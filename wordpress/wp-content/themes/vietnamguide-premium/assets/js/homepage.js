@@ -1,6 +1,8 @@
 (function () {
   'use strict';
 
+  document.documentElement.classList.add('vg-js');
+
   var header = document.querySelector('[data-vg-header]');
   var menuToggle = document.querySelector('[data-vg-menu-toggle]');
   var navigation = document.querySelector('[data-vg-navigation]');
