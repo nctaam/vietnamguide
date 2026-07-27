@@ -8,6 +8,7 @@
       "wideSize": "1280px"
     },
     "color": {
+      "defaultPalette": false,
       "palette": [
         { "slug": "ink", "color": "#101417", "name": "Ink" },
         { "slug": "soft-paper", "color": "#F7F4ED", "name": "Soft Paper" },
@@ -33,12 +34,12 @@
       "fontFamilies": [
         {
           "fontFamily": "'Source Serif 4', Georgia, serif",
-          "slug": "source-serif-4",
+          "slug": "display",
           "name": "Source Serif 4"
         },
         {
           "fontFamily": "'Hanken Grotesk', 'Segoe UI', sans-serif",
-          "slug": "hanken-grotesk",
+          "slug": "body",
           "name": "Hanken Grotesk"
         }
       ],
