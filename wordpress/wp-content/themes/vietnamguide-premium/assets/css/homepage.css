@@ -60,7 +60,8 @@ img {
 
 :focus-visible {
   outline: 3px solid var(--vg-gold);
-  outline-offset: 4px;
+  outline-offset: 3px;
+  box-shadow: 0 0 0 3px var(--vg-ink);
 }
 
 #main:focus {
@@ -140,6 +141,15 @@ img {
   color: var(--vg-ink);
   -webkit-backdrop-filter: blur(12px);
   backdrop-filter: blur(12px);
+}
+
+html:not(.vg-js) body.home .vg-site-header {
+  position: relative;
+  border-bottom-color: var(--vg-line);
+  background: var(--vg-paper);
+  color: var(--vg-ink);
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
 }
 
 .vg-site-header__inner {
@@ -686,7 +696,7 @@ img {
 }
 
 .vg-newsletter .vg-kicker {
-  color: rgba(255, 255, 255, 0.72);
+  color: var(--vg-white);
 }
 
 .vg-newsletter h2 {
@@ -978,7 +988,7 @@ img {
 
   .vg-hero,
   .vg-hero__content {
-    min-height: 760px;
+    min-height: min(760px, 100svh);
   }
 
   .vg-hero__content {

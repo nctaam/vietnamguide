@@ -7,6 +7,7 @@
   var menuToggle = document.querySelector('[data-vg-menu-toggle]');
   var navigation = document.querySelector('[data-vg-navigation]');
   var reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var desktopViewport = window.matchMedia('(min-width: 961px)');
 
   function closeMenu() {
     if (menuToggle) {
@@ -18,6 +19,18 @@
     }
 
     document.body.classList.remove('vg-menu-open');
+  }
+
+  function handleViewportChange(event) {
+    if (event.matches) {
+      closeMenu();
+    }
+  }
+
+  if (desktopViewport.addEventListener) {
+    desktopViewport.addEventListener('change', handleViewportChange);
+  } else if (desktopViewport.addListener) {
+    desktopViewport.addListener(handleViewportChange);
   }
 
   if (menuToggle && navigation) {
@@ -35,12 +48,13 @@
   }
 
   document.addEventListener('keydown', function (event) {
-    if (event.key === 'Escape') {
+    if (
+      event.key === 'Escape' &&
+      menuToggle &&
+      menuToggle.getAttribute('aria-expanded') === 'true'
+    ) {
       closeMenu();
-
-      if (menuToggle) {
-        menuToggle.focus();
-      }
+      menuToggle.focus();
     }
   });
 
