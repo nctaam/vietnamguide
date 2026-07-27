@@ -2,7 +2,7 @@
 get_header();
 $data = vg_homepage_data();
 ?>
-<main id="main">
+<main id="main" tabindex="-1">
     <section class="vg-hero">
         <picture class="vg-hero__media">
             <source srcset="<?php echo esc_url(get_theme_file_uri('/assets/images/home-hero.webp')); ?>" type="image/webp">
@@ -61,7 +61,7 @@ $data = vg_homepage_data();
                 <?php foreach ($data['itineraries'] as $index => $item) : ?>
                     <li data-vg-reveal>
                         <a href="<?php echo esc_url($item['url']); ?>" data-vg-event="itinerary_click">
-                            <span class="vg-editorial-rows__number"><?php echo esc_html(sprintf('%02d', $index + 1)); ?></span>
+                            <span class="vg-editorial-rows__number" aria-hidden="true"><?php echo esc_html(sprintf('%02d', $index + 1)); ?></span>
                             <span><small><?php echo esc_html($item['eyebrow']); ?></small><strong><?php echo esc_html($item['title']); ?></strong></span>
                             <span><?php echo esc_html($item['fit']); ?></span>
                             <span aria-hidden="true">&rarr;</span>

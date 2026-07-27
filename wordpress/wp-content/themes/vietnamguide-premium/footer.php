@@ -6,11 +6,24 @@
             <p><?php esc_html_e('Choose Vietnam well.', 'vietnamguide-premium'); ?></p>
         </div>
         <nav aria-label="<?php esc_attr_e('Footer navigation', 'vietnamguide-premium'); ?>">
-            <ul class="vg-footer-links">
-                <?php foreach ($footer_data['navigation'] as $item) : ?>
-                    <li><a href="<?php echo esc_url($item['url']); ?>"><?php echo esc_html($item['label']); ?></a></li>
-                <?php endforeach; ?>
-            </ul>
+            <?php
+            wp_nav_menu([
+                'theme_location' => 'footer',
+                'container'      => false,
+                'menu_class'     => 'vg-footer-links',
+                'fallback_cb'    => static function () use ($footer_data): void {
+                    echo '<ul class="vg-footer-links">';
+                    foreach ($footer_data['navigation'] as $item) {
+                        printf(
+                            '<li><a href="%1$s">%2$s</a></li>',
+                            esc_url($item['url']),
+                            esc_html($item['label'])
+                        );
+                    }
+                    echo '</ul>';
+                },
+            ]);
+            ?>
         </nav>
         <nav aria-label="<?php esc_attr_e('Trust and legal', 'vietnamguide-premium'); ?>">
             <ul class="vg-footer-links vg-footer-links--legal">
