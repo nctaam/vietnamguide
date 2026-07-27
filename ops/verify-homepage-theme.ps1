@@ -177,6 +177,73 @@ Require-Contains 'wordpress/wp-content/themes/vietnamguide-premium/patterns/prac
 Require-Contains 'wordpress/wp-content/themes/vietnamguide-premium/patterns/practical-essentials.php' 'Handle the details before they become problems.'
 Require-Contains 'wordpress/wp-content/themes/vietnamguide-premium/patterns/practical-essentials.php' '/plan/vietnam-evisa/'
 
+Require-Matches 'wordpress/wp-content/themes/vietnamguide-premium/patterns/planning-paths.php' '\A<\?php\r?\n/\*\*\r?\n \* Title: Planning paths\r?\n \* Slug: vietnamguide/planning-paths\r?\n \* Categories: vietnamguide\r?\n \* Inserter: true\r?\n \*/\r?\n\?>'
+Require-Contains 'wordpress/wp-content/themes/vietnamguide-premium/patterns/planning-paths.php' '<!-- wp:group {"className":"vg-section vg-planning-paths","layout":{"type":"constrained"}} -->'
+Require-Contains 'wordpress/wp-content/themes/vietnamguide-premium/patterns/planning-paths.php' '<!-- /wp:group -->'
+Require-Contains 'wordpress/wp-content/themes/vietnamguide-premium/patterns/planning-paths.php' '<!-- wp:list {"className":"vg-link-list"} -->'
+Require-Contains 'wordpress/wp-content/themes/vietnamguide-premium/patterns/planning-paths.php' '<!-- /wp:list -->'
+Require-Occurrences 'wordpress/wp-content/themes/vietnamguide-premium/patterns/planning-paths.php' '<a href=' 9
+Require-Occurrences 'wordpress/wp-content/themes/vietnamguide-premium/patterns/planning-paths.php' '<span aria-hidden="true">&rarr;</span>' 9
+Require-Contains 'wordpress/wp-content/themes/vietnamguide-premium/patterns/planning-paths.php' '/itineraries/7-days-in-vietnam/'
+Require-Contains 'wordpress/wp-content/themes/vietnamguide-premium/patterns/planning-paths.php' '/itineraries/10-days-in-vietnam/'
+Require-Contains 'wordpress/wp-content/themes/vietnamguide-premium/patterns/planning-paths.php' '/itineraries/14-days-in-vietnam/'
+Require-Contains 'wordpress/wp-content/themes/vietnamguide-premium/patterns/planning-paths.php' '/itineraries/21-days-in-vietnam/'
+Require-Contains 'wordpress/wp-content/themes/vietnamguide-premium/patterns/planning-paths.php' '/plan/vietnam-for-first-time-visitors/'
+Require-Contains 'wordpress/wp-content/themes/vietnamguide-premium/patterns/planning-paths.php' '/itineraries/vietnam-food-itinerary/'
+Require-Contains 'wordpress/wp-content/themes/vietnamguide-premium/patterns/planning-paths.php' '/itineraries/vietnam-beach-itinerary/'
+Require-Contains 'wordpress/wp-content/themes/vietnamguide-premium/patterns/planning-paths.php' '/itineraries/vietnam-family-itinerary/'
+Require-Contains 'wordpress/wp-content/themes/vietnamguide-premium/patterns/planning-paths.php' '/itineraries/vietnam-luxury-itinerary/'
+
+Require-Matches 'wordpress/wp-content/themes/vietnamguide-premium/patterns/editorial-itineraries.php' '\A<\?php\r?\n/\*\*\r?\n \* Title: Editorial itineraries\r?\n \* Slug: vietnamguide/editorial-itineraries\r?\n \* Categories: vietnamguide\r?\n \* Inserter: true\r?\n \*/\r?\n\?>'
+Require-Contains 'wordpress/wp-content/themes/vietnamguide-premium/patterns/editorial-itineraries.php' '<!-- wp:group {"className":"vg-section vg-itineraries","layout":{"type":"constrained"}} -->'
+Require-Contains 'wordpress/wp-content/themes/vietnamguide-premium/patterns/editorial-itineraries.php' '<!-- /wp:group -->'
+Require-Contains 'wordpress/wp-content/themes/vietnamguide-premium/patterns/editorial-itineraries.php' '<!-- wp:list {"ordered":true,"className":"vg-editorial-rows"} -->'
+Require-Contains 'wordpress/wp-content/themes/vietnamguide-premium/patterns/editorial-itineraries.php' '<!-- /wp:list -->'
+Require-Occurrences 'wordpress/wp-content/themes/vietnamguide-premium/patterns/editorial-itineraries.php' '<a href=' 4
+Require-Occurrences 'wordpress/wp-content/themes/vietnamguide-premium/patterns/editorial-itineraries.php' 'class="vg-editorial-rows__number" aria-hidden="true">' 4
+Require-Occurrences 'wordpress/wp-content/themes/vietnamguide-premium/patterns/editorial-itineraries.php' '<span aria-hidden="true">&rarr;</span>' 4
+Require-Occurrences 'wordpress/wp-content/themes/vietnamguide-premium/patterns/editorial-itineraries.php' '<small>' 4
+Require-Occurrences 'wordpress/wp-content/themes/vietnamguide-premium/patterns/editorial-itineraries.php' '<strong>' 4
+Require-Contains 'wordpress/wp-content/themes/vietnamguide-premium/patterns/editorial-itineraries.php' '<span class="vg-editorial-rows__number" aria-hidden="true">01</span>'
+Require-Contains 'wordpress/wp-content/themes/vietnamguide-premium/patterns/editorial-itineraries.php' '<span class="vg-editorial-rows__number" aria-hidden="true">02</span>'
+Require-Contains 'wordpress/wp-content/themes/vietnamguide-premium/patterns/editorial-itineraries.php' '<span class="vg-editorial-rows__number" aria-hidden="true">03</span>'
+Require-Contains 'wordpress/wp-content/themes/vietnamguide-premium/patterns/editorial-itineraries.php' '<span class="vg-editorial-rows__number" aria-hidden="true">04</span>'
+Require-Contains 'wordpress/wp-content/themes/vietnamguide-premium/patterns/editorial-itineraries.php' '/itineraries/10-days-in-vietnam/'
+Require-Contains 'wordpress/wp-content/themes/vietnamguide-premium/patterns/editorial-itineraries.php' '/itineraries/14-days-in-vietnam/'
+Require-Contains 'wordpress/wp-content/themes/vietnamguide-premium/patterns/editorial-itineraries.php' '/itineraries/northern-vietnam-itinerary/'
+Require-Contains 'wordpress/wp-content/themes/vietnamguide-premium/patterns/editorial-itineraries.php' '/itineraries/vietnam-luxury-itinerary/'
+Require-Contains 'wordpress/wp-content/themes/vietnamguide-premium/patterns/editorial-itineraries.php' 'First journey'
+Require-Contains 'wordpress/wp-content/themes/vietnamguide-premium/patterns/editorial-itineraries.php' 'More breathing room'
+Require-Contains 'wordpress/wp-content/themes/vietnamguide-premium/patterns/editorial-itineraries.php' 'Northern route'
+Require-Contains 'wordpress/wp-content/themes/vietnamguide-premium/patterns/editorial-itineraries.php' 'Premium stay'
+
+Require-Matches 'wordpress/wp-content/themes/vietnamguide-premium/patterns/decision-guides.php' '\A<\?php\r?\n/\*\*\r?\n \* Title: Decision guides\r?\n \* Slug: vietnamguide/decision-guides\r?\n \* Categories: vietnamguide\r?\n \* Inserter: true\r?\n \*/\r?\n\?>'
+Require-Contains 'wordpress/wp-content/themes/vietnamguide-premium/patterns/decision-guides.php' '<!-- wp:group {"className":"vg-section vg-comparisons","layout":{"type":"constrained"}} -->'
+Require-Contains 'wordpress/wp-content/themes/vietnamguide-premium/patterns/decision-guides.php' '<!-- /wp:group -->'
+Require-Contains 'wordpress/wp-content/themes/vietnamguide-premium/patterns/decision-guides.php' '<!-- wp:list {"className":"vg-comparison-list"} -->'
+Require-Contains 'wordpress/wp-content/themes/vietnamguide-premium/patterns/decision-guides.php' '<!-- /wp:list -->'
+Require-Occurrences 'wordpress/wp-content/themes/vietnamguide-premium/patterns/decision-guides.php' '<a href=' 3
+Require-Occurrences 'wordpress/wp-content/themes/vietnamguide-premium/patterns/decision-guides.php' '<span aria-hidden="true">&rarr;</span>' 3
+Require-Occurrences 'wordpress/wp-content/themes/vietnamguide-premium/patterns/decision-guides.php' '<strong>' 3
+Require-Contains 'wordpress/wp-content/themes/vietnamguide-premium/patterns/decision-guides.php' '/compare/ha-long-bay-vs-lan-ha-bay/'
+Require-Contains 'wordpress/wp-content/themes/vietnamguide-premium/patterns/decision-guides.php' '/compare/sapa-vs-ha-giang/'
+Require-Contains 'wordpress/wp-content/themes/vietnamguide-premium/patterns/decision-guides.php' '/compare/hanoi-vs-ho-chi-minh-city/'
+
+Require-Matches 'wordpress/wp-content/themes/vietnamguide-premium/patterns/practical-essentials.php' '\A<\?php\r?\n/\*\*\r?\n \* Title: Practical essentials\r?\n \* Slug: vietnamguide/practical-essentials\r?\n \* Categories: vietnamguide\r?\n \* Inserter: true\r?\n \*/\r?\n\?>'
+Require-Contains 'wordpress/wp-content/themes/vietnamguide-premium/patterns/practical-essentials.php' '<!-- wp:group {"className":"vg-section vg-essentials","layout":{"type":"constrained"}} -->'
+Require-Contains 'wordpress/wp-content/themes/vietnamguide-premium/patterns/practical-essentials.php' '<!-- /wp:group -->'
+Require-Contains 'wordpress/wp-content/themes/vietnamguide-premium/patterns/practical-essentials.php' '<!-- wp:list {"className":"vg-essential-grid"} -->'
+Require-Contains 'wordpress/wp-content/themes/vietnamguide-premium/patterns/practical-essentials.php' '<!-- /wp:list -->'
+Require-Occurrences 'wordpress/wp-content/themes/vietnamguide-premium/patterns/practical-essentials.php' '<a href=' 6
+Require-Occurrences 'wordpress/wp-content/themes/vietnamguide-premium/patterns/practical-essentials.php' '<span aria-hidden="true">&rarr;</span>' 6
+Require-Occurrences 'wordpress/wp-content/themes/vietnamguide-premium/patterns/practical-essentials.php' '<strong>' 6
+Require-Contains 'wordpress/wp-content/themes/vietnamguide-premium/patterns/practical-essentials.php' '/plan/vietnam-evisa/'
+Require-Contains 'wordpress/wp-content/themes/vietnamguide-premium/patterns/practical-essentials.php' '/plan/best-time-to-visit-vietnam/'
+Require-Contains 'wordpress/wp-content/themes/vietnamguide-premium/patterns/practical-essentials.php' '/costs/vietnam-travel-cost/'
+Require-Contains 'wordpress/wp-content/themes/vietnamguide-premium/patterns/practical-essentials.php' '/plan/sim-esim-vietnam/'
+Require-Contains 'wordpress/wp-content/themes/vietnamguide-premium/patterns/practical-essentials.php' '/plan/getting-around-vietnam/'
+Require-Contains 'wordpress/wp-content/themes/vietnamguide-premium/patterns/practical-essentials.php' '/plan/is-vietnam-safe/'
+
 if ($Failures.Count -gt 0) {
     foreach ($Failure in $Failures) {
         Write-Output "FAIL: $Failure"

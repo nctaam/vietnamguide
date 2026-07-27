@@ -14,10 +14,10 @@
 <!-- /wp:heading --><!-- wp:columns {"className":"vg-planning-grid"} -->
 <div class="wp-block-columns vg-planning-grid"><!-- wp:column -->
 <div class="wp-block-column"><!-- wp:heading {"level":3} --><h3 class="wp-block-heading">Choose your trip length</h3><!-- /wp:heading --><!-- wp:list {"className":"vg-link-list"} -->
-<ul class="vg-link-list"><li><a href="/itineraries/7-days-in-vietnam/">7 days</a></li><li><a href="/itineraries/10-days-in-vietnam/">10 days</a></li><li><a href="/itineraries/14-days-in-vietnam/">14 days</a></li><li><a href="/itineraries/21-days-in-vietnam/">21 days</a></li></ul>
+<ul class="vg-link-list"><li><a href="/itineraries/7-days-in-vietnam/">7 days<span aria-hidden="true">&rarr;</span></a></li><li><a href="/itineraries/10-days-in-vietnam/">10 days<span aria-hidden="true">&rarr;</span></a></li><li><a href="/itineraries/14-days-in-vietnam/">14 days<span aria-hidden="true">&rarr;</span></a></li><li><a href="/itineraries/21-days-in-vietnam/">21 days<span aria-hidden="true">&rarr;</span></a></li></ul>
 <!-- /wp:list --></div><!-- /wp:column --><!-- wp:column -->
 <div class="wp-block-column"><!-- wp:heading {"level":3} --><h3 class="wp-block-heading">Choose your travel style</h3><!-- /wp:heading --><!-- wp:list {"className":"vg-link-list"} -->
-<ul class="vg-link-list"><li><a href="/plan/vietnam-for-first-time-visitors/">First trip</a></li><li><a href="/itineraries/vietnam-food-itinerary/">Food</a></li><li><a href="/itineraries/vietnam-beach-itinerary/">Beach</a></li><li><a href="/itineraries/vietnam-family-itinerary/">Family</a></li><li><a href="/itineraries/vietnam-luxury-itinerary/">Premium</a></li></ul>
+<ul class="vg-link-list"><li><a href="/plan/vietnam-for-first-time-visitors/">First trip<span aria-hidden="true">&rarr;</span></a></li><li><a href="/itineraries/vietnam-food-itinerary/">Food<span aria-hidden="true">&rarr;</span></a></li><li><a href="/itineraries/vietnam-beach-itinerary/">Beach<span aria-hidden="true">&rarr;</span></a></li><li><a href="/itineraries/vietnam-family-itinerary/">Family<span aria-hidden="true">&rarr;</span></a></li><li><a href="/itineraries/vietnam-luxury-itinerary/">Premium<span aria-hidden="true">&rarr;</span></a></li></ul>
 <!-- /wp:list --></div><!-- /wp:column --></div>
 <!-- /wp:columns --></div>
 <!-- /wp:group -->
