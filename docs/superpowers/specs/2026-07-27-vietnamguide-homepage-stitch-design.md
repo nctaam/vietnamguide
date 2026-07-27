@@ -3,7 +3,7 @@
 Date: 2026-07-27
 Project: vietnamguide.net
 Scope: WordPress homepage redesign, local theme implementation
-Status: Proposed for implementation
+Status: Proposed for implementation after deep optimization review
 
 ## Goal
 
@@ -145,3 +145,60 @@ Do not add a second accent system or default to purple gradients. Gold remains a
 4. The page works as semantic HTML with JavaScript disabled.
 5. The theme remains lightweight, responsive, accessible, and ready for later destination/itinerary templates.
 
+## Deep Optimization Pass
+
+This pass upgrades the homepage from a visual implementation into a durable WordPress system. It is still limited to the homepage foundation; it does not add a booking engine, user accounts, or a heavy page builder.
+
+### Design-system governance
+
+- Define all colors, type sizes, spacing, radii, shadows, breakpoints, and motion durations as named tokens in `theme.json` and CSS custom properties.
+- Keep Stitch as the visual reference, but select one canonical desktop/mobile variant per content family. Exploratory and duplicate screens remain reference material only.
+- Establish contracts for shared patterns: required fields, optional fields, link behavior, image aspect ratio, and fallback content.
+- Support long titles, missing images, empty data, keyboard focus, reduced motion, and high zoom without breaking composition.
+- Use visual regression screenshots at the selected desktop and mobile reference widths before accepting future changes.
+
+### Content and data model
+
+Keep content separate from presentation so editors can update links and copy without editing template markup.
+
+- Store homepage collections as structured data in one isolated PHP data provider first, with a clear migration path to WordPress queries or custom fields.
+- Give every editorial item a stable URL, short description, `best for` cue, optional `skip if` cue, image, alt text, and review date.
+- Use the same field vocabulary that future Destination, Itinerary, Comparison, and Practical Guide templates will consume.
+- Do not create a custom post type solely for the homepage pass; add one only when the editorial workflow demonstrates the need.
+
+### Performance budget
+
+- Target LCP <= 2.5 seconds, CLS <= 0.1, and INP <= 200 milliseconds on a representative mobile connection.
+- Preload only the selected hero image and the minimum critical font resources; never preload every editorial image.
+- Serve hero and editorial imagery through responsive `srcset`/`sizes` with explicit dimensions and WebP/AVIF sources where available.
+- Keep homepage JavaScript below 25 KB compressed before third-party scripts. JavaScript must be progressive enhancement, not a rendering dependency.
+- Keep the first viewport free of newsletter popups, autoplay video, heavy maps, and layout-shifting embeds.
+- Capture a baseline with Lighthouse/PageSpeed before implementation and repeat it after the homepage is rendered.
+
+### SEO and conversion instrumentation
+
+- Map each section to a search or planning intent: route length, travel style, destination choice, practical requirement, or next action.
+- Add semantic landmarks, one clear H1, descriptive link text, canonical metadata, Open Graph fields, and context-appropriate `ItemList`/`FAQ`/`Article` schema.
+- Keep volatile facts behind maintained guide URLs and expose `last reviewed` metadata when available.
+- Track clicks for hero CTAs, route-selector choices, itinerary rows, decision-guide rows, newsletter submission, and outbound affiliate links.
+- Add event names and data attributes without making analytics scripts required for page usability.
+
+### Interaction and resilience
+
+- Use three motion primitives only: hero entrance, section reveal, and header surface transition.
+- Respect `prefers-reduced-motion` by disabling transforms and reducing transitions to immediate state changes.
+- Use an accessible mobile menu with focus management, Escape-to-close, and a non-JavaScript fallback navigation.
+- Ensure planning links remain ordinary URLs so they work with prefetching, SEO crawlers, keyboard navigation, and disabled JavaScript.
+
+### Verification matrix
+
+Before calling the homepage complete, verify:
+
+1. PHP syntax and WordPress theme discovery.
+2. Desktop composition against the Stitch Cinematic Perfection reference.
+3. Mobile composition against the Stitch Final Editorial reference.
+4. Keyboard navigation, visible focus, screen-reader landmarks, and reduced-motion behavior.
+5. JavaScript-disabled rendering and link functionality.
+6. Image dimensions, alt text, lazy-loading behavior, and no visible layout shifts.
+7. Lighthouse/PageSpeed performance budget and Web Vitals-related warnings.
+8. Analytics events in a debug environment without leaking private data.
