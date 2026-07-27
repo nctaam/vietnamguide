@@ -21,6 +21,7 @@
       ]
     },
     "spacing": {
+      "defaultSpacingSizes": false,
       "spacingSizes": [
         { "slug": "xs", "size": "8px", "name": "XS" },
         { "slug": "sm", "size": "16px", "name": "SM" },
