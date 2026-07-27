@@ -128,7 +128,7 @@ Require-Matches 'wordpress/wp-content/themes/vietnamguide-premium/front-page.php
 Require-Matches 'wordpress/wp-content/themes/vietnamguide-premium/front-page.php' 'home-editorial-720\.webp[^\r\n]*720w'
 Require-Matches 'wordpress/wp-content/themes/vietnamguide-premium/front-page.php' 'home-editorial-720\.jpg[^\r\n]*720w'
 Require-Contains 'wordpress/wp-content/themes/vietnamguide-premium/front-page.php' 'sizes="100vw"'
-Require-Occurrences 'wordpress/wp-content/themes/vietnamguide-premium/front-page.php' 'sizes="(max-width: 760px) calc(100vw - 64px), (max-width: 960px) calc(100vw - 96px), 48vw"' 2
+Require-Occurrences 'wordpress/wp-content/themes/vietnamguide-premium/front-page.php' 'sizes="(max-width: 760px) calc(100vw - 64px), (max-width: 960px) calc(100vw - 96px), min(48vw, 656px)"' 2
 Require-Contains 'wordpress/wp-content/themes/vietnamguide-premium/front-page.php' 'fetchpriority="high"'
 Require-Contains 'wordpress/wp-content/themes/vietnamguide-premium/front-page.php' 'loading="lazy"'
 Require-Contains 'wordpress/wp-content/themes/vietnamguide-premium/front-page.php' 'Misty limestone karsts in Ha Long Bay at sunrise'
