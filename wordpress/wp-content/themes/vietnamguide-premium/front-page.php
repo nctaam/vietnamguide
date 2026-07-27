@@ -5,12 +5,18 @@ $data = vg_homepage_data();
 <main id="main" tabindex="-1">
     <section class="vg-hero">
         <picture class="vg-hero__media">
-            <source srcset="<?php echo esc_url(get_theme_file_uri('/assets/images/home-hero.webp')); ?>" type="image/webp">
+            <source
+                type="image/webp"
+                srcset="<?php echo esc_url(get_theme_file_uri('/assets/images/home-hero-640.webp')); ?> 640w, <?php echo esc_url(get_theme_file_uri('/assets/images/home-hero-960.webp')); ?> 960w, <?php echo esc_url(get_theme_file_uri('/assets/images/home-hero.webp')); ?> 1376w"
+                sizes="100vw"
+            >
             <img
                 src="<?php echo esc_url(get_theme_file_uri('/assets/images/home-hero.jpg')); ?>"
-                width="2400"
-                height="1350"
-                alt="<?php esc_attr_e('Rice terraces, river, and limestone mountains in northern Vietnam at dawn', 'vietnamguide-premium'); ?>"
+                srcset="<?php echo esc_url(get_theme_file_uri('/assets/images/home-hero-640.jpg')); ?> 640w, <?php echo esc_url(get_theme_file_uri('/assets/images/home-hero-960.jpg')); ?> 960w, <?php echo esc_url(get_theme_file_uri('/assets/images/home-hero.jpg')); ?> 1376w"
+                sizes="100vw"
+                width="1376"
+                height="768"
+                alt="<?php esc_attr_e('Misty limestone karsts in Ha Long Bay at sunrise', 'vietnamguide-premium'); ?>"
                 fetchpriority="high"
             >
         </picture>
@@ -75,12 +81,18 @@ $data = vg_homepage_data();
     <section class="vg-section vg-destinations" aria-labelledby="vg-destinations-title">
         <div class="vg-shell vg-destinations__layout">
             <picture class="vg-destinations__media" data-vg-reveal>
-                <source srcset="<?php echo esc_url(get_theme_file_uri('/assets/images/home-editorial.webp')); ?>" type="image/webp">
+                <source
+                    type="image/webp"
+                    srcset="<?php echo esc_url(get_theme_file_uri('/assets/images/home-editorial-720.webp')); ?> 720w, <?php echo esc_url(get_theme_file_uri('/assets/images/home-editorial.webp')); ?> 1408w"
+                    sizes="(max-width: 900px) 100vw, 48vw"
+                >
                 <img
                     src="<?php echo esc_url(get_theme_file_uri('/assets/images/home-editorial.jpg')); ?>"
-                    width="1800"
-                    height="1350"
-                    alt="<?php esc_attr_e('A wooden boat moving between limestone karsts in Lan Ha Bay', 'vietnamguide-premium'); ?>"
+                    srcset="<?php echo esc_url(get_theme_file_uri('/assets/images/home-editorial-720.jpg')); ?> 720w, <?php echo esc_url(get_theme_file_uri('/assets/images/home-editorial.jpg')); ?> 1408w"
+                    sizes="(max-width: 900px) 100vw, 48vw"
+                    width="1408"
+                    height="768"
+                    alt="<?php esc_attr_e('Lanterns reflected on the river in Hoi An at night', 'vietnamguide-premium'); ?>"
                     loading="lazy"
                 >
             </picture>
