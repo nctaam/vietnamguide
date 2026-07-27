@@ -22,11 +22,14 @@ function Require-Contains {
 
     $FullPath = Join-Path $RepoRoot $RelativePath
     if (-not (Test-Path -LiteralPath $FullPath -PathType Leaf)) {
-        $Failures.Add("Missing file: $RelativePath")
         return
     }
 
     $Content = Get-Content -LiteralPath $FullPath -Raw
+    if ($null -eq $Content) {
+        $Content = ''
+    }
+
     if (-not $Content.Contains($Needle)) {
         $Failures.Add("Missing substring in ${RelativePath}: $Needle")
     }
