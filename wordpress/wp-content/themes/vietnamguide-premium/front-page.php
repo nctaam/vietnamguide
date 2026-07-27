@@ -84,12 +84,12 @@ $data = vg_homepage_data();
                 <source
                     type="image/webp"
                     srcset="<?php echo esc_url(get_theme_file_uri('/assets/images/home-editorial-720.webp')); ?> 720w, <?php echo esc_url(get_theme_file_uri('/assets/images/home-editorial.webp')); ?> 1408w"
-                    sizes="(max-width: 900px) 100vw, 48vw"
+                    sizes="(max-width: 760px) calc(100vw - 64px), (max-width: 960px) calc(100vw - 96px), 48vw"
                 >
                 <img
                     src="<?php echo esc_url(get_theme_file_uri('/assets/images/home-editorial.jpg')); ?>"
                     srcset="<?php echo esc_url(get_theme_file_uri('/assets/images/home-editorial-720.jpg')); ?> 720w, <?php echo esc_url(get_theme_file_uri('/assets/images/home-editorial.jpg')); ?> 1408w"
-                    sizes="(max-width: 900px) 100vw, 48vw"
+                    sizes="(max-width: 760px) calc(100vw - 64px), (max-width: 960px) calc(100vw - 96px), 48vw"
                     width="1408"
                     height="768"
                     alt="<?php esc_attr_e('Lanterns reflected on the river in Hoi An at night', 'vietnamguide-premium'); ?>"
