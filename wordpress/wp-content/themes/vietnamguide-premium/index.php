@@ -38,11 +38,11 @@ get_header();
                                 <?php
                                 printf(
                                     esc_html__('Search results for: %s', 'vietnamguide-premium'),
-                                    esc_html(get_search_query())
+                                    esc_html(get_search_query(false))
                                 );
                                 ?>
                             <?php elseif (is_archive()) : ?>
-                                <?php echo esc_html(get_the_archive_title()); ?>
+                                <?php echo wp_kses_post(get_the_archive_title()); ?>
                             <?php elseif (is_home() && ! is_front_page() && single_post_title('', false)) : ?>
                                 <?php echo esc_html(single_post_title('', false)); ?>
                             <?php else : ?>
