@@ -144,6 +144,39 @@ Require-Contains 'wordpress/wp-content/themes/vietnamguide-premium/assets/js/hom
 Require-Contains 'wordpress/wp-content/themes/vietnamguide-premium/assets/js/homepage.js' "event.key === 'Escape'"
 Require-Contains 'qa/homepage-preview.html' 'VietnamGuide.net'
 
+# Reusable homepage patterns must expose their exact registration headers and semantic anchors.
+Require-Contains 'wordpress/wp-content/themes/vietnamguide-premium/patterns/planning-paths.php' ' * Title: Planning paths'
+Require-Contains 'wordpress/wp-content/themes/vietnamguide-premium/patterns/planning-paths.php' ' * Slug: vietnamguide/planning-paths'
+Require-Contains 'wordpress/wp-content/themes/vietnamguide-premium/patterns/planning-paths.php' ' * Categories: vietnamguide'
+Require-Contains 'wordpress/wp-content/themes/vietnamguide-premium/patterns/planning-paths.php' ' * Inserter: true'
+Require-Contains 'wordpress/wp-content/themes/vietnamguide-premium/patterns/planning-paths.php' 'vg-section vg-planning-paths'
+Require-Contains 'wordpress/wp-content/themes/vietnamguide-premium/patterns/planning-paths.php' 'Choose your trip length'
+Require-Contains 'wordpress/wp-content/themes/vietnamguide-premium/patterns/planning-paths.php' '/itineraries/14-days-in-vietnam/'
+
+Require-Contains 'wordpress/wp-content/themes/vietnamguide-premium/patterns/editorial-itineraries.php' ' * Title: Editorial itineraries'
+Require-Contains 'wordpress/wp-content/themes/vietnamguide-premium/patterns/editorial-itineraries.php' ' * Slug: vietnamguide/editorial-itineraries'
+Require-Contains 'wordpress/wp-content/themes/vietnamguide-premium/patterns/editorial-itineraries.php' ' * Categories: vietnamguide'
+Require-Contains 'wordpress/wp-content/themes/vietnamguide-premium/patterns/editorial-itineraries.php' ' * Inserter: true'
+Require-Contains 'wordpress/wp-content/themes/vietnamguide-premium/patterns/editorial-itineraries.php' 'vg-section vg-itineraries'
+Require-Contains 'wordpress/wp-content/themes/vietnamguide-premium/patterns/editorial-itineraries.php' 'Routes built around pace, not a checklist.'
+Require-Contains 'wordpress/wp-content/themes/vietnamguide-premium/patterns/editorial-itineraries.php' '/itineraries/northern-vietnam-itinerary/'
+
+Require-Contains 'wordpress/wp-content/themes/vietnamguide-premium/patterns/decision-guides.php' ' * Title: Decision guides'
+Require-Contains 'wordpress/wp-content/themes/vietnamguide-premium/patterns/decision-guides.php' ' * Slug: vietnamguide/decision-guides'
+Require-Contains 'wordpress/wp-content/themes/vietnamguide-premium/patterns/decision-guides.php' ' * Categories: vietnamguide'
+Require-Contains 'wordpress/wp-content/themes/vietnamguide-premium/patterns/decision-guides.php' ' * Inserter: true'
+Require-Contains 'wordpress/wp-content/themes/vietnamguide-premium/patterns/decision-guides.php' 'vg-section vg-comparisons'
+Require-Contains 'wordpress/wp-content/themes/vietnamguide-premium/patterns/decision-guides.php' 'Make the difficult choices quickly.'
+Require-Contains 'wordpress/wp-content/themes/vietnamguide-premium/patterns/decision-guides.php' '/compare/ha-long-bay-vs-lan-ha-bay/'
+
+Require-Contains 'wordpress/wp-content/themes/vietnamguide-premium/patterns/practical-essentials.php' ' * Title: Practical essentials'
+Require-Contains 'wordpress/wp-content/themes/vietnamguide-premium/patterns/practical-essentials.php' ' * Slug: vietnamguide/practical-essentials'
+Require-Contains 'wordpress/wp-content/themes/vietnamguide-premium/patterns/practical-essentials.php' ' * Categories: vietnamguide'
+Require-Contains 'wordpress/wp-content/themes/vietnamguide-premium/patterns/practical-essentials.php' ' * Inserter: true'
+Require-Contains 'wordpress/wp-content/themes/vietnamguide-premium/patterns/practical-essentials.php' 'vg-section vg-essentials'
+Require-Contains 'wordpress/wp-content/themes/vietnamguide-premium/patterns/practical-essentials.php' 'Handle the details before they become problems.'
+Require-Contains 'wordpress/wp-content/themes/vietnamguide-premium/patterns/practical-essentials.php' '/plan/vietnam-evisa/'
+
 if ($Failures.Count -gt 0) {
     foreach ($Failure in $Failures) {
         Write-Output "FAIL: $Failure"
