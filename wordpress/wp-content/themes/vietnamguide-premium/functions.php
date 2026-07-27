@@ -19,9 +19,6 @@ add_action('wp_enqueue_scripts', static function (): void {
     wp_enqueue_style('vietnamguide-homepage', get_theme_file_uri('/assets/css/homepage.css'), [], $version);
     wp_enqueue_script('vietnamguide-homepage', get_theme_file_uri('/assets/js/homepage.js'), [], $version, true);
 });
-add_action('init', static function (): void {
-    register_block_pattern_category('vietnamguide', ['label' => __('VietnamGuide', 'vietnamguide-premium')]);
-});
 function vg_primary_menu_fallback(): void
 {
     echo '<ul class="vg-nav-list">';
