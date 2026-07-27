@@ -821,6 +821,8 @@ html:not(.vg-js) body.home .vg-site-header {
     right: 0;
     left: 0;
     z-index: 99;
+    justify-self: stretch;
+    width: 100%;
     max-height: calc(100svh - var(--vg-header-height));
     overflow-y: auto;
     border-top: 1px solid var(--vg-line);

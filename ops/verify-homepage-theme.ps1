@@ -79,6 +79,50 @@ function Require-Occurrences {
     }
 }
 
+function Require-MatchCount {
+    param(
+        [string]$RelativePath,
+        [string]$Pattern,
+        [int]$ExpectedCount
+    )
+
+    $FullPath = Join-Path $RepoRoot $RelativePath
+    if (-not (Test-Path -LiteralPath $FullPath -PathType Leaf)) {
+        return
+    }
+
+    $Content = Get-Content -LiteralPath $FullPath -Raw
+    if ($null -eq $Content) {
+        $Content = ''
+    }
+
+    $ActualCount = ([regex]::Matches($Content, $Pattern, [System.Text.RegularExpressions.RegexOptions]::IgnoreCase)).Count
+    if ($ActualCount -ne $ExpectedCount) {
+        $Failures.Add("Expected $ExpectedCount matches in ${RelativePath}, found ${ActualCount}: $Pattern")
+    }
+}
+
+function Require-NotContains {
+    param(
+        [string]$RelativePath,
+        [string]$Needle
+    )
+
+    $FullPath = Join-Path $RepoRoot $RelativePath
+    if (-not (Test-Path -LiteralPath $FullPath -PathType Leaf)) {
+        return
+    }
+
+    $Content = Get-Content -LiteralPath $FullPath -Raw
+    if ($null -eq $Content) {
+        $Content = ''
+    }
+
+    if ($Content.Contains($Needle)) {
+        $Failures.Add("Unexpected substring in ${RelativePath}: $Needle")
+    }
+}
+
 $RequiredFiles = @(
     'wordpress/wp-content/themes/vietnamguide-premium/style.css'
     'wordpress/wp-content/themes/vietnamguide-premium/theme.json'
@@ -140,9 +184,57 @@ Require-Contains 'wordpress/wp-content/themes/vietnamguide-premium/assets/images
 Require-Contains 'wordpress/wp-content/themes/vietnamguide-premium/assets/images/README.md' 'No embedded text, logo, or third-party trademark.'
 Require-Contains 'wordpress/wp-content/themes/vietnamguide-premium/assets/css/homepage.css' '@media (prefers-reduced-motion: reduce)'
 Require-Contains 'wordpress/wp-content/themes/vietnamguide-premium/assets/css/homepage.css' ':focus-visible'
+Require-Matches 'wordpress/wp-content/themes/vietnamguide-premium/assets/css/homepage.css' '(?s)\.vg-js \.vg-primary-navigation \{[^}]*justify-self: stretch;[^}]*width: 100%;'
 Require-Contains 'wordpress/wp-content/themes/vietnamguide-premium/assets/js/homepage.js' "matchMedia('(prefers-reduced-motion: reduce)')"
 Require-Contains 'wordpress/wp-content/themes/vietnamguide-premium/assets/js/homepage.js' "event.key === 'Escape'"
-Require-Contains 'qa/homepage-preview.html' 'VietnamGuide.net'
+
+# The static fixture mirrors the current PHP templates closely enough for meaningful browser QA.
+Require-Matches 'qa/homepage-preview.html' '\A<!doctype html>'
+Require-Contains 'qa/homepage-preview.html' '<html lang="en">'
+Require-Contains 'qa/homepage-preview.html' '<meta charset="utf-8">'
+Require-Contains 'qa/homepage-preview.html' '<meta name="viewport" content="width=device-width, initial-scale=1">'
+Require-Contains 'qa/homepage-preview.html' '<title>VietnamGuide.net Homepage Preview'
+Require-Contains 'qa/homepage-preview.html' '<link rel="icon" href="data:,">'
+Require-Contains 'qa/homepage-preview.html' '../wordpress/wp-content/themes/vietnamguide-premium/assets/css/homepage.css'
+Require-Contains 'qa/homepage-preview.html' '../wordpress/wp-content/themes/vietnamguide-premium/assets/js/homepage.js'
+Require-Matches 'qa/homepage-preview.html' '<script[^>]+homepage\.js[^>]+defer'
+Require-Contains 'qa/homepage-preview.html' '<body class="home vg-site">'
+Require-Contains 'qa/homepage-preview.html' '<a class="vg-skip-link" href="#main">Skip to content</a>'
+Require-Matches 'qa/homepage-preview.html' '<main id="main" tabindex="-1">'
+Require-MatchCount 'qa/homepage-preview.html' '<h1(?:\s|>)' 1
+Require-Contains 'qa/homepage-preview.html' 'class="vg-site-header" data-vg-header'
+Require-Contains 'qa/homepage-preview.html' 'aria-controls="vg-primary-navigation"'
+Require-Contains 'qa/homepage-preview.html' 'aria-expanded="false"'
+Require-Contains 'qa/homepage-preview.html' 'data-vg-menu-toggle'
+Require-Contains 'qa/homepage-preview.html' 'id="vg-primary-navigation"'
+Require-Contains 'qa/homepage-preview.html' 'data-vg-navigation'
+Require-Contains 'qa/homepage-preview.html' 'class="vg-hero"'
+Require-Contains 'qa/homepage-preview.html' 'class="vg-section vg-planning-paths"'
+Require-Contains 'qa/homepage-preview.html' 'class="vg-section vg-itineraries"'
+Require-Contains 'qa/homepage-preview.html' 'class="vg-section vg-destinations"'
+Require-Contains 'qa/homepage-preview.html' 'class="vg-section vg-comparisons"'
+Require-Contains 'qa/homepage-preview.html' 'class="vg-section vg-essentials"'
+Require-Contains 'qa/homepage-preview.html' 'class="vg-section vg-newsletter"'
+Require-Contains 'qa/homepage-preview.html' 'class="vg-site-footer"'
+Require-Contains 'qa/homepage-preview.html' 'home-hero-640.webp 640w'
+Require-Contains 'qa/homepage-preview.html' 'home-hero-960.webp 960w'
+Require-Contains 'qa/homepage-preview.html' 'home-hero.webp 1376w'
+Require-Contains 'qa/homepage-preview.html' 'home-hero-640.jpg 640w'
+Require-Contains 'qa/homepage-preview.html' 'home-hero-960.jpg 960w'
+Require-Contains 'qa/homepage-preview.html' 'home-hero.jpg 1376w'
+Require-Contains 'qa/homepage-preview.html' 'width="1376"'
+Require-Contains 'qa/homepage-preview.html' 'height="768"'
+Require-Contains 'qa/homepage-preview.html' 'alt="Misty limestone karsts in Ha Long Bay at sunrise"'
+Require-Contains 'qa/homepage-preview.html' 'fetchpriority="high"'
+Require-Contains 'qa/homepage-preview.html' 'home-editorial-720.webp 720w'
+Require-Contains 'qa/homepage-preview.html' 'home-editorial.webp 1408w'
+Require-Contains 'qa/homepage-preview.html' 'home-editorial-720.jpg 720w'
+Require-Contains 'qa/homepage-preview.html' 'home-editorial.jpg 1408w'
+Require-Contains 'qa/homepage-preview.html' 'width="1408"'
+Require-Contains 'qa/homepage-preview.html' 'alt="Lanterns reflected on the river in Hoi An at night"'
+Require-Contains 'qa/homepage-preview.html' 'loading="lazy"'
+Require-NotContains 'qa/homepage-preview.html' 'Rice terraces, river, and limestone mountains in northern Vietnam at dawn'
+Require-NotContains 'qa/homepage-preview.html' 'A wooden boat moving between limestone karsts in Lan Ha Bay'
 
 # Reusable homepage patterns must expose their exact registration headers and semantic anchors.
 Require-Contains 'wordpress/wp-content/themes/vietnamguide-premium/patterns/planning-paths.php' ' * Title: Planning paths'
