@@ -105,6 +105,7 @@ $Routing = "$ThemeRoot/inc/guide-routing.php"
 $Functions = "$ThemeRoot/functions.php"
 
 Require-File $Routing
+Require-File $Functions
 Require-Contains $Functions "require_once get_theme_file_path('/inc/guide-routing.php');"
 Require-Contains $Routing 'function vg_guide_pilot_paths(): array'
 Require-Contains $Routing 'function vg_classify_guide_path(string $path): ?string'
@@ -149,6 +150,30 @@ if ($null -ne $ClassifierFunction) {
             'compare=comparison'
             'plan=practical'
         )
+    }
+}
+
+$GuideTypeFunction = Get-FunctionContent $Routing 'vg_get_guide_type'
+if ($null -ne $GuideTypeFunction) {
+    $FilteredValidation = [regex]::Match($GuideTypeFunction, 'in_array\s*\(\s*\$filtered\s*,\s*\[(?<items>.*?)\](?<tail>.*?)\)', [System.Text.RegularExpressions.RegexOptions]::Singleline)
+    if (-not $FilteredValidation.Success) {
+        $Failures.Add('Missing filtered type validation in vg_get_guide_type()')
+    } else {
+        $FilteredTypeItems = @($FilteredValidation.Groups['items'].Value -split ',' | ForEach-Object { $_.Trim() } | Where-Object { $_ -ne '' })
+        $FilteredTypes = @($FilteredTypeItems | ForEach-Object {
+            $ItemMatch = [regex]::Match($_, '^[''"](?<value>[^''"]+)[''"]$')
+            if ($ItemMatch.Success) { $ItemMatch.Groups['value'].Value } else { "invalid:$_" }
+        })
+        Require-ExactSet 'filtered guide type' $FilteredTypes @(
+            'destination'
+            'itinerary'
+            'comparison'
+            'practical'
+        )
+
+        if (-not [regex]::IsMatch($FilteredValidation.Groups['tail'].Value, '^\s*,\s*true\s*$')) {
+            $Failures.Add('Expected strict true validation for filtered guide types in vg_get_guide_type()')
+        }
     }
 }
 
