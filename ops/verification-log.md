@@ -65,6 +65,7 @@ Date: 2026-07-28 (Asia/Saigon)
 - Deployment route: WordPress admin one-time deployer, because SSH `66.42.48.146:2209` remained `CLOSED_OR_FILTERED`; no posts, pages, post metadata, menus, or site settings were changed. Temporary plugin lifecycle and deployment-status options were used, then removed.
 - Guarded deployment verified the active `vietnamguide-premium` theme and installed 11 changed files with source/target hash equality; WordPress reported the theme cache and LiteSpeed cache purge completed.
 - Theme editor confirmed the updated `functions.php`, `guide-patterns.css`, and all nine new pattern files are present.
+- Post-review hero correction marks the media `alignfull` and the content group `alignwide`, preventing the outer constrained layout from limiting both children to the `760px` content size. Live and local normalized source match SHA256 `dab6f2ffdca3702ef8ac83c0dd02d9bab9eaca02908d6cd4766f5ef3d2860ff`.
 - Site Editor > Patterns confirmed `All patterns 13` and `VietnamGuide 13`:
   - Hero Editorial
   - Route Selector

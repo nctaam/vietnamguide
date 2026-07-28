@@ -242,7 +242,7 @@ foreach ($PreservedPattern in $PreservedPatterns.GetEnumerator()) {
 
 $HeroPath = "$PatternRoot/hero-editorial.php"
 Require-Contains $HeroPath '<!-- wp:html -->'
-Require-Contains $HeroPath '<picture class="vg-pattern-hero__media">'
+Require-Contains $HeroPath '<picture class="alignfull vg-pattern-hero__media">'
 Require-Contains $HeroPath 'assets/images/home-hero.webp'
 Require-Contains $HeroPath 'assets/images/home-hero.jpg'
 Require-Contains $HeroPath 'type="image/webp"'
@@ -251,6 +251,8 @@ Require-Contains $HeroPath 'href="/plan/"'
 Require-Contains $HeroPath 'href="/itineraries/"'
 Require-Contains $HeroPath '<!-- wp:heading {"level":2} -->'
 Require-Contains $HeroPath 'The page template owns the h1; this reusable hero intentionally uses h2.'
+Require-Contains $HeroPath '<!-- wp:group {"align":"wide","className":"vg-pattern-hero__content","layout":{"type":"constrained"}} -->'
+Require-Contains $HeroPath '<div class="wp-block-group alignwide vg-pattern-hero__content">'
 Require-NotMatches $HeroPath '<h1\b' 'hero h1 heading'
 
 $RoutePath = "$PatternRoot/route-selector.php"

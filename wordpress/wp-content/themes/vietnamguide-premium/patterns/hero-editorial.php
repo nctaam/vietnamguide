@@ -9,12 +9,12 @@
 ?>
 <!-- wp:group {"align":"full","className":"vg-guide-pattern vg-pattern-hero","layout":{"type":"constrained"}} -->
 <div class="wp-block-group alignfull vg-guide-pattern vg-pattern-hero"><!-- wp:html -->
-<picture class="vg-pattern-hero__media">
+<picture class="alignfull vg-pattern-hero__media">
     <source srcset="<?php echo esc_url(get_theme_file_uri('/assets/images/home-hero.webp')); ?>" type="image/webp">
     <img src="<?php echo esc_url(get_theme_file_uri('/assets/images/home-hero.jpg')); ?>" width="1376" height="768" alt="Sunrise over limestone karsts and boats on Ha Long Bay, Vietnam" loading="eager" decoding="async" fetchpriority="high">
 </picture>
-<!-- /wp:html --><!-- wp:group {"className":"vg-pattern-hero__content","layout":{"type":"constrained"}} -->
-<div class="wp-block-group vg-pattern-hero__content"><!-- wp:paragraph {"className":"vg-pattern-kicker"} -->
+<!-- /wp:html --><!-- wp:group {"align":"wide","className":"vg-pattern-hero__content","layout":{"type":"constrained"}} -->
+<div class="wp-block-group alignwide vg-pattern-hero__content"><!-- wp:paragraph {"className":"vg-pattern-kicker"} -->
 <p class="vg-pattern-kicker">Vietnam field guide</p>
 <!-- /wp:paragraph --><!-- wp:heading {"level":2} -->
 <h2 class="wp-block-heading">Choose a route that leaves room to notice Vietnam.</h2>
