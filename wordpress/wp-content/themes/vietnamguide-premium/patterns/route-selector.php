@@ -16,7 +16,7 @@
 <p>Four proven shapes, each paced for real transfers rather than a country-wide checklist.</p>
 <!-- /wp:paragraph --></div>
 <!-- /wp:group --><!-- wp:list {"className":"vg-pattern-route-selector__list"} -->
-<ul class="vg-pattern-route-selector__list"><!-- wp:list-item -->
+<ul class="wp-block-list vg-pattern-route-selector__list"><!-- wp:list-item -->
 <li><a href="/itineraries/7-days-in-vietnam/"><strong>7 days</strong><span>One focused region</span><span aria-hidden="true">&rarr;</span></a></li>
 <!-- /wp:list-item --><!-- wp:list-item -->
 <li><a href="/itineraries/10-days-in-vietnam/"><strong>10 days</strong><span>A confident first route</span><span aria-hidden="true">&rarr;</span></a></li>

@@ -14,7 +14,7 @@
 <h2 class="wp-block-heading">The practical shape of the trip.</h2>
 <!-- /wp:heading --></div>
 <!-- /wp:group --><!-- wp:list {"className":"vg-pattern-at-a-glance__list"} -->
-<ul class="vg-pattern-at-a-glance__list"><!-- wp:list-item -->
+<ul class="wp-block-list vg-pattern-at-a-glance__list"><!-- wp:list-item -->
 <li><span>Best window</span><strong>March-April or October-November</strong></li>
 <!-- /wp:list-item --><!-- wp:list-item -->
 <li><span>Useful pace</span><strong>10-14 days</strong></li>

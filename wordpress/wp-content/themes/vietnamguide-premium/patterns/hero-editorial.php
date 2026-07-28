@@ -4,6 +4,7 @@
  * Slug: vietnamguide/hero-editorial
  * Categories: vietnamguide
  * Inserter: true
+ * Note: The page template owns the h1; this reusable hero intentionally uses h2.
  */
 ?>
 <!-- wp:group {"align":"full","className":"vg-guide-pattern vg-pattern-hero","layout":{"type":"constrained"}} -->
@@ -15,8 +16,8 @@
 <!-- /wp:html --><!-- wp:group {"className":"vg-pattern-hero__content","layout":{"type":"constrained"}} -->
 <div class="wp-block-group vg-pattern-hero__content"><!-- wp:paragraph {"className":"vg-pattern-kicker"} -->
 <p class="vg-pattern-kicker">Vietnam field guide</p>
-<!-- /wp:paragraph --><!-- wp:heading {"level":1} -->
-<h1 class="wp-block-heading">Choose a route that leaves room to notice Vietnam.</h1>
+<!-- /wp:paragraph --><!-- wp:heading {"level":2} -->
+<h2 class="wp-block-heading">Choose a route that leaves room to notice Vietnam.</h2>
 <!-- /wp:heading --><!-- wp:paragraph {"className":"vg-pattern-hero__lede"} -->
 <p class="vg-pattern-hero__lede">Clear itineraries, practical evidence, and considered recommendations for a trip that moves at the right pace.</p>
 <!-- /wp:paragraph --><!-- wp:buttons {"className":"vg-pattern-actions"} -->

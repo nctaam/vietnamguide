@@ -12,7 +12,7 @@
 <!-- /wp:paragraph --><!-- wp:heading {"level":3} -->
 <h3 class="wp-block-heading">Verify entry rules before you book.</h3>
 <!-- /wp:heading --><!-- wp:list {"className":"vg-pattern-source-block__list"} -->
-<ul class="vg-pattern-source-block__list"><!-- wp:list-item -->
+<ul class="wp-block-list vg-pattern-source-block__list"><!-- wp:list-item -->
 <li><a href="https://vietnam.travel/plan-your-trip/visa-requirements">Vietnam.travel visa requirements</a></li>
 <!-- /wp:list-item --><!-- wp:list-item -->
 <li><a href="https://evisa.gov.vn/">Official Vietnam e-visa portal</a></li>

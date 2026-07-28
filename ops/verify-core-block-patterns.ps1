@@ -206,23 +206,26 @@ $PreservedPatterns = @{
 }
 
 $ExpectedFiles = @($Patterns.File) + @($PreservedPatterns.Keys)
+$AllowedFuturePatternFiles = @('homepage-sections.php')
 $PatternDirectory = Join-Path $RepoRoot $PatternRoot
 if (Test-Path -LiteralPath $PatternDirectory -PathType Container) {
     $ActualFiles = @(Get-ChildItem -LiteralPath $PatternDirectory -Filter '*.php' -File | Select-Object -ExpandProperty Name)
-    $UnexpectedFiles = @($ActualFiles | Where-Object { $_ -notin $ExpectedFiles })
+    $MissingFiles = @($ExpectedFiles | Where-Object { $_ -notin $ActualFiles })
+    if ($MissingFiles.Count -gt 0) {
+        $Failures.Add("Missing required PHP pattern files: $($MissingFiles -join ', ')")
+    }
+
+    $UnexpectedFiles = @($ActualFiles | Where-Object { $_ -notin $ExpectedFiles -and $_ -notin $AllowedFuturePatternFiles })
     if ($UnexpectedFiles.Count -gt 0) {
         $Failures.Add("Unexpected PHP pattern files: $($UnexpectedFiles -join ', ')")
     }
 
-    if ($ActualFiles.Count -ne $ExpectedFiles.Count) {
-        $Failures.Add("Expected $($ExpectedFiles.Count) PHP pattern files, found $($ActualFiles.Count)")
-    }
 }
 
 foreach ($Pattern in $Patterns) {
     $RelativePath = "$PatternRoot/$($Pattern.File)"
     Require-File $RelativePath
-    Require-Matches $RelativePath ("\A<\?php\r?\n/\*\*\r?\n \* Title: {0}\r?\n \* Slug: {1}\r?\n \* Categories: vietnamguide\r?\n \* Inserter: true\r?\n \*/\r?\n\?>" -f [regex]::Escape($Pattern.Title), [regex]::Escape($Pattern.Slug))
+    Require-Matches $RelativePath ("\A<\?php\r?\n/\*\*\r?\n \* Title: {0}\r?\n \* Slug: {1}\r?\n \* Categories: vietnamguide\r?\n \* Inserter: true\r?\n(?: \* Note: [^\r\n]+\r?\n)? \*/\r?\n\?>" -f [regex]::Escape($Pattern.Title), [regex]::Escape($Pattern.Slug))
     Require-Contains $RelativePath $Pattern.Class
     Require-BalancedBlockComments $RelativePath
     Require-ValidBlockJson $RelativePath
@@ -246,6 +249,9 @@ Require-Contains $HeroPath 'type="image/webp"'
 Require-Matches $HeroPath 'width="1376"\s+height="768"\s+alt="[^"\r\n]+"'
 Require-Contains $HeroPath 'href="/plan/"'
 Require-Contains $HeroPath 'href="/itineraries/"'
+Require-Contains $HeroPath '<!-- wp:heading {"level":2} -->'
+Require-Contains $HeroPath 'The page template owns the h1; this reusable hero intentionally uses h2.'
+Require-NotMatches $HeroPath '<h1\b' 'hero h1 heading'
 
 $RoutePath = "$PatternRoot/route-selector.php"
 foreach ($Route in @(
@@ -257,6 +263,13 @@ foreach ($Route in @(
     Require-Contains $RoutePath "href=`"$Route`""
 }
 Require-NotMatches $RoutePath '<!--\s*wp:html\b' 'raw HTML block'
+Require-Contains $RoutePath '<ul class="wp-block-list vg-pattern-route-selector__list">'
+
+$AtAGlancePath = "$PatternRoot/at-a-glance.php"
+Require-Contains $AtAGlancePath '<ul class="wp-block-list vg-pattern-at-a-glance__list">'
+
+$SourcePath = "$PatternRoot/source-block.php"
+Require-Contains $SourcePath '<ul class="wp-block-list vg-pattern-source-block__list">'
 
 foreach ($CoreOnlyFile in @('quick-verdict.php', 'at-a-glance.php', 'source-block.php', 'recommendation-row.php', 'newsletter-capture.php')) {
     Require-NotMatches "$PatternRoot/$CoreOnlyFile" '<!--\s*wp:html\b' 'raw HTML block'
@@ -275,10 +288,10 @@ Require-Matches $TablePath '<th\s+scope="col">'
 
 $TimelinePath = "$PatternRoot/itinerary-timeline.php"
 Require-Contains $TimelinePath '<!-- wp:html -->'
-Require-Contains $TimelinePath '<ol class="vg-pattern-itinerary-timeline__list">'
+Require-Contains $TimelinePath '<ol class="vg-pattern-itinerary-timeline__list" role="list">'
+Require-Contains $TimelinePath 'role="list"'
 Require-Matches $TimelinePath '<time\s+datetime="P[0-9]+D">'
 
-$SourcePath = "$PatternRoot/source-block.php"
 Require-Contains $SourcePath 'https://vietnam.travel/plan-your-trip/visa-requirements'
 Require-Contains $SourcePath 'https://evisa.gov.vn/'
 Require-Contains $SourcePath 'Last reviewed: July 2026'

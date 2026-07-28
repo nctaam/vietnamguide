@@ -137,7 +137,7 @@
   color: var(--vg-gold);
 }
 
-.vg-pattern-hero h1 {
+.vg-pattern-hero h2 {
   max-width: 920px;
   margin: 0;
   color: var(--vg-white);
@@ -583,7 +583,7 @@
     background: linear-gradient(0deg, color-mix(in srgb, var(--vg-ink) 92%, transparent), color-mix(in srgb, var(--vg-ink) 48%, transparent));
   }
 
-  .vg-pattern-hero h1 {
+  .vg-pattern-hero h2 {
     font-size: clamp(47px, 15vw, 72px);
   }
 

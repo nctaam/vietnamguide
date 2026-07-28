@@ -12,7 +12,7 @@
 <!-- /wp:paragraph --><!-- wp:heading -->
 <h2 class="wp-block-heading">Arrive softly, then build momentum.</h2>
 <!-- /wp:heading --><!-- wp:html -->
-<ol class="vg-pattern-itinerary-timeline__list">
+<ol class="vg-pattern-itinerary-timeline__list" role="list">
     <li>
         <time datetime="P1D">Day 1</time>
         <div><h3>Land and settle in Hanoi</h3><p>Stay close to the Old Quarter, eat nearby, and leave the first evening deliberately light.</p></div>
