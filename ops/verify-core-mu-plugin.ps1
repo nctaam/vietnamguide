@@ -272,7 +272,7 @@ function Test-CorePluginContract {
     Require-ContractCount $Failures $CaseName 'pattern-category init hook' $PluginContent 'add_action\s*\(\s*[''"]init[''"]\s*,\s*[''"]vg_register_pattern_category[''"]\s*\)\s*;' 1
 
     for ($Index = 0; $Index -lt $ThemePhpContents.Count; $Index++) {
-        Require-ContractCount $Failures $CaseName "theme PHP file $Index pattern registration" $ThemePhpContents[$Index] '\bregister_block_pattern_category\s*\(' 0
+        Require-ContractCount $Failures $CaseName "theme PHP file $Index pattern registration literal" $ThemePhpContents[$Index] 'register_block_pattern_category' 0
     }
 
     # Affiliate mutation is one scoped tag-processor path and returns its updated HTML.
@@ -289,7 +289,8 @@ function Test-CorePluginContract {
         Require-ContractMatch $Failures $CaseName 'affiliate final updated HTML return' $AffiliateBody 'return\s+\$processor->get_updated_html\s*\(\s*\)\s*;\s*\}\z'
         Require-ContractCount $Failures $CaseName 'affiliate regex mutation' $AffiliateBody '\bpreg_replace(?:_callback)?\s*\(' 0
         Require-ContractCount $Failures $CaseName 'affiliate while loop' $AffiliateBody '\bwhile\s*\(' 1
-        Require-ContractMatch $Failures $CaseName 'affiliate class-scoped while query' $AffiliateBody 'while\s*\(\s*\$processor->next_tag\s*\(\s*\[\s*[''"]tag_name[''"]\s*=>\s*[''"]A[''"]\s*,\s*[''"]class_name[''"]\s*=>\s*[''"]vg-affiliate-link[''"]\s*,?\s*\]\s*\)\s*\)\s*\{'
+        $AffiliateLoopContract = '(?ms)while\s*\(\s*\$processor->next_tag\s*\(\s*\[\s*[''"]tag_name[''"]\s*=>\s*[''"]A[''"]\s*,\s*[''"]class_name[''"]\s*=>\s*[''"]vg-affiliate-link[''"]\s*,?\s*\]\s*\)\s*\)\s*\{\s*\$rel_value\s*=\s*\$processor->get_attribute\s*\(\s*[''"]rel[''"]\s*\)\s*;\s*\$processor->set_attribute\s*\(\s*[''"]rel[''"]\s*,\s*vg_merge_affiliate_rel_tokens\s*\(\s*is_string\s*\(\s*\$rel_value\s*\)\s*\?\s*\$rel_value\s*:\s*[''"]{2}\s*\)\s*\)\s*;\s*\}'
+        Require-ContractMatch $Failures $CaseName 'complete scoped affiliate loop' $AffiliateBody $AffiliateLoopContract
         Require-ContractMatch $Failures $CaseName 'affiliate existing rel read' $AffiliateBody 'get_attribute\s*\(\s*[''"]rel[''"]\s*\)'
         Require-ContractMatch $Failures $CaseName 'affiliate merged rel write' $AffiliateBody 'set_attribute\s*\(\s*[''"]rel[''"]\s*,\s*vg_merge_affiliate_rel_tokens\s*\(\s*is_string\s*\(\s*\$rel_value\s*\)\s*\?\s*\$rel_value\s*:\s*[''"]{2}\s*\)\s*\)\s*;'
     }
@@ -348,6 +349,29 @@ function Test-PluginMutationRejected {
     }
 
     $MutationFailures = @(Test-CorePluginContract $MutatedPluginContent $ThemePhpContents "mutation $Name")
+    if ($MutationFailures.Count -eq 0) {
+        [void]$VerifierFailures.Add("Mutation escaped contract: $Name")
+        return
+    }
+
+    Write-Output "Mutation rejected: $Name ($($MutationFailures.Count) contract failure(s))"
+}
+
+function Test-ThemeMutationRejected {
+    param(
+        [System.Collections.Generic.List[string]]$VerifierFailures,
+        [string]$Name,
+        [string]$PluginContent,
+        [string[]]$OriginalThemePhpContents,
+        [string[]]$MutatedThemePhpContents
+    )
+
+    if (($MutatedThemePhpContents -join "`0") -ceq ($OriginalThemePhpContents -join "`0")) {
+        [void]$VerifierFailures.Add("Mutation setup failed: $Name")
+        return
+    }
+
+    $MutationFailures = @(Test-CorePluginContract $PluginContent $MutatedThemePhpContents "mutation $Name")
     if ($MutationFailures.Count -eq 0) {
         [void]$VerifierFailures.Add("Mutation escaped contract: $Name")
         return
@@ -473,6 +497,46 @@ function vg_shortcode_update_log(array $atts = []): string
             "    'hero_image_credit'      => 'vg_eeat_hero_image_credit',`n    'extra_contract_key'       => 'vg_eeat_extra_contract_key',"
         )
     ) $ThemePhpContents
+
+    $AffiliateLoop = @'
+    while ($processor->next_tag([
+        'tag_name' => 'A',
+        'class_name' => 'vg-affiliate-link',
+    ])) {
+        $rel_value = $processor->get_attribute('rel');
+        $processor->set_attribute(
+            'rel',
+            vg_merge_affiliate_rel_tokens(is_string($rel_value) ? $rel_value : '')
+        );
+    }
+'@
+    $EmptyAffiliateLoop = @'
+    while ($processor->next_tag([
+        'tag_name' => 'A',
+        'class_name' => 'vg-affiliate-link',
+    ])) {
+    }
+
+    $rel_value = $processor->get_attribute('rel');
+    $processor->set_attribute(
+        'rel',
+        vg_merge_affiliate_rel_tokens(is_string($rel_value) ? $rel_value : '')
+    );
+'@
+    Test-PluginMutationRejected $Failures 'affiliate mutations moved outside loop' $PluginContent (
+        $PluginContent.Replace($AffiliateLoop, $EmptyAffiliateLoop)
+    ) $ThemePhpContents
+
+    $IndirectThemeRegistrationContents = @($ThemePhpContents)
+    $IndirectThemeRegistrationContents[0] = $IndirectThemeRegistrationContents[0] + @'
+
+call_user_func(
+    'register_block_pattern_category',
+    'vietnamguide',
+    ['label' => 'VietnamGuide']
+);
+'@
+    Test-ThemeMutationRejected $Failures 'indirect theme pattern registration' $PluginContent $ThemePhpContents $IndirectThemeRegistrationContents
 }
 
 if ($Failures.Count -gt 0) {
