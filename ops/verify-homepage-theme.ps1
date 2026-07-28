@@ -14,6 +14,23 @@ function Require-File {
     }
 }
 
+function Require-FileSize {
+    param(
+        [string]$RelativePath,
+        [long]$ExpectedSize
+    )
+
+    $FullPath = Join-Path $RepoRoot $RelativePath
+    if (-not (Test-Path -LiteralPath $FullPath -PathType Leaf)) {
+        return
+    }
+
+    $ActualSize = (Get-Item -LiteralPath $FullPath).Length
+    if ($ActualSize -ne $ExpectedSize) {
+        $Failures.Add("Expected ${RelativePath} to be ${ExpectedSize} bytes, found ${ActualSize}")
+    }
+}
+
 function Require-Contains {
     param(
         [string]$RelativePath,
@@ -135,6 +152,7 @@ $RequiredFiles = @(
     'wordpress/wp-content/themes/vietnamguide-premium/assets/css/homepage.css'
     'wordpress/wp-content/themes/vietnamguide-premium/assets/js/homepage.js'
     'wordpress/wp-content/themes/vietnamguide-premium/assets/images/README.md'
+    'wordpress/wp-content/themes/vietnamguide-premium/assets/images/ha-long-bay-vietnam-hero.jpg'
     'wordpress/wp-content/themes/vietnamguide-premium/assets/images/home-hero.jpg'
     'wordpress/wp-content/themes/vietnamguide-premium/assets/images/home-hero.webp'
     'wordpress/wp-content/themes/vietnamguide-premium/assets/images/home-hero-960.jpg'
@@ -157,6 +175,8 @@ $RequiredFiles = @(
 foreach ($RequiredFile in $RequiredFiles) {
     Require-File $RequiredFile
 }
+
+Require-FileSize 'wordpress/wp-content/themes/vietnamguide-premium/assets/images/ha-long-bay-vietnam-hero.jpg' 204078
 
 Require-Contains 'wordpress/wp-content/themes/vietnamguide-premium/style.css' 'Theme Name: VietnamGuide Premium'
 Require-Contains 'wordpress/wp-content/themes/vietnamguide-premium/functions.php' "require_once get_theme_file_path('/inc/homepage-data.php');"
@@ -201,6 +221,10 @@ Require-Contains 'wordpress/wp-content/themes/vietnamguide-premium/assets/images
 Require-Contains 'wordpress/wp-content/themes/vietnamguide-premium/assets/images/README.md' '2026-07-27'
 Require-Contains 'wordpress/wp-content/themes/vietnamguide-premium/assets/images/README.md' 'Stitch-provided assets, not image generation.'
 Require-Contains 'wordpress/wp-content/themes/vietnamguide-premium/assets/images/README.md' 'No embedded text, logo, or third-party trademark.'
+Require-Contains 'wordpress/wp-content/themes/vietnamguide-premium/assets/images/README.md' 'ha-long-bay-vietnam-hero.jpg'
+Require-Contains 'wordpress/wp-content/themes/vietnamguide-premium/assets/images/README.md' 'Vyacheslav Argenberg'
+Require-Contains 'wordpress/wp-content/themes/vietnamguide-premium/assets/images/README.md' 'CC BY 4.0'
+Require-Contains 'wordpress/wp-content/themes/vietnamguide-premium/assets/images/README.md' 'https://commons.wikimedia.org/wiki/File:Ha_Long_Bay,_Vietnam,_View_from_above.jpg'
 Require-Contains 'wordpress/wp-content/themes/vietnamguide-premium/assets/css/homepage.css' '@media (prefers-reduced-motion: reduce)'
 Require-Contains 'wordpress/wp-content/themes/vietnamguide-premium/assets/css/homepage.css' ':focus-visible'
 Require-Matches 'wordpress/wp-content/themes/vietnamguide-premium/assets/css/homepage.css' '(?s)\.vg-js \.vg-primary-navigation \{[^}]*justify-self: stretch;[^}]*width: 100%;'

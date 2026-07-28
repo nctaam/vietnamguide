@@ -128,16 +128,21 @@ if (function_exists('vg_add_affiliate_link_attributes') && class_exists('WP_HTML
         $singular_query->is_404 = false;
         $GLOBALS['wp_query'] = $singular_query;
 
+        $editorial_anchor = '<a id="editorial-link" rel="noopener external" href="https://example.com/editorial">Editorial</a>';
         $input = '<p>'
             . '<a id="affiliate-one" class="vg-affiliate-link" href="https://example.com/first">First affiliate</a>'
             . '<a id="affiliate-two" class="offer vg-affiliate-link featured" rel="NoFoLlOw ugc SPONSORED nofollow UGC external" href="https://example.com/second">Second affiliate</a>'
-            . '<a id="editorial-link" rel="noopener external" href="https://example.com/editorial">Editorial</a>'
+            . $editorial_anchor
             . '</p>';
         $first_pass = vg_add_affiliate_link_attributes($input);
         $second_pass = vg_add_affiliate_link_attributes($first_pass);
 
         if ($second_pass !== $first_pass) {
             $fail('Affiliate link processing is not idempotent on a second call.');
+        }
+
+        if (substr_count($first_pass, $editorial_anchor) !== 1) {
+            $fail('Non-affiliate anchor markup was modified, duplicated, or removed.');
         }
 
         $processor = new WP_HTML_Tag_Processor($first_pass);

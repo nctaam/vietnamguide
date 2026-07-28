@@ -1,6 +1,6 @@
 # Homepage editorial image provenance
 
-These are Stitch-provided assets, not image generation.
+The approved homepage image outputs below are Stitch-provided assets, not image generation. The separately listed legacy compatibility asset is attributed to its original source.
 
 - Stitch project: `Vietnam Travel Experience Portal` (`10120543989568032144`)
 - Desktop screen: `85c390be32164a6e809f8affd0d442f7`
@@ -15,6 +15,15 @@ These are Stitch-provided assets, not image generation.
 - Stitch URL (unique index 0): `https://lh3.googleusercontent.com/aida-public/AB6AXuCFsC5oDVqAkxKdFK5K-sTl-sZXnAxGN69qx5PhmnExKrxw3iKNDDPPhvA9x6SIkhzTbTe69NTaFUV7WikRJN-Rs5O7fRJyCJFQ-Jn2HsQQi7LzHoP3NMM8atcZ_hPTG1fLqpNUMFn5pAuItMwR65_SPpVdSPgzS0ZAHyi5_qDid2zbAzS_gty10yyeXNhTc-2DjIf5LO_YQh8ksQgCymHs73FqcUhqKkaTKNG2x4BNdHUBiryEaXokHurEF6in9pgZrGOEF_35p-qS`
 - Source: `source-stitch-ha-long-bay.jpg` (JPEG, 1376 x 768).
 - Outputs: `home-hero.jpg`, `home-hero.webp`, `home-hero-960.jpg`, `home-hero-960.webp`, `home-hero-640.jpg`, and `home-hero-640.webp`.
+
+### Legacy Ha Long Bay compatibility asset
+
+- File: `ha-long-bay-vietnam-hero.jpg` (JPEG, 204,078 bytes).
+- Purpose: Retained at its published theme URL for compatibility with existing WordPress content and Rank Math schema references. It does not replace the Stitch-derived homepage hero outputs.
+- Subject: Ha Long Bay, Vietnam, viewed from above.
+- Creator: Vyacheslav Argenberg.
+- License: CC BY 4.0.
+- Source: `https://commons.wikimedia.org/wiki/File:Ha_Long_Bay,_Vietnam,_View_from_above.jpg`.
 
 ### Hoi An editorial image
 
