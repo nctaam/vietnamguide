@@ -125,7 +125,7 @@ Require-Contains $ContentProvider "'headings'"
 Require-Contains $ContentProvider 'vg-guide-hero'
 Require-Contains $ContentProvider '<h2\b'
 Require-Contains $ContentProvider "preg_match_all('/<h1\b/i', `$heroSource) !== 1"
-Require-Contains $ContentProvider 'data-vg-toc="false"'
+Require-Contains $ContentProvider 'data-vg-toc'
 Require-Contains $ContentProvider 'sanitize_title'
 Require-Contains $ContentProvider 'serialize_blocks'
 Require-Contains $ContentProvider "apply_filters('the_content'"
@@ -203,7 +203,12 @@ Require-FunctionContains $ContentProvider 'vg_split_guide_blocks' 'parse_blocks(
 Require-FunctionContains $ContentProvider 'vg_split_guide_blocks' "preg_match_all('/<h1\b/i', `$heroSource) !== 1"
 Require-FunctionContains $ContentProvider 'vg_split_guide_blocks' 'serialize_blocks($blocks)'
 Require-FunctionContains $ContentProvider 'vg_prepare_guide_headings' '<h2\b'
-Require-FunctionContains $ContentProvider 'vg_prepare_guide_headings' 'data-vg-toc='
+Require-FunctionContains $ContentProvider 'vg_prepare_guide_headings' "/(?:^|\s)data-vg-toc\s*=\s*(?:`"false`"|\'false\')/i"
+Require-FunctionContains $ContentProvider 'vg_prepare_guide_headings' "`$hasId = preg_match("
+Require-FunctionContains $ContentProvider 'vg_prepare_guide_headings' "/(?:^|\s)id\s*=\s*(?:`"([^`"]*)`"|\'([^\']*)\')/i"
+Require-FunctionContains $ContentProvider 'vg_prepare_guide_headings' 'if ($hasId) {'
+Require-FunctionContains $ContentProvider 'vg_prepare_guide_headings' "/(^|\s)id\s*=\s*(?:`"[^`"]*`"|\'[^\']*\')/i"
+Require-FunctionContains $ContentProvider 'vg_prepare_guide_headings' "'`$1id=`"' . esc_attr(`$candidate)"
 Require-FunctionContains $ContentProvider 'vg_prepare_guide_headings' 'sanitize_title'
 Require-FunctionContains $ContentProvider 'vg_prepare_guide_content' "apply_filters('the_content', `$split['hero_source'])"
 Require-FunctionContains $ContentProvider 'vg_prepare_guide_content' "apply_filters('the_content', `$split['body_source'])"

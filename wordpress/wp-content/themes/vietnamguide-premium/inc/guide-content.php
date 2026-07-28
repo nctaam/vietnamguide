@@ -54,7 +54,7 @@ function vg_prepare_guide_headings(string $html): array
             $attributes = $matches[1];
             $innerHtml = $matches[2];
 
-            if (preg_match('/data-vg-toc="false"|data-vg-toc=\'false\'/i', $attributes)) {
+            if (preg_match('/(?:^|\s)data-vg-toc\s*=\s*(?:"false"|\'false\')/i', $attributes)) {
                 return $matches[0];
             }
 
@@ -64,8 +64,15 @@ function vg_prepare_guide_headings(string $html): array
             }
 
             $id = '';
-            if (preg_match('/\bid=(?:"([^\"]+)"|\'([^\']+)\')/i', $attributes, $idMatch)) {
-                $id = (string) ($idMatch[1] !== '' ? $idMatch[1] : $idMatch[2]);
+            $hasId = preg_match(
+                '/(?:^|\s)id\s*=\s*(?:"([^"]*)"|\'([^\']*)\')/i',
+                $attributes,
+                $idMatch
+            ) === 1;
+            if ($hasId) {
+                $doubleQuotedId = (string) ($idMatch[1] ?? '');
+                $singleQuotedId = (string) ($idMatch[2] ?? '');
+                $id = $doubleQuotedId !== '' ? $doubleQuotedId : $singleQuotedId;
             }
 
             $base = sanitize_title($id !== '' ? $id : $label);
@@ -81,10 +88,10 @@ function vg_prepare_guide_headings(string $html): array
             }
             $usedIds[$candidate] = true;
 
-            if ($id !== '') {
+            if ($hasId) {
                 $attributes = preg_replace(
-                    '/\bid=(?:"[^\"]*"|\'[^\']*\')/i',
-                    'id="' . esc_attr($candidate) . '"',
+                    '/(^|\s)id\s*=\s*(?:"[^"]*"|\'[^\']*\')/i',
+                    '$1id="' . esc_attr($candidate) . '"',
                     $attributes,
                     1
                 );
