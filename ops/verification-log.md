@@ -59,3 +59,25 @@ Date: 2026-07-28 (Asia/Saigon)
 - Confirm UpdraftPlus remote storage and perform a restore test.
 - Complete Site Kit, GA4, and Google Search Console verification.
 - Complete Bing Webmaster Tools verification.
+
+## Phase 3 Block Patterns
+
+- Deployment route: WordPress admin one-time deployer, because SSH `66.42.48.146:2209` remained `CLOSED_OR_FILTERED`; no database, content, or metadata changes were made.
+- Guarded deployment verified the active `vietnamguide-premium` theme and installed 11 changed files with source/target hash equality; WordPress reported the theme cache and LiteSpeed cache purge completed.
+- Theme editor confirmed the updated `functions.php`, `guide-patterns.css`, and all nine new pattern files are present.
+- Site Editor > Patterns confirmed `All patterns 13` and `VietnamGuide 13`:
+  - Hero Editorial
+  - Route Selector
+  - Quick Verdict
+  - At A Glance
+  - Decision Table
+  - Itinerary Timeline
+  - Source Block
+  - Recommendation Row
+  - Newsletter Capture
+  - Planning Paths
+  - Editorial Itineraries
+  - Decision Guides
+  - Practical Essentials
+- Live homepage remained HTTP `200`, loaded both `homepage.css` and `guide-patterns.css`, rendered the VietnamGuide H1, and exposed no fatal-error text.
+- Temporary deploy and cleanup helpers were removed; a fresh WordPress plugin inventory showed no remaining VietnamGuide deployment helper.
