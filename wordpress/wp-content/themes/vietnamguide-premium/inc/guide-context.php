@@ -66,7 +66,10 @@ function vg_count_guide_sources(string $html): int
 
         $href = trim($anchor->getAttribute('href'));
         $host = strtolower((string) wp_parse_url($href, PHP_URL_HOST));
-        if ($href !== '' && $host !== '' && $host !== $homeHost) {
+        $scheme = strtolower((string) wp_parse_url($href, PHP_URL_SCHEME));
+        $isAllowedScheme = in_array($scheme, ['http', 'https'], true)
+            || ($scheme === '' && str_starts_with($href, '//'));
+        if ($isAllowedScheme && $href !== '' && $host !== '' && $host !== $homeHost) {
             $sources[$href] = true;
         }
     }
@@ -78,6 +81,31 @@ function vg_get_related_routes(WP_Post $post, bool $hasExisting): array
 {
     if ($hasExisting) {
         return [];
+    }
+
+    if (function_exists('vg_eeat_get_field') && function_exists('vg_eeat_related_route_items')) {
+        $curatedRoutes = [];
+        $items = vg_eeat_related_route_items(vg_eeat_get_field($post->ID, 'related_routes'));
+        foreach ($items as $item) {
+            if (! is_array($item)) {
+                continue;
+            }
+
+            $title = trim((string) ($item['label'] ?? ''));
+            $url = $item['url'] ?? '';
+            if ($title === '' || ! is_string($url) || trim($url) === '') {
+                continue;
+            }
+
+            $curatedRoutes[] = [
+                'title' => $title,
+                'url' => trim($url),
+            ];
+        }
+
+        if ($curatedRoutes !== []) {
+            return array_values($curatedRoutes);
+        }
     }
 
     $routes = [];
@@ -112,10 +140,17 @@ function vg_get_related_routes(WP_Post $post, bool $hasExisting): array
     }
 
     if ($routes === [] && $post->post_parent > 0) {
-        $routes[] = [
-            'title' => get_the_title($post->post_parent),
-            'url' => get_permalink($post->post_parent),
-        ];
+        $parent = get_post($post->post_parent);
+        if ($parent instanceof WP_Post && $parent->post_type === 'page' && $parent->post_status === 'publish') {
+            $parentTitle = get_the_title($parent);
+            $parentUrl = get_permalink($parent);
+            if ($parentTitle !== '' && is_string($parentUrl) && $parentUrl !== '') {
+                $routes[] = [
+                    'title' => $parentTitle,
+                    'url' => $parentUrl,
+                ];
+            }
+        }
     }
 
     return array_values(array_filter($routes, static function (array $route): bool {
@@ -131,9 +166,24 @@ function vg_build_guide_context(WP_Post $post): ?array
         return null;
     }
 
-    $reviewed = trim((string) get_post_meta($post->ID, '_vg_reviewed_at', true));
+    $reviewed = '';
+    if (function_exists('vg_eeat_get_field')) {
+        $reviewed = trim((string) vg_eeat_get_field($post->ID, 'last_meaningful_update'));
+    }
+    if ($reviewed === '') {
+        $reviewed = trim((string) get_post_meta($post->ID, '_vg_reviewed_at', true));
+    }
     if ($reviewed === '') {
         $reviewed = get_the_modified_date('F j, Y', $post);
+    }
+
+    $sourceCount = 0;
+    if (function_exists('vg_eeat_get_field') && function_exists('vg_eeat_lines')) {
+        $sourcesChecked = vg_eeat_lines(vg_eeat_get_field($post->ID, 'sources_checked'));
+        $sourceCount = count($sourcesChecked);
+    }
+    if ($sourceCount === 0) {
+        $sourceCount = vg_count_guide_sources($content['body_html']);
     }
 
     $processor = new WP_HTML_Tag_Processor($content['body_html']);
@@ -160,7 +210,7 @@ function vg_build_guide_context(WP_Post $post): ?array
         'toc_html' => $content['toc_html'],
         'reviewed_at' => $reviewed,
         'reading_time' => vg_estimate_guide_reading_time($content['body_html']),
-        'source_count' => vg_count_guide_sources($content['body_html']),
+        'source_count' => $sourceCount,
         'best_for' => vg_extract_guide_data_value($content['body_html'], 'data-vg-best-for'),
         'skip_if' => vg_extract_guide_data_value($content['body_html'], 'data-vg-skip-if'),
         'related_routes' => vg_get_related_routes($post, $hasExistingRelated),
