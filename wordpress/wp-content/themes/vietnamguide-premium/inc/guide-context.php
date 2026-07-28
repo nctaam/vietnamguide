@@ -81,7 +81,7 @@ function vg_get_related_routes(WP_Post $post, bool $hasExisting): array
     }
 
     $routes = [];
-    if ($post->post_parent > 0) {
+    if ($post->post_parent >= 0) {
         $siblings = get_pages([
             'parent' => $post->post_parent,
             'post_status' => 'publish',
@@ -94,9 +94,15 @@ function vg_get_related_routes(WP_Post $post, bool $hasExisting): array
                 continue;
             }
 
+            $title = get_the_title($sibling);
+            $url = get_permalink($sibling);
+            if ($title === '' || ! is_string($url) || $url === '') {
+                continue;
+            }
+
             $routes[] = [
-                'title' => get_the_title($sibling),
-                'url' => get_permalink($sibling),
+                'title' => $title,
+                'url' => $url,
             ];
 
             if (count($routes) === 3) {

@@ -37,6 +37,14 @@ function Require-NotContains {
     }
 }
 
+function Require-Matches {
+    param([string]$RelativePath, [string]$Pattern, [string]$Description)
+    $Content = Get-RepoContent $RelativePath
+    if ($null -ne $Content -and -not [regex]::IsMatch($Content, $Pattern)) {
+        $Failures.Add("Missing pattern in ${RelativePath}: $Description")
+    }
+}
+
 function Get-FunctionContent {
     param([string]$RelativePath, [string]$FunctionName)
     $Content = Get-RepoContent $RelativePath
@@ -146,9 +154,11 @@ Require-Contains $ContentProvider 'serialize_blocks'
 Require-Contains $ContentProvider "apply_filters('the_content'"
 Require-NotContains $ContentProvider '<h2\b'
 Require-Contains $ContextProvider 'function vg_estimate_guide_reading_time(string $html): int'
+Require-Contains $ContextProvider 'function vg_extract_guide_data_value(string $html, string $attribute): string'
 Require-Contains $ContextProvider 'function vg_count_guide_sources(string $html): int'
 Require-Contains $ContextProvider 'function vg_get_related_routes(WP_Post $post, bool $hasExisting): array'
 Require-Contains $ContextProvider 'function vg_build_guide_context(WP_Post $post): ?array'
+Require-Matches $ContextProvider '\A<\?php\s+if\s*\(!\s*defined\(''ABSPATH''\)\s*\)\s*\{\s*exit;\s*\}' 'ABSPATH guard at the start of the context provider'
 Require-Contains $ContextProvider "'_vg_reviewed_at'"
 Require-Contains $ContextProvider 'vg-related-routes'
 Require-Contains $ContextProvider 'if ($hasExisting) {'
@@ -295,15 +305,38 @@ Require-FunctionNotContains $ContextProvider 'vg_count_guide_sources' 'contains(
 Require-FunctionContains $ContextProvider 'vg_count_guide_sources' 'wp_parse_url(home_url(''/'')'
 Require-FunctionContains $ContextProvider 'vg_count_guide_sources' '$sources[$href] = true;'
 Require-FunctionContains $ContextProvider 'vg_get_related_routes' 'if ($hasExisting) {'
+Require-FunctionContains $ContextProvider 'vg_get_related_routes' 'if ($post->post_parent >= 0) {'
 Require-FunctionContains $ContextProvider 'vg_get_related_routes' "'post_status' => 'publish'"
+Require-FunctionContains $ContextProvider 'vg_get_related_routes' '$title = get_the_title($sibling);'
+Require-FunctionContains $ContextProvider 'vg_get_related_routes' '$url = get_permalink($sibling);'
+Require-FunctionContains $ContextProvider 'vg_get_related_routes' "if (`$title === '' || ! is_string(`$url) || `$url === '') {"
 Require-FunctionContains $ContextProvider 'vg_get_related_routes' 'if (count($routes) === 3) {'
 Require-FunctionContains $ContextProvider 'vg_get_related_routes' '$post->post_parent'
+Require-FunctionOrder $ContextProvider 'vg_get_related_routes' '$title = get_the_title($sibling);' "if (`$title === '' || ! is_string(`$url) || `$url === '') {"
+Require-FunctionOrder $ContextProvider 'vg_get_related_routes' "if (`$title === '' || ! is_string(`$url) || `$url === '') {" '$routes[] = ['
+Require-FunctionOrder $ContextProvider 'vg_get_related_routes' '$routes[] = [' 'if (count($routes) === 3) {'
+Require-FunctionOrder $ContextProvider 'vg_get_related_routes' 'if (count($routes) === 3) {' 'if ($routes === [] && $post->post_parent > 0) {'
 Require-FunctionContains $ContextProvider 'vg_build_guide_context' 'vg_prepare_guide_content($post)'
 Require-FunctionContains $ContextProvider 'vg_build_guide_context' 'vg_get_guide_type($post)'
 Require-FunctionContains $ContextProvider 'vg_build_guide_context' "get_post_meta(`$post->ID, '_vg_reviewed_at', true)"
 Require-FunctionContains $ContextProvider 'vg_build_guide_context' "has_class('vg-related-routes')"
 Require-FunctionContains $ContextProvider 'vg_build_guide_context' "vg_extract_guide_data_value(`$content['body_html'], 'data-vg-best-for')"
 Require-FunctionContains $ContextProvider 'vg_build_guide_context' "vg_extract_guide_data_value(`$content['body_html'], 'data-vg-skip-if')"
+Require-FunctionContains $ContextProvider 'vg_build_guide_context' "'post_id' =>"
+Require-FunctionContains $ContextProvider 'vg_build_guide_context' "'type' =>"
+Require-FunctionContains $ContextProvider 'vg_build_guide_context' "'title' =>"
+Require-FunctionContains $ContextProvider 'vg_build_guide_context' "'permalink' =>"
+Require-FunctionContains $ContextProvider 'vg_build_guide_context' "'hero_html' =>"
+Require-FunctionContains $ContextProvider 'vg_build_guide_context' "'body_html' =>"
+Require-FunctionContains $ContextProvider 'vg_build_guide_context' "'headings' =>"
+Require-FunctionContains $ContextProvider 'vg_build_guide_context' "'toc_html' =>"
+Require-FunctionContains $ContextProvider 'vg_build_guide_context' "'reviewed_at' =>"
+Require-FunctionContains $ContextProvider 'vg_build_guide_context' "'reading_time' =>"
+Require-FunctionContains $ContextProvider 'vg_build_guide_context' "'source_count' =>"
+Require-FunctionContains $ContextProvider 'vg_build_guide_context' "'best_for' =>"
+Require-FunctionContains $ContextProvider 'vg_build_guide_context' "'skip_if' =>"
+Require-FunctionContains $ContextProvider 'vg_build_guide_context' "'related_routes' =>"
+Require-FunctionContains $ContextProvider 'vg_build_guide_context' "'has_existing_related_routes' =>"
 
 if ($Failures.Count -gt 0) {
     $Failures | ForEach-Object { Write-Output "FAIL: $_" }
