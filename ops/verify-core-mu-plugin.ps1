@@ -19,6 +19,39 @@ function Get-PhpFunctionBody {
     return $Match.Value
 }
 
+function Get-CorePluginCompatibilityFingerprint {
+    param(
+        [string]$Content
+    )
+
+    $NormalizedContent = $Content.Replace("`r`n", "`n").Replace("`r", "`n")
+    $NormalizedContent = [regex]::Replace(
+        $NormalizedContent,
+        '(?m)^\s*\*\s*Version:\s*.*$',
+        ' * Version: __VG_VERSION__'
+    )
+
+    $AuthorizedRegions = @(
+        @{ Name = 'vg_register_pattern_category'; Marker = '__VG_REGISTER_PATTERN_CATEGORY__' }
+        @{ Name = 'vg_add_affiliate_link_attributes'; Marker = '__VG_ADD_AFFILIATE_LINK_ATTRIBUTES__' }
+    )
+
+    foreach ($Region in $AuthorizedRegions) {
+        $FunctionBody = Get-PhpFunctionBody $NormalizedContent $Region.Name
+        if ($FunctionBody -ne '') {
+            $NormalizedContent = $NormalizedContent.Replace($FunctionBody, $Region.Marker)
+        }
+    }
+
+    $Sha256 = [System.Security.Cryptography.SHA256]::Create()
+    try {
+        $Bytes = [System.Text.Encoding]::UTF8.GetBytes($NormalizedContent)
+        return ([System.BitConverter]::ToString($Sha256.ComputeHash($Bytes))).Replace('-', '').ToLowerInvariant()
+    } finally {
+        $Sha256.Dispose()
+    }
+}
+
 function Add-ContractFailure {
     param(
         [System.Collections.Generic.List[string]]$Failures,
@@ -73,6 +106,12 @@ function Test-CorePluginContract {
     Require-ContractMatch $Failures $CaseName 'Plugin Name metadata' $PluginContent '(?m)^\s*\*\s*Plugin Name:\s*VietnamGuide Core\s*$'
     Require-ContractMatch $Failures $CaseName 'Version 0.1.6 metadata' $PluginContent '(?m)^\s*\*\s*Version:\s*0\.1\.6\s*$'
     Require-ContractMatch $Failures $CaseName 'top-level ABSPATH guard' $PluginContent '(?ms)\A<\?php\s*/\*\*.*?^\s*\*/\s*if\s*\(\s*!\s*defined\s*\(\s*[''"]ABSPATH[''"]\s*\)\s*\)\s*\{\s*exit\s*;\s*\}'
+
+    $ExpectedCompatibilityFingerprint = 'b4bd55544a1c7a86eda065ce92dcc02aa9dab53027cc5be2aff494e501069aa6'
+    $ActualCompatibilityFingerprint = Get-CorePluginCompatibilityFingerprint $PluginContent
+    if ($ActualCompatibilityFingerprint -cne $ExpectedCompatibilityFingerprint) {
+        Add-ContractFailure $Failures $CaseName "Immutable plugin fingerprint expected $ExpectedCompatibilityFingerprint, found $ActualCompatibilityFingerprint"
+    }
 
     # Constants must retain their deployed key-to-meta mappings.
     $EeatMatch = [regex]::Match($PluginContent, '(?ms)^const\s+VG_EEAT_META_KEYS\s*=\s*\[(?<body>.*?)^\];')
@@ -249,7 +288,8 @@ function Test-CorePluginContract {
         Require-ContractCount $Failures $CaseName 'affiliate updated HTML return' $AffiliateBody 'return\s+\$processor->get_updated_html\s*\(\s*\)\s*;' 1
         Require-ContractMatch $Failures $CaseName 'affiliate final updated HTML return' $AffiliateBody 'return\s+\$processor->get_updated_html\s*\(\s*\)\s*;\s*\}\z'
         Require-ContractCount $Failures $CaseName 'affiliate regex mutation' $AffiliateBody '\bpreg_replace(?:_callback)?\s*\(' 0
-        Require-ContractMatch $Failures $CaseName 'affiliate class-scoped next_tag query' $AffiliateBody 'next_tag\s*\(\s*\[\s*[''"]tag_name[''"]\s*=>\s*[''"]A[''"]\s*,\s*[''"]class_name[''"]\s*=>\s*[''"]vg-affiliate-link[''"]\s*,?\s*\]\s*\)'
+        Require-ContractCount $Failures $CaseName 'affiliate while loop' $AffiliateBody '\bwhile\s*\(' 1
+        Require-ContractMatch $Failures $CaseName 'affiliate class-scoped while query' $AffiliateBody 'while\s*\(\s*\$processor->next_tag\s*\(\s*\[\s*[''"]tag_name[''"]\s*=>\s*[''"]A[''"]\s*,\s*[''"]class_name[''"]\s*=>\s*[''"]vg-affiliate-link[''"]\s*,?\s*\]\s*\)\s*\)\s*\{'
         Require-ContractMatch $Failures $CaseName 'affiliate existing rel read' $AffiliateBody 'get_attribute\s*\(\s*[''"]rel[''"]\s*\)'
         Require-ContractMatch $Failures $CaseName 'affiliate merged rel write' $AffiliateBody 'set_attribute\s*\(\s*[''"]rel[''"]\s*,\s*vg_merge_affiliate_rel_tokens\s*\(\s*is_string\s*\(\s*\$rel_value\s*\)\s*\?\s*\$rel_value\s*:\s*[''"]{2}\s*\)\s*\)\s*;'
     }
@@ -399,6 +439,38 @@ register_block_pattern_category(
         $PluginContent.Replace(
             "add_action('init', 'vg_register_pattern_category');",
             $TopLevelPatternRegistration
+        )
+    ) $ThemePhpContents
+
+    Test-PluginMutationRejected $Failures 'affiliate loop changed from while to if' $PluginContent (
+        $PluginContent.Replace(
+            '    while ($processor->next_tag([',
+            '    if ($processor->next_tag(['
+        )
+    ) $ThemePhpContents
+
+    $UpdateLogBody = Get-PhpFunctionBody $PluginContent 'vg_shortcode_update_log'
+    $JunkUpdateLogBody = @'
+function vg_shortcode_update_log(array $atts = []): string
+{
+    return 'junk';
+}
+'@
+    Test-PluginMutationRejected $Failures 'update-log callback replaced with junk' $PluginContent (
+        $PluginContent.Replace($UpdateLogBody, $JunkUpdateLogBody)
+    ) $ThemePhpContents
+
+    Test-PluginMutationRejected $Failures 'inverted XML-RPC request condition' $PluginContent (
+        $PluginContent.Replace(
+            "    if (defined('XMLRPC_REQUEST') && XMLRPC_REQUEST) {",
+            "    if (! defined('XMLRPC_REQUEST') && XMLRPC_REQUEST) {"
+        )
+    ) $ThemePhpContents
+
+    Test-PluginMutationRejected $Failures 'extra EEAT constant mapping' $PluginContent (
+        $PluginContent.Replace(
+            "    'hero_image_credit'      => 'vg_eeat_hero_image_credit',",
+            "    'hero_image_credit'      => 'vg_eeat_hero_image_credit',`n    'extra_contract_key'       => 'vg_eeat_extra_contract_key',"
         )
     ) $ThemePhpContents
 }
