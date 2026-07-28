@@ -204,8 +204,8 @@ function Test-CorePluginContract {
     if ($RestBody -eq '') {
         Add-ContractFailure $Failures $CaseName 'Missing vg_disable_public_user_rest_endpoints body'
     } else {
-        Require-ContractMatch $Failures $CaseName 'logged-in REST bypass' $RestBody 'is_user_logged_in\s*\(\s*\)'
-        Require-ContractMatch $Failures $CaseName 'anonymous REST user endpoint removal' $RestBody 'unset\s*\(\s*\$endpoints\[[''"]/wp/v2/users[''"]\]\s*,\s*\$endpoints\[[''"]/wp/v2/users/\(\?P<id>\[\\d\]\+\)[''"]\]\s*\)\s*;'
+        $RestProtectionContract = '(?ms)\Afunction\s+vg_disable_public_user_rest_endpoints\b.*?\{\s*if\s*\(\s*is_user_logged_in\s*\(\s*\)\s*\)\s*\{\s*return\s+\$endpoints\s*;\s*\}\s*unset\s*\(\s*\$endpoints\[[''"]/wp/v2/users[''"]\]\s*,\s*\$endpoints\[[''"]/wp/v2/users/\(\?P<id>\[\\d\]\+\)[''"]\]\s*\)\s*;'
+        Require-ContractMatch $Failures $CaseName 'ordered anonymous REST protection' $RestBody $RestProtectionContract
     }
     Require-ContractCount $Failures $CaseName 'REST user endpoint filter' $PluginContent 'add_filter\s*\(\s*[''"]rest_endpoints[''"]\s*,\s*[''"]vg_disable_public_user_rest_endpoints[''"]\s*\)\s*;' 1
 
@@ -229,6 +229,7 @@ function Test-CorePluginContract {
         Require-ContractMatch $Failures $CaseName 'ordered pattern-category guards and registration' $PatternBody $OrderedPatternContract
         Require-ContractCount $Failures $CaseName 'pattern-category registration call in callback' $PatternBody 'register_block_pattern_category\s*\(' 1
     }
+    Require-ContractCount $Failures $CaseName 'global pattern-category registration call' $PluginContent '\bregister_block_pattern_category\s*\(' 1
     Require-ContractCount $Failures $CaseName 'pattern-category init hook' $PluginContent 'add_action\s*\(\s*[''"]init[''"]\s*,\s*[''"]vg_register_pattern_category[''"]\s*\)\s*;' 1
 
     for ($Index = 0; $Index -lt $ThemePhpContents.Count; $Index++) {
@@ -262,8 +263,8 @@ function Test-CorePluginContract {
         Require-ContractMatch $Failures $CaseName 'affiliate rel token parsing' $MergeBody 'preg_split\s*\(\s*[''"]/\\s\+/[''"]\s*,\s*trim\s*\(\s*\$rel_value\s*\)\s*\)'
         Require-ContractMatch $Failures $CaseName 'affiliate rel case-insensitive deduplication' $MergeBody 'strtolower\s*\(\s*\$token\s*\)'
         Require-ContractMatch $Failures $CaseName 'affiliate existing token preservation' $MergeBody '\$merged_tokens\[\]\s*=\s*\$token\s*;'
-        Require-ContractMatch $Failures $CaseName 'affiliate required tokens' $MergeBody 'foreach\s*\(\s*\[[''"]sponsored[''"]\s*,\s*[''"]nofollow[''"]\]\s+as\s+\$required_token\s*\)'
-        Require-ContractMatch $Failures $CaseName 'affiliate required token idempotence' $MergeBody 'isset\s*\(\s*\$seen_tokens\[\$required_token\]\s*\)'
+        $RequiredTokenContract = '(?ms)foreach\s*\(\s*\[[''"]sponsored[''"]\s*,\s*[''"]nofollow[''"]\]\s+as\s+\$required_token\s*\)\s*\{\s*if\s*\(\s*isset\s*\(\s*\$seen_tokens\[\$required_token\]\s*\)\s*\)\s*\{\s*continue\s*;\s*\}\s*\$merged_tokens\[\]\s*=\s*\$required_token\s*;\s*\$seen_tokens\[\$required_token\]\s*=\s*true\s*;\s*\}'
+        Require-ContractMatch $Failures $CaseName 'ordered affiliate required-token addition' $MergeBody $RequiredTokenContract
         Require-ContractMatch $Failures $CaseName 'affiliate merged token return' $MergeBody 'return\s+implode\s*\(\s*[''"] [''"]\s*,\s*\$merged_tokens\s*\)\s*;'
     }
 
@@ -370,6 +371,34 @@ if ($Failures.Count -eq 0) {
         $PluginContent.Replace(
             "add_filter('xmlrpc_enabled', '__return_false');",
             "add_filter('xmlrpc_enabled', '__return_true');"
+        )
+    ) $ThemePhpContents
+
+    Test-PluginMutationRejected $Failures 'inverted REST login condition' $PluginContent (
+        $PluginContent.Replace(
+            '    if (is_user_logged_in()) {',
+            '    if (! is_user_logged_in()) {'
+        )
+    ) $ThemePhpContents
+
+    Test-PluginMutationRejected $Failures 'inverted required-token condition' $PluginContent (
+        $PluginContent.Replace(
+            '        if (isset($seen_tokens[$required_token])) {',
+            '        if (! isset($seen_tokens[$required_token])) {'
+        )
+    ) $ThemePhpContents
+
+    $TopLevelPatternRegistration = @'
+add_action('init', 'vg_register_pattern_category');
+register_block_pattern_category(
+    'vietnamguide',
+    ['label' => __('VietnamGuide', 'vietnamguide-core')]
+);
+'@
+    Test-PluginMutationRejected $Failures 'second top-level pattern registration' $PluginContent (
+        $PluginContent.Replace(
+            "add_action('init', 'vg_register_pattern_category');",
+            $TopLevelPatternRegistration
         )
     ) $ThemePhpContents
 }
