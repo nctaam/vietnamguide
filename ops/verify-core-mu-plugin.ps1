@@ -273,6 +273,7 @@ function Test-CorePluginContract {
 
     for ($Index = 0; $Index -lt $ThemePhpContents.Count; $Index++) {
         Require-ContractCount $Failures $CaseName "theme PHP file $Index pattern registration literal" $ThemePhpContents[$Index] 'register_block_pattern_category' 0
+        Require-ContractCount $Failures $CaseName "theme PHP file $Index pattern registry literal" $ThemePhpContents[$Index] 'WP_Block_Pattern_Categories_Registry' 0
     }
 
     # Affiliate mutation is one scoped tag-processor path and returns its updated HTML.
@@ -280,19 +281,14 @@ function Test-CorePluginContract {
     if ($AffiliateBody -eq '') {
         Add-ContractFailure $Failures $CaseName 'Missing vg_add_affiliate_link_attributes body'
     } else {
-        $AffiliateEarlyReturns = '(?ms)\Afunction\s+vg_add_affiliate_link_attributes\b.*?\{\s*if\s*\(\s*is_admin\s*\(\s*\)\s*\|\|\s*!\s*is_singular\s*\(\s*\)\s*\)\s*\{\s*return\s+\$content\s*;\s*\}\s*if\s*\(\s*!\s*class_exists\s*\(\s*[''"]WP_HTML_Tag_Processor[''"]\s*\)\s*\)\s*\{\s*return\s+\$content\s*;\s*\}'
-        Require-ContractMatch $Failures $CaseName 'ordered affiliate early returns' $AffiliateBody $AffiliateEarlyReturns
+        $AffiliateFunctionContract = '(?ms)\Afunction\s+vg_add_affiliate_link_attributes\s*\(\s*string\s+\$content\s*\)\s*:\s*string\s*\{\s*if\s*\(\s*is_admin\s*\(\s*\)\s*\|\|\s*!\s*is_singular\s*\(\s*\)\s*\)\s*\{\s*return\s+\$content\s*;\s*\}\s*if\s*\(\s*!\s*class_exists\s*\(\s*[''"]WP_HTML_Tag_Processor[''"]\s*\)\s*\)\s*\{\s*return\s+\$content\s*;\s*\}\s*\$processor\s*=\s*new\s+WP_HTML_Tag_Processor\s*\(\s*\$content\s*\)\s*;\s*while\s*\(\s*\$processor->next_tag\s*\(\s*\[\s*[''"]tag_name[''"]\s*=>\s*[''"]A[''"]\s*,\s*[''"]class_name[''"]\s*=>\s*[''"]vg-affiliate-link[''"]\s*,?\s*\]\s*\)\s*\)\s*\{\s*\$rel_value\s*=\s*\$processor->get_attribute\s*\(\s*[''"]rel[''"]\s*\)\s*;\s*\$processor->set_attribute\s*\(\s*[''"]rel[''"]\s*,\s*vg_merge_affiliate_rel_tokens\s*\(\s*is_string\s*\(\s*\$rel_value\s*\)\s*\?\s*\$rel_value\s*:\s*[''"]{2}\s*\)\s*\)\s*;\s*\}\s*return\s+\$processor->get_updated_html\s*\(\s*\)\s*;\s*\}\z'
+        Require-ContractMatch $Failures $CaseName 'complete affiliate function body' $AffiliateBody $AffiliateFunctionContract
         Require-ContractCount $Failures $CaseName 'affiliate tag processor construction' $AffiliateBody 'new\s+WP_HTML_Tag_Processor\s*\(' 1
         Require-ContractCount $Failures $CaseName 'affiliate next_tag path' $AffiliateBody '->next_tag\s*\(' 1
         Require-ContractCount $Failures $CaseName 'affiliate rel mutation path' $AffiliateBody '->set_attribute\s*\(' 1
         Require-ContractCount $Failures $CaseName 'affiliate updated HTML return' $AffiliateBody 'return\s+\$processor->get_updated_html\s*\(\s*\)\s*;' 1
-        Require-ContractMatch $Failures $CaseName 'affiliate final updated HTML return' $AffiliateBody 'return\s+\$processor->get_updated_html\s*\(\s*\)\s*;\s*\}\z'
         Require-ContractCount $Failures $CaseName 'affiliate regex mutation' $AffiliateBody '\bpreg_replace(?:_callback)?\s*\(' 0
         Require-ContractCount $Failures $CaseName 'affiliate while loop' $AffiliateBody '\bwhile\s*\(' 1
-        $AffiliateLoopContract = '(?ms)while\s*\(\s*\$processor->next_tag\s*\(\s*\[\s*[''"]tag_name[''"]\s*=>\s*[''"]A[''"]\s*,\s*[''"]class_name[''"]\s*=>\s*[''"]vg-affiliate-link[''"]\s*,?\s*\]\s*\)\s*\)\s*\{\s*\$rel_value\s*=\s*\$processor->get_attribute\s*\(\s*[''"]rel[''"]\s*\)\s*;\s*\$processor->set_attribute\s*\(\s*[''"]rel[''"]\s*,\s*vg_merge_affiliate_rel_tokens\s*\(\s*is_string\s*\(\s*\$rel_value\s*\)\s*\?\s*\$rel_value\s*:\s*[''"]{2}\s*\)\s*\)\s*;\s*\}'
-        Require-ContractMatch $Failures $CaseName 'complete scoped affiliate loop' $AffiliateBody $AffiliateLoopContract
-        Require-ContractMatch $Failures $CaseName 'affiliate existing rel read' $AffiliateBody 'get_attribute\s*\(\s*[''"]rel[''"]\s*\)'
-        Require-ContractMatch $Failures $CaseName 'affiliate merged rel write' $AffiliateBody 'set_attribute\s*\(\s*[''"]rel[''"]\s*,\s*vg_merge_affiliate_rel_tokens\s*\(\s*is_string\s*\(\s*\$rel_value\s*\)\s*\?\s*\$rel_value\s*:\s*[''"]{2}\s*\)\s*\)\s*;'
     }
     Require-ContractCount $Failures $CaseName 'the_content hook count' $PluginContent 'add_filter\s*\(\s*[''"]the_content[''"]' 1
     Require-ContractCount $Failures $CaseName 'affiliate the_content callback/priority' $PluginContent 'add_filter\s*\(\s*[''"]the_content[''"]\s*,\s*[''"]vg_add_affiliate_link_attributes[''"]\s*,\s*20\s*\)\s*;' 1
@@ -537,6 +533,23 @@ call_user_func(
 );
 '@
     Test-ThemeMutationRejected $Failures 'indirect theme pattern registration' $PluginContent $ThemePhpContents $IndirectThemeRegistrationContents
+
+    Test-PluginMutationRejected $Failures 'unconditional affiliate early return' $PluginContent (
+        $PluginContent.Replace(
+            '    $processor = new WP_HTML_Tag_Processor($content);',
+            "    return `$content;`n`n    `$processor = new WP_HTML_Tag_Processor(`$content);"
+        )
+    ) $ThemePhpContents
+
+    $RegistryThemeRegistrationContents = @($ThemePhpContents)
+    $RegistryThemeRegistrationContents[0] = $RegistryThemeRegistrationContents[0] + @'
+
+WP_Block_Pattern_Categories_Registry::get_instance()->register(
+    'vietnamguide',
+    ['label' => 'VietnamGuide']
+);
+'@
+    Test-ThemeMutationRejected $Failures 'theme registry pattern registration' $PluginContent $ThemePhpContents $RegistryThemeRegistrationContents
 }
 
 if ($Failures.Count -gt 0) {
