@@ -8,7 +8,7 @@ add_action('after_setup_theme', static function (): void {
     add_theme_support('align-wide');
     add_theme_support('wp-block-styles');
     add_theme_support('editor-styles');
-    add_editor_style('assets/css/homepage.css');
+    add_editor_style(['assets/css/homepage.css', 'assets/css/guide-patterns.css']);
     register_nav_menus([
         'primary' => __('Primary navigation', 'vietnamguide-premium'),
         'footer' => __('Footer navigation', 'vietnamguide-premium'),
@@ -17,6 +17,7 @@ add_action('after_setup_theme', static function (): void {
 add_action('wp_enqueue_scripts', static function (): void {
     $version = wp_get_theme()->get('Version');
     wp_enqueue_style('vietnamguide-homepage', get_theme_file_uri('/assets/css/homepage.css'), [], $version);
+    wp_enqueue_style('vietnamguide-guide-patterns', get_theme_file_uri('/assets/css/guide-patterns.css'), ['vietnamguide-homepage'], $version);
     wp_enqueue_script('vietnamguide-homepage', get_theme_file_uri('/assets/js/homepage.js'), [], $version, true);
 });
 function vg_primary_menu_fallback(): void
