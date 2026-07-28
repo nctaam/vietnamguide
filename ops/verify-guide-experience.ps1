@@ -62,6 +62,14 @@ function Require-FunctionContains {
     }
 }
 
+function Require-FunctionNotContains {
+    param([string]$RelativePath, [string]$FunctionName, [string]$Needle)
+    $FunctionContent = Get-FunctionContent $RelativePath $FunctionName
+    if ($null -ne $FunctionContent -and $FunctionContent.Contains($Needle)) {
+        $Failures.Add("Unexpected substring in ${FunctionName}(): $Needle")
+    }
+}
+
 function Require-FunctionMatches {
     param([string]$RelativePath, [string]$FunctionName, [string]$Pattern, [string]$Description)
     $FunctionContent = Get-FunctionContent $RelativePath $FunctionName
@@ -203,12 +211,18 @@ Require-FunctionContains $ContentProvider 'vg_split_guide_blocks' 'parse_blocks(
 Require-FunctionContains $ContentProvider 'vg_split_guide_blocks' "preg_match_all('/<h1\b/i', `$heroSource) !== 1"
 Require-FunctionContains $ContentProvider 'vg_split_guide_blocks' 'serialize_blocks($blocks)'
 Require-FunctionContains $ContentProvider 'vg_prepare_guide_headings' '<h2\b'
-Require-FunctionContains $ContentProvider 'vg_prepare_guide_headings' "/(?:^|\s)data-vg-toc\s*=\s*(?:`"false`"|\'false\')/i"
-Require-FunctionContains $ContentProvider 'vg_prepare_guide_headings' "`$hasId = preg_match("
-Require-FunctionContains $ContentProvider 'vg_prepare_guide_headings' "/(?:^|\s)id\s*=\s*(?:`"([^`"]*)`"|\'([^\']*)\')/i"
-Require-FunctionContains $ContentProvider 'vg_prepare_guide_headings' 'if ($hasId) {'
-Require-FunctionContains $ContentProvider 'vg_prepare_guide_headings' "/(^|\s)id\s*=\s*(?:`"[^`"]*`"|\'[^\']*\')/i"
-Require-FunctionContains $ContentProvider 'vg_prepare_guide_headings' "'`$1id=`"' . esc_attr(`$candidate)"
+Require-FunctionContains $ContentProvider 'vg_prepare_guide_headings' 'WP_HTML_Tag_Processor'
+Require-FunctionContains $ContentProvider 'vg_prepare_guide_headings' "next_tag('H2')"
+Require-FunctionContains $ContentProvider 'vg_prepare_guide_headings' "get_attribute('data-vg-toc')"
+Require-FunctionContains $ContentProvider 'vg_prepare_guide_headings' "get_attribute('id')"
+Require-FunctionContains $ContentProvider 'vg_prepare_guide_headings' "set_attribute('id'"
+Require-FunctionContains $ContentProvider 'vg_prepare_guide_headings' 'get_updated_html()'
+Require-FunctionContains $ContentProvider 'vg_prepare_guide_headings' 'strcasecmp(trim('
+Require-FunctionNotContains $ContentProvider 'vg_prepare_guide_headings' "/(?:^|\s)data-vg-toc"
+Require-FunctionNotContains $ContentProvider 'vg_prepare_guide_headings' "/(?:^|\s)id\s*="
+Require-FunctionNotContains $ContentProvider 'vg_prepare_guide_headings' "/(^|\s)id\s*="
+Require-FunctionNotContains $ContentProvider 'vg_prepare_guide_headings' "`$hasId = preg_match("
+Require-FunctionNotContains $ContentProvider 'vg_prepare_guide_headings' 'preg_replace('
 Require-FunctionContains $ContentProvider 'vg_prepare_guide_headings' 'sanitize_title'
 Require-FunctionContains $ContentProvider 'vg_prepare_guide_content' "apply_filters('the_content', `$split['hero_source'])"
 Require-FunctionContains $ContentProvider 'vg_prepare_guide_content' "apply_filters('the_content', `$split['body_source'])"

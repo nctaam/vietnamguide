@@ -53,8 +53,14 @@ function vg_prepare_guide_headings(string $html): array
         static function (array $matches) use (&$headings, &$usedIds): string {
             $attributes = $matches[1];
             $innerHtml = $matches[2];
+            $tagProcessor = new WP_HTML_Tag_Processor('<h2' . $attributes . '>');
 
-            if (preg_match('/(?:^|\s)data-vg-toc\s*=\s*(?:"false"|\'false\')/i', $attributes)) {
+            if (! $tagProcessor->next_tag('H2')) {
+                return $matches[0];
+            }
+
+            $tocAttribute = $tagProcessor->get_attribute('data-vg-toc');
+            if (is_string($tocAttribute) && strcasecmp(trim($tocAttribute), 'false') === 0) {
                 return $matches[0];
             }
 
@@ -63,17 +69,8 @@ function vg_prepare_guide_headings(string $html): array
                 return $matches[0];
             }
 
-            $id = '';
-            $hasId = preg_match(
-                '/(?:^|\s)id\s*=\s*(?:"([^"]*)"|\'([^\']*)\')/i',
-                $attributes,
-                $idMatch
-            ) === 1;
-            if ($hasId) {
-                $doubleQuotedId = (string) ($idMatch[1] ?? '');
-                $singleQuotedId = (string) ($idMatch[2] ?? '');
-                $id = $doubleQuotedId !== '' ? $doubleQuotedId : $singleQuotedId;
-            }
+            $idAttribute = $tagProcessor->get_attribute('id');
+            $id = is_string($idAttribute) ? $idAttribute : '';
 
             $base = sanitize_title($id !== '' ? $id : $label);
             if ($base === '') {
@@ -88,20 +85,13 @@ function vg_prepare_guide_headings(string $html): array
             }
             $usedIds[$candidate] = true;
 
-            if ($hasId) {
-                $attributes = preg_replace(
-                    '/(^|\s)id\s*=\s*(?:"[^"]*"|\'[^\']*\')/i',
-                    '$1id="' . esc_attr($candidate) . '"',
-                    $attributes,
-                    1
-                );
-            } else {
-                $attributes .= ' id="' . esc_attr($candidate) . '"';
+            if (! $tagProcessor->set_attribute('id', $candidate)) {
+                return $matches[0];
             }
 
             $headings[] = ['id' => $candidate, 'label' => $label];
 
-            return '<h2' . $attributes . '>' . $innerHtml . '</h2>';
+            return $tagProcessor->get_updated_html() . $innerHtml . '</h2>';
         },
         $html
     );
