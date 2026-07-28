@@ -42,62 +42,213 @@ function vg_split_guide_blocks(string $postContent): ?array
     ];
 }
 
-function vg_prepare_guide_headings(string $html): array
+function vg_inspect_guide_html(string $html): ?array
 {
+    $processor = new WP_HTML_Tag_Processor($html);
+    $hasHeroClass = false;
+    $h1Count = 0;
+
+    while ($processor->next_token()) {
+        $tokenName = $processor->get_token_name();
+        if ($processor->is_tag_closer()) {
+            continue;
+        }
+
+        if ('H1' === $tokenName) {
+            $h1Count++;
+        }
+
+        if (true === $processor->has_class('vg-guide-hero')) {
+            $hasHeroClass = true;
+        }
+    }
+
+    if ($processor->paused_at_incomplete_token()) {
+        return null;
+    }
+
+    return [
+        'has_hero_class' => $hasHeroClass,
+        'h1_count' => $h1Count,
+    ];
+}
+
+function vg_is_valid_guide_heading_id(string $id): bool
+{
+    return $id !== '' && preg_match('/\s/u', $id) === 0;
+}
+
+function vg_allocate_guide_heading_id(string $base, array $reservedIds, array $assignedIds): string
+{
+    $candidate = $base;
+    $suffix = 2;
+    while (isset($reservedIds[$candidate]) || isset($assignedIds[$candidate])) {
+        $candidate = $base . '-' . $suffix;
+        $suffix++;
+    }
+
+    return $candidate;
+}
+
+function vg_collect_guide_heading_plan(string $html): ?array
+{
+    $processor = new WP_HTML_Tag_Processor($html);
     $headings = [];
-    $usedIds = [];
-    $pattern = '/<h2\b((?:[^>"\']+|"[^"]*"|\'[^\']*\')*)>(.*?)<\/h2>/is';
+    $currentHeading = null;
 
-    $normalized = preg_replace_callback(
-        $pattern,
-        static function (array $matches) use (&$headings, &$usedIds): string {
-            $attributes = $matches[1];
-            $innerHtml = $matches[2];
-            $tagProcessor = new WP_HTML_Tag_Processor('<h2' . $attributes . '>');
+    while ($processor->next_token()) {
+        $tokenName = $processor->get_token_name();
 
-            if (! $tagProcessor->next_tag('H2')) {
-                return $matches[0];
+        if ('H2' === $tokenName) {
+            if ($processor->is_tag_closer()) {
+                if ($currentHeading === null) {
+                    return null;
+                }
+
+                $label = preg_replace('/\s+/u', ' ', implode('', $currentHeading['label_parts']));
+                if (! is_string($label)) {
+                    return null;
+                }
+
+                $currentHeading['label'] = trim($label);
+                unset($currentHeading['label_parts']);
+                $headings[] = $currentHeading;
+                $currentHeading = null;
+            } else {
+                if ($currentHeading !== null) {
+                    return null;
+                }
+
+                $tocAttribute = $processor->get_attribute('data-vg-toc');
+                $idAttribute = $processor->get_attribute('id');
+                $currentHeading = [
+                    'original_id' => is_string($idAttribute) ? $idAttribute : null,
+                    'opt_out' => is_string($tocAttribute) && strcasecmp(trim($tocAttribute), 'false') === 0,
+                    'label_parts' => [],
+                ];
             }
 
-            $tocAttribute = $tagProcessor->get_attribute('data-vg-toc');
-            if (is_string($tocAttribute) && strcasecmp(trim($tocAttribute), 'false') === 0) {
-                return $matches[0];
+            continue;
+        }
+
+        if ($currentHeading === null) {
+            continue;
+        }
+
+        if ('#text' === $tokenName) {
+            $currentHeading['label_parts'][] = $processor->get_modifiable_text();
+        } elseif ('BR' === $tokenName && ! $processor->is_tag_closer()) {
+            $currentHeading['label_parts'][] = ' ';
+        }
+    }
+
+    if ($processor->paused_at_incomplete_token() || $currentHeading !== null) {
+        return null;
+    }
+
+    $reservedIds = [];
+    foreach ($headings as $heading) {
+        $originalId = $heading['original_id'];
+        if (is_string($originalId) && vg_is_valid_guide_heading_id($originalId)) {
+            $reservedIds[$originalId] = true;
+        }
+    }
+
+    $assignedIds = [];
+    foreach ($headings as $index => $heading) {
+        $originalId = $heading['original_id'];
+        $label = $heading['label'];
+        $eligible = ! $heading['opt_out'] && $label !== '';
+        $plannedId = null;
+
+        if (is_string($originalId) && vg_is_valid_guide_heading_id($originalId)) {
+            if (! isset($assignedIds[$originalId])) {
+                $plannedId = $originalId;
+            } else {
+                $plannedId = vg_allocate_guide_heading_id($originalId, $reservedIds, $assignedIds);
             }
-
-            $label = trim(wp_strip_all_tags($innerHtml));
-            if ($label === '') {
-                return $matches[0];
-            }
-
-            $idAttribute = $tagProcessor->get_attribute('id');
-            $id = is_string($idAttribute) ? $idAttribute : '';
-
-            $base = sanitize_title($id !== '' ? $id : $label);
+        } elseif ($eligible) {
+            $base = sanitize_title($label);
             if ($base === '') {
                 $base = 'section';
             }
+            $plannedId = vg_allocate_guide_heading_id($base, $reservedIds, $assignedIds);
+        }
 
-            $candidate = $base;
-            $suffix = 2;
-            while (isset($usedIds[$candidate])) {
-                $candidate = $base . '-' . $suffix;
-                $suffix++;
+        if ($plannedId !== null) {
+            $assignedIds[$plannedId] = true;
+        }
+
+        $headings[$index]['eligible'] = $eligible;
+        $headings[$index]['planned_id'] = $plannedId;
+    }
+
+    return $headings;
+}
+
+function vg_apply_guide_heading_plan(string $html, array $plan): ?string
+{
+    $processor = new WP_HTML_Tag_Processor($html);
+    $headingIndex = 0;
+
+    while ($processor->next_tag('H2')) {
+        if (! isset($plan[$headingIndex])) {
+            return null;
+        }
+
+        $plannedId = $plan[$headingIndex]['planned_id'];
+        $idAttribute = $processor->get_attribute('id');
+        $currentId = is_string($idAttribute) ? $idAttribute : null;
+
+        if (is_string($plannedId)) {
+            if ($plannedId !== $currentId) {
+                if (! $processor->set_attribute('id', $plannedId)) {
+                    return null;
+                }
             }
-            $usedIds[$candidate] = true;
+        }
 
-            if (! $tagProcessor->set_attribute('id', $candidate)) {
-                return $matches[0];
-            }
+        $headingIndex++;
+    }
 
-            $headings[] = ['id' => $candidate, 'label' => $label];
+    if ($processor->paused_at_incomplete_token() || $headingIndex !== count($plan)) {
+        return null;
+    }
 
-            return $tagProcessor->get_updated_html() . $innerHtml . '</h2>';
-        },
-        $html
-    );
+    return $processor->get_updated_html();
+}
+
+function vg_prepare_guide_headings(string $html): array
+{
+    $fallback = [
+        'html' => $html,
+        'headings' => [],
+    ];
+
+    $plan = vg_collect_guide_heading_plan($html);
+    if ($plan === null) {
+        return $fallback;
+    }
+
+    $normalized = vg_apply_guide_heading_plan($html, $plan);
+    if ($normalized === null) {
+        return $fallback;
+    }
+
+    $headings = [];
+    foreach ($plan as $heading) {
+        if (! $heading['eligible']) {
+            continue;
+        }
+
+        $headings[] = [
+            'id' => (string) $heading['planned_id'],
+            'label' => (string) $heading['label'],
+        ];
+    }
 
     return [
-        'html' => is_string($normalized) ? $normalized : $html,
+        'html' => $normalized,
         'headings' => $headings,
     ];
 }
@@ -134,6 +285,18 @@ function vg_prepare_guide_content(WP_Post $post): ?array
 
     $heroHtml = apply_filters('the_content', $split['hero_source']);
     $bodyHtml = apply_filters('the_content', $split['body_source']);
+    $heroStats = vg_inspect_guide_html((string) $heroHtml);
+    $bodyStats = vg_inspect_guide_html((string) $bodyHtml);
+    if (
+        $heroStats === null
+        || $bodyStats === null
+        || ! $heroStats['has_hero_class']
+        || $heroStats['h1_count'] !== 1
+        || $bodyStats['h1_count'] !== 0
+    ) {
+        return null;
+    }
+
     $prepared = vg_prepare_guide_headings((string) $bodyHtml);
 
     return [

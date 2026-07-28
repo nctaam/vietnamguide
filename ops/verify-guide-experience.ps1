@@ -124,6 +124,11 @@ Require-Contains $Routing 'function vg_get_guide_path(?WP_Post $post = null): st
 Require-Contains $Routing 'function vg_get_guide_type(?WP_Post $post = null): ?string'
 Require-Contains $Routing 'function vg_is_guide_experience_page(?WP_Post $post = null): bool'
 Require-Contains $ContentProvider 'function vg_split_guide_blocks(string $postContent): ?array'
+Require-Contains $ContentProvider 'function vg_inspect_guide_html(string $html): ?array'
+Require-Contains $ContentProvider 'function vg_is_valid_guide_heading_id(string $id): bool'
+Require-Contains $ContentProvider 'function vg_allocate_guide_heading_id(string $base, array $reservedIds, array $assignedIds): string'
+Require-Contains $ContentProvider 'function vg_collect_guide_heading_plan(string $html): ?array'
+Require-Contains $ContentProvider 'function vg_apply_guide_heading_plan(string $html, array $plan): ?string'
 Require-Contains $ContentProvider 'function vg_prepare_guide_headings(string $html): array'
 Require-Contains $ContentProvider 'function vg_render_guide_toc(array $headings, string $className = ''vg-guide-toc''): string'
 Require-Contains $ContentProvider 'function vg_prepare_guide_content(WP_Post $post): ?array'
@@ -131,12 +136,12 @@ Require-Contains $ContentProvider "'hero_html'"
 Require-Contains $ContentProvider "'body_html'"
 Require-Contains $ContentProvider "'headings'"
 Require-Contains $ContentProvider 'vg-guide-hero'
-Require-Contains $ContentProvider '<h2\b'
 Require-Contains $ContentProvider "preg_match_all('/<h1\b/i', `$heroSource) !== 1"
 Require-Contains $ContentProvider 'data-vg-toc'
 Require-Contains $ContentProvider 'sanitize_title'
 Require-Contains $ContentProvider 'serialize_blocks'
 Require-Contains $ContentProvider "apply_filters('the_content'"
+Require-NotContains $ContentProvider '<h2\b'
 
 $PilotFunction = Get-FunctionContent $Routing 'vg_guide_pilot_paths'
 if ($null -ne $PilotFunction) {
@@ -210,23 +215,53 @@ Require-FunctionOrder $Routing 'vg_is_guide_experience_page' 'if (! in_array($pa
 Require-FunctionContains $ContentProvider 'vg_split_guide_blocks' 'parse_blocks($postContent)'
 Require-FunctionContains $ContentProvider 'vg_split_guide_blocks' "preg_match_all('/<h1\b/i', `$heroSource) !== 1"
 Require-FunctionContains $ContentProvider 'vg_split_guide_blocks' 'serialize_blocks($blocks)'
-Require-FunctionContains $ContentProvider 'vg_prepare_guide_headings' "/<h2\b((?:[^>`"\']+|`"[^`"]*`"|\'[^\']*\')*)>(.*?)<\/h2>/is"
-Require-FunctionNotContains $ContentProvider 'vg_prepare_guide_headings' '/<h2\b([^>]*)>'
-Require-FunctionContains $ContentProvider 'vg_prepare_guide_headings' 'WP_HTML_Tag_Processor'
-Require-FunctionContains $ContentProvider 'vg_prepare_guide_headings' "next_tag('H2')"
-Require-FunctionContains $ContentProvider 'vg_prepare_guide_headings' "get_attribute('data-vg-toc')"
-Require-FunctionContains $ContentProvider 'vg_prepare_guide_headings' "get_attribute('id')"
-Require-FunctionContains $ContentProvider 'vg_prepare_guide_headings' "set_attribute('id'"
-Require-FunctionContains $ContentProvider 'vg_prepare_guide_headings' 'get_updated_html()'
-Require-FunctionContains $ContentProvider 'vg_prepare_guide_headings' 'strcasecmp(trim('
-Require-FunctionNotContains $ContentProvider 'vg_prepare_guide_headings' "/(?:^|\s)data-vg-toc"
-Require-FunctionNotContains $ContentProvider 'vg_prepare_guide_headings' "/(?:^|\s)id\s*="
-Require-FunctionNotContains $ContentProvider 'vg_prepare_guide_headings' "/(^|\s)id\s*="
-Require-FunctionNotContains $ContentProvider 'vg_prepare_guide_headings' "`$hasId = preg_match("
-Require-FunctionNotContains $ContentProvider 'vg_prepare_guide_headings' 'preg_replace('
-Require-FunctionContains $ContentProvider 'vg_prepare_guide_headings' 'sanitize_title'
+Require-FunctionContains $ContentProvider 'vg_inspect_guide_html' 'WP_HTML_Tag_Processor'
+Require-FunctionContains $ContentProvider 'vg_inspect_guide_html' 'next_token()'
+Require-FunctionContains $ContentProvider 'vg_inspect_guide_html' 'get_token_name()'
+Require-FunctionContains $ContentProvider 'vg_inspect_guide_html' 'is_tag_closer()'
+Require-FunctionContains $ContentProvider 'vg_inspect_guide_html' "has_class('vg-guide-hero')"
+Require-FunctionContains $ContentProvider 'vg_inspect_guide_html' 'paused_at_incomplete_token()'
+Require-FunctionContains $ContentProvider 'vg_inspect_guide_html' "'H1' === `$tokenName"
+Require-FunctionContains $ContentProvider 'vg_inspect_guide_html' "'has_hero_class'"
+Require-FunctionContains $ContentProvider 'vg_inspect_guide_html' "'h1_count'"
+Require-FunctionContains $ContentProvider 'vg_is_valid_guide_heading_id' "preg_match('/\s/u', `$id) === 0"
+Require-FunctionContains $ContentProvider 'vg_allocate_guide_heading_id' 'isset($reservedIds[$candidate])'
+Require-FunctionContains $ContentProvider 'vg_allocate_guide_heading_id' 'isset($assignedIds[$candidate])'
+Require-FunctionContains $ContentProvider 'vg_collect_guide_heading_plan' 'next_token()'
+Require-FunctionContains $ContentProvider 'vg_collect_guide_heading_plan' 'get_token_name()'
+Require-FunctionContains $ContentProvider 'vg_collect_guide_heading_plan' 'is_tag_closer()'
+Require-FunctionContains $ContentProvider 'vg_collect_guide_heading_plan' 'get_modifiable_text()'
+Require-FunctionContains $ContentProvider 'vg_collect_guide_heading_plan' 'paused_at_incomplete_token()'
+Require-FunctionContains $ContentProvider 'vg_collect_guide_heading_plan' "get_attribute('data-vg-toc')"
+Require-FunctionContains $ContentProvider 'vg_collect_guide_heading_plan' "get_attribute('id')"
+Require-FunctionContains $ContentProvider 'vg_collect_guide_heading_plan' 'strcasecmp(trim('
+Require-FunctionContains $ContentProvider 'vg_collect_guide_heading_plan' "preg_replace('/\s+/u'"
+Require-FunctionContains $ContentProvider 'vg_collect_guide_heading_plan' 'if ($processor->paused_at_incomplete_token() || $currentHeading !== null) {'
+Require-FunctionContains $ContentProvider 'vg_collect_guide_heading_plan' 'vg_is_valid_guide_heading_id($originalId)'
+Require-FunctionContains $ContentProvider 'vg_collect_guide_heading_plan' '$reservedIds'
+Require-FunctionContains $ContentProvider 'vg_collect_guide_heading_plan' '$assignedIds'
+Require-FunctionContains $ContentProvider 'vg_collect_guide_heading_plan' '$plannedId = $originalId;'
+Require-FunctionContains $ContentProvider 'vg_collect_guide_heading_plan' 'sanitize_title($label)'
+Require-FunctionContains $ContentProvider 'vg_apply_guide_heading_plan' "next_tag('H2')"
+Require-FunctionContains $ContentProvider 'vg_apply_guide_heading_plan' "get_attribute('id')"
+Require-FunctionContains $ContentProvider 'vg_apply_guide_heading_plan' 'if ($plannedId !== $currentId) {'
+Require-FunctionContains $ContentProvider 'vg_apply_guide_heading_plan' "set_attribute('id', `$plannedId)"
+Require-FunctionContains $ContentProvider 'vg_apply_guide_heading_plan' 'paused_at_incomplete_token()'
+Require-FunctionContains $ContentProvider 'vg_apply_guide_heading_plan' '$headingIndex !== count($plan)'
+Require-FunctionContains $ContentProvider 'vg_apply_guide_heading_plan' 'get_updated_html()'
+Require-FunctionContains $ContentProvider 'vg_prepare_guide_headings' 'vg_collect_guide_heading_plan($html)'
+Require-FunctionContains $ContentProvider 'vg_prepare_guide_headings' 'vg_apply_guide_heading_plan($html, $plan)'
+Require-FunctionNotContains $ContentProvider 'vg_prepare_guide_headings' '<h2\b'
+Require-FunctionNotContains $ContentProvider 'vg_prepare_guide_headings' 'preg_replace_callback('
 Require-FunctionContains $ContentProvider 'vg_prepare_guide_content' "apply_filters('the_content', `$split['hero_source'])"
 Require-FunctionContains $ContentProvider 'vg_prepare_guide_content' "apply_filters('the_content', `$split['body_source'])"
+Require-FunctionContains $ContentProvider 'vg_prepare_guide_content' 'vg_inspect_guide_html((string) $heroHtml)'
+Require-FunctionContains $ContentProvider 'vg_prepare_guide_content' 'vg_inspect_guide_html((string) $bodyHtml)'
+Require-FunctionContains $ContentProvider 'vg_prepare_guide_content' "`$heroStats['has_hero_class']"
+Require-FunctionContains $ContentProvider 'vg_prepare_guide_content' "`$heroStats['h1_count'] !== 1"
+Require-FunctionContains $ContentProvider 'vg_prepare_guide_content' "`$bodyStats['h1_count'] !== 0"
+Require-FunctionOrder $ContentProvider 'vg_prepare_guide_content' "apply_filters('the_content', `$split['hero_source'])" 'vg_inspect_guide_html((string) $heroHtml)'
+Require-FunctionOrder $ContentProvider 'vg_prepare_guide_content' "apply_filters('the_content', `$split['body_source'])" 'vg_inspect_guide_html((string) $bodyHtml)'
 
 if ($Failures.Count -gt 0) {
     $Failures | ForEach-Object { Write-Output "FAIL: $_" }
