@@ -111,13 +111,16 @@ function Require-ExactSet {
 
 $Routing = "$ThemeRoot/inc/guide-routing.php"
 $ContentProvider = "$ThemeRoot/inc/guide-content.php"
+$ContextProvider = "$ThemeRoot/inc/guide-context.php"
 $Functions = "$ThemeRoot/functions.php"
 
 Require-File $Routing
 Require-File $ContentProvider
+Require-File $ContextProvider
 Require-File $Functions
 Require-Contains $Functions "require_once get_theme_file_path('/inc/guide-routing.php');"
 Require-Contains $Functions "require_once get_theme_file_path('/inc/guide-content.php');"
+Require-Contains $Functions "require_once get_theme_file_path('/inc/guide-context.php');"
 Require-Contains $Routing 'function vg_guide_pilot_paths(): array'
 Require-Contains $Routing 'function vg_classify_guide_path(string $path): ?string'
 Require-Contains $Routing 'function vg_get_guide_path(?WP_Post $post = null): string'
@@ -142,6 +145,19 @@ Require-Contains $ContentProvider 'sanitize_title'
 Require-Contains $ContentProvider 'serialize_blocks'
 Require-Contains $ContentProvider "apply_filters('the_content'"
 Require-NotContains $ContentProvider '<h2\b'
+Require-Contains $ContextProvider 'function vg_estimate_guide_reading_time(string $html): int'
+Require-Contains $ContextProvider 'function vg_count_guide_sources(string $html): int'
+Require-Contains $ContextProvider 'function vg_get_related_routes(WP_Post $post, bool $hasExisting): array'
+Require-Contains $ContextProvider 'function vg_build_guide_context(WP_Post $post): ?array'
+Require-Contains $ContextProvider "'_vg_reviewed_at'"
+Require-Contains $ContextProvider 'vg-related-routes'
+Require-Contains $ContextProvider 'if ($hasExisting) {'
+Require-Contains $ContextProvider "'has_existing_related_routes'"
+Require-Contains $ContextProvider "'reading_time'"
+Require-Contains $ContextProvider "'source_count'"
+Require-Contains $ContextProvider "'best_for'"
+Require-Contains $ContextProvider "'skip_if'"
+Require-Contains $ContextProvider "'related_routes'"
 
 $PilotFunction = Get-FunctionContent $Routing 'vg_guide_pilot_paths'
 if ($null -ne $PilotFunction) {
@@ -262,6 +278,32 @@ Require-FunctionContains $ContentProvider 'vg_prepare_guide_content' "`$heroStat
 Require-FunctionContains $ContentProvider 'vg_prepare_guide_content' "`$bodyStats['h1_count'] !== 0"
 Require-FunctionOrder $ContentProvider 'vg_prepare_guide_content' "apply_filters('the_content', `$split['hero_source'])" 'vg_inspect_guide_html((string) $heroHtml)'
 Require-FunctionOrder $ContentProvider 'vg_prepare_guide_content' "apply_filters('the_content', `$split['body_source'])" 'vg_inspect_guide_html((string) $bodyHtml)'
+
+Require-FunctionContains $ContextProvider 'vg_estimate_guide_reading_time' 'str_word_count(wp_strip_all_tags($html))'
+Require-FunctionContains $ContextProvider 'vg_estimate_guide_reading_time' 'max(1, (int) ceil($words / 220))'
+Require-FunctionContains $ContextProvider 'vg_extract_guide_data_value' 'WP_HTML_Tag_Processor'
+Require-FunctionContains $ContextProvider 'vg_extract_guide_data_value' 'next_token()'
+Require-FunctionContains $ContextProvider 'vg_extract_guide_data_value' 'is_tag_closer()'
+Require-FunctionContains $ContextProvider 'vg_extract_guide_data_value' 'get_attribute($attribute)'
+Require-FunctionContains $ContextProvider 'vg_extract_guide_data_value' 'sanitize_text_field'
+Require-FunctionContains $ContextProvider 'vg_count_guide_sources' "class_exists('DOMDocument')"
+Require-FunctionContains $ContextProvider 'vg_count_guide_sources' "class_exists('DOMXPath')"
+Require-FunctionContains $ContextProvider 'vg_count_guide_sources' 'contains(concat(" ", normalize-space(@class), " "), " vg-pattern-source-block ")'
+Require-FunctionContains $ContextProvider 'vg_count_guide_sources' 'contains(concat(" ", normalize-space(@class), " "), " source-diversity ")'
+Require-FunctionContains $ContextProvider 'vg_count_guide_sources' 'contains(concat(" ", normalize-space(@class), " "), " source-trail ")'
+Require-FunctionNotContains $ContextProvider 'vg_count_guide_sources' 'contains(@class,'
+Require-FunctionContains $ContextProvider 'vg_count_guide_sources' 'wp_parse_url(home_url(''/'')'
+Require-FunctionContains $ContextProvider 'vg_count_guide_sources' '$sources[$href] = true;'
+Require-FunctionContains $ContextProvider 'vg_get_related_routes' 'if ($hasExisting) {'
+Require-FunctionContains $ContextProvider 'vg_get_related_routes' "'post_status' => 'publish'"
+Require-FunctionContains $ContextProvider 'vg_get_related_routes' 'if (count($routes) === 3) {'
+Require-FunctionContains $ContextProvider 'vg_get_related_routes' '$post->post_parent'
+Require-FunctionContains $ContextProvider 'vg_build_guide_context' 'vg_prepare_guide_content($post)'
+Require-FunctionContains $ContextProvider 'vg_build_guide_context' 'vg_get_guide_type($post)'
+Require-FunctionContains $ContextProvider 'vg_build_guide_context' "get_post_meta(`$post->ID, '_vg_reviewed_at', true)"
+Require-FunctionContains $ContextProvider 'vg_build_guide_context' "has_class('vg-related-routes')"
+Require-FunctionContains $ContextProvider 'vg_build_guide_context' "vg_extract_guide_data_value(`$content['body_html'], 'data-vg-best-for')"
+Require-FunctionContains $ContextProvider 'vg_build_guide_context' "vg_extract_guide_data_value(`$content['body_html'], 'data-vg-skip-if')"
 
 if ($Failures.Count -gt 0) {
     $Failures | ForEach-Object { Write-Output "FAIL: $_" }
