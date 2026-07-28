@@ -1,6 +1,7 @@
 <?php
 if (! defined('ABSPATH')) { exit; }
 require_once get_theme_file_path('/inc/homepage-data.php');
+require_once get_theme_file_path('/inc/guide-routing.php');
 add_action('after_setup_theme', static function (): void {
     add_theme_support('title-tag');
     add_theme_support('post-thumbnails');
