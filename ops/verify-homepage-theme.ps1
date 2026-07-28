@@ -31,6 +31,23 @@ function Require-FileSize {
     }
 }
 
+function Require-FileSha256 {
+    param(
+        [string]$RelativePath,
+        [string]$ExpectedHash
+    )
+
+    $FullPath = Join-Path $RepoRoot $RelativePath
+    if (-not (Test-Path -LiteralPath $FullPath -PathType Leaf)) {
+        return
+    }
+
+    $ActualHash = (Get-FileHash -LiteralPath $FullPath -Algorithm SHA256).Hash.ToLowerInvariant()
+    if ($ActualHash -ne $ExpectedHash.ToLowerInvariant()) {
+        $Failures.Add("Expected ${RelativePath} SHA256 ${ExpectedHash}, found ${ActualHash}")
+    }
+}
+
 function Require-Contains {
     param(
         [string]$RelativePath,
@@ -177,6 +194,7 @@ foreach ($RequiredFile in $RequiredFiles) {
 }
 
 Require-FileSize 'wordpress/wp-content/themes/vietnamguide-premium/assets/images/ha-long-bay-vietnam-hero.jpg' 204078
+Require-FileSha256 'wordpress/wp-content/themes/vietnamguide-premium/assets/images/ha-long-bay-vietnam-hero.jpg' '032c197e7688039428b8738936478e0c2a66629b40e8d25f9d818ca577165065'
 
 Require-Contains 'wordpress/wp-content/themes/vietnamguide-premium/style.css' 'Theme Name: VietnamGuide Premium'
 Require-Contains 'wordpress/wp-content/themes/vietnamguide-premium/functions.php' "require_once get_theme_file_path('/inc/homepage-data.php');"

@@ -29,14 +29,14 @@ Date: 2026-07-28 (Asia/Saigon)
 
 - Rank Math schema and existing published content reference `https://vietnamguide.net/wp-content/themes/vietnamguide-premium/assets/images/ha-long-bay-vietnam-hero.jpg`; the database, post content, and metadata were intentionally left unchanged.
 - The missing compatibility path was restored from repository blob `b9317acc9b6bb7b8fae3d960a5dd05370a0a4f00` as a 1,920 x 1,080 JPEG (204,078 bytes; SHA256 `032c197e7688039428b8738936478e0c2a66629b40e8d25f9d818ca577165065`).
-- Image attribution: “Ha Long Bay, Vietnam” by Vyacheslav Argenberg, CC BY 4.0; source `https://commons.wikimedia.org/wiki/File:Ha_Long_Bay,_Vietnam,_View_from_above.jpg`.
+- Image attribution: "Ha Long Bay, Vietnam" by Vyacheslav Argenberg, CC BY 4.0; source `https://commons.wikimedia.org/wiki/File:Ha_Long_Bay,_Vietnam,_View_from_above.jpg`.
 - Production installation uses owner/group `vietnamguidewpnet:vietnamguidewpnet` and mode `0644`; the public asset changed from HTTP `404` before restoration to HTTP `200` afterward.
 - LiteSpeed and WordPress object caches were purged after the compatibility asset was installed.
 
 ## Public And Security Checks
 
 - Homepage: HTTP `200`; new VietnamGuide header and hero present; GeneratePress stylesheet/reference absent.
-- Homepage-derived theme asset crawl: all 13 unique VietnamGuide theme asset URLs returned HTTP `200` (11 image URLs plus the homepage CSS and JavaScript URLs); this enumeration includes the restored compatibility JPG rather than relying on a handpicked hero/editorial list.
+- Homepage HTML/schema-reference asset crawl: all 13 unique VietnamGuide theme asset URLs extracted from the rendered homepage returned HTTP `200` (11 image URLs plus the homepage CSS and JavaScript URLs); this includes the restored compatibility JPG rather than relying on a handpicked hero/editorial list.
 - XML-RPC POST: HTTP `403`.
 - Anonymous REST users endpoint: REST `no_route` HTTP `404` semantics.
 - Author enumeration query `?author=1`: final HTTP `404`.

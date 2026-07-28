@@ -18,7 +18,7 @@ The approved homepage image outputs below are Stitch-provided assets, not image 
 
 ### Legacy Ha Long Bay compatibility asset
 
-- File: `ha-long-bay-vietnam-hero.jpg` (JPEG, 204,078 bytes).
+- File: `ha-long-bay-vietnam-hero.jpg` (JPEG, 1,920 x 1,080, 204,078 bytes), a resized/cropped derivative of the 3,984 x 2,656 Wikimedia original.
 - Purpose: Retained at its published theme URL for compatibility with existing WordPress content and Rank Math schema references. It does not replace the Stitch-derived homepage hero outputs.
 - Subject: Ha Long Bay, Vietnam, viewed from above.
 - Creator: Vyacheslav Argenberg.
