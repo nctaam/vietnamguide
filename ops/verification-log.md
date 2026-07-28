@@ -62,7 +62,7 @@ Date: 2026-07-28 (Asia/Saigon)
 
 ## Phase 3 Block Patterns
 
-- Deployment route: WordPress admin one-time deployer, because SSH `66.42.48.146:2209` remained `CLOSED_OR_FILTERED`; no database, content, or metadata changes were made.
+- Deployment route: WordPress admin one-time deployer, because SSH `66.42.48.146:2209` remained `CLOSED_OR_FILTERED`; no posts, pages, post metadata, menus, or site settings were changed. Temporary plugin lifecycle and deployment-status options were used, then removed.
 - Guarded deployment verified the active `vietnamguide-premium` theme and installed 11 changed files with source/target hash equality; WordPress reported the theme cache and LiteSpeed cache purge completed.
 - Theme editor confirmed the updated `functions.php`, `guide-patterns.css`, and all nine new pattern files are present.
 - Site Editor > Patterns confirmed `All patterns 13` and `VietnamGuide 13`:
@@ -80,4 +80,4 @@ Date: 2026-07-28 (Asia/Saigon)
   - Decision Guides
   - Practical Essentials
 - Live homepage remained HTTP `200`, loaded both `homepage.css` and `guide-patterns.css`, rendered the VietnamGuide H1, and exposed no fatal-error text.
-- Temporary deploy and cleanup helpers were removed; a fresh WordPress plugin inventory showed no remaining VietnamGuide deployment helper.
+- Temporary deploy and cleanup helpers and their status options were removed; a fresh WordPress plugin inventory showed no remaining VietnamGuide deployment helper.
