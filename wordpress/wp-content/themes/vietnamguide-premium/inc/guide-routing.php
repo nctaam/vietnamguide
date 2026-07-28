@@ -44,6 +44,10 @@ function vg_get_guide_path(?WP_Post $post = null): string
 function vg_get_guide_type(?WP_Post $post = null): ?string
 {
     $post = $post ?: get_post();
+    if (! $post instanceof WP_Post || $post->post_type !== 'page') {
+        return null;
+    }
+
     $path = vg_get_guide_path($post);
     $type = vg_classify_guide_path($path);
     $filtered = apply_filters('vg_guide_type', $type, $post, $path);
@@ -56,7 +60,7 @@ function vg_get_guide_type(?WP_Post $post = null): ?string
 function vg_is_guide_experience_page(?WP_Post $post = null): bool
 {
     $post = $post ?: get_post();
-    if (! $post instanceof WP_Post || ! is_page($post)) {
+    if (! $post instanceof WP_Post || ! is_page($post->ID)) {
         return false;
     }
 
