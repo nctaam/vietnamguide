@@ -102,16 +102,33 @@ function Require-ExactSet {
 }
 
 $Routing = "$ThemeRoot/inc/guide-routing.php"
+$ContentProvider = "$ThemeRoot/inc/guide-content.php"
 $Functions = "$ThemeRoot/functions.php"
 
 Require-File $Routing
+Require-File $ContentProvider
 Require-File $Functions
 Require-Contains $Functions "require_once get_theme_file_path('/inc/guide-routing.php');"
+Require-Contains $Functions "require_once get_theme_file_path('/inc/guide-content.php');"
 Require-Contains $Routing 'function vg_guide_pilot_paths(): array'
 Require-Contains $Routing 'function vg_classify_guide_path(string $path): ?string'
 Require-Contains $Routing 'function vg_get_guide_path(?WP_Post $post = null): string'
 Require-Contains $Routing 'function vg_get_guide_type(?WP_Post $post = null): ?string'
 Require-Contains $Routing 'function vg_is_guide_experience_page(?WP_Post $post = null): bool'
+Require-Contains $ContentProvider 'function vg_split_guide_blocks(string $postContent): ?array'
+Require-Contains $ContentProvider 'function vg_prepare_guide_headings(string $html): array'
+Require-Contains $ContentProvider 'function vg_render_guide_toc(array $headings, string $className = ''vg-guide-toc''): string'
+Require-Contains $ContentProvider 'function vg_prepare_guide_content(WP_Post $post): ?array'
+Require-Contains $ContentProvider "'hero_html'"
+Require-Contains $ContentProvider "'body_html'"
+Require-Contains $ContentProvider "'headings'"
+Require-Contains $ContentProvider 'vg-guide-hero'
+Require-Contains $ContentProvider '<h2\b'
+Require-Contains $ContentProvider "preg_match_all('/<h1\b/i', `$heroSource) !== 1"
+Require-Contains $ContentProvider 'data-vg-toc="false"'
+Require-Contains $ContentProvider 'sanitize_title'
+Require-Contains $ContentProvider 'serialize_blocks'
+Require-Contains $ContentProvider "apply_filters('the_content'"
 
 $PilotFunction = Get-FunctionContent $Routing 'vg_guide_pilot_paths'
 if ($null -ne $PilotFunction) {
@@ -181,6 +198,15 @@ Require-FunctionMatches $Routing 'vg_get_guide_type' 'if\s*\(!\s*\$post\s+instan
 Require-FunctionOrder $Routing 'vg_get_guide_type' "if (! `$post instanceof WP_Post || `$post->post_type !== 'page') {" "apply_filters('vg_guide_type'"
 Require-FunctionContains $Routing 'vg_is_guide_experience_page' 'is_page($post->ID)'
 Require-FunctionOrder $Routing 'vg_is_guide_experience_page' 'if (! in_array($path, vg_guide_pilot_paths(), true)) {' 'vg_get_guide_type($post)'
+
+Require-FunctionContains $ContentProvider 'vg_split_guide_blocks' 'parse_blocks($postContent)'
+Require-FunctionContains $ContentProvider 'vg_split_guide_blocks' "preg_match_all('/<h1\b/i', `$heroSource) !== 1"
+Require-FunctionContains $ContentProvider 'vg_split_guide_blocks' 'serialize_blocks($blocks)'
+Require-FunctionContains $ContentProvider 'vg_prepare_guide_headings' '<h2\b'
+Require-FunctionContains $ContentProvider 'vg_prepare_guide_headings' 'data-vg-toc='
+Require-FunctionContains $ContentProvider 'vg_prepare_guide_headings' 'sanitize_title'
+Require-FunctionContains $ContentProvider 'vg_prepare_guide_content' "apply_filters('the_content', `$split['hero_source'])"
+Require-FunctionContains $ContentProvider 'vg_prepare_guide_content' "apply_filters('the_content', `$split['body_source'])"
 
 if ($Failures.Count -gt 0) {
     $Failures | ForEach-Object { Write-Output "FAIL: $_" }
