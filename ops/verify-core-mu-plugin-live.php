@@ -17,10 +17,25 @@ $fail = static function (string $message) use (&$failures): void {
 };
 
 $plugin_path = WPMU_PLUGIN_DIR . '/vietnamguide-core.php';
+$expected_plugin_sha256 = '76313bc2537a25decf743f5db7b2b93be1c1431e546efb96e48e50d99afd20cc';
 
-if (! is_readable($plugin_path)) {
+if (! is_file($plugin_path)) {
+    $fail('Core must-use plugin does not exist at the expected WordPress path.');
+} elseif (! is_readable($plugin_path)) {
     $fail('Core must-use plugin is not readable at the expected WordPress path.');
 } else {
+    $actual_plugin_sha256 = hash_file('sha256', $plugin_path);
+
+    if (! is_string($actual_plugin_sha256)) {
+        $fail('Core must-use plugin SHA256 could not be calculated.');
+    } elseif (! hash_equals($expected_plugin_sha256, $actual_plugin_sha256)) {
+        $fail(sprintf(
+            'Core must-use plugin SHA256 mismatch: expected %s, found %s.',
+            $expected_plugin_sha256,
+            $actual_plugin_sha256
+        ));
+    }
+
     $plugin_data = get_file_data($plugin_path, ['Version' => 'Version']);
     $version = isset($plugin_data['Version']) ? trim((string) $plugin_data['Version']) : '';
 

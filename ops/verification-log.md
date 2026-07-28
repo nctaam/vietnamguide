@@ -20,6 +20,7 @@ Date: 2026-07-28 (Asia/Saigon)
 ## Runtime Status
 
 - Post-deployment runtime smoke: GREEN for `vietnamguide-core` version `0.1.6`, required functions and shortcodes, block pattern category, image sizes, affiliate-link behavior, and exact preservation of the complete non-affiliate anchor fixture.
+- Runtime source-integrity enforcement requires the deployed `vietnamguide-core.php` file to exist and match the exact local source SHA256 `76313bc2537a25decf743f5db7b2b93be1c1431e546efb96e48e50d99afd20cc` (30,870 bytes). A temporary wrong expected hash produced the required RED checksum mismatch; the correct hash passed server `php -l` and live `wp eval-file` verification.
 - Must-use plugins report `vietnamguide-core` version `0.1.6`.
 - Active required plugins: Advanced Custom Fields, LiteSpeed Cache, Rank Math SEO, Redirection, Site Kit by Google, UpdraftPlus, and Wordfence.
 - LiteSpeed Cache is active and is the only detected page-cache plugin in the configured cache-plugin set.
