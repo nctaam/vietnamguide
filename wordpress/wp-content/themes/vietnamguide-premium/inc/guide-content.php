@@ -46,7 +46,7 @@ function vg_prepare_guide_headings(string $html): array
 {
     $headings = [];
     $usedIds = [];
-    $pattern = '/<h2\b([^>]*)>(.*?)<\/h2>/is';
+    $pattern = '/<h2\b((?:[^>"\']+|"[^"]*"|\'[^\']*\')*)>(.*?)<\/h2>/is';
 
     $normalized = preg_replace_callback(
         $pattern,

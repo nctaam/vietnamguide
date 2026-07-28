@@ -210,7 +210,8 @@ Require-FunctionOrder $Routing 'vg_is_guide_experience_page' 'if (! in_array($pa
 Require-FunctionContains $ContentProvider 'vg_split_guide_blocks' 'parse_blocks($postContent)'
 Require-FunctionContains $ContentProvider 'vg_split_guide_blocks' "preg_match_all('/<h1\b/i', `$heroSource) !== 1"
 Require-FunctionContains $ContentProvider 'vg_split_guide_blocks' 'serialize_blocks($blocks)'
-Require-FunctionContains $ContentProvider 'vg_prepare_guide_headings' '<h2\b'
+Require-FunctionContains $ContentProvider 'vg_prepare_guide_headings' "/<h2\b((?:[^>`"\']+|`"[^`"]*`"|\'[^\']*\')*)>(.*?)<\/h2>/is"
+Require-FunctionNotContains $ContentProvider 'vg_prepare_guide_headings' '/<h2\b([^>]*)>'
 Require-FunctionContains $ContentProvider 'vg_prepare_guide_headings' 'WP_HTML_Tag_Processor'
 Require-FunctionContains $ContentProvider 'vg_prepare_guide_headings' "next_tag('H2')"
 Require-FunctionContains $ContentProvider 'vg_prepare_guide_headings' "get_attribute('data-vg-toc')"
