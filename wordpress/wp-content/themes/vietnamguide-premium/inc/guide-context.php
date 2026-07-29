@@ -79,8 +79,11 @@ function vg_count_guide_sources(string $html): int
 
 function vg_normalize_guide_route_url(string $url): string
 {
-    $url = trim($url);
     if ($url === '') {
+        return '';
+    }
+
+    if (str_contains($url, '\\') || preg_match('/[\x00-\x20\x7F]/', $url) === 1) {
         return '';
     }
 
@@ -91,7 +94,7 @@ function vg_normalize_guide_route_url(string $url): string
 
     $scheme = strtolower((string) ($parts['scheme'] ?? ''));
     $host = trim((string) ($parts['host'] ?? ''));
-    $isRootRelative = str_starts_with($url, '/') && ! str_starts_with($url, '//');
+    $isRootRelative = str_starts_with($url, '/') && ! str_starts_with($url, '//') && $scheme === '' && $host === '';
     $isProtocolRelative = str_starts_with($url, '//') && $scheme === '' && $host !== '';
     $isAbsoluteWeb = in_array($scheme, ['http', 'https'], true) && $host !== '';
     if (! $isRootRelative && ! $isProtocolRelative && ! $isAbsoluteWeb) {
@@ -99,7 +102,28 @@ function vg_normalize_guide_route_url(string $url): string
     }
 
     $sanitized = esc_url_raw($url, ['http', 'https']);
-    return is_string($sanitized) && $sanitized !== '' ? $sanitized : '';
+    if ($sanitized === '') {
+        return '';
+    }
+
+    $sanitizedParts = wp_parse_url($sanitized);
+    if (! is_array($sanitizedParts)) {
+        return '';
+    }
+
+    $sanitizedScheme = strtolower((string) ($sanitizedParts['scheme'] ?? ''));
+    $sanitizedHost = trim((string) ($sanitizedParts['host'] ?? ''));
+    $sanitizedIsRootRelative = str_starts_with($sanitized, '/') && ! str_starts_with($sanitized, '//') && $sanitizedScheme === '' && $sanitizedHost === '';
+    $sanitizedIsProtocolRelative = str_starts_with($sanitized, '//') && $sanitizedScheme === '' && $sanitizedHost !== '';
+    $sanitizedIsAbsoluteWeb = in_array($sanitizedScheme, ['http', 'https'], true) && $sanitizedHost !== '';
+    $hasMatchingShape = ($isRootRelative && $sanitizedIsRootRelative)
+        || ($isProtocolRelative && $sanitizedIsProtocolRelative)
+        || ($isAbsoluteWeb && $sanitizedIsAbsoluteWeb);
+    if (! $hasMatchingShape) {
+        return '';
+    }
+
+    return $sanitized;
 }
 
 function vg_get_related_routes(WP_Post $post, bool $hasExisting): array

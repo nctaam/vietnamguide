@@ -311,22 +311,38 @@ Require-FunctionContains $ContextProvider 'vg_count_guide_sources' '$isAllowedSc
 Require-FunctionContains $ContextProvider 'vg_count_guide_sources' '$sources[$href] = true;'
 Require-FunctionOrder $ContextProvider 'vg_count_guide_sources' '$scheme = strtolower((string) wp_parse_url($href, PHP_URL_SCHEME));' '$isAllowedScheme'
 Require-FunctionOrder $ContextProvider 'vg_count_guide_sources' '$isAllowedScheme' '$sources[$href] = true;'
-Require-FunctionContains $ContextProvider 'vg_normalize_guide_route_url' '$url = trim($url);'
 Require-FunctionContains $ContextProvider 'vg_normalize_guide_route_url' 'if ($url === '''') {'
+Require-FunctionContains $ContextProvider 'vg_normalize_guide_route_url' "str_contains(`$url, '\\')"
+Require-FunctionContains $ContextProvider 'vg_normalize_guide_route_url' "preg_match('/[\x00-\x20\x7F]/', `$url) === 1"
+Require-FunctionNotContains $ContextProvider 'vg_normalize_guide_route_url' '$url = trim($url);'
 Require-FunctionContains $ContextProvider 'vg_normalize_guide_route_url' '$parts = wp_parse_url($url);'
 Require-FunctionContains $ContextProvider 'vg_normalize_guide_route_url' 'if (! is_array($parts)) {'
 Require-FunctionContains $ContextProvider 'vg_normalize_guide_route_url' "`$scheme = strtolower((string) (`$parts['scheme'] ?? ''));"
 Require-FunctionContains $ContextProvider 'vg_normalize_guide_route_url' "`$host = trim((string) (`$parts['host'] ?? ''));"
-Require-FunctionContains $ContextProvider 'vg_normalize_guide_route_url' "`$isRootRelative = str_starts_with(`$url, '/') && ! str_starts_with(`$url, '//');"
+Require-FunctionContains $ContextProvider 'vg_normalize_guide_route_url' "`$isRootRelative = str_starts_with(`$url, '/') && ! str_starts_with(`$url, '//') && `$scheme === '' && `$host === '';"
 Require-FunctionContains $ContextProvider 'vg_normalize_guide_route_url' "`$isProtocolRelative = str_starts_with(`$url, '//') && `$scheme === '' && `$host !== '';"
 Require-FunctionContains $ContextProvider 'vg_normalize_guide_route_url' "`$isAbsoluteWeb = in_array(`$scheme, ['http', 'https'], true) && `$host !== '';"
 Require-FunctionContains $ContextProvider 'vg_normalize_guide_route_url' "esc_url_raw(`$url, ['http', 'https'])"
-Require-FunctionContains $ContextProvider 'vg_normalize_guide_route_url' '$sanitized !== '''''
+Require-FunctionContains $ContextProvider 'vg_normalize_guide_route_url' 'if ($sanitized === '''') {'
+Require-FunctionContains $ContextProvider 'vg_normalize_guide_route_url' '$sanitizedParts = wp_parse_url($sanitized);'
+Require-FunctionContains $ContextProvider 'vg_normalize_guide_route_url' 'if (! is_array($sanitizedParts)) {'
+Require-FunctionContains $ContextProvider 'vg_normalize_guide_route_url' "`$sanitizedScheme = strtolower((string) (`$sanitizedParts['scheme'] ?? ''));"
+Require-FunctionContains $ContextProvider 'vg_normalize_guide_route_url' "`$sanitizedHost = trim((string) (`$sanitizedParts['host'] ?? ''));"
+Require-FunctionContains $ContextProvider 'vg_normalize_guide_route_url' "`$sanitizedIsRootRelative = str_starts_with(`$sanitized, '/') && ! str_starts_with(`$sanitized, '//') && `$sanitizedScheme === '' && `$sanitizedHost === '';"
+Require-FunctionContains $ContextProvider 'vg_normalize_guide_route_url' "`$sanitizedIsProtocolRelative = str_starts_with(`$sanitized, '//') && `$sanitizedScheme === '' && `$sanitizedHost !== '';"
+Require-FunctionContains $ContextProvider 'vg_normalize_guide_route_url' "`$sanitizedIsAbsoluteWeb = in_array(`$sanitizedScheme, ['http', 'https'], true) && `$sanitizedHost !== '';"
+Require-FunctionContains $ContextProvider 'vg_normalize_guide_route_url' '$hasMatchingShape'
+Require-FunctionContains $ContextProvider 'vg_normalize_guide_route_url' 'return $sanitized;'
 Require-FunctionNotContains $ContextProvider 'vg_normalize_guide_route_url' 'javascript'
 Require-FunctionNotContains $ContextProvider 'vg_normalize_guide_route_url' 'data:'
 Require-FunctionNotContains $ContextProvider 'vg_normalize_guide_route_url' 'ftp'
-Require-FunctionOrder $ContextProvider 'vg_normalize_guide_route_url' '$parts = wp_parse_url($url);' '$isRootRelative'
+Require-FunctionOrder $ContextProvider 'vg_normalize_guide_route_url' "str_contains(`$url, '\\')" '$parts = wp_parse_url($url);'
+Require-FunctionOrder $ContextProvider 'vg_normalize_guide_route_url' "preg_match('/[\x00-\x20\x7F]/', `$url) === 1" '$parts = wp_parse_url($url);'
 Require-FunctionOrder $ContextProvider 'vg_normalize_guide_route_url' '$isAbsoluteWeb' "esc_url_raw(`$url, ['http', 'https'])"
+Require-FunctionOrder $ContextProvider 'vg_normalize_guide_route_url' "esc_url_raw(`$url, ['http', 'https'])" '$sanitizedParts = wp_parse_url($sanitized);'
+Require-FunctionOrder $ContextProvider 'vg_normalize_guide_route_url' '$sanitizedParts = wp_parse_url($sanitized);' '$sanitizedIsRootRelative'
+Require-FunctionOrder $ContextProvider 'vg_normalize_guide_route_url' '$sanitizedIsAbsoluteWeb' '$hasMatchingShape'
+Require-FunctionOrder $ContextProvider 'vg_normalize_guide_route_url' '$hasMatchingShape' 'return $sanitized;'
 Require-FunctionContains $ContextProvider 'vg_get_related_routes' 'if ($hasExisting) {'
 Require-FunctionContains $ContextProvider 'vg_get_related_routes' "function_exists('vg_eeat_get_field')"
 Require-FunctionContains $ContextProvider 'vg_get_related_routes' "function_exists('vg_eeat_related_route_items')"
