@@ -299,7 +299,7 @@ function vg_is_valid_guide_context(array $context): bool
 
 function vg_build_guide_context(WP_Post $post): ?array
 {
-    if (post_password_required($post)) {
+    if ($post->post_password !== '' || post_password_required($post)) {
         return null;
     }
 

@@ -464,8 +464,10 @@ Require-FunctionOrder $ContextProvider 'vg_is_valid_guide_context' "foreach (`$c
 Require-FunctionContains $ContextProvider 'vg_build_guide_context' 'vg_prepare_guide_content($post)'
 Require-FunctionContains $ContextProvider 'vg_build_guide_context' 'vg_get_guide_type($post)'
 Require-FunctionContains $ContextProvider 'vg_build_guide_context' 'post_password_required($post)'
+Require-FunctionContains $ContextProvider 'vg_build_guide_context' "`$post->post_password !== ''"
 Require-FunctionContains $ContextProvider 'vg_build_guide_context' "preg_match('/<!--\s*nextpage\s*-->/i', `$post->post_content) === 1"
 Require-FunctionOrder $ContextProvider 'vg_build_guide_context' 'post_password_required($post)' 'vg_prepare_guide_content($post)'
+Require-FunctionOrder $ContextProvider 'vg_build_guide_context' "`$post->post_password !== ''" 'vg_prepare_guide_content($post)'
 Require-FunctionOrder $ContextProvider 'vg_build_guide_context' "preg_match('/<!--\s*nextpage\s*-->/i', `$post->post_content) === 1" 'vg_prepare_guide_content($post)'
 Require-FunctionContains $ContextProvider 'vg_build_guide_context' "function_exists('vg_eeat_get_field')"
 Require-FunctionContains $ContextProvider 'vg_build_guide_context' "vg_eeat_get_field(`$post->ID, 'last_meaningful_update')"
