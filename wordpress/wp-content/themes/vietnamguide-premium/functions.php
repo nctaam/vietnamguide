@@ -22,6 +22,21 @@ add_action('wp_enqueue_scripts', static function (): void {
     wp_enqueue_style('vietnamguide-homepage', get_theme_file_uri('/assets/css/homepage.css'), [], $version);
     wp_enqueue_style('vietnamguide-guide-patterns', get_theme_file_uri('/assets/css/guide-patterns.css'), ['vietnamguide-homepage'], $version);
     wp_enqueue_script('vietnamguide-homepage', get_theme_file_uri('/assets/js/homepage.js'), [], $version, true);
+    if (vg_is_guide_experience_page()) {
+        wp_enqueue_style(
+            'vietnamguide-guide-experience',
+            get_theme_file_uri('/assets/css/guide-experience.css'),
+            ['vietnamguide-guide-patterns'],
+            $version
+        );
+        wp_enqueue_script(
+            'vietnamguide-guide-experience',
+            get_theme_file_uri('/assets/js/guide-experience.js'),
+            [],
+            $version,
+            true
+        );
+    }
 });
 function vg_primary_menu_fallback(): void
 {

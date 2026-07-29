@@ -5,6 +5,8 @@ param(
 $ErrorActionPreference = 'Stop'
 $RepoRoot = if ($RepoRootOverride) { $RepoRootOverride } else { Split-Path -Parent $PSScriptRoot }
 $ThemeRoot = 'wordpress/wp-content/themes/vietnamguide-premium'
+$GuideCss = "$ThemeRoot/assets/css/guide-experience.css"
+$GuideJs = "$ThemeRoot/assets/js/guide-experience.js"
 $Failures = [System.Collections.Generic.List[string]]::new()
 
 function Get-RepoContent {
@@ -543,6 +545,25 @@ Require-FunctionContains $ContextProvider 'vg_build_guide_context' "'best_for' =
 Require-FunctionContains $ContextProvider 'vg_build_guide_context' "'skip_if' =>"
 Require-FunctionContains $ContextProvider 'vg_build_guide_context' "'related_routes' =>"
 Require-FunctionContains $ContextProvider 'vg_build_guide_context' "'has_existing_related_routes' =>"
+
+Require-File $GuideCss
+Require-File $GuideJs
+Require-Contains $Functions 'if (vg_is_guide_experience_page())'
+Require-Matches $Functions "(?s)if\s*\(\s*vg_is_guide_experience_page\(\)\s*\)\s*\{[^{}]*wp_enqueue_style\s*\(\s*'vietnamguide-guide-experience'[^{}]*wp_enqueue_script\s*\(\s*'vietnamguide-guide-experience'[^{}]*\}" 'guide assets conditionally enqueued for guide experience pages'
+Require-Matches $Functions "wp_enqueue_style\s*\(\s*'vietnamguide-guide-experience'" 'guide experience style handle'
+Require-Matches $Functions "wp_enqueue_script\s*\(\s*'vietnamguide-guide-experience'" 'guide experience script handle'
+Require-Contains $GuideCss '.vg-guide-spine'
+Require-Contains $GuideCss 'grid-template-columns: minmax(148px, 190px) minmax(0, 760px) minmax(190px, 240px)'
+Require-Contains $GuideCss '.vg-guide-jump'
+Require-Contains $GuideCss '.vg-guide-trust'
+Require-Contains $GuideCss '.vg-decision-table'
+Require-Contains $GuideCss '.vg-timeline'
+Require-Contains $GuideCss '@media (max-width: 960px)'
+Require-Contains $GuideCss '@media (prefers-reduced-motion: reduce)'
+Require-Contains $GuideJs "document.querySelector('[data-vg-guide]')"
+Require-Contains $GuideJs 'IntersectionObserver'
+Require-Contains $GuideJs "style.setProperty('--vg-guide-progress'"
+Require-NotContains $GuideJs 'preventDefault()'
 
 if ($Failures.Count -gt 0) {
     $Failures | ForEach-Object { Write-Output "FAIL: $_" }
