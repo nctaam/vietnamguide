@@ -351,7 +351,6 @@
   box-shadow: 0 14px 42px rgba(1, 45, 29, .07);
 }
 
-.vg-guide-article .vg-decision-table,
 .vg-guide-article .vg-decision-table__scroll,
 .vg-guide-article .wp-block-table {
   width: 100%;
@@ -363,16 +362,21 @@
   -webkit-overflow-scrolling: touch;
 }
 
-.vg-guide-article .vg-decision-table:focus-visible,
 .vg-guide-article .vg-decision-table__scroll:focus-visible,
 .vg-guide-article .wp-block-table:focus-visible {
   outline: 3px solid var(--vg-gold);
   outline-offset: 4px;
 }
 
-.vg-guide-article .vg-decision-table table,
-.vg-guide-article .vg-decision-table__scroll table,
-.vg-guide-article .wp-block-table table {
+.vg-guide-article table.vg-decision-table {
+  width: 100%;
+  max-width: 100%;
+  margin: 0;
+  border-collapse: collapse;
+}
+
+.vg-guide-article .vg-decision-table__scroll > table,
+.vg-guide-article .wp-block-table > table {
   width: 100%;
   min-width: 680px;
   margin: 0;
@@ -694,7 +698,6 @@
     grid-template-columns: 1fr;
   }
 
-  .vg-guide-article .vg-decision-table,
   .vg-guide-article .vg-decision-table__scroll,
   .vg-guide-article .wp-block-table {
     width: calc(100vw - 20px);

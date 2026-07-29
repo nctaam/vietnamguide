@@ -47,6 +47,62 @@ function Require-Matches {
     }
 }
 
+function Get-CssBlockContent {
+    param([string]$RelativePath, [string]$Marker)
+    $Content = Get-RepoContent $RelativePath
+    if ($null -eq $Content) { return $null }
+
+    $MarkerIndex = $Content.IndexOf($Marker, [System.StringComparison]::Ordinal)
+    if ($MarkerIndex -lt 0) { return $null }
+
+    $OpenBrace = $Content.IndexOf('{', $MarkerIndex)
+    if ($OpenBrace -lt 0) { return $null }
+
+    $Depth = 0
+    for ($Index = $OpenBrace; $Index -lt $Content.Length; $Index++) {
+        if ($Content[$Index] -eq '{') {
+            $Depth++
+            continue
+        }
+
+        if ($Content[$Index] -eq '}') {
+            $Depth--
+            if ($Depth -eq 0) {
+                return $Content.Substring($OpenBrace + 1, $Index - $OpenBrace - 1)
+            }
+        }
+    }
+
+    return $null
+}
+
+function Require-CssBlockContains {
+    param([string]$RelativePath, [string]$Marker, [string]$Needle)
+    $BlockContent = Get-CssBlockContent $RelativePath $Marker
+    if ($null -eq $BlockContent) {
+        $Failures.Add("Missing CSS block in ${RelativePath}: $Marker")
+    } elseif (-not $BlockContent.Contains($Needle)) {
+        $Failures.Add("Missing substring in CSS block ${Marker}: $Needle")
+    }
+}
+
+function Require-GuideCssScoped {
+    param([string]$RelativePath)
+    $Content = Get-RepoContent $RelativePath
+    if ($null -eq $Content) { return }
+
+    $SelectorMatches = [regex]::Matches($Content, '(?ms)(?:^|[{}])\s*([^{};][^{};]*)\{')
+    foreach ($SelectorMatch in $SelectorMatches) {
+        foreach ($SelectorValue in $SelectorMatch.Groups[1].Value.Split(',')) {
+            $Selector = $SelectorValue.Trim()
+            if ($Selector -eq '' -or $Selector.StartsWith('@')) { continue }
+            if ($Selector -notmatch '^\.vg-[A-Za-z0-9_-]+') {
+                $Failures.Add("Unscoped guide CSS selector in ${RelativePath}: $Selector")
+            }
+        }
+    }
+}
+
 function Get-FunctionContent {
     param([string]$RelativePath, [string]$FunctionName)
     $Content = Get-RepoContent $RelativePath
@@ -552,18 +608,97 @@ Require-Contains $Functions 'if (vg_is_guide_experience_page())'
 Require-Matches $Functions "(?s)if\s*\(\s*vg_is_guide_experience_page\(\)\s*\)\s*\{[^{}]*wp_enqueue_style\s*\(\s*'vietnamguide-guide-experience'[^{}]*wp_enqueue_script\s*\(\s*'vietnamguide-guide-experience'[^{}]*\}" 'guide assets conditionally enqueued for guide experience pages'
 Require-Matches $Functions "wp_enqueue_style\s*\(\s*'vietnamguide-guide-experience'" 'guide experience style handle'
 Require-Matches $Functions "wp_enqueue_script\s*\(\s*'vietnamguide-guide-experience'" 'guide experience script handle'
-Require-Contains $GuideCss '.vg-guide-spine'
+Require-Contains $Functions "`$version = wp_get_theme()->get('Version');"
+Require-Matches $Functions '(?s)wp_enqueue_style\s*\(\s*''vietnamguide-guide-experience''\s*,\s*get_theme_file_uri\(\s*''/assets/css/guide-experience\.css''\s*\)\s*,\s*\[\s*''vietnamguide-guide-patterns''\s*\]\s*,\s*\$version\s*\)' 'guide style dependency and shared version'
+Require-Matches $Functions '(?s)wp_enqueue_script\s*\(\s*''vietnamguide-guide-experience''\s*,\s*get_theme_file_uri\(\s*''/assets/js/guide-experience\.js''\s*\)\s*,\s*\[\s*\]\s*,\s*\$version\s*,\s*true\s*\)' 'guide script empty dependencies, shared version, and footer loading'
+
+$KeyGuideSelectors = @(
+    '.vg-guide-experience::before',
+    '.vg-guide-experience .vg-guide-hero-cover',
+    '.vg-guide-experience .vg-guide-hero-inner',
+    '.vg-guide-experience .vg-guide-title',
+    '.vg-guide-meta',
+    '.vg-guide-jump',
+    '.vg-guide-spine',
+    '.vg-guide-trust',
+    '.vg-guide-article h2',
+    '.vg-guide-article p',
+    '.vg-guide-related',
+    '.vg-guide-article .vg-concierge-verdict',
+    '.vg-guide-article .vg-at-a-glance',
+    '.vg-guide-article .vg-field-note',
+    '.vg-guide-article .vg-related-cards',
+    '.vg-guide-article .vg-decision-table__scroll',
+    '.vg-guide-article .vg-timeline',
+    '.vg-guide-article .vg-guide-photo-grid',
+    '.vg-guide-article .vg-check-list',
+    '.vg-guide-article .vg-feature-list',
+    '.vg-guide-article .vg-faq-list',
+    '.vg-guide-article .vg-travel-guide-flow',
+    '.vg-guide-article .vg-travel-route-family'
+)
+foreach ($Selector in $KeyGuideSelectors) {
+    Require-Contains $GuideCss $Selector
+}
+
 Require-Contains $GuideCss 'grid-template-columns: minmax(148px, 190px) minmax(0, 760px) minmax(190px, 240px)'
-Require-Contains $GuideCss '.vg-guide-jump'
-Require-Contains $GuideCss '.vg-guide-trust'
-Require-Contains $GuideCss '.vg-decision-table'
-Require-Contains $GuideCss '.vg-timeline'
+Require-Contains $GuideCss '@media (max-width: 1100px)'
 Require-Contains $GuideCss '@media (max-width: 960px)'
+Require-Contains $GuideCss '@media (max-width: 620px)'
 Require-Contains $GuideCss '@media (prefers-reduced-motion: reduce)'
+Require-Contains $GuideCss ':focus-visible'
+Require-CssBlockContains $GuideCss '.vg-guide-experience {' 'overflow-x: clip;'
+Require-CssBlockContains $GuideCss '.vg-guide-experience::before {' 'height: 3px;'
+Require-CssBlockContains $GuideCss '.vg-guide-experience::before {' 'background: var(--vg-gold);'
+Require-CssBlockContains $GuideCss '.vg-guide-experience .vg-guide-hero-cover {' 'align-items: flex-end;'
+Require-CssBlockContains $GuideCss '.vg-guide-experience .vg-guide-hero-cover {' 'min-height: clamp(520px, 70svh, 780px);'
+Require-CssBlockContains $GuideCss '.vg-guide-meta {' 'text-transform: uppercase;'
+Require-CssBlockContains $GuideCss '.vg-guide-article h2 {' 'font-size: clamp(34px, 4vw, 56px);'
+Require-CssBlockContains $GuideCss '.vg-guide-related h2 {' 'font-size: clamp(36px, 5vw, 64px);'
+Require-CssBlockContains $GuideCss '.vg-guide-experience a:focus-visible,' 'outline: 3px solid var(--vg-gold);'
+Require-CssBlockContains $GuideCss '.vg-guide-article .vg-decision-table__scroll,' 'overflow-x: auto;'
+Require-CssBlockContains $GuideCss '.vg-guide-article .vg-decision-table__scroll,' 'border: 1px solid var(--vg-line);'
+Require-CssBlockContains $GuideCss '.vg-guide-article .vg-decision-table__scroll,' 'margin-block: 36px;'
+Require-CssBlockContains $GuideCss '.vg-guide-article .vg-decision-table__scroll:focus-visible,' 'outline: 3px solid var(--vg-gold);'
+Require-CssBlockContains $GuideCss '.vg-guide-article .vg-decision-table__scroll > table,' 'width: 100%;'
+Require-CssBlockContains $GuideCss '.vg-guide-article .vg-decision-table__scroll > table,' 'min-width: 680px;'
+Require-CssBlockContains $GuideCss '.vg-guide-article .vg-decision-table__scroll > table,' 'margin: 0;'
+Require-CssBlockContains $GuideCss '.vg-guide-article .vg-decision-table__scroll > table,' 'border-collapse: collapse;'
+Require-NotContains $GuideCss '.vg-guide-article .vg-decision-table,'
+Require-CssBlockContains $GuideCss '@media (max-width: 1100px)' 'grid-template-columns: minmax(136px, 170px) minmax(0, 1fr);'
+Require-CssBlockContains $GuideCss '@media (max-width: 1100px)' 'grid-column: 2;'
+Require-CssBlockContains $GuideCss '@media (max-width: 960px)' '.vg-guide-spine__toc'
+Require-CssBlockContains $GuideCss '@media (max-width: 960px)' 'grid-template-columns: minmax(0, 1fr);'
+Require-CssBlockContains $GuideCss '@media (max-width: 620px)' '.vg-guide-article .vg-guide-photo-grid'
+Require-CssBlockContains $GuideCss '@media (max-width: 620px)' 'grid-template-columns: 1fr;'
+Require-CssBlockContains $GuideCss '@media (prefers-reduced-motion: reduce)' 'scroll-behavior: auto !important;'
+Require-CssBlockContains $GuideCss '@media (prefers-reduced-motion: reduce)' 'transition: none !important;'
+Require-CssBlockContains $GuideCss '@media (prefers-reduced-motion: reduce)' 'animation: none !important;'
+Require-CssBlockContains $GuideCss '@media (prefers-reduced-motion: reduce)' 'transform: none;'
+Require-GuideCssScoped $GuideCss
+
 Require-Contains $GuideJs "document.querySelector('[data-vg-guide]')"
+Require-Contains $GuideJs "guide.querySelectorAll('table.vg-decision-table')"
+Require-Contains $GuideJs "table.parentElement.classList.contains('vg-decision-table__scroll')"
+Require-Matches $GuideJs "(?s)if\s*\(\s*table.parentElement\s*&&\s*table.parentElement.classList.contains\('vg-decision-table__scroll'\)\s*\)\s*\{\s*return;\s*\}" 'already wrapped legacy tables are skipped'
+Require-Contains $GuideJs "document.createElement('div')"
+Require-Contains $GuideJs "wrapper.className = 'vg-decision-table__scroll';"
+Require-Contains $GuideJs "wrapper.setAttribute('tabindex', '0');"
+Require-Contains $GuideJs 'table.parentNode.insertBefore(wrapper, table);'
+Require-Contains $GuideJs 'wrapper.appendChild(table);'
+Require-Contains $GuideJs "guide.querySelectorAll('.vg-guide-toc a[href^=`"#`"], .vg-guide-jump a[href^=`"#`"]')"
+Require-Contains $GuideJs 'document.getElementById(id)'
 Require-Contains $GuideJs 'IntersectionObserver'
+Require-Contains $GuideJs "classList.toggle('is-active'"
+Require-Contains $GuideJs 'Math.max(0, Math.min(100'
+Require-Contains $GuideJs 'window.requestAnimationFrame(updateProgress)'
+Require-Contains $GuideJs '{ passive: true }'
 Require-Contains $GuideJs "style.setProperty('--vg-guide-progress'"
+Require-Contains $GuideJs 'updateProgress();'
 Require-NotContains $GuideJs 'preventDefault()'
+Require-NotContains $GuideJs 'innerHTML'
+Require-NotContains $GuideJs 'outerHTML'
+Require-NotContains $GuideJs 'cloneNode'
 
 if ($Failures.Count -gt 0) {
     $Failures | ForEach-Object { Write-Output "FAIL: $_" }

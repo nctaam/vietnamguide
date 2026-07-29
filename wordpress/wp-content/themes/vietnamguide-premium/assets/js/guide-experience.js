@@ -6,6 +6,26 @@
     return;
   }
 
+  var legacyTables = guide.querySelectorAll('table.vg-decision-table');
+  Array.prototype.forEach.call(legacyTables, function (table) {
+    if (
+      table.parentElement &&
+      table.parentElement.classList.contains('vg-decision-table__scroll')
+    ) {
+      return;
+    }
+
+    if (!table.parentNode) {
+      return;
+    }
+
+    var wrapper = document.createElement('div');
+    wrapper.className = 'vg-decision-table__scroll';
+    wrapper.setAttribute('tabindex', '0');
+    table.parentNode.insertBefore(wrapper, table);
+    wrapper.appendChild(table);
+  });
+
   var links = Array.prototype.slice.call(
     guide.querySelectorAll('.vg-guide-toc a[href^="#"], .vg-guide-jump a[href^="#"]')
   );
