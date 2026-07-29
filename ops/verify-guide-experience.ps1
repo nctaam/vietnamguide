@@ -121,11 +121,17 @@ $Routing = "$ThemeRoot/inc/guide-routing.php"
 $ContentProvider = "$ThemeRoot/inc/guide-content.php"
 $ContextProvider = "$ThemeRoot/inc/guide-context.php"
 $Functions = "$ThemeRoot/functions.php"
+$PageTemplate = "$ThemeRoot/page.php"
+$DefaultPart = "$ThemeRoot/template-parts/content-page.php"
+$GuidePart = "$ThemeRoot/template-parts/guide-page.php"
 
 Require-File $Routing
 Require-File $ContentProvider
 Require-File $ContextProvider
 Require-File $Functions
+Require-File $PageTemplate
+Require-File $DefaultPart
+Require-File $GuidePart
 Require-Contains $Functions "require_once get_theme_file_path('/inc/guide-routing.php');"
 Require-Contains $Functions "require_once get_theme_file_path('/inc/guide-content.php');"
 Require-Contains $Functions "require_once get_theme_file_path('/inc/guide-context.php');"
@@ -169,6 +175,26 @@ Require-Contains $ContextProvider "'source_count'"
 Require-Contains $ContextProvider "'best_for'"
 Require-Contains $ContextProvider "'skip_if'"
 Require-Contains $ContextProvider "'related_routes'"
+Require-Matches $PageTemplate '\A<\?php\s+if\s*\(!\s*defined\(''ABSPATH''\)\s*\)\s*\{\s*exit;\s*\}' 'ABSPATH guard at the start of the page template'
+Require-Contains $PageTemplate 'vg_is_guide_experience_page($post)'
+Require-Contains $PageTemplate 'vg_build_guide_context($post)'
+Require-Contains $PageTemplate '$guideContext = null;'
+Require-Contains $PageTemplate 'if (is_array($guideContext)) {'
+Require-Contains $PageTemplate "get_template_part('template-parts/guide', 'page', `$guideContext);"
+Require-Contains $PageTemplate "get_template_part('template-parts/content', 'page');"
+Require-Matches $DefaultPart '\A<\?php\s+if\s*\(!\s*defined\(''ABSPATH''\)\s*\)\s*\{\s*exit;\s*\}' 'ABSPATH guard at the start of the default page template part'
+Require-Contains $DefaultPart '<h1>'
+Require-Contains $DefaultPart 'the_content();'
+Require-Contains $GuidePart "if (! defined('ABSPATH') || ! isset(`$args['type'], `$args['hero_html'], `$args['body_html'])) {"
+Require-Contains $GuidePart 'return;'
+Require-Contains $GuidePart 'data-vg-guide'
+Require-Contains $GuidePart 'data-vg-guide-type'
+Require-Contains $GuidePart 'vg-guide-jump'
+Require-Contains $GuidePart 'vg-guide-spine'
+Require-Contains $GuidePart 'vg-guide-article'
+Require-Contains $GuidePart 'vg-guide-trust'
+Require-Contains $GuidePart 'vg-guide-related'
+Require-NotContains $GuidePart '<h1'
 
 $PilotFunction = Get-FunctionContent $Routing 'vg_guide_pilot_paths'
 if ($null -ne $PilotFunction) {
