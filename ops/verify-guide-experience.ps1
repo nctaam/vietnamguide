@@ -207,6 +207,10 @@ $Functions = "$ThemeRoot/functions.php"
 $PageTemplate = "$ThemeRoot/page.php"
 $DefaultPart = "$ThemeRoot/template-parts/content-page.php"
 $GuidePart = "$ThemeRoot/template-parts/guide-page.php"
+$Footer = "$ThemeRoot/footer.php"
+$MutationVerifier = 'ops/verify-guide-experience-mutations.ps1'
+$LiveVerifier = 'ops/verify-guide-experience-live.php'
+$PublicVerifier = 'ops/verify-guide-experience-public.ps1'
 
 Require-File $Routing
 Require-File $ContentProvider
@@ -215,6 +219,10 @@ Require-File $Functions
 Require-File $PageTemplate
 Require-File $DefaultPart
 Require-File $GuidePart
+Require-File $Footer
+Require-File $MutationVerifier
+Require-File $LiveVerifier
+Require-File $PublicVerifier
 Require-Contains $Functions "require_once get_theme_file_path('/inc/guide-routing.php');"
 Require-Contains $Functions "require_once get_theme_file_path('/inc/guide-content.php');"
 Require-Contains $Functions "require_once get_theme_file_path('/inc/guide-context.php');"
@@ -290,6 +298,118 @@ Require-Contains $GuidePart 'vg-guide-article'
 Require-Contains $GuidePart 'vg-guide-trust'
 Require-Contains $GuidePart 'vg-guide-related'
 Require-NotContains $GuidePart '<h1'
+Require-Contains $Footer "esc_url(vg_home_url('source-update-policy'))"
+Require-NotContains $Footer "vg_home_url('source-policy')"
+
+Require-Contains $MutationVerifier '$RequiredContractPaths = @('
+Require-Contains $MutationVerifier "[guid]::NewGuid().ToString('N')"
+Require-Contains $MutationVerifier '$ValidatedTempRoot = (Resolve-Path -LiteralPath $TempRoot).Path'
+Require-Contains $MutationVerifier '-RepoRootOverride $MutationRoot'
+Require-Contains $MutationVerifier 'if ($LASTEXITCODE -eq 0) {'
+Require-Contains $MutationVerifier 'finally {'
+Require-Contains $MutationVerifier 'Remove-Item -LiteralPath $ValidatedTempRoot -Recurse -Force'
+Require-Contains $MutationVerifier 'pilot allowlist bypass'
+Require-Contains $MutationVerifier 'rendered hero H1 guard removal'
+Require-Contains $MutationVerifier 'rendered body H1 guard removal'
+Require-Contains $MutationVerifier 'required hero class guard removal'
+Require-Contains $MutationVerifier 'heading HTML round-trip guard removal'
+Require-Contains $MutationVerifier 'heading list round-trip guard removal'
+Require-Contains $MutationVerifier 'unique heading ID guard removal'
+Require-Contains $MutationVerifier 'opted-out heading inclusion'
+Require-Contains $MutationVerifier 'reserved heading collision guard removal'
+Require-Contains $MutationVerifier 'assigned heading collision guard removal'
+Require-Contains $MutationVerifier 'incomplete rendered HTML guard removal'
+Require-Contains $MutationVerifier 'incomplete heading-plan guard removal'
+Require-Contains $MutationVerifier 'heading application count guard removal'
+Require-Contains $MutationVerifier 'duplicate literal guide H1'
+Require-Contains $MutationVerifier 'global guide asset enqueue'
+Require-Contains $MutationVerifier 'legacy table wrapper removal'
+Require-Contains $MutationVerifier 'legacy table idempotence guard removal'
+Require-Contains $MutationVerifier 'legacy table focus guard removal'
+Require-Contains $MutationVerifier 'legacy table preventDefault regression'
+Require-Contains $MutationVerifier 'canonical TOC relationship removal'
+Require-Contains $MutationVerifier 'EEAT reviewed precedence inversion'
+Require-Contains $MutationVerifier 'invalid curated URL shape guard removal'
+Require-Contains $MutationVerifier 'invalid curated route item guard removal'
+Require-Contains $MutationVerifier 'existing related-route suppression removal'
+Require-Contains $MutationVerifier 'existing related-route context invariant removal'
+Require-Contains $MutationVerifier 'password-protected fallback removal'
+Require-Contains $MutationVerifier 'multipage fallback removal'
+Require-NotContains $MutationVerifier "<h2\b"
+Require-FunctionContains $MutationVerifier 'Copy-ContractTree' 'Copy-Item -LiteralPath $SourcePath -Destination $DestinationPath'
+Require-FunctionContains $MutationVerifier 'Set-ExactReplacement' '$SecondIndex'
+Require-FunctionContains $MutationVerifier 'Set-ExactReplacement' '[System.IO.File]::WriteAllText'
+Require-FunctionOrder $MutationVerifier 'Set-ExactReplacement' '$SecondIndex' '[System.IO.File]::WriteAllText'
+Require-Matches $MutationVerifier '(?s)try\s*\{.*?\}\s*finally\s*\{.*?Remove-Item\s+-LiteralPath\s+\$ValidatedTempRoot\s+-Recurse\s+-Force' 'validated mutation temp cleanup in finally'
+
+Require-Matches $LiveVerifier '(?s)\A<\?php\s+/\*\*.*?if\s*\(!\s*defined\(''ABSPATH''\)\s*\)\s*\{.*?WordPress is not loaded' 'live verifier ABSPATH failure guard'
+Require-Contains $LiveVerifier "'vg_guide_pilot_paths'"
+Require-Contains $LiveVerifier "'vg_get_guide_type'"
+Require-Contains $LiveVerifier "'vg_is_guide_experience_page'"
+Require-Contains $LiveVerifier "'vg_prepare_guide_content'"
+Require-Contains $LiveVerifier "'vg_prepare_guide_headings'"
+Require-Contains $LiveVerifier "'vg_render_guide_toc'"
+Require-Contains $LiveVerifier "'vg_normalize_guide_route_url'"
+Require-Contains $LiveVerifier "'vg_get_related_routes'"
+Require-Contains $LiveVerifier "'vg_is_valid_guide_context'"
+Require-Contains $LiveVerifier "'vg_build_guide_context'"
+Require-Contains $LiveVerifier 'WP_HTML_Tag_Processor'
+Require-Contains $LiveVerifier 'destinations/ho-chi-minh-city-travel-guide'
+Require-Contains $LiveVerifier 'itineraries/10-days-in-vietnam'
+Require-Contains $LiveVerifier 'compare/ha-long-bay-vs-lan-ha-bay'
+Require-Contains $LiveVerifier 'plan/vietnam-evisa'
+foreach ($FixtureLabel in @(
+    'pilot strict context'
+    'rendered hero/body H1 contract'
+    'filter-generated H1 fails closed'
+    'script and comment pseudo-headings ignored'
+    'authored heading IDs and deterministic collisions'
+    'opted-out headings excluded without collisions'
+    'incomplete markup fails closed'
+    'canonical EEAT metadata precedence'
+    'curated route URL normalization'
+    'protected and multipage fallback'
+    'malformed context rejection'
+    'canonical heading and TOC relationship'
+    'embedded related-route conflict rejection'
+)) {
+    Require-Contains $LiveVerifier $FixtureLabel
+}
+Require-Contains $LiveVerifier "add_filter('get_post_metadata'"
+Require-Contains $LiveVerifier "remove_filter('get_post_metadata'"
+Require-Contains $LiveVerifier 'finally {'
+Require-Contains $LiveVerifier 'catch (Throwable $throwable)'
+Require-Matches $LiveVerifier "(?s)add_filter\('get_post_metadata'.*?try\s*\{.*?\}\s*finally\s*\{\s*remove_filter\('get_post_metadata'" 'metadata filters restored in finally'
+Require-Contains $LiveVerifier 'WP_CLI::error'
+Require-Contains $LiveVerifier 'VietnamGuide guide experience live verification passed.'
+Require-NotContains $LiveVerifier 'wp_insert_post('
+Require-NotContains $LiveVerifier 'wp_update_post('
+Require-NotContains $LiveVerifier 'update_post_meta('
+Require-NotContains $LiveVerifier 'delete_post_meta('
+
+Require-Contains $PublicVerifier "[string]`$BaseUrl = 'https://vietnamguide.net'"
+Require-Contains $PublicVerifier 'Invoke-WebRequest'
+Require-Contains $PublicVerifier '-TimeoutSec'
+Require-Contains $PublicVerifier 'try {'
+Require-Contains $PublicVerifier 'catch {'
+Require-Contains $PublicVerifier 'destinations/ho-chi-minh-city-travel-guide'
+Require-Contains $PublicVerifier 'itineraries/10-days-in-vietnam'
+Require-Contains $PublicVerifier 'compare/ha-long-bay-vs-lan-ha-bay'
+Require-Contains $PublicVerifier 'plan/vietnam-evisa'
+Require-Contains $PublicVerifier "'<h1\b'"
+Require-Contains $PublicVerifier 'StatusCode -ne 200'
+Require-Contains $PublicVerifier 'data-vg-guide'
+Require-Contains $PublicVerifier 'guide-experience.css'
+Require-Contains $PublicVerifier 'guide-experience.js'
+Require-Contains $PublicVerifier 'vg-guide-jump'
+Require-Contains $PublicVerifier 'vg-guide-toc'
+Require-Contains $PublicVerifier 'fatal error'
+Require-Contains $PublicVerifier 'source-update-policy'
+Require-Contains $PublicVerifier 'representative non-pilot page'
+Require-FunctionContains $PublicVerifier 'Get-PublicPage' 'Invoke-WebRequest'
+Require-FunctionContains $PublicVerifier 'Get-PublicPage' '-TimeoutSec $RequestTimeoutSeconds'
+Require-FunctionContains $PublicVerifier 'Get-PublicPage' 'catch {'
+Require-FunctionContains $PublicVerifier 'Require-NoFatalText' "'fatal error'"
 
 $PilotFunction = Get-FunctionContent $Routing 'vg_guide_pilot_paths'
 if ($null -ne $PilotFunction) {
@@ -390,6 +510,7 @@ Require-FunctionContains $ContentProvider 'vg_collect_guide_heading_plan' '$rese
 Require-FunctionContains $ContentProvider 'vg_collect_guide_heading_plan' '$assignedIds'
 Require-FunctionContains $ContentProvider 'vg_collect_guide_heading_plan' '$plannedId = $originalId;'
 Require-FunctionContains $ContentProvider 'vg_collect_guide_heading_plan' 'sanitize_title($label)'
+Require-FunctionContains $ContentProvider 'vg_collect_guide_heading_plan' '$eligible = ! $heading[''opt_out''] && $label !== '''';'
 Require-FunctionContains $ContentProvider 'vg_apply_guide_heading_plan' "next_tag('H2')"
 Require-FunctionContains $ContentProvider 'vg_apply_guide_heading_plan' "get_attribute('id')"
 Require-FunctionContains $ContentProvider 'vg_apply_guide_heading_plan' 'if ($plannedId !== $currentId) {'
@@ -443,6 +564,7 @@ Require-FunctionContains $ContextProvider 'vg_normalize_guide_route_url' "`$host
 Require-FunctionContains $ContextProvider 'vg_normalize_guide_route_url' "`$isRootRelative = str_starts_with(`$url, '/') && ! str_starts_with(`$url, '//') && `$scheme === '' && `$host === '';"
 Require-FunctionContains $ContextProvider 'vg_normalize_guide_route_url' "`$isProtocolRelative = str_starts_with(`$url, '//') && `$scheme === '' && `$host !== '';"
 Require-FunctionContains $ContextProvider 'vg_normalize_guide_route_url' "`$isAbsoluteWeb = in_array(`$scheme, ['http', 'https'], true) && `$host !== '';"
+Require-FunctionContains $ContextProvider 'vg_normalize_guide_route_url' 'if (! $isRootRelative && ! $isProtocolRelative && ! $isAbsoluteWeb) {'
 Require-FunctionContains $ContextProvider 'vg_normalize_guide_route_url' "esc_url_raw(`$url, ['http', 'https'])"
 Require-FunctionContains $ContextProvider 'vg_normalize_guide_route_url' 'if ($sanitized === '''') {'
 Require-FunctionContains $ContextProvider 'vg_normalize_guide_route_url' '$sanitizedParts = wp_parse_url($sanitized);'

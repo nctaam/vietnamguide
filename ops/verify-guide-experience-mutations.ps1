@@ -1,0 +1,363 @@
+$ErrorActionPreference = 'Stop'
+
+$RepoRoot = Split-Path -Parent $PSScriptRoot
+$VerifierRelativePath = 'ops/verify-guide-experience.ps1'
+$RequiredContractPaths = @(
+    'ops/verify-guide-experience.ps1'
+    'ops/verify-guide-experience-mutations.ps1'
+    'ops/verify-guide-experience-live.php'
+    'ops/verify-guide-experience-public.ps1'
+    'wordpress/wp-content/themes/vietnamguide-premium/functions.php'
+    'wordpress/wp-content/themes/vietnamguide-premium/footer.php'
+    'wordpress/wp-content/themes/vietnamguide-premium/page.php'
+    'wordpress/wp-content/themes/vietnamguide-premium/inc/guide-routing.php'
+    'wordpress/wp-content/themes/vietnamguide-premium/inc/guide-content.php'
+    'wordpress/wp-content/themes/vietnamguide-premium/inc/guide-context.php'
+    'wordpress/wp-content/themes/vietnamguide-premium/template-parts/content-page.php'
+    'wordpress/wp-content/themes/vietnamguide-premium/template-parts/guide-page.php'
+    'wordpress/wp-content/themes/vietnamguide-premium/assets/css/guide-experience.css'
+    'wordpress/wp-content/themes/vietnamguide-premium/assets/js/guide-experience.js'
+)
+
+$Mutations = @(
+    @{
+        Name = 'pilot allowlist bypass'
+        File = 'wordpress/wp-content/themes/vietnamguide-premium/inc/guide-routing.php'
+        Find = @'
+    if (! in_array($path, vg_guide_pilot_paths(), true)) {
+        return false;
+    }
+'@
+        Replace = @'
+    if (false) {
+        return false;
+    }
+'@
+    }
+    @{
+        Name = 'rendered hero H1 guard removal'
+        File = 'wordpress/wp-content/themes/vietnamguide-premium/inc/guide-content.php'
+        Find = '$heroStats[''h1_count''] !== 1'
+        Replace = '$heroStats[''h1_count''] < 0'
+    }
+    @{
+        Name = 'rendered body H1 guard removal'
+        File = 'wordpress/wp-content/themes/vietnamguide-premium/inc/guide-content.php'
+        Find = '$bodyStats[''h1_count''] !== 0'
+        Replace = '$bodyStats[''h1_count''] < 0'
+    }
+    @{
+        Name = 'required hero class guard removal'
+        File = 'wordpress/wp-content/themes/vietnamguide-premium/inc/guide-content.php'
+        Find = '|| ! $heroStats[''has_hero_class'']'
+        Replace = '|| false'
+    }
+    @{
+        Name = 'heading HTML round-trip guard removal'
+        File = 'wordpress/wp-content/themes/vietnamguide-premium/inc/guide-context.php'
+        Find = '$preparedBody[''html''] !== $context[''body_html'']'
+        Replace = 'false'
+    }
+    @{
+        Name = 'heading list round-trip guard removal'
+        File = 'wordpress/wp-content/themes/vietnamguide-premium/inc/guide-context.php'
+        Find = '$preparedBody[''headings''] !== $context[''headings'']'
+        Replace = 'false'
+    }
+    @{
+        Name = 'unique heading ID guard removal'
+        File = 'wordpress/wp-content/themes/vietnamguide-premium/inc/guide-context.php'
+        Find = '|| isset($headingIds[$headingId])'
+        Replace = '|| false'
+    }
+    @{
+        Name = 'opted-out heading inclusion'
+        File = 'wordpress/wp-content/themes/vietnamguide-premium/inc/guide-content.php'
+        Find = '$eligible = ! $heading[''opt_out''] && $label !== '''';'
+        Replace = '$eligible = $label !== '''';'
+    }
+    @{
+        Name = 'reserved heading collision guard removal'
+        File = 'wordpress/wp-content/themes/vietnamguide-premium/inc/guide-content.php'
+        Find = 'while (isset($reservedIds[$candidate]) || isset($assignedIds[$candidate])) {'
+        Replace = 'while (isset($assignedIds[$candidate])) {'
+    }
+    @{
+        Name = 'assigned heading collision guard removal'
+        File = 'wordpress/wp-content/themes/vietnamguide-premium/inc/guide-content.php'
+        Find = 'while (isset($reservedIds[$candidate]) || isset($assignedIds[$candidate])) {'
+        Replace = 'while (isset($reservedIds[$candidate])) {'
+    }
+    @{
+        Name = 'incomplete rendered HTML guard removal'
+        File = 'wordpress/wp-content/themes/vietnamguide-premium/inc/guide-content.php'
+        Find = @'
+    if ($processor->paused_at_incomplete_token()) {
+        return null;
+    }
+'@
+        Replace = @'
+    if (false) {
+        return null;
+    }
+'@
+    }
+    @{
+        Name = 'incomplete heading-plan guard removal'
+        File = 'wordpress/wp-content/themes/vietnamguide-premium/inc/guide-content.php'
+        Find = 'if ($processor->paused_at_incomplete_token() || $currentHeading !== null) {'
+        Replace = 'if ($currentHeading !== null) {'
+    }
+    @{
+        Name = 'heading application count guard removal'
+        File = 'wordpress/wp-content/themes/vietnamguide-premium/inc/guide-content.php'
+        Find = 'if ($processor->paused_at_incomplete_token() || $headingIndex !== count($plan)) {'
+        Replace = 'if ($processor->paused_at_incomplete_token()) {'
+    }
+    @{
+        Name = 'duplicate literal guide H1'
+        File = 'wordpress/wp-content/themes/vietnamguide-premium/template-parts/guide-page.php'
+        Find = @'
+?>
+<article
+'@
+        Replace = @'
+?>
+<h1>Duplicate guide title</h1>
+<article
+'@
+    }
+    @{
+        Name = 'global guide asset enqueue'
+        File = 'wordpress/wp-content/themes/vietnamguide-premium/functions.php'
+        Find = 'if (vg_is_guide_experience_page()) {'
+        Replace = 'if (true) {'
+    }
+    @{
+        Name = 'legacy table wrapper removal'
+        File = 'wordpress/wp-content/themes/vietnamguide-premium/assets/js/guide-experience.js'
+        Find = '    wrapper.appendChild(table);'
+        Replace = '    table.parentNode.removeChild(wrapper);'
+    }
+    @{
+        Name = 'legacy table idempotence guard removal'
+        File = 'wordpress/wp-content/themes/vietnamguide-premium/assets/js/guide-experience.js'
+        Find = @'
+    if (
+      table.parentElement &&
+      table.parentElement.classList.contains('vg-decision-table__scroll')
+    ) {
+      return;
+    }
+'@
+        Replace = @'
+    if (false) {
+      return;
+    }
+'@
+    }
+    @{
+        Name = 'legacy table focus guard removal'
+        File = 'wordpress/wp-content/themes/vietnamguide-premium/assets/js/guide-experience.js'
+        Find = @'
+    if (!scrollContainer.hasAttribute('tabindex')) {
+      scrollContainer.setAttribute('tabindex', '0');
+    }
+'@
+        Replace = @'
+    scrollContainer.removeAttribute('tabindex');
+'@
+    }
+    @{
+        Name = 'legacy table preventDefault regression'
+        File = 'wordpress/wp-content/themes/vietnamguide-premium/assets/js/guide-experience.js'
+        Find = '    var hash = link.getAttribute(''href'');'
+        Replace = "    event.preventDefault();`n    var hash = link.getAttribute('href');"
+    }
+    @{
+        Name = 'canonical TOC relationship removal'
+        File = 'wordpress/wp-content/themes/vietnamguide-premium/inc/guide-context.php'
+        Find = 'if ($context[''toc_html''] !== vg_render_guide_toc($context[''headings''])) {'
+        Replace = 'if (false) {'
+    }
+    @{
+        Name = 'EEAT reviewed precedence inversion'
+        File = 'wordpress/wp-content/themes/vietnamguide-premium/inc/guide-context.php'
+        Find = @'
+    $reviewed = '';
+    if (function_exists('vg_eeat_get_field')) {
+        $reviewed = trim((string) vg_eeat_get_field($post->ID, 'last_meaningful_update'));
+    }
+    if ($reviewed === '') {
+        $reviewed = trim((string) get_post_meta($post->ID, '_vg_reviewed_at', true));
+    }
+'@
+        Replace = @'
+    $reviewed = trim((string) get_post_meta($post->ID, '_vg_reviewed_at', true));
+    if ($reviewed === '' && function_exists('vg_eeat_get_field')) {
+        $reviewed = trim((string) vg_eeat_get_field($post->ID, 'last_meaningful_update'));
+    }
+'@
+    }
+    @{
+        Name = 'invalid curated URL shape guard removal'
+        File = 'wordpress/wp-content/themes/vietnamguide-premium/inc/guide-context.php'
+        Find = 'if (! $isRootRelative && ! $isProtocolRelative && ! $isAbsoluteWeb) {'
+        Replace = 'if (false) {'
+    }
+    @{
+        Name = 'invalid curated route item guard removal'
+        File = 'wordpress/wp-content/themes/vietnamguide-premium/inc/guide-context.php'
+        Find = 'if ($title === '''' || $url === '''') {'
+        Replace = 'if (false) {'
+    }
+    @{
+        Name = 'existing related-route suppression removal'
+        File = 'wordpress/wp-content/themes/vietnamguide-premium/inc/guide-context.php'
+        Find = @'
+    if ($hasExisting) {
+        return [];
+    }
+'@
+        Replace = @'
+    if (false) {
+        return [];
+    }
+'@
+    }
+    @{
+        Name = 'existing related-route context invariant removal'
+        File = 'wordpress/wp-content/themes/vietnamguide-premium/inc/guide-context.php'
+        Find = 'if ($hasExistingRelated && $context[''related_routes''] !== []) {'
+        Replace = 'if (false) {'
+    }
+    @{
+        Name = 'password-protected fallback removal'
+        File = 'wordpress/wp-content/themes/vietnamguide-premium/inc/guide-context.php'
+        Find = @'
+    if ($post->post_password !== '' || post_password_required($post)) {
+        return null;
+    }
+'@
+        Replace = @'
+    if (false) {
+        return null;
+    }
+'@
+    }
+    @{
+        Name = 'multipage fallback removal'
+        File = 'wordpress/wp-content/themes/vietnamguide-premium/inc/guide-context.php'
+        Find = @'
+    if (preg_match('/<!--\s*nextpage\s*-->/i', $post->post_content) === 1) {
+        return null;
+    }
+'@
+        Replace = @'
+    if (false) {
+        return null;
+    }
+'@
+    }
+)
+
+function Copy-ContractTree {
+    param([string]$DestinationRoot)
+
+    foreach ($RelativePath in $RequiredContractPaths) {
+        $SourcePath = Join-Path $RepoRoot $RelativePath
+        if (-not (Test-Path -LiteralPath $SourcePath -PathType Leaf)) {
+            throw "Required contract file is missing: $RelativePath"
+        }
+
+        $DestinationPath = Join-Path $DestinationRoot $RelativePath
+        $DestinationDirectory = Split-Path -Parent $DestinationPath
+        $null = New-Item -ItemType Directory -Path $DestinationDirectory -Force
+        Copy-Item -LiteralPath $SourcePath -Destination $DestinationPath
+    }
+}
+
+function Set-ExactReplacement {
+    param(
+        [string]$Root,
+        [string]$RelativePath,
+        [string]$Find,
+        [string]$Replace
+    )
+
+    $Path = Join-Path $Root $RelativePath
+    $Content = [System.IO.File]::ReadAllText($Path)
+    $FirstIndex = $Content.IndexOf($Find, [System.StringComparison]::Ordinal)
+    $SecondIndex = if ($FirstIndex -ge 0) {
+        $Content.IndexOf($Find, $FirstIndex + $Find.Length, [System.StringComparison]::Ordinal)
+    } else {
+        -1
+    }
+
+    if ($FirstIndex -lt 0 -or $SecondIndex -ge 0) {
+        throw "Mutation target must occur exactly once in ${RelativePath}: $Find"
+    }
+
+    $Updated = $Content.Substring(0, $FirstIndex) + $Replace + $Content.Substring($FirstIndex + $Find.Length)
+    [System.IO.File]::WriteAllText($Path, $Updated, [System.Text.UTF8Encoding]::new($false))
+}
+
+$TempBase = [System.IO.Path]::GetFullPath([System.IO.Path]::GetTempPath()).TrimEnd(
+    [System.IO.Path]::DirectorySeparatorChar,
+    [System.IO.Path]::AltDirectorySeparatorChar
+)
+$TempLeaf = 'vietnamguide-guide-mutations-' + [guid]::NewGuid().ToString('N')
+$TempRoot = Join-Path $TempBase $TempLeaf
+$ValidatedTempRoot = $null
+$Failures = [System.Collections.Generic.List[string]]::new()
+
+try {
+    $null = New-Item -ItemType Directory -Path $TempRoot
+    $ValidatedTempRoot = (Resolve-Path -LiteralPath $TempRoot).Path
+    $ExpectedPrefix = $TempBase + [System.IO.Path]::DirectorySeparatorChar
+    if (-not $ValidatedTempRoot.StartsWith($ExpectedPrefix, [System.StringComparison]::OrdinalIgnoreCase) -or (Split-Path -Leaf $ValidatedTempRoot) -ne $TempLeaf) {
+        throw "Refusing to use unvalidated mutation temp directory: $ValidatedTempRoot"
+    }
+
+    $BaselineRoot = Join-Path $ValidatedTempRoot 'baseline'
+    Copy-ContractTree $BaselineRoot
+    $BaselineOutput = & powershell -NoProfile -ExecutionPolicy Bypass -File (Join-Path $BaselineRoot $VerifierRelativePath) -RepoRootOverride $BaselineRoot 2>&1
+    if ($LASTEXITCODE -ne 0) {
+        throw "Copied contract baseline failed before mutation testing:`n$($BaselineOutput -join "`n")"
+    }
+
+    foreach ($Mutation in $Mutations) {
+        $MutationLeaf = [regex]::Replace($Mutation.Name, '[^A-Za-z0-9]+', '-').Trim('-').ToLowerInvariant()
+        $MutationRoot = Join-Path $ValidatedTempRoot $MutationLeaf
+        Copy-ContractTree $MutationRoot
+        Set-ExactReplacement `
+            -Root $MutationRoot `
+            -RelativePath $Mutation.File `
+            -Find $Mutation.Find `
+            -Replace $Mutation.Replace
+
+        $MutationOutput = & powershell -NoProfile -ExecutionPolicy Bypass -File (Join-Path $MutationRoot $VerifierRelativePath) -RepoRootOverride $MutationRoot 2>&1
+        if ($LASTEXITCODE -eq 0) {
+            $Failures.Add("Mutation was not rejected: $($Mutation.Name)")
+            continue
+        }
+
+        if (-not (($MutationOutput -join "`n").Contains('FAIL:'))) {
+            $Failures.Add("Mutation did not produce a verifier failure: $($Mutation.Name)`n$($MutationOutput -join "`n")")
+            continue
+        }
+
+        Write-Output "PASS: mutation rejected - $($Mutation.Name)"
+    }
+} finally {
+    if ($null -ne $ValidatedTempRoot -and (Test-Path -LiteralPath $ValidatedTempRoot -PathType Container)) {
+        Remove-Item -LiteralPath $ValidatedTempRoot -Recurse -Force
+    }
+}
+
+if ($Failures.Count -gt 0) {
+    $Failures | ForEach-Object { Write-Output "FAIL: $_" }
+    exit 1
+}
+
+Write-Output "VietnamGuide guide experience mutation checks passed ($($Mutations.Count) rejected mutations)."

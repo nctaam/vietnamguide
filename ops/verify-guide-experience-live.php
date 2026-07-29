@@ -1,0 +1,467 @@
+<?php
+/**
+ * Runtime verification for the VietnamGuide guide experience system.
+ *
+ * Run with: wp eval-file /path/to/verify-guide-experience-live.php
+ */
+
+if (! defined('ABSPATH')) {
+    $message = "FAIL: WordPress is not loaded. Run this file with wp eval-file or a loaded verifier route.\n";
+    if (defined('STDERR')) {
+        fwrite(STDERR, $message);
+    } else {
+        echo $message;
+    }
+    exit(1);
+}
+
+$failures = [];
+$fail = static function (string $message) use (&$failures): void {
+    $failures[] = $message;
+};
+$check = static function (bool $condition, string $fixture, string $detail) use ($fail): void {
+    if (! $condition) {
+        $fail(sprintf('%s: %s', $fixture, $detail));
+    }
+};
+
+$required_functions = [
+    'vg_guide_pilot_paths',
+    'vg_classify_guide_path',
+    'vg_get_guide_path',
+    'vg_get_guide_type',
+    'vg_is_guide_experience_page',
+    'vg_split_guide_blocks',
+    'vg_inspect_guide_html',
+    'vg_is_valid_guide_heading_id',
+    'vg_allocate_guide_heading_id',
+    'vg_collect_guide_heading_plan',
+    'vg_apply_guide_heading_plan',
+    'vg_prepare_guide_headings',
+    'vg_render_guide_toc',
+    'vg_prepare_guide_content',
+    'vg_estimate_guide_reading_time',
+    'vg_extract_guide_data_value',
+    'vg_count_guide_sources',
+    'vg_normalize_guide_route_url',
+    'vg_get_related_routes',
+    'vg_guide_body_has_related_routes',
+    'vg_is_valid_guide_context',
+    'vg_build_guide_context',
+];
+
+foreach ($required_functions as $function_name) {
+    if (! function_exists($function_name)) {
+        $fail(sprintf('Required guide function is unavailable: %s.', $function_name));
+    }
+}
+
+if (! class_exists('WP_HTML_Tag_Processor')) {
+    $fail('WP_HTML_Tag_Processor is unavailable.');
+}
+
+$runtime_ready = $failures === [];
+
+$with_page_state = static function (WP_Post $post, callable $callback) {
+    $had_query = array_key_exists('wp_query', $GLOBALS);
+    $original_query = $GLOBALS['wp_query'] ?? null;
+    $had_post = array_key_exists('post', $GLOBALS);
+    $original_post = $GLOBALS['post'] ?? null;
+
+    $query = new WP_Query();
+    $query->is_page = true;
+    $query->is_singular = true;
+    $query->queried_object = $post;
+    $query->queried_object_id = $post->ID;
+    $GLOBALS['wp_query'] = $query;
+    $GLOBALS['post'] = $post;
+
+    try {
+        return $callback();
+    } finally {
+        if ($had_query) {
+            $GLOBALS['wp_query'] = $original_query;
+        } else {
+            unset($GLOBALS['wp_query']);
+        }
+
+        if ($had_post) {
+            $GLOBALS['post'] = $original_post;
+        } else {
+            unset($GLOBALS['post']);
+        }
+    }
+};
+
+$inspect_semantic_html = static function (string $html): ?array {
+    $processor = new WP_HTML_Tag_Processor($html);
+    $h1_count = 0;
+    $h2_ids = [];
+    $has_hero_class = false;
+
+    while ($processor->next_token()) {
+        if ($processor->is_tag_closer()) {
+            continue;
+        }
+
+        $token_name = $processor->get_token_name();
+        if ('H1' === $token_name) {
+            $h1_count++;
+        }
+        if ('H2' === $token_name) {
+            $id = $processor->get_attribute('id');
+            $h2_ids[] = is_string($id) ? $id : '';
+        }
+        if (true === $processor->has_class('vg-guide-hero')) {
+            $has_hero_class = true;
+        }
+    }
+
+    if ($processor->paused_at_incomplete_token()) {
+        return null;
+    }
+
+    return [
+        'h1_count' => $h1_count,
+        'h2_ids' => $h2_ids,
+        'has_hero_class' => $has_hero_class,
+    ];
+};
+
+$pilot_types = [
+    'destinations/ho-chi-minh-city-travel-guide' => 'destination',
+    'itineraries/10-days-in-vietnam' => 'itinerary',
+    'compare/ha-long-bay-vs-lan-ha-bay' => 'comparison',
+    'plan/vietnam-evisa' => 'practical',
+];
+$pilot_posts = [];
+
+if ($runtime_ready) {
+    try {
+    $check(
+        vg_guide_pilot_paths() === array_keys($pilot_types),
+        'pilot strict context',
+        'the runtime pilot allowlist does not match the four expected paths in order'
+    );
+
+    foreach ($pilot_types as $path => $expected_type) {
+        $post = get_page_by_path($path, OBJECT, 'page');
+        if (! $post instanceof WP_Post) {
+            $fail(sprintf('pilot strict context: published page lookup failed for %s.', $path));
+            continue;
+        }
+
+        $pilot_posts[$path] = $post;
+        $check($post->post_type === 'page', 'pilot strict context', sprintf('%s is not a page', $path));
+        $check($post->post_status === 'publish', 'pilot strict context', sprintf('%s is not published', $path));
+        $check(vg_get_guide_path($post) === $path, 'pilot strict context', sprintf('%s has a non-canonical guide path', $path));
+        $check(vg_get_guide_type($post) === $expected_type, 'pilot strict context', sprintf('%s did not classify strictly as %s', $path, $expected_type));
+
+        $result = $with_page_state($post, static function () use ($post): array {
+            return [
+                'enabled' => vg_is_guide_experience_page($post),
+                'context' => vg_build_guide_context($post),
+            ];
+        });
+        $check($result['enabled'] === true, 'pilot strict context', sprintf('%s did not enable the guide experience', $path));
+        $check(
+            is_array($result['context']) && vg_is_valid_guide_context($result['context']),
+            'pilot strict context',
+            sprintf('%s did not produce a valid strict context', $path)
+        );
+
+        if (is_array($result['context'])) {
+            $hero_stats = $inspect_semantic_html($result['context']['hero_html']);
+            $body_stats = $inspect_semantic_html($result['context']['body_html']);
+            $prepared_body = vg_prepare_guide_headings($result['context']['body_html']);
+            $check(
+                $hero_stats !== null
+                    && $body_stats !== null
+                    && $hero_stats['h1_count'] === 1
+                    && $body_stats['h1_count'] === 0
+                    && $hero_stats['has_hero_class'],
+                'rendered hero/body H1 contract',
+                sprintf('%s must render one real hero H1, zero body H1s, and the real hero class', $path)
+            );
+            $check(
+                $prepared_body['html'] === $result['context']['body_html']
+                    && $prepared_body['headings'] === $result['context']['headings']
+                    && $result['context']['toc_html'] === vg_render_guide_toc($result['context']['headings'])
+                    && $result['context']['reading_time'] >= 1,
+                'canonical heading and TOC relationship',
+                sprintf('%s context is not canonical or has invalid reading time', $path)
+            );
+        }
+    }
+    } catch (Throwable $throwable) {
+        $fail(sprintf('Pilot runtime fixtures threw %s: %s', get_class($throwable), $throwable->getMessage()));
+    }
+}
+
+if ($runtime_ready && $pilot_posts !== []) {
+    try {
+    $fixture_post = clone reset($pilot_posts);
+    $fixture_post->post_password = '';
+    $fixture_post->post_content = <<<'HTML'
+<!-- wp:html -->
+<section class="vg-guide-hero"><h1>Runtime fixture guide</h1></section>
+<!-- /wp:html -->
+<!-- wp:html -->
+<div data-vg-best-for="careful planners" data-vg-skip-if="you need a beach holiday"><h2 id="arrival">Arrival notes</h2><p>Useful details for a careful Vietnam itinerary.</p><h2>Local transport</h2><p>Practical transport details and timing advice.</p></div>
+<!-- /wp:html -->
+HTML;
+
+    $fixture_context = $with_page_state($fixture_post, static function () use ($fixture_post) {
+        return vg_build_guide_context($fixture_post);
+    });
+    $check(
+        is_array($fixture_context) && vg_is_valid_guide_context($fixture_context),
+        'rendered hero/body H1 contract',
+        'the in-memory guide fixture did not produce a valid context'
+    );
+
+    $generated_h1_filter = static function (string $html): string {
+        if (str_contains($html, 'VG_FILTER_H1_FIXTURE')) {
+            return $html . '<h1>Injected by a content filter</h1>';
+        }
+        return $html;
+    };
+    $filter_fixture = clone $fixture_post;
+    $filter_fixture->post_content = str_replace(
+        'Practical transport details',
+        'VG_FILTER_H1_FIXTURE Practical transport details',
+        $filter_fixture->post_content
+    );
+    add_filter('the_content', $generated_h1_filter, 999);
+    try {
+        $filtered_content = $with_page_state($filter_fixture, static function () use ($filter_fixture) {
+            return vg_prepare_guide_content($filter_fixture);
+        });
+        $check(
+            $filtered_content === null,
+            'filter-generated H1 fails closed',
+            'an H1 introduced by the_content in the rendered body was accepted'
+        );
+    } finally {
+        remove_filter('the_content', $generated_h1_filter, 999);
+    }
+
+    $pseudo_stats = $inspect_semantic_html(
+        '<section class="vg-guide-hero"><h1>Real heading</h1>'
+        . '<script>window.fake = "<h1>script heading</h1>";</script>'
+        . '<!-- <h1>comment heading</h1> --></section>'
+    );
+    $check(
+        $pseudo_stats !== null && $pseudo_stats['h1_count'] === 1,
+        'script and comment pseudo-headings ignored',
+        'semantic H1 inspection counted script or comment text'
+    );
+
+    $collision_html = '<h2 id="keep">Keep</h2><h2 id="keep">Duplicate</h2><h2>Keep</h2>';
+    $collision_result = vg_prepare_guide_headings($collision_html);
+    $collision_stats = $inspect_semantic_html($collision_result['html']);
+    $check(
+        $collision_stats !== null
+            && $collision_stats['h2_ids'] === ['keep', 'keep-2', 'keep-3']
+            && array_column($collision_result['headings'], 'id') === ['keep', 'keep-2', 'keep-3'],
+        'authored heading IDs and deterministic collisions',
+        'authored IDs were not preserved and duplicate IDs were not disambiguated deterministically'
+    );
+
+    $opt_out_html = '<h2 data-vg-toc="false" id="reserved">Hidden</h2><h2>Reserved</h2><h2>Visible</h2>';
+    $opt_out_result = vg_prepare_guide_headings($opt_out_html);
+    $opt_out_stats = $inspect_semantic_html($opt_out_result['html']);
+    $check(
+        $opt_out_stats !== null
+            && $opt_out_stats['h2_ids'] === ['reserved', 'reserved-2', 'visible']
+            && array_column($opt_out_result['headings'], 'id') === ['reserved-2', 'visible'],
+        'opted-out headings excluded without collisions',
+        'data-vg-toc=false did not reserve its ID while remaining excluded from the TOC'
+    );
+
+    $incomplete_html = '<section class="vg-guide-hero"><h1>Complete</h1><div';
+    $incomplete_headings = '<h2>Complete</h2><div';
+    $incomplete_prepared = vg_prepare_guide_headings($incomplete_headings);
+    $check(
+        vg_inspect_guide_html($incomplete_html) === null
+            && vg_collect_guide_heading_plan($incomplete_headings) === null
+            && $incomplete_prepared === ['html' => $incomplete_headings, 'headings' => []],
+        'incomplete markup fails closed',
+        'an incomplete token stream was accepted or rewritten'
+    );
+
+    if (function_exists('vg_eeat_get_field') && function_exists('vg_eeat_lines')) {
+        $eeat_meta_filter = static function ($value, int $object_id, string $meta_key, bool $single, string $meta_type) use ($fixture_post) {
+            if ($meta_type !== 'post' || $object_id !== $fixture_post->ID) {
+                return $value;
+            }
+
+            $fixtures = [
+                'vg_eeat_last_meaningful_update' => 'Canonical review date',
+                'vg_eeat_sources_checked' => "Canonical source A\nCanonical source B",
+                'vg_eeat_related_routes' => '',
+                '_vg_reviewed_at' => 'Legacy review date',
+            ];
+            if (! array_key_exists($meta_key, $fixtures)) {
+                return $value;
+            }
+
+            return $single ? $fixtures[$meta_key] : [$fixtures[$meta_key]];
+        };
+
+        add_filter('get_post_metadata', $eeat_meta_filter, 1, 5);
+        try {
+            $eeat_context = $with_page_state($fixture_post, static function () use ($fixture_post) {
+                return vg_build_guide_context($fixture_post);
+            });
+            $check(
+                is_array($eeat_context)
+                    && $eeat_context['reviewed_at'] === 'Canonical review date'
+                    && $eeat_context['source_count'] === 2,
+                'canonical EEAT metadata precedence',
+                'legacy or computed metadata took precedence over canonical EEAT fields'
+            );
+        } finally {
+            remove_filter('get_post_metadata', $eeat_meta_filter, 1);
+        }
+    }
+
+    $valid_urls = [
+        '/plan/vietnam-evisa/' => '/plan/vietnam-evisa/',
+        'https://example.com/route' => 'https://example.com/route',
+        'http://example.com/route' => 'http://example.com/route',
+        '//cdn.example.com/route' => '//cdn.example.com/route',
+    ];
+    foreach ($valid_urls as $input => $expected) {
+        $check(
+            vg_normalize_guide_route_url($input) === $expected,
+            'curated route URL normalization',
+            sprintf('valid URL did not normalize canonically: %s', $input)
+        );
+    }
+    foreach ([
+        '',
+        'plan/vietnam-evisa/',
+        'javascript:alert(1)',
+        'data:text/html,bad',
+        'ftp://example.com/route',
+        'https:///missing-host',
+        'https://example.com/bad path',
+        'https://example.com\\bad',
+    ] as $invalid_url) {
+        $check(
+            vg_normalize_guide_route_url($invalid_url) === '',
+            'curated route URL normalization',
+            sprintf('invalid URL shape was accepted: %s', $invalid_url)
+        );
+    }
+
+    if (function_exists('vg_eeat_get_field') && function_exists('vg_eeat_related_route_items')) {
+        $route_meta_filter = static function ($value, int $object_id, string $meta_key, bool $single, string $meta_type) use ($fixture_post) {
+            if ($meta_type === 'post' && $object_id === $fixture_post->ID && $meta_key === 'vg_eeat_related_routes') {
+                $routes = "Valid local|/plan/vietnam-evisa/\n"
+                    . "Bad script|javascript:alert(1)\n"
+                    . "Bad relative|plan/not-rooted\n"
+                    . "Valid web|https://example.com/guide";
+                return $single ? $routes : [$routes];
+            }
+            return $value;
+        };
+
+        add_filter('get_post_metadata', $route_meta_filter, 1, 5);
+        try {
+            $curated_routes = vg_get_related_routes($fixture_post, false);
+            $check(
+                $curated_routes === [
+                    ['title' => 'Valid local', 'url' => '/plan/vietnam-evisa/'],
+                    ['title' => 'Valid web', 'url' => 'https://example.com/guide'],
+                ],
+                'curated route URL normalization',
+                'malformed curated route items or URLs were not rejected'
+            );
+        } finally {
+            remove_filter('get_post_metadata', $route_meta_filter, 1);
+        }
+    }
+
+    $protected_post = clone $fixture_post;
+    $protected_post->post_password = 'runtime-fixture-password';
+    $multipage_post = clone $fixture_post;
+    $multipage_post->post_content .= "\n<!--nextpage-->\n<p>Page two</p>";
+    $protected_context = $with_page_state($protected_post, static function () use ($protected_post) {
+        return vg_build_guide_context($protected_post);
+    });
+    $multipage_context = $with_page_state($multipage_post, static function () use ($multipage_post) {
+        return vg_build_guide_context($multipage_post);
+    });
+    $check(
+        $protected_context === null && $multipage_context === null,
+        'protected and multipage fallback',
+        'protected or <!--nextpage--> content did not return null for the default template fallback'
+    );
+
+    if (is_array($fixture_context)) {
+        $malformed = $fixture_context;
+        unset($malformed['type']);
+        $check(! vg_is_valid_guide_context($malformed), 'malformed context rejection', 'a missing type was accepted');
+
+        $malformed = $fixture_context;
+        $malformed['headings'][0] = 'not-an-array';
+        $check(! vg_is_valid_guide_context($malformed), 'malformed context rejection', 'a malformed heading entry was accepted');
+
+        $malformed = $fixture_context;
+        $malformed['headings'][1]['id'] = $malformed['headings'][0]['id'];
+        $check(! vg_is_valid_guide_context($malformed), 'malformed context rejection', 'duplicate heading IDs were accepted');
+
+        $malformed = $fixture_context;
+        $malformed['body_html'] = str_replace('Arrival notes', 'Changed arrival notes', $malformed['body_html']);
+        $check(! vg_is_valid_guide_context($malformed), 'canonical heading and TOC relationship', 'a body/headings mismatch was accepted');
+
+        $malformed = $fixture_context;
+        $malformed['toc_html'] = '<nav>stale TOC</nav>';
+        $check(! vg_is_valid_guide_context($malformed), 'canonical heading and TOC relationship', 'a TOC/headings mismatch was accepted');
+
+        $malformed = $fixture_context;
+        $malformed['related_routes'] = [['url' => '/plan/vietnam-evisa/']];
+        $check(! vg_is_valid_guide_context($malformed), 'malformed context rejection', 'a malformed route item was accepted');
+
+        $malformed = $fixture_context;
+        $malformed['related_routes'] = [['title' => 'Bad route', 'url' => 'javascript:alert(1)']];
+        $check(! vg_is_valid_guide_context($malformed), 'malformed context rejection', 'an invalid route URL was accepted');
+
+        $malformed = $fixture_context;
+        $malformed['body_html'] .= '<div class="vg-related-routes">Embedded routes</div>';
+        $malformed['has_existing_related_routes'] = true;
+        $malformed['related_routes'] = [['title' => 'Generated route', 'url' => '/plan/vietnam-evisa/']];
+        $check(
+            ! vg_is_valid_guide_context($malformed) && vg_get_related_routes($fixture_post, true) === [],
+            'embedded related-route conflict rejection',
+            'embedded related routes did not suppress or conflict with generated routes'
+        );
+    }
+    } catch (Throwable $throwable) {
+        $fail(sprintf('Behavioral runtime fixtures threw %s: %s', get_class($throwable), $throwable->getMessage()));
+    }
+}
+
+if ($failures !== []) {
+    $message = "VietnamGuide guide experience live verification failed:\n- " . implode("\n- ", $failures);
+    if (class_exists('WP_CLI')) {
+        WP_CLI::error($message);
+    }
+
+    $output = "FAIL: {$message}\n";
+    if (defined('STDERR')) {
+        fwrite(STDERR, $output);
+    } else {
+        echo $output;
+    }
+    exit(1);
+}
+
+$success = 'VietnamGuide guide experience live verification passed.';
+if (class_exists('WP_CLI')) {
+    WP_CLI::success($success);
+} else {
+    echo "SUCCESS: {$success}\n";
+}
