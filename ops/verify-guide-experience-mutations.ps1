@@ -277,6 +277,20 @@ function Copy-ContractTree {
     }
 }
 
+function Convert-MutationTextToSourceStyle {
+    param(
+        [string]$Text,
+        [string]$LineEnding
+    )
+
+    $Normalized = $Text -replace "`r`n?", "`n"
+    if ($Normalized.StartsWith("`n")) {
+        $Normalized = $Normalized.Substring(1)
+    }
+
+    return $Normalized.Replace("`n", $LineEnding)
+}
+
 function Set-ExactReplacement {
     param(
         [string]$Root,
@@ -287,9 +301,12 @@ function Set-ExactReplacement {
 
     $Path = Join-Path $Root $RelativePath
     $Content = [System.IO.File]::ReadAllText($Path)
-    $FirstIndex = $Content.IndexOf($Find, [System.StringComparison]::Ordinal)
+    $LineEnding = if ($Content.Contains("`r`n")) { "`r`n" } else { "`n" }
+    $FindForMatching = Convert-MutationTextToSourceStyle -Text $Find -LineEnding $LineEnding
+    $ReplaceForWriting = Convert-MutationTextToSourceStyle -Text $Replace -LineEnding $LineEnding
+    $FirstIndex = $Content.IndexOf($FindForMatching, [System.StringComparison]::Ordinal)
     $SecondIndex = if ($FirstIndex -ge 0) {
-        $Content.IndexOf($Find, $FirstIndex + $Find.Length, [System.StringComparison]::Ordinal)
+        $Content.IndexOf($FindForMatching, $FirstIndex + $FindForMatching.Length, [System.StringComparison]::Ordinal)
     } else {
         -1
     }
@@ -298,9 +315,41 @@ function Set-ExactReplacement {
         throw "Mutation target must occur exactly once in ${RelativePath}: $Find"
     }
 
-    $Updated = $Content.Substring(0, $FirstIndex) + $Replace + $Content.Substring($FirstIndex + $Find.Length)
+    $Updated = $Content.Substring(0, $FirstIndex) + $ReplaceForWriting + $Content.Substring($FirstIndex + $FindForMatching.Length)
     [System.IO.File]::WriteAllText($Path, $Updated, [System.Text.UTF8Encoding]::new($false))
 }
+
+function Test-SetExactReplacementPortableFixture {
+    $FixtureRoot = Join-Path ([System.IO.Path]::GetTempPath()) ('vietnamguide-set-exact-' + [guid]::NewGuid().ToString('N'))
+    try {
+        $null = New-Item -ItemType Directory -Path $FixtureRoot
+        $FixturePath = Join-Path $FixtureRoot 'fixture.txt'
+        [System.IO.File]::WriteAllText(
+            $FixturePath,
+            "alpha`r`nbeta`r`ngamma`r`n",
+            [System.Text.UTF8Encoding]::new($false)
+        )
+
+        Set-ExactReplacement -Root $FixtureRoot -RelativePath 'fixture.txt' -Find @'
+beta
+gamma
+'@ -Replace @'
+delta
+epsilon
+'@
+
+        $Actual = [System.IO.File]::ReadAllText($FixturePath)
+        if ($Actual -ne "alpha`r`ndelta`r`nepsilon`r`n") {
+            throw "Portable Set-ExactReplacement fixture produced unexpected content: $Actual"
+        }
+    } finally {
+        if (Test-Path -LiteralPath $FixtureRoot -PathType Container) {
+            Remove-Item -LiteralPath $FixtureRoot -Recurse -Force
+        }
+    }
+}
+
+Test-SetExactReplacementPortableFixture
 
 $TempBase = [System.IO.Path]::GetFullPath([System.IO.Path]::GetTempPath()).TrimEnd(
     [System.IO.Path]::DirectorySeparatorChar,

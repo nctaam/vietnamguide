@@ -355,11 +355,11 @@ Require-Contains $LiveVerifier "'vg_is_valid_guide_context'"
 Require-Contains $LiveVerifier "'vg_build_guide_context'"
 Require-Matches $LiveVerifier '(?s)\$required_functions\s*=\s*\[.*?''vg_eeat_get_field''.*?''vg_eeat_lines''.*?''vg_eeat_related_route_items''.*?\];' 'EEAT helpers in the required live function inventory'
 Require-Contains $LiveVerifier 'WP_HTML_Tag_Processor'
+Require-Contains $LiveVerifier "`$result['context']['type'] === `$expected_type"
 Require-Contains $LiveVerifier 'destinations/ho-chi-minh-city-travel-guide'
 Require-Contains $LiveVerifier 'itineraries/10-days-in-vietnam'
 Require-Contains $LiveVerifier 'compare/ha-long-bay-vs-lan-ha-bay'
 Require-Contains $LiveVerifier 'plan/vietnam-evisa'
-Require-Contains $LiveVerifier "`$result['context']['type'] === `$expected_type"
 Require-Contains $LiveVerifier '$pseudo_inspection = vg_inspect_guide_html($pseudo_html);'
 Require-Contains $LiveVerifier 'vg_prepare_guide_content($pseudo_post)'
 Require-Contains $LiveVerifier 'vg_is_valid_guide_context($pseudo_context)'
@@ -387,6 +387,17 @@ Require-Contains $LiveVerifier 'catch (Throwable $throwable)'
 Require-Matches $LiveVerifier "(?s)add_filter\('get_post_metadata'.*?try\s*\{.*?\}\s*finally\s*\{\s*remove_filter\('get_post_metadata'" 'metadata filters restored in finally'
 Require-NotContains $LiveVerifier "if (function_exists('vg_eeat_get_field') && function_exists('vg_eeat_lines')) {"
 Require-NotContains $LiveVerifier "if (function_exists('vg_eeat_get_field') && function_exists('vg_eeat_related_route_items')) {"
+Require-Contains $LiveVerifier '<script>window.fake = "<h1>script heading</h1>";</script>'
+Require-Contains $LiveVerifier '<!-- <h1>comment heading</h1> -->'
+Require-Contains $LiveVerifier "vg_inspect_guide_html((string) `$pseudo_content['hero_html'])"
+foreach ($EeatFunction in @(
+    'vg_eeat_get_field'
+    'vg_eeat_lines'
+    'vg_eeat_related_route_items'
+)) {
+    Require-Matches $LiveVerifier "(?s)\`$required_functions\s*=\s*\[.*?'$EeatFunction'.*?\]" "required live EEAT helper inventory includes $EeatFunction"
+}
+Require-NotContains $LiveVerifier 'if ($runtime_ready && $pilot_posts !== []) {'
 Require-Contains $LiveVerifier 'WP_CLI::error'
 Require-Contains $LiveVerifier 'VietnamGuide guide experience live verification passed.'
 Require-NotContains $LiveVerifier 'wp_insert_post('

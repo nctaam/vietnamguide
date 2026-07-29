@@ -206,9 +206,44 @@ if ($runtime_ready) {
     }
 }
 
-if ($runtime_ready && $pilot_posts !== []) {
+if ($runtime_ready) {
+    $fixture_type_filter = null;
     try {
-    $fixture_post = clone reset($pilot_posts);
+    if ($pilot_posts !== []) {
+        $fixture_post = clone reset($pilot_posts);
+    } else {
+        // Keep in-memory fixtures runnable even when a pilot page lookup fails.
+        $fixture_post = new WP_Post((object) [
+            'ID' => 9000001,
+            'post_author' => 0,
+            'post_date' => '2026-01-01 00:00:00',
+            'post_date_gmt' => '2026-01-01 00:00:00',
+            'post_content' => '',
+            'post_title' => 'Runtime fixture guide',
+            'post_excerpt' => '',
+            'post_status' => 'publish',
+            'comment_status' => 'closed',
+            'ping_status' => 'closed',
+            'post_password' => '',
+            'post_name' => 'runtime-fixture-guide',
+            'to_ping' => '',
+            'pinged' => '',
+            'post_modified' => '2026-01-01 00:00:00',
+            'post_modified_gmt' => '2026-01-01 00:00:00',
+            'post_content_filtered' => '',
+            'post_parent' => 0,
+            'guid' => '',
+            'menu_order' => 0,
+            'post_type' => 'page',
+            'post_mime_type' => '',
+            'comment_count' => 0,
+            'filter' => 'raw',
+        ]);
+        $fixture_type_filter = static function (?string $type, WP_Post $post) use ($fixture_post): ?string {
+            return $post->ID === $fixture_post->ID ? 'practical' : $type;
+        };
+        add_filter('vg_guide_type', $fixture_type_filter, 999, 2);
+    }
     $fixture_post->post_password = '';
     $fixture_post->post_content = <<<'HTML'
 <!-- wp:html -->
@@ -290,7 +325,7 @@ HTML;
             return vg_build_guide_context($pseudo_post);
         });
         $pseudo_hero_stats = is_array($pseudo_content)
-            ? $inspect_semantic_html($pseudo_content['hero_html'])
+            ? vg_inspect_guide_html((string) $pseudo_content['hero_html'])
             : null;
         $check(
             is_array($pseudo_content)
@@ -486,6 +521,10 @@ HTML;
     }
     } catch (Throwable $throwable) {
         $fail(sprintf('Behavioral runtime fixtures threw %s: %s', get_class($throwable), $throwable->getMessage()));
+    } finally {
+        if ($fixture_type_filter !== null) {
+            remove_filter('vg_guide_type', $fixture_type_filter, 999);
+        }
     }
 }
 
