@@ -86,20 +86,45 @@ function Require-CssBlockContains {
     }
 }
 
-function Require-GuideCssScoped {
-    param([string]$RelativePath)
-    $Content = Get-RepoContent $RelativePath
-    if ($null -eq $Content) { return }
-
+function Get-UnscopedGuideCssSelectors {
+    param([string]$Content)
+    $UnscopedSelectors = [System.Collections.Generic.List[string]]::new()
     $SelectorMatches = [regex]::Matches($Content, '(?ms)(?:^|[{}])\s*([^{};][^{};]*)\{')
     foreach ($SelectorMatch in $SelectorMatches) {
         foreach ($SelectorValue in $SelectorMatch.Groups[1].Value.Split(',')) {
             $Selector = $SelectorValue.Trim()
             if ($Selector -eq '' -or $Selector.StartsWith('@')) { continue }
+            if ($Selector -match '^(from|to|(?:[0-9]+(?:\.[0-9]+)?|\.[0-9]+)%)$') { continue }
             if ($Selector -notmatch '^\.vg-[A-Za-z0-9_-]+') {
-                $Failures.Add("Unscoped guide CSS selector in ${RelativePath}: $Selector")
+                $UnscopedSelectors.Add($Selector)
             }
         }
+    }
+
+    return $UnscopedSelectors.ToArray()
+}
+
+function Require-GuideCssScoped {
+    param([string]$RelativePath)
+    $Content = Get-RepoContent $RelativePath
+    if ($null -eq $Content) { return }
+
+    foreach ($Selector in (Get-UnscopedGuideCssSelectors $Content)) {
+        $Failures.Add("Unscoped guide CSS selector in ${RelativePath}: $Selector")
+    }
+}
+
+function Require-GuideCssScopeSelfTest {
+    $KeyframeFixture = '@keyframes vg-scope-check { from { opacity: 0; } 50%, .5% { opacity: .5; } to { opacity: 1; } } .vg-scope-check { opacity: 1; }'
+    $KeyframeFailures = @(Get-UnscopedGuideCssSelectors $KeyframeFixture)
+    if ($KeyframeFailures.Count -ne 0) {
+        $Failures.Add("Guide CSS scope helper rejected keyframe selectors: $($KeyframeFailures -join ', ')")
+    }
+
+    $LeakFixture = 'body { overflow-x: hidden; } .vg-scope-check { display: block; }'
+    $LeakFailures = @(Get-UnscopedGuideCssSelectors $LeakFixture)
+    if ($LeakFailures -notcontains 'body') {
+        $Failures.Add('Guide CSS scope helper failed to reject an unscoped body selector')
     }
 }
 
@@ -676,6 +701,7 @@ Require-CssBlockContains $GuideCss '@media (prefers-reduced-motion: reduce)' 'tr
 Require-CssBlockContains $GuideCss '@media (prefers-reduced-motion: reduce)' 'animation: none !important;'
 Require-CssBlockContains $GuideCss '@media (prefers-reduced-motion: reduce)' 'transform: none;'
 Require-GuideCssScoped $GuideCss
+Require-GuideCssScopeSelfTest
 
 Require-Contains $GuideJs "document.querySelector('[data-vg-guide]')"
 Require-Contains $GuideJs "guide.querySelectorAll('table.vg-decision-table')"
@@ -686,10 +712,20 @@ Require-Contains $GuideJs "wrapper.className = 'vg-decision-table__scroll';"
 Require-Contains $GuideJs "wrapper.setAttribute('tabindex', '0');"
 Require-Contains $GuideJs 'table.parentNode.insertBefore(wrapper, table);'
 Require-Contains $GuideJs 'wrapper.appendChild(table);'
+Require-Contains $GuideJs "guide.querySelectorAll('.vg-decision-table__scroll, .wp-block-table')"
+Require-Contains $GuideJs "scrollContainer.hasAttribute('tabindex')"
+Require-Contains $GuideJs "scrollContainer.setAttribute('tabindex', '0');"
 Require-Contains $GuideJs "guide.querySelectorAll('.vg-guide-toc a[href^=`"#`"], .vg-guide-jump a[href^=`"#`"]')"
 Require-Contains $GuideJs 'document.getElementById(id)'
 Require-Contains $GuideJs 'IntersectionObserver'
 Require-Contains $GuideJs "classList.toggle('is-active'"
+Require-Contains $GuideJs 'var activeId = null;'
+Require-Contains $GuideJs 'if (id === activeId) {'
+Require-Contains $GuideJs 'var lastSection = sections.length > 0 ? sections[sections.length - 1] : null;'
+Require-Contains $GuideJs 'var nearGuideEnd = false;'
+Require-Contains $GuideJs 'progress >= 99.5'
+Require-Contains $GuideJs 'rect.bottom <= window.innerHeight * 1.15'
+Require-Contains $GuideJs 'setActive(lastSection.id);'
 Require-Contains $GuideJs 'Math.max(0, Math.min(100'
 Require-Contains $GuideJs 'window.requestAnimationFrame(updateProgress)'
 Require-Contains $GuideJs '{ passive: true }'
