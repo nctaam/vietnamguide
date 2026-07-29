@@ -16,7 +16,7 @@ get_header();
             $guideContext = vg_build_guide_context($post);
         }
 
-        if (is_array($guideContext)) {
+        if (is_array($guideContext) && vg_is_valid_guide_context($guideContext)) {
             get_template_part('template-parts/guide', 'page', $guideContext);
         } else {
             get_template_part('template-parts/content', 'page');

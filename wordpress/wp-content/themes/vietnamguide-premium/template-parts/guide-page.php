@@ -1,9 +1,16 @@
 <?php
-if (! defined('ABSPATH') || ! isset($args['type'], $args['hero_html'], $args['body_html'])) {
+if (! defined('ABSPATH') || ! is_array($args ?? null) || ! vg_is_valid_guide_context($args)) {
     return;
 }
 
 $type = (string) $args['type'];
+$typeLabels = [
+    'destination' => __('Destination', 'vietnamguide-premium'),
+    'itinerary' => __('Itinerary', 'vietnamguide-premium'),
+    'comparison' => __('Comparison', 'vietnamguide-premium'),
+    'practical' => __('Practical', 'vietnamguide-premium'),
+];
+$typeLabel = $typeLabels[$type];
 $headings = is_array($args['headings'] ?? null) ? $args['headings'] : [];
 $reviewed = (string) ($args['reviewed_at'] ?? '');
 $readingTime = (int) ($args['reading_time'] ?? 0);
@@ -20,16 +27,16 @@ $relatedRoutes = is_array($args['related_routes'] ?? null) ? $args['related_rout
 >
     <?php echo $args['hero_html']; ?>
 
-    <div class="vg-guide-meta" aria-label="<?php esc_attr_e('Guide details', 'vietnamguide-premium'); ?>">
-        <span><?php echo esc_html(ucfirst($type)); ?></span>
+    <div class="vg-guide-meta" role="list" aria-label="<?php esc_attr_e('Guide details', 'vietnamguide-premium'); ?>">
+        <span role="listitem"><?php echo esc_html($typeLabel); ?></span>
         <?php if ($readingTime > 0) : ?>
-            <span><?php echo esc_html(sprintf(_n('%d minute read', '%d minute read', $readingTime, 'vietnamguide-premium'), $readingTime)); ?></span>
+            <span role="listitem"><?php echo esc_html(sprintf(_n('%d minute read', '%d minutes read', $readingTime, 'vietnamguide-premium'), $readingTime)); ?></span>
         <?php endif; ?>
         <?php if ($reviewed !== '') : ?>
-            <span><?php echo esc_html(sprintf(__('Reviewed %s', 'vietnamguide-premium'), $reviewed)); ?></span>
+            <span role="listitem"><?php echo esc_html(sprintf(__('Reviewed %s', 'vietnamguide-premium'), $reviewed)); ?></span>
         <?php endif; ?>
         <?php if ($sourceCount > 0) : ?>
-            <span><?php echo esc_html(sprintf(_n('%d source', '%d sources', $sourceCount, 'vietnamguide-premium'), $sourceCount)); ?></span>
+            <span role="listitem"><?php echo esc_html(sprintf(_n('%d source', '%d sources', $sourceCount, 'vietnamguide-premium'), $sourceCount)); ?></span>
         <?php endif; ?>
     </div>
 

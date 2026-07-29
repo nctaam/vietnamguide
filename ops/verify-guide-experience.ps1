@@ -164,6 +164,7 @@ Require-Contains $ContextProvider 'function vg_extract_guide_data_value(string $
 Require-Contains $ContextProvider 'function vg_count_guide_sources(string $html): int'
 Require-Contains $ContextProvider 'function vg_normalize_guide_route_url(string $url): string'
 Require-Contains $ContextProvider 'function vg_get_related_routes(WP_Post $post, bool $hasExisting): array'
+Require-Contains $ContextProvider 'function vg_is_valid_guide_context(array $context): bool'
 Require-Contains $ContextProvider 'function vg_build_guide_context(WP_Post $post): ?array'
 Require-Matches $ContextProvider '\A<\?php\s+if\s*\(!\s*defined\(''ABSPATH''\)\s*\)\s*\{\s*exit;\s*\}' 'ABSPATH guard at the start of the context provider'
 Require-Contains $ContextProvider "'_vg_reviewed_at'"
@@ -179,16 +180,26 @@ Require-Matches $PageTemplate '\A<\?php\s+if\s*\(!\s*defined\(''ABSPATH''\)\s*\)
 Require-Contains $PageTemplate 'vg_is_guide_experience_page($post)'
 Require-Contains $PageTemplate 'vg_build_guide_context($post)'
 Require-Contains $PageTemplate '$guideContext = null;'
-Require-Contains $PageTemplate 'if (is_array($guideContext)) {'
+Require-Contains $PageTemplate 'if (is_array($guideContext) && vg_is_valid_guide_context($guideContext)) {'
+Require-NotContains $PageTemplate 'if (is_array($guideContext)) {'
 Require-Contains $PageTemplate "get_template_part('template-parts/guide', 'page', `$guideContext);"
 Require-Contains $PageTemplate "get_template_part('template-parts/content', 'page');"
 Require-Matches $DefaultPart '\A<\?php\s+if\s*\(!\s*defined\(''ABSPATH''\)\s*\)\s*\{\s*exit;\s*\}' 'ABSPATH guard at the start of the default page template part'
 Require-Contains $DefaultPart '<h1>'
 Require-Contains $DefaultPart 'the_content();'
-Require-Contains $GuidePart "if (! defined('ABSPATH') || ! isset(`$args['type'], `$args['hero_html'], `$args['body_html'])) {"
+Require-Contains $GuidePart '! is_array($args ?? null)'
+Require-Contains $GuidePart '! vg_is_valid_guide_context($args)'
 Require-Contains $GuidePart 'return;'
 Require-Contains $GuidePart 'data-vg-guide'
 Require-Contains $GuidePart 'data-vg-guide-type'
+Require-Contains $GuidePart 'role="list"'
+Require-Contains $GuidePart 'role="listitem"'
+Require-Contains $GuidePart "'destination' => __('Destination', 'vietnamguide-premium')"
+Require-Contains $GuidePart "'itinerary' => __('Itinerary', 'vietnamguide-premium')"
+Require-Contains $GuidePart "'comparison' => __('Comparison', 'vietnamguide-premium')"
+Require-Contains $GuidePart "'practical' => __('Practical', 'vietnamguide-premium')"
+Require-Contains $GuidePart "_n('%d minute read', '%d minutes read', `$readingTime, 'vietnamguide-premium')"
+Require-NotContains $GuidePart 'ucfirst('
 Require-Contains $GuidePart 'vg-guide-jump'
 Require-Contains $GuidePart 'vg-guide-spine'
 Require-Contains $GuidePart 'vg-guide-article'
@@ -411,8 +422,51 @@ Require-FunctionOrder $ContextProvider 'vg_get_related_routes' 'if (count($route
 Require-FunctionOrder $ContextProvider 'vg_get_related_routes' '$parent = get_post($post->post_parent);' '$parent->post_status === ''publish'''
 Require-FunctionOrder $ContextProvider 'vg_get_related_routes' '$parent->post_status === ''publish''' '$parentTitle = get_the_title($parent);'
 Require-FunctionOrder $ContextProvider 'vg_get_related_routes' '$parentTitle = get_the_title($parent);' "'title' => `$parentTitle"
+Require-FunctionContains $ContextProvider 'vg_is_valid_guide_context' "array_key_exists('post_id', `$context)"
+Require-FunctionContains $ContextProvider 'vg_is_valid_guide_context' "is_int(`$context['post_id'])"
+Require-FunctionContains $ContextProvider 'vg_is_valid_guide_context' "`$context['post_id'] <= 0"
+Require-FunctionContains $ContextProvider 'vg_is_valid_guide_context' "in_array(`$context['type'], ['destination', 'itinerary', 'comparison', 'practical'], true)"
+Require-FunctionContains $ContextProvider 'vg_is_valid_guide_context' "array_key_exists('hero_html', `$context)"
+Require-FunctionContains $ContextProvider 'vg_is_valid_guide_context' "is_string(`$context['hero_html'])"
+Require-FunctionContains $ContextProvider 'vg_is_valid_guide_context' "trim(`$context['hero_html']) === ''"
+Require-FunctionContains $ContextProvider 'vg_is_valid_guide_context' '$stringFields = ['
+Require-FunctionContains $ContextProvider 'vg_is_valid_guide_context' "'body_html'"
+Require-FunctionContains $ContextProvider 'vg_is_valid_guide_context' "'toc_html'"
+Require-FunctionContains $ContextProvider 'vg_is_valid_guide_context' "'reviewed_at'"
+Require-FunctionContains $ContextProvider 'vg_is_valid_guide_context' "'best_for'"
+Require-FunctionContains $ContextProvider 'vg_is_valid_guide_context' "'skip_if'"
+Require-FunctionContains $ContextProvider 'vg_is_valid_guide_context' "'title'"
+Require-FunctionContains $ContextProvider 'vg_is_valid_guide_context' "'permalink'"
+Require-FunctionContains $ContextProvider 'vg_is_valid_guide_context' 'foreach ($stringFields as $field) {'
+Require-FunctionContains $ContextProvider 'vg_is_valid_guide_context' '! array_key_exists($field, $context)'
+Require-FunctionContains $ContextProvider 'vg_is_valid_guide_context' '! is_string($context[$field])'
+Require-FunctionContains $ContextProvider 'vg_is_valid_guide_context' "array_key_exists('headings', `$context)"
+Require-FunctionContains $ContextProvider 'vg_is_valid_guide_context' "is_array(`$context['headings'])"
+Require-FunctionContains $ContextProvider 'vg_is_valid_guide_context' "array_key_exists('reading_time', `$context)"
+Require-FunctionContains $ContextProvider 'vg_is_valid_guide_context' "is_int(`$context['reading_time'])"
+Require-FunctionContains $ContextProvider 'vg_is_valid_guide_context' "`$context['reading_time'] < 1"
+Require-FunctionContains $ContextProvider 'vg_is_valid_guide_context' "array_key_exists('source_count', `$context)"
+Require-FunctionContains $ContextProvider 'vg_is_valid_guide_context' "is_int(`$context['source_count'])"
+Require-FunctionContains $ContextProvider 'vg_is_valid_guide_context' "`$context['source_count'] < 0"
+Require-FunctionContains $ContextProvider 'vg_is_valid_guide_context' "array_key_exists('related_routes', `$context)"
+Require-FunctionContains $ContextProvider 'vg_is_valid_guide_context' "is_array(`$context['related_routes'])"
+Require-FunctionContains $ContextProvider 'vg_is_valid_guide_context' "array_key_exists('has_existing_related_routes', `$context)"
+Require-FunctionContains $ContextProvider 'vg_is_valid_guide_context' "is_bool(`$context['has_existing_related_routes'])"
+Require-FunctionContains $ContextProvider 'vg_is_valid_guide_context' "foreach (`$context['related_routes'] as `$route) {"
+Require-FunctionContains $ContextProvider 'vg_is_valid_guide_context' '! is_array($route)'
+Require-FunctionContains $ContextProvider 'vg_is_valid_guide_context' "! array_key_exists('title', `$route)"
+Require-FunctionContains $ContextProvider 'vg_is_valid_guide_context' "! array_key_exists('url', `$route)"
+Require-FunctionContains $ContextProvider 'vg_is_valid_guide_context' "! is_string(`$route['title'])"
+Require-FunctionContains $ContextProvider 'vg_is_valid_guide_context' "! is_string(`$route['url'])"
+Require-FunctionContains $ContextProvider 'vg_is_valid_guide_context' "trim(`$route['title']) === ''"
+Require-FunctionContains $ContextProvider 'vg_is_valid_guide_context' "trim(`$route['url']) === ''"
+Require-FunctionOrder $ContextProvider 'vg_is_valid_guide_context' "foreach (`$context['related_routes'] as `$route) {" 'return true;'
 Require-FunctionContains $ContextProvider 'vg_build_guide_context' 'vg_prepare_guide_content($post)'
 Require-FunctionContains $ContextProvider 'vg_build_guide_context' 'vg_get_guide_type($post)'
+Require-FunctionContains $ContextProvider 'vg_build_guide_context' 'post_password_required($post)'
+Require-FunctionContains $ContextProvider 'vg_build_guide_context' "preg_match('/<!--\s*nextpage\s*-->/i', `$post->post_content) === 1"
+Require-FunctionOrder $ContextProvider 'vg_build_guide_context' 'post_password_required($post)' 'vg_prepare_guide_content($post)'
+Require-FunctionOrder $ContextProvider 'vg_build_guide_context' "preg_match('/<!--\s*nextpage\s*-->/i', `$post->post_content) === 1" 'vg_prepare_guide_content($post)'
 Require-FunctionContains $ContextProvider 'vg_build_guide_context' "function_exists('vg_eeat_get_field')"
 Require-FunctionContains $ContextProvider 'vg_build_guide_context' "vg_eeat_get_field(`$post->ID, 'last_meaningful_update')"
 Require-FunctionContains $ContextProvider 'vg_build_guide_context' "get_post_meta(`$post->ID, '_vg_reviewed_at', true)"

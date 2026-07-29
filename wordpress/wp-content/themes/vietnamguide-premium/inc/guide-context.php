@@ -208,8 +208,105 @@ function vg_get_related_routes(WP_Post $post, bool $hasExisting): array
     }));
 }
 
+function vg_is_valid_guide_context(array $context): bool
+{
+    if (
+        ! array_key_exists('post_id', $context)
+        || ! is_int($context['post_id'])
+        || $context['post_id'] <= 0
+    ) {
+        return false;
+    }
+
+    if (
+        ! array_key_exists('type', $context)
+        || ! is_string($context['type'])
+        || ! in_array($context['type'], ['destination', 'itinerary', 'comparison', 'practical'], true)
+    ) {
+        return false;
+    }
+
+    if (
+        ! array_key_exists('hero_html', $context)
+        || ! is_string($context['hero_html'])
+        || trim($context['hero_html']) === ''
+    ) {
+        return false;
+    }
+
+    $stringFields = [
+        'body_html',
+        'toc_html',
+        'reviewed_at',
+        'best_for',
+        'skip_if',
+        'title',
+        'permalink',
+    ];
+    foreach ($stringFields as $field) {
+        if (! array_key_exists($field, $context) || ! is_string($context[$field])) {
+            return false;
+        }
+    }
+
+    if (! array_key_exists('headings', $context) || ! is_array($context['headings'])) {
+        return false;
+    }
+
+    if (
+        ! array_key_exists('reading_time', $context)
+        || ! is_int($context['reading_time'])
+        || $context['reading_time'] < 1
+    ) {
+        return false;
+    }
+
+    if (
+        ! array_key_exists('source_count', $context)
+        || ! is_int($context['source_count'])
+        || $context['source_count'] < 0
+    ) {
+        return false;
+    }
+
+    if (! array_key_exists('related_routes', $context) || ! is_array($context['related_routes'])) {
+        return false;
+    }
+
+    if (
+        ! array_key_exists('has_existing_related_routes', $context)
+        || ! is_bool($context['has_existing_related_routes'])
+    ) {
+        return false;
+    }
+
+    foreach ($context['related_routes'] as $route) {
+        if (
+            ! is_array($route)
+            || ! array_key_exists('title', $route)
+            || ! array_key_exists('url', $route)
+            || ! is_string($route['title'])
+            || ! is_string($route['url'])
+            || trim($route['title']) === ''
+            || trim($route['url']) === ''
+        ) {
+            return false;
+        }
+    }
+
+    return true;
+}
+
 function vg_build_guide_context(WP_Post $post): ?array
 {
+    if (post_password_required($post)) {
+        return null;
+    }
+
+    if (preg_match('/<!--\s*nextpage\s*-->/i', $post->post_content) === 1) {
+        return null;
+    }
+
     $content = vg_prepare_guide_content($post);
     $type = vg_get_guide_type($post);
     if ($content === null || $type === null) {
