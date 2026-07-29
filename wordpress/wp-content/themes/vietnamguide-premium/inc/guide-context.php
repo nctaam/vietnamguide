@@ -77,6 +77,31 @@ function vg_count_guide_sources(string $html): int
     return count($sources);
 }
 
+function vg_normalize_guide_route_url(string $url): string
+{
+    $url = trim($url);
+    if ($url === '') {
+        return '';
+    }
+
+    $parts = wp_parse_url($url);
+    if (! is_array($parts)) {
+        return '';
+    }
+
+    $scheme = strtolower((string) ($parts['scheme'] ?? ''));
+    $host = trim((string) ($parts['host'] ?? ''));
+    $isRootRelative = str_starts_with($url, '/') && ! str_starts_with($url, '//');
+    $isProtocolRelative = str_starts_with($url, '//') && $scheme === '' && $host !== '';
+    $isAbsoluteWeb = in_array($scheme, ['http', 'https'], true) && $host !== '';
+    if (! $isRootRelative && ! $isProtocolRelative && ! $isAbsoluteWeb) {
+        return '';
+    }
+
+    $sanitized = esc_url_raw($url, ['http', 'https']);
+    return is_string($sanitized) && $sanitized !== '' ? $sanitized : '';
+}
+
 function vg_get_related_routes(WP_Post $post, bool $hasExisting): array
 {
     if ($hasExisting) {
@@ -92,14 +117,15 @@ function vg_get_related_routes(WP_Post $post, bool $hasExisting): array
             }
 
             $title = trim((string) ($item['label'] ?? ''));
-            $url = $item['url'] ?? '';
-            if ($title === '' || ! is_string($url) || trim($url) === '') {
+            $rawUrl = $item['url'] ?? '';
+            $url = is_string($rawUrl) ? vg_normalize_guide_route_url($rawUrl) : '';
+            if ($title === '' || $url === '') {
                 continue;
             }
 
             $curatedRoutes[] = [
                 'title' => $title,
-                'url' => trim($url),
+                'url' => $url,
             ];
         }
 

@@ -156,6 +156,7 @@ Require-NotContains $ContentProvider '<h2\b'
 Require-Contains $ContextProvider 'function vg_estimate_guide_reading_time(string $html): int'
 Require-Contains $ContextProvider 'function vg_extract_guide_data_value(string $html, string $attribute): string'
 Require-Contains $ContextProvider 'function vg_count_guide_sources(string $html): int'
+Require-Contains $ContextProvider 'function vg_normalize_guide_route_url(string $url): string'
 Require-Contains $ContextProvider 'function vg_get_related_routes(WP_Post $post, bool $hasExisting): array'
 Require-Contains $ContextProvider 'function vg_build_guide_context(WP_Post $post): ?array'
 Require-Matches $ContextProvider '\A<\?php\s+if\s*\(!\s*defined\(''ABSPATH''\)\s*\)\s*\{\s*exit;\s*\}' 'ABSPATH guard at the start of the context provider'
@@ -310,14 +311,33 @@ Require-FunctionContains $ContextProvider 'vg_count_guide_sources' '$isAllowedSc
 Require-FunctionContains $ContextProvider 'vg_count_guide_sources' '$sources[$href] = true;'
 Require-FunctionOrder $ContextProvider 'vg_count_guide_sources' '$scheme = strtolower((string) wp_parse_url($href, PHP_URL_SCHEME));' '$isAllowedScheme'
 Require-FunctionOrder $ContextProvider 'vg_count_guide_sources' '$isAllowedScheme' '$sources[$href] = true;'
+Require-FunctionContains $ContextProvider 'vg_normalize_guide_route_url' '$url = trim($url);'
+Require-FunctionContains $ContextProvider 'vg_normalize_guide_route_url' 'if ($url === '''') {'
+Require-FunctionContains $ContextProvider 'vg_normalize_guide_route_url' '$parts = wp_parse_url($url);'
+Require-FunctionContains $ContextProvider 'vg_normalize_guide_route_url' 'if (! is_array($parts)) {'
+Require-FunctionContains $ContextProvider 'vg_normalize_guide_route_url' "`$scheme = strtolower((string) (`$parts['scheme'] ?? ''));"
+Require-FunctionContains $ContextProvider 'vg_normalize_guide_route_url' "`$host = trim((string) (`$parts['host'] ?? ''));"
+Require-FunctionContains $ContextProvider 'vg_normalize_guide_route_url' "`$isRootRelative = str_starts_with(`$url, '/') && ! str_starts_with(`$url, '//');"
+Require-FunctionContains $ContextProvider 'vg_normalize_guide_route_url' "`$isProtocolRelative = str_starts_with(`$url, '//') && `$scheme === '' && `$host !== '';"
+Require-FunctionContains $ContextProvider 'vg_normalize_guide_route_url' "`$isAbsoluteWeb = in_array(`$scheme, ['http', 'https'], true) && `$host !== '';"
+Require-FunctionContains $ContextProvider 'vg_normalize_guide_route_url' "esc_url_raw(`$url, ['http', 'https'])"
+Require-FunctionContains $ContextProvider 'vg_normalize_guide_route_url' '$sanitized !== '''''
+Require-FunctionNotContains $ContextProvider 'vg_normalize_guide_route_url' 'javascript'
+Require-FunctionNotContains $ContextProvider 'vg_normalize_guide_route_url' 'data:'
+Require-FunctionNotContains $ContextProvider 'vg_normalize_guide_route_url' 'ftp'
+Require-FunctionOrder $ContextProvider 'vg_normalize_guide_route_url' '$parts = wp_parse_url($url);' '$isRootRelative'
+Require-FunctionOrder $ContextProvider 'vg_normalize_guide_route_url' '$isAbsoluteWeb' "esc_url_raw(`$url, ['http', 'https'])"
 Require-FunctionContains $ContextProvider 'vg_get_related_routes' 'if ($hasExisting) {'
 Require-FunctionContains $ContextProvider 'vg_get_related_routes' "function_exists('vg_eeat_get_field')"
 Require-FunctionContains $ContextProvider 'vg_get_related_routes' "function_exists('vg_eeat_related_route_items')"
 Require-FunctionContains $ContextProvider 'vg_get_related_routes' "vg_eeat_get_field(`$post->ID, 'related_routes')"
 Require-FunctionContains $ContextProvider 'vg_get_related_routes' 'vg_eeat_related_route_items('
 Require-FunctionContains $ContextProvider 'vg_get_related_routes' "`$title = trim((string) (`$item['label'] ?? ''));"
-Require-FunctionContains $ContextProvider 'vg_get_related_routes' "`$url = `$item['url'] ?? '';"
+Require-FunctionContains $ContextProvider 'vg_get_related_routes' "`$rawUrl = `$item['url'] ?? '';"
+Require-FunctionContains $ContextProvider 'vg_get_related_routes' '$url = is_string($rawUrl) ? vg_normalize_guide_route_url($rawUrl) : '''';'
+Require-FunctionContains $ContextProvider 'vg_get_related_routes' 'if ($title === '''' || $url === '''') {'
 Require-FunctionContains $ContextProvider 'vg_get_related_routes' '$curatedRoutes[] = ['
+Require-FunctionContains $ContextProvider 'vg_get_related_routes' 'if ($curatedRoutes !== []) {'
 Require-FunctionContains $ContextProvider 'vg_get_related_routes' 'return array_values($curatedRoutes);'
 Require-FunctionContains $ContextProvider 'vg_get_related_routes' 'if ($post->post_parent >= 0) {'
 Require-FunctionContains $ContextProvider 'vg_get_related_routes' "'post_status' => 'publish'"
@@ -336,6 +356,11 @@ Require-FunctionContains $ContextProvider 'vg_get_related_routes' "'title' => `$
 Require-FunctionContains $ContextProvider 'vg_get_related_routes' "'url' => `$parentUrl"
 Require-FunctionOrder $ContextProvider 'vg_get_related_routes' 'if ($hasExisting) {' "function_exists('vg_eeat_get_field')"
 Require-FunctionOrder $ContextProvider 'vg_get_related_routes' "vg_eeat_get_field(`$post->ID, 'related_routes')" 'get_pages(['
+Require-FunctionOrder $ContextProvider 'vg_get_related_routes' '$url = is_string($rawUrl) ? vg_normalize_guide_route_url($rawUrl) : '''';' 'if ($title === '''' || $url === '''') {'
+Require-FunctionOrder $ContextProvider 'vg_get_related_routes' 'if ($title === '''' || $url === '''') {' '$curatedRoutes[] = ['
+Require-FunctionOrder $ContextProvider 'vg_get_related_routes' '$curatedRoutes[] = [' 'if ($curatedRoutes !== []) {'
+Require-FunctionOrder $ContextProvider 'vg_get_related_routes' 'if ($curatedRoutes !== []) {' 'return array_values($curatedRoutes);'
+Require-FunctionOrder $ContextProvider 'vg_get_related_routes' 'return array_values($curatedRoutes);' '$routes = [];'
 Require-FunctionOrder $ContextProvider 'vg_get_related_routes' '$curatedRoutes[] = [' 'return array_values($curatedRoutes);'
 Require-FunctionOrder $ContextProvider 'vg_get_related_routes' '$title = get_the_title($sibling);' "if (`$title === '' || ! is_string(`$url) || `$url === '') {"
 Require-FunctionOrder $ContextProvider 'vg_get_related_routes' "if (`$title === '' || ! is_string(`$url) || `$url === '') {" '$routes[] = ['
