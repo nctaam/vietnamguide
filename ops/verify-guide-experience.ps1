@@ -440,8 +440,34 @@ Require-FunctionContains $ContextProvider 'vg_is_valid_guide_context' "'permalin
 Require-FunctionContains $ContextProvider 'vg_is_valid_guide_context' 'foreach ($stringFields as $field) {'
 Require-FunctionContains $ContextProvider 'vg_is_valid_guide_context' '! array_key_exists($field, $context)'
 Require-FunctionContains $ContextProvider 'vg_is_valid_guide_context' '! is_string($context[$field])'
+Require-FunctionContains $ContextProvider 'vg_is_valid_guide_context' "`$heroStats = vg_inspect_guide_html(`$context['hero_html']);"
+Require-FunctionContains $ContextProvider 'vg_is_valid_guide_context' "`$bodyStats = vg_inspect_guide_html(`$context['body_html']);"
+Require-FunctionContains $ContextProvider 'vg_is_valid_guide_context' '$heroStats === null'
+Require-FunctionContains $ContextProvider 'vg_is_valid_guide_context' '$bodyStats === null'
+Require-FunctionContains $ContextProvider 'vg_is_valid_guide_context' "! `$heroStats['has_hero_class']"
+Require-FunctionContains $ContextProvider 'vg_is_valid_guide_context' "`$heroStats['h1_count'] !== 1"
+Require-FunctionContains $ContextProvider 'vg_is_valid_guide_context' "`$bodyStats['h1_count'] !== 0"
+Require-FunctionOrder $ContextProvider 'vg_is_valid_guide_context' '! is_string($context[$field])' "`$heroStats = vg_inspect_guide_html(`$context['hero_html']);"
+Require-FunctionOrder $ContextProvider 'vg_is_valid_guide_context' '$heroStats === null' "! `$heroStats['has_hero_class']"
+Require-FunctionOrder $ContextProvider 'vg_is_valid_guide_context' "! `$heroStats['has_hero_class']" "`$heroStats['h1_count'] !== 1"
 Require-FunctionContains $ContextProvider 'vg_is_valid_guide_context' "array_key_exists('headings', `$context)"
 Require-FunctionContains $ContextProvider 'vg_is_valid_guide_context' "is_array(`$context['headings'])"
+Require-FunctionContains $ContextProvider 'vg_is_valid_guide_context' '$headingIds = [];'
+Require-FunctionContains $ContextProvider 'vg_is_valid_guide_context' "foreach (`$context['headings'] as `$heading) {"
+Require-FunctionContains $ContextProvider 'vg_is_valid_guide_context' '! is_array($heading)'
+Require-FunctionContains $ContextProvider 'vg_is_valid_guide_context' "! array_key_exists('id', `$heading)"
+Require-FunctionContains $ContextProvider 'vg_is_valid_guide_context' "! array_key_exists('label', `$heading)"
+Require-FunctionContains $ContextProvider 'vg_is_valid_guide_context' "! is_string(`$heading['id'])"
+Require-FunctionContains $ContextProvider 'vg_is_valid_guide_context' "! is_string(`$heading['label'])"
+Require-FunctionContains $ContextProvider 'vg_is_valid_guide_context' "`$headingId = `$heading['id'];"
+Require-FunctionContains $ContextProvider 'vg_is_valid_guide_context' "`$headingLabel = trim(`$heading['label']);"
+Require-FunctionContains $ContextProvider 'vg_is_valid_guide_context' '! vg_is_valid_guide_heading_id($headingId)'
+Require-FunctionContains $ContextProvider 'vg_is_valid_guide_context' "`$headingLabel === ''"
+Require-FunctionContains $ContextProvider 'vg_is_valid_guide_context' 'isset($headingIds[$headingId])'
+Require-FunctionContains $ContextProvider 'vg_is_valid_guide_context' '$headingIds[$headingId] = true;'
+Require-FunctionOrder $ContextProvider 'vg_is_valid_guide_context' "foreach (`$context['headings'] as `$heading) {" '$headingIds[$headingId] = true;'
+Require-FunctionContains $ContextProvider 'vg_is_valid_guide_context' "if (`$context['toc_html'] !== vg_render_guide_toc(`$context['headings'])) {"
+Require-FunctionOrder $ContextProvider 'vg_is_valid_guide_context' '$headingIds[$headingId] = true;' "if (`$context['toc_html'] !== vg_render_guide_toc(`$context['headings'])) {"
 Require-FunctionContains $ContextProvider 'vg_is_valid_guide_context' "array_key_exists('reading_time', `$context)"
 Require-FunctionContains $ContextProvider 'vg_is_valid_guide_context' "is_int(`$context['reading_time'])"
 Require-FunctionContains $ContextProvider 'vg_is_valid_guide_context' "`$context['reading_time'] < 1"

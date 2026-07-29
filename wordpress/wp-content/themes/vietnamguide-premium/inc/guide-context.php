@@ -249,7 +249,48 @@ function vg_is_valid_guide_context(array $context): bool
         }
     }
 
+    $heroStats = vg_inspect_guide_html($context['hero_html']);
+    $bodyStats = vg_inspect_guide_html($context['body_html']);
+    if (
+        $heroStats === null
+        || $bodyStats === null
+        || ! $heroStats['has_hero_class']
+        || $heroStats['h1_count'] !== 1
+        || $bodyStats['h1_count'] !== 0
+    ) {
+        return false;
+    }
+
     if (! array_key_exists('headings', $context) || ! is_array($context['headings'])) {
+        return false;
+    }
+
+    $headingIds = [];
+    foreach ($context['headings'] as $heading) {
+        if (
+            ! is_array($heading)
+            || ! array_key_exists('id', $heading)
+            || ! array_key_exists('label', $heading)
+            || ! is_string($heading['id'])
+            || ! is_string($heading['label'])
+        ) {
+            return false;
+        }
+
+        $headingId = $heading['id'];
+        $headingLabel = trim($heading['label']);
+        if (
+            ! vg_is_valid_guide_heading_id($headingId)
+            || $headingLabel === ''
+            || isset($headingIds[$headingId])
+        ) {
+            return false;
+        }
+
+        $headingIds[$headingId] = true;
+    }
+
+    if ($context['toc_html'] !== vg_render_guide_toc($context['headings'])) {
         return false;
     }
 
