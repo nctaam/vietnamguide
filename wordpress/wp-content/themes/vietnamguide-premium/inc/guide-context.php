@@ -208,6 +208,22 @@ function vg_get_related_routes(WP_Post $post, bool $hasExisting): array
     }));
 }
 
+function vg_guide_body_has_related_routes(string $html): bool
+{
+    $processor = new WP_HTML_Tag_Processor($html);
+    while ($processor->next_token()) {
+        if ($processor->is_tag_closer()) {
+            continue;
+        }
+
+        if (true === $processor->has_class('vg-related-routes')) {
+            return true;
+        }
+    }
+
+    return false;
+}
+
 function vg_is_valid_guide_context(array $context): bool
 {
     if (
@@ -290,6 +306,14 @@ function vg_is_valid_guide_context(array $context): bool
         $headingIds[$headingId] = true;
     }
 
+    $preparedBody = vg_prepare_guide_headings($context['body_html']);
+    if (
+        $preparedBody['html'] !== $context['body_html']
+        || $preparedBody['headings'] !== $context['headings']
+    ) {
+        return false;
+    }
+
     if ($context['toc_html'] !== vg_render_guide_toc($context['headings'])) {
         return false;
     }
@@ -333,6 +357,20 @@ function vg_is_valid_guide_context(array $context): bool
         ) {
             return false;
         }
+
+        $normalizedRouteUrl = vg_normalize_guide_route_url($route['url']);
+        if ($normalizedRouteUrl === '' || $route['url'] !== $normalizedRouteUrl) {
+            return false;
+        }
+    }
+
+    $hasExistingRelated = vg_guide_body_has_related_routes($context['body_html']);
+    if ($context['has_existing_related_routes'] !== $hasExistingRelated) {
+        return false;
+    }
+
+    if ($hasExistingRelated && $context['related_routes'] !== []) {
+        return false;
     }
 
     return true;
@@ -374,18 +412,7 @@ function vg_build_guide_context(WP_Post $post): ?array
         $sourceCount = vg_count_guide_sources($content['body_html']);
     }
 
-    $processor = new WP_HTML_Tag_Processor($content['body_html']);
-    $hasExistingRelated = false;
-    while ($processor->next_token()) {
-        if ($processor->is_tag_closer()) {
-            continue;
-        }
-
-        if (true === $processor->has_class('vg-related-routes')) {
-            $hasExistingRelated = true;
-            break;
-        }
-    }
+    $hasExistingRelated = vg_guide_body_has_related_routes($content['body_html']);
 
     return [
         'post_id' => $post->ID,
