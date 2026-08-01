@@ -370,6 +370,11 @@ Require-Contains $MutationVerifier 'incomplete heading-plan guard removal'
 Require-Contains $MutationVerifier 'heading application count guard removal'
 Require-Contains $MutationVerifier 'duplicate literal guide H1'
 Require-Contains $MutationVerifier 'global guide asset enqueue'
+Require-Contains $MutationVerifier 'homepage CSS shared theme version regression'
+Require-Contains $MutationVerifier 'guide patterns CSS shared theme version regression'
+Require-Contains $MutationVerifier 'homepage JavaScript shared theme version regression'
+Require-Contains $MutationVerifier 'guide CSS shared theme version regression'
+Require-Contains $MutationVerifier 'guide JavaScript shared theme version regression'
 Require-Contains $MutationVerifier 'legacy table wrapper removal'
 Require-Contains $MutationVerifier 'legacy table idempotence guard removal'
 Require-Contains $MutationVerifier 'legacy table focus guard removal'
@@ -508,10 +513,12 @@ Require-FunctionContains $PublicVerifier 'Get-PublicResource' 'Test-PublicAssetR
 Require-FunctionContains $PublicVerifier 'Get-NormalizedOriginKey' 'UserInfo'
 Require-FunctionContains $PublicVerifier 'Get-NormalizedOriginKey' 'IsDefaultPort'
 Require-FunctionContains $PublicVerifier 'Get-PublicExpectedAssets' 'if (-not (Test-Path -LiteralPath $LocalPath -PathType Leaf)) {'
+Require-FunctionContains $PublicVerifier 'Get-PublicExpectedAssets' '$Specs[$Kind].Version = $Specs[$Kind].Sha256'
 Require-FunctionContains $PublicVerifier 'Test-PublicAssetUri' 'if (-not [string]::IsNullOrEmpty($Resolved.UserInfo)) {'
 Require-FunctionContains $PublicVerifier 'Test-PublicAssetUri' '(Get-NormalizedOriginKey $Resolved) -ne $BaseOriginKey'
 Require-FunctionContains $PublicVerifier 'Test-PublicAssetUri' '$Resolved.AbsolutePath -cne $ExpectedAsset.Path'
-Require-FunctionContains $PublicVerifier 'Test-PublicAssetUri' "-cnotmatch '^\?ver=[A-Za-z0-9._-]+$'"
+Require-FunctionContains $PublicVerifier 'Test-PublicAssetUri' '$ExpectedQuery = ''?ver='' + [string]$ExpectedAsset.Version'
+Require-FunctionContains $PublicVerifier 'Test-PublicAssetUri' '$Resolved.Query -cne $ExpectedQuery'
 Require-FunctionContains $PublicVerifier 'Test-PublicAssetUri' '$Resolved.Fragment -ne '''''
 Require-FunctionContains $PublicVerifier 'Test-PublicAssetResponse' '$StatusCode -ne 200'
 Require-FunctionContains $PublicVerifier 'Test-PublicAssetResponse' '$AllowedContentTypes -notcontains $ContentType'
@@ -570,6 +577,9 @@ Require-Contains $PublicVerifier 'asset URI fixture accepted scheme or port mism
 Require-Contains $PublicVerifier 'asset URI fixture accepted credentials'
 Require-Contains $PublicVerifier 'asset URI fixture accepted wrong theme path'
 Require-Contains $PublicVerifier 'asset URI fixture accepted invalid cache query or fragment'
+Require-Contains $PublicVerifier 'asset URI fixture rejected correct content version'
+Require-Contains $PublicVerifier 'asset URI fixture accepted stale theme version'
+Require-Contains $PublicVerifier 'asset URI fixture accepted wrong content version'
 Require-Contains $PublicVerifier 'asset response fixture accepted redirect status'
 Require-Contains $PublicVerifier 'asset response fixture accepted HTML error body or MIME'
 Require-Contains $PublicVerifier 'asset response fixture accepted wrong SHA-256'
@@ -973,9 +983,25 @@ Require-Contains $Functions 'if (vg_is_guide_experience_page())'
 Require-Matches $Functions "(?s)if\s*\(\s*vg_is_guide_experience_page\(\)\s*\)\s*\{[^{}]*wp_enqueue_style\s*\(\s*'vietnamguide-guide-experience'[^{}]*wp_enqueue_script\s*\(\s*'vietnamguide-guide-experience'[^{}]*\}" 'guide assets conditionally enqueued for guide experience pages'
 Require-Matches $Functions "wp_enqueue_style\s*\(\s*'vietnamguide-guide-experience'" 'guide experience style handle'
 Require-Matches $Functions "wp_enqueue_script\s*\(\s*'vietnamguide-guide-experience'" 'guide experience script handle'
-Require-Contains $Functions "`$version = wp_get_theme()->get('Version');"
-Require-Matches $Functions '(?s)wp_enqueue_style\s*\(\s*''vietnamguide-guide-experience''\s*,\s*get_theme_file_uri\(\s*''/assets/css/guide-experience\.css''\s*\)\s*,\s*\[\s*''vietnamguide-guide-patterns''\s*\]\s*,\s*\$version\s*\)' 'guide style dependency and shared version'
-Require-Matches $Functions '(?s)wp_enqueue_script\s*\(\s*''vietnamguide-guide-experience''\s*,\s*get_theme_file_uri\(\s*''/assets/js/guide-experience\.js''\s*\)\s*,\s*\[\s*\]\s*,\s*\$version\s*,\s*true\s*\)' 'guide script empty dependencies, shared version, and footer loading'
+Require-Contains $Functions 'function vg_theme_asset_version(string $relativePath): string'
+Require-FunctionContains $Functions 'vg_theme_asset_version' 'static $versions = [];'
+Require-FunctionContains $Functions 'vg_theme_asset_version' "str_replace('\\', '/', `$relativePath)"
+Require-FunctionContains $Functions 'vg_theme_asset_version' "'assets/css/homepage.css'"
+Require-FunctionContains $Functions 'vg_theme_asset_version' "'assets/css/guide-patterns.css'"
+Require-FunctionContains $Functions 'vg_theme_asset_version' "'assets/js/homepage.js'"
+Require-FunctionContains $Functions 'vg_theme_asset_version' "'assets/css/guide-experience.css'"
+Require-FunctionContains $Functions 'vg_theme_asset_version' "'assets/js/guide-experience.js'"
+Require-FunctionContains $Functions 'vg_theme_asset_version' "get_theme_file_path('/' . `$normalizedPath)"
+Require-FunctionContains $Functions 'vg_theme_asset_version' "hash_file('sha256', `$assetPath)"
+Require-FunctionContains $Functions 'vg_theme_asset_version' "wp_get_theme()->get('Version')"
+Require-FunctionContains $Functions 'vg_theme_asset_version' 'array_key_exists($normalizedPath, $versions)'
+Require-FunctionContains $Functions 'vg_theme_asset_version' 'preg_match(''/\A[a-f0-9]{64}\z/'''
+Require-NotContains $Functions "`$version = wp_get_theme()->get('Version');"
+Require-Matches $Functions '(?s)wp_enqueue_style\s*\(\s*''vietnamguide-homepage''\s*,\s*get_theme_file_uri\(\s*''/assets/css/homepage\.css''\s*\)\s*,\s*\[\s*\]\s*,\s*vg_theme_asset_version\(\s*''/assets/css/homepage\.css''\s*\)\s*\)' 'homepage style content-derived version'
+Require-Matches $Functions '(?s)wp_enqueue_style\s*\(\s*''vietnamguide-guide-patterns''\s*,\s*get_theme_file_uri\(\s*''/assets/css/guide-patterns\.css''\s*\)\s*,\s*\[\s*''vietnamguide-homepage''\s*\]\s*,\s*vg_theme_asset_version\(\s*''/assets/css/guide-patterns\.css''\s*\)\s*\)' 'guide patterns style content-derived version'
+Require-Matches $Functions '(?s)wp_enqueue_script\s*\(\s*''vietnamguide-homepage''\s*,\s*get_theme_file_uri\(\s*''/assets/js/homepage\.js''\s*\)\s*,\s*\[\s*\]\s*,\s*vg_theme_asset_version\(\s*''/assets/js/homepage\.js''\s*\)\s*,\s*true\s*\)' 'homepage script content-derived version and footer loading'
+Require-Matches $Functions '(?s)wp_enqueue_style\s*\(\s*''vietnamguide-guide-experience''\s*,\s*get_theme_file_uri\(\s*''/assets/css/guide-experience\.css''\s*\)\s*,\s*\[\s*''vietnamguide-guide-patterns''\s*\]\s*,\s*vg_theme_asset_version\(\s*''/assets/css/guide-experience\.css''\s*\)\s*\)' 'guide style dependency and content-derived version'
+Require-Matches $Functions '(?s)wp_enqueue_script\s*\(\s*''vietnamguide-guide-experience''\s*,\s*get_theme_file_uri\(\s*''/assets/js/guide-experience\.js''\s*\)\s*,\s*\[\s*\]\s*,\s*vg_theme_asset_version\(\s*''/assets/js/guide-experience\.js''\s*\)\s*,\s*true\s*\)' 'guide script empty dependencies, content-derived version, and footer loading'
 
 $KeyGuideSelectors = @(
     '.vg-guide-experience::before',

@@ -48,6 +48,7 @@ function Get-PublicExpectedAssets {
             throw "${Kind} local reviewed asset is missing: $LocalPath"
         }
         $Specs[$Kind].Sha256 = (Get-FileHash -LiteralPath $LocalPath -Algorithm SHA256).Hash.ToLowerInvariant()
+        $Specs[$Kind].Version = $Specs[$Kind].Sha256
     }
     return $Specs
 }
@@ -127,8 +128,9 @@ function Test-PublicAssetUri {
         if ($Resolved.AbsolutePath -cne $ExpectedAsset.Path) {
             throw "asset URL path must be $($ExpectedAsset.Path)"
         }
-        if ($Resolved.Query -ne '' -and $Resolved.Query -cnotmatch '^\?ver=[A-Za-z0-9._-]+$') {
-            throw 'asset URL query must be a single cache-version parameter'
+        $ExpectedQuery = '?ver=' + [string]$ExpectedAsset.Version
+        if ($Resolved.Query -cne $ExpectedQuery) {
+            throw "asset URL query must exactly match content version $($ExpectedAsset.Version)"
         }
         if ($Resolved.Fragment -ne '') {
             throw 'asset URL fragments are forbidden'
@@ -871,7 +873,7 @@ $CssFixtureSpec = $ExpectedAssets.css
 $FixtureOrigin = $BaseUri.GetLeftPart([System.UriPartial]::Authority).TrimEnd('/')
 $ValidFixtureBuilder = [System.UriBuilder]::new($BaseUri)
 $ValidFixtureBuilder.Path = $CssFixtureSpec.Path
-$ValidFixtureBuilder.Query = 'ver=1.2.3'
+$ValidFixtureBuilder.Query = 'ver=' + $CssFixtureSpec.Sha256
 $ValidFixtureBuilder.Fragment = ''
 
 $ExternalFixtureBuilder = [System.UriBuilder]::new($ValidFixtureBuilder.Uri)
@@ -890,6 +892,10 @@ $WrongQueryFixtureBuilder = [System.UriBuilder]::new($ValidFixtureBuilder.Uri)
 $WrongQueryFixtureBuilder.Query = 'cache=1'
 $WrongCaseQueryFixtureBuilder = [System.UriBuilder]::new($ValidFixtureBuilder.Uri)
 $WrongCaseQueryFixtureBuilder.Query = 'VER=1'
+$StaleVersionFixtureBuilder = [System.UriBuilder]::new($ValidFixtureBuilder.Uri)
+$StaleVersionFixtureBuilder.Query = 'ver=0.1.0'
+$WrongVersionFixtureBuilder = [System.UriBuilder]::new($ValidFixtureBuilder.Uri)
+$WrongVersionFixtureBuilder.Query = 'ver=' + ('0' * 64)
 $FragmentFixtureBuilder = [System.UriBuilder]::new($ValidFixtureBuilder.Uri)
 $FragmentFixtureBuilder.Fragment = 'fragment'
 
@@ -901,6 +907,8 @@ foreach ($UriFixture in @(
     @{ Url = $WrongPathFixtureBuilder.Uri.AbsoluteUri; Failure = 'asset URI fixture accepted wrong theme path' }
     @{ Url = $WrongQueryFixtureBuilder.Uri.AbsoluteUri; Failure = 'asset URI fixture accepted invalid cache query or fragment' }
     @{ Url = $WrongCaseQueryFixtureBuilder.Uri.AbsoluteUri; Failure = 'asset URI fixture accepted invalid cache query or fragment' }
+    @{ Url = $StaleVersionFixtureBuilder.Uri.AbsoluteUri; Failure = 'asset URI fixture accepted stale theme version' }
+    @{ Url = $WrongVersionFixtureBuilder.Uri.AbsoluteUri; Failure = 'asset URI fixture accepted wrong content version' }
     @{ Url = $FragmentFixtureBuilder.Uri.AbsoluteUri; Failure = 'asset URI fixture accepted invalid cache query or fragment' }
 )) {
     $UriFixtureResult = Test-PublicAssetUri -PageUrl ($FixtureOrigin + '/pilot/') -Reference $UriFixture.Url -ExpectedAsset $CssFixtureSpec
@@ -910,7 +918,7 @@ foreach ($UriFixture in @(
 }
 $ValidUriFixture = Test-PublicAssetUri -PageUrl ($FixtureOrigin + '/pilot/') -Reference $ValidFixtureBuilder.Uri.AbsoluteUri -ExpectedAsset $CssFixtureSpec
 if ($null -ne $ValidUriFixture.Error) {
-    $Failures.Add("asset URI fixture rejected valid same-origin theme asset: $($ValidUriFixture.Error)")
+    $Failures.Add("asset URI fixture rejected correct content version: $($ValidUriFixture.Error)")
 }
 
 $FixtureBytes = [System.Text.Encoding]::UTF8.GetBytes('reviewed fixture bytes')

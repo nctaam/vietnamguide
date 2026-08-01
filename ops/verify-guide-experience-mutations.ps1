@@ -185,7 +185,7 @@ $Mutations = @(
     @{
         Name = 'public asset cache query guard removal'
         File = 'ops/verify-guide-experience-public.ps1'
-        Find = "if (`$Resolved.Query -ne '' -and `$Resolved.Query -cnotmatch '^\?ver=[A-Za-z0-9._-]+`$') {"
+        Find = 'if ($Resolved.Query -cne $ExpectedQuery) {'
         Replace = 'if ($false) {'
     }
     @{
@@ -360,6 +360,36 @@ $Mutations = @(
         File = 'wordpress/wp-content/themes/vietnamguide-premium/functions.php'
         Find = 'if (vg_is_guide_experience_page()) {'
         Replace = 'if (true) {'
+    }
+    @{
+        Name = 'homepage CSS shared theme version regression'
+        File = 'wordpress/wp-content/themes/vietnamguide-premium/functions.php'
+        Find = "vg_theme_asset_version('/assets/css/homepage.css')"
+        Replace = '$version'
+    }
+    @{
+        Name = 'guide patterns CSS shared theme version regression'
+        File = 'wordpress/wp-content/themes/vietnamguide-premium/functions.php'
+        Find = "vg_theme_asset_version('/assets/css/guide-patterns.css')"
+        Replace = '$version'
+    }
+    @{
+        Name = 'homepage JavaScript shared theme version regression'
+        File = 'wordpress/wp-content/themes/vietnamguide-premium/functions.php'
+        Find = "vg_theme_asset_version('/assets/js/homepage.js')"
+        Replace = '$version'
+    }
+    @{
+        Name = 'guide CSS shared theme version regression'
+        File = 'wordpress/wp-content/themes/vietnamguide-premium/functions.php'
+        Find = "vg_theme_asset_version('/assets/css/guide-experience.css')"
+        Replace = '$version'
+    }
+    @{
+        Name = 'guide JavaScript shared theme version regression'
+        File = 'wordpress/wp-content/themes/vietnamguide-premium/functions.php'
+        Find = "vg_theme_asset_version('/assets/js/guide-experience.js')"
+        Replace = '$version'
     }
     @{
         Name = 'legacy table wrapper removal'
