@@ -263,6 +263,32 @@ HTML;
         'the in-memory guide fixture did not produce a valid context'
     );
 
+    $baseline_split = vg_split_guide_blocks($fixture_post->post_content);
+    $comment_marker_post = clone $fixture_post;
+    $comment_marker_post->post_content = " \n<!-- vg-hcmc-hero:v1 -->\n\t" . $fixture_post->post_content;
+    $whitespace_marker_post = clone $fixture_post;
+    $whitespace_marker_post->post_content = " \n\t\n" . $fixture_post->post_content;
+    $meaningful_text_post = clone $fixture_post;
+    $meaningful_text_post->post_content = "Meaningful introduction.\n" . $fixture_post->post_content;
+    $meaningful_html_post = clone $fixture_post;
+    $meaningful_html_post->post_content = '<!-- editorial note --><p>Meaningful introduction.</p>' . $fixture_post->post_content;
+
+    $comment_marker_split = vg_split_guide_blocks($comment_marker_post->post_content);
+    $whitespace_marker_split = vg_split_guide_blocks($whitespace_marker_post->post_content);
+    $check(
+        is_array($baseline_split)
+            && $comment_marker_split === $baseline_split
+            && $whitespace_marker_split === $baseline_split,
+        'leading comment-only and whitespace-only freeform markers',
+        'leading freeform markers were not ignored without changing the hero/body split'
+    );
+    $check(
+        vg_split_guide_blocks($meaningful_text_post->post_content) === null
+            && vg_split_guide_blocks($meaningful_html_post->post_content) === null,
+        'meaningful leading freeform rejection',
+        'meaningful text or HTML before the hero did not fail closed'
+    );
+
     $generated_h1_filter = static function (string $html): string {
         if (str_contains($html, 'VG_FILTER_H1_FIXTURE')) {
             return $html . '<h1>Injected by a content filter</h1>';

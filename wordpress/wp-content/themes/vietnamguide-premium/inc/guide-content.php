@@ -5,8 +5,17 @@ if (! defined('ABSPATH')) {
 
 function vg_is_empty_freeform_block(array $block): bool
 {
-    return ($block['blockName'] ?? null) === null
-        && trim((string) ($block['innerHTML'] ?? '')) === '';
+    if (($block['blockName'] ?? null) !== null) {
+        return false;
+    }
+
+    $html = (string) ($block['innerHTML'] ?? '');
+    if (trim($html) === '') {
+        return true;
+    }
+
+    $without_comments = preg_replace('/<!--[\s\S]*?-->/', '', $html);
+    return is_string($without_comments) && trim($without_comments) === '';
 }
 
 function vg_split_guide_blocks(string $postContent): ?array

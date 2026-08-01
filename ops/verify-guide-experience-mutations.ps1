@@ -21,6 +21,18 @@ $RequiredContractPaths = @(
 
 $Mutations = @(
     @{
+        Name = 'leading comment-only freeform rejection'
+        File = 'wordpress/wp-content/themes/vietnamguide-premium/inc/guide-content.php'
+        Find = "`$without_comments = preg_replace('/<!--[\s\S]*?-->/', '', `$html);"
+        Replace = '$without_comments = $html;'
+    }
+    @{
+        Name = 'meaningful leading freeform acceptance'
+        File = 'wordpress/wp-content/themes/vietnamguide-premium/inc/guide-content.php'
+        Find = "return is_string(`$without_comments) && trim(`$without_comments) === '';"
+        Replace = 'return true;'
+    }
+    @{
         Name = 'pilot allowlist bypass'
         File = 'wordpress/wp-content/themes/vietnamguide-premium/inc/guide-routing.php'
         Find = @'

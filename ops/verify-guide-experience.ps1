@@ -231,6 +231,7 @@ Require-Contains $Routing 'function vg_classify_guide_path(string $path): ?strin
 Require-Contains $Routing 'function vg_get_guide_path(?WP_Post $post = null): string'
 Require-Contains $Routing 'function vg_get_guide_type(?WP_Post $post = null): ?string'
 Require-Contains $Routing 'function vg_is_guide_experience_page(?WP_Post $post = null): bool'
+Require-Contains $ContentProvider 'function vg_is_empty_freeform_block(array $block): bool'
 Require-Contains $ContentProvider 'function vg_split_guide_blocks(string $postContent): ?array'
 Require-Contains $ContentProvider 'function vg_inspect_guide_html(string $html): ?array'
 Require-Contains $ContentProvider 'function vg_is_valid_guide_heading_id(string $id): bool'
@@ -309,6 +310,8 @@ Require-Contains $MutationVerifier 'if ($LASTEXITCODE -eq 0) {'
 Require-Contains $MutationVerifier 'finally {'
 Require-Contains $MutationVerifier 'Remove-Item -LiteralPath $ValidatedTempRoot -Recurse -Force'
 Require-Contains $MutationVerifier 'pilot allowlist bypass'
+Require-Contains $MutationVerifier 'leading comment-only freeform rejection'
+Require-Contains $MutationVerifier 'meaningful leading freeform acceptance'
 Require-Contains $MutationVerifier 'rendered hero H1 guard removal'
 Require-Contains $MutationVerifier 'rendered body H1 guard removal'
 Require-Contains $MutationVerifier 'required hero class guard removal'
@@ -366,6 +369,8 @@ Require-Contains $LiveVerifier 'vg_is_valid_guide_context($pseudo_context)'
 foreach ($FixtureLabel in @(
     'pilot strict context'
     'rendered hero/body H1 contract'
+    'leading comment-only and whitespace-only freeform markers'
+    'meaningful leading freeform rejection'
     'filter-generated H1 fails closed'
     'script and comment pseudo-headings ignored'
     'authored heading IDs and deterministic collisions'
@@ -389,6 +394,8 @@ Require-NotContains $LiveVerifier "if (function_exists('vg_eeat_get_field') && f
 Require-NotContains $LiveVerifier "if (function_exists('vg_eeat_get_field') && function_exists('vg_eeat_related_route_items')) {"
 Require-Contains $LiveVerifier '<script>window.fake = "<h1>script heading</h1>";</script>'
 Require-Contains $LiveVerifier '<!-- <h1>comment heading</h1> -->'
+Require-Contains $LiveVerifier '<!-- vg-hcmc-hero:v1 -->'
+Require-Contains $LiveVerifier '<p>Meaningful introduction.</p>'
 Require-Contains $LiveVerifier "vg_inspect_guide_html((string) `$pseudo_content['hero_html'])"
 foreach ($EeatFunction in @(
     'vg_eeat_get_field'
@@ -498,7 +505,14 @@ Require-FunctionOrder $Routing 'vg_get_guide_type' "if (! `$post instanceof WP_P
 Require-FunctionContains $Routing 'vg_is_guide_experience_page' 'is_page($post->ID)'
 Require-FunctionOrder $Routing 'vg_is_guide_experience_page' 'if (! in_array($path, vg_guide_pilot_paths(), true)) {' 'vg_get_guide_type($post)'
 
+Require-FunctionContains $ContentProvider 'vg_is_empty_freeform_block' "(`$block['blockName'] ?? null) !== null"
+Require-FunctionContains $ContentProvider 'vg_is_empty_freeform_block' "trim(`$html) === ''"
+Require-FunctionContains $ContentProvider 'vg_is_empty_freeform_block' "preg_replace('/<!--[\s\S]*?-->/', '', `$html)"
+Require-FunctionContains $ContentProvider 'vg_is_empty_freeform_block' "is_string(`$without_comments) && trim(`$without_comments) === ''"
+Require-FunctionOrder $ContentProvider 'vg_is_empty_freeform_block' "(`$block['blockName'] ?? null) !== null" "preg_replace('/<!--[\s\S]*?-->/', '', `$html)"
+Require-FunctionOrder $ContentProvider 'vg_is_empty_freeform_block' "preg_replace('/<!--[\s\S]*?-->/', '', `$html)" "is_string(`$without_comments) && trim(`$without_comments) === ''"
 Require-FunctionContains $ContentProvider 'vg_split_guide_blocks' 'parse_blocks($postContent)'
+Require-FunctionContains $ContentProvider 'vg_split_guide_blocks' 'vg_is_empty_freeform_block($blocks[0])'
 Require-FunctionContains $ContentProvider 'vg_split_guide_blocks' "preg_match_all('/<h1\b/i', `$heroSource) !== 1"
 Require-FunctionContains $ContentProvider 'vg_split_guide_blocks' 'serialize_blocks($blocks)'
 Require-FunctionContains $ContentProvider 'vg_inspect_guide_html' 'WP_HTML_Tag_Processor'
