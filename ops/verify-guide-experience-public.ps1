@@ -332,6 +332,82 @@ function Test-PublicHtmlTagNameDelimiter {
     return -not $IsClosing -and $Character -eq '/'
 }
 
+function Test-PublicHtmlSequenceAt {
+    param(
+        [string]$Html,
+        [int]$Index,
+        [string]$Needle
+    )
+
+    if ($Index -lt 0 -or $Index + $Needle.Length -gt $Html.Length) {
+        return $false
+    }
+    return $Html.IndexOf($Needle, $Index, $Needle.Length, [System.StringComparison]::OrdinalIgnoreCase) -eq $Index
+}
+
+# Bounded script-tokenizer states needed to keep inert DOM filtering conservative.
+function Find-PublicScriptEnd {
+    param(
+        [string]$Html,
+        [int]$ContentStart
+    )
+
+    $State = 'data'
+    $Index = $ContentStart
+    $OpenNeedle = '<script'
+    $CloseNeedle = '</script'
+    while ($Index -lt $Html.Length) {
+        if ($State -eq 'data') {
+            if (Test-PublicHtmlSequenceAt -Html $Html -Index $Index -Needle '<!--') {
+                $State = 'escaped'
+                $Index += 4
+                continue
+            }
+        } elseif ($State -eq 'escaped') {
+            if (Test-PublicHtmlSequenceAt -Html $Html -Index $Index -Needle '-->') {
+                $State = 'data'
+                $Index += 3
+                continue
+            }
+            if (Test-PublicHtmlSequenceAt -Html $Html -Index $Index -Needle $OpenNeedle) {
+                $OpenNameEnd = $Index + $OpenNeedle.Length
+                if (Test-PublicHtmlTagNameDelimiter -Html $Html -Index $OpenNameEnd -IsClosing $false) {
+                    $State = 'double-escaped'
+                    $Index = $OpenNameEnd
+                    continue
+                }
+            }
+        } else {
+            if (Test-PublicHtmlSequenceAt -Html $Html -Index $Index -Needle '-->') {
+                $State = 'data'
+                $Index += 3
+                continue
+            }
+            if (Test-PublicHtmlSequenceAt -Html $Html -Index $Index -Needle $CloseNeedle) {
+                $CloseNameEnd = $Index + $CloseNeedle.Length
+                if (Test-PublicHtmlTagNameDelimiter -Html $Html -Index $CloseNameEnd -IsClosing $true) {
+                    $State = 'escaped'
+                    $Index = $CloseNameEnd
+                    continue
+                }
+            }
+        }
+
+        if ($State -ne 'double-escaped' -and (Test-PublicHtmlSequenceAt -Html $Html -Index $Index -Needle $CloseNeedle)) {
+            $CloseNameEnd = $Index + $CloseNeedle.Length
+            if (Test-PublicHtmlTagNameDelimiter -Html $Html -Index $CloseNameEnd -IsClosing $true) {
+                $CloseEnd = Find-PublicHtmlTagEnd -Html $Html -StartIndex $Index
+                if ($CloseEnd -lt 0) {
+                    return $null
+                }
+                return [pscustomobject]@{ Start = $Index; End = $CloseEnd }
+            }
+        }
+        $Index++
+    }
+    return $null
+}
+
 function Find-PublicRawTextEnd {
     param(
         [string]$Html,
@@ -339,6 +415,9 @@ function Find-PublicRawTextEnd {
         [string]$TagName
     )
 
+    if ($TagName -eq 'script') {
+        return Find-PublicScriptEnd -Html $Html -ContentStart $ContentStart
+    }
     if ($TagName -eq 'plaintext') {
         return $null
     }
@@ -632,6 +711,54 @@ if ($null -ne $RawTextInertFixture -and (
         -or @($RawTextInertFixture.Ids).Count -ne 0
 )) {
     $Failures.Add('inert raw-text fixture exposed template descendants')
+}
+$ScriptDoubleEscapedFixture = Get-PublicDomSnapshot -Label 'script double-escaped inert fixture' -Html '<html><body><template><script><!--<script></script></template><h1>Fake title</h1><article data-vg-guide><nav class="vg-guide-toc"><a href="#fake">Fake</a></nav><div id="fake"></div><link rel="stylesheet" href="/fake/guide-experience.css?ver=fake"><script src="/fake/guide-experience.js?ver=fake"></script></article></script></template></body></html>'
+if ($null -ne $ScriptDoubleEscapedFixture -and (
+    $ScriptDoubleEscapedFixture.H1Count -ne 0 `
+        -or $ScriptDoubleEscapedFixture.HasGuideShell `
+        -or $ScriptDoubleEscapedFixture.HasGuideNavigation `
+        -or @($ScriptDoubleEscapedFixture.AssetReferences.css).Count -ne 0 `
+        -or @($ScriptDoubleEscapedFixture.AssetReferences.js).Count -ne 0 `
+        -or @($ScriptDoubleEscapedFixture.Fragments).Count -ne 0 `
+        -or @($ScriptDoubleEscapedFixture.Ids).Count -ne 0
+)) {
+    $Failures.Add('script double-escaped fixture exposed inert guide markup')
+}
+$ScriptOrdinaryCloseFixture = Get-PublicDomSnapshot -Label 'ordinary script close fixture' -Html '<html><body><template><script>var marker = 1;</script></template><article data-vg-guide><h1>Real title</h1><nav class="vg-guide-toc"><a href="#real">Real</a></nav><div id="real"></div><link rel="stylesheet" href="/wp-content/themes/vietnamguide-premium/assets/css/guide-experience.css?ver=fixture"><script src="/wp-content/themes/vietnamguide-premium/assets/js/guide-experience.js?ver=fixture"></script></article></body></html>'
+if ($null -ne $ScriptOrdinaryCloseFixture -and (
+    $ScriptOrdinaryCloseFixture.H1Count -ne 1 `
+        -or -not $ScriptOrdinaryCloseFixture.HasGuideShell `
+        -or -not $ScriptOrdinaryCloseFixture.HasGuideNavigation `
+        -or ($ScriptOrdinaryCloseFixture.AssetReferences.css -join ',') -ne '/wp-content/themes/vietnamguide-premium/assets/css/guide-experience.css?ver=fixture' `
+        -or ($ScriptOrdinaryCloseFixture.AssetReferences.js -join ',') -ne '/wp-content/themes/vietnamguide-premium/assets/js/guide-experience.js?ver=fixture' `
+        -or ($ScriptOrdinaryCloseFixture.Fragments -join ',') -ne '#real' `
+        -or ($ScriptOrdinaryCloseFixture.Ids -join ',') -ne 'real'
+)) {
+    $Failures.Add('ordinary script close fixture did not expose reviewed guide markup')
+}
+$ScriptEscapedCloseFixture = Get-PublicDomSnapshot -Label 'escaped script close fixture' -Html '<html><body><template><script><!-- escaped marker </script></template><article data-vg-guide><h1>Real title</h1><nav class="vg-guide-toc"><a href="#real">Real</a></nav><div id="real"></div><link rel="stylesheet" href="/wp-content/themes/vietnamguide-premium/assets/css/guide-experience.css?ver=fixture"><script src="/wp-content/themes/vietnamguide-premium/assets/js/guide-experience.js?ver=fixture"></script></article></body></html>'
+if ($null -ne $ScriptEscapedCloseFixture -and (
+    $ScriptEscapedCloseFixture.H1Count -ne 1 `
+        -or -not $ScriptEscapedCloseFixture.HasGuideShell `
+        -or -not $ScriptEscapedCloseFixture.HasGuideNavigation `
+        -or ($ScriptEscapedCloseFixture.AssetReferences.css -join ',') -ne '/wp-content/themes/vietnamguide-premium/assets/css/guide-experience.css?ver=fixture' `
+        -or ($ScriptEscapedCloseFixture.AssetReferences.js -join ',') -ne '/wp-content/themes/vietnamguide-premium/assets/js/guide-experience.js?ver=fixture' `
+        -or ($ScriptEscapedCloseFixture.Fragments -join ',') -ne '#real' `
+        -or ($ScriptEscapedCloseFixture.Ids -join ',') -ne 'real'
+)) {
+    $Failures.Add('escaped script close fixture did not expose reviewed guide markup')
+}
+$ScriptDoubleEscapedCommentCloseFixture = Get-PublicDomSnapshot -Label 'double-escaped script comment close fixture' -Html '<html><body><template><script><!--<script>--><script></script></template><article data-vg-guide><h1>Real title</h1><nav class="vg-guide-toc"><a href="#real">Real</a></nav><div id="real"></div><link rel="stylesheet" href="/wp-content/themes/vietnamguide-premium/assets/css/guide-experience.css?ver=fixture"><script src="/wp-content/themes/vietnamguide-premium/assets/js/guide-experience.js?ver=fixture"></script></article></script></template></body></html>'
+if ($null -ne $ScriptDoubleEscapedCommentCloseFixture -and (
+    $ScriptDoubleEscapedCommentCloseFixture.H1Count -ne 1 `
+        -or -not $ScriptDoubleEscapedCommentCloseFixture.HasGuideShell `
+        -or -not $ScriptDoubleEscapedCommentCloseFixture.HasGuideNavigation `
+        -or ($ScriptDoubleEscapedCommentCloseFixture.AssetReferences.css -join ',') -ne '/wp-content/themes/vietnamguide-premium/assets/css/guide-experience.css?ver=fixture' `
+        -or ($ScriptDoubleEscapedCommentCloseFixture.AssetReferences.js -join ',') -ne '/wp-content/themes/vietnamguide-premium/assets/js/guide-experience.js?ver=fixture' `
+        -or ($ScriptDoubleEscapedCommentCloseFixture.Fragments -join ',') -ne '#real' `
+        -or ($ScriptDoubleEscapedCommentCloseFixture.Ids -join ',') -ne 'real'
+)) {
+    $Failures.Add('double-escaped script comment close did not return to script data')
 }
 $MalformedTemplateDelimiterFixture = Get-PublicDomSnapshot -Label 'malformed template closing delimiter fixture' -Html '<html><body><template></template!><h1>Fake title</h1><article data-vg-guide><nav class="vg-guide-toc"><a href="#fake">Fake</a></nav><div id="fake"></div><link rel="stylesheet" href="/fake/guide-experience.css?ver=fake"><script src="/fake/guide-experience.js?ver=fake"></script></article></template></body></html>'
 if ($null -ne $MalformedTemplateDelimiterFixture -and (

@@ -99,6 +99,12 @@ $Mutations = @(
         Replace = "`$RawTextTags = @('iframe', 'noembed', 'noframes', 'plaintext', 'style', 'textarea', 'title', 'xmp')"
     }
     @{
+        Name = 'public script double-escaped state removal'
+        File = 'ops/verify-guide-experience-public.ps1'
+        Find = "`$State = 'double-escaped'"
+        Replace = "`$State = 'escaped'"
+    }
+    @{
         Name = 'public HTML tag-name delimiter validation removal'
         File = 'ops/verify-guide-experience-public.ps1'
         Find = "return -not `$IsClosing -and `$Character -eq '/'"
