@@ -326,6 +326,28 @@ Require-Contains $MutationVerifier 'active guide aria-current assignment removal
 Require-Contains $MutationVerifier 'inactive guide aria-current cleanup removal'
 Require-Contains $MutationVerifier 'non-H2 ID reservation removal'
 Require-Contains $MutationVerifier 'public guide asset status guard removal'
+Require-Contains $MutationVerifier 'public semantic H1 guard removal'
+Require-Contains $MutationVerifier 'public semantic guide shell guard removal'
+Require-Contains $MutationVerifier 'public semantic guide navigation guard removal'
+Require-Contains $MutationVerifier 'public DOM snapshot reuse removal'
+Require-Contains $MutationVerifier 'public inert raw-text tokenizer state removal'
+Require-Contains $MutationVerifier 'public custom-origin fixture isolation removal'
+Require-Contains $MutationVerifier 'public semantic H1 inventory removal'
+Require-Contains $MutationVerifier 'public semantic guide shell inventory removal'
+Require-Contains $MutationVerifier 'public semantic guide navigation inventory removal'
+Require-Contains $MutationVerifier 'public semantic stylesheet element inventory removal'
+Require-Contains $MutationVerifier 'public semantic script element inventory removal'
+Require-Contains $MutationVerifier 'public semantic stylesheet relation guard removal'
+Require-Contains $MutationVerifier 'public asset exact origin guard removal'
+Require-Contains $MutationVerifier 'public asset credentials guard removal'
+Require-Contains $MutationVerifier 'public asset exact path guard removal'
+Require-Contains $MutationVerifier 'public asset cache query guard removal'
+Require-Contains $MutationVerifier 'public asset fragment guard removal'
+Require-Contains $MutationVerifier 'public asset redirect rejection removal'
+Require-Contains $MutationVerifier 'public asset MIME guard removal'
+Require-Contains $MutationVerifier 'public asset response URI guard removal'
+Require-Contains $MutationVerifier 'public asset SHA-256 parity guard removal'
+Require-Contains $MutationVerifier 'public local asset fail-closed guard removal'
 Require-Contains $MutationVerifier 'public guide fragment target guard removal'
 Require-Contains $MutationVerifier 'public non-pilot inventory regression'
 Require-Contains $MutationVerifier 'leading comment-only freeform rejection'
@@ -435,6 +457,7 @@ Require-NotContains $LiveVerifier 'update_post_meta('
 Require-NotContains $LiveVerifier 'delete_post_meta('
 
 Require-Contains $PublicVerifier "[string]`$BaseUrl = 'https://vietnamguide.net'"
+Require-Contains $PublicVerifier '[switch]$FixturesOnly'
 Require-Contains $PublicVerifier 'Invoke-WebRequest'
 Require-Contains $PublicVerifier '-TimeoutSec'
 Require-Contains $PublicVerifier 'try {'
@@ -443,19 +466,21 @@ Require-Contains $PublicVerifier 'destinations/ho-chi-minh-city-travel-guide'
 Require-Contains $PublicVerifier 'itineraries/10-days-in-vietnam'
 Require-Contains $PublicVerifier 'compare/ha-long-bay-vs-lan-ha-bay'
 Require-Contains $PublicVerifier 'plan/vietnam-evisa'
-Require-Contains $PublicVerifier "'<h1\b'"
 Require-Contains $PublicVerifier 'StatusCode -ne 200'
 Require-Contains $PublicVerifier 'data-vg-guide'
 Require-Contains $PublicVerifier 'guide-experience.css'
 Require-Contains $PublicVerifier 'guide-experience.js'
-Require-Contains $PublicVerifier 'vg-guide-jump'
 Require-Contains $PublicVerifier 'vg-guide-toc'
 Require-Contains $PublicVerifier 'fatal error'
 Require-Contains $PublicVerifier 'source-update-policy'
-Require-Contains $PublicVerifier 'function Resolve-PublicUrl'
 Require-Contains $PublicVerifier 'function Get-PublicResource'
 Require-Contains $PublicVerifier 'function Get-PublicAssetUrl'
 Require-Contains $PublicVerifier 'function Get-PublicDomSnapshot'
+Require-Contains $PublicVerifier 'function Find-PublicHtmlTagEnd'
+Require-Contains $PublicVerifier 'function Convert-PublicHtmlForMshtml'
+Require-Contains $PublicVerifier 'function Get-NormalizedOriginKey'
+Require-Contains $PublicVerifier 'function Test-PublicAssetUri'
+Require-Contains $PublicVerifier 'function Test-PublicAssetResponse'
 Require-Contains $PublicVerifier 'function Require-GuideFragmentTargets'
 Require-Contains $PublicVerifier 'destinations/hanoi-travel-guide'
 Require-Contains $PublicVerifier 'itineraries/14-days-in-vietnam'
@@ -467,23 +492,87 @@ Require-Contains $PublicVerifier "guide CSS asset"
 Require-Contains $PublicVerifier "guide JavaScript asset"
 Require-FunctionContains $PublicVerifier 'Get-PublicPage' 'Invoke-WebRequest'
 Require-FunctionContains $PublicVerifier 'Get-PublicPage' '-TimeoutSec $RequestTimeoutSeconds'
+Require-FunctionContains $PublicVerifier 'Get-PublicPage' 'Dom = $Dom'
 Require-FunctionContains $PublicVerifier 'Get-PublicPage' 'catch {'
 Require-FunctionContains $PublicVerifier 'Require-NoFatalText' "'fatal error'"
 Require-FunctionContains $PublicVerifier 'Get-PublicResource' 'Invoke-WebRequest'
-Require-FunctionContains $PublicVerifier 'Resolve-PublicUrl' '[uri]::new'
+Require-FunctionContains $PublicVerifier 'Get-PublicResource' '-MaximumRedirection 0'
+Require-FunctionContains $PublicVerifier 'Get-PublicResource' 'RawContentStream'
+Require-FunctionContains $PublicVerifier 'Get-PublicResource' 'Test-PublicAssetResponse'
+Require-FunctionContains $PublicVerifier 'Get-NormalizedOriginKey' 'UserInfo'
+Require-FunctionContains $PublicVerifier 'Get-NormalizedOriginKey' 'IsDefaultPort'
+Require-FunctionContains $PublicVerifier 'Get-PublicExpectedAssets' 'if (-not (Test-Path -LiteralPath $LocalPath -PathType Leaf)) {'
+Require-FunctionContains $PublicVerifier 'Test-PublicAssetUri' 'if (-not [string]::IsNullOrEmpty($Resolved.UserInfo)) {'
+Require-FunctionContains $PublicVerifier 'Test-PublicAssetUri' '(Get-NormalizedOriginKey $Resolved) -ne $BaseOriginKey'
+Require-FunctionContains $PublicVerifier 'Test-PublicAssetUri' '$Resolved.AbsolutePath -cne $ExpectedAsset.Path'
+Require-FunctionContains $PublicVerifier 'Test-PublicAssetUri' "-cnotmatch '^\?ver=[A-Za-z0-9._-]+$'"
+Require-FunctionContains $PublicVerifier 'Test-PublicAssetUri' '$Resolved.Fragment -ne '''''
+Require-FunctionContains $PublicVerifier 'Test-PublicAssetResponse' '$StatusCode -ne 200'
+Require-FunctionContains $PublicVerifier 'Test-PublicAssetResponse' '$AllowedContentTypes -notcontains $ContentType'
+Require-FunctionContains $PublicVerifier 'Test-PublicAssetResponse' '$ActualHash.Equals($ExpectedAsset.Sha256'
+Require-FunctionContains $PublicVerifier 'Test-PublicAssetResponse' 'if ($ResponseUri.AbsoluteUri -ne $RequestedUri.AbsoluteUri) {'
 Require-FunctionContains $PublicVerifier 'Get-PublicDomSnapshot' 'New-Object -ComObject HTMLFile'
+Require-FunctionContains $PublicVerifier 'Get-PublicDomSnapshot' 'Convert-PublicHtmlForMshtml'
+Require-FunctionNotContains $PublicVerifier 'Get-PublicDomSnapshot' "[regex]::Replace(`$Html, '(?is)<(?:template|noscript)"
+Require-FunctionNotContains $PublicVerifier 'Get-PublicDomSnapshot' "[regex]::Replace(`$RenderableHtml, '(?is)<nav"
 Require-FunctionContains $PublicVerifier 'Get-PublicDomSnapshot' "getElementsByTagName('*')"
 Require-FunctionContains $PublicVerifier 'Get-PublicDomSnapshot' "getElementsByTagName('div')"
 Require-FunctionContains $PublicVerifier 'Get-PublicDomSnapshot' "getAttribute('data-vg-dom-nav')"
-Require-FunctionContains $PublicVerifier 'Get-PublicDomSnapshot' '<(?:template|noscript)'
-Require-FunctionContains $PublicVerifier 'Get-PublicDomSnapshot' '<nav\b'
+Require-FunctionContains $PublicVerifier 'Convert-PublicHtmlForMshtml' "`$TagName -in @('template', 'noscript')"
+Require-FunctionContains $PublicVerifier 'Convert-PublicHtmlForMshtml' "`$TagName -eq 'nav'"
 Require-FunctionContains $PublicVerifier 'Get-PublicDomSnapshot' 'vg-guide-(?:toc|jump)'
+Require-FunctionContains $PublicVerifier 'Get-PublicDomSnapshot' "H1Count = @(`$Document.getElementsByTagName('h1')).Count"
+Require-FunctionContains $PublicVerifier 'Get-PublicDomSnapshot' "if (`$null -ne `$Element.getAttributeNode('data-vg-guide')) {"
+Require-FunctionContains $PublicVerifier 'Get-PublicDomSnapshot' "foreach (`$Navigation in `$Document.getElementsByTagName('div')) {"
+Require-FunctionContains $PublicVerifier 'Get-PublicDomSnapshot' "foreach (`$Link in `$Document.getElementsByTagName('link')) {"
+Require-FunctionContains $PublicVerifier 'Get-PublicDomSnapshot' "foreach (`$Script in `$Document.getElementsByTagName('script')) {"
+Require-FunctionContains $PublicVerifier 'Get-PublicDomSnapshot' "`$RelTokens -contains 'stylesheet'"
 Require-FunctionContains $PublicVerifier 'Require-GuideFragmentTargets' 'HtmlDecode'
 Require-FunctionContains $PublicVerifier 'Require-GuideFragmentTargets' 'UnescapeDataString'
 Require-FunctionContains $PublicVerifier 'Require-GuideFragmentTargets' '$TargetCount -ne 1'
-Require-FunctionContains $PublicVerifier 'Require-GuideFragmentTargets' 'Get-PublicDomSnapshot'
-Require-Contains $PublicVerifier 'DOM parser fixture counted inert or unrelated markup as guide navigation'
-Require-Contains $PublicVerifier '$Asset.StatusCode -ne 200'
+Require-FunctionContains $PublicVerifier 'Require-GuideFragmentTargets' '$Snapshot = $Page.Dom'
+Require-FunctionNotContains $PublicVerifier 'Require-GuideFragmentTargets' 'Get-PublicDomSnapshot -Html $Page.Content'
+Require-Contains $PublicVerifier 'if ($Page.Dom.H1Count -ne 1) {'
+Require-Contains $PublicVerifier 'if (-not $Page.Dom.HasGuideShell) {'
+Require-Contains $PublicVerifier 'if (-not $Page.Dom.HasGuideNavigation) {'
+Require-Contains $PublicVerifier 'DOM parser fixture accepted inert pseudo guide markup'
+Require-Contains $PublicVerifier 'inert raw-text fixture exposed template descendants'
+Require-Contains $PublicVerifier '$FixtureOrigin = $BaseUri.GetLeftPart([System.UriPartial]::Authority).TrimEnd(''/'')'
+Require-Contains $PublicVerifier 'asset URI fixture accepted external host'
+Require-Contains $PublicVerifier 'asset URI fixture accepted scheme or port mismatch'
+Require-Contains $PublicVerifier 'asset URI fixture accepted credentials'
+Require-Contains $PublicVerifier 'asset URI fixture accepted wrong theme path'
+Require-Contains $PublicVerifier 'asset URI fixture accepted invalid cache query or fragment'
+Require-Contains $PublicVerifier 'asset response fixture accepted redirect status'
+Require-Contains $PublicVerifier 'asset response fixture accepted HTML error body or MIME'
+Require-Contains $PublicVerifier 'asset response fixture accepted wrong SHA-256'
+Require-Contains $PublicVerifier "Join-Path `$PSScriptRoot '..\wordpress\wp-content\themes\vietnamguide-premium\assets'"
+Require-Contains $PublicVerifier 'local reviewed asset is missing'
+Require-Contains $PublicVerifier 'VietnamGuide public verifier fixtures passed for $BaseOriginKey.'
+Require-NotContains $PublicVerifier '$H1Count = [regex]::Matches'
+Require-NotContains $PublicVerifier "Require-PublicContains `$Page 'data-vg-guide'"
+Require-NotContains $PublicVerifier "Require-PublicContains `$Page 'guide-experience.css'"
+Require-NotContains $PublicVerifier "Require-PublicContains `$Page 'guide-experience.js'"
+Require-NotContains $PublicVerifier "`$Page.Content.Contains('vg-guide-jump')"
+
+$PublicFixtureOrigins = @(
+    'https://vietnamguide.net'
+    'http://staging.example:8081'
+    'https://staging.example:444'
+)
+foreach ($PublicFixtureOrigin in $PublicFixtureOrigins) {
+    $PreviousErrorActionPreference = $ErrorActionPreference
+    $ErrorActionPreference = 'Continue'
+    try {
+        $PublicFixtureOutput = & powershell -NoProfile -ExecutionPolicy Bypass -File (Join-Path $RepoRoot $PublicVerifier) -BaseUrl $PublicFixtureOrigin -FixturesOnly 2>&1
+        $PublicFixtureExitCode = $LASTEXITCODE
+    } finally {
+        $ErrorActionPreference = $PreviousErrorActionPreference
+    }
+    if ($PublicFixtureExitCode -ne 0) {
+        $Failures.Add("Public verifier fixtures failed for ${PublicFixtureOrigin}: $($PublicFixtureOutput -join ' ')")
+    }
+}
 
 $PublicVerifierContent = Get-RepoContent $PublicVerifier
 if ($null -ne $PublicVerifierContent) {

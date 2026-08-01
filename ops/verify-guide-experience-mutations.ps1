@@ -65,8 +65,140 @@ $Mutations = @(
     @{
         Name = 'public guide asset status guard removal'
         File = 'ops/verify-guide-experience-public.ps1'
-        Find = 'if ($null -ne $Asset -and $Asset.StatusCode -ne 200) {'
-        Replace = 'if ($null -ne $Asset -and $Asset.StatusCode -lt 0) {'
+        Find = 'if ($StatusCode -ne 200) {'
+        Replace = 'if ($StatusCode -lt 0) {'
+    }
+    @{
+        Name = 'public semantic H1 guard removal'
+        File = 'ops/verify-guide-experience-public.ps1'
+        Find = 'if ($Page.Dom.H1Count -ne 1) {'
+        Replace = 'if ($Page.Dom.H1Count -lt 0) {'
+    }
+    @{
+        Name = 'public semantic guide shell guard removal'
+        File = 'ops/verify-guide-experience-public.ps1'
+        Find = 'if (-not $Page.Dom.HasGuideShell) {'
+        Replace = 'if ($false) {'
+    }
+    @{
+        Name = 'public semantic guide navigation guard removal'
+        File = 'ops/verify-guide-experience-public.ps1'
+        Find = 'if (-not $Page.Dom.HasGuideNavigation) {'
+        Replace = 'if ($false) {'
+    }
+    @{
+        Name = 'public DOM snapshot reuse removal'
+        File = 'ops/verify-guide-experience-public.ps1'
+        Find = '$Snapshot = $Page.Dom'
+        Replace = '$Snapshot = Get-PublicDomSnapshot -Html $Page.Content -Label $Page.Label'
+    }
+    @{
+        Name = 'public inert raw-text tokenizer state removal'
+        File = 'ops/verify-guide-experience-public.ps1'
+        Find = "`$RawTextTags = @('iframe', 'noembed', 'noframes', 'plaintext', 'script', 'style', 'textarea', 'title', 'xmp')"
+        Replace = "`$RawTextTags = @('iframe', 'noembed', 'noframes', 'plaintext', 'style', 'textarea', 'title', 'xmp')"
+    }
+    @{
+        Name = 'public custom-origin fixture isolation removal'
+        File = 'ops/verify-guide-experience-public.ps1'
+        Find = "`$FixtureOrigin = `$BaseUri.GetLeftPart([System.UriPartial]::Authority).TrimEnd('/')"
+        Replace = "`$FixtureOrigin = 'https://vietnamguide.net'"
+    }
+    @{
+        Name = 'public semantic H1 inventory removal'
+        File = 'ops/verify-guide-experience-public.ps1'
+        Find = "H1Count = @(`$Document.getElementsByTagName('h1')).Count"
+        Replace = "H1Count = [regex]::Matches(`$Html, '<h1\b').Count"
+    }
+    @{
+        Name = 'public semantic guide shell inventory removal'
+        File = 'ops/verify-guide-experience-public.ps1'
+        Find = "if (`$null -ne `$Element.getAttributeNode('data-vg-guide')) {"
+        Replace = 'if ($true) {'
+    }
+    @{
+        Name = 'public semantic guide navigation inventory removal'
+        File = 'ops/verify-guide-experience-public.ps1'
+        Find = "foreach (`$Navigation in `$Document.getElementsByTagName('div')) {"
+        Replace = 'foreach ($Navigation in @()) {'
+    }
+    @{
+        Name = 'public semantic stylesheet element inventory removal'
+        File = 'ops/verify-guide-experience-public.ps1'
+        Find = "foreach (`$Link in `$Document.getElementsByTagName('link')) {"
+        Replace = 'foreach ($Link in @()) {'
+    }
+    @{
+        Name = 'public semantic script element inventory removal'
+        File = 'ops/verify-guide-experience-public.ps1'
+        Find = "foreach (`$Script in `$Document.getElementsByTagName('script')) {"
+        Replace = 'foreach ($Script in @()) {'
+    }
+    @{
+        Name = 'public semantic stylesheet relation guard removal'
+        File = 'ops/verify-guide-experience-public.ps1'
+        Find = "`$IsStylesheet = `$RelTokens -contains 'stylesheet'"
+        Replace = '$IsStylesheet = $true'
+    }
+    @{
+        Name = 'public asset exact origin guard removal'
+        File = 'ops/verify-guide-experience-public.ps1'
+        Find = 'if ((Get-NormalizedOriginKey $Resolved) -ne $BaseOriginKey) {'
+        Replace = 'if ($false) {'
+    }
+    @{
+        Name = 'public asset credentials guard removal'
+        File = 'ops/verify-guide-experience-public.ps1'
+        Find = 'if (-not [string]::IsNullOrEmpty($Resolved.UserInfo)) {'
+        Replace = 'if ($false) {'
+    }
+    @{
+        Name = 'public asset exact path guard removal'
+        File = 'ops/verify-guide-experience-public.ps1'
+        Find = 'if ($Resolved.AbsolutePath -cne $ExpectedAsset.Path) {'
+        Replace = 'if ($false) {'
+    }
+    @{
+        Name = 'public asset cache query guard removal'
+        File = 'ops/verify-guide-experience-public.ps1'
+        Find = "if (`$Resolved.Query -ne '' -and `$Resolved.Query -cnotmatch '^\?ver=[A-Za-z0-9._-]+`$') {"
+        Replace = 'if ($false) {'
+    }
+    @{
+        Name = 'public asset fragment guard removal'
+        File = 'ops/verify-guide-experience-public.ps1'
+        Find = "if (`$Resolved.Fragment -ne '') {"
+        Replace = 'if ($false) {'
+    }
+    @{
+        Name = 'public asset redirect rejection removal'
+        File = 'ops/verify-guide-experience-public.ps1'
+        Find = '-MaximumRedirection 0'
+        Replace = '-MaximumRedirection 5'
+    }
+    @{
+        Name = 'public asset MIME guard removal'
+        File = 'ops/verify-guide-experience-public.ps1'
+        Find = 'if ($AllowedContentTypes -notcontains $ContentType) {'
+        Replace = 'if ($false) {'
+    }
+    @{
+        Name = 'public asset response URI guard removal'
+        File = 'ops/verify-guide-experience-public.ps1'
+        Find = 'if ($ResponseUri.AbsoluteUri -ne $RequestedUri.AbsoluteUri) {'
+        Replace = 'if ($false) {'
+    }
+    @{
+        Name = 'public asset SHA-256 parity guard removal'
+        File = 'ops/verify-guide-experience-public.ps1'
+        Find = 'if (-not $ActualHash.Equals($ExpectedAsset.Sha256, [System.StringComparison]::OrdinalIgnoreCase)) {'
+        Replace = 'if ($false) {'
+    }
+    @{
+        Name = 'public local asset fail-closed guard removal'
+        File = 'ops/verify-guide-experience-public.ps1'
+        Find = 'if (-not (Test-Path -LiteralPath $LocalPath -PathType Leaf)) {'
+        Replace = 'if ($false) {'
     }
     @{
         Name = 'public guide fragment target guard removal'
