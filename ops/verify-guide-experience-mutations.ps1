@@ -203,8 +203,30 @@ $Mutations = @(
     @{
         Name = 'public asset redirect rejection removal'
         File = 'ops/verify-guide-experience-public.ps1'
-        Find = '-MaximumRedirection 0'
-        Replace = '-MaximumRedirection 5'
+        Find = @'
+        $Response = Invoke-WebRequest `
+            -Uri $Url.AbsoluteUri `
+            -UseBasicParsing `
+            -MaximumRedirection 0 `
+'@
+        Replace = @'
+        $Response = Invoke-WebRequest `
+            -Uri $Url.AbsoluteUri `
+            -UseBasicParsing `
+            -MaximumRedirection 5 `
+'@
+    }
+    @{
+        Name = 'public page status guard removal'
+        File = 'ops/verify-guide-experience-public.ps1'
+        Find = 'if (200 -ne $StatusCode) {'
+        Replace = 'if ($false) {'
+    }
+    @{
+        Name = 'public page response URI guard removal'
+        File = 'ops/verify-guide-experience-public.ps1'
+        Find = 'elseif ($ResponseUri.AbsoluteUri -cne $RequestedUri.AbsoluteUri) {'
+        Replace = 'elseif ($false) {'
     }
     @{
         Name = 'public asset MIME guard removal'

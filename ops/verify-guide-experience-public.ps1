@@ -83,21 +83,34 @@ function Get-PublicPage {
     } else {
         "$NormalizedBaseUrl/$($Path.Trim('/'))/"
     }
+    $RequestedUri = [uri]$Url
 
     try {
         $Response = Invoke-WebRequest `
-            -Uri $Url `
+            -Uri $RequestedUri.AbsoluteUri `
             -UseBasicParsing `
-            -MaximumRedirection 5 `
+            -MaximumRedirection 0 `
             -TimeoutSec $RequestTimeoutSeconds `
             -ErrorAction Stop
+
+        $ResponseUri = if ($null -ne $Response.BaseResponse) { [uri]$Response.BaseResponse.ResponseUri } else { $null }
+        $ResponseFailures = @(Test-PublicPageResponse `
+            -StatusCode ([int]$Response.StatusCode) `
+            -ResponseUri $ResponseUri `
+            -RequestedUri $RequestedUri)
+        if ($ResponseFailures.Count -gt 0) {
+            foreach ($ResponseFailure in $ResponseFailures) {
+                $Failures.Add("${Label}: $ResponseFailure at $($RequestedUri.AbsoluteUri)")
+            }
+            return $null
+        }
 
         $Content = [string]$Response.Content
         $Dom = Get-PublicDomSnapshot -Html $Content -Label $Label
 
         return [pscustomobject]@{
             Label = $Label
-            Url = $Url
+            Url = $RequestedUri.AbsoluteUri
             StatusCode = [int]$Response.StatusCode
             Content = $Content
             Dom = $Dom
@@ -152,6 +165,25 @@ function Get-ByteSha256 {
     finally {
         $Sha256.Dispose()
     }
+}
+
+function Test-PublicPageResponse {
+    param(
+        [int]$StatusCode,
+        [uri]$ResponseUri,
+        [uri]$RequestedUri
+    )
+
+    $Errors = [System.Collections.Generic.List[string]]::new()
+    if (200 -ne $StatusCode) {
+        $Errors.Add("expected HTTP 200, found $StatusCode")
+    }
+    if ($null -eq $ResponseUri -or $null -eq $RequestedUri) {
+        $Errors.Add('response URI evidence was missing')
+    } elseif ($ResponseUri.AbsoluteUri -cne $RequestedUri.AbsoluteUri) {
+        $Errors.Add("response URI changed to $($ResponseUri.AbsoluteUri)")
+    }
+    return $Errors.ToArray()
 }
 
 function Test-PublicAssetResponse {
@@ -944,6 +976,17 @@ if (@(Test-PublicAssetResponse -StatusCode 200 -ContentTypeHeader 'text/css' -By
 $WrongHashExpected = @{ Sha256 = ('0' * 64); AllowedContentTypes = @('text/css') }
 if (@(Test-PublicAssetResponse -StatusCode 200 -ContentTypeHeader 'text/css' -Bytes $FixtureBytes -ResponseUri $FixtureUri -RequestedUri $FixtureUri -ExpectedAsset $WrongHashExpected).Count -eq 0) {
     $Failures.Add('asset response fixture accepted wrong SHA-256')
+}
+$PageFixtureUri = [uri]($FixtureOrigin + '/pilot/')
+$RedirectedPageFixtureUri = [uri]($FixtureOrigin + '/unexpected/')
+if (@(Test-PublicPageResponse -StatusCode 302 -ResponseUri $PageFixtureUri -RequestedUri $PageFixtureUri).Count -eq 0) {
+    $Failures.Add('page response fixture accepted redirect status')
+}
+if (@(Test-PublicPageResponse -StatusCode 200 -ResponseUri $RedirectedPageFixtureUri -RequestedUri $PageFixtureUri).Count -eq 0) {
+    $Failures.Add('page response fixture accepted mismatched final URI')
+}
+if (@(Test-PublicPageResponse -StatusCode 200 -ResponseUri $PageFixtureUri -RequestedUri $PageFixtureUri).Count -ne 0) {
+    $Failures.Add('page response fixture rejected canonical response')
 }
 $MissingAssetFixtureRejected = $false
 try {
