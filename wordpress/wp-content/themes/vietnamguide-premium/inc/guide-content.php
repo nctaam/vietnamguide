@@ -110,7 +110,7 @@ function vg_collect_guide_heading_plan(string $html): ?array
         $tokenName = $processor->get_token_name();
         $isTagCloser = $processor->is_tag_closer();
 
-        if (! $isTagCloser) {
+        if (! $isTagCloser && 'H2' !== $tokenName) {
             $elementId = null;
             if (is_string($tokenName) && isset($tokenName[0]) && $tokenName[0] !== '#') {
                 $elementId = $processor->get_attribute('id');
@@ -175,7 +175,7 @@ function vg_collect_guide_heading_plan(string $html): ?array
         $plannedId = null;
 
         if (is_string($originalId) && vg_is_valid_guide_heading_id($originalId)) {
-            if (! isset($assignedIds[$originalId])) {
+            if (! isset($reservedIds[$originalId]) && ! isset($assignedIds[$originalId])) {
                 $plannedId = $originalId;
             } else {
                 $plannedId = vg_allocate_guide_heading_id($originalId, $reservedIds, $assignedIds);

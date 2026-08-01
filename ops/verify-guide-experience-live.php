@@ -395,6 +395,17 @@ HTML;
         'generated H2 IDs collided with valid IDs already used by non-H2 body elements'
     );
 
+    $authored_non_h2_collision_html = '<div id="arrival"></div><h2 id="arrival">Arrival</h2>';
+    $authored_non_h2_collision_result = vg_prepare_guide_headings($authored_non_h2_collision_html);
+    $authored_non_h2_collision_stats = $inspect_semantic_html($authored_non_h2_collision_result['html']);
+    $check(
+        $authored_non_h2_collision_stats !== null
+            && $authored_non_h2_collision_stats['all_ids'] === ['arrival', 'arrival-2']
+            && array_column($authored_non_h2_collision_result['headings'], 'id') === ['arrival-2'],
+        'authored H2 IDs avoid non-H2 collisions',
+        'an authored H2 ID was preserved even though a non-H2 element already owned it'
+    );
+
     $opt_out_html = '<h2 data-vg-toc="false" id="reserved">Hidden</h2><h2>Reserved</h2><h2>Visible</h2>';
     $opt_out_result = vg_prepare_guide_headings($opt_out_html);
     $opt_out_stats = $inspect_semantic_html($opt_out_result['html']);

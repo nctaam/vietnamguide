@@ -59,8 +59,14 @@ $Mutations = @(
     @{
         Name = 'non-H2 ID reservation removal'
         File = 'wordpress/wp-content/themes/vietnamguide-premium/inc/guide-content.php'
-        Find = '        if (! $isTagCloser) {'
+        Find = '        if (! $isTagCloser && ''H2'' !== $tokenName) {'
         Replace = '        if (! $isTagCloser && ''H2'' === $tokenName) {'
+    }
+    @{
+        Name = 'authored H2 non-H2 collision guard removal'
+        File = 'wordpress/wp-content/themes/vietnamguide-premium/inc/guide-content.php'
+        Find = '            if (! isset($reservedIds[$originalId]) && ! isset($assignedIds[$originalId])) {'
+        Replace = '            if (! isset($assignedIds[$originalId])) {'
     }
     @{
         Name = 'public guide asset status guard removal'

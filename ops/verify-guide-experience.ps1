@@ -325,6 +325,7 @@ Require-Contains $MutationVerifier 'guide fragment heading offset removal'
 Require-Contains $MutationVerifier 'active guide aria-current assignment removal'
 Require-Contains $MutationVerifier 'inactive guide aria-current cleanup removal'
 Require-Contains $MutationVerifier 'non-H2 ID reservation removal'
+Require-Contains $MutationVerifier 'authored H2 non-H2 collision guard removal'
 Require-Contains $MutationVerifier 'public guide asset status guard removal'
 Require-Contains $MutationVerifier 'public semantic H1 guard removal'
 Require-Contains $MutationVerifier 'public semantic guide shell guard removal'
@@ -424,6 +425,7 @@ foreach ($FixtureLabel in @(
     'script and comment pseudo-headings ignored'
     'authored heading IDs and deterministic collisions'
     'non-H2 element IDs reserve heading slugs'
+    'authored H2 IDs avoid non-H2 collisions'
     'opted-out headings excluded without collisions'
     'incomplete markup fails closed'
     'canonical EEAT metadata precedence'
@@ -449,6 +451,8 @@ Require-Contains $LiveVerifier '<p>Meaningful introduction.</p>'
 Require-Contains $LiveVerifier "'#tag' !== `$processor->get_token_type()"
 Require-Contains $LiveVerifier "'all_ids'"
 Require-Contains $LiveVerifier '<div id="arrival"><h3 id="local-transport">'
+Require-Contains $LiveVerifier '<div id="arrival"></div><h2 id="arrival">Arrival</h2>'
+Require-Contains $LiveVerifier "['arrival', 'arrival-2']"
 Require-Contains $LiveVerifier "vg_inspect_guide_html((string) `$pseudo_content['hero_html'])"
 foreach ($EeatFunction in @(
     'vg_eeat_get_field'
@@ -722,7 +726,7 @@ Require-FunctionContains $ContentProvider 'vg_collect_guide_heading_plan' 'next_
 Require-FunctionContains $ContentProvider 'vg_collect_guide_heading_plan' 'get_token_name()'
 Require-FunctionContains $ContentProvider 'vg_collect_guide_heading_plan' 'is_tag_closer()'
 Require-FunctionContains $ContentProvider 'vg_collect_guide_heading_plan' '$isTagCloser = $processor->is_tag_closer();'
-Require-FunctionContains $ContentProvider 'vg_collect_guide_heading_plan' 'if (! $isTagCloser) {'
+Require-FunctionContains $ContentProvider 'vg_collect_guide_heading_plan' 'if (! $isTagCloser && ''H2'' !== $tokenName) {'
 Require-FunctionContains $ContentProvider 'vg_collect_guide_heading_plan' '$elementId = $processor->get_attribute(''id'');'
 Require-FunctionContains $ContentProvider 'vg_collect_guide_heading_plan' 'vg_is_valid_guide_heading_id($elementId)'
 Require-FunctionContains $ContentProvider 'vg_collect_guide_heading_plan' 'get_modifiable_text()'
@@ -736,6 +740,7 @@ Require-FunctionContains $ContentProvider 'vg_collect_guide_heading_plan' 'vg_is
 Require-FunctionContains $ContentProvider 'vg_collect_guide_heading_plan' '$reservedIds'
 Require-FunctionContains $ContentProvider 'vg_collect_guide_heading_plan' '$assignedIds'
 Require-FunctionContains $ContentProvider 'vg_collect_guide_heading_plan' '$plannedId = $originalId;'
+Require-FunctionContains $ContentProvider 'vg_collect_guide_heading_plan' 'if (! isset($reservedIds[$originalId]) && ! isset($assignedIds[$originalId])) {'
 Require-FunctionContains $ContentProvider 'vg_collect_guide_heading_plan' 'sanitize_title($label)'
 Require-FunctionContains $ContentProvider 'vg_collect_guide_heading_plan' '$eligible = ! $heading[''opt_out''] && $label !== '''';'
 Require-FunctionContains $ContentProvider 'vg_apply_guide_heading_plan' "next_tag('H2')"
