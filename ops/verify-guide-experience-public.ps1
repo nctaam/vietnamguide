@@ -315,6 +315,23 @@ function Find-PublicHtmlTagEnd {
     return -1
 }
 
+function Test-PublicHtmlTagNameDelimiter {
+    param(
+        [string]$Html,
+        [int]$Index,
+        [bool]$IsClosing
+    )
+
+    if ($Index -lt 0 -or $Index -ge $Html.Length) {
+        return $false
+    }
+    $Character = $Html[$Index]
+    if ($Character -eq '>' -or $Character -match '[\x09\x0A\x0C\x0D ]') {
+        return $true
+    }
+    return -not $IsClosing -and $Character -eq '/'
+}
+
 function Find-PublicRawTextEnd {
     param(
         [string]$Html,
@@ -333,7 +350,7 @@ function Find-PublicRawTextEnd {
             return $null
         }
         $NameEnd = $CloseStart + $Needle.Length
-        if ($NameEnd -lt $Html.Length -and $Html[$NameEnd] -match '[A-Za-z0-9:-]') {
+        if (-not (Test-PublicHtmlTagNameDelimiter -Html $Html -Index $NameEnd -IsClosing $true)) {
             $SearchIndex = $NameEnd
             continue
         }
@@ -397,6 +414,14 @@ function Convert-PublicHtmlForMshtml {
 
         $TagName = $TagMatch.Groups['name'].Value.ToLowerInvariant()
         $IsClosing = $TagMatch.Groups['closing'].Value -eq '/'
+        $NameEnd = $TagMatch.Groups['name'].Index + $TagMatch.Groups['name'].Length
+        if (-not (Test-PublicHtmlTagNameDelimiter -Html $Token -Index $NameEnd -IsClosing $IsClosing)) {
+            if ($InertStack.Count -eq 0) {
+                [void]$Output.Append($Token)
+            }
+            $Index = $TagEnd + 1
+            continue
+        }
         if (-not $IsClosing -and $RawTextTags -contains $TagName) {
             $RawEnd = Find-PublicRawTextEnd -Html $Html -ContentStart ($TagEnd + 1) -TagName $TagName
             $BlockEnd = if ($null -eq $RawEnd) { $Html.Length - 1 } else { $RawEnd.End }
@@ -607,6 +632,42 @@ if ($null -ne $RawTextInertFixture -and (
         -or @($RawTextInertFixture.Ids).Count -ne 0
 )) {
     $Failures.Add('inert raw-text fixture exposed template descendants')
+}
+$MalformedTemplateDelimiterFixture = Get-PublicDomSnapshot -Label 'malformed template closing delimiter fixture' -Html '<html><body><template></template!><h1>Fake title</h1><article data-vg-guide><nav class="vg-guide-toc"><a href="#fake">Fake</a></nav><div id="fake"></div><link rel="stylesheet" href="/fake/guide-experience.css?ver=fake"><script src="/fake/guide-experience.js?ver=fake"></script></article></template></body></html>'
+if ($null -ne $MalformedTemplateDelimiterFixture -and (
+    $MalformedTemplateDelimiterFixture.H1Count -ne 0 `
+        -or $MalformedTemplateDelimiterFixture.HasGuideShell `
+        -or $MalformedTemplateDelimiterFixture.HasGuideNavigation `
+        -or @($MalformedTemplateDelimiterFixture.AssetReferences.css).Count -ne 0 `
+        -or @($MalformedTemplateDelimiterFixture.AssetReferences.js).Count -ne 0 `
+        -or @($MalformedTemplateDelimiterFixture.Fragments).Count -ne 0 `
+        -or @($MalformedTemplateDelimiterFixture.Ids).Count -ne 0
+)) {
+    $Failures.Add('malformed template closing delimiter exposed inert descendants')
+}
+$MalformedRawTextDelimiterFixture = Get-PublicDomSnapshot -Label 'malformed raw-text closing delimiter fixture' -Html '<html><body><template><script>var marker = "</script!></template>";</script><h1>Fake title</h1><article data-vg-guide><nav class="vg-guide-toc"><a href="#fake">Fake</a></nav><div id="fake"></div><link rel="stylesheet" href="/fake/guide-experience.css?ver=fake"><script src="/fake/guide-experience.js?ver=fake"></script></article></template></body></html>'
+if ($null -ne $MalformedRawTextDelimiterFixture -and (
+    $MalformedRawTextDelimiterFixture.H1Count -ne 0 `
+        -or $MalformedRawTextDelimiterFixture.HasGuideShell `
+        -or $MalformedRawTextDelimiterFixture.HasGuideNavigation `
+        -or @($MalformedRawTextDelimiterFixture.AssetReferences.css).Count -ne 0 `
+        -or @($MalformedRawTextDelimiterFixture.AssetReferences.js).Count -ne 0 `
+        -or @($MalformedRawTextDelimiterFixture.Fragments).Count -ne 0 `
+        -or @($MalformedRawTextDelimiterFixture.Ids).Count -ne 0
+)) {
+    $Failures.Add('malformed raw-text closing delimiter exposed inert descendants')
+}
+$ValidClosingDelimiterFixture = Get-PublicDomSnapshot -Label 'valid closing delimiter fixture' -Html '<html><body><template><h1>Inert template title</h1></template   ><script>var fake = ''<h1>Inert script title</h1>'';</script   ><article data-vg-guide><h1>Real title</h1><nav class="vg-guide-toc"><a href="#real">Real</a></nav><div id="real"></div><link rel="stylesheet" href="/wp-content/themes/vietnamguide-premium/assets/css/guide-experience.css?ver=fixture"><script src="/wp-content/themes/vietnamguide-premium/assets/js/guide-experience.js?ver=fixture"></script></article></body></html>'
+if ($null -ne $ValidClosingDelimiterFixture -and (
+    $ValidClosingDelimiterFixture.H1Count -ne 1 `
+        -or -not $ValidClosingDelimiterFixture.HasGuideShell `
+        -or -not $ValidClosingDelimiterFixture.HasGuideNavigation `
+        -or ($ValidClosingDelimiterFixture.AssetReferences.css -join ',') -ne '/wp-content/themes/vietnamguide-premium/assets/css/guide-experience.css?ver=fixture' `
+        -or ($ValidClosingDelimiterFixture.AssetReferences.js -join ',') -ne '/wp-content/themes/vietnamguide-premium/assets/js/guide-experience.js?ver=fixture' `
+        -or ($ValidClosingDelimiterFixture.Fragments -join ',') -ne '#real' `
+        -or ($ValidClosingDelimiterFixture.Ids -join ',') -ne 'real'
+)) {
+    $Failures.Add('valid whitespace closing delimiter was rejected')
 }
 
 $CssFixtureSpec = $ExpectedAssets.css

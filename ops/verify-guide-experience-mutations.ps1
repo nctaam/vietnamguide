@@ -99,6 +99,12 @@ $Mutations = @(
         Replace = "`$RawTextTags = @('iframe', 'noembed', 'noframes', 'plaintext', 'style', 'textarea', 'title', 'xmp')"
     }
     @{
+        Name = 'public HTML tag-name delimiter validation removal'
+        File = 'ops/verify-guide-experience-public.ps1'
+        Find = "return -not `$IsClosing -and `$Character -eq '/'"
+        Replace = 'return $true'
+    }
+    @{
         Name = 'public custom-origin fixture isolation removal'
         File = 'ops/verify-guide-experience-public.ps1'
         Find = "`$FixtureOrigin = `$BaseUri.GetLeftPart([System.UriPartial]::Authority).TrimEnd('/')"
