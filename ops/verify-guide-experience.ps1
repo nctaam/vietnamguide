@@ -332,6 +332,7 @@ Require-Contains $MutationVerifier 'public semantic guide navigation guard remov
 Require-Contains $MutationVerifier 'public DOM snapshot reuse removal'
 Require-Contains $MutationVerifier 'public inert raw-text tokenizer state removal'
 Require-Contains $MutationVerifier 'public HTML tag-name delimiter validation removal'
+Require-Contains $MutationVerifier 'public opening self-close delimiter rejection'
 Require-Contains $MutationVerifier 'public HTML tag-prefix grammar relaxation'
 Require-Contains $MutationVerifier 'public custom-origin fixture isolation removal'
 Require-Contains $MutationVerifier 'public semantic H1 inventory removal'
@@ -549,6 +550,9 @@ Require-Contains $PublicVerifier 'valid whitespace closing delimiter was rejecte
 Require-Contains $PublicVerifier 'malformed template tag prefix exposed inert descendants'
 Require-Contains $PublicVerifier 'malformed raw-text tag prefix exposed inert descendants'
 Require-Contains $PublicVerifier 'malformed opening tag prefix was treated as an inert tag'
+Require-Contains $PublicVerifier 'malformed raw-text opening tag changed semantic guide inventory'
+Require-Contains $PublicVerifier 'valid opening self-close slash delimiter was rejected'
+Require-Contains $PublicVerifier "`$OpeningSelfCloseProbe = '<vg-probe/>'"
 Require-Contains $PublicVerifier '$FixtureOrigin = $BaseUri.GetLeftPart([System.UriPartial]::Authority).TrimEnd(''/'')'
 Require-Contains $PublicVerifier 'asset URI fixture accepted external host'
 Require-Contains $PublicVerifier 'asset URI fixture accepted scheme or port mismatch'

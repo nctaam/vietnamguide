@@ -105,6 +105,12 @@ $Mutations = @(
         Replace = 'return $true'
     }
     @{
+        Name = 'public opening self-close delimiter rejection'
+        File = 'ops/verify-guide-experience-public.ps1'
+        Find = "return -not `$IsClosing -and `$Character -eq '/'"
+        Replace = 'return $false'
+    }
+    @{
         Name = 'public HTML tag-prefix grammar relaxation'
         File = 'ops/verify-guide-experience-public.ps1'
         Find = "`$TagMatch = [regex]::Match(`$Token, '^<(?<closing>/)?(?<name>[A-Za-z][A-Za-z0-9:-]*)', [System.Text.RegularExpressions.RegexOptions]::IgnoreCase)"

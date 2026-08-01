@@ -717,6 +717,28 @@ if ($null -ne $MalformedOpeningPrefixFixture -and (
 )) {
     $Failures.Add('malformed opening tag prefix was treated as an inert tag')
 }
+$MalformedRawTextOpeningFixture = Get-PublicDomSnapshot -Label 'malformed raw-text opening fixture' -Html '<html><body>< script><article data-vg-guide><h1>Real title</h1><nav class="vg-guide-toc"><a href="#real">Real</a></nav><div id="real"></div><link rel="stylesheet" href="/wp-content/themes/vietnamguide-premium/assets/css/guide-experience.css?ver=fixture"><script src="/wp-content/themes/vietnamguide-premium/assets/js/guide-experience.js?ver=fixture"></script></article></script></body></html>'
+if ($null -ne $MalformedRawTextOpeningFixture -and (
+    $MalformedRawTextOpeningFixture.H1Count -ne 1 `
+        -or -not $MalformedRawTextOpeningFixture.HasGuideShell `
+        -or -not $MalformedRawTextOpeningFixture.HasGuideNavigation `
+        -or ($MalformedRawTextOpeningFixture.AssetReferences.css -join ',') -ne '/wp-content/themes/vietnamguide-premium/assets/css/guide-experience.css?ver=fixture' `
+        -or ($MalformedRawTextOpeningFixture.AssetReferences.js -join ',') -ne '/wp-content/themes/vietnamguide-premium/assets/js/guide-experience.js?ver=fixture' `
+        -or ($MalformedRawTextOpeningFixture.Fragments -join ',') -ne '#real' `
+        -or ($MalformedRawTextOpeningFixture.Ids -join ',') -ne 'real'
+)) {
+    $Failures.Add('malformed raw-text opening tag changed semantic guide inventory')
+}
+$OpeningSelfCloseProbe = '<vg-probe/>'
+$OpeningSelfCloseSlashIndex = $OpeningSelfCloseProbe.IndexOf('/', [System.StringComparison]::Ordinal)
+$OpeningSelfCloseDelimiterAccepted = Test-PublicHtmlTagNameDelimiter `
+    -Html $OpeningSelfCloseProbe `
+    -Index $OpeningSelfCloseSlashIndex `
+    -IsClosing $false
+$OpeningSelfCloseConverted = Convert-PublicHtmlForMshtml -Html $OpeningSelfCloseProbe -NavMarker 'self-close-probe'
+if (-not $OpeningSelfCloseDelimiterAccepted -or $OpeningSelfCloseConverted -cne $OpeningSelfCloseProbe) {
+    $Failures.Add('valid opening self-close slash delimiter was rejected')
+}
 
 $CssFixtureSpec = $ExpectedAssets.css
 $FixtureOrigin = $BaseUri.GetLeftPart([System.UriPartial]::Authority).TrimEnd('/')
