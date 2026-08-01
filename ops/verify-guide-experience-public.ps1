@@ -403,7 +403,7 @@ function Convert-PublicHtmlForMshtml {
             break
         }
         $Token = $Html.Substring($Index, $TagEnd - $Index + 1)
-        $TagMatch = [regex]::Match($Token, '^<\s*(?<closing>/?)\s*(?<name>[A-Za-z][A-Za-z0-9:-]*)', [System.Text.RegularExpressions.RegexOptions]::IgnoreCase)
+        $TagMatch = [regex]::Match($Token, '^<(?<closing>/)?(?<name>[A-Za-z][A-Za-z0-9:-]*)', [System.Text.RegularExpressions.RegexOptions]::IgnoreCase)
         if (-not $TagMatch.Success) {
             if ($InertStack.Count -eq 0) {
                 [void]$Output.Append($Token)
@@ -668,6 +668,54 @@ if ($null -ne $ValidClosingDelimiterFixture -and (
         -or ($ValidClosingDelimiterFixture.Ids -join ',') -ne 'real'
 )) {
     $Failures.Add('valid whitespace closing delimiter was rejected')
+}
+$MalformedTemplatePrefixFixtures = @(
+    @{ Label = 'space before closing slash'; Token = '< /template>' }
+    @{ Label = 'space after closing slash'; Token = '</ template>' }
+)
+foreach ($FixtureSpec in $MalformedTemplatePrefixFixtures) {
+    $FixtureHtml = '<html><body><template>{{TOKEN}}<h1>Fake title</h1><article data-vg-guide><nav class="vg-guide-toc"><a href="#fake">Fake</a></nav><div id="fake"></div><link rel="stylesheet" href="/fake/guide-experience.css?ver=fake"><script src="/fake/guide-experience.js?ver=fake"></script></article></template></body></html>'.Replace('{{TOKEN}}', $FixtureSpec.Token)
+    $Fixture = Get-PublicDomSnapshot -Label "malformed template prefix fixture ($($FixtureSpec.Label))" -Html $FixtureHtml
+    if ($null -ne $Fixture -and (
+        $Fixture.H1Count -ne 0 `
+            -or $Fixture.HasGuideShell `
+            -or $Fixture.HasGuideNavigation `
+            -or @($Fixture.AssetReferences.css).Count -ne 0 `
+            -or @($Fixture.AssetReferences.js).Count -ne 0 `
+            -or @($Fixture.Fragments).Count -ne 0 `
+            -or @($Fixture.Ids).Count -ne 0
+    )) {
+        $Failures.Add("malformed template tag prefix exposed inert descendants: $($FixtureSpec.Label)")
+    }
+}
+$MalformedRawTextPrefixFixtures = @(
+    @{ Label = 'space before closing slash'; Token = '< /script>' }
+    @{ Label = 'space after closing slash'; Token = '</ script>' }
+)
+foreach ($FixtureSpec in $MalformedRawTextPrefixFixtures) {
+    $FixtureHtml = '<html><body><template><script>var marker = "{{TOKEN}}</template>";</script><h1>Fake title</h1><article data-vg-guide><nav class="vg-guide-toc"><a href="#fake">Fake</a></nav><div id="fake"></div><link rel="stylesheet" href="/fake/guide-experience.css?ver=fake"><script src="/fake/guide-experience.js?ver=fake"></script></article></template></body></html>'.Replace('{{TOKEN}}', $FixtureSpec.Token)
+    $Fixture = Get-PublicDomSnapshot -Label "malformed raw-text prefix fixture ($($FixtureSpec.Label))" -Html $FixtureHtml
+    if ($null -ne $Fixture -and (
+        $Fixture.H1Count -ne 0 `
+            -or $Fixture.HasGuideShell `
+            -or $Fixture.HasGuideNavigation `
+            -or @($Fixture.AssetReferences.css).Count -ne 0 `
+            -or @($Fixture.AssetReferences.js).Count -ne 0 `
+            -or @($Fixture.Fragments).Count -ne 0 `
+            -or @($Fixture.Ids).Count -ne 0
+    )) {
+        $Failures.Add("malformed raw-text tag prefix exposed inert descendants: $($FixtureSpec.Label)")
+    }
+}
+$MalformedOpeningPrefixFixture = Get-PublicDomSnapshot -Label 'malformed opening prefix fixture' -Html '<html><body>< template><article data-vg-guide><h1>Real title</h1><nav class="vg-guide-toc"><a href="#real">Real</a></nav><div id="real"></div></template></body></html>'
+if ($null -ne $MalformedOpeningPrefixFixture -and (
+    $MalformedOpeningPrefixFixture.H1Count -ne 1 `
+        -or -not $MalformedOpeningPrefixFixture.HasGuideShell `
+        -or -not $MalformedOpeningPrefixFixture.HasGuideNavigation `
+        -or ($MalformedOpeningPrefixFixture.Fragments -join ',') -ne '#real' `
+        -or ($MalformedOpeningPrefixFixture.Ids -join ',') -ne 'real'
+)) {
+    $Failures.Add('malformed opening tag prefix was treated as an inert tag')
 }
 
 $CssFixtureSpec = $ExpectedAssets.css

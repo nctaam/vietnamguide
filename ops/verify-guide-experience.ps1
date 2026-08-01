@@ -332,6 +332,7 @@ Require-Contains $MutationVerifier 'public semantic guide navigation guard remov
 Require-Contains $MutationVerifier 'public DOM snapshot reuse removal'
 Require-Contains $MutationVerifier 'public inert raw-text tokenizer state removal'
 Require-Contains $MutationVerifier 'public HTML tag-name delimiter validation removal'
+Require-Contains $MutationVerifier 'public HTML tag-prefix grammar relaxation'
 Require-Contains $MutationVerifier 'public custom-origin fixture isolation removal'
 Require-Contains $MutationVerifier 'public semantic H1 inventory removal'
 Require-Contains $MutationVerifier 'public semantic guide shell inventory removal'
@@ -517,6 +518,7 @@ Require-FunctionContains $PublicVerifier 'Get-PublicDomSnapshot' 'New-Object -Co
 Require-FunctionContains $PublicVerifier 'Get-PublicDomSnapshot' 'Convert-PublicHtmlForMshtml'
 Require-FunctionContains $PublicVerifier 'Find-PublicRawTextEnd' 'Test-PublicHtmlTagNameDelimiter'
 Require-FunctionContains $PublicVerifier 'Convert-PublicHtmlForMshtml' 'Test-PublicHtmlTagNameDelimiter'
+Require-FunctionContains $PublicVerifier 'Convert-PublicHtmlForMshtml' "'^<(?<closing>/)?(?<name>[A-Za-z][A-Za-z0-9:-]*)'"
 Require-FunctionNotContains $PublicVerifier 'Get-PublicDomSnapshot' "[regex]::Replace(`$Html, '(?is)<(?:template|noscript)"
 Require-FunctionNotContains $PublicVerifier 'Get-PublicDomSnapshot' "[regex]::Replace(`$RenderableHtml, '(?is)<nav"
 Require-FunctionContains $PublicVerifier 'Get-PublicDomSnapshot' "getElementsByTagName('*')"
@@ -544,6 +546,9 @@ Require-Contains $PublicVerifier 'inert raw-text fixture exposed template descen
 Require-Contains $PublicVerifier 'malformed template closing delimiter exposed inert descendants'
 Require-Contains $PublicVerifier 'malformed raw-text closing delimiter exposed inert descendants'
 Require-Contains $PublicVerifier 'valid whitespace closing delimiter was rejected'
+Require-Contains $PublicVerifier 'malformed template tag prefix exposed inert descendants'
+Require-Contains $PublicVerifier 'malformed raw-text tag prefix exposed inert descendants'
+Require-Contains $PublicVerifier 'malformed opening tag prefix was treated as an inert tag'
 Require-Contains $PublicVerifier '$FixtureOrigin = $BaseUri.GetLeftPart([System.UriPartial]::Authority).TrimEnd(''/'')'
 Require-Contains $PublicVerifier 'asset URI fixture accepted external host'
 Require-Contains $PublicVerifier 'asset URI fixture accepted scheme or port mismatch'

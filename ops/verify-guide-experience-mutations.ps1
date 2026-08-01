@@ -105,6 +105,12 @@ $Mutations = @(
         Replace = 'return $true'
     }
     @{
+        Name = 'public HTML tag-prefix grammar relaxation'
+        File = 'ops/verify-guide-experience-public.ps1'
+        Find = "`$TagMatch = [regex]::Match(`$Token, '^<(?<closing>/)?(?<name>[A-Za-z][A-Za-z0-9:-]*)', [System.Text.RegularExpressions.RegexOptions]::IgnoreCase)"
+        Replace = "`$TagMatch = [regex]::Match(`$Token, '^<\s*(?<closing>/?)\s*(?<name>[A-Za-z][A-Za-z0-9:-]*)', [System.Text.RegularExpressions.RegexOptions]::IgnoreCase)"
+    }
+    @{
         Name = 'public custom-origin fixture isolation removal'
         File = 'ops/verify-guide-experience-public.ps1'
         Find = "`$FixtureOrigin = `$BaseUri.GetLeftPart([System.UriPartial]::Authority).TrimEnd('/')"
