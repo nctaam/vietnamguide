@@ -48,6 +48,9 @@ $required_functions = [
     'vg_guide_body_has_related_routes',
     'vg_is_valid_guide_context',
     'vg_build_guide_context',
+    'vg_eeat_get_field',
+    'vg_eeat_lines',
+    'vg_eeat_related_route_items',
 ];
 
 foreach ($required_functions as $function_name) {
@@ -171,6 +174,11 @@ if ($runtime_ready) {
         );
 
         if (is_array($result['context'])) {
+            $check(
+                $result['context']['type'] === $expected_type,
+                'pilot strict context',
+                sprintf('%s context type did not remain %s', $path, $expected_type)
+            );
             $hero_stats = $inspect_semantic_html($result['context']['hero_html']);
             $body_stats = $inspect_semantic_html($result['context']['body_html']);
             $prepared_body = vg_prepare_guide_headings($result['context']['body_html']);
@@ -246,16 +254,57 @@ HTML;
         remove_filter('the_content', $generated_h1_filter, 999);
     }
 
-    $pseudo_stats = $inspect_semantic_html(
-        '<section class="vg-guide-hero"><h1>Real heading</h1>'
-        . '<script>window.fake = "<h1>script heading</h1>";</script>'
-        . '<!-- <h1>comment heading</h1> --></section>'
-    );
+    $pseudo_markup = '<script>window.fake = "<h1>script heading</h1>";</script>'
+        . '<!-- <h1>comment heading</h1> -->';
+    $pseudo_html = '<section class="vg-guide-hero"><h1>Real heading</h1>' . $pseudo_markup . '</section>';
+    $pseudo_inspection = vg_inspect_guide_html($pseudo_html);
+    $pseudo_stats = $inspect_semantic_html($pseudo_html);
     $check(
-        $pseudo_stats !== null && $pseudo_stats['h1_count'] === 1,
+        $pseudo_inspection !== null
+            && $pseudo_inspection['has_hero_class']
+            && $pseudo_inspection['h1_count'] === 1
+            && $pseudo_stats !== null
+            && $pseudo_stats['h1_count'] === 1,
         'script and comment pseudo-headings ignored',
         'semantic H1 inspection counted script or comment text'
     );
+
+    $pseudo_post = clone $fixture_post;
+    $pseudo_post->post_content = <<<'HTML'
+<!-- wp:html -->
+<section class="vg-guide-hero"><h1>Runtime pseudo-heading fixture</h1><span>VG_PSEUDO_H1_FIXTURE</span></section>
+<!-- /wp:html -->
+<!-- wp:html -->
+<div><h2 id="pseudo-first">First section</h2><p>Production parsing fixture body.</p><h2>Second section</h2><p>More fixture detail.</p></div>
+<!-- /wp:html -->
+HTML;
+    $pseudo_filter = static function (string $html) use ($pseudo_markup): string {
+        return str_replace('<span>VG_PSEUDO_H1_FIXTURE</span>', $pseudo_markup, $html);
+    };
+    add_filter('the_content', $pseudo_filter, 999);
+    try {
+        $pseudo_content = $with_page_state($pseudo_post, static function () use ($pseudo_post) {
+            return vg_prepare_guide_content($pseudo_post);
+        });
+        $pseudo_context = $with_page_state($pseudo_post, static function () use ($pseudo_post) {
+            return vg_build_guide_context($pseudo_post);
+        });
+        $pseudo_hero_stats = is_array($pseudo_content)
+            ? $inspect_semantic_html($pseudo_content['hero_html'])
+            : null;
+        $check(
+            is_array($pseudo_content)
+                && $pseudo_hero_stats !== null
+                && $pseudo_hero_stats['h1_count'] === 1
+                && $pseudo_hero_stats['has_hero_class']
+                && is_array($pseudo_context)
+                && vg_is_valid_guide_context($pseudo_context),
+            'script and comment pseudo-headings ignored',
+            'production content preparation rejected pseudo-H1 strings or produced an invalid context'
+        );
+    } finally {
+        remove_filter('the_content', $pseudo_filter, 999);
+    }
 
     $collision_html = '<h2 id="keep">Keep</h2><h2 id="keep">Duplicate</h2><h2>Keep</h2>';
     $collision_result = vg_prepare_guide_headings($collision_html);
@@ -290,40 +339,38 @@ HTML;
         'an incomplete token stream was accepted or rewritten'
     );
 
-    if (function_exists('vg_eeat_get_field') && function_exists('vg_eeat_lines')) {
-        $eeat_meta_filter = static function ($value, int $object_id, string $meta_key, bool $single, string $meta_type) use ($fixture_post) {
-            if ($meta_type !== 'post' || $object_id !== $fixture_post->ID) {
-                return $value;
-            }
-
-            $fixtures = [
-                'vg_eeat_last_meaningful_update' => 'Canonical review date',
-                'vg_eeat_sources_checked' => "Canonical source A\nCanonical source B",
-                'vg_eeat_related_routes' => '',
-                '_vg_reviewed_at' => 'Legacy review date',
-            ];
-            if (! array_key_exists($meta_key, $fixtures)) {
-                return $value;
-            }
-
-            return $single ? $fixtures[$meta_key] : [$fixtures[$meta_key]];
-        };
-
-        add_filter('get_post_metadata', $eeat_meta_filter, 1, 5);
-        try {
-            $eeat_context = $with_page_state($fixture_post, static function () use ($fixture_post) {
-                return vg_build_guide_context($fixture_post);
-            });
-            $check(
-                is_array($eeat_context)
-                    && $eeat_context['reviewed_at'] === 'Canonical review date'
-                    && $eeat_context['source_count'] === 2,
-                'canonical EEAT metadata precedence',
-                'legacy or computed metadata took precedence over canonical EEAT fields'
-            );
-        } finally {
-            remove_filter('get_post_metadata', $eeat_meta_filter, 1);
+    $eeat_meta_filter = static function ($value, int $object_id, string $meta_key, bool $single, string $meta_type) use ($fixture_post) {
+        if ($meta_type !== 'post' || $object_id !== $fixture_post->ID) {
+            return $value;
         }
+
+        $fixtures = [
+            'vg_eeat_last_meaningful_update' => 'Canonical review date',
+            'vg_eeat_sources_checked' => "Canonical source A\nCanonical source B",
+            'vg_eeat_related_routes' => '',
+            '_vg_reviewed_at' => 'Legacy review date',
+        ];
+        if (! array_key_exists($meta_key, $fixtures)) {
+            return $value;
+        }
+
+        return $single ? $fixtures[$meta_key] : [$fixtures[$meta_key]];
+    };
+
+    add_filter('get_post_metadata', $eeat_meta_filter, 1, 5);
+    try {
+        $eeat_context = $with_page_state($fixture_post, static function () use ($fixture_post) {
+            return vg_build_guide_context($fixture_post);
+        });
+        $check(
+            is_array($eeat_context)
+                && $eeat_context['reviewed_at'] === 'Canonical review date'
+                && $eeat_context['source_count'] === 2,
+            'canonical EEAT metadata precedence',
+            'legacy or computed metadata took precedence over canonical EEAT fields'
+        );
+    } finally {
+        remove_filter('get_post_metadata', $eeat_meta_filter, 1);
     }
 
     $valid_urls = [
@@ -356,32 +403,30 @@ HTML;
         );
     }
 
-    if (function_exists('vg_eeat_get_field') && function_exists('vg_eeat_related_route_items')) {
-        $route_meta_filter = static function ($value, int $object_id, string $meta_key, bool $single, string $meta_type) use ($fixture_post) {
-            if ($meta_type === 'post' && $object_id === $fixture_post->ID && $meta_key === 'vg_eeat_related_routes') {
-                $routes = "Valid local|/plan/vietnam-evisa/\n"
-                    . "Bad script|javascript:alert(1)\n"
-                    . "Bad relative|plan/not-rooted\n"
-                    . "Valid web|https://example.com/guide";
-                return $single ? $routes : [$routes];
-            }
-            return $value;
-        };
-
-        add_filter('get_post_metadata', $route_meta_filter, 1, 5);
-        try {
-            $curated_routes = vg_get_related_routes($fixture_post, false);
-            $check(
-                $curated_routes === [
-                    ['title' => 'Valid local', 'url' => '/plan/vietnam-evisa/'],
-                    ['title' => 'Valid web', 'url' => 'https://example.com/guide'],
-                ],
-                'curated route URL normalization',
-                'malformed curated route items or URLs were not rejected'
-            );
-        } finally {
-            remove_filter('get_post_metadata', $route_meta_filter, 1);
+    $route_meta_filter = static function ($value, int $object_id, string $meta_key, bool $single, string $meta_type) use ($fixture_post) {
+        if ($meta_type === 'post' && $object_id === $fixture_post->ID && $meta_key === 'vg_eeat_related_routes') {
+            $routes = "Valid local|/plan/vietnam-evisa/\n"
+                . "Bad script|javascript:alert(1)\n"
+                . "Bad relative|plan/not-rooted\n"
+                . "Valid web|https://example.com/guide";
+            return $single ? $routes : [$routes];
         }
+        return $value;
+    };
+
+    add_filter('get_post_metadata', $route_meta_filter, 1, 5);
+    try {
+        $curated_routes = vg_get_related_routes($fixture_post, false);
+        $check(
+            $curated_routes === [
+                ['title' => 'Valid local', 'url' => '/plan/vietnam-evisa/'],
+                ['title' => 'Valid web', 'url' => 'https://example.com/guide'],
+            ],
+            'curated route URL normalization',
+            'malformed curated route items or URLs were not rejected'
+        );
+    } finally {
+        remove_filter('get_post_metadata', $route_meta_filter, 1);
     }
 
     $protected_post = clone $fixture_post;
