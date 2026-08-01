@@ -1129,7 +1129,7 @@ html:not(.vg-js) body.home .vg-site-header {
 
 @media (prefers-reduced-motion: reduce) {
   html {
-    scroll-behavior: auto;
+    scroll-behavior: auto !important;
   }
 
   *,

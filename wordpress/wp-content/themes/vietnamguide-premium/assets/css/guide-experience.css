@@ -140,6 +140,7 @@
 
 .vg-guide-article h2 {
   margin: clamp(64px, 8vw, 104px) 0 24px;
+  scroll-margin-top: calc(var(--vg-header-height) + 24px);
   color: var(--vg-jade);
   font-size: clamp(34px, 4vw, 56px);
   letter-spacing: -.03em;

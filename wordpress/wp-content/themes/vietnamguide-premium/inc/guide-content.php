@@ -104,12 +104,24 @@ function vg_collect_guide_heading_plan(string $html): ?array
     $processor = new WP_HTML_Tag_Processor($html);
     $headings = [];
     $currentHeading = null;
+    $reservedIds = [];
 
     while ($processor->next_token()) {
         $tokenName = $processor->get_token_name();
+        $isTagCloser = $processor->is_tag_closer();
+
+        if (! $isTagCloser) {
+            $elementId = null;
+            if (is_string($tokenName) && isset($tokenName[0]) && $tokenName[0] !== '#') {
+                $elementId = $processor->get_attribute('id');
+            }
+            if (is_string($elementId) && vg_is_valid_guide_heading_id($elementId)) {
+                $reservedIds[$elementId] = true;
+            }
+        }
 
         if ('H2' === $tokenName) {
-            if ($processor->is_tag_closer()) {
+            if ($isTagCloser) {
                 if ($currentHeading === null) {
                     return null;
                 }
@@ -146,21 +158,13 @@ function vg_collect_guide_heading_plan(string $html): ?array
 
         if ('#text' === $tokenName) {
             $currentHeading['label_parts'][] = $processor->get_modifiable_text();
-        } elseif ('BR' === $tokenName && ! $processor->is_tag_closer()) {
+        } elseif ('BR' === $tokenName && ! $isTagCloser) {
             $currentHeading['label_parts'][] = ' ';
         }
     }
 
     if ($processor->paused_at_incomplete_token() || $currentHeading !== null) {
         return null;
-    }
-
-    $reservedIds = [];
-    foreach ($headings as $heading) {
-        $originalId = $heading['original_id'];
-        if (is_string($originalId) && vg_is_valid_guide_heading_id($originalId)) {
-            $reservedIds[$originalId] = true;
-        }
     }
 
     $assignedIds = [];

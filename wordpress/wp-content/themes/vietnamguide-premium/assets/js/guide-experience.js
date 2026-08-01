@@ -72,7 +72,13 @@
 
     activeId = id;
     targets.forEach(function (target) {
-      target.link.classList.toggle('is-active', target.section.id === id);
+      var isActive = target.section.id === id;
+      target.link.classList.toggle('is-active', isActive);
+      if (isActive) {
+        target.link.setAttribute('aria-current', 'location');
+      } else {
+        target.link.removeAttribute('aria-current');
+      }
     });
   }
 

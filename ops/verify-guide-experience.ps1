@@ -5,8 +5,10 @@ param(
 $ErrorActionPreference = 'Stop'
 $RepoRoot = if ($RepoRootOverride) { $RepoRootOverride } else { Split-Path -Parent $PSScriptRoot }
 $ThemeRoot = 'wordpress/wp-content/themes/vietnamguide-premium'
+$HomepageCss = "$ThemeRoot/assets/css/homepage.css"
 $GuideCss = "$ThemeRoot/assets/css/guide-experience.css"
 $GuideJs = "$ThemeRoot/assets/js/guide-experience.js"
+$GuideJsRuntimeVerifier = 'ops/verify-guide-experience-js-runtime.js'
 $Failures = [System.Collections.Generic.List[string]]::new()
 
 function Get-RepoContent {
@@ -223,6 +225,7 @@ Require-File $Footer
 Require-File $MutationVerifier
 Require-File $LiveVerifier
 Require-File $PublicVerifier
+Require-File $GuideJsRuntimeVerifier
 Require-Contains $Functions "require_once get_theme_file_path('/inc/guide-routing.php');"
 Require-Contains $Functions "require_once get_theme_file_path('/inc/guide-content.php');"
 Require-Contains $Functions "require_once get_theme_file_path('/inc/guide-context.php');"
@@ -273,7 +276,13 @@ Require-Matches $PageTemplate '\A<\?php\s+if\s*\(!\s*defined\(''ABSPATH''\)\s*\)
 Require-Contains $PageTemplate 'vg_is_guide_experience_page($post)'
 Require-Contains $PageTemplate 'vg_build_guide_context($post)'
 Require-Contains $PageTemplate '$guideContext = null;'
-Require-Contains $PageTemplate 'if (is_array($guideContext) && vg_is_valid_guide_context($guideContext)) {'
+Require-Contains $PageTemplate '$guideFunctionsReady = function_exists(''vg_is_guide_experience_page'')'
+Require-Contains $PageTemplate "&& function_exists('vg_build_guide_context')"
+Require-Contains $PageTemplate "&& function_exists('vg_is_valid_guide_context');"
+Require-Contains $PageTemplate '$post instanceof WP_Post && $guideFunctionsReady && vg_is_guide_experience_page($post)'
+Require-Contains $PageTemplate '$guideFunctionsReady && is_array($guideContext) && vg_is_valid_guide_context($guideContext)'
+Require-Matches $PageTemplate '(?s)\$guideFunctionsReady\s*=.*?if\s*\(\$post\s+instanceof\s+WP_Post\s+&&\s+\$guideFunctionsReady\s+&&\s+vg_is_guide_experience_page\(\$post\)' 'guide function availability is checked before guide routing'
+Require-Matches $PageTemplate '(?s)\$guideFunctionsReady\s*=.*?if\s*\(\$guideFunctionsReady\s+&&\s+is_array\(\$guideContext\)\s+&&\s+vg_is_valid_guide_context\(\$guideContext\)' 'guide function availability is checked before context validation'
 Require-NotContains $PageTemplate 'if (is_array($guideContext)) {'
 Require-Contains $PageTemplate "get_template_part('template-parts/guide', 'page', `$guideContext);"
 Require-Contains $PageTemplate "get_template_part('template-parts/content', 'page');"
@@ -310,6 +319,15 @@ Require-Contains $MutationVerifier 'if ($LASTEXITCODE -eq 0) {'
 Require-Contains $MutationVerifier 'finally {'
 Require-Contains $MutationVerifier 'Remove-Item -LiteralPath $ValidatedTempRoot -Recurse -Force'
 Require-Contains $MutationVerifier 'pilot allowlist bypass'
+Require-Contains $MutationVerifier 'page guide function availability guard removal'
+Require-Contains $MutationVerifier 'global reduced-motion scroll override removal'
+Require-Contains $MutationVerifier 'guide fragment heading offset removal'
+Require-Contains $MutationVerifier 'active guide aria-current assignment removal'
+Require-Contains $MutationVerifier 'inactive guide aria-current cleanup removal'
+Require-Contains $MutationVerifier 'non-H2 ID reservation removal'
+Require-Contains $MutationVerifier 'public guide asset status guard removal'
+Require-Contains $MutationVerifier 'public guide fragment target guard removal'
+Require-Contains $MutationVerifier 'public non-pilot inventory regression'
 Require-Contains $MutationVerifier 'leading comment-only freeform rejection'
 Require-Contains $MutationVerifier 'meaningful leading freeform acceptance'
 Require-Contains $MutationVerifier 'rendered hero H1 guard removal'
@@ -374,6 +392,7 @@ foreach ($FixtureLabel in @(
     'filter-generated H1 fails closed'
     'script and comment pseudo-headings ignored'
     'authored heading IDs and deterministic collisions'
+    'non-H2 element IDs reserve heading slugs'
     'opted-out headings excluded without collisions'
     'incomplete markup fails closed'
     'canonical EEAT metadata precedence'
@@ -396,6 +415,9 @@ Require-Contains $LiveVerifier '<script>window.fake = "<h1>script heading</h1>";
 Require-Contains $LiveVerifier '<!-- <h1>comment heading</h1> -->'
 Require-Contains $LiveVerifier '<!-- vg-hcmc-hero:v1 -->'
 Require-Contains $LiveVerifier '<p>Meaningful introduction.</p>'
+Require-Contains $LiveVerifier "'#tag' !== `$processor->get_token_type()"
+Require-Contains $LiveVerifier "'all_ids'"
+Require-Contains $LiveVerifier '<div id="arrival"><h3 id="local-transport">'
 Require-Contains $LiveVerifier "vg_inspect_guide_html((string) `$pseudo_content['hero_html'])"
 foreach ($EeatFunction in @(
     'vg_eeat_get_field'
@@ -430,11 +452,54 @@ Require-Contains $PublicVerifier 'vg-guide-jump'
 Require-Contains $PublicVerifier 'vg-guide-toc'
 Require-Contains $PublicVerifier 'fatal error'
 Require-Contains $PublicVerifier 'source-update-policy'
-Require-Contains $PublicVerifier 'representative non-pilot page'
+Require-Contains $PublicVerifier 'function Resolve-PublicUrl'
+Require-Contains $PublicVerifier 'function Get-PublicResource'
+Require-Contains $PublicVerifier 'function Get-PublicAssetUrl'
+Require-Contains $PublicVerifier 'function Get-PublicDomSnapshot'
+Require-Contains $PublicVerifier 'function Require-GuideFragmentTargets'
+Require-Contains $PublicVerifier 'destinations/hanoi-travel-guide'
+Require-Contains $PublicVerifier 'itineraries/14-days-in-vietnam'
+Require-Contains $PublicVerifier 'compare/da-nang-vs-hoi-an'
+Require-Contains $PublicVerifier 'plan/sim-esim-vietnam'
+Require-NotContains $PublicVerifier "Get-PublicPage -Path 'about'"
+Require-Contains $PublicVerifier "expected exactly one target ID"
+Require-Contains $PublicVerifier "guide CSS asset"
+Require-Contains $PublicVerifier "guide JavaScript asset"
 Require-FunctionContains $PublicVerifier 'Get-PublicPage' 'Invoke-WebRequest'
 Require-FunctionContains $PublicVerifier 'Get-PublicPage' '-TimeoutSec $RequestTimeoutSeconds'
 Require-FunctionContains $PublicVerifier 'Get-PublicPage' 'catch {'
 Require-FunctionContains $PublicVerifier 'Require-NoFatalText' "'fatal error'"
+Require-FunctionContains $PublicVerifier 'Get-PublicResource' 'Invoke-WebRequest'
+Require-FunctionContains $PublicVerifier 'Resolve-PublicUrl' '[uri]::new'
+Require-FunctionContains $PublicVerifier 'Get-PublicDomSnapshot' 'New-Object -ComObject HTMLFile'
+Require-FunctionContains $PublicVerifier 'Get-PublicDomSnapshot' "getElementsByTagName('*')"
+Require-FunctionContains $PublicVerifier 'Get-PublicDomSnapshot' "getElementsByTagName('div')"
+Require-FunctionContains $PublicVerifier 'Get-PublicDomSnapshot' "getAttribute('data-vg-dom-nav')"
+Require-FunctionContains $PublicVerifier 'Get-PublicDomSnapshot' '<(?:template|noscript)'
+Require-FunctionContains $PublicVerifier 'Get-PublicDomSnapshot' '<nav\b'
+Require-FunctionContains $PublicVerifier 'Get-PublicDomSnapshot' 'vg-guide-(?:toc|jump)'
+Require-FunctionContains $PublicVerifier 'Require-GuideFragmentTargets' 'HtmlDecode'
+Require-FunctionContains $PublicVerifier 'Require-GuideFragmentTargets' 'UnescapeDataString'
+Require-FunctionContains $PublicVerifier 'Require-GuideFragmentTargets' '$TargetCount -ne 1'
+Require-FunctionContains $PublicVerifier 'Require-GuideFragmentTargets' 'Get-PublicDomSnapshot'
+Require-Contains $PublicVerifier 'DOM parser fixture counted inert or unrelated markup as guide navigation'
+Require-Contains $PublicVerifier '$Asset.StatusCode -ne 200'
+
+$PublicVerifierContent = Get-RepoContent $PublicVerifier
+if ($null -ne $PublicVerifierContent) {
+    $NonPilotArray = [regex]::Match($PublicVerifierContent, '(?s)\$NonPilotPaths\s*=\s*@\((?<items>.*?)\)')
+    if (-not $NonPilotArray.Success) {
+        $Failures.Add('Missing exact non-pilot public verification inventory')
+    } else {
+        $NonPilotPaths = @([regex]::Matches($NonPilotArray.Groups['items'].Value, "'([^']+)'") | ForEach-Object { $_.Groups[1].Value })
+        Require-ExactSet 'public non-pilot path' $NonPilotPaths @(
+            'destinations/hanoi-travel-guide'
+            'itineraries/14-days-in-vietnam'
+            'compare/da-nang-vs-hoi-an'
+            'plan/sim-esim-vietnam'
+        )
+    }
+}
 
 $PilotFunction = Get-FunctionContent $Routing 'vg_guide_pilot_paths'
 if ($null -ne $PilotFunction) {
@@ -530,6 +595,10 @@ Require-FunctionContains $ContentProvider 'vg_allocate_guide_heading_id' 'isset(
 Require-FunctionContains $ContentProvider 'vg_collect_guide_heading_plan' 'next_token()'
 Require-FunctionContains $ContentProvider 'vg_collect_guide_heading_plan' 'get_token_name()'
 Require-FunctionContains $ContentProvider 'vg_collect_guide_heading_plan' 'is_tag_closer()'
+Require-FunctionContains $ContentProvider 'vg_collect_guide_heading_plan' '$isTagCloser = $processor->is_tag_closer();'
+Require-FunctionContains $ContentProvider 'vg_collect_guide_heading_plan' 'if (! $isTagCloser) {'
+Require-FunctionContains $ContentProvider 'vg_collect_guide_heading_plan' '$elementId = $processor->get_attribute(''id'');'
+Require-FunctionContains $ContentProvider 'vg_collect_guide_heading_plan' 'vg_is_valid_guide_heading_id($elementId)'
 Require-FunctionContains $ContentProvider 'vg_collect_guide_heading_plan' 'get_modifiable_text()'
 Require-FunctionContains $ContentProvider 'vg_collect_guide_heading_plan' 'paused_at_incomplete_token()'
 Require-FunctionContains $ContentProvider 'vg_collect_guide_heading_plan' "get_attribute('data-vg-toc')"
@@ -781,6 +850,7 @@ Require-FunctionContains $ContextProvider 'vg_build_guide_context' "'skip_if' =>
 Require-FunctionContains $ContextProvider 'vg_build_guide_context' "'related_routes' =>"
 Require-FunctionContains $ContextProvider 'vg_build_guide_context' "'has_existing_related_routes' =>"
 
+Require-File $HomepageCss
 Require-File $GuideCss
 Require-File $GuideJs
 Require-Contains $Functions 'if (vg_is_guide_experience_page())'
@@ -826,6 +896,8 @@ Require-Contains $GuideCss '@media (max-width: 960px)'
 Require-Contains $GuideCss '@media (max-width: 620px)'
 Require-Contains $GuideCss '@media (prefers-reduced-motion: reduce)'
 Require-Contains $GuideCss ':focus-visible'
+Require-CssBlockContains $HomepageCss '@media (prefers-reduced-motion: reduce)' 'scroll-behavior: auto !important;'
+Require-Matches $HomepageCss '(?s)@media\s*\(prefers-reduced-motion:\s*reduce\)\s*\{.*?html\s*\{\s*scroll-behavior:\s*auto\s*!important;' 'explicit reduced-motion override for root smooth scrolling'
 Require-CssBlockContains $GuideCss '.vg-guide-experience {' 'overflow-x: clip;'
 Require-CssBlockContains $GuideCss '.vg-guide-experience::before {' 'height: 3px;'
 Require-CssBlockContains $GuideCss '.vg-guide-experience::before {' 'background: var(--vg-gold);'
@@ -833,6 +905,7 @@ Require-CssBlockContains $GuideCss '.vg-guide-experience .vg-guide-hero-cover {'
 Require-CssBlockContains $GuideCss '.vg-guide-experience .vg-guide-hero-cover {' 'min-height: clamp(520px, 70svh, 780px);'
 Require-CssBlockContains $GuideCss '.vg-guide-meta {' 'text-transform: uppercase;'
 Require-CssBlockContains $GuideCss '.vg-guide-article h2 {' 'font-size: clamp(34px, 4vw, 56px);'
+Require-CssBlockContains $GuideCss '.vg-guide-article h2 {' 'scroll-margin-top: calc(var(--vg-header-height) + 24px);'
 Require-CssBlockContains $GuideCss '.vg-guide-related h2 {' 'font-size: clamp(36px, 5vw, 64px);'
 Require-CssBlockContains $GuideCss '.vg-guide-experience a:focus-visible,' 'outline: 3px solid var(--vg-gold);'
 Require-CssBlockContains $GuideCss '.vg-guide-article .vg-decision-table__scroll,' 'overflow-x: auto;'
@@ -857,6 +930,24 @@ Require-CssBlockContains $GuideCss '@media (prefers-reduced-motion: reduce)' 'tr
 Require-GuideCssScoped $GuideCss
 Require-GuideCssScopeSelfTest
 
+$HomepageCssContent = Get-RepoContent $HomepageCss
+$GuideCssContent = Get-RepoContent $GuideCss
+if ($null -ne $HomepageCssContent -and $null -ne $GuideCssContent) {
+    $DesktopHeaderMatch = [regex]::Match($HomepageCssContent, '(?s):root\s*\{.*?--vg-header-height:\s*(?<height>\d+)px;')
+    $MobileHeaderMatch = [regex]::Match($HomepageCssContent, '(?s)@media\s*\(max-width:\s*760px\)\s*\{.*?:root\s*\{.*?--vg-header-height:\s*(?<height>\d+)px;')
+    $HeadingOffsetMatch = [regex]::Match($GuideCssContent, '(?s)\.vg-guide-article h2\s*\{.*?scroll-margin-top:\s*calc\(var\(--vg-header-height\)\s*\+\s*(?<gap>\d+)px\);')
+    if (-not $DesktopHeaderMatch.Success -or -not $MobileHeaderMatch.Success -or -not $HeadingOffsetMatch.Success) {
+        $Failures.Add('Guide fragment offset fixture could not resolve desktop, mobile, and heading offset values')
+    } else {
+        $DesktopHeader = [int]$DesktopHeaderMatch.Groups['height'].Value
+        $MobileHeader = [int]$MobileHeaderMatch.Groups['height'].Value
+        $HeadingGap = [int]$HeadingOffsetMatch.Groups['gap'].Value
+        if ($HeadingGap -lt 16 -or ($DesktopHeader + $HeadingGap) -le $DesktopHeader -or ($MobileHeader + $HeadingGap) -le $MobileHeader) {
+            $Failures.Add('Guide fragment offset fixture did not clear the sticky header with sufficient breathing room')
+        }
+    }
+}
+
 Require-Contains $GuideJs "document.querySelector('[data-vg-guide]')"
 Require-Contains $GuideJs "guide.querySelectorAll('table.vg-decision-table')"
 Require-Contains $GuideJs "table.parentElement.classList.contains('vg-decision-table__scroll')"
@@ -873,6 +964,8 @@ Require-Contains $GuideJs "guide.querySelectorAll('.vg-guide-toc a[href^=`"#`"],
 Require-Contains $GuideJs 'document.getElementById(id)'
 Require-Contains $GuideJs 'IntersectionObserver'
 Require-Contains $GuideJs "classList.toggle('is-active'"
+Require-Contains $GuideJs "setAttribute('aria-current', 'location')"
+Require-Contains $GuideJs "removeAttribute('aria-current')"
 Require-Contains $GuideJs 'var activeId = null;'
 Require-Contains $GuideJs 'if (id === activeId) {'
 Require-Contains $GuideJs 'var lastSection = sections.length > 0 ? sections[sections.length - 1] : null;'
@@ -889,6 +982,23 @@ Require-NotContains $GuideJs 'preventDefault()'
 Require-NotContains $GuideJs 'innerHTML'
 Require-NotContains $GuideJs 'outerHTML'
 Require-NotContains $GuideJs 'cloneNode'
+
+$NodeCommand = Get-Command node -ErrorAction SilentlyContinue
+if ($null -eq $NodeCommand) {
+    $Failures.Add('Node.js is required for the guide JavaScript runtime fixture')
+} else {
+    $PreviousErrorActionPreference = $ErrorActionPreference
+    $ErrorActionPreference = 'Continue'
+    try {
+        $GuideJsRuntimeOutput = & $NodeCommand.Source (Join-Path $RepoRoot $GuideJsRuntimeVerifier) (Join-Path $RepoRoot $GuideJs) 2>&1
+        $GuideJsRuntimeExitCode = $LASTEXITCODE
+    } finally {
+        $ErrorActionPreference = $PreviousErrorActionPreference
+    }
+    if ($GuideJsRuntimeExitCode -ne 0) {
+        $Failures.Add("Guide JavaScript runtime fixture failed: $($GuideJsRuntimeOutput -join ' ')")
+    }
+}
 
 if ($Failures.Count -gt 0) {
     $Failures | ForEach-Object { Write-Output "FAIL: $_" }

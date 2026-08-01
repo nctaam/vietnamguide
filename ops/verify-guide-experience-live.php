@@ -100,14 +100,19 @@ $inspect_semantic_html = static function (string $html): ?array {
     $processor = new WP_HTML_Tag_Processor($html);
     $h1_count = 0;
     $h2_ids = [];
+    $all_ids = [];
     $has_hero_class = false;
 
     while ($processor->next_token()) {
-        if ($processor->is_tag_closer()) {
+        if ('#tag' !== $processor->get_token_type() || $processor->is_tag_closer()) {
             continue;
         }
 
         $token_name = $processor->get_token_name();
+        $id = $processor->get_attribute('id');
+        if (is_string($id)) {
+            $all_ids[] = $id;
+        }
         if ('H1' === $token_name) {
             $h1_count++;
         }
@@ -127,6 +132,7 @@ $inspect_semantic_html = static function (string $html): ?array {
     return [
         'h1_count' => $h1_count,
         'h2_ids' => $h2_ids,
+        'all_ids' => $all_ids,
         'has_hero_class' => $has_hero_class,
     ];
 };
@@ -376,6 +382,17 @@ HTML;
             && array_column($collision_result['headings'], 'id') === ['keep', 'keep-2', 'keep-3'],
         'authored heading IDs and deterministic collisions',
         'authored IDs were not preserved and duplicate IDs were not disambiguated deterministically'
+    );
+
+    $non_h2_collision_html = '<div id="arrival"><h3 id="local-transport">Reserved elements</h3></div><h2>Arrival</h2><h2>Local transport</h2>';
+    $non_h2_collision_result = vg_prepare_guide_headings($non_h2_collision_html);
+    $non_h2_collision_stats = $inspect_semantic_html($non_h2_collision_result['html']);
+    $check(
+        $non_h2_collision_stats !== null
+            && $non_h2_collision_stats['all_ids'] === ['arrival', 'local-transport', 'arrival-2', 'local-transport-2']
+            && array_column($non_h2_collision_result['headings'], 'id') === ['arrival-2', 'local-transport-2'],
+        'non-H2 element IDs reserve heading slugs',
+        'generated H2 IDs collided with valid IDs already used by non-H2 body elements'
     );
 
     $opt_out_html = '<h2 data-vg-toc="false" id="reserved">Hidden</h2><h2>Reserved</h2><h2>Visible</h2>';

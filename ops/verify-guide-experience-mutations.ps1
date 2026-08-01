@@ -7,6 +7,7 @@ $RequiredContractPaths = @(
     'ops/verify-guide-experience-mutations.ps1'
     'ops/verify-guide-experience-live.php'
     'ops/verify-guide-experience-public.ps1'
+    'ops/verify-guide-experience-js-runtime.js'
     'wordpress/wp-content/themes/vietnamguide-premium/functions.php'
     'wordpress/wp-content/themes/vietnamguide-premium/footer.php'
     'wordpress/wp-content/themes/vietnamguide-premium/page.php'
@@ -15,11 +16,70 @@ $RequiredContractPaths = @(
     'wordpress/wp-content/themes/vietnamguide-premium/inc/guide-context.php'
     'wordpress/wp-content/themes/vietnamguide-premium/template-parts/content-page.php'
     'wordpress/wp-content/themes/vietnamguide-premium/template-parts/guide-page.php'
+    'wordpress/wp-content/themes/vietnamguide-premium/assets/css/homepage.css'
     'wordpress/wp-content/themes/vietnamguide-premium/assets/css/guide-experience.css'
     'wordpress/wp-content/themes/vietnamguide-premium/assets/js/guide-experience.js'
 )
 
 $Mutations = @(
+    @{
+        Name = 'page guide function availability guard removal'
+        File = 'wordpress/wp-content/themes/vietnamguide-premium/page.php'
+        Find = @'
+        $guideFunctionsReady = function_exists('vg_is_guide_experience_page')
+            && function_exists('vg_build_guide_context')
+            && function_exists('vg_is_valid_guide_context');
+'@
+        Replace = '        $guideFunctionsReady = true;'
+    }
+    @{
+        Name = 'global reduced-motion scroll override removal'
+        File = 'wordpress/wp-content/themes/vietnamguide-premium/assets/css/homepage.css'
+        Find = '  html {'
+        Replace = '  html.vg-motion-disabled {'
+    }
+    @{
+        Name = 'guide fragment heading offset removal'
+        File = 'wordpress/wp-content/themes/vietnamguide-premium/assets/css/guide-experience.css'
+        Find = '  scroll-margin-top: calc(var(--vg-header-height) + 24px);'
+        Replace = '  scroll-margin-top: calc(var(--vg-header-height) + 0px);'
+    }
+    @{
+        Name = 'active guide aria-current assignment removal'
+        File = 'wordpress/wp-content/themes/vietnamguide-premium/assets/js/guide-experience.js'
+        Find = "        target.link.setAttribute('aria-current', 'location');"
+        Replace = "        target.link.removeAttribute('aria-current');"
+    }
+    @{
+        Name = 'inactive guide aria-current cleanup removal'
+        File = 'wordpress/wp-content/themes/vietnamguide-premium/assets/js/guide-experience.js'
+        Find = "        target.link.removeAttribute('aria-current');"
+        Replace = "        target.link.setAttribute('aria-current', 'location');"
+    }
+    @{
+        Name = 'non-H2 ID reservation removal'
+        File = 'wordpress/wp-content/themes/vietnamguide-premium/inc/guide-content.php'
+        Find = '        if (! $isTagCloser) {'
+        Replace = '        if (! $isTagCloser && ''H2'' === $tokenName) {'
+    }
+    @{
+        Name = 'public guide asset status guard removal'
+        File = 'ops/verify-guide-experience-public.ps1'
+        Find = 'if ($null -ne $Asset -and $Asset.StatusCode -ne 200) {'
+        Replace = 'if ($null -ne $Asset -and $Asset.StatusCode -lt 0) {'
+    }
+    @{
+        Name = 'public guide fragment target guard removal'
+        File = 'ops/verify-guide-experience-public.ps1'
+        Find = 'if ($TargetCount -ne 1) {'
+        Replace = 'if ($TargetCount -lt 0) {'
+    }
+    @{
+        Name = 'public non-pilot inventory regression'
+        File = 'ops/verify-guide-experience-public.ps1'
+        Find = "    'destinations/hanoi-travel-guide'"
+        Replace = "    'about'"
+    }
     @{
         Name = 'leading comment-only freeform rejection'
         File = 'wordpress/wp-content/themes/vietnamguide-premium/inc/guide-content.php'
