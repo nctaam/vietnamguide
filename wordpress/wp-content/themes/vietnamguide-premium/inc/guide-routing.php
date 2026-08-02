@@ -8,6 +8,10 @@ function vg_guide_pilot_paths(): array
     return [
         'destinations/ho-chi-minh-city-travel-guide',
         'itineraries/10-days-in-vietnam',
+        'itineraries/7-days-in-vietnam',
+        'itineraries/14-days-in-vietnam',
+        'itineraries/21-days-in-vietnam',
+        'itineraries/hanoi-in-2-days',
         'compare/ha-long-bay-vs-lan-ha-bay',
         'plan/vietnam-evisa',
     ];

@@ -327,6 +327,7 @@ Require-Contains $MutationVerifier 'if ($LASTEXITCODE -eq 0) {'
 Require-Contains $MutationVerifier 'finally {'
 Require-Contains $MutationVerifier 'Remove-Item -LiteralPath $ValidatedTempRoot -Recurse -Force'
 Require-Contains $MutationVerifier 'pilot allowlist bypass'
+Require-Contains $MutationVerifier 'itinerary pilot allowlist entry regression'
 Require-Contains $MutationVerifier 'page guide function availability guard removal'
 Require-Contains $MutationVerifier 'global reduced-motion scroll override removal'
 Require-Contains $MutationVerifier 'guide fragment heading offset removal'
@@ -487,6 +488,10 @@ Require-Contains $PublicVerifier 'try {'
 Require-Contains $PublicVerifier 'catch {'
 Require-Contains $PublicVerifier 'destinations/ho-chi-minh-city-travel-guide'
 Require-Contains $PublicVerifier 'itineraries/10-days-in-vietnam'
+Require-Contains $PublicVerifier 'itineraries/7-days-in-vietnam'
+Require-Contains $PublicVerifier 'itineraries/14-days-in-vietnam'
+Require-Contains $PublicVerifier 'itineraries/21-days-in-vietnam'
+Require-Contains $PublicVerifier 'itineraries/hanoi-in-2-days'
 Require-Contains $PublicVerifier 'compare/ha-long-bay-vs-lan-ha-bay'
 Require-Contains $PublicVerifier 'plan/vietnam-evisa'
 Require-Contains $PublicVerifier 'StatusCode -ne 200'
@@ -645,9 +650,9 @@ if ($null -ne $PublicVerifierContent) {
         $NonPilotPaths = @([regex]::Matches($NonPilotArray.Groups['items'].Value, "'([^']+)'") | ForEach-Object { $_.Groups[1].Value })
         Require-ExactSet 'public non-pilot path' $NonPilotPaths @(
             'destinations/hanoi-travel-guide'
-            'itineraries/14-days-in-vietnam'
             'compare/da-nang-vs-hoi-an'
             'plan/sim-esim-vietnam'
+            'plan/transport-within-vietnam'
         )
     }
 }
@@ -666,6 +671,10 @@ if ($null -ne $PilotFunction) {
         Require-ExactSet 'pilot path' $PilotPaths @(
             'destinations/ho-chi-minh-city-travel-guide'
             'itineraries/10-days-in-vietnam'
+            'itineraries/7-days-in-vietnam'
+            'itineraries/14-days-in-vietnam'
+            'itineraries/21-days-in-vietnam'
+            'itineraries/hanoi-in-2-days'
             'compare/ha-long-bay-vs-lan-ha-bay'
             'plan/vietnam-evisa'
         )

@@ -291,6 +291,12 @@ $Mutations = @(
 '@
     }
     @{
+        Name = 'itinerary pilot allowlist entry regression'
+        File = 'wordpress/wp-content/themes/vietnamguide-premium/inc/guide-routing.php'
+        Find = "        'itineraries/14-days-in-vietnam',"
+        Replace = "        'about',"
+    }
+    @{
         Name = 'rendered hero H1 guard removal'
         File = 'wordpress/wp-content/themes/vietnamguide-premium/inc/guide-content.php'
         Find = '$heroStats[''h1_count''] !== 1'

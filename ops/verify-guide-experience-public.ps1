@@ -1049,6 +1049,10 @@ function Require-NoFatalText {
 $PilotPaths = @(
     'destinations/ho-chi-minh-city-travel-guide'
     'itineraries/10-days-in-vietnam'
+    'itineraries/7-days-in-vietnam'
+    'itineraries/14-days-in-vietnam'
+    'itineraries/21-days-in-vietnam'
+    'itineraries/hanoi-in-2-days'
     'compare/ha-long-bay-vs-lan-ha-bay'
     'plan/vietnam-evisa'
 )
@@ -1107,9 +1111,9 @@ if ($null -ne $Homepage) {
 
 $NonPilotPaths = @(
     'destinations/hanoi-travel-guide'
-    'itineraries/14-days-in-vietnam'
     'compare/da-nang-vs-hoi-an'
     'plan/sim-esim-vietnam'
+    'plan/transport-within-vietnam'
 )
 
 foreach ($NonPilotPath in $NonPilotPaths) {
