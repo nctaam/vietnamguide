@@ -1,3 +1,7 @@
+param(
+    [string]$PhpExecutable = ''
+)
+
 $ErrorActionPreference = 'Stop'
 
 $RepoRoot = Split-Path -Parent $PSScriptRoot
@@ -6,6 +10,7 @@ $RequiredContractPaths = @(
     'ops/verify-guide-experience.ps1'
     'ops/verify-guide-experience-mutations.ps1'
     'ops/verify-guide-experience-live.php'
+    'ops/verify-guide-experience-tokenizer.php'
     'ops/verify-guide-experience-public.ps1'
     'ops/verify-guide-experience-js-runtime.js'
     'wordpress/wp-content/themes/vietnamguide-premium/functions.php'
@@ -295,6 +300,41 @@ $Mutations = @(
         File = 'wordpress/wp-content/themes/vietnamguide-premium/inc/guide-routing.php'
         Find = "        'itineraries/14-days-in-vietnam',"
         Replace = "        'about',"
+    }
+    @{
+        Name = 'live itinerary pilot type inventory regression'
+        File = 'ops/verify-guide-experience-live.php'
+        Find = "    'itineraries/14-days-in-vietnam' => 'itinerary',"
+        Replace = "    'itineraries/14-days-in-vietnam' => 'comparison',"
+    }
+    @{
+        Name = 'live itinerary pilot type residue regression'
+        File = 'ops/verify-guide-experience-live.php'
+        Find = "    'itineraries/7-days-in-vietnam' => 'itinerary',"
+        Replace = "    'itineraries/7-days-in-vietnam' => 'itinerary',`n    // unrelated residue"
+    }
+    @{
+        Name = 'live pilot type executable decoy regression'
+        File = 'ops/verify-guide-experience-live.php'
+        Find = '$pilot_types = ['
+        Replace = @'
+/*
+$pilot_types = [
+    'destinations/ho-chi-minh-city-travel-guide' => 'destination',
+    'itineraries/10-days-in-vietnam' => 'itinerary',
+    'itineraries/7-days-in-vietnam' => 'itinerary',
+    'itineraries/14-days-in-vietnam' => 'itinerary',
+    'itineraries/21-days-in-vietnam' => 'itinerary',
+    'itineraries/hanoi-in-2-days' => 'itinerary',
+    'compare/ha-long-bay-vs-lan-ha-bay' => 'comparison',
+    'plan/vietnam-evisa' => 'practical',
+];
+*/
+$pilot_types = [
+    'about' => 'practical',
+];
+$pilot_types = [
+'@
     }
     @{
         Name = 'rendered hero H1 guard removal'
@@ -662,7 +702,9 @@ try {
 
     $BaselineRoot = Join-Path $ValidatedTempRoot 'baseline'
     Copy-ContractTree $BaselineRoot
-    $BaselineOutput = & powershell -NoProfile -ExecutionPolicy Bypass -File (Join-Path $BaselineRoot $VerifierRelativePath) -RepoRootOverride $BaselineRoot 2>&1
+    $BaselineArguments = @('-NoProfile', '-ExecutionPolicy', 'Bypass', '-File', (Join-Path $BaselineRoot $VerifierRelativePath), '-RepoRootOverride', $BaselineRoot)
+    if (-not [string]::IsNullOrWhiteSpace($PhpExecutable)) { $BaselineArguments += @('-PhpExecutable', $PhpExecutable) }
+    $BaselineOutput = & powershell @BaselineArguments 2>&1
     if ($LASTEXITCODE -ne 0) {
         throw "Copied contract baseline failed before mutation testing:`n$($BaselineOutput -join "`n")"
     }
@@ -677,7 +719,9 @@ try {
             -Find $Mutation.Find `
             -Replace $Mutation.Replace
 
-        $MutationOutput = & powershell -NoProfile -ExecutionPolicy Bypass -File (Join-Path $MutationRoot $VerifierRelativePath) -RepoRootOverride $MutationRoot 2>&1
+        $MutationArguments = @('-NoProfile', '-ExecutionPolicy', 'Bypass', '-File', (Join-Path $MutationRoot $VerifierRelativePath), '-RepoRootOverride', $MutationRoot)
+        if (-not [string]::IsNullOrWhiteSpace($PhpExecutable)) { $MutationArguments += @('-PhpExecutable', $PhpExecutable) }
+        $MutationOutput = & powershell @MutationArguments 2>&1
         if ($LASTEXITCODE -eq 0) {
             $Failures.Add("Mutation was not rejected: $($Mutation.Name)")
             continue

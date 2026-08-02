@@ -1,5 +1,6 @@
 param(
-    [string]$RepoRootOverride = ''
+    [string]$RepoRootOverride = '',
+    [string]$PhpExecutable = ''
 )
 
 $ErrorActionPreference = 'Stop'
@@ -210,6 +211,127 @@ function Require-ExactSet {
     }
 }
 
+function Resolve-PhpExecutable {
+    param([string]$Candidate)
+
+    foreach ($Value in @($Candidate, $env:VG_PHP_CLI, 'php')) {
+        if ([string]::IsNullOrWhiteSpace($Value)) { continue }
+        if (Test-Path -LiteralPath $Value -PathType Leaf) { return [System.IO.Path]::GetFullPath($Value) }
+        $Command = Get-Command $Value -ErrorAction SilentlyContinue
+        if ($null -ne $Command) { return $Command.Source }
+    }
+    return $null
+}
+
+function Invoke-PhpVariableArrayTokenizer {
+    param([string]$PhpPath, [string]$HelperPath, [string]$SourcePath, [string]$VariableName)
+
+    $PreviousErrorActionPreference = $ErrorActionPreference
+    $ErrorActionPreference = 'Continue'
+    try {
+        $Output = & $PhpPath $HelperPath $SourcePath $VariableName 2>&1
+        $ExitCode = $LASTEXITCODE
+    } finally {
+        $ErrorActionPreference = $PreviousErrorActionPreference
+    }
+    if ($ExitCode -ne 0) {
+        return [pscustomobject]@{ Assignments = @(); Errors = @("PHP tokenizer failed: $($Output -join ' ')") }
+    }
+
+    try {
+        $Decoded = ($Output -join "`n") | ConvertFrom-Json
+        $Utf8Strict = [System.Text.UTF8Encoding]::new($false, $true)
+        $Assignments = @($Decoded.assignments | ForEach-Object {
+            $Body = if ($null -eq $_.body_base64) { $null } else { $Utf8Strict.GetString([Convert]::FromBase64String([string]$_.body_base64)) }
+            [pscustomobject]@{ Body = $Body }
+        })
+        return [pscustomobject]@{ Assignments = $Assignments; Errors = @($Decoded.errors) }
+    } catch {
+        return [pscustomobject]@{ Assignments = @(); Errors = @("PHP tokenizer returned invalid JSON: $($_.Exception.Message)") }
+    }
+}
+
+function Test-PhpVariableArrayTokenizerFixtures {
+    param([string]$PhpPath, [string]$HelperPath)
+
+    $FixtureRoot = Join-Path ([System.IO.Path]::GetTempPath()) ('vietnamguide-php-tokenizer-' + [guid]::NewGuid().ToString('N'))
+    try {
+        $null = New-Item -ItemType Directory -Path $FixtureRoot
+        $FixturePath = Join-Path $FixtureRoot 'fixture.php'
+        $Fixture = @'
+<?php
+$heredoc = <<<TEXT
+    $pilot_types = [
+        'heredoc' => 'ignored',
+    ];
+    TEXT;
+$nowdocs = [
+    <<<'ROW'
+    $pilot_types = [
+        'nowdoc' => 'ignored',
+    ];
+    ROW,
+];
+$command = `echo "$pilot_types = [];"`;
+$lookup = [$pilot_types => 'ignored'];
+$$pilot_types = [];
+$object->$pilot_types = [];
+class PilotInventoryFixture {
+    public $pilot_types = [
+        'property' => 'ignored',
+    ];
+}
+function pilot_inventory_fixture() {
+    $pilot_types = [
+        'nested' => 'ignored',
+    ];
+    return $pilot_types = [
+        'return' => 'ignored',
+    ];
+}
+($pilot_types = [
+    'expression' => 'ignored',
+]);
+if (true):
+    $if_marker = true;
+    $pilot_types = [
+        'alternative-if' => 'ignored',
+    ];
+endif;
+foreach ([1] as $fixture_item):
+    $foreach_marker = true;
+    $pilot_types = [
+        'alternative-foreach' => 'ignored',
+    ];
+endforeach;
+if ((static function () {
+    if (true):
+        return true;
+    endif;
+})()):
+    $closure_header_marker = true;
+    $pilot_types = [
+        'alternative-if-closure-header' => 'ignored',
+    ];
+endif;
+$pilot_types = [
+    'executable' => 'captured',
+];
+'@
+        [System.IO.File]::WriteAllText($FixturePath, $Fixture, [System.Text.UTF8Encoding]::new($false))
+        $Result = Invoke-PhpVariableArrayTokenizer $PhpPath $HelperPath $FixturePath 'pilot_types'
+        if ($Result.Errors.Count -ne 0) {
+            $script:Failures.Add("PHP tokenizer fixture errors: $($Result.Errors -join ', ')")
+        } elseif ($Result.Assignments.Count -ne 1 -or $null -eq $Result.Assignments[0].Body -or $Result.Assignments[0].Body.Trim() -ne "'executable' => 'captured',") {
+            $script:Failures.Add('PHP tokenizer fixture did not isolate the one executable direct pilot_types assignment')
+        }
+    } finally {
+        if (Test-Path -LiteralPath $FixtureRoot -PathType Container) {
+            Remove-Item -LiteralPath $FixtureRoot -Recurse -Force
+        }
+    }
+}
+
 $Routing = "$ThemeRoot/inc/guide-routing.php"
 $ContentProvider = "$ThemeRoot/inc/guide-content.php"
 $ContextProvider = "$ThemeRoot/inc/guide-context.php"
@@ -221,6 +343,7 @@ $Footer = "$ThemeRoot/footer.php"
 $MutationVerifier = 'ops/verify-guide-experience-mutations.ps1'
 $LiveVerifier = 'ops/verify-guide-experience-live.php'
 $PublicVerifier = 'ops/verify-guide-experience-public.ps1'
+$PhpTokenizer = 'ops/verify-guide-experience-tokenizer.php'
 
 Require-File $Routing
 Require-File $ContentProvider
@@ -233,7 +356,22 @@ Require-File $Footer
 Require-File $MutationVerifier
 Require-File $LiveVerifier
 Require-File $PublicVerifier
+Require-File $PhpTokenizer
 Require-File $GuideJsRuntimeVerifier
+Require-Contains $PhpTokenizer 'token_get_all'
+Require-Contains $PhpTokenizer 'TOKEN_PARSE'
+Require-Contains $PhpTokenizer 'T_VARIABLE'
+Require-Contains $PhpTokenizer 'T_START_HEREDOC'
+Require-Contains $PhpTokenizer 'T_END_HEREDOC'
+Require-Contains $PhpTokenizer 'T_OBJECT_OPERATOR'
+Require-Contains $PhpTokenizer 'T_NULLSAFE_OBJECT_OPERATOR'
+Require-Contains $MutationVerifier "'ops/verify-guide-experience-tokenizer.php'"
+$PhpCommandPath = Resolve-PhpExecutable $PhpExecutable
+if ($null -eq $PhpCommandPath) {
+    $Failures.Add('PHP CLI is required for executable live-verifier token inspection')
+} else {
+    Test-PhpVariableArrayTokenizerFixtures $PhpCommandPath (Join-Path $RepoRoot $PhpTokenizer)
+}
 Require-Contains $Functions "require_once get_theme_file_path('/inc/guide-routing.php');"
 Require-Contains $Functions "require_once get_theme_file_path('/inc/guide-content.php');"
 Require-Contains $Functions "require_once get_theme_file_path('/inc/guide-context.php');"
@@ -322,12 +460,17 @@ Require-NotContains $Footer "vg_home_url('source-policy')"
 Require-Contains $MutationVerifier '$RequiredContractPaths = @('
 Require-Contains $MutationVerifier "[guid]::NewGuid().ToString('N')"
 Require-Contains $MutationVerifier '$ValidatedTempRoot = (Resolve-Path -LiteralPath $TempRoot).Path'
-Require-Contains $MutationVerifier '-RepoRootOverride $MutationRoot'
+Require-Contains $MutationVerifier '$MutationArguments'
+Require-Contains $MutationVerifier "'-RepoRootOverride', `$MutationRoot"
+Require-Contains $MutationVerifier "'-PhpExecutable', `$PhpExecutable"
 Require-Contains $MutationVerifier 'if ($LASTEXITCODE -eq 0) {'
 Require-Contains $MutationVerifier 'finally {'
 Require-Contains $MutationVerifier 'Remove-Item -LiteralPath $ValidatedTempRoot -Recurse -Force'
 Require-Contains $MutationVerifier 'pilot allowlist bypass'
 Require-Contains $MutationVerifier 'itinerary pilot allowlist entry regression'
+Require-Contains $MutationVerifier 'live itinerary pilot type inventory regression'
+Require-Contains $MutationVerifier 'live itinerary pilot type residue regression'
+Require-Contains $MutationVerifier 'live pilot type executable decoy regression'
 Require-Contains $MutationVerifier 'page guide function availability guard removal'
 Require-Contains $MutationVerifier 'global reduced-motion scroll override removal'
 Require-Contains $MutationVerifier 'guide fragment heading offset removal'
@@ -424,6 +567,8 @@ Require-Contains $LiveVerifier 'destinations/ho-chi-minh-city-travel-guide'
 Require-Contains $LiveVerifier 'itineraries/10-days-in-vietnam'
 Require-Contains $LiveVerifier 'compare/ha-long-bay-vs-lan-ha-bay'
 Require-Contains $LiveVerifier 'plan/vietnam-evisa'
+Require-Contains $LiveVerifier 'eight expected paths'
+Require-NotContains $LiveVerifier 'four expected paths'
 Require-Matches $LiveVerifier '\$pseudo_inspection\s*=\s*vg_inspect_guide_html\s*\(\s*\$pseudo_html\s*\)\s*;' 'pseudo inspection assignment uses the semantic HTML inspector'
 Require-Matches $LiveVerifier '(?:(?<!\s)(?<!->)(?<!::)(?<!\\)\s+|(?<![A-Za-z0-9_\\>:\s]))vg_prepare_guide_content\s*\(\s*\$pseudo_post\s*\)\s*;' 'pseudo content fixture calls production content preparation'
 Require-Matches $LiveVerifier '(?:(?<!\s)(?<!->)(?<!::)(?<!\\)\s+|(?<![A-Za-z0-9_\\>:\s]))vg_is_valid_guide_context\s*\(\s*\$pseudo_context\s*\)' 'pseudo context fixture validates the built guide context'
@@ -654,6 +799,42 @@ if ($null -ne $PublicVerifierContent) {
             'plan/sim-esim-vietnam'
             'plan/transport-within-vietnam'
         )
+    }
+}
+
+$LiveVerifierContent = Get-RepoContent $LiveVerifier
+if ($null -ne $LiveVerifierContent -and $null -ne $PhpCommandPath) {
+    $LivePilotTypeScan = Invoke-PhpVariableArrayTokenizer `
+        $PhpCommandPath `
+        (Join-Path $RepoRoot $PhpTokenizer) `
+        (Join-Path $RepoRoot $LiveVerifier) `
+        'pilot_types'
+    foreach ($LivePilotTypeScanError in $LivePilotTypeScan.Errors) { $Failures.Add($LivePilotTypeScanError) }
+    if ($LivePilotTypeScan.Assignments.Count -ne 1) {
+        $Failures.Add("Expected exactly one executable live pilot type declaration, found $($LivePilotTypeScan.Assignments.Count)")
+    } elseif ($null -ne $LivePilotTypeScan.Assignments[0].Body) {
+        $LivePilotTypeBody = $LivePilotTypeScan.Assignments[0].Body
+        $LivePilotTypeEntryPattern = '(?m)^[ \t]*''(?<key>[^''\r\n]+)''[ \t]*=>[ \t]*''(?<value>[^''\r\n]+)''[ \t]*,[ \t]*\r?$'
+        $LivePilotTypeMatches = @([regex]::Matches($LivePilotTypeBody, $LivePilotTypeEntryPattern))
+        $LivePilotTypeResidue = [regex]::Replace($LivePilotTypeBody, $LivePilotTypeEntryPattern, '')
+        if (-not [string]::IsNullOrWhiteSpace($LivePilotTypeResidue)) {
+            $Failures.Add('Unexpected syntax or residue in live pilot type inventory')
+        }
+
+        $LivePilotTypeMappings = @($LivePilotTypeMatches | ForEach-Object { "$($_.Groups['key'].Value)=$($_.Groups['value'].Value)" })
+        $ExpectedLivePilotTypeMappings = @(
+            'destinations/ho-chi-minh-city-travel-guide=destination'
+            'itineraries/10-days-in-vietnam=itinerary'
+            'itineraries/7-days-in-vietnam=itinerary'
+            'itineraries/14-days-in-vietnam=itinerary'
+            'itineraries/21-days-in-vietnam=itinerary'
+            'itineraries/hanoi-in-2-days=itinerary'
+            'compare/ha-long-bay-vs-lan-ha-bay=comparison'
+            'plan/vietnam-evisa=practical'
+        )
+        if (($LivePilotTypeMappings -join "`n") -cne ($ExpectedLivePilotTypeMappings -join "`n")) {
+            $Failures.Add("Expected exact ordered live pilot type mappings; found: $($LivePilotTypeMappings -join ', ')")
+        }
     }
 }
 

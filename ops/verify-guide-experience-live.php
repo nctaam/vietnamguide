@@ -140,6 +140,10 @@ $inspect_semantic_html = static function (string $html): ?array {
 $pilot_types = [
     'destinations/ho-chi-minh-city-travel-guide' => 'destination',
     'itineraries/10-days-in-vietnam' => 'itinerary',
+    'itineraries/7-days-in-vietnam' => 'itinerary',
+    'itineraries/14-days-in-vietnam' => 'itinerary',
+    'itineraries/21-days-in-vietnam' => 'itinerary',
+    'itineraries/hanoi-in-2-days' => 'itinerary',
     'compare/ha-long-bay-vs-lan-ha-bay' => 'comparison',
     'plan/vietnam-evisa' => 'practical',
 ];
@@ -150,7 +154,7 @@ if ($runtime_ready) {
     $check(
         vg_guide_pilot_paths() === array_keys($pilot_types),
         'pilot strict context',
-        'the runtime pilot allowlist does not match the four expected paths in order'
+        'the runtime pilot allowlist does not match the eight expected paths in order'
     );
 
     foreach ($pilot_types as $path => $expected_type) {
