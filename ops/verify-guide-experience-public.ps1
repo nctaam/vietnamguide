@@ -7,6 +7,19 @@ $ErrorActionPreference = 'Stop'
 $Failures = [System.Collections.Generic.List[string]]::new()
 $RequestTimeoutSeconds = 20
 $ResourceCache = @{}
+$Utf8NoBom = New-Object System.Text.UTF8Encoding($false)
+$Utf8Strict = New-Object System.Text.UTF8Encoding($false, $true)
+
+function Get-CanonicalTextBytes {
+    param([byte[]]$Bytes)
+
+    $Text = $Utf8Strict.GetString($Bytes)
+    if ($Text.Length -gt 0 -and [int]$Text[0] -eq 0xFEFF) {
+        $Text = $Text.Substring(1)
+    }
+    $Text = $Text.Replace("`r`n", "`n").Replace("`r", "`n")
+    return ,$Utf8NoBom.GetBytes($Text)
+}
 
 function Get-NormalizedOriginKey {
     param([uri]$Uri)
@@ -24,6 +37,18 @@ function Get-NormalizedOriginKey {
         $Uri.Port
     }
     return '{0}://{1}:{2}' -f $Uri.Scheme.ToLowerInvariant(), $Uri.DnsSafeHost.ToLowerInvariant(), $EffectivePort
+}
+
+function Get-ByteSha256 {
+    param([byte[]]$Bytes)
+
+    $Sha256 = [System.Security.Cryptography.SHA256]::Create()
+    try {
+        return ([System.BitConverter]::ToString($Sha256.ComputeHash($Bytes))).Replace('-', '').ToLowerInvariant()
+    }
+    finally {
+        $Sha256.Dispose()
+    }
 }
 
 function Get-PublicExpectedAssets {
@@ -47,7 +72,8 @@ function Get-PublicExpectedAssets {
         if (-not (Test-Path -LiteralPath $LocalPath -PathType Leaf)) {
             throw "${Kind} local reviewed asset is missing: $LocalPath"
         }
-        $Specs[$Kind].Sha256 = (Get-FileHash -LiteralPath $LocalPath -Algorithm SHA256).Hash.ToLowerInvariant()
+        $LocalBytes = Get-CanonicalTextBytes -Bytes ([System.IO.File]::ReadAllBytes($LocalPath))
+        $Specs[$Kind].Sha256 = Get-ByteSha256 -Bytes $LocalBytes
         $Specs[$Kind].Version = $Specs[$Kind].Sha256
     }
     return $Specs
@@ -155,18 +181,6 @@ function Test-PublicAssetUri {
     }
 }
 
-function Get-ByteSha256 {
-    param([byte[]]$Bytes)
-
-    $Sha256 = [System.Security.Cryptography.SHA256]::Create()
-    try {
-        return ([System.BitConverter]::ToString($Sha256.ComputeHash($Bytes))).Replace('-', '').ToLowerInvariant()
-    }
-    finally {
-        $Sha256.Dispose()
-    }
-}
-
 function Test-PublicPageResponse {
     param(
         [int]$StatusCode,
@@ -212,7 +226,8 @@ function Test-PublicAssetResponse {
         $Errors.Add("unexpected Content-Type '$ContentTypeHeader'")
     }
 
-    $ActualHash = Get-ByteSha256 -Bytes $Bytes
+    $ActualBytes = Get-CanonicalTextBytes -Bytes $Bytes
+    $ActualHash = Get-ByteSha256 -Bytes $ActualBytes
     if (-not $ActualHash.Equals($ExpectedAsset.Sha256, [System.StringComparison]::OrdinalIgnoreCase)) {
         $Errors.Add("SHA-256 mismatch: expected $($ExpectedAsset.Sha256), found $ActualHash")
     }
@@ -274,7 +289,7 @@ function Get-PublicResource {
             Url = $Url.AbsoluteUri
             StatusCode = [int]$Response.StatusCode
             ContentType = [string]$Response.Headers['Content-Type']
-            Sha256 = Get-ByteSha256 -Bytes $Bytes
+            Sha256 = Get-ByteSha256 -Bytes (Get-CanonicalTextBytes -Bytes $Bytes)
         }
         $ResourceCache[$CacheKey] = $Resource
         return $Resource
@@ -958,7 +973,16 @@ $FixtureExpected = @{
     Sha256 = Get-ByteSha256 -Bytes $FixtureBytes
     AllowedContentTypes = @('text/css')
 }
+$CanonicalFixtureLfBytes = [System.Text.Encoding]::UTF8.GetBytes("canonical fixture`n")
+$CanonicalFixtureCrlfBomBytes = [byte[]](0xEF, 0xBB, 0xBF) + [System.Text.Encoding]::UTF8.GetBytes("canonical fixture`r`n")
+$CanonicalFixtureExpected = @{
+    Sha256 = Get-ByteSha256 -Bytes $CanonicalFixtureLfBytes
+    AllowedContentTypes = @('text/css')
+}
 $FixtureUri = [uri]'https://vietnamguide.net/wp-content/themes/vietnamguide-premium/assets/css/guide-experience.css?ver=1'
+if (@(Test-PublicAssetResponse -StatusCode 200 -ContentTypeHeader 'text/css' -Bytes $CanonicalFixtureCrlfBomBytes -ResponseUri $FixtureUri -RequestedUri $FixtureUri -ExpectedAsset $CanonicalFixtureExpected).Count -ne 0) {
+    $Failures.Add('canonical asset fixture rejected UTF-8 BOM/CRLF normalization')
+}
 if (@(Test-PublicAssetResponse -StatusCode 302 -ContentTypeHeader 'text/css' -Bytes $FixtureBytes -ResponseUri $FixtureUri -RequestedUri $FixtureUri -ExpectedAsset $FixtureExpected).Count -eq 0) {
     $Failures.Add('asset response fixture accepted redirect status')
 }
