@@ -9,12 +9,7 @@ Recovery date: 2026-08-03.
 - Project documentation and operations scripts: `vietnamguide-production-snapshot-20260803/project-webroot/docs` and `project-webroot/ops`.
 - The stale `project-webroot/wordpress` copy was not used.
 
-The active theme (46 files) and MU plugin were previously verified against production. Recovery verification compares every restored file to its source with SHA-256. Tree hashes are SHA-256 over sorted `relative-path<TAB>file-sha256` manifest lines:
-
-- Theme manifest: `fd97ac4159fde652a9dee2362d34bda86007b458d1d54a53ae7b56886d10c449`
-- MU plugin file: `76313bc2537a25decf743f5db7b2b93be1c1431e546efb96e48e50d99afd20cc`
-- Docs source manifest: `79ef208184e7e7816fc9e50b33f5d9929229c8868336544018f3210ddfd8a612`
-- Ops source manifest, excluding backups and SQL: `72686fc43c1faa46ce451e13979df4946de0e45d13b690e5bb71dc62ba542a4a`
+The active theme and MU plugin were previously verified against production. The immutable expected counts and canonical SHA-256 section digests are checked in at `tests/fixtures/recovery-source-manifest.json`. The verifier recomputes both the external snapshot projection and repository targets from ordinal-sorted `relative-path<TAB>lowercase-file-sha256` lines joined with LF and encoded as UTF-8. The approved projection contains 46 theme files, 1 MU plugin, 4 source docs, and 157 ops files; `ops/backups/**` and SQL are excluded.
 
 ## Boundaries
 

@@ -12,7 +12,10 @@
 **/backups/
 **/snapshots/
 **/exports/
+**/secret/
 **/secrets/
+**/credential/
+**/credentials/
 wordpress/wp-content/uploads/
 *production-snapshot*/
 *recovery-export*/
@@ -24,6 +27,10 @@ wordpress/wp-content/uploads/
 wp-config.php
 *.pem
 *.key
+*.p12
+*.pfx
+*.jks
+*.keystore
 .htpasswd
 *credentials*.json
 *secret*.json

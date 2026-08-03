@@ -1,11 +1,13 @@
 [CmdletBinding()]
 param(
     [Parameter(Mandatory = $true)]
-    [string]$SnapshotRoot
+    [string]$SnapshotRoot,
+    [string]$RepositoryRoot = (Split-Path -Parent $PSScriptRoot),
+    [string[]]$AdditionalGitStageEntry = @()
 )
 
 $ErrorActionPreference = 'Stop'
-$repoRoot = Split-Path -Parent $PSScriptRoot
+$repoRoot = [System.IO.Path]::GetFullPath($RepositoryRoot)
 $failures = [System.Collections.Generic.List[string]]::new()
 
 function Add-Failure {
@@ -74,10 +76,150 @@ function Compare-FileTree {
     }
 }
 
+function Test-ExcludedRelativePath {
+    param(
+        [string]$RelativePath,
+        [string[]]$Exclude
+    )
+
+    foreach ($pattern in $Exclude) {
+        if ($RelativePath -like $pattern) {
+            return $true
+        }
+    }
+
+    return $false
+}
+
+function Get-CanonicalSectionDigest {
+    param(
+        [string]$Path,
+        [string[]]$Exclude = @()
+    )
+
+    if (-not (Test-Path -LiteralPath $Path)) {
+        Add-Failure "Manifest path missing: $Path"
+        return [pscustomobject]@{ Count = 0; Digest = '' }
+    }
+
+    $resolved = (Resolve-Path -LiteralPath $Path).Path
+    if (Test-Path -LiteralPath $resolved -PathType Leaf) {
+        $root = Split-Path -Parent $resolved
+        $files = @(Get-Item -LiteralPath $resolved -Force)
+    } else {
+        $root = $resolved.TrimEnd('\')
+        $files = @(Get-ChildItem -LiteralPath $resolved -Recurse -File -Force)
+    }
+
+    $lines = [System.Collections.Generic.List[string]]::new()
+    foreach ($file in $files) {
+        $relative = $file.FullName.Substring($root.Length).TrimStart('\').Replace('\', '/')
+        if (Test-ExcludedRelativePath -RelativePath $relative -Exclude $Exclude) {
+            continue
+        }
+
+        $fileHash = (Get-FileHash -Algorithm SHA256 -LiteralPath $file.FullName).Hash.ToLowerInvariant()
+        $lines.Add("$relative`t$fileHash")
+    }
+
+    $canonicalLines = $lines.ToArray()
+    [Array]::Sort($canonicalLines, [System.StringComparer]::Ordinal)
+    $bytes = [System.Text.UTF8Encoding]::new($false).GetBytes(($canonicalLines -join "`n"))
+    $sha256 = [System.Security.Cryptography.SHA256]::Create()
+    try {
+        $digest = ([BitConverter]::ToString($sha256.ComputeHash($bytes))).Replace('-', '').ToLowerInvariant()
+    } finally {
+        $sha256.Dispose()
+    }
+
+    [pscustomobject]@{
+        Count = $canonicalLines.Count
+        Digest = $digest
+    }
+}
+
+function Assert-NoReparsePoint {
+    param(
+        [string]$Label,
+        [string]$Path
+    )
+
+    if (-not (Test-Path -LiteralPath $Path)) {
+        return
+    }
+
+    $items = @(Get-Item -LiteralPath $Path -Force)
+    if (Test-Path -LiteralPath $Path -PathType Container) {
+        $items += @(Get-ChildItem -LiteralPath $Path -Recurse -Force)
+    }
+
+    foreach ($item in $items) {
+        if (($item.Attributes -band [System.IO.FileAttributes]::ReparsePoint) -ne 0) {
+            Add-Failure "$Label reparse point rejected: $($item.FullName)"
+        }
+    }
+}
+
 $themeSource = Join-Path $SnapshotRoot 'live-theme\vietnamguide-premium'
 $muSource = Join-Path $SnapshotRoot 'live-mu-plugins\mu-plugins\vietnamguide-core.php'
 $docsSource = Join-Path $SnapshotRoot 'project-webroot\docs'
 $opsSource = Join-Path $SnapshotRoot 'project-webroot\ops'
+
+$manifestPath = Join-Path $repoRoot 'tests\fixtures\recovery-source-manifest.json'
+if (-not (Test-Path -LiteralPath $manifestPath -PathType Leaf)) {
+    Add-Failure "Recovery source manifest missing: $manifestPath"
+} else {
+    try {
+        $manifest = Get-Content -Raw -LiteralPath $manifestPath | ConvertFrom-Json
+        $rootKeys = @($manifest.PSObject.Properties.Name)
+        $expectedRootKeys = @('schemaVersion', 'canonicalFormat', 'sections')
+        if (@(Compare-Object -ReferenceObject $expectedRootKeys -DifferenceObject $rootKeys).Count -ne 0) {
+            Add-Failure 'Recovery source manifest has unexpected root shape.'
+        }
+        if ($manifest.schemaVersion -ne 1 -or $manifest.canonicalFormat -ne 'sha256-utf8-lf-ordinal-relative-path-tab-lowercase-file-sha256') {
+            Add-Failure 'Recovery source manifest schema or canonical format is invalid.'
+        }
+
+        $expectedSectionNames = @('theme', 'mu-plugin', 'docs', 'ops')
+        $actualSectionNames = @($manifest.sections | ForEach-Object name)
+        if ($manifest.sections.Count -ne 4 -or @(Compare-Object -ReferenceObject $expectedSectionNames -DifferenceObject $actualSectionNames).Count -ne 0) {
+            Add-Failure 'Recovery source manifest section set is invalid.'
+        }
+
+        foreach ($section in $manifest.sections) {
+            $sectionKeys = @($section.PSObject.Properties.Name)
+            $expectedSectionKeys = @('name', 'source', 'target', 'count', 'digest', 'exclude')
+            if (@(Compare-Object -ReferenceObject $expectedSectionKeys -DifferenceObject $sectionKeys).Count -ne 0) {
+                Add-Failure "Recovery source manifest section shape is invalid: $($section.name)"
+                continue
+            }
+            if ($section.count -isnot [int] -or $section.count -lt 1 -or $section.digest -notmatch '^[0-9a-f]{64}$') {
+                Add-Failure "Recovery source manifest count or digest is invalid: $($section.name)"
+                continue
+            }
+            if ([System.IO.Path]::IsPathRooted($section.source) -or [System.IO.Path]::IsPathRooted($section.target) -or $section.source -match '(^|/)\.\.(/|$)' -or $section.target -match '(^|/)\.\.(/|$)') {
+                Add-Failure "Recovery source manifest path is unsafe: $($section.name)"
+                continue
+            }
+
+            $sourcePath = Join-Path $SnapshotRoot ($section.source.Replace('/', '\'))
+            $targetPath = Join-Path $repoRoot ($section.target.Replace('/', '\'))
+            Assert-NoReparsePoint -Label "$($section.name) source" -Path $sourcePath
+            Assert-NoReparsePoint -Label "$($section.name) repository" -Path $targetPath
+
+            $sourceDigest = Get-CanonicalSectionDigest -Path $sourcePath -Exclude @($section.exclude)
+            $targetDigest = Get-CanonicalSectionDigest -Path $targetPath -Exclude @($section.exclude)
+            if ($sourceDigest.Count -ne $section.count -or $sourceDigest.Digest -ne $section.digest) {
+                Add-Failure "$($section.name) source manifest digest mismatch."
+            }
+            if ($targetDigest.Count -ne $section.count -or $targetDigest.Digest -ne $section.digest) {
+                Add-Failure "$($section.name) repository manifest digest mismatch."
+            }
+        }
+    } catch {
+        Add-Failure "Recovery source manifest parse failed: $($_.Exception.Message)"
+    }
+}
 
 $results = @()
 $results += Compare-FileTree -Label 'theme' -SourceRoot $themeSource -DestinationRoot (Join-Path $repoRoot 'wordpress\wp-content\themes\vietnamguide-premium')
@@ -106,7 +248,10 @@ $requiredIgnoreRules = @(
     '**/backups/',
     '**/snapshots/',
     '**/exports/',
+    '**/secret/',
     '**/secrets/',
+    '**/credential/',
+    '**/credentials/',
     'wordpress/wp-content/uploads/',
     '*production-snapshot*/',
     '*recovery-export*/',
@@ -114,7 +259,11 @@ $requiredIgnoreRules = @(
     '.env.*',
     'wp-config.php',
     '*.pem',
-    '*.key'
+    '*.key',
+    '*.p12',
+    '*.pfx',
+    '*.jks',
+    '*.keystore'
 )
 
 if (-not (Test-Path -LiteralPath $gitignorePath -PathType Leaf)) {
@@ -141,9 +290,18 @@ $ignoreProbePaths = @(
     'recovery-export-test/file',
     '.env',
     'private.key',
+    'leaked.key',
+    'private.pem',
+    'identity.p12',
+    'identity.pfx',
+    'identity.jks',
+    'identity.keystore',
     'snapshots/artifact.bin',
     'nested/exports/artifact.bin',
-    'nested/deeper/secrets/artifact.bin'
+    'nested/secret/artifact.bin',
+    'nested/deeper/secrets/artifact.bin',
+    'nested/credential/artifact.bin',
+    'nested/deeper/credentials/artifact.bin'
 )
 $ignoredProbeCount = 0
 
@@ -162,13 +320,22 @@ $candidatePaths = @(git -C $repoRoot ls-files --cached --others --exclude-standa
     Where-Object { $_ } |
     ForEach-Object { $_.Replace('\', '/') }
 
+$gitStageEntries = @(git -C $repoRoot ls-files --stage) + @($AdditionalGitStageEntry)
+foreach ($entry in $gitStageEntries) {
+    if ($entry -match '^120000\s+[0-9a-f]{40,64}\s+\d+\s+(.+)$') {
+        Add-Failure "Git symlink mode 120000 rejected: $($Matches[1])"
+    }
+}
+
 $forbiddenPathPatterns = @(
     '(^|/)wp-config\.php$',
-    '\.sql$',
+    '\.(sql|sqlite|sqlite3|db|dump)$',
     '\.wxr$',
     '\.wpress$',
+    '\.(pem|key|p12|pfx|jks|keystore)$',
     '(^|/)uploads/',
     '(^|/)backups?/',
+    '(^|/)(secret|secrets|credential|credentials)/',
     '(^|/)\.codex/config\.toml$',
     'production-snapshot',
     'recovery-export'
@@ -183,7 +350,7 @@ foreach ($path in $candidatePaths) {
     }
 }
 
-$textExtensions = @('.css', '.env', '.html', '.htm', '.ini', '.js', '.json', '.md', '.php', '.ps1', '.svg', '.toml', '.txt', '.xml', '.yaml', '.yml')
+$textExtensions = @('.css', '.env', '.html', '.htm', '.ini', '.js', '.json', '.key', '.md', '.pem', '.php', '.ps1', '.svg', '.toml', '.txt', '.xml', '.yaml', '.yml')
 $secretPatterns = @(
     ('X-' + 'Goog-' + 'Api-' + 'Key'),
     'BEGIN(?: [A-Z0-9]+)* PRIVATE KEY',
