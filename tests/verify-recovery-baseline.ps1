@@ -173,33 +173,6 @@ function Get-CanonicalSectionDigest {
     }
 }
 
-function Test-ContainsByteSequence {
-    param(
-        [byte[]]$Buffer,
-        [byte[]]$Needle,
-        [int]$Length
-    )
-
-    if ($Needle.Length -eq 0 -or $Length -lt $Needle.Length) {
-        return $false
-    }
-
-    for ($offset = 0; $offset -le $Length - $Needle.Length; $offset++) {
-        $matched = $true
-        for ($index = 0; $index -lt $Needle.Length; $index++) {
-            if ($Buffer[$offset + $index] -ne $Needle[$index]) {
-                $matched = $false
-                break
-            }
-        }
-        if ($matched) {
-            return $true
-        }
-    }
-
-    return $false
-}
-
 function Test-PrivateKeyHeader {
     param([string]$Path)
 
@@ -215,14 +188,12 @@ function Test-PrivateKeyHeader {
         $stream.Dispose()
     }
 
-    foreach ($type in @('', 'RSA ', 'EC ', 'OPENSSH ')) {
-        $marker = [System.Text.Encoding]::ASCII.GetBytes(('-----BEGIN ' + $type + 'PRIVATE KEY-----'))
-        if (Test-ContainsByteSequence -Buffer $buffer -Needle $marker -Length $read) {
-            return $true
-        }
-    }
-
-    return $false
+    $leadingText = [System.Text.Encoding]::ASCII.GetString($buffer, 0, $read)
+    return [regex]::IsMatch(
+        $leadingText,
+        '-----BEGIN (?:[A-Z0-9][A-Z0-9 -]* )?PRIVATE KEY-----',
+        [System.Text.RegularExpressions.RegexOptions]::CultureInvariant
+    )
 }
 
 function Assert-NoReparsePoint {

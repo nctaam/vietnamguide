@@ -146,6 +146,22 @@ try {
     $extensionlessKeyResult = Invoke-CaseVerifier -Fixture $extensionlessKey
     Add-Result -Name 'extensionless private key is rejected' -Passed ($extensionlessKeyResult.ExitCode -ne 0 -and $extensionlessKeyResult.Output -match 'Private key signature') -Detail $extensionlessKeyResult.Output
 
+    $encryptedKey = New-CaseFixture -Name 'extensionless-encrypted-private-key'
+    $encryptedKeyPath = Join-Path $encryptedKey.Repo 'id_encrypted'
+    $encryptedMarker = ('-' * 5) + 'BEGIN ' + 'ENCRYPTED PRIVATE KEY' + ('-' * 5)
+    [System.IO.File]::WriteAllText($encryptedKeyPath, $encryptedMarker)
+    & git -c core.autocrlf=false -C $encryptedKey.Repo add -f -- $encryptedKeyPath 2>$null
+    $encryptedKeyResult = Invoke-CaseVerifier -Fixture $encryptedKey
+    Add-Result -Name 'extensionless encrypted private key is rejected' -Passed ($encryptedKeyResult.ExitCode -ne 0 -and $encryptedKeyResult.Output -match 'Private key signature') -Detail $encryptedKeyResult.Output
+
+    $dsaKey = New-CaseFixture -Name 'extensionless-dsa-private-key'
+    $dsaKeyPath = Join-Path $dsaKey.Repo 'id_dsa'
+    $dsaMarker = ('-' * 5) + 'BEGIN ' + 'DSA PRIVATE KEY' + ('-' * 5)
+    [System.IO.File]::WriteAllText($dsaKeyPath, $dsaMarker)
+    & git -c core.autocrlf=false -C $dsaKey.Repo add -f -- $dsaKeyPath 2>$null
+    $dsaKeyResult = Invoke-CaseVerifier -Fixture $dsaKey
+    Add-Result -Name 'extensionless DSA private key is rejected' -Passed ($dsaKeyResult.ExitCode -ne 0 -and $dsaKeyResult.Output -match 'Private key signature') -Detail $dsaKeyResult.Output
+
     $indexMismatch = New-CaseFixture -Name 'recovered-index-eol-mismatch'
     $recoveredRelative = 'ops/verification-log.md'
     $recoveredPath = Join-Path $indexMismatch.Repo $recoveredRelative
