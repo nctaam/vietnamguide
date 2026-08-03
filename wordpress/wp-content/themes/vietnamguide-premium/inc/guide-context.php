@@ -1,0 +1,434 @@
+<?php
+if (! defined('ABSPATH')) {
+    exit;
+}
+
+function vg_estimate_guide_reading_time(string $html): int
+{
+    $words = str_word_count(wp_strip_all_tags($html));
+    return max(1, (int) ceil($words / 220));
+}
+
+function vg_extract_guide_data_value(string $html, string $attribute): string
+{
+    $processor = new WP_HTML_Tag_Processor($html);
+    while ($processor->next_token()) {
+        if ($processor->is_tag_closer()) {
+            continue;
+        }
+
+        $value = $processor->get_attribute($attribute);
+        if ($value !== null) {
+            return sanitize_text_field((string) $value);
+        }
+    }
+
+    return '';
+}
+
+function vg_count_guide_sources(string $html): int
+{
+    if (! class_exists('DOMDocument') || ! class_exists('DOMXPath')) {
+        return 0;
+    }
+
+    $previous = libxml_use_internal_errors(true);
+    $document = new DOMDocument();
+    $loaded = $document->loadHTML(
+        '<?xml encoding="utf-8" ?><div id="vg-source-root">' . $html . '</div>',
+        LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD
+    );
+    libxml_clear_errors();
+    libxml_use_internal_errors($previous);
+
+    if (! $loaded) {
+        return 0;
+    }
+
+    $xpath = new DOMXPath($document);
+    $anchors = $xpath->query(
+        '//*[@id="vg-source-root"]//*['
+        . 'contains(concat(" ", normalize-space(@class), " "), " vg-pattern-source-block ") or '
+        . 'contains(concat(" ", normalize-space(@class), " "), " source-diversity ") or '
+        . 'contains(concat(" ", normalize-space(@class), " "), " source-trail ")'
+        . ']//a[@href]'
+    );
+    if (! $anchors instanceof DOMNodeList) {
+        return 0;
+    }
+
+    $homeHost = strtolower((string) wp_parse_url(home_url('/'), PHP_URL_HOST));
+    $sources = [];
+    foreach ($anchors as $anchor) {
+        if (! $anchor instanceof DOMElement) {
+            continue;
+        }
+
+        $href = trim($anchor->getAttribute('href'));
+        $host = strtolower((string) wp_parse_url($href, PHP_URL_HOST));
+        $scheme = strtolower((string) wp_parse_url($href, PHP_URL_SCHEME));
+        $isAllowedScheme = in_array($scheme, ['http', 'https'], true)
+            || ($scheme === '' && str_starts_with($href, '//'));
+        if ($isAllowedScheme && $href !== '' && $host !== '' && $host !== $homeHost) {
+            $sources[$href] = true;
+        }
+    }
+
+    return count($sources);
+}
+
+function vg_normalize_guide_route_url(string $url): string
+{
+    if ($url === '') {
+        return '';
+    }
+
+    if (str_contains($url, '\\') || preg_match('/[\x00-\x20\x7F]/', $url) === 1) {
+        return '';
+    }
+
+    $parts = wp_parse_url($url);
+    if (! is_array($parts)) {
+        return '';
+    }
+
+    $scheme = strtolower((string) ($parts['scheme'] ?? ''));
+    $host = trim((string) ($parts['host'] ?? ''));
+    $isRootRelative = str_starts_with($url, '/') && ! str_starts_with($url, '//') && $scheme === '' && $host === '';
+    $isProtocolRelative = str_starts_with($url, '//') && $scheme === '' && $host !== '';
+    $isAbsoluteWeb = in_array($scheme, ['http', 'https'], true) && $host !== '';
+    if (! $isRootRelative && ! $isProtocolRelative && ! $isAbsoluteWeb) {
+        return '';
+    }
+
+    $sanitized = esc_url_raw($url, ['http', 'https']);
+    if ($sanitized === '') {
+        return '';
+    }
+
+    $sanitizedParts = wp_parse_url($sanitized);
+    if (! is_array($sanitizedParts)) {
+        return '';
+    }
+
+    $sanitizedScheme = strtolower((string) ($sanitizedParts['scheme'] ?? ''));
+    $sanitizedHost = trim((string) ($sanitizedParts['host'] ?? ''));
+    $sanitizedIsRootRelative = str_starts_with($sanitized, '/') && ! str_starts_with($sanitized, '//') && $sanitizedScheme === '' && $sanitizedHost === '';
+    $sanitizedIsProtocolRelative = str_starts_with($sanitized, '//') && $sanitizedScheme === '' && $sanitizedHost !== '';
+    $sanitizedIsAbsoluteWeb = in_array($sanitizedScheme, ['http', 'https'], true) && $sanitizedHost !== '';
+    $hasMatchingShape = ($isRootRelative && $sanitizedIsRootRelative)
+        || ($isProtocolRelative && $sanitizedIsProtocolRelative)
+        || ($isAbsoluteWeb && $sanitizedIsAbsoluteWeb);
+    if (! $hasMatchingShape) {
+        return '';
+    }
+
+    return $sanitized;
+}
+
+function vg_get_related_routes(WP_Post $post, bool $hasExisting): array
+{
+    if ($hasExisting) {
+        return [];
+    }
+
+    if (function_exists('vg_eeat_get_field') && function_exists('vg_eeat_related_route_items')) {
+        $curatedRoutes = [];
+        $items = vg_eeat_related_route_items(vg_eeat_get_field($post->ID, 'related_routes'));
+        foreach ($items as $item) {
+            if (! is_array($item)) {
+                continue;
+            }
+
+            $title = trim((string) ($item['label'] ?? ''));
+            $rawUrl = $item['url'] ?? '';
+            $url = is_string($rawUrl) ? vg_normalize_guide_route_url($rawUrl) : '';
+            if ($title === '' || $url === '') {
+                continue;
+            }
+
+            $curatedRoutes[] = [
+                'title' => $title,
+                'url' => $url,
+            ];
+        }
+
+        if ($curatedRoutes !== []) {
+            return array_values($curatedRoutes);
+        }
+    }
+
+    $routes = [];
+    if ($post->post_parent >= 0) {
+        $siblings = get_pages([
+            'parent' => $post->post_parent,
+            'post_status' => 'publish',
+            'sort_column' => 'menu_order,post_title',
+            'sort_order' => 'ASC',
+        ]);
+
+        foreach ($siblings as $sibling) {
+            if (! $sibling instanceof WP_Post || $sibling->ID === $post->ID) {
+                continue;
+            }
+
+            $title = get_the_title($sibling);
+            $url = get_permalink($sibling);
+            if ($title === '' || ! is_string($url) || $url === '') {
+                continue;
+            }
+
+            $routes[] = [
+                'title' => $title,
+                'url' => $url,
+            ];
+
+            if (count($routes) === 3) {
+                break;
+            }
+        }
+    }
+
+    if ($routes === [] && $post->post_parent > 0) {
+        $parent = get_post($post->post_parent);
+        if ($parent instanceof WP_Post && $parent->post_type === 'page' && $parent->post_status === 'publish') {
+            $parentTitle = get_the_title($parent);
+            $parentUrl = get_permalink($parent);
+            if ($parentTitle !== '' && is_string($parentUrl) && $parentUrl !== '') {
+                $routes[] = [
+                    'title' => $parentTitle,
+                    'url' => $parentUrl,
+                ];
+            }
+        }
+    }
+
+    return array_values(array_filter($routes, static function (array $route): bool {
+        return $route['title'] !== '' && is_string($route['url']) && $route['url'] !== '';
+    }));
+}
+
+function vg_guide_body_has_related_routes(string $html): bool
+{
+    $processor = new WP_HTML_Tag_Processor($html);
+    while ($processor->next_token()) {
+        if ($processor->is_tag_closer()) {
+            continue;
+        }
+
+        if (true === $processor->has_class('vg-related-routes')) {
+            return true;
+        }
+    }
+
+    return false;
+}
+
+function vg_is_valid_guide_context(array $context): bool
+{
+    if (
+        ! array_key_exists('post_id', $context)
+        || ! is_int($context['post_id'])
+        || $context['post_id'] <= 0
+    ) {
+        return false;
+    }
+
+    if (
+        ! array_key_exists('type', $context)
+        || ! is_string($context['type'])
+        || ! in_array($context['type'], ['destination', 'itinerary', 'comparison', 'practical'], true)
+    ) {
+        return false;
+    }
+
+    if (
+        ! array_key_exists('hero_html', $context)
+        || ! is_string($context['hero_html'])
+        || trim($context['hero_html']) === ''
+    ) {
+        return false;
+    }
+
+    $stringFields = [
+        'body_html',
+        'toc_html',
+        'reviewed_at',
+        'best_for',
+        'skip_if',
+        'title',
+        'permalink',
+    ];
+    foreach ($stringFields as $field) {
+        if (! array_key_exists($field, $context) || ! is_string($context[$field])) {
+            return false;
+        }
+    }
+
+    $heroStats = vg_inspect_guide_html($context['hero_html']);
+    $bodyStats = vg_inspect_guide_html($context['body_html']);
+    if (
+        $heroStats === null
+        || $bodyStats === null
+        || ! $heroStats['has_hero_class']
+        || $heroStats['h1_count'] !== 1
+        || $bodyStats['h1_count'] !== 0
+    ) {
+        return false;
+    }
+
+    if (! array_key_exists('headings', $context) || ! is_array($context['headings'])) {
+        return false;
+    }
+
+    $headingIds = [];
+    foreach ($context['headings'] as $heading) {
+        if (
+            ! is_array($heading)
+            || ! array_key_exists('id', $heading)
+            || ! array_key_exists('label', $heading)
+            || ! is_string($heading['id'])
+            || ! is_string($heading['label'])
+        ) {
+            return false;
+        }
+
+        $headingId = $heading['id'];
+        $headingLabel = trim($heading['label']);
+        if (
+            ! vg_is_valid_guide_heading_id($headingId)
+            || $headingLabel === ''
+            || isset($headingIds[$headingId])
+        ) {
+            return false;
+        }
+
+        $headingIds[$headingId] = true;
+    }
+
+    $preparedBody = vg_prepare_guide_headings($context['body_html']);
+    if (
+        $preparedBody['html'] !== $context['body_html']
+        || $preparedBody['headings'] !== $context['headings']
+    ) {
+        return false;
+    }
+
+    if ($context['toc_html'] !== vg_render_guide_toc($context['headings'])) {
+        return false;
+    }
+
+    if (
+        ! array_key_exists('reading_time', $context)
+        || ! is_int($context['reading_time'])
+        || $context['reading_time'] < 1
+    ) {
+        return false;
+    }
+
+    if (
+        ! array_key_exists('source_count', $context)
+        || ! is_int($context['source_count'])
+        || $context['source_count'] < 0
+    ) {
+        return false;
+    }
+
+    if (! array_key_exists('related_routes', $context) || ! is_array($context['related_routes'])) {
+        return false;
+    }
+
+    if (
+        ! array_key_exists('has_existing_related_routes', $context)
+        || ! is_bool($context['has_existing_related_routes'])
+    ) {
+        return false;
+    }
+
+    foreach ($context['related_routes'] as $route) {
+        if (
+            ! is_array($route)
+            || ! array_key_exists('title', $route)
+            || ! array_key_exists('url', $route)
+            || ! is_string($route['title'])
+            || ! is_string($route['url'])
+            || trim($route['title']) === ''
+            || trim($route['url']) === ''
+        ) {
+            return false;
+        }
+
+        $normalizedRouteUrl = vg_normalize_guide_route_url($route['url']);
+        if ($normalizedRouteUrl === '' || $route['url'] !== $normalizedRouteUrl) {
+            return false;
+        }
+    }
+
+    $hasExistingRelated = vg_guide_body_has_related_routes($context['body_html']);
+    if ($context['has_existing_related_routes'] !== $hasExistingRelated) {
+        return false;
+    }
+
+    if ($hasExistingRelated && $context['related_routes'] !== []) {
+        return false;
+    }
+
+    return true;
+}
+
+function vg_build_guide_context(WP_Post $post): ?array
+{
+    if ($post->post_password !== '' || post_password_required($post)) {
+        return null;
+    }
+
+    if (preg_match('/<!--\s*nextpage\s*-->/i', $post->post_content) === 1) {
+        return null;
+    }
+
+    $content = vg_prepare_guide_content($post);
+    $type = vg_get_guide_type($post);
+    if ($content === null || $type === null) {
+        return null;
+    }
+
+    $reviewed = '';
+    if (function_exists('vg_eeat_get_field')) {
+        $reviewed = trim((string) vg_eeat_get_field($post->ID, 'last_meaningful_update'));
+    }
+    if ($reviewed === '') {
+        $reviewed = trim((string) get_post_meta($post->ID, '_vg_reviewed_at', true));
+    }
+    if ($reviewed === '') {
+        $reviewed = get_the_modified_date('F j, Y', $post);
+    }
+
+    $sourceCount = 0;
+    if (function_exists('vg_eeat_get_field') && function_exists('vg_eeat_lines')) {
+        $sourcesChecked = vg_eeat_lines(vg_eeat_get_field($post->ID, 'sources_checked'));
+        $sourceCount = count($sourcesChecked);
+    }
+    if ($sourceCount === 0) {
+        $sourceCount = vg_count_guide_sources($content['body_html']);
+    }
+
+    $hasExistingRelated = vg_guide_body_has_related_routes($content['body_html']);
+
+    return [
+        'post_id' => $post->ID,
+        'type' => $type,
+        'title' => get_the_title($post),
+        'permalink' => get_permalink($post),
+        'hero_html' => $content['hero_html'],
+        'body_html' => $content['body_html'],
+        'headings' => $content['headings'],
+        'toc_html' => $content['toc_html'],
+        'reviewed_at' => $reviewed,
+        'reading_time' => vg_estimate_guide_reading_time($content['body_html']),
+        'source_count' => $sourceCount,
+        'best_for' => vg_extract_guide_data_value($content['body_html'], 'data-vg-best-for'),
+        'skip_if' => vg_extract_guide_data_value($content['body_html'], 'data-vg-skip-if'),
+        'related_routes' => vg_get_related_routes($post, $hasExistingRelated),
+        'has_existing_related_routes' => $hasExistingRelated,
+    ];
+}
