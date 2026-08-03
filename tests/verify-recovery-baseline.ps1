@@ -104,6 +104,9 @@ $requiredIgnoreRules = @(
     '*.wxr',
     '*.wpress',
     '**/backups/',
+    '**/snapshots/',
+    '**/exports/',
+    '**/secrets/',
     'wordpress/wp-content/uploads/',
     '*production-snapshot*/',
     '*recovery-export*/',
@@ -124,6 +127,36 @@ if (-not (Test-Path -LiteralPath $gitignorePath -PathType Leaf)) {
         }
     }
 }
+
+$ignoreProbePaths = @(
+    '.superpowers/state.json',
+    '.worktrees/check/file',
+    '.codex/config.toml',
+    'database.sql',
+    'export.wxr',
+    'backup.wpress',
+    'ops/backups/file.php',
+    'wordpress/wp-content/uploads/file.jpg',
+    'vietnamguide-production-snapshot-test/file',
+    'recovery-export-test/file',
+    '.env',
+    'private.key',
+    'snapshots/artifact.bin',
+    'nested/exports/artifact.bin',
+    'nested/deeper/secrets/artifact.bin'
+)
+$ignoredProbeCount = 0
+
+foreach ($probe in $ignoreProbePaths) {
+    & git -C $repoRoot check-ignore --no-index -q -- $probe
+    if ($LASTEXITCODE -eq 0) {
+        $ignoredProbeCount++
+    } else {
+        Add-Failure ".gitignore probe not ignored: $probe"
+    }
+}
+
+Write-Host "Ignore probes: $ignoredProbeCount/$($ignoreProbePaths.Count)"
 
 $candidatePaths = @(git -C $repoRoot ls-files --cached --others --exclude-standard) |
     Where-Object { $_ } |

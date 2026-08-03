@@ -10,6 +10,9 @@
 *.wxr
 *.wpress
 **/backups/
+**/snapshots/
+**/exports/
+**/secrets/
 wordpress/wp-content/uploads/
 *production-snapshot*/
 *recovery-export*/
