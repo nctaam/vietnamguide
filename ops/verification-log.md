@@ -100,3 +100,39 @@ Date: 2026-07-28 (Asia/Saigon)
 - Accessibility QA: the live reviewed stylesheet exposed visible `:focus-visible` outlines and a `prefers-reduced-motion: reduce` rule disabling transitions/animations and transform motion.
 - Non-pilot isolation: `/destinations/hanoi-travel-guide/`, `/itineraries/14-days-in-vietnam/`, `/compare/da-nang-vs-hoi-an/`, and `/plan/sim-esim-vietnam/` each returned HTTP 200 with no guide shell, guide CSS, guide JavaScript, or fatal text.
 - Helper cleanup: the helper self-delete route reported `Helper removed`; transient status was removed, backups were preserved, and a fresh WordPress plugin inventory contained no `vietnamguide-guide-deployer` entry.
+
+## Itinerary Hub Expansion - 2026-08-02
+
+- Source rollout baseline: `e99de00e82e74107435ec4748e6a04aa9d6ed29d`; follow-up verifier hardening: `3617b274b3b04150f480b28e0d997f2ae2840ee6`.
+- Exact pilot inventory:
+  - `destinations/ho-chi-minh-city-travel-guide`
+  - `itineraries/10-days-in-vietnam`
+  - `itineraries/7-days-in-vietnam`
+  - `itineraries/14-days-in-vietnam`
+  - `itineraries/21-days-in-vietnam`
+  - `itineraries/hanoi-in-2-days`
+  - `compare/ha-long-bay-vs-lan-ha-bay`
+  - `plan/vietnam-evisa`
+- Exact public non-pilot inventory:
+  - `destinations/hanoi-travel-guide`
+  - `compare/da-nang-vs-hoi-an`
+  - `plan/sim-esim-vietnam`
+  - `plan/transport-within-vietnam`
+- Verifier evidence: hardened tokenizer/AST exact-set acceptance passed; the final permanent mutation suite rejected `111/111` with `0` duplicate names; canonical live verifier SHA256 `14cea20fc7e3d3e3dc83020218f19509b109b323a168eb413c4c42e62c43f858`.
+- Follow-up verifier hardening rejects noncanonical PHP root/global writes, explicit `$GLOBALS` and plain `global` writes inside called functions, direct/indexed `unset`, PowerShell root/script-scope assignments, multiple/foreach targets, and inherited indexed writes without a definite local shadow. Function, closure, arrow, filter, parameter, variable-variable alias, and definite local-shadow fixtures remain accepted.
+- Permanent TDD coverage grew without retiring prior cases: the original rollout mutation replacing `itineraries/14-days-in-vietnam` with an unrelated path remains present, LF/CRLF replacement fixtures remain intact, and uncertain PowerShell control flow remains conservatively fail-closed.
+- Final independent verifier reviews returned `SPEC COMPLIANT` and `APPROVED` with no actionable findings. Fresh controller verification on 2026-08-03 passed PHP lint; all PowerShell parses; core block patterns; MU-plugin contracts and mutations; homepage; guide core; production public verification; `git diff --check`; and the full `111`-mutation suite in `610.3s`. The public verifier exited `0` while libjpeg emitted three non-fatal premature-end warnings for fetched images.
+- Final reviewed deterministic artifact root: `C:\Users\NCTaam\.codex\visualizations\2026\07\27\019fa252-28dd-7062-9e8e-bc4f52ab2b71\vg-guide-deployer-final-20260730`. Hash mapping: `vietnamguide-guide-deployer.zip` -> ZIP SHA256 `5690d605322ae4b6d74a646b92e6d772c2f4bf6288a68ad6e2cecdffb8a31837`; `build\vietnamguide-guide-deployer\manifest.json` -> manifest SHA256 `b32354d5370455a4c2b4a7faba74a4a7e5e9db3ae79b503449777a02a758dfda`; `build\vietnamguide-guide-deployer\vietnamguide-guide-deployer.php` -> helper SHA256 `d2f38a8fc52c811aa1df3a6ef3667da89d87482bf913999ad4d2c7486c5fd941`; `build-report.txt` -> report SHA256 `e377375905e12d8f7eb8577b4374db1f97d49b00bfaa251a1ed90d4e1406d6ce`; `build-run1.txt` -> deterministic build log SHA256 `a9ca5bfc047febc6f61376b15186a53dd3b5cb91b1ee11c0ffbc715e597c2563`; `build-run2.txt` -> deterministic build log SHA256 `a9ca5bfc047febc6f61376b15186a53dd3b5cb91b1ee11c0ffbc715e597c2563`. The ZIP contains 14 sorted fixed-time entries and 11 theme payloads.
+- Production deployment: final retained backup `/usr/local/lsws/vietnamguide.net/html/wp-content/.vietnamguide-deployment-backups/20260802-072138-a285b283c0f24f1f`; all 11 installed hashes matched the manifest; WordPress object, theme, and LiteSpeed purges completed.
+- Post-repair Hanoi post `320`: semantic hero classes were exact in JSON and HTML as `vg-guide-hero vg-guide-hero-cover vg-hanoi-2-days-hero`; modified `2026-08-02T10:55:00`; cache purged.
+- Production verification: server output was exactly `SUCCESS: VietnamGuide guide experience live verification passed.`; the fresh public verifier exited `0` with exact output `VietnamGuide public guide experience verification passed for https://vietnamguide.net.`
+- Production cleanup: helper route returned `Helper removed`; fresh plugin inventory contained zero `vietnamguide-guide-deployer` entries; the backup was preserved.
+- Browser QA covered canonical `/itineraries/7-days-in-vietnam/`, `/itineraries/14-days-in-vietnam/`, `/itineraries/21-days-in-vietnam/`, and `/itineraries/hanoi-in-2-days/` at actual viewports 1280x900 and 390x844.
+- All eight browser runs showed one visible hero H1 inside `.vg-guide-hero`, the guide shell/spine/hero/meta/trust regions, no document overflow, valid fragments/related routes/source links, and zero console, error-level, or page errors.
+- Desktop QA: the sticky TOC had `top: 108px`, and near the end `toc.bottom == container.bottom` for all four itineraries; the trust rail remained sticky.
+- Mobile QA: the desktop TOC was hidden, the horizontal jump navigation remained contained, and the trust region was static.
+- Table QA across all eight runs: actual `activeElement` focus, visible 3px outline with 4px offset, keyboard `ArrowRight` produced `scrollLeft > 0`, then scroll was reset.
+- Reduced-motion QA: agent-browser emulation returned `matchMedia(...reduce).matches=true`; computed transition and animation durations were `0`, transform was `none`, `scrollBehavior` was `auto`, and there were zero guide motion offenders.
+- Browser metadata: agent-browser `0.33.1`, HeadlessChrome `151`, DPR `1`, timestamps `2026-08-02T08:23:06.310Z`-`2026-08-02T08:24:44.410Z`.
+- Independent review: specification verdict `SPEC COMPLIANT`; quality re-review `APPROVED` with no Critical, Important, or Minor findings.
+- Scope and safety: deployment was limited to theme payloads, with no post-content rewrite except the explicit Hanoi semantic-class repair recorded above. The helper was removed and backups were preserved. SSH credentials were unavailable/rejected, so the guarded WordPress route was used; no credentials are recorded here.
