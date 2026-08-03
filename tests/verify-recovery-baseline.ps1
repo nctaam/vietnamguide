@@ -94,6 +94,35 @@ function Test-ExcludedRelativePath {
     return $false
 }
 
+function Resolve-ContainedManifestPath {
+    param(
+        [string]$Root,
+        [string]$RelativePath,
+        [string]$Label
+    )
+
+    try {
+        $components = @($RelativePath -split '[\\/]')
+        if ([string]::IsNullOrWhiteSpace($RelativePath) -or [System.IO.Path]::IsPathRooted($RelativePath) -or '..' -in $components) {
+            Add-Failure "Recovery source manifest path is unsafe: $Label"
+            return $null
+        }
+
+        $rootFull = [System.IO.Path]::GetFullPath($Root).TrimEnd([char[]]'\/')
+        $candidate = [System.IO.Path]::GetFullPath((Join-Path $rootFull ($RelativePath.Replace('/', '\'))))
+        $rootPrefix = $rootFull + [System.IO.Path]::DirectorySeparatorChar
+        if (-not $candidate.StartsWith($rootPrefix, [System.StringComparison]::OrdinalIgnoreCase)) {
+            Add-Failure "Recovery source manifest path is unsafe: $Label"
+            return $null
+        }
+
+        return $candidate
+    } catch {
+        Add-Failure "Recovery source manifest path is unsafe: $Label"
+        return $null
+    }
+}
+
 function Get-CanonicalSectionDigest {
     param(
         [string]$Path,
@@ -102,7 +131,7 @@ function Get-CanonicalSectionDigest {
 
     if (-not (Test-Path -LiteralPath $Path)) {
         Add-Failure "Manifest path missing: $Path"
-        return [pscustomobject]@{ Count = 0; Digest = '' }
+        return [pscustomobject]@{ Count = 0; Digest = ''; Files = @() }
     }
 
     $resolved = (Resolve-Path -LiteralPath $Path).Path
@@ -115,6 +144,7 @@ function Get-CanonicalSectionDigest {
     }
 
     $lines = [System.Collections.Generic.List[string]]::new()
+    $includedFiles = [System.Collections.Generic.List[string]]::new()
     foreach ($file in $files) {
         $relative = $file.FullName.Substring($root.Length).TrimStart('\').Replace('\', '/')
         if (Test-ExcludedRelativePath -RelativePath $relative -Exclude $Exclude) {
@@ -123,6 +153,7 @@ function Get-CanonicalSectionDigest {
 
         $fileHash = (Get-FileHash -Algorithm SHA256 -LiteralPath $file.FullName).Hash.ToLowerInvariant()
         $lines.Add("$relative`t$fileHash")
+        $includedFiles.Add($file.FullName)
     }
 
     $canonicalLines = $lines.ToArray()
@@ -138,7 +169,60 @@ function Get-CanonicalSectionDigest {
     [pscustomobject]@{
         Count = $canonicalLines.Count
         Digest = $digest
+        Files = $includedFiles.ToArray()
     }
+}
+
+function Test-ContainsByteSequence {
+    param(
+        [byte[]]$Buffer,
+        [byte[]]$Needle,
+        [int]$Length
+    )
+
+    if ($Needle.Length -eq 0 -or $Length -lt $Needle.Length) {
+        return $false
+    }
+
+    for ($offset = 0; $offset -le $Length - $Needle.Length; $offset++) {
+        $matched = $true
+        for ($index = 0; $index -lt $Needle.Length; $index++) {
+            if ($Buffer[$offset + $index] -ne $Needle[$index]) {
+                $matched = $false
+                break
+            }
+        }
+        if ($matched) {
+            return $true
+        }
+    }
+
+    return $false
+}
+
+function Test-PrivateKeyHeader {
+    param([string]$Path)
+
+    $stream = [System.IO.File]::Open($Path, [System.IO.FileMode]::Open, [System.IO.FileAccess]::Read, [System.IO.FileShare]::ReadWrite)
+    try {
+        $length = [int][Math]::Min(8192, $stream.Length)
+        if ($length -eq 0) {
+            return $false
+        }
+        $buffer = New-Object byte[] $length
+        $read = $stream.Read($buffer, 0, $length)
+    } finally {
+        $stream.Dispose()
+    }
+
+    foreach ($type in @('', 'RSA ', 'EC ', 'OPENSSH ')) {
+        $marker = [System.Text.Encoding]::ASCII.GetBytes(('-----BEGIN ' + $type + 'PRIVATE KEY-----'))
+        if (Test-ContainsByteSequence -Buffer $buffer -Needle $marker -Length $read) {
+            return $true
+        }
+    }
+
+    return $false
 }
 
 function Assert-NoReparsePoint {
@@ -169,6 +253,7 @@ $docsSource = Join-Path $SnapshotRoot 'project-webroot\docs'
 $opsSource = Join-Path $SnapshotRoot 'project-webroot\ops'
 
 $manifestPath = Join-Path $repoRoot 'tests\fixtures\recovery-source-manifest.json'
+$approvedTargetFiles = [System.Collections.Generic.List[string]]::new()
 if (-not (Test-Path -LiteralPath $manifestPath -PathType Leaf)) {
     Add-Failure "Recovery source manifest missing: $manifestPath"
 } else {
@@ -200,13 +285,12 @@ if (-not (Test-Path -LiteralPath $manifestPath -PathType Leaf)) {
                 Add-Failure "Recovery source manifest count or digest is invalid: $($section.name)"
                 continue
             }
-            if ([System.IO.Path]::IsPathRooted($section.source) -or [System.IO.Path]::IsPathRooted($section.target) -or $section.source -match '(^|/)\.\.(/|$)' -or $section.target -match '(^|/)\.\.(/|$)') {
-                Add-Failure "Recovery source manifest path is unsafe: $($section.name)"
+            $sourcePath = Resolve-ContainedManifestPath -Root $SnapshotRoot -RelativePath $section.source -Label "$($section.name) source"
+            $targetPath = Resolve-ContainedManifestPath -Root $repoRoot -RelativePath $section.target -Label "$($section.name) target"
+            if (-not $sourcePath -or -not $targetPath) {
                 continue
             }
 
-            $sourcePath = Join-Path $SnapshotRoot ($section.source.Replace('/', '\'))
-            $targetPath = Join-Path $repoRoot ($section.target.Replace('/', '\'))
             Assert-NoReparsePoint -Label "$($section.name) source" -Path $sourcePath
             Assert-NoReparsePoint -Label "$($section.name) repository" -Path $targetPath
 
@@ -217,6 +301,9 @@ if (-not (Test-Path -LiteralPath $manifestPath -PathType Leaf)) {
             }
             if ($targetDigest.Count -ne $section.count -or $targetDigest.Digest -ne $section.digest) {
                 Add-Failure "$($section.name) repository manifest digest mismatch."
+            }
+            foreach ($file in $targetDigest.Files) {
+                $approvedTargetFiles.Add($file)
             }
         }
     } catch {
@@ -280,6 +367,24 @@ if (-not (Test-Path -LiteralPath $gitignorePath -PathType Leaf)) {
     }
 }
 
+$gitattributesPath = Join-Path $repoRoot '.gitattributes'
+$requiredAttributeRules = @(
+    'wordpress/** -text',
+    'ops/** -text',
+    'docs/editorial/** -text',
+    'docs/superpowers/** -text'
+)
+if (-not (Test-Path -LiteralPath $gitattributesPath -PathType Leaf)) {
+    Add-Failure 'Missing .gitattributes.'
+} else {
+    $attributeRules = Get-Content -LiteralPath $gitattributesPath
+    foreach ($rule in $requiredAttributeRules) {
+        if ($rule -notin $attributeRules) {
+            Add-Failure ".gitattributes missing rule: $rule"
+        }
+    }
+}
+
 $ignoreProbePaths = @(
     '.superpowers/state.json',
     '.worktrees/check/file',
@@ -324,9 +429,66 @@ $candidatePaths = @(git -C $repoRoot ls-files --cached --others --exclude-standa
     ForEach-Object { $_.Replace('\', '/') }
 
 $gitStageEntries = @(git -C $repoRoot ls-files --stage) + @($AdditionalGitStageEntry)
+$indexEntries = @{}
 foreach ($entry in $gitStageEntries) {
-    if ($entry -match '^120000\s+[0-9a-f]{40,64}\s+\d+\s+(.+)$') {
-        Add-Failure "Git symlink mode 120000 rejected: $($Matches[1])"
+    if ($entry -match '^(\d{6})\s+([0-9a-f]{40,64})\s+\d+\s+(.+)$') {
+        $mode = $Matches[1]
+        $objectId = $Matches[2]
+        $path = $Matches[3].Replace('\', '/')
+        $indexEntries[$path] = [pscustomobject]@{ Mode = $mode; ObjectId = $objectId }
+        if ($mode -eq '120000') {
+            Add-Failure "Git symlink mode 120000 rejected: $path"
+        }
+    }
+}
+
+$repoPrefix = $repoRoot.TrimEnd('\') + '\'
+$approvedTargetPaths = @($approvedTargetFiles | ForEach-Object {
+    $_.Substring($repoPrefix.Length).Replace('\', '/')
+} | Sort-Object -Unique)
+
+if ($approvedTargetPaths.Count -gt 0) {
+    $attributeResults = @($approvedTargetPaths | git -C $repoRoot check-attr --stdin text)
+    if ($attributeResults.Count -ne $approvedTargetPaths.Count) {
+        Add-Failure 'Unable to verify .gitattributes for every recovered file.'
+    } else {
+        foreach ($result in $attributeResults) {
+            if ($result -notmatch ': text: unset$') {
+                Add-Failure ".gitattributes does not preserve recovered bytes: $result"
+            }
+        }
+    }
+
+    $workingObjectIds = @($approvedTargetPaths | git -C $repoRoot hash-object --no-filters --stdin-paths)
+    if ($workingObjectIds.Count -ne $approvedTargetPaths.Count) {
+        Add-Failure 'Unable to hash every recovered working-tree file.'
+    } else {
+        for ($index = 0; $index -lt $approvedTargetPaths.Count; $index++) {
+            $path = $approvedTargetPaths[$index]
+            if (-not $indexEntries.ContainsKey($path)) {
+                Add-Failure "Recovered file missing from Git index: $path"
+            } elseif ($indexEntries[$path].ObjectId -ne $workingObjectIds[$index]) {
+                Add-Failure "Git index blob mismatch: $path"
+            }
+        }
+    }
+}
+
+foreach ($relative in $indexEntries.Keys) {
+    if ($indexEntries[$relative].Mode -notmatch '^100') {
+        continue
+    }
+    $fullPath = Join-Path $repoRoot $relative
+    if (-not (Test-Path -LiteralPath $fullPath -PathType Leaf)) {
+        continue
+    }
+    $item = Get-Item -LiteralPath $fullPath -Force
+    if (($item.Attributes -band [System.IO.FileAttributes]::ReparsePoint) -ne 0) {
+        Add-Failure "Tracked reparse point rejected: $relative"
+        continue
+    }
+    if (Test-PrivateKeyHeader -Path $fullPath) {
+        Add-Failure "Private key signature detected in tracked file: $relative"
     }
 }
 

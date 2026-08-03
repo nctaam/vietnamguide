@@ -139,6 +139,42 @@ try {
     $privateMarkerResult = Invoke-CaseVerifier -Fixture $privateMarker
     Add-Result -Name 'private key signature is rejected' -Passed ($privateMarkerResult.ExitCode -ne 0 -and $privateMarkerResult.Output -match 'Candidate secret pattern') -Detail $privateMarkerResult.Output
 
+    $extensionlessKey = New-CaseFixture -Name 'extensionless-private-key'
+    $extensionlessKeyPath = Join-Path $extensionlessKey.Repo 'id_rsa'
+    [System.IO.File]::WriteAllText($extensionlessKeyPath, $marker)
+    & git -c core.autocrlf=false -C $extensionlessKey.Repo add -f -- $extensionlessKeyPath 2>$null
+    $extensionlessKeyResult = Invoke-CaseVerifier -Fixture $extensionlessKey
+    Add-Result -Name 'extensionless private key is rejected' -Passed ($extensionlessKeyResult.ExitCode -ne 0 -and $extensionlessKeyResult.Output -match 'Private key signature') -Detail $extensionlessKeyResult.Output
+
+    $indexMismatch = New-CaseFixture -Name 'recovered-index-eol-mismatch'
+    $recoveredRelative = 'ops/verification-log.md'
+    $recoveredPath = Join-Path $indexMismatch.Repo $recoveredRelative
+    $normalized = [System.IO.File]::ReadAllText($recoveredPath).Replace("`r`n", "`n").Replace("`n", "`r`n")
+    $blobFixture = Join-Path (Split-Path -Parent $indexMismatch.Repo) 'crlf-index-blob.tmp'
+    [System.IO.File]::WriteAllText($blobFixture, $normalized, [System.Text.UTF8Encoding]::new($false))
+    $blobObject = (& git -C $indexMismatch.Repo hash-object -w --no-filters -- $blobFixture).Trim()
+    & git -C $indexMismatch.Repo update-index --cacheinfo 100644 $blobObject $recoveredRelative
+    $indexMismatchResult = Invoke-CaseVerifier -Fixture $indexMismatch
+    Add-Result -Name 'recovered index EOL mismatch is rejected' -Passed ($indexMismatchResult.ExitCode -ne 0 -and $indexMismatchResult.Output -match 'Git index blob mismatch') -Detail $indexMismatchResult.Output
+
+    $backslashTraversal = New-CaseFixture -Name 'manifest-backslash-traversal'
+    $backslashManifestPath = Join-Path $backslashTraversal.Repo 'tests\fixtures\recovery-source-manifest.json'
+    $backslashManifest = Get-Content -Raw -LiteralPath $backslashManifestPath | ConvertFrom-Json
+    ($backslashManifest.sections | Where-Object name -eq 'theme').source = '..\outside'
+    [System.IO.File]::WriteAllText($backslashManifestPath, ($backslashManifest | ConvertTo-Json -Depth 10), [System.Text.UTF8Encoding]::new($false))
+    & git -c core.autocrlf=false -C $backslashTraversal.Repo add -f -- $backslashManifestPath 2>$null
+    $backslashTraversalResult = Invoke-CaseVerifier -Fixture $backslashTraversal
+    Add-Result -Name 'manifest backslash traversal is rejected' -Passed ($backslashTraversalResult.ExitCode -ne 0 -and $backslashTraversalResult.Output -match 'manifest path is unsafe') -Detail $backslashTraversalResult.Output
+
+    $slashTraversal = New-CaseFixture -Name 'manifest-slash-traversal'
+    $slashManifestPath = Join-Path $slashTraversal.Repo 'tests\fixtures\recovery-source-manifest.json'
+    $slashManifest = Get-Content -Raw -LiteralPath $slashManifestPath | ConvertFrom-Json
+    ($slashManifest.sections | Where-Object name -eq 'theme').source = '../outside'
+    [System.IO.File]::WriteAllText($slashManifestPath, ($slashManifest | ConvertTo-Json -Depth 10), [System.Text.UTF8Encoding]::new($false))
+    & git -c core.autocrlf=false -C $slashTraversal.Repo add -f -- $slashManifestPath 2>$null
+    $slashTraversalResult = Invoke-CaseVerifier -Fixture $slashTraversal
+    Add-Result -Name 'manifest slash traversal remains rejected' -Passed ($slashTraversalResult.ExitCode -ne 0 -and $slashTraversalResult.Output -match 'manifest path is unsafe') -Detail $slashTraversalResult.Output
+
     $gitMode = New-CaseFixture -Name 'synthetic-git-mode'
     $syntheticEntry = '120000 ' + ('0' * 40) + ' 0' + "`t" + 'synthetic-link'
     $gitModeResult = Invoke-CaseVerifier -Fixture $gitMode -AdditionalGitStageEntry $syntheticEntry
