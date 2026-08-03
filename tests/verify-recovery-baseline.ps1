@@ -2,11 +2,14 @@
 param(
     [Parameter(Mandatory = $true)]
     [string]$SnapshotRoot,
-    [string]$RepositoryRoot = (Split-Path -Parent $PSScriptRoot),
+    [string]$RepositoryRoot = '',
     [string[]]$AdditionalGitStageEntry = @()
 )
 
 $ErrorActionPreference = 'Stop'
+if ([string]::IsNullOrWhiteSpace($RepositoryRoot)) {
+    $RepositoryRoot = Split-Path -Parent $PSScriptRoot
+}
 $repoRoot = [System.IO.Path]::GetFullPath($RepositoryRoot)
 $failures = [System.Collections.Generic.List[string]]::new()
 
