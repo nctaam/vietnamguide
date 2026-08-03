@@ -211,6 +211,262 @@ function Require-ExactSet {
     }
 }
 
+function Require-ExactOrdinalSet {
+    param([string]$Label, [string[]]$Actual, [string[]]$Expected)
+
+    $ActualSet = [System.Collections.Generic.HashSet[string]]::new([System.StringComparer]::Ordinal)
+    foreach ($ActualItem in $Actual) {
+        if (-not $ActualSet.Add($ActualItem)) {
+            $Failures.Add("Duplicate ${Label}: $ActualItem")
+        }
+    }
+
+    $ExpectedSet = [System.Collections.Generic.HashSet[string]]::new($Expected, [System.StringComparer]::Ordinal)
+    if ($Actual.Count -ne $Expected.Count) {
+        $Failures.Add("Expected $Label count $($Expected.Count), found $($Actual.Count)")
+    }
+    foreach ($ExpectedItem in $Expected) {
+        if (-not $ActualSet.Contains($ExpectedItem)) {
+            $Failures.Add("Missing ${Label}: $ExpectedItem")
+        }
+    }
+    foreach ($ActualItem in $Actual) {
+        if (-not $ExpectedSet.Contains($ActualItem)) {
+            $Failures.Add("Unexpected ${Label}: $ActualItem")
+        }
+    }
+}
+
+function Get-TopLevelLiteralStringArray {
+    param(
+        [System.Management.Automation.Language.ScriptBlockAst]$Ast,
+        [string]$VariableName,
+        [string]$Label
+    )
+
+    $Writes = @($Ast.FindAll({
+        param($Node)
+
+        $TargetExpression = if ($Node -is [System.Management.Automation.Language.AssignmentStatementAst]) {
+            $Node.Left
+        } elseif (
+            $Node -is [System.Management.Automation.Language.UnaryExpressionAst] -and
+            $Node.TokenKind -in @(
+                [System.Management.Automation.Language.TokenKind]::PlusPlus,
+                [System.Management.Automation.Language.TokenKind]::MinusMinus,
+                [System.Management.Automation.Language.TokenKind]::PostfixPlusPlus,
+                [System.Management.Automation.Language.TokenKind]::PostfixMinusMinus
+            )
+        ) {
+            $Node.Child
+        } elseif ($Node -is [System.Management.Automation.Language.ForEachStatementAst]) {
+            $Node.Variable
+        } else {
+            return $false
+        }
+
+        $TargetExpressions = [System.Collections.Generic.Stack[object]]::new()
+        $TargetExpressions.Push([pscustomobject]@{
+            Expression = $TargetExpression
+            Indexed = $false
+        })
+        $MatchesTarget = $false
+        $HasScriptScopedTarget = $false
+        $HasUnqualifiedIndexedTarget = $false
+        while ($TargetExpressions.Count -ne 0) {
+            $TargetCandidate = $TargetExpressions.Pop()
+            $Candidate = $TargetCandidate.Expression
+            if ($Candidate -is [System.Management.Automation.Language.IndexExpressionAst]) {
+                $TargetExpressions.Push([pscustomobject]@{
+                    Expression = $Candidate.Target
+                    Indexed = $true
+                })
+                continue
+            }
+            if ($Candidate -is [System.Management.Automation.Language.ArrayLiteralAst]) {
+                foreach ($Element in $Candidate.Elements) {
+                    $TargetExpressions.Push([pscustomobject]@{
+                        Expression = $Element
+                        Indexed = $TargetCandidate.Indexed
+                    })
+                }
+                continue
+            }
+            if ($Candidate -isnot [System.Management.Automation.Language.VariableExpressionAst]) {
+                continue
+            }
+
+            $UserPath = $Candidate.VariablePath.UserPath
+            if ($UserPath -ieq $VariableName -or $UserPath -ilike "*:$VariableName") {
+                $MatchesTarget = $true
+                if ($UserPath.StartsWith('script:', [System.StringComparison]::OrdinalIgnoreCase)) {
+                    $HasScriptScopedTarget = $true
+                }
+                if ($UserPath -ieq $VariableName -and $TargetCandidate.Indexed) {
+                    $HasUnqualifiedIndexedTarget = $true
+                }
+            }
+        }
+        if (-not $MatchesTarget) { return $false }
+
+        $LexicalContainer = $null
+        $Ancestor = $Node.Parent
+        while ($null -ne $Ancestor -and $Ancestor -ne $Ast) {
+            if (
+                $null -eq $LexicalContainer -and
+                (
+                    $Ancestor -is [System.Management.Automation.Language.FunctionDefinitionAst] -or
+                    $Ancestor -is [System.Management.Automation.Language.ScriptBlockExpressionAst]
+                )
+            ) {
+                $LexicalContainer = $Ancestor
+            }
+            $Ancestor = $Ancestor.Parent
+        }
+        if ($Ancestor -ne $Ast) { return $false }
+
+        if (-not $HasScriptScopedTarget -and $null -ne $LexicalContainer) {
+            if (-not $HasUnqualifiedIndexedTarget) { return $false }
+
+            $Parameters = if ($LexicalContainer -is [System.Management.Automation.Language.FunctionDefinitionAst]) {
+                @($LexicalContainer.Parameters) + @($LexicalContainer.Body.ParamBlock.Parameters)
+            } else {
+                @($LexicalContainer.ScriptBlock.ParamBlock.Parameters)
+            }
+            foreach ($Parameter in $Parameters) {
+                if ($Parameter.Name.VariablePath.UserPath -ieq $VariableName) {
+                    return $false
+                }
+            }
+
+            $BindingSearchRoot = if ($LexicalContainer -is [System.Management.Automation.Language.FunctionDefinitionAst]) {
+                $LexicalContainer.Body
+            } else {
+                $LexicalContainer.ScriptBlock
+            }
+            $EarlierBareBindings = @($BindingSearchRoot.FindAll({
+                param($BindingNode)
+                $BindingNode -is [System.Management.Automation.Language.AssignmentStatementAst] -and
+                $BindingNode.Extent.StartOffset -lt $Node.Extent.StartOffset -and
+                $BindingNode.Left -is [System.Management.Automation.Language.VariableExpressionAst] -and
+                $BindingNode.Left.VariablePath.UserPath -ieq $VariableName
+            }, $true))
+            foreach ($Binding in $EarlierBareBindings) {
+                $BindingContainer = $null
+                $BindingAncestor = $Binding.Parent
+                while ($null -ne $BindingAncestor -and $null -eq $BindingContainer) {
+                    if (
+                        $BindingAncestor -is [System.Management.Automation.Language.FunctionDefinitionAst] -or
+                        $BindingAncestor -is [System.Management.Automation.Language.ScriptBlockExpressionAst]
+                    ) {
+                        $BindingContainer = $BindingAncestor
+                    }
+                    $BindingAncestor = $BindingAncestor.Parent
+                }
+                if ($BindingContainer -ne $LexicalContainer) { continue }
+
+                $IsDirectContainerBinding =
+                    $Binding.Parent -is [System.Management.Automation.Language.NamedBlockAst] -and
+                    $Binding.Parent.Parent -eq $BindingSearchRoot
+
+                $IsGuaranteedTrueBranchBinding = $false
+                if ($Binding.Parent -is [System.Management.Automation.Language.StatementBlockAst]) {
+                    $IfStatement = $Binding.Parent.Parent
+                    if (
+                        $IfStatement -is [System.Management.Automation.Language.IfStatementAst] -and
+                        $IfStatement.Parent -is [System.Management.Automation.Language.NamedBlockAst] -and
+                        $IfStatement.Parent.Parent -eq $BindingSearchRoot -and
+                        $IfStatement.Clauses.Count -ne 0 -and
+                        [object]::ReferenceEquals($IfStatement.Clauses[0].Item2, $Binding.Parent) -and
+                        $IfStatement.Clauses[0].Item1.Extent.Text.Trim() -ceq '$true' -and
+                        $Binding.Parent.Statements.Count -eq 1 -and
+                        [object]::ReferenceEquals($Binding.Parent.Statements[0], $Binding)
+                    ) {
+                        $IsGuaranteedTrueBranchBinding = $true
+                    }
+                }
+
+                if ($IsDirectContainerBinding -or $IsGuaranteedTrueBranchBinding) {
+                    return $false
+                }
+            }
+        }
+        return $true
+    }, $true))
+    if ($Writes.Count -ne 1) {
+        $Failures.Add("Expected exactly one root-executable $Label assignment/write, found $($Writes.Count)")
+        return @()
+    }
+
+    $Assignment = $Writes[0]
+    if ($Assignment -isnot [System.Management.Automation.Language.AssignmentStatementAst]) {
+        $Failures.Add("$Label must use one top-level simple `$$VariableName = assignment")
+        return @()
+    }
+    $IsTopLevel = $Assignment.Parent -is [System.Management.Automation.Language.NamedBlockAst] -and $Assignment.Parent.Parent -eq $Ast
+    $IsExactVariable = $Assignment.Left -is [System.Management.Automation.Language.VariableExpressionAst] -and $Assignment.Left.VariablePath.UserPath -ceq $VariableName
+    if (-not $IsTopLevel -or -not $IsExactVariable -or $Assignment.Operator -ne [System.Management.Automation.Language.TokenKind]::Equals) {
+        $Failures.Add("$Label must use one top-level simple `$$VariableName = assignment")
+        return @()
+    }
+
+    if (
+        $Assignment.Right -isnot [System.Management.Automation.Language.CommandExpressionAst] -or
+        $Assignment.Right.Expression -isnot [System.Management.Automation.Language.ArrayExpressionAst]
+    ) {
+        $Failures.Add("$Label assignment must use a literal @() array")
+        return @()
+    }
+
+    $Values = [System.Collections.Generic.List[string]]::new()
+    $StatementBlock = $Assignment.Right.Expression.SubExpression
+    if ($StatementBlock.Traps.Count -ne 0) {
+        $Failures.Add("$Label assignment contains non-literal statements")
+        return @()
+    }
+    foreach ($Statement in $StatementBlock.Statements) {
+        if ($Statement -isnot [System.Management.Automation.Language.PipelineAst] -or $Statement.PipelineElements.Count -ne 1) {
+            $Failures.Add("$Label assignment contains a pipeline or command")
+            return @()
+        }
+
+        $Element = $Statement.PipelineElements[0]
+        if ($Element -isnot [System.Management.Automation.Language.CommandExpressionAst] -or $Element.Redirections.Count -ne 0) {
+            $Failures.Add("$Label assignment contains a command or redirection")
+            return @()
+        }
+
+        $Expression = $Element.Expression
+        $LiteralExpressions = if ($Expression -is [System.Management.Automation.Language.ArrayLiteralAst]) {
+            @($Expression.Elements)
+        } else {
+            @($Expression)
+        }
+        foreach ($LiteralExpression in $LiteralExpressions) {
+            if ($LiteralExpression -isnot [System.Management.Automation.Language.StringConstantExpressionAst]) {
+                $Failures.Add("$Label assignment contains a non-literal or expandable value")
+                return @()
+            }
+            if ($LiteralExpression.StringConstantType -notin @(
+                [System.Management.Automation.Language.StringConstantType]::SingleQuoted,
+                [System.Management.Automation.Language.StringConstantType]::DoubleQuoted
+            )) {
+                $Failures.Add("$Label assignment contains a non-literal string")
+                return @()
+            }
+            $Values.Add($LiteralExpression.Value)
+        }
+    }
+
+    $Seen = [System.Collections.Generic.HashSet[string]]::new([System.StringComparer]::Ordinal)
+    foreach ($Value in $Values) {
+        if (-not $Seen.Add($Value)) {
+            $Failures.Add("Duplicate ${Label} value: $Value")
+        }
+    }
+    return $Values.ToArray()
+}
+
 function Resolve-PhpExecutable {
     param([string]$Candidate)
 
@@ -273,36 +529,96 @@ $nowdocs = [
     ROW,
 ];
 $command = `echo "$pilot_types = [];"`;
+$single_quoted = '$pilot_types = [];';
+$double_quoted = "read $pilot_types without assigning it";
+// $pilot_types = ['line-comment' => 'ignored'];
+# $pilot_types = ['hash-comment' => 'ignored'];
+/*
+$pilot_types = [
+    'block-comment' => 'ignored',
+];
+*/
 $lookup = [$pilot_types => 'ignored'];
+$read = $pilot_types;
+$call = is_array($pilot_types);
 $$pilot_types = [];
 $object->$pilot_types = [];
 class PilotInventoryFixture {
     public $pilot_types = [
         'property' => 'ignored',
     ];
+
+    public function write_local_inventory(): void {
+        $pilot_types = [
+            'class-method-local' => 'ignored',
+        ];
+        ($pilot_types = [
+            'class-method-parenthesized' => 'ignored',
+        ]);
+        $pilot_types['class-method-offset'] = 'ignored';
+        $pilot_types += ['class-method-compound' => 'ignored'];
+    }
 }
-function pilot_inventory_fixture() {
+function pilot_inventory_fixture($pilot_types = []) {
+    global $fixture_other_inventory;
     $pilot_types = [
         'nested' => 'ignored',
     ];
+    ($pilot_types = [
+        'function-parenthesized' => 'ignored',
+    ]);
+    $pilot_types['function-offset'] = 'ignored';
+    $pilot_types += ['function-compound' => 'ignored'];
+    [$pilot_types] = [['function-short-destructure' => 'ignored']];
+    [[$pilot_types]] = [[['function-nested-short-destructure' => 'ignored']]];
+    list($pilot_types) = [['function-list-destructure' => 'ignored']];
+    unset($pilot_types['function-unset-offset']);
+    unset($pilot_types);
     return $pilot_types = [
         'return' => 'ignored',
     ];
 }
-($pilot_types = [
-    'expression' => 'ignored',
-]);
+function pilot_inventory_unrelated_variable_global_fixture($pilot_types = []) {
+    global $$fixture_other_inventory;
+    $pilot_types += ['unrelated-variable-global-local' => 'ignored'];
+}
+function pilot_inventory_target_variable_global_fixture($pilot_types = []) {
+    global $$pilot_types;
+    $pilot_types += ['target-variable-global-local' => 'ignored'];
+}
+function pilot_inventory_braced_variable_global_fixture($pilot_types = []) {
+    global ${$pilot_types};
+    $pilot_types += ['braced-variable-global-local' => 'ignored'];
+}
+$closure = static function () use ($pilot_types): void {
+    $pilot_types = [
+        'closure-local' => 'ignored',
+    ];
+    ($pilot_types = [
+        'closure-parenthesized' => 'ignored',
+    ]);
+    $pilot_types['closure-offset'] = 'ignored';
+    $pilot_types += ['closure-compound' => 'ignored'];
+    unset($pilot_types['closure-unset-offset']);
+    unset($pilot_types);
+};
+$arrow = static fn(array $input, $pilot_types = []): array => [
+    'direct' => ($pilot_types = [
+        'arrow-direct' => 'ignored',
+    ]),
+    'offset' => ($pilot_types['arrow-offset'] = ($input['value'] ?? 'ignored')),
+    'compound' => ($pilot_types += [
+        'arrow-compound' => ['nested' => 'ignored'],
+    ]),
+];
+$expression_read = ($pilot_types);
 if (true):
     $if_marker = true;
-    $pilot_types = [
-        'alternative-if' => 'ignored',
-    ];
+    $if_read = $pilot_types;
 endif;
 foreach ([1] as $fixture_item):
     $foreach_marker = true;
-    $pilot_types = [
-        'alternative-foreach' => 'ignored',
-    ];
+    $foreach_read = $pilot_types;
 endforeach;
 if ((static function () {
     if (true):
@@ -310,9 +626,7 @@ if ((static function () {
     endif;
 })()):
     $closure_header_marker = true;
-    $pilot_types = [
-        'alternative-if-closure-header' => 'ignored',
-    ];
+    $closure_header_read = $pilot_types;
 endif;
 $pilot_types = [
     'executable' => 'captured',
@@ -329,6 +643,133 @@ $pilot_types = [
         if (Test-Path -LiteralPath $FixtureRoot -PathType Container) {
             Remove-Item -LiteralPath $FixtureRoot -Recurse -Force
         }
+    }
+}
+
+function Test-PublicNonPilotInventoryReorderFixture {
+    $Fixture = @'
+$NonPilotPaths = @(
+    'plan/transport-within-vietnam'
+    'destinations/hanoi-travel-guide'
+    'plan/sim-esim-vietnam'
+    'compare/da-nang-vs-hoi-an'
+)
+'@
+    $Tokens = $null
+    $ParseErrors = $null
+    $Ast = [System.Management.Automation.Language.Parser]::ParseInput($Fixture, [ref]$Tokens, [ref]$ParseErrors)
+    if ($ParseErrors.Count -ne 0) {
+        $script:Failures.Add("Non-pilot reorder fixture did not parse: $($ParseErrors[0].Message)")
+        return
+    }
+
+    $NonPilotPaths = @(Get-TopLevelLiteralStringArray $Ast 'NonPilotPaths' 'public non-pilot reorder fixture path inventory')
+    Require-ExactOrdinalSet 'public non-pilot reorder fixture path' $NonPilotPaths @(
+        'destinations/hanoi-travel-guide'
+        'compare/da-nang-vs-hoi-an'
+        'plan/sim-esim-vietnam'
+        'plan/transport-within-vietnam'
+    )
+}
+
+function Test-PublicPilotInventoryLocalAssignmentFixture {
+    $Fixture = @'
+function Set-LocalPilotInventory {
+    $PilotPaths = @(
+        'local/function-decoy'
+    )
+    $PilotPaths[0] = 'local/function-indexed-decoy'
+}
+function Set-ParameterPilotInventory {
+    param([string[]]$PilotPaths)
+    $PilotPaths[0] = 'local/function-parameter-indexed-decoy'
+}
+& {
+    $PilotPaths = @(
+        'local/scriptblock-decoy'
+    )
+    $PilotPaths[0] = 'local/scriptblock-indexed-decoy'
+    $PilotPaths += @(
+        'local/scriptblock-compound-decoy'
+    )
+}
+& {
+    param([string[]]$PilotPaths)
+    $PilotPaths[0] = 'local/scriptblock-parameter-indexed-decoy'
+} @('local/scriptblock-parameter-decoy')
+$PilotPaths = @(
+    'top-level/captured'
+)
+'@
+    $Tokens = $null
+    $ParseErrors = $null
+    $Ast = [System.Management.Automation.Language.Parser]::ParseInput($Fixture, [ref]$Tokens, [ref]$ParseErrors)
+    if ($ParseErrors.Count -ne 0) {
+        $script:Failures.Add("Pilot local-assignment fixture did not parse: $($ParseErrors[0].Message)")
+        return
+    }
+
+    $PilotPaths = @(Get-TopLevelLiteralStringArray $Ast 'PilotPaths' 'public pilot local-assignment fixture inventory')
+    if ($PilotPaths.Count -ne 1 -or $PilotPaths[0] -cne 'top-level/captured') {
+        $script:Failures.Add("Pilot local-assignment fixture did not isolate the top-level inventory; found: $($PilotPaths -join ', ')")
+    }
+}
+
+function Test-PublicPilotInventoryFilterLocalAssignmentFixture {
+    $Fixture = @'
+filter Set-LocalPilotInventoryFilter {
+    $PilotPaths = @(
+        'local/filter-decoy'
+    )
+    $PilotPaths[0] = 'local/filter-indexed-decoy'
+    $PilotPaths += @(
+        'local/filter-compound-decoy'
+    )
+}
+$PilotPaths = @(
+    'top-level/captured'
+)
+'@
+    $Tokens = $null
+    $ParseErrors = $null
+    $Ast = [System.Management.Automation.Language.Parser]::ParseInput($Fixture, [ref]$Tokens, [ref]$ParseErrors)
+    if ($ParseErrors.Count -ne 0) {
+        $script:Failures.Add("Pilot filter-local fixture did not parse: $($ParseErrors[0].Message)")
+        return
+    }
+
+    $PilotPaths = @(Get-TopLevelLiteralStringArray $Ast 'PilotPaths' 'public pilot filter-local fixture inventory')
+    if ($PilotPaths.Count -ne 1 -or $PilotPaths[0] -cne 'top-level/captured') {
+        $script:Failures.Add("Pilot filter-local fixture did not isolate the top-level inventory; found: $($PilotPaths -join ', ')")
+    }
+}
+
+function Test-PublicPilotInventoryGuaranteedConditionalLocalAssignmentFixture {
+    $Fixture = @'
+function Set-GuaranteedConditionalLocalPilotInventory {
+    if ($true) {
+        $PilotPaths = @(
+            'local/guaranteed-conditional-decoy'
+        )
+    }
+    $PilotPaths[0] = 'local/guaranteed-conditional-indexed-decoy'
+}
+$PilotPaths = @(
+    'top-level/captured'
+)
+Set-GuaranteedConditionalLocalPilotInventory
+'@
+    $Tokens = $null
+    $ParseErrors = $null
+    $Ast = [System.Management.Automation.Language.Parser]::ParseInput($Fixture, [ref]$Tokens, [ref]$ParseErrors)
+    if ($ParseErrors.Count -ne 0) {
+        $script:Failures.Add("Pilot guaranteed-conditional local-assignment fixture did not parse: $($ParseErrors[0].Message)")
+        return
+    }
+
+    $PilotPaths = @(Get-TopLevelLiteralStringArray $Ast 'PilotPaths' 'public pilot guaranteed-conditional local-assignment fixture inventory')
+    if ($PilotPaths.Count -ne 1 -or $PilotPaths[0] -cne 'top-level/captured') {
+        $script:Failures.Add("Pilot guaranteed-conditional local-assignment fixture did not isolate the top-level inventory; found: $($PilotPaths -join ', ')")
     }
 }
 
@@ -471,6 +912,44 @@ Require-Contains $MutationVerifier 'itinerary pilot allowlist entry regression'
 Require-Contains $MutationVerifier 'live itinerary pilot type inventory regression'
 Require-Contains $MutationVerifier 'live itinerary pilot type residue regression'
 Require-Contains $MutationVerifier 'live pilot type executable decoy regression'
+Require-Contains $MutationVerifier 'live pilot type prefix increment regression'
+Require-Contains $MutationVerifier 'live pilot type indexed postfix decrement regression'
+Require-Contains $MutationVerifier 'live pilot type array-offset write regression'
+Require-Contains $MutationVerifier 'live pilot type compound assignment regression'
+Require-Contains $MutationVerifier 'live pilot type global braced control assignment regression'
+Require-Contains $MutationVerifier 'public pilot compound assignment regression'
+Require-Contains $MutationVerifier 'public pilot second assignment regression'
+Require-Contains $MutationVerifier 'public pilot expression RHS regression'
+Require-Contains $MutationVerifier 'public pilot indexed assignment regression'
+Require-Contains $MutationVerifier 'public pilot parenthesized assignment regression'
+Require-Contains $MutationVerifier 'public pilot global braced assignment regression'
+Require-Contains $MutationVerifier 'public pilot called function script-scope compound assignment regression'
+Require-Contains $MutationVerifier 'public pilot invoked scriptblock script-scope indexed assignment regression'
+Require-Contains $MutationVerifier 'public pilot called function inherited indexed assignment regression'
+Require-Contains $MutationVerifier 'public pilot called function false-conditional inherited indexed assignment regression'
+Require-Contains $MutationVerifier 'public pilot invoked scriptblock inherited indexed assignment regression'
+Require-Contains $MutationVerifier 'public pilot multiple-assignment regression'
+Require-Contains $MutationVerifier 'public pilot foreach target assignment regression'
+Require-Contains $MutationVerifier 'public non-pilot required quoted-comment regression'
+Require-Contains $MutationVerifier 'routing pilot order regression'
+Require-Contains $MutationVerifier 'public pilot path case regression'
+Require-Contains $MutationVerifier 'public non-pilot compound assignment regression'
+Require-Contains $MutationVerifier 'public non-pilot path case regression'
+Require-Contains $MutationVerifier 'public non-pilot path duplicate regression'
+Require-Contains $MutationVerifier 'public non-pilot indexed assignment regression'
+Require-Contains $MutationVerifier 'live pilot type short destructuring assignment regression'
+Require-Contains $MutationVerifier 'live pilot type nested short destructuring assignment regression'
+Require-Contains $MutationVerifier 'live pilot type list destructuring assignment regression'
+Require-Contains $MutationVerifier 'live pilot type arrow ternary boundary regression'
+Require-Contains $MutationVerifier 'live pilot type GLOBALS alias assignment regression'
+Require-Contains $MutationVerifier 'live pilot type called function GLOBALS compound assignment regression'
+Require-Contains $MutationVerifier 'live pilot type GLOBALS unset regression'
+Require-Contains $MutationVerifier 'live pilot type called function GLOBALS indexed unset regression'
+Require-Contains $MutationVerifier 'live pilot type called function explicit global compound assignment regression'
+Require-Contains $MutationVerifier 'live pilot type unset regression'
+Require-Contains $MutationVerifier 'live pilot type indexed unset regression'
+Require-Contains $MutationVerifier '$ExpectedMutationCount = 111'
+Require-Contains $MutationVerifier '$DuplicateMutationNames.Count -ne 0'
 Require-Contains $MutationVerifier 'page guide function availability guard removal'
 Require-Contains $MutationVerifier 'global reduced-motion scroll override removal'
 Require-Contains $MutationVerifier 'guide fragment heading offset removal'
@@ -508,7 +987,6 @@ Require-Contains $MutationVerifier 'public asset response URI guard removal'
 Require-Contains $MutationVerifier 'public asset SHA-256 parity guard removal'
 Require-Contains $MutationVerifier 'public local asset fail-closed guard removal'
 Require-Contains $MutationVerifier 'public guide fragment target guard removal'
-Require-Contains $MutationVerifier 'public non-pilot inventory regression'
 Require-Contains $MutationVerifier 'leading comment-only freeform rejection'
 Require-Contains $MutationVerifier 'meaningful leading freeform acceptance'
 Require-Contains $MutationVerifier 'rendered hero H1 guard removal'
@@ -786,14 +1264,42 @@ foreach ($PublicFixtureOrigin in $PublicFixtureOrigins) {
     }
 }
 
+Test-PublicNonPilotInventoryReorderFixture
+Test-PublicPilotInventoryLocalAssignmentFixture
+Test-PublicPilotInventoryFilterLocalAssignmentFixture
+Test-PublicPilotInventoryGuaranteedConditionalLocalAssignmentFixture
+
 $PublicVerifierContent = Get-RepoContent $PublicVerifier
 if ($null -ne $PublicVerifierContent) {
-    $NonPilotArray = [regex]::Match($PublicVerifierContent, '(?s)\$NonPilotPaths\s*=\s*@\((?<items>.*?)\)')
-    if (-not $NonPilotArray.Success) {
-        $Failures.Add('Missing exact non-pilot public verification inventory')
+    $PublicVerifierTokens = $null
+    $PublicVerifierParseErrors = $null
+    $PublicVerifierAst = [System.Management.Automation.Language.Parser]::ParseInput(
+        $PublicVerifierContent,
+        [ref]$PublicVerifierTokens,
+        [ref]$PublicVerifierParseErrors
+    )
+    if ($PublicVerifierParseErrors.Count -ne 0) {
+        foreach ($ParseError in $PublicVerifierParseErrors) {
+            $Failures.Add("Public verifier PowerShell parse error: $($ParseError.Message)")
+        }
     } else {
-        $NonPilotPaths = @([regex]::Matches($NonPilotArray.Groups['items'].Value, "'([^']+)'") | ForEach-Object { $_.Groups[1].Value })
-        Require-ExactSet 'public non-pilot path' $NonPilotPaths @(
+        $PublicPilotPaths = @(Get-TopLevelLiteralStringArray $PublicVerifierAst 'PilotPaths' 'public pilot path inventory')
+        $ExpectedPublicPilotPaths = @(
+            'destinations/ho-chi-minh-city-travel-guide'
+            'itineraries/10-days-in-vietnam'
+            'itineraries/7-days-in-vietnam'
+            'itineraries/14-days-in-vietnam'
+            'itineraries/21-days-in-vietnam'
+            'itineraries/hanoi-in-2-days'
+            'compare/ha-long-bay-vs-lan-ha-bay'
+            'plan/vietnam-evisa'
+        )
+        if (($PublicPilotPaths -join "`n") -cne ($ExpectedPublicPilotPaths -join "`n")) {
+            $Failures.Add("Expected exact ordered public pilot paths; found: $($PublicPilotPaths -join ', ')")
+        }
+
+        $NonPilotPaths = @(Get-TopLevelLiteralStringArray $PublicVerifierAst 'NonPilotPaths' 'public non-pilot path inventory')
+        Require-ExactOrdinalSet 'public non-pilot path' $NonPilotPaths @(
             'destinations/hanoi-travel-guide'
             'compare/da-nang-vs-hoi-an'
             'plan/sim-esim-vietnam'
@@ -849,7 +1355,7 @@ if ($null -ne $PilotFunction) {
             $ItemMatch = [regex]::Match($_, '^[''"](?<value>[^''"]+)[''"]$')
             if ($ItemMatch.Success) { $ItemMatch.Groups['value'].Value } else { "invalid:$_" }
         })
-        Require-ExactSet 'pilot path' $PilotPaths @(
+        $ExpectedPilotPaths = @(
             'destinations/ho-chi-minh-city-travel-guide'
             'itineraries/10-days-in-vietnam'
             'itineraries/7-days-in-vietnam'
@@ -859,6 +1365,9 @@ if ($null -ne $PilotFunction) {
             'compare/ha-long-bay-vs-lan-ha-bay'
             'plan/vietnam-evisa'
         )
+        if (($PilotPaths -join "`n") -cne ($ExpectedPilotPaths -join "`n")) {
+            $Failures.Add("Expected exact ordered pilot paths; found: $($PilotPaths -join ', ')")
+        }
     }
 }
 
