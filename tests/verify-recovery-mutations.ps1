@@ -9,6 +9,7 @@ $repoRoot = Split-Path -Parent $PSScriptRoot
 $verifier = Join-Path $PSScriptRoot 'verify-recovery-baseline.ps1'
 $localHistoryManifestRelative = 'tests\fixtures\recovery-local-history-manifest.json'
 $localAuthoredManifestRelative = 'tests\fixtures\recovery-local-authored-manifest.json'
+$localOpsManifestRelative = 'tests\fixtures\recovery-local-ops-manifest.json'
 $tempParent = [System.IO.Path]::GetFullPath([System.IO.Path]::GetTempPath())
 $tempRoot = Join-Path $tempParent ("vietnamguide-recovery-mutations-" + [guid]::NewGuid().ToString('N'))
 $results = [System.Collections.Generic.List[object]]::new()
@@ -115,6 +116,12 @@ function Get-LocalAuthoredManifestPath {
     return Join-Path $Fixture.Repo $localAuthoredManifestRelative
 }
 
+function Get-LocalOpsManifestPath {
+    param([object]$Fixture)
+
+    return Join-Path $Fixture.Repo $localOpsManifestRelative
+}
+
 function Read-LocalHistoryManifest {
     param([object]$Fixture)
 
@@ -149,12 +156,116 @@ function Write-LocalAuthoredManifest {
     & git -c core.autocrlf=false -C $Fixture.Repo add -f -- $path 2>$null
 }
 
+function Read-LocalOpsManifest {
+    param([object]$Fixture)
+
+    return Get-Content -Raw -LiteralPath (Get-LocalOpsManifestPath -Fixture $Fixture) | ConvertFrom-Json
+}
+
+function Write-LocalOpsManifest {
+    param(
+        [object]$Fixture,
+        [object]$Manifest
+    )
+
+    $path = Get-LocalOpsManifestPath -Fixture $Fixture
+    [System.IO.File]::WriteAllText($path, ($Manifest | ConvertTo-Json -Depth 10), [System.Text.UTF8Encoding]::new($false))
+    & git -c core.autocrlf=false -C $Fixture.Repo add -f -- $path 2>$null
+}
+
 try {
     New-Item -ItemType Directory -Path $tempRoot -Force | Out-Null
 
     $baseline = New-CaseFixture -Name 'baseline'
     $baselineResult = Invoke-CaseVerifier -Fixture $baseline
     Add-Result -Name 'baseline fixture passes' -Passed ($baselineResult.ExitCode -eq 0) -Detail $baselineResult.Output
+    Add-Result -Name 'exact local ops stack passes' -Passed ($baselineResult.ExitCode -eq 0) -Detail $baselineResult.Output
+
+    $missingLocalOpsManifest = New-CaseFixture -Name 'local-ops-manifest-missing'
+    Remove-Item -LiteralPath (Get-LocalOpsManifestPath -Fixture $missingLocalOpsManifest) -Force
+    $missingLocalOpsManifestResult = Invoke-CaseVerifier -Fixture $missingLocalOpsManifest
+    Add-Result -Name 'local ops manifest missing is rejected' -Passed ($missingLocalOpsManifestResult.ExitCode -ne 0 -and $missingLocalOpsManifestResult.Output -match 'Recovery local-ops manifest missing') -Detail $missingLocalOpsManifestResult.Output
+
+    $malformedLocalOpsManifest = New-CaseFixture -Name 'local-ops-manifest-malformed'
+    $malformedLocalOpsManifestPath = Get-LocalOpsManifestPath -Fixture $malformedLocalOpsManifest
+    [System.IO.File]::WriteAllText($malformedLocalOpsManifestPath, '{', [System.Text.UTF8Encoding]::new($false))
+    & git -c core.autocrlf=false -C $malformedLocalOpsManifest.Repo add -f -- $malformedLocalOpsManifestPath 2>$null
+    $malformedLocalOpsManifestResult = Invoke-CaseVerifier -Fixture $malformedLocalOpsManifest
+    Add-Result -Name 'malformed local ops manifest is rejected' -Passed ($malformedLocalOpsManifestResult.ExitCode -ne 0 -and $malformedLocalOpsManifestResult.Output -match 'Recovery local-ops manifest parse failed') -Detail $malformedLocalOpsManifestResult.Output
+
+    $localOpsTamper = New-CaseFixture -Name 'local-ops-content-tamper'
+    $localOpsTamperPath = Join-Path $localOpsTamper.Repo 'ops\verify-core-block-patterns.ps1'
+    [System.IO.File]::AppendAllText($localOpsTamperPath, "`n# mutation`n", [System.Text.UTF8Encoding]::new($false))
+    & git -c core.autocrlf=false -C $localOpsTamper.Repo add -f -- $localOpsTamperPath 2>$null
+    $localOpsTamperResult = Invoke-CaseVerifier -Fixture $localOpsTamper
+    Add-Result -Name 'local ops content tamper is rejected' -Passed ($localOpsTamperResult.ExitCode -ne 0 -and $localOpsTamperResult.Output -match 'Recovery local-ops byte length mismatch') -Detail $localOpsTamperResult.Output
+
+    $eleventhOpsFile = New-CaseFixture -Name 'arbitrary-eleventh-ops-file'
+    $eleventhOpsFilePath = Join-Path $eleventhOpsFile.Repo 'ops\verify-unapproved-local.ps1'
+    [System.IO.File]::WriteAllText($eleventhOpsFilePath, 'Write-Host ''unapproved''', [System.Text.UTF8Encoding]::new($false))
+    & git -c core.autocrlf=false -C $eleventhOpsFile.Repo add -f -- $eleventhOpsFilePath 2>$null
+    $eleventhOpsFileResult = Invoke-CaseVerifier -Fixture $eleventhOpsFile
+    Add-Result -Name 'arbitrary eleventh ops file is rejected' -Passed ($eleventhOpsFileResult.ExitCode -ne 0 -and $eleventhOpsFileResult.Output -match 'ops unexpected file:\s+verify-unapproved-local\.ps1') -Detail $eleventhOpsFileResult.Output
+
+    $localOpsTraversal = New-CaseFixture -Name 'local-ops-traversal'
+    $localOpsTraversalManifest = Read-LocalOpsManifest -Fixture $localOpsTraversal
+    $localOpsTraversalManifest.entries[0].relativePath = '../outside.ps1'
+    Write-LocalOpsManifest -Fixture $localOpsTraversal -Manifest $localOpsTraversalManifest
+    $localOpsTraversalResult = Invoke-CaseVerifier -Fixture $localOpsTraversal
+    Add-Result -Name 'local ops traversal path is rejected' -Passed ($localOpsTraversalResult.ExitCode -ne 0 -and $localOpsTraversalResult.Output -match 'Recovery local-ops manifest path\s+is\s+unsafe') -Detail $localOpsTraversalResult.Output
+
+    $localOpsRooted = New-CaseFixture -Name 'local-ops-rooted-path'
+    $localOpsRootedManifest = Read-LocalOpsManifest -Fixture $localOpsRooted
+    $localOpsRootedManifest.entries[0].relativePath = 'C:/outside.ps1'
+    Write-LocalOpsManifest -Fixture $localOpsRooted -Manifest $localOpsRootedManifest
+    $localOpsRootedResult = Invoke-CaseVerifier -Fixture $localOpsRooted
+    Add-Result -Name 'local ops rooted path is rejected' -Passed ($localOpsRootedResult.ExitCode -ne 0 -and $localOpsRootedResult.Output -match 'Recovery local-ops manifest path\s+is\s+unsafe') -Detail $localOpsRootedResult.Output
+
+    $localOpsLength = New-CaseFixture -Name 'local-ops-length-mismatch'
+    $localOpsLengthManifest = Read-LocalOpsManifest -Fixture $localOpsLength
+    $localOpsLengthManifest.entries[0].length = [int64]$localOpsLengthManifest.entries[0].length + 1
+    Write-LocalOpsManifest -Fixture $localOpsLength -Manifest $localOpsLengthManifest
+    $localOpsLengthResult = Invoke-CaseVerifier -Fixture $localOpsLength
+    Add-Result -Name 'local ops manifest length mismatch is rejected' -Passed ($localOpsLengthResult.ExitCode -ne 0 -and $localOpsLengthResult.Output -match 'Recovery local-ops manifest length\s+mismatch') -Detail $localOpsLengthResult.Output
+
+    $localOpsHash = New-CaseFixture -Name 'local-ops-hash-mismatch'
+    $localOpsHashManifest = Read-LocalOpsManifest -Fixture $localOpsHash
+    $localOpsHashManifest.entries[0].sha256 = '0000000000000000000000000000000000000000000000000000000000000000'
+    Write-LocalOpsManifest -Fixture $localOpsHash -Manifest $localOpsHashManifest
+    $localOpsHashResult = Invoke-CaseVerifier -Fixture $localOpsHash
+    Add-Result -Name 'local ops manifest hash mismatch is rejected' -Passed ($localOpsHashResult.ExitCode -ne 0 -and $localOpsHashResult.Output -match 'Recovery local-ops manifest SHA-256\s+mismatch') -Detail $localOpsHashResult.Output
+
+    $localOpsDuplicate = New-CaseFixture -Name 'local-ops-duplicate-entry'
+    $localOpsDuplicateManifest = Read-LocalOpsManifest -Fixture $localOpsDuplicate
+    $localOpsDuplicateManifest.entries = @($localOpsDuplicateManifest.entries) + @($localOpsDuplicateManifest.entries[0])
+    Write-LocalOpsManifest -Fixture $localOpsDuplicate -Manifest $localOpsDuplicateManifest
+    $localOpsDuplicateResult = Invoke-CaseVerifier -Fixture $localOpsDuplicate
+    Add-Result -Name 'local ops duplicate entry is rejected' -Passed ($localOpsDuplicateResult.ExitCode -ne 0 -and $localOpsDuplicateResult.Output -match 'Recovery local-ops manifest duplicate\s+relative\s+path') -Detail $localOpsDuplicateResult.Output
+
+    $localOpsExtra = New-CaseFixture -Name 'local-ops-extra-entry'
+    $localOpsExtraManifest = Read-LocalOpsManifest -Fixture $localOpsExtra
+    $localOpsExtraManifest.entries = @($localOpsExtraManifest.entries) + @([pscustomobject]@{
+        relativePath = 'ops/verify-unapproved-local.ps1'
+        length = 0
+        sha256 = '0000000000000000000000000000000000000000000000000000000000000000'
+    })
+    Write-LocalOpsManifest -Fixture $localOpsExtra -Manifest $localOpsExtraManifest
+    $localOpsExtraResult = Invoke-CaseVerifier -Fixture $localOpsExtra
+    Add-Result -Name 'local ops extra manifest entry is rejected' -Passed ($localOpsExtraResult.ExitCode -ne 0 -and $localOpsExtraResult.Output -match 'Recovery\s+local-ops\s+manifest\s+entry\s+set\s+is\s+invalid') -Detail $localOpsExtraResult.Output
+
+    $localOpsGitMode = New-CaseFixture -Name 'local-ops-git-symlink-mode'
+    $localOpsSymlinkEntry = '120000 ' + ('0' * 40) + ' 0' + "`t" + 'ops/verify-core-block-patterns.ps1'
+    $localOpsGitModeResult = Invoke-CaseVerifier -Fixture $localOpsGitMode -AdditionalGitStageEntry $localOpsSymlinkEntry
+    Add-Result -Name 'local ops Git mode 120000 is rejected' -Passed ($localOpsGitModeResult.ExitCode -ne 0 -and $localOpsGitModeResult.Output -match 'Git symlink mode 120000') -Detail $localOpsGitModeResult.Output
+
+    $localOpsIndexMismatch = New-CaseFixture -Name 'local-ops-index-mismatch'
+    $localOpsIndexRelative = 'ops/verify-core-block-patterns.ps1'
+    $localOpsIndexFixture = Join-Path (Split-Path -Parent $localOpsIndexMismatch.Repo) 'local-ops-index-blob.tmp'
+    [System.IO.File]::WriteAllText($localOpsIndexFixture, 'different index bytes', [System.Text.UTF8Encoding]::new($false))
+    $localOpsIndexObject = (& git -C $localOpsIndexMismatch.Repo hash-object -w --no-filters -- $localOpsIndexFixture).Trim()
+    & git -C $localOpsIndexMismatch.Repo update-index --cacheinfo 100644 $localOpsIndexObject $localOpsIndexRelative
+    $localOpsIndexMismatchResult = Invoke-CaseVerifier -Fixture $localOpsIndexMismatch
+    Add-Result -Name 'local ops index no-filter mismatch is rejected' -Passed ($localOpsIndexMismatchResult.ExitCode -ne 0 -and $localOpsIndexMismatchResult.Output -match 'Git index blob mismatch:\s+ops/verify-core-block-patterns\.ps1') -Detail $localOpsIndexMismatchResult.Output
 
     $missingLocalManifest = New-CaseFixture -Name 'local-history-manifest-missing'
     Remove-Item -LiteralPath (Get-LocalHistoryManifestPath -Fixture $missingLocalManifest) -Force

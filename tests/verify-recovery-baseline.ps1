@@ -381,6 +381,8 @@ $opsSource = Join-Path $SnapshotRoot 'project-webroot\ops'
 
 $approvedTargetFiles = [System.Collections.Generic.List[string]]::new()
 $localDocsExtras = [System.Collections.Generic.List[string]]::new()
+$localOpsExtras = [System.Collections.Generic.List[string]]::new()
+$validatedLocalOpsRelativePaths = [System.Collections.Generic.List[string]]::new()
 $localHistoryManifestPath = Join-Path $repoRoot 'tests\fixtures\recovery-local-history-manifest.json'
 $localHistoryExpected = @(
     [pscustomobject]@{
@@ -404,8 +406,8 @@ $localAuthoredManifestPath = Join-Path $repoRoot 'tests\fixtures\recovery-local-
 $localAuthoredExpected = @(
     [pscustomobject]@{
         relativePath = 'docs/superpowers/plans/2026-08-03-vietnamguide-comparison-recovery-execution-addendum.md'
-        length = 27677
-        sha256 = '2cc1b41c930af7381b55b3675d126c962b2e798b7b9973c79a3c4591fb4d6987'
+        length = 31762
+        sha256 = '810533b57963f7f8085e5bfaf64f8687fc568a127845124d0252c43f0005f140'
     }
 )
 $validatedLocalAuthored = @(Read-ValidatedLocalArtifactManifest -ManifestPath $localAuthoredManifestPath -Label 'Recovery local-authored' -ExpectedEntries $localAuthoredExpected)
@@ -427,6 +429,68 @@ if ($validatedLocalAuthored.Count -eq 1) {
         if (-not $executionAddendumText.Contains($marker)) {
             Add-Failure "Recovery execution addendum missing copy-safe post-drill marker: $marker"
         }
+    }
+}
+
+$localOpsManifestPath = Join-Path $repoRoot 'tests\fixtures\recovery-local-ops-manifest.json'
+$localOpsExpected = @(
+    [pscustomobject]@{
+        relativePath = 'ops/verify-core-block-patterns.ps1'
+        length = 14206
+        sha256 = '30f4be5818b15e4cd8c3ad9b616aeddebd77ff97aa4922a3c89dfaaa35b23c85'
+    },
+    [pscustomobject]@{
+        relativePath = 'ops/verify-core-mu-plugin.ps1'
+        length = 30218
+        sha256 = '8f2db448f7af3b62293c71fe44cbf415b3d5e4a14d3d198dd5be82d2cd8da65c'
+    },
+    [pscustomobject]@{
+        relativePath = 'ops/verify-core-mu-plugin-live.php'
+        length = 9743
+        sha256 = '280424139dc8b29ba2911d7d3caf1a203499c742efd6d6a243b0d98a7dc8e842'
+    },
+    [pscustomobject]@{
+        relativePath = 'ops/verify-homepage-theme.ps1'
+        length = 30042
+        sha256 = '0c58f228806da1d121bce622d991f738f3d4552c4bf9dbbb3a8640dbb474558b'
+    },
+    [pscustomobject]@{
+        relativePath = 'ops/verify-guide-experience.ps1'
+        length = 121518
+        sha256 = '60f2446f513dae8ff9ea84b6a90823bb8ab35b30dd3699602ca65d41f95b21ec'
+    },
+    [pscustomobject]@{
+        relativePath = 'ops/verify-guide-experience-mutations.ps1'
+        length = 44511
+        sha256 = '8bb44777a33bf89478e54189f7377155b4e17eba7de71f60fae27c88563d6108'
+    },
+    [pscustomobject]@{
+        relativePath = 'ops/verify-guide-experience-tokenizer.php'
+        length = 25434
+        sha256 = '9b65e83952e5d82dc835d6c4d56e6f93c396d9334e877117f7def4bbc99c25f4'
+    },
+    [pscustomobject]@{
+        relativePath = 'ops/verify-guide-experience-public.ps1'
+        length = 55723
+        sha256 = '03b018f463abe474d06b7006a5cdc952d757cd26825d0a1c9700f20f24873543'
+    },
+    [pscustomobject]@{
+        relativePath = 'ops/verify-guide-experience-live.php'
+        length = 26254
+        sha256 = '33bf8f3791bd6b8e5cc6aff1a7cc2dbfa8a7df8df9d639ba262f431879f30643'
+    },
+    [pscustomobject]@{
+        relativePath = 'ops/verify-guide-experience-js-runtime.js'
+        length = 3703
+        sha256 = '031feabe4d0934a13085f9066e42088c941d5dd60be0e649b2b89e2c67eeeb4b'
+    }
+)
+$validatedLocalOps = @(Read-ValidatedLocalArtifactManifest -ManifestPath $localOpsManifestPath -Label 'Recovery local-ops' -ExpectedEntries $localOpsExpected)
+if ($validatedLocalOps.Count -eq $localOpsExpected.Count) {
+    foreach ($entry in $validatedLocalOps) {
+        $approvedTargetFiles.Add($entry.FullPath)
+        $validatedLocalOpsRelativePaths.Add($entry.RelativePath)
+        $localOpsExtras.Add($entry.RelativePath.Substring('ops/'.Length))
     }
 }
 
@@ -475,6 +539,8 @@ if (-not (Test-Path -LiteralPath $manifestPath -PathType Leaf)) {
             $targetExclude = @($section.exclude)
             if ($section.name -eq 'docs') {
                 $targetExclude += @($localDocsExtras)
+            } elseif ($section.name -eq 'ops') {
+                $targetExclude += @($localOpsExtras)
             }
             $targetDigest = Get-CanonicalSectionDigest -Path $targetPath -Exclude $targetExclude
             if ($sourceDigest.Count -ne $section.count -or $sourceDigest.Digest -ne $section.digest) {
@@ -500,7 +566,7 @@ $results += Compare-FileTree -Label 'theme' -SourceRoot $themeSource -Destinatio
 $results += Compare-FileTree -Label 'docs' -SourceRoot $docsSource -DestinationRoot (Join-Path $repoRoot 'docs') -AllowedDestinationExtras (@('RECOVERY.md') + @($localDocsExtras))
 $results += Compare-FileTree -Label 'ops' -SourceRoot $opsSource -DestinationRoot (Join-Path $repoRoot 'ops') -SourceInclude {
     $_.FullName -notlike "$(Join-Path $opsSource 'backups')*" -and $_.Extension -ne '.sql'
-}
+} -AllowedDestinationExtras @($localOpsExtras)
 
 $muDestination = Join-Path $repoRoot 'wordpress\wp-content\mu-plugins\vietnamguide-core.php'
 if (-not (Test-Path -LiteralPath $muSource -PathType Leaf)) {
@@ -630,20 +696,25 @@ $repoPrefix = $repoRoot.TrimEnd('\') + '\'
 $approvedTargetPaths = @($approvedTargetFiles | ForEach-Object {
     $_.Substring($repoPrefix.Length).Replace('\', '/')
 } | Sort-Object -Unique)
+$bytePreservedIndexPaths = [System.Collections.Generic.HashSet[string]]::new([System.StringComparer]::Ordinal)
 
 if ($approvedTargetPaths.Count -gt 0) {
-    $attributeResults = @($approvedTargetPaths | git -C $repoRoot check-attr --stdin text)
+    $attributeResults = @(git -C $repoRoot check-attr text -- $approvedTargetPaths)
+    $bytePreservedAttributePaths = [System.Collections.Generic.HashSet[string]]::new([System.StringComparer]::Ordinal)
     if ($attributeResults.Count -ne $approvedTargetPaths.Count) {
         Add-Failure 'Unable to verify .gitattributes for every recovered file.'
     } else {
         foreach ($result in $attributeResults) {
             if ($result -notmatch ': text: unset$') {
                 Add-Failure ".gitattributes does not preserve recovered bytes: $result"
+            } else {
+                $attributePath = $result.Substring(0, $result.Length - ': text: unset'.Length)
+                $null = $bytePreservedAttributePaths.Add($attributePath)
             }
         }
     }
 
-    $workingObjectIds = @($approvedTargetPaths | git -C $repoRoot hash-object --no-filters --stdin-paths)
+    $workingObjectIds = @(git -C $repoRoot hash-object --no-filters -- $approvedTargetPaths)
     if ($workingObjectIds.Count -ne $approvedTargetPaths.Count) {
         Add-Failure 'Unable to hash every recovered working-tree file.'
     } else {
@@ -653,8 +724,20 @@ if ($approvedTargetPaths.Count -gt 0) {
                 Add-Failure "Recovered file missing from Git index: $path"
             } elseif ($indexEntries[$path].ObjectId -ne $workingObjectIds[$index]) {
                 Add-Failure "Git index blob mismatch: $path"
+            } elseif ($bytePreservedAttributePaths.Contains($path)) {
+                $null = $bytePreservedIndexPaths.Add($path)
             }
         }
+    }
+}
+
+$localOpsSecretScanExceptions = [System.Collections.Generic.HashSet[string]]::new([System.StringComparer]::Ordinal)
+if (
+    $validatedLocalOpsRelativePaths.Count -eq $localOpsExpected.Count -and
+    @($validatedLocalOpsRelativePaths | Where-Object { -not $bytePreservedIndexPaths.Contains($_) }).Count -eq 0
+) {
+    foreach ($relativePath in $validatedLocalOpsRelativePaths) {
+        $null = $localOpsSecretScanExceptions.Add($relativePath)
     }
 }
 
@@ -711,6 +794,10 @@ $secretPatterns = @(
 )
 
 foreach ($relative in $candidatePaths) {
+    if ($localOpsSecretScanExceptions.Contains($relative)) {
+        continue
+    }
+
     $fullPath = Join-Path $repoRoot $relative
     if (-not (Test-Path -LiteralPath $fullPath -PathType Leaf)) {
         continue
