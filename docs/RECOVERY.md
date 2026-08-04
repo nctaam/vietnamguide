@@ -25,6 +25,16 @@ The active theme and MU plugin were previously verified against production. The 
 
 The seven independently preserved files came from the approved local recovery sources. The three Guide Experience verifier files were reconstructed from the approved pre-final mutation baseline by replaying the complete successful forward patch suffix with exact hunk matching and no fuzz. The raw files are pinned as follows:
 
+The replay audit used Codex thread `019fc2f2-d8b4-76b3-aa4a-1a2c63723fd8`. Its source artifact was `C:\Users\NCTaam\.codex\sessions\2026\08\02\rollout-2026-08-02T21-48-42-019fc2f2-d8b4-76b3-aa4a-1a2c63723fd8.jsonl`: 4,208,602 bytes, 3,482 lines, SHA-256 `9f16b798e55f22cd199ee1c74fd596c7852e303c88880445568bb461fd5fc349`. The approved pre-final baseline root was `C:\Users\NCTaam\AppData\Local\Temp\vietnamguide-guide-mutations-6ea602bc81b84e0cb3dc8bb46f3dc441\baseline\ops`, with these exact input identities:
+
+| Baseline file | Bytes | SHA-256 |
+| --- | ---: | --- |
+| `verify-guide-experience.ps1` | 111,269 | `736d9681b537de11daed170cdcec2f5cdffaf83d2408fcbf6bb1e3babd704b82` |
+| `verify-guide-experience-mutations.ps1` | 39,407 | `f92b80ea23af1c97f753305ceddfad58540be9ea0a8c15bfb55b28075729463f` |
+| `verify-guide-experience-tokenizer.php` | 21,263 | `a6446ded677c4cbdaa501f922c8cb8482485c01e69443e11cdbecd90210c34ba` |
+
+Across the JSONL, the audit proved 54 successful, untruncated target changes and zero failed target changes: 24 for `verify-guide-experience.ps1`, 16 for `verify-guide-experience-mutations.ps1`, and 14 for `verify-guide-experience-tokenizer.php`. The approved baselines already contained the first 8, 10, and 7 successful changes respectively. The last skipped records were JSONL line 1151 at `02:16:46Z`, line 1181 at `02:18:26Z`, and line 1124 at `02:15:19Z`; replay began independently at line 1508 at `02:56:36Z`, line 1508 at `02:56:36Z`, and line 2336 at `04:19:08Z`. This leaves the exact replay suffixes documented in Task 0: 16, 6, and 7 changes.
+
 | Path | Bytes | Raw SHA-256 | Git blob (`--no-filters`) |
 | --- | ---: | --- | --- |
 | `ops/verify-core-block-patterns.ps1` | 14,206 | `30f4be5818b15e4cd8c3ad9b616aeddebd77ff97aa4922a3c89dfaaa35b23c85` | `4d98e5bed9f8a28646fdaf71fe3e82a51923063b` |

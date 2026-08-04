@@ -406,8 +406,8 @@ $localAuthoredManifestPath = Join-Path $repoRoot 'tests\fixtures\recovery-local-
 $localAuthoredExpected = @(
     [pscustomobject]@{
         relativePath = 'docs/superpowers/plans/2026-08-03-vietnamguide-comparison-recovery-execution-addendum.md'
-        length = 31940
-        sha256 = '26118ef81b09941e1101a0effcf67ba1b7a638b5c5cd374ebf5397c47ddb4969'
+        length = 33457
+        sha256 = '8227a6902baca6bec1cc767fc22652711c204b26d6b9cff5284b77c8b457a9ce'
     }
 )
 $validatedLocalAuthored = @(Read-ValidatedLocalArtifactManifest -ManifestPath $localAuthoredManifestPath -Label 'Recovery local-authored' -ExpectedEntries $localAuthoredExpected)
@@ -731,16 +731,6 @@ if ($approvedTargetPaths.Count -gt 0) {
     }
 }
 
-$localOpsSecretScanExceptions = [System.Collections.Generic.HashSet[string]]::new([System.StringComparer]::Ordinal)
-if (
-    $validatedLocalOpsRelativePaths.Count -eq $localOpsExpected.Count -and
-    @($validatedLocalOpsRelativePaths | Where-Object { -not $bytePreservedIndexPaths.Contains($_) }).Count -eq 0
-) {
-    foreach ($relativePath in $validatedLocalOpsRelativePaths) {
-        $null = $localOpsSecretScanExceptions.Add($relativePath)
-    }
-}
-
 foreach ($relative in $indexEntries.Keys) {
     if ($indexEntries[$relative].Mode -notmatch '^100') {
         continue
@@ -792,12 +782,12 @@ $secretPatterns = @(
     '(?i)(api[_-]?key|secret|token)\s*[:=]\s*["''][A-Za-z0-9_-]{12,}["'']',
     '(?i)\b[a-z][a-z0-9+.-]*://[^/\s:@]+:[^/\s@]+@'
 )
+$authorizedCredentialFixturePath = 'ops/verify-guide-experience-public.ps1'
+$authorizedCredentialFixtureHash = '03b018f463abe474d06b7006a5cdc952d757cd26825d0a1c9700f20f24873543'
+$authorizedCredentialFixtureLine = '$CredentialFixtureBuilder.' + 'Password' + " = 'pass'"
+$authorizedCredentialFixtureMatchValue = 'Password' + " = 'pass'"
 
 foreach ($relative in $candidatePaths) {
-    if ($localOpsSecretScanExceptions.Contains($relative)) {
-        continue
-    }
-
     $fullPath = Join-Path $repoRoot $relative
     if (-not (Test-Path -LiteralPath $fullPath -PathType Leaf)) {
         continue
@@ -808,8 +798,39 @@ foreach ($relative in $candidatePaths) {
         continue
     }
 
-    $matches = Select-String -LiteralPath $fullPath -Pattern $secretPatterns -AllMatches -ErrorAction SilentlyContinue
-    if ($matches) {
+    $secretMatchLines = @(Select-String -LiteralPath $fullPath -Pattern $secretPatterns -AllMatches -ErrorAction SilentlyContinue)
+    if ($secretMatchLines.Count -eq 0) {
+        continue
+    }
+
+    # Permit only the restored credential test fixture, never the whole verifier file.
+    $isAuthorizedCredentialFixtureFile = (
+        $relative -ceq $authorizedCredentialFixturePath -and
+        $validatedLocalOpsRelativePaths.Contains($relative) -and
+        $bytePreservedIndexPaths.Contains($relative) -and
+        (Get-FileHash -Algorithm SHA256 -LiteralPath $fullPath).Hash.ToLowerInvariant() -ceq $authorizedCredentialFixtureHash
+    )
+    $hasUnauthorizedSecretMatch = $false
+    foreach ($secretMatchLine in $secretMatchLines) {
+        foreach ($secretMatch in @($secretMatchLine.Matches)) {
+            $isAuthorizedCredentialFixtureMatch = (
+                $isAuthorizedCredentialFixtureFile -and
+                $secretMatchLine.LineNumber -eq 935 -and
+                $secretMatchLine.Line -ceq $authorizedCredentialFixtureLine -and
+                $secretMatch.Index -eq 26 -and
+                $secretMatch.Value -ceq $authorizedCredentialFixtureMatchValue
+            )
+            if (-not $isAuthorizedCredentialFixtureMatch) {
+                $hasUnauthorizedSecretMatch = $true
+                break
+            }
+        }
+        if ($hasUnauthorizedSecretMatch) {
+            break
+        }
+    }
+
+    if ($hasUnauthorizedSecretMatch) {
         Add-Failure "Candidate secret pattern in: $relative"
     }
 }

@@ -62,13 +62,14 @@ function New-CaseFixture {
 function Invoke-CaseVerifier {
     param(
         [object]$Fixture,
-        [string]$AdditionalGitStageEntry = ''
+        [string]$AdditionalGitStageEntry = '',
+        [string]$VerifierPath = $verifier
     )
 
     $arguments = @(
         '-NoProfile',
         '-ExecutionPolicy', 'Bypass',
-        '-File', $verifier,
+        '-File', $VerifierPath,
         '-SnapshotRoot', $Fixture.Snapshot,
         '-RepositoryRoot', $Fixture.Repo
     )
@@ -173,6 +174,42 @@ function Write-LocalOpsManifest {
     & git -c core.autocrlf=false -C $Fixture.Repo add -f -- $path 2>$null
 }
 
+function Add-AuthorizedLocalOpsMutation {
+    param(
+        [object]$Fixture,
+        [string]$RelativePath,
+        [string]$Content
+    )
+
+    $targetPath = Join-Path $Fixture.Repo $RelativePath
+    [System.IO.File]::AppendAllText($targetPath, $Content, [System.Text.UTF8Encoding]::new($false))
+    $targetLength = (Get-Item -LiteralPath $targetPath).Length
+    $targetHash = (Get-FileHash -Algorithm SHA256 -LiteralPath $targetPath).Hash.ToLowerInvariant()
+
+    $manifest = Read-LocalOpsManifest -Fixture $Fixture
+    $manifestEntries = @($manifest.entries | Where-Object relativePath -eq $RelativePath)
+    if ($manifestEntries.Count -ne 1) {
+        throw "Expected one local-ops manifest entry for $RelativePath."
+    }
+    $manifestEntries[0].length = $targetLength
+    $manifestEntries[0].sha256 = $targetHash
+    Write-LocalOpsManifest -Fixture $Fixture -Manifest $manifest
+
+    $fixtureVerifier = Join-Path $Fixture.Repo 'tests\verify-recovery-baseline.ps1'
+    $verifierText = [System.IO.File]::ReadAllText($fixtureVerifier)
+    $escapedRelativePath = [regex]::Escape($RelativePath)
+    $expectedEntryPattern = "(?ms)(relativePath = '$escapedRelativePath'\r?\n\s+length = )\d+(\r?\n\s+sha256 = ')[0-9a-f]{64}(')"
+    $expectedEntryRegex = [regex]::new($expectedEntryPattern)
+    if ($expectedEntryRegex.Matches($verifierText).Count -ne 1) {
+        throw "Expected one hardcoded local-ops verifier entry for $RelativePath."
+    }
+    $updatedVerifierText = $expectedEntryRegex.Replace($verifierText, ('${1}' + $targetLength + '${2}' + $targetHash + '${3}'), 1)
+    [System.IO.File]::WriteAllText($fixtureVerifier, $updatedVerifierText, [System.Text.UTF8Encoding]::new($false))
+
+    & git -c core.autocrlf=false -C $Fixture.Repo add -f -- $targetPath $fixtureVerifier 2>$null
+    return $fixtureVerifier
+}
+
 try {
     New-Item -ItemType Directory -Path $tempRoot -Force | Out-Null
 
@@ -266,6 +303,16 @@ try {
     & git -C $localOpsIndexMismatch.Repo update-index --cacheinfo 100644 $localOpsIndexObject $localOpsIndexRelative
     $localOpsIndexMismatchResult = Invoke-CaseVerifier -Fixture $localOpsIndexMismatch
     Add-Result -Name 'local ops index no-filter mismatch is rejected' -Passed ($localOpsIndexMismatchResult.ExitCode -ne 0 -and $localOpsIndexMismatchResult.Output -match 'Git index blob mismatch:\s+ops/verify-core-block-patterns\.ps1') -Detail $localOpsIndexMismatchResult.Output
+
+    $rePinnedCoreSecret = New-CaseFixture -Name 're-pinned-local-ops-secret'
+    $rePinnedCoreVerifier = Add-AuthorizedLocalOpsMutation -Fixture $rePinnedCoreSecret -RelativePath 'ops/verify-core-block-patterns.ps1' -Content ("`n" + ('api_' + 'key = "' + 'not-a-real-secret-123456' + '"') + "`n")
+    $rePinnedCoreSecretResult = Invoke-CaseVerifier -Fixture $rePinnedCoreSecret -VerifierPath $rePinnedCoreVerifier
+    Add-Result -Name 're-pinned local ops secret is rejected' -Passed ($rePinnedCoreSecretResult.ExitCode -ne 0 -and $rePinnedCoreSecretResult.Output -match 'Candidate secret pattern in:\s+ops/verify-core-block-patterns\.ps1') -Detail $rePinnedCoreSecretResult.Output
+
+    $rePinnedPublicSecret = New-CaseFixture -Name 're-pinned-public-verifier-extra-secret'
+    $rePinnedPublicVerifier = Add-AuthorizedLocalOpsMutation -Fixture $rePinnedPublicSecret -RelativePath 'ops/verify-guide-experience-public.ps1' -Content ("`n" + ('secret' + ' = "' + 'another-fake-secret-123456' + '"') + "`n")
+    $rePinnedPublicSecretResult = Invoke-CaseVerifier -Fixture $rePinnedPublicSecret -VerifierPath $rePinnedPublicVerifier
+    Add-Result -Name 're-pinned public verifier extra secret is rejected' -Passed ($rePinnedPublicSecretResult.ExitCode -ne 0 -and $rePinnedPublicSecretResult.Output -match 'Candidate secret pattern in:\s+ops/verify-guide-experience-public\.ps1') -Detail $rePinnedPublicSecretResult.Output
 
     $missingLocalManifest = New-CaseFixture -Name 'local-history-manifest-missing'
     Remove-Item -LiteralPath (Get-LocalHistoryManifestPath -Fixture $missingLocalManifest) -Force

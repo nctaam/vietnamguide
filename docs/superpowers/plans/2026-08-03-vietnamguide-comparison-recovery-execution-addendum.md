@@ -59,6 +59,16 @@ Mechanically restore the seven independently preserved files from the approved l
 - `verify-guide-experience-mutations.ps1`: `1508, 1906, 2171, 2417, 2960, 3321`.
 - `verify-guide-experience-tokenizer.php`: `2336, 2343, 2542, 2557, 2568, 2783, 3115`.
 
+Pin the reconstruction audit to Codex thread `019fc2f2-d8b4-76b3-aa4a-1a2c63723fd8` and source artifact `C:\Users\NCTaam\.codex\sessions\2026\08\02\rollout-2026-08-02T21-48-42-019fc2f2-d8b4-76b3-aa4a-1a2c63723fd8.jsonl`: 4,208,602 bytes, 3,482 lines, SHA-256 `9f16b798e55f22cd199ee1c74fd596c7852e303c88880445568bb461fd5fc349`. The approved pre-final baseline root is `C:\Users\NCTaam\AppData\Local\Temp\vietnamguide-guide-mutations-6ea602bc81b84e0cb3dc8bb46f3dc441\baseline\ops`, with these exact identities:
+
+| Baseline file | Raw bytes | Raw SHA-256 |
+| --- | ---: | --- |
+| `verify-guide-experience.ps1` | 111,269 | `736d9681b537de11daed170cdcec2f5cdffaf83d2408fcbf6bb1e3babd704b82` |
+| `verify-guide-experience-mutations.ps1` | 39,407 | `f92b80ea23af1c97f753305ceddfad58540be9ea0a8c15bfb55b28075729463f` |
+| `verify-guide-experience-tokenizer.php` | 21,263 | `a6446ded677c4cbdaa501f922c8cb8482485c01e69443e11cdbecd90210c34ba` |
+
+The JSONL audit proves 54 successful, untruncated target changes and zero failed target changes: 24 static-verifier changes, 16 mutation-verifier changes, and 14 tokenizer changes. The approved baselines already contain the first 8, 10, and 7 successful changes. Their last skipped records are JSONL line 1151 at `02:16:46Z`, line 1181 at `02:18:26Z`, and line 1124 at `02:15:19Z`; the independent replay suffixes begin at line 1508 at `02:56:36Z`, line 1508 at `02:56:36Z`, and line 2336 at `04:19:08Z`. Therefore the line sets above replay exactly 16, 6, and 7 successful changes.
+
 Never reconstruct file contents from memory. Pin the exact path set, raw byte lengths, and lowercase SHA-256 values in `tests/fixtures/recovery-local-ops-manifest.json`; only a complete validated ten-entry set may be excluded from the production-snapshot `ops` digest or admitted as local extras and approved Git/index targets.
 
 | Path | Raw bytes | Raw SHA-256 |
