@@ -7,6 +7,8 @@ param(
 $ErrorActionPreference = 'Stop'
 $repoRoot = Split-Path -Parent $PSScriptRoot
 $verifier = Join-Path $PSScriptRoot 'verify-recovery-baseline.ps1'
+$localHistoryManifestRelative = 'tests\fixtures\recovery-local-history-manifest.json'
+$localAuthoredManifestRelative = 'tests\fixtures\recovery-local-authored-manifest.json'
 $tempParent = [System.IO.Path]::GetFullPath([System.IO.Path]::GetTempPath())
 $tempRoot = Join-Path $tempParent ("vietnamguide-recovery-mutations-" + [guid]::NewGuid().ToString('N'))
 $results = [System.Collections.Generic.List[object]]::new()
@@ -101,12 +103,170 @@ function Add-Result {
     })
 }
 
+function Get-LocalHistoryManifestPath {
+    param([object]$Fixture)
+
+    return Join-Path $Fixture.Repo $localHistoryManifestRelative
+}
+
+function Get-LocalAuthoredManifestPath {
+    param([object]$Fixture)
+
+    return Join-Path $Fixture.Repo $localAuthoredManifestRelative
+}
+
+function Read-LocalHistoryManifest {
+    param([object]$Fixture)
+
+    return Get-Content -Raw -LiteralPath (Get-LocalHistoryManifestPath -Fixture $Fixture) | ConvertFrom-Json
+}
+
+function Write-LocalHistoryManifest {
+    param(
+        [object]$Fixture,
+        [object]$Manifest
+    )
+
+    $path = Get-LocalHistoryManifestPath -Fixture $Fixture
+    [System.IO.File]::WriteAllText($path, ($Manifest | ConvertTo-Json -Depth 10), [System.Text.UTF8Encoding]::new($false))
+    & git -c core.autocrlf=false -C $Fixture.Repo add -f -- $path 2>$null
+}
+
+function Read-LocalAuthoredManifest {
+    param([object]$Fixture)
+
+    return Get-Content -Raw -LiteralPath (Get-LocalAuthoredManifestPath -Fixture $Fixture) | ConvertFrom-Json
+}
+
+function Write-LocalAuthoredManifest {
+    param(
+        [object]$Fixture,
+        [object]$Manifest
+    )
+
+    $path = Get-LocalAuthoredManifestPath -Fixture $Fixture
+    [System.IO.File]::WriteAllText($path, ($Manifest | ConvertTo-Json -Depth 10), [System.Text.UTF8Encoding]::new($false))
+    & git -c core.autocrlf=false -C $Fixture.Repo add -f -- $path 2>$null
+}
+
 try {
     New-Item -ItemType Directory -Path $tempRoot -Force | Out-Null
 
     $baseline = New-CaseFixture -Name 'baseline'
     $baselineResult = Invoke-CaseVerifier -Fixture $baseline
     Add-Result -Name 'baseline fixture passes' -Passed ($baselineResult.ExitCode -eq 0) -Detail $baselineResult.Output
+
+    $missingLocalManifest = New-CaseFixture -Name 'local-history-manifest-missing'
+    Remove-Item -LiteralPath (Get-LocalHistoryManifestPath -Fixture $missingLocalManifest) -Force
+    $missingLocalManifestResult = Invoke-CaseVerifier -Fixture $missingLocalManifest
+    Add-Result -Name 'local history manifest missing is rejected' -Passed ($missingLocalManifestResult.ExitCode -ne 0 -and $missingLocalManifestResult.Output -match 'Recovery local-history manifest missing') -Detail $missingLocalManifestResult.Output
+
+    $missingLocalAuthoredManifest = New-CaseFixture -Name 'local-authored-manifest-missing'
+    Remove-Item -LiteralPath (Get-LocalAuthoredManifestPath -Fixture $missingLocalAuthoredManifest) -Force
+    $missingLocalAuthoredManifestResult = Invoke-CaseVerifier -Fixture $missingLocalAuthoredManifest
+    Add-Result -Name 'local authored manifest missing is rejected' -Passed ($missingLocalAuthoredManifestResult.ExitCode -ne 0 -and $missingLocalAuthoredManifestResult.Output -match 'Recovery local-authored manifest missing') -Detail $missingLocalAuthoredManifestResult.Output
+
+    $localRootShape = New-CaseFixture -Name 'local-history-root-shape'
+    $localRootShapeManifest = Read-LocalHistoryManifest -Fixture $localRootShape
+    $localRootShapeManifest | Add-Member -NotePropertyName 'unexpected' -NotePropertyValue $true
+    Write-LocalHistoryManifest -Fixture $localRootShape -Manifest $localRootShapeManifest
+    $localRootShapeResult = Invoke-CaseVerifier -Fixture $localRootShape
+    Add-Result -Name 'local history manifest root shape is rejected' -Passed ($localRootShapeResult.ExitCode -ne 0 -and $localRootShapeResult.Output -match 'Recovery local-history manifest root shape\s+is invalid') -Detail $localRootShapeResult.Output
+
+    $localSchemaVersion = New-CaseFixture -Name 'local-history-schema-version'
+    $localSchemaVersionManifest = Read-LocalHistoryManifest -Fixture $localSchemaVersion
+    $localSchemaVersionManifest.schemaVersion = 2
+    Write-LocalHistoryManifest -Fixture $localSchemaVersion -Manifest $localSchemaVersionManifest
+    $localSchemaVersionResult = Invoke-CaseVerifier -Fixture $localSchemaVersion
+    Add-Result -Name 'local history schema version is rejected' -Passed ($localSchemaVersionResult.ExitCode -ne 0 -and $localSchemaVersionResult.Output -match 'Recovery local-history manifest schema\s+version\s+is invalid') -Detail $localSchemaVersionResult.Output
+
+    $localAuthoredEntriesShape = New-CaseFixture -Name 'local-authored-entries-object'
+    $localAuthoredEntriesShapeManifest = Read-LocalAuthoredManifest -Fixture $localAuthoredEntriesShape
+    $localAuthoredEntriesShapeManifest.entries = $localAuthoredEntriesShapeManifest.entries[0]
+    Write-LocalAuthoredManifest -Fixture $localAuthoredEntriesShape -Manifest $localAuthoredEntriesShapeManifest
+    $localAuthoredEntriesShapeResult = Invoke-CaseVerifier -Fixture $localAuthoredEntriesShape
+    Add-Result -Name 'local authored entries must remain an array' -Passed ($localAuthoredEntriesShapeResult.ExitCode -ne 0 -and $localAuthoredEntriesShapeResult.Output -match 'Recovery local-authored manifest entries\s+shape\s+is invalid') -Detail $localAuthoredEntriesShapeResult.Output
+
+    $localEntryShape = New-CaseFixture -Name 'local-history-entry-shape'
+    $localEntryShapeManifest = Read-LocalHistoryManifest -Fixture $localEntryShape
+    $localEntryShapeManifest.entries[0] | Add-Member -NotePropertyName 'unexpected' -NotePropertyValue $true
+    Write-LocalHistoryManifest -Fixture $localEntryShape -Manifest $localEntryShapeManifest
+    $localEntryShapeResult = Invoke-CaseVerifier -Fixture $localEntryShape
+    Add-Result -Name 'local history manifest entry shape is rejected' -Passed ($localEntryShapeResult.ExitCode -ne 0 -and $localEntryShapeResult.Output -match 'Recovery local-history manifest entry shape\s+is invalid') -Detail $localEntryShapeResult.Output
+
+    $localDuplicate = New-CaseFixture -Name 'local-history-duplicate-entry'
+    $localDuplicateManifest = Read-LocalHistoryManifest -Fixture $localDuplicate
+    $localDuplicateManifest.entries = @($localDuplicateManifest.entries) + @($localDuplicateManifest.entries[0])
+    Write-LocalHistoryManifest -Fixture $localDuplicate -Manifest $localDuplicateManifest
+    $localDuplicateResult = Invoke-CaseVerifier -Fixture $localDuplicate
+    Add-Result -Name 'local history duplicate entry is rejected' -Passed ($localDuplicateResult.ExitCode -ne 0 -and $localDuplicateResult.Output -match 'Recovery local-history manifest duplicate\s+relative\s+path') -Detail $localDuplicateResult.Output
+
+    $localExtra = New-CaseFixture -Name 'local-history-extra-entry'
+    $localExtraManifest = Read-LocalHistoryManifest -Fixture $localExtra
+    $localExtraManifest.entries = @($localExtraManifest.entries) + @([pscustomobject]@{
+        relativePath = 'docs/superpowers/plans/unapproved-local-history.md'
+        length = 0
+        sha256 = '0000000000000000000000000000000000000000000000000000000000000000'
+    })
+    Write-LocalHistoryManifest -Fixture $localExtra -Manifest $localExtraManifest
+    $localExtraResult = Invoke-CaseVerifier -Fixture $localExtra
+    Add-Result -Name 'local history extra entry is rejected' -Passed ($localExtraResult.ExitCode -ne 0 -and $localExtraResult.Output -match 'Recovery local-history manifest entry set\s+is invalid') -Detail $localExtraResult.Output
+
+    $localTraversal = New-CaseFixture -Name 'local-history-traversal'
+    $localTraversalManifest = Read-LocalHistoryManifest -Fixture $localTraversal
+    $localTraversalManifest.entries[0].relativePath = '../outside.md'
+    Write-LocalHistoryManifest -Fixture $localTraversal -Manifest $localTraversalManifest
+    $localTraversalResult = Invoke-CaseVerifier -Fixture $localTraversal
+    Add-Result -Name 'local history traversal path is rejected' -Passed ($localTraversalResult.ExitCode -ne 0 -and $localTraversalResult.Output -match 'Recovery local-history manifest path\s+is\s+unsafe') -Detail $localTraversalResult.Output
+
+    $localRooted = New-CaseFixture -Name 'local-history-rooted-path'
+    $localRootedManifest = Read-LocalHistoryManifest -Fixture $localRooted
+    $localRootedManifest.entries[0].relativePath = 'C:/outside.md'
+    Write-LocalHistoryManifest -Fixture $localRooted -Manifest $localRootedManifest
+    $localRootedResult = Invoke-CaseVerifier -Fixture $localRooted
+    Add-Result -Name 'local history rooted path is rejected' -Passed ($localRootedResult.ExitCode -ne 0 -and $localRootedResult.Output -match 'Recovery local-history manifest path\s+is\s+unsafe') -Detail $localRootedResult.Output
+
+    $localLength = New-CaseFixture -Name 'local-history-length-mismatch'
+    $localLengthManifest = Read-LocalHistoryManifest -Fixture $localLength
+    $localLengthManifest.entries[0].length = [int64]$localLengthManifest.entries[0].length + 1
+    Write-LocalHistoryManifest -Fixture $localLength -Manifest $localLengthManifest
+    $localLengthResult = Invoke-CaseVerifier -Fixture $localLength
+    Add-Result -Name 'local history length mismatch is rejected' -Passed ($localLengthResult.ExitCode -ne 0 -and $localLengthResult.Output -match 'Recovery local-history manifest length\s+mismatch') -Detail $localLengthResult.Output
+
+    $localHash = New-CaseFixture -Name 'local-history-hash-mismatch'
+    $localHashManifest = Read-LocalHistoryManifest -Fixture $localHash
+    $localHashManifest.entries[0].sha256 = '0000000000000000000000000000000000000000000000000000000000000000'
+    Write-LocalHistoryManifest -Fixture $localHash -Manifest $localHashManifest
+    $localHashResult = Invoke-CaseVerifier -Fixture $localHash
+    Add-Result -Name 'local history hash mismatch is rejected' -Passed ($localHashResult.ExitCode -ne 0 -and $localHashResult.Output -match 'Recovery local-history manifest SHA-256\s+mismatch') -Detail $localHashResult.Output
+
+    $localTamper = New-CaseFixture -Name 'local-history-doc-tamper'
+    $localTamperRelative = 'docs/superpowers/specs/2026-08-03-vietnamguide-comparison-diversity-rollout-design.md'
+    $localTamperPath = Join-Path $localTamper.Repo $localTamperRelative
+    $localTamperBytes = [System.IO.File]::ReadAllBytes($localTamperPath)
+    $localTamperBytes[0] = $localTamperBytes[0] -bxor 1
+    [System.IO.File]::WriteAllBytes($localTamperPath, $localTamperBytes)
+    & git -c core.autocrlf=false -C $localTamper.Repo add -f -- $localTamperPath 2>$null
+    $localTamperResult = Invoke-CaseVerifier -Fixture $localTamper
+    Add-Result -Name 'local history document tamper is rejected' -Passed ($localTamperResult.ExitCode -ne 0 -and $localTamperResult.Output -match 'Recovery local-history SHA-256 mismatch') -Detail $localTamperResult.Output
+
+    $thirdDocsExtra = New-CaseFixture -Name 'arbitrary-third-docs-extra'
+    $thirdDocsExtraPath = Join-Path $thirdDocsExtra.Repo 'docs\superpowers\plans\unapproved-extra.md'
+    [System.IO.File]::WriteAllText($thirdDocsExtraPath, 'unapproved docs mutation', [System.Text.UTF8Encoding]::new($false))
+    & git -c core.autocrlf=false -C $thirdDocsExtra.Repo add -f -- $thirdDocsExtraPath 2>$null
+    $thirdDocsExtraResult = Invoke-CaseVerifier -Fixture $thirdDocsExtra
+    Add-Result -Name 'arbitrary third docs extra is rejected' -Passed ($thirdDocsExtraResult.ExitCode -ne 0 -and $thirdDocsExtraResult.Output -match 'docs unexpected file:\s+superpowers/plans/unapproved-extra\.md') -Detail $thirdDocsExtraResult.Output
+
+    $localIndexMismatch = New-CaseFixture -Name 'local-history-index-eol-mismatch'
+    $localIndexRelative = 'docs/superpowers/specs/2026-08-03-vietnamguide-comparison-diversity-rollout-design.md'
+    $localIndexPath = Join-Path $localIndexMismatch.Repo $localIndexRelative
+    $localIndexNormalized = [System.IO.File]::ReadAllText($localIndexPath).Replace("`r`n", "`n").Replace("`n", "`r`n")
+    $localIndexBlobFixture = Join-Path (Split-Path -Parent $localIndexMismatch.Repo) 'local-history-crlf-index-blob.tmp'
+    [System.IO.File]::WriteAllText($localIndexBlobFixture, $localIndexNormalized, [System.Text.UTF8Encoding]::new($false))
+    $localIndexBlobObject = (& git -C $localIndexMismatch.Repo hash-object -w --no-filters -- $localIndexBlobFixture).Trim()
+    & git -C $localIndexMismatch.Repo update-index --cacheinfo 100644 $localIndexBlobObject $localIndexRelative
+    $localIndexMismatchResult = Invoke-CaseVerifier -Fixture $localIndexMismatch
+    Add-Result -Name 'local history index EOL mismatch is rejected' -Passed ($localIndexMismatchResult.ExitCode -ne 0 -and $localIndexMismatchResult.Output -match 'Git index blob mismatch') -Detail $localIndexMismatchResult.Output
 
     $tampered = New-CaseFixture -Name 'tampered-source-and-target'
     $sourceStyle = Join-Path $tampered.Snapshot 'live-theme\vietnamguide-premium\style.css'
@@ -203,6 +363,11 @@ try {
 }
 
 $results | Select-Object Name, Passed | Format-Table -AutoSize
+$duplicateNames = @($results | Group-Object Name | Where-Object Count -gt 1)
+if ($duplicateNames) {
+    $duplicateNames | ForEach-Object { Write-Error "Duplicate recovery mutation case name: $($_.Name)" -ErrorAction Continue }
+    exit 1
+}
 $failed = @($results | Where-Object { -not $_.Passed })
 if ($failed) {
     foreach ($failure in $failed) {

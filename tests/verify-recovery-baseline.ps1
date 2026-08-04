@@ -218,13 +218,219 @@ function Assert-NoReparsePoint {
     }
 }
 
+function Read-ValidatedLocalArtifactManifest {
+    param(
+        [string]$ManifestPath,
+        [string]$Label,
+        [object[]]$ExpectedEntries
+    )
+
+    $validated = [System.Collections.Generic.List[object]]::new()
+    if (-not (Test-Path -LiteralPath $ManifestPath -PathType Leaf)) {
+        Add-Failure "$Label manifest missing: $ManifestPath"
+        return $validated.ToArray()
+    }
+
+    try {
+        $manifest = Get-Content -Raw -LiteralPath $ManifestPath | ConvertFrom-Json
+    } catch {
+        Add-Failure "$Label manifest parse failed: $($_.Exception.Message)"
+        return $validated.ToArray()
+    }
+
+    $rootKeys = @($manifest.PSObject.Properties.Name)
+    $expectedRootKeys = @('schemaVersion', 'entries')
+    if (@(Compare-Object -ReferenceObject $expectedRootKeys -DifferenceObject $rootKeys).Count -ne 0) {
+        Add-Failure "$Label manifest root shape is invalid."
+        return $validated.ToArray()
+    }
+    if ($manifest.schemaVersion -isnot [int] -or $manifest.schemaVersion -ne 1) {
+        Add-Failure "$Label manifest schema version is invalid."
+        return $validated.ToArray()
+    }
+    if ($manifest.entries -isnot [System.Array]) {
+        Add-Failure "$Label manifest entries shape is invalid."
+        return $validated.ToArray()
+    }
+
+    $entries = @($manifest.entries)
+    $expectedByPath = [System.Collections.Generic.Dictionary[string, object]]::new([System.StringComparer]::Ordinal)
+    foreach ($expected in $ExpectedEntries) {
+        $expectedByPath.Add([string]$expected.relativePath, $expected)
+    }
+
+    $actualByPath = [System.Collections.Generic.Dictionary[string, object]]::new([System.StringComparer]::Ordinal)
+    $shapeValid = $true
+    foreach ($entry in $entries) {
+        $entryKeys = @($entry.PSObject.Properties.Name)
+        $expectedEntryKeys = @('relativePath', 'length', 'sha256')
+        if (@(Compare-Object -ReferenceObject $expectedEntryKeys -DifferenceObject $entryKeys).Count -ne 0) {
+            Add-Failure "$Label manifest entry shape is invalid."
+            $shapeValid = $false
+            continue
+        }
+        if ($entry.relativePath -isnot [string] -or [string]::IsNullOrWhiteSpace($entry.relativePath) -or
+            ($entry.length -isnot [int] -and $entry.length -isnot [long]) -or $entry.length -lt 0 -or
+            $entry.sha256 -isnot [string] -or $entry.sha256 -notmatch '^[0-9a-f]{64}$') {
+            Add-Failure "$Label manifest entry shape is invalid."
+            $shapeValid = $false
+            continue
+        }
+
+        $components = @($entry.relativePath -split '[\\/]')
+        $unsafe = [System.IO.Path]::IsPathRooted($entry.relativePath) -or
+            $entry.relativePath -match '^[A-Za-z]:' -or
+            $entry.relativePath.Contains('\') -or
+            $entry.relativePath.StartsWith('/') -or
+            $entry.relativePath.EndsWith('/') -or
+            '.' -in $components -or '..' -in $components -or '' -in $components
+        if ($unsafe) {
+            Add-Failure "$Label manifest path is unsafe: $($entry.relativePath)"
+            $shapeValid = $false
+            continue
+        }
+        if ($actualByPath.ContainsKey($entry.relativePath)) {
+            Add-Failure "$Label manifest duplicate relative path: $($entry.relativePath)"
+            $shapeValid = $false
+            continue
+        }
+        $actualByPath.Add($entry.relativePath, $entry)
+    }
+
+    $setValid = $shapeValid -and $actualByPath.Count -eq $expectedByPath.Count
+    if ($setValid) {
+        foreach ($expectedPath in $expectedByPath.Keys) {
+            if (-not $actualByPath.ContainsKey($expectedPath)) {
+                $setValid = $false
+                break
+            }
+        }
+    }
+    if (-not $setValid) {
+        Add-Failure "$Label manifest entry set is invalid."
+        return $validated.ToArray()
+    }
+
+    $rootPrefix = $repoRoot.TrimEnd([char[]]'\/') + [System.IO.Path]::DirectorySeparatorChar
+    foreach ($relativePath in $expectedByPath.Keys) {
+        $entry = $actualByPath[$relativePath]
+        $expected = $expectedByPath[$relativePath]
+        if ($entry.length -ne $expected.length) {
+            Add-Failure "$Label manifest length mismatch: $relativePath"
+            continue
+        }
+        if ($entry.sha256 -cne $expected.sha256) {
+            Add-Failure "$Label manifest SHA-256 mismatch: $relativePath"
+            continue
+        }
+
+        try {
+            $fullPath = [System.IO.Path]::GetFullPath((Join-Path $repoRoot $relativePath.Replace('/', '\')))
+        } catch {
+            Add-Failure "$Label manifest path is unsafe: $relativePath"
+            continue
+        }
+        if (-not $fullPath.StartsWith($rootPrefix, [System.StringComparison]::OrdinalIgnoreCase)) {
+            Add-Failure "$Label manifest path is unsafe: $relativePath"
+            continue
+        }
+        if (-not (Test-Path -LiteralPath $fullPath -PathType Leaf)) {
+            Add-Failure "$Label file missing: $relativePath"
+            continue
+        }
+
+        $reparseRejected = $false
+        $walkPath = $repoRoot
+        foreach ($component in @($relativePath -split '/')) {
+            $walkPath = Join-Path $walkPath $component
+            $item = Get-Item -LiteralPath $walkPath -Force
+            if (($item.Attributes -band [System.IO.FileAttributes]::ReparsePoint) -ne 0) {
+                Add-Failure "$Label reparse point rejected: $relativePath"
+                $reparseRejected = $true
+                break
+            }
+        }
+        if ($reparseRejected) {
+            continue
+        }
+
+        $file = Get-Item -LiteralPath $fullPath -Force
+        if ($file.Length -ne [int64]$entry.length) {
+            Add-Failure "$Label byte length mismatch: $relativePath"
+            continue
+        }
+        $hash = (Get-FileHash -Algorithm SHA256 -LiteralPath $fullPath).Hash.ToLowerInvariant()
+        if ($hash -cne $entry.sha256) {
+            Add-Failure "$Label SHA-256 mismatch: $relativePath"
+            continue
+        }
+
+        $validated.Add([pscustomobject]@{
+            RelativePath = $relativePath
+            FullPath = $fullPath
+        })
+    }
+
+    return $validated.ToArray()
+}
+
 $themeSource = Join-Path $SnapshotRoot 'live-theme\vietnamguide-premium'
 $muSource = Join-Path $SnapshotRoot 'live-mu-plugins\mu-plugins\vietnamguide-core.php'
 $docsSource = Join-Path $SnapshotRoot 'project-webroot\docs'
 $opsSource = Join-Path $SnapshotRoot 'project-webroot\ops'
 
-$manifestPath = Join-Path $repoRoot 'tests\fixtures\recovery-source-manifest.json'
 $approvedTargetFiles = [System.Collections.Generic.List[string]]::new()
+$localDocsExtras = [System.Collections.Generic.List[string]]::new()
+$localHistoryManifestPath = Join-Path $repoRoot 'tests\fixtures\recovery-local-history-manifest.json'
+$localHistoryExpected = @(
+    [pscustomobject]@{
+        relativePath = 'docs/superpowers/specs/2026-08-03-vietnamguide-comparison-diversity-rollout-design.md'
+        length = 56809
+        sha256 = '1a2dd7f387bb03f2b23a53a655f3db390f13e299cb468f171e88b2557f418ded'
+    },
+    [pscustomobject]@{
+        relativePath = 'docs/superpowers/plans/2026-08-03-vietnamguide-comparison-evidence-decision-rollout.md'
+        length = 63426
+        sha256 = 'a1a874d51fd3ccd43c24c0ada5d0a16008acc54400cbfdced5297ca6877b9af3'
+    }
+)
+$validatedLocalHistory = @(Read-ValidatedLocalArtifactManifest -ManifestPath $localHistoryManifestPath -Label 'Recovery local-history' -ExpectedEntries $localHistoryExpected)
+foreach ($entry in $validatedLocalHistory) {
+    $approvedTargetFiles.Add($entry.FullPath)
+    $localDocsExtras.Add($entry.RelativePath.Substring('docs/'.Length))
+}
+
+$localAuthoredManifestPath = Join-Path $repoRoot 'tests\fixtures\recovery-local-authored-manifest.json'
+$localAuthoredExpected = @(
+    [pscustomobject]@{
+        relativePath = 'docs/superpowers/plans/2026-08-03-vietnamguide-comparison-recovery-execution-addendum.md'
+        length = 27677
+        sha256 = '2cc1b41c930af7381b55b3675d126c962b2e798b7b9973c79a3c4591fb4d6987'
+    }
+)
+$validatedLocalAuthored = @(Read-ValidatedLocalArtifactManifest -ManifestPath $localAuthoredManifestPath -Label 'Recovery local-authored' -ExpectedEntries $localAuthoredExpected)
+foreach ($entry in $validatedLocalAuthored) {
+    $approvedTargetFiles.Add($entry.FullPath)
+    $localDocsExtras.Add($entry.RelativePath.Substring('docs/'.Length))
+}
+
+if ($validatedLocalAuthored.Count -eq 1) {
+    $executionAddendumPath = $validatedLocalAuthored[0].FullPath
+    $executionAddendumText = [System.IO.File]::ReadAllText($executionAddendumPath)
+    $requiredPostDrillMarkers = @(
+        '## Reconnect After the Isolated Drill',
+        "VG_ARTIFACT_HASH='<same-lowercase-artifact-sha256>'",
+        "VG_RUN_ID='<same-closed-full-run-id>'",
+        'test -f "$DRILL_SENTINEL_DIR/production.before.json"'
+    )
+    foreach ($marker in $requiredPostDrillMarkers) {
+        if (-not $executionAddendumText.Contains($marker)) {
+            Add-Failure "Recovery execution addendum missing copy-safe post-drill marker: $marker"
+        }
+    }
+}
+
+$manifestPath = Join-Path $repoRoot 'tests\fixtures\recovery-source-manifest.json'
 if (-not (Test-Path -LiteralPath $manifestPath -PathType Leaf)) {
     Add-Failure "Recovery source manifest missing: $manifestPath"
 } else {
@@ -266,15 +472,22 @@ if (-not (Test-Path -LiteralPath $manifestPath -PathType Leaf)) {
             Assert-NoReparsePoint -Label "$($section.name) repository" -Path $targetPath
 
             $sourceDigest = Get-CanonicalSectionDigest -Path $sourcePath -Exclude @($section.exclude)
-            $targetDigest = Get-CanonicalSectionDigest -Path $targetPath -Exclude @($section.exclude)
+            $targetExclude = @($section.exclude)
+            if ($section.name -eq 'docs') {
+                $targetExclude += @($localDocsExtras)
+            }
+            $targetDigest = Get-CanonicalSectionDigest -Path $targetPath -Exclude $targetExclude
             if ($sourceDigest.Count -ne $section.count -or $sourceDigest.Digest -ne $section.digest) {
                 Add-Failure "$($section.name) source manifest digest mismatch."
             }
-            if ($targetDigest.Count -ne $section.count -or $targetDigest.Digest -ne $section.digest) {
+            $targetDigestValid = $targetDigest.Count -eq $section.count -and $targetDigest.Digest -eq $section.digest
+            if (-not $targetDigestValid) {
                 Add-Failure "$($section.name) repository manifest digest mismatch."
             }
-            foreach ($file in $targetDigest.Files) {
-                $approvedTargetFiles.Add($file)
+            if ($targetDigestValid) {
+                foreach ($file in $targetDigest.Files) {
+                    $approvedTargetFiles.Add($file)
+                }
             }
         }
     } catch {
@@ -284,7 +497,7 @@ if (-not (Test-Path -LiteralPath $manifestPath -PathType Leaf)) {
 
 $results = @()
 $results += Compare-FileTree -Label 'theme' -SourceRoot $themeSource -DestinationRoot (Join-Path $repoRoot 'wordpress\wp-content\themes\vietnamguide-premium')
-$results += Compare-FileTree -Label 'docs' -SourceRoot $docsSource -DestinationRoot (Join-Path $repoRoot 'docs') -AllowedDestinationExtras @('RECOVERY.md')
+$results += Compare-FileTree -Label 'docs' -SourceRoot $docsSource -DestinationRoot (Join-Path $repoRoot 'docs') -AllowedDestinationExtras (@('RECOVERY.md') + @($localDocsExtras))
 $results += Compare-FileTree -Label 'ops' -SourceRoot $opsSource -DestinationRoot (Join-Path $repoRoot 'ops') -SourceInclude {
     $_.FullName -notlike "$(Join-Path $opsSource 'backups')*" -and $_.Extension -ne '.sql'
 }
