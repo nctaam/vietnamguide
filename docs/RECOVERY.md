@@ -35,6 +35,8 @@ The replay audit used Codex thread `019fc2f2-d8b4-76b3-aa4a-1a2c63723fd8`. Its s
 
 Across the JSONL, the audit proved 54 successful, untruncated target changes and zero failed target changes: 24 for `verify-guide-experience.ps1`, 16 for `verify-guide-experience-mutations.ps1`, and 14 for `verify-guide-experience-tokenizer.php`. The approved baselines already contained the first 8, 10, and 7 successful changes respectively. The last skipped records were JSONL line 1151 at `02:16:46Z`, line 1181 at `02:18:26Z`, and line 1124 at `02:15:19Z`; replay began independently at line 1508 at `02:56:36Z`, line 1508 at `02:56:36Z`, and line 2336 at `04:19:08Z`. This leaves the exact replay suffixes documented in Task 0: 16, 6, and 7 changes.
 
+The JSONL and temporary baseline paths above record the original reconstruction provenance only. Durable, deterministic recovery no longer depends on either local artifact surviving: commit `4ca75ab309f48124ef5d7383dceefc51d50aa85b` and the Git blobs stored in that commit are authoritative for the original restored stack. Future recovery should read each original file with `git show 4ca75ab309f48124ef5d7383dceefc51d50aa85b:<path>`, then take the reviewed core-MU line-ending portability change from descendant commit `21b59a3711dfab80f125aa7b66b197b6a5561312` to reproduce the current contract pinned below.
+
 | Path | Bytes | Raw SHA-256 | Git blob (`--no-filters`) |
 | --- | ---: | --- | --- |
 | `ops/verify-core-block-patterns.ps1` | 14,206 | `30f4be5818b15e4cd8c3ad9b616aeddebd77ff97aa4922a3c89dfaaa35b23c85` | `4d98e5bed9f8a28646fdaf71fe3e82a51923063b` |

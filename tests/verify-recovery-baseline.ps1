@@ -196,6 +196,64 @@ function Test-PrivateKeyHeader {
     )
 }
 
+function Get-GitPathLines {
+    param(
+        [string[]]$Arguments,
+        [string]$Label
+    )
+
+    $previousOutputEncoding = [Console]::OutputEncoding
+    try {
+        [Console]::OutputEncoding = [System.Text.UTF8Encoding]::new($false)
+        $output = @(& git -c core.quotePath=false -C $repoRoot @Arguments)
+        $exitCode = $LASTEXITCODE
+    } finally {
+        [Console]::OutputEncoding = $previousOutputEncoding
+    }
+
+    if ($exitCode -ne 0) {
+        Add-Failure "$Label failed."
+        return @()
+    }
+
+    return @($output)
+}
+
+function Resolve-ContainedRepositoryPath {
+    param(
+        [string]$RelativePath,
+        [string]$Label
+    )
+
+    try {
+        $normalizedPath = $RelativePath.Replace('\', '/')
+        $components = @($normalizedPath -split '/')
+        if (
+            [string]::IsNullOrWhiteSpace($normalizedPath) -or
+            [System.IO.Path]::IsPathRooted($normalizedPath) -or
+            '' -in $components -or
+            '.' -in $components -or
+            '..' -in $components
+        ) {
+            Add-Failure "$Label is unsafe: $RelativePath"
+            return $null
+        }
+
+        $rootFull = $repoRoot.TrimEnd([char[]]'\/')
+        $candidate = [System.IO.Path]::GetFullPath((Join-Path $rootFull ($normalizedPath.Replace('/', '\'))))
+        $rootPrefix = $rootFull + [System.IO.Path]::DirectorySeparatorChar
+        if (-not $candidate.StartsWith($rootPrefix, [System.StringComparison]::OrdinalIgnoreCase)) {
+            Add-Failure "$Label is unsafe: $RelativePath"
+            return $null
+        }
+
+        return $candidate
+    } catch {
+        Add-Failure "$Label is unsafe: $RelativePath"
+        return $null
+    }
+}
+
 function Assert-NoReparsePoint {
     param(
         [string]$Label,
@@ -406,8 +464,8 @@ $localAuthoredManifestPath = Join-Path $repoRoot 'tests\fixtures\recovery-local-
 $localAuthoredExpected = @(
     [pscustomobject]@{
         relativePath = 'docs/superpowers/plans/2026-08-03-vietnamguide-comparison-recovery-execution-addendum.md'
-        length = 33457
-        sha256 = '8227a6902baca6bec1cc767fc22652711c204b26d6b9cff5284b77c8b457a9ce'
+        length = 33951
+        sha256 = '789bad52b99e7588c12cd69b6efb2afb8dd10f6c88ec33afa9f795ad2fa436af'
     }
 )
 $validatedLocalAuthored = @(Read-ValidatedLocalArtifactManifest -ManifestPath $localAuthoredManifestPath -Label 'Recovery local-authored' -ExpectedEntries $localAuthoredExpected)
@@ -674,18 +732,36 @@ foreach ($probe in $ignoreProbePaths) {
 
 Write-Host "Ignore probes: $ignoredProbeCount/$($ignoreProbePaths.Count)"
 
-$candidatePaths = @(git -C $repoRoot ls-files --cached --others --exclude-standard) |
-    Where-Object { $_ } |
-    ForEach-Object { $_.Replace('\', '/') }
+$candidatePaths = [System.Collections.Generic.List[string]]::new()
+$candidateFullPaths = [System.Collections.Generic.Dictionary[string, string]]::new([System.StringComparer]::Ordinal)
+foreach ($candidateEntry in @(Get-GitPathLines -Arguments @('ls-files', '--cached', '--others', '--exclude-standard', '--') -Label 'Git candidate path enumeration')) {
+    if ([string]::IsNullOrWhiteSpace($candidateEntry)) {
+        continue
+    }
 
-$gitStageEntries = @(git -C $repoRoot ls-files --stage) + @($AdditionalGitStageEntry)
+    $candidateRelative = $candidateEntry.Replace('\', '/')
+    $candidateFullPath = Resolve-ContainedRepositoryPath -RelativePath $candidateRelative -Label 'Candidate repository path'
+    if ($null -eq $candidateFullPath) {
+        continue
+    }
+
+    $candidatePaths.Add($candidateRelative)
+    $candidateFullPaths[$candidateRelative] = $candidateFullPath
+}
+
+$gitStageEntries = @(Get-GitPathLines -Arguments @('ls-files', '--stage', '--') -Label 'Git index path enumeration') + @($AdditionalGitStageEntry)
 $indexEntries = @{}
 foreach ($entry in $gitStageEntries) {
     if ($entry -match '^(\d{6})\s+([0-9a-f]{40,64})\s+\d+\s+(.+)$') {
         $mode = $Matches[1]
         $objectId = $Matches[2]
         $path = $Matches[3].Replace('\', '/')
-        $indexEntries[$path] = [pscustomobject]@{ Mode = $mode; ObjectId = $objectId }
+        $fullPath = Resolve-ContainedRepositoryPath -RelativePath $path -Label 'Git index path'
+        if ($null -eq $fullPath) {
+            continue
+        }
+
+        $indexEntries[$path] = [pscustomobject]@{ Mode = $mode; ObjectId = $objectId; FullPath = $fullPath }
         if ($mode -eq '120000') {
             Add-Failure "Git symlink mode 120000 rejected: $path"
         }
@@ -731,21 +807,38 @@ if ($approvedTargetPaths.Count -gt 0) {
     }
 }
 
-foreach ($relative in $indexEntries.Keys) {
-    if ($indexEntries[$relative].Mode -notmatch '^100') {
+foreach ($relative in $candidatePaths) {
+    $fullPath = $candidateFullPaths[$relative]
+    $isTracked = $indexEntries.ContainsKey($relative)
+    $reparseRejected = $false
+    $walkPath = $repoRoot
+    foreach ($component in @($relative -split '/')) {
+        $walkPath = Join-Path $walkPath $component
+        if (-not (Test-Path -LiteralPath $walkPath)) {
+            break
+        }
+
+        $item = Get-Item -LiteralPath $walkPath -Force
+        if (($item.Attributes -band [System.IO.FileAttributes]::ReparsePoint) -ne 0) {
+            if ($isTracked) {
+                Add-Failure "Tracked reparse point rejected: $relative"
+            } else {
+                Add-Failure "Candidate reparse point rejected: $relative"
+            }
+            $reparseRejected = $true
+            break
+        }
+    }
+    if ($reparseRejected -or -not (Test-Path -LiteralPath $fullPath -PathType Leaf)) {
         continue
     }
-    $fullPath = Join-Path $repoRoot $relative
-    if (-not (Test-Path -LiteralPath $fullPath -PathType Leaf)) {
-        continue
-    }
-    $item = Get-Item -LiteralPath $fullPath -Force
-    if (($item.Attributes -band [System.IO.FileAttributes]::ReparsePoint) -ne 0) {
-        Add-Failure "Tracked reparse point rejected: $relative"
-        continue
-    }
+
     if (Test-PrivateKeyHeader -Path $fullPath) {
-        Add-Failure "Private key signature detected in tracked file: $relative"
+        if ($isTracked) {
+            Add-Failure "Private key signature detected in tracked file: $relative"
+        } else {
+            Add-Failure "Private key signature detected in candidate file: $relative"
+        }
     }
 }
 
@@ -788,7 +881,7 @@ $authorizedCredentialFixtureLine = '$CredentialFixtureBuilder.' + 'Password' + "
 $authorizedCredentialFixtureMatchValue = 'Password' + " = 'pass'"
 
 foreach ($relative in $candidatePaths) {
-    $fullPath = Join-Path $repoRoot $relative
+    $fullPath = $candidateFullPaths[$relative]
     if (-not (Test-Path -LiteralPath $fullPath -PathType Leaf)) {
         continue
     }

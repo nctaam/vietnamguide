@@ -69,6 +69,8 @@ Pin the reconstruction audit to Codex thread `019fc2f2-d8b4-76b3-aa4a-1a2c63723f
 
 The JSONL audit proves 54 successful, untruncated target changes and zero failed target changes: 24 static-verifier changes, 16 mutation-verifier changes, and 14 tokenizer changes. The approved baselines already contain the first 8, 10, and 7 successful changes. Their last skipped records are JSONL line 1151 at `02:16:46Z`, line 1181 at `02:18:26Z`, and line 1124 at `02:15:19Z`; the independent replay suffixes begin at line 1508 at `02:56:36Z`, line 1508 at `02:56:36Z`, and line 2336 at `04:19:08Z`. Therefore the line sets above replay exactly 16, 6, and 7 successful changes.
 
+Treat the JSONL and temporary baseline locations as original provenance only. The durable, deterministic source for the original restored stack is commit `4ca75ab309f48124ef5d7383dceefc51d50aa85b` and its exact Git blobs; future recovery must use `git show 4ca75ab309f48124ef5d7383dceefc51d50aa85b:<path>`, then take the reviewed core-MU line-ending portability change from descendant commit `21b59a3711dfab80f125aa7b66b197b6a5561312`. It must not depend on the temporary directory surviving.
+
 Never reconstruct file contents from memory. Pin the exact path set, raw byte lengths, and lowercase SHA-256 values in `tests/fixtures/recovery-local-ops-manifest.json`; only a complete validated ten-entry set may be excluded from the production-snapshot `ops` digest or admitted as local extras and approved Git/index targets.
 
 | Path | Raw bytes | Raw SHA-256 |

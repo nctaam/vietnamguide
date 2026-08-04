@@ -13,6 +13,7 @@ $localOpsManifestRelative = 'tests\fixtures\recovery-local-ops-manifest.json'
 $tempParent = [System.IO.Path]::GetFullPath([System.IO.Path]::GetTempPath())
 $tempRoot = Join-Path $tempParent ("vietnamguide-recovery-mutations-" + [guid]::NewGuid().ToString('N'))
 $results = [System.Collections.Generic.List[object]]::new()
+$expectedResultCount = 47
 
 function Copy-DirectoryContent {
     param([string]$Source, [string]$Destination)
@@ -208,6 +209,30 @@ function Add-AuthorizedLocalOpsMutation {
 
     & git -c core.autocrlf=false -C $Fixture.Repo add -f -- $targetPath $fixtureVerifier 2>$null
     return $fixtureVerifier
+}
+
+function New-VerifiedUntrackedJunction {
+    param([object]$Fixture)
+
+    $caseRoot = Split-Path -Parent $Fixture.Repo
+    $targetPath = Join-Path $caseRoot 'outside-reparse-target'
+    New-Item -ItemType Directory -Path $targetPath -Force | Out-Null
+    [System.IO.File]::WriteAllText((Join-Path $targetPath 'payload.txt'), 'reparse fixture', [System.Text.UTF8Encoding]::new($false))
+
+    $relativePath = 'untracked-reparse'
+    $junctionPath = Join-Path $Fixture.Repo $relativePath
+    New-Item -ItemType Junction -Path $junctionPath -Target $targetPath -Force | Out-Null
+    $junction = Get-Item -LiteralPath $junctionPath -Force
+    if (($junction.Attributes -band [System.IO.FileAttributes]::ReparsePoint) -eq 0) {
+        throw 'Untracked junction fixture is not a reparse point.'
+    }
+
+    $untrackedPaths = @(git -c core.quotePath=false -C $Fixture.Repo ls-files --others --exclude-standard --)
+    if (@($untrackedPaths | Where-Object { $_ -eq $relativePath -or $_.StartsWith($relativePath + '/') }).Count -eq 0) {
+        throw 'Untracked junction fixture is not visible to Git candidate enumeration.'
+    }
+
+    return $relativePath
 }
 
 try {
@@ -457,6 +482,43 @@ try {
     $privateMarkerResult = Invoke-CaseVerifier -Fixture $privateMarker
     Add-Result -Name 'private key signature is rejected' -Passed ($privateMarkerResult.ExitCode -ne 0 -and $privateMarkerResult.Output -match 'Candidate secret pattern') -Detail $privateMarkerResult.Output
 
+    $untrackedPlainKey = New-CaseFixture -Name 'untracked-extensionless-private-key'
+    $untrackedPlainKeyRelative = 'untracked_private_identity'
+    $untrackedPlainKeyPath = Join-Path $untrackedPlainKey.Repo $untrackedPlainKeyRelative
+    [System.IO.File]::WriteAllText($untrackedPlainKeyPath, $marker, [System.Text.UTF8Encoding]::new($false))
+    $untrackedPlainKeyResult = Invoke-CaseVerifier -Fixture $untrackedPlainKey
+    Add-Result -Name 'untracked extensionless private key is rejected' -Passed ($untrackedPlainKeyResult.ExitCode -ne 0 -and $untrackedPlainKeyResult.Output -match ('Private key signature detected in candidate\s+file:\s+' + [regex]::Escape($untrackedPlainKeyRelative))) -Detail $untrackedPlainKeyResult.Output
+
+    $untrackedEncryptedKey = New-CaseFixture -Name 'untracked-extensionless-encrypted-private-key'
+    $untrackedEncryptedKeyRelative = 'untracked_encrypted_identity'
+    $untrackedEncryptedKeyPath = Join-Path $untrackedEncryptedKey.Repo $untrackedEncryptedKeyRelative
+    $untrackedEncryptedMarker = ('-' * 5) + 'BEGIN ' + 'ENCRYPTED PRIVATE KEY' + ('-' * 5)
+    [System.IO.File]::WriteAllText($untrackedEncryptedKeyPath, $untrackedEncryptedMarker, [System.Text.UTF8Encoding]::new($false))
+    $untrackedEncryptedKeyResult = Invoke-CaseVerifier -Fixture $untrackedEncryptedKey
+    Add-Result -Name 'untracked extensionless encrypted private key is rejected' -Passed ($untrackedEncryptedKeyResult.ExitCode -ne 0 -and $untrackedEncryptedKeyResult.Output -match ('Private key signature detected in candidate\s+file:\s+' + [regex]::Escape($untrackedEncryptedKeyRelative))) -Detail $untrackedEncryptedKeyResult.Output
+
+    $untrackedReparse = New-CaseFixture -Name 'untracked-reparse-path'
+    $untrackedReparseRelative = New-VerifiedUntrackedJunction -Fixture $untrackedReparse
+    $untrackedReparseResult = Invoke-CaseVerifier -Fixture $untrackedReparse
+    Add-Result -Name 'untracked reparse path is rejected' -Passed ($untrackedReparseResult.ExitCode -ne 0 -and $untrackedReparseResult.Output -match ('Candidate reparse point rejected:\s+' + [regex]::Escape($untrackedReparseRelative))) -Detail $untrackedReparseResult.Output
+
+    $trackedNonAscii = New-CaseFixture -Name 'tracked-non-ascii-private-key'
+    $trackedNonAsciiRelative = 'tracked-ki' + [char]0x1ec3 + 'm.pem'
+    $trackedNonAsciiPath = Join-Path $trackedNonAscii.Repo $trackedNonAsciiRelative
+    [System.IO.File]::WriteAllText($trackedNonAsciiPath, $marker, [System.Text.UTF8Encoding]::new($false))
+    & git -c core.autocrlf=false -C $trackedNonAscii.Repo add -f -- $trackedNonAsciiPath 2>$null
+    $trackedNonAsciiResult = Invoke-CaseVerifier -Fixture $trackedNonAscii
+    $trackedNonAsciiPattern = [regex]::Escape($trackedNonAsciiRelative)
+    Add-Result -Name 'tracked non-ASCII private key path is rejected' -Passed ($trackedNonAsciiResult.ExitCode -ne 0 -and $trackedNonAsciiResult.Output -match "Private key signature detected in tracked\s+file:\s+$trackedNonAsciiPattern" -and $trackedNonAsciiResult.Output -match "Forbidden repository path:\s+$trackedNonAsciiPattern") -Detail $trackedNonAsciiResult.Output
+
+    $untrackedNonAscii = New-CaseFixture -Name 'untracked-non-ascii-secret'
+    $untrackedNonAsciiRelative = 'untracked-ki' + [char]0x1ec3 + 'm.txt'
+    $untrackedNonAsciiPath = Join-Path $untrackedNonAscii.Repo $untrackedNonAsciiRelative
+    $untrackedNonAsciiContent = 'api_' + 'key = "' + 'not-a-real-secret-123456' + '"'
+    [System.IO.File]::WriteAllText($untrackedNonAsciiPath, $untrackedNonAsciiContent, [System.Text.UTF8Encoding]::new($false))
+    $untrackedNonAsciiResult = Invoke-CaseVerifier -Fixture $untrackedNonAscii
+    Add-Result -Name 'untracked non-ASCII secret path is rejected' -Passed ($untrackedNonAsciiResult.ExitCode -ne 0 -and $untrackedNonAsciiResult.Output -match ('Candidate secret pattern in:\s+' + [regex]::Escape($untrackedNonAsciiRelative))) -Detail $untrackedNonAsciiResult.Output
+
     $extensionlessKey = New-CaseFixture -Name 'extensionless-private-key'
     $extensionlessKeyPath = Join-Path $extensionlessKey.Repo 'id_rsa'
     [System.IO.File]::WriteAllText($extensionlessKeyPath, $marker)
@@ -524,6 +586,10 @@ $results | Select-Object Name, Passed | Format-Table -AutoSize
 $duplicateNames = @($results | Group-Object Name | Where-Object Count -gt 1)
 if ($duplicateNames) {
     $duplicateNames | ForEach-Object { Write-Error "Duplicate recovery mutation case name: $($_.Name)" -ErrorAction Continue }
+    exit 1
+}
+if ($results.Count -ne $expectedResultCount) {
+    Write-Error "Recovery mutation case count mismatch: expected $expectedResultCount, got $($results.Count)." -ErrorAction Continue
     exit 1
 }
 $failed = @($results | Where-Object { -not $_.Passed })
