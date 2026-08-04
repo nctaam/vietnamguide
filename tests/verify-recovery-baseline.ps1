@@ -57,6 +57,59 @@ function Test-OrderedMarkers {
     return $true
 }
 
+function Get-ExecutableBashLines {
+    param([string]$Text)
+
+    $executableLines = [System.Collections.Generic.List[string]]::new()
+    $fences = [regex]::Matches($Text, '(?ms)^```bash\s*\r?\n(?<body>.*?)^```\s*$')
+    foreach ($fence in $fences) {
+        foreach ($line in @($fence.Groups['body'].Value -split '\r?\n')) {
+            $trimmed = $line.Trim()
+            if ([string]::IsNullOrWhiteSpace($trimmed) -or $trimmed.StartsWith('#')) {
+                continue
+            }
+            $executableLines.Add($trimmed)
+        }
+    }
+
+    return @($executableLines)
+}
+
+function Test-ConsecutiveExecutableBashLines {
+    param(
+        [string]$Label,
+        [string[]]$Lines,
+        [string[]]$Expected
+    )
+
+    $startIndexes = @(
+        for ($index = 0; $index -lt $Lines.Count; $index++) {
+            if ($Lines[$index] -ceq $Expected[0]) {
+                $index
+            }
+        }
+    )
+    if ($startIndexes.Count -ne 1) {
+        Add-Failure "$Label failed: expected exactly one executable boundary start."
+        return $false
+    }
+
+    $startIndex = $startIndexes[0]
+    if (($startIndex + $Expected.Count) -gt $Lines.Count) {
+        Add-Failure "$Label failed: executable boundary is incomplete."
+        return $false
+    }
+
+    for ($offset = 0; $offset -lt $Expected.Count; $offset++) {
+        if ($Lines[$startIndex + $offset] -cne $Expected[$offset]) {
+            Add-Failure "$Label failed: rollback failure gate is not immediate."
+            return $false
+        }
+    }
+
+    return $true
+}
+
 function Test-PowerShellNativeFailFast {
     param(
         [string]$Label,
@@ -78,12 +131,38 @@ function Test-PowerShellNativeFailFast {
             }
 
             $nextIndex = $index + 1
-            while ($nextIndex -lt $lines.Count -and [string]::IsNullOrWhiteSpace($lines[$nextIndex])) {
+            while (
+                $nextIndex -lt $lines.Count -and
+                ([string]::IsNullOrWhiteSpace($lines[$nextIndex]) -or $lines[$nextIndex].Trim().StartsWith('#'))
+            ) {
                 $nextIndex++
             }
-            $hasImmediateCheck = $nextIndex -lt $lines.Count -and (
-                $lines[$nextIndex].Trim() -match '^(?:if\s*\(\$LASTEXITCODE\b|\$[A-Za-z_][A-Za-z0-9_]*\s*=\s*\$LASTEXITCODE\b)'
-            )
+            if ($nextIndex -ge $lines.Count) {
+                Add-Failure "$Label native fail-fast contract failed: $trimmed"
+                return $false
+            }
+
+            $checkLine = $lines[$nextIndex].Trim()
+            $hasImmediateCheck = $checkLine -match '^if\s*\(\s*\$LASTEXITCODE\s+-ne\s+0\s*\)\s*\{\s*(?:throw|exit)\b.*\}\s*$'
+            if (-not $hasImmediateCheck -and $checkLine -match '^\$(?<name>[A-Za-z_][A-Za-z0-9_]*)\s*=\s*\$LASTEXITCODE\s*$') {
+                $capturedExitName = $Matches['name']
+                $branchIndex = $nextIndex + 1
+                while (
+                    $branchIndex -lt $lines.Count -and
+                    ([string]::IsNullOrWhiteSpace($lines[$branchIndex]) -or $lines[$branchIndex].Trim().StartsWith('#'))
+                ) {
+                    $branchIndex++
+                }
+                if ($branchIndex -lt $lines.Count) {
+                    $remainingText = ($lines[$branchIndex..($lines.Count - 1)] -join "`n")
+                    $escapedExitName = [regex]::Escape($capturedExitName)
+                    $hasImmediateCheck = $remainingText -match (
+                        '(?ms)^\s*if\s*\(\$' + $escapedExitName + '\s+-eq\s+0\s*\)\s*\{.*?' +
+                        '^\s*\}\s*elseif\s*\(\$' + $escapedExitName + '\s+-eq\s+1\s*\)\s*\{.*?' +
+                        '^\s*\}\s*else\s*\{\s*\r?\n\s*(?:throw|exit)\b.*?^\s*\}'
+                    )
+                }
+            }
             if (-not $hasImmediateCheck) {
                 Add-Failure "$Label native fail-fast contract failed: $trimmed"
                 return $false
@@ -539,8 +618,8 @@ $localAuthoredManifestPath = Join-Path $repoRoot 'tests\fixtures\recovery-local-
 $localAuthoredExpected = @(
     [pscustomobject]@{
         relativePath = 'docs/superpowers/plans/2026-08-03-vietnamguide-comparison-recovery-execution-addendum.md'
-        length = 43461
-        sha256 = '025179f3dc2b8cadada8c77b35fd1a32a6f3a2b40afa2f3a02f6636db9d5895a'
+        length = 44881
+        sha256 = 'b90d8f16af8aba164a045018ef75a107db605424168c0082e3606b0a90d14a1b'
     }
 )
 $validatedLocalAuthored = @(Read-ValidatedLocalArtifactManifest -ManifestPath $localAuthoredManifestPath -Label 'Recovery local-authored' -ExpectedEntries $localAuthoredExpected)
@@ -571,6 +650,7 @@ if ($validatedLocalAuthored.Count -eq 1) {
         [pscustomobject]@{ Label = 'Artifact upload block'; Heading = '## Artifact Upload' },
         [pscustomobject]@{ Label = 'Production SSH entry'; Heading = '## Production Shell Initialization' },
         [pscustomobject]@{ Label = 'Canary public verification block'; Heading = '## Canary Validate, Dry-Run, Apply, and Activate' },
+        [pscustomobject]@{ Label = 'Stage 2 public verification block'; Heading = '## Stage 2 Validate, Apply, Activate, and Close' },
         [pscustomobject]@{ Label = 'Fixture drill block'; Heading = '## Isolated Fixture-Only Rollback Drill' },
         [pscustomobject]@{ Label = 'Reconnect SSH block'; Heading = '## Reconnect After the Isolated Drill' },
         [pscustomobject]@{ Label = 'Final integration block'; Heading = '## Final Local Integration' }
@@ -691,7 +771,7 @@ PERMANENT_CONTROL_PATHS=(
         'sleep "$((300 - LOCK_RENEWAL_INTERVAL_SECONDS))"',
         'test "$((VG_OBSERVE_END_EPOCH - VG_OBSERVE_START_EPOCH))" -ge "$CANARY_OBSERVATION_MIN_SECONDS"'
     )
-    $canaryRenewalInvalid = $canaryObservationSection -match '(?m)^\s*sleep\s+300(?:\s|;|$)'
+    $canaryRenewalInvalid = $false
     foreach ($marker in $canaryRenewalMarkers) {
         if (-not $normalizedAddendumText.Contains($marker)) {
             $canaryRenewalInvalid = $true
@@ -700,6 +780,43 @@ PERMANENT_CONTROL_PATHS=(
     }
     if (([regex]::Matches($canaryObservationSection, '(?m)^\s*run_rollout recovery-audit canary --action=renew-lock --ttl-seconds=900$')).Count -lt 5) {
         $canaryRenewalInvalid = $true
+    }
+    $canaryExecutableLines = @(Get-ExecutableBashLines -Text $canaryObservationSection)
+    $canarySleepLines = @($canaryExecutableLines | Where-Object { $_ -match '^sleep(?:\s|$)' })
+    $approvedCanarySleeps = @(
+        'sleep "$LOCK_RENEWAL_INTERVAL_SECONDS"',
+        'sleep "$((300 - LOCK_RENEWAL_INTERVAL_SECONDS))"'
+    )
+    if (
+        $canarySleepLines.Count -ne 2 -or
+        $canarySleepLines[0] -cne $approvedCanarySleeps[0] -or
+        $canarySleepLines[1] -cne $approvedCanarySleeps[1]
+    ) {
+        $canaryRenewalInvalid = $true
+    } else {
+        $resolvedCanarySleepSeconds = @(240, 60)
+        $canaryGapCount = 3 - 1
+        if (
+            @($resolvedCanarySleepSeconds | Where-Object { $_ -ge 300 }).Count -ne 0 -or
+            (($resolvedCanarySleepSeconds | Measure-Object -Sum).Sum * $canaryGapCount) -lt 600
+        ) {
+            $canaryRenewalInvalid = $true
+        }
+
+        $firstSleepIndex = [array]::IndexOf($canaryExecutableLines, $approvedCanarySleeps[0])
+        $secondSleepIndex = [array]::IndexOf($canaryExecutableLines, $approvedCanarySleeps[1])
+        $renewalBetweenSleeps = $false
+        if ($firstSleepIndex -ge 0 -and $secondSleepIndex -gt $firstSleepIndex) {
+            for ($index = $firstSleepIndex + 1; $index -lt $secondSleepIndex; $index++) {
+                if ($canaryExecutableLines[$index] -ceq 'run_rollout recovery-audit canary --action=renew-lock --ttl-seconds=900') {
+                    $renewalBetweenSleeps = $true
+                    break
+                }
+            }
+        }
+        if (-not $renewalBetweenSleeps) {
+            $canaryRenewalInvalid = $true
+        }
     }
     if ($canaryRenewalInvalid) {
         Add-Failure 'Canary lock renewal contract failed.'
@@ -736,6 +853,16 @@ if [ "$ROLLBACK_EXIT" -ne 0 ]; then
   exit "$ROLLBACK_EXIT"
 fi
 '@
+    $canaryRollbackExecutableLines = @(Get-ExecutableBashLines -Text $canaryRollbackSection)
+    [void](Test-ConsecutiveExecutableBashLines -Label 'Canary rollback ordering contract' -Lines $canaryRollbackExecutableLines -Expected @(
+        'run_rollout rollback canary',
+        'ROLLBACK_EXIT=$?',
+        'set -e',
+        'if [ "$ROLLBACK_EXIT" -ne 0 ]; then',
+        "printf '%s\n' 'Canary rollback failed; lock and evidence preserved for recovery audit.' >&2",
+        'exit "$ROLLBACK_EXIT"',
+        'fi'
+    ))
     if (-not $canaryRollbackSection.Contains($canaryRollbackGate)) {
         Add-Failure 'Canary rollback ordering contract failed: immediate nonzero gate is missing.'
     }
@@ -773,41 +900,104 @@ fi
         }
     }
 
-    $stage2CompatibilityPosition = $stage2Section.IndexOf('run_rollout compatibility-sync full', [System.StringComparison]::Ordinal)
-    $stage2ClosePosition = $stage2Section.IndexOf('run_rollout recovery-audit full --action=close-ledger --require-final-event=compatibility-sync', [System.StringComparison]::Ordinal)
+    $stage2ExecutableLines = @(Get-ExecutableBashLines -Text $stage2Section)
+    $stage2CompatibilityIndexes = @(
+        for ($index = 0; $index -lt $stage2ExecutableLines.Count; $index++) {
+            if ($stage2ExecutableLines[$index] -ceq 'run_rollout compatibility-sync full') {
+                $index
+            }
+        }
+    )
+    $firstStage2CompatibilityIndex = if ($stage2CompatibilityIndexes.Count -gt 0) { $stage2CompatibilityIndexes[0] } else { -1 }
     $requiredStage2Gates = @(
         'verify_rollout cache-warm full',
         'verify_rollout public-inventory full --expected-active-pilots=17 --expected-permanent-controls=4',
         'verify_rollout browser-matrix full',
-        'verify_rollout tablet-canary full',
-        'verify_rollout reduced-motion-canary full',
-        'verify_rollout forced-colors-canary full',
+        'verify_rollout tablet-canary full --viewport="$CANARY_TABLET_VIEWPORT" --expected-runs="$CANARY_TABLET_RUNS_EXPECTED"',
+        'verify_rollout reduced-motion-canary full --expected-runs="$CANARY_REDUCED_MOTION_RUNS_EXPECTED"',
+        'verify_rollout forced-colors-canary full --expected-runs="$CANARY_FORCED_COLORS_RUNS_EXPECTED"',
         'verify_rollout keyboard-zoom-focus-overflow full',
         'verify_rollout console-h1-module-content full',
-        'verify_rollout performance-budgets full',
-        'verify_rollout cache-budgets full',
+        'verify_rollout performance-budgets full \',
+        'verify_rollout cache-budgets full --max-warm-queries="$MAX_WARM_QUERIES" --max-cold-queries="$MAX_COLD_QUERIES"',
         'verify_rollout log-observation full',
         'verify_rollout permanent-controls full'
     )
     foreach ($gate in $requiredStage2Gates) {
-        $gatePosition = $stage2Section.IndexOf($gate, [System.StringComparison]::Ordinal)
-        if ($gatePosition -lt 0 -or $stage2CompatibilityPosition -lt 0 -or $gatePosition -gt $stage2CompatibilityPosition) {
+        $gateIndexes = @(
+            for ($index = 0; $index -lt $stage2ExecutableLines.Count; $index++) {
+                if ($stage2ExecutableLines[$index] -ceq $gate) {
+                    $index
+                }
+            }
+        )
+        if ($gateIndexes.Count -ne 1 -or $firstStage2CompatibilityIndex -lt 0 -or $gateIndexes[0] -gt $firstStage2CompatibilityIndex) {
             Add-Failure "Stage 2 gate ordering contract failed: $gate"
             break
         }
     }
-    [void](Test-OrderedMarkers -Label 'Stage 2 gate ordering contract' -Text $stage2Section -Markers @(
+
+    $stage2PublicVerifierBlock = @'
+powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\ops\verify-comparison-rollout-public.ps1 `
+    -Stage full `
+    -Origin 'https://vietnamguide.net'
+if ($LASTEXITCODE -ne 0) { throw 'Full-stage public HTTP verification failed.' }
+'@
+    $stage2PublicVerifierPosition = $stage2Section.IndexOf($stage2PublicVerifierBlock, [System.StringComparison]::Ordinal)
+    if (
+        $stage2PublicVerifierPosition -lt 0 -or
+        $stage2PublicVerifierPosition -ne $stage2Section.LastIndexOf($stage2PublicVerifierBlock, [System.StringComparison]::Ordinal) -or
+        $stage2PublicVerifierPosition -gt $stage2Section.IndexOf('run_rollout compatibility-sync full', [System.StringComparison]::Ordinal)
+    ) {
+        Add-Failure 'Stage 2 public HTTP verification contract failed.'
+    }
+
+    $stage2BrowserBatchInvalid = (
+        ([regex]::Matches($stage2Section, '(?m)^BROWSER_QA_BATCH_COUNT=3$')).Count -ne 1 -or
+        ([regex]::Matches($stage2Section, '(?m)^BROWSER_QA_RUNS_PER_BATCH=6$')).Count -ne 1 -or
+        -not $stage2Section.Contains('test "$((BROWSER_QA_BATCH_COUNT * BROWSER_QA_RUNS_PER_BATCH))" -eq "$BROWSER_MATRIX_RUNS_EXPECTED"')
+    )
+    if (-not (Test-ConsecutiveExecutableBashLines -Label 'Stage 2 browser QA renewal contract' -Lines $stage2ExecutableLines -Expected @(
+        'for qa_batch in 1 2 3; do',
+        'run_rollout recovery-audit full --action=renew-lock --ttl-seconds=900',
+        'verify_rollout browser-matrix-batch full --batch="$qa_batch" --expected-runs="$BROWSER_QA_RUNS_PER_BATCH" --max-duration-seconds="$MAX_QA_BATCH_SECONDS"',
+        'run_rollout recovery-audit full --action=renew-lock --ttl-seconds=900',
+        'done'
+    ))) {
+        $stage2BrowserBatchInvalid = $true
+    }
+    if ($stage2BrowserBatchInvalid) {
+        Add-Failure 'Stage 2 browser QA renewal contract failed.'
+    }
+
+    $stage2Tail = @(
         'verify_rollout permanent-controls full',
         'run_rollout compatibility-sync full',
         'run_rollout compatibility-sync full',
         'verify_rollout compatibility-equivalence full',
         'run_rollout recovery-audit full --action=close-ledger --require-final-event=compatibility-sync',
-        'test ! -e "$STATE_DIR/lock.json"'
-    ))
+        'test ! -e "$STATE_DIR/lock.json"',
+        'verify_rollout closed full'
+    )
+    $stage2TailCursor = -1
+    foreach ($marker in $stage2Tail) {
+        $markerIndex = -1
+        for ($index = $stage2TailCursor + 1; $index -lt $stage2ExecutableLines.Count; $index++) {
+            if ($stage2ExecutableLines[$index] -ceq $marker) {
+                $markerIndex = $index
+                break
+            }
+        }
+        if ($markerIndex -lt 0) {
+            Add-Failure "Stage 2 gate ordering contract failed: missing or out-of-order executable gate: $marker"
+            break
+        }
+        $stage2TailCursor = $markerIndex
+    }
     if (
-        $stage2ClosePosition -lt $stage2CompatibilityPosition -or
-        ([regex]::Matches($stage2Section, '(?m)^run_rollout compatibility-sync full$')).Count -ne 2 -or
-        ([regex]::Matches($stage2Section, '(?m)^run_rollout recovery-audit full --action=renew-lock --ttl-seconds=900$')).Count -lt 3
+        $stage2CompatibilityIndexes.Count -ne 2 -or
+        @($stage2ExecutableLines | Where-Object { $_ -ceq 'run_rollout recovery-audit full --action=close-ledger --require-final-event=compatibility-sync' }).Count -ne 1 -or
+        @($stage2ExecutableLines | Where-Object { $_ -ceq 'run_rollout recovery-audit full --action=renew-lock --ttl-seconds=900' }).Count -lt 5
     ) {
         Add-Failure 'Stage 2 gate ordering contract failed: sync, close, or lock-renewal count is unsafe.'
     }
@@ -819,6 +1009,16 @@ if [ "$ROLLBACK_EXIT" -ne 0 ]; then
   exit "$ROLLBACK_EXIT"
 fi
 '@
+    $stage2RollbackExecutableLines = @(Get-ExecutableBashLines -Text $stage2RollbackSection)
+    [void](Test-ConsecutiveExecutableBashLines -Label 'Stage 2 rollback ordering contract' -Lines $stage2RollbackExecutableLines -Expected @(
+        'run_rollout rollback full',
+        'ROLLBACK_EXIT=$?',
+        'set -e',
+        'if [ "$ROLLBACK_EXIT" -ne 0 ]; then',
+        "printf '%s\n' 'Stage 2 rollback failed; lock and evidence preserved for recovery audit.' >&2",
+        'exit "$ROLLBACK_EXIT"',
+        'fi'
+    ))
     if (-not $stage2RollbackSection.Contains($stage2RollbackGate)) {
         Add-Failure 'Stage 2 rollback ordering contract failed: immediate nonzero gate is missing.'
     }
@@ -856,7 +1056,20 @@ fi
     ) {
         Add-Failure 'Release payload execution-root contract failed.'
     }
+    $allExecutableBashLines = @(Get-ExecutableBashLines -Text $normalizedAddendumText)
+    $releaseInstallInvocations = @(
+        $allExecutableBashLines | Where-Object {
+            $_ -match '^php\b.*install-comparison-rollout-release\.php(?:"|''|\s).*\sinstall(?:\s|$)'
+        }
+    )
+    if (
+        $releaseInstallInvocations.Count -ne 1 -or
+        $releaseInstallInvocations[0] -cne 'php "$RELEASE_PAYLOAD_DIR/ops/install-comparison-rollout-release.php" install \'
+    ) {
+        Add-Failure 'Release installer invocation contract failed.'
+    }
     [void](Test-OrderedMarkers -Label 'Post-publication release identity contract' -Text $releasePublicationSection -Markers @(
+        'test ! -e "$RELEASE_PAYLOAD_DIR"',
         'mv -- "$INSTALL_ROOT" "$RELEASE_PAYLOAD_DIR"',
         'test -f "$RELEASE_PAYLOAD_DIR/.vietnamguide-release-sha256"',
         'test "$(cat "$RELEASE_PAYLOAD_DIR/.vietnamguide-release-sha256")" = "$VG_ARTIFACT_HASH"',

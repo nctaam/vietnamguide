@@ -596,7 +596,33 @@ for path in "${CANARY_PATHS[@]}" "${STAGE2_PATHS[@]}"; do
 done
 verify_rollout cache-warm full
 
+BROWSER_QA_BATCH_COUNT=3
+BROWSER_QA_RUNS_PER_BATCH=6
+test "$((BROWSER_QA_BATCH_COUNT * BROWSER_QA_RUNS_PER_BATCH))" -eq "$BROWSER_MATRIX_RUNS_EXPECTED"
 run_rollout recovery-audit full --action=renew-lock --ttl-seconds=900
+```
+
+Keep the production root shell open with the same `$VG_RUN_ID`. The renewal immediately before leaving it idle must succeed before workstation HTTP verification starts. From the Windows workstation, run the full-stage public verifier:
+
+```powershell
+$RepoRoot = 'C:\Users\NCTaam\projects\vietnamguide'
+Set-Location -LiteralPath $RepoRoot
+powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\ops\verify-comparison-rollout-public.ps1 `
+    -Stage full `
+    -Origin 'https://vietnamguide.net'
+if ($LASTEXITCODE -ne 0) { throw 'Full-stage public HTTP verification failed.' }
+```
+
+Return to the existing production root shell without changing `$VG_RUN_ID`. Renew the same lock as the first production action, then attest the three bounded six-run browser batches. Every batch is bracketed by successful renewal before the next batch or gate may begin:
+
+```bash
+run_rollout recovery-audit full --action=renew-lock --ttl-seconds=900
+for qa_batch in 1 2 3; do
+  run_rollout recovery-audit full --action=renew-lock --ttl-seconds=900
+  verify_rollout browser-matrix-batch full --batch="$qa_batch" --expected-runs="$BROWSER_QA_RUNS_PER_BATCH" --max-duration-seconds="$MAX_QA_BATCH_SECONDS"
+  run_rollout recovery-audit full --action=renew-lock --ttl-seconds=900
+done
+
 verify_rollout public-inventory full --expected-active-pilots=17 --expected-permanent-controls=4
 verify_rollout browser-matrix full
 run_rollout recovery-audit full --action=renew-lock --ttl-seconds=900

@@ -14,8 +14,8 @@ $localOpsManifestRelative = 'tests\fixtures\recovery-local-ops-manifest.json'
 $tempParent = [System.IO.Path]::GetFullPath([System.IO.Path]::GetTempPath())
 $tempRoot = Join-Path $tempParent ("vietnamguide-recovery-mutations-" + [guid]::NewGuid().ToString('N'))
 $results = [System.Collections.Generic.List[object]]::new()
-$expectedResultCount = if ($RunbookSafetyOnly) { 19 } else { 64 }
-$expectedRunbookSafetyResultCount = 17
+$expectedResultCount = if ($RunbookSafetyOnly) { 31 } else { 76 }
+$expectedRunbookSafetyResultCount = 29
 
 function Copy-DirectoryContent {
     param([string]$Source, [string]$Destination)
@@ -308,6 +308,8 @@ try {
     Add-Result -Name 'baseline fixture passes' -Passed ($baselineResult.ExitCode -eq 0) -Detail $baselineResult.Output
     Add-Result -Name 'exact local ops stack passes' -Passed ($baselineResult.ExitCode -eq 0) -Detail $baselineResult.Output
 
+    $lineContinuation = [char]96
+    $markdownFence = ([string][char]96) * 3
     $runbookSafetyMutations = @(
         [pscustomobject]@{
             Name = 'runbook safety: recovered verifier native check removal is rejected'
@@ -413,6 +415,69 @@ try {
             OldText = "test -f `"`$RELEASE_PAYLOAD_DIR/.vietnamguide-release-sha256`"`ntest `"`$(cat `"`$RELEASE_PAYLOAD_DIR/.vietnamguide-release-sha256`")`" = `"`$VG_ARTIFACT_HASH`"`ntest -f `"`$RELEASE_PAYLOAD_DIR/payload-manifest.json`""
             NewText = "test -f `"`$RELEASE_PAYLOAD_DIR/.vietnamguide-release-sha256`"`ntest -f `"`$RELEASE_PAYLOAD_DIR/payload-manifest.json`""
             ExpectedFailure = 'Post-publication release identity contract failed'
+        },
+        [pscustomobject]@{
+            Name = 'runbook safety: missing full-stage public HTTP verifier is rejected'
+            FixtureName = 'runbook-full-public-verifier-missing'
+            OldText = "powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\ops\verify-comparison-rollout-public.ps1 $lineContinuation`n    -Stage full $lineContinuation`n    -Origin 'https://vietnamguide.net'`nif (`$LASTEXITCODE -ne 0) { throw 'Full-stage public HTTP verification failed.' }"
+            NewText = ''
+            ExpectedFailure = 'Stage 2 public HTTP verification contract failed'
+        },
+        [pscustomobject]@{
+            Name = 'runbook safety: wrong-polarity native guard is rejected'
+            FixtureName = 'runbook-native-wrong-polarity'
+            OldText = "scp -- `$ArtifactZip `"`${ProdUser}@`${ProdHost}:`$RemotePart`"`nif (`$LASTEXITCODE -ne 0) { throw 'Artifact upload failed.' }"
+            NewText = "scp -- `$ArtifactZip `"`${ProdUser}@`${ProdHost}:`$RemotePart`"`nif (`$LASTEXITCODE -eq 0) { throw 'Artifact upload failed.' }"
+            ExpectedFailure = 'Artifact upload block native fail-fast contract failed'
+        },
+        [pscustomobject]@{
+            Name = 'runbook safety: nonblocking native guard is rejected'
+            FixtureName = 'runbook-native-nonblocking-guard'
+            OldText = "ssh -t `"`$ProdUser@`$ProdHost`" 'sudo -i'`nif (`$LASTEXITCODE -ne 0) { throw 'Unable to enter the approved production root shell.' }"
+            NewText = "ssh -t `"`$ProdUser@`$ProdHost`" 'sudo -i'`nif (`$LASTEXITCODE -ne 0) { Write-Warning 'Production shell entry failed.' }"
+            ExpectedFailure = 'Production SSH entry native fail-fast contract failed'
+        },
+        [pscustomobject]@{
+            Name = 'runbook safety: canary rollback pre-gate cache action is rejected'
+            FixtureName = 'runbook-canary-rollback-pre-gate-action'
+            OldText = "run_rollout rollback canary`nROLLBACK_EXIT=`$?`nset -e`n`nif [ `"`$ROLLBACK_EXIT`" -ne 0 ]; then"
+            NewText = "run_rollout rollback canary`nROLLBACK_EXIT=`$?`nset -e`nwp --path=`"`$WP_ROOT`" --allow-root cache flush`n`nif [ `"`$ROLLBACK_EXIT`" -ne 0 ]; then"
+            ExpectedFailure = 'Canary rollback ordering contract failed'
+        },
+        [pscustomobject]@{
+            Name = 'runbook safety: stage 2 rollback pre-gate verification is rejected'
+            FixtureName = 'runbook-stage2-rollback-pre-gate-action'
+            OldText = "run_rollout rollback full`nROLLBACK_EXIT=`$?`nset -e`n`nif [ `"`$ROLLBACK_EXIT`" -ne 0 ]; then"
+            NewText = "run_rollout rollback full`nROLLBACK_EXIT=`$?`nset -e`nverify_rollout baseline-hashes full`n`nif [ `"`$ROLLBACK_EXIT`" -ne 0 ]; then"
+            ExpectedFailure = 'Stage 2 rollback ordering contract failed'
+        },
+        [pscustomobject]@{
+            Name = 'runbook safety: canary sleep over 300 seconds is rejected'
+            FixtureName = 'runbook-canary-sleep-301'
+            OldText = "sleep `"`$LOCK_RENEWAL_INTERVAL_SECONDS`"`n    run_rollout recovery-audit canary --action=renew-lock --ttl-seconds=900`n    sleep `"`$((300 - LOCK_RENEWAL_INTERVAL_SECONDS))`""
+            NewText = "sleep `"`$LOCK_RENEWAL_INTERVAL_SECONDS`"`n    run_rollout recovery-audit canary --action=renew-lock --ttl-seconds=900`n    sleep 301`n    sleep `"`$((300 - LOCK_RENEWAL_INTERVAL_SECONDS))`""
+            ExpectedFailure = 'Canary lock renewal contract failed'
+        },
+        [pscustomobject]@{
+            Name = 'runbook safety: unprovable canary sleep duration is rejected'
+            FixtureName = 'runbook-canary-unprovable-sleep'
+            OldText = "sleep `"`$LOCK_RENEWAL_INTERVAL_SECONDS`"`n    run_rollout recovery-audit canary --action=renew-lock --ttl-seconds=900`n    sleep `"`$((300 - LOCK_RENEWAL_INTERVAL_SECONDS))`""
+            NewText = "sleep `"`$LOCK_RENEWAL_INTERVAL_SECONDS`"`n    run_rollout recovery-audit canary --action=renew-lock --ttl-seconds=900`n    sleep `"`$UNBOUNDED_WAIT_SECONDS`"`n    sleep `"`$((300 - LOCK_RENEWAL_INTERVAL_SECONDS))`""
+            ExpectedFailure = 'Canary lock renewal contract failed'
+        },
+        [pscustomobject]@{
+            Name = 'runbook safety: browser QA batch missing post-renewal is rejected'
+            FixtureName = 'runbook-stage2-browser-batch-renewal'
+            OldText = "for qa_batch in 1 2 3; do`n  run_rollout recovery-audit full --action=renew-lock --ttl-seconds=900`n  verify_rollout browser-matrix-batch full --batch=`"`$qa_batch`" --expected-runs=`"`$BROWSER_QA_RUNS_PER_BATCH`" --max-duration-seconds=`"`$MAX_QA_BATCH_SECONDS`"`n  run_rollout recovery-audit full --action=renew-lock --ttl-seconds=900`ndone"
+            NewText = "for qa_batch in 1 2 3; do`n  run_rollout recovery-audit full --action=renew-lock --ttl-seconds=900`n  verify_rollout browser-matrix-batch full --batch=`"`$qa_batch`" --expected-runs=`"`$BROWSER_QA_RUNS_PER_BATCH`" --max-duration-seconds=`"`$MAX_QA_BATCH_SECONDS`"`ndone"
+            ExpectedFailure = 'Stage 2 browser QA renewal contract failed'
+        },
+        [pscustomobject]@{
+            Name = 'runbook safety: early install from install root is rejected'
+            FixtureName = 'runbook-early-install-root-execution'
+            OldText = "mkdir -m 0750 `"`$RELEASE_DIR`""
+            NewText = "php `"`$INSTALL_ROOT/ops/install-comparison-rollout-release.php`" install $lineContinuation`n  --release-root=`"`$INSTALL_ROOT`" $lineContinuation`n  --wordpress-root=`"`$WP_ROOT`" $lineContinuation`n  --state-dir=`"`$STATE_DIR`" $lineContinuation`n  --run-id=`"`$VG_RUN_ID`"`n`nmkdir -m 0750 `"`$RELEASE_DIR`""
+            ExpectedFailure = 'Release installer invocation contract failed'
         }
     )
     foreach ($mutation in $runbookSafetyMutations) {
@@ -447,6 +512,40 @@ try {
     $stage2RollbackVerifier = Set-AuthorizedExecutionAddendumText -Fixture $stage2RollbackOrdering -Text $stage2RollbackText
     $stage2RollbackResult = Invoke-CaseVerifier -Fixture $stage2RollbackOrdering -VerifierPath $stage2RollbackVerifier
     Add-Result -Name 'runbook safety: stage 2 rollback success gate after ledger close is rejected' -Passed ($stage2RollbackResult.ExitCode -ne 0 -and $stage2RollbackResult.Output -match 'Stage 2 rollback ordering contract failed') -Detail $stage2RollbackResult.Output
+
+    $fullPublicAfterSync = New-CaseFixture -Name 'runbook-full-public-after-sync'
+    $fullPublicAfterSyncText = [System.IO.File]::ReadAllText((Get-ExecutionAddendumPath -Fixture $fullPublicAfterSync))
+    $fullPublicBlock = "powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\ops\verify-comparison-rollout-public.ps1 $lineContinuation`n    -Stage full $lineContinuation`n    -Origin 'https://vietnamguide.net'`nif (`$LASTEXITCODE -ne 0) { throw 'Full-stage public HTTP verification failed.' }"
+    if ($fullPublicAfterSyncText.Contains($fullPublicBlock)) {
+        $fullPublicAfterSyncText = $fullPublicAfterSyncText.Replace($fullPublicBlock, '')
+        $fullCloseMarker = 'verify_rollout closed full'
+        $fullPublicAfterSyncText = $fullPublicAfterSyncText.Replace($fullCloseMarker, ($fullCloseMarker + "`n`n$markdownFence" + "powershell`n" + $fullPublicBlock + "`n$markdownFence"))
+    }
+    $fullPublicAfterSyncVerifier = Set-AuthorizedExecutionAddendumText -Fixture $fullPublicAfterSync -Text $fullPublicAfterSyncText
+    $fullPublicAfterSyncResult = Invoke-CaseVerifier -Fixture $fullPublicAfterSync -VerifierPath $fullPublicAfterSyncVerifier
+    Add-Result -Name 'runbook safety: full-stage public HTTP verifier after sync is rejected' -Passed ($fullPublicAfterSyncResult.ExitCode -ne 0 -and $fullPublicAfterSyncResult.Output -match 'Stage 2 public HTTP verification contract failed') -Detail $fullPublicAfterSyncResult.Output
+
+    $commentSpoofedStage2Gate = New-CaseFixture -Name 'runbook-stage2-comment-spoofed-gate'
+    $commentSpoofedStage2GateText = [System.IO.File]::ReadAllText((Get-ExecutionAddendumPath -Fixture $commentSpoofedStage2Gate))
+    $browserGate = 'verify_rollout browser-matrix full'
+    if ($commentSpoofedStage2GateText.Contains($browserGate)) {
+        $commentSpoofedStage2GateText = $commentSpoofedStage2GateText.Replace($browserGate, ('# ' + $browserGate))
+        $fullCloseMarker = 'verify_rollout closed full'
+        $commentSpoofedStage2GateText = $commentSpoofedStage2GateText.Replace($fullCloseMarker, ($fullCloseMarker + "`n" + $browserGate))
+    }
+    $commentSpoofedStage2GateVerifier = Set-AuthorizedExecutionAddendumText -Fixture $commentSpoofedStage2Gate -Text $commentSpoofedStage2GateText
+    $commentSpoofedStage2GateResult = Invoke-CaseVerifier -Fixture $commentSpoofedStage2Gate -VerifierPath $commentSpoofedStage2GateVerifier
+    Add-Result -Name 'runbook safety: commented stage 2 gate cannot spoof executable ordering' -Passed ($commentSpoofedStage2GateResult.ExitCode -ne 0 -and $commentSpoofedStage2GateResult.Output -match 'Stage 2 gate ordering contract failed') -Detail $commentSpoofedStage2GateResult.Output
+
+    $duplicateStage2Gate = New-CaseFixture -Name 'runbook-stage2-duplicate-gate'
+    $duplicateStage2GateText = [System.IO.File]::ReadAllText((Get-ExecutionAddendumPath -Fixture $duplicateStage2Gate))
+    $fullCloseMarker = 'verify_rollout closed full'
+    if ($duplicateStage2GateText.Contains($fullCloseMarker)) {
+        $duplicateStage2GateText = $duplicateStage2GateText.Replace($fullCloseMarker, ($fullCloseMarker + "`nverify_rollout log-observation full"))
+    }
+    $duplicateStage2GateVerifier = Set-AuthorizedExecutionAddendumText -Fixture $duplicateStage2Gate -Text $duplicateStage2GateText
+    $duplicateStage2GateResult = Invoke-CaseVerifier -Fixture $duplicateStage2Gate -VerifierPath $duplicateStage2GateVerifier
+    Add-Result -Name 'runbook safety: duplicate stage 2 gate is rejected' -Passed ($duplicateStage2GateResult.ExitCode -ne 0 -and $duplicateStage2GateResult.Output -match 'Stage 2 gate ordering contract failed') -Detail $duplicateStage2GateResult.Output
 
     if (-not $RunbookSafetyOnly) {
     $missingLocalOpsManifest = New-CaseFixture -Name 'local-ops-manifest-missing'
