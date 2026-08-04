@@ -8,8 +8,8 @@
     },
     {
       "relativePath": "ops/verify-core-mu-plugin.ps1",
-      "length": 30218,
-      "sha256": "8f2db448f7af3b62293c71fe44cbf415b3d5e4a14d3d198dd5be82d2cd8da65c"
+      "length": 30539,
+      "sha256": "1334d35e895a8eac7d5122b482a188f19072ae5b636c46ce44f6257fd1a1419d"
     },
     {
       "relativePath": "ops/verify-core-mu-plugin-live.php",

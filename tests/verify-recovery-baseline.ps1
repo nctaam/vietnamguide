@@ -406,8 +406,8 @@ $localAuthoredManifestPath = Join-Path $repoRoot 'tests\fixtures\recovery-local-
 $localAuthoredExpected = @(
     [pscustomobject]@{
         relativePath = 'docs/superpowers/plans/2026-08-03-vietnamguide-comparison-recovery-execution-addendum.md'
-        length = 31762
-        sha256 = '810533b57963f7f8085e5bfaf64f8687fc568a127845124d0252c43f0005f140'
+        length = 31940
+        sha256 = '26118ef81b09941e1101a0effcf67ba1b7a638b5c5cd374ebf5397c47ddb4969'
     }
 )
 $validatedLocalAuthored = @(Read-ValidatedLocalArtifactManifest -ManifestPath $localAuthoredManifestPath -Label 'Recovery local-authored' -ExpectedEntries $localAuthoredExpected)
@@ -441,8 +441,8 @@ $localOpsExpected = @(
     },
     [pscustomobject]@{
         relativePath = 'ops/verify-core-mu-plugin.ps1'
-        length = 30218
-        sha256 = '8f2db448f7af3b62293c71fe44cbf415b3d5e4a14d3d198dd5be82d2cd8da65c'
+        length = 30539
+        sha256 = '1334d35e895a8eac7d5122b482a188f19072ae5b636c46ce44f6257fd1a1419d'
     },
     [pscustomobject]@{
         relativePath = 'ops/verify-core-mu-plugin-live.php'

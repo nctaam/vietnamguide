@@ -28,7 +28,7 @@ The seven independently preserved files came from the approved local recovery so
 | Path | Bytes | Raw SHA-256 | Git blob (`--no-filters`) |
 | --- | ---: | --- | --- |
 | `ops/verify-core-block-patterns.ps1` | 14,206 | `30f4be5818b15e4cd8c3ad9b616aeddebd77ff97aa4922a3c89dfaaa35b23c85` | `4d98e5bed9f8a28646fdaf71fe3e82a51923063b` |
-| `ops/verify-core-mu-plugin.ps1` | 30,218 | `8f2db448f7af3b62293c71fe44cbf415b3d5e4a14d3d198dd5be82d2cd8da65c` | `042dda3a158c1af5a0528086772e2c98a8173ca7` |
+| `ops/verify-core-mu-plugin.ps1` | 30,539 | `1334d35e895a8eac7d5122b482a188f19072ae5b636c46ce44f6257fd1a1419d` | `c342e9fd043a6581c4c27a9c528b87bdd36ac31e` |
 | `ops/verify-core-mu-plugin-live.php` | 9,743 | `280424139dc8b29ba2911d7d3caf1a203499c742efd6d6a243b0d98a7dc8e842` | `1228812252c71e9b5ea9950b0a6ae5db4324c358` |
 | `ops/verify-homepage-theme.ps1` | 30,042 | `0c58f228806da1d121bce622d991f738f3d4552c4bf9dbbb3a8640dbb474558b` | `726a8dc5215984653901667a1cf0d51c2c8a8ba1` |
 | `ops/verify-guide-experience.ps1` | 121,518 | `60f2446f513dae8ff9ea84b6a90823bb8ab35b30dd3699602ca65d41f95b21ec` | `7f79b7fe0be66923c31d485075d705657f43ab93` |
@@ -48,7 +48,7 @@ For reconstruction provenance, canonical LF normalization of the three replayed 
 
 ## Historical Applicability Findings
 
-- The exact core MU verifier passes against the approved salvage state, whose MU plugin uses CRLF. Against the production-pinned LF plugin, its one multiline affiliate-loop mutation fixture cannot find the CRLF here-string target and reports `Mutation setup failed`. The product contract itself passes; a separate follow-up commit must make only this fixture replacement portable without changing the production plugin.
+- Exact recovery commit `4ca75ab309f48124ef5d7383dceefc51d50aa85b` preserved the 30,218-byte core MU verifier with SHA-256 `8f2db448f7af3b62293c71fe44cbf415b3d5e4a14d3d198dd5be82d2cd8da65c`. It passes against the approved CRLF salvage state but its multiline affiliate-loop fixture cannot locate the production-pinned LF block. The follow-up TDD hardening changes only that fixture replacement to follow the plugin line ending; the production plugin and source manifest remain unchanged.
 - The exact homepage verifier passes against the approved later salvage homepage state. It is not directly applicable to the recovered production baseline because it requires `ops/build-homepage-images.py`, `ops/test-homepage-images.py`, `qa/homepage-preview.html`, and Ha Long Bay credit metadata that are not in the production source manifest. Those unrelated assets must not be added to the strict ten-file local-ops contract, and the canonical theme README must not be changed to satisfy this historical verifier.
 
 ## Boundaries

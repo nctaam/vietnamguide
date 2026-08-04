@@ -64,7 +64,7 @@ Never reconstruct file contents from memory. Pin the exact path set, raw byte le
 | Path | Raw bytes | Raw SHA-256 |
 | --- | ---: | --- |
 | `ops/verify-core-block-patterns.ps1` | 14,206 | `30f4be5818b15e4cd8c3ad9b616aeddebd77ff97aa4922a3c89dfaaa35b23c85` |
-| `ops/verify-core-mu-plugin.ps1` | 30,218 | `8f2db448f7af3b62293c71fe44cbf415b3d5e4a14d3d198dd5be82d2cd8da65c` |
+| `ops/verify-core-mu-plugin.ps1` | 30,539 | `1334d35e895a8eac7d5122b482a188f19072ae5b636c46ce44f6257fd1a1419d` |
 | `ops/verify-core-mu-plugin-live.php` | 9,743 | `280424139dc8b29ba2911d7d3caf1a203499c742efd6d6a243b0d98a7dc8e842` |
 | `ops/verify-homepage-theme.ps1` | 30,042 | `0c58f228806da1d121bce622d991f738f3d4552c4bf9dbbb3a8640dbb474558b` |
 | `ops/verify-guide-experience.ps1` | 121,518 | `60f2446f513dae8ff9ea84b6a90823bb8ab35b30dd3699602ca65d41f95b21ec` |
@@ -116,6 +116,8 @@ if ($LASTEXITCODE -ne 0) { throw 'Node syntax check failed: ops/verify-guide-exp
 
 powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\ops\verify-core-block-patterns.ps1
 if ($LASTEXITCODE -ne 0) { throw 'Core block-pattern verification failed.' }
+powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\tests\verify-core-mu-plugin-portability.ps1
+if ($LASTEXITCODE -ne 0) { throw 'Core MU-plugin LF/CRLF portability verification failed.' }
 powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\ops\verify-core-mu-plugin.ps1
 if ($LASTEXITCODE -ne 0) { throw 'Core MU-plugin verification failed.' }
 powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\ops\verify-homepage-theme.ps1
@@ -130,7 +132,7 @@ if ($LASTEXITCODE -ne 0) { throw 'Guide Experience public fixture verification f
 
 The byte-exact recovery has two historical applicability findings that must remain fail-fast and visible:
 
-- The exact core MU verifier passes against the approved salvage state, where the MU plugin uses CRLF. Its multiline affiliate-loop mutation setup is line-ending-sensitive and fails to locate the same LF block in the production-pinned MU plugin. Fix that verifier portability in a separate TDD commit; do not modify the production plugin or source manifest.
+- Exact recovery commit `4ca75ab309f48124ef5d7383dceefc51d50aa85b` preserves the original core MU verifier blob and its line-ending-sensitive RED. The follow-up TDD hardening changes only the multiline affiliate-loop fixture replacement to follow either LF or CRLF source content; the production plugin and source manifest remain unchanged.
 - The exact homepage verifier passes against the approved later salvage homepage state. It requires two local image-build scripts, a QA preview, and Ha Long Bay credit metadata that are outside the recovered production baseline. Do not expand the ten-file local-ops contract or change the production-pinned theme README to make this historical verifier applicable. Independent review must decide the future homepage verification contract before Task 2.
 
 The restored mutation harness must preserve the original inventory of exactly 111 unique named mutations and report all 111 rejected for their intended reasons. Run the recovery baseline again, run `git diff --check`, verify the recovered files against the Git index with `git hash-object --no-filters`, obtain independent spec and quality reviews, and commit only the recovered verifier stack. Record that reviewed commit as:
