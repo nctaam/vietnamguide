@@ -301,7 +301,7 @@ printf '%s\n' "$VG_ARTIFACT_HASH" > "$INSTALL_ROOT/.vietnamguide-release-sha256"
 mkdir -m 0750 "$RELEASE_DIR"
 RELEASE_PAYLOAD_DIR="$RELEASE_DIR/payload"
 test ! -e "$RELEASE_PAYLOAD_DIR"
-mv -- "$INSTALL_ROOT" "$RELEASE_PAYLOAD_DIR"
+mv -T -- "$INSTALL_ROOT" "$RELEASE_PAYLOAD_DIR"
 
 test -f "$RELEASE_PAYLOAD_DIR/.vietnamguide-release-sha256"
 test "$(cat "$RELEASE_PAYLOAD_DIR/.vietnamguide-release-sha256")" = "$VG_ARTIFACT_HASH"

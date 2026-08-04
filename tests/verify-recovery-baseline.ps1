@@ -618,8 +618,8 @@ $localAuthoredManifestPath = Join-Path $repoRoot 'tests\fixtures\recovery-local-
 $localAuthoredExpected = @(
     [pscustomobject]@{
         relativePath = 'docs/superpowers/plans/2026-08-03-vietnamguide-comparison-recovery-execution-addendum.md'
-        length = 44881
-        sha256 = 'b90d8f16af8aba164a045018ef75a107db605424168c0082e3606b0a90d14a1b'
+        length = 44884
+        sha256 = '0381ad940343495f0d8b7c95d488adb8fcede2b57caf94bf3d81d08c19fe9737'
     }
 )
 $validatedLocalAuthored = @(Read-ValidatedLocalArtifactManifest -ManifestPath $localAuthoredManifestPath -Label 'Recovery local-authored' -ExpectedEntries $localAuthoredExpected)
@@ -1047,8 +1047,13 @@ fi
         'mkdir -m 0750 "$RELEASE_DIR"',
         'RELEASE_PAYLOAD_DIR="$RELEASE_DIR/payload"',
         'test ! -e "$RELEASE_PAYLOAD_DIR"',
-        'mv -- "$INSTALL_ROOT" "$RELEASE_PAYLOAD_DIR"'
+        'mv -T -- "$INSTALL_ROOT" "$RELEASE_PAYLOAD_DIR"'
     ))
+    $publicationExecutableLines = @(Get-ExecutableBashLines -Text $releasePublicationSection)
+    $publicationMoveLines = @($publicationExecutableLines | Where-Object { $_ -match '^mv(?:\s+-T)?\s+--\s+"\$INSTALL_ROOT"\s+"\$RELEASE_PAYLOAD_DIR"$' })
+    if ($publicationMoveLines.Count -ne 1 -or $publicationMoveLines[0] -cne 'mv -T -- "$INSTALL_ROOT" "$RELEASE_PAYLOAD_DIR"') {
+        Add-Failure 'Atomic release publication contract failed: exact no-target-directory move is missing.'
+    }
     if (
         $normalizedAddendumText.Contains('$RELEASE_DIR/ops/') -or
         -not $releasePublicationSection.Contains('php "$RELEASE_PAYLOAD_DIR/ops/install-comparison-rollout-release.php" install \') -or
@@ -1070,7 +1075,7 @@ fi
     }
     [void](Test-OrderedMarkers -Label 'Post-publication release identity contract' -Text $releasePublicationSection -Markers @(
         'test ! -e "$RELEASE_PAYLOAD_DIR"',
-        'mv -- "$INSTALL_ROOT" "$RELEASE_PAYLOAD_DIR"',
+        'mv -T -- "$INSTALL_ROOT" "$RELEASE_PAYLOAD_DIR"',
         'test -f "$RELEASE_PAYLOAD_DIR/.vietnamguide-release-sha256"',
         'test "$(cat "$RELEASE_PAYLOAD_DIR/.vietnamguide-release-sha256")" = "$VG_ARTIFACT_HASH"',
         'test -f "$RELEASE_PAYLOAD_DIR/payload-manifest.json"',

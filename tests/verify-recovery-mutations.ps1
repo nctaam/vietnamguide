@@ -14,8 +14,8 @@ $localOpsManifestRelative = 'tests\fixtures\recovery-local-ops-manifest.json'
 $tempParent = [System.IO.Path]::GetFullPath([System.IO.Path]::GetTempPath())
 $tempRoot = Join-Path $tempParent ("vietnamguide-recovery-mutations-" + [guid]::NewGuid().ToString('N'))
 $results = [System.Collections.Generic.List[object]]::new()
-$expectedResultCount = if ($RunbookSafetyOnly) { 31 } else { 76 }
-$expectedRunbookSafetyResultCount = 29
+$expectedResultCount = if ($RunbookSafetyOnly) { 32 } else { 77 }
+$expectedRunbookSafetyResultCount = 30
 
 function Copy-DirectoryContent {
     param([string]$Source, [string]$Destination)
@@ -398,9 +398,16 @@ try {
         [pscustomobject]@{
             Name = 'runbook safety: non-atomic release test and move is rejected'
             FixtureName = 'runbook-non-atomic-publication'
-            OldText = "mkdir -m 0750 `"`$RELEASE_DIR`"`nRELEASE_PAYLOAD_DIR=`"`$RELEASE_DIR/payload`"`ntest ! -e `"`$RELEASE_PAYLOAD_DIR`"`nmv -- `"`$INSTALL_ROOT`" `"`$RELEASE_PAYLOAD_DIR`""
+            OldText = "mkdir -m 0750 `"`$RELEASE_DIR`"`nRELEASE_PAYLOAD_DIR=`"`$RELEASE_DIR/payload`"`ntest ! -e `"`$RELEASE_PAYLOAD_DIR`"`nmv -T -- `"`$INSTALL_ROOT`" `"`$RELEASE_PAYLOAD_DIR`""
             NewText = "test ! -e `"`$RELEASE_DIR`"`nmv -- `"`$INSTALL_ROOT`" `"`$RELEASE_DIR`"`nRELEASE_PAYLOAD_DIR=`"`$RELEASE_DIR`""
             ExpectedFailure = 'Atomic release publication contract failed'
+        },
+        [pscustomobject]@{
+            Name = 'runbook safety: publication move without no-target-directory is rejected'
+            FixtureName = 'runbook-publication-move-without-no-target-directory'
+            OldText = 'mv -T -- "$INSTALL_ROOT" "$RELEASE_PAYLOAD_DIR"'
+            NewText = 'mv -- "$INSTALL_ROOT" "$RELEASE_PAYLOAD_DIR"'
+            ExpectedFailure = 'no-target-directory move is missing'
         },
         [pscustomobject]@{
             Name = 'runbook safety: installer execution from release container root is rejected'
