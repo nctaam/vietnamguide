@@ -1,7 +1,8 @@
 [CmdletBinding()]
 param(
     [Parameter(Mandatory = $true)]
-    [string]$SnapshotRoot
+    [string]$SnapshotRoot,
+    [switch]$RunbookSafetyOnly
 )
 
 $ErrorActionPreference = 'Stop'
@@ -13,7 +14,8 @@ $localOpsManifestRelative = 'tests\fixtures\recovery-local-ops-manifest.json'
 $tempParent = [System.IO.Path]::GetFullPath([System.IO.Path]::GetTempPath())
 $tempRoot = Join-Path $tempParent ("vietnamguide-recovery-mutations-" + [guid]::NewGuid().ToString('N'))
 $results = [System.Collections.Generic.List[object]]::new()
-$expectedResultCount = 47
+$expectedResultCount = if ($RunbookSafetyOnly) { 19 } else { 64 }
+$expectedRunbookSafetyResultCount = 17
 
 function Copy-DirectoryContent {
     param([string]$Source, [string]$Destination)
@@ -158,6 +160,69 @@ function Write-LocalAuthoredManifest {
     & git -c core.autocrlf=false -C $Fixture.Repo add -f -- $path 2>$null
 }
 
+function Get-ExecutionAddendumPath {
+    param([object]$Fixture)
+
+    return Join-Path $Fixture.Repo 'docs\superpowers\plans\2026-08-03-vietnamguide-comparison-recovery-execution-addendum.md'
+}
+
+function Set-AuthorizedExecutionAddendumText {
+    param(
+        [object]$Fixture,
+        [string]$Text
+    )
+
+    $addendumPath = Get-ExecutionAddendumPath -Fixture $Fixture
+    [System.IO.File]::WriteAllText($addendumPath, $Text, [System.Text.UTF8Encoding]::new($false))
+    $addendumLength = (Get-Item -LiteralPath $addendumPath).Length
+    $addendumHash = (Get-FileHash -Algorithm SHA256 -LiteralPath $addendumPath).Hash.ToLowerInvariant()
+
+    $manifest = Read-LocalAuthoredManifest -Fixture $Fixture
+    $manifestEntries = @($manifest.entries | Where-Object relativePath -eq 'docs/superpowers/plans/2026-08-03-vietnamguide-comparison-recovery-execution-addendum.md')
+    if ($manifestEntries.Count -ne 1) {
+        throw 'Expected one local-authored manifest entry for the recovery execution addendum.'
+    }
+    $manifestEntries[0].length = $addendumLength
+    $manifestEntries[0].sha256 = $addendumHash
+    Write-LocalAuthoredManifest -Fixture $Fixture -Manifest $manifest
+
+    $fixtureVerifier = Join-Path $Fixture.Repo 'tests\verify-recovery-baseline.ps1'
+    $verifierText = [System.IO.File]::ReadAllText($fixtureVerifier)
+    $expectedEntryPattern = "(?ms)(relativePath = 'docs/superpowers/plans/2026-08-03-vietnamguide-comparison-recovery-execution-addendum\.md'\r?\n\s+length = )\d+(\r?\n\s+sha256 = ')[0-9a-f]{64}(')"
+    $expectedEntryRegex = [regex]::new($expectedEntryPattern)
+    if ($expectedEntryRegex.Matches($verifierText).Count -ne 1) {
+        throw 'Expected one hardcoded local-authored verifier entry for the recovery execution addendum.'
+    }
+    $updatedVerifierText = $expectedEntryRegex.Replace($verifierText, ('${1}' + $addendumLength + '${2}' + $addendumHash + '${3}'), 1)
+    [System.IO.File]::WriteAllText($fixtureVerifier, $updatedVerifierText, [System.Text.UTF8Encoding]::new($false))
+
+    & git -c core.autocrlf=false -C $Fixture.Repo add -f -- $addendumPath $fixtureVerifier 2>$null
+    return $fixtureVerifier
+}
+
+function Add-ExecutionAddendumReplacementMutation {
+    param(
+        [string]$Name,
+        [string]$FixtureName,
+        [string]$OldText,
+        [string]$NewText,
+        [string]$ExpectedFailure
+    )
+
+    $fixture = New-CaseFixture -Name $FixtureName
+    $addendumText = [System.IO.File]::ReadAllText((Get-ExecutionAddendumPath -Fixture $fixture))
+    $matchCount = ([regex]::Matches($addendumText, [regex]::Escape($OldText))).Count
+    if ($matchCount -gt 1) {
+        throw "Expected at most one runbook mutation target for $Name; found $matchCount."
+    }
+    if ($matchCount -eq 1) {
+        $addendumText = $addendumText.Replace($OldText, $NewText)
+    }
+    $fixtureVerifier = Set-AuthorizedExecutionAddendumText -Fixture $fixture -Text $addendumText
+    $result = Invoke-CaseVerifier -Fixture $fixture -VerifierPath $fixtureVerifier
+    Add-Result -Name $Name -Passed ($result.ExitCode -ne 0 -and $result.Output -match $ExpectedFailure) -Detail $result.Output
+}
+
 function Read-LocalOpsManifest {
     param([object]$Fixture)
 
@@ -243,6 +308,147 @@ try {
     Add-Result -Name 'baseline fixture passes' -Passed ($baselineResult.ExitCode -eq 0) -Detail $baselineResult.Output
     Add-Result -Name 'exact local ops stack passes' -Passed ($baselineResult.ExitCode -eq 0) -Detail $baselineResult.Output
 
+    $runbookSafetyMutations = @(
+        [pscustomobject]@{
+            Name = 'runbook safety: recovered verifier native check removal is rejected'
+            FixtureName = 'runbook-recovered-verifier-native-check'
+            OldText = "node --check .\ops\verify-guide-experience-js-runtime.js`nif (`$LASTEXITCODE -ne 0) { throw 'Node syntax check failed: ops/verify-guide-experience-js-runtime.js' }"
+            NewText = 'node --check .\ops\verify-guide-experience-js-runtime.js'
+            ExpectedFailure = 'Recovered verifier block native fail-fast contract\s+failed'
+        },
+        [pscustomobject]@{
+            Name = 'runbook safety: local build moved native check is rejected'
+            FixtureName = 'runbook-local-build-native-check'
+            OldText = "powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\ops\verify-comparison-rollout.ps1`nif (`$LASTEXITCODE -ne 0) { throw 'Comparison rollout verification failed.' }`npowershell.exe -NoProfile -ExecutionPolicy Bypass -File .\ops\verify-comparison-rollout-mutations.ps1"
+            NewText = "powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\ops\verify-comparison-rollout.ps1`npowershell.exe -NoProfile -ExecutionPolicy Bypass -File .\ops\verify-comparison-rollout-mutations.ps1`nif (`$LASTEXITCODE -ne 0) { throw 'Comparison rollout verification failed.' }"
+            ExpectedFailure = 'Local build block native fail-fast contract failed'
+        },
+        [pscustomobject]@{
+            Name = 'runbook safety: artifact upload native check removal is rejected'
+            FixtureName = 'runbook-artifact-upload-native-check'
+            OldText = "scp -- `$ArtifactZip `"`${ProdUser}@`${ProdHost}:`$RemotePart`"`nif (`$LASTEXITCODE -ne 0) { throw 'Artifact upload failed.' }"
+            NewText = 'scp -- $ArtifactZip "${ProdUser}@${ProdHost}:$RemotePart"'
+            ExpectedFailure = 'Artifact upload block native fail-fast contract failed'
+        },
+        [pscustomobject]@{
+            Name = 'runbook safety: production ssh entry native check removal is rejected'
+            FixtureName = 'runbook-production-ssh-native-check'
+            OldText = "ssh -t `"`$ProdUser@`$ProdHost`" 'sudo -i'`nif (`$LASTEXITCODE -ne 0) { throw 'Unable to enter the approved production root shell.' }"
+            NewText = 'ssh -t "$ProdUser@$ProdHost" ''sudo -i'''
+            ExpectedFailure = 'Production SSH entry native fail-fast contract failed'
+        },
+        [pscustomobject]@{
+            Name = 'runbook safety: reconnect ssh native check removal is rejected'
+            FixtureName = 'runbook-reconnect-ssh-native-check'
+            OldText = "ssh -t `"`$ProdUser@`$ProdHost`" 'sudo -i'`nif (`$LASTEXITCODE -ne 0) { throw 'Unable to reconnect to the approved production root shell.' }"
+            NewText = 'ssh -t "$ProdUser@$ProdHost" ''sudo -i'''
+            ExpectedFailure = 'Reconnect SSH block native fail-fast contract failed'
+        },
+        [pscustomobject]@{
+            Name = 'runbook safety: fixture drill native check removal is rejected'
+            FixtureName = 'runbook-fixture-drill-native-check'
+            OldText = "    if (`$LASTEXITCODE -ne 0) { throw 'Fixture rollback drill failed.' }"
+            NewText = ''
+            ExpectedFailure = 'Fixture drill block native fail-fast contract failed'
+        },
+        [pscustomobject]@{
+            Name = 'runbook safety: final integration native check removal is rejected'
+            FixtureName = 'runbook-final-integration-native-check'
+            OldText = "git switch master`nif (`$LASTEXITCODE -ne 0) { throw 'Unable to switch to master for final integration.' }"
+            NewText = 'git switch master'
+            ExpectedFailure = 'Final integration block native fail-fast contract\s+failed'
+        },
+        [pscustomobject]@{
+            Name = 'runbook safety: stage 2 compatibility sync before browser gate is rejected'
+            FixtureName = 'runbook-stage2-sync-before-browser'
+            OldText = "verify_rollout browser-matrix full`nrun_rollout recovery-audit full --action=renew-lock --ttl-seconds=900"
+            NewText = "run_rollout compatibility-sync full`nverify_rollout browser-matrix full`nrun_rollout recovery-audit full --action=renew-lock --ttl-seconds=900"
+            ExpectedFailure = 'Stage 2 gate ordering contract failed'
+        },
+        [pscustomobject]@{
+            Name = 'runbook safety: stage 2 ledger close before permanent controls is rejected'
+            FixtureName = 'runbook-stage2-close-before-controls'
+            OldText = "verify_rollout permanent-controls full`nrun_rollout compatibility-sync full`nrun_rollout compatibility-sync full`nverify_rollout compatibility-equivalence full`nrun_rollout recovery-audit full --action=close-ledger --require-final-event=compatibility-sync"
+            NewText = "run_rollout recovery-audit full --action=close-ledger --require-final-event=compatibility-sync`nverify_rollout permanent-controls full`nrun_rollout compatibility-sync full`nrun_rollout compatibility-sync full`nverify_rollout compatibility-equivalence full"
+            ExpectedFailure = 'Stage 2 gate ordering contract failed'
+        },
+        [pscustomobject]@{
+            Name = 'runbook safety: exact 18-run browser marker removal is rejected'
+            FixtureName = 'runbook-browser-matrix-count'
+            OldText = 'BROWSER_MATRIX_RUNS_EXPECTED=18'
+            NewText = 'BROWSER_MATRIX_RUNS_EXPECTED=17'
+            ExpectedFailure = 'Stage 2 browser matrix inventory contract failed'
+        },
+        [pscustomobject]@{
+            Name = 'runbook safety: unsafe 300-second wait before renewal is rejected'
+            FixtureName = 'runbook-canary-unsafe-renewal-gap'
+            OldText = 'sleep "$LOCK_RENEWAL_INTERVAL_SECONDS"'
+            NewText = 'sleep 300'
+            ExpectedFailure = 'Canary lock renewal contract failed'
+        },
+        [pscustomobject]@{
+            Name = 'runbook safety: exact active pilot and permanent-control inventory is enforced'
+            FixtureName = 'runbook-stage-inventory'
+            OldText = "  'compare'`n  'destinations/hanoi-travel-guide'"
+            NewText = "  'destinations/hanoi-travel-guide'"
+            ExpectedFailure = 'Stage inventory contract failed'
+        },
+        [pscustomobject]@{
+            Name = 'runbook safety: non-atomic release test and move is rejected'
+            FixtureName = 'runbook-non-atomic-publication'
+            OldText = "mkdir -m 0750 `"`$RELEASE_DIR`"`nRELEASE_PAYLOAD_DIR=`"`$RELEASE_DIR/payload`"`ntest ! -e `"`$RELEASE_PAYLOAD_DIR`"`nmv -- `"`$INSTALL_ROOT`" `"`$RELEASE_PAYLOAD_DIR`""
+            NewText = "test ! -e `"`$RELEASE_DIR`"`nmv -- `"`$INSTALL_ROOT`" `"`$RELEASE_DIR`"`nRELEASE_PAYLOAD_DIR=`"`$RELEASE_DIR`""
+            ExpectedFailure = 'Atomic release publication contract failed'
+        },
+        [pscustomobject]@{
+            Name = 'runbook safety: installer execution from release container root is rejected'
+            FixtureName = 'runbook-container-root-install'
+            OldText = 'php "$RELEASE_PAYLOAD_DIR/ops/install-comparison-rollout-release.php" install \'
+            NewText = 'php "$RELEASE_DIR/ops/install-comparison-rollout-release.php" install \'
+            ExpectedFailure = 'Release payload execution-root contract failed'
+        },
+        [pscustomobject]@{
+            Name = 'runbook safety: missing post-publication identity verification is rejected'
+            FixtureName = 'runbook-post-publication-identity'
+            OldText = "test -f `"`$RELEASE_PAYLOAD_DIR/.vietnamguide-release-sha256`"`ntest `"`$(cat `"`$RELEASE_PAYLOAD_DIR/.vietnamguide-release-sha256`")`" = `"`$VG_ARTIFACT_HASH`"`ntest -f `"`$RELEASE_PAYLOAD_DIR/payload-manifest.json`""
+            NewText = "test -f `"`$RELEASE_PAYLOAD_DIR/.vietnamguide-release-sha256`"`ntest -f `"`$RELEASE_PAYLOAD_DIR/payload-manifest.json`""
+            ExpectedFailure = 'Post-publication release identity contract failed'
+        }
+    )
+    foreach ($mutation in $runbookSafetyMutations) {
+        Add-ExecutionAddendumReplacementMutation `
+            -Name $mutation.Name `
+            -FixtureName $mutation.FixtureName `
+            -OldText $mutation.OldText `
+            -NewText $mutation.NewText `
+            -ExpectedFailure $mutation.ExpectedFailure
+    }
+
+    $canaryRollbackOrdering = New-CaseFixture -Name 'runbook-canary-rollback-ordering'
+    $canaryRollbackText = [System.IO.File]::ReadAllText((Get-ExecutionAddendumPath -Fixture $canaryRollbackOrdering))
+    $canaryEarlyGate = "if [ `"`$ROLLBACK_EXIT`" -ne 0 ]; then`n  printf '%s\n' 'Canary rollback failed; lock and evidence preserved for recovery audit.' >&2`n  exit `"`$ROLLBACK_EXIT`"`nfi`n`n"
+    $canaryRollbackText = $canaryRollbackText.Replace($canaryEarlyGate, '')
+    $canaryClose = 'run_rollout recovery-audit canary --action=close-ledger --require-final-event=rollback'
+    if ($canaryRollbackText.Contains($canaryClose) -and -not $canaryRollbackText.Contains('test "$ROLLBACK_EXIT" -eq 0')) {
+        $canaryRollbackText = $canaryRollbackText.Replace($canaryClose, ($canaryClose + "`ntest `"`$ROLLBACK_EXIT`" -eq 0"))
+    }
+    $canaryRollbackVerifier = Set-AuthorizedExecutionAddendumText -Fixture $canaryRollbackOrdering -Text $canaryRollbackText
+    $canaryRollbackResult = Invoke-CaseVerifier -Fixture $canaryRollbackOrdering -VerifierPath $canaryRollbackVerifier
+    Add-Result -Name 'runbook safety: canary rollback success gate after ledger close is rejected' -Passed ($canaryRollbackResult.ExitCode -ne 0 -and $canaryRollbackResult.Output -match 'Canary rollback ordering contract failed') -Detail $canaryRollbackResult.Output
+
+    $stage2RollbackOrdering = New-CaseFixture -Name 'runbook-stage2-rollback-ordering'
+    $stage2RollbackText = [System.IO.File]::ReadAllText((Get-ExecutionAddendumPath -Fixture $stage2RollbackOrdering))
+    $stage2EarlyGate = "if [ `"`$ROLLBACK_EXIT`" -ne 0 ]; then`n  printf '%s\n' 'Stage 2 rollback failed; lock and evidence preserved for recovery audit.' >&2`n  exit `"`$ROLLBACK_EXIT`"`nfi`n`n"
+    $stage2RollbackText = $stage2RollbackText.Replace($stage2EarlyGate, '')
+    $stage2Close = 'run_rollout recovery-audit full --action=close-ledger --require-final-event=rollback'
+    if ($stage2RollbackText.Contains($stage2Close) -and -not $stage2RollbackText.Contains('test "$ROLLBACK_EXIT" -eq 0')) {
+        $stage2RollbackText = $stage2RollbackText.Replace($stage2Close, ($stage2Close + "`ntest `"`$ROLLBACK_EXIT`" -eq 0"))
+    }
+    $stage2RollbackVerifier = Set-AuthorizedExecutionAddendumText -Fixture $stage2RollbackOrdering -Text $stage2RollbackText
+    $stage2RollbackResult = Invoke-CaseVerifier -Fixture $stage2RollbackOrdering -VerifierPath $stage2RollbackVerifier
+    Add-Result -Name 'runbook safety: stage 2 rollback success gate after ledger close is rejected' -Passed ($stage2RollbackResult.ExitCode -ne 0 -and $stage2RollbackResult.Output -match 'Stage 2 rollback ordering contract failed') -Detail $stage2RollbackResult.Output
+
+    if (-not $RunbookSafetyOnly) {
     $missingLocalOpsManifest = New-CaseFixture -Name 'local-ops-manifest-missing'
     Remove-Item -LiteralPath (Get-LocalOpsManifestPath -Fixture $missingLocalOpsManifest) -Force
     $missingLocalOpsManifestResult = Invoke-CaseVerifier -Fixture $missingLocalOpsManifest
@@ -575,6 +781,7 @@ try {
     $syntheticEntry = '120000 ' + ('0' * 40) + ' 0' + "`t" + 'synthetic-link'
     $gitModeResult = Invoke-CaseVerifier -Fixture $gitMode -AdditionalGitStageEntry $syntheticEntry
     Add-Result -Name 'git mode 120000 is rejected' -Passed ($gitModeResult.ExitCode -ne 0 -and $gitModeResult.Output -match 'Git symlink mode 120000') -Detail $gitModeResult.Output
+    }
 } finally {
     $resolvedTempRoot = [System.IO.Path]::GetFullPath($tempRoot)
     if ($resolvedTempRoot.StartsWith($tempParent, [System.StringComparison]::OrdinalIgnoreCase) -and (Test-Path -LiteralPath $resolvedTempRoot)) {
@@ -586,6 +793,11 @@ $results | Select-Object Name, Passed | Format-Table -AutoSize
 $duplicateNames = @($results | Group-Object Name | Where-Object Count -gt 1)
 if ($duplicateNames) {
     $duplicateNames | ForEach-Object { Write-Error "Duplicate recovery mutation case name: $($_.Name)" -ErrorAction Continue }
+    exit 1
+}
+$runbookSafetyResults = @($results | Where-Object Name -like 'runbook safety:*')
+if ($runbookSafetyResults.Count -ne $expectedRunbookSafetyResultCount) {
+    Write-Error "Runbook safety mutation case count mismatch: expected $expectedRunbookSafetyResultCount, got $($runbookSafetyResults.Count)." -ErrorAction Continue
     exit 1
 }
 if ($results.Count -ne $expectedResultCount) {

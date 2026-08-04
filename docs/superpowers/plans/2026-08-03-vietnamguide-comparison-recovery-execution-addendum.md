@@ -151,6 +151,7 @@ The restored mutation harness must preserve the original inventory of exactly 11
 
 ```powershell
 $RecoveryBaseSha = (git rev-parse HEAD).Trim()
+if ($LASTEXITCODE -ne 0) { throw 'Unable to record the verified recovery base.' }
 ```
 
 Feature Task 2 starts only from this recorded recovery base.
@@ -169,15 +170,22 @@ $PayloadManifest = Join-Path $BuildRoot 'payload-manifest.json'
 Set-Location -LiteralPath $RepoRoot
 git merge-base --is-ancestor $RecoveryBaseSha HEAD
 if ($LASTEXITCODE -ne 0) { throw 'HEAD does not descend from the verified recovery base.' }
-if (-not [string]::IsNullOrWhiteSpace((git status --porcelain | Out-String))) {
+$GitStatus = git status --porcelain
+if ($LASTEXITCODE -ne 0) { throw 'Unable to inspect the worktree before building.' }
+if (-not [string]::IsNullOrWhiteSpace(($GitStatus | Out-String))) {
     throw 'Tracked worktree must be clean before building.'
 }
 
 powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\ops\verify-comparison-rollout.ps1
+if ($LASTEXITCODE -ne 0) { throw 'Comparison rollout verification failed.' }
 powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\ops\verify-comparison-rollout-mutations.ps1
+if ($LASTEXITCODE -ne 0) { throw 'Comparison rollout mutation verification failed.' }
 powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\ops\verify-guide-experience.ps1
+if ($LASTEXITCODE -ne 0) { throw 'Guide Experience verification failed.' }
 powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\ops\verify-guide-experience-mutations.ps1
+if ($LASTEXITCODE -ne 0) { throw 'Guide Experience mutation verification failed.' }
 powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\ops\build-comparison-rollout-artifact.ps1 -OutputDirectory $BuildRoot
+if ($LASTEXITCODE -ne 0) { throw 'Comparison rollout artifact build failed.' }
 
 if (-not (Test-Path -LiteralPath $ArtifactZip -PathType Leaf)) { throw 'Artifact ZIP missing.' }
 if (-not (Test-Path -LiteralPath $PayloadManifest -PathType Leaf)) { throw 'Payload manifest missing.' }
@@ -219,6 +227,7 @@ Open one approved production session and become root. All following Linux blocks
 $ProdHost = '<approved-production-host>'
 $ProdUser = '<approved-production-user>'
 ssh -t "$ProdUser@$ProdHost" 'sudo -i'
+if ($LASTEXITCODE -ne 0) { throw 'Unable to enter the approved production root shell.' }
 ```
 
 ```bash
@@ -268,7 +277,6 @@ Create one mutation run ID before the first installation or WordPress write. Thi
 VG_RUN_ID="$(uuidgen)"
 INSTALL_ROOT="$RELEASE_ROOT/.install-$VG_ARTIFACT_HASH-$VG_RUN_ID"
 test ! -e "$INSTALL_ROOT"
-test ! -e "$RELEASE_DIR"
 mkdir -m 0750 "$INSTALL_ROOT"
 unzip -q "$UPLOAD" -d "$INSTALL_ROOT"
 
@@ -286,11 +294,28 @@ php "$INSTALL_ROOT/ops/install-comparison-rollout-release.php" self-test \
   --assert-cli-only
 php "$INSTALL_ROOT/ops/comparison-rollout-lib.php" --self-test
 
-mv -- "$INSTALL_ROOT" "$RELEASE_DIR"
-cd "$RELEASE_DIR"
+test -f "$INSTALL_ROOT/payload-manifest.json"
+test -f "$INSTALL_ROOT/ops/comparison-rollout/artifact.json"
+printf '%s\n' "$VG_ARTIFACT_HASH" > "$INSTALL_ROOT/.vietnamguide-release-sha256"
 
-php "$RELEASE_DIR/ops/install-comparison-rollout-release.php" install \
-  --release-root="$RELEASE_DIR" \
+mkdir -m 0750 "$RELEASE_DIR"
+RELEASE_PAYLOAD_DIR="$RELEASE_DIR/payload"
+test ! -e "$RELEASE_PAYLOAD_DIR"
+mv -- "$INSTALL_ROOT" "$RELEASE_PAYLOAD_DIR"
+
+test -f "$RELEASE_PAYLOAD_DIR/.vietnamguide-release-sha256"
+test "$(cat "$RELEASE_PAYLOAD_DIR/.vietnamguide-release-sha256")" = "$VG_ARTIFACT_HASH"
+test -f "$RELEASE_PAYLOAD_DIR/payload-manifest.json"
+test -f "$RELEASE_PAYLOAD_DIR/ops/comparison-rollout/artifact.json"
+php "$RELEASE_PAYLOAD_DIR/ops/install-comparison-rollout-release.php" verify-payload \
+  --release-root="$RELEASE_PAYLOAD_DIR" \
+  --payload="$RELEASE_PAYLOAD_DIR/payload-manifest.json" \
+  --archive-sha256="$VG_ARTIFACT_HASH"
+
+cd "$RELEASE_PAYLOAD_DIR"
+
+php "$RELEASE_PAYLOAD_DIR/ops/install-comparison-rollout-release.php" install \
+  --release-root="$RELEASE_PAYLOAD_DIR" \
   --wordpress-root="$WP_ROOT" \
   --state-dir="$STATE_DIR" \
   --run-id="$VG_RUN_ID"
@@ -307,14 +332,14 @@ The installer must verify the payload manifest, write only reviewed destinations
 Define the wrapper once in the same root Bash session:
 
 ```bash
-ARTIFACT="$RELEASE_DIR/ops/comparison-rollout/artifact.json"
+ARTIFACT="$RELEASE_PAYLOAD_DIR/ops/comparison-rollout/artifact.json"
 
 run_rollout() {
   local mode="$1"
   local stage="$2"
   shift 2
   wp --path="$WP_ROOT" --allow-root eval-file \
-    "$RELEASE_DIR/ops/apply-comparison-rollout.php" -- \
+    "$RELEASE_PAYLOAD_DIR/ops/apply-comparison-rollout.php" -- \
     "$mode" \
     --stage="$stage" \
     --artifact="$ARTIFACT" \
@@ -327,13 +352,15 @@ run_rollout() {
 verify_rollout() {
   local phase="$1"
   local stage="$2"
+  shift 2
   wp --path="$WP_ROOT" --allow-root eval-file \
-    "$RELEASE_DIR/ops/verify-comparison-rollout-live.php" -- \
+    "$RELEASE_PAYLOAD_DIR/ops/verify-comparison-rollout-live.php" -- \
     "$phase" \
     --stage="$stage" \
     --artifact="$ARTIFACT" \
     --run-id="$VG_RUN_ID" \
-    --state-dir="$STATE_DIR"
+    --state-dir="$STATE_DIR" \
+    "$@"
 }
 ```
 
@@ -346,11 +373,71 @@ The lock must contain the run ID, stage, operator, host, PID, creation time, exp
 ## Canary Validate, Dry-Run, Apply, and Activate
 
 ```bash
+BASELINE_PILOT_PATHS=(
+  'destinations/ho-chi-minh-city-travel-guide'
+  'itineraries/10-days-in-vietnam'
+  'itineraries/7-days-in-vietnam'
+  'itineraries/14-days-in-vietnam'
+  'itineraries/21-days-in-vietnam'
+  'itineraries/hanoi-in-2-days'
+  'compare/ha-long-bay-vs-lan-ha-bay'
+  'plan/vietnam-evisa'
+)
 CANARY_PATHS=(
   'compare/old-quarter-vs-french-quarter-vs-west-lake'
   'compare/ninh-binh-day-trip-vs-overnight'
   'compare/north-central-south-vietnam'
 )
+STAGE2_PATHS=(
+  'compare/cu-chi-tunnels-vs-mekong-delta-day-trip'
+  'compare/da-nang-vs-hoi-an'
+  'compare/hoi-an-vs-hue'
+  'compare/mui-ne-vs-nha-trang'
+  'compare/phu-quoc-vs-nha-trang'
+  'compare/trang-an-vs-tam-coc'
+)
+PERMANENT_CONTROL_PATHS=(
+  'compare'
+  'destinations/hanoi-travel-guide'
+  'plan/sim-esim-vietnam'
+  'plan/transport-within-vietnam'
+)
+ACTIVE_PILOT_PATHS=("${BASELINE_PILOT_PATHS[@]}" "${CANARY_PATHS[@]}" "${STAGE2_PATHS[@]}")
+BROWSER_MATRIX_PATHS=("${CANARY_PATHS[@]}" "${STAGE2_PATHS[@]}")
+CANARY_STRESS_PATHS=("${CANARY_PATHS[@]}")
+BROWSER_MATRIX_VIEWPORTS=('desktop:1280x900' 'mobile:390x844')
+BROWSER_MATRIX_RUNS_EXPECTED=18
+CANARY_TABLET_VIEWPORT='768x1024'
+CANARY_TABLET_RUNS_EXPECTED=3
+CANARY_REDUCED_MOTION_RUNS_EXPECTED=3
+CANARY_FORCED_COLORS_RUNS_EXPECTED=3
+
+test "${#BASELINE_PILOT_PATHS[@]}" -eq 8
+test "${#CANARY_PATHS[@]}" -eq 3
+test "${#STAGE2_PATHS[@]}" -eq 6
+test "${#ACTIVE_PILOT_PATHS[@]}" -eq 17
+test "$(printf '%s\n' "${ACTIVE_PILOT_PATHS[@]}" | sort -u | wc -l)" -eq 17
+test "${#PERMANENT_CONTROL_PATHS[@]}" -eq 4
+test "$(printf '%s\n' "${PERMANENT_CONTROL_PATHS[@]}" | sort -u | wc -l)" -eq 4
+test "${#BROWSER_MATRIX_PATHS[@]}" -eq 9
+test "${#BROWSER_MATRIX_VIEWPORTS[@]}" -eq 2
+test "$(( ${#BROWSER_MATRIX_PATHS[@]} * ${#BROWSER_MATRIX_VIEWPORTS[@]} ))" -eq "$BROWSER_MATRIX_RUNS_EXPECTED"
+test "${#CANARY_STRESS_PATHS[@]}" -eq 3
+
+MAX_HTML_GROWTH_BYTES=20480
+MAX_DOM_NODES=180
+MAX_SCOPED_CSS_BYTES=6144
+MAX_WARM_QUERIES=0
+MAX_COLD_QUERIES=1
+MAX_PHP_P95_MS=8
+MAX_CLS='0.10'
+MAX_LCP_REGRESSION_PERCENT=10
+LOCK_RENEWAL_INTERVAL_SECONDS=240
+MAX_QA_BATCH_SECONDS=240
+CANARY_OBSERVATION_ROUNDS=3
+CANARY_OBSERVATION_MIN_SECONDS=600
+test "$LOCK_RENEWAL_INTERVAL_SECONDS" -lt 300
+test "$MAX_QA_BATCH_SECONDS" -lt 300
 
 run_rollout validate canary
 run_rollout dry-run canary
@@ -367,7 +454,7 @@ jq -e '.stage == "canary" and (.paths | length) == 11' "$STATE_DIR/active-paths.
 verify_rollout active-state canary
 
 wp --path="$WP_ROOT" --allow-root cache flush
-wp --path="$WP_ROOT" --allow-root eval-file "$RELEASE_DIR/ops/purge-litespeed-cache.php"
+wp --path="$WP_ROOT" --allow-root eval-file "$RELEASE_PAYLOAD_DIR/ops/purge-litespeed-cache.php"
 for path in "${CANARY_PATHS[@]}"; do
   curl --fail --silent --show-error --location --max-time 20 \
     --output /dev/null "$SITE_ORIGIN/$path/?vg_warm=$VG_RUN_ID"
@@ -392,11 +479,15 @@ if ($LASTEXITCODE -ne 0) { throw 'Canary public verification failed.' }
 
 Renew the same run lock, then perform exactly three uncached rounds over at least ten minutes:
 
+Keep the production root shell and the same `$VG_RUN_ID` while workstation public/browser evidence is collected. Bound every QA batch to `$MAX_QA_BATCH_SECONDS` (240 seconds), renew the production lock before the first batch and between batches, and stop before the next browser action if renewal has not succeeded. The canary evidence includes desktop `1280x900`, mobile `390x844`, tablet `768x1024`, reduced-motion, forced-colors, keyboard, 200-percent zoom at 320 CSS pixels, focus, overflow, console, single-H1, module, and unchanged-content controls for all three canary paths.
+
 ```bash
 run_rollout recovery-audit canary --action=renew-lock --ttl-seconds=900
 VG_OBSERVE_START="$(date --utc +%Y-%m-%dT%H:%M:%SZ)"
+VG_OBSERVE_START_EPOCH="$(date +%s)"
 
 for round in 1 2 3; do
+  run_rollout recovery-audit canary --action=renew-lock --ttl-seconds=900
   for path in "${CANARY_PATHS[@]}"; do
     curl --fail --silent --show-error --location --max-time 20 \
       --header 'Cache-Control: no-cache' \
@@ -404,9 +495,16 @@ for round in 1 2 3; do
       "$SITE_ORIGIN/$path/?vg_canary_round=$round&run_id=$VG_RUN_ID"
   done
   verify_rollout observation-round canary
-  if [ "$round" -lt 3 ]; then sleep 300; fi
   run_rollout recovery-audit canary --action=renew-lock --ttl-seconds=900
+  if [ "$round" -lt "$CANARY_OBSERVATION_ROUNDS" ]; then
+    sleep "$LOCK_RENEWAL_INTERVAL_SECONDS"
+    run_rollout recovery-audit canary --action=renew-lock --ttl-seconds=900
+    sleep "$((300 - LOCK_RENEWAL_INTERVAL_SECONDS))"
+    run_rollout recovery-audit canary --action=renew-lock --ttl-seconds=900
+  fi
 done
+VG_OBSERVE_END_EPOCH="$(date +%s)"
+test "$((VG_OBSERVE_END_EPOCH - VG_OBSERVE_START_EPOCH))" -ge "$CANARY_OBSERVATION_MIN_SECONDS"
 
 journalctl --since "$VG_OBSERVE_START" --unit=lsws --unit=php8.3-fpm --no-pager \
   > "$STATE_DIR/evidence/$VG_RUN_ID/service-observation.log"
@@ -414,7 +512,25 @@ test ! -f "$WP_ROOT/wp-content/debug.log" || \
   tail -n 5000 "$WP_ROOT/wp-content/debug.log" \
     > "$STATE_DIR/evidence/$VG_RUN_ID/wordpress-observation.log"
 verify_rollout observation-complete canary
+verify_rollout public-inventory canary --expected-active-pilots=11 --expected-permanent-controls=4
+verify_rollout browser-matrix canary
+verify_rollout tablet-canary canary --viewport="$CANARY_TABLET_VIEWPORT" --expected-runs="$CANARY_TABLET_RUNS_EXPECTED"
+verify_rollout reduced-motion-canary canary --expected-runs="$CANARY_REDUCED_MOTION_RUNS_EXPECTED"
+verify_rollout forced-colors-canary canary --expected-runs="$CANARY_FORCED_COLORS_RUNS_EXPECTED"
+verify_rollout keyboard-zoom-focus-overflow canary
+verify_rollout console-h1-module-content canary
+verify_rollout performance-budgets canary \
+  --max-html-growth-bytes="$MAX_HTML_GROWTH_BYTES" \
+  --max-dom-nodes="$MAX_DOM_NODES" \
+  --max-scoped-css-bytes="$MAX_SCOPED_CSS_BYTES" \
+  --max-php-p95-ms="$MAX_PHP_P95_MS" \
+  --max-cls="$MAX_CLS" \
+  --max-lcp-regression-percent="$MAX_LCP_REGRESSION_PERCENT"
+verify_rollout cache-budgets canary --max-warm-queries="$MAX_WARM_QUERIES" --max-cold-queries="$MAX_COLD_QUERIES"
+verify_rollout log-observation canary
+verify_rollout permanent-controls canary
 
+run_rollout recovery-audit canary --action=renew-lock --ttl-seconds=900
 run_rollout compatibility-sync canary
 verify_rollout compatibility-equivalence canary
 run_rollout recovery-audit canary --action=close-ledger --require-final-event=compatibility-sync
@@ -434,8 +550,13 @@ run_rollout rollback canary
 ROLLBACK_EXIT=$?
 set -e
 
+if [ "$ROLLBACK_EXIT" -ne 0 ]; then
+  printf '%s\n' 'Canary rollback failed; lock and evidence preserved for recovery audit.' >&2
+  exit "$ROLLBACK_EXIT"
+fi
+
 wp --path="$WP_ROOT" --allow-root cache flush
-wp --path="$WP_ROOT" --allow-root eval-file "$RELEASE_DIR/ops/purge-litespeed-cache.php"
+wp --path="$WP_ROOT" --allow-root eval-file "$RELEASE_PAYLOAD_DIR/ops/purge-litespeed-cache.php"
 for path in "${CANARY_PATHS[@]}"; do
   curl --fail --silent --show-error --location --max-time 20 \
     --output /dev/null "$SITE_ORIGIN/$path/?vg_rollback_warm=$VG_RUN_ID"
@@ -445,7 +566,6 @@ verify_rollout baseline-hashes canary
 jq -e '.stage == "baseline" and (.paths | length) == 8' "$STATE_DIR/active-paths.json"
 run_rollout recovery-audit canary --action=close-ledger --require-final-event=rollback
 test ! -e "$STATE_DIR/lock.json"
-test "$ROLLBACK_EXIT" -eq 0
 ```
 
 If rollback, cache purge, baseline-hash verification, or ledger close fails, keep the lock, stop all rollout commands, preserve the release and backup, and escalate for recovery audit. Never release the lock merely to clear an error.
@@ -456,14 +576,7 @@ Stage 2 starts only after the canary run is closed and its evidence is reviewed.
 
 ```bash
 VG_RUN_ID="$(uuidgen)"
-STAGE2_PATHS=(
-  'compare/cu-chi-tunnels-vs-mekong-delta-day-trip'
-  'compare/da-nang-vs-hoi-an'
-  'compare/hoi-an-vs-hue'
-  'compare/mui-ne-vs-nha-trang'
-  'compare/phu-quoc-vs-nha-trang'
-  'compare/trang-an-vs-tam-coc'
-)
+VG_STAGE2_OBSERVE_START="$(date --utc +%Y-%m-%dT%H:%M:%SZ)"
 
 run_rollout validate full
 run_rollout dry-run full
@@ -476,13 +589,38 @@ jq -e '.stage == "full" and (.paths | length) == 17' "$STATE_DIR/active-paths.js
 verify_rollout active-state full
 
 wp --path="$WP_ROOT" --allow-root cache flush
-wp --path="$WP_ROOT" --allow-root eval-file "$RELEASE_DIR/ops/purge-litespeed-cache.php"
+wp --path="$WP_ROOT" --allow-root eval-file "$RELEASE_PAYLOAD_DIR/ops/purge-litespeed-cache.php"
 for path in "${CANARY_PATHS[@]}" "${STAGE2_PATHS[@]}"; do
   curl --fail --silent --show-error --location --max-time 20 \
     --output /dev/null "$SITE_ORIGIN/$path/?vg_full_warm=$VG_RUN_ID"
 done
 verify_rollout cache-warm full
 
+run_rollout recovery-audit full --action=renew-lock --ttl-seconds=900
+verify_rollout public-inventory full --expected-active-pilots=17 --expected-permanent-controls=4
+verify_rollout browser-matrix full
+run_rollout recovery-audit full --action=renew-lock --ttl-seconds=900
+verify_rollout tablet-canary full --viewport="$CANARY_TABLET_VIEWPORT" --expected-runs="$CANARY_TABLET_RUNS_EXPECTED"
+verify_rollout reduced-motion-canary full --expected-runs="$CANARY_REDUCED_MOTION_RUNS_EXPECTED"
+verify_rollout forced-colors-canary full --expected-runs="$CANARY_FORCED_COLORS_RUNS_EXPECTED"
+verify_rollout keyboard-zoom-focus-overflow full
+verify_rollout console-h1-module-content full
+run_rollout recovery-audit full --action=renew-lock --ttl-seconds=900
+verify_rollout performance-budgets full \
+  --max-html-growth-bytes="$MAX_HTML_GROWTH_BYTES" \
+  --max-dom-nodes="$MAX_DOM_NODES" \
+  --max-scoped-css-bytes="$MAX_SCOPED_CSS_BYTES" \
+  --max-php-p95-ms="$MAX_PHP_P95_MS" \
+  --max-cls="$MAX_CLS" \
+  --max-lcp-regression-percent="$MAX_LCP_REGRESSION_PERCENT"
+verify_rollout cache-budgets full --max-warm-queries="$MAX_WARM_QUERIES" --max-cold-queries="$MAX_COLD_QUERIES"
+journalctl --since "$VG_STAGE2_OBSERVE_START" --unit=lsws --unit=php8.3-fpm --no-pager \
+  > "$STATE_DIR/evidence/$VG_RUN_ID/service-observation.log"
+test ! -f "$WP_ROOT/wp-content/debug.log" || \
+  tail -n 5000 "$WP_ROOT/wp-content/debug.log" \
+    > "$STATE_DIR/evidence/$VG_RUN_ID/wordpress-observation.log"
+verify_rollout log-observation full
+verify_rollout permanent-controls full
 run_rollout compatibility-sync full
 run_rollout compatibility-sync full
 verify_rollout compatibility-equivalence full
@@ -491,7 +629,9 @@ test ! -e "$STATE_DIR/lock.json"
 verify_rollout closed full
 ```
 
-The second compatibility sync must report zero writes. Run the complete 18-run desktop/mobile browser matrix and all permanent controls before ledger close.
+The workstation/public-browser evidence must contain exactly 18 primary runs: all nine comparison paths at desktop `1280x900` and mobile `390x844`. It must also contain three canary tablet `768x1024` runs, three reduced-motion runs, and three forced-colors runs. Every run checks keyboard reachability, 200-percent zoom at 320 CSS pixels, visible focus, document and table overflow, console/page errors, exactly one visible H1, semantic grouped modules, descriptive links, language semantics, and unchanged content outside approved module boundaries. Split collection into batches no longer than `$MAX_QA_BATCH_SECONDS`, renewing the production lock with the same `$VG_RUN_ID` before and between batches.
+
+The production-shell evidence gates then attest the exact 17 active pilots and four permanent controls, the public/browser evidence, service and WordPress logs, cache warm/cold query counts, and the 20 KB HTML, 180-node, 6 KB scoped-CSS, PHP p95 <= 8 ms, CLS <= 0.10, and LCP regression <= 10 percent budgets. Every gate must pass before compatibility sync. The second compatibility sync must report zero writes, compatibility equivalence must pass, and only then may the ledger close release the lock.
 
 ## Stage 2 Failure and Rollback
 
@@ -503,8 +643,13 @@ run_rollout rollback full
 ROLLBACK_EXIT=$?
 set -e
 
+if [ "$ROLLBACK_EXIT" -ne 0 ]; then
+  printf '%s\n' 'Stage 2 rollback failed; lock and evidence preserved for recovery audit.' >&2
+  exit "$ROLLBACK_EXIT"
+fi
+
 wp --path="$WP_ROOT" --allow-root cache flush
-wp --path="$WP_ROOT" --allow-root eval-file "$RELEASE_DIR/ops/purge-litespeed-cache.php"
+wp --path="$WP_ROOT" --allow-root eval-file "$RELEASE_PAYLOAD_DIR/ops/purge-litespeed-cache.php"
 for path in "${CANARY_PATHS[@]}" "${STAGE2_PATHS[@]}"; do
   curl --fail --silent --show-error --location --max-time 20 \
     --output /dev/null "$SITE_ORIGIN/$path/?vg_stage2_rollback_warm=$VG_RUN_ID"
@@ -514,7 +659,6 @@ verify_rollout baseline-hashes full
 jq -e '.stage == "canary" and (.paths | length) == 11' "$STATE_DIR/active-paths.json"
 run_rollout recovery-audit full --action=close-ledger --require-final-event=rollback
 test ! -e "$STATE_DIR/lock.json"
-test "$ROLLBACK_EXIT" -eq 0
 ```
 
 If the canary paths, canary post/meta hashes, active-state hash, or baseline cache namespace differ after Stage 2 rollback, the rollback is incomplete and the lock must remain held for recovery audit.
@@ -530,7 +674,7 @@ DRILL_SENTINEL_DIR="$STATE_DIR/evidence/$VG_RUN_ID/rollback-drill"
 install -d -o root -g root -m 0700 "$DRILL_SENTINEL_DIR"
 
 wp --path="$WP_ROOT" --allow-root eval-file \
-  "$RELEASE_DIR/ops/verify-comparison-rollout-live.php" -- \
+  "$RELEASE_PAYLOAD_DIR/ops/verify-comparison-rollout-live.php" -- \
   emit-sentinel \
   --stage=full \
   --artifact="$ARTIFACT" \
@@ -582,6 +726,7 @@ After the local drill ends, reconnect to production and become root. Replace the
 $ProdHost = '<approved-production-host>'
 $ProdUser = '<approved-production-user>'
 ssh -t "$ProdUser@$ProdHost" 'sudo -i'
+if ($LASTEXITCODE -ne 0) { throw 'Unable to reconnect to the approved production root shell.' }
 ```
 
 Reinitialize every non-secret shell variable in the new root Bash session, then load the cache namespace from the protected environment file with tracing disabled:
@@ -598,10 +743,13 @@ ENV_FILE='/etc/vietnamguide/comparison-rollout.env'
 VG_ARTIFACT_HASH='<same-lowercase-artifact-sha256>'
 VG_RUN_ID='<same-closed-full-run-id>'
 RELEASE_DIR="$RELEASE_ROOT/$VG_ARTIFACT_HASH"
-ARTIFACT="$RELEASE_DIR/ops/comparison-rollout/artifact.json"
+RELEASE_PAYLOAD_DIR="$RELEASE_DIR/payload"
+ARTIFACT="$RELEASE_PAYLOAD_DIR/ops/comparison-rollout/artifact.json"
 DRILL_SENTINEL_DIR="$STATE_DIR/evidence/$VG_RUN_ID/rollback-drill"
 
 test -d "$RELEASE_DIR"
+test -d "$RELEASE_PAYLOAD_DIR"
+test "$(cat "$RELEASE_PAYLOAD_DIR/.vietnamguide-release-sha256")" = "$VG_ARTIFACT_HASH"
 test -f "$ARTIFACT"
 test -f "$DRILL_SENTINEL_DIR/production.before.json"
 test -f "$DRILL_SENTINEL_DIR/active-state.before.sha256"
@@ -619,7 +767,7 @@ Capture the post-drill sentinel only after reinitialization succeeds. These comm
 
 ```bash
 wp --path="$WP_ROOT" --allow-root eval-file \
-  "$RELEASE_DIR/ops/verify-comparison-rollout-live.php" -- \
+  "$RELEASE_PAYLOAD_DIR/ops/verify-comparison-rollout-live.php" -- \
   emit-sentinel \
   --stage=full \
   --artifact="$ARTIFACT" \
@@ -648,25 +796,37 @@ Set-Location -LiteralPath $RepoRoot
 
 git merge-base --is-ancestor $RecoveryBaseSha $FeatureBranch
 if ($LASTEXITCODE -ne 0) { throw 'Feature branch does not descend from recovery base.' }
-if (-not [string]::IsNullOrWhiteSpace((git status --porcelain | Out-String))) {
+$GitStatus = git status --porcelain
+if ($LASTEXITCODE -ne 0) { throw 'Unable to inspect the worktree before final integration.' }
+if (-not [string]::IsNullOrWhiteSpace(($GitStatus | Out-String))) {
     throw 'Working tree must be clean before finishing.'
 }
 
 git show-ref --verify --quiet refs/heads/master
-if ($LASTEXITCODE -eq 0) {
+$ShowRefExit = $LASTEXITCODE
+if ($ShowRefExit -eq 0) {
     $ExistingMaster = (git rev-parse master).Trim()
+    if ($LASTEXITCODE -ne 0) { throw 'Unable to resolve the existing master branch.' }
     if ($ExistingMaster -ne $RecoveryBaseSha) {
         throw 'Existing master is not the recorded recovery base; stop for review.'
     }
-} else {
+} elseif ($ShowRefExit -eq 1) {
     git branch master $RecoveryBaseSha
     if ($LASTEXITCODE -ne 0) { throw 'Unable to create master at the verified recovery base.' }
+} else {
+    throw 'Unable to inspect the local master branch.'
 }
 
 git switch master
+if ($LASTEXITCODE -ne 0) { throw 'Unable to switch to master for final integration.' }
 git merge --no-ff $FeatureBranch -m 'merge: comparison evidence decision rollout'
-git status --short
-git log -5 --oneline
+if ($LASTEXITCODE -ne 0) { throw 'Final integration merge failed.' }
+$FinalStatus = git status --short
+if ($LASTEXITCODE -ne 0) { throw 'Unable to inspect final integration status.' }
+$FinalStatus
+$FinalLog = git log -5 --oneline
+if ($LASTEXITCODE -ne 0) { throw 'Unable to inspect final integration history.' }
+$FinalLog
 ```
 
 Creating `master` is allowed only inside this finishing workflow and only at the exact reviewed `RECOVERY_BASE_SHA`. Never create it from an arbitrary current HEAD.

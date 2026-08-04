@@ -19,6 +19,81 @@ function Add-Failure {
     $script:failures.Add($Message)
 }
 
+function Get-MarkdownSectionText {
+    param(
+        [string]$Text,
+        [string]$Heading
+    )
+
+    $match = [regex]::Match(
+        $Text,
+        ('(?ms)^' + [regex]::Escape($Heading) + '\r?\n.*?(?=^## |\z)')
+    )
+    if (-not $match.Success) {
+        Add-Failure "Recovery execution addendum section missing: $Heading"
+        return ''
+    }
+
+    return $match.Value
+}
+
+function Test-OrderedMarkers {
+    param(
+        [string]$Label,
+        [string]$Text,
+        [string[]]$Markers
+    )
+
+    $cursor = -1
+    foreach ($marker in $Markers) {
+        $position = $Text.IndexOf($marker, $cursor + 1, [System.StringComparison]::Ordinal)
+        if ($position -lt 0) {
+            Add-Failure "$Label failed: missing or out-of-order marker: $marker"
+            return $false
+        }
+        $cursor = $position
+    }
+
+    return $true
+}
+
+function Test-PowerShellNativeFailFast {
+    param(
+        [string]$Label,
+        [string]$Text
+    )
+
+    $fences = [regex]::Matches($Text, '(?ms)^```powershell\s*\r?\n(?<body>.*?)^```\s*$')
+    foreach ($fence in $fences) {
+        $lines = @($fence.Groups['body'].Value -split '\r?\n')
+        for ($index = 0; $index -lt $lines.Count; $index++) {
+            $trimmed = $lines[$index].Trim()
+            $isNative = $trimmed -match '^(?:&\s+\$PhpExecutable\b|powershell\.exe\b|node\b|php\b|git\b|ssh\b|scp\b|\$[A-Za-z_][A-Za-z0-9_]*\s*=\s*\(?git\b)'
+            if (-not $isNative) {
+                continue
+            }
+
+            while ($index -lt ($lines.Count - 1) -and $lines[$index].TrimEnd().EndsWith('`')) {
+                $index++
+            }
+
+            $nextIndex = $index + 1
+            while ($nextIndex -lt $lines.Count -and [string]::IsNullOrWhiteSpace($lines[$nextIndex])) {
+                $nextIndex++
+            }
+            $hasImmediateCheck = $nextIndex -lt $lines.Count -and (
+                $lines[$nextIndex].Trim() -match '^(?:if\s*\(\$LASTEXITCODE\b|\$[A-Za-z_][A-Za-z0-9_]*\s*=\s*\$LASTEXITCODE\b)'
+            )
+            if (-not $hasImmediateCheck) {
+                Add-Failure "$Label native fail-fast contract failed: $trimmed"
+                return $false
+            }
+        }
+    }
+
+    return $true
+}
+
 function Get-RelativeFileMap {
     param(
         [string]$Root,
@@ -464,8 +539,8 @@ $localAuthoredManifestPath = Join-Path $repoRoot 'tests\fixtures\recovery-local-
 $localAuthoredExpected = @(
     [pscustomobject]@{
         relativePath = 'docs/superpowers/plans/2026-08-03-vietnamguide-comparison-recovery-execution-addendum.md'
-        length = 33951
-        sha256 = '789bad52b99e7588c12cd69b6efb2afb8dd10f6c88ec33afa9f795ad2fa436af'
+        length = 43461
+        sha256 = '025179f3dc2b8cadada8c77b35fd1a32a6f3a2b40afa2f3a02f6636db9d5895a'
     }
 )
 $validatedLocalAuthored = @(Read-ValidatedLocalArtifactManifest -ManifestPath $localAuthoredManifestPath -Label 'Recovery local-authored' -ExpectedEntries $localAuthoredExpected)
@@ -477,6 +552,7 @@ foreach ($entry in $validatedLocalAuthored) {
 if ($validatedLocalAuthored.Count -eq 1) {
     $executionAddendumPath = $validatedLocalAuthored[0].FullPath
     $executionAddendumText = [System.IO.File]::ReadAllText($executionAddendumPath)
+    $normalizedAddendumText = $executionAddendumText.Replace("`r`n", "`n")
     $requiredPostDrillMarkers = @(
         '## Reconnect After the Isolated Drill',
         "VG_ARTIFACT_HASH='<same-lowercase-artifact-sha256>'",
@@ -488,6 +564,307 @@ if ($validatedLocalAuthored.Count -eq 1) {
             Add-Failure "Recovery execution addendum missing copy-safe post-drill marker: $marker"
         }
     }
+
+    $nativeFailFastSections = @(
+        [pscustomobject]@{ Label = 'Recovered verifier block'; Heading = '## Task 0: Recover the Missing Verifier Stack' },
+        [pscustomobject]@{ Label = 'Local build block'; Heading = '## Local Build and Release Preparation' },
+        [pscustomobject]@{ Label = 'Artifact upload block'; Heading = '## Artifact Upload' },
+        [pscustomobject]@{ Label = 'Production SSH entry'; Heading = '## Production Shell Initialization' },
+        [pscustomobject]@{ Label = 'Canary public verification block'; Heading = '## Canary Validate, Dry-Run, Apply, and Activate' },
+        [pscustomobject]@{ Label = 'Fixture drill block'; Heading = '## Isolated Fixture-Only Rollback Drill' },
+        [pscustomobject]@{ Label = 'Reconnect SSH block'; Heading = '## Reconnect After the Isolated Drill' },
+        [pscustomobject]@{ Label = 'Final integration block'; Heading = '## Final Local Integration' }
+    )
+    foreach ($sectionSpec in $nativeFailFastSections) {
+        $sectionText = Get-MarkdownSectionText -Text $normalizedAddendumText -Heading $sectionSpec.Heading
+        if ($sectionText) {
+            [void](Test-PowerShellNativeFailFast -Label $sectionSpec.Label -Text $sectionText)
+        }
+    }
+
+    $canaryActivationSection = Get-MarkdownSectionText -Text $normalizedAddendumText -Heading '## Canary Validate, Dry-Run, Apply, and Activate'
+    $baselinePilotBlock = @'
+BASELINE_PILOT_PATHS=(
+  'destinations/ho-chi-minh-city-travel-guide'
+  'itineraries/10-days-in-vietnam'
+  'itineraries/7-days-in-vietnam'
+  'itineraries/14-days-in-vietnam'
+  'itineraries/21-days-in-vietnam'
+  'itineraries/hanoi-in-2-days'
+  'compare/ha-long-bay-vs-lan-ha-bay'
+  'plan/vietnam-evisa'
+)
+'@
+    $canaryPilotBlock = @'
+CANARY_PATHS=(
+  'compare/old-quarter-vs-french-quarter-vs-west-lake'
+  'compare/ninh-binh-day-trip-vs-overnight'
+  'compare/north-central-south-vietnam'
+)
+'@
+    $stage2PilotBlock = @'
+STAGE2_PATHS=(
+  'compare/cu-chi-tunnels-vs-mekong-delta-day-trip'
+  'compare/da-nang-vs-hoi-an'
+  'compare/hoi-an-vs-hue'
+  'compare/mui-ne-vs-nha-trang'
+  'compare/phu-quoc-vs-nha-trang'
+  'compare/trang-an-vs-tam-coc'
+)
+'@
+    $permanentControlBlock = @'
+PERMANENT_CONTROL_PATHS=(
+  'compare'
+  'destinations/hanoi-travel-guide'
+  'plan/sim-esim-vietnam'
+  'plan/transport-within-vietnam'
+)
+'@
+    $requiredInventoryMarkers = @(
+        "  'destinations/ho-chi-minh-city-travel-guide'",
+        "  'itineraries/10-days-in-vietnam'",
+        "  'itineraries/7-days-in-vietnam'",
+        "  'itineraries/14-days-in-vietnam'",
+        "  'itineraries/21-days-in-vietnam'",
+        "  'itineraries/hanoi-in-2-days'",
+        "  'compare/ha-long-bay-vs-lan-ha-bay'",
+        "  'plan/vietnam-evisa'",
+        "  'compare/old-quarter-vs-french-quarter-vs-west-lake'",
+        "  'compare/ninh-binh-day-trip-vs-overnight'",
+        "  'compare/north-central-south-vietnam'",
+        "  'compare/cu-chi-tunnels-vs-mekong-delta-day-trip'",
+        "  'compare/da-nang-vs-hoi-an'",
+        "  'compare/hoi-an-vs-hue'",
+        "  'compare/mui-ne-vs-nha-trang'",
+        "  'compare/phu-quoc-vs-nha-trang'",
+        "  'compare/trang-an-vs-tam-coc'",
+        'ACTIVE_PILOT_PATHS=("${BASELINE_PILOT_PATHS[@]}" "${CANARY_PATHS[@]}" "${STAGE2_PATHS[@]}")',
+        'test "${#ACTIVE_PILOT_PATHS[@]}" -eq 17',
+        'test "$(printf ''%s\n'' "${ACTIVE_PILOT_PATHS[@]}" | sort -u | wc -l)" -eq 17',
+        'test "${#PERMANENT_CONTROL_PATHS[@]}" -eq 4',
+        'test "$(printf ''%s\n'' "${PERMANENT_CONTROL_PATHS[@]}" | sort -u | wc -l)" -eq 4'
+    )
+    $inventoryInvalid = $false
+    foreach ($inventoryBlock in @($baselinePilotBlock, $canaryPilotBlock, $stage2PilotBlock, $permanentControlBlock)) {
+        if (-not $canaryActivationSection.Contains($inventoryBlock)) {
+            $inventoryInvalid = $true
+            break
+        }
+    }
+    foreach ($marker in $requiredInventoryMarkers) {
+        if (-not $canaryActivationSection.Contains($marker)) {
+            $inventoryInvalid = $true
+            break
+        }
+    }
+    if ($inventoryInvalid) {
+        Add-Failure 'Stage inventory contract failed.'
+    }
+
+    $browserMatrixMarkers = @(
+        'BROWSER_MATRIX_PATHS=("${CANARY_PATHS[@]}" "${STAGE2_PATHS[@]}")',
+        'BROWSER_MATRIX_VIEWPORTS=(''desktop:1280x900'' ''mobile:390x844'')',
+        'BROWSER_MATRIX_RUNS_EXPECTED=18',
+        'test "${#BROWSER_MATRIX_PATHS[@]}" -eq 9',
+        'test "${#BROWSER_MATRIX_VIEWPORTS[@]}" -eq 2',
+        'test "$(( ${#BROWSER_MATRIX_PATHS[@]} * ${#BROWSER_MATRIX_VIEWPORTS[@]} ))" -eq "$BROWSER_MATRIX_RUNS_EXPECTED"',
+        "CANARY_TABLET_VIEWPORT='768x1024'",
+        'CANARY_TABLET_RUNS_EXPECTED=3',
+        'CANARY_REDUCED_MOTION_RUNS_EXPECTED=3',
+        'CANARY_FORCED_COLORS_RUNS_EXPECTED=3'
+    )
+    foreach ($marker in $browserMatrixMarkers) {
+        if (-not $canaryActivationSection.Contains($marker)) {
+            Add-Failure "Stage 2 browser matrix inventory contract failed: $marker"
+            break
+        }
+    }
+
+    $canaryObservationSection = Get-MarkdownSectionText -Text $normalizedAddendumText -Heading '## Canary Observation, Compatibility Sync, and Close'
+    $canaryRenewalMarkers = @(
+        'LOCK_RENEWAL_INTERVAL_SECONDS=240',
+        'CANARY_OBSERVATION_ROUNDS=3',
+        'CANARY_OBSERVATION_MIN_SECONDS=600',
+        'for round in 1 2 3; do',
+        'sleep "$LOCK_RENEWAL_INTERVAL_SECONDS"',
+        'run_rollout recovery-audit canary --action=renew-lock --ttl-seconds=900',
+        'sleep "$((300 - LOCK_RENEWAL_INTERVAL_SECONDS))"',
+        'test "$((VG_OBSERVE_END_EPOCH - VG_OBSERVE_START_EPOCH))" -ge "$CANARY_OBSERVATION_MIN_SECONDS"'
+    )
+    $canaryRenewalInvalid = $canaryObservationSection -match '(?m)^\s*sleep\s+300(?:\s|;|$)'
+    foreach ($marker in $canaryRenewalMarkers) {
+        if (-not $normalizedAddendumText.Contains($marker)) {
+            $canaryRenewalInvalid = $true
+            break
+        }
+    }
+    if (([regex]::Matches($canaryObservationSection, '(?m)^\s*run_rollout recovery-audit canary --action=renew-lock --ttl-seconds=900$')).Count -lt 5) {
+        $canaryRenewalInvalid = $true
+    }
+    if ($canaryRenewalInvalid) {
+        Add-Failure 'Canary lock renewal contract failed.'
+    }
+
+    $canaryCompatibilityPosition = $canaryObservationSection.IndexOf('run_rollout compatibility-sync canary', [System.StringComparison]::Ordinal)
+    foreach ($gate in @(
+        'verify_rollout public-inventory canary',
+        'verify_rollout browser-matrix canary',
+        'verify_rollout performance-budgets canary',
+        'verify_rollout cache-budgets canary',
+        'verify_rollout log-observation canary',
+        'verify_rollout permanent-controls canary'
+    )) {
+        $gatePosition = $canaryObservationSection.IndexOf($gate, [System.StringComparison]::Ordinal)
+        if ($gatePosition -lt 0 -or $canaryCompatibilityPosition -lt 0 -or $gatePosition -gt $canaryCompatibilityPosition) {
+            Add-Failure "Canary gate ordering contract failed: $gate"
+            break
+        }
+    }
+    [void](Test-OrderedMarkers -Label 'Canary gate ordering contract' -Text $canaryObservationSection -Markers @(
+        'verify_rollout permanent-controls canary',
+        'run_rollout recovery-audit canary --action=renew-lock --ttl-seconds=900',
+        'run_rollout compatibility-sync canary',
+        'verify_rollout compatibility-equivalence canary',
+        'run_rollout recovery-audit canary --action=close-ledger --require-final-event=compatibility-sync',
+        'test ! -e "$STATE_DIR/lock.json"'
+    ))
+
+    $canaryRollbackSection = Get-MarkdownSectionText -Text $normalizedAddendumText -Heading '## Canary Failure and Rollback'
+    $canaryRollbackGate = @'
+if [ "$ROLLBACK_EXIT" -ne 0 ]; then
+  printf '%s\n' 'Canary rollback failed; lock and evidence preserved for recovery audit.' >&2
+  exit "$ROLLBACK_EXIT"
+fi
+'@
+    if (-not $canaryRollbackSection.Contains($canaryRollbackGate)) {
+        Add-Failure 'Canary rollback ordering contract failed: immediate nonzero gate is missing.'
+    }
+    [void](Test-OrderedMarkers -Label 'Canary rollback ordering contract' -Text $canaryRollbackSection -Markers @(
+        'run_rollout rollback canary',
+        'ROLLBACK_EXIT=$?',
+        'set -e',
+        'if [ "$ROLLBACK_EXIT" -ne 0 ]; then',
+        'wp --path="$WP_ROOT" --allow-root cache flush',
+        'verify_rollout baseline-hashes canary',
+        'run_rollout recovery-audit canary --action=close-ledger --require-final-event=rollback',
+        'test ! -e "$STATE_DIR/lock.json"'
+    ))
+    if ($canaryRollbackSection.Contains('test "$ROLLBACK_EXIT" -eq 0')) {
+        Add-Failure 'Canary rollback ordering contract failed: success gate occurs after rollback work.'
+    }
+
+    $stage2Section = Get-MarkdownSectionText -Text $normalizedAddendumText -Heading '## Stage 2 Validate, Apply, Activate, and Close'
+    $requiredBudgetMarkers = @(
+        'MAX_HTML_GROWTH_BYTES=20480',
+        'MAX_DOM_NODES=180',
+        'MAX_SCOPED_CSS_BYTES=6144',
+        'MAX_WARM_QUERIES=0',
+        'MAX_COLD_QUERIES=1',
+        'MAX_PHP_P95_MS=8',
+        "MAX_CLS='0.10'",
+        'MAX_LCP_REGRESSION_PERCENT=10',
+        'MAX_QA_BATCH_SECONDS=240',
+        'test "$MAX_QA_BATCH_SECONDS" -lt 300'
+    )
+    foreach ($marker in $requiredBudgetMarkers) {
+        if (-not $normalizedAddendumText.Contains($marker)) {
+            Add-Failure "Stage 2 gate ordering contract failed: missing budget marker: $marker"
+            break
+        }
+    }
+
+    $stage2CompatibilityPosition = $stage2Section.IndexOf('run_rollout compatibility-sync full', [System.StringComparison]::Ordinal)
+    $stage2ClosePosition = $stage2Section.IndexOf('run_rollout recovery-audit full --action=close-ledger --require-final-event=compatibility-sync', [System.StringComparison]::Ordinal)
+    $requiredStage2Gates = @(
+        'verify_rollout cache-warm full',
+        'verify_rollout public-inventory full --expected-active-pilots=17 --expected-permanent-controls=4',
+        'verify_rollout browser-matrix full',
+        'verify_rollout tablet-canary full',
+        'verify_rollout reduced-motion-canary full',
+        'verify_rollout forced-colors-canary full',
+        'verify_rollout keyboard-zoom-focus-overflow full',
+        'verify_rollout console-h1-module-content full',
+        'verify_rollout performance-budgets full',
+        'verify_rollout cache-budgets full',
+        'verify_rollout log-observation full',
+        'verify_rollout permanent-controls full'
+    )
+    foreach ($gate in $requiredStage2Gates) {
+        $gatePosition = $stage2Section.IndexOf($gate, [System.StringComparison]::Ordinal)
+        if ($gatePosition -lt 0 -or $stage2CompatibilityPosition -lt 0 -or $gatePosition -gt $stage2CompatibilityPosition) {
+            Add-Failure "Stage 2 gate ordering contract failed: $gate"
+            break
+        }
+    }
+    [void](Test-OrderedMarkers -Label 'Stage 2 gate ordering contract' -Text $stage2Section -Markers @(
+        'verify_rollout permanent-controls full',
+        'run_rollout compatibility-sync full',
+        'run_rollout compatibility-sync full',
+        'verify_rollout compatibility-equivalence full',
+        'run_rollout recovery-audit full --action=close-ledger --require-final-event=compatibility-sync',
+        'test ! -e "$STATE_DIR/lock.json"'
+    ))
+    if (
+        $stage2ClosePosition -lt $stage2CompatibilityPosition -or
+        ([regex]::Matches($stage2Section, '(?m)^run_rollout compatibility-sync full$')).Count -ne 2 -or
+        ([regex]::Matches($stage2Section, '(?m)^run_rollout recovery-audit full --action=renew-lock --ttl-seconds=900$')).Count -lt 3
+    ) {
+        Add-Failure 'Stage 2 gate ordering contract failed: sync, close, or lock-renewal count is unsafe.'
+    }
+
+    $stage2RollbackSection = Get-MarkdownSectionText -Text $normalizedAddendumText -Heading '## Stage 2 Failure and Rollback'
+    $stage2RollbackGate = @'
+if [ "$ROLLBACK_EXIT" -ne 0 ]; then
+  printf '%s\n' 'Stage 2 rollback failed; lock and evidence preserved for recovery audit.' >&2
+  exit "$ROLLBACK_EXIT"
+fi
+'@
+    if (-not $stage2RollbackSection.Contains($stage2RollbackGate)) {
+        Add-Failure 'Stage 2 rollback ordering contract failed: immediate nonzero gate is missing.'
+    }
+    [void](Test-OrderedMarkers -Label 'Stage 2 rollback ordering contract' -Text $stage2RollbackSection -Markers @(
+        'run_rollout rollback full',
+        'ROLLBACK_EXIT=$?',
+        'set -e',
+        'if [ "$ROLLBACK_EXIT" -ne 0 ]; then',
+        'wp --path="$WP_ROOT" --allow-root cache flush',
+        'verify_rollout baseline-hashes full',
+        'run_rollout recovery-audit full --action=close-ledger --require-final-event=rollback',
+        'test ! -e "$STATE_DIR/lock.json"'
+    ))
+    if ($stage2RollbackSection.Contains('test "$ROLLBACK_EXIT" -eq 0')) {
+        Add-Failure 'Stage 2 rollback ordering contract failed: success gate occurs after rollback work.'
+    }
+
+    $releasePublicationSection = Get-MarkdownSectionText -Text $normalizedAddendumText -Heading '## Verify and Atomically Install the Release'
+    if (
+        $releasePublicationSection.Contains('test ! -e "$RELEASE_DIR"') -or
+        $releasePublicationSection.Contains('mv -- "$INSTALL_ROOT" "$RELEASE_DIR"')
+    ) {
+        Add-Failure 'Atomic release publication contract failed: non-atomic final-directory test and move detected.'
+    }
+    [void](Test-OrderedMarkers -Label 'Atomic release publication contract' -Text $releasePublicationSection -Markers @(
+        'mkdir -m 0750 "$RELEASE_DIR"',
+        'RELEASE_PAYLOAD_DIR="$RELEASE_DIR/payload"',
+        'test ! -e "$RELEASE_PAYLOAD_DIR"',
+        'mv -- "$INSTALL_ROOT" "$RELEASE_PAYLOAD_DIR"'
+    ))
+    if (
+        $normalizedAddendumText.Contains('$RELEASE_DIR/ops/') -or
+        -not $releasePublicationSection.Contains('php "$RELEASE_PAYLOAD_DIR/ops/install-comparison-rollout-release.php" install \') -or
+        -not $releasePublicationSection.Contains('--release-root="$RELEASE_PAYLOAD_DIR"')
+    ) {
+        Add-Failure 'Release payload execution-root contract failed.'
+    }
+    [void](Test-OrderedMarkers -Label 'Post-publication release identity contract' -Text $releasePublicationSection -Markers @(
+        'mv -- "$INSTALL_ROOT" "$RELEASE_PAYLOAD_DIR"',
+        'test -f "$RELEASE_PAYLOAD_DIR/.vietnamguide-release-sha256"',
+        'test "$(cat "$RELEASE_PAYLOAD_DIR/.vietnamguide-release-sha256")" = "$VG_ARTIFACT_HASH"',
+        'test -f "$RELEASE_PAYLOAD_DIR/payload-manifest.json"',
+        'test -f "$RELEASE_PAYLOAD_DIR/ops/comparison-rollout/artifact.json"',
+        'php "$RELEASE_PAYLOAD_DIR/ops/install-comparison-rollout-release.php" verify-payload \',
+        'php "$RELEASE_PAYLOAD_DIR/ops/install-comparison-rollout-release.php" install \'
+    ))
 }
 
 $localOpsManifestPath = Join-Path $repoRoot 'tests\fixtures\recovery-local-ops-manifest.json'
