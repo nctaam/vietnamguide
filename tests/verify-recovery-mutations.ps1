@@ -284,18 +284,24 @@ function Add-ExecutionAddendumReplacementMutation {
     param(
         [string]$Name,
         [string]$FixtureName,
-        [string]$OldText,
-        [string]$NewText,
+        [string[]]$OldText,
+        [string[]]$NewText,
         [string]$ExpectedFailure
     )
 
+    if ($OldText.Count -ne $NewText.Count) {
+        throw "Runbook mutation replacement count mismatch for $Name."
+    }
+
     $fixture = New-CaseFixture -Name $FixtureName
     $addendumText = [System.IO.File]::ReadAllText((Get-ExecutionAddendumPath -Fixture $fixture))
-    $matchCount = ([regex]::Matches($addendumText, [regex]::Escape($OldText))).Count
-    if ($matchCount -ne 1) {
-        throw "Expected exactly one runbook mutation target for $Name; found $matchCount."
+    for ($replacementIndex = 0; $replacementIndex -lt $OldText.Count; $replacementIndex++) {
+        $matchCount = ([regex]::Matches($addendumText, [regex]::Escape($OldText[$replacementIndex]))).Count
+        if ($matchCount -ne 1) {
+            throw "Expected exactly one runbook mutation target $replacementIndex for $Name; found $matchCount."
+        }
+        $addendumText = $addendumText.Replace($OldText[$replacementIndex], $NewText[$replacementIndex])
     }
-    $addendumText = $addendumText.Replace($OldText, $NewText)
     $fixtureVerifier = Set-AuthorizedExecutionAddendumText -Fixture $fixture -Text $addendumText
     $result = Invoke-CaseVerifier -Fixture $fixture -VerifierPath $fixtureVerifier
     Add-Result -Name $Name -Passed ($result.ExitCode -ne 0 -and $result.Output -match $ExpectedFailure) -Detail $result.Output
@@ -388,6 +394,9 @@ try {
 
     $lineContinuation = [char]96
     $markdownFence = ([string][char]96) * 3
+    $closedHtmlCommentChain = '<!--closed--><!--also-closed-->'
+    $splicedStage2Heading = '#' + $closedHtmlCommentChain + '# Stage 2 Validate, Apply, Activate, and Close'
+    $splicedPowerShellFence = ([string][char]96) + $closedHtmlCommentChain + (([string][char]96) * 2) + 'powershell'
     $runbookSafetyMutations = @(
         [pscustomobject]@{
             Name = 'runbook safety: recovered verifier native check removal is rejected'
@@ -518,10 +527,16 @@ try {
         [pscustomobject]@{
             Name = 'runbook safety: full-stage public HTTP verifier in HTML comment is rejected'
             FixtureName = 'runbook-full-public-verifier-html-comment'
-            OldText = ($markdownFence + "powershell`n`$RepoRoot = 'C:\Users\NCTaam\projects\vietnamguide'`nSet-Location -LiteralPath `$RepoRoot`n" +
-                "powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\ops\verify-comparison-rollout-public.ps1 $lineContinuation`n    -Stage full $lineContinuation`n    -Origin 'https://vietnamguide.net'`nif (`$LASTEXITCODE -ne 0) { throw 'Full-stage public HTTP verification failed.' }`n" + $markdownFence)
-            NewText = ("<!--closed--><!--`n" + $markdownFence + "powershell`n`$RepoRoot = 'C:\Users\NCTaam\projects\vietnamguide'`nSet-Location -LiteralPath `$RepoRoot`n" +
-                "powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\ops\verify-comparison-rollout-public.ps1 $lineContinuation`n    -Stage full $lineContinuation`n    -Origin 'https://vietnamguide.net'`nif (`$LASTEXITCODE -ne 0) { throw 'Full-stage public HTTP verification failed.' }`n" + $markdownFence + "`n-->")
+            OldText = @(
+                '## Stage 2 Validate, Apply, Activate, and Close',
+                ($markdownFence + "powershell`n`$RepoRoot = 'C:\Users\NCTaam\projects\vietnamguide'`nSet-Location -LiteralPath `$RepoRoot`n" +
+                    "powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\ops\verify-comparison-rollout-public.ps1 $lineContinuation`n    -Stage full $lineContinuation`n    -Origin 'https://vietnamguide.net'`nif (`$LASTEXITCODE -ne 0) { throw 'Full-stage public HTTP verification failed.' }`n" + $markdownFence)
+            )
+            NewText = @(
+                $splicedStage2Heading,
+                ($splicedPowerShellFence + "`n`$RepoRoot = 'C:\Users\NCTaam\projects\vietnamguide'`nSet-Location -LiteralPath `$RepoRoot`n" +
+                    "powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\ops\verify-comparison-rollout-public.ps1 $lineContinuation`n    -Stage full $lineContinuation`n    -Origin 'https://vietnamguide.net'`nif (`$LASTEXITCODE -ne 0) { throw 'Full-stage public HTTP verification failed.' }`n" + $markdownFence)
+            )
             ExpectedFailure = 'Stage 2 public HTTP verification contract failed'
         },
         [pscustomobject]@{
@@ -625,11 +640,14 @@ try {
     $nestedFenceStage2Gate = New-CaseFixture -Name 'runbook-stage2-nested-fence-spoofed-gate'
     $nestedFenceStage2GateText = [System.IO.File]::ReadAllText((Get-ExecutionAddendumPath -Fixture $nestedFenceStage2Gate))
     $outerMarkdownFence = ([string][char]96) * 4
+    $splicedOuterFence = ([string][char]96) + '<!--closed-->' + (([string][char]96) * 3)
     $stage2Heading = '## Stage 2 Validate, Apply, Activate, and Close'
-    $stage2RollbackHeading = '## Stage 2 Failure and Rollback'
-    if ($nestedFenceStage2GateText.Contains($stage2Heading) -and $nestedFenceStage2GateText.Contains($stage2RollbackHeading)) {
-        $nestedFenceStage2GateText = $nestedFenceStage2GateText.Replace($stage2Heading, ($outerMarkdownFence + "text`nunsafe Stage 2 text`n" + $stage2Heading))
-        $nestedFenceStage2GateText = $nestedFenceStage2GateText.Replace($stage2RollbackHeading, ($outerMarkdownFence + "`n`n" + $stage2RollbackHeading))
+    if ($nestedFenceStage2GateText.Contains($stage2Heading)) {
+        $nestedFenceStage2GateText = $nestedFenceStage2GateText.Replace(
+            $stage2Heading,
+            ($splicedOuterFence + "text`nunsafe Stage 2 text`n" + $outerMarkdownFence + "`n" + $stage2Heading)
+        )
+        $nestedFenceStage2GateText += "`n$outerMarkdownFence`n"
     }
     $nestedFenceStage2GateVerifier = Set-AuthorizedExecutionAddendumText -Fixture $nestedFenceStage2Gate -Text $nestedFenceStage2GateText
     $nestedFenceStage2GateResult = Invoke-CaseVerifier -Fixture $nestedFenceStage2Gate -VerifierPath $nestedFenceStage2GateVerifier

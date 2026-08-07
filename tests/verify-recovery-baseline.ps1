@@ -72,31 +72,34 @@ function Get-MarkdownVisibleLine {
         [ref]$InHtmlComment
     )
 
-    $visible = [System.Text.StringBuilder]::new()
+    $visible = $Line.ToCharArray()
     $cursor = 0
     while ($cursor -lt $Line.Length) {
         if ($InHtmlComment.Value) {
             $commentEnd = $Line.IndexOf('-->', $cursor, [System.StringComparison]::Ordinal)
+            $commentEndExclusive = if ($commentEnd -lt 0) { $Line.Length } else { $commentEnd + 3 }
+            for ($commentIndex = $cursor; $commentIndex -lt $commentEndExclusive; $commentIndex++) {
+                $visible[$commentIndex] = ' '
+            }
             if ($commentEnd -lt 0) {
                 break
             }
+
             $InHtmlComment.Value = $false
-            $cursor = $commentEnd + 3
+            $cursor = $commentEndExclusive
             continue
         }
 
         $commentStart = $Line.IndexOf('<!--', $cursor, [System.StringComparison]::Ordinal)
         if ($commentStart -lt 0) {
-            [void]$visible.Append($Line.Substring($cursor))
             break
         }
 
-        [void]$visible.Append($Line.Substring($cursor, $commentStart - $cursor))
         $InHtmlComment.Value = $true
-        $cursor = $commentStart + 4
+        $cursor = $commentStart
     }
 
-    return $visible.ToString()
+    return -join $visible
 }
 
 function Get-MarkdownSectionText {
