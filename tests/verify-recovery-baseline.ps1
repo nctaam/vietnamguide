@@ -411,6 +411,10 @@ function Get-BashHeredocRedirections {
         $index = [Math]::Max($delimiterIndex, $index + 2)
     }
 
+    if ($inSingleQuote -or $inDoubleQuote) {
+        return [pscustomobject]@{ IsValid = $false; Redirections = @() }
+    }
+
     return [pscustomobject]@{
         IsValid = $true
         Redirections = $redirections.ToArray()

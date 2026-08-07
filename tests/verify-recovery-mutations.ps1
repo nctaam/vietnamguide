@@ -608,7 +608,7 @@ try {
     $canaryRollbackOrdering = New-CaseFixture -Name 'runbook-canary-rollback-ordering'
     $canaryRollbackText = [System.IO.File]::ReadAllText((Get-ExecutionAddendumPath -Fixture $canaryRollbackOrdering))
     $canaryCacheFlush = 'wp --path="$WP_ROOT" --allow-root cache flush'
-    $canaryHeredocMarker = "cat <<`"E\OF`" <<'ROLLBACK_ORDER_TWO'`nignored first heredoc body`nEOF`nROLLBACK_ORDER_TWO`n$canaryCacheFlush`nE\OF`nignored second heredoc body`nROLLBACK_ORDER_TWO"
+    $canaryHeredocMarker = "echo `"unterminated double quote`ncat <<`"E\OF`" <<'ROLLBACK_ORDER_TWO'`nignored first heredoc body`nEOF`nROLLBACK_ORDER_TWO`n$canaryCacheFlush`nE\OF`nignored second heredoc body`nROLLBACK_ORDER_TWO`n$canaryCacheFlush`n`""
     if ($canaryRollbackText.Contains($canaryCacheFlush)) {
         $canaryRollbackText = $canaryRollbackText.Replace($canaryCacheFlush, $canaryHeredocMarker)
     }
@@ -619,10 +619,9 @@ try {
     $stage2RollbackOrdering = New-CaseFixture -Name 'runbook-stage2-rollback-ordering'
     $stage2RollbackText = [System.IO.File]::ReadAllText((Get-ExecutionAddendumPath -Fixture $stage2RollbackOrdering))
     $stage2CacheFlush = 'wp --path="$WP_ROOT" --allow-root cache flush'
-    $stage2RollbackPrelude = "run_rollout rollback full`nROLLBACK_EXIT=`$?`nset -e"
-    $stage2HeredocMarker = ": `$((1 << 2))`n$stage2CacheFlush`n2`n$stage2RollbackPrelude"
-    if ($stage2RollbackText.Contains($stage2RollbackPrelude)) {
-        $stage2RollbackText = $stage2RollbackText.Replace($stage2RollbackPrelude, $stage2HeredocMarker)
+    $stage2HeredocMarker = "echo 'unterminated single quote`n: `$((1 << 2))`n$stage2CacheFlush`n2`n'"
+    if ($stage2RollbackText.Contains($stage2CacheFlush)) {
+        $stage2RollbackText = $stage2RollbackText.Replace($stage2CacheFlush, $stage2HeredocMarker)
     }
     $stage2RollbackVerifier = Set-AuthorizedExecutionAddendumText -Fixture $stage2RollbackOrdering -Text $stage2RollbackText
     $stage2RollbackResult = Invoke-CaseVerifier -Fixture $stage2RollbackOrdering -VerifierPath $stage2RollbackVerifier
