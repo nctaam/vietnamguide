@@ -19,22 +19,108 @@ function Add-Failure {
     $script:failures.Add($Message)
 }
 
+function Get-MarkdownLineRecords {
+    param([string]$Text)
+
+    $records = [System.Collections.Generic.List[object]]::new()
+    $offset = 0
+    foreach ($rawLine in @($Text -split "`n", -1)) {
+        $line = $rawLine.TrimEnd("`r")
+        $records.Add([pscustomobject]@{
+            Text = $line
+            RawText = $rawLine
+            Offset = $offset
+        })
+        $offset += $rawLine.Length + 1
+    }
+
+    return @($records)
+}
+
+function Get-MarkdownFenceMatch {
+    param([string]$Line)
+
+    $match = [regex]::Match($Line, '^(?: {0,3})(?<marker>`{3,}|~{3,})(?<info>.*)$')
+    if (-not $match.Success) {
+        return $null
+    }
+
+    [pscustomobject]@{
+        Marker = $match.Groups['marker'].Value
+        Info = $match.Groups['info'].Value.Trim()
+    }
+}
+
 function Get-MarkdownSectionText {
     param(
         [string]$Text,
         [string]$Heading
     )
 
-    $match = [regex]::Match(
-        $Text,
-        ('(?ms)^' + [regex]::Escape($Heading) + '\r?\n.*?(?=^## |\z)')
-    )
-    if (-not $match.Success) {
+    $records = @(Get-MarkdownLineRecords -Text $Text)
+    $inFence = $false
+    $fenceMarker = ''
+    $fenceLength = 0
+    $fenceInfo = ''
+    $inHtmlComment = $false
+    $sectionStart = -1
+    $sectionEnd = $Text.Length
+
+    foreach ($record in $records) {
+        $line = $record.Text
+        if ($inFence) {
+            $fence = Get-MarkdownFenceMatch -Line $line
+            if ($null -ne $fence -and
+                $fence.Marker[0] -ceq $fenceMarker -and
+                $fence.Marker.Length -ge $fenceLength -and
+                ($fence.Info -eq '' -or $fence.Info -ceq $fenceInfo)) {
+                $inFence = $false
+            }
+            continue
+        }
+
+        if ($inHtmlComment) {
+            if ($line.Contains('-->')) {
+                $inHtmlComment = $false
+            }
+            continue
+        }
+        $commentStart = $line.IndexOf('<!--', [System.StringComparison]::Ordinal)
+        if ($commentStart -ge 0) {
+            if ($line.IndexOf('-->', $commentStart + 4, [System.StringComparison]::Ordinal) -lt 0) {
+                $inHtmlComment = $true
+            }
+            continue
+        }
+
+        $fence = Get-MarkdownFenceMatch -Line $line
+        if ($null -ne $fence) {
+            $inFence = $true
+            $fenceMarker = $fence.Marker[0]
+            $fenceLength = $fence.Marker.Length
+            $fenceInfo = $fence.Info
+            continue
+        }
+
+        if ($sectionStart -lt 0) {
+            if ($line -ceq $Heading) {
+                $sectionStart = $record.Offset
+            }
+            continue
+        }
+
+        if ($line -match '^##\s+') {
+            $sectionEnd = $record.Offset
+            break
+        }
+    }
+
+    if ($sectionStart -lt 0) {
         Add-Failure "Recovery execution addendum section missing: $Heading"
         return ''
     }
 
-    return $match.Value
+    return $Text.Substring($sectionStart, $sectionEnd - $sectionStart)
 }
 
 function Get-MarkdownFencedBlocks {
@@ -44,14 +130,61 @@ function Get-MarkdownFencedBlocks {
     )
 
     $blocks = [System.Collections.Generic.List[object]]::new()
-    $executableMarkdown = [regex]::Replace($Text, '(?s)<!--.*?-->', '')
-    $pattern = '(?ms)^```' + [regex]::Escape($Language) + '\s*\r?\n(?<body>.*?)^```\s*$'
-    foreach ($fence in [regex]::Matches($executableMarkdown, $pattern)) {
-        $blocks.Add([pscustomobject]@{
-            Index = $fence.Index
-            Text = $fence.Value
-            Body = $fence.Groups['body'].Value
-        })
+    $records = @(Get-MarkdownLineRecords -Text $Text)
+    $openFence = $null
+    $inHtmlComment = $false
+    foreach ($record in $records) {
+        $line = $record.Text
+        if ($null -ne $openFence) {
+            $fence = Get-MarkdownFenceMatch -Line $line
+            if ($null -eq $fence -or
+                $fence.Marker[0] -cne $openFence.Marker[0] -or
+                $fence.Marker.Length -lt $openFence.Marker.Length -or
+                ($fence.Info -ne '' -and $fence.Info -cne $openFence.Info)) {
+                continue
+            }
+
+            $bodyStart = $openFence.Offset + $openFence.RawText.Length + 1
+            $bodyLength = $record.Offset - $bodyStart
+            if ($bodyLength -lt 0) {
+                $bodyLength = 0
+            }
+            $languageToken = if ($openFence.Info) { ($openFence.Info -split '\s+')[0] } else { '' }
+            if ($languageToken -ieq $Language) {
+                $textLength = ($record.Offset + $record.RawText.Length) - $openFence.Offset
+                $blocks.Add([pscustomobject]@{
+                    Index = $openFence.Offset
+                    Text = $Text.Substring($openFence.Offset, $textLength)
+                    Body = $Text.Substring($bodyStart, $bodyLength)
+                })
+            }
+            $openFence = $null
+            continue
+        }
+
+        if ($inHtmlComment) {
+            if ($line.Contains('-->')) {
+                $inHtmlComment = $false
+            }
+            continue
+        }
+        $commentStart = $line.IndexOf('<!--', [System.StringComparison]::Ordinal)
+        if ($commentStart -ge 0) {
+            if ($line.IndexOf('-->', $commentStart + 4, [System.StringComparison]::Ordinal) -lt 0) {
+                $inHtmlComment = $true
+            }
+            continue
+        }
+
+        $fence = Get-MarkdownFenceMatch -Line $line
+        if ($null -ne $fence) {
+            $openFence = [pscustomobject]@{
+                Marker = $fence.Marker
+                Info = $fence.Info
+                Offset = $record.Offset
+                RawText = $record.RawText
+            }
+        }
     }
 
     return @($blocks)
@@ -83,12 +216,83 @@ function Get-ExecutableBashLines {
     $executableLines = [System.Collections.Generic.List[string]]::new()
     $fences = @(Get-MarkdownFencedBlocks -Text $Text -Language 'bash')
     foreach ($fence in $fences) {
-        foreach ($line in @($fence.Body -split '\r?\n')) {
+        $heredocDelimiter = $null
+        $heredocStripTabs = $false
+        foreach ($record in @(Get-MarkdownLineRecords -Text $fence.Body)) {
+            $line = $record.Text
+            if ($null -ne $heredocDelimiter) {
+                $terminator = if ($heredocStripTabs) { $line.TrimStart("`t") } else { $line }
+                if ($terminator -ceq $heredocDelimiter) {
+                    $heredocDelimiter = $null
+                    $heredocStripTabs = $false
+                }
+                continue
+            }
+
             $trimmed = $line.Trim()
             if ([string]::IsNullOrWhiteSpace($trimmed) -or $trimmed.StartsWith('#')) {
                 continue
             }
             $executableLines.Add($trimmed)
+
+            $heredoc = [regex]::Match($trimmed, '<<(?!<)(?<strip>-)?\s*[''\"]?(?<delimiter>[A-Za-z_][A-Za-z0-9_]*)[''\"]?')
+            if ($heredoc.Success) {
+                $heredocDelimiter = $heredoc.Groups['delimiter'].Value
+                $heredocStripTabs = $heredoc.Groups['strip'].Success
+            }
+        }
+    }
+
+    return @($executableLines)
+}
+
+function Get-ExecutablePowerShellLines {
+    param([string]$Text)
+
+    $executableLines = [System.Collections.Generic.List[string]]::new()
+    $inHereString = $false
+    $hereStringTerminator = ''
+    $inBlockComment = $false
+    foreach ($record in @(Get-MarkdownLineRecords -Text $Text)) {
+        $line = $record.Text
+        $trimmed = $line.Trim()
+        if ($inHereString) {
+            if ($trimmed -ceq $hereStringTerminator) {
+                $inHereString = $false
+                $hereStringTerminator = ''
+            }
+            continue
+        }
+        if ($inBlockComment) {
+            $commentEnd = $line.IndexOf('#>', [System.StringComparison]::Ordinal)
+            if ($commentEnd -ge 0) {
+                $inBlockComment = $false
+                $line = $line.Substring($commentEnd + 2)
+                $trimmed = $line.Trim()
+            } else {
+                continue
+            }
+        }
+        $commentStart = $line.IndexOf('<#', [System.StringComparison]::Ordinal)
+        if ($commentStart -ge 0) {
+            $commentEnd = $line.IndexOf('#>', $commentStart + 2, [System.StringComparison]::Ordinal)
+            if ($commentEnd -lt 0) {
+                $inBlockComment = $true
+                $line = $line.Substring(0, $commentStart)
+                $trimmed = $line.Trim()
+            } else {
+                $line = $line.Remove($commentStart, ($commentEnd + 2) - $commentStart)
+                $trimmed = $line.Trim()
+            }
+        }
+        if ([string]::IsNullOrWhiteSpace($trimmed) -or $trimmed.StartsWith('#')) {
+            continue
+        }
+        $hereString = [regex]::Match($trimmed, '@(?<quote>[''\"])\s*$')
+        $executableLines.Add($trimmed)
+        if ($hereString.Success) {
+            $hereStringTerminator = $hereString.Groups['quote'].Value + '@'
+            $inHereString = $true
         }
     }
 
@@ -164,7 +368,7 @@ function Test-PowerShellNativeFailFast {
 
     $fences = @(Get-MarkdownFencedBlocks -Text $Text -Language 'powershell')
     foreach ($fence in $fences) {
-        $lines = @($fence.Body -split '\r?\n')
+        $lines = @(Get-ExecutablePowerShellLines -Text $fence.Body)
         for ($index = 0; $index -lt $lines.Count; $index++) {
             $trimmed = $lines[$index].Trim()
             $isNative = $trimmed -match '^(?:&\s+\$PhpExecutable\b|powershell\.exe\b|node\b|php\b|git\b|ssh\b|scp\b|\$[A-Za-z_][A-Za-z0-9_]*\s*=\s*\(?git\b)'
@@ -912,7 +1116,7 @@ fi
     if (-not $canaryRollbackSection.Contains($canaryRollbackGate)) {
         Add-Failure 'Canary rollback ordering contract failed: immediate nonzero gate is missing.'
     }
-    [void](Test-OrderedMarkers -Label 'Canary rollback ordering contract' -Text $canaryRollbackSection -Markers @(
+    [void](Test-OrderedUniqueExecutableLines -Label 'Canary rollback ordering contract' -Lines $canaryRollbackExecutableLines -Markers @(
         'run_rollout rollback canary',
         'ROLLBACK_EXIT=$?',
         'set -e',
@@ -969,40 +1173,38 @@ fi
         'verify_rollout log-observation full',
         'verify_rollout permanent-controls full'
     )
-    foreach ($gate in $requiredStage2Gates) {
-        $gateIndexes = @(
-            for ($index = 0; $index -lt $stage2ExecutableLines.Count; $index++) {
-                if ($stage2ExecutableLines[$index] -ceq $gate) {
-                    $index
-                }
-            }
-        )
-        if ($gateIndexes.Count -ne 1 -or $firstStage2CompatibilityIndex -lt 0 -or $gateIndexes[0] -gt $firstStage2CompatibilityIndex) {
-            Add-Failure "Stage 2 gate ordering contract failed: $gate"
-            break
+    $stage2GateOrderValid = Test-OrderedUniqueExecutableLines -Label 'Stage 2 gate ordering contract' -Lines $stage2ExecutableLines -Markers $requiredStage2Gates
+    if ($stage2GateOrderValid) {
+        $lastStage2GateIndex = [array]::IndexOf($stage2ExecutableLines, $requiredStage2Gates[$requiredStage2Gates.Count - 1])
+        if ($firstStage2CompatibilityIndex -le $lastStage2GateIndex) {
+            Add-Failure 'Stage 2 gate ordering contract failed: compatibility sync precedes a required executable gate.'
         }
     }
 
-    $stage2PublicVerifierBlock = @'
-powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\ops\verify-comparison-rollout-public.ps1 `
-    -Stage full `
-    -Origin 'https://vietnamguide.net'
-if ($LASTEXITCODE -ne 0) { throw 'Full-stage public HTTP verification failed.' }
-'@
+    $stage2PublicVerifierLines = @(
+        'powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\ops\verify-comparison-rollout-public.ps1 `',
+        '-Stage full `',
+        '-Origin ''https://vietnamguide.net''',
+        'if ($LASTEXITCODE -ne 0) { throw ''Full-stage public HTTP verification failed.'' }'
+    )
     $stage2PowerShellFences = @(Get-MarkdownFencedBlocks -Text $stage2Section -Language 'powershell')
     $stage2PublicVerifierMatches = [System.Collections.Generic.List[object]]::new()
     foreach ($fence in $stage2PowerShellFences) {
-        $searchStart = 0
-        while ($searchStart -lt $fence.Body.Length) {
-            $matchIndex = $fence.Body.IndexOf($stage2PublicVerifierBlock, $searchStart, [System.StringComparison]::Ordinal)
-            if ($matchIndex -lt 0) {
-                break
+        $powerShellLines = @(Get-ExecutablePowerShellLines -Text $fence.Body)
+        for ($startIndex = 0; $startIndex -le ($powerShellLines.Count - $stage2PublicVerifierLines.Count); $startIndex++) {
+            $sequenceMatches = $true
+            for ($offset = 0; $offset -lt $stage2PublicVerifierLines.Count; $offset++) {
+                if ($powerShellLines[$startIndex + $offset] -cne $stage2PublicVerifierLines[$offset]) {
+                    $sequenceMatches = $false
+                    break
+                }
             }
-            $stage2PublicVerifierMatches.Add([pscustomobject]@{
-                Fence = $fence
-                Index = $matchIndex
-            })
-            $searchStart = $matchIndex + $stage2PublicVerifierBlock.Length
+            if ($sequenceMatches) {
+                $stage2PublicVerifierMatches.Add([pscustomobject]@{
+                    Fence = $fence
+                    Index = $startIndex
+                })
+            }
         }
     }
     $stage2PublicVerifierInvalid = $stage2PublicVerifierMatches.Count -ne 1
@@ -1105,7 +1307,7 @@ fi
     if (-not $stage2RollbackSection.Contains($stage2RollbackGate)) {
         Add-Failure 'Stage 2 rollback ordering contract failed: immediate nonzero gate is missing.'
     }
-    [void](Test-OrderedMarkers -Label 'Stage 2 rollback ordering contract' -Text $stage2RollbackSection -Markers @(
+    [void](Test-OrderedUniqueExecutableLines -Label 'Stage 2 rollback ordering contract' -Lines $stage2RollbackExecutableLines -Markers @(
         'run_rollout rollback full',
         'ROLLBACK_EXIT=$?',
         'set -e',

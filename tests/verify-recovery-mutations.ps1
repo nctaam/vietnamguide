@@ -14,8 +14,88 @@ $localOpsManifestRelative = 'tests\fixtures\recovery-local-ops-manifest.json'
 $tempParent = [System.IO.Path]::GetFullPath([System.IO.Path]::GetTempPath())
 $tempRoot = Join-Path $tempParent ("vietnamguide-recovery-mutations-" + [guid]::NewGuid().ToString('N'))
 $results = [System.Collections.Generic.List[object]]::new()
-$expectedResultCount = if ($RunbookSafetyOnly) { 32 } else { 77 }
-$expectedRunbookSafetyResultCount = 30
+$ExpectedMutationNames = @(
+    'baseline fixture passes',
+    'exact local ops stack passes',
+    'runbook safety: recovered verifier native check removal is rejected',
+    'runbook safety: local build moved native check is rejected',
+    'runbook safety: artifact upload native check removal is rejected',
+    'runbook safety: production ssh entry native check removal is rejected',
+    'runbook safety: reconnect ssh native check removal is rejected',
+    'runbook safety: fixture drill native check removal is rejected',
+    'runbook safety: final integration native check removal is rejected',
+    'runbook safety: stage 2 executable gates cannot swap order',
+    'runbook safety: stage 2 ledger close before permanent controls is rejected',
+    'runbook safety: exact 18-run browser marker removal is rejected',
+    'runbook safety: unsafe 300-second wait before renewal is rejected',
+    'runbook safety: exact active pilot and permanent-control inventory is enforced',
+    'runbook safety: executable publication move before release directory creation is rejected',
+    'runbook safety: publication move without no-target-directory is rejected',
+    'runbook safety: installer execution from release container root is rejected',
+    'runbook safety: missing post-publication identity verification is rejected',
+    'runbook safety: full-stage public HTTP verifier in HTML comment is rejected',
+    'runbook safety: wrong-polarity native guard is rejected',
+    'runbook safety: nonblocking native guard is rejected',
+    'runbook safety: canary rollback pre-gate cache action is rejected',
+    'runbook safety: stage 2 rollback pre-gate verification is rejected',
+    'runbook safety: canary sleep over 300 seconds is rejected',
+    'runbook safety: unprovable canary sleep duration is rejected',
+    'runbook safety: browser QA batch missing post-renewal is rejected',
+    'runbook safety: early install from install root is rejected',
+    'runbook safety: canary rollback heredoc marker cannot spoof post-gate order',
+    'runbook safety: stage 2 rollback heredoc marker cannot spoof post-gate order',
+    'runbook safety: stage 2 public verifier here-string cannot spoof pre-sync ordering',
+    'runbook safety: nested markdown fence cannot spoof stage 2 gate',
+    'runbook safety: duplicate stage 2 gate is rejected',
+    'local ops manifest missing is rejected',
+    'malformed local ops manifest is rejected',
+    'local ops content tamper is rejected',
+    'arbitrary eleventh ops file is rejected',
+    'local ops traversal path is rejected',
+    'local ops rooted path is rejected',
+    'local ops manifest length mismatch is rejected',
+    'local ops manifest hash mismatch is rejected',
+    'local ops duplicate entry is rejected',
+    'local ops extra manifest entry is rejected',
+    'local ops Git mode 120000 is rejected',
+    'local ops index no-filter mismatch is rejected',
+    're-pinned local ops secret is rejected',
+    're-pinned public verifier extra secret is rejected',
+    'local history manifest missing is rejected',
+    'local authored manifest missing is rejected',
+    'local history manifest root shape is rejected',
+    'local history schema version is rejected',
+    'local authored entries must remain an array',
+    'local history manifest entry shape is rejected',
+    'local history duplicate entry is rejected',
+    'local history extra entry is rejected',
+    'local history traversal path is rejected',
+    'local history rooted path is rejected',
+    'local history length mismatch is rejected',
+    'local history hash mismatch is rejected',
+    'local history document tamper is rejected',
+    'arbitrary third docs extra is rejected',
+    'local history index EOL mismatch is rejected',
+    'matching source and target tamper is rejected',
+    'later key negation is rejected',
+    'tracked secret directory is rejected',
+    'private key signature is rejected',
+    'untracked extensionless private key is rejected',
+    'untracked extensionless encrypted private key is rejected',
+    'untracked reparse path is rejected',
+    'tracked non-ASCII private key path is rejected',
+    'untracked non-ASCII secret path is rejected',
+    'extensionless private key is rejected',
+    'extensionless encrypted private key is rejected',
+    'extensionless DSA private key is rejected',
+    'recovered index EOL mismatch is rejected',
+    'manifest backslash traversal is rejected',
+    'manifest slash traversal remains rejected',
+    'git mode 120000 is rejected'
+)
+$ExpectedRunbookSafetyNames = @($ExpectedMutationNames | Where-Object { $_ -like 'runbook safety:*' })
+$expectedResultCount = if ($RunbookSafetyOnly) { $ExpectedRunbookSafetyNames.Count + 2 } else { $ExpectedMutationNames.Count }
+$expectedRunbookSafetyResultCount = $ExpectedRunbookSafetyNames.Count
 
 function Copy-DirectoryContent {
     param([string]$Source, [string]$Destination)
@@ -212,12 +292,10 @@ function Add-ExecutionAddendumReplacementMutation {
     $fixture = New-CaseFixture -Name $FixtureName
     $addendumText = [System.IO.File]::ReadAllText((Get-ExecutionAddendumPath -Fixture $fixture))
     $matchCount = ([regex]::Matches($addendumText, [regex]::Escape($OldText))).Count
-    if ($matchCount -gt 1) {
-        throw "Expected at most one runbook mutation target for $Name; found $matchCount."
+    if ($matchCount -ne 1) {
+        throw "Expected exactly one runbook mutation target for $Name; found $matchCount."
     }
-    if ($matchCount -eq 1) {
-        $addendumText = $addendumText.Replace($OldText, $NewText)
-    }
+    $addendumText = $addendumText.Replace($OldText, $NewText)
     $fixtureVerifier = Set-AuthorizedExecutionAddendumText -Fixture $fixture -Text $addendumText
     $result = Invoke-CaseVerifier -Fixture $fixture -VerifierPath $fixtureVerifier
     Add-Result -Name $Name -Passed ($result.ExitCode -ne 0 -and $result.Output -match $ExpectedFailure) -Detail $result.Output
@@ -361,10 +439,24 @@ try {
             ExpectedFailure = 'Final integration block native fail-fast contract\s+failed'
         },
         [pscustomobject]@{
-            Name = 'runbook safety: stage 2 compatibility sync before browser gate is rejected'
+            Name = 'runbook safety: stage 2 executable gates cannot swap order'
             FixtureName = 'runbook-stage2-sync-before-browser'
-            OldText = "verify_rollout browser-matrix full`nrun_rollout recovery-audit full --action=renew-lock --ttl-seconds=900"
-            NewText = "run_rollout compatibility-sync full`nverify_rollout browser-matrix full`nrun_rollout recovery-audit full --action=renew-lock --ttl-seconds=900"
+            OldText = ('verify_rollout performance-budgets full \' + "`n" +
+                '  --max-html-growth-bytes="$MAX_HTML_GROWTH_BYTES" \' + "`n" +
+                '  --max-dom-nodes="$MAX_DOM_NODES" \' + "`n" +
+                '  --max-scoped-css-bytes="$MAX_SCOPED_CSS_BYTES" \' + "`n" +
+                '  --max-php-p95-ms="$MAX_PHP_P95_MS" \' + "`n" +
+                '  --max-cls="$MAX_CLS" \' + "`n" +
+                '  --max-lcp-regression-percent="$MAX_LCP_REGRESSION_PERCENT"' + "`n" +
+                'verify_rollout cache-budgets full --max-warm-queries="$MAX_WARM_QUERIES" --max-cold-queries="$MAX_COLD_QUERIES"')
+            NewText = ('verify_rollout cache-budgets full --max-warm-queries="$MAX_WARM_QUERIES" --max-cold-queries="$MAX_COLD_QUERIES"' + "`n" +
+                'verify_rollout performance-budgets full \' + "`n" +
+                '  --max-html-growth-bytes="$MAX_HTML_GROWTH_BYTES" \' + "`n" +
+                '  --max-dom-nodes="$MAX_DOM_NODES" \' + "`n" +
+                '  --max-scoped-css-bytes="$MAX_SCOPED_CSS_BYTES" \' + "`n" +
+                '  --max-php-p95-ms="$MAX_PHP_P95_MS" \' + "`n" +
+                '  --max-cls="$MAX_CLS" \' + "`n" +
+                '  --max-lcp-regression-percent="$MAX_LCP_REGRESSION_PERCENT"')
             ExpectedFailure = 'Stage 2 gate ordering contract failed'
         },
         [pscustomobject]@{
@@ -500,51 +592,52 @@ try {
 
     $canaryRollbackOrdering = New-CaseFixture -Name 'runbook-canary-rollback-ordering'
     $canaryRollbackText = [System.IO.File]::ReadAllText((Get-ExecutionAddendumPath -Fixture $canaryRollbackOrdering))
-    $canaryEarlyGate = "if [ `"`$ROLLBACK_EXIT`" -ne 0 ]; then`n  printf '%s\n' 'Canary rollback failed; lock and evidence preserved for recovery audit.' >&2`n  exit `"`$ROLLBACK_EXIT`"`nfi`n`n"
-    $canaryRollbackText = $canaryRollbackText.Replace($canaryEarlyGate, '')
-    $canaryClose = 'run_rollout recovery-audit canary --action=close-ledger --require-final-event=rollback'
-    if ($canaryRollbackText.Contains($canaryClose) -and -not $canaryRollbackText.Contains('test "$ROLLBACK_EXIT" -eq 0')) {
-        $canaryRollbackText = $canaryRollbackText.Replace($canaryClose, ($canaryClose + "`ntest `"`$ROLLBACK_EXIT`" -eq 0"))
+    $canaryCacheFlush = 'wp --path="$WP_ROOT" --allow-root cache flush'
+    $canaryBaselineHashes = 'verify_rollout baseline-hashes canary'
+    $canaryHeredocMarker = "cat <<'ROLLBACK_ORDER_MARKER'`n$canaryCacheFlush`nROLLBACK_ORDER_MARKER"
+    if ($canaryRollbackText.Contains($canaryCacheFlush)) {
+        $canaryRollbackText = $canaryRollbackText.Replace($canaryCacheFlush, $canaryHeredocMarker)
+        $canaryRollbackText = $canaryRollbackText.Replace($canaryBaselineHashes, ($canaryBaselineHashes + "`n" + $canaryCacheFlush))
     }
     $canaryRollbackVerifier = Set-AuthorizedExecutionAddendumText -Fixture $canaryRollbackOrdering -Text $canaryRollbackText
     $canaryRollbackResult = Invoke-CaseVerifier -Fixture $canaryRollbackOrdering -VerifierPath $canaryRollbackVerifier
-    Add-Result -Name 'runbook safety: canary rollback success gate after ledger close is rejected' -Passed ($canaryRollbackResult.ExitCode -ne 0 -and $canaryRollbackResult.Output -match 'Canary rollback ordering contract failed') -Detail $canaryRollbackResult.Output
+    Add-Result -Name 'runbook safety: canary rollback heredoc marker cannot spoof post-gate order' -Passed ($canaryRollbackResult.ExitCode -ne 0 -and $canaryRollbackResult.Output -match 'Canary rollback ordering contract failed') -Detail $canaryRollbackResult.Output
 
     $stage2RollbackOrdering = New-CaseFixture -Name 'runbook-stage2-rollback-ordering'
     $stage2RollbackText = [System.IO.File]::ReadAllText((Get-ExecutionAddendumPath -Fixture $stage2RollbackOrdering))
-    $stage2EarlyGate = "if [ `"`$ROLLBACK_EXIT`" -ne 0 ]; then`n  printf '%s\n' 'Stage 2 rollback failed; lock and evidence preserved for recovery audit.' >&2`n  exit `"`$ROLLBACK_EXIT`"`nfi`n`n"
-    $stage2RollbackText = $stage2RollbackText.Replace($stage2EarlyGate, '')
-    $stage2Close = 'run_rollout recovery-audit full --action=close-ledger --require-final-event=rollback'
-    if ($stage2RollbackText.Contains($stage2Close) -and -not $stage2RollbackText.Contains('test "$ROLLBACK_EXIT" -eq 0')) {
-        $stage2RollbackText = $stage2RollbackText.Replace($stage2Close, ($stage2Close + "`ntest `"`$ROLLBACK_EXIT`" -eq 0"))
+    $stage2CacheFlush = 'wp --path="$WP_ROOT" --allow-root cache flush'
+    $stage2BaselineHashes = 'verify_rollout baseline-hashes full'
+    $stage2HeredocMarker = "cat <<'ROLLBACK_ORDER_MARKER'`n$stage2CacheFlush`nROLLBACK_ORDER_MARKER"
+    if ($stage2RollbackText.Contains($stage2CacheFlush)) {
+        $stage2RollbackText = $stage2RollbackText.Replace($stage2CacheFlush, $stage2HeredocMarker)
+        $stage2RollbackText = $stage2RollbackText.Replace($stage2BaselineHashes, ($stage2BaselineHashes + "`n" + $stage2CacheFlush))
     }
     $stage2RollbackVerifier = Set-AuthorizedExecutionAddendumText -Fixture $stage2RollbackOrdering -Text $stage2RollbackText
     $stage2RollbackResult = Invoke-CaseVerifier -Fixture $stage2RollbackOrdering -VerifierPath $stage2RollbackVerifier
-    Add-Result -Name 'runbook safety: stage 2 rollback success gate after ledger close is rejected' -Passed ($stage2RollbackResult.ExitCode -ne 0 -and $stage2RollbackResult.Output -match 'Stage 2 rollback ordering contract failed') -Detail $stage2RollbackResult.Output
+    Add-Result -Name 'runbook safety: stage 2 rollback heredoc marker cannot spoof post-gate order' -Passed ($stage2RollbackResult.ExitCode -ne 0 -and $stage2RollbackResult.Output -match 'Stage 2 rollback ordering contract failed') -Detail $stage2RollbackResult.Output
 
     $fullPublicAfterSync = New-CaseFixture -Name 'runbook-full-public-after-sync'
     $fullPublicAfterSyncText = [System.IO.File]::ReadAllText((Get-ExecutionAddendumPath -Fixture $fullPublicAfterSync))
     $fullPublicBlock = "powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\ops\verify-comparison-rollout-public.ps1 $lineContinuation`n    -Stage full $lineContinuation`n    -Origin 'https://vietnamguide.net'`nif (`$LASTEXITCODE -ne 0) { throw 'Full-stage public HTTP verification failed.' }"
     if ($fullPublicAfterSyncText.Contains($fullPublicBlock)) {
-        $fullPublicAfterSyncText = $fullPublicAfterSyncText.Replace($fullPublicBlock, '')
-        $fullCloseMarker = 'verify_rollout closed full'
-        $fullPublicAfterSyncText = $fullPublicAfterSyncText.Replace($fullCloseMarker, ($fullCloseMarker + "`n`n$markdownFence" + "powershell`n" + $fullPublicBlock + "`n$markdownFence"))
+        $fullPublicAfterSyncText = $fullPublicAfterSyncText.Replace($fullPublicBlock, ("@'`n$fullPublicBlock`n'@"))
     }
     $fullPublicAfterSyncVerifier = Set-AuthorizedExecutionAddendumText -Fixture $fullPublicAfterSync -Text $fullPublicAfterSyncText
     $fullPublicAfterSyncResult = Invoke-CaseVerifier -Fixture $fullPublicAfterSync -VerifierPath $fullPublicAfterSyncVerifier
-    Add-Result -Name 'runbook safety: full-stage public HTTP verifier after sync is rejected' -Passed ($fullPublicAfterSyncResult.ExitCode -ne 0 -and $fullPublicAfterSyncResult.Output -match 'Stage 2 public HTTP verification contract failed') -Detail $fullPublicAfterSyncResult.Output
+    Add-Result -Name 'runbook safety: stage 2 public verifier here-string cannot spoof pre-sync ordering' -Passed ($fullPublicAfterSyncResult.ExitCode -ne 0 -and $fullPublicAfterSyncResult.Output -match 'Stage 2 public HTTP verification contract failed') -Detail $fullPublicAfterSyncResult.Output
 
-    $commentSpoofedStage2Gate = New-CaseFixture -Name 'runbook-stage2-comment-spoofed-gate'
-    $commentSpoofedStage2GateText = [System.IO.File]::ReadAllText((Get-ExecutionAddendumPath -Fixture $commentSpoofedStage2Gate))
-    $browserGate = 'verify_rollout browser-matrix full'
-    if ($commentSpoofedStage2GateText.Contains($browserGate)) {
-        $commentSpoofedStage2GateText = $commentSpoofedStage2GateText.Replace($browserGate, ('# ' + $browserGate))
-        $fullCloseMarker = 'verify_rollout closed full'
-        $commentSpoofedStage2GateText = $commentSpoofedStage2GateText.Replace($fullCloseMarker, ($fullCloseMarker + "`n" + $browserGate))
+    $nestedFenceStage2Gate = New-CaseFixture -Name 'runbook-stage2-nested-fence-spoofed-gate'
+    $nestedFenceStage2GateText = [System.IO.File]::ReadAllText((Get-ExecutionAddendumPath -Fixture $nestedFenceStage2Gate))
+    $outerMarkdownFence = ([string][char]96) * 4
+    $stage2Heading = '## Stage 2 Validate, Apply, Activate, and Close'
+    $stage2RollbackHeading = '## Stage 2 Failure and Rollback'
+    if ($nestedFenceStage2GateText.Contains($stage2Heading) -and $nestedFenceStage2GateText.Contains($stage2RollbackHeading)) {
+        $nestedFenceStage2GateText = $nestedFenceStage2GateText.Replace($stage2Heading, ($outerMarkdownFence + "text`nunsafe Stage 2 text`n" + $stage2Heading))
+        $nestedFenceStage2GateText = $nestedFenceStage2GateText.Replace($stage2RollbackHeading, ($outerMarkdownFence + "`n`n" + $stage2RollbackHeading))
     }
-    $commentSpoofedStage2GateVerifier = Set-AuthorizedExecutionAddendumText -Fixture $commentSpoofedStage2Gate -Text $commentSpoofedStage2GateText
-    $commentSpoofedStage2GateResult = Invoke-CaseVerifier -Fixture $commentSpoofedStage2Gate -VerifierPath $commentSpoofedStage2GateVerifier
-    Add-Result -Name 'runbook safety: commented stage 2 gate cannot spoof executable ordering' -Passed ($commentSpoofedStage2GateResult.ExitCode -ne 0 -and $commentSpoofedStage2GateResult.Output -match 'Stage 2 gate ordering contract failed') -Detail $commentSpoofedStage2GateResult.Output
+    $nestedFenceStage2GateVerifier = Set-AuthorizedExecutionAddendumText -Fixture $nestedFenceStage2Gate -Text $nestedFenceStage2GateText
+    $nestedFenceStage2GateResult = Invoke-CaseVerifier -Fixture $nestedFenceStage2Gate -VerifierPath $nestedFenceStage2GateVerifier
+    Add-Result -Name 'runbook safety: nested markdown fence cannot spoof stage 2 gate' -Passed ($nestedFenceStage2GateResult.ExitCode -ne 0 -and $nestedFenceStage2GateResult.Output -match 'Recovery execution addendum section missing:\s+## Stage\s+2 Validate, Apply, Activate, and Close') -Detail $nestedFenceStage2GateResult.Output
 
     $duplicateStage2Gate = New-CaseFixture -Name 'runbook-stage2-duplicate-gate'
     $duplicateStage2GateText = [System.IO.File]::ReadAllText((Get-ExecutionAddendumPath -Fixture $duplicateStage2Gate))
@@ -902,6 +995,22 @@ $duplicateNames = @($results | Group-Object Name | Where-Object Count -gt 1)
 if ($duplicateNames) {
     $duplicateNames | ForEach-Object { Write-Error "Duplicate recovery mutation case name: $($_.Name)" -ErrorAction Continue }
     exit 1
+}
+$expectedNamesForRun = if ($RunbookSafetyOnly) {
+    @('baseline fixture passes', 'exact local ops stack passes') + $ExpectedRunbookSafetyNames
+} else {
+    @($ExpectedMutationNames)
+}
+$actualNames = @($results | ForEach-Object { $_.Name })
+if ($actualNames.Count -ne $expectedNamesForRun.Count) {
+    Write-Error "Recovery mutation exact name count mismatch: expected $($expectedNamesForRun.Count), got $($actualNames.Count)." -ErrorAction Continue
+    exit 1
+}
+for ($nameIndex = 0; $nameIndex -lt $expectedNamesForRun.Count; $nameIndex++) {
+    if ($actualNames[$nameIndex] -cne $expectedNamesForRun[$nameIndex]) {
+        Write-Error "Recovery mutation exact name/order mismatch at index $nameIndex`: expected '$($expectedNamesForRun[$nameIndex])', got '$($actualNames[$nameIndex])'." -ErrorAction Continue
+        exit 1
+    }
 }
 $runbookSafetyResults = @($results | Where-Object Name -like 'runbook safety:*')
 if ($runbookSafetyResults.Count -ne $expectedRunbookSafetyResultCount) {
