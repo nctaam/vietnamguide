@@ -19,6 +19,21 @@ function Add-Failure {
     $script:failures.Add($Message)
 }
 
+function ConvertTo-LfText {
+    param([string]$Text)
+
+    return $Text.Replace("`r`n", "`n").Replace("`r", "`n")
+}
+
+function Test-ContainsNormalizedText {
+    param(
+        [string]$Text,
+        [string]$Expected
+    )
+
+    return (ConvertTo-LfText -Text $Text).Contains((ConvertTo-LfText -Text $Expected))
+}
+
 function Get-MarkdownLineRecords {
     param([string]$Text)
 
@@ -51,6 +66,39 @@ function Get-MarkdownFenceMatch {
     }
 }
 
+function Get-MarkdownVisibleLine {
+    param(
+        [string]$Line,
+        [ref]$InHtmlComment
+    )
+
+    $visible = [System.Text.StringBuilder]::new()
+    $cursor = 0
+    while ($cursor -lt $Line.Length) {
+        if ($InHtmlComment.Value) {
+            $commentEnd = $Line.IndexOf('-->', $cursor, [System.StringComparison]::Ordinal)
+            if ($commentEnd -lt 0) {
+                break
+            }
+            $InHtmlComment.Value = $false
+            $cursor = $commentEnd + 3
+            continue
+        }
+
+        $commentStart = $Line.IndexOf('<!--', $cursor, [System.StringComparison]::Ordinal)
+        if ($commentStart -lt 0) {
+            [void]$visible.Append($Line.Substring($cursor))
+            break
+        }
+
+        [void]$visible.Append($Line.Substring($cursor, $commentStart - $cursor))
+        $InHtmlComment.Value = $true
+        $cursor = $commentStart + 4
+    }
+
+    return $visible.ToString()
+}
+
 function Get-MarkdownSectionText {
     param(
         [string]$Text,
@@ -79,19 +127,7 @@ function Get-MarkdownSectionText {
             continue
         }
 
-        if ($inHtmlComment) {
-            if ($line.Contains('-->')) {
-                $inHtmlComment = $false
-            }
-            continue
-        }
-        $commentStart = $line.IndexOf('<!--', [System.StringComparison]::Ordinal)
-        if ($commentStart -ge 0) {
-            if ($line.IndexOf('-->', $commentStart + 4, [System.StringComparison]::Ordinal) -lt 0) {
-                $inHtmlComment = $true
-            }
-            continue
-        }
+        $line = Get-MarkdownVisibleLine -Line $line -InHtmlComment ([ref]$inHtmlComment)
 
         $fence = Get-MarkdownFenceMatch -Line $line
         if ($null -ne $fence) {
@@ -162,19 +198,7 @@ function Get-MarkdownFencedBlocks {
             continue
         }
 
-        if ($inHtmlComment) {
-            if ($line.Contains('-->')) {
-                $inHtmlComment = $false
-            }
-            continue
-        }
-        $commentStart = $line.IndexOf('<!--', [System.StringComparison]::Ordinal)
-        if ($commentStart -ge 0) {
-            if ($line.IndexOf('-->', $commentStart + 4, [System.StringComparison]::Ordinal) -lt 0) {
-                $inHtmlComment = $true
-            }
-            continue
-        }
+        $line = Get-MarkdownVisibleLine -Line $line -InHtmlComment ([ref]$inHtmlComment)
 
         $fence = Get-MarkdownFenceMatch -Line $line
         if ($null -ne $fence) {
@@ -210,21 +234,133 @@ function Test-OrderedMarkers {
     return $true
 }
 
+function Get-BashHeredocRedirections {
+    param([string]$Line)
+
+    $redirections = [System.Collections.Generic.List[object]]::new()
+    $index = 0
+    $inSingleQuote = $false
+    $inDoubleQuote = $false
+    while ($index -lt $Line.Length) {
+        $character = $Line[$index]
+        if ($inSingleQuote) {
+            if ($character -ceq "'") {
+                $inSingleQuote = $false
+            }
+            $index++
+            continue
+        }
+        if ($inDoubleQuote) {
+            if ($character -ceq '\' -and ($index + 1) -lt $Line.Length) {
+                $index += 2
+                continue
+            }
+            if ($character -ceq '"') {
+                $inDoubleQuote = $false
+            }
+            $index++
+            continue
+        }
+
+        if ($character -ceq "'") {
+            $inSingleQuote = $true
+            $index++
+            continue
+        }
+        if ($character -ceq '"') {
+            $inDoubleQuote = $true
+            $index++
+            continue
+        }
+        if ($character -ceq '\' -and ($index + 1) -lt $Line.Length) {
+            $index += 2
+            continue
+        }
+        if ($character -ceq '#') {
+            $previous = if ($index -gt 0) { $Line[$index - 1] } else { [char]0 }
+            if ($index -eq 0 -or [char]::IsWhiteSpace($previous) -or ';|&()<>'.Contains([string]$previous)) {
+                break
+            }
+        }
+        if ($character -cne '<' -or ($index + 1) -ge $Line.Length -or $Line[$index + 1] -cne '<' -or
+            (($index + 2) -lt $Line.Length -and $Line[$index + 2] -ceq '<')) {
+            $index++
+            continue
+        }
+
+        $delimiterIndex = $index + 2
+        $stripTabs = $false
+        if ($delimiterIndex -lt $Line.Length -and $Line[$delimiterIndex] -ceq '-') {
+            $stripTabs = $true
+            $delimiterIndex++
+        }
+        while ($delimiterIndex -lt $Line.Length -and [char]::IsWhiteSpace($Line[$delimiterIndex])) {
+            $delimiterIndex++
+        }
+
+        $delimiter = [System.Text.StringBuilder]::new()
+        $delimiterQuote = [char]0
+        while ($delimiterIndex -lt $Line.Length) {
+            $delimiterCharacter = $Line[$delimiterIndex]
+            if ($delimiterQuote -ne [char]0) {
+                if ($delimiterCharacter -ceq $delimiterQuote) {
+                    $delimiterQuote = [char]0
+                    $delimiterIndex++
+                    continue
+                }
+                if ($delimiterQuote -ceq '"' -and $delimiterCharacter -ceq '\' -and ($delimiterIndex + 1) -lt $Line.Length) {
+                    $delimiterIndex++
+                    $delimiterCharacter = $Line[$delimiterIndex]
+                }
+                [void]$delimiter.Append($delimiterCharacter)
+                $delimiterIndex++
+                continue
+            }
+
+            if ($delimiterCharacter -ceq "'" -or $delimiterCharacter -ceq '"') {
+                $delimiterQuote = $delimiterCharacter
+                $delimiterIndex++
+                continue
+            }
+            if ($delimiterCharacter -ceq '\' -and ($delimiterIndex + 1) -lt $Line.Length) {
+                $delimiterIndex++
+                [void]$delimiter.Append($Line[$delimiterIndex])
+                $delimiterIndex++
+                continue
+            }
+            if ([char]::IsWhiteSpace($delimiterCharacter) -or ';|&()<>'.Contains([string]$delimiterCharacter)) {
+                break
+            }
+            [void]$delimiter.Append($delimiterCharacter)
+            $delimiterIndex++
+        }
+
+        if ($delimiter.Length -gt 0 -and $delimiterQuote -eq [char]0) {
+            $redirections.Add([pscustomobject]@{
+                Delimiter = $delimiter.ToString()
+                StripTabs = $stripTabs
+            })
+        }
+        $index = [Math]::Max($delimiterIndex, $index + 2)
+    }
+
+    return $redirections.ToArray()
+}
+
 function Get-ExecutableBashLines {
     param([string]$Text)
 
     $executableLines = [System.Collections.Generic.List[string]]::new()
     $fences = @(Get-MarkdownFencedBlocks -Text $Text -Language 'bash')
     foreach ($fence in $fences) {
-        $heredocDelimiter = $null
-        $heredocStripTabs = $false
+        $heredocQueue = [System.Collections.Generic.List[object]]::new()
         foreach ($record in @(Get-MarkdownLineRecords -Text $fence.Body)) {
             $line = $record.Text
-            if ($null -ne $heredocDelimiter) {
-                $terminator = if ($heredocStripTabs) { $line.TrimStart("`t") } else { $line }
-                if ($terminator -ceq $heredocDelimiter) {
-                    $heredocDelimiter = $null
-                    $heredocStripTabs = $false
+            if ($heredocQueue.Count -gt 0) {
+                $activeHeredoc = $heredocQueue[0]
+                $terminator = if ($activeHeredoc.StripTabs) { $line.TrimStart("`t") } else { $line }
+                if ($terminator -ceq $activeHeredoc.Delimiter) {
+                    $heredocQueue.RemoveAt(0)
                 }
                 continue
             }
@@ -235,10 +371,8 @@ function Get-ExecutableBashLines {
             }
             $executableLines.Add($trimmed)
 
-            $heredoc = [regex]::Match($trimmed, '<<(?!<)(?<strip>-)?\s*[''\"]?(?<delimiter>[A-Za-z_][A-Za-z0-9_]*)[''\"]?')
-            if ($heredoc.Success) {
-                $heredocDelimiter = $heredoc.Groups['delimiter'].Value
-                $heredocStripTabs = $heredoc.Groups['strip'].Success
+            foreach ($heredoc in @(Get-BashHeredocRedirections -Line $trimmed)) {
+                $heredocQueue.Add($heredoc)
             }
         }
     }
@@ -253,47 +387,101 @@ function Get-ExecutablePowerShellLines {
     $inHereString = $false
     $hereStringTerminator = ''
     $inBlockComment = $false
+    $stringQuote = [char]0
     foreach ($record in @(Get-MarkdownLineRecords -Text $Text)) {
         $line = $record.Text
-        $trimmed = $line.Trim()
         if ($inHereString) {
-            if ($trimmed -ceq $hereStringTerminator) {
+            if ($line.StartsWith($hereStringTerminator, [System.StringComparison]::Ordinal) -and
+                [string]::IsNullOrWhiteSpace($line.Substring($hereStringTerminator.Length))) {
                 $inHereString = $false
                 $hereStringTerminator = ''
             }
             continue
         }
-        if ($inBlockComment) {
-            $commentEnd = $line.IndexOf('#>', [System.StringComparison]::Ordinal)
-            if ($commentEnd -ge 0) {
+
+        $executable = [System.Text.StringBuilder]::new()
+        $index = 0
+        $suppressLeadingStringContent = $stringQuote -ne [char]0
+        while ($index -lt $line.Length) {
+            if ($inBlockComment) {
+                $commentEnd = $line.IndexOf('#>', $index, [System.StringComparison]::Ordinal)
+                if ($commentEnd -lt 0) {
+                    $index = $line.Length
+                    break
+                }
                 $inBlockComment = $false
-                $line = $line.Substring($commentEnd + 2)
-                $trimmed = $line.Trim()
-            } else {
+                $index = $commentEnd + 2
+                [void]$executable.Append(' ')
                 continue
             }
-        }
-        $commentStart = $line.IndexOf('<#', [System.StringComparison]::Ordinal)
-        if ($commentStart -ge 0) {
-            $commentEnd = $line.IndexOf('#>', $commentStart + 2, [System.StringComparison]::Ordinal)
-            if ($commentEnd -lt 0) {
-                $inBlockComment = $true
-                $line = $line.Substring(0, $commentStart)
-                $trimmed = $line.Trim()
-            } else {
-                $line = $line.Remove($commentStart, ($commentEnd + 2) - $commentStart)
-                $trimmed = $line.Trim()
+
+            $character = $line[$index]
+            if ($stringQuote -ne [char]0) {
+                if (-not $suppressLeadingStringContent) {
+                    [void]$executable.Append($character)
+                }
+                if ($character -ceq '`' -and ($index + 1) -lt $line.Length) {
+                    if (-not $suppressLeadingStringContent) {
+                        [void]$executable.Append($line[$index + 1])
+                    }
+                    $index += 2
+                    continue
+                }
+                if ($character -ceq $stringQuote) {
+                    if (($index + 1) -lt $line.Length -and $line[$index + 1] -ceq $stringQuote) {
+                        if (-not $suppressLeadingStringContent) {
+                            [void]$executable.Append($line[$index + 1])
+                        }
+                        $index += 2
+                        continue
+                    }
+                    $stringQuote = [char]0
+                    $suppressLeadingStringContent = $false
+                }
+                $index++
+                continue
             }
+
+            if ($character -ceq '#') {
+                break
+            }
+            if ($character -ceq '<' -and ($index + 1) -lt $line.Length -and $line[$index + 1] -ceq '#') {
+                $inBlockComment = $true
+                $index += 2
+                [void]$executable.Append(' ')
+                continue
+            }
+            if ($character -ceq '`' -and ($index + 1) -lt $line.Length) {
+                [void]$executable.Append($character)
+                [void]$executable.Append($line[$index + 1])
+                $index += 2
+                continue
+            }
+            if ($character -ceq "'" -or $character -ceq '"') {
+                $stringQuote = $character
+                [void]$executable.Append($character)
+                $index++
+                continue
+            }
+            if ($character -ceq '@' -and ($index + 1) -lt $line.Length -and
+                ($line[$index + 1] -ceq "'" -or $line[$index + 1] -ceq '"') -and
+                [string]::IsNullOrWhiteSpace($line.Substring($index + 2))) {
+                [void]$executable.Append($line.Substring($index))
+                $hereStringTerminator = $line[$index + 1] + '@'
+                $inHereString = $true
+                $index = $line.Length
+                break
+            }
+
+            [void]$executable.Append($character)
+            $index++
         }
+
+        $trimmed = $executable.ToString().Trim()
         if ([string]::IsNullOrWhiteSpace($trimmed) -or $trimmed.StartsWith('#')) {
             continue
         }
-        $hereString = [regex]::Match($trimmed, '@(?<quote>[''\"])\s*$')
         $executableLines.Add($trimmed)
-        if ($hereString.Success) {
-            $hereStringTerminator = $hereString.Groups['quote'].Value + '@'
-            $inHereString = $true
-        }
     }
 
     return @($executableLines)
@@ -881,7 +1069,7 @@ foreach ($entry in $validatedLocalAuthored) {
 if ($validatedLocalAuthored.Count -eq 1) {
     $executionAddendumPath = $validatedLocalAuthored[0].FullPath
     $executionAddendumText = [System.IO.File]::ReadAllText($executionAddendumPath)
-    $normalizedAddendumText = $executionAddendumText.Replace("`r`n", "`n")
+    $normalizedAddendumText = ConvertTo-LfText -Text $executionAddendumText
     $requiredPostDrillMarkers = @(
         '## Reconnect After the Isolated Drill',
         "VG_ARTIFACT_HASH='<same-lowercase-artifact-sha256>'",
@@ -976,7 +1164,7 @@ PERMANENT_CONTROL_PATHS=(
     )
     $inventoryInvalid = $false
     foreach ($inventoryBlock in @($baselinePilotBlock, $canaryPilotBlock, $stage2PilotBlock, $permanentControlBlock)) {
-        if (-not $canaryActivationSection.Contains($inventoryBlock)) {
+        if (-not (Test-ContainsNormalizedText -Text $canaryActivationSection -Expected $inventoryBlock)) {
             $inventoryInvalid = $true
             break
         }
@@ -1113,7 +1301,7 @@ fi
         'exit "$ROLLBACK_EXIT"',
         'fi'
     ))
-    if (-not $canaryRollbackSection.Contains($canaryRollbackGate)) {
+    if (-not (Test-ContainsNormalizedText -Text $canaryRollbackSection -Expected $canaryRollbackGate)) {
         Add-Failure 'Canary rollback ordering contract failed: immediate nonzero gate is missing.'
     }
     [void](Test-OrderedUniqueExecutableLines -Label 'Canary rollback ordering contract' -Lines $canaryRollbackExecutableLines -Markers @(
@@ -1304,7 +1492,7 @@ fi
         'exit "$ROLLBACK_EXIT"',
         'fi'
     ))
-    if (-not $stage2RollbackSection.Contains($stage2RollbackGate)) {
+    if (-not (Test-ContainsNormalizedText -Text $stage2RollbackSection -Expected $stage2RollbackGate)) {
         Add-Failure 'Stage 2 rollback ordering contract failed: immediate nonzero gate is missing.'
     }
     [void](Test-OrderedUniqueExecutableLines -Label 'Stage 2 rollback ordering contract' -Lines $stage2RollbackExecutableLines -Markers @(

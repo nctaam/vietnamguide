@@ -520,15 +520,15 @@ try {
             FixtureName = 'runbook-full-public-verifier-html-comment'
             OldText = ($markdownFence + "powershell`n`$RepoRoot = 'C:\Users\NCTaam\projects\vietnamguide'`nSet-Location -LiteralPath `$RepoRoot`n" +
                 "powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\ops\verify-comparison-rollout-public.ps1 $lineContinuation`n    -Stage full $lineContinuation`n    -Origin 'https://vietnamguide.net'`nif (`$LASTEXITCODE -ne 0) { throw 'Full-stage public HTTP verification failed.' }`n" + $markdownFence)
-            NewText = ($markdownFence + "powershell`n`$RepoRoot = 'C:\Users\NCTaam\projects\vietnamguide'`nSet-Location -LiteralPath `$RepoRoot`n" + $markdownFence + "`n`n<!--`n" +
-                "powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\ops\verify-comparison-rollout-public.ps1 $lineContinuation`n    -Stage full $lineContinuation`n    -Origin 'https://vietnamguide.net'`nif (`$LASTEXITCODE -ne 0) { throw 'Full-stage public HTTP verification failed.' }`n-->")
+            NewText = ("<!--closed--><!--`n" + $markdownFence + "powershell`n`$RepoRoot = 'C:\Users\NCTaam\projects\vietnamguide'`nSet-Location -LiteralPath `$RepoRoot`n" +
+                "powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\ops\verify-comparison-rollout-public.ps1 $lineContinuation`n    -Stage full $lineContinuation`n    -Origin 'https://vietnamguide.net'`nif (`$LASTEXITCODE -ne 0) { throw 'Full-stage public HTTP verification failed.' }`n" + $markdownFence + "`n-->")
             ExpectedFailure = 'Stage 2 public HTTP verification contract failed'
         },
         [pscustomobject]@{
             Name = 'runbook safety: wrong-polarity native guard is rejected'
             FixtureName = 'runbook-native-wrong-polarity'
             OldText = "scp -- `$ArtifactZip `"`${ProdUser}@`${ProdHost}:`$RemotePart`"`nif (`$LASTEXITCODE -ne 0) { throw 'Artifact upload failed.' }"
-            NewText = "scp -- `$ArtifactZip `"`${ProdUser}@`${ProdHost}:`$RemotePart`"`nif (`$LASTEXITCODE -eq 0) { throw 'Artifact upload failed.' }"
+            NewText = "scp -- `$ArtifactZip `"`${ProdUser}@`${ProdHost}:`$RemotePart`" <#closed#><#`nif (`$LASTEXITCODE -ne 0) { throw 'Artifact upload failed.' }`n#>`nif (`$LASTEXITCODE -eq 0) { throw 'Artifact upload failed.' }"
             ExpectedFailure = 'Artifact upload block native fail-fast contract failed'
         },
         [pscustomobject]@{
@@ -593,11 +593,9 @@ try {
     $canaryRollbackOrdering = New-CaseFixture -Name 'runbook-canary-rollback-ordering'
     $canaryRollbackText = [System.IO.File]::ReadAllText((Get-ExecutionAddendumPath -Fixture $canaryRollbackOrdering))
     $canaryCacheFlush = 'wp --path="$WP_ROOT" --allow-root cache flush'
-    $canaryBaselineHashes = 'verify_rollout baseline-hashes canary'
-    $canaryHeredocMarker = "cat <<'ROLLBACK_ORDER_MARKER'`n$canaryCacheFlush`nROLLBACK_ORDER_MARKER"
+    $canaryHeredocMarker = "cat <<'ROLLBACK_ORDER_ONE' <<'ROLLBACK_ORDER_TWO'`nignored first heredoc body`nROLLBACK_ORDER_ONE`n$canaryCacheFlush`nROLLBACK_ORDER_TWO"
     if ($canaryRollbackText.Contains($canaryCacheFlush)) {
         $canaryRollbackText = $canaryRollbackText.Replace($canaryCacheFlush, $canaryHeredocMarker)
-        $canaryRollbackText = $canaryRollbackText.Replace($canaryBaselineHashes, ($canaryBaselineHashes + "`n" + $canaryCacheFlush))
     }
     $canaryRollbackVerifier = Set-AuthorizedExecutionAddendumText -Fixture $canaryRollbackOrdering -Text $canaryRollbackText
     $canaryRollbackResult = Invoke-CaseVerifier -Fixture $canaryRollbackOrdering -VerifierPath $canaryRollbackVerifier
@@ -606,11 +604,9 @@ try {
     $stage2RollbackOrdering = New-CaseFixture -Name 'runbook-stage2-rollback-ordering'
     $stage2RollbackText = [System.IO.File]::ReadAllText((Get-ExecutionAddendumPath -Fixture $stage2RollbackOrdering))
     $stage2CacheFlush = 'wp --path="$WP_ROOT" --allow-root cache flush'
-    $stage2BaselineHashes = 'verify_rollout baseline-hashes full'
-    $stage2HeredocMarker = "cat <<'ROLLBACK_ORDER_MARKER'`n$stage2CacheFlush`nROLLBACK_ORDER_MARKER"
+    $stage2HeredocMarker = "cat <<'ROLLBACK_ORDER_ONE' <<'ROLLBACK_ORDER_TWO'`nignored first heredoc body`nROLLBACK_ORDER_ONE`n$stage2CacheFlush`nROLLBACK_ORDER_TWO"
     if ($stage2RollbackText.Contains($stage2CacheFlush)) {
         $stage2RollbackText = $stage2RollbackText.Replace($stage2CacheFlush, $stage2HeredocMarker)
-        $stage2RollbackText = $stage2RollbackText.Replace($stage2BaselineHashes, ($stage2BaselineHashes + "`n" + $stage2CacheFlush))
     }
     $stage2RollbackVerifier = Set-AuthorizedExecutionAddendumText -Fixture $stage2RollbackOrdering -Text $stage2RollbackText
     $stage2RollbackResult = Invoke-CaseVerifier -Fixture $stage2RollbackOrdering -VerifierPath $stage2RollbackVerifier
@@ -620,7 +616,7 @@ try {
     $fullPublicAfterSyncText = [System.IO.File]::ReadAllText((Get-ExecutionAddendumPath -Fixture $fullPublicAfterSync))
     $fullPublicBlock = "powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\ops\verify-comparison-rollout-public.ps1 $lineContinuation`n    -Stage full $lineContinuation`n    -Origin 'https://vietnamguide.net'`nif (`$LASTEXITCODE -ne 0) { throw 'Full-stage public HTTP verification failed.' }"
     if ($fullPublicAfterSyncText.Contains($fullPublicBlock)) {
-        $fullPublicAfterSyncText = $fullPublicAfterSyncText.Replace($fullPublicBlock, ("@'`n$fullPublicBlock`n'@"))
+        $fullPublicAfterSyncText = $fullPublicAfterSyncText.Replace($fullPublicBlock, ("`$PublicVerifierSpoof = @'`n  '@`n$fullPublicBlock`n'@"))
     }
     $fullPublicAfterSyncVerifier = Set-AuthorizedExecutionAddendumText -Fixture $fullPublicAfterSync -Text $fullPublicAfterSyncText
     $fullPublicAfterSyncResult = Invoke-CaseVerifier -Fixture $fullPublicAfterSync -VerifierPath $fullPublicAfterSyncVerifier
