@@ -237,6 +237,40 @@ function Test-OrderedMarkers {
     return $true
 }
 
+function Get-BashArithmeticExpansionEnd {
+    param(
+        [string]$Line,
+        [int]$ContentIndex
+    )
+
+    $depth = 1
+    $index = $ContentIndex
+    while ($index -lt $Line.Length) {
+        $character = $Line[$index]
+        if ($character -ceq '\' -and ($index + 1) -lt $Line.Length) {
+            $index += 2
+            continue
+        }
+        if ($character -ceq '(') {
+            $depth++
+            $index++
+            continue
+        }
+        if ($character -ceq ')') {
+            if ($depth -eq 1 -and ($index + 1) -lt $Line.Length -and $Line[$index + 1] -ceq ')') {
+                return $index + 2
+            }
+            $depth--
+            if ($depth -lt 1) {
+                return -1
+            }
+        }
+        $index++
+    }
+
+    return -1
+}
+
 function Get-BashHeredocRedirections {
     param([string]$Line)
 
@@ -285,6 +319,23 @@ function Get-BashHeredocRedirections {
                 break
             }
         }
+        if ($character -ceq '$' -and ($index + 2) -lt $Line.Length -and
+            $Line[$index + 1] -ceq '(' -and $Line[$index + 2] -ceq '(') {
+            $arithmeticEnd = Get-BashArithmeticExpansionEnd -Line $Line -ContentIndex ($index + 3)
+            if ($arithmeticEnd -lt 0) {
+                return [pscustomobject]@{ IsValid = $false; Redirections = @() }
+            }
+            $index = $arithmeticEnd
+            continue
+        }
+        if ($character -ceq '(' -and ($index + 1) -lt $Line.Length -and $Line[$index + 1] -ceq '(') {
+            $arithmeticEnd = Get-BashArithmeticExpansionEnd -Line $Line -ContentIndex ($index + 2)
+            if ($arithmeticEnd -lt 0) {
+                return [pscustomobject]@{ IsValid = $false; Redirections = @() }
+            }
+            $index = $arithmeticEnd
+            continue
+        }
         if ($character -cne '<' -or ($index + 1) -ge $Line.Length -or $Line[$index + 1] -cne '<' -or
             (($index + 2) -lt $Line.Length -and $Line[$index + 2] -ceq '<')) {
             $index++
@@ -312,8 +363,20 @@ function Get-BashHeredocRedirections {
                     continue
                 }
                 if ($delimiterQuote -ceq '"' -and $delimiterCharacter -ceq '\' -and ($delimiterIndex + 1) -lt $Line.Length) {
+                    $nextDelimiterCharacter = $Line[$delimiterIndex + 1]
+                    if (
+                        $nextDelimiterCharacter -ceq '$' -or
+                        $nextDelimiterCharacter -ceq ([char]96) -or
+                        $nextDelimiterCharacter -ceq '"' -or
+                        $nextDelimiterCharacter -ceq '\'
+                    ) {
+                        [void]$delimiter.Append($nextDelimiterCharacter)
+                        $delimiterIndex += 2
+                        continue
+                    }
+                    [void]$delimiter.Append($delimiterCharacter)
                     $delimiterIndex++
-                    $delimiterCharacter = $Line[$delimiterIndex]
+                    continue
                 }
                 [void]$delimiter.Append($delimiterCharacter)
                 $delimiterIndex++
@@ -338,16 +401,20 @@ function Get-BashHeredocRedirections {
             $delimiterIndex++
         }
 
-        if ($delimiter.Length -gt 0 -and $delimiterQuote -eq [char]0) {
-            $redirections.Add([pscustomobject]@{
-                Delimiter = $delimiter.ToString()
-                StripTabs = $stripTabs
-            })
+        if ($delimiter.Length -eq 0 -or $delimiterQuote -ne [char]0) {
+            return [pscustomobject]@{ IsValid = $false; Redirections = @() }
         }
+        $redirections.Add([pscustomobject]@{
+            Delimiter = $delimiter.ToString()
+            StripTabs = $stripTabs
+        })
         $index = [Math]::Max($delimiterIndex, $index + 2)
     }
 
-    return $redirections.ToArray()
+    return [pscustomobject]@{
+        IsValid = $true
+        Redirections = $redirections.ToArray()
+    }
 }
 
 function Get-ExecutableBashLines {
@@ -374,9 +441,19 @@ function Get-ExecutableBashLines {
             }
             $executableLines.Add($trimmed)
 
-            foreach ($heredoc in @(Get-BashHeredocRedirections -Line $trimmed)) {
+            $heredocParse = Get-BashHeredocRedirections -Line $trimmed
+            if (-not $heredocParse.IsValid) {
+                Add-Failure "Bash heredoc parsing failed: ambiguous redirection: $trimmed"
+                return @()
+            }
+            foreach ($heredoc in @($heredocParse.Redirections)) {
                 $heredocQueue.Add($heredoc)
             }
+        }
+
+        if ($heredocQueue.Count -gt 0) {
+            Add-Failure 'Bash heredoc parsing failed: unbalanced heredoc queue.'
+            return @()
         }
     }
 
@@ -551,6 +628,204 @@ function Test-OrderedUniqueExecutableLines {
     return $true
 }
 
+function Get-PowerShellNativeCommandName {
+    param([System.Management.Automation.Language.CommandAst]$Command)
+
+    $commandName = $Command.GetCommandName()
+    if ($commandName -and @('powershell.exe', 'node', 'php', 'git', 'ssh', 'scp') -icontains $commandName) {
+        return $commandName
+    }
+
+    $commandElements = @($Command.CommandElements)
+    if (
+        $Command.InvocationOperator -eq [System.Management.Automation.Language.TokenKind]::Ampersand -and
+        $commandElements.Count -gt 0 -and
+        $commandElements[0] -is [System.Management.Automation.Language.VariableExpressionAst] -and
+        $commandElements[0].VariablePath.UserPath -ieq 'PhpExecutable'
+    ) {
+        return '$PhpExecutable'
+    }
+
+    return $null
+}
+
+function Get-PowerShellStatementContext {
+    param([System.Management.Automation.Language.CommandAst]$Command)
+
+    [System.Management.Automation.Language.Ast]$statement = $Command
+    while (
+        $null -ne $statement.Parent -and
+        $statement.Parent -isnot [System.Management.Automation.Language.NamedBlockAst] -and
+        $statement.Parent -isnot [System.Management.Automation.Language.StatementBlockAst]
+    ) {
+        $statement = $statement.Parent
+    }
+    if ($null -eq $statement.Parent) {
+        return $null
+    }
+
+    $statements = @($statement.Parent.Statements)
+    for ($index = 0; $index -lt $statements.Count; $index++) {
+        if ([object]::ReferenceEquals($statements[$index], $statement)) {
+            return [pscustomobject]@{
+                Statement = $statement
+                Statements = $statements
+                Index = $index
+            }
+        }
+    }
+
+    return $null
+}
+
+function Test-PowerShellNativeStatementShape {
+    param(
+        [System.Management.Automation.Language.CommandAst]$Command,
+        [System.Management.Automation.Language.Ast]$Statement,
+        [string]$CommandName
+    )
+
+    $pipeline = $Command.Parent
+    if (
+        $pipeline -isnot [System.Management.Automation.Language.PipelineAst] -or
+        @($pipeline.PipelineElements).Count -ne 1
+    ) {
+        return $false
+    }
+    if ([object]::ReferenceEquals($pipeline, $Statement)) {
+        return $true
+    }
+    if ($Statement -isnot [System.Management.Automation.Language.AssignmentStatementAst] -or $CommandName -ine 'git') {
+        return $false
+    }
+    if ([object]::ReferenceEquals($Statement.Right, $pipeline)) {
+        return $true
+    }
+
+    $parenthesized = $pipeline.Parent
+    $memberCall = if ($null -ne $parenthesized) { $parenthesized.Parent } else { $null }
+    $commandExpression = if ($null -ne $memberCall) { $memberCall.Parent } else { $null }
+    return (
+        $parenthesized -is [System.Management.Automation.Language.ParenExpressionAst] -and
+        $memberCall -is [System.Management.Automation.Language.InvokeMemberExpressionAst] -and
+        $memberCall.Member.Value -ceq 'Trim' -and
+        $memberCall.Arguments.Count -eq 0 -and
+        $commandExpression -is [System.Management.Automation.Language.CommandExpressionAst] -and
+        [object]::ReferenceEquals($commandExpression.Parent, $Statement) -and
+        [object]::ReferenceEquals($Statement.Right, $commandExpression)
+    )
+}
+
+function Test-PowerShellCondition {
+    param(
+        [System.Management.Automation.Language.PipelineBaseAst]$Condition,
+        [string]$VariableName,
+        [System.Management.Automation.Language.TokenKind]$Operator,
+        [int]$Value
+    )
+
+    if ($Condition -isnot [System.Management.Automation.Language.PipelineAst]) {
+        return $false
+    }
+    $pipelineElements = @($Condition.PipelineElements)
+    if ($pipelineElements.Count -ne 1 -or $pipelineElements[0] -isnot [System.Management.Automation.Language.CommandExpressionAst]) {
+        return $false
+    }
+    $expression = $pipelineElements[0].Expression
+    return (
+        $expression -is [System.Management.Automation.Language.BinaryExpressionAst] -and
+        $expression.Operator -eq $Operator -and
+        $expression.Left -is [System.Management.Automation.Language.VariableExpressionAst] -and
+        $expression.Left.VariablePath.UserPath -ieq $VariableName -and
+        $expression.Right -is [System.Management.Automation.Language.ConstantExpressionAst] -and
+        $expression.Right.Value -eq $Value
+    )
+}
+
+function Test-PowerShellBlockingStatementBlock {
+    param([System.Management.Automation.Language.StatementBlockAst]$StatementBlock)
+
+    $statements = @($StatementBlock.Statements)
+    return (
+        $statements.Count -eq 1 -and
+        ($statements[0] -is [System.Management.Automation.Language.ThrowStatementAst] -or
+            $statements[0] -is [System.Management.Automation.Language.ExitStatementAst])
+    )
+}
+
+function Test-PowerShellStandardNativeGuard {
+    param([System.Management.Automation.Language.StatementAst]$Statement)
+
+    if ($Statement -isnot [System.Management.Automation.Language.IfStatementAst] -or
+        @($Statement.Clauses).Count -ne 1 -or $null -ne $Statement.ElseClause) {
+        return $false
+    }
+    return (
+        (Test-PowerShellCondition -Condition $Statement.Clauses[0].Item1 -VariableName 'LASTEXITCODE' -Operator ([System.Management.Automation.Language.TokenKind]::Ine) -Value 0) -and
+        (Test-PowerShellBlockingStatementBlock -StatementBlock $Statement.Clauses[0].Item2)
+    )
+}
+
+function Get-PowerShellCapturedExitVariableName {
+    param([System.Management.Automation.Language.StatementAst]$Statement)
+
+    if (
+        $Statement -isnot [System.Management.Automation.Language.AssignmentStatementAst] -or
+        $Statement.Operator -ne [System.Management.Automation.Language.TokenKind]::Equals -or
+        $Statement.Left -isnot [System.Management.Automation.Language.VariableExpressionAst] -or
+        $Statement.Right -isnot [System.Management.Automation.Language.CommandExpressionAst] -or
+        $Statement.Right.Expression -isnot [System.Management.Automation.Language.VariableExpressionAst] -or
+        $Statement.Right.Expression.VariablePath.UserPath -ine 'LASTEXITCODE'
+    ) {
+        return $null
+    }
+
+    return $Statement.Left.VariablePath.UserPath
+}
+
+function Test-PowerShellCapturedNativeGuard {
+    param(
+        [System.Management.Automation.Language.StatementAst]$CaptureStatement,
+        [System.Management.Automation.Language.StatementAst]$GuardStatement
+    )
+
+    $capturedExitName = Get-PowerShellCapturedExitVariableName -Statement $CaptureStatement
+    if (
+        -not $capturedExitName -or
+        $GuardStatement -isnot [System.Management.Automation.Language.IfStatementAst] -or
+        @($GuardStatement.Clauses).Count -ne 2 -or
+        $null -eq $GuardStatement.ElseClause
+    ) {
+        return $false
+    }
+    return (
+        (Test-PowerShellCondition -Condition $GuardStatement.Clauses[0].Item1 -VariableName $capturedExitName -Operator ([System.Management.Automation.Language.TokenKind]::Ieq) -Value 0) -and
+        (Test-PowerShellCondition -Condition $GuardStatement.Clauses[1].Item1 -VariableName $capturedExitName -Operator ([System.Management.Automation.Language.TokenKind]::Ieq) -Value 1) -and
+        (Test-PowerShellBlockingStatementBlock -StatementBlock $GuardStatement.ElseClause)
+    )
+}
+
+function Test-PowerShellImmediateNativeGuard {
+    param(
+        [object[]]$Statements,
+        [int]$CommandIndex
+    )
+
+    $guardIndex = $CommandIndex + 1
+    if ($guardIndex -ge $Statements.Count) {
+        return $false
+    }
+    if (Test-PowerShellStandardNativeGuard -Statement $Statements[$guardIndex]) {
+        return $true
+    }
+
+    $branchIndex = $guardIndex + 1
+    return (
+        $branchIndex -lt $Statements.Count -and
+        (Test-PowerShellCapturedNativeGuard -CaptureStatement $Statements[$guardIndex] -GuardStatement $Statements[$branchIndex])
+    )
+}
+
 function Test-PowerShellNativeFailFast {
     param(
         [string]$Label,
@@ -559,53 +834,35 @@ function Test-PowerShellNativeFailFast {
 
     $fences = @(Get-MarkdownFencedBlocks -Text $Text -Language 'powershell')
     foreach ($fence in $fences) {
-        $lines = @(Get-ExecutablePowerShellLines -Text $fence.Body)
-        for ($index = 0; $index -lt $lines.Count; $index++) {
-            $trimmed = $lines[$index].Trim()
-            $isNative = $trimmed -match '^(?:&\s+\$PhpExecutable\b|powershell\.exe\b|node\b|php\b|git\b|ssh\b|scp\b|\$[A-Za-z_][A-Za-z0-9_]*\s*=\s*\(?git\b)'
-            if (-not $isNative) {
+        $tokens = $null
+        $parseErrors = $null
+        $ast = [System.Management.Automation.Language.Parser]::ParseInput(
+            $fence.Body,
+            [ref]$tokens,
+            [ref]$parseErrors
+        )
+        if ($parseErrors.Count -ne 0) {
+            Add-Failure "$Label native fail-fast contract failed: PowerShell parse error."
+            return $false
+        }
+
+        $commands = @($ast.FindAll({
+            param($node)
+            $node -is [System.Management.Automation.Language.CommandAst]
+        }, $true))
+        foreach ($command in $commands) {
+            $commandName = Get-PowerShellNativeCommandName -Command $command
+            if (-not $commandName) {
                 continue
             }
 
-            while ($index -lt ($lines.Count - 1) -and $lines[$index].TrimEnd().EndsWith('`')) {
-                $index++
-            }
-
-            $nextIndex = $index + 1
-            while (
-                $nextIndex -lt $lines.Count -and
-                ([string]::IsNullOrWhiteSpace($lines[$nextIndex]) -or $lines[$nextIndex].Trim().StartsWith('#'))
+            $context = Get-PowerShellStatementContext -Command $command
+            if (
+                $null -eq $context -or
+                -not (Test-PowerShellNativeStatementShape -Command $command -Statement $context.Statement -CommandName $commandName) -or
+                -not (Test-PowerShellImmediateNativeGuard -Statements $context.Statements -CommandIndex $context.Index)
             ) {
-                $nextIndex++
-            }
-            if ($nextIndex -ge $lines.Count) {
-                Add-Failure "$Label native fail-fast contract failed: $trimmed"
-                return $false
-            }
-
-            $checkLine = $lines[$nextIndex].Trim()
-            $hasImmediateCheck = $checkLine -match '^if\s*\(\s*\$LASTEXITCODE\s+-ne\s+0\s*\)\s*\{\s*(?:throw|exit)\b.*\}\s*$'
-            if (-not $hasImmediateCheck -and $checkLine -match '^\$(?<name>[A-Za-z_][A-Za-z0-9_]*)\s*=\s*\$LASTEXITCODE\s*$') {
-                $capturedExitName = $Matches['name']
-                $branchIndex = $nextIndex + 1
-                while (
-                    $branchIndex -lt $lines.Count -and
-                    ([string]::IsNullOrWhiteSpace($lines[$branchIndex]) -or $lines[$branchIndex].Trim().StartsWith('#'))
-                ) {
-                    $branchIndex++
-                }
-                if ($branchIndex -lt $lines.Count) {
-                    $remainingText = ($lines[$branchIndex..($lines.Count - 1)] -join "`n")
-                    $escapedExitName = [regex]::Escape($capturedExitName)
-                    $hasImmediateCheck = $remainingText -match (
-                        '(?ms)^\s*if\s*\(\$' + $escapedExitName + '\s+-eq\s+0\s*\)\s*\{.*?' +
-                        '^\s*\}\s*elseif\s*\(\$' + $escapedExitName + '\s+-eq\s+1\s*\)\s*\{.*?' +
-                        '^\s*\}\s*else\s*\{\s*\r?\n\s*(?:throw|exit)\b.*?^\s*\}'
-                    )
-                }
-            }
-            if (-not $hasImmediateCheck) {
-                Add-Failure "$Label native fail-fast contract failed: $trimmed"
+                Add-Failure "$Label native fail-fast contract failed: $($command.Extent.Text.Trim())"
                 return $false
             }
         }

@@ -402,21 +402,21 @@ try {
             Name = 'runbook safety: recovered verifier native check removal is rejected'
             FixtureName = 'runbook-recovered-verifier-native-check'
             OldText = "node --check .\ops\verify-guide-experience-js-runtime.js`nif (`$LASTEXITCODE -ne 0) { throw 'Node syntax check failed: ops/verify-guide-experience-js-runtime.js' }"
-            NewText = 'node --check .\ops\verify-guide-experience-js-runtime.js'
+            NewText = "`$QuotedValue = 'abc``' # Backticks are literal in single-quoted strings.`nnode --check .\ops\verify-guide-experience-js-runtime.js"
             ExpectedFailure = 'Recovered verifier block native fail-fast contract\s+failed'
         },
         [pscustomobject]@{
             Name = 'runbook safety: local build moved native check is rejected'
             FixtureName = 'runbook-local-build-native-check'
             OldText = "powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\ops\verify-comparison-rollout.ps1`nif (`$LASTEXITCODE -ne 0) { throw 'Comparison rollout verification failed.' }`npowershell.exe -NoProfile -ExecutionPolicy Bypass -File .\ops\verify-comparison-rollout-mutations.ps1"
-            NewText = "powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\ops\verify-comparison-rollout.ps1`npowershell.exe -NoProfile -ExecutionPolicy Bypass -File .\ops\verify-comparison-rollout-mutations.ps1`nif (`$LASTEXITCODE -ne 0) { throw 'Comparison rollout verification failed.' }"
+            NewText = "`$NestedOutput = `"`$(powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\ops\verify-comparison-rollout.ps1)`"`nif (`$LASTEXITCODE -ne 0) { throw 'Comparison rollout verification failed.' }`npowershell.exe -NoProfile -ExecutionPolicy Bypass -File .\ops\verify-comparison-rollout-mutations.ps1"
             ExpectedFailure = 'Local build block native fail-fast contract failed'
         },
         [pscustomobject]@{
             Name = 'runbook safety: artifact upload native check removal is rejected'
             FixtureName = 'runbook-artifact-upload-native-check'
             OldText = "scp -- `$ArtifactZip `"`${ProdUser}@`${ProdHost}:`$RemotePart`"`nif (`$LASTEXITCODE -ne 0) { throw 'Artifact upload failed.' }"
-            NewText = 'scp -- $ArtifactZip "${ProdUser}@${ProdHost}:$RemotePart"'
+            NewText = "scp -- `$ArtifactZip `"`${ProdUser}@`${ProdHost}:`$RemotePart`"; cmd.exe /c exit 0`nif (`$LASTEXITCODE -ne 0) { throw 'Artifact upload failed.' }"
             ExpectedFailure = 'Artifact upload block native fail-fast contract failed'
         },
         [pscustomobject]@{
@@ -608,7 +608,7 @@ try {
     $canaryRollbackOrdering = New-CaseFixture -Name 'runbook-canary-rollback-ordering'
     $canaryRollbackText = [System.IO.File]::ReadAllText((Get-ExecutionAddendumPath -Fixture $canaryRollbackOrdering))
     $canaryCacheFlush = 'wp --path="$WP_ROOT" --allow-root cache flush'
-    $canaryHeredocMarker = "cat <<'ROLLBACK_ORDER_ONE' <<'ROLLBACK_ORDER_TWO'`nignored first heredoc body`nROLLBACK_ORDER_ONE`n$canaryCacheFlush`nROLLBACK_ORDER_TWO"
+    $canaryHeredocMarker = "cat <<`"E\OF`" <<'ROLLBACK_ORDER_TWO'`nignored first heredoc body`nEOF`nROLLBACK_ORDER_TWO`n$canaryCacheFlush`nE\OF`nignored second heredoc body`nROLLBACK_ORDER_TWO"
     if ($canaryRollbackText.Contains($canaryCacheFlush)) {
         $canaryRollbackText = $canaryRollbackText.Replace($canaryCacheFlush, $canaryHeredocMarker)
     }
@@ -619,9 +619,10 @@ try {
     $stage2RollbackOrdering = New-CaseFixture -Name 'runbook-stage2-rollback-ordering'
     $stage2RollbackText = [System.IO.File]::ReadAllText((Get-ExecutionAddendumPath -Fixture $stage2RollbackOrdering))
     $stage2CacheFlush = 'wp --path="$WP_ROOT" --allow-root cache flush'
-    $stage2HeredocMarker = "cat <<'ROLLBACK_ORDER_ONE' <<'ROLLBACK_ORDER_TWO'`nignored first heredoc body`nROLLBACK_ORDER_ONE`n$stage2CacheFlush`nROLLBACK_ORDER_TWO"
-    if ($stage2RollbackText.Contains($stage2CacheFlush)) {
-        $stage2RollbackText = $stage2RollbackText.Replace($stage2CacheFlush, $stage2HeredocMarker)
+    $stage2RollbackPrelude = "run_rollout rollback full`nROLLBACK_EXIT=`$?`nset -e"
+    $stage2HeredocMarker = ": `$((1 << 2))`n$stage2CacheFlush`n2`n$stage2RollbackPrelude"
+    if ($stage2RollbackText.Contains($stage2RollbackPrelude)) {
+        $stage2RollbackText = $stage2RollbackText.Replace($stage2RollbackPrelude, $stage2HeredocMarker)
     }
     $stage2RollbackVerifier = Set-AuthorizedExecutionAddendumText -Fixture $stage2RollbackOrdering -Text $stage2RollbackText
     $stage2RollbackResult = Invoke-CaseVerifier -Fixture $stage2RollbackOrdering -VerifierPath $stage2RollbackVerifier
