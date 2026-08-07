@@ -37,6 +37,26 @@ function Get-MarkdownSectionText {
     return $match.Value
 }
 
+function Get-MarkdownFencedBlocks {
+    param(
+        [string]$Text,
+        [string]$Language
+    )
+
+    $blocks = [System.Collections.Generic.List[object]]::new()
+    $executableMarkdown = [regex]::Replace($Text, '(?s)<!--.*?-->', '')
+    $pattern = '(?ms)^```' + [regex]::Escape($Language) + '\s*\r?\n(?<body>.*?)^```\s*$'
+    foreach ($fence in [regex]::Matches($executableMarkdown, $pattern)) {
+        $blocks.Add([pscustomobject]@{
+            Index = $fence.Index
+            Text = $fence.Value
+            Body = $fence.Groups['body'].Value
+        })
+    }
+
+    return @($blocks)
+}
+
 function Test-OrderedMarkers {
     param(
         [string]$Label,
@@ -61,9 +81,9 @@ function Get-ExecutableBashLines {
     param([string]$Text)
 
     $executableLines = [System.Collections.Generic.List[string]]::new()
-    $fences = [regex]::Matches($Text, '(?ms)^```bash\s*\r?\n(?<body>.*?)^```\s*$')
+    $fences = @(Get-MarkdownFencedBlocks -Text $Text -Language 'bash')
     foreach ($fence in $fences) {
-        foreach ($line in @($fence.Groups['body'].Value -split '\r?\n')) {
+        foreach ($line in @($fence.Body -split '\r?\n')) {
             $trimmed = $line.Trim()
             if ([string]::IsNullOrWhiteSpace($trimmed) -or $trimmed.StartsWith('#')) {
                 continue
@@ -110,15 +130,41 @@ function Test-ConsecutiveExecutableBashLines {
     return $true
 }
 
+function Test-OrderedUniqueExecutableLines {
+    param(
+        [string]$Label,
+        [string[]]$Lines,
+        [string[]]$Markers
+    )
+
+    $cursor = -1
+    foreach ($marker in $Markers) {
+        $markerIndexes = @(
+            for ($index = 0; $index -lt $Lines.Count; $index++) {
+                if ($Lines[$index] -ceq $marker) {
+                    $index
+                }
+            }
+        )
+        if ($markerIndexes.Count -ne 1 -or $markerIndexes[0] -le $cursor) {
+            Add-Failure "$Label failed: missing, duplicate, or out-of-order executable marker: $marker"
+            return $false
+        }
+        $cursor = $markerIndexes[0]
+    }
+
+    return $true
+}
+
 function Test-PowerShellNativeFailFast {
     param(
         [string]$Label,
         [string]$Text
     )
 
-    $fences = [regex]::Matches($Text, '(?ms)^```powershell\s*\r?\n(?<body>.*?)^```\s*$')
+    $fences = @(Get-MarkdownFencedBlocks -Text $Text -Language 'powershell')
     foreach ($fence in $fences) {
-        $lines = @($fence.Groups['body'].Value -split '\r?\n')
+        $lines = @($fence.Body -split '\r?\n')
         for ($index = 0; $index -lt $lines.Count; $index++) {
             $trimmed = $lines[$index].Trim()
             $isNative = $trimmed -match '^(?:&\s+\$PhpExecutable\b|powershell\.exe\b|node\b|php\b|git\b|ssh\b|scp\b|\$[A-Za-z_][A-Za-z0-9_]*\s*=\s*\(?git\b)'
@@ -943,12 +989,49 @@ powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\ops\verify-comparison-
     -Origin 'https://vietnamguide.net'
 if ($LASTEXITCODE -ne 0) { throw 'Full-stage public HTTP verification failed.' }
 '@
-    $stage2PublicVerifierPosition = $stage2Section.IndexOf($stage2PublicVerifierBlock, [System.StringComparison]::Ordinal)
-    if (
-        $stage2PublicVerifierPosition -lt 0 -or
-        $stage2PublicVerifierPosition -ne $stage2Section.LastIndexOf($stage2PublicVerifierBlock, [System.StringComparison]::Ordinal) -or
-        $stage2PublicVerifierPosition -gt $stage2Section.IndexOf('run_rollout compatibility-sync full', [System.StringComparison]::Ordinal)
-    ) {
+    $stage2PowerShellFences = @(Get-MarkdownFencedBlocks -Text $stage2Section -Language 'powershell')
+    $stage2PublicVerifierMatches = [System.Collections.Generic.List[object]]::new()
+    foreach ($fence in $stage2PowerShellFences) {
+        $searchStart = 0
+        while ($searchStart -lt $fence.Body.Length) {
+            $matchIndex = $fence.Body.IndexOf($stage2PublicVerifierBlock, $searchStart, [System.StringComparison]::Ordinal)
+            if ($matchIndex -lt 0) {
+                break
+            }
+            $stage2PublicVerifierMatches.Add([pscustomobject]@{
+                Fence = $fence
+                Index = $matchIndex
+            })
+            $searchStart = $matchIndex + $stage2PublicVerifierBlock.Length
+        }
+    }
+    $stage2PublicVerifierInvalid = $stage2PublicVerifierMatches.Count -ne 1
+    if (-not $stage2PublicVerifierInvalid) {
+        $publicVerifierFence = $stage2PublicVerifierMatches[0].Fence
+        [void](Test-PowerShellNativeFailFast -Label 'Stage 2 public verification block' -Text $publicVerifierFence.Text)
+
+        $stage2BashFences = @(Get-MarkdownFencedBlocks -Text $stage2Section -Language 'bash')
+        $firstCompatibilityFenceIndex = -1
+        $closeFenceIndex = -1
+        foreach ($fence in $stage2BashFences) {
+            $fenceExecutableLines = @(Get-ExecutableBashLines -Text $fence.Text)
+            if ($firstCompatibilityFenceIndex -lt 0 -and @($fenceExecutableLines | Where-Object { $_ -ceq 'run_rollout compatibility-sync full' }).Count -gt 0) {
+                $firstCompatibilityFenceIndex = $fence.Index
+            }
+            if ($closeFenceIndex -lt 0 -and @($fenceExecutableLines | Where-Object { $_ -ceq 'run_rollout recovery-audit full --action=close-ledger --require-final-event=compatibility-sync' }).Count -gt 0) {
+                $closeFenceIndex = $fence.Index
+            }
+        }
+        if (
+            $firstCompatibilityFenceIndex -lt 0 -or
+            $closeFenceIndex -lt 0 -or
+            $publicVerifierFence.Index -ge $firstCompatibilityFenceIndex -or
+            $publicVerifierFence.Index -ge $closeFenceIndex
+        ) {
+            $stage2PublicVerifierInvalid = $true
+        }
+    }
+    if ($stage2PublicVerifierInvalid) {
         Add-Failure 'Stage 2 public HTTP verification contract failed.'
     }
 
@@ -1037,20 +1120,30 @@ fi
     }
 
     $releasePublicationSection = Get-MarkdownSectionText -Text $normalizedAddendumText -Heading '## Verify and Atomically Install the Release'
+    $publicationExecutableLines = @(Get-ExecutableBashLines -Text $releasePublicationSection)
+    $allExecutableBashLines = @(Get-ExecutableBashLines -Text $normalizedAddendumText)
     if (
         $releasePublicationSection.Contains('test ! -e "$RELEASE_DIR"') -or
         $releasePublicationSection.Contains('mv -- "$INSTALL_ROOT" "$RELEASE_DIR"')
     ) {
         Add-Failure 'Atomic release publication contract failed: non-atomic final-directory test and move detected.'
     }
-    [void](Test-OrderedMarkers -Label 'Atomic release publication contract' -Text $releasePublicationSection -Markers @(
+    [void](Test-OrderedUniqueExecutableLines -Label 'Atomic release publication contract' -Lines $publicationExecutableLines -Markers @(
         'mkdir -m 0750 "$RELEASE_DIR"',
         'RELEASE_PAYLOAD_DIR="$RELEASE_DIR/payload"',
         'test ! -e "$RELEASE_PAYLOAD_DIR"',
         'mv -T -- "$INSTALL_ROOT" "$RELEASE_PAYLOAD_DIR"'
     ))
-    $publicationExecutableLines = @(Get-ExecutableBashLines -Text $releasePublicationSection)
-    $publicationMoveLines = @($publicationExecutableLines | Where-Object { $_ -match '^mv(?:\s+-T)?\s+--\s+"\$INSTALL_ROOT"\s+"\$RELEASE_PAYLOAD_DIR"$' })
+    [void](Test-OrderedUniqueExecutableLines -Label 'Post-publication release identity contract' -Lines $publicationExecutableLines -Markers @(
+        'mv -T -- "$INSTALL_ROOT" "$RELEASE_PAYLOAD_DIR"',
+        'test -f "$RELEASE_PAYLOAD_DIR/.vietnamguide-release-sha256"',
+        'test "$(cat "$RELEASE_PAYLOAD_DIR/.vietnamguide-release-sha256")" = "$VG_ARTIFACT_HASH"',
+        'test -f "$RELEASE_PAYLOAD_DIR/payload-manifest.json"',
+        'test -f "$RELEASE_PAYLOAD_DIR/ops/comparison-rollout/artifact.json"',
+        'php "$RELEASE_PAYLOAD_DIR/ops/install-comparison-rollout-release.php" verify-payload \',
+        'php "$RELEASE_PAYLOAD_DIR/ops/install-comparison-rollout-release.php" install \'
+    ))
+    $publicationMoveLines = @($allExecutableBashLines | Where-Object { $_ -match '^mv(?:\s|$)' -and $_.Contains('$INSTALL_ROOT') })
     if ($publicationMoveLines.Count -ne 1 -or $publicationMoveLines[0] -cne 'mv -T -- "$INSTALL_ROOT" "$RELEASE_PAYLOAD_DIR"') {
         Add-Failure 'Atomic release publication contract failed: exact no-target-directory move is missing.'
     }
@@ -1061,7 +1154,6 @@ fi
     ) {
         Add-Failure 'Release payload execution-root contract failed.'
     }
-    $allExecutableBashLines = @(Get-ExecutableBashLines -Text $normalizedAddendumText)
     $releaseInstallInvocations = @(
         $allExecutableBashLines | Where-Object {
             $_ -match '^php\b.*install-comparison-rollout-release\.php(?:"|''|\s).*\sinstall(?:\s|$)'
@@ -1073,16 +1165,6 @@ fi
     ) {
         Add-Failure 'Release installer invocation contract failed.'
     }
-    [void](Test-OrderedMarkers -Label 'Post-publication release identity contract' -Text $releasePublicationSection -Markers @(
-        'test ! -e "$RELEASE_PAYLOAD_DIR"',
-        'mv -T -- "$INSTALL_ROOT" "$RELEASE_PAYLOAD_DIR"',
-        'test -f "$RELEASE_PAYLOAD_DIR/.vietnamguide-release-sha256"',
-        'test "$(cat "$RELEASE_PAYLOAD_DIR/.vietnamguide-release-sha256")" = "$VG_ARTIFACT_HASH"',
-        'test -f "$RELEASE_PAYLOAD_DIR/payload-manifest.json"',
-        'test -f "$RELEASE_PAYLOAD_DIR/ops/comparison-rollout/artifact.json"',
-        'php "$RELEASE_PAYLOAD_DIR/ops/install-comparison-rollout-release.php" verify-payload \',
-        'php "$RELEASE_PAYLOAD_DIR/ops/install-comparison-rollout-release.php" install \'
-    ))
 }
 
 $localOpsManifestPath = Join-Path $repoRoot 'tests\fixtures\recovery-local-ops-manifest.json'

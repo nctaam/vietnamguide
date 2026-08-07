@@ -396,10 +396,10 @@ try {
             ExpectedFailure = 'Stage inventory contract failed'
         },
         [pscustomobject]@{
-            Name = 'runbook safety: non-atomic release test and move is rejected'
-            FixtureName = 'runbook-non-atomic-publication'
+            Name = 'runbook safety: executable publication move before release directory creation is rejected'
+            FixtureName = 'runbook-publication-move-before-mkdir'
             OldText = "mkdir -m 0750 `"`$RELEASE_DIR`"`nRELEASE_PAYLOAD_DIR=`"`$RELEASE_DIR/payload`"`ntest ! -e `"`$RELEASE_PAYLOAD_DIR`"`nmv -T -- `"`$INSTALL_ROOT`" `"`$RELEASE_PAYLOAD_DIR`""
-            NewText = "test ! -e `"`$RELEASE_DIR`"`nmv -- `"`$INSTALL_ROOT`" `"`$RELEASE_DIR`"`nRELEASE_PAYLOAD_DIR=`"`$RELEASE_DIR`""
+            NewText = "mv -T -- `"`$INSTALL_ROOT`" `"`$RELEASE_PAYLOAD_DIR`"`nmkdir -m 0750 `"`$RELEASE_DIR`"`nRELEASE_PAYLOAD_DIR=`"`$RELEASE_DIR/payload`"`ntest ! -e `"`$RELEASE_PAYLOAD_DIR`"`n# mv -T -- `"`$INSTALL_ROOT`" `"`$RELEASE_PAYLOAD_DIR`""
             ExpectedFailure = 'Atomic release publication contract failed'
         },
         [pscustomobject]@{
@@ -424,10 +424,12 @@ try {
             ExpectedFailure = 'Post-publication release identity contract failed'
         },
         [pscustomobject]@{
-            Name = 'runbook safety: missing full-stage public HTTP verifier is rejected'
-            FixtureName = 'runbook-full-public-verifier-missing'
-            OldText = "powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\ops\verify-comparison-rollout-public.ps1 $lineContinuation`n    -Stage full $lineContinuation`n    -Origin 'https://vietnamguide.net'`nif (`$LASTEXITCODE -ne 0) { throw 'Full-stage public HTTP verification failed.' }"
-            NewText = ''
+            Name = 'runbook safety: full-stage public HTTP verifier in HTML comment is rejected'
+            FixtureName = 'runbook-full-public-verifier-html-comment'
+            OldText = ($markdownFence + "powershell`n`$RepoRoot = 'C:\Users\NCTaam\projects\vietnamguide'`nSet-Location -LiteralPath `$RepoRoot`n" +
+                "powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\ops\verify-comparison-rollout-public.ps1 $lineContinuation`n    -Stage full $lineContinuation`n    -Origin 'https://vietnamguide.net'`nif (`$LASTEXITCODE -ne 0) { throw 'Full-stage public HTTP verification failed.' }`n" + $markdownFence)
+            NewText = ($markdownFence + "powershell`n`$RepoRoot = 'C:\Users\NCTaam\projects\vietnamguide'`nSet-Location -LiteralPath `$RepoRoot`n" + $markdownFence + "`n`n<!--`n" +
+                "powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\ops\verify-comparison-rollout-public.ps1 $lineContinuation`n    -Stage full $lineContinuation`n    -Origin 'https://vietnamguide.net'`nif (`$LASTEXITCODE -ne 0) { throw 'Full-stage public HTTP verification failed.' }`n-->")
             ExpectedFailure = 'Stage 2 public HTTP verification contract failed'
         },
         [pscustomobject]@{
