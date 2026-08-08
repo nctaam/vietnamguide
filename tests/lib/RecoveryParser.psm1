@@ -123,52 +123,16 @@ function Get-RecoveryPowerShellConfiguredCommands {
     return $configured
 }
 
-function Get-RecoveryPowerShellCommandResolution {
+function Get-RecoveryPowerShellLiteralCommandResolution {
     param(
         [Parameter(Mandatory = $true)]
-        [System.Management.Automation.Language.CommandAst]$Command,
+        [string]$LiteralCommandName,
 
         [Parameter(Mandatory = $true)]
         [System.Collections.Generic.HashSet[string]]$ConfiguredCommands
     )
 
-    $invocationOperator = $Command.InvocationOperator
-    $commandElements = @($Command.CommandElements)
-    $firstElement = if ($commandElements.Count -gt 0) { $commandElements[0] } else { $null }
-    if (
-        $invocationOperator -ne [System.Management.Automation.Language.TokenKind]::Unknown -and
-        $invocationOperator -ne [System.Management.Automation.Language.TokenKind]::Ampersand
-    ) {
-        return [pscustomobject]@{ Classification = 'dynamic'; NormalizedCommand = $null; LeafName = $null }
-    }
-
-    if (
-        $invocationOperator -eq [System.Management.Automation.Language.TokenKind]::Ampersand -and
-        $firstElement -is [System.Management.Automation.Language.VariableExpressionAst]
-    ) {
-        if (
-            $firstElement.VariablePath.UserPath -ieq 'PhpExecutable' -and
-            $ConfiguredCommands.Contains('php')
-        ) {
-            return [pscustomobject]@{ Classification = 'native'; NormalizedCommand = 'php'; LeafName = '$PhpExecutable' }
-        }
-
-        return [pscustomobject]@{ Classification = 'dynamic'; NormalizedCommand = $null; LeafName = $null }
-    }
-
-    $literalCommandName = $Command.GetCommandName()
-    if (
-        -not $literalCommandName -and
-        $invocationOperator -eq [System.Management.Automation.Language.TokenKind]::Ampersand -and
-        $firstElement -is [System.Management.Automation.Language.StringConstantExpressionAst]
-    ) {
-        $literalCommandName = [string]$firstElement.Value
-    }
-    if (-not $literalCommandName) {
-        return [pscustomobject]@{ Classification = 'dynamic'; NormalizedCommand = $null; LeafName = $null }
-    }
-
-    $leafName = [System.IO.Path]::GetFileName($literalCommandName).ToLowerInvariant()
+    $leafName = [System.IO.Path]::GetFileName($LiteralCommandName).ToLowerInvariant()
     if (
         $leafName -eq 'cmd' -or
         $leafName -eq 'cmd.exe' -or
@@ -188,6 +152,100 @@ function Get-RecoveryPowerShellCommandResolution {
     }
 
     return [pscustomobject]@{ Classification = 'ignore'; NormalizedCommand = $null; LeafName = $leafName }
+}
+
+function Get-RecoveryPowerShellPhpExecutableAssignmentState {
+    param(
+        [Parameter(Mandatory = $true)]
+        [AllowEmptyCollection()]
+        [object[]]$Assignments,
+
+        [Parameter(Mandatory = $true)]
+        [System.Management.Automation.Language.CommandAst]$Command
+    )
+
+    $latestAssignment = $null
+    foreach ($assignment in $Assignments) {
+        if ($assignment.Extent.StartOffset -ge $Command.Extent.StartOffset) {
+            break
+        }
+        $latestAssignment = $assignment
+    }
+    if ($null -eq $latestAssignment) {
+        return [pscustomobject]@{ IsStatic = $false; LiteralCommandName = $null }
+    }
+
+    $rightExpression = if ($latestAssignment.Right -is [System.Management.Automation.Language.CommandExpressionAst]) {
+        $latestAssignment.Right.Expression
+    }
+    else {
+        $null
+    }
+    if (
+        $latestAssignment.Operator -eq [System.Management.Automation.Language.TokenKind]::Equals -and
+        $latestAssignment.Left -is [System.Management.Automation.Language.VariableExpressionAst] -and
+        $latestAssignment.Left.VariablePath.UserPath -ieq 'PhpExecutable' -and
+        $rightExpression -is [System.Management.Automation.Language.StringConstantExpressionAst]
+    ) {
+        return [pscustomobject]@{ IsStatic = $true; LiteralCommandName = [string]$rightExpression.Value }
+    }
+
+    return [pscustomobject]@{ IsStatic = $false; LiteralCommandName = $null }
+}
+
+function Get-RecoveryPowerShellCommandResolution {
+    param(
+        [Parameter(Mandatory = $true)]
+        [System.Management.Automation.Language.CommandAst]$Command,
+
+        [Parameter(Mandatory = $true)]
+        [System.Collections.Generic.HashSet[string]]$ConfiguredCommands,
+
+        $PhpExecutableAssignment = $null
+    )
+
+    $invocationOperator = $Command.InvocationOperator
+    $commandElements = @($Command.CommandElements)
+    $firstElement = if ($commandElements.Count -gt 0) { $commandElements[0] } else { $null }
+    if (
+        $invocationOperator -ne [System.Management.Automation.Language.TokenKind]::Unknown -and
+        $invocationOperator -ne [System.Management.Automation.Language.TokenKind]::Ampersand
+    ) {
+        return [pscustomobject]@{ Classification = 'dynamic'; NormalizedCommand = $null; LeafName = $null }
+    }
+
+    if (
+        $invocationOperator -eq [System.Management.Automation.Language.TokenKind]::Ampersand -and
+        $firstElement -is [System.Management.Automation.Language.VariableExpressionAst]
+    ) {
+        if (
+            $firstElement.VariablePath.UserPath -ine 'PhpExecutable' -or
+            $null -eq $PhpExecutableAssignment -or
+            -not $PhpExecutableAssignment.IsStatic
+        ) {
+            return [pscustomobject]@{ Classification = 'dynamic'; NormalizedCommand = $null; LeafName = $null }
+        }
+
+        $assignmentResolution = Get-RecoveryPowerShellLiteralCommandResolution -LiteralCommandName $PhpExecutableAssignment.LiteralCommandName -ConfiguredCommands $ConfiguredCommands
+        if ($assignmentResolution.Classification -eq 'ignore') {
+            return [pscustomobject]@{ Classification = 'dynamic'; NormalizedCommand = $null; LeafName = $assignmentResolution.LeafName }
+        }
+        return $assignmentResolution
+    }
+
+    $literalCommandName = $Command.GetCommandName()
+    if (
+        -not $literalCommandName -and
+        $invocationOperator -eq [System.Management.Automation.Language.TokenKind]::Ampersand -and
+        $firstElement -is [System.Management.Automation.Language.StringConstantExpressionAst]
+    ) {
+        $literalCommandName = [string]$firstElement.Value
+    }
+    if (-not $literalCommandName) {
+        return [pscustomobject]@{ Classification = 'dynamic'; NormalizedCommand = $null; LeafName = $null }
+    }
+
+    return Get-RecoveryPowerShellLiteralCommandResolution -LiteralCommandName $literalCommandName -ConfiguredCommands $ConfiguredCommands
 }
 
 function Get-RecoveryPowerShellStatementContext {
@@ -279,6 +337,33 @@ function Test-RecoveryPowerShellNativeStatementShape {
         [object]::ReferenceEquals($commandExpression.Parent, $Statement) -and
         [object]::ReferenceEquals($Statement.Right, $commandExpression)
     )
+}
+
+function Test-RecoveryPowerShellEnclosingFailureCanContinue {
+    param(
+        [Parameter(Mandatory = $true)]
+        [System.Management.Automation.Language.CommandAst]$Command
+    )
+
+    $ancestor = $Command.Parent
+    while ($null -ne $ancestor) {
+        if (
+            ($ancestor -is [System.Management.Automation.Language.StatementBlockAst] -or
+                $ancestor -is [System.Management.Automation.Language.NamedBlockAst]) -and
+            $null -ne $ancestor.Traps
+        ) {
+            return $true
+        }
+        if (
+            $ancestor -is [System.Management.Automation.Language.TryStatementAst] -and
+            $ancestor.CatchClauses.Count -gt 0
+        ) {
+            return $true
+        }
+        $ancestor = $ancestor.Parent
+    }
+
+    return $false
 }
 
 function Test-RecoveryPowerShellCondition {
@@ -539,13 +624,20 @@ function ConvertFrom-RecoveryPowerShellFence {
     $configuredCommands = Get-RecoveryPowerShellConfiguredCommands -NativeCommandNames $NativeCommandNames
     $events = [System.Collections.Generic.List[object]]::new()
     $diagnostics = [System.Collections.Generic.List[object]]::new()
+    $phpExecutableAssignments = @($ast.FindAll({
+        param($node)
+        $node -is [System.Management.Automation.Language.AssignmentStatementAst] -and
+        $node.Left -is [System.Management.Automation.Language.VariableExpressionAst] -and
+        $node.Left.VariablePath.UserPath -ieq 'PhpExecutable'
+    }, $true) | Sort-Object -Property @{ Expression = { $_.Extent.StartOffset }; Ascending = $true })
     $commands = @($ast.FindAll({
         param($node)
         $node -is [System.Management.Automation.Language.CommandAst]
     }, $true) | Sort-Object -Property @{ Expression = { $_.Extent.StartOffset }; Ascending = $true }, @{ Expression = { $_.Extent.EndOffset }; Ascending = $true })
 
     foreach ($command in $commands) {
-        $resolution = Get-RecoveryPowerShellCommandResolution -Command $command -ConfiguredCommands $configuredCommands
+        $phpExecutableAssignment = Get-RecoveryPowerShellPhpExecutableAssignmentState -Assignments $phpExecutableAssignments -Command $command
+        $resolution = Get-RecoveryPowerShellCommandResolution -Command $command -ConfiguredCommands $configuredCommands -PhpExecutableAssignment $phpExecutableAssignment
         if ($resolution.Classification -eq 'ignore') {
             continue
         }
@@ -572,7 +664,10 @@ function ConvertFrom-RecoveryPowerShellFence {
             $diagnostics.Add((New-RecoveryPowerShellExtentDiagnostic -Code 'PS_NATIVE_GUARD_MISSING' -Message 'PowerShell native command is missing an immediate blocking guard.' -Extent $command.Extent -Fence $Fence))
             continue
         }
-        if (-not $guardAnalysis.Blocking) {
+        if (
+            -not $guardAnalysis.Blocking -or
+            (Test-RecoveryPowerShellEnclosingFailureCanContinue -Command $command)
+        ) {
             $diagnostics.Add((New-RecoveryPowerShellExtentDiagnostic -Code 'PS_NATIVE_GUARD_NONBLOCKING' -Message 'PowerShell native command guard does not block failure.' -Extent $command.Extent -Fence $Fence))
             continue
         }

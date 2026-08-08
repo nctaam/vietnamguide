@@ -781,7 +781,7 @@ Add-ParserResult -Name 'PowerShell parser restricts dynamic native invocation' -
     Assert-ParserDiagnosticCodes -Diagnostics @($unknownResult.Diagnostics) -Expected @('PS_DYNAMIC_NATIVE_UNSUPPORTED')
     Assert-ParserEqual -Actual @($unknownResult.Events).Count -Expected 0 -Message 'Unknown dynamic command should not emit an event.'
 
-    $phpBody = [string]::Join("`n", @('& $PhpExecutable -v', 'if ($LASTEXITCODE -ne 0) { throw "php failed" }'))
+    $phpBody = [string]::Join("`n", @('$PhpExecutable = ''php''', '& $PhpExecutable -v', 'if ($LASTEXITCODE -ne 0) { throw "php failed" }'))
     $phpResult = ConvertFrom-RecoveryPowerShellFence -Fence (New-TestRecoveryPowerShellFence -Body $phpBody)
     Assert-ParserEqual -Actual $phpResult.IsValid -Expected $true -Message 'Configured PhpExecutable command should be valid.'
     Assert-RecoveryPowerShellEventCommands -Result $phpResult -Expected @('php')
@@ -789,6 +789,40 @@ Add-ParserResult -Name 'PowerShell parser restricts dynamic native invocation' -
     $excludedPhpResult = ConvertFrom-RecoveryPowerShellFence -Fence (New-TestRecoveryPowerShellFence -Body $phpBody) -NativeCommandNames @('git')
     Assert-ParserDiagnosticCodes -Diagnostics @($excludedPhpResult.Diagnostics) -Expected @('PS_DYNAMIC_NATIVE_UNSUPPORTED')
     Assert-ParserEqual -Actual @($excludedPhpResult.Events).Count -Expected 0 -Message 'Excluded PhpExecutable command should not emit an event.'
+}
+
+Add-ParserResult -Name 'PowerShell parser requires a static PhpExecutable assignment' -Test {
+    $cases = @(
+        [pscustomobject]@{ Name = 'cmd wrapper'; Lines = @('$PhpExecutable = ''cmd.exe''', '& $PhpExecutable /c exit 0', 'if ($LASTEXITCODE -ne 0) { throw ''failed'' }'); Codes = @('PS_UNSUPPORTED_NATIVE_WRAPPER'); Commands = @() },
+        [pscustomobject]@{ Name = 'known git'; Lines = @('$PhpExecutable = ''git''', '& $PhpExecutable status', 'if ($LASTEXITCODE -ne 0) { throw ''failed'' }'); Codes = @(); Commands = @('git') },
+        [pscustomobject]@{ Name = 'environment value'; Lines = @('$PhpExecutable = $env:ComSpec', '& $PhpExecutable /c exit 0', 'if ($LASTEXITCODE -ne 0) { throw ''failed'' }'); Codes = @('PS_DYNAMIC_NATIVE_UNSUPPORTED'); Commands = @() },
+        [pscustomobject]@{ Name = 'full cmd path'; Lines = @('$PhpExecutable = ''C:\Windows\System32\cmd.exe''', '& $PhpExecutable /c exit 0', 'if ($LASTEXITCODE -ne 0) { throw ''failed'' }'); Codes = @('PS_UNSUPPORTED_NATIVE_WRAPPER'); Commands = @() },
+        [pscustomobject]@{ Name = 'no assignment'; Lines = @('& $PhpExecutable -v', 'if ($LASTEXITCODE -ne 0) { throw ''failed'' }'); Codes = @('PS_DYNAMIC_NATIVE_UNSUPPORTED'); Commands = @() },
+        [pscustomobject]@{ Name = 'nonliteral assignment'; Lines = @('$PhpExecutable = Get-Thing', '& $PhpExecutable -v', 'if ($LASTEXITCODE -ne 0) { throw ''failed'' }'); Codes = @('PS_DYNAMIC_NATIVE_UNSUPPORTED'); Commands = @() }
+    )
+
+    foreach ($case in $cases) {
+        $result = ConvertFrom-RecoveryPowerShellFence -Fence (New-TestRecoveryPowerShellFence -Body ([string]::Join("`n", $case.Lines)))
+
+        Assert-ParserEqual -Actual $result.IsValid -Expected ($case.Codes.Count -eq 0) -Message "PhpExecutable case '$($case.Name)' validity mismatch."
+        if ($case.Codes.Count -eq 0) {
+            Assert-ParserEqual -Actual @($result.Diagnostics).Count -Expected 0 -Message "PhpExecutable case '$($case.Name)' diagnostic count mismatch."
+        }
+        else {
+            Assert-ParserDiagnosticCodes -Diagnostics @($result.Diagnostics) -Expected $case.Codes
+        }
+        if ($case.Commands.Count -eq 0) {
+            Assert-ParserEqual -Actual @($result.Events).Count -Expected 0 -Message "PhpExecutable case '$($case.Name)' event count mismatch."
+        }
+        else {
+            Assert-RecoveryPowerShellEventCommands -Result $result -Expected $case.Commands
+        }
+    }
+
+    $staticPathBody = [string]::Join("`n", @('$PhpExecutable = ''C:\tools\php.exe''', '& $PhpExecutable -v', 'if ($LASTEXITCODE -ne 0) { throw ''php failed'' }'))
+    $staticPathResult = ConvertFrom-RecoveryPowerShellFence -Fence (New-TestRecoveryPowerShellFence -Body $staticPathBody)
+    Assert-ParserEqual -Actual $staticPathResult.IsValid -Expected $true -Message 'Static php.exe path should be valid.'
+    Assert-RecoveryPowerShellEventCommands -Result $staticPathResult -Expected @('php')
 }
 
 Add-ParserResult -Name 'PowerShell parser reports AST parse errors without events' -Test {
@@ -816,6 +850,52 @@ Add-ParserResult -Name 'PowerShell parser rejects nested or piped native stateme
         Assert-ParserEqual -Actual @($result.Events).Count -Expected 0 -Message "Nested command '$command' should not emit an event."
         Assert-ParserDiagnosticCodes -Diagnostics @($result.Diagnostics) -Expected @('PS_NATIVE_STATEMENT_AMBIGUOUS')
     }
+}
+
+Add-ParserResult -Name 'PowerShell parser rejects guards swallowed by enclosing trap or catch' -Test {
+    $invalidCases = @(
+        [pscustomobject]@{
+            Name = 'enclosing trap'
+            Body = [string]::Join("`n", @(
+                'trap { continue }',
+                'git status',
+                'if ($LASTEXITCODE -ne 0) { throw ''failed'' }',
+                'Write-Host TRAP_AFTER'
+            ))
+        },
+        [pscustomobject]@{
+            Name = 'try catch'
+            Body = [string]::Join("`n", @(
+                'try {',
+                '    git status',
+                '    if ($LASTEXITCODE -ne 0) { throw ''failed'' }',
+                '} catch {',
+                '    Write-Host TRY_CAUGHT',
+                '}',
+                'Write-Host TRY_AFTER'
+            ))
+        }
+    )
+
+    foreach ($case in $invalidCases) {
+        $result = ConvertFrom-RecoveryPowerShellFence -Fence (New-TestRecoveryPowerShellFence -Body $case.Body)
+
+        Assert-ParserEqual -Actual $result.IsValid -Expected $false -Message "Enclosing $($case.Name) should be invalid."
+        Assert-ParserEqual -Actual @($result.Events).Count -Expected 0 -Message "Enclosing $($case.Name) should not emit an event."
+        Assert-ParserDiagnosticCodes -Diagnostics @($result.Diagnostics) -Expected @('PS_NATIVE_GUARD_NONBLOCKING')
+    }
+
+    $finallyBody = [string]::Join("`n", @(
+        'try {',
+        '    git status',
+        '    if ($LASTEXITCODE -ne 0) { throw ''failed'' }',
+        '} finally {',
+        '    Write-Host TRY_FINALLY',
+        '}'
+    ))
+    $finallyResult = ConvertFrom-RecoveryPowerShellFence -Fence (New-TestRecoveryPowerShellFence -Body $finallyBody)
+    Assert-ParserEqual -Actual $finallyResult.IsValid -Expected $true -Message 'Try/finally without catch should remain valid.'
+    Assert-RecoveryPowerShellEventCommands -Result $finallyResult -Expected @('git')
 }
 
 Add-ParserResult -Name 'PowerShell parser rejects same-line intervening statements' -Test {
