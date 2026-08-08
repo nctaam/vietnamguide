@@ -112,7 +112,6 @@ function Get-MarkdownSectionText {
     $inFence = $false
     $fenceMarker = ''
     $fenceLength = 0
-    $fenceInfo = ''
     $inHtmlComment = $false
     $sectionStart = -1
     $sectionEnd = $Text.Length
@@ -124,7 +123,7 @@ function Get-MarkdownSectionText {
             if ($null -ne $fence -and
                 $fence.Marker[0] -ceq $fenceMarker -and
                 $fence.Marker.Length -ge $fenceLength -and
-                ($fence.Info -eq '' -or $fence.Info -ceq $fenceInfo)) {
+                $fence.Info -eq '') {
                 $inFence = $false
             }
             continue
@@ -137,7 +136,6 @@ function Get-MarkdownSectionText {
             $inFence = $true
             $fenceMarker = $fence.Marker[0]
             $fenceLength = $fence.Marker.Length
-            $fenceInfo = $fence.Info
             continue
         }
 
@@ -179,7 +177,7 @@ function Get-MarkdownFencedBlocks {
             if ($null -eq $fence -or
                 $fence.Marker[0] -cne $openFence.Marker[0] -or
                 $fence.Marker.Length -lt $openFence.Marker.Length -or
-                ($fence.Info -ne '' -and $fence.Info -cne $openFence.Info)) {
+                $fence.Info -ne '') {
                 continue
             }
 
@@ -430,6 +428,55 @@ function Get-BashHeredocRedirections {
     }
 }
 
+function Test-BashUnquotedLineContinuation {
+    param([string]$Line)
+
+    $inSingleQuote = $false
+    $inDoubleQuote = $false
+    $index = 0
+    while ($index -lt $Line.Length) {
+        $character = $Line[$index]
+        if ($inSingleQuote) {
+            if ($character -ceq "'") {
+                $inSingleQuote = $false
+            }
+            $index++
+            continue
+        }
+        if ($inDoubleQuote) {
+            if ($character -ceq '\' -and ($index + 1) -lt $Line.Length) {
+                $index += 2
+                continue
+            }
+            if ($character -ceq '"') {
+                $inDoubleQuote = $false
+            }
+            $index++
+            continue
+        }
+        if ($character -ceq "'") {
+            $inSingleQuote = $true
+            $index++
+            continue
+        }
+        if ($character -ceq '"') {
+            $inDoubleQuote = $true
+            $index++
+            continue
+        }
+        if ($character -ceq '\') {
+            if (($index + 1) -eq $Line.Length) {
+                return $true
+            }
+            $index += 2
+            continue
+        }
+        $index++
+    }
+
+    return $false
+}
+
 function Get-ExecutableBashLines {
     param([string]$Text)
 
@@ -437,8 +484,13 @@ function Get-ExecutableBashLines {
     $fences = @(Get-MarkdownFencedBlocks -Text $Text -Language 'bash')
     foreach ($fence in $fences) {
         $heredocQueue = [System.Collections.Generic.List[object]]::new()
+        $continuedLine = [System.Text.StringBuilder]::new()
+        $continuedPhysicalLines = [System.Collections.Generic.List[string]]::new()
         foreach ($record in @(Get-MarkdownLineRecords -Text $fence.Body)) {
             $line = $record.Text
+            if ($record.Offset -eq $fence.Body.Length -and $line -eq '') {
+                continue
+            }
             if ($heredocQueue.Count -gt 0) {
                 $activeHeredoc = $heredocQueue[0]
                 $terminator = if ($activeHeredoc.StripTabs) { $line.TrimStart("`t") } else { $line }
@@ -448,20 +500,42 @@ function Get-ExecutableBashLines {
                 continue
             }
 
-            $trimmed = $line.Trim()
-            if ([string]::IsNullOrWhiteSpace($trimmed) -or $trimmed.StartsWith('#')) {
+            $isContinued = Test-BashUnquotedLineContinuation -Line $line
+            $lineFragment = if ($isContinued) { $line.Substring(0, $line.Length - 1) } else { $line }
+            [void]$continuedLine.Append($lineFragment)
+            $continuedPhysicalLines.Add($line.Trim())
+            if ($isContinued) {
                 continue
             }
-            $executableLines.Add($trimmed)
 
-            $heredocParse = Get-BashHeredocRedirections -Line $trimmed
+            $logicalTrimmed = $continuedLine.ToString().Trim()
+            if (-not [string]::IsNullOrWhiteSpace($logicalTrimmed) -and -not $logicalTrimmed.StartsWith('#')) {
+                foreach ($physicalLine in $continuedPhysicalLines) {
+                    if (-not [string]::IsNullOrWhiteSpace($physicalLine)) {
+                        $executableLines.Add($physicalLine)
+                    }
+                }
+            }
+
+            $continuedLine.Clear() | Out-Null
+            $continuedPhysicalLines.Clear()
+            if ([string]::IsNullOrWhiteSpace($logicalTrimmed) -or $logicalTrimmed.StartsWith('#')) {
+                continue
+            }
+
+            $heredocParse = Get-BashHeredocRedirections -Line $logicalTrimmed
             if (-not $heredocParse.IsValid) {
-                Add-Failure "Bash heredoc parsing failed: ambiguous redirection: $trimmed"
+                Add-Failure "Bash heredoc parsing failed: ambiguous redirection: $logicalTrimmed"
                 return @()
             }
             foreach ($heredoc in @($heredocParse.Redirections)) {
                 $heredocQueue.Add($heredoc)
             }
+        }
+
+        if ($continuedPhysicalLines.Count -gt 0) {
+            Add-Failure 'Bash heredoc parsing failed: unfinished line continuation.'
+            return @()
         }
 
         if ($heredocQueue.Count -gt 0) {
@@ -645,8 +719,16 @@ function Get-PowerShellNativeCommandName {
     param([System.Management.Automation.Language.CommandAst]$Command)
 
     $commandName = $Command.GetCommandName()
-    if ($commandName -and @('powershell.exe', 'node', 'php', 'git', 'ssh', 'scp') -icontains $commandName) {
-        return $commandName
+    if ($commandName) {
+        $leafName = [System.IO.Path]::GetFileName($commandName)
+        $nativeMatch = [regex]::Match(
+            $leafName,
+            '^(?<name>powershell|pwsh|node|php|git|ssh|scp)(?:\.exe)?$',
+            [System.Text.RegularExpressions.RegexOptions]::IgnoreCase
+        )
+        if ($nativeMatch.Success) {
+            return $nativeMatch.Groups['name'].Value.ToLowerInvariant()
+        }
     }
 
     $commandElements = @($Command.CommandElements)
@@ -657,6 +739,10 @@ function Get-PowerShellNativeCommandName {
         $commandElements[0].VariablePath.UserPath -ieq 'PhpExecutable'
     ) {
         return '$PhpExecutable'
+    }
+
+    if ($Command.InvocationOperator -eq [System.Management.Automation.Language.TokenKind]::Ampersand) {
+        return '<dynamic>'
     }
 
     return $null
@@ -759,11 +845,52 @@ function Test-PowerShellBlockingStatementBlock {
     param([System.Management.Automation.Language.StatementBlockAst]$StatementBlock)
 
     $statements = @($StatementBlock.Statements)
+    if ($statements.Count -ne 1) {
+        return $false
+    }
+    if ($statements[0] -is [System.Management.Automation.Language.ThrowStatementAst]) {
+        return $true
+    }
+    if ($statements[0] -isnot [System.Management.Automation.Language.ExitStatementAst]) {
+        return $false
+    }
+
+    $pipeline = $statements[0].Pipeline
+    if ($null -eq $pipeline) {
+        return $false
+    }
+    $expression = $pipeline.GetPureExpression()
+    if ($expression -is [System.Management.Automation.Language.ConstantExpressionAst]) {
+        return (
+            $expression.Value -is [byte] -or
+            $expression.Value -is [sbyte] -or
+            $expression.Value -is [int16] -or
+            $expression.Value -is [uint16] -or
+            $expression.Value -is [int32] -or
+            $expression.Value -is [uint32] -or
+            $expression.Value -is [int64] -or
+            $expression.Value -is [uint64]
+        ) -and $expression.Value -ne 0
+    }
+    if ($expression -isnot [System.Management.Automation.Language.UnaryExpressionAst] -or
+        @(
+            [System.Management.Automation.Language.TokenKind]::Minus,
+            [System.Management.Automation.Language.TokenKind]::Plus
+        ) -notcontains $expression.TokenKind -or
+        $expression.Child -isnot [System.Management.Automation.Language.ConstantExpressionAst]) {
+        return $false
+    }
+
     return (
-        $statements.Count -eq 1 -and
-        ($statements[0] -is [System.Management.Automation.Language.ThrowStatementAst] -or
-            $statements[0] -is [System.Management.Automation.Language.ExitStatementAst])
-    )
+        $expression.Child.Value -is [byte] -or
+        $expression.Child.Value -is [sbyte] -or
+        $expression.Child.Value -is [int16] -or
+        $expression.Child.Value -is [uint16] -or
+        $expression.Child.Value -is [int32] -or
+        $expression.Child.Value -is [uint32] -or
+        $expression.Child.Value -is [int64] -or
+        $expression.Child.Value -is [uint64]
+    ) -and $expression.Child.Value -ne 0
 }
 
 function Test-PowerShellStandardNativeGuard {

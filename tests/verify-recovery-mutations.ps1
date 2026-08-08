@@ -286,25 +286,52 @@ function Add-ExecutionAddendumReplacementMutation {
         [string]$FixtureName,
         [string[]]$OldText,
         [string[]]$NewText,
-        [string]$ExpectedFailure
+        [string]$ExpectedFailure,
+        [object[]]$Variants = @()
     )
 
-    if ($OldText.Count -ne $NewText.Count) {
-        throw "Runbook mutation replacement count mismatch for $Name."
+    $mutationCases = [System.Collections.Generic.List[object]]::new()
+    $mutationCases.Add(
+        [pscustomobject]@{
+            FixtureName = $FixtureName
+            OldText = $OldText
+            NewText = $NewText
+            ExpectedFailure = $ExpectedFailure
+        }
+    )
+    foreach ($variant in @($Variants)) {
+        if ($null -ne $variant) {
+            $mutationCases.Add($variant)
+        }
+    }
+    $passed = $true
+    $caseDetails = [System.Collections.Generic.List[string]]::new()
+    foreach ($mutationCase in $mutationCases) {
+        $caseOldText = @($mutationCase.OldText)
+        $caseNewText = @($mutationCase.NewText)
+        if ($caseOldText.Count -ne $caseNewText.Count) {
+            throw "Runbook mutation replacement count mismatch for $Name."
+        }
+
+        $fixture = New-CaseFixture -Name $mutationCase.FixtureName
+        $addendumText = [System.IO.File]::ReadAllText((Get-ExecutionAddendumPath -Fixture $fixture))
+        for ($replacementIndex = 0; $replacementIndex -lt $caseOldText.Count; $replacementIndex++) {
+            $matchCount = ([regex]::Matches($addendumText, [regex]::Escape($caseOldText[$replacementIndex]))).Count
+            if ($matchCount -ne 1) {
+                throw "Expected exactly one runbook mutation target $replacementIndex for $Name; found $matchCount."
+            }
+            $addendumText = $addendumText.Replace($caseOldText[$replacementIndex], $caseNewText[$replacementIndex])
+        }
+        $fixtureVerifier = Set-AuthorizedExecutionAddendumText -Fixture $fixture -Text $addendumText
+        $result = Invoke-CaseVerifier -Fixture $fixture -VerifierPath $fixtureVerifier
+        if ($result.ExitCode -eq 0 -or $result.Output -notmatch $mutationCase.ExpectedFailure) {
+            $passed = $false
+        }
+        $caseDetails.Add("$($mutationCase.FixtureName):`n$($result.Output)")
     }
 
-    $fixture = New-CaseFixture -Name $FixtureName
-    $addendumText = [System.IO.File]::ReadAllText((Get-ExecutionAddendumPath -Fixture $fixture))
-    for ($replacementIndex = 0; $replacementIndex -lt $OldText.Count; $replacementIndex++) {
-        $matchCount = ([regex]::Matches($addendumText, [regex]::Escape($OldText[$replacementIndex]))).Count
-        if ($matchCount -ne 1) {
-            throw "Expected exactly one runbook mutation target $replacementIndex for $Name; found $matchCount."
-        }
-        $addendumText = $addendumText.Replace($OldText[$replacementIndex], $NewText[$replacementIndex])
-    }
-    $fixtureVerifier = Set-AuthorizedExecutionAddendumText -Fixture $fixture -Text $addendumText
-    $result = Invoke-CaseVerifier -Fixture $fixture -VerifierPath $fixtureVerifier
-    Add-Result -Name $Name -Passed ($result.ExitCode -ne 0 -and $result.Output -match $ExpectedFailure) -Detail $result.Output
+    $detail = $caseDetails -join "`n---`n"
+    Add-Result -Name $Name -Passed $passed -Detail $detail
 }
 
 function Read-LocalOpsManifest {
@@ -402,35 +429,35 @@ try {
             Name = 'runbook safety: recovered verifier native check removal is rejected'
             FixtureName = 'runbook-recovered-verifier-native-check'
             OldText = "node --check .\ops\verify-guide-experience-js-runtime.js`nif (`$LASTEXITCODE -ne 0) { throw 'Node syntax check failed: ops/verify-guide-experience-js-runtime.js' }"
-            NewText = "`$QuotedValue = 'abc``' # Backticks are literal in single-quoted strings.`nnode --check .\ops\verify-guide-experience-js-runtime.js"
+            NewText = "`$QuotedValue = 'abc``' # Backticks are literal in single-quoted strings.`nnode.exe --check .\ops\verify-guide-experience-js-runtime.js"
             ExpectedFailure = 'Recovered verifier block native fail-fast contract\s+failed'
         },
         [pscustomobject]@{
             Name = 'runbook safety: local build moved native check is rejected'
             FixtureName = 'runbook-local-build-native-check'
             OldText = "powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\ops\verify-comparison-rollout.ps1`nif (`$LASTEXITCODE -ne 0) { throw 'Comparison rollout verification failed.' }`npowershell.exe -NoProfile -ExecutionPolicy Bypass -File .\ops\verify-comparison-rollout-mutations.ps1"
-            NewText = "`$NestedOutput = `"`$(powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\ops\verify-comparison-rollout.ps1)`"`nif (`$LASTEXITCODE -ne 0) { throw 'Comparison rollout verification failed.' }`npowershell.exe -NoProfile -ExecutionPolicy Bypass -File .\ops\verify-comparison-rollout-mutations.ps1"
+            NewText = "`$NestedOutput = `"`$(pwsh -NoProfile -File .\ops\verify-comparison-rollout.ps1)`"`nif (`$LASTEXITCODE -ne 0) { throw 'Comparison rollout verification failed.' }`npowershell.exe -NoProfile -ExecutionPolicy Bypass -File .\ops\verify-comparison-rollout-mutations.ps1"
             ExpectedFailure = 'Local build block native fail-fast contract failed'
         },
         [pscustomobject]@{
             Name = 'runbook safety: artifact upload native check removal is rejected'
             FixtureName = 'runbook-artifact-upload-native-check'
             OldText = "scp -- `$ArtifactZip `"`${ProdUser}@`${ProdHost}:`$RemotePart`"`nif (`$LASTEXITCODE -ne 0) { throw 'Artifact upload failed.' }"
-            NewText = "scp -- `$ArtifactZip `"`${ProdUser}@`${ProdHost}:`$RemotePart`"; cmd.exe /c exit 0`nif (`$LASTEXITCODE -ne 0) { throw 'Artifact upload failed.' }"
+            NewText = "scp.exe -- `$ArtifactZip `"`${ProdUser}@`${ProdHost}:`$RemotePart`"; cmd.exe /c exit 0`nif (`$LASTEXITCODE -ne 0) { throw 'Artifact upload failed.' }"
             ExpectedFailure = 'Artifact upload block native fail-fast contract failed'
         },
         [pscustomobject]@{
             Name = 'runbook safety: production ssh entry native check removal is rejected'
             FixtureName = 'runbook-production-ssh-native-check'
             OldText = "ssh -t `"`$ProdUser@`$ProdHost`" 'sudo -i'`nif (`$LASTEXITCODE -ne 0) { throw 'Unable to enter the approved production root shell.' }"
-            NewText = 'ssh -t "$ProdUser@$ProdHost" ''sudo -i'''
+            NewText = 'ssh.exe -t "$ProdUser@$ProdHost" ''sudo -i'''
             ExpectedFailure = 'Production SSH entry native fail-fast contract failed'
         },
         [pscustomobject]@{
             Name = 'runbook safety: reconnect ssh native check removal is rejected'
             FixtureName = 'runbook-reconnect-ssh-native-check'
             OldText = "ssh -t `"`$ProdUser@`$ProdHost`" 'sudo -i'`nif (`$LASTEXITCODE -ne 0) { throw 'Unable to reconnect to the approved production root shell.' }"
-            NewText = 'ssh -t "$ProdUser@$ProdHost" ''sudo -i'''
+            NewText = 'powershell -NoProfile -Command ''exit 0'''
             ExpectedFailure = 'Reconnect SSH block native fail-fast contract failed'
         },
         [pscustomobject]@{
@@ -439,12 +466,20 @@ try {
             OldText = "    if (`$LASTEXITCODE -ne 0) { throw 'Fixture rollback drill failed.' }"
             NewText = ''
             ExpectedFailure = 'Fixture drill block native fail-fast contract failed'
+            Variants = @(
+                [pscustomobject]@{
+                    FixtureName = 'runbook-unsupported-dynamic-native-check'
+                    OldText = "node --check .\ops\verify-guide-experience-js-runtime.js`nif (`$LASTEXITCODE -ne 0) { throw 'Node syntax check failed: ops/verify-guide-experience-js-runtime.js' }"
+                    NewText = '& $UnsupportedExecutable --check .\ops\verify-guide-experience-js-runtime.js'
+                    ExpectedFailure = 'Recovered verifier block native fail-fast contract\s+failed'
+                }
+            )
         },
         [pscustomobject]@{
             Name = 'runbook safety: final integration native check removal is rejected'
             FixtureName = 'runbook-final-integration-native-check'
             OldText = "git switch master`nif (`$LASTEXITCODE -ne 0) { throw 'Unable to switch to master for final integration.' }"
-            NewText = 'git switch master'
+            NewText = 'git.exe switch master'
             ExpectedFailure = 'Final integration block native fail-fast contract\s+failed'
         },
         [pscustomobject]@{
@@ -550,8 +585,16 @@ try {
             Name = 'runbook safety: nonblocking native guard is rejected'
             FixtureName = 'runbook-native-nonblocking-guard'
             OldText = "ssh -t `"`$ProdUser@`$ProdHost`" 'sudo -i'`nif (`$LASTEXITCODE -ne 0) { throw 'Unable to enter the approved production root shell.' }"
-            NewText = "ssh -t `"`$ProdUser@`$ProdHost`" 'sudo -i'`nif (`$LASTEXITCODE -ne 0) { Write-Warning 'Production shell entry failed.' }"
+            NewText = "ssh -t `"`$ProdUser@`$ProdHost`" 'sudo -i'`nif (`$LASTEXITCODE -ne 0) { exit 0 }"
             ExpectedFailure = 'Production SSH entry native fail-fast contract failed'
+            Variants = @(
+                [pscustomobject]@{
+                    FixtureName = 'runbook-native-captured-exit-zero'
+                    OldText = "} else {`n    throw 'Unable to inspect the local master branch.'`n}"
+                    NewText = "} else {`n    exit 0`n}"
+                    ExpectedFailure = 'Final integration block native fail-fast contract\s+failed'
+                }
+            )
         },
         [pscustomobject]@{
             Name = 'runbook safety: canary rollback pre-gate cache action is rejected'
@@ -602,7 +645,8 @@ try {
             -FixtureName $mutation.FixtureName `
             -OldText $mutation.OldText `
             -NewText $mutation.NewText `
-            -ExpectedFailure $mutation.ExpectedFailure
+            -ExpectedFailure $mutation.ExpectedFailure `
+            -Variants $mutation.Variants
     }
 
     $canaryRollbackOrdering = New-CaseFixture -Name 'runbook-canary-rollback-ordering'
@@ -634,18 +678,30 @@ try {
     $canaryDoubleQuoteVerifier = Set-AuthorizedExecutionAddendumText -Fixture $canaryDoubleQuoteOrdering -Text $canaryDoubleQuoteText
     $canaryDoubleQuoteResult = Invoke-CaseVerifier -Fixture $canaryDoubleQuoteOrdering -VerifierPath $canaryDoubleQuoteVerifier
 
+    $canaryContinuedHeredocOrdering = New-CaseFixture -Name 'runbook-canary-rollback-continued-heredoc'
+    $canaryContinuedHeredocText = [System.IO.File]::ReadAllText((Get-ExecutionAddendumPath -Fixture $canaryContinuedHeredocOrdering))
+    $canaryContinuedHeredocMarker = "cat <\`n<ROLLBACK_CONTINUED`n$canaryCacheFlush`nROLLBACK_CONTINUED"
+    if ($canaryContinuedHeredocText.Contains($canaryCacheFlush)) {
+        $canaryContinuedHeredocText = $canaryContinuedHeredocText.Replace($canaryCacheFlush, $canaryContinuedHeredocMarker)
+    }
+    $canaryContinuedHeredocVerifier = Set-AuthorizedExecutionAddendumText -Fixture $canaryContinuedHeredocOrdering -Text $canaryContinuedHeredocText
+    $canaryContinuedHeredocResult = Invoke-CaseVerifier -Fixture $canaryContinuedHeredocOrdering -VerifierPath $canaryContinuedHeredocVerifier
+
     $canaryRollbackPassed = (
         $canaryRollbackResult.ExitCode -ne 0 -and
         $canaryRollbackResult.Output -match 'Canary rollback ordering contract failed' -and
         $canaryLessRunResult.ExitCode -ne 0 -and
         $canaryLessRunResult.Output -match '(?s)Bash heredoc parsing failed:\s+ambiguous\s+redirection:.*?<<<<<EOF' -and
         $canaryDoubleQuoteResult.ExitCode -ne 0 -and
-        $canaryDoubleQuoteResult.Output -match '(?s)Bash heredoc parsing failed:\s+ambiguous\s+redirection:.*?echo\s+"unterminated double quote'
+        $canaryDoubleQuoteResult.Output -match '(?s)Bash heredoc parsing failed:\s+ambiguous\s+redirection:.*?echo\s+"unterminated double quote' -and
+        $canaryContinuedHeredocResult.ExitCode -ne 0 -and
+        $canaryContinuedHeredocResult.Output -match 'Canary rollback ordering contract failed'
     )
     $canaryRollbackDetail = @(
         "exact here-string:`n$($canaryRollbackResult.Output)",
         "five-less run:`n$($canaryLessRunResult.Output)",
-        "unterminated double quote:`n$($canaryDoubleQuoteResult.Output)"
+        "unterminated double quote:`n$($canaryDoubleQuoteResult.Output)",
+        "continued heredoc:`n$($canaryContinuedHeredocResult.Output)"
     ) -join "`n---`n"
     Add-Result -Name 'runbook safety: canary rollback heredoc marker cannot spoof post-gate order' -Passed $canaryRollbackPassed -Detail $canaryRollbackDetail
 
@@ -684,7 +740,31 @@ try {
     }
     $nestedFenceStage2GateVerifier = Set-AuthorizedExecutionAddendumText -Fixture $nestedFenceStage2Gate -Text $nestedFenceStage2GateText
     $nestedFenceStage2GateResult = Invoke-CaseVerifier -Fixture $nestedFenceStage2Gate -VerifierPath $nestedFenceStage2GateVerifier
-    Add-Result -Name 'runbook safety: nested markdown fence cannot spoof stage 2 gate' -Passed ($nestedFenceStage2GateResult.ExitCode -ne 0 -and $nestedFenceStage2GateResult.Output -match 'Recovery execution addendum section missing:\s+## Stage\s+2 Validate, Apply, Activate, and Close') -Detail $nestedFenceStage2GateResult.Output
+
+    $sameInfoFenceStage2Gate = New-CaseFixture -Name 'runbook-stage2-same-info-fence-spoofed-gate'
+    $sameInfoFenceStage2GateText = [System.IO.File]::ReadAllText((Get-ExecutionAddendumPath -Fixture $sameInfoFenceStage2Gate))
+    $bashMarkdownFence = (([string][char]96) * 3) + 'bash'
+    if ($sameInfoFenceStage2GateText.Contains($stage2Heading)) {
+        $sameInfoFenceStage2GateText = $sameInfoFenceStage2GateText.Replace(
+            $stage2Heading,
+            ($bashMarkdownFence + "`nignored outer fence text`n" + $bashMarkdownFence + "`n" + $stage2Heading)
+        )
+        $sameInfoFenceStage2GateText += "`n$markdownFence`n"
+    }
+    $sameInfoFenceStage2GateVerifier = Set-AuthorizedExecutionAddendumText -Fixture $sameInfoFenceStage2Gate -Text $sameInfoFenceStage2GateText
+    $sameInfoFenceStage2GateResult = Invoke-CaseVerifier -Fixture $sameInfoFenceStage2Gate -VerifierPath $sameInfoFenceStage2GateVerifier
+
+    $nestedFenceStage2GatePassed = (
+        $nestedFenceStage2GateResult.ExitCode -ne 0 -and
+        $nestedFenceStage2GateResult.Output -match 'Recovery execution addendum section missing:\s+##\s+Stage\s+2 Validate, Apply, Activate, and Close' -and
+        $sameInfoFenceStage2GateResult.ExitCode -ne 0 -and
+        $sameInfoFenceStage2GateResult.Output -match 'Recovery execution addendum section missing:\s+##\s+Stage\s+2 Validate, Apply, Activate, and Close'
+    )
+    $nestedFenceStage2GateDetail = @(
+        "HTML-spliced fence:`n$($nestedFenceStage2GateResult.Output)",
+        "same-info fence:`n$($sameInfoFenceStage2GateResult.Output)"
+    ) -join "`n---`n"
+    Add-Result -Name 'runbook safety: nested markdown fence cannot spoof stage 2 gate' -Passed $nestedFenceStage2GatePassed -Detail $nestedFenceStage2GateDetail
 
     $duplicateStage2Gate = New-CaseFixture -Name 'runbook-stage2-duplicate-gate'
     $duplicateStage2GateText = [System.IO.File]::ReadAllText((Get-ExecutionAddendumPath -Fixture $duplicateStage2Gate))
