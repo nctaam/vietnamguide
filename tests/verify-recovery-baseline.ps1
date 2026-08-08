@@ -336,6 +336,10 @@ function Get-BashHeredocRedirections {
             $index = $arithmeticEnd
             continue
         }
+        if ($character -ceq '<' -and ($index + 3) -lt $Line.Length -and
+            $Line[$index + 1] -ceq '<' -and $Line[$index + 2] -ceq '<' -and $Line[$index + 3] -ceq '<') {
+            return [pscustomobject]@{ IsValid = $false; Redirections = @() }
+        }
         if ($character -ceq '<' -and ($index + 2) -lt $Line.Length -and
             $Line[$index + 1] -ceq '<' -and $Line[$index + 2] -ceq '<') {
             $index += 3

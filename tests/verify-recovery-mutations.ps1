@@ -615,7 +615,39 @@ try {
     }
     $canaryRollbackVerifier = Set-AuthorizedExecutionAddendumText -Fixture $canaryRollbackOrdering -Text $canaryRollbackText
     $canaryRollbackResult = Invoke-CaseVerifier -Fixture $canaryRollbackOrdering -VerifierPath $canaryRollbackVerifier
-    Add-Result -Name 'runbook safety: canary rollback heredoc marker cannot spoof post-gate order' -Passed ($canaryRollbackResult.ExitCode -ne 0 -and $canaryRollbackResult.Output -match 'Canary rollback ordering contract failed') -Detail $canaryRollbackResult.Output
+
+    $canaryLessRunOrdering = New-CaseFixture -Name 'runbook-canary-rollback-five-less-run'
+    $canaryLessRunText = [System.IO.File]::ReadAllText((Get-ExecutionAddendumPath -Fixture $canaryLessRunOrdering))
+    $canaryLessRunMarker = "set +e`n: <<<<<EOF`n$canaryCacheFlush`nEOF`nrun_rollout rollback canary"
+    if ($canaryLessRunText.Contains($canaryRollbackStart)) {
+        $canaryLessRunText = $canaryLessRunText.Replace($canaryRollbackStart, $canaryLessRunMarker)
+    }
+    $canaryLessRunVerifier = Set-AuthorizedExecutionAddendumText -Fixture $canaryLessRunOrdering -Text $canaryLessRunText
+    $canaryLessRunResult = Invoke-CaseVerifier -Fixture $canaryLessRunOrdering -VerifierPath $canaryLessRunVerifier
+
+    $canaryDoubleQuoteOrdering = New-CaseFixture -Name 'runbook-canary-rollback-unterminated-double-quote'
+    $canaryDoubleQuoteText = [System.IO.File]::ReadAllText((Get-ExecutionAddendumPath -Fixture $canaryDoubleQuoteOrdering))
+    $canaryDoubleQuoteMarker = "echo `"unterminated double quote`ncat <<`"E\OF`" <<'ROLLBACK_ORDER_TWO'`nignored first heredoc body`nEOF`nROLLBACK_ORDER_TWO`n$canaryCacheFlush`nE\OF`nignored second heredoc body`nROLLBACK_ORDER_TWO`n$canaryCacheFlush`n`""
+    if ($canaryDoubleQuoteText.Contains($canaryCacheFlush)) {
+        $canaryDoubleQuoteText = $canaryDoubleQuoteText.Replace($canaryCacheFlush, $canaryDoubleQuoteMarker)
+    }
+    $canaryDoubleQuoteVerifier = Set-AuthorizedExecutionAddendumText -Fixture $canaryDoubleQuoteOrdering -Text $canaryDoubleQuoteText
+    $canaryDoubleQuoteResult = Invoke-CaseVerifier -Fixture $canaryDoubleQuoteOrdering -VerifierPath $canaryDoubleQuoteVerifier
+
+    $canaryRollbackPassed = (
+        $canaryRollbackResult.ExitCode -ne 0 -and
+        $canaryRollbackResult.Output -match 'Canary rollback ordering contract failed' -and
+        $canaryLessRunResult.ExitCode -ne 0 -and
+        $canaryLessRunResult.Output -match '(?s)Bash heredoc parsing failed:\s+ambiguous\s+redirection:.*?<<<<<EOF' -and
+        $canaryDoubleQuoteResult.ExitCode -ne 0 -and
+        $canaryDoubleQuoteResult.Output -match '(?s)Bash heredoc parsing failed:\s+ambiguous\s+redirection:.*?echo\s+"unterminated double quote'
+    )
+    $canaryRollbackDetail = @(
+        "exact here-string:`n$($canaryRollbackResult.Output)",
+        "five-less run:`n$($canaryLessRunResult.Output)",
+        "unterminated double quote:`n$($canaryDoubleQuoteResult.Output)"
+    ) -join "`n---`n"
+    Add-Result -Name 'runbook safety: canary rollback heredoc marker cannot spoof post-gate order' -Passed $canaryRollbackPassed -Detail $canaryRollbackDetail
 
     $stage2RollbackOrdering = New-CaseFixture -Name 'runbook-stage2-rollback-ordering'
     $stage2RollbackText = [System.IO.File]::ReadAllText((Get-ExecutionAddendumPath -Fixture $stage2RollbackOrdering))
