@@ -119,12 +119,14 @@ function Get-RecoveryBashPhysicalLineAnalysis {
     param(
         [Parameter(Mandatory = $true)]
         [AllowEmptyString()]
-        [string]$Line
+        [string]$Line,
+
+        [bool]$InitialCommentEligible = $true
     )
 
     $inSingleQuote = $false
     $inDoubleQuote = $false
-    $commentEligible = $true
+    $commentEligible = $InitialCommentEligible
     $index = 0
     while ($index -lt $Line.Length) {
         $character = $Line[$index]
@@ -165,6 +167,7 @@ function Get-RecoveryBashPhysicalLineAnalysis {
                 return [pscustomobject]@{
                     HasContinuation = $true
                     ContinuationColumn = $index + 1
+                    CommentEligible = $commentEligible
                 }
             }
 
@@ -187,6 +190,7 @@ function Get-RecoveryBashPhysicalLineAnalysis {
     return [pscustomobject]@{
         HasContinuation = $false
         ContinuationColumn = 0
+        CommentEligible = $commentEligible
     }
 }
 
@@ -502,6 +506,7 @@ function ConvertFrom-RecoveryBashFence {
     $logicalPositions = [System.Collections.Generic.List[object]]::new()
     $logicalStartLine = 0
     $logicalStartColumn = 1
+    $logicalCommentEligible = $true
     $continuationLine = 0
     $continuationColumn = 0
     $heredocQueueLine = 0
@@ -526,7 +531,7 @@ function ConvertFrom-RecoveryBashFence {
             $logicalStartColumn = Get-RecoveryBashFirstContentColumn -Line $line
         }
 
-        $physicalAnalysis = Get-RecoveryBashPhysicalLineAnalysis -Line $line
+        $physicalAnalysis = Get-RecoveryBashPhysicalLineAnalysis -Line $line -InitialCommentEligible $logicalCommentEligible
         $fragmentLength = if ($physicalAnalysis.HasContinuation) { $line.Length - 1 } else { $line.Length }
         if ($fragmentLength -gt 0) {
             $fragment = $line.Substring(0, $fragmentLength)
@@ -540,6 +545,7 @@ function ConvertFrom-RecoveryBashFence {
         }
 
         if ($physicalAnalysis.HasContinuation) {
+            $logicalCommentEligible = $physicalAnalysis.CommentEligible
             $continuationLine = $sourceLine
             $continuationColumn = $physicalAnalysis.ContinuationColumn
             continue
@@ -598,6 +604,7 @@ function ConvertFrom-RecoveryBashFence {
         $logicalPositions.Clear()
         $logicalStartLine = 0
         $logicalStartColumn = 1
+        $logicalCommentEligible = $true
         $continuationLine = 0
         $continuationColumn = 0
         if ($stopParsing) {

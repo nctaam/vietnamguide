@@ -517,6 +517,22 @@ Add-ParserResult -Name 'Bash parser applies token boundaries when starting comme
     )
 }
 
+Add-ParserResult -Name 'Bash parser preserves word token state across continuations' -Test {
+    $body = [string]::Join("`n", @('echo word\', '#fragment\', 'tail'))
+    $result = ConvertFrom-RecoveryBashFence -Fence (New-TestRecoveryBashFence -Body $body -StartLine 60 -Id 'fence-cross-boundary' -SectionId 'section-cross-boundary')
+    $events = @($result.Events)
+
+    Assert-ParserEqual -Actual $result.IsValid -Expected $true -Message 'Cross-boundary word fragment should be valid.'
+    Assert-ParserEqual -Actual @($result.Diagnostics).Count -Expected 0 -Message 'Cross-boundary word fragment should have no diagnostics.'
+    Assert-RecoveryBashEventTexts -Result $result -Expected @('echo word#fragmenttail')
+    Assert-ParserEqual -Actual $events.Count -Expected 1 -Message 'Cross-boundary word fragment event count mismatch.'
+    Assert-ParserEqual -Actual $events[0].SourceLine -Expected 61 -Message 'Cross-boundary event source line mismatch.'
+    Assert-ParserEqual -Actual $events[0].SourceColumn -Expected 1 -Message 'Cross-boundary event source column mismatch.'
+    Assert-ParserEqual -Actual $events[0].SectionId -Expected 'section-cross-boundary' -Message 'Cross-boundary event section mismatch.'
+    Assert-ParserEqual -Actual $events[0].FenceId -Expected 'fence-cross-boundary' -Message 'Cross-boundary event fence mismatch.'
+    Assert-ParserEqual -Actual $events[0].StatementId -Expected 'fence-cross-boundary-statement-0001' -Message 'Cross-boundary statement identifier mismatch.'
+}
+
 Add-ParserResult -Name 'Bash parser emits deterministic source metadata and statement identifiers' -Test {
     $body = [string]::Join("`n", @('  echo first', '', "`techo second"))
     $result = ConvertFrom-RecoveryBashFence -Fence (New-TestRecoveryBashFence -Body $body -StartLine 100 -Id 'fence-custom' -SectionId 'section-custom')
