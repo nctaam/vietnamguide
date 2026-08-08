@@ -267,6 +267,22 @@ function Get-RecoveryPowerShellPhpExecutableAssignmentState {
     )
 
     $commandScope = Get-RecoveryPowerShellScriptBlockScope -Ast $Command
+    $ancestor = $Command.Parent
+    while ($null -ne $ancestor) {
+        if ($ancestor -is [System.Management.Automation.Language.LoopStatementAst]) {
+            foreach ($assignment in $Assignments) {
+                if (
+                    [object]::ReferenceEquals((Get-RecoveryPowerShellScriptBlockScope -Ast $assignment), $commandScope) -and
+                    $assignment.Extent.StartOffset -ge $ancestor.Extent.StartOffset -and
+                    $assignment.Extent.EndOffset -le $ancestor.Extent.EndOffset
+                ) {
+                    return [pscustomobject]@{ IsStatic = $false; LiteralCommandName = $null }
+                }
+            }
+        }
+        $ancestor = $ancestor.Parent
+    }
+
     $latestAssignment = $null
     foreach ($assignment in $Assignments) {
         if ($assignment.Extent.StartOffset -ge $Command.Extent.StartOffset) {
@@ -407,7 +423,8 @@ function Test-RecoveryPowerShellNativeStatementShape {
         if (
             $ancestor -is [System.Management.Automation.Language.SubExpressionAst] -or
             $ancestor -is [System.Management.Automation.Language.ScriptBlockExpressionAst] -or
-            $ancestor -is [System.Management.Automation.Language.ArrayExpressionAst]
+            $ancestor -is [System.Management.Automation.Language.ArrayExpressionAst] -or
+            $ancestor -is [System.Management.Automation.Language.FunctionDefinitionAst]
         ) {
             return $false
         }
@@ -720,6 +737,7 @@ function ConvertFrom-RecoveryPowerShellFence {
 
         [Parameter(Mandatory = $true)]
         [ValidateNotNullOrEmpty()]
+        [ValidatePattern('\S')]
         [string[]]$NativeCommandNames
     )
 

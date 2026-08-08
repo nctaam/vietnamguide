@@ -883,6 +883,68 @@ Add-ParserResult -Name 'PowerShell parser rejects nondominating PhpExecutable as
     }
 }
 
+Add-ParserResult -Name 'PowerShell parser rejects loop-carried PhpExecutable rebinding' -Test {
+    $invalidCases = @(
+        [pscustomobject]@{
+            Name = 'same loop after command'
+            Body = [string]::Join("`n", @(
+                '$PhpExecutable = ''git''',
+                'foreach ($n in 1, 2) {',
+                '    & $PhpExecutable --version',
+                '    if ($LASTEXITCODE -ne 0) { throw ''failed'' }',
+                '    $PhpExecutable = ''cmd.exe''',
+                '}'
+            ))
+        },
+        [pscustomobject]@{
+            Name = 'nested loop after command'
+            Body = [string]::Join("`n", @(
+                '$PhpExecutable = ''git''',
+                'foreach ($outer in 1, 2) {',
+                '    & $PhpExecutable --version',
+                '    if ($LASTEXITCODE -ne 0) { throw ''failed'' }',
+                '    foreach ($inner in 1, 2) {',
+                '        $PhpExecutable = ''cmd.exe''',
+                '    }',
+                '}'
+            ))
+        },
+        [pscustomobject]@{
+            Name = 'outer loop after nested command'
+            Body = [string]::Join("`n", @(
+                '$PhpExecutable = ''git''',
+                'foreach ($outer in 1, 2) {',
+                '    foreach ($inner in 1, 2) {',
+                '        & $PhpExecutable --version',
+                '        if ($LASTEXITCODE -ne 0) { throw ''failed'' }',
+                '    }',
+                '    $PhpExecutable = ''cmd.exe''',
+                '}'
+            ))
+        }
+    )
+
+    foreach ($case in $invalidCases) {
+        $result = Invoke-TestRecoveryPowerShellFenceParser -Fence (New-TestRecoveryPowerShellFence -Body $case.Body)
+
+        Assert-ParserEqual -Actual $result.IsValid -Expected $false -Message "PhpExecutable $($case.Name) rebind should be invalid."
+        Assert-ParserEqual -Actual @($result.Events).Count -Expected 0 -Message "PhpExecutable $($case.Name) rebind should not emit an event."
+        Assert-ParserDiagnosticCodes -Diagnostics @($result.Diagnostics) -Expected @('PS_DYNAMIC_NATIVE_UNSUPPORTED')
+    }
+
+    $authoredBody = [string]::Join("`n", @(
+        '$PhpExecutable = ''php''',
+        'foreach ($File in @(''first.php'', ''second.php'')) {',
+        '    & $PhpExecutable -l $File',
+        '    if ($LASTEXITCODE -ne 0) { throw "PHP lint failed: $File" }',
+        '}'
+    ))
+    $authoredResult = Invoke-TestRecoveryPowerShellFenceParser -Fence (New-TestRecoveryPowerShellFence -Body $authoredBody)
+
+    Assert-ParserEqual -Actual $authoredResult.IsValid -Expected $true -Message 'Authored PhpExecutable loop without a rebind should remain valid.'
+    Assert-RecoveryPowerShellEventCommands -Result $authoredResult -Expected @('php')
+}
+
 Add-ParserResult -Name 'PowerShell parser requires non-empty explicit native command configuration' -Test {
     $command = Get-Command -Name 'ConvertFrom-RecoveryPowerShellFence' -Module RecoveryParser
     $parameter = $command.Parameters['NativeCommandNames']
@@ -901,6 +963,33 @@ Add-ParserResult -Name 'PowerShell parser requires non-empty explicit native com
         $exception = $null
         try {
             RecoveryParser\ConvertFrom-RecoveryPowerShellFence -Fence $invalidFence -NativeCommandNames $case.Value | Out-Null
+        }
+        catch {
+            $exception = $_.Exception
+        }
+
+        Assert-ParserEqual -Actual ($null -ne $exception) -Expected $true -Message "$($case.Name) NativeCommandNames should fail before parsing."
+        Assert-ParserEqual -Actual $exception.GetType().FullName -Expected 'System.Management.Automation.ParameterBindingValidationException' -Message "$($case.Name) NativeCommandNames should fail parameter validation."
+    }
+}
+
+Add-ParserResult -Name 'PowerShell parser rejects whitespace-only native command configuration' -Test {
+    $command = Get-Command -Name 'ConvertFrom-RecoveryPowerShellFence' -Module RecoveryParser
+    $parameter = $command.Parameters['NativeCommandNames']
+    $validationAttribute = @($parameter.Attributes | Where-Object { $_ -is [System.Management.Automation.ValidatePatternAttribute] })[0]
+
+    Assert-ParserEqual -Actual ($null -ne $validationAttribute) -Expected $true -Message 'NativeCommandNames should require a non-whitespace character in every value.'
+
+    $invalidFence = New-TestRecoveryPowerShellFence -Body 'if ('
+    $invalidValues = @(
+        [pscustomobject]@{ Name = 'space'; Value = ' ' },
+        [pscustomobject]@{ Name = 'tab'; Value = "`t" },
+        [pscustomobject]@{ Name = 'newline'; Value = "`n" }
+    )
+    foreach ($case in $invalidValues) {
+        $exception = $null
+        try {
+            RecoveryParser\ConvertFrom-RecoveryPowerShellFence -Fence $invalidFence -NativeCommandNames ([string[]]@($case.Value)) | Out-Null
         }
         catch {
             $exception = $_.Exception
@@ -949,6 +1038,26 @@ Add-ParserResult -Name 'PowerShell parser rejects native commands nested in arra
 
     Assert-ParserEqual -Actual $result.IsValid -Expected $false -Message 'Array-nested native command should be invalid.'
     Assert-ParserEqual -Actual @($result.Events).Count -Expected 0 -Message 'Array-nested native command should not emit an event.'
+    Assert-ParserDiagnosticCodes -Diagnostics @($result.Diagnostics) -Expected @('PS_NATIVE_STATEMENT_AMBIGUOUS')
+}
+
+Add-ParserResult -Name 'PowerShell parser rejects native commands inside function definitions' -Test {
+    $body = [string]::Join("`n", @(
+        'function Invoke-Native {',
+        '    git status',
+        '    if ($LASTEXITCODE -ne 0) { throw ''failed'' }',
+        '}',
+        'try {',
+        '    Invoke-Native',
+        '}',
+        'catch {',
+        '    Write-Host caught',
+        '}'
+    ))
+    $result = Invoke-TestRecoveryPowerShellFenceParser -Fence (New-TestRecoveryPowerShellFence -Body $body)
+
+    Assert-ParserEqual -Actual $result.IsValid -Expected $false -Message 'Native command inside a function definition should be invalid.'
+    Assert-ParserEqual -Actual @($result.Events).Count -Expected 0 -Message 'Native command inside a function definition should not emit an event.'
     Assert-ParserDiagnosticCodes -Diagnostics @($result.Diagnostics) -Expected @('PS_NATIVE_STATEMENT_AMBIGUOUS')
 }
 
