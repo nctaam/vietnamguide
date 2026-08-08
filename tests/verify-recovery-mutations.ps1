@@ -608,9 +608,10 @@ try {
     $canaryRollbackOrdering = New-CaseFixture -Name 'runbook-canary-rollback-ordering'
     $canaryRollbackText = [System.IO.File]::ReadAllText((Get-ExecutionAddendumPath -Fixture $canaryRollbackOrdering))
     $canaryCacheFlush = 'wp --path="$WP_ROOT" --allow-root cache flush'
-    $canaryHeredocMarker = "echo `"unterminated double quote`ncat <<`"E\OF`" <<'ROLLBACK_ORDER_TWO'`nignored first heredoc body`nEOF`nROLLBACK_ORDER_TWO`n$canaryCacheFlush`nE\OF`nignored second heredoc body`nROLLBACK_ORDER_TWO`n$canaryCacheFlush`n`""
-    if ($canaryRollbackText.Contains($canaryCacheFlush)) {
-        $canaryRollbackText = $canaryRollbackText.Replace($canaryCacheFlush, $canaryHeredocMarker)
+    $canaryRollbackStart = "set +e`nrun_rollout rollback canary"
+    $canaryHeredocMarker = "set +e`n: <<<EOF`n$canaryCacheFlush`nEOF`nrun_rollout rollback canary"
+    if ($canaryRollbackText.Contains($canaryRollbackStart)) {
+        $canaryRollbackText = $canaryRollbackText.Replace($canaryRollbackStart, $canaryHeredocMarker)
     }
     $canaryRollbackVerifier = Set-AuthorizedExecutionAddendumText -Fixture $canaryRollbackOrdering -Text $canaryRollbackText
     $canaryRollbackResult = Invoke-CaseVerifier -Fixture $canaryRollbackOrdering -VerifierPath $canaryRollbackVerifier

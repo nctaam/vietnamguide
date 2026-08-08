@@ -336,6 +336,11 @@ function Get-BashHeredocRedirections {
             $index = $arithmeticEnd
             continue
         }
+        if ($character -ceq '<' -and ($index + 2) -lt $Line.Length -and
+            $Line[$index + 1] -ceq '<' -and $Line[$index + 2] -ceq '<') {
+            $index += 3
+            continue
+        }
         if ($character -cne '<' -or ($index + 1) -ge $Line.Length -or $Line[$index + 1] -cne '<' -or
             (($index + 2) -lt $Line.Length -and $Line[$index + 2] -ceq '<')) {
             $index++
