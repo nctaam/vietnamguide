@@ -1,3 +1,6 @@
+[CmdletBinding()]
+param()
+
 $ErrorActionPreference = 'Stop'
 
 Import-Module (Join-Path $PSScriptRoot 'lib\RecoveryParser.psm1') -Force
@@ -33,9 +36,11 @@ function Add-ParserResult {
 function Assert-ParserEqual {
     param(
         [Parameter(Mandatory = $true)]
+        [AllowNull()]
         $Actual,
 
         [Parameter(Mandatory = $true)]
+        [AllowNull()]
         $Expected,
 
         [Parameter(Mandatory = $true)]
@@ -63,17 +68,21 @@ function Assert-ParserProperties {
 }
 
 Add-ParserResult -Name 'Diagnostic constructor returns the typed diagnostic contract' -Test {
-    $diagnostic = New-RecoveryParserDiagnostic -Code 'RP001' -Message 'Example diagnostic' -Language 'powershell' -SourceLine 12 -SourceColumn 4 -FenceId 'fence-1'
+    $diagnostic = New-RecoveryParserDiagnostic -Code 'RP001' -Message 'Example diagnostic' -Language 'powershell' -SourceLine 12 -SourceColumn 4
 
     Assert-ParserProperties -Value $diagnostic -Expected @('Code', 'Message', 'Language', 'SourceLine', 'SourceColumn', 'FenceId')
     Assert-ParserEqual -Actual $diagnostic.Code -Expected 'RP001' -Message 'Diagnostic code mismatch.'
+    Assert-ParserEqual -Actual $diagnostic.FenceId -Expected $null -Message 'Diagnostic fence identifier should default to null.'
 }
 
 Add-ParserResult -Name 'Executable event constructor returns the typed event contract' -Test {
-    $event = New-RecoveryExecutableEvent -Kind 'Command' -Language 'powershell' -Text 'Get-Date' -NormalizedCommand 'Get-Date' -SourceLine 8 -SourceColumn 1 -SectionId 'section-1' -FenceId 'fence-1' -StatementId 'statement-1' -Metadata @{ Source = 'test' }
+    $event = New-RecoveryExecutableEvent -Kind 'Command' -Language 'powershell' -Text 'Get-Date' -SourceLine 8 -SourceColumn 1 -FenceId 'fence-1' -StatementId 'statement-1'
 
     Assert-ParserProperties -Value $event -Expected @('Kind', 'Language', 'Text', 'NormalizedCommand', 'SourceLine', 'SourceColumn', 'SectionId', 'FenceId', 'StatementId', 'Metadata')
     Assert-ParserEqual -Actual $event.Kind -Expected 'Command' -Message 'Event kind mismatch.'
+    Assert-ParserEqual -Actual $event.NormalizedCommand -Expected $null -Message 'Normalized command should default to null.'
+    Assert-ParserEqual -Actual $event.SectionId -Expected $null -Message 'Section identifier should default to null.'
+    Assert-ParserEqual -Actual $event.Metadata.GetType().FullName -Expected 'System.Collections.Hashtable' -Message 'Metadata should default to a hashtable.'
 }
 
 Add-ParserResult -Name 'Parse result filters null entries and derives validity from diagnostics' -Test {
@@ -82,6 +91,7 @@ Add-ParserResult -Name 'Parse result filters null entries and derives validity f
     $valid = New-RecoveryParseResult -Events @($null, $event) -Diagnostics @($null)
     $invalid = New-RecoveryParseResult -Events @($null) -Diagnostics @($diagnostic, $null)
 
+    Assert-ParserProperties -Value $valid -Expected @('IsValid', 'Events', 'Diagnostics')
     Assert-ParserEqual -Actual $valid.Events.Count -Expected 1 -Message 'Valid result event count mismatch.'
     Assert-ParserEqual -Actual $valid.Diagnostics.Count -Expected 0 -Message 'Valid result diagnostic count mismatch.'
     Assert-ParserEqual -Actual $valid.IsValid -Expected $true -Message 'Valid result should be valid.'

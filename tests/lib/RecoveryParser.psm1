@@ -1,6 +1,7 @@
 Set-StrictMode -Version 2.0
 
 function New-RecoveryParserDiagnostic {
+    [CmdletBinding()]
     param(
         [Parameter(Mandatory = $true)]
         [string]$Code,
@@ -17,9 +18,10 @@ function New-RecoveryParserDiagnostic {
         [Parameter(Mandatory = $true)]
         [int]$SourceColumn,
 
-        [Parameter(Mandatory = $true)]
-        [string]$FenceId
+        [string]$FenceId = $null
     )
+
+    $fenceIdValue = if ($PSBoundParameters.ContainsKey('FenceId')) { $FenceId } else { $null }
 
     [pscustomobject]@{
         Code = $Code
@@ -27,11 +29,12 @@ function New-RecoveryParserDiagnostic {
         Language = $Language
         SourceLine = $SourceLine
         SourceColumn = $SourceColumn
-        FenceId = $FenceId
+        FenceId = $fenceIdValue
     }
 }
 
 function New-RecoveryExecutableEvent {
+    [CmdletBinding()]
     param(
         [Parameter(Mandatory = $true)]
         [string]$Kind,
@@ -42,8 +45,7 @@ function New-RecoveryExecutableEvent {
         [Parameter(Mandatory = $true)]
         [string]$Text,
 
-        [Parameter(Mandatory = $true)]
-        [string]$NormalizedCommand,
+        [string]$NormalizedCommand = $null,
 
         [Parameter(Mandatory = $true)]
         [int]$SourceLine,
@@ -51,8 +53,7 @@ function New-RecoveryExecutableEvent {
         [Parameter(Mandatory = $true)]
         [int]$SourceColumn,
 
-        [Parameter(Mandatory = $true)]
-        [string]$SectionId,
+        [string]$SectionId = $null,
 
         [Parameter(Mandatory = $true)]
         [string]$FenceId,
@@ -60,18 +61,20 @@ function New-RecoveryExecutableEvent {
         [Parameter(Mandatory = $true)]
         [string]$StatementId,
 
-        [Parameter(Mandatory = $true)]
-        [object]$Metadata
+        [hashtable]$Metadata = @{}
     )
+
+    $normalizedCommandValue = if ($PSBoundParameters.ContainsKey('NormalizedCommand')) { $NormalizedCommand } else { $null }
+    $sectionIdValue = if ($PSBoundParameters.ContainsKey('SectionId')) { $SectionId } else { $null }
 
     [pscustomobject]@{
         Kind = $Kind
         Language = $Language
         Text = $Text
-        NormalizedCommand = $NormalizedCommand
+        NormalizedCommand = $normalizedCommandValue
         SourceLine = $SourceLine
         SourceColumn = $SourceColumn
-        SectionId = $SectionId
+        SectionId = $sectionIdValue
         FenceId = $FenceId
         StatementId = $StatementId
         Metadata = $Metadata
@@ -79,6 +82,7 @@ function New-RecoveryExecutableEvent {
 }
 
 function New-RecoveryParseResult {
+    [CmdletBinding()]
     param(
         [object[]]$Events = @(),
 
@@ -89,9 +93,9 @@ function New-RecoveryParseResult {
     $filteredDiagnostics = @($Diagnostics | Where-Object { $null -ne $_ })
 
     [pscustomobject]@{
+        IsValid = ($filteredDiagnostics.Count -eq 0)
         Events = $filteredEvents
         Diagnostics = $filteredDiagnostics
-        IsValid = ($filteredDiagnostics.Count -eq 0)
     }
 }
 
