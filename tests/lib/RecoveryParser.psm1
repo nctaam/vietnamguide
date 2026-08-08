@@ -102,6 +102,7 @@ function New-RecoveryParseResult {
 function Get-RecoveryPowerShellConfiguredCommands {
     param(
         [Parameter(Mandatory = $true)]
+        [AllowEmptyCollection()]
         [string[]]$NativeCommandNames
     )
 
@@ -120,7 +121,49 @@ function Get-RecoveryPowerShellConfiguredCommands {
         }
     }
 
-    return $configured
+    return ,$configured
+}
+
+function Test-RecoveryPowerShellOrdinaryVariablePath {
+    param(
+        [Parameter(Mandatory = $true)]
+        [System.Management.Automation.VariablePath]$VariablePath
+    )
+
+    if (-not $VariablePath.IsUnqualified) {
+        return $false
+    }
+
+    return @(
+        '_',
+        'args',
+        'error',
+        'executioncontext',
+        'false',
+        'foreach',
+        'home',
+        'host',
+        'input',
+        'lastexitcode',
+        'matches',
+        'myinvocation',
+        'nestedpromptlevel',
+        'null',
+        'ofs',
+        'pid',
+        'psboundparameters',
+        'pscmdlet',
+        'pscommandpath',
+        'pshome',
+        'psscriptroot',
+        'psversiontable',
+        'pwd',
+        'shellid',
+        'stacktrace',
+        'switch',
+        'this',
+        'true'
+    ) -notcontains $VariablePath.UserPath
 }
 
 function Get-RecoveryPowerShellLiteralCommandResolution {
@@ -129,6 +172,7 @@ function Get-RecoveryPowerShellLiteralCommandResolution {
         [string]$LiteralCommandName,
 
         [Parameter(Mandatory = $true)]
+        [AllowEmptyCollection()]
         [System.Collections.Generic.HashSet[string]]$ConfiguredCommands
     )
 
@@ -154,6 +198,64 @@ function Get-RecoveryPowerShellLiteralCommandResolution {
     return [pscustomobject]@{ Classification = 'ignore'; NormalizedCommand = $null; LeafName = $leafName }
 }
 
+function Get-RecoveryPowerShellScriptBlockScope {
+    param(
+        [Parameter(Mandatory = $true)]
+        [System.Management.Automation.Language.Ast]$Ast
+    )
+
+    $ancestor = $Ast
+    while ($null -ne $ancestor -and $ancestor -isnot [System.Management.Automation.Language.ScriptBlockAst]) {
+        $ancestor = $ancestor.Parent
+    }
+
+    return $ancestor
+}
+
+function Test-RecoveryPowerShellAssignmentDominatesCommand {
+    param(
+        [Parameter(Mandatory = $true)]
+        [System.Management.Automation.Language.AssignmentStatementAst]$Assignment,
+
+        [Parameter(Mandatory = $true)]
+        [System.Management.Automation.Language.CommandAst]$Command
+    )
+
+    [System.Management.Automation.Language.Ast]$current = $Command
+    while ($null -ne $current.Parent) {
+        [System.Management.Automation.Language.Ast]$statement = $current
+        while (
+            $null -ne $statement.Parent -and
+            $statement.Parent -isnot [System.Management.Automation.Language.NamedBlockAst] -and
+            $statement.Parent -isnot [System.Management.Automation.Language.StatementBlockAst]
+        ) {
+            $statement = $statement.Parent
+        }
+        if ($null -eq $statement.Parent) {
+            return $false
+        }
+
+        $statements = @($statement.Parent.Statements)
+        $assignmentIndex = -1
+        $statementIndex = -1
+        for ($index = 0; $index -lt $statements.Count; $index++) {
+            if ([object]::ReferenceEquals($statements[$index], $Assignment)) {
+                $assignmentIndex = $index
+            }
+            if ([object]::ReferenceEquals($statements[$index], $statement)) {
+                $statementIndex = $index
+            }
+        }
+        if ($assignmentIndex -ge 0) {
+            return $statementIndex -ge 0 -and $assignmentIndex -lt $statementIndex
+        }
+
+        $current = $statement.Parent
+    }
+
+    return $false
+}
+
 function Get-RecoveryPowerShellPhpExecutableAssignmentState {
     param(
         [Parameter(Mandatory = $true)]
@@ -164,10 +266,14 @@ function Get-RecoveryPowerShellPhpExecutableAssignmentState {
         [System.Management.Automation.Language.CommandAst]$Command
     )
 
+    $commandScope = Get-RecoveryPowerShellScriptBlockScope -Ast $Command
     $latestAssignment = $null
     foreach ($assignment in $Assignments) {
         if ($assignment.Extent.StartOffset -ge $Command.Extent.StartOffset) {
             break
+        }
+        if (-not [object]::ReferenceEquals((Get-RecoveryPowerShellScriptBlockScope -Ast $assignment), $commandScope)) {
+            continue
         }
         $latestAssignment = $assignment
     }
@@ -185,7 +291,9 @@ function Get-RecoveryPowerShellPhpExecutableAssignmentState {
         $latestAssignment.Operator -eq [System.Management.Automation.Language.TokenKind]::Equals -and
         $latestAssignment.Left -is [System.Management.Automation.Language.VariableExpressionAst] -and
         $latestAssignment.Left.VariablePath.UserPath -ieq 'PhpExecutable' -and
-        $rightExpression -is [System.Management.Automation.Language.StringConstantExpressionAst]
+        (Test-RecoveryPowerShellOrdinaryVariablePath -VariablePath $latestAssignment.Left.VariablePath) -and
+        $rightExpression -is [System.Management.Automation.Language.StringConstantExpressionAst] -and
+        (Test-RecoveryPowerShellAssignmentDominatesCommand -Assignment $latestAssignment -Command $Command)
     ) {
         return [pscustomobject]@{ IsStatic = $true; LiteralCommandName = [string]$rightExpression.Value }
     }
@@ -199,6 +307,7 @@ function Get-RecoveryPowerShellCommandResolution {
         [System.Management.Automation.Language.CommandAst]$Command,
 
         [Parameter(Mandatory = $true)]
+        [AllowEmptyCollection()]
         [System.Collections.Generic.HashSet[string]]$ConfiguredCommands,
 
         $PhpExecutableAssignment = $null
@@ -220,6 +329,7 @@ function Get-RecoveryPowerShellCommandResolution {
     ) {
         if (
             $firstElement.VariablePath.UserPath -ine 'PhpExecutable' -or
+            -not (Test-RecoveryPowerShellOrdinaryVariablePath -VariablePath $firstElement.VariablePath) -or
             $null -eq $PhpExecutableAssignment -or
             -not $PhpExecutableAssignment.IsStatic
         ) {
@@ -296,7 +406,8 @@ function Test-RecoveryPowerShellNativeStatementShape {
     while ($null -ne $ancestor) {
         if (
             $ancestor -is [System.Management.Automation.Language.SubExpressionAst] -or
-            $ancestor -is [System.Management.Automation.Language.ScriptBlockExpressionAst]
+            $ancestor -is [System.Management.Automation.Language.ScriptBlockExpressionAst] -or
+            $ancestor -is [System.Management.Automation.Language.ArrayExpressionAst]
         ) {
             return $false
         }
@@ -486,6 +597,10 @@ function Get-RecoveryPowerShellCapturedExitVariableName {
         return $null
     }
 
+    if (-not (Test-RecoveryPowerShellOrdinaryVariablePath -VariablePath $Statement.Left.VariablePath)) {
+        return $null
+    }
+
     return $Statement.Left.VariablePath.UserPath
 }
 
@@ -603,7 +718,8 @@ function ConvertFrom-RecoveryPowerShellFence {
         [Parameter(Mandatory = $true)]
         $Fence,
 
-        [string[]]$NativeCommandNames = @('powershell', 'pwsh', 'node', 'php', 'git', 'ssh', 'scp')
+        [AllowEmptyCollection()]
+        [string[]]$NativeCommandNames = @()
     )
 
     $tokens = $null
