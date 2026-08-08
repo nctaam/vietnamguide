@@ -571,6 +571,62 @@ Add-ParserResult -Name 'Bash parser handles empty and trailing physical body lin
     }
 }
 
+Add-ParserResult -Name 'Bash parser rejects comment-start heredoc delimiters and preserves authored delimiter words' -Test {
+    $invalidCases = @(
+        [pscustomobject]@{ Name = 'spaced comment'; Lines = @('cat << #EOF', 'BODY', '#EOF', 'echo hidden') },
+        [pscustomobject]@{ Name = 'adjacent comment'; Lines = @('cat <<#EOF', 'BODY', '#EOF', 'echo hidden') },
+        [pscustomobject]@{ Name = 'continued comment'; Lines = @('cat <<\', '#EOF', 'BODY', '#EOF', 'echo hidden') }
+    )
+
+    foreach ($case in $invalidCases) {
+        $result = ConvertFrom-RecoveryBashFence -Fence (New-TestRecoveryBashFence -Body ([string]::Join("`n", $case.Lines)))
+
+        Assert-ParserEqual -Actual $result.IsValid -Expected $false -Message "Heredoc $($case.Name) delimiter should be invalid."
+        Assert-ParserDiagnosticCodes -Diagnostics @($result.Diagnostics) -Expected @('BASH_AMBIGUOUS_REDIRECTION')
+        Assert-ParserEqual -Actual @($result.Events).Count -Expected 0 -Message "Heredoc $($case.Name) delimiter should stop all event emission."
+    }
+
+    $validCases = @(
+        [pscustomobject]@{ Opener = 'cat <<\#EOF'; Delimiter = '#EOF' },
+        [pscustomobject]@{ Opener = "cat <<'#EOF'"; Delimiter = '#EOF' },
+        [pscustomobject]@{ Opener = 'cat <<"#EOF"'; Delimiter = '#EOF' },
+        [pscustomobject]@{ Opener = 'cat <<E#OF'; Delimiter = 'E#OF' },
+        [pscustomobject]@{ Opener = "cat <<'E'#OF"; Delimiter = 'E#OF' }
+    )
+
+    foreach ($case in $validCases) {
+        $body = [string]::Join("`n", @($case.Opener, 'BODY', $case.Delimiter, 'echo visible'))
+        $result = ConvertFrom-RecoveryBashFence -Fence (New-TestRecoveryBashFence -Body $body)
+
+        Assert-ParserEqual -Actual $result.IsValid -Expected $true -Message "Heredoc opener '$($case.Opener)' should be valid."
+        Assert-RecoveryBashEventTexts -Result $result -Expected @($case.Opener, 'echo visible')
+    }
+}
+
+Add-ParserResult -Name 'Bash parser validates arithmetic expansion inside double quotes' -Test {
+    $validCommands = @(
+        'echo "$((1 << 2))"',
+        'echo "\$((1 << 2)"',
+        'echo ''$((1 << 2)'''
+    )
+
+    foreach ($command in $validCommands) {
+        $body = [string]::Join("`n", @($command, 'echo visible'))
+        $result = ConvertFrom-RecoveryBashFence -Fence (New-TestRecoveryBashFence -Body $body)
+
+        Assert-ParserEqual -Actual $result.IsValid -Expected $true -Message "Quoted arithmetic command '$command' should be valid."
+        Assert-RecoveryBashEventTexts -Result $result -Expected @($command, 'echo visible')
+    }
+
+    $invalidCommand = 'echo "$((1 << 2)"'
+    $invalidBody = [string]::Join("`n", @($invalidCommand, 'echo hidden'))
+    $invalidResult = ConvertFrom-RecoveryBashFence -Fence (New-TestRecoveryBashFence -Body $invalidBody)
+
+    Assert-ParserEqual -Actual $invalidResult.IsValid -Expected $false -Message 'Malformed double-quoted arithmetic expansion should be invalid.'
+    Assert-ParserDiagnosticCodes -Diagnostics @($invalidResult.Diagnostics) -Expected @('BASH_INVALID_ARITHMETIC')
+    Assert-ParserEqual -Actual @($invalidResult.Events).Count -Expected 0 -Message 'Malformed double-quoted arithmetic should stop later event emission.'
+}
+
 $results | Format-Table -AutoSize | Out-Host
 
 $failed = @($results | Where-Object { -not $_.Passed })

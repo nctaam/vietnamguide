@@ -281,6 +281,16 @@ function Get-RecoveryBashStatementAnalysis {
                 $index += 2
                 continue
             }
+            if ($character -ceq '$' -and ($index + 2) -lt $Line.Length -and
+                $Line[$index + 1] -ceq '(' -and $Line[$index + 2] -ceq '(') {
+                $arithmeticEnd = Get-RecoveryBashArithmeticEnd -Line $Line -ContentIndex ($index + 3)
+                if ($arithmeticEnd -lt 0) {
+                    return New-RecoveryBashStatementFailure -Code 'BASH_INVALID_ARITHMETIC' -Message 'Bash arithmetic expansion is not balanced.' -ErrorIndex $index
+                }
+
+                $index = $arithmeticEnd
+                continue
+            }
             if ($character -ceq '"') {
                 $inDoubleQuote = $false
             }
@@ -363,6 +373,7 @@ function Get-RecoveryBashStatementAnalysis {
                 $delimiter = [System.Text.StringBuilder]::new()
                 $delimiterQuote = [char]0
                 $delimiterQuoteIndex = -1
+                $delimiterWordStarted = $false
                 while ($delimiterIndex -lt $Line.Length) {
                     $delimiterCharacter = $Line[$delimiterIndex]
                     if ($delimiterQuote -ne [char]0) {
@@ -395,6 +406,7 @@ function Get-RecoveryBashStatementAnalysis {
                     if ($delimiterCharacter -ceq "'" -or $delimiterCharacter -ceq '"') {
                         $delimiterQuote = $delimiterCharacter
                         $delimiterQuoteIndex = $delimiterIndex
+                        $delimiterWordStarted = $true
                         $delimiterIndex++
                         continue
                     }
@@ -405,14 +417,19 @@ function Get-RecoveryBashStatementAnalysis {
 
                         $delimiterIndex++
                         [void]$delimiter.Append($Line[$delimiterIndex])
+                        $delimiterWordStarted = $true
                         $delimiterIndex++
                         continue
+                    }
+                    if ($delimiterCharacter -ceq '#' -and -not $delimiterWordStarted) {
+                        return New-RecoveryBashStatementFailure -Code 'BASH_AMBIGUOUS_REDIRECTION' -Message 'Bash heredoc redirection is followed by a comment instead of a delimiter.' -ErrorIndex $index
                     }
                     if ([char]::IsWhiteSpace($delimiterCharacter) -or ';|&()<>'.Contains([string]$delimiterCharacter)) {
                         break
                     }
 
                     [void]$delimiter.Append($delimiterCharacter)
+                    $delimiterWordStarted = $true
                     $delimiterIndex++
                 }
 
