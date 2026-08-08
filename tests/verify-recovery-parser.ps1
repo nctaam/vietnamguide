@@ -729,6 +729,22 @@ Add-ParserResult -Name 'PowerShell parser accepts effective standard guard block
     }
 }
 
+Add-ParserResult -Name 'PowerShell parser rejects guards containing traps' -Test {
+    $guards = @(
+        'if ($LASTEXITCODE -ne 0) { trap { continue }; throw ''failed'' }',
+        'if ($LASTEXITCODE -ne 0) { trap { continue }; exit 1 }'
+    )
+
+    foreach ($guard in $guards) {
+        $body = [string]::Join("`n", @('git status', $guard))
+        $result = ConvertFrom-RecoveryPowerShellFence -Fence (New-TestRecoveryPowerShellFence -Body $body)
+
+        Assert-ParserEqual -Actual $result.IsValid -Expected $false -Message "Guard '$guard' should be invalid."
+        Assert-ParserEqual -Actual @($result.Events).Count -Expected 0 -Message "Guard '$guard' should not emit an event."
+        Assert-ParserDiagnosticCodes -Diagnostics @($result.Diagnostics) -Expected @('PS_NATIVE_GUARD_NONBLOCKING')
+    }
+}
+
 Add-ParserResult -Name 'PowerShell parser accepts a captured native exit guard' -Test {
     $body = [string]::Join("`n", @(
         'git status',
@@ -838,6 +854,24 @@ Add-ParserResult -Name 'PowerShell parser allows a guarded git assignment captur
     Assert-ParserEqual -Actual $result.Events[0].Text -Expected 'git status --porcelain' -Message 'Git assignment event text mismatch.'
 }
 
+Add-ParserResult -Name 'PowerShell parser rejects non-simple git assignment targets and operators' -Test {
+    $assignments = @(
+        '$x += git status',
+        '$x.Property = git status',
+        '$x, $y = git status',
+        '$x += (git rev-parse HEAD).Trim()'
+    )
+
+    foreach ($assignment in $assignments) {
+        $body = [string]::Join("`n", @($assignment, 'if ($LASTEXITCODE -ne 0) { throw ''git failed'' }'))
+        $result = ConvertFrom-RecoveryPowerShellFence -Fence (New-TestRecoveryPowerShellFence -Body $body)
+
+        Assert-ParserEqual -Actual $result.IsValid -Expected $false -Message "Git assignment '$assignment' should be invalid."
+        Assert-ParserEqual -Actual @($result.Events).Count -Expected 0 -Message "Git assignment '$assignment' should not emit an event."
+        Assert-ParserDiagnosticCodes -Diagnostics @($result.Diagnostics) -Expected @('PS_NATIVE_STATEMENT_AMBIGUOUS')
+    }
+}
+
 Add-ParserResult -Name 'PowerShell parser allows the authored trimmed git revision capture' -Test {
     $body = [string]::Join("`n", @('$RecoveryBaseSha = (git rev-parse HEAD).Trim()', 'if ($LASTEXITCODE -ne 0) { throw "git failed" }'))
     $result = ConvertFrom-RecoveryPowerShellFence -Fence (New-TestRecoveryPowerShellFence -Body $body)
@@ -887,6 +921,17 @@ Add-ParserResult -Name 'PowerShell parser emits exact normalized event metadata'
     Assert-ParserEqual -Actual $event.StatementId -Expected 'fence-custom-statement-0001' -Message 'PowerShell event statement identifier mismatch.'
     Assert-ParserEqual -Actual $event.Metadata.GetType().FullName -Expected 'System.Collections.Hashtable' -Message 'PowerShell event metadata should be a hashtable.'
     Assert-ParserEqual -Actual $event.Metadata.Count -Expected 0 -Message 'PowerShell event metadata should be empty.'
+}
+
+Add-ParserResult -Name 'PowerShell parser preserves a null fence section identifier' -Test {
+    $body = [string]::Join("`n", @('git status', 'if ($LASTEXITCODE -ne 0) { throw ''git failed'' }'))
+    $fence = New-TestRecoveryPowerShellFence -Body $body
+    $fence.SectionId = $null
+    $result = ConvertFrom-RecoveryPowerShellFence -Fence $fence
+
+    Assert-ParserEqual -Actual $result.IsValid -Expected $true -Message 'Null section identifier case should be valid.'
+    Assert-ParserEqual -Actual @($result.Events).Count -Expected 1 -Message 'Null section identifier event count mismatch.'
+    Assert-ParserEqual -Actual $result.Events[0].SectionId -Expected $null -Message 'PowerShell event should preserve a null section identifier.'
 }
 
 Add-ParserResult -Name 'PowerShell parser emits multiple valid native commands in order' -Test {

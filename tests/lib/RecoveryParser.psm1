@@ -255,7 +255,12 @@ function Test-RecoveryPowerShellNativeStatementShape {
     if ([object]::ReferenceEquals($pipeline, $Statement)) {
         return $true
     }
-    if ($Statement -isnot [System.Management.Automation.Language.AssignmentStatementAst] -or $CommandName -ine 'git') {
+    if (
+        $Statement -isnot [System.Management.Automation.Language.AssignmentStatementAst] -or
+        $CommandName -ine 'git' -or
+        $Statement.Operator -ne [System.Management.Automation.Language.TokenKind]::Equals -or
+        $Statement.Left -isnot [System.Management.Automation.Language.VariableExpressionAst]
+    ) {
         return $false
     }
     if ([object]::ReferenceEquals($Statement.Right, $pipeline)) {
@@ -337,7 +342,7 @@ function Test-RecoveryPowerShellBlockingStatementBlock {
     )
 
     $statements = @($StatementBlock.Statements)
-    if ($statements.Count -ne 1) {
+    if ($null -ne $StatementBlock.Traps -or $statements.Count -ne 1) {
         return $false
     }
     if ($statements[0] -is [System.Management.Automation.Language.ThrowStatementAst]) {
@@ -573,7 +578,21 @@ function ConvertFrom-RecoveryPowerShellFence {
         }
 
         $eventText = $command.Extent.Text.Trim().Replace("`r`n", "`n").Replace("`r", "`n")
-        $events.Add((New-RecoveryExecutableEvent -Kind 'command' -Language 'powershell' -Text $eventText -NormalizedCommand $resolution.NormalizedCommand -SourceLine ([int]$Fence.StartLine + [int]$command.Extent.StartLineNumber) -SourceColumn ([int]$command.Extent.StartColumnNumber) -SectionId $Fence.SectionId -FenceId $Fence.Id -StatementId ('{0}-statement-{1:D4}' -f $Fence.Id, ($events.Count + 1)) -Metadata @{}))
+        $eventParameters = @{
+            Kind = 'command'
+            Language = 'powershell'
+            Text = $eventText
+            NormalizedCommand = $resolution.NormalizedCommand
+            SourceLine = [int]$Fence.StartLine + [int]$command.Extent.StartLineNumber
+            SourceColumn = [int]$command.Extent.StartColumnNumber
+            FenceId = $Fence.Id
+            StatementId = '{0}-statement-{1:D4}' -f $Fence.Id, ($events.Count + 1)
+            Metadata = @{}
+        }
+        if ($null -ne $Fence.SectionId) {
+            $eventParameters.SectionId = $Fence.SectionId
+        }
+        $events.Add((New-RecoveryExecutableEvent @eventParameters))
     }
 
     return New-RecoveryParseResult -Events $events.ToArray() -Diagnostics $diagnostics.ToArray()
