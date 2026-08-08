@@ -718,8 +718,9 @@ function ConvertFrom-RecoveryPowerShellFence {
         [Parameter(Mandatory = $true)]
         $Fence,
 
-        [AllowEmptyCollection()]
-        [string[]]$NativeCommandNames = @()
+        [Parameter(Mandatory = $true)]
+        [ValidateNotNullOrEmpty()]
+        [string[]]$NativeCommandNames
     )
 
     $tokens = $null

@@ -883,16 +883,31 @@ Add-ParserResult -Name 'PowerShell parser rejects nondominating PhpExecutable as
     }
 }
 
-Add-ParserResult -Name 'PowerShell parser has no default native command policy' -Test {
-    $body = [string]::Join("`n", @('git status', 'if ($LASTEXITCODE -ne 0) { throw ''failed'' }'))
-    $fence = New-TestRecoveryPowerShellFence -Body $body
-    $missingResult = RecoveryParser\ConvertFrom-RecoveryPowerShellFence -Fence $fence
-    $emptyResult = RecoveryParser\ConvertFrom-RecoveryPowerShellFence -Fence $fence -NativeCommandNames @()
+Add-ParserResult -Name 'PowerShell parser requires non-empty explicit native command configuration' -Test {
+    $command = Get-Command -Name 'ConvertFrom-RecoveryPowerShellFence' -Module RecoveryParser
+    $parameter = $command.Parameters['NativeCommandNames']
+    $parameterAttribute = @($parameter.Attributes | Where-Object { $_ -is [System.Management.Automation.ParameterAttribute] })[0]
+    $validationAttribute = @($parameter.Attributes | Where-Object { $_ -is [System.Management.Automation.ValidateNotNullOrEmptyAttribute] })[0]
 
-    foreach ($result in @($missingResult, $emptyResult)) {
-        Assert-ParserEqual -Actual $result.IsValid -Expected $true -Message 'Policy-free parser result should remain structurally valid.'
-        Assert-ParserEqual -Actual @($result.Events).Count -Expected 0 -Message 'Missing or empty native configuration should emit no events.'
-        Assert-ParserEqual -Actual @($result.Diagnostics).Count -Expected 0 -Message 'Missing or empty native configuration should emit no diagnostics.'
+    Assert-ParserEqual -Actual $parameterAttribute.Mandatory -Expected $true -Message 'NativeCommandNames should be mandatory.'
+    Assert-ParserEqual -Actual ($null -ne $validationAttribute) -Expected $true -Message 'NativeCommandNames should reject null or empty values.'
+
+    $invalidFence = New-TestRecoveryPowerShellFence -Body 'if ('
+    $invalidValues = @(
+        [pscustomobject]@{ Name = 'empty'; Value = [string[]]@() },
+        [pscustomobject]@{ Name = 'null'; Value = $null }
+    )
+    foreach ($case in $invalidValues) {
+        $exception = $null
+        try {
+            RecoveryParser\ConvertFrom-RecoveryPowerShellFence -Fence $invalidFence -NativeCommandNames $case.Value | Out-Null
+        }
+        catch {
+            $exception = $_.Exception
+        }
+
+        Assert-ParserEqual -Actual ($null -ne $exception) -Expected $true -Message "$($case.Name) NativeCommandNames should fail before parsing."
+        Assert-ParserEqual -Actual $exception.GetType().FullName -Expected 'System.Management.Automation.ParameterBindingValidationException' -Message "$($case.Name) NativeCommandNames should fail parameter validation."
     }
 }
 
