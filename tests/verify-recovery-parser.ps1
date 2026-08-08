@@ -303,6 +303,258 @@ Add-ParserResult -Name 'Markdown parser normalizes mixed line endings without lo
     Assert-ParserEqual -Actual $fence.Body -Expected "echo one`necho two" -Message 'Normalized fence body mismatch.'
 }
 
+function New-TestRecoveryBashFence {
+    param(
+        [Parameter(Mandatory = $true)]
+        [AllowEmptyString()]
+        [string]$Body,
+
+        [int]$StartLine = 10,
+
+        [string]$Id = 'fence-bash-0001',
+
+        [string]$SectionId = 'section-bash-0001'
+    )
+
+    [pscustomobject]@{
+        Id = $Id
+        SectionId = $SectionId
+        Language = 'bash'
+        RawInfo = 'bash'
+        Body = $Body
+        StartLine = $StartLine
+        EndLine = $StartLine + (@($Body.Replace("`r`n", "`n").Replace("`r", "`n") -split "`n", -1).Count) + 1
+    }
+}
+
+function Assert-ParserArrayEqual {
+    param(
+        [Parameter(Mandatory = $true)]
+        [AllowEmptyCollection()]
+        [object[]]$Actual,
+
+        [Parameter(Mandatory = $true)]
+        [AllowEmptyCollection()]
+        [object[]]$Expected,
+
+        [Parameter(Mandatory = $true)]
+        [string]$Message
+    )
+
+    Assert-ParserEqual -Actual $Actual.Count -Expected $Expected.Count -Message "$Message Count mismatch."
+    for ($index = 0; $index -lt $Expected.Count; $index++) {
+        Assert-ParserEqual -Actual $Actual[$index] -Expected $Expected[$index] -Message "$Message Item $index mismatch."
+    }
+}
+
+function Assert-RecoveryBashEventTexts {
+    param(
+        [Parameter(Mandatory = $true)]
+        $Result,
+
+        [Parameter(Mandatory = $true)]
+        [AllowEmptyCollection()]
+        [string[]]$Expected
+    )
+
+    $actual = @($Result.Events | ForEach-Object { $_.Text })
+    Assert-ParserArrayEqual -Actual $actual -Expected $Expected -Message 'Bash event text mismatch.'
+}
+
+Add-ParserResult -Name 'Bash parser joins a split heredoc operator before consuming its body' -Test {
+    $body = [string]::Join("`n", @('cat <\', '<EOF', 'BODY_MARKER', 'EOF', 'echo visible'))
+    $result = ConvertFrom-RecoveryBashFence -Fence (New-TestRecoveryBashFence -Body $body)
+
+    Assert-ParserEqual -Actual $result.IsValid -Expected $true -Message 'Split heredoc operator should be valid.'
+    Assert-RecoveryBashEventTexts -Result $result -Expected @('cat <<EOF', 'echo visible')
+}
+
+Add-ParserResult -Name 'Bash parser does not continue a backslash after comment start' -Test {
+    $body = [string]::Join("`n", @('echo ok # comment \', 'cat <<EOF', 'BODY_MARKER', 'EOF'))
+    $result = ConvertFrom-RecoveryBashFence -Fence (New-TestRecoveryBashFence -Body $body)
+
+    Assert-ParserEqual -Actual $result.IsValid -Expected $true -Message 'Comment backslash should remain literal comment text.'
+    Assert-RecoveryBashEventTexts -Result $result -Expected @('echo ok # comment \', 'cat <<EOF')
+}
+
+Add-ParserResult -Name 'Bash parser rejects an unfinished unquoted continuation' -Test {
+    $result = ConvertFrom-RecoveryBashFence -Fence (New-TestRecoveryBashFence -Body 'echo broken \' -StartLine 40)
+    $diagnostic = @($result.Diagnostics)[0]
+
+    Assert-ParserEqual -Actual $result.IsValid -Expected $false -Message 'Unfinished continuation should be invalid.'
+    Assert-ParserDiagnosticCodes -Diagnostics @($result.Diagnostics) -Expected @('BASH_UNFINISHED_CONTINUATION')
+    Assert-ParserEqual -Actual $diagnostic.Language -Expected 'bash' -Message 'Continuation diagnostic language mismatch.'
+    Assert-ParserEqual -Actual $diagnostic.SourceLine -Expected 41 -Message 'Continuation diagnostic source line mismatch.'
+    Assert-ParserEqual -Actual $diagnostic.SourceColumn -Expected 13 -Message 'Continuation diagnostic source column mismatch.'
+    Assert-ParserEqual -Actual $diagnostic.FenceId -Expected 'fence-bash-0001' -Message 'Continuation diagnostic fence mismatch.'
+}
+
+Add-ParserResult -Name 'Bash parser treats exact three less-than characters as a here-string' -Test {
+    $result = ConvertFrom-RecoveryBashFence -Fence (New-TestRecoveryBashFence -Body ': <<<EOF')
+
+    Assert-ParserEqual -Actual $result.IsValid -Expected $true -Message 'Here-string should be valid.'
+    Assert-RecoveryBashEventTexts -Result $result -Expected @(': <<<EOF')
+}
+
+Add-ParserResult -Name 'Bash parser rejects every long less-than redirection run' -Test {
+    foreach ($command in @('cat <<<<EOF', 'cat <<<<<EOF')) {
+        $body = [string]::Join("`n", @($command, 'echo hidden'))
+        $result = ConvertFrom-RecoveryBashFence -Fence (New-TestRecoveryBashFence -Body $body)
+
+        Assert-ParserEqual -Actual $result.IsValid -Expected $false -Message "Long redirection '$command' should be invalid."
+        Assert-ParserDiagnosticCodes -Diagnostics @($result.Diagnostics) -Expected @('BASH_AMBIGUOUS_REDIRECTION')
+        Assert-ParserEqual -Actual @($result.Events).Count -Expected 0 -Message 'Ambiguous statement and later statements should not emit events.'
+    }
+}
+
+Add-ParserResult -Name 'Bash parser skips shift operators inside supported arithmetic forms' -Test {
+    foreach ($command in @(': $((1 << 2))', '((value << 1))')) {
+        $body = [string]::Join("`n", @($command, 'echo visible'))
+        $result = ConvertFrom-RecoveryBashFence -Fence (New-TestRecoveryBashFence -Body $body)
+
+        Assert-ParserEqual -Actual $result.IsValid -Expected $true -Message "Arithmetic command '$command' should be valid."
+        Assert-RecoveryBashEventTexts -Result $result -Expected @($command, 'echo visible')
+    }
+}
+
+Add-ParserResult -Name 'Bash parser rejects unclosed arithmetic forms' -Test {
+    foreach ($command in @(': $((1 << 2)', '((value << 1)')) {
+        $body = [string]::Join("`n", @('echo before', $command, 'echo hidden'))
+        $result = ConvertFrom-RecoveryBashFence -Fence (New-TestRecoveryBashFence -Body $body)
+
+        Assert-ParserEqual -Actual $result.IsValid -Expected $false -Message "Arithmetic command '$command' should be invalid."
+        Assert-ParserDiagnosticCodes -Diagnostics @($result.Diagnostics) -Expected @('BASH_INVALID_ARITHMETIC')
+        Assert-RecoveryBashEventTexts -Result $result -Expected @('echo before')
+    }
+}
+
+Add-ParserResult -Name 'Bash parser consumes multiple heredocs in FIFO order' -Test {
+    $body = [string]::Join("`n", @("cat <<A <<'B'", 'BODY_A', 'A', 'BODY_B', 'B', 'echo visible'))
+    $result = ConvertFrom-RecoveryBashFence -Fence (New-TestRecoveryBashFence -Body $body)
+
+    Assert-ParserEqual -Actual $result.IsValid -Expected $true -Message 'FIFO heredoc queue should be valid.'
+    Assert-RecoveryBashEventTexts -Result $result -Expected @("cat <<A <<'B'", 'echo visible')
+}
+
+Add-ParserResult -Name 'Bash parser removes supported heredoc delimiter quoting and escapes' -Test {
+    $cases = @(
+        [pscustomobject]@{ Opener = 'cat <<EOF'; Body = @('BODY_MARKER', 'EOF') },
+        [pscustomobject]@{ Opener = "cat <<'EOF'"; Body = @('BODY_MARKER', 'EOF') },
+        [pscustomobject]@{ Opener = 'cat <<"EOF"'; Body = @('BODY_MARKER', 'EOF') },
+        [pscustomobject]@{ Opener = 'cat <<E\OF'; Body = @('BODY_MARKER', 'EOF') },
+        [pscustomobject]@{ Opener = 'cat <<-EOF'; Body = @("`tBODY_MARKER", "`tEOF") }
+    )
+
+    foreach ($case in $cases) {
+        $body = [string]::Join("`n", @($case.Opener) + @($case.Body) + @('echo visible'))
+        $result = ConvertFrom-RecoveryBashFence -Fence (New-TestRecoveryBashFence -Body $body)
+
+        Assert-ParserEqual -Actual $result.IsValid -Expected $true -Message "Heredoc opener '$($case.Opener)' should be valid."
+        Assert-RecoveryBashEventTexts -Result $result -Expected @($case.Opener, 'echo visible')
+    }
+}
+
+Add-ParserResult -Name 'Bash parser ignores heredoc text inside ordinary quoted strings' -Test {
+    foreach ($command in @("printf '%s' '<<EOF'", 'printf "%s" "<<EOF"')) {
+        $body = [string]::Join("`n", @($command, 'echo visible'))
+        $result = ConvertFrom-RecoveryBashFence -Fence (New-TestRecoveryBashFence -Body $body)
+
+        Assert-ParserEqual -Actual $result.IsValid -Expected $true -Message "Quoted command '$command' should be valid."
+        Assert-RecoveryBashEventTexts -Result $result -Expected @($command, 'echo visible')
+    }
+}
+
+Add-ParserResult -Name 'Bash parser diagnoses unterminated ordinary quotes' -Test {
+    $cases = @(
+        [pscustomobject]@{ Command = "echo 'broken"; Code = 'BASH_UNTERMINATED_SINGLE_QUOTE'; Column = 6 },
+        [pscustomobject]@{ Command = 'echo "broken'; Code = 'BASH_UNTERMINATED_DOUBLE_QUOTE'; Column = 6 }
+    )
+
+    foreach ($case in $cases) {
+        $body = [string]::Join("`n", @('echo before', $case.Command, 'echo hidden'))
+        $result = ConvertFrom-RecoveryBashFence -Fence (New-TestRecoveryBashFence -Body $body -StartLine 20)
+        $diagnostic = @($result.Diagnostics)[0]
+
+        Assert-ParserEqual -Actual $result.IsValid -Expected $false -Message "Quote case '$($case.Code)' should be invalid."
+        Assert-ParserDiagnosticCodes -Diagnostics @($result.Diagnostics) -Expected @($case.Code)
+        Assert-RecoveryBashEventTexts -Result $result -Expected @('echo before')
+        Assert-ParserEqual -Actual $diagnostic.SourceLine -Expected 22 -Message 'Quote diagnostic source line mismatch.'
+        Assert-ParserEqual -Actual $diagnostic.SourceColumn -Expected $case.Column -Message 'Quote diagnostic source column mismatch.'
+    }
+}
+
+Add-ParserResult -Name 'Bash parser rejects a heredoc queue missing any FIFO terminator' -Test {
+    $body = [string]::Join("`n", @('echo before', 'cat <<A <<B', 'BODY_A', 'A', 'BODY_B'))
+    $result = ConvertFrom-RecoveryBashFence -Fence (New-TestRecoveryBashFence -Body $body -StartLine 30)
+    $diagnostic = @($result.Diagnostics)[0]
+
+    Assert-ParserEqual -Actual $result.IsValid -Expected $false -Message 'Unbalanced heredoc queue should be invalid.'
+    Assert-ParserDiagnosticCodes -Diagnostics @($result.Diagnostics) -Expected @('BASH_UNBALANCED_HEREDOC_QUEUE')
+    Assert-RecoveryBashEventTexts -Result $result -Expected @('echo before', 'cat <<A <<B')
+    Assert-ParserEqual -Actual $diagnostic.SourceLine -Expected 32 -Message 'Heredoc queue diagnostic source line mismatch.'
+    Assert-ParserEqual -Actual $diagnostic.SourceColumn -Expected 5 -Message 'Heredoc queue diagnostic source column mismatch.'
+}
+
+Add-ParserResult -Name 'Bash parser applies token boundaries when starting comments' -Test {
+    $body = [string]::Join("`n", @(
+        '# pure comment',
+        '  # indented comment',
+        'echo whitespace # comment <<EOF \',
+        'echo escaped \#value',
+        'echo word#fragment',
+        'echo control;# comment \',
+        'echo visible'
+    ))
+    $result = ConvertFrom-RecoveryBashFence -Fence (New-TestRecoveryBashFence -Body $body)
+
+    Assert-ParserEqual -Actual $result.IsValid -Expected $true -Message 'Comment token boundaries should be valid.'
+    Assert-RecoveryBashEventTexts -Result $result -Expected @(
+        'echo whitespace # comment <<EOF \',
+        'echo escaped \#value',
+        'echo word#fragment',
+        'echo control;# comment \',
+        'echo visible'
+    )
+}
+
+Add-ParserResult -Name 'Bash parser emits deterministic source metadata and statement identifiers' -Test {
+    $body = [string]::Join("`n", @('  echo first', '', "`techo second"))
+    $result = ConvertFrom-RecoveryBashFence -Fence (New-TestRecoveryBashFence -Body $body -StartLine 100 -Id 'fence-custom' -SectionId 'section-custom')
+    $events = @($result.Events)
+
+    Assert-ParserEqual -Actual $result.IsValid -Expected $true -Message 'Metadata case should be valid.'
+    Assert-ParserEqual -Actual $events.Count -Expected 2 -Message 'Metadata event count mismatch.'
+    Assert-ParserEqual -Actual $events[0].Kind -Expected 'command' -Message 'First event kind mismatch.'
+    Assert-ParserEqual -Actual $events[0].Language -Expected 'bash' -Message 'First event language mismatch.'
+    Assert-ParserEqual -Actual $events[0].SourceLine -Expected 101 -Message 'First event source line mismatch.'
+    Assert-ParserEqual -Actual $events[0].SourceColumn -Expected 3 -Message 'First event source column mismatch.'
+    Assert-ParserEqual -Actual $events[0].SectionId -Expected 'section-custom' -Message 'First event section mismatch.'
+    Assert-ParserEqual -Actual $events[0].FenceId -Expected 'fence-custom' -Message 'First event fence mismatch.'
+    Assert-ParserEqual -Actual $events[0].StatementId -Expected 'fence-custom-statement-0001' -Message 'First statement identifier mismatch.'
+    Assert-ParserEqual -Actual $events[0].NormalizedCommand -Expected $null -Message 'First normalized command should be null.'
+    Assert-ParserEqual -Actual $events[0].Metadata.GetType().FullName -Expected 'System.Collections.Hashtable' -Message 'First metadata should be a hashtable.'
+    Assert-ParserEqual -Actual $events[1].SourceLine -Expected 103 -Message 'Second event source line mismatch.'
+    Assert-ParserEqual -Actual $events[1].SourceColumn -Expected 2 -Message 'Second event source column mismatch.'
+    Assert-ParserEqual -Actual $events[1].StatementId -Expected 'fence-custom-statement-0002' -Message 'Second statement identifier mismatch.'
+}
+
+Add-ParserResult -Name 'Bash parser handles empty and trailing physical body lines deterministically' -Test {
+    $cases = @(
+        [pscustomobject]@{ Body = ''; Expected = @(); Lines = @() },
+        [pscustomobject]@{ Body = "`n"; Expected = @(); Lines = @() },
+        [pscustomobject]@{ Body = "echo only`n"; Expected = @('echo only'); Lines = @(11) },
+        [pscustomobject]@{ Body = "echo one`r`n`r`necho two`r"; Expected = @('echo one', 'echo two'); Lines = @(11, 13) }
+    )
+
+    foreach ($case in $cases) {
+        $result = ConvertFrom-RecoveryBashFence -Fence (New-TestRecoveryBashFence -Body $case.Body)
+
+        Assert-ParserEqual -Actual $result.IsValid -Expected $true -Message 'Empty and trailing body case should be valid.'
+        Assert-RecoveryBashEventTexts -Result $result -Expected @($case.Expected)
+        Assert-ParserArrayEqual -Actual @($result.Events | ForEach-Object { $_.SourceLine }) -Expected @($case.Lines) -Message 'Normalized Bash source line mismatch.'
+    }
+}
+
 $results | Format-Table -AutoSize | Out-Host
 
 $failed = @($results | Where-Object { -not $_.Passed })
