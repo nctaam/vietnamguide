@@ -361,6 +361,42 @@ function Assert-RecoveryBashEventTexts {
     Assert-ParserArrayEqual -Actual $actual -Expected $Expected -Message 'Bash event text mismatch.'
 }
 
+function New-TestRecoveryPowerShellFence {
+    param(
+        [Parameter(Mandatory = $true)]
+        [AllowEmptyString()]
+        [string]$Body,
+
+        [int]$StartLine = 20,
+
+        [string]$Id = 'fence-powershell',
+
+        [string]$SectionId = 'section-powershell'
+    )
+
+    [pscustomobject][ordered]@{
+        Id = $Id
+        SectionId = $SectionId
+        Language = 'powershell'
+        RawInfo = 'powershell'
+        Body = $Body
+        StartLine = $StartLine
+        EndLine = $StartLine + @($Body.Replace("`r`n", "`n").Replace("`r", "`n") -split "`n", -1).Count + 1
+    }
+}
+
+function Assert-RecoveryPowerShellEventCommands {
+    param(
+        [Parameter(Mandatory = $true)]
+        $Result,
+
+        [Parameter(Mandatory = $true)]
+        [string[]]$Expected
+    )
+
+    Assert-ParserArrayEqual -Actual @($Result.Events | ForEach-Object { $_.NormalizedCommand }) -Expected $Expected -Message 'PowerShell normalized command mismatch.'
+}
+
 Add-ParserResult -Name 'Bash parser joins a split heredoc operator before consuming its body' -Test {
     $body = [string]::Join("`n", @('cat <\', '<EOF', 'BODY_MARKER', 'EOF', 'echo visible'))
     $result = ConvertFrom-RecoveryBashFence -Fence (New-TestRecoveryBashFence -Body $body)
@@ -625,6 +661,256 @@ Add-ParserResult -Name 'Bash parser validates arithmetic expansion inside double
     Assert-ParserEqual -Actual $invalidResult.IsValid -Expected $false -Message 'Malformed double-quoted arithmetic expansion should be invalid.'
     Assert-ParserDiagnosticCodes -Diagnostics @($invalidResult.Diagnostics) -Expected @('BASH_INVALID_ARITHMETIC')
     Assert-ParserEqual -Actual @($invalidResult.Events).Count -Expected 0 -Message 'Malformed double-quoted arithmetic should stop later event emission.'
+}
+
+Add-ParserResult -Name 'PowerShell parser requires an immediate native guard' -Test {
+    $result = ConvertFrom-RecoveryPowerShellFence -Fence (New-TestRecoveryPowerShellFence -Body 'git status' -StartLine 40)
+
+    Assert-ParserEqual -Actual $result.IsValid -Expected $false -Message 'Unguarded git should be invalid.'
+    Assert-ParserEqual -Actual @($result.Events).Count -Expected 0 -Message 'Unguarded git should not emit an event.'
+    Assert-ParserDiagnosticCodes -Diagnostics @($result.Diagnostics) -Expected @('PS_NATIVE_GUARD_MISSING')
+    Assert-ParserEqual -Actual $result.Diagnostics[0].SourceLine -Expected 41 -Message 'Unguarded git diagnostic source line mismatch.'
+    Assert-ParserEqual -Actual $result.Diagnostics[0].SourceColumn -Expected 1 -Message 'Unguarded git diagnostic source column mismatch.'
+}
+
+Add-ParserResult -Name 'PowerShell parser normalizes guarded scp executable names' -Test {
+    $body = [string]::Join("`n", @('scp.exe x host:y', 'if ($LASTEXITCODE -ne 0) { throw "scp failed" }'))
+    $result = ConvertFrom-RecoveryPowerShellFence -Fence (New-TestRecoveryPowerShellFence -Body $body)
+
+    Assert-ParserEqual -Actual $result.IsValid -Expected $true -Message 'Guarded scp.exe should be valid.'
+    Assert-RecoveryPowerShellEventCommands -Result $result -Expected @('scp')
+    Assert-ParserEqual -Actual $result.Events[0].Text -Expected 'scp.exe x host:y' -Message 'scp event text mismatch.'
+}
+
+Add-ParserResult -Name 'PowerShell parser rejects unsupported native wrappers' -Test {
+    $commands = @(
+        'git.cmd status',
+        'git.bat status',
+        'git.com status',
+        'cmd.exe /c git status',
+        "& 'C:\tools\git.cmd' status",
+        "& 'C:\tools\git.bat' status",
+        "& 'C:\tools\git.com' status",
+        "& 'C:\Windows\System32\cmd.exe' /c git status"
+    )
+
+    foreach ($command in $commands) {
+        $body = [string]::Join("`n", @($command, 'if ($LASTEXITCODE -ne 0) { throw "failed" }'))
+        $result = ConvertFrom-RecoveryPowerShellFence -Fence (New-TestRecoveryPowerShellFence -Body $body)
+
+        Assert-ParserEqual -Actual $result.IsValid -Expected $false -Message "Wrapper '$command' should be invalid."
+        Assert-ParserEqual -Actual @($result.Events).Count -Expected 0 -Message "Wrapper '$command' should not emit an event."
+        Assert-ParserDiagnosticCodes -Diagnostics @($result.Diagnostics) -Expected @('PS_UNSUPPORTED_NATIVE_WRAPPER')
+    }
+}
+
+Add-ParserResult -Name 'PowerShell parser rejects a zero exit guard' -Test {
+    $body = [string]::Join("`n", @('git status', 'if ($LASTEXITCODE -ne 0) { exit 0 }'))
+    $result = ConvertFrom-RecoveryPowerShellFence -Fence (New-TestRecoveryPowerShellFence -Body $body)
+
+    Assert-ParserEqual -Actual $result.IsValid -Expected $false -Message 'exit 0 guard should be invalid.'
+    Assert-ParserEqual -Actual @($result.Events).Count -Expected 0 -Message 'exit 0 guard should not emit an event.'
+    Assert-ParserDiagnosticCodes -Diagnostics @($result.Diagnostics) -Expected @('PS_NATIVE_GUARD_NONBLOCKING')
+}
+
+Add-ParserResult -Name 'PowerShell parser accepts effective standard guard blockers' -Test {
+    $guards = @(
+        'if ($LASTEXITCODE -ne 0) { exit 1 }',
+        'if ($LASTEXITCODE -ne 0) { exit -1 }',
+        'if ($LASTEXITCODE -ne 0) { throw "git failed" }'
+    )
+
+    foreach ($guard in $guards) {
+        $body = [string]::Join("`n", @('git status', $guard))
+        $result = ConvertFrom-RecoveryPowerShellFence -Fence (New-TestRecoveryPowerShellFence -Body $body)
+
+        Assert-ParserEqual -Actual $result.IsValid -Expected $true -Message "Guard '$guard' should be valid."
+        Assert-RecoveryPowerShellEventCommands -Result $result -Expected @('git')
+    }
+}
+
+Add-ParserResult -Name 'PowerShell parser accepts a captured native exit guard' -Test {
+    $body = [string]::Join("`n", @(
+        'git status',
+        '$gitExit = $LASTEXITCODE',
+        'if ($gitExit -ne 0) { exit $gitExit }'
+    ))
+    $result = ConvertFrom-RecoveryPowerShellFence -Fence (New-TestRecoveryPowerShellFence -Body $body)
+
+    Assert-ParserEqual -Actual $result.IsValid -Expected $true -Message 'Captured git exit guard should be valid.'
+    Assert-RecoveryPowerShellEventCommands -Result $result -Expected @('git')
+}
+
+Add-ParserResult -Name 'PowerShell parser classifies malformed captured guards deterministically' -Test {
+    $cases = @(
+        [pscustomobject]@{ Name = 'wrong variable'; Lines = @('git status', '$gitExit = $LASTEXITCODE', 'if ($otherExit -ne 0) { throw "failed" }'); Code = 'PS_NATIVE_GUARD_MISSING' },
+        [pscustomobject]@{ Name = 'wrong condition'; Lines = @('git status', '$gitExit = $LASTEXITCODE', 'if ($gitExit -eq 0) { throw "failed" }'); Code = 'PS_NATIVE_GUARD_MISSING' },
+        [pscustomobject]@{ Name = 'intervening statement'; Lines = @('git status', '$gitExit = $LASTEXITCODE', 'Write-Host waiting', 'if ($gitExit -ne 0) { throw "failed" }'); Code = 'PS_NATIVE_GUARD_MISSING' },
+        [pscustomobject]@{ Name = 'zero exit'; Lines = @('git status', '$gitExit = $LASTEXITCODE', 'if ($gitExit -ne 0) { exit 0 }'); Code = 'PS_NATIVE_GUARD_NONBLOCKING' },
+        [pscustomobject]@{ Name = 'unknown exit'; Lines = @('git status', '$gitExit = $LASTEXITCODE', 'if ($gitExit -ne 0) { exit $otherExit }'); Code = 'PS_NATIVE_GUARD_NONBLOCKING' }
+    )
+
+    foreach ($case in $cases) {
+        $result = ConvertFrom-RecoveryPowerShellFence -Fence (New-TestRecoveryPowerShellFence -Body ([string]::Join("`n", $case.Lines)))
+
+        Assert-ParserEqual -Actual $result.IsValid -Expected $false -Message "Captured guard $($case.Name) should be invalid."
+        Assert-ParserEqual -Actual @($result.Events).Count -Expected 0 -Message "Captured guard $($case.Name) should not emit an event."
+        Assert-ParserDiagnosticCodes -Diagnostics @($result.Diagnostics) -Expected @($case.Code)
+    }
+}
+
+Add-ParserResult -Name 'PowerShell parser restricts dynamic native invocation' -Test {
+    $unknownBody = [string]::Join("`n", @('& $UnknownExecutable --version', 'if ($LASTEXITCODE -ne 0) { throw "failed" }'))
+    $unknownResult = ConvertFrom-RecoveryPowerShellFence -Fence (New-TestRecoveryPowerShellFence -Body $unknownBody)
+    Assert-ParserDiagnosticCodes -Diagnostics @($unknownResult.Diagnostics) -Expected @('PS_DYNAMIC_NATIVE_UNSUPPORTED')
+    Assert-ParserEqual -Actual @($unknownResult.Events).Count -Expected 0 -Message 'Unknown dynamic command should not emit an event.'
+
+    $phpBody = [string]::Join("`n", @('& $PhpExecutable -v', 'if ($LASTEXITCODE -ne 0) { throw "php failed" }'))
+    $phpResult = ConvertFrom-RecoveryPowerShellFence -Fence (New-TestRecoveryPowerShellFence -Body $phpBody)
+    Assert-ParserEqual -Actual $phpResult.IsValid -Expected $true -Message 'Configured PhpExecutable command should be valid.'
+    Assert-RecoveryPowerShellEventCommands -Result $phpResult -Expected @('php')
+
+    $excludedPhpResult = ConvertFrom-RecoveryPowerShellFence -Fence (New-TestRecoveryPowerShellFence -Body $phpBody) -NativeCommandNames @('git')
+    Assert-ParserDiagnosticCodes -Diagnostics @($excludedPhpResult.Diagnostics) -Expected @('PS_DYNAMIC_NATIVE_UNSUPPORTED')
+    Assert-ParserEqual -Actual @($excludedPhpResult.Events).Count -Expected 0 -Message 'Excluded PhpExecutable command should not emit an event.'
+}
+
+Add-ParserResult -Name 'PowerShell parser reports AST parse errors without events' -Test {
+    $result = ConvertFrom-RecoveryPowerShellFence -Fence (New-TestRecoveryPowerShellFence -Body "git status`nif (`$LASTEXITCODE -ne 0) {")
+
+    Assert-ParserEqual -Actual $result.IsValid -Expected $false -Message 'Malformed PowerShell should be invalid.'
+    Assert-ParserEqual -Actual @($result.Events).Count -Expected 0 -Message 'Malformed PowerShell should not emit events.'
+    Assert-ParserDiagnosticCodes -Diagnostics @($result.Diagnostics) -Expected @('PS_PARSE_ERROR')
+    Assert-ParserEqual -Actual $result.Diagnostics[0].Language -Expected 'powershell' -Message 'Parse diagnostic language mismatch.'
+    Assert-ParserEqual -Actual $result.Diagnostics[0].FenceId -Expected 'fence-powershell' -Message 'Parse diagnostic fence identifier mismatch.'
+}
+
+Add-ParserResult -Name 'PowerShell parser rejects nested or piped native statements' -Test {
+    $commands = @(
+        '$value = "$(git status)"',
+        'Write-Host (git status)',
+        'git status | Out-String'
+    )
+
+    foreach ($command in $commands) {
+        $body = [string]::Join("`n", @($command, 'if ($LASTEXITCODE -ne 0) { throw "failed" }'))
+        $result = ConvertFrom-RecoveryPowerShellFence -Fence (New-TestRecoveryPowerShellFence -Body $body)
+
+        Assert-ParserEqual -Actual $result.IsValid -Expected $false -Message "Nested command '$command' should be invalid."
+        Assert-ParserEqual -Actual @($result.Events).Count -Expected 0 -Message "Nested command '$command' should not emit an event."
+        Assert-ParserDiagnosticCodes -Diagnostics @($result.Diagnostics) -Expected @('PS_NATIVE_STATEMENT_AMBIGUOUS')
+    }
+}
+
+Add-ParserResult -Name 'PowerShell parser rejects same-line intervening statements' -Test {
+    $body = 'git status; Write-Host waiting; if ($LASTEXITCODE -ne 0) { throw "failed" }'
+    $result = ConvertFrom-RecoveryPowerShellFence -Fence (New-TestRecoveryPowerShellFence -Body $body)
+
+    Assert-ParserEqual -Actual $result.IsValid -Expected $false -Message 'Same-line intervening statement should be invalid.'
+    Assert-ParserDiagnosticCodes -Diagnostics @($result.Diagnostics) -Expected @('PS_NATIVE_GUARD_MISSING')
+    Assert-ParserEqual -Actual @($result.Events).Count -Expected 0 -Message 'Same-line intervening statement should not emit an event.'
+}
+
+Add-ParserResult -Name 'PowerShell parser normalizes powershell hosts and requires guards' -Test {
+    $validBody = [string]::Join("`n", @(
+        'powershell.exe -NoProfile -Command "exit 0"',
+        'if ($LASTEXITCODE -ne 0) { throw "powershell failed" }',
+        'pwsh -NoProfile -Command "exit 0"',
+        'if ($LASTEXITCODE -ne 0) { throw "pwsh failed" }'
+    ))
+    $validResult = ConvertFrom-RecoveryPowerShellFence -Fence (New-TestRecoveryPowerShellFence -Body $validBody)
+    Assert-ParserEqual -Actual $validResult.IsValid -Expected $true -Message 'Guarded PowerShell hosts should be valid.'
+    Assert-RecoveryPowerShellEventCommands -Result $validResult -Expected @('powershell', 'pwsh')
+
+    foreach ($command in @('powershell.exe -NoProfile', 'pwsh -NoProfile')) {
+        $missingResult = ConvertFrom-RecoveryPowerShellFence -Fence (New-TestRecoveryPowerShellFence -Body $command)
+        Assert-ParserDiagnosticCodes -Diagnostics @($missingResult.Diagnostics) -Expected @('PS_NATIVE_GUARD_MISSING')
+        Assert-ParserEqual -Actual @($missingResult.Events).Count -Expected 0 -Message "Unguarded host '$command' should not emit an event."
+    }
+}
+
+Add-ParserResult -Name 'PowerShell parser allows a guarded git assignment capture' -Test {
+    $body = [string]::Join("`n", @('$GitStatus = git status --porcelain', 'if ($LASTEXITCODE -ne 0) { throw "git failed" }'))
+    $result = ConvertFrom-RecoveryPowerShellFence -Fence (New-TestRecoveryPowerShellFence -Body $body)
+
+    Assert-ParserEqual -Actual $result.IsValid -Expected $true -Message 'Git assignment capture should be valid.'
+    Assert-RecoveryPowerShellEventCommands -Result $result -Expected @('git')
+    Assert-ParserEqual -Actual $result.Events[0].Text -Expected 'git status --porcelain' -Message 'Git assignment event text mismatch.'
+}
+
+Add-ParserResult -Name 'PowerShell parser allows the authored trimmed git revision capture' -Test {
+    $body = [string]::Join("`n", @('$RecoveryBaseSha = (git rev-parse HEAD).Trim()', 'if ($LASTEXITCODE -ne 0) { throw "git failed" }'))
+    $result = ConvertFrom-RecoveryPowerShellFence -Fence (New-TestRecoveryPowerShellFence -Body $body)
+
+    Assert-ParserEqual -Actual $result.IsValid -Expected $true -Message 'Trimmed git revision capture should be valid.'
+    Assert-RecoveryPowerShellEventCommands -Result $result -Expected @('git')
+    Assert-ParserEqual -Actual $result.Events[0].Text -Expected 'git rev-parse HEAD' -Message 'Trimmed git event text mismatch.'
+}
+
+Add-ParserResult -Name 'PowerShell parser allows the authored git tri-state guard' -Test {
+    $body = [string]::Join("`n", @(
+        'git show-ref --verify --quiet refs/heads/master',
+        '$masterExit = $LASTEXITCODE',
+        'if ($masterExit -eq 0) {',
+        '    Write-Host "master exists"',
+        '}',
+        'elseif ($masterExit -eq 1) {',
+        '    Write-Host "master missing"',
+        '}',
+        'else {',
+        '    throw "git show-ref failed"',
+        '}'
+    ))
+    $result = ConvertFrom-RecoveryPowerShellFence -Fence (New-TestRecoveryPowerShellFence -Body $body)
+
+    Assert-ParserEqual -Actual $result.IsValid -Expected $true -Message 'Authored tri-state guard should be valid.'
+    Assert-RecoveryPowerShellEventCommands -Result $result -Expected @('git')
+}
+
+Add-ParserResult -Name 'PowerShell parser emits exact normalized event metadata' -Test {
+    $body = '  & ''C:\tools\git.exe'' status ' + [char]96 + "`r`n" + '    --porcelain' + "`r`n" + 'if ($LASTEXITCODE -ne 0) { throw "git failed" }'
+    $fence = New-TestRecoveryPowerShellFence -Body $body -StartLine 100 -Id 'fence-custom' -SectionId 'section-custom'
+    $result = ConvertFrom-RecoveryPowerShellFence -Fence $fence
+    $event = $result.Events[0]
+
+    Assert-ParserEqual -Actual $result.IsValid -Expected $true -Message 'Metadata case should be valid.'
+    Assert-ParserEqual -Actual @($result.Events).Count -Expected 1 -Message 'Metadata event count mismatch.'
+    Assert-ParserProperties -Value $event -Expected @('Kind', 'Language', 'Text', 'NormalizedCommand', 'SourceLine', 'SourceColumn', 'SectionId', 'FenceId', 'StatementId', 'Metadata')
+    Assert-ParserEqual -Actual $event.Kind -Expected 'command' -Message 'PowerShell event kind mismatch.'
+    Assert-ParserEqual -Actual $event.Language -Expected 'powershell' -Message 'PowerShell event language mismatch.'
+    Assert-ParserEqual -Actual $event.Text -Expected ("& 'C:\tools\git.exe' status " + [char]96 + "`n" + '    --porcelain') -Message 'PowerShell event text normalization mismatch.'
+    Assert-ParserEqual -Actual $event.NormalizedCommand -Expected 'git' -Message 'PowerShell event normalized command mismatch.'
+    Assert-ParserEqual -Actual $event.SourceLine -Expected 101 -Message 'PowerShell event source line mismatch.'
+    Assert-ParserEqual -Actual $event.SourceColumn -Expected 3 -Message 'PowerShell event source column mismatch.'
+    Assert-ParserEqual -Actual $event.SectionId -Expected 'section-custom' -Message 'PowerShell event section identifier mismatch.'
+    Assert-ParserEqual -Actual $event.FenceId -Expected 'fence-custom' -Message 'PowerShell event fence identifier mismatch.'
+    Assert-ParserEqual -Actual $event.StatementId -Expected 'fence-custom-statement-0001' -Message 'PowerShell event statement identifier mismatch.'
+    Assert-ParserEqual -Actual $event.Metadata.GetType().FullName -Expected 'System.Collections.Hashtable' -Message 'PowerShell event metadata should be a hashtable.'
+    Assert-ParserEqual -Actual $event.Metadata.Count -Expected 0 -Message 'PowerShell event metadata should be empty.'
+}
+
+Add-ParserResult -Name 'PowerShell parser emits multiple valid native commands in order' -Test {
+    $body = [string]::Join("`n", @(
+        'git status',
+        'if ($LASTEXITCODE -ne 0) { throw "git failed" }',
+        'scp x host:y',
+        'if ($LASTEXITCODE -ne 0) { exit 1 }'
+    ))
+    $result = ConvertFrom-RecoveryPowerShellFence -Fence (New-TestRecoveryPowerShellFence -Body $body -Id 'fence-order')
+
+    Assert-ParserEqual -Actual $result.IsValid -Expected $true -Message 'Multiple guarded commands should be valid.'
+    Assert-RecoveryPowerShellEventCommands -Result $result -Expected @('git', 'scp')
+    Assert-ParserArrayEqual -Actual @($result.Events | ForEach-Object { $_.StatementId }) -Expected @('fence-order-statement-0001', 'fence-order-statement-0002') -Message 'PowerShell statement order mismatch.'
+    Assert-ParserArrayEqual -Actual @($result.Events | ForEach-Object { $_.SourceLine }) -Expected @(21, 23) -Message 'PowerShell event source line order mismatch.'
+}
+
+Add-ParserResult -Name 'PowerShell parser ignores unknown ordinary commands and excluded natives' -Test {
+    $body = [string]::Join("`n", @('Write-Host hello', 'Invoke-CustomThing', 'git status'))
+    $result = ConvertFrom-RecoveryPowerShellFence -Fence (New-TestRecoveryPowerShellFence -Body $body) -NativeCommandNames @('scp')
+
+    Assert-ParserEqual -Actual $result.IsValid -Expected $true -Message 'Unknown ordinary commands should be ignored.'
+    Assert-ParserEqual -Actual @($result.Events).Count -Expected 0 -Message 'Unknown ordinary commands should not emit events.'
+    Assert-ParserEqual -Actual @($result.Diagnostics).Count -Expected 0 -Message 'Unknown ordinary commands should not emit diagnostics.'
 }
 
 $results | Format-Table -AutoSize | Out-Host

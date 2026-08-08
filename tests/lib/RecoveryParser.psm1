@@ -99,6 +99,486 @@ function New-RecoveryParseResult {
     }
 }
 
+function Get-RecoveryPowerShellConfiguredCommands {
+    param(
+        [Parameter(Mandatory = $true)]
+        [string[]]$NativeCommandNames
+    )
+
+    $configured = [System.Collections.Generic.HashSet[string]]::new([System.StringComparer]::OrdinalIgnoreCase)
+    foreach ($commandName in @($NativeCommandNames)) {
+        if ([string]::IsNullOrWhiteSpace($commandName)) {
+            continue
+        }
+
+        $leafName = [System.IO.Path]::GetFileName($commandName).ToLowerInvariant()
+        if ($leafName.EndsWith('.exe', [System.StringComparison]::OrdinalIgnoreCase)) {
+            $leafName = $leafName.Substring(0, $leafName.Length - 4)
+        }
+        if (-not [string]::IsNullOrWhiteSpace($leafName)) {
+            [void]$configured.Add($leafName)
+        }
+    }
+
+    return $configured
+}
+
+function Get-RecoveryPowerShellCommandResolution {
+    param(
+        [Parameter(Mandatory = $true)]
+        [System.Management.Automation.Language.CommandAst]$Command,
+
+        [Parameter(Mandatory = $true)]
+        [System.Collections.Generic.HashSet[string]]$ConfiguredCommands
+    )
+
+    $invocationOperator = $Command.InvocationOperator
+    $commandElements = @($Command.CommandElements)
+    $firstElement = if ($commandElements.Count -gt 0) { $commandElements[0] } else { $null }
+    if (
+        $invocationOperator -ne [System.Management.Automation.Language.TokenKind]::Unknown -and
+        $invocationOperator -ne [System.Management.Automation.Language.TokenKind]::Ampersand
+    ) {
+        return [pscustomobject]@{ Classification = 'dynamic'; NormalizedCommand = $null; LeafName = $null }
+    }
+
+    if (
+        $invocationOperator -eq [System.Management.Automation.Language.TokenKind]::Ampersand -and
+        $firstElement -is [System.Management.Automation.Language.VariableExpressionAst]
+    ) {
+        if (
+            $firstElement.VariablePath.UserPath -ieq 'PhpExecutable' -and
+            $ConfiguredCommands.Contains('php')
+        ) {
+            return [pscustomobject]@{ Classification = 'native'; NormalizedCommand = 'php'; LeafName = '$PhpExecutable' }
+        }
+
+        return [pscustomobject]@{ Classification = 'dynamic'; NormalizedCommand = $null; LeafName = $null }
+    }
+
+    $literalCommandName = $Command.GetCommandName()
+    if (
+        -not $literalCommandName -and
+        $invocationOperator -eq [System.Management.Automation.Language.TokenKind]::Ampersand -and
+        $firstElement -is [System.Management.Automation.Language.StringConstantExpressionAst]
+    ) {
+        $literalCommandName = [string]$firstElement.Value
+    }
+    if (-not $literalCommandName) {
+        return [pscustomobject]@{ Classification = 'dynamic'; NormalizedCommand = $null; LeafName = $null }
+    }
+
+    $leafName = [System.IO.Path]::GetFileName($literalCommandName).ToLowerInvariant()
+    if (
+        $leafName -eq 'cmd' -or
+        $leafName -eq 'cmd.exe' -or
+        $leafName.EndsWith('.cmd', [System.StringComparison]::OrdinalIgnoreCase) -or
+        $leafName.EndsWith('.bat', [System.StringComparison]::OrdinalIgnoreCase) -or
+        $leafName.EndsWith('.com', [System.StringComparison]::OrdinalIgnoreCase)
+    ) {
+        return [pscustomobject]@{ Classification = 'wrapper'; NormalizedCommand = $null; LeafName = $leafName }
+    }
+
+    $normalizedCommand = $leafName
+    if ($normalizedCommand.EndsWith('.exe', [System.StringComparison]::OrdinalIgnoreCase)) {
+        $normalizedCommand = $normalizedCommand.Substring(0, $normalizedCommand.Length - 4)
+    }
+    if ($ConfiguredCommands.Contains($normalizedCommand)) {
+        return [pscustomobject]@{ Classification = 'native'; NormalizedCommand = $normalizedCommand; LeafName = $leafName }
+    }
+
+    return [pscustomobject]@{ Classification = 'ignore'; NormalizedCommand = $null; LeafName = $leafName }
+}
+
+function Get-RecoveryPowerShellStatementContext {
+    param(
+        [Parameter(Mandatory = $true)]
+        [System.Management.Automation.Language.CommandAst]$Command
+    )
+
+    [System.Management.Automation.Language.Ast]$statement = $Command
+    while (
+        $null -ne $statement.Parent -and
+        $statement.Parent -isnot [System.Management.Automation.Language.NamedBlockAst] -and
+        $statement.Parent -isnot [System.Management.Automation.Language.StatementBlockAst]
+    ) {
+        $statement = $statement.Parent
+    }
+    if ($null -eq $statement.Parent) {
+        return $null
+    }
+
+    $statements = @($statement.Parent.Statements)
+    for ($index = 0; $index -lt $statements.Count; $index++) {
+        if ([object]::ReferenceEquals($statements[$index], $statement)) {
+            return [pscustomobject]@{
+                Statement = $statement
+                Statements = $statements
+                Index = $index
+            }
+        }
+    }
+
+    return $null
+}
+
+function Test-RecoveryPowerShellNativeStatementShape {
+    param(
+        [Parameter(Mandatory = $true)]
+        [System.Management.Automation.Language.CommandAst]$Command,
+
+        [Parameter(Mandatory = $true)]
+        [System.Management.Automation.Language.Ast]$Statement,
+
+        [Parameter(Mandatory = $true)]
+        [string]$CommandName
+    )
+
+    $ancestor = $Command.Parent
+    while ($null -ne $ancestor) {
+        if (
+            $ancestor -is [System.Management.Automation.Language.SubExpressionAst] -or
+            $ancestor -is [System.Management.Automation.Language.ScriptBlockExpressionAst]
+        ) {
+            return $false
+        }
+        $ancestor = $ancestor.Parent
+    }
+
+    $pipeline = $Command.Parent
+    if (
+        $pipeline -isnot [System.Management.Automation.Language.PipelineAst] -or
+        @($pipeline.PipelineElements).Count -ne 1
+    ) {
+        return $false
+    }
+    if ([object]::ReferenceEquals($pipeline, $Statement)) {
+        return $true
+    }
+    if ($Statement -isnot [System.Management.Automation.Language.AssignmentStatementAst] -or $CommandName -ine 'git') {
+        return $false
+    }
+    if ([object]::ReferenceEquals($Statement.Right, $pipeline)) {
+        return $true
+    }
+
+    $parenthesized = $pipeline.Parent
+    $memberCall = if ($null -ne $parenthesized) { $parenthesized.Parent } else { $null }
+    $commandExpression = if ($null -ne $memberCall) { $memberCall.Parent } else { $null }
+    return (
+        $parenthesized -is [System.Management.Automation.Language.ParenExpressionAst] -and
+        $memberCall -is [System.Management.Automation.Language.InvokeMemberExpressionAst] -and
+        $memberCall.Member.Value -ceq 'Trim' -and
+        $null -eq $memberCall.Arguments -and
+        $commandExpression -is [System.Management.Automation.Language.CommandExpressionAst] -and
+        [object]::ReferenceEquals($commandExpression.Parent, $Statement) -and
+        [object]::ReferenceEquals($Statement.Right, $commandExpression)
+    )
+}
+
+function Test-RecoveryPowerShellCondition {
+    param(
+        [Parameter(Mandatory = $true)]
+        [System.Management.Automation.Language.PipelineBaseAst]$Condition,
+
+        [Parameter(Mandatory = $true)]
+        [string]$VariableName,
+
+        [Parameter(Mandatory = $true)]
+        [System.Management.Automation.Language.TokenKind]$Operator,
+
+        [Parameter(Mandatory = $true)]
+        [int]$Value
+    )
+
+    if ($Condition -isnot [System.Management.Automation.Language.PipelineAst]) {
+        return $false
+    }
+    $pipelineElements = @($Condition.PipelineElements)
+    if (
+        $pipelineElements.Count -ne 1 -or
+        $pipelineElements[0] -isnot [System.Management.Automation.Language.CommandExpressionAst]
+    ) {
+        return $false
+    }
+
+    $expression = $pipelineElements[0].Expression
+    return (
+        $expression -is [System.Management.Automation.Language.BinaryExpressionAst] -and
+        $expression.Operator -eq $Operator -and
+        $expression.Left -is [System.Management.Automation.Language.VariableExpressionAst] -and
+        $expression.Left.VariablePath.UserPath -ieq $VariableName -and
+        $expression.Right -is [System.Management.Automation.Language.ConstantExpressionAst] -and
+        $expression.Right.Value -eq $Value
+    )
+}
+
+function Test-RecoveryPowerShellIntegerValue {
+    param($Value)
+
+    return (
+        $Value -is [byte] -or
+        $Value -is [sbyte] -or
+        $Value -is [int16] -or
+        $Value -is [uint16] -or
+        $Value -is [int32] -or
+        $Value -is [uint32] -or
+        $Value -is [int64] -or
+        $Value -is [uint64]
+    )
+}
+
+function Test-RecoveryPowerShellBlockingStatementBlock {
+    param(
+        [Parameter(Mandatory = $true)]
+        [System.Management.Automation.Language.StatementBlockAst]$StatementBlock,
+
+        [string]$CapturedExitVariableName = $null
+    )
+
+    $statements = @($StatementBlock.Statements)
+    if ($statements.Count -ne 1) {
+        return $false
+    }
+    if ($statements[0] -is [System.Management.Automation.Language.ThrowStatementAst]) {
+        return $true
+    }
+    if ($statements[0] -isnot [System.Management.Automation.Language.ExitStatementAst]) {
+        return $false
+    }
+
+    $pipeline = $statements[0].Pipeline
+    if ($null -eq $pipeline) {
+        return $false
+    }
+    $expression = $pipeline.GetPureExpression()
+    if (
+        $CapturedExitVariableName -and
+        $expression -is [System.Management.Automation.Language.VariableExpressionAst] -and
+        $expression.VariablePath.UserPath -ieq $CapturedExitVariableName
+    ) {
+        return $true
+    }
+    if ($expression -is [System.Management.Automation.Language.ConstantExpressionAst]) {
+        return (Test-RecoveryPowerShellIntegerValue -Value $expression.Value) -and $expression.Value -ne 0
+    }
+    if (
+        $expression -isnot [System.Management.Automation.Language.UnaryExpressionAst] -or
+        @(
+            [System.Management.Automation.Language.TokenKind]::Minus,
+            [System.Management.Automation.Language.TokenKind]::Plus
+        ) -notcontains $expression.TokenKind -or
+        $expression.Child -isnot [System.Management.Automation.Language.ConstantExpressionAst]
+    ) {
+        return $false
+    }
+
+    return (
+        (Test-RecoveryPowerShellIntegerValue -Value $expression.Child.Value) -and
+        $expression.Child.Value -ne 0
+    )
+}
+
+function Get-RecoveryPowerShellCapturedExitVariableName {
+    param(
+        [Parameter(Mandatory = $true)]
+        [System.Management.Automation.Language.StatementAst]$Statement
+    )
+
+    if (
+        $Statement -isnot [System.Management.Automation.Language.AssignmentStatementAst] -or
+        $Statement.Operator -ne [System.Management.Automation.Language.TokenKind]::Equals -or
+        $Statement.Left -isnot [System.Management.Automation.Language.VariableExpressionAst] -or
+        $Statement.Right -isnot [System.Management.Automation.Language.CommandExpressionAst] -or
+        $Statement.Right.Expression -isnot [System.Management.Automation.Language.VariableExpressionAst] -or
+        $Statement.Right.Expression.VariablePath.UserPath -ine 'LASTEXITCODE'
+    ) {
+        return $null
+    }
+
+    return $Statement.Left.VariablePath.UserPath
+}
+
+function Get-RecoveryPowerShellStandardGuardAnalysis {
+    param(
+        [Parameter(Mandatory = $true)]
+        [System.Management.Automation.Language.StatementAst]$Statement
+    )
+
+    if (
+        $Statement -isnot [System.Management.Automation.Language.IfStatementAst] -or
+        @($Statement.Clauses).Count -ne 1 -or
+        $null -ne $Statement.ElseClause -or
+        -not (Test-RecoveryPowerShellCondition -Condition $Statement.Clauses[0].Item1 -VariableName 'LASTEXITCODE' -Operator ([System.Management.Automation.Language.TokenKind]::Ine) -Value 0)
+    ) {
+        return [pscustomobject]@{ Matched = $false; Blocking = $false }
+    }
+
+    return [pscustomobject]@{
+        Matched = $true
+        Blocking = Test-RecoveryPowerShellBlockingStatementBlock -StatementBlock $Statement.Clauses[0].Item2
+    }
+}
+
+function Get-RecoveryPowerShellCapturedGuardAnalysis {
+    param(
+        [Parameter(Mandatory = $true)]
+        [System.Management.Automation.Language.StatementAst]$Statement,
+
+        [Parameter(Mandatory = $true)]
+        [string]$CapturedExitVariableName
+    )
+
+    if ($Statement -isnot [System.Management.Automation.Language.IfStatementAst]) {
+        return [pscustomobject]@{ Matched = $false; Blocking = $false }
+    }
+
+    if (
+        @($Statement.Clauses).Count -eq 1 -and
+        $null -eq $Statement.ElseClause -and
+        (Test-RecoveryPowerShellCondition -Condition $Statement.Clauses[0].Item1 -VariableName $CapturedExitVariableName -Operator ([System.Management.Automation.Language.TokenKind]::Ine) -Value 0)
+    ) {
+        return [pscustomobject]@{
+            Matched = $true
+            Blocking = Test-RecoveryPowerShellBlockingStatementBlock -StatementBlock $Statement.Clauses[0].Item2 -CapturedExitVariableName $CapturedExitVariableName
+        }
+    }
+
+    if (
+        @($Statement.Clauses).Count -eq 2 -and
+        $null -ne $Statement.ElseClause -and
+        (Test-RecoveryPowerShellCondition -Condition $Statement.Clauses[0].Item1 -VariableName $CapturedExitVariableName -Operator ([System.Management.Automation.Language.TokenKind]::Ieq) -Value 0) -and
+        (Test-RecoveryPowerShellCondition -Condition $Statement.Clauses[1].Item1 -VariableName $CapturedExitVariableName -Operator ([System.Management.Automation.Language.TokenKind]::Ieq) -Value 1)
+    ) {
+        return [pscustomobject]@{
+            Matched = $true
+            Blocking = Test-RecoveryPowerShellBlockingStatementBlock -StatementBlock $Statement.ElseClause
+        }
+    }
+
+    return [pscustomobject]@{ Matched = $false; Blocking = $false }
+}
+
+function Get-RecoveryPowerShellImmediateGuardAnalysis {
+    param(
+        [Parameter(Mandatory = $true)]
+        [object[]]$Statements,
+
+        [Parameter(Mandatory = $true)]
+        [int]$CommandIndex
+    )
+
+    $nextIndex = $CommandIndex + 1
+    if ($nextIndex -ge $Statements.Count) {
+        return [pscustomobject]@{ Matched = $false; Blocking = $false }
+    }
+
+    $standardGuard = Get-RecoveryPowerShellStandardGuardAnalysis -Statement $Statements[$nextIndex]
+    if ($standardGuard.Matched) {
+        return $standardGuard
+    }
+
+    $capturedExitVariableName = Get-RecoveryPowerShellCapturedExitVariableName -Statement $Statements[$nextIndex]
+    $guardIndex = $nextIndex + 1
+    if (-not $capturedExitVariableName -or $guardIndex -ge $Statements.Count) {
+        return [pscustomobject]@{ Matched = $false; Blocking = $false }
+    }
+
+    return Get-RecoveryPowerShellCapturedGuardAnalysis -Statement $Statements[$guardIndex] -CapturedExitVariableName $capturedExitVariableName
+}
+
+function New-RecoveryPowerShellExtentDiagnostic {
+    param(
+        [Parameter(Mandatory = $true)]
+        [string]$Code,
+
+        [Parameter(Mandatory = $true)]
+        [string]$Message,
+
+        [Parameter(Mandatory = $true)]
+        [System.Management.Automation.Language.IScriptExtent]$Extent,
+
+        [Parameter(Mandatory = $true)]
+        $Fence
+    )
+
+    $bodyLine = [Math]::Max(1, [int]$Extent.StartLineNumber)
+    $bodyColumn = [Math]::Max(1, [int]$Extent.StartColumnNumber)
+    New-RecoveryParserDiagnostic -Code $Code -Message $Message -Language 'powershell' -SourceLine ([int]$Fence.StartLine + $bodyLine) -SourceColumn $bodyColumn -FenceId $Fence.Id
+}
+
+function ConvertFrom-RecoveryPowerShellFence {
+    [CmdletBinding()]
+    param(
+        [Parameter(Mandatory = $true)]
+        $Fence,
+
+        [string[]]$NativeCommandNames = @('powershell', 'pwsh', 'node', 'php', 'git', 'ssh', 'scp')
+    )
+
+    $tokens = $null
+    $parseErrors = $null
+    $ast = [System.Management.Automation.Language.Parser]::ParseInput(
+        [string]$Fence.Body,
+        [ref]$tokens,
+        [ref]$parseErrors
+    )
+    if (@($parseErrors).Count -gt 0) {
+        $parseDiagnostics = [System.Collections.Generic.List[object]]::new()
+        foreach ($parseError in @($parseErrors)) {
+            $parseDiagnostics.Add((New-RecoveryPowerShellExtentDiagnostic -Code 'PS_PARSE_ERROR' -Message $parseError.Message -Extent $parseError.Extent -Fence $Fence))
+        }
+        return New-RecoveryParseResult -Diagnostics $parseDiagnostics.ToArray()
+    }
+
+    $configuredCommands = Get-RecoveryPowerShellConfiguredCommands -NativeCommandNames $NativeCommandNames
+    $events = [System.Collections.Generic.List[object]]::new()
+    $diagnostics = [System.Collections.Generic.List[object]]::new()
+    $commands = @($ast.FindAll({
+        param($node)
+        $node -is [System.Management.Automation.Language.CommandAst]
+    }, $true) | Sort-Object -Property @{ Expression = { $_.Extent.StartOffset }; Ascending = $true }, @{ Expression = { $_.Extent.EndOffset }; Ascending = $true })
+
+    foreach ($command in $commands) {
+        $resolution = Get-RecoveryPowerShellCommandResolution -Command $command -ConfiguredCommands $configuredCommands
+        if ($resolution.Classification -eq 'ignore') {
+            continue
+        }
+        if ($resolution.Classification -eq 'wrapper') {
+            $diagnostics.Add((New-RecoveryPowerShellExtentDiagnostic -Code 'PS_UNSUPPORTED_NATIVE_WRAPPER' -Message "PowerShell native wrapper '$($resolution.LeafName)' is unsupported." -Extent $command.Extent -Fence $Fence))
+            continue
+        }
+        if ($resolution.Classification -eq 'dynamic') {
+            $diagnostics.Add((New-RecoveryPowerShellExtentDiagnostic -Code 'PS_DYNAMIC_NATIVE_UNSUPPORTED' -Message 'PowerShell dynamic native invocation is unsupported.' -Extent $command.Extent -Fence $Fence))
+            continue
+        }
+
+        $context = Get-RecoveryPowerShellStatementContext -Command $command
+        if (
+            $null -eq $context -or
+            -not (Test-RecoveryPowerShellNativeStatementShape -Command $command -Statement $context.Statement -CommandName $resolution.NormalizedCommand)
+        ) {
+            $diagnostics.Add((New-RecoveryPowerShellExtentDiagnostic -Code 'PS_NATIVE_STATEMENT_AMBIGUOUS' -Message 'PowerShell native command statement shape is ambiguous.' -Extent $command.Extent -Fence $Fence))
+            continue
+        }
+
+        $guardAnalysis = Get-RecoveryPowerShellImmediateGuardAnalysis -Statements $context.Statements -CommandIndex $context.Index
+        if (-not $guardAnalysis.Matched) {
+            $diagnostics.Add((New-RecoveryPowerShellExtentDiagnostic -Code 'PS_NATIVE_GUARD_MISSING' -Message 'PowerShell native command is missing an immediate blocking guard.' -Extent $command.Extent -Fence $Fence))
+            continue
+        }
+        if (-not $guardAnalysis.Blocking) {
+            $diagnostics.Add((New-RecoveryPowerShellExtentDiagnostic -Code 'PS_NATIVE_GUARD_NONBLOCKING' -Message 'PowerShell native command guard does not block failure.' -Extent $command.Extent -Fence $Fence))
+            continue
+        }
+
+        $eventText = $command.Extent.Text.Trim().Replace("`r`n", "`n").Replace("`r", "`n")
+        $events.Add((New-RecoveryExecutableEvent -Kind 'command' -Language 'powershell' -Text $eventText -NormalizedCommand $resolution.NormalizedCommand -SourceLine ([int]$Fence.StartLine + [int]$command.Extent.StartLineNumber) -SourceColumn ([int]$command.Extent.StartColumnNumber) -SectionId $Fence.SectionId -FenceId $Fence.Id -StatementId ('{0}-statement-{1:D4}' -f $Fence.Id, ($events.Count + 1)) -Metadata @{}))
+    }
+
+    return New-RecoveryParseResult -Events $events.ToArray() -Diagnostics $diagnostics.ToArray()
+}
+
 function Get-RecoveryBashFirstContentColumn {
     param(
         [Parameter(Mandatory = $true)]
@@ -913,4 +1393,4 @@ function ConvertFrom-RecoveryMarkdown {
     }
 }
 
-Export-ModuleMember -Function New-RecoveryParserDiagnostic, New-RecoveryExecutableEvent, New-RecoveryParseResult, ConvertFrom-RecoveryMarkdown, ConvertFrom-RecoveryBashFence
+Export-ModuleMember -Function New-RecoveryParserDiagnostic, New-RecoveryExecutableEvent, New-RecoveryParseResult, ConvertFrom-RecoveryMarkdown, ConvertFrom-RecoveryBashFence, ConvertFrom-RecoveryPowerShellFence
