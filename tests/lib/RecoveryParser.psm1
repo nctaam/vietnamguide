@@ -135,35 +135,79 @@ function Test-RecoveryPowerShellOrdinaryVariablePath {
     }
 
     return @(
+        '$',
+        '?',
+        '^',
         '_',
         'args',
+        'confirmpreference',
+        'consolefilename',
+        'debugpreference',
         'error',
+        'erroractionpreference',
+        'errorview',
+        'event',
+        'eventargs',
+        'eventsubscriber',
         'executioncontext',
         'false',
         'foreach',
+        'formatenumerationlimit',
         'home',
         'host',
+        'informationpreference',
         'input',
         'lastexitcode',
+        'logcommandhealthevent',
+        'logcommandlifecycleevent',
+        'logenginehealthevent',
+        'logenginelifecycleevent',
+        'logproviderhealthevent',
+        'logproviderlifecycleevent',
         'matches',
+        'maximumaliascount',
+        'maximumdrivecount',
+        'maximumerrorcount',
+        'maximumfunctioncount',
+        'maximumhistorycount',
+        'maximumvariablecount',
         'myinvocation',
         'nestedpromptlevel',
         'null',
         'ofs',
+        'outputencoding',
         'pid',
+        'profile',
+        'progresspreference',
         'psboundparameters',
         'pscmdlet',
         'pscommandpath',
+        'psculture',
+        'psdebugcontext',
+        'psdefaultparametervalues',
+        'psedition',
+        'psemailserver',
         'pshome',
+        'psitem',
+        'psmoduleautoloadingpreference',
+        'pssenderinfo',
         'psscriptroot',
+        'pssessionapplicationname',
+        'pssessionconfigurationname',
+        'pssessionoption',
+        'psuiculture',
         'psversiontable',
         'pwd',
         'shellid',
         'stacktrace',
         'switch',
         'this',
-        'true'
-    ) -notcontains $VariablePath.UserPath
+        'transcript',
+        'true',
+        'verbosepreference',
+        'warningpreference',
+        'whatifpreference'
+    ) -inotcontains $VariablePath.UserPath
 }
 
 function Get-RecoveryPowerShellLiteralCommandResolution {
@@ -269,6 +313,35 @@ function Test-RecoveryPowerShellCommandUsesProvider {
     return $false
 }
 
+function Test-RecoveryPowerShellNewItemDirectory {
+    param(
+        [Parameter(Mandatory = $true)]
+        [System.Management.Automation.Language.CommandAst]$Command
+    )
+
+    $elements = @($Command.CommandElements)
+    for ($index = 1; $index -lt $elements.Count; $index++) {
+        $element = $elements[$index]
+        if (
+            $element -isnot [System.Management.Automation.Language.CommandParameterAst] -or
+            $element.ParameterName -ine 'ItemType'
+        ) {
+            continue
+        }
+
+        $argument = $element.Argument
+        if ($null -eq $argument -and ($index + 1) -lt $elements.Count) {
+            $argument = $elements[$index + 1]
+        }
+        return (
+            $argument -is [System.Management.Automation.Language.StringConstantExpressionAst] -and
+            $argument.Value -ieq 'Directory'
+        )
+    }
+
+    return $false
+}
+
 function Test-RecoveryPowerShellConfiguredCommandLiteral {
     param(
         [Parameter(Mandatory = $true)]
@@ -300,7 +373,8 @@ function Get-RecoveryPowerShellShadowingNodes {
         $node -is [System.Management.Automation.Language.FunctionDefinitionAst]
     }, $true) | Sort-Object -Property @{ Expression = { $_.Extent.StartOffset }; Ascending = $true })
 
-    $hasConfiguredNativeEvents = $false
+    $hasLiteralConfiguredNativeEvents = $false
+    $hasDynamicPhpExecutableEvent = $false
     foreach ($candidate in $candidates) {
         if ($candidate -isnot [System.Management.Automation.Language.CommandAst]) {
             continue
@@ -309,18 +383,22 @@ function Get-RecoveryPowerShellShadowingNodes {
         $literalCommandName = $candidate.GetCommandName()
         $elements = @($candidate.CommandElements)
         if (
-            ($literalCommandName -and
-                (Test-RecoveryPowerShellConfiguredCommandLiteral -LiteralCommandName $literalCommandName -ConfiguredCommands $ConfiguredCommands)) -or
-            ($candidate.InvocationOperator -eq [System.Management.Automation.Language.TokenKind]::Ampersand -and
-                $elements.Count -gt 0 -and
-                $elements[0] -is [System.Management.Automation.Language.VariableExpressionAst] -and
-                $elements[0].VariablePath.UserPath -ieq 'PhpExecutable' -and
-                (Test-RecoveryPowerShellOrdinaryVariablePath -VariablePath $elements[0].VariablePath))
+            $literalCommandName -and
+            (Test-RecoveryPowerShellConfiguredCommandLiteral -LiteralCommandName $literalCommandName -ConfiguredCommands $ConfiguredCommands)
         ) {
-            $hasConfiguredNativeEvents = $true
-            break
+            $hasLiteralConfiguredNativeEvents = $true
+        }
+        if (
+            $candidate.InvocationOperator -eq [System.Management.Automation.Language.TokenKind]::Ampersand -and
+            $elements.Count -gt 0 -and
+            $elements[0] -is [System.Management.Automation.Language.VariableExpressionAst] -and
+            $elements[0].VariablePath.UserPath -ieq 'PhpExecutable' -and
+            (Test-RecoveryPowerShellOrdinaryVariablePath -VariablePath $elements[0].VariablePath)
+        ) {
+            $hasDynamicPhpExecutableEvent = $true
         }
     }
+    $hasConfiguredNativeEvents = $hasLiteralConfiguredNativeEvents -or $hasDynamicPhpExecutableEvent
 
     foreach ($candidate in $candidates) {
         if ($candidate -is [System.Management.Automation.Language.FunctionDefinitionAst]) {
@@ -341,8 +419,25 @@ function Get-RecoveryPowerShellShadowingNodes {
             $shadowingNodes.Add($candidate)
             continue
         }
+        if ($commandName -ieq 'new-item') {
+            if (
+                $hasLiteralConfiguredNativeEvents -and
+                -not (Test-RecoveryPowerShellNewItemDirectory -Command $candidate)
+            ) {
+                $shadowingNodes.Add($candidate)
+            }
+            continue
+        }
         if (
-            @('set-item', 'new-item', 'copy-item', 'move-item', 'rename-item', 'clear-item', 'remove-item') -icontains $commandName -and
+            @('set-item', 'copy-item', 'move-item', 'rename-item') -icontains $commandName -and
+            ($hasLiteralConfiguredNativeEvents -or
+                (Test-RecoveryPowerShellCommandUsesProvider -Command $candidate -ProviderNames @('Alias', 'Function')))
+        ) {
+            $shadowingNodes.Add($candidate)
+            continue
+        }
+        if (
+            @('clear-item', 'remove-item') -icontains $commandName -and
             (Test-RecoveryPowerShellCommandUsesProvider -Command $candidate -ProviderNames @('Alias', 'Function'))
         ) {
             $shadowingNodes.Add($candidate)
@@ -376,7 +471,13 @@ function Test-RecoveryPowerShellPhpExecutableMutationCommand {
         return $true
     }
 
-    if (@('get-item', 'set-item', 'new-item', 'copy-item', 'move-item', 'rename-item', 'clear-item', 'remove-item') -inotcontains $commandName) {
+    if (@('set-item', 'copy-item', 'move-item', 'rename-item') -icontains $commandName) {
+        return $true
+    }
+    if ($commandName -ieq 'new-item') {
+        return -not (Test-RecoveryPowerShellNewItemDirectory -Command $Command)
+    }
+    if (@('get-item', 'clear-item', 'remove-item') -inotcontains $commandName) {
         return $false
     }
     return Test-RecoveryPowerShellCommandUsesProvider -Command $Command -ProviderNames @('Variable')

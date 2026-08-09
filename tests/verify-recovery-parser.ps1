@@ -1145,19 +1145,46 @@ Add-ParserResult -Name 'PowerShell parser rejects indirect PhpExecutable PSVaria
     }
 }
 
-Add-ParserResult -Name 'PowerShell parser preserves non-shadowing item provider commands' -Test {
-    $cases = @(
-        [pscustomobject]@{ Name = 'authored directory creation'; Statement = 'New-Item -ItemType Directory -Path $DrillRoot -Force | Out-Null' },
-        [pscustomobject]@{ Name = 'environment provider update'; Statement = 'si Env:\RECOVERY_FLAG enabled' }
-    )
+Add-ParserResult -Name 'PowerShell parser rejects dynamic PhpExecutable provider mutation' -Test {
+    $body = [string]::Join("`n", @(
+        '$PhpExecutable = ''git''',
+        '$name = ''PhpExecutable''',
+        'Set-Item -Path "Variable:$name" -Value cmd.exe',
+        '& $PhpExecutable /c exit 0',
+        'if ($LASTEXITCODE -ne 0) { throw ''failed'' }'
+    ))
+    $result = Invoke-TestRecoveryPowerShellFenceParser -Fence (New-TestRecoveryPowerShellFence -Body $body)
 
-    foreach ($case in $cases) {
-        $body = [string]::Join("`n", @($case.Statement, 'git status', 'if ($LASTEXITCODE -ne 0) { throw ''failed'' }'))
-        $result = Invoke-TestRecoveryPowerShellFenceParser -Fence (New-TestRecoveryPowerShellFence -Body $body)
+    Assert-ParserEqual -Actual $result.IsValid -Expected $false -Message 'Dynamic Variable provider mutation should invalidate PhpExecutable proof.'
+    Assert-ParserEqual -Actual @($result.Events).Count -Expected 0 -Message 'Dynamic Variable provider mutation should not emit an event.'
+    Assert-ParserDiagnosticCodes -Diagnostics @($result.Diagnostics) -Expected @('PS_DYNAMIC_NATIVE_UNSUPPORTED')
+}
 
-        Assert-ParserEqual -Actual $result.IsValid -Expected $true -Message "$($case.Name) should remain valid."
-        Assert-RecoveryPowerShellEventCommands -Result $result -Expected @('git')
-    }
+Add-ParserResult -Name 'PowerShell parser rejects dynamic alias provider mutation' -Test {
+    $body = [string]::Join("`n", @(
+        '$name = ''git''',
+        'Set-Item -Path "Alias:$name" -Value cmd.exe',
+        'git /c exit 0',
+        'if ($LASTEXITCODE -ne 0) { throw ''failed'' }'
+    ))
+    $result = Invoke-TestRecoveryPowerShellFenceParser -Fence (New-TestRecoveryPowerShellFence -Body $body)
+
+    Assert-ParserEqual -Actual $result.IsValid -Expected $false -Message 'Dynamic Alias provider mutation should make native resolution ambiguous.'
+    Assert-ParserEqual -Actual @($result.Events).Count -Expected 0 -Message 'Dynamic Alias provider mutation should not emit an event.'
+    Assert-ParserDiagnosticCodes -Diagnostics @($result.Diagnostics) -Expected @('PS_NATIVE_STATEMENT_AMBIGUOUS')
+}
+
+Add-ParserResult -Name 'PowerShell parser preserves the authored New-Item directory command' -Test {
+    $body = [string]::Join("`n", @(
+        'New-Item -ItemType Directory -Path $DrillRoot -Force | Out-Null',
+        'powershell.exe -NoProfile -Command "exit 0"',
+        'if ($LASTEXITCODE -ne 0) { throw ''failed'' }',
+        'Remove-Item -LiteralPath $DrillRoot -Recurse -Force'
+    ))
+    $result = Invoke-TestRecoveryPowerShellFenceParser -Fence (New-TestRecoveryPowerShellFence -Body $body)
+
+    Assert-ParserEqual -Actual $result.IsValid -Expected $true -Message 'Authored directory creation and cleanup should remain valid.'
+    Assert-RecoveryPowerShellEventCommands -Result $result -Expected @('powershell')
 }
 
 Add-ParserResult -Name 'PowerShell parser requires non-empty explicit native command configuration' -Test {
@@ -1376,6 +1403,52 @@ Add-ParserResult -Name 'PowerShell parser rejects unsafe git assignment capture 
 
         Assert-ParserEqual -Actual $result.IsValid -Expected $false -Message "Git capture target $($target.Name) should be invalid."
         Assert-ParserEqual -Actual @($result.Events).Count -Expected 0 -Message "Git capture target $($target.Name) should not emit an event."
+        Assert-ParserDiagnosticCodes -Diagnostics @($result.Diagnostics) -Expected @('PS_NATIVE_STATEMENT_AMBIGUOUS')
+    }
+}
+
+Add-ParserResult -Name 'PowerShell parser rejects automatic and preference git capture targets' -Test {
+    $targets = @(
+        '$PSCulture',
+        '$psuiculture',
+        '$PSEdition',
+        '$ConsoleFileName',
+        '$?',
+        '$$',
+        '$^',
+        '$PSItem',
+        '$Event',
+        '$EventArgs',
+        '$EventSubscriber',
+        '$PSDebugContext',
+        '$PSSenderInfo',
+        '$PROFILE',
+        '$ConfirmPreference',
+        '$DebugPreference',
+        '$ErrorActionPreference',
+        '$ErrorView',
+        '$FormatEnumerationLimit',
+        '$InformationPreference',
+        '$MaximumHistoryCount',
+        '$OutputEncoding',
+        '$ProgressPreference',
+        '$PSDefaultParameterValues',
+        '$PSEmailServer',
+        '$PSModuleAutoLoadingPreference',
+        '$PSSessionApplicationName',
+        '$PSSessionConfigurationName',
+        '$PSSessionOption',
+        '$VerbosePreference',
+        '$WarningPreference',
+        '$WhatIfPreference'
+    )
+
+    foreach ($target in $targets) {
+        $body = [string]::Join("`n", @("$target = git status", 'if ($LASTEXITCODE -ne 0) { throw ''failed'' }'))
+        $result = Invoke-TestRecoveryPowerShellFenceParser -Fence (New-TestRecoveryPowerShellFence -Body $body)
+
+        Assert-ParserEqual -Actual $result.IsValid -Expected $false -Message "Git capture target '$target' should be invalid."
+        Assert-ParserEqual -Actual @($result.Events).Count -Expected 0 -Message "Git capture target '$target' should not emit an event."
         Assert-ParserDiagnosticCodes -Diagnostics @($result.Diagnostics) -Expected @('PS_NATIVE_STATEMENT_AMBIGUOUS')
     }
 }
