@@ -113,6 +113,59 @@ function Test-RecoveryParserEventSequenceContract {
     return $true
 }
 
+function Test-RecoveryParserEventPrecedesFirstEvent {
+    param(
+        [object[]]$Events,
+        [string]$ExactText,
+        [string]$BeforeExactText,
+        [string]$Language = $null
+    )
+
+    $eventArray = @($Events | Where-Object { $null -ne $_ })
+    $eventParameters = @{ Events = $eventArray; ExactText = $ExactText }
+    $beforeParameters = @{ Events = $eventArray; ExactText = $BeforeExactText }
+    if (-not [string]::IsNullOrEmpty($Language)) {
+        $eventParameters.Language = $Language
+        $beforeParameters.Language = $Language
+    }
+    $matchingEvents = @(Find-RecoveryExecutableEvents @eventParameters)
+    $beforeEvents = @(Find-RecoveryExecutableEvents @beforeParameters)
+    if ($matchingEvents.Count -eq 0 -or $beforeEvents.Count -eq 0) {
+        return $false
+    }
+
+    return [array]::IndexOf($eventArray, $matchingEvents[0]) -lt [array]::IndexOf($eventArray, $beforeEvents[0])
+}
+
+function Get-RecoveryParserFirstMissingOrOutOfOrderEventText {
+    param(
+        [object[]]$Events,
+        [string[]]$ExpectedTexts,
+        [string]$Language = $null
+    )
+
+    $eventArray = @($Events | Where-Object { $null -ne $_ })
+    $cursor = -1
+    foreach ($expectedText in @($ExpectedTexts)) {
+        $matchingIndex = -1
+        for ($index = $cursor + 1; $index -lt $eventArray.Count; $index++) {
+            if (
+                $eventArray[$index].Text -ceq $expectedText -and
+                ([string]::IsNullOrEmpty($Language) -or $eventArray[$index].Language -ceq $Language)
+            ) {
+                $matchingIndex = $index
+                break
+            }
+        }
+        if ($matchingIndex -lt 0) {
+            return $expectedText
+        }
+        $cursor = $matchingIndex
+    }
+
+    return $null
+}
+
 function Test-RecoveryParserConsecutiveEventWindow {
     param(
         [object[]]$Events,
@@ -1726,25 +1779,26 @@ if ($validatedLocalAuthored.Count -eq 1) {
         "VG_RUN_ID='<same-closed-full-run-id>'",
         'test -f "$DRILL_SENTINEL_DIR/production.before.json"'
     )
-    # Raw authored-content pin: keep copy-safe placeholders exact; parser events validate executable presence below.
     foreach ($marker in $requiredPostDrillMarkers) {
+        # Non-execution-sensitive authored pin: keep copy-safe placeholders exact; typed events validate executable presence below.
         if (-not $executionAddendumText.Contains($marker)) {
             Add-Failure "Recovery execution addendum missing copy-safe post-drill marker: $marker"
         }
     }
 
-    $nativeFailFastSections = @(
-        [pscustomobject]@{ Label = 'Recovered verifier block'; Heading = '## Task 0: Recover the Missing Verifier Stack' },
-        [pscustomobject]@{ Label = 'Local build block'; Heading = '## Local Build and Release Preparation' },
-        [pscustomobject]@{ Label = 'Artifact upload block'; Heading = '## Artifact Upload' },
-        [pscustomobject]@{ Label = 'Production SSH entry'; Heading = '## Production Shell Initialization' },
-        [pscustomobject]@{ Label = 'Canary public verification block'; Heading = '## Canary Validate, Dry-Run, Apply, and Activate' },
-        [pscustomobject]@{ Label = 'Stage 2 public verification block'; Heading = '## Stage 2 Validate, Apply, Activate, and Close' },
-        [pscustomobject]@{ Label = 'Fixture drill block'; Heading = '## Isolated Fixture-Only Rollback Drill' },
-        [pscustomobject]@{ Label = 'Reconnect SSH block'; Heading = '## Reconnect After the Isolated Drill' },
-        [pscustomobject]@{ Label = 'Final integration block'; Heading = '## Final Local Integration' }
+    $nativeFailFastSectionContracts = @(
+        [pscustomobject]@{ Heading = '## Task 0: Recover the Missing Verifier Stack'; Language = 'powershell'; FailureLabel = 'Recovered verifier block native fail-fast contract failed.' },
+        [pscustomobject]@{ Heading = '## Local Build and Release Preparation'; Language = 'powershell'; FailureLabel = 'Local build block native fail-fast contract failed.' },
+        [pscustomobject]@{ Heading = '## Artifact Upload'; Language = 'powershell'; FailureLabel = 'Artifact upload block native fail-fast contract failed.' },
+        [pscustomobject]@{ Heading = '## Production Shell Initialization'; Language = 'powershell'; FailureLabel = 'Production SSH entry native fail-fast contract failed.' },
+        [pscustomobject]@{ Heading = '## Canary Validate, Dry-Run, Apply, and Activate'; Language = 'powershell'; FailureLabel = 'Canary public verification block native fail-fast contract failed.' },
+        [pscustomobject]@{ Heading = '## Stage 2 Validate, Apply, Activate, and Close'; Language = 'powershell'; FailureLabel = 'Stage 2 public verification block native fail-fast contract failed.' },
+        [pscustomobject]@{ Heading = '## Isolated Fixture-Only Rollback Drill'; Language = 'powershell'; FailureLabel = 'Fixture drill block native fail-fast contract failed.' },
+        [pscustomobject]@{ Heading = '## Reconnect After the Isolated Drill'; Language = 'powershell'; FailureLabel = 'Reconnect SSH block native fail-fast contract failed.' },
+        [pscustomobject]@{ Heading = '## Final Local Integration'; Language = 'powershell'; FailureLabel = 'Final integration block native fail-fast contract failed.' }
     )
 
+    # Non-execution-sensitive authored pin: extract the exact inventory prose blocks; typed events enforce executable structure below.
     $canaryActivationSection = Get-MarkdownSectionText -Text $normalizedAddendumText -Heading '## Canary Validate, Dry-Run, Apply, and Activate'
     $baselinePilotBlock = @'
 BASELINE_PILOT_PATHS=(
@@ -1808,15 +1862,15 @@ PERMANENT_CONTROL_PATHS=(
         'test "$(printf ''%s\n'' "${PERMANENT_CONTROL_PATHS[@]}" | sort -u | wc -l)" -eq 4'
     )
     $inventoryInvalid = $false
-    # Raw authored-content pin: preserve exact array formatting; parser events validate executable contiguity below.
     foreach ($inventoryBlock in @($baselinePilotBlock, $canaryPilotBlock, $stage2PilotBlock, $permanentControlBlock)) {
+        # Non-execution-sensitive authored pin: preserve exact array formatting; typed events validate executable contiguity below.
         if (-not (Test-ContainsNormalizedText -Text $canaryActivationSection -Expected $inventoryBlock)) {
             $inventoryInvalid = $true
             break
         }
     }
-    # Raw authored-content pin: preserve exact inventory spellings; parser events validate executable coverage below.
     foreach ($marker in $requiredInventoryMarkers) {
+        # Non-execution-sensitive authored pin: preserve exact inventory spellings; typed events validate executable coverage below.
         if (-not $canaryActivationSection.Contains($marker)) {
             $inventoryInvalid = $true
             break
@@ -1838,15 +1892,14 @@ PERMANENT_CONTROL_PATHS=(
         'CANARY_REDUCED_MOTION_RUNS_EXPECTED=3',
         'CANARY_FORCED_COLORS_RUNS_EXPECTED=3'
     )
-    # Raw authored-content pin: preserve exact matrix values; parser events validate executable coverage below.
     foreach ($marker in $browserMatrixMarkers) {
+        # Non-execution-sensitive authored pin: preserve exact matrix values; typed events validate executable coverage below.
         if (-not $canaryActivationSection.Contains($marker)) {
             Add-Failure "Stage 2 browser matrix inventory contract failed: $marker"
             break
         }
     }
 
-    $canaryObservationSection = Get-MarkdownSectionText -Text $normalizedAddendumText -Heading '## Canary Observation, Compatibility Sync, and Close'
     $canaryRenewalMarkers = @(
         'LOCK_RENEWAL_INTERVAL_SECONDS=240',
         'CANARY_OBSERVATION_ROUNDS=3',
@@ -1857,81 +1910,10 @@ PERMANENT_CONTROL_PATHS=(
         'sleep "$((300 - LOCK_RENEWAL_INTERVAL_SECONDS))"',
         'test "$((VG_OBSERVE_END_EPOCH - VG_OBSERVE_START_EPOCH))" -ge "$CANARY_OBSERVATION_MIN_SECONDS"'
     )
-    $canaryRenewalInvalid = $false
-    # Raw authored-content pin: prove exact timing values; parser events validate sleep and renewal ordering below.
-    foreach ($marker in $canaryRenewalMarkers) {
-        if (-not $normalizedAddendumText.Contains($marker)) {
-            $canaryRenewalInvalid = $true
-            break
-        }
-    }
-    if (([regex]::Matches($canaryObservationSection, '(?m)^\s*run_rollout recovery-audit canary --action=renew-lock --ttl-seconds=900$')).Count -lt 5) {
-        $canaryRenewalInvalid = $true
-    }
-    $canaryExecutableLines = @(Get-ExecutableBashLines -Text $canaryObservationSection)
-    $canarySleepLines = @($canaryExecutableLines | Where-Object { $_ -match '^sleep(?:\s|$)' })
     $approvedCanarySleeps = @(
         'sleep "$LOCK_RENEWAL_INTERVAL_SECONDS"',
         'sleep "$((300 - LOCK_RENEWAL_INTERVAL_SECONDS))"'
     )
-    if (
-        $canarySleepLines.Count -ne 2 -or
-        $canarySleepLines[0] -cne $approvedCanarySleeps[0] -or
-        $canarySleepLines[1] -cne $approvedCanarySleeps[1]
-    ) {
-        $canaryRenewalInvalid = $true
-    } else {
-        $resolvedCanarySleepSeconds = @(240, 60)
-        $canaryGapCount = 3 - 1
-        if (
-            @($resolvedCanarySleepSeconds | Where-Object { $_ -ge 300 }).Count -ne 0 -or
-            (($resolvedCanarySleepSeconds | Measure-Object -Sum).Sum * $canaryGapCount) -lt 600
-        ) {
-            $canaryRenewalInvalid = $true
-        }
-
-        $firstSleepIndex = [array]::IndexOf($canaryExecutableLines, $approvedCanarySleeps[0])
-        $secondSleepIndex = [array]::IndexOf($canaryExecutableLines, $approvedCanarySleeps[1])
-        $renewalBetweenSleeps = $false
-        if ($firstSleepIndex -ge 0 -and $secondSleepIndex -gt $firstSleepIndex) {
-            for ($index = $firstSleepIndex + 1; $index -lt $secondSleepIndex; $index++) {
-                if ($canaryExecutableLines[$index] -ceq 'run_rollout recovery-audit canary --action=renew-lock --ttl-seconds=900') {
-                    $renewalBetweenSleeps = $true
-                    break
-                }
-            }
-        }
-        if (-not $renewalBetweenSleeps) {
-            $canaryRenewalInvalid = $true
-        }
-    }
-    if ($canaryRenewalInvalid) {
-        Add-Failure 'Canary lock renewal contract failed.'
-    }
-
-    $canaryCompatibilityPosition = $canaryObservationSection.IndexOf('run_rollout compatibility-sync canary', [System.StringComparison]::Ordinal)
-    foreach ($gate in @(
-        'verify_rollout public-inventory canary',
-        'verify_rollout browser-matrix canary',
-        'verify_rollout performance-budgets canary',
-        'verify_rollout cache-budgets canary',
-        'verify_rollout log-observation canary',
-        'verify_rollout permanent-controls canary'
-    )) {
-        $gatePosition = $canaryObservationSection.IndexOf($gate, [System.StringComparison]::Ordinal)
-        if ($gatePosition -lt 0 -or $canaryCompatibilityPosition -lt 0 -or $gatePosition -gt $canaryCompatibilityPosition) {
-            Add-Failure "Canary gate ordering contract failed: $gate"
-            break
-        }
-    }
-    [void](Test-OrderedMarkers -Label 'Canary gate ordering contract' -Text $canaryObservationSection -Markers @(
-        'verify_rollout permanent-controls canary',
-        'run_rollout recovery-audit canary --action=renew-lock --ttl-seconds=900',
-        'run_rollout compatibility-sync canary',
-        'verify_rollout compatibility-equivalence canary',
-        'run_rollout recovery-audit canary --action=close-ledger --require-final-event=compatibility-sync',
-        'test ! -e "$STATE_DIR/lock.json"'
-    ))
 
     $requiredBudgetMarkers = @(
         'MAX_HTML_GROWTH_BYTES=20480',
@@ -1965,9 +1947,9 @@ PERMANENT_CONTROL_PATHS=(
     $releasePublicationParserEvents = @(Get-RecoveryParserSectionEvents -Sections @($recoveryMarkdownResult.Sections) -Events $recoveryParserEventArray -Heading '## Verify and Atomically Install the Release')
     $postDrillParserEvents = @(Get-RecoveryParserSectionEvents -Sections @($recoveryMarkdownResult.Sections) -Events $recoveryParserEventArray -Heading '## Reconnect After the Isolated Drill')
 
-    foreach ($sectionSpec in $nativeFailFastSections) {
-        if (-not (Test-RecoveryParserSectionLanguageDiagnostics -Sections @($recoveryMarkdownResult.Sections) -Fences @($recoveryMarkdownResult.Fences) -Diagnostics @($recoveryParserDiagnostics) -Heading $sectionSpec.Heading -Language 'powershell')) {
-            Add-Failure "$($sectionSpec.Label) native fail-fast contract failed."
+    foreach ($sectionContract in $nativeFailFastSectionContracts) {
+        if (-not (Test-RecoveryParserSectionLanguageDiagnostics -Sections @($recoveryMarkdownResult.Sections) -Fences @($recoveryMarkdownResult.Fences) -Diagnostics @($recoveryParserDiagnostics) -Heading $sectionContract.Heading -Language $sectionContract.Language)) {
+            Add-Failure $sectionContract.FailureLabel
         }
     }
 
@@ -2027,34 +2009,33 @@ PERMANENT_CONTROL_PATHS=(
     }
     [void](Test-RecoveryParserEventCoverage -Label 'Stage 2 browser matrix inventory contract' -Events $canaryActivationParserEvents -ExpectedTexts $browserMatrixMarkers)
     [void](Test-RecoveryParserEventCoverage -Label 'Stage 2 gate ordering contract' -Events $recoveryParserEventArray -ExpectedTexts $requiredBudgetMarkers)
-    [void](Test-RecoveryParserEventCoverage -Label 'Canary lock renewal contract' -Events $recoveryParserEventArray -ExpectedTexts $canaryRenewalMarkers)
 
     $requiredCanaryParserGates = @(
-        'verify_rollout public-inventory canary --expected-active-pilots=11 --expected-permanent-controls=4',
-        'verify_rollout browser-matrix canary',
-        'verify_rollout performance-budgets canary   --max-html-growth-bytes="$MAX_HTML_GROWTH_BYTES"   --max-dom-nodes="$MAX_DOM_NODES"   --max-scoped-css-bytes="$MAX_SCOPED_CSS_BYTES"   --max-php-p95-ms="$MAX_PHP_P95_MS"   --max-cls="$MAX_CLS"   --max-lcp-regression-percent="$MAX_LCP_REGRESSION_PERCENT"',
-        'verify_rollout cache-budgets canary --max-warm-queries="$MAX_WARM_QUERIES" --max-cold-queries="$MAX_COLD_QUERIES"',
-        'verify_rollout log-observation canary',
-        'verify_rollout permanent-controls canary'
+        [pscustomobject]@{ FailureMarker = 'verify_rollout public-inventory canary'; ExactText = 'verify_rollout public-inventory canary --expected-active-pilots=11 --expected-permanent-controls=4' },
+        [pscustomobject]@{ FailureMarker = 'verify_rollout browser-matrix canary'; ExactText = 'verify_rollout browser-matrix canary' },
+        [pscustomobject]@{ FailureMarker = 'verify_rollout performance-budgets canary'; ExactText = 'verify_rollout performance-budgets canary   --max-html-growth-bytes="$MAX_HTML_GROWTH_BYTES"   --max-dom-nodes="$MAX_DOM_NODES"   --max-scoped-css-bytes="$MAX_SCOPED_CSS_BYTES"   --max-php-p95-ms="$MAX_PHP_P95_MS"   --max-cls="$MAX_CLS"   --max-lcp-regression-percent="$MAX_LCP_REGRESSION_PERCENT"' },
+        [pscustomobject]@{ FailureMarker = 'verify_rollout cache-budgets canary'; ExactText = 'verify_rollout cache-budgets canary --max-warm-queries="$MAX_WARM_QUERIES" --max-cold-queries="$MAX_COLD_QUERIES"' },
+        [pscustomobject]@{ FailureMarker = 'verify_rollout log-observation canary'; ExactText = 'verify_rollout log-observation canary' },
+        [pscustomobject]@{ FailureMarker = 'verify_rollout permanent-controls canary'; ExactText = 'verify_rollout permanent-controls canary' }
     )
-    $canaryCompatibilityEvents = @(Find-RecoveryExecutableEvents -Events $canaryObservationParserEvents -ExactText 'run_rollout compatibility-sync canary' -Language 'bash')
-    $firstCanaryCompatibilityIndex = if ($canaryCompatibilityEvents.Count -gt 0) { [array]::IndexOf($canaryObservationParserEvents, $canaryCompatibilityEvents[0]) } else { -1 }
     foreach ($gate in $requiredCanaryParserGates) {
-        $gateEvents = @(Find-RecoveryExecutableEvents -Events $canaryObservationParserEvents -ExactText $gate -Language 'bash')
-        $firstGateIndex = if ($gateEvents.Count -gt 0) { [array]::IndexOf($canaryObservationParserEvents, $gateEvents[0]) } else { -1 }
-        if ($firstGateIndex -lt 0 -or $firstCanaryCompatibilityIndex -lt 0 -or $firstGateIndex -gt $firstCanaryCompatibilityIndex) {
-            Add-Failure "Canary gate ordering parser shadow failed: $gate"
+        if (-not (Test-RecoveryParserEventPrecedesFirstEvent -Events $canaryObservationParserEvents -ExactText $gate.ExactText -BeforeExactText 'run_rollout compatibility-sync canary' -Language 'bash')) {
+            Add-Failure "Canary gate ordering contract failed: $($gate.FailureMarker)"
             break
         }
     }
-    [void](Test-RecoveryParserEventSequenceContract -Label 'Canary gate tail contract' -Events $canaryObservationParserEvents -ExpectedTexts @(
+    $canaryGateTail = @(
         'verify_rollout permanent-controls canary',
         'run_rollout recovery-audit canary --action=renew-lock --ttl-seconds=900',
         'run_rollout compatibility-sync canary',
         'verify_rollout compatibility-equivalence canary',
         'run_rollout recovery-audit canary --action=close-ledger --require-final-event=compatibility-sync',
         'test ! -e "$STATE_DIR/lock.json"'
-    ))
+    )
+    $invalidCanaryGateTailMarker = Get-RecoveryParserFirstMissingOrOutOfOrderEventText -Events $canaryObservationParserEvents -ExpectedTexts $canaryGateTail -Language 'bash'
+    if ($null -ne $invalidCanaryGateTailMarker) {
+        Add-Failure "Canary gate ordering contract failed: missing or out-of-order marker: $invalidCanaryGateTailMarker"
+    }
 
     $canaryRollbackImmediateParserSequence = @(
         'run_rollout rollback canary',
@@ -2175,28 +2156,45 @@ PERMANENT_CONTROL_PATHS=(
     [void](Test-RecoveryParserEventSequenceContract -Label 'Atomic release publication contract' -Events $releasePublicationParserEvents -ExpectedTexts $releasePublicationParserMarkers -RequireUnique)
     [void](Test-RecoveryParserEventSequenceContract -Label 'Post-publication release identity contract' -Events $releasePublicationParserEvents -ExpectedTexts $postPublicationParserMarkers -RequireUnique)
 
-    $canaryRenewalEventCount = @(Find-RecoveryExecutableEvents -Events $canaryObservationParserEvents -ExactText 'run_rollout recovery-audit canary --action=renew-lock --ttl-seconds=900' -Language 'bash').Count
-    $firstCanarySleepEventCount = @(Find-RecoveryExecutableEvents -Events $canaryObservationParserEvents -ExactText $approvedCanarySleeps[0] -Language 'bash').Count
-    $secondCanarySleepEventCount = @(Find-RecoveryExecutableEvents -Events $canaryObservationParserEvents -ExactText $approvedCanarySleeps[1] -Language 'bash').Count
-    if ($canaryRenewalEventCount -lt 5 -or $firstCanarySleepEventCount -ne 1 -or $secondCanarySleepEventCount -ne 1) {
-        Add-Failure 'Canary lock renewal parser shadow failed: executable event counts are unsafe.'
-    } else {
-        $firstCanarySleepEvent = @(Find-RecoveryExecutableEvents -Events $canaryObservationParserEvents -ExactText $approvedCanarySleeps[0] -Language 'bash')[0]
-        $secondCanarySleepEvent = @(Find-RecoveryExecutableEvents -Events $canaryObservationParserEvents -ExactText $approvedCanarySleeps[1] -Language 'bash')[0]
-        $firstCanarySleepIndex = [array]::IndexOf($canaryObservationParserEvents, $firstCanarySleepEvent)
-        $secondCanarySleepIndex = [array]::IndexOf($canaryObservationParserEvents, $secondCanarySleepEvent)
-        $renewalBetweenCanarySleeps = $false
-        if ($firstCanarySleepIndex -ge 0 -and $secondCanarySleepIndex -gt $firstCanarySleepIndex) {
-            for ($index = $firstCanarySleepIndex + 1; $index -lt $secondCanarySleepIndex; $index++) {
-                if ($canaryObservationParserEvents[$index].Text -ceq 'run_rollout recovery-audit canary --action=renew-lock --ttl-seconds=900') {
-                    $renewalBetweenCanarySleeps = $true
-                    break
-                }
-            }
+    $canaryRenewalInvalid = $false
+    foreach ($marker in $canaryRenewalMarkers) {
+        if (@(Find-RecoveryExecutableEvents -Events $recoveryParserEventArray -ExactText $marker).Count -eq 0) {
+            $canaryRenewalInvalid = $true
+            break
         }
-        if (-not $renewalBetweenCanarySleeps) {
-            Add-Failure 'Canary lock renewal parser shadow failed: sleeps are out of order or lack an intervening renewal.'
-        }
+    }
+    $canaryRenewalEventText = 'run_rollout recovery-audit canary --action=renew-lock --ttl-seconds=900'
+    $canaryRenewalEventCount = @(Find-RecoveryExecutableEvents -Events $canaryObservationParserEvents -ExactText $canaryRenewalEventText -Language 'bash').Count
+    $canarySleepEvents = @($canaryObservationParserEvents | Where-Object {
+        $null -ne $_ -and $_.Language -ceq 'bash' -and $_.Text -match '^sleep(?:\s|$)'
+    })
+    if (
+        $canaryRenewalEventCount -lt 5 -or
+        $canarySleepEvents.Count -ne 2 -or
+        $canarySleepEvents[0].Text -cne $approvedCanarySleeps[0] -or
+        $canarySleepEvents[1].Text -cne $approvedCanarySleeps[1]
+    ) {
+        $canaryRenewalInvalid = $true
+    }
+    $resolvedCanarySleepSeconds = @(240, 60)
+    $canaryGapCount = 3 - 1
+    if (
+        @($resolvedCanarySleepSeconds | Where-Object { $_ -ge 300 }).Count -ne 0 -or
+        (($resolvedCanarySleepSeconds | Measure-Object -Sum).Sum * $canaryGapCount) -lt 600
+    ) {
+        $canaryRenewalInvalid = $true
+    }
+    if (
+        $null -ne (Get-RecoveryParserFirstMissingOrOutOfOrderEventText -Events $canaryObservationParserEvents -ExpectedTexts @(
+            $approvedCanarySleeps[0],
+            $canaryRenewalEventText,
+            $approvedCanarySleeps[1]
+        ) -Language 'bash')
+    ) {
+        $canaryRenewalInvalid = $true
+    }
+    if ($canaryRenewalInvalid) {
+        Add-Failure 'Canary lock renewal contract failed.'
     }
 
     $stage2CompatibilityEventCount = @(Find-RecoveryExecutableEvents -Events $stage2ParserEvents -ExactText 'run_rollout compatibility-sync full' -Language 'bash').Count

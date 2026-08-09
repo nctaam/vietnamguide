@@ -348,12 +348,55 @@ Add-ParserResult -Name 'Baseline section diagnostics require one expected langua
     Assert-ParserEqual -Actual $callSites.Count -Expected 1 -Message 'Section language-diagnostic call-site count mismatch.'
 }
 
+Add-ParserResult -Name 'Baseline event precedence compares the first exact typed events' -Test {
+    [void](Import-RecoveryBaselinePrivateFunction -Name 'Test-RecoveryParserEventPrecedesFirstEvent')
+    $newEvent = {
+        param([string]$Text, [string]$Language = 'bash')
+        New-RecoveryExecutableEvent -Kind 'command' -Text $Text -Language $Language -FenceId 'fence-1' -SectionId 'section-1' -SourceLine 1 -SourceColumn 1 -StatementId ([guid]::NewGuid().ToString('N'))
+    }
+    $validEvents = @(
+        (& $newEvent 'gate'),
+        (& $newEvent 'compatibility'),
+        (& $newEvent 'gate')
+    )
+    $lateGateEvents = @(
+        (& $newEvent 'compatibility'),
+        (& $newEvent 'gate'),
+        (& $newEvent 'compatibility')
+    )
+
+    Assert-ParserEqual -Actual (Test-RecoveryParserEventPrecedesFirstEvent -Events $validEvents -ExactText 'gate' -BeforeExactText 'compatibility' -Language 'bash') -Expected $true -Message 'A gate before the first compatibility event should pass.'
+    Assert-ParserEqual -Actual (Test-RecoveryParserEventPrecedesFirstEvent -Events $lateGateEvents -ExactText 'gate' -BeforeExactText 'compatibility' -Language 'bash') -Expected $false -Message 'A gate after the first compatibility event must fail even when another compatibility event follows.'
+    Assert-ParserEqual -Actual (Test-RecoveryParserEventPrecedesFirstEvent -Events $validEvents -ExactText 'missing' -BeforeExactText 'compatibility' -Language 'bash') -Expected $false -Message 'A missing gate should fail.'
+    Assert-ParserEqual -Actual (Test-RecoveryParserEventPrecedesFirstEvent -Events $validEvents -ExactText 'gate' -BeforeExactText 'missing' -Language 'bash') -Expected $false -Message 'A missing boundary event should fail.'
+}
+
+Add-ParserResult -Name 'Baseline ordered typed markers report the first missing or out-of-order event' -Test {
+    [void](Import-RecoveryBaselinePrivateFunction -Name 'Get-RecoveryParserFirstMissingOrOutOfOrderEventText')
+    $newEvent = {
+        param([string]$Text)
+        New-RecoveryExecutableEvent -Kind 'command' -Text $Text -Language 'bash' -FenceId 'fence-1' -SectionId 'section-1' -SourceLine 1 -SourceColumn 1 -StatementId ([guid]::NewGuid().ToString('N'))
+    }
+    $events = @(
+        (& $newEvent 'first'),
+        (& $newEvent 'noise'),
+        (& $newEvent 'second'),
+        (& $newEvent 'third')
+    )
+
+    Assert-ParserEqual -Actual (Get-RecoveryParserFirstMissingOrOutOfOrderEventText -Events $events -ExpectedTexts @('first', 'second', 'third') -Language 'bash') -Expected $null -Message 'An ordered typed-event subsequence should have no failure marker.'
+    Assert-ParserEqual -Actual (Get-RecoveryParserFirstMissingOrOutOfOrderEventText -Events $events -ExpectedTexts @('second', 'first', 'third') -Language 'bash') -Expected 'first' -Message 'The first out-of-order marker should be returned.'
+    Assert-ParserEqual -Actual (Get-RecoveryParserFirstMissingOrOutOfOrderEventText -Events $events -ExpectedTexts @('first', 'missing', 'third') -Language 'bash') -Expected 'missing' -Message 'The first missing marker should be returned.'
+}
+
 Add-ParserResult -Name 'Baseline migrated contracts do not call legacy raw execution helpers' -Test {
     $baselineAst = Get-RecoveryBaselineAst
     $legacyHelperNames = @(
         'Test-PowerShellNativeFailFast',
         'Test-ConsecutiveExecutableBashLines',
         'Test-OrderedUniqueExecutableLines',
+        'Test-OrderedMarkers',
+        'Get-ExecutableBashLines',
         'Get-ExecutablePowerShellLines',
         'Get-MarkdownFencedBlocks'
     )
@@ -389,49 +432,152 @@ Add-ParserResult -Name 'Baseline migrated contracts do not call legacy raw execu
     Assert-ParserEqual -Actual $rawBudgetLoops.Count -Expected 0 -Message 'Stage 2 budget gates must be evaluated from parser events.'
 }
 
-Add-ParserResult -Name 'Baseline retained raw authored pins explain their non-ordering purpose' -Test {
+Add-ParserResult -Name 'Baseline has no top-level raw ordering evaluators and annotates every retained authored pin' -Test {
     $baselineAst = Get-RecoveryBaselineAst
     $baselineLines = @($baselineAst.Extent.Text.Replace("`r`n", "`n").Replace("`r", "`n") -split "`n", -1)
-    $retainedRawLoopConditions = @(
-        '$requiredPostDrillMarkers',
-        '@($baselinePilotBlock, $canaryPilotBlock, $stage2PilotBlock, $permanentControlBlock)',
-        '$requiredInventoryMarkers',
-        '$browserMatrixMarkers',
-        '$canaryRenewalMarkers'
-    )
+    $isTopLevel = {
+        param([System.Management.Automation.Language.Ast]$Node)
+        $ancestor = $Node.Parent
+        while ($null -ne $ancestor) {
+            if ($ancestor -is [System.Management.Automation.Language.FunctionDefinitionAst]) {
+                return $false
+            }
+            $ancestor = $ancestor.Parent
+        }
+        return $true
+    }
 
-    foreach ($conditionText in $retainedRawLoopConditions) {
-        $loops = @($baselineAst.FindAll({
-            param($node)
-            $node -is [System.Management.Automation.Language.ForEachStatementAst] -and
-            $node.Condition.Extent.Text -ceq $conditionText
-        }, $true))
-        Assert-ParserEqual -Actual $loops.Count -Expected 1 -Message "Retained raw authored-pin loop count mismatch: $conditionText"
+    $rawOrderingNodes = @($baselineAst.FindAll({
+        param($node)
+        $node -is [System.Management.Automation.Language.InvokeMemberExpressionAst] -and (
+            $node.Member.Extent.Text -ceq 'IndexOf' -or
+            ($node.Expression.Extent.Text -ceq '[regex]' -and $node.Member.Extent.Text -in @('Match', 'Matches'))
+        )
+    }, $true) | Where-Object { & $isTopLevel $_ })
+    $rawOrderingSummary = @($rawOrderingNodes | ForEach-Object { "line $($_.Extent.StartLineNumber): $($_.Extent.Text)" }) -join '; '
+    Assert-ParserEqual -Actual $rawOrderingNodes.Count -Expected 0 -Message "Top-level raw ordering evaluators remain: $rawOrderingSummary"
 
-        $lineIndex = [int]$loops[0].Extent.StartLineNumber - 2
+    $rawAuthoredPinNodes = @($baselineAst.FindAll({
+        param($node)
+        if ($node -is [System.Management.Automation.Language.CommandAst]) {
+            return $node.GetCommandName() -in @('Get-MarkdownSectionText', 'Test-ContainsNormalizedText')
+        }
+        if ($node -isnot [System.Management.Automation.Language.InvokeMemberExpressionAst] -or $node.Member.Extent.Text -cne 'Contains') {
+            return $false
+        }
+        return $node.Expression.Extent.Text -match '^\$(?:executionAddendumText|normalizedAddendumText|[A-Za-z][A-Za-z0-9]*Section)$'
+    }, $true) | Where-Object { & $isTopLevel $_ })
+    foreach ($rawNode in $rawAuthoredPinNodes) {
+        $lineIndex = [int]$rawNode.Extent.StartLineNumber - 2
         while ($lineIndex -ge 0 -and [string]::IsNullOrWhiteSpace($baselineLines[$lineIndex])) {
             $lineIndex--
         }
         $adjacentLine = if ($lineIndex -ge 0) { $baselineLines[$lineIndex].Trim() } else { '' }
-        Assert-ParserEqual -Actual $adjacentLine.StartsWith('# Raw authored-content pin:', [System.StringComparison]::Ordinal) -Expected $true -Message "Retained raw check lacks an adjacent non-execution comment: $conditionText"
+        Assert-ParserEqual -Actual $adjacentLine.StartsWith('# Non-execution-sensitive authored pin:', [System.StringComparison]::Ordinal) -Expected $true -Message "Retained raw authored check lacks an immediately adjacent standardized comment at line $($rawNode.Extent.StartLineNumber): $($rawNode.Extent.Text)"
     }
 }
 
-Add-ParserResult -Name 'Baseline requires expected fence languages for every migrated section' -Test {
+Add-ParserResult -Name 'Baseline requires the exact fence map and native diagnostic contract mapping' -Test {
     $baselineAst = Get-RecoveryBaselineAst
-    $baselineText = $baselineAst.Extent.Text
-    foreach ($requirement in @(
-        [pscustomobject]@{ Heading = '## Task 0: Recover the Missing Verifier Stack'; Language = 'powershell' },
-        [pscustomobject]@{ Heading = '## Artifact Upload'; Language = 'powershell' },
-        [pscustomobject]@{ Heading = '## Canary Failure and Rollback'; Language = 'bash' },
-        [pscustomobject]@{ Heading = '## Stage 2 Validate, Apply, Activate, and Close'; Language = 'powershell' },
-        [pscustomobject]@{ Heading = '## Stage 2 Validate, Apply, Activate, and Close'; Language = 'bash' },
-        [pscustomobject]@{ Heading = '## Stage 2 Failure and Rollback'; Language = 'bash' },
-        [pscustomobject]@{ Heading = '## Verify and Atomically Install the Release'; Language = 'bash' }
-    )) {
-        $entryPattern = '(?m)^\s*' + [regex]::Escape("'$($requirement.Heading)'") + '\s*=\s*@\([^\r\n]*' + [regex]::Escape("'$($requirement.Language)'")
-        Assert-ParserEqual -Actual ([regex]::IsMatch($baselineText, $entryPattern)) -Expected $true -Message "Missing migrated section fence requirement: $($requirement.Heading) / $($requirement.Language)"
+    $requiredMapAssignment = @($baselineAst.FindAll({
+        param($node)
+        $node -is [System.Management.Automation.Language.AssignmentStatementAst] -and
+        $node.Left -is [System.Management.Automation.Language.VariableExpressionAst] -and
+        $node.Left.VariablePath.UserPath -ceq 'requiredRecoveryFenceLanguages'
+    }, $true))
+    Assert-ParserEqual -Actual $requiredMapAssignment.Count -Expected 1 -Message 'Required recovery fence-language map assignment count mismatch.'
+    $requiredMapAst = $requiredMapAssignment[0].Right.Expression
+    $actualRequiredMap = @($requiredMapAst.KeyValuePairs | ForEach-Object {
+        $languages = @($_.Item2.FindAll({
+            param($node)
+            $node -is [System.Management.Automation.Language.StringConstantExpressionAst]
+        }, $true) | ForEach-Object { $_.Value })
+        [pscustomobject]@{ Heading = $_.Item1.Value; Languages = $languages }
+    })
+    $expectedRequiredMap = @(
+        [pscustomobject]@{ Heading = '## Task 0: Recover the Missing Verifier Stack'; Languages = @('powershell') },
+        [pscustomobject]@{ Heading = '## Local Build and Release Preparation'; Languages = @('powershell') },
+        [pscustomobject]@{ Heading = '## Artifact Upload'; Languages = @('powershell') },
+        [pscustomobject]@{ Heading = '## Production Shell Initialization'; Languages = @('powershell', 'bash') },
+        [pscustomobject]@{ Heading = '## Verify and Atomically Install the Release'; Languages = @('bash') },
+        [pscustomobject]@{ Heading = '## Command Wrapper and Run-ID Rules'; Languages = @('bash') },
+        [pscustomobject]@{ Heading = '## Canary Validate, Dry-Run, Apply, and Activate'; Languages = @('bash', 'powershell') },
+        [pscustomobject]@{ Heading = '## Canary Observation, Compatibility Sync, and Close'; Languages = @('bash') },
+        [pscustomobject]@{ Heading = '## Canary Failure and Rollback'; Languages = @('bash') },
+        [pscustomobject]@{ Heading = '## Stage 2 Validate, Apply, Activate, and Close'; Languages = @('bash', 'powershell') },
+        [pscustomobject]@{ Heading = '## Stage 2 Failure and Rollback'; Languages = @('bash') },
+        [pscustomobject]@{ Heading = '## Isolated Fixture-Only Rollback Drill'; Languages = @('bash', 'powershell') },
+        [pscustomobject]@{ Heading = '## Reconnect After the Isolated Drill'; Languages = @('powershell', 'bash') },
+        [pscustomobject]@{ Heading = '## Final Local Integration'; Languages = @('powershell') }
+    )
+    Assert-ParserEqual -Actual $actualRequiredMap.Count -Expected $expectedRequiredMap.Count -Message 'Required recovery fence-language map entry count mismatch.'
+    for ($index = 0; $index -lt $expectedRequiredMap.Count; $index++) {
+        Assert-ParserEqual -Actual $actualRequiredMap[$index].Heading -Expected $expectedRequiredMap[$index].Heading -Message "Required recovery fence heading mismatch at index $index."
+        Assert-ParserArrayEqual -Actual $actualRequiredMap[$index].Languages -Expected $expectedRequiredMap[$index].Languages -Message "Required recovery fence languages mismatch for $($expectedRequiredMap[$index].Heading)."
     }
+
+    $contractAssignment = @($baselineAst.FindAll({
+        param($node)
+        $node -is [System.Management.Automation.Language.AssignmentStatementAst] -and
+        $node.Left -is [System.Management.Automation.Language.VariableExpressionAst] -and
+        $node.Left.VariablePath.UserPath -ceq 'nativeFailFastSectionContracts'
+    }, $true))
+    Assert-ParserEqual -Actual $contractAssignment.Count -Expected 1 -Message 'Native fail-fast section contract assignment count mismatch.'
+    $contractHashtables = @($contractAssignment[0].Right.FindAll({
+        param($node)
+        $node -is [System.Management.Automation.Language.HashtableAst]
+    }, $true))
+    $actualContracts = @($contractHashtables | ForEach-Object {
+        $values = @{}
+        foreach ($pair in $_.KeyValuePairs) {
+            $valueAst = @($pair.Item2.FindAll({
+                param($node)
+                $node -is [System.Management.Automation.Language.StringConstantExpressionAst]
+            }, $true))[0]
+            $values[$pair.Item1.Value] = $valueAst.Value
+        }
+        [pscustomobject]@{ Heading = $values.Heading; Language = $values.Language; FailureLabel = $values.FailureLabel }
+    })
+    $expectedContracts = @(
+        [pscustomobject]@{ Heading = '## Task 0: Recover the Missing Verifier Stack'; Language = 'powershell'; FailureLabel = 'Recovered verifier block native fail-fast contract failed.' },
+        [pscustomobject]@{ Heading = '## Local Build and Release Preparation'; Language = 'powershell'; FailureLabel = 'Local build block native fail-fast contract failed.' },
+        [pscustomobject]@{ Heading = '## Artifact Upload'; Language = 'powershell'; FailureLabel = 'Artifact upload block native fail-fast contract failed.' },
+        [pscustomobject]@{ Heading = '## Production Shell Initialization'; Language = 'powershell'; FailureLabel = 'Production SSH entry native fail-fast contract failed.' },
+        [pscustomobject]@{ Heading = '## Canary Validate, Dry-Run, Apply, and Activate'; Language = 'powershell'; FailureLabel = 'Canary public verification block native fail-fast contract failed.' },
+        [pscustomobject]@{ Heading = '## Stage 2 Validate, Apply, Activate, and Close'; Language = 'powershell'; FailureLabel = 'Stage 2 public verification block native fail-fast contract failed.' },
+        [pscustomobject]@{ Heading = '## Isolated Fixture-Only Rollback Drill'; Language = 'powershell'; FailureLabel = 'Fixture drill block native fail-fast contract failed.' },
+        [pscustomobject]@{ Heading = '## Reconnect After the Isolated Drill'; Language = 'powershell'; FailureLabel = 'Reconnect SSH block native fail-fast contract failed.' },
+        [pscustomobject]@{ Heading = '## Final Local Integration'; Language = 'powershell'; FailureLabel = 'Final integration block native fail-fast contract failed.' }
+    )
+    Assert-ParserEqual -Actual $actualContracts.Count -Expected $expectedContracts.Count -Message 'Native fail-fast section contract entry count mismatch.'
+    for ($index = 0; $index -lt $expectedContracts.Count; $index++) {
+        Assert-ParserEqual -Actual $actualContracts[$index].Heading -Expected $expectedContracts[$index].Heading -Message "Native fail-fast heading mismatch at index $index."
+        Assert-ParserEqual -Actual $actualContracts[$index].Language -Expected $expectedContracts[$index].Language -Message "Native fail-fast language mismatch at index $index."
+        Assert-ParserEqual -Actual $actualContracts[$index].FailureLabel -Expected $expectedContracts[$index].FailureLabel -Message "Native fail-fast label mismatch at index $index."
+    }
+
+    $contractLoops = @($baselineAst.FindAll({
+        param($node)
+        $node -is [System.Management.Automation.Language.ForEachStatementAst] -and
+        $node.Condition.Extent.Text -ceq '$nativeFailFastSectionContracts'
+    }, $true))
+    Assert-ParserEqual -Actual $contractLoops.Count -Expected 1 -Message 'Native fail-fast section diagnostic loop count mismatch.'
+    $diagnosticCalls = @($contractLoops[0].Body.FindAll({
+        param($node)
+        $node -is [System.Management.Automation.Language.CommandAst] -and
+        $node.GetCommandName() -ceq 'Test-RecoveryParserSectionLanguageDiagnostics'
+    }, $true))
+    Assert-ParserEqual -Actual $diagnosticCalls.Count -Expected 1 -Message 'Native fail-fast section diagnostic call count mismatch.'
+    $diagnosticCallText = $diagnosticCalls[0].Extent.Text
+    Assert-ParserEqual -Actual $diagnosticCallText.Contains('-Heading $sectionContract.Heading') -Expected $true -Message 'Section diagnostic call does not map the contract heading.'
+    Assert-ParserEqual -Actual $diagnosticCallText.Contains('-Language $sectionContract.Language') -Expected $true -Message 'Section diagnostic call does not map the contract language.'
+    $failureCalls = @($contractLoops[0].Body.FindAll({
+        param($node)
+        $node -is [System.Management.Automation.Language.CommandAst] -and
+        $node.GetCommandName() -ceq 'Add-Failure'
+    }, $true))
+    Assert-ParserEqual -Actual $failureCalls.Count -Expected 1 -Message 'Native fail-fast section failure call count mismatch.'
+    Assert-ParserEqual -Actual $failureCalls[0].CommandElements[1].Extent.Text -Expected '$sectionContract.FailureLabel' -Message 'Native fail-fast section failure label is not sourced from the exact contract map.'
 }
 
 Add-ParserResult -Name 'Baseline inventory excludes exactly the parser verifier infrastructure from the 231-file target' -Test {
