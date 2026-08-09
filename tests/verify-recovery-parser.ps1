@@ -865,6 +865,46 @@ Add-ParserResult -Name 'PowerShell parser requires a static PhpExecutable assign
     Assert-RecoveryPowerShellEventCommands -Result $staticPathResult -Expected @('php')
 }
 
+$phpExecutableMutationCases = @(
+    [pscustomobject]@{
+        Name = 'tuple assignment'
+        Body = [string]::Join("`n", @(
+            '$PhpExecutable = ''git''',
+            '$PhpExecutable, $ignored = ''cmd.exe'', 1',
+            '& $PhpExecutable /c exit 0',
+            'if ($LASTEXITCODE -ne 0) { throw ''failed'' }'
+        ))
+    },
+    [pscustomobject]@{
+        Name = 'Set-Variable mutation'
+        Body = [string]::Join("`n", @(
+            '$PhpExecutable = ''git''',
+            'Set-Variable -Name PhpExecutable -Value cmd.exe',
+            '& $PhpExecutable /c exit 0',
+            'if ($LASTEXITCODE -ne 0) { throw ''failed'' }'
+        ))
+    },
+    [pscustomobject]@{
+        Name = 'pipeline scriptblock mutation'
+        Body = [string]::Join("`n", @(
+            '$PhpExecutable = ''git''',
+            '1 | ForEach-Object { $PhpExecutable = ''cmd.exe'' }',
+            '& $PhpExecutable /c exit 0',
+            'if ($LASTEXITCODE -ne 0) { throw ''failed'' }'
+        ))
+    }
+)
+
+foreach ($case in $phpExecutableMutationCases) {
+    Add-ParserResult -Name "PowerShell parser rejects ambiguous PhpExecutable $($case.Name)" -Test {
+        $result = Invoke-TestRecoveryPowerShellFenceParser -Fence (New-TestRecoveryPowerShellFence -Body $case.Body)
+
+        Assert-ParserEqual -Actual $result.IsValid -Expected $false -Message "PhpExecutable $($case.Name) should be invalid."
+        Assert-ParserEqual -Actual @($result.Events).Count -Expected 0 -Message "PhpExecutable $($case.Name) should not emit an event."
+        Assert-ParserDiagnosticCodes -Diagnostics @($result.Diagnostics) -Expected @('PS_DYNAMIC_NATIVE_UNSUPPORTED')
+    }
+}
+
 Add-ParserResult -Name 'PowerShell parser rejects nondominating PhpExecutable assignments' -Test {
     $cases = @(
         [pscustomobject]@{ Name = 'false conditional'; Body = [string]::Join("`n", @('if ($false) { $PhpExecutable = ''php.exe'' }', '& $PhpExecutable -v', 'if ($LASTEXITCODE -ne 0) { throw ''failed'' }')) },
@@ -943,6 +983,43 @@ Add-ParserResult -Name 'PowerShell parser rejects loop-carried PhpExecutable reb
 
     Assert-ParserEqual -Actual $authoredResult.IsValid -Expected $true -Message 'Authored PhpExecutable loop without a rebind should remain valid.'
     Assert-RecoveryPowerShellEventCommands -Result $authoredResult -Expected @('php')
+}
+
+Add-ParserResult -Name 'PowerShell parser rejects native commands shadowed by alias cmdlets' -Test {
+    $shadowingStatements = @(
+        'Set-Alias git cmd.exe',
+        'New-Alias -Name git -Value cmd.exe',
+        'sal git cmd.exe',
+        'nal -Name git -Value cmd.exe'
+    )
+
+    foreach ($statement in $shadowingStatements) {
+        $body = [string]::Join("`n", @($statement, 'git /c exit 0', 'if ($LASTEXITCODE -ne 0) { throw ''failed'' }'))
+        $result = Invoke-TestRecoveryPowerShellFenceParser -Fence (New-TestRecoveryPowerShellFence -Body $body)
+
+        Assert-ParserEqual -Actual $result.IsValid -Expected $false -Message "Alias shadowing statement '$statement' should be invalid."
+        Assert-ParserEqual -Actual @($result.Events).Count -Expected 0 -Message "Alias shadowing statement '$statement' should not emit an event."
+        Assert-ParserDiagnosticCodes -Diagnostics @($result.Diagnostics) -Expected @('PS_NATIVE_STATEMENT_AMBIGUOUS')
+    }
+}
+
+Add-ParserResult -Name 'PowerShell parser rejects native commands shadowed by function definitions or providers' -Test {
+    $shadowingStatements = @(
+        'function git { Write-Output shadow }',
+        'Set-Item Alias:/git cmd.exe',
+        'New-Item -Path Alias:\git -Value cmd.exe',
+        'Set-Item Function:/git { Write-Output shadow }',
+        'New-Item -Path Function:\git -Value { Write-Output shadow }'
+    )
+
+    foreach ($statement in $shadowingStatements) {
+        $body = [string]::Join("`n", @($statement, 'git /c exit 0', 'if ($LASTEXITCODE -ne 0) { throw ''failed'' }'))
+        $result = Invoke-TestRecoveryPowerShellFenceParser -Fence (New-TestRecoveryPowerShellFence -Body $body)
+
+        Assert-ParserEqual -Actual $result.IsValid -Expected $false -Message "Function or provider shadowing statement '$statement' should be invalid."
+        Assert-ParserEqual -Actual @($result.Events).Count -Expected 0 -Message "Function or provider shadowing statement '$statement' should not emit an event."
+        Assert-ParserDiagnosticCodes -Diagnostics @($result.Diagnostics) -Expected @('PS_NATIVE_STATEMENT_AMBIGUOUS')
+    }
 }
 
 Add-ParserResult -Name 'PowerShell parser requires non-empty explicit native command configuration' -Test {
