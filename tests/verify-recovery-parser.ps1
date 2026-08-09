@@ -389,6 +389,51 @@ Add-ParserResult -Name 'Baseline ordered typed markers report the first missing 
     Assert-ParserEqual -Actual (Get-RecoveryParserFirstMissingOrOutOfOrderEventText -Events $events -ExpectedTexts @('first', 'missing', 'third') -Language 'bash') -Expected 'missing' -Message 'The first missing marker should be returned.'
 }
 
+Add-ParserResult -Name 'Baseline delegates legacy parser core exclusively to RecoveryParser' -Test {
+    $baselinePath = Join-Path $PSScriptRoot 'verify-recovery-baseline.ps1'
+    $baselineText = Get-Content -LiteralPath $baselinePath -Raw
+    $tokens = $null
+    $parseErrors = $null
+    $baselineAst = [System.Management.Automation.Language.Parser]::ParseInput($baselineText, $baselinePath, [ref]$tokens, [ref]$parseErrors)
+    Assert-ParserEqual -Actual @($parseErrors).Count -Expected 0 -Message 'Baseline structural AST parse mismatch.'
+
+    $legacyParserNames = @(
+        'Get-MarkdownLineRecords',
+        'Get-MarkdownFenceMatch',
+        'Get-MarkdownVisibleLine',
+        'Get-MarkdownSectionText',
+        'Get-MarkdownFencedBlocks',
+        'Get-BashArithmeticExpansionEnd',
+        'Get-BashHeredocRedirections',
+        'Test-BashUnquotedLineContinuation',
+        'Get-BashLogicalLineRecords',
+        'Get-PowerShellNativeCommandName',
+        'Test-PowerShellNativeFailFast'
+    )
+    $legacyDefinitions = @($baselineAst.FindAll({
+        param($node)
+        $node -is [System.Management.Automation.Language.FunctionDefinitionAst] -and
+        $legacyParserNames -ccontains $node.Name
+    }, $true))
+    $orderedMarkerDefinitions = @($baselineAst.FindAll({
+        param($node)
+        $node -is [System.Management.Automation.Language.FunctionDefinitionAst] -and
+        $node.Name -ceq 'Test-OrderedMarkers'
+    }, $true))
+    $orderedMarkerCalls = @($baselineAst.FindAll({
+        param($node)
+        $node -is [System.Management.Automation.Language.CommandAst] -and
+        $node.GetCommandName() -ceq 'Test-OrderedMarkers'
+    }, $true))
+    $violations = @(
+        $legacyDefinitions | ForEach-Object { "definition:$($_.Name)" }
+        $orderedMarkerDefinitions | ForEach-Object { 'definition:Test-OrderedMarkers' }
+        $orderedMarkerCalls | ForEach-Object { "call:Test-OrderedMarkers@line$($_.Extent.StartLineNumber)" }
+    )
+
+    Assert-ParserEqual -Actual $violations.Count -Expected 0 -Message "Baseline retains legacy parser core or raw ordered-marker usage: $($violations -join ', ')"
+}
+
 Add-ParserResult -Name 'Baseline migrated contracts do not call legacy raw execution helpers' -Test {
     $baselineAst = Get-RecoveryBaselineAst
     $legacyHelperNames = @(
