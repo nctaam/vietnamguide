@@ -198,46 +198,75 @@ function Get-RecoveryPowerShellLiteralCommandResolution {
     return [pscustomobject]@{ Classification = 'ignore'; NormalizedCommand = $null; LeafName = $leafName }
 }
 
-function Get-RecoveryPowerShellLiteralArgument {
+function Get-RecoveryPowerShellCanonicalCommandLeaf {
+    param(
+        [AllowNull()]
+        [string]$LiteralCommandName
+    )
+
+    if ([string]::IsNullOrWhiteSpace($LiteralCommandName)) {
+        return $null
+    }
+
+    $leafName = ([regex]::Replace($LiteralCommandName, '^.*[\\/]', '')).ToLowerInvariant()
+    $builtInAliases = @{
+        'sal' = 'set-alias'
+        'nal' = 'new-alias'
+        'ipal' = 'import-alias'
+        'si' = 'set-item'
+        'ni' = 'new-item'
+        'copy' = 'copy-item'
+        'cp' = 'copy-item'
+        'cpi' = 'copy-item'
+        'mi' = 'move-item'
+        'move' = 'move-item'
+        'mv' = 'move-item'
+        'ren' = 'rename-item'
+        'rni' = 'rename-item'
+        'cli' = 'clear-item'
+        'del' = 'remove-item'
+        'erase' = 'remove-item'
+        'rd' = 'remove-item'
+        'ri' = 'remove-item'
+        'rm' = 'remove-item'
+        'rmdir' = 'remove-item'
+        'gi' = 'get-item'
+        'gv' = 'get-variable'
+        'set' = 'set-variable'
+        'sv' = 'set-variable'
+        'nv' = 'new-variable'
+        'clv' = 'clear-variable'
+        'cv' = 'clear-variable'
+        'rv' = 'remove-variable'
+    }
+    if ($builtInAliases.ContainsKey($leafName)) {
+        return $builtInAliases[$leafName]
+    }
+
+    return $leafName
+}
+
+function Test-RecoveryPowerShellCommandUsesProvider {
     param(
         [Parameter(Mandatory = $true)]
         [System.Management.Automation.Language.CommandAst]$Command,
 
         [Parameter(Mandatory = $true)]
-        [string[]]$ParameterNames
+        [string[]]$ProviderNames
     )
 
-    $elements = @($Command.CommandElements)
-    for ($index = 1; $index -lt $elements.Count; $index++) {
-        $element = $elements[$index]
-        if (
-            $element -isnot [System.Management.Automation.Language.CommandParameterAst] -or
-            $ParameterNames -inotcontains $element.ParameterName
-        ) {
+    foreach ($element in @($Command.CommandElements | Select-Object -Skip 1)) {
+        if ($element -isnot [System.Management.Automation.Language.StringConstantExpressionAst]) {
             continue
         }
-
-        $argument = $element.Argument
-        if ($null -eq $argument -and ($index + 1) -lt $elements.Count) {
-            $argument = $elements[$index + 1]
+        foreach ($providerName in $ProviderNames) {
+            if ([string]$element.Value -match ('^{0}:[\\/]*' -f [regex]::Escape($providerName))) {
+                return $true
+            }
         }
-        if ($argument -is [System.Management.Automation.Language.StringConstantExpressionAst]) {
-            return [pscustomobject]@{ IsLiteral = $true; Value = [string]$argument.Value }
-        }
-        return [pscustomobject]@{ IsLiteral = $false; Value = $null }
     }
 
-    foreach ($element in @($elements | Select-Object -Skip 1)) {
-        if ($element -is [System.Management.Automation.Language.CommandParameterAst]) {
-            continue
-        }
-        if ($element -is [System.Management.Automation.Language.StringConstantExpressionAst]) {
-            return [pscustomobject]@{ IsLiteral = $true; Value = [string]$element.Value }
-        }
-        return [pscustomobject]@{ IsLiteral = $false; Value = $null }
-    }
-
-    return [pscustomobject]@{ IsLiteral = $false; Value = $null }
+    return $false
 }
 
 function Test-RecoveryPowerShellConfiguredCommandLiteral {
@@ -271,41 +300,51 @@ function Get-RecoveryPowerShellShadowingNodes {
         $node -is [System.Management.Automation.Language.FunctionDefinitionAst]
     }, $true) | Sort-Object -Property @{ Expression = { $_.Extent.StartOffset }; Ascending = $true })
 
+    $hasConfiguredNativeEvents = $false
+    foreach ($candidate in $candidates) {
+        if ($candidate -isnot [System.Management.Automation.Language.CommandAst]) {
+            continue
+        }
+
+        $literalCommandName = $candidate.GetCommandName()
+        $elements = @($candidate.CommandElements)
+        if (
+            ($literalCommandName -and
+                (Test-RecoveryPowerShellConfiguredCommandLiteral -LiteralCommandName $literalCommandName -ConfiguredCommands $ConfiguredCommands)) -or
+            ($candidate.InvocationOperator -eq [System.Management.Automation.Language.TokenKind]::Ampersand -and
+                $elements.Count -gt 0 -and
+                $elements[0] -is [System.Management.Automation.Language.VariableExpressionAst] -and
+                $elements[0].VariablePath.UserPath -ieq 'PhpExecutable' -and
+                (Test-RecoveryPowerShellOrdinaryVariablePath -VariablePath $elements[0].VariablePath))
+        ) {
+            $hasConfiguredNativeEvents = $true
+            break
+        }
+    }
+
     foreach ($candidate in $candidates) {
         if ($candidate -is [System.Management.Automation.Language.FunctionDefinitionAst]) {
             $functionName = [string]$candidate.Name
-            if ($functionName -match '^(?:global|local|private|script):(.+)$') {
-                $functionName = $matches[1]
-            }
+            $functionName = [regex]::Replace($functionName, '^(?i:global|local|private|script):', '')
             if (Test-RecoveryPowerShellConfiguredCommandLiteral -LiteralCommandName $functionName -ConfiguredCommands $ConfiguredCommands) {
                 $shadowingNodes.Add($candidate)
             }
             continue
         }
 
-        $commandName = [string]$candidate.GetCommandName()
-        if (@('set-alias', 'new-alias', 'sal', 'nal') -icontains $commandName) {
-            $nameArgument = Get-RecoveryPowerShellLiteralArgument -Command $candidate -ParameterNames @('Name')
-            if (
-                $nameArgument.IsLiteral -and
-                (Test-RecoveryPowerShellConfiguredCommandLiteral -LiteralCommandName $nameArgument.Value -ConfiguredCommands $ConfiguredCommands)
-            ) {
-                $shadowingNodes.Add($candidate)
-            }
+        if (-not $hasConfiguredNativeEvents) {
             continue
         }
 
-        if (@('set-item', 'new-item') -inotcontains $commandName) {
+        $commandName = Get-RecoveryPowerShellCanonicalCommandLeaf -LiteralCommandName $candidate.GetCommandName()
+        if (@('set-alias', 'new-alias', 'import-alias') -icontains $commandName) {
+            $shadowingNodes.Add($candidate)
             continue
         }
-        $pathArgument = Get-RecoveryPowerShellLiteralArgument -Command $candidate -ParameterNames @('Path', 'LiteralPath')
         if (
-            -not $pathArgument.IsLiteral -or
-            $pathArgument.Value -notmatch '^(?:Alias|Function):[\\/]*(.+)$'
+            @('set-item', 'new-item', 'copy-item', 'move-item', 'rename-item', 'clear-item', 'remove-item') -icontains $commandName -and
+            (Test-RecoveryPowerShellCommandUsesProvider -Command $candidate -ProviderNames @('Alias', 'Function'))
         ) {
-            continue
-        }
-        if (Test-RecoveryPowerShellConfiguredCommandLiteral -LiteralCommandName $matches[1] -ConfiguredCommands $ConfiguredCommands) {
             $shadowingNodes.Add($candidate)
         }
     }
@@ -332,23 +371,41 @@ function Test-RecoveryPowerShellPhpExecutableMutationCommand {
         [System.Management.Automation.Language.CommandAst]$Command
     )
 
-    $commandName = [string]$Command.GetCommandName()
-    if (@('set-variable', 'new-variable', 'clear-variable', 'remove-variable', 'sv', 'nv', 'cv', 'rv') -icontains $commandName) {
-        $nameArgument = Get-RecoveryPowerShellLiteralArgument -Command $Command -ParameterNames @('Name')
-        if (-not $nameArgument.IsLiteral) {
-            return $true
-        }
-        return $nameArgument.Value -ieq 'PhpExecutable'
+    $commandName = Get-RecoveryPowerShellCanonicalCommandLeaf -LiteralCommandName $Command.GetCommandName()
+    if (@('get-variable', 'set-variable', 'new-variable', 'clear-variable', 'remove-variable') -icontains $commandName) {
+        return $true
     }
 
-    if (@('set-item', 'new-item') -inotcontains $commandName) {
+    if (@('get-item', 'set-item', 'new-item', 'copy-item', 'move-item', 'rename-item', 'clear-item', 'remove-item') -inotcontains $commandName) {
         return $false
     }
-    $pathArgument = Get-RecoveryPowerShellLiteralArgument -Command $Command -ParameterNames @('Path', 'LiteralPath')
+    return Test-RecoveryPowerShellCommandUsesProvider -Command $Command -ProviderNames @('Variable')
+}
+
+function Test-RecoveryPowerShellAssignmentTargetsValueMember {
+    param(
+        [Parameter(Mandatory = $true)]
+        [System.Management.Automation.Language.AssignmentStatementAst]$Assignment
+    )
+
+    return @($Assignment.Left.FindAll({
+        param($node)
+        $node -is [System.Management.Automation.Language.MemberExpressionAst] -and
+        $node.Member -is [System.Management.Automation.Language.StringConstantExpressionAst] -and
+        $node.Member.Value -ieq 'Value'
+    }, $true)).Count -gt 0
+}
+
+function Test-RecoveryPowerShellPhpExecutableReference {
+    param(
+        [Parameter(Mandatory = $true)]
+        [System.Management.Automation.Language.ConvertExpressionAst]$Expression
+    )
+
     return (
-        $pathArgument.IsLiteral -and
-        $pathArgument.Value -match '^Variable:[\\/]*(.+)$' -and
-        $matches[1] -ieq 'PhpExecutable'
+        $Expression.Type.TypeName.FullName -ieq 'ref' -and
+        $Expression.Child -is [System.Management.Automation.Language.VariableExpressionAst] -and
+        $Expression.Child.VariablePath.UserPath -ieq 'PhpExecutable'
     )
 }
 
@@ -942,9 +999,18 @@ function ConvertFrom-RecoveryPowerShellFence {
     $phpExecutableMutationCommands = @($commands | Where-Object {
         Test-RecoveryPowerShellPhpExecutableMutationCommand -Command $_
     })
+    $phpExecutableIndirectMutationNodes = @($ast.FindAll({
+        param($node)
+        ($node -is [System.Management.Automation.Language.AssignmentStatementAst] -and
+            (Test-RecoveryPowerShellAssignmentTargetsValueMember -Assignment $node)) -or
+        ($node -is [System.Management.Automation.Language.ConvertExpressionAst] -and
+            (Test-RecoveryPowerShellPhpExecutableReference -Expression $node))
+    }, $true))
     if (
         $phpExecutableInvocations.Count -gt 0 -and
-        ($phpExecutableAssignments.Count -ne 1 -or $phpExecutableMutationCommands.Count -gt 0)
+        ($phpExecutableAssignments.Count -ne 1 -or
+            $phpExecutableMutationCommands.Count -gt 0 -or
+            $phpExecutableIndirectMutationNodes.Count -gt 0)
     ) {
         foreach ($phpExecutableInvocation in $phpExecutableInvocations) {
             $diagnostics.Add((New-RecoveryPowerShellExtentDiagnostic -Code 'PS_DYNAMIC_NATIVE_UNSUPPORTED' -Message 'PowerShell dynamic native invocation is unsupported.' -Extent $phpExecutableInvocation.Extent -Fence $Fence))
