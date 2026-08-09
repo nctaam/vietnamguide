@@ -242,11 +242,13 @@ Add-ParserResult -Name 'Baseline consecutive event windows require exactly one c
     $interveningEvents = @(& $newEvent 'begin' 1; & $newEvent 'noise' 2; & $newEvent 'middle' 3; & $newEvent 'end' 4)
     $nullInterveningEvents = @(& $newEvent 'begin' 1; $null; & $newEvent 'middle' 3; & $newEvent 'end' 4)
     $duplicateEvents = @(& $newEvent 'begin' 1; & $newEvent 'middle' 2; & $newEvent 'end' 3; & $newEvent 'begin' 4; & $newEvent 'middle' 5; & $newEvent 'end' 6)
+    $incompleteDuplicateStartEvents = @(& $newEvent 'begin' 1; & $newEvent 'middle' 2; & $newEvent 'end' 3; & $newEvent 'begin' 4; & $newEvent 'noise' 5)
 
     Assert-ParserEqual -Actual (Test-RecoveryParserConsecutiveEventWindow -Events $validEvents -ExpectedTexts $expected) -Expected $true -Message 'A single complete contiguous event window should be accepted.'
     Assert-ParserEqual -Actual (Test-RecoveryParserConsecutiveEventWindow -Events $interveningEvents -ExpectedTexts $expected) -Expected $false -Message 'An intervening event should reject the contiguous event window.'
     Assert-ParserEqual -Actual (Test-RecoveryParserConsecutiveEventWindow -Events $nullInterveningEvents -ExpectedTexts $expected) -Expected $false -Message 'A null intervening event should not be filtered out of a contiguous event window.'
     Assert-ParserEqual -Actual (Test-RecoveryParserConsecutiveEventWindow -Events $duplicateEvents -ExpectedTexts $expected) -Expected $false -Message 'Duplicate complete event-window starts should be rejected.'
+    Assert-ParserEqual -Actual (Test-RecoveryParserConsecutiveEventWindow -Events $incompleteDuplicateStartEvents -ExpectedTexts $expected) -Expected $false -Message 'A duplicate first boundary event should be rejected even when only one complete window matches.'
 
     $callSites = @($baselineAst.FindAll({
         param($node)

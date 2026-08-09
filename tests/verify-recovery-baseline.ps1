@@ -94,15 +94,18 @@ function Test-RecoveryParserConsecutiveEventWindow {
         return $false
     }
 
-    $validStartCount = 0
-    for ($startIndex = 0; $startIndex -le ($eventArray.Count - $expectedTextArray.Count); $startIndex++) {
-        $window = @($eventArray[$startIndex..($startIndex + $expectedTextArray.Count - 1)])
-        if (Test-RecoveryEventSequence -Events $window -ExpectedTexts $expectedTextArray) {
-            $validStartCount++
-        }
+    $firstBoundaryEvents = @(Find-RecoveryExecutableEvents -Events $eventArray -ExactText $expectedTextArray[0])
+    if ($firstBoundaryEvents.Count -ne 1) {
+        return $false
     }
 
-    return $validStartCount -eq 1
+    $startIndex = [array]::IndexOf($eventArray, $firstBoundaryEvents[0])
+    if ($startIndex -lt 0 -or ($startIndex + $expectedTextArray.Count) -gt $eventArray.Count) {
+        return $false
+    }
+
+    $window = @($eventArray[$startIndex..($startIndex + $expectedTextArray.Count - 1)])
+    return Test-RecoveryEventSequence -Events $window -ExpectedTexts $expectedTextArray
 }
 
 function Test-RecoveryParserContiguousEventBlock {
