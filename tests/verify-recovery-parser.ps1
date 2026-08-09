@@ -52,6 +52,26 @@ function Assert-ParserEqual {
     }
 }
 
+function Assert-ParserArrayEqual {
+    param(
+        [Parameter(Mandatory = $true)]
+        [AllowEmptyCollection()]
+        [object[]]$Actual,
+
+        [Parameter(Mandatory = $true)]
+        [AllowEmptyCollection()]
+        [object[]]$Expected,
+
+        [Parameter(Mandatory = $true)]
+        [string]$Message
+    )
+
+    Assert-ParserEqual -Actual $Actual.Count -Expected $Expected.Count -Message "$Message Count mismatch."
+    for ($index = 0; $index -lt $Expected.Count; $index++) {
+        Assert-ParserEqual -Actual $Actual[$index] -Expected $Expected[$index] -Message "$Message Item $index mismatch."
+    }
+}
+
 function Assert-ParserProperties {
     param(
         [Parameter(Mandatory = $true)]
@@ -98,6 +118,141 @@ Add-ParserResult -Name 'Executable event constructor returns the typed event con
     Assert-ParserEqual -Actual $event.NormalizedCommand -Expected $null -Message 'Normalized command should default to null.'
     Assert-ParserEqual -Actual $event.SectionId -Expected $null -Message 'Section identifier should default to null.'
     Assert-ParserEqual -Actual $event.Metadata.GetType().FullName -Expected 'System.Collections.Hashtable' -Message 'Metadata should default to a hashtable.'
+}
+
+Add-ParserResult -Name 'Executable event query normalizes line endings and preserves event order' -Test {
+    $events = @(
+        (New-RecoveryExecutableEvent -Kind 'command' -Language 'bash' -Text "deploy`r`nbuild" -SourceLine 1 -SourceColumn 1 -FenceId 'fence-1' -StatementId 'statement-1'),
+        (New-RecoveryExecutableEvent -Kind 'command' -Language 'bash' -Text 'unrelated' -SourceLine 2 -SourceColumn 1 -FenceId 'fence-1' -StatementId 'statement-2'),
+        (New-RecoveryExecutableEvent -Kind 'command' -Language 'powershell' -Text "deploy`nbuild" -SourceLine 3 -SourceColumn 1 -FenceId 'fence-2' -StatementId 'statement-3'),
+        (New-RecoveryExecutableEvent -Kind 'command' -Language 'bash' -Text "deploy`rbuild" -SourceLine 4 -SourceColumn 1 -FenceId 'fence-3' -StatementId 'statement-4')
+    )
+
+    $matches = @(Find-RecoveryExecutableEvents -Events $events -ExactText "deploy`nbuild")
+
+    Assert-ParserArrayEqual -Actual @($matches | ForEach-Object { $_.StatementId }) -Expected @('statement-1', 'statement-3', 'statement-4') -Message 'Normalized executable event order mismatch.'
+}
+
+Add-ParserResult -Name 'Executable event query applies ordinal text equality and language filtering' -Test {
+    $events = @(
+        (New-RecoveryExecutableEvent -Kind 'command' -Language 'powershell' -Text 'Git status' -SourceLine 1 -SourceColumn 1 -FenceId 'fence-1' -StatementId 'statement-1'),
+        (New-RecoveryExecutableEvent -Kind 'command' -Language 'powershell' -Text 'git status' -SourceLine 2 -SourceColumn 1 -FenceId 'fence-1' -StatementId 'statement-2'),
+        (New-RecoveryExecutableEvent -Kind 'command' -Language 'bash' -Text 'git status' -SourceLine 3 -SourceColumn 1 -FenceId 'fence-2' -StatementId 'statement-3')
+    )
+
+    $allLanguageMatches = @(Find-RecoveryExecutableEvents -Events $events -ExactText 'git status')
+    $powerShellMatches = @(Find-RecoveryExecutableEvents -Events $events -ExactText 'git status' -Language 'powershell')
+
+    Assert-ParserArrayEqual -Actual @($allLanguageMatches | ForEach-Object { $_.StatementId }) -Expected @('statement-2', 'statement-3') -Message 'Ordinal executable event query mismatch.'
+    Assert-ParserArrayEqual -Actual @($powerShellMatches | ForEach-Object { $_.StatementId }) -Expected @('statement-2') -Message 'Executable event language filter mismatch.'
+}
+
+Add-ParserResult -Name 'Executable event query handles scalar empty and null event inputs deterministically' -Test {
+    $event = New-RecoveryExecutableEvent -Kind 'command' -Language 'bash' -Text 'echo ready' -SourceLine 1 -SourceColumn 1 -FenceId 'fence-1' -StatementId 'statement-1'
+    $scalarMatches = @(Find-RecoveryExecutableEvents -Events $event -ExactText 'echo ready')
+    $emptyMatches = @(Find-RecoveryExecutableEvents -Events @() -ExactText 'echo ready')
+    $nullMatches = @(Find-RecoveryExecutableEvents -Events $null -ExactText 'echo ready')
+
+    Assert-ParserEqual -Actual $scalarMatches.Count -Expected 1 -Message 'Scalar executable event query count mismatch.'
+    Assert-ParserEqual -Actual $emptyMatches.Count -Expected 0 -Message 'Empty executable event query count mismatch.'
+    Assert-ParserEqual -Actual $nullMatches.Count -Expected 0 -Message 'Null executable event query count mismatch.'
+}
+
+Add-ParserResult -Name 'Executable event sequence accepts expected texts in exact event order' -Test {
+    $events = @(
+        (New-RecoveryExecutableEvent -Kind 'command' -Language 'bash' -Text "prepare`r`nrelease" -SourceLine 1 -SourceColumn 1 -FenceId 'fence-1' -StatementId 'statement-1'),
+        (New-RecoveryExecutableEvent -Kind 'command' -Language 'bash' -Text 'unrelated' -SourceLine 2 -SourceColumn 1 -FenceId 'fence-1' -StatementId 'statement-2'),
+        (New-RecoveryExecutableEvent -Kind 'command' -Language 'powershell' -Text 'publish release' -SourceLine 3 -SourceColumn 1 -FenceId 'fence-2' -StatementId 'statement-3')
+    )
+
+    Assert-ParserEqual -Actual (Test-RecoveryEventSequence -Events $events -ExpectedTexts @("prepare`nrelease", 'publish release')) -Expected $true -Message 'Ordered executable event sequence should be accepted.'
+}
+
+Add-ParserResult -Name 'Executable event sequence rejects a missing expected text' -Test {
+    $events = @(
+        (New-RecoveryExecutableEvent -Kind 'command' -Language 'bash' -Text 'prepare release' -SourceLine 1 -SourceColumn 1 -FenceId 'fence-1' -StatementId 'statement-1'),
+        (New-RecoveryExecutableEvent -Kind 'command' -Language 'bash' -Text 'publish release' -SourceLine 2 -SourceColumn 1 -FenceId 'fence-1' -StatementId 'statement-2')
+    )
+
+    Assert-ParserEqual -Actual (Test-RecoveryEventSequence -Events $events -ExpectedTexts @('prepare release', 'verify release', 'publish release')) -Expected $false -Message 'Missing executable event sequence text should be rejected.'
+}
+
+Add-ParserResult -Name 'Executable event sequence rejects reordered expected texts' -Test {
+    $events = @(
+        (New-RecoveryExecutableEvent -Kind 'command' -Language 'bash' -Text 'publish release' -SourceLine 1 -SourceColumn 1 -FenceId 'fence-1' -StatementId 'statement-1'),
+        (New-RecoveryExecutableEvent -Kind 'command' -Language 'bash' -Text 'prepare release' -SourceLine 2 -SourceColumn 1 -FenceId 'fence-1' -StatementId 'statement-2')
+    )
+
+    Assert-ParserEqual -Actual (Test-RecoveryEventSequence -Events $events -ExpectedTexts @('prepare release', 'publish release')) -Expected $false -Message 'Reordered executable event sequence should be rejected.'
+}
+
+Add-ParserResult -Name 'Executable event sequence rejects duplicate expected events when uniqueness is required' -Test {
+    $events = @(
+        (New-RecoveryExecutableEvent -Kind 'command' -Language 'bash' -Text 'prepare release' -SourceLine 1 -SourceColumn 1 -FenceId 'fence-1' -StatementId 'statement-1'),
+        (New-RecoveryExecutableEvent -Kind 'command' -Language 'bash' -Text 'prepare release' -SourceLine 2 -SourceColumn 1 -FenceId 'fence-1' -StatementId 'statement-2'),
+        (New-RecoveryExecutableEvent -Kind 'command' -Language 'bash' -Text 'publish release' -SourceLine 3 -SourceColumn 1 -FenceId 'fence-1' -StatementId 'statement-3')
+    )
+
+    Assert-ParserEqual -Actual (Test-RecoveryEventSequence -Events $events -ExpectedTexts @('prepare release', 'publish release')) -Expected $true -Message 'Duplicate executable events should be allowed without uniqueness.'
+    Assert-ParserEqual -Actual (Test-RecoveryEventSequence -Events $events -ExpectedTexts @('prepare release', 'publish release') -RequireUnique) -Expected $false -Message 'Duplicate executable events should be rejected when uniqueness is required.'
+}
+
+Add-ParserResult -Name 'Executable event sequence handles scalar empty and null arrays deterministically' -Test {
+    $event = New-RecoveryExecutableEvent -Kind 'command' -Language 'bash' -Text 'echo ready' -SourceLine 1 -SourceColumn 1 -FenceId 'fence-1' -StatementId 'statement-1'
+
+    Assert-ParserEqual -Actual (Test-RecoveryEventSequence -Events $event -ExpectedTexts 'echo ready') -Expected $true -Message 'Scalar executable event sequence should be accepted.'
+    Assert-ParserEqual -Actual (Test-RecoveryEventSequence -Events @() -ExpectedTexts @()) -Expected $true -Message 'Empty executable event sequence should be accepted.'
+    Assert-ParserEqual -Actual (Test-RecoveryEventSequence -Events $null -ExpectedTexts $null) -Expected $true -Message 'Null executable event sequence should be accepted.'
+    Assert-ParserEqual -Actual (Test-RecoveryEventSequence -Events $null -ExpectedTexts 'echo ready') -Expected $false -Message 'Missing scalar executable event should be rejected.'
+}
+
+Add-ParserResult -Name 'Baseline inventory excludes exactly the parser verifier infrastructure from the 231-file target' -Test {
+    $baselinePath = Join-Path $PSScriptRoot 'verify-recovery-baseline.ps1'
+    $tokens = $null
+    $parseErrors = $null
+    $baselineAst = [System.Management.Automation.Language.Parser]::ParseFile($baselinePath, [ref]$tokens, [ref]$parseErrors)
+    Assert-ParserEqual -Actual @($parseErrors).Count -Expected 0 -Message 'Baseline inventory regression AST parse mismatch.'
+
+    $expectedInfrastructurePaths = @('tests/lib/RecoveryParser.psm1', 'tests/verify-recovery-parser.ps1')
+    $actualInfrastructurePaths = @($baselineAst.FindAll({
+        param($node)
+        $node -is [System.Management.Automation.Language.StringConstantExpressionAst] -and
+        $expectedInfrastructurePaths -ccontains [string]$node.Value
+    }, $true) | ForEach-Object { [string]$_.Value })
+    [Array]::Sort($actualInfrastructurePaths, [System.StringComparer]::Ordinal)
+    [Array]::Sort($expectedInfrastructurePaths, [System.StringComparer]::Ordinal)
+    Assert-ParserArrayEqual -Actual $actualInfrastructurePaths -Expected $expectedInfrastructurePaths -Message 'Parser infrastructure exclusion path mismatch.'
+
+    $inventoryCountGuards = @($baselineAst.FindAll({
+        param($node)
+        $node -is [System.Management.Automation.Language.BinaryExpressionAst] -and
+        $node.Operator -eq [System.Management.Automation.Language.TokenKind]::Ine -and
+        $node.Left.Extent.Text -ceq '$recoveryRepositoryPaths.Count' -and
+        $node.Right -is [System.Management.Automation.Language.ConstantExpressionAst] -and
+        $node.Right.Value -eq 231
+    }, $true))
+    Assert-ParserEqual -Actual $inventoryCountGuards.Count -Expected 1 -Message 'Recovery repository count guard mismatch.'
+
+    $inventorySuccessMessages = @($baselineAst.FindAll({
+        param($node)
+        $node -is [System.Management.Automation.Language.ExpandableStringExpressionAst] -and
+        $node.Extent.Text.Contains('Recovery baseline verification passed') -and
+        $node.Extent.Text.Contains('$($recoveryRepositoryPaths.Count)')
+    }, $true))
+    Assert-ParserEqual -Actual $inventorySuccessMessages.Count -Expected 1 -Message 'Recovery repository success count source mismatch.'
+
+    $candidateSecurityLoops = @($baselineAst.FindAll({
+        param($node)
+        $node -is [System.Management.Automation.Language.ForEachStatementAst] -and
+        $node.Condition.Extent.Text -ceq '$candidatePaths'
+    }, $true))
+    $inventoryOnlySecurityLoops = @($baselineAst.FindAll({
+        param($node)
+        $node -is [System.Management.Automation.Language.ForEachStatementAst] -and
+        $node.Condition.Extent.Text -ceq '$recoveryRepositoryPaths'
+    }, $true))
+    Assert-ParserEqual -Actual $candidateSecurityLoops.Count -Expected 3 -Message 'Full candidate security scan loop count mismatch.'
+    Assert-ParserEqual -Actual $inventoryOnlySecurityLoops.Count -Expected 0 -Message 'Recovery inventory paths must not replace full candidate security scans.'
 }
 
 Add-ParserResult -Name 'Parse result filters null entries and derives validity from diagnostics' -Test {
@@ -324,26 +479,6 @@ function New-TestRecoveryBashFence {
         Body = $Body
         StartLine = $StartLine
         EndLine = $StartLine + (@($Body.Replace("`r`n", "`n").Replace("`r", "`n") -split "`n", -1).Count) + 1
-    }
-}
-
-function Assert-ParserArrayEqual {
-    param(
-        [Parameter(Mandatory = $true)]
-        [AllowEmptyCollection()]
-        [object[]]$Actual,
-
-        [Parameter(Mandatory = $true)]
-        [AllowEmptyCollection()]
-        [object[]]$Expected,
-
-        [Parameter(Mandatory = $true)]
-        [string]$Message
-    )
-
-    Assert-ParserEqual -Actual $Actual.Count -Expected $Expected.Count -Message "$Message Count mismatch."
-    for ($index = 0; $index -lt $Expected.Count; $index++) {
-        Assert-ParserEqual -Actual $Actual[$index] -Expected $Expected[$index] -Message "$Message Item $index mismatch."
     }
 }
 

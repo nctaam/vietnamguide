@@ -7,6 +7,8 @@ param(
 )
 
 $ErrorActionPreference = 'Stop'
+Import-Module "$PSScriptRoot\lib\RecoveryParser.psm1" -Force -ErrorAction Stop
+
 if ([string]::IsNullOrWhiteSpace($RepositoryRoot)) {
     $RepositoryRoot = Split-Path -Parent $PSScriptRoot
 }
@@ -17,6 +19,67 @@ function Add-Failure {
     param([string]$Message)
 
     $script:failures.Add($Message)
+}
+
+function Get-RecoveryParserSectionEvents {
+    param(
+        [object[]]$Sections,
+        [object[]]$Events,
+        [string]$Heading
+    )
+
+    $sectionIds = @($Sections | Where-Object { $_.Heading -ceq $Heading } | ForEach-Object { $_.Id })
+    return @($Events | Where-Object { $sectionIds -contains $_.SectionId })
+}
+
+function Test-RecoveryParserEventCoverage {
+    param(
+        [string]$Label,
+        [object[]]$Events,
+        [string[]]$ExpectedTexts,
+        [string]$Language = $null,
+        [switch]$RequireUnique
+    )
+
+    foreach ($expectedText in @($ExpectedTexts)) {
+        $queryParameters = @{
+            Events = $Events
+            ExactText = $expectedText
+        }
+        if (-not [string]::IsNullOrEmpty($Language)) {
+            $queryParameters.Language = $Language
+        }
+        $matchCount = @(Find-RecoveryExecutableEvents @queryParameters).Count
+        if (($RequireUnique -and $matchCount -ne 1) -or (-not $RequireUnique -and $matchCount -eq 0)) {
+            Add-Failure "$Label parser shadow failed: executable event count $matchCount for: $expectedText"
+            return $false
+        }
+    }
+
+    return $true
+}
+
+function Test-RecoveryParserEventSequenceContract {
+    param(
+        [string]$Label,
+        [object[]]$Events,
+        [string[]]$ExpectedTexts,
+        [switch]$RequireUnique
+    )
+
+    $sequenceParameters = @{
+        Events = $Events
+        ExpectedTexts = $ExpectedTexts
+    }
+    if ($RequireUnique) {
+        $sequenceParameters.RequireUnique = $true
+    }
+    if (-not (Test-RecoveryEventSequence @sequenceParameters)) {
+        Add-Failure "$Label parser shadow failed: executable event sequence is missing, duplicated, or out of order."
+        return $false
+    }
+
+    return $true
 }
 
 function ConvertTo-LfText {
@@ -1470,6 +1533,62 @@ if ($validatedLocalAuthored.Count -eq 1) {
     $executionAddendumPath = $validatedLocalAuthored[0].FullPath
     $executionAddendumText = [System.IO.File]::ReadAllText($executionAddendumPath)
     $normalizedAddendumText = ConvertTo-LfText -Text $executionAddendumText
+    $requiredRecoveryFenceLanguages = @{
+        '## Task 0: Recover the Missing Verifier Stack' = @('powershell')
+        '## Local Build and Release Preparation' = @('powershell')
+        '## Artifact Upload' = @('powershell')
+        '## Production Shell Initialization' = @('powershell', 'bash')
+        '## Verify and Atomically Install the Release' = @('bash')
+        '## Command Wrapper and Run-ID Rules' = @('bash')
+        '## Canary Validate, Dry-Run, Apply, and Activate' = @('bash', 'powershell')
+        '## Canary Observation, Compatibility Sync, and Close' = @('bash')
+        '## Canary Failure and Rollback' = @('bash')
+        '## Stage 2 Validate, Apply, Activate, and Close' = @('bash', 'powershell')
+        '## Stage 2 Failure and Rollback' = @('bash')
+        '## Isolated Fixture-Only Rollback Drill' = @('bash', 'powershell')
+        '## Reconnect After the Isolated Drill' = @('powershell', 'bash')
+        '## Final Local Integration' = @('powershell')
+    }
+    $recoveryMarkdownResult = ConvertFrom-RecoveryMarkdown -Text $executionAddendumText -RequiredFenceLanguages $requiredRecoveryFenceLanguages
+    $recoveryParserEvents = [System.Collections.Generic.List[object]]::new()
+    $recoveryParserDiagnostics = [System.Collections.Generic.List[object]]::new()
+    foreach ($diagnostic in @($recoveryMarkdownResult.Diagnostics)) {
+        $recoveryParserDiagnostics.Add($diagnostic)
+    }
+
+    $recoveryParserNativeCommandNames = @('powershell', 'pwsh', 'node', 'php', 'git', 'ssh', 'scp')
+    $parsedRecoveryFenceCount = 0
+    foreach ($fence in @($recoveryMarkdownResult.Fences)) {
+        if ($fence.Language -ceq 'bash') {
+            $fenceResult = ConvertFrom-RecoveryBashFence -Fence $fence
+        } elseif ($fence.Language -ceq 'powershell') {
+            $fenceResult = ConvertFrom-RecoveryPowerShellFence -Fence $fence -NativeCommandNames $recoveryParserNativeCommandNames
+        } else {
+            continue
+        }
+
+        $parsedRecoveryFenceCount++
+        foreach ($event in @($fenceResult.Events)) {
+            $recoveryParserEvents.Add($event)
+        }
+        foreach ($diagnostic in @($fenceResult.Diagnostics)) {
+            $recoveryParserDiagnostics.Add($diagnostic)
+        }
+    }
+
+    $recoveryBashFenceCount = @($recoveryMarkdownResult.Fences | Where-Object { $_.Language -ceq 'bash' }).Count
+    $recoveryPowerShellFenceCount = @($recoveryMarkdownResult.Fences | Where-Object { $_.Language -ceq 'powershell' }).Count
+    if (
+        $recoveryBashFenceCount -ne 13 -or
+        $recoveryPowerShellFenceCount -ne 11 -or
+        $parsedRecoveryFenceCount -ne ($recoveryBashFenceCount + $recoveryPowerShellFenceCount)
+    ) {
+        Add-Failure 'Recovery parser executable fence coverage failed.'
+    }
+    foreach ($diagnostic in $recoveryParserDiagnostics) {
+        Add-Failure "Parser diagnostic [$($diagnostic.Code)] line $($diagnostic.SourceLine):$($diagnostic.SourceColumn): $($diagnostic.Message)"
+    }
+
     $requiredPostDrillMarkers = @(
         '## Reconnect After the Isolated Drill',
         "VG_ARTIFACT_HASH='<same-lowercase-artifact-sha256>'",
@@ -1955,6 +2074,163 @@ fi
     ) {
         Add-Failure 'Release installer invocation contract failed.'
     }
+
+    $recoveryParserEventArray = $recoveryParserEvents.ToArray()
+    $canaryActivationParserEvents = @(Get-RecoveryParserSectionEvents -Sections @($recoveryMarkdownResult.Sections) -Events $recoveryParserEventArray -Heading '## Canary Validate, Dry-Run, Apply, and Activate')
+    $canaryObservationParserEvents = @(Get-RecoveryParserSectionEvents -Sections @($recoveryMarkdownResult.Sections) -Events $recoveryParserEventArray -Heading '## Canary Observation, Compatibility Sync, and Close')
+    $canaryRollbackParserEvents = @(Get-RecoveryParserSectionEvents -Sections @($recoveryMarkdownResult.Sections) -Events $recoveryParserEventArray -Heading '## Canary Failure and Rollback')
+    $stage2ParserEvents = @(Get-RecoveryParserSectionEvents -Sections @($recoveryMarkdownResult.Sections) -Events $recoveryParserEventArray -Heading '## Stage 2 Validate, Apply, Activate, and Close')
+    $stage2RollbackParserEvents = @(Get-RecoveryParserSectionEvents -Sections @($recoveryMarkdownResult.Sections) -Events $recoveryParserEventArray -Heading '## Stage 2 Failure and Rollback')
+    $releasePublicationParserEvents = @(Get-RecoveryParserSectionEvents -Sections @($recoveryMarkdownResult.Sections) -Events $recoveryParserEventArray -Heading '## Verify and Atomically Install the Release')
+    $postDrillParserEvents = @(Get-RecoveryParserSectionEvents -Sections @($recoveryMarkdownResult.Sections) -Events $recoveryParserEventArray -Heading '## Reconnect After the Isolated Drill')
+
+    $requiredPostDrillEventMarkers = @($requiredPostDrillMarkers | Select-Object -Skip 1)
+    [void](Test-RecoveryParserEventSequenceContract -Label 'Recovery execution addendum post-drill marker contract' -Events $postDrillParserEvents -ExpectedTexts $requiredPostDrillEventMarkers -RequireUnique)
+
+    $requiredInventoryEventMarkers = @($requiredInventoryMarkers | ForEach-Object { $_.TrimStart() })
+    [void](Test-RecoveryParserEventSequenceContract -Label 'Stage inventory contract' -Events $canaryActivationParserEvents -ExpectedTexts $requiredInventoryEventMarkers -RequireUnique)
+    [void](Test-RecoveryParserEventCoverage -Label 'Stage 2 browser matrix inventory contract' -Events $canaryActivationParserEvents -ExpectedTexts $browserMatrixMarkers -RequireUnique)
+    [void](Test-RecoveryParserEventSequenceContract -Label 'Stage 2 budget marker contract' -Events $canaryActivationParserEvents -ExpectedTexts $requiredBudgetMarkers -RequireUnique)
+    [void](Test-RecoveryParserEventSequenceContract -Label 'Canary lock renewal contract' -Events $recoveryParserEventArray -ExpectedTexts $canaryRenewalMarkers)
+
+    $requiredCanaryParserGates = @(
+        'verify_rollout public-inventory canary --expected-active-pilots=11 --expected-permanent-controls=4',
+        'verify_rollout browser-matrix canary',
+        'verify_rollout performance-budgets canary   --max-html-growth-bytes="$MAX_HTML_GROWTH_BYTES"   --max-dom-nodes="$MAX_DOM_NODES"   --max-scoped-css-bytes="$MAX_SCOPED_CSS_BYTES"   --max-php-p95-ms="$MAX_PHP_P95_MS"   --max-cls="$MAX_CLS"   --max-lcp-regression-percent="$MAX_LCP_REGRESSION_PERCENT"',
+        'verify_rollout cache-budgets canary --max-warm-queries="$MAX_WARM_QUERIES" --max-cold-queries="$MAX_COLD_QUERIES"',
+        'verify_rollout log-observation canary',
+        'verify_rollout permanent-controls canary'
+    )
+    [void](Test-RecoveryParserEventSequenceContract -Label 'Canary gate ordering contract' -Events $canaryObservationParserEvents -ExpectedTexts $requiredCanaryParserGates -RequireUnique)
+    [void](Test-RecoveryParserEventSequenceContract -Label 'Canary gate tail contract' -Events $canaryObservationParserEvents -ExpectedTexts @(
+        'verify_rollout permanent-controls canary',
+        'run_rollout recovery-audit canary --action=renew-lock --ttl-seconds=900',
+        'run_rollout compatibility-sync canary',
+        'verify_rollout compatibility-equivalence canary',
+        'run_rollout recovery-audit canary --action=close-ledger --require-final-event=compatibility-sync',
+        'test ! -e "$STATE_DIR/lock.json"'
+    ))
+
+    $canaryRollbackImmediateParserSequence = @(
+        'run_rollout rollback canary',
+        'ROLLBACK_EXIT=$?',
+        'set -e',
+        'if [ "$ROLLBACK_EXIT" -ne 0 ]; then',
+        "printf '%s\n' 'Canary rollback failed; lock and evidence preserved for recovery audit.' >&2",
+        'exit "$ROLLBACK_EXIT"',
+        'fi'
+    )
+    $canaryRollbackParserMarkers = @(
+        'run_rollout rollback canary',
+        'ROLLBACK_EXIT=$?',
+        'set -e',
+        'if [ "$ROLLBACK_EXIT" -ne 0 ]; then',
+        'wp --path="$WP_ROOT" --allow-root cache flush',
+        'verify_rollout baseline-hashes canary',
+        'run_rollout recovery-audit canary --action=close-ledger --require-final-event=rollback',
+        'test ! -e "$STATE_DIR/lock.json"'
+    )
+    [void](Test-RecoveryParserEventSequenceContract -Label 'Canary rollback immediate gate contract' -Events $canaryRollbackParserEvents -ExpectedTexts $canaryRollbackImmediateParserSequence -RequireUnique)
+    [void](Test-RecoveryParserEventSequenceContract -Label 'Canary rollback ordering contract' -Events $canaryRollbackParserEvents -ExpectedTexts $canaryRollbackParserMarkers -RequireUnique)
+
+    $requiredStage2ParserGates = @(
+        'verify_rollout cache-warm full',
+        'verify_rollout public-inventory full --expected-active-pilots=17 --expected-permanent-controls=4',
+        'verify_rollout browser-matrix full',
+        'verify_rollout tablet-canary full --viewport="$CANARY_TABLET_VIEWPORT" --expected-runs="$CANARY_TABLET_RUNS_EXPECTED"',
+        'verify_rollout reduced-motion-canary full --expected-runs="$CANARY_REDUCED_MOTION_RUNS_EXPECTED"',
+        'verify_rollout forced-colors-canary full --expected-runs="$CANARY_FORCED_COLORS_RUNS_EXPECTED"',
+        'verify_rollout keyboard-zoom-focus-overflow full',
+        'verify_rollout console-h1-module-content full',
+        'verify_rollout performance-budgets full   --max-html-growth-bytes="$MAX_HTML_GROWTH_BYTES"   --max-dom-nodes="$MAX_DOM_NODES"   --max-scoped-css-bytes="$MAX_SCOPED_CSS_BYTES"   --max-php-p95-ms="$MAX_PHP_P95_MS"   --max-cls="$MAX_CLS"   --max-lcp-regression-percent="$MAX_LCP_REGRESSION_PERCENT"',
+        'verify_rollout cache-budgets full --max-warm-queries="$MAX_WARM_QUERIES" --max-cold-queries="$MAX_COLD_QUERIES"',
+        'verify_rollout log-observation full',
+        'verify_rollout permanent-controls full'
+    )
+    [void](Test-RecoveryParserEventSequenceContract -Label 'Stage 2 gate ordering contract' -Events $stage2ParserEvents -ExpectedTexts $requiredStage2ParserGates -RequireUnique)
+
+    $stage2PublicVerifierEventText = [string]::Join("`n", @(
+        'powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\ops\verify-comparison-rollout-public.ps1 `',
+        '    -Stage full `',
+        '    -Origin ''https://vietnamguide.net'''
+    ))
+    [void](Test-RecoveryParserEventCoverage -Label 'Stage 2 public HTTP verification contract' -Events $stage2ParserEvents -ExpectedTexts @($stage2PublicVerifierEventText) -Language 'powershell' -RequireUnique)
+
+    $stage2BrowserBatchMarkers = @(
+        'BROWSER_QA_BATCH_COUNT=3',
+        'BROWSER_QA_RUNS_PER_BATCH=6',
+        'test "$((BROWSER_QA_BATCH_COUNT * BROWSER_QA_RUNS_PER_BATCH))" -eq "$BROWSER_MATRIX_RUNS_EXPECTED"'
+    )
+    $stage2BrowserBatchParserSequence = @(
+        'for qa_batch in 1 2 3; do',
+        'run_rollout recovery-audit full --action=renew-lock --ttl-seconds=900',
+        'verify_rollout browser-matrix-batch full --batch="$qa_batch" --expected-runs="$BROWSER_QA_RUNS_PER_BATCH" --max-duration-seconds="$MAX_QA_BATCH_SECONDS"',
+        'run_rollout recovery-audit full --action=renew-lock --ttl-seconds=900',
+        'done'
+    )
+    [void](Test-RecoveryParserEventSequenceContract -Label 'Stage 2 browser QA marker contract' -Events $stage2ParserEvents -ExpectedTexts $stage2BrowserBatchMarkers -RequireUnique)
+    [void](Test-RecoveryParserEventSequenceContract -Label 'Stage 2 browser QA renewal contract' -Events $stage2ParserEvents -ExpectedTexts $stage2BrowserBatchParserSequence)
+    [void](Test-RecoveryParserEventSequenceContract -Label 'Stage 2 gate tail contract' -Events $stage2ParserEvents -ExpectedTexts $stage2Tail)
+
+    $stage2RollbackImmediateParserSequence = @(
+        'run_rollout rollback full',
+        'ROLLBACK_EXIT=$?',
+        'set -e',
+        'if [ "$ROLLBACK_EXIT" -ne 0 ]; then',
+        "printf '%s\n' 'Stage 2 rollback failed; lock and evidence preserved for recovery audit.' >&2",
+        'exit "$ROLLBACK_EXIT"',
+        'fi'
+    )
+    $stage2RollbackParserMarkers = @(
+        'run_rollout rollback full',
+        'ROLLBACK_EXIT=$?',
+        'set -e',
+        'if [ "$ROLLBACK_EXIT" -ne 0 ]; then',
+        'wp --path="$WP_ROOT" --allow-root cache flush',
+        'verify_rollout baseline-hashes full',
+        'run_rollout recovery-audit full --action=close-ledger --require-final-event=rollback',
+        'test ! -e "$STATE_DIR/lock.json"'
+    )
+    [void](Test-RecoveryParserEventSequenceContract -Label 'Stage 2 rollback immediate gate contract' -Events $stage2RollbackParserEvents -ExpectedTexts $stage2RollbackImmediateParserSequence -RequireUnique)
+    [void](Test-RecoveryParserEventSequenceContract -Label 'Stage 2 rollback ordering contract' -Events $stage2RollbackParserEvents -ExpectedTexts $stage2RollbackParserMarkers -RequireUnique)
+
+    $releasePublicationParserMarkers = @(
+        'mkdir -m 0750 "$RELEASE_DIR"',
+        'RELEASE_PAYLOAD_DIR="$RELEASE_DIR/payload"',
+        'test ! -e "$RELEASE_PAYLOAD_DIR"',
+        'mv -T -- "$INSTALL_ROOT" "$RELEASE_PAYLOAD_DIR"'
+    )
+    $postPublicationParserMarkers = @(
+        'mv -T -- "$INSTALL_ROOT" "$RELEASE_PAYLOAD_DIR"',
+        'test -f "$RELEASE_PAYLOAD_DIR/.vietnamguide-release-sha256"',
+        'test "$(cat "$RELEASE_PAYLOAD_DIR/.vietnamguide-release-sha256")" = "$VG_ARTIFACT_HASH"',
+        'test -f "$RELEASE_PAYLOAD_DIR/payload-manifest.json"',
+        'test -f "$RELEASE_PAYLOAD_DIR/ops/comparison-rollout/artifact.json"',
+        'php "$RELEASE_PAYLOAD_DIR/ops/install-comparison-rollout-release.php" verify-payload   --release-root="$RELEASE_PAYLOAD_DIR"   --payload="$RELEASE_PAYLOAD_DIR/payload-manifest.json"   --archive-sha256="$VG_ARTIFACT_HASH"',
+        'php "$RELEASE_PAYLOAD_DIR/ops/install-comparison-rollout-release.php" install   --release-root="$RELEASE_PAYLOAD_DIR"   --wordpress-root="$WP_ROOT"   --state-dir="$STATE_DIR"   --run-id="$VG_RUN_ID"'
+    )
+    [void](Test-RecoveryParserEventSequenceContract -Label 'Atomic release publication contract' -Events $releasePublicationParserEvents -ExpectedTexts $releasePublicationParserMarkers -RequireUnique)
+    [void](Test-RecoveryParserEventSequenceContract -Label 'Post-publication release identity contract' -Events $releasePublicationParserEvents -ExpectedTexts $postPublicationParserMarkers -RequireUnique)
+
+    $canaryRenewalEventCount = @(Find-RecoveryExecutableEvents -Events $canaryObservationParserEvents -ExactText 'run_rollout recovery-audit canary --action=renew-lock --ttl-seconds=900' -Language 'bash').Count
+    $firstCanarySleepEventCount = @(Find-RecoveryExecutableEvents -Events $canaryObservationParserEvents -ExactText $approvedCanarySleeps[0] -Language 'bash').Count
+    $secondCanarySleepEventCount = @(Find-RecoveryExecutableEvents -Events $canaryObservationParserEvents -ExactText $approvedCanarySleeps[1] -Language 'bash').Count
+    if ($canaryRenewalEventCount -lt 5 -or $firstCanarySleepEventCount -ne 1 -or $secondCanarySleepEventCount -ne 1) {
+        Add-Failure 'Canary lock renewal parser shadow failed: executable event counts are unsafe.'
+    }
+
+    $stage2CompatibilityEventCount = @(Find-RecoveryExecutableEvents -Events $stage2ParserEvents -ExactText 'run_rollout compatibility-sync full' -Language 'bash').Count
+    $stage2CloseEventCount = @(Find-RecoveryExecutableEvents -Events $stage2ParserEvents -ExactText 'run_rollout recovery-audit full --action=close-ledger --require-final-event=compatibility-sync' -Language 'bash').Count
+    $stage2RenewalEventCount = @(Find-RecoveryExecutableEvents -Events $stage2ParserEvents -ExactText 'run_rollout recovery-audit full --action=renew-lock --ttl-seconds=900' -Language 'bash').Count
+    if ($stage2CompatibilityEventCount -ne 2 -or $stage2CloseEventCount -ne 1 -or $stage2RenewalEventCount -lt 5) {
+        Add-Failure 'Stage 2 gate parser shadow failed: sync, close, or lock-renewal event count is unsafe.'
+    }
+
+    $publicationMoveEventCount = @(Find-RecoveryExecutableEvents -Events $recoveryParserEventArray -ExactText 'mv -T -- "$INSTALL_ROOT" "$RELEASE_PAYLOAD_DIR"' -Language 'bash').Count
+    $releaseInstallEventCount = @(Find-RecoveryExecutableEvents -Events $recoveryParserEventArray -ExactText $postPublicationParserMarkers[-1] -Language 'bash').Count
+    if ($publicationMoveEventCount -ne 1 -or $releaseInstallEventCount -ne 1) {
+        Add-Failure 'Release publication parser shadow failed: move or installer event count is unsafe.'
+    }
 }
 
 $localOpsManifestPath = Join-Path $repoRoot 'tests\fixtures\recovery-local-ops-manifest.json'
@@ -2199,7 +2475,11 @@ foreach ($probe in $ignoreProbePaths) {
 
 Write-Host "Ignore probes: $ignoredProbeCount/$($ignoreProbePaths.Count)"
 
+$recoveryParserInfrastructurePaths = [System.Collections.Generic.HashSet[string]]::new([System.StringComparer]::Ordinal)
+[void]$recoveryParserInfrastructurePaths.Add('tests/lib/RecoveryParser.psm1')
+[void]$recoveryParserInfrastructurePaths.Add('tests/verify-recovery-parser.ps1')
 $candidatePaths = [System.Collections.Generic.List[string]]::new()
+$recoveryRepositoryPaths = [System.Collections.Generic.List[string]]::new()
 $candidateFullPaths = [System.Collections.Generic.Dictionary[string, string]]::new([System.StringComparer]::Ordinal)
 foreach ($candidateEntry in @(Get-GitPathLines -Arguments @('ls-files', '--cached', '--others', '--exclude-standard', '--') -Label 'Git candidate path enumeration')) {
     if ([string]::IsNullOrWhiteSpace($candidateEntry)) {
@@ -2213,7 +2493,22 @@ foreach ($candidateEntry in @(Get-GitPathLines -Arguments @('ls-files', '--cache
     }
 
     $candidatePaths.Add($candidateRelative)
+    if (-not $recoveryParserInfrastructurePaths.Contains($candidateRelative)) {
+        $recoveryRepositoryPaths.Add($candidateRelative)
+    }
     $candidateFullPaths[$candidateRelative] = $candidateFullPath
+}
+
+foreach ($parserInfrastructurePath in $recoveryParserInfrastructurePaths) {
+    if (-not $candidateFullPaths.ContainsKey($parserInfrastructurePath)) {
+        Add-Failure "Recovery parser infrastructure path missing from repository candidates: $parserInfrastructurePath"
+    }
+}
+if (
+    ($candidatePaths.Count - $recoveryRepositoryPaths.Count) -ne $recoveryParserInfrastructurePaths.Count -or
+    $recoveryRepositoryPaths.Count -ne 231
+) {
+    Add-Failure "Recovery repository inventory count mismatch: expected 231; received $($recoveryRepositoryPaths.Count)."
 }
 
 $gitStageEntries = @(Get-GitPathLines -Arguments @('ls-files', '--stage', '--') -Label 'Git index path enumeration') + @($AdditionalGitStageEntry)
@@ -2401,4 +2696,4 @@ if ($failures.Count -gt 0) {
     exit 1
 }
 
-Write-Host "Recovery baseline verification passed for $($candidatePaths.Count) repository files."
+Write-Host "Recovery baseline verification passed for $($recoveryRepositoryPaths.Count) repository files."

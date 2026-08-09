@@ -99,6 +99,94 @@ function New-RecoveryParseResult {
     }
 }
 
+function ConvertTo-RecoveryEventLfText {
+    param(
+        [AllowNull()]
+        [string]$Text
+    )
+
+    if ($null -eq $Text) {
+        return ''
+    }
+
+    # Event queries compare ordinal text after normalizing CRLF and CR to LF.
+    return $Text.Replace("`r`n", "`n").Replace("`r", "`n")
+}
+
+function Find-RecoveryExecutableEvents {
+    [CmdletBinding()]
+    param(
+        [AllowNull()]
+        [object[]]$Events,
+
+        [AllowNull()]
+        [string]$ExactText,
+
+        [AllowNull()]
+        [string]$Language = $null
+    )
+
+    $normalizedExactText = ConvertTo-RecoveryEventLfText -Text $ExactText
+    $hasLanguageFilter = $PSBoundParameters.ContainsKey('Language') -and -not [string]::IsNullOrEmpty($Language)
+    $matches = [System.Collections.Generic.List[object]]::new()
+    foreach ($candidate in @($Events)) {
+        if ($null -eq $candidate) {
+            continue
+        }
+        if (
+            $hasLanguageFilter -and
+            -not [string]::Equals([string]$candidate.Language, $Language, [System.StringComparison]::Ordinal)
+        ) {
+            continue
+        }
+
+        $candidateText = ConvertTo-RecoveryEventLfText -Text ([string]$candidate.Text)
+        if ([string]::Equals($candidateText, $normalizedExactText, [System.StringComparison]::Ordinal)) {
+            $matches.Add($candidate)
+        }
+    }
+
+    return $matches.ToArray()
+}
+
+function Test-RecoveryEventSequence {
+    [CmdletBinding()]
+    param(
+        [AllowNull()]
+        [object[]]$Events,
+
+        [AllowNull()]
+        [string[]]$ExpectedTexts,
+
+        [switch]$RequireUnique
+    )
+
+    $eventArray = @($Events | Where-Object { $null -ne $_ })
+    $expectedTextArray = if ($null -eq $ExpectedTexts) { @() } else { @($ExpectedTexts) }
+    $cursor = 0
+    foreach ($expectedText in $expectedTextArray) {
+        if ($RequireUnique -and @(Find-RecoveryExecutableEvents -Events $eventArray -ExactText $expectedText).Count -ne 1) {
+            return $false
+        }
+
+        $normalizedExpectedText = ConvertTo-RecoveryEventLfText -Text $expectedText
+        $found = $false
+        while ($cursor -lt $eventArray.Count) {
+            $candidateText = ConvertTo-RecoveryEventLfText -Text ([string]$eventArray[$cursor].Text)
+            $cursor++
+            if ([string]::Equals($candidateText, $normalizedExpectedText, [System.StringComparison]::Ordinal)) {
+                $found = $true
+                break
+            }
+        }
+        if (-not $found) {
+            return $false
+        }
+    }
+
+    return $true
+}
+
 function Get-RecoveryPowerShellConfiguredCommands {
     param(
         [Parameter(Mandatory = $true)]
@@ -1998,4 +2086,4 @@ function ConvertFrom-RecoveryMarkdown {
     }
 }
 
-Export-ModuleMember -Function New-RecoveryParserDiagnostic, New-RecoveryExecutableEvent, New-RecoveryParseResult, ConvertFrom-RecoveryMarkdown, ConvertFrom-RecoveryBashFence, ConvertFrom-RecoveryPowerShellFence
+Export-ModuleMember -Function New-RecoveryParserDiagnostic, New-RecoveryExecutableEvent, New-RecoveryParseResult, Find-RecoveryExecutableEvents, Test-RecoveryEventSequence, ConvertFrom-RecoveryMarkdown, ConvertFrom-RecoveryBashFence, ConvertFrom-RecoveryPowerShellFence
