@@ -102,6 +102,64 @@ function Assert-ParserDiagnosticCodes {
     }
 }
 
+$forbiddenRecoveryLegacyHelperNames = @(
+    'Get-MarkdownLineRecords',
+    'Get-MarkdownFenceMatch',
+    'Get-MarkdownVisibleLine',
+    'Get-MarkdownSectionText',
+    'Get-MarkdownFencedBlocks',
+    'Test-OrderedMarkers',
+    'Get-BashArithmeticExpansionEnd',
+    'Get-BashHeredocRedirections',
+    'Test-BashUnquotedLineContinuation',
+    'Get-ExecutableBashLines',
+    'Get-ExecutablePowerShellLines',
+    'Test-ConsecutiveExecutableBashLines',
+    'Test-OrderedUniqueExecutableLines',
+    'Get-BashLogicalLineRecords',
+    'Get-PowerShellNativeCommandName',
+    'Get-PowerShellStatementContext',
+    'Test-PowerShellNativeStatementShape',
+    'Test-PowerShellCondition',
+    'Test-PowerShellBlockingStatementBlock',
+    'Test-PowerShellStandardNativeGuard',
+    'Get-PowerShellCapturedExitVariableName',
+    'Test-PowerShellCapturedNativeGuard',
+    'Test-PowerShellImmediateNativeGuard',
+    'Test-PowerShellNativeFailFast'
+)
+
+function Get-RecoveryLegacyHelperViolations {
+    param(
+        [Parameter(Mandatory = $true)]
+        [System.Management.Automation.Language.Ast]$Ast
+    )
+
+    return @($Ast.FindAll({
+        param($node)
+        if ($node -is [System.Management.Automation.Language.FunctionDefinitionAst]) {
+            return $script:forbiddenRecoveryLegacyHelperNames -ccontains $node.Name
+        }
+        if ($node -is [System.Management.Automation.Language.CommandAst]) {
+            return $script:forbiddenRecoveryLegacyHelperNames -ccontains $node.GetCommandName()
+        }
+        return $false
+    }, $true) | ForEach-Object {
+        if ($_ -is [System.Management.Automation.Language.FunctionDefinitionAst]) {
+            return [pscustomobject]@{
+                Kind = 'definition'
+                Name = $_.Name
+                SourceLine = $_.Extent.StartLineNumber
+            }
+        }
+        return [pscustomobject]@{
+            Kind = 'call'
+            Name = $_.GetCommandName()
+            SourceLine = $_.Extent.StartLineNumber
+        }
+    })
+}
+
 function Get-RecoveryBaselineAst {
     $baselinePath = Join-Path $PSScriptRoot 'verify-recovery-baseline.ps1'
     $tokens = $null
@@ -397,41 +455,64 @@ Add-ParserResult -Name 'Baseline delegates legacy parser core exclusively to Rec
     $baselineAst = [System.Management.Automation.Language.Parser]::ParseInput($baselineText, $baselinePath, [ref]$tokens, [ref]$parseErrors)
     Assert-ParserEqual -Actual @($parseErrors).Count -Expected 0 -Message 'Baseline structural AST parse mismatch.'
 
-    $legacyParserNames = @(
+    $violations = @(Get-RecoveryLegacyHelperViolations -Ast $baselineAst)
+    $violationSummary = @($violations | ForEach-Object { "$($_.Kind):$($_.Name)@line$($_.SourceLine)" }) -join ', '
+
+    Assert-ParserEqual -Actual $violations.Count -Expected 0 -Message "Baseline retains legacy parser core or raw helper usage: $violationSummary"
+}
+
+Add-ParserResult -Name 'Legacy helper structural scanner rejects every forbidden definition and call' -Test {
+    $expectedForbiddenLegacyHelperNames = @(
         'Get-MarkdownLineRecords',
         'Get-MarkdownFenceMatch',
         'Get-MarkdownVisibleLine',
         'Get-MarkdownSectionText',
         'Get-MarkdownFencedBlocks',
+        'Test-OrderedMarkers',
         'Get-BashArithmeticExpansionEnd',
         'Get-BashHeredocRedirections',
         'Test-BashUnquotedLineContinuation',
+        'Get-ExecutableBashLines',
+        'Get-ExecutablePowerShellLines',
+        'Test-ConsecutiveExecutableBashLines',
+        'Test-OrderedUniqueExecutableLines',
         'Get-BashLogicalLineRecords',
         'Get-PowerShellNativeCommandName',
+        'Get-PowerShellStatementContext',
+        'Test-PowerShellNativeStatementShape',
+        'Test-PowerShellCondition',
+        'Test-PowerShellBlockingStatementBlock',
+        'Test-PowerShellStandardNativeGuard',
+        'Get-PowerShellCapturedExitVariableName',
+        'Test-PowerShellCapturedNativeGuard',
+        'Test-PowerShellImmediateNativeGuard',
         'Test-PowerShellNativeFailFast'
     )
-    $legacyDefinitions = @($baselineAst.FindAll({
-        param($node)
-        $node -is [System.Management.Automation.Language.FunctionDefinitionAst] -and
-        $legacyParserNames -ccontains $node.Name
-    }, $true))
-    $orderedMarkerDefinitions = @($baselineAst.FindAll({
-        param($node)
-        $node -is [System.Management.Automation.Language.FunctionDefinitionAst] -and
-        $node.Name -ceq 'Test-OrderedMarkers'
-    }, $true))
-    $orderedMarkerCalls = @($baselineAst.FindAll({
-        param($node)
-        $node -is [System.Management.Automation.Language.CommandAst] -and
-        $node.GetCommandName() -ceq 'Test-OrderedMarkers'
-    }, $true))
-    $violations = @(
-        $legacyDefinitions | ForEach-Object { "definition:$($_.Name)" }
-        $orderedMarkerDefinitions | ForEach-Object { 'definition:Test-OrderedMarkers' }
-        $orderedMarkerCalls | ForEach-Object { "call:Test-OrderedMarkers@line$($_.Extent.StartLineNumber)" }
+    $syntheticLines = [System.Collections.Generic.List[string]]::new()
+    foreach ($helperName in $expectedForbiddenLegacyHelperNames) {
+        $syntheticLines.Add("# comment-only $helperName")
+        $syntheticLines.Add("'string-only $helperName'")
+        $syntheticLines.Add("function $helperName {}")
+        $syntheticLines.Add($helperName)
+    }
+    $tokens = $null
+    $parseErrors = $null
+    $syntheticAst = [System.Management.Automation.Language.Parser]::ParseInput(
+        ($syntheticLines -join "`n"),
+        'synthetic-legacy-helper-coverage.ps1',
+        [ref]$tokens,
+        [ref]$parseErrors
     )
+    Assert-ParserEqual -Actual @($parseErrors).Count -Expected 0 -Message 'Synthetic legacy-helper coverage AST parse mismatch.'
 
-    Assert-ParserEqual -Actual $violations.Count -Expected 0 -Message "Baseline retains legacy parser core or raw ordered-marker usage: $($violations -join ', ')"
+    Assert-ParserArrayEqual -Actual @($script:forbiddenRecoveryLegacyHelperNames | Sort-Object) -Expected @($expectedForbiddenLegacyHelperNames | Sort-Object) -Message 'Legacy-helper structural denylist mismatch.'
+    $actualViolationKeys = @(Get-RecoveryLegacyHelperViolations -Ast $syntheticAst | ForEach-Object { "$($_.Kind):$($_.Name)" } | Sort-Object)
+    $expectedViolationKeys = @($expectedForbiddenLegacyHelperNames | ForEach-Object {
+        "definition:$_"
+        "call:$_"
+    } | Sort-Object)
+
+    Assert-ParserArrayEqual -Actual $actualViolationKeys -Expected $expectedViolationKeys -Message 'Legacy-helper structural scanner coverage mismatch.'
 }
 
 Add-ParserResult -Name 'Baseline migrated contracts do not call legacy raw execution helpers' -Test {
