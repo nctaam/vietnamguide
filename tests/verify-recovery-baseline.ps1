@@ -32,6 +32,37 @@ function Get-RecoveryParserSectionEvents {
     return @($Events | Where-Object { $sectionIds -contains $_.SectionId })
 }
 
+function Test-RecoveryParserSectionLanguageDiagnostics {
+    param(
+        [object[]]$Sections,
+        [object[]]$Fences,
+        [object[]]$Diagnostics,
+        [string]$Heading,
+        [string]$Language
+    )
+
+    $matchingSections = @($Sections | Where-Object { $null -ne $_ -and $_.Heading -ceq $Heading })
+    if ($matchingSections.Count -ne 1) {
+        return $false
+    }
+
+    $sectionId = $matchingSections[0].Id
+    $languageFences = @($Fences | Where-Object {
+        $null -ne $_ -and $_.SectionId -ceq $sectionId -and $_.Language -ceq $Language
+    })
+    if ($languageFences.Count -eq 0) {
+        return $false
+    }
+
+    $fenceIds = [System.Collections.Generic.HashSet[string]]::new([System.StringComparer]::Ordinal)
+    foreach ($fence in $languageFences) {
+        [void]$fenceIds.Add([string]$fence.Id)
+    }
+    return @($Diagnostics | Where-Object {
+        $null -ne $_ -and $null -ne $_.FenceId -and $fenceIds.Contains([string]$_.FenceId)
+    }).Count -eq 0
+}
+
 function Test-RecoveryParserEventCoverage {
     param(
         [string]$Label,
@@ -51,7 +82,7 @@ function Test-RecoveryParserEventCoverage {
         }
         $matchCount = @(Find-RecoveryExecutableEvents @queryParameters).Count
         if (($RequireUnique -and $matchCount -ne 1) -or (-not $RequireUnique -and $matchCount -eq 0)) {
-            Add-Failure "$Label parser shadow failed: executable event count $matchCount for: $expectedText"
+            Add-Failure "$Label failed: executable event count $matchCount for: $expectedText"
             return $false
         }
     }
@@ -75,7 +106,7 @@ function Test-RecoveryParserEventSequenceContract {
         $sequenceParameters.RequireUnique = $true
     }
     if (-not (Test-RecoveryEventSequence @sequenceParameters)) {
-        Add-Failure "$Label parser shadow failed: executable event sequence is missing, duplicated, or out of order."
+        Add-Failure "$Label failed: executable event sequence is missing, duplicated, or out of order."
         return $false
     }
 
@@ -1695,6 +1726,7 @@ if ($validatedLocalAuthored.Count -eq 1) {
         "VG_RUN_ID='<same-closed-full-run-id>'",
         'test -f "$DRILL_SENTINEL_DIR/production.before.json"'
     )
+    # Raw authored-content pin: keep copy-safe placeholders exact; parser events validate executable presence below.
     foreach ($marker in $requiredPostDrillMarkers) {
         if (-not $executionAddendumText.Contains($marker)) {
             Add-Failure "Recovery execution addendum missing copy-safe post-drill marker: $marker"
@@ -1712,12 +1744,6 @@ if ($validatedLocalAuthored.Count -eq 1) {
         [pscustomobject]@{ Label = 'Reconnect SSH block'; Heading = '## Reconnect After the Isolated Drill' },
         [pscustomobject]@{ Label = 'Final integration block'; Heading = '## Final Local Integration' }
     )
-    foreach ($sectionSpec in $nativeFailFastSections) {
-        $sectionText = Get-MarkdownSectionText -Text $normalizedAddendumText -Heading $sectionSpec.Heading
-        if ($sectionText) {
-            [void](Test-PowerShellNativeFailFast -Label $sectionSpec.Label -Text $sectionText)
-        }
-    }
 
     $canaryActivationSection = Get-MarkdownSectionText -Text $normalizedAddendumText -Heading '## Canary Validate, Dry-Run, Apply, and Activate'
     $baselinePilotBlock = @'
@@ -1782,12 +1808,14 @@ PERMANENT_CONTROL_PATHS=(
         'test "$(printf ''%s\n'' "${PERMANENT_CONTROL_PATHS[@]}" | sort -u | wc -l)" -eq 4'
     )
     $inventoryInvalid = $false
+    # Raw authored-content pin: preserve exact array formatting; parser events validate executable contiguity below.
     foreach ($inventoryBlock in @($baselinePilotBlock, $canaryPilotBlock, $stage2PilotBlock, $permanentControlBlock)) {
         if (-not (Test-ContainsNormalizedText -Text $canaryActivationSection -Expected $inventoryBlock)) {
             $inventoryInvalid = $true
             break
         }
     }
+    # Raw authored-content pin: preserve exact inventory spellings; parser events validate executable coverage below.
     foreach ($marker in $requiredInventoryMarkers) {
         if (-not $canaryActivationSection.Contains($marker)) {
             $inventoryInvalid = $true
@@ -1810,6 +1838,7 @@ PERMANENT_CONTROL_PATHS=(
         'CANARY_REDUCED_MOTION_RUNS_EXPECTED=3',
         'CANARY_FORCED_COLORS_RUNS_EXPECTED=3'
     )
+    # Raw authored-content pin: preserve exact matrix values; parser events validate executable coverage below.
     foreach ($marker in $browserMatrixMarkers) {
         if (-not $canaryActivationSection.Contains($marker)) {
             Add-Failure "Stage 2 browser matrix inventory contract failed: $marker"
@@ -1829,6 +1858,7 @@ PERMANENT_CONTROL_PATHS=(
         'test "$((VG_OBSERVE_END_EPOCH - VG_OBSERVE_START_EPOCH))" -ge "$CANARY_OBSERVATION_MIN_SECONDS"'
     )
     $canaryRenewalInvalid = $false
+    # Raw authored-content pin: prove exact timing values; parser events validate sleep and renewal ordering below.
     foreach ($marker in $canaryRenewalMarkers) {
         if (-not $normalizedAddendumText.Contains($marker)) {
             $canaryRenewalInvalid = $true
@@ -1903,41 +1933,6 @@ PERMANENT_CONTROL_PATHS=(
         'test ! -e "$STATE_DIR/lock.json"'
     ))
 
-    $canaryRollbackSection = Get-MarkdownSectionText -Text $normalizedAddendumText -Heading '## Canary Failure and Rollback'
-    $canaryRollbackGate = @'
-if [ "$ROLLBACK_EXIT" -ne 0 ]; then
-  printf '%s\n' 'Canary rollback failed; lock and evidence preserved for recovery audit.' >&2
-  exit "$ROLLBACK_EXIT"
-fi
-'@
-    $canaryRollbackExecutableLines = @(Get-ExecutableBashLines -Text $canaryRollbackSection)
-    [void](Test-ConsecutiveExecutableBashLines -Label 'Canary rollback ordering contract' -Lines $canaryRollbackExecutableLines -Expected @(
-        'run_rollout rollback canary',
-        'ROLLBACK_EXIT=$?',
-        'set -e',
-        'if [ "$ROLLBACK_EXIT" -ne 0 ]; then',
-        "printf '%s\n' 'Canary rollback failed; lock and evidence preserved for recovery audit.' >&2",
-        'exit "$ROLLBACK_EXIT"',
-        'fi'
-    ))
-    if (-not (Test-ContainsNormalizedText -Text $canaryRollbackSection -Expected $canaryRollbackGate)) {
-        Add-Failure 'Canary rollback ordering contract failed: immediate nonzero gate is missing.'
-    }
-    [void](Test-OrderedUniqueExecutableLines -Label 'Canary rollback ordering contract' -Lines $canaryRollbackExecutableLines -Markers @(
-        'run_rollout rollback canary',
-        'ROLLBACK_EXIT=$?',
-        'set -e',
-        'if [ "$ROLLBACK_EXIT" -ne 0 ]; then',
-        'wp --path="$WP_ROOT" --allow-root cache flush',
-        'verify_rollout baseline-hashes canary',
-        'run_rollout recovery-audit canary --action=close-ledger --require-final-event=rollback',
-        'test ! -e "$STATE_DIR/lock.json"'
-    ))
-    if ($canaryRollbackSection.Contains('test "$ROLLBACK_EXIT" -eq 0')) {
-        Add-Failure 'Canary rollback ordering contract failed: success gate occurs after rollback work.'
-    }
-
-    $stage2Section = Get-MarkdownSectionText -Text $normalizedAddendumText -Heading '## Stage 2 Validate, Apply, Activate, and Close'
     $requiredBudgetMarkers = @(
         'MAX_HTML_GROWTH_BYTES=20480',
         'MAX_DOM_NODES=180',
@@ -1950,117 +1945,6 @@ fi
         'MAX_QA_BATCH_SECONDS=240',
         'test "$MAX_QA_BATCH_SECONDS" -lt 300'
     )
-    foreach ($marker in $requiredBudgetMarkers) {
-        if (-not $normalizedAddendumText.Contains($marker)) {
-            Add-Failure "Stage 2 gate ordering contract failed: missing budget marker: $marker"
-            break
-        }
-    }
-
-    $stage2ExecutableLines = @(Get-ExecutableBashLines -Text $stage2Section)
-    $stage2CompatibilityIndexes = @(
-        for ($index = 0; $index -lt $stage2ExecutableLines.Count; $index++) {
-            if ($stage2ExecutableLines[$index] -ceq 'run_rollout compatibility-sync full') {
-                $index
-            }
-        }
-    )
-    $firstStage2CompatibilityIndex = if ($stage2CompatibilityIndexes.Count -gt 0) { $stage2CompatibilityIndexes[0] } else { -1 }
-    $requiredStage2Gates = @(
-        'verify_rollout cache-warm full',
-        'verify_rollout public-inventory full --expected-active-pilots=17 --expected-permanent-controls=4',
-        'verify_rollout browser-matrix full',
-        'verify_rollout tablet-canary full --viewport="$CANARY_TABLET_VIEWPORT" --expected-runs="$CANARY_TABLET_RUNS_EXPECTED"',
-        'verify_rollout reduced-motion-canary full --expected-runs="$CANARY_REDUCED_MOTION_RUNS_EXPECTED"',
-        'verify_rollout forced-colors-canary full --expected-runs="$CANARY_FORCED_COLORS_RUNS_EXPECTED"',
-        'verify_rollout keyboard-zoom-focus-overflow full',
-        'verify_rollout console-h1-module-content full',
-        'verify_rollout performance-budgets full \',
-        'verify_rollout cache-budgets full --max-warm-queries="$MAX_WARM_QUERIES" --max-cold-queries="$MAX_COLD_QUERIES"',
-        'verify_rollout log-observation full',
-        'verify_rollout permanent-controls full'
-    )
-    $stage2GateOrderValid = Test-OrderedUniqueExecutableLines -Label 'Stage 2 gate ordering contract' -Lines $stage2ExecutableLines -Markers $requiredStage2Gates
-    if ($stage2GateOrderValid) {
-        $lastStage2GateIndex = [array]::IndexOf($stage2ExecutableLines, $requiredStage2Gates[$requiredStage2Gates.Count - 1])
-        if ($firstStage2CompatibilityIndex -le $lastStage2GateIndex) {
-            Add-Failure 'Stage 2 gate ordering contract failed: compatibility sync precedes a required executable gate.'
-        }
-    }
-
-    $stage2PublicVerifierLines = @(
-        'powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\ops\verify-comparison-rollout-public.ps1 `',
-        '-Stage full `',
-        '-Origin ''https://vietnamguide.net''',
-        'if ($LASTEXITCODE -ne 0) { throw ''Full-stage public HTTP verification failed.'' }'
-    )
-    $stage2PowerShellFences = @(Get-MarkdownFencedBlocks -Text $stage2Section -Language 'powershell')
-    $stage2PublicVerifierMatches = [System.Collections.Generic.List[object]]::new()
-    foreach ($fence in $stage2PowerShellFences) {
-        $powerShellLines = @(Get-ExecutablePowerShellLines -Text $fence.Body)
-        for ($startIndex = 0; $startIndex -le ($powerShellLines.Count - $stage2PublicVerifierLines.Count); $startIndex++) {
-            $sequenceMatches = $true
-            for ($offset = 0; $offset -lt $stage2PublicVerifierLines.Count; $offset++) {
-                if ($powerShellLines[$startIndex + $offset] -cne $stage2PublicVerifierLines[$offset]) {
-                    $sequenceMatches = $false
-                    break
-                }
-            }
-            if ($sequenceMatches) {
-                $stage2PublicVerifierMatches.Add([pscustomobject]@{
-                    Fence = $fence
-                    Index = $startIndex
-                })
-            }
-        }
-    }
-    $stage2PublicVerifierInvalid = $stage2PublicVerifierMatches.Count -ne 1
-    if (-not $stage2PublicVerifierInvalid) {
-        $publicVerifierFence = $stage2PublicVerifierMatches[0].Fence
-        [void](Test-PowerShellNativeFailFast -Label 'Stage 2 public verification block' -Text $publicVerifierFence.Text)
-
-        $stage2BashFences = @(Get-MarkdownFencedBlocks -Text $stage2Section -Language 'bash')
-        $firstCompatibilityFenceIndex = -1
-        $closeFenceIndex = -1
-        foreach ($fence in $stage2BashFences) {
-            $fenceExecutableLines = @(Get-ExecutableBashLines -Text $fence.Text)
-            if ($firstCompatibilityFenceIndex -lt 0 -and @($fenceExecutableLines | Where-Object { $_ -ceq 'run_rollout compatibility-sync full' }).Count -gt 0) {
-                $firstCompatibilityFenceIndex = $fence.Index
-            }
-            if ($closeFenceIndex -lt 0 -and @($fenceExecutableLines | Where-Object { $_ -ceq 'run_rollout recovery-audit full --action=close-ledger --require-final-event=compatibility-sync' }).Count -gt 0) {
-                $closeFenceIndex = $fence.Index
-            }
-        }
-        if (
-            $firstCompatibilityFenceIndex -lt 0 -or
-            $closeFenceIndex -lt 0 -or
-            $publicVerifierFence.Index -ge $firstCompatibilityFenceIndex -or
-            $publicVerifierFence.Index -ge $closeFenceIndex
-        ) {
-            $stage2PublicVerifierInvalid = $true
-        }
-    }
-    if ($stage2PublicVerifierInvalid) {
-        Add-Failure 'Stage 2 public HTTP verification contract failed.'
-    }
-
-    $stage2BrowserBatchInvalid = (
-        ([regex]::Matches($stage2Section, '(?m)^BROWSER_QA_BATCH_COUNT=3$')).Count -ne 1 -or
-        ([regex]::Matches($stage2Section, '(?m)^BROWSER_QA_RUNS_PER_BATCH=6$')).Count -ne 1 -or
-        -not $stage2Section.Contains('test "$((BROWSER_QA_BATCH_COUNT * BROWSER_QA_RUNS_PER_BATCH))" -eq "$BROWSER_MATRIX_RUNS_EXPECTED"')
-    )
-    if (-not (Test-ConsecutiveExecutableBashLines -Label 'Stage 2 browser QA renewal contract' -Lines $stage2ExecutableLines -Expected @(
-        'for qa_batch in 1 2 3; do',
-        'run_rollout recovery-audit full --action=renew-lock --ttl-seconds=900',
-        'verify_rollout browser-matrix-batch full --batch="$qa_batch" --expected-runs="$BROWSER_QA_RUNS_PER_BATCH" --max-duration-seconds="$MAX_QA_BATCH_SECONDS"',
-        'run_rollout recovery-audit full --action=renew-lock --ttl-seconds=900',
-        'done'
-    ))) {
-        $stage2BrowserBatchInvalid = $true
-    }
-    if ($stage2BrowserBatchInvalid) {
-        Add-Failure 'Stage 2 browser QA renewal contract failed.'
-    }
 
     $stage2Tail = @(
         'verify_rollout permanent-controls full',
@@ -2071,109 +1955,6 @@ fi
         'test ! -e "$STATE_DIR/lock.json"',
         'verify_rollout closed full'
     )
-    $stage2TailCursor = -1
-    foreach ($marker in $stage2Tail) {
-        $markerIndex = -1
-        for ($index = $stage2TailCursor + 1; $index -lt $stage2ExecutableLines.Count; $index++) {
-            if ($stage2ExecutableLines[$index] -ceq $marker) {
-                $markerIndex = $index
-                break
-            }
-        }
-        if ($markerIndex -lt 0) {
-            Add-Failure "Stage 2 gate ordering contract failed: missing or out-of-order executable gate: $marker"
-            break
-        }
-        $stage2TailCursor = $markerIndex
-    }
-    if (
-        $stage2CompatibilityIndexes.Count -ne 2 -or
-        @($stage2ExecutableLines | Where-Object { $_ -ceq 'run_rollout recovery-audit full --action=close-ledger --require-final-event=compatibility-sync' }).Count -ne 1 -or
-        @($stage2ExecutableLines | Where-Object { $_ -ceq 'run_rollout recovery-audit full --action=renew-lock --ttl-seconds=900' }).Count -lt 5
-    ) {
-        Add-Failure 'Stage 2 gate ordering contract failed: sync, close, or lock-renewal count is unsafe.'
-    }
-
-    $stage2RollbackSection = Get-MarkdownSectionText -Text $normalizedAddendumText -Heading '## Stage 2 Failure and Rollback'
-    $stage2RollbackGate = @'
-if [ "$ROLLBACK_EXIT" -ne 0 ]; then
-  printf '%s\n' 'Stage 2 rollback failed; lock and evidence preserved for recovery audit.' >&2
-  exit "$ROLLBACK_EXIT"
-fi
-'@
-    $stage2RollbackExecutableLines = @(Get-ExecutableBashLines -Text $stage2RollbackSection)
-    [void](Test-ConsecutiveExecutableBashLines -Label 'Stage 2 rollback ordering contract' -Lines $stage2RollbackExecutableLines -Expected @(
-        'run_rollout rollback full',
-        'ROLLBACK_EXIT=$?',
-        'set -e',
-        'if [ "$ROLLBACK_EXIT" -ne 0 ]; then',
-        "printf '%s\n' 'Stage 2 rollback failed; lock and evidence preserved for recovery audit.' >&2",
-        'exit "$ROLLBACK_EXIT"',
-        'fi'
-    ))
-    if (-not (Test-ContainsNormalizedText -Text $stage2RollbackSection -Expected $stage2RollbackGate)) {
-        Add-Failure 'Stage 2 rollback ordering contract failed: immediate nonzero gate is missing.'
-    }
-    [void](Test-OrderedUniqueExecutableLines -Label 'Stage 2 rollback ordering contract' -Lines $stage2RollbackExecutableLines -Markers @(
-        'run_rollout rollback full',
-        'ROLLBACK_EXIT=$?',
-        'set -e',
-        'if [ "$ROLLBACK_EXIT" -ne 0 ]; then',
-        'wp --path="$WP_ROOT" --allow-root cache flush',
-        'verify_rollout baseline-hashes full',
-        'run_rollout recovery-audit full --action=close-ledger --require-final-event=rollback',
-        'test ! -e "$STATE_DIR/lock.json"'
-    ))
-    if ($stage2RollbackSection.Contains('test "$ROLLBACK_EXIT" -eq 0')) {
-        Add-Failure 'Stage 2 rollback ordering contract failed: success gate occurs after rollback work.'
-    }
-
-    $releasePublicationSection = Get-MarkdownSectionText -Text $normalizedAddendumText -Heading '## Verify and Atomically Install the Release'
-    $publicationExecutableLines = @(Get-ExecutableBashLines -Text $releasePublicationSection)
-    $allExecutableBashLines = @(Get-ExecutableBashLines -Text $normalizedAddendumText)
-    if (
-        $releasePublicationSection.Contains('test ! -e "$RELEASE_DIR"') -or
-        $releasePublicationSection.Contains('mv -- "$INSTALL_ROOT" "$RELEASE_DIR"')
-    ) {
-        Add-Failure 'Atomic release publication contract failed: non-atomic final-directory test and move detected.'
-    }
-    [void](Test-OrderedUniqueExecutableLines -Label 'Atomic release publication contract' -Lines $publicationExecutableLines -Markers @(
-        'mkdir -m 0750 "$RELEASE_DIR"',
-        'RELEASE_PAYLOAD_DIR="$RELEASE_DIR/payload"',
-        'test ! -e "$RELEASE_PAYLOAD_DIR"',
-        'mv -T -- "$INSTALL_ROOT" "$RELEASE_PAYLOAD_DIR"'
-    ))
-    [void](Test-OrderedUniqueExecutableLines -Label 'Post-publication release identity contract' -Lines $publicationExecutableLines -Markers @(
-        'mv -T -- "$INSTALL_ROOT" "$RELEASE_PAYLOAD_DIR"',
-        'test -f "$RELEASE_PAYLOAD_DIR/.vietnamguide-release-sha256"',
-        'test "$(cat "$RELEASE_PAYLOAD_DIR/.vietnamguide-release-sha256")" = "$VG_ARTIFACT_HASH"',
-        'test -f "$RELEASE_PAYLOAD_DIR/payload-manifest.json"',
-        'test -f "$RELEASE_PAYLOAD_DIR/ops/comparison-rollout/artifact.json"',
-        'php "$RELEASE_PAYLOAD_DIR/ops/install-comparison-rollout-release.php" verify-payload \',
-        'php "$RELEASE_PAYLOAD_DIR/ops/install-comparison-rollout-release.php" install \'
-    ))
-    $publicationMoveLines = @($allExecutableBashLines | Where-Object { $_ -match '^mv(?:\s|$)' -and $_.Contains('$INSTALL_ROOT') })
-    if ($publicationMoveLines.Count -ne 1 -or $publicationMoveLines[0] -cne 'mv -T -- "$INSTALL_ROOT" "$RELEASE_PAYLOAD_DIR"') {
-        Add-Failure 'Atomic release publication contract failed: exact no-target-directory move is missing.'
-    }
-    if (
-        $normalizedAddendumText.Contains('$RELEASE_DIR/ops/') -or
-        -not $releasePublicationSection.Contains('php "$RELEASE_PAYLOAD_DIR/ops/install-comparison-rollout-release.php" install \') -or
-        -not $releasePublicationSection.Contains('--release-root="$RELEASE_PAYLOAD_DIR"')
-    ) {
-        Add-Failure 'Release payload execution-root contract failed.'
-    }
-    $releaseInstallInvocations = @(
-        $allExecutableBashLines | Where-Object {
-            $_ -match '^php\b.*install-comparison-rollout-release\.php(?:"|''|\s).*\sinstall(?:\s|$)'
-        }
-    )
-    if (
-        $releaseInstallInvocations.Count -ne 1 -or
-        $releaseInstallInvocations[0] -cne 'php "$RELEASE_PAYLOAD_DIR/ops/install-comparison-rollout-release.php" install \'
-    ) {
-        Add-Failure 'Release installer invocation contract failed.'
-    }
 
     $recoveryParserEventArray = $recoveryParserEvents.ToArray()
     $canaryActivationParserEvents = @(Get-RecoveryParserSectionEvents -Sections @($recoveryMarkdownResult.Sections) -Events $recoveryParserEventArray -Heading '## Canary Validate, Dry-Run, Apply, and Activate')
@@ -2183,6 +1964,12 @@ fi
     $stage2RollbackParserEvents = @(Get-RecoveryParserSectionEvents -Sections @($recoveryMarkdownResult.Sections) -Events $recoveryParserEventArray -Heading '## Stage 2 Failure and Rollback')
     $releasePublicationParserEvents = @(Get-RecoveryParserSectionEvents -Sections @($recoveryMarkdownResult.Sections) -Events $recoveryParserEventArray -Heading '## Verify and Atomically Install the Release')
     $postDrillParserEvents = @(Get-RecoveryParserSectionEvents -Sections @($recoveryMarkdownResult.Sections) -Events $recoveryParserEventArray -Heading '## Reconnect After the Isolated Drill')
+
+    foreach ($sectionSpec in $nativeFailFastSections) {
+        if (-not (Test-RecoveryParserSectionLanguageDiagnostics -Sections @($recoveryMarkdownResult.Sections) -Fences @($recoveryMarkdownResult.Fences) -Diagnostics @($recoveryParserDiagnostics) -Heading $sectionSpec.Heading -Language 'powershell')) {
+            Add-Failure "$($sectionSpec.Label) native fail-fast contract failed."
+        }
+    }
 
     $requiredPostDrillEventMarkers = @($requiredPostDrillMarkers | Select-Object -Skip 1)
     [void](Test-RecoveryParserEventCoverage -Label 'Recovery execution addendum post-drill marker contract' -Events $postDrillParserEvents -ExpectedTexts $requiredPostDrillEventMarkers)
@@ -2239,7 +2026,7 @@ fi
         Add-Failure 'Stage inventory parser shadow failed: permanent-control block is incomplete or noncontiguous.'
     }
     [void](Test-RecoveryParserEventCoverage -Label 'Stage 2 browser matrix inventory contract' -Events $canaryActivationParserEvents -ExpectedTexts $browserMatrixMarkers)
-    [void](Test-RecoveryParserEventCoverage -Label 'Stage 2 budget marker contract' -Events $recoveryParserEventArray -ExpectedTexts $requiredBudgetMarkers)
+    [void](Test-RecoveryParserEventCoverage -Label 'Stage 2 gate ordering contract' -Events $recoveryParserEventArray -ExpectedTexts $requiredBudgetMarkers)
     [void](Test-RecoveryParserEventCoverage -Label 'Canary lock renewal contract' -Events $recoveryParserEventArray -ExpectedTexts $canaryRenewalMarkers)
 
     $requiredCanaryParserGates = @(
@@ -2289,9 +2076,12 @@ fi
         'test ! -e "$STATE_DIR/lock.json"'
     )
     if (-not (Test-RecoveryParserConsecutiveEventWindow -Events $canaryRollbackParserEvents -ExpectedTexts $canaryRollbackImmediateParserSequence)) {
-        Add-Failure 'Canary rollback immediate gate parser shadow failed: sequence is missing, duplicated, or noncontiguous.'
+        Add-Failure 'Canary rollback ordering contract failed: immediate gate sequence is missing, duplicated, or noncontiguous.'
     }
     [void](Test-RecoveryParserEventSequenceContract -Label 'Canary rollback ordering contract' -Events $canaryRollbackParserEvents -ExpectedTexts $canaryRollbackParserMarkers -RequireUnique)
+    if (@(Find-RecoveryExecutableEvents -Events $canaryRollbackParserEvents -ExactText 'test "$ROLLBACK_EXIT" -eq 0' -Language 'bash').Count -gt 0) {
+        Add-Failure 'Canary rollback ordering contract failed: success gate occurs after rollback work.'
+    }
 
     $requiredStage2ParserGates = @(
         'verify_rollout cache-warm full',
@@ -2318,7 +2108,7 @@ fi
         'run_rollout compatibility-sync full',
         'run_rollout recovery-audit full --action=close-ledger --require-final-event=compatibility-sync'
     ))) {
-        Add-Failure 'Stage 2 public HTTP verification parser shadow failed: typed event or fence ordering is unsafe.'
+        Add-Failure 'Stage 2 public HTTP verification contract failed: typed event or fence ordering is unsafe.'
     }
 
     $stage2BrowserBatchMarkers = @(
@@ -2333,12 +2123,12 @@ fi
         'run_rollout recovery-audit full --action=renew-lock --ttl-seconds=900',
         'done'
     )
-    [void](Test-RecoveryParserEventCoverage -Label 'Stage 2 browser QA marker contract' -Events $stage2ParserEvents -ExpectedTexts @($stage2BrowserBatchMarkers | Select-Object -First 2) -RequireUnique)
-    [void](Test-RecoveryParserEventCoverage -Label 'Stage 2 browser QA marker contract' -Events $stage2ParserEvents -ExpectedTexts @($stage2BrowserBatchMarkers | Select-Object -Last 1))
+    [void](Test-RecoveryParserEventCoverage -Label 'Stage 2 browser QA renewal contract' -Events $stage2ParserEvents -ExpectedTexts @($stage2BrowserBatchMarkers | Select-Object -First 2) -RequireUnique)
+    [void](Test-RecoveryParserEventCoverage -Label 'Stage 2 browser QA renewal contract' -Events $stage2ParserEvents -ExpectedTexts @($stage2BrowserBatchMarkers | Select-Object -Last 1))
     if (-not (Test-RecoveryParserConsecutiveEventWindow -Events $stage2ParserEvents -ExpectedTexts $stage2BrowserBatchParserSequence)) {
-        Add-Failure 'Stage 2 browser QA renewal parser shadow failed: sequence is missing, duplicated, or noncontiguous.'
+        Add-Failure 'Stage 2 browser QA renewal contract failed: sequence is missing, duplicated, or noncontiguous.'
     }
-    [void](Test-RecoveryParserEventSequenceContract -Label 'Stage 2 gate tail contract' -Events $stage2ParserEvents -ExpectedTexts $stage2Tail)
+    [void](Test-RecoveryParserEventSequenceContract -Label 'Stage 2 gate ordering contract' -Events $stage2ParserEvents -ExpectedTexts $stage2Tail)
 
     $stage2RollbackImmediateParserSequence = @(
         'run_rollout rollback full',
@@ -2360,9 +2150,12 @@ fi
         'test ! -e "$STATE_DIR/lock.json"'
     )
     if (-not (Test-RecoveryParserConsecutiveEventWindow -Events $stage2RollbackParserEvents -ExpectedTexts $stage2RollbackImmediateParserSequence)) {
-        Add-Failure 'Stage 2 rollback immediate gate parser shadow failed: sequence is missing, duplicated, or noncontiguous.'
+        Add-Failure 'Stage 2 rollback ordering contract failed: immediate gate sequence is missing, duplicated, or noncontiguous.'
     }
     [void](Test-RecoveryParserEventSequenceContract -Label 'Stage 2 rollback ordering contract' -Events $stage2RollbackParserEvents -ExpectedTexts $stage2RollbackParserMarkers -RequireUnique)
+    if (@(Find-RecoveryExecutableEvents -Events $stage2RollbackParserEvents -ExactText 'test "$ROLLBACK_EXIT" -eq 0' -Language 'bash').Count -gt 0) {
+        Add-Failure 'Stage 2 rollback ordering contract failed: success gate occurs after rollback work.'
+    }
 
     $releasePublicationParserMarkers = @(
         'mkdir -m 0750 "$RELEASE_DIR"',
@@ -2410,13 +2203,32 @@ fi
     $stage2CloseEventCount = @(Find-RecoveryExecutableEvents -Events $stage2ParserEvents -ExactText 'run_rollout recovery-audit full --action=close-ledger --require-final-event=compatibility-sync' -Language 'bash').Count
     $stage2RenewalEventCount = @(Find-RecoveryExecutableEvents -Events $stage2ParserEvents -ExactText 'run_rollout recovery-audit full --action=renew-lock --ttl-seconds=900' -Language 'bash').Count
     if ($stage2CompatibilityEventCount -ne 2 -or $stage2CloseEventCount -ne 1 -or $stage2RenewalEventCount -lt 5) {
-        Add-Failure 'Stage 2 gate parser shadow failed: sync, close, or lock-renewal event count is unsafe.'
+        Add-Failure 'Stage 2 gate ordering contract failed: sync, close, or lock-renewal event count is unsafe.'
     }
 
-    $publicationMoveEventCount = @(Find-RecoveryExecutableEvents -Events $recoveryParserEventArray -ExactText 'mv -T -- "$INSTALL_ROOT" "$RELEASE_PAYLOAD_DIR"' -Language 'bash').Count
-    $releaseInstallEventCount = @(Find-RecoveryExecutableEvents -Events $recoveryParserEventArray -ExactText $postPublicationParserMarkers[-1] -Language 'bash').Count
-    if ($publicationMoveEventCount -ne 1 -or $releaseInstallEventCount -ne 1) {
-        Add-Failure 'Release publication parser shadow failed: move or installer event count is unsafe.'
+    $publicationMoveEvents = @($recoveryParserEventArray | Where-Object {
+        $null -ne $_ -and $_.Language -ceq 'bash' -and $_.Text -match '^mv(?:\s|$)' -and $_.Text.Contains('$INSTALL_ROOT')
+    })
+    if ($publicationMoveEvents.Count -ne 1 -or $publicationMoveEvents[0].Text -cne 'mv -T -- "$INSTALL_ROOT" "$RELEASE_PAYLOAD_DIR"') {
+        Add-Failure 'Atomic release publication contract failed: exact no-target-directory move is missing.'
+    }
+    if (
+        @(Find-RecoveryExecutableEvents -Events $releasePublicationParserEvents -ExactText 'test ! -e "$RELEASE_DIR"' -Language 'bash').Count -gt 0 -or
+        @(Find-RecoveryExecutableEvents -Events $releasePublicationParserEvents -ExactText 'mv -- "$INSTALL_ROOT" "$RELEASE_DIR"' -Language 'bash').Count -gt 0
+    ) {
+        Add-Failure 'Atomic release publication contract failed: non-atomic final-directory test and move detected.'
+    }
+
+    $releaseInstallInvocations = @($recoveryParserEventArray | Where-Object {
+        $null -ne $_ -and
+        $_.Language -ceq 'bash' -and
+        $_.Text -match '^php\b.*install-comparison-rollout-release\.php(?:"|''|\s).*\sinstall(?:\s|$)'
+    })
+    if ($releaseInstallInvocations.Count -ne 1 -or $releaseInstallInvocations[0].Text -cne $postPublicationParserMarkers[-1]) {
+        Add-Failure 'Release installer invocation contract failed.'
+    }
+    if (@($releaseInstallInvocations | Where-Object { $_.Text.Contains('$RELEASE_DIR/ops/') }).Count -gt 0) {
+        Add-Failure 'Release payload execution-root contract failed.'
     }
 }
 

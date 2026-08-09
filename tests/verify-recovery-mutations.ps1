@@ -299,10 +299,8 @@ function Add-ExecutionAddendumReplacementMutation {
             ExpectedFailure = $ExpectedFailure
         }
     )
-    foreach ($variant in @($Variants)) {
-        if ($null -ne $variant) {
-            $mutationCases.Add($variant)
-        }
+    foreach ($variant in @($Variants) | Where-Object { $null -ne $_ }) {
+        $mutationCases.Add($variant)
     }
     $passed = $true
     $caseDetails = [System.Collections.Generic.List[string]]::new()
@@ -430,7 +428,37 @@ try {
             FixtureName = 'runbook-recovered-verifier-native-check'
             OldText = "node --check .\ops\verify-guide-experience-js-runtime.js`nif (`$LASTEXITCODE -ne 0) { throw 'Node syntax check failed: ops/verify-guide-experience-js-runtime.js' }"
             NewText = "`$QuotedValue = 'abc``' # Backticks are literal in single-quoted strings.`nnode.exe --check .\ops\verify-guide-experience-js-runtime.js"
-            ExpectedFailure = 'Recovered verifier block native fail-fast contract\s+failed'
+            ExpectedFailure = 'Recovered verifier block native fail-fast\s+contract\s+failed'
+            Variants = @(
+                [pscustomobject]@{
+                    FixtureName = 'runbook-recovered-verifier-missing-powershell-fence'
+                    OldText = @(
+                        ("## Task 0: Recover the Missing Verifier Stack`n`nRun the recovery baseline first from Windows PowerShell:`n`n$markdownFence" + 'powershell'),
+                        ("Before committing the recovered verifier stack:`n`n$markdownFence" + 'powershell'),
+                        ("Record that reviewed commit as:`n`n$markdownFence" + 'powershell')
+                    )
+                    NewText = @(
+                        "## Task 0: Recover the Missing Verifier Stack`n`nRun the recovery baseline first from Windows PowerShell:`n`n$markdownFence",
+                        "Before committing the recovered verifier stack:`n`n$markdownFence",
+                        "Record that reviewed commit as:`n`n$markdownFence"
+                    )
+                    ExpectedFailure = 'Recovered verifier block native fail-fast\s+contract\s+failed'
+                },
+                [pscustomobject]@{
+                    FixtureName = 'runbook-recovered-verifier-text-fence'
+                    OldText = @(
+                        ("## Task 0: Recover the Missing Verifier Stack`n`nRun the recovery baseline first from Windows PowerShell:`n`n$markdownFence" + 'powershell'),
+                        ("Before committing the recovered verifier stack:`n`n$markdownFence" + 'powershell'),
+                        ("Record that reviewed commit as:`n`n$markdownFence" + 'powershell')
+                    )
+                    NewText = @(
+                        ("## Task 0: Recover the Missing Verifier Stack`n`nRun the recovery baseline first from Windows PowerShell:`n`n$markdownFence" + 'text'),
+                        ("Before committing the recovered verifier stack:`n`n$markdownFence" + 'text'),
+                        ("Record that reviewed commit as:`n`n$markdownFence" + 'text')
+                    )
+                    ExpectedFailure = 'Recovered verifier block native fail-fast\s+contract\s+failed'
+                }
+            )
         },
         [pscustomobject]@{
             Name = 'runbook safety: local build moved native check is rejected'
@@ -443,8 +471,22 @@ try {
             Name = 'runbook safety: artifact upload native check removal is rejected'
             FixtureName = 'runbook-artifact-upload-native-check'
             OldText = "scp -- `$ArtifactZip `"`${ProdUser}@`${ProdHost}:`$RemotePart`"`nif (`$LASTEXITCODE -ne 0) { throw 'Artifact upload failed.' }"
-            NewText = "scp.exe -- `$ArtifactZip `"`${ProdUser}@`${ProdHost}:`$RemotePart`"; cmd.exe /c exit 0`nif (`$LASTEXITCODE -ne 0) { throw 'Artifact upload failed.' }"
+            NewText = 'scp.exe -- $ArtifactZip "${ProdUser}@${ProdHost}:$RemotePart"'
             ExpectedFailure = 'Artifact upload block native fail-fast contract failed'
+            Variants = @(
+                [pscustomobject]@{
+                    FixtureName = 'runbook-artifact-upload-cmd-script'
+                    OldText = "scp -- `$ArtifactZip `"`${ProdUser}@`${ProdHost}:`$RemotePart`"`nif (`$LASTEXITCODE -ne 0) { throw 'Artifact upload failed.' }"
+                    NewText = "upload.cmd -- `$ArtifactZip `"`${ProdUser}@`${ProdHost}:`$RemotePart`"`nif (`$LASTEXITCODE -ne 0) { throw 'Artifact upload failed.' }"
+                    ExpectedFailure = 'Artifact upload block native fail-fast contract failed'
+                },
+                [pscustomobject]@{
+                    FixtureName = 'runbook-artifact-upload-cmd-wrapper'
+                    OldText = "scp -- `$ArtifactZip `"`${ProdUser}@`${ProdHost}:`$RemotePart`"`nif (`$LASTEXITCODE -ne 0) { throw 'Artifact upload failed.' }"
+                    NewText = "cmd.exe /c scp -- `$ArtifactZip `"`${ProdUser}@`${ProdHost}:`$RemotePart`"`nif (`$LASTEXITCODE -ne 0) { throw 'Artifact upload failed.' }"
+                    ExpectedFailure = 'Artifact upload block native fail-fast contract failed'
+                }
+            )
         },
         [pscustomobject]@{
             Name = 'runbook safety: production ssh entry native check removal is rejected'
@@ -471,7 +513,7 @@ try {
                     FixtureName = 'runbook-unsupported-dynamic-native-check'
                     OldText = "node --check .\ops\verify-guide-experience-js-runtime.js`nif (`$LASTEXITCODE -ne 0) { throw 'Node syntax check failed: ops/verify-guide-experience-js-runtime.js' }"
                     NewText = '& $UnsupportedExecutable --check .\ops\verify-guide-experience-js-runtime.js'
-                    ExpectedFailure = 'Recovered verifier block native fail-fast contract\s+failed'
+                    ExpectedFailure = 'Recovered verifier block native fail-fast\s+contract\s+failed'
                 }
             )
         },
@@ -578,8 +620,16 @@ try {
             Name = 'runbook safety: wrong-polarity native guard is rejected'
             FixtureName = 'runbook-native-wrong-polarity'
             OldText = "scp -- `$ArtifactZip `"`${ProdUser}@`${ProdHost}:`$RemotePart`"`nif (`$LASTEXITCODE -ne 0) { throw 'Artifact upload failed.' }"
-            NewText = "scp -- `$ArtifactZip `"`${ProdUser}@`${ProdHost}:`$RemotePart`" <#closed#><#`nif (`$LASTEXITCODE -ne 0) { throw 'Artifact upload failed.' }`n#>`nif (`$LASTEXITCODE -eq 0) { throw 'Artifact upload failed.' }"
+            NewText = "scp -- `$ArtifactZip `"`${ProdUser}@`${ProdHost}:`$RemotePart`"`nif (`$LASTEXITCODE -eq 0) { exit 0 }"
             ExpectedFailure = 'Artifact upload block native fail-fast contract failed'
+            Variants = @(
+                [pscustomobject]@{
+                    FixtureName = 'runbook-native-captured-wrong-polarity'
+                    OldText = "scp -- `$ArtifactZip `"`${ProdUser}@`${ProdHost}:`$RemotePart`"`nif (`$LASTEXITCODE -ne 0) { throw 'Artifact upload failed.' }"
+                    NewText = "scp -- `$ArtifactZip `"`${ProdUser}@`${ProdHost}:`$RemotePart`"`n`$ArtifactUploadExit = `$LASTEXITCODE`nif (`$ArtifactUploadExit -eq 0) { exit 0 }"
+                    ExpectedFailure = 'Artifact upload block native fail-fast contract failed'
+                }
+            )
         },
         [pscustomobject]@{
             Name = 'runbook safety: nonblocking native guard is rejected'
@@ -678,31 +728,51 @@ try {
     $canaryDoubleQuoteVerifier = Set-AuthorizedExecutionAddendumText -Fixture $canaryDoubleQuoteOrdering -Text $canaryDoubleQuoteText
     $canaryDoubleQuoteResult = Invoke-CaseVerifier -Fixture $canaryDoubleQuoteOrdering -VerifierPath $canaryDoubleQuoteVerifier
 
-    $canaryContinuedHeredocOrdering = New-CaseFixture -Name 'runbook-canary-rollback-continued-heredoc'
-    $canaryContinuedHeredocText = [System.IO.File]::ReadAllText((Get-ExecutionAddendumPath -Fixture $canaryContinuedHeredocOrdering))
-    $canaryContinuedHeredocMarker = "cat <\`n<ROLLBACK_CONTINUED`n$canaryCacheFlush`nROLLBACK_CONTINUED"
-    if ($canaryContinuedHeredocText.Contains($canaryCacheFlush)) {
-        $canaryContinuedHeredocText = $canaryContinuedHeredocText.Replace($canaryCacheFlush, $canaryContinuedHeredocMarker)
+    $canaryRollbackVariants = @(
+        [pscustomobject]@{
+            FixtureName = 'runbook-canary-rollback-split-heredoc'
+            OldText = $canaryCacheFlush
+            NewText = "cat <\`n<ROLLBACK_CONTINUED`n$canaryCacheFlush`nROLLBACK_CONTINUED"
+            ExpectedFailure = 'Canary rollback ordering contract failed'
+        },
+        [pscustomobject]@{
+            FixtureName = 'runbook-canary-rollback-comment-backslash'
+            OldText = $canaryRollbackStart
+            NewText = "set +e`necho ignored # comment \`n$canaryCacheFlush`nrun_rollout rollback canary"
+            ExpectedFailure = 'Canary rollback ordering contract failed'
+        }
+    ) | Where-Object { $null -ne $_ }
+    $canaryRollbackVariantResults = [System.Collections.Generic.List[object]]::new()
+    foreach ($variant in $canaryRollbackVariants) {
+        $fixture = New-CaseFixture -Name $variant.FixtureName
+        $text = [System.IO.File]::ReadAllText((Get-ExecutionAddendumPath -Fixture $fixture))
+        if ($text.Contains($variant.OldText)) {
+            $text = $text.Replace($variant.OldText, $variant.NewText)
+        }
+        $fixtureVerifier = Set-AuthorizedExecutionAddendumText -Fixture $fixture -Text $text
+        $variantResult = Invoke-CaseVerifier -Fixture $fixture -VerifierPath $fixtureVerifier
+        $canaryRollbackVariantResults.Add([pscustomobject]@{
+            Name = $variant.FixtureName
+            Result = $variantResult
+            Passed = ($variantResult.ExitCode -ne 0 -and $variantResult.Output -match $variant.ExpectedFailure)
+        })
     }
-    $canaryContinuedHeredocVerifier = Set-AuthorizedExecutionAddendumText -Fixture $canaryContinuedHeredocOrdering -Text $canaryContinuedHeredocText
-    $canaryContinuedHeredocResult = Invoke-CaseVerifier -Fixture $canaryContinuedHeredocOrdering -VerifierPath $canaryContinuedHeredocVerifier
 
     $canaryRollbackPassed = (
         $canaryRollbackResult.ExitCode -ne 0 -and
         $canaryRollbackResult.Output -match 'Canary rollback ordering contract failed' -and
         $canaryLessRunResult.ExitCode -ne 0 -and
-        $canaryLessRunResult.Output -match '(?s)Bash heredoc parsing failed:\s+ambiguous\s+redirection:.*?<<<<<EOF' -and
+        $canaryLessRunResult.Output -match '(?s)Parser diagnostic\s+\[BASH_AMBIGUOUS_REDIRECTION\].*?ambiguous run of less-than characters' -and
         $canaryDoubleQuoteResult.ExitCode -ne 0 -and
-        $canaryDoubleQuoteResult.Output -match '(?s)Bash heredoc parsing failed:\s+ambiguous\s+redirection:.*?echo\s+"unterminated double quote' -and
-        $canaryContinuedHeredocResult.ExitCode -ne 0 -and
-        $canaryContinuedHeredocResult.Output -match 'Canary rollback ordering contract failed'
+        $canaryDoubleQuoteResult.Output -match 'Parser diagnostic\s+\[BASH_UNTERMINATED_DOUBLE_QUOTE\]' -and
+        @($canaryRollbackVariantResults | Where-Object { -not $_.Passed }).Count -eq 0
     )
-    $canaryRollbackDetail = @(
+    $canaryRollbackDetailParts = @(
         "exact here-string:`n$($canaryRollbackResult.Output)",
         "five-less run:`n$($canaryLessRunResult.Output)",
-        "unterminated double quote:`n$($canaryDoubleQuoteResult.Output)",
-        "continued heredoc:`n$($canaryContinuedHeredocResult.Output)"
-    ) -join "`n---`n"
+        "unterminated double quote:`n$($canaryDoubleQuoteResult.Output)"
+    ) + @($canaryRollbackVariantResults | ForEach-Object { "$($_.Name):`n$($_.Result.Output)" })
+    $canaryRollbackDetail = @($canaryRollbackDetailParts | Where-Object { $null -ne $_ }) -join "`n---`n"
     Add-Result -Name 'runbook safety: canary rollback heredoc marker cannot spoof post-gate order' -Passed $canaryRollbackPassed -Detail $canaryRollbackDetail
 
     $stage2RollbackOrdering = New-CaseFixture -Name 'runbook-stage2-rollback-ordering'
@@ -741,29 +811,49 @@ try {
     $nestedFenceStage2GateVerifier = Set-AuthorizedExecutionAddendumText -Fixture $nestedFenceStage2Gate -Text $nestedFenceStage2GateText
     $nestedFenceStage2GateResult = Invoke-CaseVerifier -Fixture $nestedFenceStage2Gate -VerifierPath $nestedFenceStage2GateVerifier
 
-    $sameInfoFenceStage2Gate = New-CaseFixture -Name 'runbook-stage2-same-info-fence-spoofed-gate'
-    $sameInfoFenceStage2GateText = [System.IO.File]::ReadAllText((Get-ExecutionAddendumPath -Fixture $sameInfoFenceStage2Gate))
     $bashMarkdownFence = (([string][char]96) * 3) + 'bash'
-    if ($sameInfoFenceStage2GateText.Contains($stage2Heading)) {
-        $sameInfoFenceStage2GateText = $sameInfoFenceStage2GateText.Replace(
-            $stage2Heading,
-            ($bashMarkdownFence + "`nignored outer fence text`n" + $bashMarkdownFence + "`n" + $stage2Heading)
-        )
-        $sameInfoFenceStage2GateText += "`n$markdownFence`n"
+    $nestedFenceStage2GateVariants = @(
+        [pscustomobject]@{
+            FixtureName = 'runbook-stage2-same-info-fence-spoofed-gate'
+            OldText = $stage2Heading
+            NewText = $bashMarkdownFence + "`nignored outer fence text`n" + $bashMarkdownFence + "`n" + $stage2Heading
+            Suffix = "`n$markdownFence`n"
+            ExpectedFailure = 'Parser diagnostic\s+\[MD_UNCLOSED_FENCE\]'
+        },
+        [pscustomobject]@{
+            FixtureName = 'runbook-stage2-commented-executable-gate'
+            OldText = 'verify_rollout log-observation full'
+            NewText = '# verify_rollout log-observation full'
+            Suffix = ''
+            ExpectedFailure = 'Stage 2 gate ordering contract failed'
+        }
+    ) | Where-Object { $null -ne $_ }
+    $nestedFenceStage2GateVariantResults = [System.Collections.Generic.List[object]]::new()
+    foreach ($variant in $nestedFenceStage2GateVariants) {
+        $fixture = New-CaseFixture -Name $variant.FixtureName
+        $text = [System.IO.File]::ReadAllText((Get-ExecutionAddendumPath -Fixture $fixture))
+        if ($text.Contains($variant.OldText)) {
+            $text = $text.Replace($variant.OldText, $variant.NewText)
+            $text += $variant.Suffix
+        }
+        $fixtureVerifier = Set-AuthorizedExecutionAddendumText -Fixture $fixture -Text $text
+        $variantResult = Invoke-CaseVerifier -Fixture $fixture -VerifierPath $fixtureVerifier
+        $nestedFenceStage2GateVariantResults.Add([pscustomobject]@{
+            Name = $variant.FixtureName
+            Result = $variantResult
+            Passed = ($variantResult.ExitCode -ne 0 -and $variantResult.Output -match $variant.ExpectedFailure)
+        })
     }
-    $sameInfoFenceStage2GateVerifier = Set-AuthorizedExecutionAddendumText -Fixture $sameInfoFenceStage2Gate -Text $sameInfoFenceStage2GateText
-    $sameInfoFenceStage2GateResult = Invoke-CaseVerifier -Fixture $sameInfoFenceStage2Gate -VerifierPath $sameInfoFenceStage2GateVerifier
 
     $nestedFenceStage2GatePassed = (
         $nestedFenceStage2GateResult.ExitCode -ne 0 -and
-        $nestedFenceStage2GateResult.Output -match 'Recovery execution addendum section missing:\s+##\s+Stage\s+2 Validate, Apply, Activate, and Close' -and
-        $sameInfoFenceStage2GateResult.ExitCode -ne 0 -and
-        $sameInfoFenceStage2GateResult.Output -match 'Recovery execution addendum section missing:\s+##\s+Stage\s+2 Validate, Apply, Activate, and Close'
+        $nestedFenceStage2GateResult.Output -match 'Recovery parser executable fence coverage failed' -and
+        @($nestedFenceStage2GateVariantResults | Where-Object { -not $_.Passed }).Count -eq 0
     )
-    $nestedFenceStage2GateDetail = @(
-        "HTML-spliced fence:`n$($nestedFenceStage2GateResult.Output)",
-        "same-info fence:`n$($sameInfoFenceStage2GateResult.Output)"
-    ) -join "`n---`n"
+    $nestedFenceStage2GateDetailParts = @("HTML-spliced fence:`n$($nestedFenceStage2GateResult.Output)") + @(
+        $nestedFenceStage2GateVariantResults | ForEach-Object { "$($_.Name):`n$($_.Result.Output)" }
+    )
+    $nestedFenceStage2GateDetail = @($nestedFenceStage2GateDetailParts | Where-Object { $null -ne $_ }) -join "`n---`n"
     Add-Result -Name 'runbook safety: nested markdown fence cannot spoof stage 2 gate' -Passed $nestedFenceStage2GatePassed -Detail $nestedFenceStage2GateDetail
 
     $duplicateStage2Gate = New-CaseFixture -Name 'runbook-stage2-duplicate-gate'
