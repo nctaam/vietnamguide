@@ -656,7 +656,8 @@ function Test-RecoveryPowerShellNativeStatementShape {
         $Statement -isnot [System.Management.Automation.Language.AssignmentStatementAst] -or
         $CommandName -ine 'git' -or
         $Statement.Operator -ne [System.Management.Automation.Language.TokenKind]::Equals -or
-        $Statement.Left -isnot [System.Management.Automation.Language.VariableExpressionAst]
+        $Statement.Left -isnot [System.Management.Automation.Language.VariableExpressionAst] -or
+        -not (Test-RecoveryPowerShellOrdinaryVariablePath -VariablePath $Statement.Left.VariablePath)
     ) {
         return $false
     }
@@ -999,6 +1000,11 @@ function ConvertFrom-RecoveryPowerShellFence {
     $phpExecutableMutationCommands = @($commands | Where-Object {
         Test-RecoveryPowerShellPhpExecutableMutationCommand -Command $_
     })
+    $phpExecutableForeachVariables = @($ast.FindAll({
+        param($node)
+        $node -is [System.Management.Automation.Language.ForEachStatementAst] -and
+        $node.Variable.VariablePath.UserPath -imatch '^(?:[^:]+:)?PhpExecutable$'
+    }, $true))
     $phpExecutableIndirectMutationNodes = @($ast.FindAll({
         param($node)
         ($node -is [System.Management.Automation.Language.AssignmentStatementAst] -and
@@ -1010,6 +1016,7 @@ function ConvertFrom-RecoveryPowerShellFence {
         $phpExecutableInvocations.Count -gt 0 -and
         ($phpExecutableAssignments.Count -ne 1 -or
             $phpExecutableMutationCommands.Count -gt 0 -or
+            $phpExecutableForeachVariables.Count -gt 0 -or
             $phpExecutableIndirectMutationNodes.Count -gt 0)
     ) {
         foreach ($phpExecutableInvocation in $phpExecutableInvocations) {

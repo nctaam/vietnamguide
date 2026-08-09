@@ -905,6 +905,61 @@ foreach ($case in $phpExecutableMutationCases) {
     }
 }
 
+Add-ParserResult -Name 'PowerShell parser rejects PhpExecutable foreach control-variable rebinding' -Test {
+    $cases = @(
+        [pscustomobject]@{
+            Name = 'direct loop'
+            Body = [string]::Join("`n", @(
+                '$PhpExecutable = ''git''',
+                'foreach ($PhpExecutable in @(''cmd.exe'')) {',
+                '    & $PhpExecutable /c exit 0',
+                '    if ($LASTEXITCODE -ne 0) { throw ''failed'' }',
+                '}'
+            ))
+        },
+        [pscustomobject]@{
+            Name = 'nested loop'
+            Body = [string]::Join("`n", @(
+                '$PhpExecutable = ''git''',
+                'foreach ($outer in 1) {',
+                '    foreach ($PhpExecutable in @(''cmd.exe'')) {',
+                '        & $PhpExecutable /c exit 0',
+                '        if ($LASTEXITCODE -ne 0) { throw ''failed'' }',
+                '    }',
+                '}'
+            ))
+        },
+        [pscustomobject]@{
+            Name = 'scoped loop variable'
+            Body = [string]::Join("`n", @(
+                '$PhpExecutable = ''git''',
+                'foreach ($script:PhpExecutable in @(''cmd.exe'')) {',
+                '    & $PhpExecutable /c exit 0',
+                '    if ($LASTEXITCODE -ne 0) { throw ''failed'' }',
+                '}'
+            ))
+        },
+        [pscustomobject]@{
+            Name = 'variable drive loop variable'
+            Body = [string]::Join("`n", @(
+                '$PhpExecutable = ''git''',
+                'foreach ($variable:PhpExecutable in @(''cmd.exe'')) {',
+                '    & $PhpExecutable /c exit 0',
+                '    if ($LASTEXITCODE -ne 0) { throw ''failed'' }',
+                '}'
+            ))
+        }
+    )
+
+    foreach ($case in $cases) {
+        $result = Invoke-TestRecoveryPowerShellFenceParser -Fence (New-TestRecoveryPowerShellFence -Body $case.Body)
+
+        Assert-ParserEqual -Actual $result.IsValid -Expected $false -Message "PhpExecutable $($case.Name) should be invalid."
+        Assert-ParserEqual -Actual @($result.Events).Count -Expected 0 -Message "PhpExecutable $($case.Name) should not emit an event."
+        Assert-ParserDiagnosticCodes -Diagnostics @($result.Diagnostics) -Expected @('PS_DYNAMIC_NATIVE_UNSUPPORTED')
+    }
+}
+
 Add-ParserResult -Name 'PowerShell parser rejects nondominating PhpExecutable assignments' -Test {
     $cases = @(
         [pscustomobject]@{ Name = 'false conditional'; Body = [string]::Join("`n", @('if ($false) { $PhpExecutable = ''php.exe'' }', '& $PhpExecutable -v', 'if ($LASTEXITCODE -ne 0) { throw ''failed'' }')) },
@@ -1301,6 +1356,28 @@ Add-ParserResult -Name 'PowerShell parser allows a guarded git assignment captur
     Assert-ParserEqual -Actual $result.IsValid -Expected $true -Message 'Git assignment capture should be valid.'
     Assert-RecoveryPowerShellEventCommands -Result $result -Expected @('git')
     Assert-ParserEqual -Actual $result.Events[0].Text -Expected 'git status --porcelain' -Message 'Git assignment event text mismatch.'
+}
+
+Add-ParserResult -Name 'PowerShell parser rejects unsafe git assignment capture targets' -Test {
+    $targets = @(
+        [pscustomobject]@{ Name = 'automatic LASTEXITCODE'; Target = '$LASTEXITCODE' },
+        [pscustomobject]@{ Name = 'scoped variable'; Target = '$script:GitStatus' },
+        [pscustomobject]@{ Name = 'drive variable'; Target = '$env:GitStatus' },
+        [pscustomobject]@{ Name = 'null variable'; Target = '$null' },
+        [pscustomobject]@{ Name = 'pipeline automatic variable'; Target = '$_' }
+    )
+
+    foreach ($target in $targets) {
+        $body = [string]::Join("`n", @(
+            "$($target.Target) = git -c 'alias.fail=!f() { echo 0; exit 7; }; f' fail",
+            'if ($LASTEXITCODE -ne 0) { throw ''failed'' }'
+        ))
+        $result = Invoke-TestRecoveryPowerShellFenceParser -Fence (New-TestRecoveryPowerShellFence -Body $body)
+
+        Assert-ParserEqual -Actual $result.IsValid -Expected $false -Message "Git capture target $($target.Name) should be invalid."
+        Assert-ParserEqual -Actual @($result.Events).Count -Expected 0 -Message "Git capture target $($target.Name) should not emit an event."
+        Assert-ParserDiagnosticCodes -Diagnostics @($result.Diagnostics) -Expected @('PS_NATIVE_STATEMENT_AMBIGUOUS')
+    }
 }
 
 Add-ParserResult -Name 'PowerShell parser rejects non-simple git assignment targets and operators' -Test {
