@@ -102,6 +102,31 @@ function Assert-ParserDiagnosticCodes {
     }
 }
 
+function Get-RecoveryBaselineAst {
+    $baselinePath = Join-Path $PSScriptRoot 'verify-recovery-baseline.ps1'
+    $tokens = $null
+    $parseErrors = $null
+    $baselineAst = [System.Management.Automation.Language.Parser]::ParseFile($baselinePath, [ref]$tokens, [ref]$parseErrors)
+    Assert-ParserEqual -Actual @($parseErrors).Count -Expected 0 -Message 'Baseline regression AST parse mismatch.'
+    return $baselineAst
+}
+
+function Import-RecoveryBaselinePrivateFunction {
+    param([string]$Name)
+
+    $baselineAst = Get-RecoveryBaselineAst
+    $definitions = @($baselineAst.FindAll({
+        param($node)
+        $node -is [System.Management.Automation.Language.FunctionDefinitionAst] -and
+        $node.Name -ceq $Name
+    }, $true))
+    Assert-ParserEqual -Actual $definitions.Count -Expected 1 -Message "Baseline private function definition count mismatch: $Name."
+    $bodyText = $definitions[0].Body.Extent.Text
+    $bodyScript = [scriptblock]::Create($bodyText.Substring(1, $bodyText.Length - 2))
+    Set-Item -Path "Function:\global:$Name" -Value $bodyScript
+    return $baselineAst
+}
+
 Add-ParserResult -Name 'Diagnostic constructor returns the typed diagnostic contract' -Test {
     $diagnostic = New-RecoveryParserDiagnostic -Code 'RP001' -Message 'Example diagnostic' -Language 'powershell' -SourceLine 12 -SourceColumn 4
 
@@ -206,32 +231,157 @@ Add-ParserResult -Name 'Executable event sequence handles scalar empty and null 
     Assert-ParserEqual -Actual (Test-RecoveryEventSequence -Events $null -ExpectedTexts 'echo ready') -Expected $false -Message 'Missing scalar executable event should be rejected.'
 }
 
+Add-ParserResult -Name 'Baseline consecutive event windows require exactly one complete contiguous start' -Test {
+    $baselineAst = Import-RecoveryBaselinePrivateFunction -Name 'Test-RecoveryParserConsecutiveEventWindow'
+    $newEvent = {
+        param([string]$Text, [int]$Line)
+        New-RecoveryExecutableEvent -Kind 'command' -Language 'bash' -Text $Text -SourceLine $Line -SourceColumn 1 -FenceId 'fence-1' -StatementId "statement-$Line"
+    }
+    $expected = @('begin', 'middle', 'end')
+    $validEvents = @(& $newEvent 'noise' 1; & $newEvent 'begin' 2; & $newEvent 'middle' 3; & $newEvent 'end' 4; & $newEvent 'tail' 5)
+    $interveningEvents = @(& $newEvent 'begin' 1; & $newEvent 'noise' 2; & $newEvent 'middle' 3; & $newEvent 'end' 4)
+    $nullInterveningEvents = @(& $newEvent 'begin' 1; $null; & $newEvent 'middle' 3; & $newEvent 'end' 4)
+    $duplicateEvents = @(& $newEvent 'begin' 1; & $newEvent 'middle' 2; & $newEvent 'end' 3; & $newEvent 'begin' 4; & $newEvent 'middle' 5; & $newEvent 'end' 6)
+
+    Assert-ParserEqual -Actual (Test-RecoveryParserConsecutiveEventWindow -Events $validEvents -ExpectedTexts $expected) -Expected $true -Message 'A single complete contiguous event window should be accepted.'
+    Assert-ParserEqual -Actual (Test-RecoveryParserConsecutiveEventWindow -Events $interveningEvents -ExpectedTexts $expected) -Expected $false -Message 'An intervening event should reject the contiguous event window.'
+    Assert-ParserEqual -Actual (Test-RecoveryParserConsecutiveEventWindow -Events $nullInterveningEvents -ExpectedTexts $expected) -Expected $false -Message 'A null intervening event should not be filtered out of a contiguous event window.'
+    Assert-ParserEqual -Actual (Test-RecoveryParserConsecutiveEventWindow -Events $duplicateEvents -ExpectedTexts $expected) -Expected $false -Message 'Duplicate complete event-window starts should be rejected.'
+
+    $callSites = @($baselineAst.FindAll({
+        param($node)
+        $node -is [System.Management.Automation.Language.CommandAst] -and
+        $node.GetCommandName() -ceq 'Test-RecoveryParserConsecutiveEventWindow'
+    }, $true))
+    Assert-ParserEqual -Actual $callSites.Count -Expected 3 -Message 'Consecutive event-window call-site count mismatch.'
+}
+
+Add-ParserResult -Name 'Baseline contiguous event blocks require completeness but preserve legacy duplicate tolerance' -Test {
+    $baselineAst = Import-RecoveryBaselinePrivateFunction -Name 'Test-RecoveryParserContiguousEventBlock'
+    $newEvent = {
+        param([string]$Text, [int]$Line)
+        New-RecoveryExecutableEvent -Kind 'command' -Language 'bash' -Text $Text -SourceLine $Line -SourceColumn 1 -FenceId 'fence-1' -StatementId "statement-$Line"
+    }
+    $expected = @('PATHS=(', "'one'", "'two'", ')')
+    $validEvents = @(& $newEvent 'noise' 1; & $newEvent 'PATHS=(' 2; & $newEvent "'one'" 3; & $newEvent "'two'" 4; & $newEvent ')' 5)
+    $duplicateEvents = @($validEvents + @(& $newEvent 'PATHS=(' 6; & $newEvent "'one'" 7; & $newEvent "'two'" 8; & $newEvent ')' 9))
+    $interveningEvents = @(& $newEvent 'PATHS=(' 1; & $newEvent "'one'" 2; & $newEvent 'noise' 3; & $newEvent "'two'" 4; & $newEvent ')' 5)
+    $nullInterveningEvents = @(& $newEvent 'PATHS=(' 1; & $newEvent "'one'" 2; $null; & $newEvent "'two'" 4; & $newEvent ')' 5)
+    $missingEvents = @(& $newEvent 'PATHS=(' 1; & $newEvent "'one'" 2; & $newEvent ')' 3)
+
+    Assert-ParserEqual -Actual (Test-RecoveryParserContiguousEventBlock -Events $validEvents -ExpectedTexts $expected) -Expected $true -Message 'A complete contiguous event block should be accepted.'
+    Assert-ParserEqual -Actual (Test-RecoveryParserContiguousEventBlock -Events $duplicateEvents -ExpectedTexts $expected) -Expected $true -Message 'Duplicate complete blocks should preserve legacy existence semantics.'
+    Assert-ParserEqual -Actual (Test-RecoveryParserContiguousEventBlock -Events $interveningEvents -ExpectedTexts $expected) -Expected $false -Message 'An intervening event should reject an incomplete block.'
+    Assert-ParserEqual -Actual (Test-RecoveryParserContiguousEventBlock -Events $nullInterveningEvents -ExpectedTexts $expected) -Expected $false -Message 'A null intervening event should not be filtered out of a contiguous event block.'
+    Assert-ParserEqual -Actual (Test-RecoveryParserContiguousEventBlock -Events $missingEvents -ExpectedTexts $expected) -Expected $false -Message 'A block with a missing member should be rejected.'
+
+    $callSites = @($baselineAst.FindAll({
+        param($node)
+        $node -is [System.Management.Automation.Language.CommandAst] -and
+        $node.GetCommandName() -ceq 'Test-RecoveryParserContiguousEventBlock'
+    }, $true))
+    Assert-ParserEqual -Actual $callSites.Count -Expected 4 -Message 'Inventory contiguous-block call-site count mismatch.'
+}
+
+Add-ParserResult -Name 'Baseline public verifier requires one typed event in one fence before the first closing fences' -Test {
+    $baselineAst = Import-RecoveryBaselinePrivateFunction -Name 'Test-RecoveryParserUniqueEventFenceBeforeFirstEvents'
+    $newEvent = {
+        param([string]$Text, [string]$Language, [string]$FenceId, [int]$Line, [int]$Column)
+        New-RecoveryExecutableEvent -Kind 'command' -Language $Language -Text $Text -SourceLine $Line -SourceColumn $Column -FenceId $FenceId -StatementId "$FenceId-$Line-$Column"
+    }
+    $fences = @(
+        [pscustomobject]@{ Id = 'public-fence'; StartLine = 20 },
+        [pscustomobject]@{ Id = 'compatibility-fence'; StartLine = 40 },
+        [pscustomobject]@{ Id = 'close-fence'; StartLine = 60 }
+    )
+    $validEvents = @(
+        (& $newEvent 'close' 'bash' 'close-fence' 61 1),
+        (& $newEvent 'public' 'powershell' 'public-fence' 21 3),
+        (& $newEvent 'compatibility' 'bash' 'compatibility-fence' 41 1)
+    )
+    $latePublicFences = @(
+        [pscustomobject]@{ Id = 'compatibility-fence'; StartLine = 20 },
+        [pscustomobject]@{ Id = 'public-fence'; StartLine = 40 },
+        [pscustomobject]@{ Id = 'close-fence'; StartLine = 60 }
+    )
+    $duplicatePublicEvents = @($validEvents + @(& $newEvent 'public' 'powershell' 'public-fence' 22 3))
+    $duplicatePublicFences = @($fences + [pscustomobject]@{ Id = 'public-fence'; StartLine = 19 })
+    $parameters = @{ ExactText = 'public'; Language = 'powershell'; BeforeEventTexts = @('compatibility', 'close') }
+
+    Assert-ParserEqual -Actual (Test-RecoveryParserUniqueEventFenceBeforeFirstEvents -Events $validEvents -Fences $fences @parameters) -Expected $true -Message 'A unique public verifier fence before both target fences should be accepted.'
+    Assert-ParserEqual -Actual (Test-RecoveryParserUniqueEventFenceBeforeFirstEvents -Events $validEvents -Fences $latePublicFences @parameters) -Expected $false -Message 'A public verifier fence after compatibility sync should be rejected.'
+    Assert-ParserEqual -Actual (Test-RecoveryParserUniqueEventFenceBeforeFirstEvents -Events $duplicatePublicEvents -Fences $fences @parameters) -Expected $false -Message 'Duplicate public verifier events should be rejected.'
+    Assert-ParserEqual -Actual (Test-RecoveryParserUniqueEventFenceBeforeFirstEvents -Events $validEvents -Fences $duplicatePublicFences @parameters) -Expected $false -Message 'Duplicate public verifier fences should be rejected.'
+
+    $callSites = @($baselineAst.FindAll({
+        param($node)
+        $node -is [System.Management.Automation.Language.CommandAst] -and
+        $node.GetCommandName() -ceq 'Test-RecoveryParserUniqueEventFenceBeforeFirstEvents'
+    }, $true))
+    Assert-ParserEqual -Actual $callSites.Count -Expected 1 -Message 'Public verifier fence-order call-site count mismatch.'
+}
+
 Add-ParserResult -Name 'Baseline inventory excludes exactly the parser verifier infrastructure from the 231-file target' -Test {
-    $baselinePath = Join-Path $PSScriptRoot 'verify-recovery-baseline.ps1'
-    $tokens = $null
-    $parseErrors = $null
-    $baselineAst = [System.Management.Automation.Language.Parser]::ParseFile($baselinePath, [ref]$tokens, [ref]$parseErrors)
-    Assert-ParserEqual -Actual @($parseErrors).Count -Expected 0 -Message 'Baseline inventory regression AST parse mismatch.'
+    $baselineAst = Get-RecoveryBaselineAst
 
     $expectedInfrastructurePaths = @('tests/lib/RecoveryParser.psm1', 'tests/verify-recovery-parser.ps1')
-    $actualInfrastructurePaths = @($baselineAst.FindAll({
+    $infrastructureAdds = @($baselineAst.FindAll({
         param($node)
-        $node -is [System.Management.Automation.Language.StringConstantExpressionAst] -and
-        $expectedInfrastructurePaths -ccontains [string]$node.Value
-    }, $true) | ForEach-Object { [string]$_.Value })
+        $node -is [System.Management.Automation.Language.InvokeMemberExpressionAst] -and
+        $node.Expression.Extent.Text -ceq '$recoveryParserInfrastructurePaths' -and
+        $node.Member.Extent.Text -ceq 'Add'
+    }, $true))
+    Assert-ParserEqual -Actual $infrastructureAdds.Count -Expected 2 -Message 'Parser infrastructure exclusion add count mismatch.'
+    $actualInfrastructurePaths = @($infrastructureAdds | ForEach-Object {
+        Assert-ParserEqual -Actual $_.Arguments.Count -Expected 1 -Message 'Parser infrastructure exclusion add argument count mismatch.'
+        Assert-ParserEqual -Actual ($_.Arguments[0] -is [System.Management.Automation.Language.StringConstantExpressionAst]) -Expected $true -Message 'Parser infrastructure exclusion add must use a string literal.'
+        [string]$_.Arguments[0].Value
+    })
     [Array]::Sort($actualInfrastructurePaths, [System.StringComparer]::Ordinal)
     [Array]::Sort($expectedInfrastructurePaths, [System.StringComparer]::Ordinal)
     Assert-ParserArrayEqual -Actual $actualInfrastructurePaths -Expected $expectedInfrastructurePaths -Message 'Parser infrastructure exclusion path mismatch.'
 
-    $inventoryCountGuards = @($baselineAst.FindAll({
+    $repositoryAdds = @($baselineAst.FindAll({
         param($node)
-        $node -is [System.Management.Automation.Language.BinaryExpressionAst] -and
-        $node.Operator -eq [System.Management.Automation.Language.TokenKind]::Ine -and
-        $node.Left.Extent.Text -ceq '$recoveryRepositoryPaths.Count' -and
-        $node.Right -is [System.Management.Automation.Language.ConstantExpressionAst] -and
-        $node.Right.Value -eq 231
+        $node -is [System.Management.Automation.Language.InvokeMemberExpressionAst] -and
+        $node.Extent.Text -ceq '$recoveryRepositoryPaths.Add($candidateRelative)'
     }, $true))
-    Assert-ParserEqual -Actual $inventoryCountGuards.Count -Expected 1 -Message 'Recovery repository count guard mismatch.'
+    Assert-ParserEqual -Actual $repositoryAdds.Count -Expected 1 -Message 'Recovery repository candidate-add count mismatch.'
+    $repositoryAddGuard = $repositoryAdds[0].Parent.Parent.Parent.Parent
+    Assert-ParserEqual -Actual ($repositoryAddGuard -is [System.Management.Automation.Language.IfStatementAst]) -Expected $true -Message 'Recovery repository candidate add must be guarded by an if statement.'
+    Assert-ParserEqual -Actual $repositoryAddGuard.Clauses.Count -Expected 1 -Message 'Recovery repository candidate-add guard clause count mismatch.'
+    Assert-ParserEqual -Actual $repositoryAddGuard.Clauses[0].Item1.Extent.Text -Expected '-not $recoveryParserInfrastructurePaths.Contains($candidateRelative)' -Message 'Recovery repository exclusion guard mismatch.'
+
+    foreach ($guardSpec in @(
+        [pscustomobject]@{ Left = '$recoveryParserInfrastructurePaths.Count'; Right = 2; Message = 'Parser infrastructure exclusion count guard mismatch.' },
+        [pscustomobject]@{ Left = '$candidatePaths.Count - $recoveryRepositoryPaths.Count'; Right = 2; Message = 'Parser infrastructure exclusion delta guard mismatch.' },
+        [pscustomobject]@{ Left = '$recoveryRepositoryPaths.Count'; Right = 231; Message = 'Recovery repository count guard mismatch.' }
+    )) {
+        $guards = @($baselineAst.FindAll({
+            param($node)
+            $node -is [System.Management.Automation.Language.BinaryExpressionAst] -and
+            $node.Operator -eq [System.Management.Automation.Language.TokenKind]::Ine -and
+            $node.Left.Extent.Text.Trim('()') -ceq $guardSpec.Left -and
+            $node.Right -is [System.Management.Automation.Language.ConstantExpressionAst] -and
+            $node.Right.Value -eq $guardSpec.Right
+        }, $true))
+        Assert-ParserEqual -Actual $guards.Count -Expected 1 -Message $guardSpec.Message
+    }
+
+    $indexVerificationLoops = @($baselineAst.FindAll({
+        param($node)
+        $node -is [System.Management.Automation.Language.ForEachStatementAst] -and
+        $node.Condition.Extent.Text -ceq '$recoveryParserInfrastructurePaths' -and
+        $node.Body.Extent.Text.Contains('$indexEntries.ContainsKey($parserInfrastructurePath)')
+    }, $true))
+    Assert-ParserEqual -Actual $indexVerificationLoops.Count -Expected 1 -Message 'Parser infrastructure Git-index verification loop mismatch.'
+    $indexPopulationLoops = @($baselineAst.FindAll({
+        param($node)
+        $node -is [System.Management.Automation.Language.ForEachStatementAst] -and
+        $node.Condition.Extent.Text -ceq '$gitStageEntries'
+    }, $true))
+    Assert-ParserEqual -Actual $indexPopulationLoops.Count -Expected 1 -Message 'Git-index population loop count mismatch.'
+    Assert-ParserEqual -Actual ($indexVerificationLoops[0].Extent.StartOffset -gt $indexPopulationLoops[0].Extent.EndOffset) -Expected $true -Message 'Parser infrastructure index verification must follow index construction.'
 
     $inventorySuccessMessages = @($baselineAst.FindAll({
         param($node)

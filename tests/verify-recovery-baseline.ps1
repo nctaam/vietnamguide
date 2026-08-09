@@ -82,6 +82,103 @@ function Test-RecoveryParserEventSequenceContract {
     return $true
 }
 
+function Test-RecoveryParserConsecutiveEventWindow {
+    param(
+        [object[]]$Events,
+        [string[]]$ExpectedTexts
+    )
+
+    $eventArray = if ($null -eq $Events) { @() } else { @($Events) }
+    $expectedTextArray = if ($null -eq $ExpectedTexts) { @() } else { @($ExpectedTexts) }
+    if ($expectedTextArray.Count -eq 0 -or $eventArray.Count -lt $expectedTextArray.Count) {
+        return $false
+    }
+
+    $validStartCount = 0
+    for ($startIndex = 0; $startIndex -le ($eventArray.Count - $expectedTextArray.Count); $startIndex++) {
+        $window = @($eventArray[$startIndex..($startIndex + $expectedTextArray.Count - 1)])
+        if (Test-RecoveryEventSequence -Events $window -ExpectedTexts $expectedTextArray) {
+            $validStartCount++
+        }
+    }
+
+    return $validStartCount -eq 1
+}
+
+function Test-RecoveryParserContiguousEventBlock {
+    param(
+        [object[]]$Events,
+        [string[]]$ExpectedTexts
+    )
+
+    $eventArray = if ($null -eq $Events) { @() } else { @($Events) }
+    $expectedTextArray = if ($null -eq $ExpectedTexts) { @() } else { @($ExpectedTexts) }
+    if ($expectedTextArray.Count -eq 0 -or $eventArray.Count -lt $expectedTextArray.Count) {
+        return $false
+    }
+
+    $validStartCount = 0
+    for ($startIndex = 0; $startIndex -le ($eventArray.Count - $expectedTextArray.Count); $startIndex++) {
+        $window = @($eventArray[$startIndex..($startIndex + $expectedTextArray.Count - 1)])
+        if (Test-RecoveryEventSequence -Events $window -ExpectedTexts $expectedTextArray) {
+            $validStartCount++
+        }
+    }
+
+    return $validStartCount -gt 0
+}
+
+function Test-RecoveryParserUniqueEventFenceBeforeFirstEvents {
+    param(
+        [object[]]$Events,
+        [object[]]$Fences,
+        [string]$ExactText,
+        [string]$Language,
+        [string[]]$BeforeEventTexts
+    )
+
+    $eventArray = @($Events | Where-Object { $null -ne $_ })
+    $fenceArray = @($Fences | Where-Object { $null -ne $_ })
+    $publicEvents = @(Find-RecoveryExecutableEvents -Events $eventArray -ExactText $ExactText -Language $Language)
+    if ($publicEvents.Count -ne 1) {
+        return $false
+    }
+
+    $publicEvent = $publicEvents[0]
+    $publicFences = @($fenceArray | Where-Object { $_.Id -ceq $publicEvent.FenceId })
+    if (
+        $publicFences.Count -ne 1 -or
+        [int]$publicEvent.SourceLine -le 0 -or
+        [int]$publicEvent.SourceColumn -le 0 -or
+        [int]$publicFences[0].StartLine -le 0 -or
+        [int]$publicFences[0].StartLine -gt [int]$publicEvent.SourceLine
+    ) {
+        return $false
+    }
+
+    foreach ($beforeEventText in @($BeforeEventTexts)) {
+        $beforeEvents = @(Find-RecoveryExecutableEvents -Events $eventArray -ExactText $beforeEventText | Sort-Object -Property SourceLine, SourceColumn)
+        if ($beforeEvents.Count -eq 0) {
+            return $false
+        }
+
+        $beforeEvent = $beforeEvents[0]
+        $beforeFences = @($fenceArray | Where-Object { $_.Id -ceq $beforeEvent.FenceId })
+        if (
+            $beforeFences.Count -ne 1 -or
+            [int]$beforeEvent.SourceLine -le 0 -or
+            [int]$beforeEvent.SourceColumn -le 0 -or
+            [int]$beforeFences[0].StartLine -le 0 -or
+            [int]$beforeFences[0].StartLine -gt [int]$beforeEvent.SourceLine -or
+            [int]$publicFences[0].StartLine -ge [int]$beforeFences[0].StartLine
+        ) {
+            return $false
+        }
+    }
+
+    return $true
+}
+
 function ConvertTo-LfText {
     param([string]$Text)
 
@@ -2085,13 +2182,62 @@ fi
     $postDrillParserEvents = @(Get-RecoveryParserSectionEvents -Sections @($recoveryMarkdownResult.Sections) -Events $recoveryParserEventArray -Heading '## Reconnect After the Isolated Drill')
 
     $requiredPostDrillEventMarkers = @($requiredPostDrillMarkers | Select-Object -Skip 1)
-    [void](Test-RecoveryParserEventSequenceContract -Label 'Recovery execution addendum post-drill marker contract' -Events $postDrillParserEvents -ExpectedTexts $requiredPostDrillEventMarkers -RequireUnique)
+    [void](Test-RecoveryParserEventCoverage -Label 'Recovery execution addendum post-drill marker contract' -Events $postDrillParserEvents -ExpectedTexts $requiredPostDrillEventMarkers)
 
     $requiredInventoryEventMarkers = @($requiredInventoryMarkers | ForEach-Object { $_.TrimStart() })
-    [void](Test-RecoveryParserEventSequenceContract -Label 'Stage inventory contract' -Events $canaryActivationParserEvents -ExpectedTexts $requiredInventoryEventMarkers -RequireUnique)
-    [void](Test-RecoveryParserEventCoverage -Label 'Stage 2 browser matrix inventory contract' -Events $canaryActivationParserEvents -ExpectedTexts $browserMatrixMarkers -RequireUnique)
-    [void](Test-RecoveryParserEventSequenceContract -Label 'Stage 2 budget marker contract' -Events $canaryActivationParserEvents -ExpectedTexts $requiredBudgetMarkers -RequireUnique)
-    [void](Test-RecoveryParserEventSequenceContract -Label 'Canary lock renewal contract' -Events $recoveryParserEventArray -ExpectedTexts $canaryRenewalMarkers)
+    [void](Test-RecoveryParserEventCoverage -Label 'Stage inventory contract' -Events $canaryActivationParserEvents -ExpectedTexts $requiredInventoryEventMarkers)
+    $baselinePilotParserBlock = @(
+        'BASELINE_PILOT_PATHS=(',
+        "'destinations/ho-chi-minh-city-travel-guide'",
+        "'itineraries/10-days-in-vietnam'",
+        "'itineraries/7-days-in-vietnam'",
+        "'itineraries/14-days-in-vietnam'",
+        "'itineraries/21-days-in-vietnam'",
+        "'itineraries/hanoi-in-2-days'",
+        "'compare/ha-long-bay-vs-lan-ha-bay'",
+        "'plan/vietnam-evisa'",
+        ')'
+    )
+    $canaryPilotParserBlock = @(
+        'CANARY_PATHS=(',
+        "'compare/old-quarter-vs-french-quarter-vs-west-lake'",
+        "'compare/ninh-binh-day-trip-vs-overnight'",
+        "'compare/north-central-south-vietnam'",
+        ')'
+    )
+    $stage2PilotParserBlock = @(
+        'STAGE2_PATHS=(',
+        "'compare/cu-chi-tunnels-vs-mekong-delta-day-trip'",
+        "'compare/da-nang-vs-hoi-an'",
+        "'compare/hoi-an-vs-hue'",
+        "'compare/mui-ne-vs-nha-trang'",
+        "'compare/phu-quoc-vs-nha-trang'",
+        "'compare/trang-an-vs-tam-coc'",
+        ')'
+    )
+    $permanentControlParserBlock = @(
+        'PERMANENT_CONTROL_PATHS=(',
+        "'compare'",
+        "'destinations/hanoi-travel-guide'",
+        "'plan/sim-esim-vietnam'",
+        "'plan/transport-within-vietnam'",
+        ')'
+    )
+    if (-not (Test-RecoveryParserContiguousEventBlock -Events $canaryActivationParserEvents -ExpectedTexts $baselinePilotParserBlock)) {
+        Add-Failure 'Stage inventory parser shadow failed: baseline pilot block is incomplete or noncontiguous.'
+    }
+    if (-not (Test-RecoveryParserContiguousEventBlock -Events $canaryActivationParserEvents -ExpectedTexts $canaryPilotParserBlock)) {
+        Add-Failure 'Stage inventory parser shadow failed: canary pilot block is incomplete or noncontiguous.'
+    }
+    if (-not (Test-RecoveryParserContiguousEventBlock -Events $canaryActivationParserEvents -ExpectedTexts $stage2PilotParserBlock)) {
+        Add-Failure 'Stage inventory parser shadow failed: Stage 2 pilot block is incomplete or noncontiguous.'
+    }
+    if (-not (Test-RecoveryParserContiguousEventBlock -Events $canaryActivationParserEvents -ExpectedTexts $permanentControlParserBlock)) {
+        Add-Failure 'Stage inventory parser shadow failed: permanent-control block is incomplete or noncontiguous.'
+    }
+    [void](Test-RecoveryParserEventCoverage -Label 'Stage 2 browser matrix inventory contract' -Events $canaryActivationParserEvents -ExpectedTexts $browserMatrixMarkers)
+    [void](Test-RecoveryParserEventCoverage -Label 'Stage 2 budget marker contract' -Events $recoveryParserEventArray -ExpectedTexts $requiredBudgetMarkers)
+    [void](Test-RecoveryParserEventCoverage -Label 'Canary lock renewal contract' -Events $recoveryParserEventArray -ExpectedTexts $canaryRenewalMarkers)
 
     $requiredCanaryParserGates = @(
         'verify_rollout public-inventory canary --expected-active-pilots=11 --expected-permanent-controls=4',
@@ -2101,7 +2247,16 @@ fi
         'verify_rollout log-observation canary',
         'verify_rollout permanent-controls canary'
     )
-    [void](Test-RecoveryParserEventSequenceContract -Label 'Canary gate ordering contract' -Events $canaryObservationParserEvents -ExpectedTexts $requiredCanaryParserGates -RequireUnique)
+    $canaryCompatibilityEvents = @(Find-RecoveryExecutableEvents -Events $canaryObservationParserEvents -ExactText 'run_rollout compatibility-sync canary' -Language 'bash')
+    $firstCanaryCompatibilityIndex = if ($canaryCompatibilityEvents.Count -gt 0) { [array]::IndexOf($canaryObservationParserEvents, $canaryCompatibilityEvents[0]) } else { -1 }
+    foreach ($gate in $requiredCanaryParserGates) {
+        $gateEvents = @(Find-RecoveryExecutableEvents -Events $canaryObservationParserEvents -ExactText $gate -Language 'bash')
+        $firstGateIndex = if ($gateEvents.Count -gt 0) { [array]::IndexOf($canaryObservationParserEvents, $gateEvents[0]) } else { -1 }
+        if ($firstGateIndex -lt 0 -or $firstCanaryCompatibilityIndex -lt 0 -or $firstGateIndex -gt $firstCanaryCompatibilityIndex) {
+            Add-Failure "Canary gate ordering parser shadow failed: $gate"
+            break
+        }
+    }
     [void](Test-RecoveryParserEventSequenceContract -Label 'Canary gate tail contract' -Events $canaryObservationParserEvents -ExpectedTexts @(
         'verify_rollout permanent-controls canary',
         'run_rollout recovery-audit canary --action=renew-lock --ttl-seconds=900',
@@ -2130,7 +2285,9 @@ fi
         'run_rollout recovery-audit canary --action=close-ledger --require-final-event=rollback',
         'test ! -e "$STATE_DIR/lock.json"'
     )
-    [void](Test-RecoveryParserEventSequenceContract -Label 'Canary rollback immediate gate contract' -Events $canaryRollbackParserEvents -ExpectedTexts $canaryRollbackImmediateParserSequence -RequireUnique)
+    if (-not (Test-RecoveryParserConsecutiveEventWindow -Events $canaryRollbackParserEvents -ExpectedTexts $canaryRollbackImmediateParserSequence)) {
+        Add-Failure 'Canary rollback immediate gate parser shadow failed: sequence is missing, duplicated, or noncontiguous.'
+    }
     [void](Test-RecoveryParserEventSequenceContract -Label 'Canary rollback ordering contract' -Events $canaryRollbackParserEvents -ExpectedTexts $canaryRollbackParserMarkers -RequireUnique)
 
     $requiredStage2ParserGates = @(
@@ -2154,7 +2311,12 @@ fi
         '    -Stage full `',
         '    -Origin ''https://vietnamguide.net'''
     ))
-    [void](Test-RecoveryParserEventCoverage -Label 'Stage 2 public HTTP verification contract' -Events $stage2ParserEvents -ExpectedTexts @($stage2PublicVerifierEventText) -Language 'powershell' -RequireUnique)
+    if (-not (Test-RecoveryParserUniqueEventFenceBeforeFirstEvents -Events $stage2ParserEvents -Fences @($recoveryMarkdownResult.Fences) -ExactText $stage2PublicVerifierEventText -Language 'powershell' -BeforeEventTexts @(
+        'run_rollout compatibility-sync full',
+        'run_rollout recovery-audit full --action=close-ledger --require-final-event=compatibility-sync'
+    ))) {
+        Add-Failure 'Stage 2 public HTTP verification parser shadow failed: typed event or fence ordering is unsafe.'
+    }
 
     $stage2BrowserBatchMarkers = @(
         'BROWSER_QA_BATCH_COUNT=3',
@@ -2168,8 +2330,11 @@ fi
         'run_rollout recovery-audit full --action=renew-lock --ttl-seconds=900',
         'done'
     )
-    [void](Test-RecoveryParserEventSequenceContract -Label 'Stage 2 browser QA marker contract' -Events $stage2ParserEvents -ExpectedTexts $stage2BrowserBatchMarkers -RequireUnique)
-    [void](Test-RecoveryParserEventSequenceContract -Label 'Stage 2 browser QA renewal contract' -Events $stage2ParserEvents -ExpectedTexts $stage2BrowserBatchParserSequence)
+    [void](Test-RecoveryParserEventCoverage -Label 'Stage 2 browser QA marker contract' -Events $stage2ParserEvents -ExpectedTexts @($stage2BrowserBatchMarkers | Select-Object -First 2) -RequireUnique)
+    [void](Test-RecoveryParserEventCoverage -Label 'Stage 2 browser QA marker contract' -Events $stage2ParserEvents -ExpectedTexts @($stage2BrowserBatchMarkers | Select-Object -Last 1))
+    if (-not (Test-RecoveryParserConsecutiveEventWindow -Events $stage2ParserEvents -ExpectedTexts $stage2BrowserBatchParserSequence)) {
+        Add-Failure 'Stage 2 browser QA renewal parser shadow failed: sequence is missing, duplicated, or noncontiguous.'
+    }
     [void](Test-RecoveryParserEventSequenceContract -Label 'Stage 2 gate tail contract' -Events $stage2ParserEvents -ExpectedTexts $stage2Tail)
 
     $stage2RollbackImmediateParserSequence = @(
@@ -2191,7 +2356,9 @@ fi
         'run_rollout recovery-audit full --action=close-ledger --require-final-event=rollback',
         'test ! -e "$STATE_DIR/lock.json"'
     )
-    [void](Test-RecoveryParserEventSequenceContract -Label 'Stage 2 rollback immediate gate contract' -Events $stage2RollbackParserEvents -ExpectedTexts $stage2RollbackImmediateParserSequence -RequireUnique)
+    if (-not (Test-RecoveryParserConsecutiveEventWindow -Events $stage2RollbackParserEvents -ExpectedTexts $stage2RollbackImmediateParserSequence)) {
+        Add-Failure 'Stage 2 rollback immediate gate parser shadow failed: sequence is missing, duplicated, or noncontiguous.'
+    }
     [void](Test-RecoveryParserEventSequenceContract -Label 'Stage 2 rollback ordering contract' -Events $stage2RollbackParserEvents -ExpectedTexts $stage2RollbackParserMarkers -RequireUnique)
 
     $releasePublicationParserMarkers = @(
@@ -2217,6 +2384,23 @@ fi
     $secondCanarySleepEventCount = @(Find-RecoveryExecutableEvents -Events $canaryObservationParserEvents -ExactText $approvedCanarySleeps[1] -Language 'bash').Count
     if ($canaryRenewalEventCount -lt 5 -or $firstCanarySleepEventCount -ne 1 -or $secondCanarySleepEventCount -ne 1) {
         Add-Failure 'Canary lock renewal parser shadow failed: executable event counts are unsafe.'
+    } else {
+        $firstCanarySleepEvent = @(Find-RecoveryExecutableEvents -Events $canaryObservationParserEvents -ExactText $approvedCanarySleeps[0] -Language 'bash')[0]
+        $secondCanarySleepEvent = @(Find-RecoveryExecutableEvents -Events $canaryObservationParserEvents -ExactText $approvedCanarySleeps[1] -Language 'bash')[0]
+        $firstCanarySleepIndex = [array]::IndexOf($canaryObservationParserEvents, $firstCanarySleepEvent)
+        $secondCanarySleepIndex = [array]::IndexOf($canaryObservationParserEvents, $secondCanarySleepEvent)
+        $renewalBetweenCanarySleeps = $false
+        if ($firstCanarySleepIndex -ge 0 -and $secondCanarySleepIndex -gt $firstCanarySleepIndex) {
+            for ($index = $firstCanarySleepIndex + 1; $index -lt $secondCanarySleepIndex; $index++) {
+                if ($canaryObservationParserEvents[$index].Text -ceq 'run_rollout recovery-audit canary --action=renew-lock --ttl-seconds=900') {
+                    $renewalBetweenCanarySleeps = $true
+                    break
+                }
+            }
+        }
+        if (-not $renewalBetweenCanarySleeps) {
+            Add-Failure 'Canary lock renewal parser shadow failed: sleeps are out of order or lack an intervening renewal.'
+        }
     }
 
     $stage2CompatibilityEventCount = @(Find-RecoveryExecutableEvents -Events $stage2ParserEvents -ExactText 'run_rollout compatibility-sync full' -Language 'bash').Count
@@ -2505,7 +2689,8 @@ foreach ($parserInfrastructurePath in $recoveryParserInfrastructurePaths) {
     }
 }
 if (
-    ($candidatePaths.Count - $recoveryRepositoryPaths.Count) -ne $recoveryParserInfrastructurePaths.Count -or
+    $recoveryParserInfrastructurePaths.Count -ne 2 -or
+    ($candidatePaths.Count - $recoveryRepositoryPaths.Count) -ne 2 -or
     $recoveryRepositoryPaths.Count -ne 231
 ) {
     Add-Failure "Recovery repository inventory count mismatch: expected 231; received $($recoveryRepositoryPaths.Count)."
@@ -2527,6 +2712,12 @@ foreach ($entry in $gitStageEntries) {
         if ($mode -eq '120000') {
             Add-Failure "Git symlink mode 120000 rejected: $path"
         }
+    }
+}
+
+foreach ($parserInfrastructurePath in $recoveryParserInfrastructurePaths) {
+    if (-not $indexEntries.ContainsKey($parserInfrastructurePath)) {
+        Add-Failure "Recovery parser infrastructure path missing from Git index: $parserInfrastructurePath"
     }
 }
 
