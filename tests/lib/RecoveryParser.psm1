@@ -310,7 +310,7 @@ function Get-RecoveryPowerShellLiteralCommandResolution {
 
     $leafName = [System.IO.Path]::GetFileName($LiteralCommandName).ToLowerInvariant()
     $canonicalCommandName = Get-RecoveryPowerShellCanonicalCommandLeaf -LiteralCommandName $LiteralCommandName
-    if (@('invoke-expression', 'start-process') -icontains $canonicalCommandName) {
+    if (@('invoke-expression', 'start-process', 'invoke-item', 'import-module') -icontains $canonicalCommandName) {
         return [pscustomobject]@{ Classification = 'wrapper'; NormalizedCommand = $null; LeafName = $leafName }
     }
     if (
@@ -352,6 +352,8 @@ function Get-RecoveryPowerShellCanonicalCommandLeaf {
         'iex' = 'invoke-expression'
         'start' = 'start-process'
         'saps' = 'start-process'
+        'ii' = 'invoke-item'
+        'ipmo' = 'import-module'
         'si' = 'set-item'
         'ni' = 'new-item'
         'copy' = 'copy-item'
@@ -389,24 +391,42 @@ function Get-RecoveryPowerShellCanonicalCommandLeaf {
 function Get-RecoveryPowerShellStaticStringValue {
     param(
         [Parameter(Mandatory = $true)]
-        [System.Management.Automation.Language.Ast]$Expression
+        [System.Management.Automation.Language.Ast]$Expression,
+
+        [hashtable]$KnownStringValues = @{}
     )
 
+    if ($Expression -is [System.Management.Automation.Language.VariableExpressionAst]) {
+        if (
+            (Test-RecoveryPowerShellOrdinaryVariablePath -VariablePath $Expression.VariablePath) -and
+            $KnownStringValues.ContainsKey($Expression.VariablePath.UserPath)
+        ) {
+            return [string]$KnownStringValues[$Expression.VariablePath.UserPath]
+        }
+        return $null
+    }
     if (
         $Expression -is [System.Management.Automation.Language.StringConstantExpressionAst] -or
         $Expression -is [System.Management.Automation.Language.ExpandableStringExpressionAst]
     ) {
         return [string]$Expression.Value
     }
+    if ($Expression -is [System.Management.Automation.Language.PipelineAst]) {
+        $pureExpression = $Expression.GetPureExpression()
+        if ($null -eq $pureExpression) {
+            return $null
+        }
+        return Get-RecoveryPowerShellStaticStringValue -Expression $pureExpression -KnownStringValues $KnownStringValues
+    }
     if ($Expression -is [System.Management.Automation.Language.CommandExpressionAst]) {
-        return Get-RecoveryPowerShellStaticStringValue -Expression $Expression.Expression
+        return Get-RecoveryPowerShellStaticStringValue -Expression $Expression.Expression -KnownStringValues $KnownStringValues
     }
     if ($Expression -is [System.Management.Automation.Language.ParenExpressionAst]) {
         $pureExpression = $Expression.Pipeline.GetPureExpression()
         if ($null -eq $pureExpression) {
             return $null
         }
-        return Get-RecoveryPowerShellStaticStringValue -Expression $pureExpression
+        return Get-RecoveryPowerShellStaticStringValue -Expression $pureExpression -KnownStringValues $KnownStringValues
     }
     if (
         $Expression -isnot [System.Management.Automation.Language.BinaryExpressionAst] -or
@@ -415,12 +435,136 @@ function Get-RecoveryPowerShellStaticStringValue {
         return $null
     }
 
-    $leftValue = Get-RecoveryPowerShellStaticStringValue -Expression $Expression.Left
-    $rightValue = Get-RecoveryPowerShellStaticStringValue -Expression $Expression.Right
+    $leftValue = Get-RecoveryPowerShellStaticStringValue -Expression $Expression.Left -KnownStringValues $KnownStringValues
+    $rightValue = Get-RecoveryPowerShellStaticStringValue -Expression $Expression.Right -KnownStringValues $KnownStringValues
     if ($null -eq $leftValue -or $null -eq $rightValue) {
         return $null
     }
     return [string]$leftValue + [string]$rightValue
+}
+
+function Get-RecoveryPowerShellStaticStringValues {
+    param(
+        [Parameter(Mandatory = $true)]
+        [System.Management.Automation.Language.ScriptBlockAst]$Ast,
+
+        [int]$BeforeOffset = [int]::MaxValue
+    )
+
+    $values = @{}
+    $assignments = @($Ast.FindAll({
+        param($node)
+        $node -is [System.Management.Automation.Language.AssignmentStatementAst]
+    }, $true) | Sort-Object -Property @{ Expression = { $_.Extent.StartOffset }; Ascending = $true })
+    foreach ($assignment in $assignments) {
+        if ($assignment.Extent.StartOffset -ge $BeforeOffset) {
+            break
+        }
+        if ($assignment.Left -isnot [System.Management.Automation.Language.VariableExpressionAst]) {
+            continue
+        }
+        if (-not (Test-RecoveryPowerShellOrdinaryVariablePath -VariablePath $assignment.Left.VariablePath)) {
+            continue
+        }
+        $value = Get-RecoveryPowerShellStaticStringValue -Expression $assignment.Right -KnownStringValues $values
+        if ($null -ne $value) {
+            $values[$assignment.Left.VariablePath.UserPath] = $value
+        } else {
+            [void]$values.Remove($assignment.Left.VariablePath.UserPath)
+        }
+    }
+
+    return ,$values
+}
+
+function Test-RecoveryPowerShellExpressionUsesProvider {
+    param(
+        [Parameter(Mandatory = $true)]
+        [System.Management.Automation.Language.Ast]$Expression,
+
+        [Parameter(Mandatory = $true)]
+        [string[]]$ProviderNames,
+
+        [hashtable]$KnownStringValues = @{}
+    )
+
+    $providerPattern = '^{0}:[\\/]*'
+    $value = Get-RecoveryPowerShellStaticStringValue -Expression $Expression -KnownStringValues $KnownStringValues
+    if ($null -ne $value) {
+        foreach ($providerName in $ProviderNames) {
+            if ($value -match ($providerPattern -f [regex]::Escape($providerName))) {
+                return $true
+            }
+        }
+        return $false
+    }
+
+    if ($Expression -is [System.Management.Automation.Language.ParenExpressionAst]) {
+        $pureExpression = $Expression.Pipeline.GetPureExpression()
+        if ($null -ne $pureExpression) {
+            return Test-RecoveryPowerShellExpressionUsesProvider -Expression $pureExpression -ProviderNames $ProviderNames -KnownStringValues $KnownStringValues
+        }
+        return $false
+    }
+    if (
+        $Expression -is [System.Management.Automation.Language.BinaryExpressionAst] -and
+        $Expression.Operator -eq [System.Management.Automation.Language.TokenKind]::Plus
+    ) {
+        $leftValue = Get-RecoveryPowerShellStaticStringValue -Expression $Expression.Left -KnownStringValues $KnownStringValues
+        if ($null -eq $leftValue) {
+            return Test-RecoveryPowerShellExpressionUsesProvider -Expression $Expression.Right -ProviderNames $ProviderNames -KnownStringValues $KnownStringValues
+        }
+        foreach ($providerName in $ProviderNames) {
+            if ($leftValue -match ($providerPattern -f [regex]::Escape($providerName))) {
+                return $true
+            }
+        }
+    }
+
+    return $false
+}
+
+function Get-RecoveryPowerShellProviderPathParameterNames {
+    param(
+        [Parameter(Mandatory = $true)]
+        [AllowNull()]
+        [AllowEmptyString()]
+        [string]$CommandName
+    )
+
+    if (@('set-content', 'set-item', 'get-item', 'clear-item', 'remove-item') -icontains $CommandName) {
+        return @('Path', 'LiteralPath')
+    }
+    if (@('copy-item', 'move-item') -icontains $CommandName) {
+        return @('Path', 'LiteralPath', 'Destination')
+    }
+    if ($CommandName -ieq 'rename-item') {
+        return @('Path', 'LiteralPath', 'NewName')
+    }
+    return @()
+}
+
+function Get-RecoveryPowerShellProviderArgumentParameterNames {
+    param(
+        [Parameter(Mandatory = $true)]
+        [AllowNull()]
+        [AllowEmptyString()]
+        [string]$CommandName
+    )
+
+    if ($CommandName -ieq 'set-content') {
+        return @('Value', 'Encoding', 'Filter', 'Include', 'Exclude', 'Credential', 'Stream')
+    }
+    if ($CommandName -ieq 'set-item') {
+        return @('Value', 'Filter', 'Include', 'Exclude', 'Credential')
+    }
+    if (@('copy-item', 'move-item') -icontains $CommandName) {
+        return @('Filter', 'Include', 'Exclude', 'Credential')
+    }
+    if ($CommandName -ieq 'rename-item') {
+        return @('Filter', 'Include', 'Exclude')
+    }
+    return @('Filter', 'Include', 'Exclude')
 }
 
 function Test-RecoveryPowerShellCommandUsesProvider {
@@ -431,55 +575,47 @@ function Test-RecoveryPowerShellCommandUsesProvider {
         [Parameter(Mandatory = $true)]
         [string[]]$ProviderNames,
 
-        [string[]]$PathParameterNames = @()
+        [string[]]$PathParameterNames = @(),
+
+        [string[]]$ArgumentParameterNames = @(),
+
+        [hashtable]$KnownStringValues = @{}
     )
 
     $elements = @($Command.CommandElements)
     $candidateExpressions = [System.Collections.Generic.List[object]]::new()
-    if ($null -eq $PathParameterNames -or $PathParameterNames.Length -eq 0) {
-        foreach ($element in @($elements | Select-Object -Skip 1)) {
-            $candidateExpressions.Add($element)
+    $consumedArgumentIndexes = [System.Collections.Generic.HashSet[int]]::new()
+    for ($index = 1; $index -lt $elements.Count; $index++) {
+        $element = $elements[$index]
+        if ($element -isnot [System.Management.Automation.Language.CommandParameterAst]) {
+            continue
+        }
+
+        $argument = $element.Argument
+        if ($null -eq $argument -and ($index + 1) -lt $elements.Count -and $elements[$index + 1] -isnot [System.Management.Automation.Language.CommandParameterAst]) {
+            $argument = $elements[$index + 1]
+            if ($ArgumentParameterNames -icontains $element.ParameterName -or $PathParameterNames -icontains $element.ParameterName) {
+                [void]$consumedArgumentIndexes.Add($index + 1)
+            }
+        }
+        if ($null -ne $argument -and $PathParameterNames -icontains $element.ParameterName) {
+            $candidateExpressions.Add($argument)
         }
     }
-    else {
-        $hasNamedPath = $false
-        for ($index = 1; $index -lt $elements.Count; $index++) {
-            $element = $elements[$index]
-            if (
-                $element -isnot [System.Management.Automation.Language.CommandParameterAst] -or
-                $PathParameterNames -inotcontains $element.ParameterName
-            ) {
-                continue
-            }
 
-            $hasNamedPath = $true
-            $argument = $element.Argument
-            if ($null -eq $argument -and ($index + 1) -lt $elements.Count) {
-                $argument = $elements[$index + 1]
-            }
-            if ($null -ne $argument) {
-                $candidateExpressions.Add($argument)
-            }
-        }
-        if (-not $hasNamedPath) {
-            foreach ($element in @($elements | Select-Object -Skip 1)) {
-                if ($element -isnot [System.Management.Automation.Language.CommandParameterAst]) {
-                    $candidateExpressions.Add($element)
-                    break
-                }
-            }
+    for ($index = 1; $index -lt $elements.Count; $index++) {
+        if (
+            $elements[$index] -isnot [System.Management.Automation.Language.CommandParameterAst] -and
+            -not $consumedArgumentIndexes.Contains($index)
+        ) {
+            $candidateExpressions.Add($elements[$index])
+            break
         }
     }
 
     foreach ($expression in $candidateExpressions) {
-        $providerPath = Get-RecoveryPowerShellStaticStringValue -Expression $expression
-        if ($null -eq $providerPath) {
-            continue
-        }
-        foreach ($providerName in $ProviderNames) {
-            if ($providerPath -match ('^{0}:[\\/]*' -f [regex]::Escape($providerName))) {
-                return $true
-            }
+        if (Test-RecoveryPowerShellExpressionUsesProvider -Expression $expression -ProviderNames $ProviderNames -KnownStringValues $KnownStringValues) {
+            return $true
         }
     }
 
@@ -608,6 +744,9 @@ function Get-RecoveryPowerShellShadowingNodes {
         }
 
         $commandName = Get-RecoveryPowerShellCanonicalCommandLeaf -LiteralCommandName $candidate.GetCommandName()
+        $knownStringValues = Get-RecoveryPowerShellStaticStringValues -Ast $Ast -BeforeOffset $candidate.Extent.StartOffset
+        $pathParameterNames = Get-RecoveryPowerShellProviderPathParameterNames -CommandName $commandName
+        $argumentParameterNames = Get-RecoveryPowerShellProviderArgumentParameterNames -CommandName $commandName
         if (@('set-alias', 'new-alias', 'import-alias') -icontains $commandName) {
             $shadowingNodes.Add($candidate)
             continue
@@ -623,22 +762,21 @@ function Get-RecoveryPowerShellShadowingNodes {
         }
         if (
             $commandName -ieq 'set-content' -and
-            (Test-RecoveryPowerShellCommandUsesProvider -Command $candidate -ProviderNames @('Alias', 'Function') -PathParameterNames @('Path', 'LiteralPath'))
+            (Test-RecoveryPowerShellCommandUsesProvider -Command $candidate -ProviderNames @('Alias', 'Function') -PathParameterNames $pathParameterNames -ArgumentParameterNames $argumentParameterNames -KnownStringValues $knownStringValues)
         ) {
             $shadowingNodes.Add($candidate)
             continue
         }
         if (
             @('set-item', 'copy-item', 'move-item', 'rename-item') -icontains $commandName -and
-            ($hasLiteralConfiguredNativeEvents -or
-                (Test-RecoveryPowerShellCommandUsesProvider -Command $candidate -ProviderNames @('Alias', 'Function')))
+            (Test-RecoveryPowerShellCommandUsesProvider -Command $candidate -ProviderNames @('Alias', 'Function') -PathParameterNames $pathParameterNames -ArgumentParameterNames $argumentParameterNames -KnownStringValues $knownStringValues)
         ) {
             $shadowingNodes.Add($candidate)
             continue
         }
         if (
             @('clear-item', 'remove-item') -icontains $commandName -and
-            (Test-RecoveryPowerShellCommandUsesProvider -Command $candidate -ProviderNames @('Alias', 'Function'))
+            (Test-RecoveryPowerShellCommandUsesProvider -Command $candidate -ProviderNames @('Alias', 'Function') -PathParameterNames $pathParameterNames -ArgumentParameterNames $argumentParameterNames -KnownStringValues $knownStringValues)
         ) {
             $shadowingNodes.Add($candidate)
         }
@@ -663,7 +801,9 @@ function Test-RecoveryPowerShellAssignmentTargetsPhpExecutable {
 function Test-RecoveryPowerShellPhpExecutableMutationCommand {
     param(
         [Parameter(Mandatory = $true)]
-        [System.Management.Automation.Language.CommandAst]$Command
+        [System.Management.Automation.Language.CommandAst]$Command,
+
+        [hashtable]$KnownStringValues = @{}
     )
 
     $commandName = Get-RecoveryPowerShellCanonicalCommandLeaf -LiteralCommandName $Command.GetCommandName()
@@ -671,17 +811,17 @@ function Test-RecoveryPowerShellPhpExecutableMutationCommand {
         return $true
     }
 
-    if (@('set-item', 'copy-item', 'move-item', 'rename-item') -icontains $commandName) {
-        return $true
-    }
     if ($commandName -ieq 'new-item') {
         return -not (Test-RecoveryPowerShellNewItemDirectory -Command $Command)
     }
     if (@('get-item', 'clear-item', 'remove-item', 'set-content') -inotcontains $commandName) {
-        return $false
+        if (@('set-item', 'copy-item', 'move-item', 'rename-item') -inotcontains $commandName) {
+            return $false
+        }
     }
-    $pathParameterNames = if ($commandName -ieq 'set-content') { @('Path', 'LiteralPath') } else { @() }
-    return Test-RecoveryPowerShellCommandUsesProvider -Command $Command -ProviderNames @('Variable') -PathParameterNames $pathParameterNames
+    $pathParameterNames = Get-RecoveryPowerShellProviderPathParameterNames -CommandName $commandName
+    $argumentParameterNames = Get-RecoveryPowerShellProviderArgumentParameterNames -CommandName $commandName
+    return Test-RecoveryPowerShellCommandUsesProvider -Command $Command -ProviderNames @('Variable') -PathParameterNames $pathParameterNames -ArgumentParameterNames $argumentParameterNames -KnownStringValues $KnownStringValues
 }
 
 function Test-RecoveryPowerShellAssignmentTargetsValueMember {
@@ -1293,6 +1433,18 @@ function ConvertFrom-RecoveryPowerShellFence {
         $node -is [System.Management.Automation.Language.CommandAst]
     }, $true) | Sort-Object -Property @{ Expression = { $_.Extent.StartOffset }; Ascending = $true }, @{ Expression = { $_.Extent.EndOffset }; Ascending = $true })
 
+    $wrapperCommands = @($commands | Where-Object {
+        $resolution = Get-RecoveryPowerShellCommandResolution -Command $_ -ConfiguredCommands $configuredCommands -PhpExecutableAssignment $null
+        $resolution.Classification -eq 'wrapper'
+    })
+    if ($wrapperCommands.Count -gt 0) {
+        foreach ($wrapperCommand in $wrapperCommands) {
+            $resolution = Get-RecoveryPowerShellCommandResolution -Command $wrapperCommand -ConfiguredCommands $configuredCommands -PhpExecutableAssignment $null
+            $diagnostics.Add((New-RecoveryPowerShellExtentDiagnostic -Code 'PS_UNSUPPORTED_NATIVE_WRAPPER' -Message "PowerShell native wrapper '$($resolution.LeafName)' is unsupported." -Extent $wrapperCommand.Extent -Fence $Fence))
+        }
+        return New-RecoveryParseResult -Diagnostics $diagnostics.ToArray()
+    }
+
     $shadowingNodes = @(Get-RecoveryPowerShellShadowingNodes -Ast $ast -ConfiguredCommands $configuredCommands)
     if ($shadowingNodes.Count -gt 0) {
         foreach ($shadowingNode in $shadowingNodes) {
@@ -1310,7 +1462,8 @@ function ConvertFrom-RecoveryPowerShellFence {
         (Test-RecoveryPowerShellOrdinaryVariablePath -VariablePath $elements[0].VariablePath)
     })
     $phpExecutableMutationCommands = @($commands | Where-Object {
-        Test-RecoveryPowerShellPhpExecutableMutationCommand -Command $_
+        $knownStringValues = Get-RecoveryPowerShellStaticStringValues -Ast $ast -BeforeOffset $_.Extent.StartOffset
+        Test-RecoveryPowerShellPhpExecutableMutationCommand -Command $_ -KnownStringValues $knownStringValues
     })
     $phpExecutableForeachVariables = @($ast.FindAll({
         param($node)

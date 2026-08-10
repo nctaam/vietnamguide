@@ -1458,7 +1458,11 @@ Add-ParserResult -Name 'PowerShell parser rejects PowerShell execution primitive
         'Start-Process -FilePath git -ArgumentList status -Wait',
         'start git -ArgumentList status -Wait',
         'saps git -ArgumentList status -Wait',
-        'Microsoft.PowerShell.Management\Start-Process -FilePath git -ArgumentList status -Wait'
+        'Microsoft.PowerShell.Management\Start-Process -FilePath git -ArgumentList status -Wait',
+        'Invoke-Item git.exe',
+        'ii git.exe',
+        'Invoke-Item $Executable',
+        'Microsoft.PowerShell.Management\Invoke-Item git.exe'
     )
 
     foreach ($wrapper in $wrappers) {
@@ -1472,6 +1476,27 @@ Add-ParserResult -Name 'PowerShell parser rejects PowerShell execution primitive
     $safeResult = Invoke-TestRecoveryPowerShellFenceParser -Fence (New-TestRecoveryPowerShellFence -Body 'Write-Output ''git status''')
     Assert-ParserEqual -Actual $safeResult.IsValid -Expected $true -Message 'An ordinary cmdlet containing native command text should remain valid.'
     Assert-ParserEqual -Actual @($safeResult.Diagnostics).Count -Expected 0 -Message 'An ordinary cmdlet should not emit wrapper diagnostics.'
+}
+
+Add-ParserResult -Name 'PowerShell parser rejects module loading that can conceal native commands' -Test {
+    $moduleLoads = @(
+        'Import-Module .\evil.psm1',
+        'ipmo .\evil.psm1',
+        'Microsoft.PowerShell.Core\Import-Module .\evil.psm1'
+    )
+
+    foreach ($moduleLoad in $moduleLoads) {
+        $body = [string]::Join("`n", @(
+            $moduleLoad,
+            'git status',
+            'if ($LASTEXITCODE -ne 0) { throw ''failed'' }'
+        ))
+        $result = Invoke-TestRecoveryPowerShellFenceParser -Fence (New-TestRecoveryPowerShellFence -Body $body)
+
+        Assert-ParserEqual -Actual $result.IsValid -Expected $false -Message "Module load '$moduleLoad' should invalidate native resolution."
+        Assert-ParserEqual -Actual @($result.Events).Count -Expected 0 -Message "Module load '$moduleLoad' should suppress native events."
+        Assert-ParserDiagnosticCodes -Diagnostics @($result.Diagnostics) -Expected @('PS_UNSUPPORTED_NATIVE_WRAPPER')
+    }
 }
 
 Add-ParserResult -Name 'PowerShell parser rejects a zero exit guard' -Test {
@@ -1924,6 +1949,48 @@ Add-ParserResult -Name 'PowerShell parser rejects constant-computed Set-Content 
     Assert-RecoveryPowerShellEventCommands -Result $safeResult -Expected @('git')
 }
 
+Add-ParserResult -Name 'PowerShell parser rejects dynamic Set-Content provider prefixes' -Test {
+    $cases = @(
+        [pscustomobject]@{
+            Name = 'Function prefix concatenated with variable'
+            Lines = @(
+                '$name = ''git''',
+                'Set-Content -Path (''Function:'' + $name) -Value ''param()'''
+            )
+        },
+        [pscustomobject]@{
+            Name = 'Alias prefix concatenated with variable through sc'
+            Lines = @(
+                '$name = ''git''',
+                'sc (''Alias:\'' + $name) cmd.exe'
+            )
+        },
+        [pscustomobject]@{
+            Name = 'Alias prefix concatenated with variable through Remove-Item'
+            Lines = @(
+                '$name = ''git''',
+                'Remove-Item -Path (''Alias:'' + $name)'
+            )
+        },
+        [pscustomobject]@{
+            Name = 'Function prefix concatenated with variable through Clear-Item'
+            Lines = @(
+                '$name = ''git''',
+                'Clear-Item -Path (''Function:'' + $name)'
+            )
+        }
+    )
+
+    foreach ($case in $cases) {
+        $body = [string]::Join("`n", @($case.Lines + @('git status', 'if ($LASTEXITCODE -ne 0) { throw ''failed'' }')))
+        $result = Invoke-TestRecoveryPowerShellFenceParser -Fence (New-TestRecoveryPowerShellFence -Body $body)
+
+        Assert-ParserEqual -Actual $result.IsValid -Expected $false -Message "$($case.Name) should be invalid."
+        Assert-ParserEqual -Actual @($result.Events).Count -Expected 0 -Message "$($case.Name) should not emit an event."
+        Assert-ParserDiagnosticCodes -Diagnostics @($result.Diagnostics) -Expected @('PS_NATIVE_STATEMENT_AMBIGUOUS')
+    }
+}
+
 Add-ParserResult -Name 'PowerShell parser rejects a configured native shadowed through the Set-Item alias' -Test {
     $body = [string]::Join("`n", @(
         'si Alias:\git cmd.exe',
@@ -2037,6 +2104,90 @@ Add-ParserResult -Name 'PowerShell parser rejects Set-Content PhpExecutable prov
 
     Assert-ParserEqual -Actual $safeResult.IsValid -Expected $true -Message 'Ordinary filesystem Set-Content should not invalidate PhpExecutable proof.'
     Assert-RecoveryPowerShellEventCommands -Result $safeResult -Expected @('php')
+}
+
+Add-ParserResult -Name 'PowerShell parser rejects statically assigned PhpExecutable provider paths' -Test {
+    $mutations = @(
+        'Set-Content -Path $Path -Value git',
+        'Set-Content -LiteralPath $Path -Value git'
+    )
+
+    foreach ($mutation in $mutations) {
+        $body = [string]::Join("`n", @(
+            '$PhpExecutable = ''php''',
+            '$Path = ''Variable:PhpExecutable''',
+            $mutation,
+            '& $PhpExecutable --version',
+            'if ($LASTEXITCODE -ne 0) { throw ''failed'' }'
+        ))
+        $result = Invoke-TestRecoveryPowerShellFenceParser -Fence (New-TestRecoveryPowerShellFence -Body $body)
+
+        Assert-ParserEqual -Actual $result.IsValid -Expected $false -Message "Static provider path '$mutation' should be invalid."
+        Assert-ParserEqual -Actual @($result.Events).Count -Expected 0 -Message "Static provider path '$mutation' should not emit an event."
+        Assert-ParserDiagnosticCodes -Diagnostics @($result.Diagnostics) -Expected @('PS_DYNAMIC_NATIVE_UNSUPPORTED')
+    }
+}
+
+Add-ParserResult -Name 'PowerShell parser allows filesystem item mutations around PhpExecutable' -Test {
+    $safeCases = @(
+        [pscustomobject]@{
+            Name = 'Set-Item'
+            Lines = @('Set-Item -LiteralPath $OutputPath -Value safe')
+        },
+        [pscustomobject]@{
+            Name = 'Copy-Item'
+            Lines = @('Copy-Item -LiteralPath $InputPath -Destination $OutputPath')
+        },
+        [pscustomobject]@{
+            Name = 'Move-Item'
+            Lines = @('Move-Item -LiteralPath $InputPath -Destination $OutputPath')
+        },
+        [pscustomobject]@{
+            Name = 'Rename-Item'
+            Lines = @('Rename-Item -LiteralPath $InputPath -NewName $OutputPath')
+        }
+    )
+
+    foreach ($case in $safeCases) {
+        $lines = @('$PhpExecutable = ''php''') + @($case.Lines) + @('& $PhpExecutable --version', 'if ($LASTEXITCODE -ne 0) { throw ''failed'' }')
+        $body = [string]::Join("`n", $lines)
+        $result = Invoke-TestRecoveryPowerShellFenceParser -Fence (New-TestRecoveryPowerShellFence -Body $body)
+
+        Assert-ParserEqual -Actual $result.IsValid -Expected $true -Message "$($case.Name) filesystem mutation should remain valid."
+        Assert-RecoveryPowerShellEventCommands -Result $result -Expected @('php')
+    }
+
+    $providerCases = @(
+        'Set-Item -LiteralPath Variable:PhpExecutable -Value cmd.exe',
+        'Copy-Item -LiteralPath $InputPath -Destination Variable:PhpExecutable',
+        'Move-Item -LiteralPath $InputPath -Destination Variable:PhpExecutable',
+        'Rename-Item -LiteralPath Variable:PhpExecutable -NewName cmd.exe'
+    )
+    foreach ($mutation in $providerCases) {
+        $body = [string]::Join("`n", @(
+            '$PhpExecutable = ''php''',
+            $mutation,
+            '& $PhpExecutable --version',
+            'if ($LASTEXITCODE -ne 0) { throw ''failed'' }'
+        ))
+        $result = Invoke-TestRecoveryPowerShellFenceParser -Fence (New-TestRecoveryPowerShellFence -Body $body)
+
+        Assert-ParserEqual -Actual $result.IsValid -Expected $false -Message "Provider-targeted $mutation should be invalid."
+        Assert-ParserEqual -Actual @($result.Events).Count -Expected 0 -Message "Provider-targeted $mutation should not emit an event."
+        Assert-ParserDiagnosticCodes -Diagnostics @($result.Diagnostics) -Expected @('PS_DYNAMIC_NATIVE_UNSUPPORTED')
+    }
+}
+
+Add-ParserResult -Name 'PowerShell parser does not treat Set-Content value as a positional path' -Test {
+    $body = [string]::Join("`n", @(
+        'Set-Content -Value ''Alias:git'' $OutputPath',
+        'git status',
+        'if ($LASTEXITCODE -ne 0) { throw ''failed'' }'
+    ))
+    $result = Invoke-TestRecoveryPowerShellFenceParser -Fence (New-TestRecoveryPowerShellFence -Body $body)
+
+    Assert-ParserEqual -Actual $result.IsValid -Expected $true -Message 'Set-Content value text should not be treated as a positional provider path.'
+    Assert-RecoveryPowerShellEventCommands -Result $result -Expected @('git')
 }
 
 Add-ParserResult -Name 'PowerShell parser rejects dynamic alias provider mutation' -Test {
