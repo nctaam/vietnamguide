@@ -747,7 +747,7 @@ function Test-RecoveryPowerShellCommandMutatesProviderPathVariable {
     if ($null -eq $value) {
         return $true
     }
-    return Test-RecoveryPowerShellExpressionUsesProvider -Expression $valueExpression -ProviderNames @('Alias', 'Function') -KnownStringValues $KnownStringValues
+    return Test-RecoveryPowerShellExpressionUsesProvider -Expression $valueExpression -ProviderNames @('Alias', 'Function', 'Variable') -KnownStringValues $KnownStringValues
 }
 
 function Test-RecoveryPowerShellNewItemDirectory {

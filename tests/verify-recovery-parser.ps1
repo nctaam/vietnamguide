@@ -2217,6 +2217,29 @@ Add-ParserResult -Name 'PowerShell parser rejects indirect provider-path variabl
     }
 }
 
+Add-ParserResult -Name 'PowerShell parser rejects indirect Variable provider-path rebinding' -Test {
+    $mutations = @(
+        'Set-Variable -Name Path -Value ''Variable:PhpExecutable''',
+        'Set-Item Variable:Path ''Variable:PhpExecutable'''
+    )
+
+    foreach ($mutation in $mutations) {
+        $body = [string]::Join("`n", @(
+            '$PhpExecutable = ''php''',
+            '$Path = ''C:\safe.txt''',
+            $mutation,
+            'Set-Content -Path $Path -Value git',
+            '& $PhpExecutable --version',
+            'if ($LASTEXITCODE -ne 0) { throw ''failed'' }'
+        ))
+        $result = Invoke-TestRecoveryPowerShellFenceParser -Fence (New-TestRecoveryPowerShellFence -Body $body)
+
+        Assert-ParserEqual -Actual $result.IsValid -Expected $false -Message "Indirect Variable provider mutation '$mutation' should fail closed."
+        Assert-ParserEqual -Actual @($result.Events).Count -Expected 0 -Message "Indirect Variable provider mutation '$mutation' should not emit an event."
+        Assert-ParserDiagnosticCodes -Diagnostics @($result.Diagnostics) -Expected @('PS_NATIVE_STATEMENT_AMBIGUOUS')
+    }
+}
+
 Add-ParserResult -Name 'PowerShell parser allows filesystem item mutations around PhpExecutable' -Test {
     $safeCases = @(
         [pscustomobject]@{
