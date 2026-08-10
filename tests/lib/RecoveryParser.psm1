@@ -389,7 +389,10 @@ function Test-RecoveryPowerShellCommandUsesProvider {
     )
 
     foreach ($element in @($Command.CommandElements | Select-Object -Skip 1)) {
-        if ($element -isnot [System.Management.Automation.Language.StringConstantExpressionAst]) {
+        if (
+            $element -isnot [System.Management.Automation.Language.StringConstantExpressionAst] -and
+            $element -isnot [System.Management.Automation.Language.ExpandableStringExpressionAst]
+        ) {
             continue
         }
         foreach ($providerName in $ProviderNames) {

@@ -1852,6 +1852,28 @@ Add-ParserResult -Name 'PowerShell parser rejects configured natives shadowed th
     Assert-RecoveryPowerShellEventCommands -Result $safeResult -Expected @('git')
 }
 
+Add-ParserResult -Name 'PowerShell parser rejects expandable Set-Content provider paths' -Test {
+    $cases = @(
+        [pscustomobject]@{
+            Name = 'Function provider'
+            Lines = @('$name = ''git''', 'Set-Content -Path "Function:$name" -Value { Write-Output shadow }')
+        },
+        [pscustomobject]@{
+            Name = 'Alias provider through sc'
+            Lines = @('$name = ''git''', 'sc "Alias:$name" cmd.exe')
+        }
+    )
+
+    foreach ($case in $cases) {
+        $body = [string]::Join("`n", @($case.Lines + @('git status', 'if ($LASTEXITCODE -ne 0) { throw ''failed'' }')))
+        $result = Invoke-TestRecoveryPowerShellFenceParser -Fence (New-TestRecoveryPowerShellFence -Body $body)
+
+        Assert-ParserEqual -Actual $result.IsValid -Expected $false -Message "$($case.Name) expandable provider path should be invalid."
+        Assert-ParserEqual -Actual @($result.Events).Count -Expected 0 -Message "$($case.Name) expandable provider path should not emit an event."
+        Assert-ParserDiagnosticCodes -Diagnostics @($result.Diagnostics) -Expected @('PS_NATIVE_STATEMENT_AMBIGUOUS')
+    }
+}
+
 Add-ParserResult -Name 'PowerShell parser rejects a configured native shadowed through the Set-Item alias' -Test {
     $body = [string]::Join("`n", @(
         'si Alias:\git cmd.exe',
