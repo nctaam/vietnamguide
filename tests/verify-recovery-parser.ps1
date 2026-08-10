@@ -2240,6 +2240,67 @@ Add-ParserResult -Name 'PowerShell parser rejects indirect Variable provider-pat
     }
 }
 
+Add-ParserResult -Name 'PowerShell parser rejects first-definition provider-path variables' -Test {
+    $setters = @(
+        [pscustomobject]@{ Name = 'Set-Variable'; Format = 'Set-Variable -Name Path -Value {0}' },
+        [pscustomobject]@{ Name = 'New-Variable'; Format = 'New-Variable -Name Path -Value {0}' },
+        [pscustomobject]@{ Name = 'New-Variable alias'; Format = 'nv -Name Path -Value {0}' },
+        [pscustomobject]@{ Name = 'module-qualified New-Variable'; Format = 'Microsoft.PowerShell.Utility\New-Variable -Name Path -Value {0}' },
+        [pscustomobject]@{ Name = 'Set-Item'; Format = 'Set-Item Variable:Path {0}' },
+        [pscustomobject]@{ Name = 'Set-Content'; Format = 'Set-Content Variable:Path {0}' }
+    )
+    $invalidValues = @(
+        [pscustomobject]@{
+            Name = 'Alias provider'
+            Value = '''Alias:git'''
+            Prefix = @()
+            Suffix = @('Set-Content -Path $Path -Value cmd.exe', 'git status', 'if ($LASTEXITCODE -ne 0) { throw ''failed'' }')
+        },
+        [pscustomobject]@{
+            Name = 'Function provider'
+            Value = '''Function:git'''
+            Prefix = @()
+            Suffix = @('Set-Content -Path $Path -Value cmd.exe', 'git status', 'if ($LASTEXITCODE -ne 0) { throw ''failed'' }')
+        },
+        [pscustomobject]@{
+            Name = 'Variable provider'
+            Value = '''Variable:PhpExecutable'''
+            Prefix = @('$PhpExecutable = ''php''')
+            Suffix = @('Set-Content -Path $Path -Value cmd.exe', '& $PhpExecutable --version', 'if ($LASTEXITCODE -ne 0) { throw ''failed'' }')
+        },
+        [pscustomobject]@{
+            Name = 'unresolved value'
+            Value = '(Get-Thing)'
+            Prefix = @('function Get-Thing { ''Alias:git'' }')
+            Suffix = @('Set-Content -Path $Path -Value cmd.exe', 'git status', 'if ($LASTEXITCODE -ne 0) { throw ''failed'' }')
+        }
+    )
+
+    foreach ($setter in $setters) {
+        foreach ($invalidValue in $invalidValues) {
+            $mutation = $setter.Format -f $invalidValue.Value
+            $lines = @($invalidValue.Prefix) + @($mutation) + @($invalidValue.Suffix)
+            $result = Invoke-TestRecoveryPowerShellFenceParser -Fence (New-TestRecoveryPowerShellFence -Body ([string]::Join("`n", $lines)))
+
+            Assert-ParserEqual -Actual $result.IsValid -Expected $false -Message "$($setter.Name) first-definition $($invalidValue.Name) should fail closed."
+            Assert-ParserEqual -Actual @($result.Events).Count -Expected 0 -Message "$($setter.Name) first-definition $($invalidValue.Name) should not emit an event."
+            Assert-ParserDiagnosticCodes -Diagnostics @($result.Diagnostics) -Expected @('PS_NATIVE_STATEMENT_AMBIGUOUS')
+        }
+
+        $safeMutation = $setter.Format -f '''C:\safe.txt'''
+        $safeBody = [string]::Join("`n", @(
+            $safeMutation,
+            'Set-Content -Path $Path -Value safe',
+            'git status',
+            'if ($LASTEXITCODE -ne 0) { throw ''failed'' }'
+        ))
+        $safeResult = Invoke-TestRecoveryPowerShellFenceParser -Fence (New-TestRecoveryPowerShellFence -Body $safeBody)
+
+        Assert-ParserEqual -Actual $safeResult.IsValid -Expected $true -Message "$($setter.Name) filesystem first-definition should remain valid."
+        Assert-RecoveryPowerShellEventCommands -Result $safeResult -Expected @('git')
+    }
+}
+
 Add-ParserResult -Name 'PowerShell parser allows filesystem item mutations around PhpExecutable' -Test {
     $safeCases = @(
         [pscustomobject]@{

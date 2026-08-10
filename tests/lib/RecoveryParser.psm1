@@ -701,7 +701,7 @@ function Test-RecoveryPowerShellCommandMutatesProviderPathVariable {
     $commandName = Get-RecoveryPowerShellCanonicalCommandLeaf -LiteralCommandName $Command.GetCommandName()
     $variableName = $null
     $valueExpression = $null
-    if ($commandName -ieq 'set-variable') {
+    if (@('set-variable', 'new-variable') -icontains $commandName) {
         $positional = @(Get-RecoveryPowerShellCommandPositionalArguments -Command $Command -ArgumentParameterNames @('Name', 'Value'))
         $nameExpression = Get-RecoveryPowerShellCommandParameterArgument -Command $Command -ParameterName 'Name'
         if ($null -eq $nameExpression -and $positional.Count -gt 0) {
@@ -738,7 +738,6 @@ function Test-RecoveryPowerShellCommandMutatesProviderPathVariable {
 
     if (
         [string]::IsNullOrWhiteSpace($variableName) -or
-        -not $KnownStringValues.ContainsKey($variableName) -or
         $null -eq $valueExpression
     ) {
         return $false
