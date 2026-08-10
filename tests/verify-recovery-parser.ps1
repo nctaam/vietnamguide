@@ -1748,6 +1748,48 @@ Add-ParserResult -Name 'PowerShell parser rejects native commands shadowed by fu
     }
 }
 
+Add-ParserResult -Name 'PowerShell parser rejects configured natives shadowed through provider-qualified assignments' -Test {
+    $shadowingStatements = @(
+        '${function:git} = { Write-Output shadow }',
+        '${alias:git} = ''cmd.exe'''
+    )
+
+    foreach ($statement in $shadowingStatements) {
+        $body = [string]::Join("`n", @($statement, 'git status', 'if ($LASTEXITCODE -ne 0) { throw ''failed'' }'))
+        $result = Invoke-TestRecoveryPowerShellFenceParser -Fence (New-TestRecoveryPowerShellFence -Body $body)
+
+        Assert-ParserEqual -Actual $result.IsValid -Expected $false -Message "Provider-qualified assignment '$statement' should be invalid."
+        Assert-ParserEqual -Actual @($result.Events).Count -Expected 0 -Message "Provider-qualified assignment '$statement' should not emit an event."
+        Assert-ParserDiagnosticCodes -Diagnostics @($result.Diagnostics) -Expected @('PS_NATIVE_STATEMENT_AMBIGUOUS')
+    }
+}
+
+Add-ParserResult -Name 'PowerShell parser rejects configured natives shadowed through Set-Content provider writes' -Test {
+    $shadowingStatements = @(
+        'Set-Content Function:\git { Write-Output shadow }',
+        'sc Alias:\git cmd.exe'
+    )
+
+    foreach ($statement in $shadowingStatements) {
+        $body = [string]::Join("`n", @($statement, 'git status', 'if ($LASTEXITCODE -ne 0) { throw ''failed'' }'))
+        $result = Invoke-TestRecoveryPowerShellFenceParser -Fence (New-TestRecoveryPowerShellFence -Body $body)
+
+        Assert-ParserEqual -Actual $result.IsValid -Expected $false -Message "Set-Content provider write '$statement' should be invalid."
+        Assert-ParserEqual -Actual @($result.Events).Count -Expected 0 -Message "Set-Content provider write '$statement' should not emit an event."
+        Assert-ParserDiagnosticCodes -Diagnostics @($result.Diagnostics) -Expected @('PS_NATIVE_STATEMENT_AMBIGUOUS')
+    }
+
+    $safeBody = [string]::Join("`n", @(
+        'Set-Content -LiteralPath $OutputPath -Value ''ok''',
+        'git status',
+        'if ($LASTEXITCODE -ne 0) { throw ''failed'' }'
+    ))
+    $safeResult = Invoke-TestRecoveryPowerShellFenceParser -Fence (New-TestRecoveryPowerShellFence -Body $safeBody)
+
+    Assert-ParserEqual -Actual $safeResult.IsValid -Expected $true -Message 'Ordinary filesystem Set-Content should remain valid.'
+    Assert-RecoveryPowerShellEventCommands -Result $safeResult -Expected @('git')
+}
+
 Add-ParserResult -Name 'PowerShell parser rejects a configured native shadowed through the Set-Item alias' -Test {
     $body = [string]::Join("`n", @(
         'si Alias:\git cmd.exe',

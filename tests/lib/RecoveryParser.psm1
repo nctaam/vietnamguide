@@ -362,6 +362,7 @@ function Get-RecoveryPowerShellCanonicalCommandLeaf {
         'ri' = 'remove-item'
         'rm' = 'remove-item'
         'rmdir' = 'remove-item'
+        'sc' = 'set-content'
         'gi' = 'get-item'
         'gv' = 'get-variable'
         'set' = 'set-variable'
@@ -458,7 +459,8 @@ function Get-RecoveryPowerShellShadowingNodes {
     $candidates = @($Ast.FindAll({
         param($node)
         $node -is [System.Management.Automation.Language.CommandAst] -or
-        $node -is [System.Management.Automation.Language.FunctionDefinitionAst]
+        $node -is [System.Management.Automation.Language.FunctionDefinitionAst] -or
+        $node -is [System.Management.Automation.Language.AssignmentStatementAst]
     }, $true) | Sort-Object -Property @{ Expression = { $_.Extent.StartOffset }; Ascending = $true })
 
     $hasLiteralConfiguredNativeEvents = $false
@@ -489,6 +491,25 @@ function Get-RecoveryPowerShellShadowingNodes {
     $hasConfiguredNativeEvents = $hasLiteralConfiguredNativeEvents -or $hasDynamicPhpExecutableEvent
 
     foreach ($candidate in $candidates) {
+        if ($candidate -is [System.Management.Automation.Language.AssignmentStatementAst]) {
+            $providerVariables = @($candidate.Left.FindAll({
+                param($node)
+                $node -is [System.Management.Automation.Language.VariableExpressionAst] -and
+                @('Alias', 'Function') -icontains $node.VariablePath.DriveName
+            }, $true))
+            foreach ($providerVariable in $providerVariables) {
+                $providerTarget = [string]$providerVariable.VariablePath.UserPath
+                $providerTarget = $providerTarget.Substring($providerTarget.IndexOf(':') + 1)
+                $providerTarget = [regex]::Replace($providerTarget, '^[\\/]+', '')
+                $providerTarget = [regex]::Replace($providerTarget, '^(?i:global|local|private|script):', '')
+                if (Test-RecoveryPowerShellConfiguredCommandLiteral -LiteralCommandName $providerTarget -ConfiguredCommands $ConfiguredCommands) {
+                    $shadowingNodes.Add($candidate)
+                    break
+                }
+            }
+            continue
+        }
+
         if ($candidate -is [System.Management.Automation.Language.FunctionDefinitionAst]) {
             $functionName = [string]$candidate.Name
             $functionName = [regex]::Replace($functionName, '^(?i:global|local|private|script):', '')
@@ -514,6 +535,13 @@ function Get-RecoveryPowerShellShadowingNodes {
             ) {
                 $shadowingNodes.Add($candidate)
             }
+            continue
+        }
+        if (
+            $commandName -ieq 'set-content' -and
+            (Test-RecoveryPowerShellCommandUsesProvider -Command $candidate -ProviderNames @('Alias', 'Function'))
+        ) {
+            $shadowingNodes.Add($candidate)
             continue
         }
         if (
