@@ -700,6 +700,7 @@ function Test-RecoveryPowerShellCommandMutatesProviderPathVariable {
 
     $commandName = Get-RecoveryPowerShellCanonicalCommandLeaf -LiteralCommandName $Command.GetCommandName()
     $variableName = $null
+    $hasUnresolvedVariableName = $false
     $valueExpression = $null
     if (@('set-variable', 'new-variable') -icontains $commandName) {
         $positional = @(Get-RecoveryPowerShellCommandPositionalArguments -Command $Command -ArgumentParameterNames @('Name', 'Value'))
@@ -713,6 +714,7 @@ function Test-RecoveryPowerShellCommandMutatesProviderPathVariable {
         }
         if ($null -ne $nameExpression) {
             $variableName = Get-RecoveryPowerShellStaticStringValue -Expression $nameExpression -KnownStringValues $KnownStringValues
+            $hasUnresolvedVariableName = $null -eq $variableName
         }
     }
     elseif (@('set-item', 'set-content') -icontains $commandName) {
@@ -736,13 +738,19 @@ function Test-RecoveryPowerShellCommandMutatesProviderPathVariable {
         }
     }
 
-    if (
-        [string]::IsNullOrWhiteSpace($variableName) -or
-        $null -eq $valueExpression
-    ) {
+    if ($null -eq $valueExpression) {
         return $false
     }
     $value = Get-RecoveryPowerShellStaticStringValue -Expression $valueExpression -KnownStringValues $KnownStringValues
+    if ($hasUnresolvedVariableName) {
+        if ($null -eq $value) {
+            return $true
+        }
+        return Test-RecoveryPowerShellExpressionUsesProvider -Expression $valueExpression -ProviderNames @('Alias', 'Function', 'Variable') -KnownStringValues $KnownStringValues
+    }
+    if ([string]::IsNullOrWhiteSpace($variableName)) {
+        return $false
+    }
     if ($null -eq $value) {
         return $true
     }
