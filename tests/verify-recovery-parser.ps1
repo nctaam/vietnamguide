@@ -289,6 +289,38 @@ Add-ParserResult -Name 'Executable event sequence handles scalar empty and null 
     Assert-ParserEqual -Actual (Test-RecoveryEventSequence -Events $null -ExpectedTexts 'echo ready') -Expected $false -Message 'Missing scalar executable event should be rejected.'
 }
 
+Add-ParserResult -Name 'Baseline section event selection rejects duplicate headings' -Test {
+    $baselineAst = Import-RecoveryBaselinePrivateFunction -Name 'Get-RecoveryParserSectionEvents'
+    $duplicateSections = @(
+        [pscustomobject]@{ Id = 'section-first'; Heading = '## Contract' },
+        [pscustomobject]@{ Id = 'section-second'; Heading = '## Contract' }
+    )
+    $duplicateEvents = @(
+        [pscustomobject]@{ SectionId = 'section-first'; Text = 'first' },
+        [pscustomobject]@{ SectionId = 'section-second'; Text = 'second' }
+    )
+
+    $duplicateMatches = @(Get-RecoveryParserSectionEvents -Sections $duplicateSections -Events $duplicateEvents -Heading '## Contract')
+    Assert-ParserEqual -Actual $duplicateMatches.Count -Expected 0 -Message 'Duplicate target sections should return no events.'
+
+    $uniqueSections = @([pscustomobject]@{ Id = 'section-unique'; Heading = '## Contract' })
+    $uniqueEvents = @(
+        [pscustomobject]@{ SectionId = 'section-unique'; Text = 'first' },
+        [pscustomobject]@{ SectionId = 'section-other'; Text = 'noise' },
+        [pscustomobject]@{ SectionId = 'section-unique'; Text = 'second' }
+    )
+    $uniqueMatches = @(Get-RecoveryParserSectionEvents -Sections $uniqueSections -Events $uniqueEvents -Heading '## Contract')
+
+    Assert-ParserArrayEqual -Actual @($uniqueMatches | ForEach-Object { $_.Text }) -Expected @('first', 'second') -Message 'Unique target section event order mismatch.'
+
+    $callSites = @($baselineAst.FindAll({
+        param($node)
+        $node -is [System.Management.Automation.Language.CommandAst] -and
+        $node.GetCommandName() -ceq 'Get-RecoveryParserSectionEvents'
+    }, $true))
+    Assert-ParserEqual -Actual $callSites.Count -Expected 7 -Message 'Baseline section event selector call-site count mismatch.'
+}
+
 Add-ParserResult -Name 'Baseline consecutive event windows require exactly one complete contiguous start' -Test {
     $baselineAst = Import-RecoveryBaselinePrivateFunction -Name 'Test-RecoveryParserConsecutiveEventWindow'
     $newEvent = {

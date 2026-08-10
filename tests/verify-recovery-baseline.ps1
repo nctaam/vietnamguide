@@ -28,7 +28,12 @@ function Get-RecoveryParserSectionEvents {
         [string]$Heading
     )
 
-    $sectionIds = @($Sections | Where-Object { $_.Heading -ceq $Heading } | ForEach-Object { $_.Id })
+    $matchingSections = @($Sections | Where-Object { $_.Heading -ceq $Heading })
+    if ($matchingSections.Count -ne 1) {
+        return @()
+    }
+
+    $sectionIds = @($matchingSections | ForEach-Object { $_.Id })
     return @($Events | Where-Object { $sectionIds -contains $_.SectionId })
 }
 
