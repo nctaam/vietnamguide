@@ -138,10 +138,10 @@ function Get-RecoveryLegacyHelperViolations {
     return @($Ast.FindAll({
         param($node)
         if ($node -is [System.Management.Automation.Language.FunctionDefinitionAst]) {
-            return $script:forbiddenRecoveryLegacyHelperNames -ccontains $node.Name
+            return $script:forbiddenRecoveryLegacyHelperNames -icontains $node.Name
         }
         if ($node -is [System.Management.Automation.Language.CommandAst]) {
-            return $script:forbiddenRecoveryLegacyHelperNames -ccontains $node.GetCommandName()
+            return $script:forbiddenRecoveryLegacyHelperNames -icontains $node.GetCommandName()
         }
         return $false
     }, $true) | ForEach-Object {
@@ -545,6 +545,36 @@ Add-ParserResult -Name 'Legacy helper structural scanner rejects every forbidden
     } | Sort-Object)
 
     Assert-ParserArrayEqual -Actual $actualViolationKeys -Expected $expectedViolationKeys -Message 'Legacy-helper structural scanner coverage mismatch.'
+}
+
+Add-ParserResult -Name 'Legacy helper structural scanner matches PowerShell names case-insensitively' -Test {
+    $syntheticText = [string]::Join("`n", @(
+        '# comment-only get-markdownlinerecords',
+        '''string-only GET-MARKDOWNFENCEMATCH''',
+        'function get-markdownlinerecords {}',
+        'get-markdownlinerecords',
+        'function GeT-MaRkDoWnFeNcEmAtCh {}',
+        'GET-MARKDOWNFENCEMATCH'
+    ))
+    $tokens = $null
+    $parseErrors = $null
+    $syntheticAst = [System.Management.Automation.Language.Parser]::ParseInput(
+        $syntheticText,
+        'synthetic-legacy-helper-case-coverage.ps1',
+        [ref]$tokens,
+        [ref]$parseErrors
+    )
+    Assert-ParserEqual -Actual @($parseErrors).Count -Expected 0 -Message 'Synthetic case-insensitive legacy-helper AST parse mismatch.'
+
+    $actualViolationKeys = @(Get-RecoveryLegacyHelperViolations -Ast $syntheticAst | ForEach-Object { "$($_.Kind):$($_.Name)" } | Sort-Object)
+    $expectedViolationKeys = @(
+        'call:get-markdownlinerecords',
+        'call:GET-MARKDOWNFENCEMATCH',
+        'definition:get-markdownlinerecords',
+        'definition:GeT-MaRkDoWnFeNcEmAtCh'
+    ) | Sort-Object
+
+    Assert-ParserArrayEqual -Actual $actualViolationKeys -Expected $expectedViolationKeys -Message 'Case-insensitive legacy-helper structural scanner coverage mismatch.'
 }
 
 Add-ParserResult -Name 'Baseline migrated contracts do not call legacy raw execution helpers' -Test {
