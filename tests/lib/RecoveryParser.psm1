@@ -309,6 +309,10 @@ function Get-RecoveryPowerShellLiteralCommandResolution {
     )
 
     $leafName = [System.IO.Path]::GetFileName($LiteralCommandName).ToLowerInvariant()
+    $canonicalCommandName = Get-RecoveryPowerShellCanonicalCommandLeaf -LiteralCommandName $LiteralCommandName
+    if (@('invoke-expression', 'start-process') -icontains $canonicalCommandName) {
+        return [pscustomobject]@{ Classification = 'wrapper'; NormalizedCommand = $null; LeafName = $leafName }
+    }
     if (
         $leafName -eq 'cmd' -or
         $leafName -eq 'cmd.exe' -or
@@ -345,6 +349,9 @@ function Get-RecoveryPowerShellCanonicalCommandLeaf {
         'sal' = 'set-alias'
         'nal' = 'new-alias'
         'ipal' = 'import-alias'
+        'iex' = 'invoke-expression'
+        'start' = 'start-process'
+        'saps' = 'start-process'
         'si' = 'set-item'
         'ni' = 'new-item'
         'copy' = 'copy-item'
@@ -379,24 +386,98 @@ function Get-RecoveryPowerShellCanonicalCommandLeaf {
     return $leafName
 }
 
+function Get-RecoveryPowerShellStaticStringValue {
+    param(
+        [Parameter(Mandatory = $true)]
+        [System.Management.Automation.Language.Ast]$Expression
+    )
+
+    if (
+        $Expression -is [System.Management.Automation.Language.StringConstantExpressionAst] -or
+        $Expression -is [System.Management.Automation.Language.ExpandableStringExpressionAst]
+    ) {
+        return [string]$Expression.Value
+    }
+    if ($Expression -is [System.Management.Automation.Language.CommandExpressionAst]) {
+        return Get-RecoveryPowerShellStaticStringValue -Expression $Expression.Expression
+    }
+    if ($Expression -is [System.Management.Automation.Language.ParenExpressionAst]) {
+        $pureExpression = $Expression.Pipeline.GetPureExpression()
+        if ($null -eq $pureExpression) {
+            return $null
+        }
+        return Get-RecoveryPowerShellStaticStringValue -Expression $pureExpression
+    }
+    if (
+        $Expression -isnot [System.Management.Automation.Language.BinaryExpressionAst] -or
+        $Expression.Operator -ne [System.Management.Automation.Language.TokenKind]::Plus
+    ) {
+        return $null
+    }
+
+    $leftValue = Get-RecoveryPowerShellStaticStringValue -Expression $Expression.Left
+    $rightValue = Get-RecoveryPowerShellStaticStringValue -Expression $Expression.Right
+    if ($null -eq $leftValue -or $null -eq $rightValue) {
+        return $null
+    }
+    return [string]$leftValue + [string]$rightValue
+}
+
 function Test-RecoveryPowerShellCommandUsesProvider {
     param(
         [Parameter(Mandatory = $true)]
         [System.Management.Automation.Language.CommandAst]$Command,
 
         [Parameter(Mandatory = $true)]
-        [string[]]$ProviderNames
+        [string[]]$ProviderNames,
+
+        [string[]]$PathParameterNames = @()
     )
 
-    foreach ($element in @($Command.CommandElements | Select-Object -Skip 1)) {
-        if (
-            $element -isnot [System.Management.Automation.Language.StringConstantExpressionAst] -and
-            $element -isnot [System.Management.Automation.Language.ExpandableStringExpressionAst]
-        ) {
+    $elements = @($Command.CommandElements)
+    $candidateExpressions = [System.Collections.Generic.List[object]]::new()
+    if ($null -eq $PathParameterNames -or $PathParameterNames.Length -eq 0) {
+        foreach ($element in @($elements | Select-Object -Skip 1)) {
+            $candidateExpressions.Add($element)
+        }
+    }
+    else {
+        $hasNamedPath = $false
+        for ($index = 1; $index -lt $elements.Count; $index++) {
+            $element = $elements[$index]
+            if (
+                $element -isnot [System.Management.Automation.Language.CommandParameterAst] -or
+                $PathParameterNames -inotcontains $element.ParameterName
+            ) {
+                continue
+            }
+
+            $hasNamedPath = $true
+            $argument = $element.Argument
+            if ($null -eq $argument -and ($index + 1) -lt $elements.Count) {
+                $argument = $elements[$index + 1]
+            }
+            if ($null -ne $argument) {
+                $candidateExpressions.Add($argument)
+            }
+        }
+        if (-not $hasNamedPath) {
+            foreach ($element in @($elements | Select-Object -Skip 1)) {
+                if ($element -isnot [System.Management.Automation.Language.CommandParameterAst]) {
+                    $candidateExpressions.Add($element)
+                    break
+                }
+            }
+        }
+    }
+
+    foreach ($expression in $candidateExpressions) {
+        $providerPath = Get-RecoveryPowerShellStaticStringValue -Expression $expression
+        if ($null -eq $providerPath) {
             continue
         }
         foreach ($providerName in $ProviderNames) {
-            if ([string]$element.Value -match ('^{0}:[\\/]*' -f [regex]::Escape($providerName))) {
+            if ($providerPath -match ('^{0}:[\\/]*' -f [regex]::Escape($providerName))) {
                 return $true
             }
         }
@@ -542,7 +623,7 @@ function Get-RecoveryPowerShellShadowingNodes {
         }
         if (
             $commandName -ieq 'set-content' -and
-            (Test-RecoveryPowerShellCommandUsesProvider -Command $candidate -ProviderNames @('Alias', 'Function'))
+            (Test-RecoveryPowerShellCommandUsesProvider -Command $candidate -ProviderNames @('Alias', 'Function') -PathParameterNames @('Path', 'LiteralPath'))
         ) {
             $shadowingNodes.Add($candidate)
             continue
@@ -596,10 +677,11 @@ function Test-RecoveryPowerShellPhpExecutableMutationCommand {
     if ($commandName -ieq 'new-item') {
         return -not (Test-RecoveryPowerShellNewItemDirectory -Command $Command)
     }
-    if (@('get-item', 'clear-item', 'remove-item') -inotcontains $commandName) {
+    if (@('get-item', 'clear-item', 'remove-item', 'set-content') -inotcontains $commandName) {
         return $false
     }
-    return Test-RecoveryPowerShellCommandUsesProvider -Command $Command -ProviderNames @('Variable')
+    $pathParameterNames = if ($commandName -ieq 'set-content') { @('Path', 'LiteralPath') } else { @() }
+    return Test-RecoveryPowerShellCommandUsesProvider -Command $Command -ProviderNames @('Variable') -PathParameterNames $pathParameterNames
 }
 
 function Test-RecoveryPowerShellAssignmentTargetsValueMember {
@@ -917,6 +999,16 @@ function Test-RecoveryPowerShellEnclosingFailureCanContinue {
         if (
             $ancestor -is [System.Management.Automation.Language.TryStatementAst] -and
             $ancestor.CatchClauses.Count -gt 0
+        ) {
+            return $true
+        }
+        if (
+            $ancestor -is [System.Management.Automation.Language.TryStatementAst] -and
+            $null -ne $ancestor.Finally -and
+            @($ancestor.Finally.FindAll({
+                param($node)
+                $node -is [System.Management.Automation.Language.ExitStatementAst]
+            }, $true)).Count -gt 0
         ) {
             return $true
         }
