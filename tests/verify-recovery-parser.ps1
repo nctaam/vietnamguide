@@ -2128,6 +2128,95 @@ Add-ParserResult -Name 'PowerShell parser rejects statically assigned PhpExecuta
     }
 }
 
+Add-ParserResult -Name 'PowerShell parser rejects provider paths hidden by unreachable reassignment' -Test {
+    $cases = @(
+        [pscustomobject]@{
+            Name = 'Alias shadowing'
+            Lines = @(
+                '$Path = ''Alias:git''',
+                'if ($false) { $Path = ''C:\safe.txt'' }',
+                'Set-Content -Path $Path -Value ''cmd.exe''',
+                'git status',
+                'if ($LASTEXITCODE -ne 0) { throw ''failed'' }'
+            )
+            Code = 'PS_NATIVE_STATEMENT_AMBIGUOUS'
+        },
+        [pscustomobject]@{
+            Name = 'PhpExecutable mutation'
+            Lines = @(
+                '$PhpExecutable = ''php''',
+                '$Path = ''Variable:PhpExecutable''',
+                'if ($false) { $Path = ''C:\safe.txt'' }',
+                'Set-Content -Path $Path -Value git',
+                '& $PhpExecutable --version',
+                'if ($LASTEXITCODE -ne 0) { throw ''failed'' }'
+            )
+            Code = 'PS_DYNAMIC_NATIVE_UNSUPPORTED'
+        }
+    )
+
+    foreach ($case in $cases) {
+        $result = Invoke-TestRecoveryPowerShellFenceParser -Fence (New-TestRecoveryPowerShellFence -Body ([string]::Join("`n", $case.Lines)))
+
+        Assert-ParserEqual -Actual $result.IsValid -Expected $false -Message "$($case.Name) should fail closed."
+        Assert-ParserEqual -Actual @($result.Events).Count -Expected 0 -Message "$($case.Name) should not emit an event."
+        Assert-ParserDiagnosticCodes -Diagnostics @($result.Diagnostics) -Expected @($case.Code)
+    }
+}
+
+Add-ParserResult -Name 'PowerShell parser rejects unknown dynamic provider prefixes but preserves proven filesystem concatenation' -Test {
+    $unknownBody = [string]::Join("`n", @(
+        'function Get-Thing { ''Alias:'' }',
+        '$prefix = Get-Thing',
+        '$name = ''git''',
+        'Set-Content -Path ($prefix + $name) -Value ''cmd.exe''',
+        'git status',
+        'if ($LASTEXITCODE -ne 0) { throw ''failed'' }'
+    ))
+    $unknownResult = Invoke-TestRecoveryPowerShellFenceParser -Fence (New-TestRecoveryPowerShellFence -Body $unknownBody)
+
+    Assert-ParserEqual -Actual $unknownResult.IsValid -Expected $false -Message 'An unknown dynamic provider prefix should fail closed.'
+    Assert-ParserEqual -Actual @($unknownResult.Events).Count -Expected 0 -Message 'An unknown dynamic provider prefix should not emit an event.'
+    Assert-ParserDiagnosticCodes -Diagnostics @($unknownResult.Diagnostics) -Expected @('PS_NATIVE_STATEMENT_AMBIGUOUS')
+
+    $safeBody = [string]::Join("`n", @(
+        '$prefix = ''C:\safe''',
+        '$name = ''file.txt''',
+        'Set-Content -Path ($prefix + ''\'' + $name) -Value ''safe''',
+        'git status',
+        'if ($LASTEXITCODE -ne 0) { throw ''failed'' }'
+    ))
+    $safeResult = Invoke-TestRecoveryPowerShellFenceParser -Fence (New-TestRecoveryPowerShellFence -Body $safeBody)
+
+    Assert-ParserEqual -Actual $safeResult.IsValid -Expected $true -Message 'A statically proven filesystem concatenation should remain valid.'
+    Assert-RecoveryPowerShellEventCommands -Result $safeResult -Expected @('git')
+}
+
+Add-ParserResult -Name 'PowerShell parser rejects indirect provider-path variable rebinding' -Test {
+    $mutations = @(
+        'Set-Variable -Name Path -Value ''Alias:git''',
+        'Set-Item Variable:Path ''Alias:git''',
+        'Set-Variable -Name Path -Value (Get-Thing)',
+        'Set-Item Variable:Path -Value (Get-Thing)'
+    )
+
+    foreach ($mutation in $mutations) {
+        $body = [string]::Join("`n", @(
+            'function Get-Thing { ''Alias:git'' }',
+            '$Path = ''C:\safe.txt''',
+            $mutation,
+            'Set-Content -Path $Path -Value ''cmd.exe''',
+            'git status',
+            'if ($LASTEXITCODE -ne 0) { throw ''failed'' }'
+        ))
+        $result = Invoke-TestRecoveryPowerShellFenceParser -Fence (New-TestRecoveryPowerShellFence -Body $body)
+
+        Assert-ParserEqual -Actual $result.IsValid -Expected $false -Message "Indirect provider-path mutation '$mutation' should fail closed."
+        Assert-ParserEqual -Actual @($result.Events).Count -Expected 0 -Message "Indirect provider-path mutation '$mutation' should not emit an event."
+        Assert-ParserDiagnosticCodes -Diagnostics @($result.Diagnostics) -Expected @('PS_NATIVE_STATEMENT_AMBIGUOUS')
+    }
+}
+
 Add-ParserResult -Name 'PowerShell parser allows filesystem item mutations around PhpExecutable' -Test {
     $safeCases = @(
         [pscustomobject]@{

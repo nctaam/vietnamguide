@@ -448,7 +448,9 @@ function Get-RecoveryPowerShellStaticStringValues {
         [Parameter(Mandatory = $true)]
         [System.Management.Automation.Language.ScriptBlockAst]$Ast,
 
-        [int]$BeforeOffset = [int]::MaxValue
+        [int]$BeforeOffset = [int]::MaxValue,
+
+        [System.Management.Automation.Language.CommandAst]$Command = $null
     )
 
     $values = @{}
@@ -459,6 +461,9 @@ function Get-RecoveryPowerShellStaticStringValues {
     foreach ($assignment in $assignments) {
         if ($assignment.Extent.StartOffset -ge $BeforeOffset) {
             break
+        }
+        if ($null -ne $Command -and -not (Test-RecoveryPowerShellAssignmentDominatesCommand -Assignment $assignment -Command $Command)) {
+            continue
         }
         if ($assignment.Left -isnot [System.Management.Automation.Language.VariableExpressionAst]) {
             continue
@@ -511,8 +516,9 @@ function Test-RecoveryPowerShellExpressionUsesProvider {
         $Expression.Operator -eq [System.Management.Automation.Language.TokenKind]::Plus
     ) {
         $leftValue = Get-RecoveryPowerShellStaticStringValue -Expression $Expression.Left -KnownStringValues $KnownStringValues
-        if ($null -eq $leftValue) {
-            return Test-RecoveryPowerShellExpressionUsesProvider -Expression $Expression.Right -ProviderNames $ProviderNames -KnownStringValues $KnownStringValues
+        $rightValue = Get-RecoveryPowerShellStaticStringValue -Expression $Expression.Right -KnownStringValues $KnownStringValues
+        if ($null -eq $leftValue -or $null -eq $rightValue) {
+            return $true
         }
         foreach ($providerName in $ProviderNames) {
             if ($leftValue -match ($providerPattern -f [regex]::Escape($providerName))) {
@@ -620,6 +626,128 @@ function Test-RecoveryPowerShellCommandUsesProvider {
     }
 
     return $false
+}
+
+function Get-RecoveryPowerShellCommandParameterArgument {
+    param(
+        [Parameter(Mandatory = $true)]
+        [System.Management.Automation.Language.CommandAst]$Command,
+
+        [Parameter(Mandatory = $true)]
+        [string]$ParameterName
+    )
+
+    $elements = @($Command.CommandElements)
+    for ($index = 1; $index -lt $elements.Count; $index++) {
+        $element = $elements[$index]
+        if (
+            $element -isnot [System.Management.Automation.Language.CommandParameterAst] -or
+            $element.ParameterName -ine $ParameterName
+        ) {
+            continue
+        }
+        if ($null -ne $element.Argument) {
+            return $element.Argument
+        }
+        if (($index + 1) -lt $elements.Count -and $elements[$index + 1] -isnot [System.Management.Automation.Language.CommandParameterAst]) {
+            return $elements[$index + 1]
+        }
+    }
+    return $null
+}
+
+function Get-RecoveryPowerShellCommandPositionalArguments {
+    param(
+        [Parameter(Mandatory = $true)]
+        [System.Management.Automation.Language.CommandAst]$Command,
+
+        [string[]]$ArgumentParameterNames = @()
+    )
+
+    $elements = @($Command.CommandElements)
+    $consumedArgumentIndexes = [System.Collections.Generic.HashSet[int]]::new()
+    for ($index = 1; $index -lt ($elements.Count - 1); $index++) {
+        $element = $elements[$index]
+        if (
+            $element -is [System.Management.Automation.Language.CommandParameterAst] -and
+            $null -eq $element.Argument -and
+            $ArgumentParameterNames -icontains $element.ParameterName -and
+            $elements[$index + 1] -isnot [System.Management.Automation.Language.CommandParameterAst]
+        ) {
+            [void]$consumedArgumentIndexes.Add($index + 1)
+        }
+    }
+
+    return @(
+        for ($index = 1; $index -lt $elements.Count; $index++) {
+            if (
+                $elements[$index] -isnot [System.Management.Automation.Language.CommandParameterAst] -and
+                -not $consumedArgumentIndexes.Contains($index)
+            ) {
+                $elements[$index]
+            }
+        }
+    )
+}
+
+function Test-RecoveryPowerShellCommandMutatesProviderPathVariable {
+    param(
+        [Parameter(Mandatory = $true)]
+        [System.Management.Automation.Language.CommandAst]$Command,
+
+        [hashtable]$KnownStringValues = @{}
+    )
+
+    $commandName = Get-RecoveryPowerShellCanonicalCommandLeaf -LiteralCommandName $Command.GetCommandName()
+    $variableName = $null
+    $valueExpression = $null
+    if ($commandName -ieq 'set-variable') {
+        $positional = @(Get-RecoveryPowerShellCommandPositionalArguments -Command $Command -ArgumentParameterNames @('Name', 'Value'))
+        $nameExpression = Get-RecoveryPowerShellCommandParameterArgument -Command $Command -ParameterName 'Name'
+        if ($null -eq $nameExpression -and $positional.Count -gt 0) {
+            $nameExpression = $positional[0]
+        }
+        $valueExpression = Get-RecoveryPowerShellCommandParameterArgument -Command $Command -ParameterName 'Value'
+        if ($null -eq $valueExpression -and $positional.Count -gt 1) {
+            $valueExpression = $positional[1]
+        }
+        if ($null -ne $nameExpression) {
+            $variableName = Get-RecoveryPowerShellStaticStringValue -Expression $nameExpression -KnownStringValues $KnownStringValues
+        }
+    }
+    elseif (@('set-item', 'set-content') -icontains $commandName) {
+        $positional = @(Get-RecoveryPowerShellCommandPositionalArguments -Command $Command -ArgumentParameterNames @('Path', 'LiteralPath', 'Value'))
+        $pathExpression = Get-RecoveryPowerShellCommandParameterArgument -Command $Command -ParameterName 'Path'
+        if ($null -eq $pathExpression) {
+            $pathExpression = Get-RecoveryPowerShellCommandParameterArgument -Command $Command -ParameterName 'LiteralPath'
+        }
+        if ($null -eq $pathExpression -and $positional.Count -gt 0) {
+            $pathExpression = $positional[0]
+        }
+        $valueExpression = Get-RecoveryPowerShellCommandParameterArgument -Command $Command -ParameterName 'Value'
+        if ($null -eq $valueExpression -and $positional.Count -gt 1) {
+            $valueExpression = $positional[1]
+        }
+        if ($null -ne $pathExpression) {
+            $providerPath = Get-RecoveryPowerShellStaticStringValue -Expression $pathExpression -KnownStringValues $KnownStringValues
+            if ($providerPath -match '^(?i:Variable):[\\/]*(?<Name>[^\\/]+)$') {
+                $variableName = $Matches.Name
+            }
+        }
+    }
+
+    if (
+        [string]::IsNullOrWhiteSpace($variableName) -or
+        -not $KnownStringValues.ContainsKey($variableName) -or
+        $null -eq $valueExpression
+    ) {
+        return $false
+    }
+    $value = Get-RecoveryPowerShellStaticStringValue -Expression $valueExpression -KnownStringValues $KnownStringValues
+    if ($null -eq $value) {
+        return $true
+    }
+    return Test-RecoveryPowerShellExpressionUsesProvider -Expression $valueExpression -ProviderNames @('Alias', 'Function') -KnownStringValues $KnownStringValues
 }
 
 function Test-RecoveryPowerShellNewItemDirectory {
@@ -744,9 +872,13 @@ function Get-RecoveryPowerShellShadowingNodes {
         }
 
         $commandName = Get-RecoveryPowerShellCanonicalCommandLeaf -LiteralCommandName $candidate.GetCommandName()
-        $knownStringValues = Get-RecoveryPowerShellStaticStringValues -Ast $Ast -BeforeOffset $candidate.Extent.StartOffset
+        $knownStringValues = Get-RecoveryPowerShellStaticStringValues -Ast $Ast -BeforeOffset $candidate.Extent.StartOffset -Command $candidate
         $pathParameterNames = Get-RecoveryPowerShellProviderPathParameterNames -CommandName $commandName
         $argumentParameterNames = Get-RecoveryPowerShellProviderArgumentParameterNames -CommandName $commandName
+        if (Test-RecoveryPowerShellCommandMutatesProviderPathVariable -Command $candidate -KnownStringValues $knownStringValues) {
+            $shadowingNodes.Add($candidate)
+            continue
+        }
         if (@('set-alias', 'new-alias', 'import-alias') -icontains $commandName) {
             $shadowingNodes.Add($candidate)
             continue
@@ -1462,7 +1594,7 @@ function ConvertFrom-RecoveryPowerShellFence {
         (Test-RecoveryPowerShellOrdinaryVariablePath -VariablePath $elements[0].VariablePath)
     })
     $phpExecutableMutationCommands = @($commands | Where-Object {
-        $knownStringValues = Get-RecoveryPowerShellStaticStringValues -Ast $ast -BeforeOffset $_.Extent.StartOffset
+        $knownStringValues = Get-RecoveryPowerShellStaticStringValues -Ast $ast -BeforeOffset $_.Extent.StartOffset -Command $_
         Test-RecoveryPowerShellPhpExecutableMutationCommand -Command $_ -KnownStringValues $knownStringValues
     })
     $phpExecutableForeachVariables = @($ast.FindAll({
