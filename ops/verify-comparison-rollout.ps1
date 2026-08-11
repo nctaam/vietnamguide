@@ -1730,6 +1730,10 @@ function Invoke-ResolverFixtureValidation {
         $schemaErrors = @(Test-VgSchemaDocument -Document $schemaFixture.document -Schema $Schema -DefinitionName $schemaFixture.definition -DocumentId "fixture/$($schemaFixture.name)")
         Assert-ResolverTrue $schemaFixture.name ($schemaErrors.Count -eq 0) "valid fixture schema was rejected: $([string]::Join(' | ', $schemaErrors))"
     }
+    $canonicalDomainValidErrors = @(Test-VgSchemaDocument -Document 'publisher.example.vn' -Schema $Schema -DefinitionName 'canonicalDomain' -DocumentId 'fixture/canonical-domain-valid')
+    Assert-ResolverTrue 'canonical-domain-valid' ($canonicalDomainValidErrors.Count -eq 0) 'valid lowercase hostname was rejected'
+    $canonicalDomainInvalidErrors = @(Test-VgSchemaDocument -Document 'bad..example.vn' -Schema $Schema -DefinitionName 'canonicalDomain' -DocumentId 'fixture/canonical-domain-invalid')
+    Assert-ResolverTrue 'canonical-domain-invalid' (@($canonicalDomainInvalidErrors | Where-Object { $_.StartsWith('E_SCHEMA ', [System.StringComparison]::Ordinal) }).Count -gt 0) 'canonicalDomain accepted an empty hostname label'
 
     $unknownNested = Copy-FixtureObject $manifest
     $unknownNested.pages[0].axes[0]['unexpected'] = 'private'
@@ -1739,6 +1743,17 @@ function Invoke-ResolverFixtureValidation {
     [void]$missingNested.pages[0].outcomes[0].Remove('trade_off')
     $missingErrors = @(Test-VgSchemaDocument -Document $missingNested -Schema $Schema -DefinitionName 'fixtureManifest' -DocumentId 'fixture/missing-nested')
     Assert-ResolverTrue 'schema-missing-nested-key' (@($missingErrors | Where-Object { $_.StartsWith('E_SCHEMA ', [System.StringComparison]::Ordinal) }).Count -gt 0) 'missing nested key was accepted'
+
+    $moduleUniqueSchema = '{"type":"array","uniqueItems":true}' | ConvertFrom-Json
+    $moduleHugeA = [System.Numerics.BigInteger]::Parse('10000000000000000000000000000000000000000')
+    $moduleHugeB = [System.Numerics.BigInteger]::Parse('10000000000000000000000000000000000000001')
+    $moduleHugeDistinctErrors = @(Test-VgSchemaDocument -Document (ConvertTo-FixtureObject @($moduleHugeA, $moduleHugeB)) -Schema $moduleUniqueSchema -DocumentId 'fixture/module-big-integer-distinct')
+    Assert-ResolverTrue 'module-schema-big-integer-distinct' ($moduleHugeDistinctErrors.Count -eq 0) 'module schema equality collapsed distinct huge integers'
+    $moduleHugeDuplicateErrors = @(Test-VgSchemaDocument -Document (ConvertTo-FixtureObject @($moduleHugeA, $moduleHugeA)) -Schema $moduleUniqueSchema -DocumentId 'fixture/module-big-integer-duplicate')
+    Assert-ResolverTrue 'module-schema-big-integer-duplicate' (@($moduleHugeDuplicateErrors | Where-Object { $_.StartsWith('E_SCHEMA ', [System.StringComparison]::Ordinal) }).Count -gt 0) 'module schema equality accepted duplicate huge integers'
+    $moduleNumberSchema = '{"type":"number"}' | ConvertFrom-Json
+    $moduleNonfiniteErrors = @(Test-VgSchemaDocument -Document ([double]::PositiveInfinity) -Schema $moduleNumberSchema -DocumentId 'fixture/module-nonfinite')
+    Assert-ResolverTrue 'module-schema-nonfinite' (@($moduleNonfiniteErrors | Where-Object { $_.StartsWith('E_SCHEMA ', [System.StringComparison]::Ordinal) }).Count -gt 0) 'module schema accepted non-finite JSON number'
 
     $validResult = Get-PortfolioResult $manifest $sources $organizations $identities
     $expectedShape = @('Ok', 'Errors', 'Hashes', 'ResolvedBundles', 'CoverageMatrix', 'ImpactIndex', 'StageInventories')
@@ -1759,9 +1774,37 @@ function Invoke-ResolverFixtureValidation {
         Assert-ResolverTrue 'impact-index-ordinal-outcomes' (Test-OrdinalSequence @($impactEntry.outcome_ids) @($impactEntry.outcome_ids | Sort-Object -CaseSensitive)) "outcome_ids are not ordinal-sorted for $($impactEntry.source_id)"
     }
 
+    foreach ($freshnessFixture in @(
+        [ordered]@{ name = 'freshness-live-30-current'; source_index = 2; age_days = 30; expected_state = 'current' }
+        [ordered]@{ name = 'freshness-live-31-stale'; source_index = 2; age_days = 31; expected_state = 'stale' }
+        [ordered]@{ name = 'freshness-current-180-current'; source_index = 0; age_days = 180; expected_state = 'current' }
+        [ordered]@{ name = 'freshness-current-181-stale'; source_index = 0; age_days = 181; expected_state = 'stale' }
+        [ordered]@{ name = 'freshness-stable-730-current'; source_index = 7; age_days = 730; expected_state = 'current' }
+        [ordered]@{ name = 'freshness-stable-731-stale'; source_index = 7; age_days = 731; expected_state = 'stale' }
+    )) {
+        $boundarySources = Copy-FixtureObject $sources
+        $boundarySource = $boundarySources.sources[$freshnessFixture.source_index]
+        $boundarySource.checked_on = $EvaluationDate.Date.AddDays(-[int]$freshnessFixture.age_days).ToString('yyyy-MM-dd', [System.Globalization.CultureInfo]::InvariantCulture)
+        $boundaryResult = Get-PortfolioResult $manifest $boundarySources $organizations $identities
+        $boundaryRow = @($boundaryResult.CoverageMatrix | Where-Object { $_.source_id -ceq $boundarySource.source_id } | Select-Object -First 1)
+        Assert-ResolverTrue $freshnessFixture.name ($boundaryRow.Count -eq 1 -and $boundaryRow[0].freshness_state -ceq $freshnessFixture.expected_state) "expected $($freshnessFixture.expected_state) at age $($freshnessFixture.age_days) days"
+    }
+
     $publisherMismatchSources = Copy-FixtureObject $sources
     $publisherMismatchSources.sources[0].publisher_id = 'pub-beta-national'
     Assert-PortfolioError 'publisher-organization-bijection' $manifest $publisherMismatchSources $organizations $identities 'E_PUBLISHER'
+    $duplicateUrlSources = Copy-FixtureObject $sources
+    $duplicateUrlSources.sources[1].publisher_id = $duplicateUrlSources.sources[0].publisher_id
+    $duplicateUrlSources.sources[1].publisher_name = $duplicateUrlSources.sources[0].publisher_name
+    $duplicateUrlSources.sources[1].canonical_domain = $duplicateUrlSources.sources[0].canonical_domain
+    $duplicateUrlSources.sources[1].url = $duplicateUrlSources.sources[0].url
+    Assert-PortfolioError 'source-url-unique-across-source-ids' $manifest $duplicateUrlSources $organizations $identities 'E_SOURCE'
+    $titleMismatchSources = Copy-FixtureObject $sources
+    $titleMismatchSources.sources[0].expected_title = 'Different source title'
+    Assert-PortfolioError 'source-expected-title-contract' $manifest $titleMismatchSources $organizations $identities 'E_SOURCE'
+    $claimGroupMismatchSources = Copy-FixtureObject $sources
+    $claimGroupMismatchSources.sources[0].claim_groups = @('experience_fit')
+    Assert-PortfolioError 'source-claim-group-contract' $manifest $claimGroupMismatchSources $organizations $identities 'E_SOURCE'
 
     $aliasCollapsedSources = Copy-FixtureObject $sources
     foreach ($sourceItem in $aliasCollapsedSources.sources) {
@@ -1867,7 +1910,11 @@ function Invoke-ResolverFixtureValidation {
     Assert-PortfolioError 'rule-terminal-outcome' $badTerminal $sources $organizations $identities 'E_RULE'
     $badTradeOff = Copy-FixtureObject $manifest
     $badTradeOff.pages[0].traveler_lenses[1].trade_off = ''
+    [void]$badTradeOff.pages[0].traveler_lenses[1].Remove('reversal_condition')
     Assert-PortfolioError 'rule-material-trade-off' $badTradeOff $sources $organizations $identities 'E_RULE'
+    $duplicateLensId = Copy-FixtureObject $manifest
+    $duplicateLensId.pages[0].traveler_lenses[1].lens_id = $duplicateLensId.pages[0].traveler_lenses[0].lens_id
+    Assert-PortfolioError 'traveler-lens-id-unique' $duplicateLensId $sources $organizations $identities 'E_RULE'
     foreach ($scoringField in @('weight', 'priority', 'score')) {
         $scoredManifest = Copy-FixtureObject $manifest
         $scoredManifest.pages[0].rule_catalog[0][$scoringField] = 1
@@ -1883,12 +1930,50 @@ function Invoke-ResolverFixtureValidation {
     $stalePrimarySources = Copy-FixtureObject $sources
     $stalePrimarySources.sources[6].checked_on = '2020-01-01'
     Assert-PortfolioError 'current-primary-timing' $manifest $stalePrimarySources $organizations $identities 'E_FRESHNESS'
+    $backgroundPrimaryManifest = Copy-FixtureObject $manifest
+    $backgroundPrimarySources = Copy-FixtureObject $sources
+    $backgroundPrimaryManifest.pages[0].source_assignments[0].evidence_label = 'corroborating'
+    $backgroundPrimaryManifest.pages[0].source_assignments[3].evidence_label = 'primary'
+    $backgroundPrimaryManifest.pages[0].source_assignments[3].mappings[0].claim_id = 'claim-access'
+    $backgroundPrimaryManifest.pages[0].source_assignments[3].mappings[0].axis_id = 'axis-access'
+    $backgroundPrimaryManifest.pages[0].source_assignments[3].mappings[0].outcome_id = 'outcome-alpha'
+    $backgroundPrimarySources.sources[3].claim_groups = @('access_transport')
+    Assert-PortfolioError 'background-primary-does-not-cover-option' $backgroundPrimaryManifest $backgroundPrimarySources $organizations $identities 'E_FRESHNESS'
+    $expiredSettledSources = Copy-FixtureObject $sources
+    $expiredSettledSources.sources[7].checked_on = $EvaluationDate.Date.AddDays(-731).ToString('yyyy-MM-dd', [System.Globalization.CultureInfo]::InvariantCulture)
+    Assert-PortfolioError 'expired-settled-decisive-source' $manifest $expiredSettledSources $organizations $identities 'E_FRESHNESS'
+    $incompleteLiveCheckManifest = Copy-FixtureObject $manifest
+    $incompleteLiveCheckManifest.pages[0].source_assignments[7].evidence_label = 'live_check_required'
+    Assert-PortfolioError 'expired-settled-needs-live-check-outcome' $incompleteLiveCheckManifest $expiredSettledSources $organizations $identities 'E_FRESHNESS'
+    $completeLiveCheckManifest = Copy-FixtureObject $incompleteLiveCheckManifest
+    $completeLiveCheckManifest.pages[0].outcomes[0].live_check_required = $true
+    $completeLiveCheckResult = Get-PortfolioResult $completeLiveCheckManifest $expiredSettledSources $organizations $identities
+    Assert-ResolverTrue 'expired-settled-live-check-exception' (@($completeLiveCheckResult.Errors | Where-Object { $_.StartsWith('E_FRESHNESS ', [System.StringComparison]::Ordinal) }).Count -eq 0) "complete live-check exception failed: $([string]::Join(' | ', @($completeLiveCheckResult.Errors)))"
+    $visibleLiveCheckSource = @($completeLiveCheckResult.ResolvedBundles[$fixturePath].sources | Where-Object { $_.source_id -ceq 'source-beta-independent' })
+    Assert-ResolverTrue 'live-check-preserves-checked-date-and-url' ($visibleLiveCheckSource.Count -eq 1 -and $visibleLiveCheckSource[0].checked_on -ceq $expiredSettledSources.sources[7].checked_on -and $visibleLiveCheckSource[0].url -ceq $expiredSettledSources.sources[7].url -and $visibleLiveCheckSource[0].evidence_label -ceq 'live_check_required' -and $visibleLiveCheckSource[0].freshness_state -ceq 'live_check_required') 'resolved live-check source did not preserve its checked date, direct URL, and visible label'
+    $missingLiveCheckCover = Copy-FixtureObject $completeLiveCheckManifest
+    foreach ($assignmentIndex in @(0, 2, 5)) {
+        foreach ($mapping in $missingLiveCheckCover.pages[0].source_assignments[$assignmentIndex].mappings) {
+            if ($mapping.outcome_id -ceq 'outcome-alpha') { $mapping.outcome_id = 'outcome-beta' }
+        }
+    }
+    $missingLiveCheckCoverResult = Get-PortfolioResult $missingLiveCheckCover $expiredSettledSources $organizations $identities
+    Assert-ResolverTrue 'expired-settled-live-check-needs-current-cover' (@($missingLiveCheckCoverResult.Errors | Where-Object { $_.StartsWith("E_FRESHNESS $fixturePath outcome=outcome-alpha source=source-beta-independent`:", [System.StringComparison]::Ordinal) }).Count -gt 0) 'expired live-check source was accepted without current same-outcome coverage'
     $englishOnlySources = Copy-FixtureObject $sources
     foreach ($sourceItem in $englishOnlySources.sources) { $sourceItem.language = 'en' }
     Assert-PortfolioError 'locality-language-coverage' $manifest $englishOnlySources $organizations $identities 'E_LOCALITY'
     $decisiveBackground = Copy-FixtureObject $manifest
     $decisiveBackground.pages[0].source_assignments[3].decisive = $true
     Assert-PortfolioError 'background-source-not-decisive' $decisiveBackground $sources $organizations $identities 'E_BACKGROUND'
+    $backgroundIndependence = Copy-FixtureObject $manifest
+    $backgroundIndependence.pages[0].source_assignments[2].mappings[0].outcome_id = 'outcome-alpha'
+    Assert-PortfolioError 'background-source-does-not-settle-outcome' $backgroundIndependence $sources $organizations $identities 'E_SETTLED'
+    $duplicateRelatedRoute = Copy-FixtureObject $manifest
+    $duplicateRelatedRoute.pages[0].related_routes[1].path = $duplicateRelatedRoute.pages[0].related_routes[0].path
+    Assert-PortfolioError 'related-route-path-unique' $duplicateRelatedRoute $sources $organizations $identities 'E_ROUTE'
+    $selfRelatedRoute = Copy-FixtureObject $manifest
+    $selfRelatedRoute.pages[0].related_routes[0].path = $selfRelatedRoute.pages[0].path
+    Assert-PortfolioError 'related-route-rejects-self-link' $selfRelatedRoute $sources $organizations $identities 'E_ROUTE'
 
     $shuffledSources = Copy-FixtureObject $sources
     [array]::Reverse($shuffledSources.sources)
@@ -1906,6 +1991,7 @@ function Invoke-ResolverFixtureValidation {
 
     $productionResult = Get-PortfolioResult $manifest $sources $organizations $identities 'Production'
     Assert-ResolverTrue 'fixture-fails-production-portfolio-gates' (-not $productionResult.Ok -and @($productionResult.Errors | Where-Object { $_.StartsWith('E_PORTFOLIO ', [System.StringComparison]::Ordinal) }).Count -gt 0) 'fixture profile was accepted as a Production portfolio'
+    Assert-ResolverTrue 'fixture-rejected-by-production-profile' (@($productionResult.Errors | Where-Object { $_.StartsWith('E_PROFILE ', [System.StringComparison]::Ordinal) }).Count -gt 0) 'Production did not explicitly reject fixtureManifest profile data'
     $script:resolverFixtureChecks++
     try {
         [void](New-VgComparisonArtifact -Manifest $manifest -Sources $sources -Organizations $organizations -Identities $identities -Schema $Schema -Profile Production -AsOfDate $EvaluationDate)
