@@ -7,13 +7,13 @@
       "type": "string",
       "minLength": 1,
       "maxLength": 2000,
-      "pattern": "^(?!.*(?:[jJ][aA][vV][aA][sS][cC][rR][iI][pP][tT]:|[dD][aA][tT][aA]:[tT][eE][xX][tT]/[hH][tT][mM][lL]|[oO][nN][a-zA-Z]+\\s*=))[^\\u0000-\\u001F<>]*$"
+      "pattern": "^(?![\\s\\S]*[\\u0000-\\u001F\\u007F])(?![\\s\\S]*(?:[jJ][aA][vV][aA][sS][cC][rR][iI][pP][tT]:|[dD][aA][tT][aA]:[tT][eE][xX][tT]/[hH][tT][mM][lL]|[oO][nN][a-zA-Z]+\\s*=))[^<>]*$"
     },
     "httpUrl": {
       "type": "string",
       "minLength": 10,
       "maxLength": 2048,
-      "pattern": "^https?://[^\\u0000-\\u0020<>\"']+$"
+      "pattern": "^(?![\\s\\S]*[\\u0000-\\u0020\\u007F<>\"'])https?://[^\\u0000-\\u0020\\u007F<>\"']+$"
     },
     "stableId": {
       "type": "string",
@@ -345,7 +345,15 @@
         },
         "archetype": {
           "type": "string",
-          "enum": ["destination_pair", "day_trip_choice", "region_choice", "neighborhood_choice", "stay_length_choice"]
+          "enum": [
+            "competing_day_trips",
+            "city_or_heritage_base",
+            "coast_and_island",
+            "time_allocation",
+            "neighborhood",
+            "macro_region",
+            "attraction_and_landscape"
+          ]
         },
         "localities": {
           "type": "array",

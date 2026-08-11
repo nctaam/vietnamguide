@@ -96,6 +96,24 @@ $enumContracts = [ordered]@{
     changeReason = @('source_refresh', 'operational_change', 'decision_change', 'route_change', 'correction')
 }
 
+$publicEnumContracts = [ordered]@{
+    sourceClass = $enumContracts.sourceClass
+    claimGroup = $enumContracts.claimGroup
+    evidenceLabel = $enumContracts.evidenceLabel
+    freshnessTier = $enumContracts.freshnessTier
+    ruleKind = $enumContracts.ruleKind
+    routeGroup = $enumContracts.routeGroup
+    changeReason = $enumContracts.changeReason
+    activationStage = @('baseline', 'canary', 'full')
+    approvalRole = @('author', 'reviewer')
+    terminalOutcome = @('option', 'no_clear_winner', 'combine_or_sequence')
+    archetype = @('competing_day_trips', 'city_or_heritage_base', 'coast_and_island', 'time_allocation', 'neighborhood', 'macro_region', 'attraction_and_landscape')
+    requiredFeature = @('decision_frame', 'evidence_labels', 'source_checked_dates', 'related_routes', 'update_log', 'editorial_byline')
+    sourceProbeOutcome = @('available', 'changed', 'unavailable', 'manual_review')
+    impactReportOutcome = @('pass', 'fail', 'manual_review')
+    schemaVersion = @('v1', 'v2')
+}
+
 function Get-RepoRoot {
     if ([string]::IsNullOrWhiteSpace($RepoRootOverride)) {
         return (Split-Path -Parent $PSScriptRoot)
@@ -456,6 +474,25 @@ function Test-WithinBundleSizeLimit {
     return ((Get-SerializedUtf8Size $Value) -le 65536)
 }
 
+function Get-ResolvedBundleV2ContractErrors {
+    param(
+        [Parameter(Mandatory = $true)]$Value,
+        [Parameter(Mandatory = $true)]$Schema,
+        [Parameter(Mandatory = $true)][string]$Path
+    )
+
+    $contractErrors = @()
+    $bundleSchema = Get-Definition $Schema 'resolvedBundleV2'
+    foreach ($schemaError in @(Test-SchemaNode $Value $bundleSchema $Schema '$')) {
+        $contractErrors += "E_SCHEMA ${Path}: $schemaError"
+    }
+    $serializedSize = Get-SerializedUtf8Size $Value
+    if ($serializedSize -gt 65536) {
+        $contractErrors += "E_SIZE ${Path}: serialized resolvedBundleV2 is $serializedSize UTF-8 bytes; maximum is 65536"
+    }
+    return @($contractErrors)
+}
+
 function New-PositiveBundle {
     $optionA = [ordered]@{ option_id = 'option-a'; label = 'Option A'; summary = 'Best for direct access and a compact visit.' }
     $optionB = [ordered]@{ option_id = 'option-b'; label = 'Option B'; summary = 'Best for a slower pace and broader context.' }
@@ -518,7 +555,7 @@ function New-PositiveBundle {
             change_reason = 'source_refresh'
             affected_public_labels = @('Decision frame', 'Sources')
         }
-        archetype = 'day_trip_choice'
+        archetype = 'competing_day_trips'
         localities = @('ho-chi-minh-city', 'mekong-delta')
         options = @($optionA, $optionB)
         primary_decision = [ordered]@{
@@ -557,12 +594,243 @@ function New-PositiveBundle {
     }))
 }
 
+function New-SizedBundleFixture {
+    param([Parameter(Mandatory = $true)][int]$TargetBytes)
+
+    $bundle = New-PositiveBundle
+    $options = @($bundle['options'])
+    foreach ($optionNumber in 3..4) {
+        $options += [ordered]@{
+            option_id = "option-$optionNumber"
+            label = "Option $optionNumber"
+            summary = "Alternative option $optionNumber for the comparison."
+        }
+    }
+    $bundle['options'] = ConvertTo-FixtureObject $options
+
+    $rules = @($bundle['primary_decision']['rules'])
+    foreach ($ruleNumber in 2..8) {
+        $rules += [ordered]@{
+            order = $ruleNumber
+            kind = if ($ruleNumber -eq 8) { 'tie_breaker' } else { 'preference' }
+            condition = "Qualitative condition $ruleNumber for this decision path."
+            outcome = "Qualitative outcome $ruleNumber without scoring or hidden weights."
+        }
+    }
+    $bundle['primary_decision']['rules'] = ConvertTo-FixtureObject $rules
+
+    $bundle['evidence_moat'] = ConvertTo-FixtureObject @(
+        'Official access evidence.'
+        'Operational timing evidence.'
+        'Independent corroboration evidence.'
+        'Current-condition evidence.'
+    )
+
+    $axes = @()
+    foreach ($axisNumber in 1..6) {
+        $assessments = @()
+        foreach ($optionNumber in 1..4) {
+            $optionId = if ($optionNumber -le 2) { "option-$([char](96 + $optionNumber))" } else { "option-$optionNumber" }
+            $assessments += [ordered]@{ option_id = $optionId; outcome = "Axis $axisNumber outcome for option $optionNumber." }
+        }
+        $axes += [ordered]@{
+            axis_id = "axis-$axisNumber"
+            label = "Decision axis $axisNumber"
+            explanation = "Checked explanation for decision axis $axisNumber."
+            assessments = $assessments
+            source_ids = @("source-$axisNumber")
+        }
+    }
+    $bundle['axes'] = ConvertTo-FixtureObject $axes
+
+    $lenses = @()
+    foreach ($lensNumber in 1..5) {
+        $lensRules = @()
+        foreach ($ruleNumber in 1..5) {
+            $lensRules += [ordered]@{
+                order = $ruleNumber
+                kind = if ($ruleNumber -eq 1) { 'hard_constraint' } elseif ($ruleNumber -eq 5) { 'tie_breaker' } else { 'preference' }
+                condition = "Lens $lensNumber condition $ruleNumber."
+                outcome = "Lens $lensNumber qualitative outcome $ruleNumber."
+            }
+        }
+        $lenses += [ordered]@{
+            lens_id = "lens-$lensNumber"
+            traveler = "Traveler profile $lensNumber"
+            outcome = "Outcome for traveler profile $lensNumber."
+            rule_path = $lensRules
+        }
+    }
+    $bundle['traveler_lenses'] = ConvertTo-FixtureObject $lenses
+
+    $sources = @($bundle['sources'])
+    foreach ($sourceNumber in 7..10) {
+        $sources += [ordered]@{
+            source_id = "source-$sourceNumber"
+            evidence_label = 'corroborating'
+            checked_on = '2026-08-03'
+            claim_groups = @('experience_fit')
+        }
+    }
+    $bundle['sources'] = ConvertTo-FixtureObject $sources
+
+    $routes = @($bundle['related_routes'])
+    $routes += [ordered]@{ path = 'destinations/ninh-binh-travel-guide'; label = 'Ninh Binh guide'; route_group = 'deepen_place' }
+    $routes += [ordered]@{ path = 'itineraries/14-days-in-vietnam'; label = 'Fourteen day route'; route_group = 'build_route' }
+    $bundle['related_routes'] = ConvertTo-FixtureObject $routes
+
+    $updates = @($bundle['update_log'])
+    foreach ($updateNumber in 2..12) {
+        $updates += [ordered]@{
+            date = '2026-08-03'
+            summary = "Public update summary $updateNumber."
+            change_reason = 'source_refresh'
+            affected_public_labels = @("Decision frame $updateNumber", "Sources $updateNumber")
+        }
+    }
+    $bundle['update_log'] = ConvertTo-FixtureObject $updates
+    $bundle['module_requirements']['required_features'] = ConvertTo-FixtureObject $publicEnumContracts.requiredFeature
+
+    $slots = New-Object System.Collections.ArrayList
+    function Add-PaddingSlot {
+        param($Container, $Key, [int]$MaxLength)
+        [void]$slots.Add([ordered]@{ container = $Container; key = $Key; max_length = $MaxLength })
+    }
+
+    Add-PaddingSlot $bundle['editorial'] 'update_summary' 240
+    foreach ($option in $bundle['options']) {
+        Add-PaddingSlot $option 'label' 48
+        Add-PaddingSlot $option 'summary' 180
+    }
+    Add-PaddingSlot $bundle['primary_decision'] 'summary' 240
+    foreach ($ruleItem in $bundle['primary_decision']['rules']) {
+        Add-PaddingSlot $ruleItem 'condition' 140
+        Add-PaddingSlot $ruleItem 'outcome' 160
+    }
+    Add-PaddingSlot $bundle 'field_note' 320
+    for ($index = 0; $index -lt $bundle['evidence_moat'].Count; $index++) {
+        Add-PaddingSlot $bundle['evidence_moat'] $index 240
+    }
+    foreach ($axis in $bundle['axes']) {
+        Add-PaddingSlot $axis 'label' 48
+        Add-PaddingSlot $axis 'explanation' 180
+        foreach ($assessment in $axis['assessments']) {
+            Add-PaddingSlot $assessment 'outcome' 160
+        }
+    }
+    foreach ($lens in $bundle['traveler_lenses']) {
+        Add-PaddingSlot $lens 'traveler' 80
+        Add-PaddingSlot $lens 'outcome' 220
+        foreach ($ruleItem in $lens['rule_path']) {
+            Add-PaddingSlot $ruleItem 'condition' 140
+            Add-PaddingSlot $ruleItem 'outcome' 160
+        }
+    }
+    foreach ($route in $bundle['related_routes']) {
+        Add-PaddingSlot $route 'label' 72
+    }
+    foreach ($update in $bundle['update_log']) {
+        Add-PaddingSlot $update 'summary' 240
+    }
+    foreach ($headingName in @('decision_heading', 'source_heading', 'route_heading', 'update_heading')) {
+        Add-PaddingSlot $bundle['render_contract'] $headingName 72
+    }
+
+    $remainingBytes = $TargetBytes - (Get-SerializedUtf8Size $bundle)
+    if ($remainingBytes -lt 0) {
+        throw "target size $TargetBytes is smaller than the expanded fixture"
+    }
+    $remainder = $remainingBytes % 3
+    if ($remainder -gt 0) {
+        $firstSlot = $slots[0]
+        $suffix = if ($remainder -eq 1) { 'x' } else { [string][char]0x00E9 }
+        $firstSlot.container[$firstSlot.key] = ([string]$firstSlot.container[$firstSlot.key]) + $suffix
+        $remainingBytes -= $remainder
+    }
+    $unicodeCharacters = [int]($remainingBytes / 3)
+    foreach ($slot in $slots) {
+        if ($unicodeCharacters -le 0) {
+            break
+        }
+        $currentValue = [string]$slot.container[$slot.key]
+        $availableCharacters = [int]$slot.max_length - $currentValue.Length
+        $charactersToAdd = [Math]::Min($unicodeCharacters, $availableCharacters)
+        if ($charactersToAdd -gt 0) {
+            $slot.container[$slot.key] = $currentValue + ([string][char]0x1ED9 * $charactersToAdd)
+            $unicodeCharacters -= $charactersToAdd
+        }
+    }
+    if ($unicodeCharacters -ne 0 -or (Get-SerializedUtf8Size $bundle) -ne $TargetBytes) {
+        throw "could not construct a schema-valid bundle at exactly $TargetBytes UTF-8 bytes"
+    }
+    return $bundle
+}
+
+function Get-PublicEnumSchemaNodes {
+    param([Parameter(Mandatory = $true)]$Schema)
+
+    $bundleProperties = Get-Property (Get-Definition $Schema 'resolvedBundleV2') 'properties'
+    $manifestProperties = Get-Property (Get-Definition $Schema 'manifest') 'properties'
+    $approvalProperties = Get-Property (Get-Definition $Schema 'approvalArtifact') 'properties'
+    $primaryDecisionProperties = Get-Property (Get-Property $bundleProperties 'primary_decision') 'properties'
+    $moduleProperties = Get-Property (Get-Property $bundleProperties 'module_requirements') 'properties'
+    $approvalItemProperties = Get-Property (Get-Property (Get-Property $approvalProperties 'approvals') 'items') 'properties'
+    $sourceProbeProperties = Get-Property (Get-Definition $Schema 'sourceProbe') 'properties'
+    $impactReportProperties = Get-Property (Get-Definition $Schema 'impactReport') 'properties'
+    $backupProperties = Get-Property (Get-Definition $Schema 'backup') 'properties'
+
+    return [ordered]@{
+        sourceClass = Get-Definition $Schema 'sourceClass'
+        claimGroup = Get-Definition $Schema 'claimGroup'
+        evidenceLabel = Get-Definition $Schema 'evidenceLabel'
+        freshnessTier = Get-Definition $Schema 'freshnessTier'
+        ruleKind = Get-Definition $Schema 'ruleKind'
+        routeGroup = Get-Definition $Schema 'routeGroup'
+        changeReason = Get-Definition $Schema 'changeReason'
+        activationStage = Get-Property $manifestProperties 'activation_stage'
+        approvalRole = Get-Property $approvalItemProperties 'role'
+        terminalOutcome = Get-Property $primaryDecisionProperties 'outcome'
+        archetype = Get-Property $bundleProperties 'archetype'
+        requiredFeature = Get-Property (Get-Property $moduleProperties 'required_features') 'items'
+        sourceProbeOutcome = Get-Property $sourceProbeProperties 'outcome'
+        impactReportOutcome = Get-Property $impactReportProperties 'outcome'
+        schemaVersion = Get-Property $backupProperties 'schema_version'
+    }
+}
+
+function Get-SchemaEnumInventory {
+    param([Parameter(Mandatory = $true)]$Schema)
+
+    $inventory = New-Object System.Collections.ArrayList
+    function Visit-SchemaNode {
+        param($Node, [string]$Path)
+        if (Test-IsObject $Node) {
+            if (Test-HasProperty $Node 'enum') {
+                $enumValues = Get-Property $Node 'enum'
+                [void]$inventory.Add([ordered]@{
+                    path = $Path
+                    key = [string]::Join([char]0x1F, @($enumValues))
+                })
+            }
+            foreach ($propertyName in @(Get-ObjectPropertyNames $Node)) {
+                Visit-SchemaNode (Get-Property $Node $propertyName) "$Path/$propertyName"
+            }
+        } elseif (Test-IsArray $Node) {
+            for ($index = 0; $index -lt $Node.Count; $index++) {
+                Visit-SchemaNode $Node[$index] "$Path/$index"
+            }
+        }
+    }
+
+    Visit-SchemaNode $Schema '$'
+    return $inventory.ToArray()
+}
+
 function Invoke-FixtureValidation {
     param([Parameter(Mandatory = $true)]$Schema)
 
     $script:fixtureErrors = @()
     $script:fixtureChecks = 0
-    $bundleSchema = Get-Definition $Schema 'resolvedBundleV2'
 
     function Assert-Accepted {
         param([string]$Name, $Value, $SchemaNode)
@@ -582,44 +850,75 @@ function Invoke-FixtureValidation {
         }
     }
 
+    function Assert-BundleAccepted {
+        param([string]$Name, $Value)
+        $script:fixtureChecks++
+        $validationErrors = @(Get-ResolvedBundleV2ContractErrors $Value $Schema "fixture/$Name")
+        if ($validationErrors.Count -gt 0) {
+            $script:fixtureErrors += $validationErrors[0]
+        }
+    }
+
+    function Assert-BundleRejected {
+        param([string]$Name, $Value, [string]$ExpectedCode = '')
+        $script:fixtureChecks++
+        $validationErrors = @(Get-ResolvedBundleV2ContractErrors $Value $Schema "fixture/$Name")
+        if ($validationErrors.Count -eq 0) {
+            $script:fixtureErrors += "E_SCHEMA fixture/${Name}: expected rejection but value was accepted"
+            return
+        }
+        if (-not [string]::IsNullOrWhiteSpace($ExpectedCode)) {
+            $matchingErrors = @($validationErrors | Where-Object { $_.StartsWith("$ExpectedCode ", [System.StringComparison]::Ordinal) })
+            if ($matchingErrors.Count -eq 0) {
+                $script:fixtureErrors += "E_SCHEMA fixture/${Name}: expected $ExpectedCode rejection"
+            }
+            if ($ExpectedCode -ceq 'E_SIZE') {
+                $schemaErrors = @($validationErrors | Where-Object { $_.StartsWith('E_SCHEMA ', [System.StringComparison]::Ordinal) })
+                if ($schemaErrors.Count -gt 0) {
+                    $script:fixtureErrors += "E_SCHEMA fixture/${Name}: oversized regression bundle must remain schema-valid"
+                }
+            }
+        }
+    }
+
     $positiveBundle = New-PositiveBundle
-    Assert-Accepted 'resolved-bundle-v2-positive' $positiveBundle $bundleSchema
+    Assert-BundleAccepted 'resolved-bundle-v2-positive' $positiveBundle
 
     $missingRequired = Copy-FixtureObject $positiveBundle
     [void]$missingRequired.Remove('editorial')
-    Assert-Rejected 'required-key' $missingRequired $bundleSchema
+    Assert-BundleRejected 'required-key' $missingRequired
 
     $wrongScalar = Copy-FixtureObject $positiveBundle
     $wrongScalar.post_id = '279'
-    Assert-Rejected 'scalar-type' $wrongScalar $bundleSchema
+    Assert-BundleRejected 'scalar-type' $wrongScalar
 
     $tooFewAxes = Copy-FixtureObject $positiveBundle
     $tooFewAxes.axes = @($tooFewAxes.axes | Select-Object -First 2)
-    Assert-Rejected 'axis-count' $tooFewAxes $bundleSchema
+    Assert-BundleRejected 'axis-count' $tooFewAxes
 
     $longAxisLabel = Copy-FixtureObject $positiveBundle
     $longAxisLabel.axes[0].label = ('x' * 49)
-    Assert-Rejected 'axis-label-length' $longAxisLabel $bundleSchema
+    Assert-BundleRejected 'axis-label-length' $longAxisLabel
 
     $longAxisExplanation = Copy-FixtureObject $positiveBundle
     $longAxisExplanation.axes[0].explanation = ('x' * 181)
-    Assert-Rejected 'axis-explanation-length' $longAxisExplanation $bundleSchema
+    Assert-BundleRejected 'axis-explanation-length' $longAxisExplanation
 
     $longDecision = Copy-FixtureObject $positiveBundle
     $longDecision.primary_decision.summary = ('x' * 241)
-    Assert-Rejected 'primary-decision-length' $longDecision $bundleSchema
+    Assert-BundleRejected 'primary-decision-length' $longDecision
 
     $longLensOutcome = Copy-FixtureObject $positiveBundle
     $longLensOutcome.traveler_lenses[0].outcome = ('x' * 221)
-    Assert-Rejected 'traveler-lens-length' $longLensOutcome $bundleSchema
+    Assert-BundleRejected 'traveler-lens-length' $longLensOutcome
 
     $tooFewSources = Copy-FixtureObject $positiveBundle
     $tooFewSources.sources = @($tooFewSources.sources | Select-Object -First 5)
-    Assert-Rejected 'source-count' $tooFewSources $bundleSchema
+    Assert-BundleRejected 'source-count' $tooFewSources
 
     $tooFewRoutes = Copy-FixtureObject $positiveBundle
     $tooFewRoutes.related_routes = @($tooFewRoutes.related_routes | Select-Object -First 5)
-    Assert-Rejected 'route-count' $tooFewRoutes $bundleSchema
+    Assert-BundleRejected 'route-count' $tooFewRoutes
 
     $missingRouteGroup = Copy-FixtureObject $positiveBundle
     foreach ($route in $missingRouteGroup.related_routes) {
@@ -627,27 +926,66 @@ function Invoke-FixtureValidation {
             $route.route_group = 'build_route'
         }
     }
-    Assert-Rejected 'route-group-coverage' $missingRouteGroup $bundleSchema
+    Assert-BundleRejected 'route-group-coverage' $missingRouteGroup
 
     $unknownKey = Copy-FixtureObject $positiveBundle
     $unknownKey['reviewer_notes'] = 'private'
-    Assert-Rejected 'unknown-key' $unknownKey $bundleSchema
+    Assert-BundleRejected 'unknown-key' $unknownKey
 
     $rawHtml = Copy-FixtureObject $positiveBundle
     $rawHtml.field_note = '<script>alert(1)</script>'
-    Assert-Rejected 'raw-html' $rawHtml $bundleSchema
+    Assert-BundleRejected 'raw-html' $rawHtml
 
     $eventHandler = Copy-FixtureObject $positiveBundle
     $eventHandler.field_note = 'onclick=alert(1)'
-    Assert-Rejected 'event-handler-text' $eventHandler $bundleSchema
+    Assert-BundleRejected 'event-handler-text' $eventHandler
 
     $controlCharacter = Copy-FixtureObject $positiveBundle
     $controlCharacter.field_note = "unsafe$([char]1)text"
-    Assert-Rejected 'control-character' $controlCharacter $bundleSchema
+    Assert-BundleRejected 'control-character' $controlCharacter
+
+    foreach ($unsafeTextFixture in ([ordered]@{
+        'safe-text-trailing-lf' = "unsafe`n"
+        'safe-text-trailing-cr' = "unsafe`r"
+        'safe-text-embedded-newline' = "unsafe`ntext"
+        'safe-text-delete-control' = "unsafe$([char]0x7F)text"
+    }).GetEnumerator()) {
+        Assert-Rejected $unsafeTextFixture.Key $unsafeTextFixture.Value (Get-Definition $Schema 'safeText')
+    }
+    $vietnameseText = [string]::Concat('Th', [char]0x00F4, 'ng tin ', [char]0x0111, [char]0x00E3, ' ki', [char]0x1EC3, 'm ch', [char]0x1EE9, 'ng')
+    Assert-Accepted 'safe-text-vietnamese-unicode' $vietnameseText (Get-Definition $Schema 'safeText')
 
     Assert-Accepted 'safe-http-url' 'https://example.org/source?id=1' (Get-Definition $Schema 'httpUrl')
+    Assert-Accepted 'safe-http-url-http' 'http://example.org/source' (Get-Definition $Schema 'httpUrl')
     Assert-Rejected 'unsafe-javascript-url' 'javascript:alert(1)' (Get-Definition $Schema 'httpUrl')
     Assert-Rejected 'unsafe-data-url' 'data:text/html,bad' (Get-Definition $Schema 'httpUrl')
+    Assert-Rejected 'unsafe-url-trailing-lf' "https://example.org/source`n" (Get-Definition $Schema 'httpUrl')
+    Assert-Rejected 'unsafe-url-trailing-cr' "https://example.org/source`r" (Get-Definition $Schema 'httpUrl')
+    Assert-Rejected 'unsafe-url-delete-control' "https://example.org/source$([char]0x7F)" (Get-Definition $Schema 'httpUrl')
+
+    $publicEnumSchemaNodes = Get-PublicEnumSchemaNodes $Schema
+    foreach ($enumFamily in $publicEnumContracts.Keys) {
+        $enumSchemaNode = $publicEnumSchemaNodes[$enumFamily]
+        $declaredValues = Get-Property $enumSchemaNode 'enum'
+        $script:fixtureChecks++
+        if (-not (Test-OrdinalSequence $declaredValues $publicEnumContracts[$enumFamily])) {
+            $script:fixtureErrors += "E_SCHEMA fixture/enum-inventory-${enumFamily}: schema enum does not match the approved ordinal contract"
+        }
+        foreach ($allowedValue in $publicEnumContracts[$enumFamily]) {
+            Assert-Accepted "enum-${enumFamily}-${allowedValue}" $allowedValue $enumSchemaNode
+        }
+        Assert-Rejected "enum-${enumFamily}-unknown" '__unknown__' $enumSchemaNode
+    }
+    $knownEnumKeys = @{}
+    foreach ($enumFamily in $publicEnumContracts.Keys) {
+        $knownEnumKeys[[string]::Join([char]0x1F, @($publicEnumContracts[$enumFamily]))] = $true
+    }
+    foreach ($declaredEnum in @(Get-SchemaEnumInventory $Schema)) {
+        $script:fixtureChecks++
+        if (-not $knownEnumKeys.ContainsKey($declaredEnum.key)) {
+            $script:fixtureErrors += "E_SCHEMA fixture/enum-inventory-untracked: public enum at $($declaredEnum.path) has no approved fixture contract"
+        }
+    }
 
     foreach ($enumName in $enumContracts.Keys) {
         foreach ($allowedEnumValue in $enumContracts[$enumName]) {
@@ -716,26 +1054,29 @@ function Invoke-FixtureValidation {
     foreach ($terminalOutcome in @('option', 'no_clear_winner', 'combine_or_sequence')) {
         $terminalFixture = Copy-FixtureObject $positiveBundle
         $terminalFixture.primary_decision.outcome = $terminalOutcome
-        Assert-Accepted "terminal-outcome-$terminalOutcome" $terminalFixture $bundleSchema
+        Assert-BundleAccepted "terminal-outcome-$terminalOutcome" $terminalFixture
     }
     $badTerminal = Copy-FixtureObject $positiveBundle
     $badTerminal.primary_decision.outcome = 'weighted_score'
-    Assert-Rejected 'terminal-outcome-enum' $badTerminal $bundleSchema
+    Assert-BundleRejected 'terminal-outcome-enum' $badTerminal
 
     $visibleLimit = Copy-FixtureObject $positiveBundle
     $visibleLimit.render_contract.max_visible_characters = 1801
-    Assert-Rejected 'visible-decision-frame-limit' $visibleLimit $bundleSchema
+    Assert-BundleRejected 'visible-decision-frame-limit' $visibleLimit
 
-    $boundaryString = ('x' * 65534)
+    $boundaryBundle = New-SizedBundleFixture 65536
+    Assert-BundleAccepted 'resolved-bundle-v2-size-boundary' $boundaryBundle
     $script:fixtureChecks++
-    if ((Get-SerializedUtf8Size $boundaryString) -ne 65536 -or -not (Test-WithinBundleSizeLimit $boundaryString)) {
-        $script:fixtureErrors += 'E_SIZE fixture/utf8-boundary: 65,536-byte serialized value was not accepted'
+    if ((Get-SerializedUtf8Size $boundaryBundle) -ne 65536) {
+        $script:fixtureErrors += 'E_SIZE fixture/resolved-bundle-v2-size-boundary: bundle is not exactly 65,536 UTF-8 bytes'
     }
-    $oversizedString = ('x' * 65535)
+    $oversizedBundle = New-SizedBundleFixture 65537
+    Assert-BundleRejected 'resolved-bundle-v2-size-oversized' $oversizedBundle 'E_SIZE'
     $script:fixtureChecks++
-    if ((Get-SerializedUtf8Size $oversizedString) -ne 65537 -or (Test-WithinBundleSizeLimit $oversizedString)) {
-        $script:fixtureErrors += 'E_SIZE fixture/utf8-oversized: value above 65,536 UTF-8 bytes was not rejected'
+    if ((Get-SerializedUtf8Size $oversizedBundle) -ne 65537) {
+        $script:fixtureErrors += 'E_SIZE fixture/resolved-bundle-v2-size-oversized: bundle is not exactly 65,537 UTF-8 bytes'
     }
+
     $script:fixtureChecks++
     if (-not (Test-WithinBundleSizeLimit $positiveBundle)) {
         $script:fixtureErrors += 'E_SIZE fixture/resolved-bundle-v2-positive: valid fixture exceeds 65,536 UTF-8 bytes'
