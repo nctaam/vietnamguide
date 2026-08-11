@@ -270,7 +270,7 @@
         "primary_outcome_id": { "$ref": "#/$defs/stableId" },
         "rule_catalog": { "type": "array", "minItems": 1, "maxItems": 24, "uniqueItems": true, "items": { "$ref": "#/$defs/ruleDefinition" } },
         "traveler_lenses": {
-          "type": "array", "minItems": 3, "maxItems": 7, "uniqueItems": true,
+          "type": "array", "minItems": 3, "maxItems": 5, "uniqueItems": true,
           "items": {
             "type": "object", "additionalProperties": false,
             "required": ["lens_id", "traveler", "context_tags", "rule_path", "outcome_id", "trade_off"],

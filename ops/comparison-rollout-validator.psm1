@@ -677,7 +677,8 @@ function Invoke-VgComparisonPortfolio {
         }
         $publisherRecord = $publisherById[$publisherId]
         if ([string](Get-VgProperty $publisherRecord 'organization_id') -cne $organizationId) { Add-VgError $errors 'E_PUBLISHER' $sourceId 'source publisher belongs to a different controlling organization' }
-        if (-not $domainToPublisher.ContainsKey($domain) -or [string](Get-VgProperty $domainToPublisher[$domain] 'publisher_id') -cne $publisherId) { Add-VgError $errors 'E_PUBLISHER' $sourceId 'canonical domain does not map bijectively to publisher_id' }
+        $publisherCanonicalDomain = ([string](Get-VgProperty $publisherRecord 'canonical_domain')).ToLowerInvariant()
+        if ($domain -cne $publisherCanonicalDomain) { Add-VgError $errors 'E_PUBLISHER' $sourceId 'source canonical_domain does not match the publisher registry canonical_domain' }
         $expectedName = [string](Get-VgProperty (Get-VgProperty $publisherRecord 'publisher') 'publisher_name')
         if ([string](Get-VgProperty $source 'publisher_name') -cne $expectedName) { Add-VgError $errors 'E_PUBLISHER' $sourceId 'publisher_name does not match the organization registry' }
         if ($organizationById.ContainsKey($organizationId) -and @((Get-VgProperty $organizationById[$organizationId] 'source_classes')) -cnotcontains [string](Get-VgProperty $source 'source_class')) { Add-VgError $errors 'E_SOURCE' $sourceId 'source_class is not authorized by the controlling organization' }
@@ -719,7 +720,16 @@ function Invoke-VgComparisonPortfolio {
     $vietnamesePageCount = 0
     $nationalPublisherPages = New-VgStringObjectMap
     $nationalDomainPages = New-VgStringObjectMap
+    $geographicGroupMembers = [ordered]@{
+        northern = @('hanoi', 'ninh_binh', 'trang_an', 'tam_coc', 'old_quarter', 'french_quarter', 'west_lake')
+        central = @('da_nang', 'hoi_an', 'quang_nam', 'hue')
+        'south-central-coast' = @('binh_thuan', 'mui_ne', 'khanh_hoa', 'nha_trang')
+        southern = @('ho_chi_minh_city', 'cu_chi', 'mekong_delta')
+        island = @('phu_quoc', 'kien_giang')
+    }
     $geographicPublishers = New-VgStringObjectMap
+    foreach ($groupName in $geographicGroupMembers.Keys) { $geographicPublishers.Add([string]$groupName, (New-VgStringSet)) }
+    $nationwideRegions = New-VgStringSet
     $pageByPath = New-VgStringObjectMap
 
     foreach ($page in $pages) {
@@ -788,6 +798,7 @@ function Invoke-VgComparisonPortfolio {
         $supportRows = New-Object System.Collections.ArrayList
         $coverageKeys = New-VgStringSet
         $pageHasVietnameseLocal = $false
+        $assignedEvidenceLocalities = New-VgStringSet
 
         foreach ($assignment in $assignments) {
             $sourceId = [string](Get-VgProperty $assignment 'source_id')
@@ -806,24 +817,23 @@ function Invoke-VgComparisonPortfolio {
             if (-not $pageDomains.ContainsKey($normalizedDomain)) { $pageDomains.Add($normalizedDomain, (New-VgStringSet)) }
             [void]$pageDomains[$normalizedDomain].Add($sourceId)
             if (($sourceClass -ceq 'local_official' -or $sourceClass -ceq 'operational') -and [string](Get-VgProperty $source 'language') -ceq 'vi' -and (Test-VgIntersection (Get-VgProperty $source 'localities') (Get-VgProperty $page 'localities'))) { $pageHasVietnameseLocal = $true }
-            foreach ($locality in @((Get-VgProperty $page 'localities'))) {
-                if (@((Get-VgProperty $source 'localities')) -ccontains [string]$locality) {
-                    if (-not $geographicPublishers.ContainsKey([string]$locality)) { $geographicPublishers.Add([string]$locality, (New-VgStringSet)) }
-                    [void]$geographicPublishers[[string]$locality].Add($publisherId)
-                }
-            }
             if ($sourceClass -ceq 'national_official') {
                 if (-not $nationalPublisherPages.ContainsKey($publisherId)) { $nationalPublisherPages.Add($publisherId, (New-VgStringSet)) }
                 [void]$nationalPublisherPages[$publisherId].Add($path)
                 if (-not $nationalDomainPages.ContainsKey($normalizedDomain)) { $nationalDomainPages.Add($normalizedDomain, (New-VgStringSet)) }
                 [void]$nationalDomainPages[$normalizedDomain].Add($path)
             }
-
             $mappings = @((Get-VgProperty $assignment 'mappings'))
             $hasAllOptions = @($mappings | Where-Object { [string](Get-VgProperty $_ 'option_id') -ceq 'all_options' }).Count -gt 0
             $hasSpecific = @($mappings | Where-Object { [string](Get-VgProperty $_ 'option_id') -cne 'all_options' }).Count -gt 0
             if ($hasAllOptions -and $hasSpecific) { Add-VgError $errors 'E_SCOPE' "$path source=$sourceId" 'all_options cannot be mixed with option-specific mappings in one source assignment' }
             if ($hasAllOptions -and [bool](Get-VgProperty $assignment 'decisive')) { Add-VgError $errors 'E_BACKGROUND' "$path source=$sourceId" 'background all_options evidence cannot be decisive' }
+            if (-not $hasAllOptions) {
+                $sourceLocalities = @((Get-VgProperty $source 'localities'))
+                foreach ($locality in @((Get-VgProperty $page 'localities'))) { if ($sourceLocalities -ccontains [string]$locality) { [void]$assignedEvidenceLocalities.Add([string]$locality) } }
+                foreach ($groupName in $geographicGroupMembers.Keys) { if (Test-VgIntersection $sourceLocalities $geographicGroupMembers[$groupName]) { [void]$geographicPublishers[[string]$groupName].Add($publisherId) } }
+                foreach ($region in @('north', 'central', 'south')) { if ($sourceLocalities -ccontains $region) { [void]$nationwideRegions.Add($region) } }
+            }
             $freshnessState = Get-VgFreshnessState $source ([string](Get-VgProperty $assignment 'evidence_label')) $AsOfDate
             $sourceExpired = Test-VgSourceExpired $source $AsOfDate
             foreach ($mapping in $mappings) {
@@ -856,7 +866,7 @@ function Invoke-VgComparisonPortfolio {
                 if ($validClaim -and @((Get-VgProperty $source 'claim_groups')) -cnotcontains $claimGroup) { Add-VgError $errors 'E_SOURCE' "$path source=$sourceId" "source registry does not authorize claim_group '$claimGroup'" }
                 $supportOptions = if ($optionId -ceq 'all_options') { $optionIds } else { @($optionId) }
                 foreach ($supportOption in $supportOptions) {
-                    [void]$supportRows.Add([ordered]@{ option_id = $supportOption; claim_group = $claimGroup; axis_id = $axisId; outcome_id = $outcomeId; source_id = $sourceId; organization_id = [string](Get-VgProperty $source 'organization_id'); evidence_label = [string](Get-VgProperty $assignment 'evidence_label'); freshness_state = $freshnessState; expired = $sourceExpired; decisive = [bool](Get-VgProperty $assignment 'decisive'); background = $hasAllOptions })
+                    [void]$supportRows.Add([ordered]@{ option_id = $supportOption; claim_id = $claimId; claim_group = $claimGroup; axis_id = $axisId; outcome_id = $outcomeId; source_id = $sourceId; organization_id = [string](Get-VgProperty $source 'organization_id'); source_class = $sourceClass; evidence_label = [string](Get-VgProperty $assignment 'evidence_label'); freshness_state = $freshnessState; expired = $sourceExpired; decisive = [bool](Get-VgProperty $assignment 'decisive'); background = $hasAllOptions })
                 }
                 $coverageKey = "$path$([char]0x1F)$optionId$([char]0x1F)$claimGroup$([char]0x1F)$axisId$([char]0x1F)$sourceId"
                 if ($coverageKeys.Add($coverageKey)) {
@@ -869,6 +879,7 @@ function Invoke-VgComparisonPortfolio {
             }
         }
 
+        foreach ($locality in @((Get-VgProperty $page 'localities'))) { if (-not $assignedEvidenceLocalities.Contains([string]$locality)) { Add-VgError $errors 'E_LOCALITY' "$path locality=$locality" 'declared locality needs non-background assigned evidence' } }
         if ($pageHasVietnameseLocal) { $vietnamesePageCount++ } else { Add-VgError $errors 'E_LOCALITY' $path 'page needs a Vietnamese-language local or operational assignment for a compared locality' }
         if ($pageSourceIds.Count -lt 6 -or $pageSourceIds.Count -gt 10) { Add-VgError $errors 'E_SOURCE' $path "page has $($pageSourceIds.Count) unique assigned sources; expected 6-10" }
         if ($pageSourceClasses.Count -lt 4 -or -not $pageSourceClasses.Contains('national_official') -or -not $pageSourceClasses.Contains('local_official') -or -not $pageSourceClasses.Contains('operational')) { Add-VgError $errors 'E_SOURCE_CLASS' $path 'page needs at least four source classes including national, local, and operational' }
@@ -889,8 +900,10 @@ function Invoke-VgComparisonPortfolio {
                 if ($currentPrimary -eq 0) { Add-VgError $errors 'E_FRESHNESS' "$path option=$optionId claim_group=$group" 'missing current primary evidence' }
             }
             $experienceOrganizations = New-VgStringSet
-            foreach ($row in @($supportRows | Where-Object { $_.option_id -ceq $optionId -and $_.claim_group -ceq 'experience_fit' -and -not $_.background })) { [void]$experienceOrganizations.Add([string]$row.organization_id) }
-            if ($experienceOrganizations.Count -lt 2) { Add-VgError $errors 'E_EXPERIENCE' "$path option=$optionId" 'experience-fit coverage needs two controlling organizations' }
+            $currentExperienceRows = @($supportRows | Where-Object { $_.option_id -ceq $optionId -and $_.claim_group -ceq 'experience_fit' -and $_.freshness_state -ceq 'current' -and -not $_.background })
+            foreach ($row in $currentExperienceRows) { [void]$experienceOrganizations.Add([string]$row.organization_id) }
+            $hasIndependentExperienceClass = @($currentExperienceRows | Where-Object { $_.source_class -ceq 'local_official' -or $_.source_class -ceq 'operational' -or $_.source_class -ceq 'independent_corroboration' }).Count -gt 0
+            if ($experienceOrganizations.Count -lt 2 -or -not $hasIndependentExperienceClass) { Add-VgError $errors 'E_EXPERIENCE' "$path option=$optionId" 'experience-fit coverage needs current evidence from two controlling organizations including a local, operational, or independent source' }
         }
 
         foreach ($axis in $axes) {
@@ -913,14 +926,20 @@ function Invoke-VgComparisonPortfolio {
         foreach ($outcome in $outcomes) {
             $outcomeId = [string](Get-VgProperty $outcome 'outcome_id')
             $outcomeOrganizations = New-VgStringSet
-            foreach ($row in @($supportRows | Where-Object { $_.outcome_id -ceq $outcomeId -and $_.decisive -and -not $_.background })) { [void]$outcomeOrganizations.Add([string]$row.organization_id) }
+            $currentOutcomeRows = @($supportRows | Where-Object { $_.outcome_id -ceq $outcomeId -and $_.decisive -and $_.freshness_state -ceq 'current' -and -not $_.background })
+            foreach ($row in $currentOutcomeRows) { [void]$outcomeOrganizations.Add([string]$row.organization_id) }
             if (-not $mappedOutcomes.Contains($outcomeId)) { Add-VgError $errors 'E_PROVENANCE' "$path outcome=$outcomeId" 'outcome is orphaned from source evidence' }
-            if ([bool](Get-VgProperty $outcome 'negative') -and $outcomeOrganizations.Count -lt 2) { Add-VgError $errors 'E_NEGATIVE' "$path outcome=$outcomeId" 'negative outcome needs corroboration from two controlling organizations' }
+            if ([bool](Get-VgProperty $outcome 'negative')) {
+                $hasResponsiblePrimary = @($currentOutcomeRows | Where-Object { $_.evidence_label -ceq 'primary' }).Count -gt 0
+                $corroboratingOrganizations = New-VgStringSet
+                foreach ($row in @($currentOutcomeRows | Where-Object { $_.evidence_label -ceq 'corroborating' })) { [void]$corroboratingOrganizations.Add([string]$row.organization_id) }
+                if (-not $hasResponsiblePrimary -and $corroboratingOrganizations.Count -lt 2) { Add-VgError $errors 'E_NEGATIVE' "$path outcome=$outcomeId" 'negative outcome needs one responsible current primary source or current corroboration from two controlling organizations' }
+            }
             if ([bool](Get-VgProperty $outcome 'settled') -and $outcomeOrganizations.Count -lt 2) { Add-VgError $errors 'E_SETTLED' "$path outcome=$outcomeId" 'settled outcome needs independent controlling organizations' }
             if ([bool](Get-VgProperty $outcome 'settled') -and [bool](Get-VgProperty $outcome 'decisive')) {
                 foreach ($expiredRow in @($supportRows | Where-Object { $_.outcome_id -ceq $outcomeId -and $_.decisive -and -not $_.background -and $_.expired })) {
                     $hasLiveCheckLabel = ([string]$expiredRow.evidence_label -ceq 'live_check_required' -and [bool](Get-VgProperty $outcome 'live_check_required'))
-                    $hasCurrentCover = @($supportRows | Where-Object { $_.outcome_id -ceq $outcomeId -and $_.source_id -cne $expiredRow.source_id -and -not $_.background -and $_.freshness_state -ceq 'current' }).Count -gt 0
+                    $hasCurrentCover = @($supportRows | Where-Object { $_.option_id -ceq $expiredRow.option_id -and $_.claim_id -ceq $expiredRow.claim_id -and $_.axis_id -ceq $expiredRow.axis_id -and $_.outcome_id -ceq $expiredRow.outcome_id -and $_.source_id -cne $expiredRow.source_id -and -not $_.background -and $_.freshness_state -ceq 'current' }).Count -gt 0
                     if (-not ($hasLiveCheckLabel -and $hasCurrentCover)) { Add-VgError $errors 'E_FRESHNESS' "$path outcome=$outcomeId source=$($expiredRow.source_id)" 'expired source supports a settled decisive recommendation without a complete live-check exception' }
                 }
             }
@@ -940,25 +959,30 @@ function Invoke-VgComparisonPortfolio {
         }
         $primaryOutcomeId = [string](Get-VgProperty $page 'primary_outcome_id')
         if (-not $outcomeById.ContainsKey($primaryOutcomeId)) { Add-VgError $errors 'E_OUTCOME' $path "primary_outcome_id '$primaryOutcomeId' is unknown" }
+        $lensOutcomeIds = New-VgStringSet
         foreach ($lens in $lenses) {
             $lensId = [string](Get-VgProperty $lens 'lens_id')
             $pathIds = @((Get-VgProperty $lens 'rule_path'))
             $resolvedPath = @()
             foreach ($ruleId in $pathIds) { if ($ruleById.ContainsKey([string]$ruleId)) { $resolvedPath += $ruleById[[string]$ruleId] } else { Add-VgError $errors 'E_RULE' "$path lens=$lensId" "unknown rule_id '$ruleId'" } }
+            $lensOutcomeId = [string](Get-VgProperty $lens 'outcome_id')
+            [void]$lensOutcomeIds.Add($lensOutcomeId)
             $hardCount = @($resolvedPath | Where-Object { [string](Get-VgProperty $_ 'kind') -ceq 'hard_constraint' }).Count
             $preferenceCount = @($resolvedPath | Where-Object { [string](Get-VgProperty $_ 'kind') -ceq 'preference' }).Count
             $tieCount = @($resolvedPath | Where-Object { [string](Get-VgProperty $_ 'kind') -ceq 'tie_breaker' }).Count
             if ($hardCount -gt 1 -or ($hardCount -eq 1 -and [string](Get-VgProperty $resolvedPath[0] 'kind') -cne 'hard_constraint')) { Add-VgError $errors 'E_RULE' "$path lens=$lensId" 'hard constraint must appear at most once and first' }
-            $hardTerminates = ($resolvedPath.Count -eq 1 -and $hardCount -eq 1 -and [string](Get-VgProperty $resolvedPath[0] 'outcome_id') -ceq [string](Get-VgProperty $lens 'outcome_id'))
+            $terminalHardCount = @($resolvedPath | Where-Object { [string](Get-VgProperty $_ 'kind') -ceq 'hard_constraint' -and [string](Get-VgProperty $_ 'outcome_id') -ceq $lensOutcomeId }).Count
+            if ($resolvedPath.Count -gt 1 -and $terminalHardCount -gt 0) { Add-VgError $errors 'E_RULE' "$path lens=$lensId" 'no rule may follow a hard constraint that resolves the terminal outcome' }
+            $hardTerminates = ($resolvedPath.Count -eq 1 -and $hardCount -eq 1 -and [string](Get-VgProperty $resolvedPath[0] 'outcome_id') -ceq $lensOutcomeId)
             if (-not $hardTerminates -and $preferenceCount -ne 1) { Add-VgError $errors 'E_RULE' "$path lens=$lensId" 'rule path needs exactly one preference unless the first hard constraint terminates' }
             if ($tieCount -gt 1) { Add-VgError $errors 'E_RULE' "$path lens=$lensId" 'rule path permits at most one tie-breaker' }
             if ($tieCount -eq 1 -and [string](Get-VgProperty $resolvedPath[$resolvedPath.Count - 1] 'kind') -cne 'tie_breaker') { Add-VgError $errors 'E_RULE' "$path lens=$lensId" 'tie-breaker must be later and terminal' }
             foreach ($resolvedRule in $resolvedPath) { if (-not (Test-VgIntersection (Get-VgProperty $resolvedRule 'context_tags') (Get-VgProperty $lens 'context_tags'))) { Add-VgError $errors 'E_RULE' "$path lens=$lensId" "rule '$([string](Get-VgProperty $resolvedRule 'rule_id'))' has no context-tag intersection" } }
-            $lensOutcomeId = [string](Get-VgProperty $lens 'outcome_id')
             if (-not $outcomeById.ContainsKey($lensOutcomeId)) { Add-VgError $errors 'E_RULE' "$path lens=$lensId" "unknown terminal outcome '$lensOutcomeId'" }
             if ($resolvedPath.Count -gt 0 -and [string](Get-VgProperty $resolvedPath[$resolvedPath.Count - 1] 'outcome_id') -cne $lensOutcomeId) { Add-VgError $errors 'E_RULE' "$path lens=$lensId" 'last used rule does not reach the lens terminal outcome' }
             if ([string]::IsNullOrWhiteSpace([string](Get-VgProperty $lens 'trade_off')) -and [string]::IsNullOrWhiteSpace([string](Get-VgProperty $lens 'reversal_condition'))) { Add-VgError $errors 'E_RULE' "$path lens=$lensId" 'lens needs a material trade-off or reversal condition' }
         }
+        if ($lensOutcomeIds.Count -lt 2) { Add-VgError $errors 'E_RULE' $path 'traveler lenses must resolve to at least two distinct outcomes' }
         if (Test-VgGraphCycle $graph) { Add-VgError $errors 'E_CYCLE' $path 'provenance graph contains a cycle' }
 
         $sortedAssignments = @($assignments | Sort-Object @{ Expression = { [string](Get-VgProperty $_ 'source_id') }; Ascending = $true })
@@ -1034,6 +1058,7 @@ function Invoke-VgComparisonPortfolio {
             render_contract = [ordered]@{ decision_heading = 'Decision guide'; source_heading = 'Sources checked'; route_heading = 'Continue planning'; update_heading = 'What changed'; page_language = 'vi'; max_visible_characters = 1800 }
         }
         $hashInput = Copy-VgValue $bundle; [void]$hashInput.Remove('bundle_hash'); $bundle['bundle_hash'] = Get-VgSha256Hex -Value $hashInput
+        foreach ($schemaError in @(Test-VgSchemaDocument -Document $bundle -Schema $Schema -DefinitionName 'resolvedBundleV2' -DocumentId "$path bundle")) { [void]$errors.Add($schemaError) }
         $resolvedBundles[$path] = $bundle
     }
 
@@ -1057,7 +1082,8 @@ function Invoke-VgComparisonPortfolio {
         if ($portfolioAssignmentCount -eq 0 -or $portfolioLocalAssignmentCount * 100 -lt $portfolioAssignmentCount * 35) { Add-VgError $errors 'E_PORTFOLIO' 'portfolio' "$portfolioLocalAssignmentCount of $portfolioAssignmentCount assignments is below the 35 percent local/operational minimum" }
         if ($vietnamesePageCount -lt 7) { Add-VgError $errors 'E_PORTFOLIO' 'portfolio' "Production requires Vietnamese local/operational evidence on 7 pages; found $vietnamesePageCount" }
         if ($portfolioLensIds.Count -lt 7) { Add-VgError $errors 'E_PORTFOLIO' 'portfolio' "Production requires at least 7 traveler lenses; found $($portfolioLensIds.Count)" }
-        foreach ($locality in $geographicPublishers.Keys) { if ($geographicPublishers[$locality].Count -lt 2) { Add-VgError $errors 'E_PORTFOLIO' "locality=$locality" 'required geographic group has fewer than two publishers' } }
+        foreach ($groupName in $geographicGroupMembers.Keys) { if ($geographicPublishers[[string]$groupName].Count -lt 2) { Add-VgError $errors 'E_LOCALITY' "portfolio geographic_group=$groupName" 'required geographic group has fewer than two publishers' } }
+        if ($nationwideRegions.Count -lt 3) { Add-VgError $errors 'E_LOCALITY' 'portfolio geographic_group=nationwide' 'nationwide coverage requires assigned evidence for north, central, and south' }
         foreach ($publisherId in $nationalPublisherPages.Keys) { if ($nationalPublisherPages[$publisherId].Count -gt 6) { Add-VgError $errors 'E_PORTFOLIO' "publisher=$publisherId" 'national publisher is reused on more than six pages' } }
         foreach ($domain in $nationalDomainPages.Keys) { if ($nationalDomainPages[$domain].Count -gt 6) { Add-VgError $errors 'E_PORTFOLIO' "domain=$domain" 'national domain is reused on more than six pages' } }
     }
