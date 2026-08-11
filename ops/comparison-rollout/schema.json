@@ -1,0 +1,718 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://vietnamguide.example/schemas/comparison-rollout-v2.schema.json",
+  "$ref": "#/$defs/resolvedBundleV2",
+  "$defs": {
+    "safeText": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 2000,
+      "pattern": "^(?!.*(?:[jJ][aA][vV][aA][sS][cC][rR][iI][pP][tT]:|[dD][aA][tT][aA]:[tT][eE][xX][tT]/[hH][tT][mM][lL]|[oO][nN][a-zA-Z]+\\s*=))[^\\u0000-\\u001F<>]*$"
+    },
+    "httpUrl": {
+      "type": "string",
+      "minLength": 10,
+      "maxLength": 2048,
+      "pattern": "^https?://[^\\u0000-\\u0020<>\"']+$"
+    },
+    "stableId": {
+      "type": "string",
+      "minLength": 3,
+      "maxLength": 64,
+      "pattern": "^[a-z0-9][a-z0-9._-]*$"
+    },
+    "sha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "isoDate": {
+      "type": "string",
+      "pattern": "^[0-9]{4}-(0[1-9]|1[0-2])-([0-2][0-9]|3[01])$"
+    },
+    "pagePath": {
+      "type": "string",
+      "minLength": 3,
+      "maxLength": 160,
+      "pattern": "^[a-z0-9]+(?:[a-z0-9-]*[a-z0-9])?(?:/[a-z0-9]+(?:[a-z0-9-]*[a-z0-9])?)*$"
+    },
+    "sourceClass": {
+      "type": "string",
+      "enum": [
+        "national_official",
+        "local_official",
+        "operational",
+        "conditions_heritage",
+        "independent_corroboration"
+      ]
+    },
+    "claimGroup": {
+      "type": "string",
+      "enum": [
+        "access_transport",
+        "timing_duration",
+        "cost_booking",
+        "season_current_conditions",
+        "experience_fit",
+        "constraints_safety"
+      ]
+    },
+    "evidenceLabel": {
+      "type": "string",
+      "enum": ["primary", "corroborating", "live_check_required"]
+    },
+    "freshnessTier": {
+      "type": "string",
+      "enum": ["live", "current", "stable"]
+    },
+    "ruleKind": {
+      "type": "string",
+      "enum": ["hard_constraint", "preference", "tie_breaker"]
+    },
+    "routeGroup": {
+      "type": "string",
+      "enum": ["deepen_place", "build_route", "check_practical"]
+    },
+    "changeReason": {
+      "type": "string",
+      "enum": ["source_refresh", "operational_change", "decision_change", "route_change", "correction"]
+    },
+    "manifest": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "manifest_version",
+        "schema_version",
+        "previous_schema_version",
+        "activation_artifact_version",
+        "activation_stage",
+        "baseline",
+        "canary",
+        "full",
+        "six",
+        "permanent_controls",
+        "target_mappings",
+        "canary_activation"
+      ],
+      "properties": {
+        "manifest_version": { "$ref": "#/$defs/stableId" },
+        "schema_version": { "const": "v2" },
+        "previous_schema_version": { "const": "v1" },
+        "activation_artifact_version": { "$ref": "#/$defs/stableId" },
+        "activation_stage": { "type": "string", "enum": ["baseline", "canary", "full"] },
+        "baseline": {
+          "type": "array",
+          "minItems": 8,
+          "maxItems": 8,
+          "uniqueItems": true,
+          "items": { "$ref": "#/$defs/pagePath" }
+        },
+        "canary": {
+          "type": "array",
+          "minItems": 11,
+          "maxItems": 11,
+          "uniqueItems": true,
+          "items": { "$ref": "#/$defs/pagePath" }
+        },
+        "full": {
+          "type": "array",
+          "minItems": 17,
+          "maxItems": 17,
+          "uniqueItems": true,
+          "items": { "$ref": "#/$defs/pagePath" }
+        },
+        "six": {
+          "type": "array",
+          "minItems": 6,
+          "maxItems": 6,
+          "uniqueItems": true,
+          "items": { "$ref": "#/$defs/pagePath" }
+        },
+        "permanent_controls": {
+          "type": "array",
+          "minItems": 4,
+          "maxItems": 4,
+          "uniqueItems": true,
+          "items": { "$ref": "#/$defs/pagePath" }
+        },
+        "target_mappings": {
+          "type": "array",
+          "minItems": 9,
+          "maxItems": 9,
+          "uniqueItems": true,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["path", "post_id"],
+            "properties": {
+              "path": { "$ref": "#/$defs/pagePath" },
+              "post_id": { "type": "integer", "minimum": 1 }
+            }
+          }
+        },
+        "canary_activation": {
+          "type": "array",
+          "minItems": 3,
+          "maxItems": 3,
+          "uniqueItems": true,
+          "items": { "$ref": "#/$defs/pagePath" }
+        }
+      }
+    },
+    "sourceRegistry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["registry_version", "generated_on", "sources"],
+      "properties": {
+        "registry_version": { "$ref": "#/$defs/stableId" },
+        "generated_on": { "$ref": "#/$defs/isoDate" },
+        "sources": {
+          "type": "array",
+          "minItems": 6,
+          "maxItems": 200,
+          "uniqueItems": true,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["source_id", "organization_id", "source_class", "title", "url", "checked_on", "freshness_tier", "claim_groups"],
+            "properties": {
+              "source_id": { "$ref": "#/$defs/stableId" },
+              "organization_id": { "$ref": "#/$defs/stableId" },
+              "source_class": { "$ref": "#/$defs/sourceClass" },
+              "title": { "$ref": "#/$defs/safeText" },
+              "url": { "$ref": "#/$defs/httpUrl" },
+              "checked_on": { "$ref": "#/$defs/isoDate" },
+              "freshness_tier": { "$ref": "#/$defs/freshnessTier" },
+              "claim_groups": {
+                "type": "array",
+                "minItems": 1,
+                "maxItems": 6,
+                "uniqueItems": true,
+                "items": { "$ref": "#/$defs/claimGroup" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "organizationRegistry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["registry_version", "generated_on", "organizations"],
+      "properties": {
+        "registry_version": { "$ref": "#/$defs/stableId" },
+        "generated_on": { "$ref": "#/$defs/isoDate" },
+        "organizations": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 100,
+          "uniqueItems": true,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["organization_id", "name", "source_classes", "homepage_url"],
+            "properties": {
+              "organization_id": { "$ref": "#/$defs/stableId" },
+              "name": { "$ref": "#/$defs/safeText" },
+              "source_classes": {
+                "type": "array",
+                "minItems": 1,
+                "maxItems": 5,
+                "uniqueItems": true,
+                "items": { "$ref": "#/$defs/sourceClass" }
+              },
+              "homepage_url": { "$ref": "#/$defs/httpUrl" }
+            }
+          }
+        }
+      }
+    },
+    "identityRegistry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["registry_version", "generated_on", "identities"],
+      "properties": {
+        "registry_version": { "$ref": "#/$defs/stableId" },
+        "generated_on": { "$ref": "#/$defs/isoDate" },
+        "identities": {
+          "type": "array",
+          "minItems": 2,
+          "maxItems": 50,
+          "uniqueItems": true,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["identity_id", "display_name", "public_profile_path", "roles"],
+            "properties": {
+              "identity_id": { "$ref": "#/$defs/stableId" },
+              "display_name": { "$ref": "#/$defs/safeText" },
+              "public_profile_path": { "$ref": "#/$defs/pagePath" },
+              "roles": {
+                "type": "array",
+                "minItems": 1,
+                "maxItems": 2,
+                "uniqueItems": true,
+                "items": { "type": "string", "enum": ["author", "reviewer"] }
+              }
+            }
+          }
+        }
+      }
+    },
+    "resolvedBundleV1": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schema_version", "bundle_hash", "path", "post_id", "title", "decision", "sources"],
+      "properties": {
+        "schema_version": { "const": "v1" },
+        "bundle_hash": { "$ref": "#/$defs/sha256" },
+        "path": { "$ref": "#/$defs/pagePath" },
+        "post_id": { "type": "integer", "minimum": 1 },
+        "title": { "$ref": "#/$defs/safeText" },
+        "decision": { "allOf": [{ "$ref": "#/$defs/safeText" }], "maxLength": 240 },
+        "sources": {
+          "type": "array",
+          "minItems": 3,
+          "maxItems": 10,
+          "uniqueItems": true,
+          "items": { "$ref": "#/$defs/stableId" }
+        }
+      }
+    },
+    "resolvedBundleV2": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_version",
+        "bundle_hash",
+        "manifest_version",
+        "source_registry_version",
+        "organization_registry_version",
+        "activation_artifact_version",
+        "path",
+        "post_id",
+        "editorial",
+        "archetype",
+        "localities",
+        "options",
+        "primary_decision",
+        "field_note",
+        "evidence_moat",
+        "axes",
+        "traveler_lenses",
+        "sources",
+        "related_routes",
+        "update_log",
+        "module_requirements",
+        "provenance_hash",
+        "render_contract"
+      ],
+      "properties": {
+        "schema_version": { "const": "v2" },
+        "bundle_hash": { "$ref": "#/$defs/sha256" },
+        "manifest_version": { "$ref": "#/$defs/stableId" },
+        "source_registry_version": { "$ref": "#/$defs/stableId" },
+        "organization_registry_version": { "$ref": "#/$defs/stableId" },
+        "activation_artifact_version": { "$ref": "#/$defs/stableId" },
+        "path": { "$ref": "#/$defs/pagePath" },
+        "post_id": { "type": "integer", "minimum": 1 },
+        "editorial": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "reviewed_guide",
+            "written_by_identity_id",
+            "reviewed_by_identity_id",
+            "last_meaningful_update",
+            "update_summary",
+            "change_reason",
+            "affected_public_labels"
+          ],
+          "properties": {
+            "reviewed_guide": { "type": "boolean" },
+            "written_by_identity_id": { "$ref": "#/$defs/stableId" },
+            "reviewed_by_identity_id": { "$ref": "#/$defs/stableId" },
+            "last_meaningful_update": { "$ref": "#/$defs/isoDate" },
+            "update_summary": { "allOf": [{ "$ref": "#/$defs/safeText" }], "maxLength": 240 },
+            "change_reason": { "$ref": "#/$defs/changeReason" },
+            "affected_public_labels": {
+              "type": "array",
+              "minItems": 1,
+              "maxItems": 8,
+              "uniqueItems": true,
+              "items": { "allOf": [{ "$ref": "#/$defs/safeText" }], "maxLength": 64 }
+            }
+          }
+        },
+        "archetype": {
+          "type": "string",
+          "enum": ["destination_pair", "day_trip_choice", "region_choice", "neighborhood_choice", "stay_length_choice"]
+        },
+        "localities": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 6,
+          "uniqueItems": true,
+          "items": { "$ref": "#/$defs/stableId" }
+        },
+        "options": {
+          "type": "array",
+          "minItems": 2,
+          "maxItems": 4,
+          "uniqueItems": true,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["option_id", "label", "summary"],
+            "properties": {
+              "option_id": { "$ref": "#/$defs/stableId" },
+              "label": { "allOf": [{ "$ref": "#/$defs/safeText" }], "maxLength": 48 },
+              "summary": { "allOf": [{ "$ref": "#/$defs/safeText" }], "maxLength": 180 }
+            }
+          }
+        },
+        "primary_decision": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["outcome", "summary", "rules"],
+          "properties": {
+            "outcome": { "type": "string", "enum": ["option", "no_clear_winner", "combine_or_sequence"] },
+            "winner_option_id": { "$ref": "#/$defs/stableId" },
+            "summary": { "allOf": [{ "$ref": "#/$defs/safeText" }], "maxLength": 240 },
+            "rules": {
+              "type": "array",
+              "minItems": 1,
+              "maxItems": 8,
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": ["order", "kind", "condition", "outcome"],
+                "properties": {
+                  "order": { "type": "integer", "minimum": 1, "maximum": 8 },
+                  "kind": { "$ref": "#/$defs/ruleKind" },
+                  "condition": { "allOf": [{ "$ref": "#/$defs/safeText" }], "maxLength": 140 },
+                  "outcome": { "allOf": [{ "$ref": "#/$defs/safeText" }], "maxLength": 160 }
+                }
+              }
+            }
+          }
+        },
+        "field_note": { "allOf": [{ "$ref": "#/$defs/safeText" }], "maxLength": 320 },
+        "evidence_moat": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 4,
+          "uniqueItems": true,
+          "items": { "allOf": [{ "$ref": "#/$defs/safeText" }], "maxLength": 240 }
+        },
+        "axes": {
+          "type": "array",
+          "minItems": 3,
+          "maxItems": 6,
+          "uniqueItems": true,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["axis_id", "label", "explanation", "assessments", "source_ids"],
+            "properties": {
+              "axis_id": { "$ref": "#/$defs/stableId" },
+              "label": { "allOf": [{ "$ref": "#/$defs/safeText" }], "maxLength": 48 },
+              "explanation": { "allOf": [{ "$ref": "#/$defs/safeText" }], "maxLength": 180 },
+              "assessments": {
+                "type": "array",
+                "minItems": 2,
+                "maxItems": 4,
+                "items": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": ["option_id", "outcome"],
+                  "properties": {
+                    "option_id": { "$ref": "#/$defs/stableId" },
+                    "outcome": { "allOf": [{ "$ref": "#/$defs/safeText" }], "maxLength": 160 }
+                  }
+                }
+              },
+              "source_ids": {
+                "type": "array",
+                "minItems": 1,
+                "maxItems": 5,
+                "uniqueItems": true,
+                "items": { "$ref": "#/$defs/stableId" }
+              }
+            }
+          }
+        },
+        "traveler_lenses": {
+          "type": "array",
+          "minItems": 3,
+          "maxItems": 5,
+          "uniqueItems": true,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["lens_id", "traveler", "outcome", "rule_path"],
+            "properties": {
+              "lens_id": { "$ref": "#/$defs/stableId" },
+              "traveler": { "allOf": [{ "$ref": "#/$defs/safeText" }], "maxLength": 80 },
+              "outcome": { "allOf": [{ "$ref": "#/$defs/safeText" }], "maxLength": 220 },
+              "rule_path": {
+                "type": "array",
+                "minItems": 1,
+                "maxItems": 5,
+                "items": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": ["order", "kind", "condition", "outcome"],
+                  "properties": {
+                    "order": { "type": "integer", "minimum": 1, "maximum": 5 },
+                    "kind": { "$ref": "#/$defs/ruleKind" },
+                    "condition": { "allOf": [{ "$ref": "#/$defs/safeText" }], "maxLength": 140 },
+                    "outcome": { "allOf": [{ "$ref": "#/$defs/safeText" }], "maxLength": 160 }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "sources": {
+          "type": "array",
+          "minItems": 6,
+          "maxItems": 10,
+          "uniqueItems": true,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["source_id", "evidence_label", "checked_on", "claim_groups"],
+            "properties": {
+              "source_id": { "$ref": "#/$defs/stableId" },
+              "evidence_label": { "$ref": "#/$defs/evidenceLabel" },
+              "checked_on": { "$ref": "#/$defs/isoDate" },
+              "claim_groups": {
+                "type": "array",
+                "minItems": 1,
+                "maxItems": 6,
+                "uniqueItems": true,
+                "items": { "$ref": "#/$defs/claimGroup" }
+              }
+            }
+          }
+        },
+        "related_routes": {
+          "type": "array",
+          "minItems": 6,
+          "maxItems": 8,
+          "uniqueItems": true,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["path", "label", "route_group"],
+            "properties": {
+              "path": { "$ref": "#/$defs/pagePath" },
+              "label": { "allOf": [{ "$ref": "#/$defs/safeText" }], "maxLength": 72 },
+              "route_group": { "$ref": "#/$defs/routeGroup" }
+            }
+          },
+          "allOf": [
+            { "contains": { "required": ["route_group"], "properties": { "route_group": { "const": "deepen_place" } } }, "minContains": 1 },
+            { "contains": { "required": ["route_group"], "properties": { "route_group": { "const": "build_route" } } }, "minContains": 1 },
+            { "contains": { "required": ["route_group"], "properties": { "route_group": { "const": "check_practical" } } }, "minContains": 1 }
+          ]
+        },
+        "update_log": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 12,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["date", "summary", "change_reason", "affected_public_labels"],
+            "properties": {
+              "date": { "$ref": "#/$defs/isoDate" },
+              "summary": { "allOf": [{ "$ref": "#/$defs/safeText" }], "maxLength": 240 },
+              "change_reason": { "$ref": "#/$defs/changeReason" },
+              "affected_public_labels": {
+                "type": "array",
+                "minItems": 1,
+                "maxItems": 8,
+                "uniqueItems": true,
+                "items": { "allOf": [{ "$ref": "#/$defs/safeText" }], "maxLength": 64 }
+              }
+            }
+          }
+        },
+        "module_requirements": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["validator_version", "renderer_version", "cache_key_fields", "required_features"],
+          "properties": {
+            "validator_version": { "$ref": "#/$defs/stableId" },
+            "renderer_version": { "$ref": "#/$defs/stableId" },
+            "cache_key_fields": {
+              "type": "array",
+              "minItems": 5,
+              "maxItems": 5,
+              "prefixItems": [
+                { "const": "path" },
+                { "const": "bundle_hash" },
+                { "const": "schema_version" },
+                { "const": "source_registry_version" },
+                { "const": "activation_artifact_version" }
+              ],
+              "items": false
+            },
+            "required_features": {
+              "type": "array",
+              "minItems": 3,
+              "maxItems": 6,
+              "uniqueItems": true,
+              "items": {
+                "type": "string",
+                "enum": ["decision_frame", "evidence_labels", "source_checked_dates", "related_routes", "update_log", "editorial_byline"]
+              }
+            }
+          }
+        },
+        "provenance_hash": { "$ref": "#/$defs/sha256" },
+        "render_contract": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["decision_heading", "source_heading", "route_heading", "update_heading", "page_language", "max_visible_characters"],
+          "properties": {
+            "decision_heading": { "allOf": [{ "$ref": "#/$defs/safeText" }], "maxLength": 72 },
+            "source_heading": { "allOf": [{ "$ref": "#/$defs/safeText" }], "maxLength": 72 },
+            "route_heading": { "allOf": [{ "$ref": "#/$defs/safeText" }], "maxLength": 72 },
+            "update_heading": { "allOf": [{ "$ref": "#/$defs/safeText" }], "maxLength": 72 },
+            "page_language": { "type": "string", "pattern": "^[a-z]{2}(?:-[A-Z]{2})?$" },
+            "max_visible_characters": { "type": "integer", "minimum": 1, "maximum": 1800 }
+          }
+        }
+      }
+    },
+    "activationSnapshot": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["snapshot_version", "activation_stage", "activated_on", "manifest_version", "activation_artifact_version", "paths", "bundle_hashes"],
+      "properties": {
+        "snapshot_version": { "$ref": "#/$defs/stableId" },
+        "activation_stage": { "type": "string", "enum": ["baseline", "canary", "full"] },
+        "activated_on": { "$ref": "#/$defs/isoDate" },
+        "manifest_version": { "$ref": "#/$defs/stableId" },
+        "activation_artifact_version": { "$ref": "#/$defs/stableId" },
+        "paths": { "type": "array", "minItems": 8, "maxItems": 17, "uniqueItems": true, "items": { "$ref": "#/$defs/pagePath" } },
+        "bundle_hashes": {
+          "type": "array",
+          "minItems": 8,
+          "maxItems": 17,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["path", "bundle_hash", "schema_version", "source_registry_version", "activation_artifact_version"],
+            "properties": {
+              "path": { "$ref": "#/$defs/pagePath" },
+              "bundle_hash": { "$ref": "#/$defs/sha256" },
+              "schema_version": { "type": "string", "enum": ["v1", "v2"] },
+              "source_registry_version": { "$ref": "#/$defs/stableId" },
+              "activation_artifact_version": { "$ref": "#/$defs/stableId" }
+            }
+          }
+        }
+      }
+    },
+    "approvalArtifact": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["artifact_version", "path", "bundle_hash", "schema_version", "approvals", "approved_on"],
+      "properties": {
+        "artifact_version": { "$ref": "#/$defs/stableId" },
+        "path": { "$ref": "#/$defs/pagePath" },
+        "bundle_hash": { "$ref": "#/$defs/sha256" },
+        "schema_version": { "const": "v2" },
+        "approvals": {
+          "type": "array",
+          "minItems": 2,
+          "maxItems": 2,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["role", "identity_id", "approved_on"],
+            "properties": {
+              "role": { "type": "string", "enum": ["author", "reviewer"] },
+              "identity_id": { "$ref": "#/$defs/stableId" },
+              "approved_on": { "$ref": "#/$defs/isoDate" }
+            }
+          }
+        },
+        "approved_on": { "$ref": "#/$defs/isoDate" }
+      }
+    },
+    "backup": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["backup_version", "created_on", "path", "schema_version", "bundle_hash", "content_hash"],
+      "properties": {
+        "backup_version": { "$ref": "#/$defs/stableId" },
+        "created_on": { "$ref": "#/$defs/isoDate" },
+        "path": { "$ref": "#/$defs/pagePath" },
+        "schema_version": { "type": "string", "enum": ["v1", "v2"] },
+        "bundle_hash": { "$ref": "#/$defs/sha256" },
+        "content_hash": { "$ref": "#/$defs/sha256" }
+      }
+    },
+    "ledgerEvent": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["event_id", "event_date", "path", "change_reason", "from_bundle_hash", "to_bundle_hash", "actor_identity_id", "public_summary"],
+      "properties": {
+        "event_id": { "$ref": "#/$defs/stableId" },
+        "event_date": { "$ref": "#/$defs/isoDate" },
+        "path": { "$ref": "#/$defs/pagePath" },
+        "change_reason": { "$ref": "#/$defs/changeReason" },
+        "from_bundle_hash": { "$ref": "#/$defs/sha256" },
+        "to_bundle_hash": { "$ref": "#/$defs/sha256" },
+        "actor_identity_id": { "$ref": "#/$defs/stableId" },
+        "public_summary": { "allOf": [{ "$ref": "#/$defs/safeText" }], "maxLength": 240 }
+      }
+    },
+    "sourceProbe": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["source_id", "checked_on", "http_status", "freshness_tier", "content_hash", "outcome"],
+      "properties": {
+        "source_id": { "$ref": "#/$defs/stableId" },
+        "checked_on": { "$ref": "#/$defs/isoDate" },
+        "http_status": { "type": "integer", "minimum": 100, "maximum": 599 },
+        "freshness_tier": { "$ref": "#/$defs/freshnessTier" },
+        "content_hash": { "$ref": "#/$defs/sha256" },
+        "outcome": { "type": "string", "enum": ["available", "changed", "unavailable", "manual_review"] }
+      }
+    },
+    "coverageRow": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "claim_group", "primary_source_ids", "corroborating_source_ids", "live_check_required", "checked_on"],
+      "properties": {
+        "path": { "$ref": "#/$defs/pagePath" },
+        "claim_group": { "$ref": "#/$defs/claimGroup" },
+        "primary_source_ids": { "type": "array", "minItems": 1, "maxItems": 5, "uniqueItems": true, "items": { "$ref": "#/$defs/stableId" } },
+        "corroborating_source_ids": { "type": "array", "minItems": 0, "maxItems": 5, "uniqueItems": true, "items": { "$ref": "#/$defs/stableId" } },
+        "live_check_required": { "type": "boolean" },
+        "checked_on": { "$ref": "#/$defs/isoDate" }
+      }
+    },
+    "impactReport": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["report_version", "as_of_date", "activation_stage", "manifest_version", "evaluated_paths", "changed_paths", "unchanged_paths", "control_paths", "outcome"],
+      "properties": {
+        "report_version": { "$ref": "#/$defs/stableId" },
+        "as_of_date": { "$ref": "#/$defs/isoDate" },
+        "activation_stage": { "type": "string", "enum": ["baseline", "canary", "full"] },
+        "manifest_version": { "$ref": "#/$defs/stableId" },
+        "evaluated_paths": { "type": "array", "minItems": 1, "maxItems": 17, "uniqueItems": true, "items": { "$ref": "#/$defs/pagePath" } },
+        "changed_paths": { "type": "array", "minItems": 0, "maxItems": 17, "uniqueItems": true, "items": { "$ref": "#/$defs/pagePath" } },
+        "unchanged_paths": { "type": "array", "minItems": 0, "maxItems": 17, "uniqueItems": true, "items": { "$ref": "#/$defs/pagePath" } },
+        "control_paths": { "type": "array", "minItems": 4, "maxItems": 4, "uniqueItems": true, "items": { "$ref": "#/$defs/pagePath" } },
+        "outcome": { "type": "string", "enum": ["pass", "fail", "manual_review"] }
+      }
+    }
+  }
+}
