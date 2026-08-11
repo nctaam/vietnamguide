@@ -336,15 +336,29 @@ function ConvertTo-VgNumberRational {
     return $true
 }
 
+function Compare-VgJsonNumbers {
+    param($Left, $Right, [ref]$Comparison)
+    $leftNumerator = [System.Numerics.BigInteger]::Zero; $leftDenominator = [System.Numerics.BigInteger]::One
+    $rightNumerator = [System.Numerics.BigInteger]::Zero; $rightDenominator = [System.Numerics.BigInteger]::One
+    if (-not (ConvertTo-VgNumberRational $Left ([ref]$leftNumerator) ([ref]$leftDenominator)) -or
+        -not (ConvertTo-VgNumberRational $Right ([ref]$rightNumerator) ([ref]$rightDenominator))) { return $false }
+    try {
+        $leftScaled = $leftNumerator * $rightDenominator
+        $rightScaled = $rightNumerator * $leftDenominator
+        $Comparison.Value = $leftScaled.CompareTo($rightScaled)
+        return $true
+    } catch {
+        return $false
+    }
+}
+
 function Test-VgJsonEqual {
     param($Left, $Right)
     if ($null -eq $Left -or $null -eq $Right) { return ($null -eq $Left -and $null -eq $Right) }
     if ((Test-VgNumeric $Left) -or (Test-VgNumeric $Right)) {
         if (-not (Test-VgJsonNumber $Left) -or -not (Test-VgJsonNumber $Right)) { return $false }
-        $leftNumerator = [System.Numerics.BigInteger]::Zero; $leftDenominator = [System.Numerics.BigInteger]::One
-        $rightNumerator = [System.Numerics.BigInteger]::Zero; $rightDenominator = [System.Numerics.BigInteger]::One
-        if (-not (ConvertTo-VgNumberRational $Left ([ref]$leftNumerator) ([ref]$leftDenominator)) -or -not (ConvertTo-VgNumberRational $Right ([ref]$rightNumerator) ([ref]$rightDenominator))) { return $false }
-        return ($leftNumerator * $rightDenominator -eq $rightNumerator * $leftDenominator)
+        $comparison = 0
+        return ((Compare-VgJsonNumbers $Left $Right ([ref]$comparison)) -and $comparison -eq 0)
     }
     if ($Left -is [string] -or $Right -is [string]) { return ($Left -is [string] -and $Right -is [string] -and $Left -ceq $Right) }
     if ($Left -is [bool] -or $Right -is [bool]) { return ($Left -is [bool] -and $Right -is [bool] -and $Left -eq $Right) }
@@ -417,8 +431,16 @@ function Test-VgSchemaNode {
         }
     }
     if (Test-VgJsonNumber $Value) {
-        if (Test-VgProperty $SchemaNode 'minimum') { if ([decimal]$Value -lt [decimal](Get-VgProperty $SchemaNode 'minimum')) { $errors += "$Pointer is below minimum" } }
-        if (Test-VgProperty $SchemaNode 'maximum') { if ([decimal]$Value -gt [decimal](Get-VgProperty $SchemaNode 'maximum')) { $errors += "$Pointer is above maximum" } }
+        if (Test-VgProperty $SchemaNode 'minimum') {
+            $minimumComparison = 0
+            if (-not (Compare-VgJsonNumbers $Value (Get-VgProperty $SchemaNode 'minimum') ([ref]$minimumComparison))) { $errors += "$Pointer has an invalid numeric minimum" }
+            elseif ($minimumComparison -lt 0) { $errors += "$Pointer is below minimum" }
+        }
+        if (Test-VgProperty $SchemaNode 'maximum') {
+            $maximumComparison = 0
+            if (-not (Compare-VgJsonNumbers $Value (Get-VgProperty $SchemaNode 'maximum') ([ref]$maximumComparison))) { $errors += "$Pointer has an invalid numeric maximum" }
+            elseif ($maximumComparison -gt 0) { $errors += "$Pointer is above maximum" }
+        }
     }
     if (Test-VgObject $Value) {
         $names = @(Get-VgPropertyNames $Value)
@@ -692,7 +714,13 @@ function Invoke-VgComparisonPortfolio {
         if ([string](Get-VgProperty $source 'expected_title_mode') -ceq 'exact') {
             if ($sourceTitle -cne $expectedTitle) { Add-VgError $errors 'E_SOURCE' $sourceId 'title does not match expected_title exactly' }
         } else {
-            try { if (-not [regex]::IsMatch($sourceTitle, $expectedTitle, [System.Text.RegularExpressions.RegexOptions]::CultureInvariant)) { Add-VgError $errors 'E_SOURCE' $sourceId 'title does not match expected_title pattern' } } catch { Add-VgError $errors 'E_SOURCE' $sourceId 'expected_title pattern is invalid' }
+            try {
+                if (-not [regex]::IsMatch($sourceTitle, $expectedTitle, [System.Text.RegularExpressions.RegexOptions]::CultureInvariant, [timespan]::FromMilliseconds(250))) { Add-VgError $errors 'E_SOURCE' $sourceId 'title does not match expected_title pattern' }
+            } catch [System.Text.RegularExpressions.RegexMatchTimeoutException] {
+                Add-VgError $errors 'E_SOURCE' $sourceId 'expected_title pattern timed out'
+            } catch {
+                Add-VgError $errors 'E_SOURCE' $sourceId 'expected_title pattern is invalid'
+            }
         }
         try {
             $uri = New-Object System.Uri([string](Get-VgProperty $source 'url'))
@@ -957,13 +985,44 @@ function Invoke-VgComparisonPortfolio {
             }
         }
 
+        $usedRuleIds = New-VgStringSet
+        foreach ($lens in $lenses) { foreach ($ruleId in @((Get-VgProperty $lens 'rule_path'))) { [void]$usedRuleIds.Add([string]$ruleId) } }
         foreach ($rule in $rules) {
             $ruleId = [string](Get-VgProperty $rule 'rule_id')
             foreach ($forbidden in @('weight', 'priority', 'score')) { if (Test-VgProperty $rule $forbidden) { Add-VgError $errors 'E_RULE' "$path rule=$ruleId" "numeric scoring field '$forbidden' is forbidden" } }
-            foreach ($claimId in @((Get-VgProperty $rule 'claim_ids'))) { if (-not $claimById.ContainsKey([string]$claimId)) { Add-VgError $errors 'E_RULE' "$path rule=$ruleId" "unknown claim_id '$claimId'" } }
-            foreach ($axisId in @((Get-VgProperty $rule 'axis_ids'))) { if (-not $axisById.ContainsKey([string]$axisId)) { Add-VgError $errors 'E_RULE' "$path rule=$ruleId" "unknown axis_id '$axisId'" } }
+            $ruleClaimIds = [string[]]@((Get-VgProperty $rule 'claim_ids'))
+            $ruleAxisIds = [string[]]@((Get-VgProperty $rule 'axis_ids'))
+            $ruleOptionIds = [string[]]@((Get-VgProperty $rule 'option_ids'))
+            foreach ($claimId in $ruleClaimIds) { if (-not $claimById.ContainsKey($claimId)) { Add-VgError $errors 'E_RULE' "$path rule=$ruleId" "unknown claim_id '$claimId'" } }
+            foreach ($axisId in $ruleAxisIds) { if (-not $axisById.ContainsKey($axisId)) { Add-VgError $errors 'E_RULE' "$path rule=$ruleId" "unknown axis_id '$axisId'" } }
+            foreach ($optionId in $ruleOptionIds) { if (-not $optionById.ContainsKey($optionId)) { Add-VgError $errors 'E_RULE' "$path rule=$ruleId" "unknown option_id '$optionId'" } }
             $ruleOutcomeId = [string](Get-VgProperty $rule 'outcome_id')
             if (-not $outcomeById.ContainsKey($ruleOutcomeId)) { Add-VgError $errors 'E_RULE' "$path rule=$ruleId" "unknown outcome_id '$ruleOutcomeId'" }
+            if (-not $usedRuleIds.Contains($ruleId)) { continue }
+            foreach ($claimId in $ruleClaimIds) {
+                if (-not $claimById.ContainsKey($claimId)) { continue }
+                foreach ($axisId in $ruleAxisIds) {
+                    if (-not $axisById.ContainsKey($axisId)) { continue }
+                    if (@((Get-VgProperty $axisById[$axisId] 'claim_ids')) -cnotcontains $claimId) { Add-VgError $errors 'E_RULE' "$path rule=$ruleId" "claim_id '$claimId' is not declared by axis_id '$axisId'" }
+                }
+            }
+            foreach ($optionId in $ruleOptionIds) {
+                if (-not $optionById.ContainsKey($optionId)) { continue }
+                foreach ($claimId in $ruleClaimIds) {
+                    if (-not $claimById.ContainsKey($claimId)) { continue }
+                    if (@((Get-VgProperty $claimById[$claimId] 'option_ids')) -cnotcontains $optionId) { Add-VgError $errors 'E_RULE' "$path rule=$ruleId" "option_id '$optionId' is outside claim_id '$claimId' scope" }
+                    foreach ($axisId in $ruleAxisIds) {
+                        if (-not $axisById.ContainsKey($axisId)) { continue }
+                        if (@((Get-VgProperty $axisById[$axisId] 'option_ids')) -cnotcontains $optionId) { Add-VgError $errors 'E_RULE' "$path rule=$ruleId" "option_id '$optionId' is outside axis_id '$axisId' scope" }
+                        if (@($supportRows | Where-Object { $_.claim_id -ceq $claimId -and $_.axis_id -ceq $axisId -and $_.option_id -ceq $optionId }).Count -eq 0) { Add-VgError $errors 'E_RULE' "$path rule=$ruleId" "no evidence mapping covers claim_id '$claimId', axis_id '$axisId', option_id '$optionId'" }
+                    }
+                }
+                if ($outcomeById.ContainsKey($ruleOutcomeId) -and @($supportRows | Where-Object { $_.outcome_id -ceq $ruleOutcomeId -and $_.option_id -ceq $optionId }).Count -eq 0) { Add-VgError $errors 'E_RULE' "$path rule=$ruleId" "no evidence mapping covers outcome_id '$ruleOutcomeId', option_id '$optionId'" }
+            }
+            if ($outcomeById.ContainsKey($ruleOutcomeId) -and [string](Get-VgProperty $outcomeById[$ruleOutcomeId] 'outcome_type') -ceq 'option') {
+                $winnerOptionId = [string](Get-VgProperty $outcomeById[$ruleOutcomeId] 'winner_option_id')
+                if ($ruleOptionIds.Count -ne 1 -or $ruleOptionIds[0] -cne $winnerOptionId) { Add-VgError $errors 'E_RULE' "$path rule=$ruleId" "option outcome '$ruleOutcomeId' must use only winner_option_id '$winnerOptionId'" }
+            }
         }
         $primaryOutcomeId = [string](Get-VgProperty $page 'primary_outcome_id')
         if (-not $outcomeById.ContainsKey($primaryOutcomeId)) { Add-VgError $errors 'E_OUTCOME' $path "primary_outcome_id '$primaryOutcomeId' is unknown" }
@@ -1109,9 +1168,17 @@ function Invoke-VgComparisonPortfolio {
         Identities = Get-VgSha256Hex -Value (Get-VgNormalizedHashInput $Identities 'Identities')
         Portfolio = Get-VgSha256Hex -Value ([ordered]@{ bundles = $resolvedBundles; coverage = $sortedCoverage; impact = $impactIndex; inventories = $stageInventories })
     }
+    $orderedErrors = [string[]]@($errors.ToArray())
+    [array]::Sort($orderedErrors, [System.StringComparer]::Ordinal)
+    $productionProfileError = 'E_PROFILE manifest: Production requires the Production manifest profile; fixtureManifest is not accepted'
+    $profileErrorIndex = [array]::IndexOf($orderedErrors, $productionProfileError)
+    if ($profileErrorIndex -gt 0) {
+        for ($errorIndex = $profileErrorIndex; $errorIndex -gt 0; $errorIndex--) { $orderedErrors[$errorIndex] = $orderedErrors[$errorIndex - 1] }
+        $orderedErrors[0] = $productionProfileError
+    }
     return [pscustomobject]@{
         Ok = [bool]($errors.Count -eq 0)
-        Errors = [string[]]@($errors.ToArray())
+        Errors = $orderedErrors
         Hashes = $hashes
         ResolvedBundles = $resolvedBundles
         CoverageMatrix = [object[]]@($sortedCoverage)

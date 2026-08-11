@@ -1715,6 +1715,19 @@ function Invoke-ResolverFixtureValidation {
         }
     }
 
+    function Assert-PortfolioExactError {
+        param([string]$Name, $ManifestDocument, $SourceDocument, $OrganizationDocument, $IdentityDocument, [string]$ExpectedError)
+        $script:resolverFixtureChecks++
+        try {
+            $mutationResult = Get-PortfolioResult $ManifestDocument $SourceDocument $OrganizationDocument $IdentityDocument
+            if (@($mutationResult.Errors | Where-Object { $_ -ceq $ExpectedError }).Count -ne 1) {
+                Add-ResolverFailure 'E_FIXTURE' $Name "expected exact error '$ExpectedError' but received $([string]::Join(' | ', @($mutationResult.Errors)))"
+            }
+        } catch {
+            Add-ResolverFailure 'E_FIXTURE' $Name 'validator threw instead of returning the exact deterministic error'
+        }
+    }
+
     $canonicalA = ConvertTo-VgCanonicalJson -Value ([ordered]@{ b = 2; a = 1 })
     $canonicalB = ConvertTo-VgCanonicalJson -Value ([ordered]@{ a = 1; b = 2 })
     Assert-ResolverTrue 'canonical-ordinal-object-order' ($canonicalA -ceq '{"a":1,"b":2}' -and $canonicalA -ceq $canonicalB) 'object keys were not sorted with ordinal comparison'
@@ -1799,6 +1812,35 @@ function Invoke-ResolverFixtureValidation {
     Assert-ResolverTrue 'module-schema-big-integer-distinct' ($moduleHugeDistinctErrors.Count -eq 0) 'module schema equality collapsed distinct huge integers'
     $moduleHugeDuplicateErrors = @(Test-VgSchemaDocument -Document (ConvertTo-FixtureObject @($moduleHugeA, $moduleHugeA)) -Schema $moduleUniqueSchema -DocumentId 'fixture/module-big-integer-duplicate')
     Assert-ResolverTrue 'module-schema-big-integer-duplicate' (@($moduleHugeDuplicateErrors | Where-Object { $_.StartsWith('E_SCHEMA ', [System.StringComparison]::Ordinal) }).Count -gt 0) 'module schema equality accepted duplicate huge integers'
+    $moduleHugeNegative = -$moduleHugeA
+    $moduleNumericBoundFixtures = @(
+        [ordered]@{ name = 'module-big-integer-positive-exact-bound'; value = $moduleHugeA; minimum = $moduleHugeA; maximum = $moduleHugeA; expected = '' }
+        [ordered]@{ name = 'module-big-integer-positive-below-minimum'; value = $moduleHugeA; minimum = ($moduleHugeA + [System.Numerics.BigInteger]::One); maximum = $null; expected = '$ is below minimum' }
+        [ordered]@{ name = 'module-big-integer-positive-above-maximum'; value = $moduleHugeA; minimum = $null; maximum = ($moduleHugeA - [System.Numerics.BigInteger]::One); expected = '$ is above maximum' }
+        [ordered]@{ name = 'module-big-integer-negative-exact-bound'; value = $moduleHugeNegative; minimum = $moduleHugeNegative; maximum = $moduleHugeNegative; expected = '' }
+        [ordered]@{ name = 'module-big-integer-negative-below-minimum'; value = ($moduleHugeNegative - [System.Numerics.BigInteger]::One); minimum = $moduleHugeNegative; maximum = $null; expected = '$ is below minimum' }
+        [ordered]@{ name = 'module-big-integer-negative-above-maximum'; value = ($moduleHugeNegative + [System.Numerics.BigInteger]::One); minimum = $null; maximum = $moduleHugeNegative; expected = '$ is above maximum' }
+        [ordered]@{ name = 'module-int64-exact-bound'; value = [int64]::MaxValue; minimum = [int64]::MaxValue; maximum = [int64]::MaxValue; expected = '' }
+        [ordered]@{ name = 'module-decimal-exact-bound'; value = [decimal]1.25; minimum = [decimal]1.25; maximum = [decimal]1.25; expected = '' }
+    )
+    foreach ($numericBoundFixture in $moduleNumericBoundFixtures) {
+        $script:resolverFixtureChecks++
+        $numericBoundSchema = [ordered]@{ type = 'integer' }
+        if ($numericBoundFixture.value -is [decimal]) { $numericBoundSchema.type = 'number' }
+        if ($null -ne $numericBoundFixture.minimum) { $numericBoundSchema.minimum = $numericBoundFixture.minimum }
+        if ($null -ne $numericBoundFixture.maximum) { $numericBoundSchema.maximum = $numericBoundFixture.maximum }
+        try {
+            $numericBoundErrors = @(Test-VgSchemaDocument -Document $numericBoundFixture.value -Schema $numericBoundSchema -DocumentId "fixture/$($numericBoundFixture.name)")
+            if ([string]::IsNullOrEmpty($numericBoundFixture.expected)) {
+                if ($numericBoundErrors.Count -ne 0) { Add-ResolverFailure 'E_FIXTURE' $numericBoundFixture.name "exact numeric boundary was rejected: $([string]::Join(' | ', $numericBoundErrors))" }
+            } else {
+                $expectedBoundError = "E_SCHEMA fixture/$($numericBoundFixture.name): $($numericBoundFixture.expected)"
+                if (@($numericBoundErrors | Where-Object { $_ -ceq $expectedBoundError }).Count -ne 1) { Add-ResolverFailure 'E_FIXTURE' $numericBoundFixture.name "expected exact bound error '$expectedBoundError'" }
+            }
+        } catch {
+            Add-ResolverFailure 'E_FIXTURE' $numericBoundFixture.name 'schema numeric bound comparison threw a raw exception'
+        }
+    }
     $moduleNumberSchema = '{"type":"number"}' | ConvertFrom-Json
     $moduleNonfiniteErrors = @(Test-VgSchemaDocument -Document ([double]::PositiveInfinity) -Schema $moduleNumberSchema -DocumentId 'fixture/module-nonfinite')
     Assert-ResolverTrue 'module-schema-nonfinite' (@($moduleNonfiniteErrors | Where-Object { $_.StartsWith('E_SCHEMA ', [System.StringComparison]::Ordinal) }).Count -gt 0) 'module schema accepted non-finite JSON number'
@@ -1881,6 +1923,45 @@ function Invoke-ResolverFixtureValidation {
     $titleMismatchSources = Copy-FixtureObject $sources
     $titleMismatchSources.sources[0].expected_title = 'Different source title'
     Assert-PortfolioError 'source-expected-title-contract' $manifest $titleMismatchSources $organizations $identities 'E_SOURCE'
+    $catastrophicTitleSources = Copy-FixtureObject $sources
+    $catastrophicTitleSource = $catastrophicTitleSources.sources[2]
+    $catastrophicTitleSource.title = ('a' * 26) + '!'
+    $catastrophicTitleSource.expected_title = '^(a+)+$'
+    $catastrophicStopwatch = [System.Diagnostics.Stopwatch]::StartNew()
+    try {
+        $catastrophicTitleResult = Get-PortfolioResult $manifest $catastrophicTitleSources $organizations $identities
+        $catastrophicStopwatch.Stop()
+        $expectedTimeoutError = "E_SOURCE $($catastrophicTitleSource.source_id): expected_title pattern timed out"
+        Assert-ResolverTrue 'source-expected-title-pattern-timeout-error' (@($catastrophicTitleResult.Errors | Where-Object { $_ -ceq $expectedTimeoutError }).Count -eq 1) 'catastrophic expected_title pattern did not return the exact timeout error'
+        Assert-ResolverTrue 'source-expected-title-pattern-timeout-bound' ($catastrophicStopwatch.Elapsed -lt [timespan]::FromSeconds(30)) "catastrophic expected_title pattern took $([math]::Round($catastrophicStopwatch.Elapsed.TotalMilliseconds)) ms"
+    } catch {
+        $catastrophicStopwatch.Stop()
+        Add-ResolverFailure 'E_FIXTURE' 'source-expected-title-pattern-timeout' 'catastrophic expected_title pattern threw instead of returning E_SOURCE'
+    }
+    $invalidTitlePatternSources = Copy-FixtureObject $sources
+    $invalidTitlePatternSource = $invalidTitlePatternSources.sources[2]
+    $invalidTitlePatternSource.expected_title = '['
+    $invalidTitlePatternResult = Get-PortfolioResult $manifest $invalidTitlePatternSources $organizations $identities
+    Assert-ResolverTrue 'source-expected-title-invalid-pattern-error' (@($invalidTitlePatternResult.Errors | Where-Object { $_ -ceq "E_SOURCE $($invalidTitlePatternSource.source_id): expected_title pattern is invalid" }).Count -eq 1) 'invalid expected_title pattern did not return the exact E_SOURCE error'
+    $orderedInvalidSources = Copy-FixtureObject $sources
+    $orderedInvalidSources.sources[0].expected_title = 'Mismatch Alpha title'
+    $orderedInvalidSources.sources[4].expected_title = 'Mismatch Beta title'
+    $orderedInvalidResult = Get-PortfolioResult $manifest $orderedInvalidSources $organizations $identities
+    $reversedInvalidSources = Copy-FixtureObject $orderedInvalidSources
+    [array]::Reverse($reversedInvalidSources.sources)
+    $reversedInvalidResult = Get-PortfolioResult $manifest $reversedInvalidSources $organizations $identities
+    $orderedErrorMultiset = [string[]]@($orderedInvalidResult.Errors)
+    $reversedErrorMultiset = [string[]]@($reversedInvalidResult.Errors)
+    [array]::Sort($orderedErrorMultiset, [System.StringComparer]::Ordinal)
+    [array]::Sort($reversedErrorMultiset, [System.StringComparer]::Ordinal)
+    Assert-ResolverTrue 'portfolio-error-order-fixtures-equivalent' (Test-OrdinalSequence $orderedErrorMultiset $reversedErrorMultiset) 'invalid source permutations did not produce the same error multiset'
+    Assert-ResolverTrue 'portfolio-error-order-input-independent' (Test-OrdinalSequence $orderedInvalidResult.Errors $reversedInvalidResult.Errors) 'equivalent invalid source permutations changed Errors order'
+    Assert-ResolverTrue 'portfolio-error-order-ordinal' (Test-OrdinalSequence $orderedInvalidResult.Errors $orderedErrorMultiset) 'Errors are not returned in StringComparer.Ordinal order'
+    $duplicateViolationSources = Copy-FixtureObject $sources
+    $duplicateViolationSources.sources[1].source_id = $duplicateViolationSources.sources[0].source_id
+    $duplicateViolationSources.sources[2].source_id = $duplicateViolationSources.sources[0].source_id
+    $duplicateViolationResult = Get-PortfolioResult $manifest $duplicateViolationSources $organizations $identities
+    Assert-ResolverTrue 'portfolio-error-order-preserves-duplicates' (@($duplicateViolationResult.Errors | Where-Object { $_ -ceq "E_SOURCE sources: duplicate source_id '$($duplicateViolationSources.sources[0].source_id)'" }).Count -eq 2) 'ordinal error sorting removed duplicate violations'
     $claimGroupMismatchSources = Copy-FixtureObject $sources
     $claimGroupMismatchSources.sources[0].claim_groups = @('experience_fit')
     Assert-PortfolioError 'source-claim-group-contract' $manifest $claimGroupMismatchSources $organizations $identities 'E_SOURCE'
@@ -1990,6 +2071,19 @@ function Invoke-ResolverFixtureValidation {
     $badTerminal = Copy-FixtureObject $manifest
     $badTerminal.pages[0].traveler_lenses[1].outcome_id = 'outcome-alpha'
     Assert-PortfolioError 'rule-terminal-outcome' $badTerminal $sources $organizations $identities 'E_RULE'
+    $ruleClaimAxisMismatch = Copy-FixtureObject $manifest
+    $ruleClaimAxisMismatch.pages[0].rule_catalog[0].axis_ids = @('axis-experience')
+    Assert-PortfolioExactError 'rule-claim-axis-relationship' $ruleClaimAxisMismatch $sources $organizations $identities "E_RULE $fixturePath rule=rule-hard-alpha: claim_id 'claim-access' is not declared by axis_id 'axis-experience'"
+    $ruleOptionScopeMismatch = Copy-FixtureObject $manifest
+    $ruleOptionScopeMismatch.pages[0].claims[2].option_ids = @('alpha')
+    Assert-PortfolioExactError 'rule-option-scope-relationship' $ruleOptionScopeMismatch $sources $organizations $identities "E_RULE $fixturePath rule=rule-preference-beta: option_id 'beta' is outside claim_id 'claim-experience' scope"
+    $ruleOutcomeScopeMismatch = Copy-FixtureObject $manifest
+    $ruleOutcomeScopeMismatch.pages[0].rule_catalog[1].option_ids = @('alpha')
+    Assert-PortfolioExactError 'rule-outcome-scope-relationship' $ruleOutcomeScopeMismatch $sources $organizations $identities "E_RULE $fixturePath rule=rule-preference-beta: option outcome 'outcome-beta' must use only winner_option_id 'beta'"
+    $ruleEvidenceEdgeMismatch = Copy-FixtureObject $manifest
+    $ruleEvidenceEdgeMismatch.pages[0].axes[2].claim_ids += @('claim-access')
+    $ruleEvidenceEdgeMismatch.pages[0].rule_catalog[0].axis_ids = @('axis-experience')
+    Assert-PortfolioExactError 'rule-evidence-edge-relationship' $ruleEvidenceEdgeMismatch $sources $organizations $identities "E_RULE $fixturePath rule=rule-hard-alpha: no evidence mapping covers claim_id 'claim-access', axis_id 'axis-experience', option_id 'alpha'"
     $continuedHardConstraint = Copy-FixtureObject $manifest
     $continuedHardConstraint.pages[0].traveler_lenses[0].context_tags = @('short-time', 'unused-context')
     $continuedHardConstraint.pages[0].traveler_lenses[0].rule_path = @('rule-hard-alpha', 'rule-unused')
@@ -2139,7 +2233,9 @@ function Invoke-ResolverFixtureValidation {
 
     $productionResult = Get-PortfolioResult $manifest $sources $organizations $identities 'Production'
     Assert-ResolverTrue 'fixture-fails-production-portfolio-gates' (-not $productionResult.Ok -and @($productionResult.Errors | Where-Object { $_.StartsWith('E_PORTFOLIO ', [System.StringComparison]::Ordinal) }).Count -gt 0) 'fixture profile was accepted as a Production portfolio'
-    Assert-ResolverTrue 'fixture-rejected-by-production-profile' (@($productionResult.Errors | Where-Object { $_.StartsWith('E_PROFILE ', [System.StringComparison]::Ordinal) }).Count -gt 0) 'Production did not explicitly reject fixtureManifest profile data'
+    $expectedProductionProfileError = 'E_PROFILE manifest: Production requires the Production manifest profile; fixtureManifest is not accepted'
+    $shuffledProductionResult = Get-PortfolioResult $shuffledManifest $shuffledSources $organizations $identities 'Production'
+    Assert-ResolverTrue 'fixture-rejected-by-production-profile' ($productionResult.Errors[0] -ceq $expectedProductionProfileError -and $shuffledProductionResult.Errors[0] -ceq $expectedProductionProfileError -and (Test-OrdinalSequence $productionResult.Errors $shuffledProductionResult.Errors)) 'Production profile rejection was not first and input-independent'
     $defaultProfileResult = Test-VgComparisonPortfolio -Manifest $manifest -Sources $sources -Organizations $organizations -Identities $identities -Schema $Schema -AsOfDate $EvaluationDate
     Assert-ResolverTrue 'default-profile-is-production' (@($defaultProfileResult.Errors | Where-Object { $_.StartsWith('E_PROFILE ', [System.StringComparison]::Ordinal) }).Count -gt 0) 'omitting -Profile did not use the Production discriminator'
     $storedProfileManifest = Copy-FixtureObject $manifest
@@ -2165,7 +2261,7 @@ function Invoke-ResolverFixtureValidation {
         [void](New-VgComparisonArtifact -Manifest $manifest -Sources $sources -Organizations $organizations -Identities $identities -Schema $Schema -Profile Production -AsOfDate $EvaluationDate)
         Add-ResolverFailure 'E_FIXTURE' 'production-artifact-rejects-fixture' 'New-VgComparisonArtifact accepted a fixture manifest as Production'
     } catch {
-        if (-not ($_.Exception.Message.StartsWith('E_PROFILE ', [System.StringComparison]::Ordinal) -or $_.Exception.Message.StartsWith('E_PORTFOLIO ', [System.StringComparison]::Ordinal) -or $_.Exception.Message.StartsWith('E_SCHEMA ', [System.StringComparison]::Ordinal))) {
+        if ($_.Exception.Message -cne $expectedProductionProfileError) {
             Add-ResolverFailure 'E_FIXTURE' 'production-artifact-rejects-fixture' "unexpected production rejection '$($_.Exception.Message)'"
         }
     }
