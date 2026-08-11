@@ -129,36 +129,27 @@ function Get-Property {
     )
 
     if ($Object -is [System.Collections.IDictionary]) {
-        if (Test-DictionaryKey $Object $Name) {
-            $value = $Object[$Name]
-            if (Test-IsArray $value) {
-                return ,$value
+        foreach ($key in $Object.Keys) {
+            if ([string]$key -ceq $Name) {
+                $value = $Object[$key]
+                if (Test-IsArray $value) {
+                    return ,$value
+                }
+                return $value
             }
-            return $value
         }
         return $null
     }
 
-    $property = $Object.PSObject.Properties[$Name]
-    if ($null -eq $property) {
-        return $null
+    foreach ($property in $Object.PSObject.Properties) {
+        if ($property.Name -ceq $Name) {
+            if (Test-IsArray $property.Value) {
+                return ,$property.Value
+            }
+            return $property.Value
+        }
     }
-    if (Test-IsArray $property.Value) {
-        return ,$property.Value
-    }
-    return $property.Value
-}
-
-function Test-DictionaryKey {
-    param(
-        [Parameter(Mandatory = $true)]$Dictionary,
-        [Parameter(Mandatory = $true)][string]$Name
-    )
-
-    if ($null -ne $Dictionary.PSObject.Methods['ContainsKey']) {
-        return $Dictionary.ContainsKey($Name)
-    }
-    return $Dictionary.Contains($Name)
+    return $null
 }
 
 function Test-HasProperty {
@@ -168,9 +159,19 @@ function Test-HasProperty {
     )
 
     if ($Object -is [System.Collections.IDictionary]) {
-        return (Test-DictionaryKey $Object $Name)
+        foreach ($key in $Object.Keys) {
+            if ([string]$key -ceq $Name) {
+                return $true
+            }
+        }
+        return $false
     }
-    return ($null -ne $Object.PSObject.Properties[$Name])
+    foreach ($property in $Object.PSObject.Properties) {
+        if ($property.Name -ceq $Name) {
+            return $true
+        }
+    }
+    return $false
 }
 
 function Test-IsArray {
@@ -194,15 +195,66 @@ function Get-ObjectPropertyNames {
     return @($Value.PSObject.Properties.Name)
 }
 
+function Test-IsJsonNumber {
+    param($Value)
+    return ($Value -is [sbyte] -or $Value -is [byte] -or
+        $Value -is [int16] -or $Value -is [uint16] -or
+        $Value -is [int32] -or $Value -is [uint32] -or
+        $Value -is [int64] -or $Value -is [uint64] -or
+        $Value -is [single] -or $Value -is [double] -or
+        $Value -is [decimal] -or $Value -is [System.Numerics.BigInteger])
+}
+
 function Test-JsonValueEqual {
     param($Left, $Right)
+    if ($null -eq $Left -or $null -eq $Right) {
+        return ($null -eq $Left -and $null -eq $Right)
+    }
     if ($Left -is [string] -and $Right -is [string]) {
         return ($Left -ceq $Right)
     }
-    if (($Left -is [ValueType]) -and ($Right -is [ValueType])) {
-        return ($Left -eq $Right)
+    if ($Left -is [bool] -or $Right -is [bool]) {
+        return ($Left -is [bool] -and $Right -is [bool] -and $Left -eq $Right)
     }
-    return ((ConvertTo-Json $Left -Depth 100 -Compress) -ceq (ConvertTo-Json $Right -Depth 100 -Compress))
+    if ((Test-IsJsonNumber $Left) -or (Test-IsJsonNumber $Right)) {
+        if (-not (Test-IsJsonNumber $Left) -or -not (Test-IsJsonNumber $Right)) {
+            return $false
+        }
+        try {
+            return ([decimal]$Left -eq [decimal]$Right)
+        } catch {
+            return ([double]$Left -eq [double]$Right)
+        }
+    }
+    if ((Test-IsArray $Left) -or (Test-IsArray $Right)) {
+        if (-not (Test-IsArray $Left) -or -not (Test-IsArray $Right) -or $Left.Count -ne $Right.Count) {
+            return $false
+        }
+        for ($index = 0; $index -lt $Left.Count; $index++) {
+            if (-not (Test-JsonValueEqual $Left[$index] $Right[$index])) {
+                return $false
+            }
+        }
+        return $true
+    }
+    if ((Test-IsObject $Left) -or (Test-IsObject $Right)) {
+        if (-not (Test-IsObject $Left) -or -not (Test-IsObject $Right)) {
+            return $false
+        }
+        $leftNames = @(Get-ObjectPropertyNames $Left)
+        $rightNames = @(Get-ObjectPropertyNames $Right)
+        if ($leftNames.Count -ne $rightNames.Count) {
+            return $false
+        }
+        foreach ($propertyName in $leftNames) {
+            if (-not (Test-HasProperty $Right $propertyName) -or
+                -not (Test-JsonValueEqual (Get-Property $Left $propertyName) (Get-Property $Right $propertyName))) {
+                return $false
+            }
+        }
+        return $true
+    }
+    return ($Left.GetType() -eq $Right.GetType() -and $Left -eq $Right)
 }
 
 function Resolve-SchemaReference {
@@ -306,6 +358,19 @@ function Test-SchemaNode {
                 $nodeErrors += "$Path uses an invalid schema pattern"
             }
         }
+        if ((Test-HasProperty $SchemaNode 'format') -and (Get-Property $SchemaNode 'format') -ceq 'date') {
+            $parsedDate = [datetime]::MinValue
+            $isValidDate = [datetime]::TryParseExact(
+                $Value,
+                'yyyy-MM-dd',
+                [System.Globalization.CultureInfo]::InvariantCulture,
+                [System.Globalization.DateTimeStyles]::None,
+                [ref]$parsedDate
+            )
+            if (-not $isValidDate -or $parsedDate.ToString('yyyy-MM-dd', [System.Globalization.CultureInfo]::InvariantCulture) -cne $Value) {
+                $nodeErrors += "$Path is not a valid calendar date"
+            }
+        }
     }
 
     if ($Value -is [ValueType] -and -not ($Value -is [bool])) {
@@ -347,13 +412,12 @@ function Test-SchemaNode {
             $nodeErrors += "$Path has more than maxItems"
         }
         if ((Test-HasProperty $SchemaNode 'uniqueItems') -and [bool](Get-Property $SchemaNode 'uniqueItems')) {
-            $seenValues = @{}
             for ($index = 0; $index -lt $arrayValue.Count; $index++) {
-                $serializedItem = ConvertTo-Json $arrayValue[$index] -Depth 100 -Compress
-                if ($seenValues.ContainsKey($serializedItem)) {
-                    $nodeErrors += "$Path[$index] duplicates an earlier item"
-                } else {
-                    $seenValues[$serializedItem] = $true
+                for ($earlierIndex = 0; $earlierIndex -lt $index; $earlierIndex++) {
+                    if (Test-JsonValueEqual $arrayValue[$index] $arrayValue[$earlierIndex]) {
+                        $nodeErrors += "$Path[$index] duplicates an earlier item"
+                        break
+                    }
                 }
             }
         }
@@ -389,17 +453,48 @@ function Test-SchemaNode {
     return @($nodeErrors)
 }
 
+function Copy-JsonLikeValue {
+    param(
+        [Parameter(Mandatory = $true)][AllowNull()]$Value,
+        [Parameter(Mandatory = $true)][ref]$Result
+    )
+
+    if ($null -eq $Value) {
+        $Result.Value = $null
+        return
+    }
+    if (Test-IsArray $Value) {
+        $arrayCopy = New-Object 'object[]' $Value.Count
+        for ($index = 0; $index -lt $Value.Count; $index++) {
+            $itemCopy = $null
+            Copy-JsonLikeValue $Value[$index] ([ref]$itemCopy)
+            $arrayCopy[$index] = $itemCopy
+        }
+        $Result.Value = $arrayCopy
+        return
+    }
+    if (Test-IsObject $Value) {
+        $objectCopy = New-Object System.Collections.Specialized.OrderedDictionary ([System.StringComparer]::Ordinal)
+        foreach ($propertyName in @(Get-ObjectPropertyNames $Value)) {
+            $propertyCopy = $null
+            Copy-JsonLikeValue (Get-Property $Value $propertyName) ([ref]$propertyCopy)
+            $objectCopy.Add($propertyName, $propertyCopy)
+        }
+        $Result.Value = $objectCopy
+        return
+    }
+    $Result.Value = $Value
+}
+
 function ConvertTo-FixtureObject {
-    param([Parameter(Mandatory = $true)]$Value)
-    Add-Type -AssemblyName System.Web.Extensions
-    $serializer = New-Object System.Web.Script.Serialization.JavaScriptSerializer
-    $serializer.MaxJsonLength = 10485760
-    $serialized = ConvertTo-Json $Value -Depth 100 -Compress
-    return $serializer.DeserializeObject($serialized)
+    param([Parameter(Mandatory = $true)][AllowNull()]$Value)
+    $copy = $null
+    Copy-JsonLikeValue $Value ([ref]$copy)
+    return ,$copy
 }
 
 function Copy-FixtureObject {
-    param([Parameter(Mandatory = $true)]$Value)
+    param([Parameter(Mandatory = $true)][AllowNull()]$Value)
     return (ConvertTo-FixtureObject $Value)
 }
 
@@ -884,6 +979,93 @@ function Invoke-FixtureValidation {
     $positiveBundle = New-PositiveBundle
     Assert-BundleAccepted 'resolved-bundle-v2-positive' $positiveBundle
 
+    $copySource = [ordered]@{
+        empty_array = @()
+        single_array = @('one')
+        nested_arrays = @(@('alpha', 'beta'), @())
+        empty_object = [ordered]@{}
+        null_value = $null
+        integer_value = 7
+        boolean_value = $true
+        string_value = 'copy me'
+    }
+    $copyResult = Copy-FixtureObject $copySource
+    $script:fixtureChecks++
+    if (-not (Test-IsArray (Get-Property $copyResult 'empty_array')) -or (Get-Property $copyResult 'empty_array').Count -ne 0) {
+        $script:fixtureErrors += 'E_SCHEMA fixture/deep-copy-empty-array: empty array was not preserved'
+    }
+    $script:fixtureChecks++
+    if (-not (Test-IsArray (Get-Property $copyResult 'single_array')) -or (Get-Property $copyResult 'single_array').Count -ne 1) {
+        $script:fixtureErrors += 'E_SCHEMA fixture/deep-copy-single-array: single-item array was not preserved'
+    }
+    $script:fixtureChecks++
+    if (-not (Test-IsArray (Get-Property $copyResult 'nested_arrays')) -or
+        -not (Test-IsArray (Get-Property $copyResult 'nested_arrays')[1]) -or
+        (Get-Property $copyResult 'nested_arrays')[1].Count -ne 0) {
+        $script:fixtureErrors += 'E_SCHEMA fixture/deep-copy-nested-arrays: nested arrays were not preserved'
+    }
+    $script:fixtureChecks++
+    if (-not (Test-IsObject (Get-Property $copyResult 'empty_object')) -or @(Get-ObjectPropertyNames (Get-Property $copyResult 'empty_object')).Count -ne 0) {
+        $script:fixtureErrors += 'E_SCHEMA fixture/deep-copy-empty-object: empty object was not preserved'
+    }
+    $script:fixtureChecks++
+    if (-not (Test-HasProperty $copyResult 'null_value') -or $null -ne (Get-Property $copyResult 'null_value')) {
+        $script:fixtureErrors += 'E_SCHEMA fixture/deep-copy-null: null property was not preserved'
+    }
+    $script:fixtureChecks++
+    if ((Get-Property $copyResult 'integer_value') -ne 7 -or
+        (Get-Property $copyResult 'boolean_value') -ne $true -or
+        (Get-Property $copyResult 'string_value') -cne 'copy me') {
+        $script:fixtureErrors += 'E_SCHEMA fixture/deep-copy-scalars: scalar values were not preserved'
+    }
+    (Get-Property $copyResult 'single_array')[0] = 'changed'
+    $script:fixtureChecks++
+    if ((Get-Property $copySource 'single_array')[0] -cne 'one') {
+        $script:fixtureErrors += 'E_SCHEMA fixture/deep-copy-independence: copied arrays still reference the source'
+    }
+    $caseKeySource = New-Object System.Collections.Specialized.OrderedDictionary ([System.StringComparer]::Ordinal)
+    $caseKeySource.Add('CaseName', 'upper')
+    $caseKeySource.Add('caseName', 'lower')
+    $caseKeyCopy = Copy-FixtureObject $caseKeySource
+    $script:fixtureChecks++
+    if (@(Get-ObjectPropertyNames $caseKeyCopy).Count -ne 2 -or
+        (Get-Property $caseKeyCopy 'CaseName') -cne 'upper' -or
+        (Get-Property $caseKeyCopy 'caseName') -cne 'lower') {
+        $script:fixtureErrors += 'E_SCHEMA fixture/deep-copy-case-sensitive-keys: case-differing property names were not preserved'
+    }
+
+    $casePropertySchema = '{"type":"object","additionalProperties":false,"required":["schema_version"],"properties":{"schema_version":{"const":"v2"}}}' | ConvertFrom-Json
+    $exactPropertyObject = '{"schema_version":"v2"}' | ConvertFrom-Json
+    Assert-Accepted 'exact-property-lowercase' $exactPropertyObject $casePropertySchema
+    foreach ($caseFixture in @(
+        [ordered]@{ name = 'pscustomobject'; value = ('{"Schema_Version":"v2"}' | ConvertFrom-Json) }
+        [ordered]@{ name = 'idictionary'; value = @{ Schema_Version = 'v2' } }
+    )) {
+        $script:fixtureChecks++
+        $caseErrors = @(Test-SchemaNode $caseFixture.value $casePropertySchema $Schema '$')
+        if ($caseErrors -cnotcontains '$.schema_version is required' -or $caseErrors -cnotcontains '$.Schema_Version is not allowed') {
+            $script:fixtureErrors += "E_SCHEMA fixture/exact-property-$($caseFixture.name): mixed-case property did not produce required and additionalProperties errors"
+        }
+    }
+
+    $uniqueItemsSchema = '{"type":"array","uniqueItems":true}' | ConvertFrom-Json
+    Assert-Accepted 'unique-items-string-case-sensitive' (ConvertTo-FixtureObject @('Label', 'label')) $uniqueItemsSchema
+    $orderedObjectA = New-Object System.Collections.Specialized.OrderedDictionary ([System.StringComparer]::Ordinal)
+    $orderedObjectA.Add('a', 1)
+    $orderedObjectA.Add('b', 2)
+    $orderedObjectB = New-Object System.Collections.Specialized.OrderedDictionary ([System.StringComparer]::Ordinal)
+    $orderedObjectB.Add('b', 2)
+    $orderedObjectB.Add('a', 1)
+    Assert-Rejected 'unique-items-object-order-independent' (ConvertTo-FixtureObject @($orderedObjectA, $orderedObjectB)) $uniqueItemsSchema
+    $caseObjectA = New-Object System.Collections.Specialized.OrderedDictionary ([System.StringComparer]::Ordinal)
+    $caseObjectA.Add('Label', 1)
+    $caseObjectB = New-Object System.Collections.Specialized.OrderedDictionary ([System.StringComparer]::Ordinal)
+    $caseObjectB.Add('label', 1)
+    Assert-Accepted 'unique-items-property-name-case-sensitive' (ConvertTo-FixtureObject @($caseObjectA, $caseObjectB)) $uniqueItemsSchema
+    Assert-Accepted 'unique-items-arrays-positional' (ConvertTo-FixtureObject @(@(1, 2), @(2, 1))) $uniqueItemsSchema
+    Assert-Rejected 'unique-items-json-numeric-equality' (ConvertTo-FixtureObject @([int]1, [double]1.0)) $uniqueItemsSchema
+    Assert-Accepted 'unique-items-boolean-distinct-from-number' (ConvertTo-FixtureObject @($true, 1)) $uniqueItemsSchema
+
     $missingRequired = Copy-FixtureObject $positiveBundle
     [void]$missingRequired.Remove('editorial')
     Assert-BundleRejected 'required-key' $missingRequired
@@ -954,6 +1136,10 @@ function Invoke-FixtureValidation {
     }
     $vietnameseText = [string]::Concat('Th', [char]0x00F4, 'ng tin ', [char]0x0111, [char]0x00E3, ' ki', [char]0x1EC3, 'm ch', [char]0x1EE9, 'ng')
     Assert-Accepted 'safe-text-vietnamese-unicode' $vietnameseText (Get-Definition $Schema 'safeText')
+    Assert-Accepted 'safe-text-condition-assignment' 'condition=clear' (Get-Definition $Schema 'safeText')
+    Assert-Accepted 'safe-text-connection-status-assignment' 'connectionStatus=confirmed' (Get-Definition $Schema 'safeText')
+    Assert-Rejected 'safe-text-event-attribute-start' 'onclick=alert(1)' (Get-Definition $Schema 'safeText')
+    Assert-Rejected 'safe-text-event-attribute-after-space' 'text onclick=alert(1)' (Get-Definition $Schema 'safeText')
 
     Assert-Accepted 'safe-http-url' 'https://example.org/source?id=1' (Get-Definition $Schema 'httpUrl')
     Assert-Accepted 'safe-http-url-http' 'http://example.org/source' (Get-Definition $Schema 'httpUrl')
@@ -962,6 +1148,16 @@ function Invoke-FixtureValidation {
     Assert-Rejected 'unsafe-url-trailing-lf' "https://example.org/source`n" (Get-Definition $Schema 'httpUrl')
     Assert-Rejected 'unsafe-url-trailing-cr' "https://example.org/source`r" (Get-Definition $Schema 'httpUrl')
     Assert-Rejected 'unsafe-url-delete-control' "https://example.org/source$([char]0x7F)" (Get-Definition $Schema 'httpUrl')
+
+    $isoDateSchema = Get-Definition $Schema 'isoDate'
+    $script:fixtureChecks++
+    if ((Get-Property $isoDateSchema 'format') -cne 'date') {
+        $script:fixtureErrors += 'E_SCHEMA fixture/iso-date-format-contract: isoDate must declare format date'
+    }
+    Assert-Accepted 'iso-date-normal' '2026-08-03' $isoDateSchema
+    Assert-Accepted 'iso-date-leap-day' '2024-02-29' $isoDateSchema
+    Assert-Rejected 'iso-date-impossible-february' '2026-02-31' $isoDateSchema
+    Assert-Rejected 'iso-date-impossible-april' '2026-04-31' $isoDateSchema
 
     $publicEnumSchemaNodes = Get-PublicEnumSchemaNodes $Schema
     foreach ($enumFamily in $publicEnumContracts.Keys) {

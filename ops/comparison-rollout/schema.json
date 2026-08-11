@@ -7,7 +7,7 @@
       "type": "string",
       "minLength": 1,
       "maxLength": 2000,
-      "pattern": "^(?![\\s\\S]*[\\u0000-\\u001F\\u007F])(?![\\s\\S]*(?:[jJ][aA][vV][aA][sS][cC][rR][iI][pP][tT]:|[dD][aA][tT][aA]:[tT][eE][xX][tT]/[hH][tT][mM][lL]|[oO][nN][a-zA-Z]+\\s*=))[^<>]*$"
+      "pattern": "^(?![\\s\\S]*[\\u0000-\\u001F\\u007F])(?![\\s\\S]*(?:[jJ][aA][vV][aA][sS][cC][rR][iI][pP][tT]:|[dD][aA][tT][aA]:[tT][eE][xX][tT]/[hH][tT][mM][lL]))(?![oO][nN][a-zA-Z]+\\s*=)(?![\\s\\S]*\\s[oO][nN][a-zA-Z]+\\s*=)[^<>]*$"
     },
     "httpUrl": {
       "type": "string",
@@ -27,7 +27,8 @@
     },
     "isoDate": {
       "type": "string",
-      "pattern": "^[0-9]{4}-(0[1-9]|1[0-2])-([0-2][0-9]|3[01])$"
+      "pattern": "^[0-9]{4}-(0[1-9]|1[0-2])-([0-2][0-9]|3[01])$",
+      "format": "date"
     },
     "pagePath": {
       "type": "string",
