@@ -197,12 +197,52 @@ function Get-ObjectPropertyNames {
 
 function Test-IsJsonNumber {
     param($Value)
+    if ($Value -is [double]) {
+        return (-not [double]::IsNaN($Value) -and -not [double]::IsInfinity($Value))
+    }
+    if ($Value -is [single]) {
+        return (-not [single]::IsNaN($Value) -and -not [single]::IsInfinity($Value))
+    }
     return ($Value -is [sbyte] -or $Value -is [byte] -or
         $Value -is [int16] -or $Value -is [uint16] -or
         $Value -is [int32] -or $Value -is [uint32] -or
         $Value -is [int64] -or $Value -is [uint64] -or
-        $Value -is [single] -or $Value -is [double] -or
         $Value -is [decimal] -or $Value -is [System.Numerics.BigInteger])
+}
+
+function Test-IsMathematicalInteger {
+    param($Value)
+    if (-not (Test-IsJsonNumber $Value)) {
+        return $false
+    }
+    if ($Value -is [sbyte] -or $Value -is [byte] -or
+        $Value -is [int16] -or $Value -is [uint16] -or
+        $Value -is [int32] -or $Value -is [uint32] -or
+        $Value -is [int64] -or $Value -is [uint64] -or
+        $Value -is [System.Numerics.BigInteger]) {
+        return $true
+    }
+    if ($Value -is [decimal]) {
+        return ([decimal]::Truncate($Value) -eq $Value)
+    }
+    return ([Math]::Truncate([double]$Value) -eq [double]$Value)
+}
+
+function ConvertTo-BigIntegerExact {
+    param(
+        [Parameter(Mandatory = $true)]$Value,
+        [Parameter(Mandatory = $true)][ref]$Result
+    )
+
+    if (-not (Test-IsMathematicalInteger $Value)) {
+        return $false
+    }
+    try {
+        $Result.Value = [System.Numerics.BigInteger]$Value
+        return $true
+    } catch {
+        return $false
+    }
 }
 
 function Test-JsonValueEqual {
@@ -218,6 +258,17 @@ function Test-JsonValueEqual {
     }
     if ((Test-IsJsonNumber $Left) -or (Test-IsJsonNumber $Right)) {
         if (-not (Test-IsJsonNumber $Left) -or -not (Test-IsJsonNumber $Right)) {
+            return $false
+        }
+        if ((Test-IsMathematicalInteger $Left) -and (Test-IsMathematicalInteger $Right)) {
+            $leftInteger = [System.Numerics.BigInteger]::Zero
+            $rightInteger = [System.Numerics.BigInteger]::Zero
+            if ((ConvertTo-BigIntegerExact $Left ([ref]$leftInteger)) -and
+                (ConvertTo-BigIntegerExact $Right ([ref]$rightInteger))) {
+                return ($leftInteger -eq $rightInteger)
+            }
+        }
+        if ($Left -is [System.Numerics.BigInteger] -or $Right -is [System.Numerics.BigInteger]) {
             return $false
         }
         try {
@@ -255,6 +306,29 @@ function Test-JsonValueEqual {
         return $true
     }
     return ($Left.GetType() -eq $Right.GetType() -and $Left -eq $Right)
+}
+
+function Get-JsonStringCodePointLength {
+    param(
+        [Parameter(Mandatory = $true)][string]$Value,
+        [Parameter(Mandatory = $true)][ref]$Length
+    )
+
+    $codePointCount = 0
+    for ($index = 0; $index -lt $Value.Length; $index++) {
+        $character = $Value[$index]
+        if ([char]::IsHighSurrogate($character)) {
+            if ($index + 1 -ge $Value.Length -or -not [char]::IsLowSurrogate($Value[$index + 1])) {
+                return $false
+            }
+            $index++
+        } elseif ([char]::IsLowSurrogate($character)) {
+            return $false
+        }
+        $codePointCount++
+    }
+    $Length.Value = $codePointCount
+    return $true
 }
 
 function Resolve-SchemaReference {
@@ -311,8 +385,8 @@ function Test-SchemaNode {
             'object' { Test-IsObject $Value; break }
             'array' { Test-IsArray $Value; break }
             'string' { $Value -is [string]; break }
-            'integer' { $Value -is [sbyte] -or $Value -is [byte] -or $Value -is [int16] -or $Value -is [uint16] -or $Value -is [int32] -or $Value -is [uint32] -or $Value -is [int64] -or $Value -is [uint64]; break }
-            'number' { $Value -is [ValueType] -and -not ($Value -is [bool]); break }
+            'integer' { Test-IsMathematicalInteger $Value; break }
+            'number' { Test-IsJsonNumber $Value; break }
             'boolean' { $Value -is [bool]; break }
             'null' { $null -eq $Value; break }
             default { $false }
@@ -343,11 +417,17 @@ function Test-SchemaNode {
     }
 
     if ($Value -is [string]) {
-        if ((Test-HasProperty $SchemaNode 'minLength') -and $Value.Length -lt [int](Get-Property $SchemaNode 'minLength')) {
-            $nodeErrors += "$Path is shorter than minLength"
-        }
-        if ((Test-HasProperty $SchemaNode 'maxLength') -and $Value.Length -gt [int](Get-Property $SchemaNode 'maxLength')) {
-            $nodeErrors += "$Path is longer than maxLength"
+        $codePointLength = 0
+        $hasValidSurrogates = Get-JsonStringCodePointLength $Value ([ref]$codePointLength)
+        if (-not $hasValidSurrogates) {
+            $nodeErrors += "$Path contains an unpaired UTF-16 surrogate"
+        } else {
+            if ((Test-HasProperty $SchemaNode 'minLength') -and $codePointLength -lt [int](Get-Property $SchemaNode 'minLength')) {
+                $nodeErrors += "$Path is shorter than minLength"
+            }
+            if ((Test-HasProperty $SchemaNode 'maxLength') -and $codePointLength -gt [int](Get-Property $SchemaNode 'maxLength')) {
+                $nodeErrors += "$Path is longer than maxLength"
+            }
         }
         if (Test-HasProperty $SchemaNode 'pattern') {
             try {
@@ -373,7 +453,7 @@ function Test-SchemaNode {
         }
     }
 
-    if ($Value -is [ValueType] -and -not ($Value -is [bool])) {
+    if (Test-IsJsonNumber $Value) {
         if ((Test-HasProperty $SchemaNode 'minimum') -and $Value -lt (Get-Property $SchemaNode 'minimum')) {
             $nodeErrors += "$Path is below minimum"
         }
@@ -1065,6 +1145,49 @@ function Invoke-FixtureValidation {
     Assert-Accepted 'unique-items-arrays-positional' (ConvertTo-FixtureObject @(@(1, 2), @(2, 1))) $uniqueItemsSchema
     Assert-Rejected 'unique-items-json-numeric-equality' (ConvertTo-FixtureObject @([int]1, [double]1.0)) $uniqueItemsSchema
     Assert-Accepted 'unique-items-boolean-distinct-from-number' (ConvertTo-FixtureObject @($true, 1)) $uniqueItemsSchema
+    $hugeIntegerA = [System.Numerics.BigInteger]::Parse('10000000000000000000000000000000000000000')
+    $hugeIntegerB = [System.Numerics.BigInteger]::Parse('10000000000000000000000000000000000000001')
+    $script:fixtureChecks++
+    if (Test-JsonValueEqual $hugeIntegerA $hugeIntegerB) {
+        $script:fixtureErrors += 'E_SCHEMA fixture/big-integer-direct-distinct: distinct huge integers compared equal'
+    }
+    $script:fixtureChecks++
+    if (-not (Test-JsonValueEqual $hugeIntegerA $hugeIntegerA)) {
+        $script:fixtureErrors += 'E_SCHEMA fixture/big-integer-direct-equal: identical huge integers compared distinct'
+    }
+    Assert-Accepted 'unique-items-big-integer-distinct' (ConvertTo-FixtureObject @($hugeIntegerA, $hugeIntegerB)) $uniqueItemsSchema
+    Assert-Rejected 'unique-items-big-integer-duplicate' (ConvertTo-FixtureObject @($hugeIntegerA, $hugeIntegerA)) $uniqueItemsSchema
+    $hugeObjectA = New-Object System.Collections.Specialized.OrderedDictionary ([System.StringComparer]::Ordinal)
+    $hugeObjectA.Add('value', $hugeIntegerA)
+    $hugeObjectB = New-Object System.Collections.Specialized.OrderedDictionary ([System.StringComparer]::Ordinal)
+    $hugeObjectB.Add('value', $hugeIntegerB)
+    Assert-Accepted 'unique-items-object-big-integer-distinct' (ConvertTo-FixtureObject @($hugeObjectA, $hugeObjectB)) $uniqueItemsSchema
+    Assert-Rejected 'unique-items-object-big-integer-duplicate' (ConvertTo-FixtureObject @($hugeObjectA, $hugeObjectA)) $uniqueItemsSchema
+
+    $integerTypeSchema = '{"type":"integer"}' | ConvertFrom-Json
+    Assert-Accepted 'integer-type-single-integral' ([single]1.0) $integerTypeSchema
+    Assert-Accepted 'integer-type-double-integral' ([double]1.0) $integerTypeSchema
+    Assert-Accepted 'integer-type-decimal-integral' ([decimal]1.0) $integerTypeSchema
+    Assert-Accepted 'integer-type-big-integer' ([System.Numerics.BigInteger]::Parse('10000000000000000000000000000000000000000')) $integerTypeSchema
+    Assert-Rejected 'integer-type-single-fractional' ([single]1.5) $integerTypeSchema
+    Assert-Rejected 'integer-type-double-fractional' ([double]1.5) $integerTypeSchema
+    Assert-Rejected 'integer-type-decimal-fractional' ([decimal]1.5) $integerTypeSchema
+    Assert-Rejected 'integer-type-nan' ([double]::NaN) $integerTypeSchema
+    Assert-Rejected 'integer-type-positive-infinity' ([double]::PositiveInfinity) $integerTypeSchema
+    Assert-Rejected 'integer-type-negative-infinity' ([double]::NegativeInfinity) $integerTypeSchema
+
+    $astralEmoji = [char]::ConvertFromUtf32(0x1F600)
+    $oneCodePointSchema = '{"type":"string","maxLength":1}' | ConvertFrom-Json
+    $zeroCodePointSchema = '{"type":"string","maxLength":0}' | ConvertFrom-Json
+    $twoCodePointSchema = '{"type":"string","minLength":2,"maxLength":2}' | ConvertFrom-Json
+    Assert-Accepted 'unicode-length-one-astral' $astralEmoji $oneCodePointSchema
+    Assert-Rejected 'unicode-length-one-astral-over-zero' $astralEmoji $zeroCodePointSchema
+    Assert-Accepted 'unicode-length-two-astral' ($astralEmoji + $astralEmoji) $twoCodePointSchema
+    Assert-Rejected 'unicode-length-one-astral-under-two' $astralEmoji $twoCodePointSchema
+    Assert-Accepted 'unicode-length-bmp-vietnamese' ([string][char]0x1EC3) $oneCodePointSchema
+    $plainStringSchema = '{"type":"string"}' | ConvertFrom-Json
+    Assert-Rejected 'unicode-unpaired-high-surrogate' ([string][char]0xD83D) $plainStringSchema
+    Assert-Rejected 'unicode-unpaired-low-surrogate' ([string][char]0xDE00) $plainStringSchema
 
     $missingRequired = Copy-FixtureObject $positiveBundle
     [void]$missingRequired.Remove('editorial')
