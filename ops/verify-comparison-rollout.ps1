@@ -228,21 +228,75 @@ function Test-IsMathematicalInteger {
     return ([Math]::Truncate([double]$Value) -eq [double]$Value)
 }
 
-function ConvertTo-BigIntegerExact {
+function Get-JsonNumberInvariantText {
+    param([Parameter(Mandatory = $true)]$Value)
+    if (-not (Test-IsJsonNumber $Value)) {
+        return $null
+    }
+    $invariantCulture = [System.Globalization.CultureInfo]::InvariantCulture
+    if ($Value -is [decimal]) {
+        return $Value.ToString('G29', $invariantCulture)
+    }
+    if ($Value -is [double] -or $Value -is [single]) {
+        return $Value.ToString('R', $invariantCulture)
+    }
+    return ([System.IFormattable]$Value).ToString('D', $invariantCulture)
+}
+
+function ConvertTo-JsonNumberRational {
     param(
         [Parameter(Mandatory = $true)]$Value,
-        [Parameter(Mandatory = $true)][ref]$Result
+        [Parameter(Mandatory = $true)][ref]$Numerator,
+        [Parameter(Mandatory = $true)][ref]$Denominator
     )
 
-    if (-not (Test-IsMathematicalInteger $Value)) {
+    $numberText = Get-JsonNumberInvariantText $Value
+    if ([string]::IsNullOrWhiteSpace($numberText)) {
         return $false
     }
+    $match = [regex]::Match($numberText, '^(?<sign>[+-]?)(?<integer>[0-9]+)(?:\.(?<fraction>[0-9]+))?(?:[eE](?<exponent>[+-]?[0-9]+))?$')
+    if (-not $match.Success) {
+        return $false
+    }
+    $fractionText = if ($match.Groups['fraction'].Success) { $match.Groups['fraction'].Value } else { '' }
+    $digits = $match.Groups['integer'].Value + $fractionText
     try {
-        $Result.Value = [System.Numerics.BigInteger]$Value
-        return $true
+        $parsedNumerator = [System.Numerics.BigInteger]::Parse(
+            $digits,
+            [System.Globalization.NumberStyles]::None,
+            [System.Globalization.CultureInfo]::InvariantCulture
+        )
     } catch {
         return $false
     }
+    if ($match.Groups['sign'].Value -ceq '-') {
+        $parsedNumerator = -$parsedNumerator
+    }
+    $exponent = 0
+    if ($match.Groups['exponent'].Success -and -not [int]::TryParse(
+        $match.Groups['exponent'].Value,
+        [System.Globalization.NumberStyles]::AllowLeadingSign,
+        [System.Globalization.CultureInfo]::InvariantCulture,
+        [ref]$exponent
+    )) {
+        return $false
+    }
+    $scale = [int64]$fractionText.Length - [int64]$exponent
+    if ([Math]::Abs($scale) -gt 10000) {
+        return $false
+    }
+    if ($scale -ge 0) {
+        $parsedDenominator = [System.Numerics.BigInteger]::Pow(10, [int]$scale)
+    } else {
+        $parsedNumerator *= [System.Numerics.BigInteger]::Pow(10, [int](-$scale))
+        $parsedDenominator = [System.Numerics.BigInteger]::One
+    }
+    if ($parsedNumerator.IsZero) {
+        $parsedDenominator = [System.Numerics.BigInteger]::One
+    }
+    $Numerator.Value = $parsedNumerator
+    $Denominator.Value = $parsedDenominator
+    return $true
 }
 
 function Test-JsonValueEqual {
@@ -260,22 +314,15 @@ function Test-JsonValueEqual {
         if (-not (Test-IsJsonNumber $Left) -or -not (Test-IsJsonNumber $Right)) {
             return $false
         }
-        if ((Test-IsMathematicalInteger $Left) -and (Test-IsMathematicalInteger $Right)) {
-            $leftInteger = [System.Numerics.BigInteger]::Zero
-            $rightInteger = [System.Numerics.BigInteger]::Zero
-            if ((ConvertTo-BigIntegerExact $Left ([ref]$leftInteger)) -and
-                (ConvertTo-BigIntegerExact $Right ([ref]$rightInteger))) {
-                return ($leftInteger -eq $rightInteger)
-            }
-        }
-        if ($Left -is [System.Numerics.BigInteger] -or $Right -is [System.Numerics.BigInteger]) {
+        $leftNumerator = [System.Numerics.BigInteger]::Zero
+        $leftDenominator = [System.Numerics.BigInteger]::One
+        $rightNumerator = [System.Numerics.BigInteger]::Zero
+        $rightDenominator = [System.Numerics.BigInteger]::One
+        if (-not (ConvertTo-JsonNumberRational $Left ([ref]$leftNumerator) ([ref]$leftDenominator)) -or
+            -not (ConvertTo-JsonNumberRational $Right ([ref]$rightNumerator) ([ref]$rightDenominator))) {
             return $false
         }
-        try {
-            return ([decimal]$Left -eq [decimal]$Right)
-        } catch {
-            return ([double]$Left -eq [double]$Right)
-        }
+        return ($leftNumerator * $rightDenominator -eq $rightNumerator * $leftDenominator)
     }
     if ((Test-IsArray $Left) -or (Test-IsArray $Right)) {
         if (-not (Test-IsArray $Left) -or -not (Test-IsArray $Right) -or $Left.Count -ne $Right.Count) {
@@ -1145,6 +1192,21 @@ function Invoke-FixtureValidation {
     Assert-Accepted 'unique-items-arrays-positional' (ConvertTo-FixtureObject @(@(1, 2), @(2, 1))) $uniqueItemsSchema
     Assert-Rejected 'unique-items-json-numeric-equality' (ConvertTo-FixtureObject @([int]1, [double]1.0)) $uniqueItemsSchema
     Assert-Accepted 'unique-items-boolean-distinct-from-number' (ConvertTo-FixtureObject @($true, 1)) $uniqueItemsSchema
+    $nearOneDouble = [double]1.0000000000000002
+    $oneDouble = [double]1.0
+    $script:fixtureChecks++
+    if (Test-JsonValueEqual $nearOneDouble $oneDouble) {
+        $script:fixtureErrors += 'E_SCHEMA fixture/double-roundtrip-direct-distinct: adjacent round-trip doubles compared equal'
+    }
+    Assert-Accepted 'unique-items-double-roundtrip-distinct' (ConvertTo-FixtureObject @($nearOneDouble, $oneDouble)) $uniqueItemsSchema
+    $nearOneObject = New-Object System.Collections.Specialized.OrderedDictionary ([System.StringComparer]::Ordinal)
+    $nearOneObject.Add('value', $nearOneDouble)
+    $oneObject = New-Object System.Collections.Specialized.OrderedDictionary ([System.StringComparer]::Ordinal)
+    $oneObject.Add('value', $oneDouble)
+    Assert-Accepted 'unique-items-object-double-roundtrip-distinct' (ConvertTo-FixtureObject @($nearOneObject, $oneObject)) $uniqueItemsSchema
+    Assert-Rejected 'unique-items-decimal-double-tenth-equal' (ConvertTo-FixtureObject @([decimal]0.1, [double]0.1)) $uniqueItemsSchema
+    Assert-Rejected 'unique-items-exponent-decimal-equal' (ConvertTo-FixtureObject @([double]1e-5, [decimal]0.00001)) $uniqueItemsSchema
+    Assert-Rejected 'unique-items-negative-zero-equal' (ConvertTo-FixtureObject @([double](-0.0), [int]0)) $uniqueItemsSchema
     $hugeIntegerA = [System.Numerics.BigInteger]::Parse('10000000000000000000000000000000000000000')
     $hugeIntegerB = [System.Numerics.BigInteger]::Parse('10000000000000000000000000000000000000001')
     $script:fixtureChecks++
