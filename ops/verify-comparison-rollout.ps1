@@ -1946,6 +1946,16 @@ function Invoke-ResolverFixtureValidation {
     $continuedHardConstraint.pages[0].traveler_lenses[0].context_tags = @('short-time', 'unused-context')
     $continuedHardConstraint.pages[0].traveler_lenses[0].rule_path = @('rule-hard-alpha', 'rule-unused')
     Assert-PortfolioError 'rule-terminal-hard-constraint-stops-replay' $continuedHardConstraint $sources $organizations $identities 'E_RULE'
+    $continuedHardToDifferentOutcome = Copy-FixtureObject $manifest
+    $continuedHardToDifferentOutcome.pages[0].traveler_lenses[0].context_tags = @('short-time', 'slow-travel')
+    $continuedHardToDifferentOutcome.pages[0].traveler_lenses[0].rule_path = @('rule-hard-alpha', 'rule-preference-beta')
+    $continuedHardToDifferentOutcome.pages[0].traveler_lenses[0].outcome_id = 'outcome-beta'
+    Assert-PortfolioError 'rule-hard-constraint-cannot-continue-to-different-outcome' $continuedHardToDifferentOutcome $sources $organizations $identities 'E_RULE'
+    $hardOutcomeMismatch = Copy-FixtureObject $manifest
+    $hardOutcomeMismatch.pages[0].traveler_lenses[0].outcome_id = 'outcome-beta'
+    Assert-PortfolioError 'rule-hard-constraint-must-match-lens-outcome' $hardOutcomeMismatch $sources $organizations $identities 'E_RULE'
+    Assert-NoPortfolioError 'rule-preference-only-path-remains-valid' $manifest $sources $organizations $identities 'E_RULE'
+    Assert-NoPortfolioError 'rule-preference-tie-breaker-path-remains-valid' $manifest $sources $organizations $identities 'E_RULE'
     $universalLensOutcome = Copy-FixtureObject $manifest
     foreach ($lensIndex in @(1, 2)) {
         $universalLensOutcome.pages[0].traveler_lenses[$lensIndex].context_tags = @('unused-context')
@@ -1953,13 +1963,17 @@ function Invoke-ResolverFixtureValidation {
         $universalLensOutcome.pages[0].traveler_lenses[$lensIndex].outcome_id = 'outcome-alpha'
     }
     Assert-PortfolioError 'traveler-lenses-reject-universal-outcome' $universalLensOutcome $sources $organizations $identities 'E_RULE'
-    $badTradeOff = Copy-FixtureObject $manifest
-    $badTradeOff.pages[0].traveler_lenses[1].trade_off = ''
-    [void]$badTradeOff.pages[0].traveler_lenses[1].Remove('reversal_condition')
-    Assert-PortfolioError 'rule-material-trade-off' $badTradeOff $sources $organizations $identities 'E_RULE'
+    $missingMaterialLens = Copy-FixtureObject $manifest
+    [void]$missingMaterialLens.pages[0].traveler_lenses[1].Remove('trade_off')
+    [void]$missingMaterialLens.pages[0].traveler_lenses[1].Remove('reversal_condition')
+    Assert-PortfolioError 'rule-material-trade-off-schema' $missingMaterialLens $sources $organizations $identities 'E_SCHEMA'
+    Assert-PortfolioError 'rule-material-trade-off-semantic' $missingMaterialLens $sources $organizations $identities 'E_RULE'
     $reversalOnlyLens = Copy-FixtureObject $manifest
-    $reversalOnlyLens.pages[0].traveler_lenses[1].trade_off = ''
-    Assert-NoPortfolioError 'rule-allows-reversal-without-trade-off' $reversalOnlyLens $sources $organizations $identities 'E_RULE'
+    [void]$reversalOnlyLens.pages[0].traveler_lenses[1].Remove('trade_off')
+    $reversalOnlyResult = Get-PortfolioResult $reversalOnlyLens $sources $organizations $identities
+    Assert-ResolverTrue 'rule-allows-reversal-without-trade-off' ([bool]$reversalOnlyResult.Ok -and @($reversalOnlyResult.Errors).Count -eq 0) "reversal-only lens failed full portfolio validation: $([string]::Join(' | ', @($reversalOnlyResult.Errors)))"
+    $resolvedReversalOnlyLens = @($reversalOnlyResult.ResolvedBundles[$fixturePath].traveler_lenses | Where-Object { $_.lens_id -ceq 'lens-slow' })
+    Assert-ResolverTrue 'resolved-reversal-only-lens-schema' ($resolvedReversalOnlyLens.Count -eq 1 -and -not (Test-HasProperty $resolvedReversalOnlyLens[0] 'trade_off') -and [string](Get-Property $resolvedReversalOnlyLens[0] 'reversal_condition') -ceq 'Use Alpha when the return window tightens.') 'resolved reversal-only lens did not omit trade_off and preserve reversal_condition'
     $duplicateLensId = Copy-FixtureObject $manifest
     $duplicateLensId.pages[0].traveler_lenses[1].lens_id = $duplicateLensId.pages[0].traveler_lenses[0].lens_id
     Assert-PortfolioError 'traveler-lens-id-unique' $duplicateLensId $sources $organizations $identities 'E_RULE'
@@ -1991,8 +2005,10 @@ function Invoke-ResolverFixtureValidation {
     $negativePrimaryManifest.pages[0].source_assignments[6].decisive = $false
     Assert-NoPortfolioError 'negative-outcome-allows-responsible-current-primary' $negativePrimaryManifest $sources $organizations $identities 'E_NEGATIVE'
     $liveCheckPrimaryManifest = Copy-FixtureObject $negativePrimaryManifest
+    $liveCheckPrimaryManifest.pages[0].source_assignments[6].decisive = $true
+    $liveCheckPrimaryManifest.pages[0].outcomes[1].settled = $true
     $liveCheckPrimaryManifest.pages[0].outcomes[1].live_check_required = $true
-    Assert-NoPortfolioError 'live-check-outcome-allows-sole-responsible-current-primary' $liveCheckPrimaryManifest $sources $organizations $identities 'E_NEGATIVE'
+    Assert-NoPortfolioError 'settled-live-check-allows-sole-responsible-current-primary' $liveCheckPrimaryManifest $sources $organizations $identities 'E_SETTLED'
     $staleNegativeManifest = Copy-FixtureObject $manifest
     $staleNegativeSources = Copy-FixtureObject $sources
     $staleNegativeManifest.pages[0].source_assignments[6].decisive = $false

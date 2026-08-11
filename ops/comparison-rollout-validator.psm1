@@ -380,6 +380,11 @@ function Test-VgSchemaNode {
         try { $errors += @(Test-VgSchemaNode $Value (Resolve-VgSchemaRef (Get-VgProperty $SchemaNode '$ref') $RootSchema) $RootSchema $Pointer) } catch { $errors += "$Pointer has invalid schema reference" }
     }
     if (Test-VgProperty $SchemaNode 'allOf') { foreach ($child in (Get-VgProperty $SchemaNode 'allOf')) { $errors += @(Test-VgSchemaNode $Value $child $RootSchema $Pointer) } }
+    if (Test-VgProperty $SchemaNode 'anyOf') {
+        $anyOfMatched = $false
+        foreach ($child in (Get-VgProperty $SchemaNode 'anyOf')) { if (@(Test-VgSchemaNode $Value $child $RootSchema $Pointer).Count -eq 0) { $anyOfMatched = $true; break } }
+        if (-not $anyOfMatched) { $errors += "$Pointer does not satisfy anyOf" }
+    }
     if (Test-VgProperty $SchemaNode 'type') {
         $type = [string](Get-VgProperty $SchemaNode 'type')
         $matches = switch ($type) {
@@ -928,14 +933,17 @@ function Invoke-VgComparisonPortfolio {
             $outcomeOrganizations = New-VgStringSet
             $currentOutcomeRows = @($supportRows | Where-Object { $_.outcome_id -ceq $outcomeId -and $_.decisive -and $_.freshness_state -ceq 'current' -and -not $_.background })
             foreach ($row in $currentOutcomeRows) { [void]$outcomeOrganizations.Add([string]$row.organization_id) }
+            $responsiblePrimaryOrganizations = New-VgStringSet
+            foreach ($row in @($currentOutcomeRows | Where-Object { $_.evidence_label -ceq 'primary' })) { [void]$responsiblePrimaryOrganizations.Add([string]$row.organization_id) }
             if (-not $mappedOutcomes.Contains($outcomeId)) { Add-VgError $errors 'E_PROVENANCE' "$path outcome=$outcomeId" 'outcome is orphaned from source evidence' }
             if ([bool](Get-VgProperty $outcome 'negative')) {
-                $hasResponsiblePrimary = @($currentOutcomeRows | Where-Object { $_.evidence_label -ceq 'primary' }).Count -gt 0
+                $hasResponsiblePrimary = $responsiblePrimaryOrganizations.Count -gt 0
                 $corroboratingOrganizations = New-VgStringSet
                 foreach ($row in @($currentOutcomeRows | Where-Object { $_.evidence_label -ceq 'corroborating' })) { [void]$corroboratingOrganizations.Add([string]$row.organization_id) }
                 if (-not $hasResponsiblePrimary -and $corroboratingOrganizations.Count -lt 2) { Add-VgError $errors 'E_NEGATIVE' "$path outcome=$outcomeId" 'negative outcome needs one responsible current primary source or current corroboration from two controlling organizations' }
             }
-            if ([bool](Get-VgProperty $outcome 'settled') -and $outcomeOrganizations.Count -lt 2) { Add-VgError $errors 'E_SETTLED' "$path outcome=$outcomeId" 'settled outcome needs independent controlling organizations' }
+            $allowsSoleResponsibleLiveCheck = ([bool](Get-VgProperty $outcome 'live_check_required') -and $outcomeOrganizations.Count -eq 1 -and $responsiblePrimaryOrganizations.Count -eq 1)
+            if ([bool](Get-VgProperty $outcome 'settled') -and $outcomeOrganizations.Count -lt 2 -and -not $allowsSoleResponsibleLiveCheck) { Add-VgError $errors 'E_SETTLED' "$path outcome=$outcomeId" 'settled outcome needs independent controlling organizations unless a live check has one sole responsible current primary organization' }
             if ([bool](Get-VgProperty $outcome 'settled') -and [bool](Get-VgProperty $outcome 'decisive')) {
                 foreach ($expiredRow in @($supportRows | Where-Object { $_.outcome_id -ceq $outcomeId -and $_.decisive -and -not $_.background -and $_.expired })) {
                     $hasLiveCheckLabel = ([string]$expiredRow.evidence_label -ceq 'live_check_required' -and [bool](Get-VgProperty $outcome 'live_check_required'))
@@ -971,9 +979,8 @@ function Invoke-VgComparisonPortfolio {
             $preferenceCount = @($resolvedPath | Where-Object { [string](Get-VgProperty $_ 'kind') -ceq 'preference' }).Count
             $tieCount = @($resolvedPath | Where-Object { [string](Get-VgProperty $_ 'kind') -ceq 'tie_breaker' }).Count
             if ($hardCount -gt 1 -or ($hardCount -eq 1 -and [string](Get-VgProperty $resolvedPath[0] 'kind') -cne 'hard_constraint')) { Add-VgError $errors 'E_RULE' "$path lens=$lensId" 'hard constraint must appear at most once and first' }
-            $terminalHardCount = @($resolvedPath | Where-Object { [string](Get-VgProperty $_ 'kind') -ceq 'hard_constraint' -and [string](Get-VgProperty $_ 'outcome_id') -ceq $lensOutcomeId }).Count
-            if ($resolvedPath.Count -gt 1 -and $terminalHardCount -gt 0) { Add-VgError $errors 'E_RULE' "$path lens=$lensId" 'no rule may follow a hard constraint that resolves the terminal outcome' }
             $hardTerminates = ($resolvedPath.Count -eq 1 -and $hardCount -eq 1 -and [string](Get-VgProperty $resolvedPath[0] 'outcome_id') -ceq $lensOutcomeId)
+            if ($hardCount -eq 1 -and -not $hardTerminates) { Add-VgError $errors 'E_RULE' "$path lens=$lensId" 'a hard constraint must be the sole used rule and match the lens terminal outcome' }
             if (-not $hardTerminates -and $preferenceCount -ne 1) { Add-VgError $errors 'E_RULE' "$path lens=$lensId" 'rule path needs exactly one preference unless the first hard constraint terminates' }
             if ($tieCount -gt 1) { Add-VgError $errors 'E_RULE' "$path lens=$lensId" 'rule path permits at most one tie-breaker' }
             if ($tieCount -eq 1 -and [string](Get-VgProperty $resolvedPath[$resolvedPath.Count - 1] 'kind') -cne 'tie_breaker') { Add-VgError $errors 'E_RULE' "$path lens=$lensId" 'tie-breaker must be later and terminal' }
@@ -1021,8 +1028,9 @@ function Invoke-VgComparisonPortfolio {
             $lensOutcome = if ($outcomeById.ContainsKey($lensOutcomeId)) { $outcomeById[$lensOutcomeId] } else { $null }
             $bundleLens = [ordered]@{
                 lens_id = [string](Get-VgProperty $lens 'lens_id'); traveler = [string](Get-VgProperty $lens 'traveler'); context_tags = [object[]]@((Get-VgProperty $lens 'context_tags'))
-                outcome_id = $lensOutcomeId; outcome = if ($null -ne $lensOutcome) { [string](Get-VgProperty $lensOutcome 'summary') } else { '' }; trade_off = [string](Get-VgProperty $lens 'trade_off'); rule_path = [object[]]@($usedRules)
+                outcome_id = $lensOutcomeId; outcome = if ($null -ne $lensOutcome) { [string](Get-VgProperty $lensOutcome 'summary') } else { '' }; rule_path = [object[]]@($usedRules)
             }
+            if (Test-VgProperty $lens 'trade_off') { $bundleLens['trade_off'] = [string](Get-VgProperty $lens 'trade_off') }
             if (Test-VgProperty $lens 'reversal_condition') { $bundleLens['reversal_condition'] = [string](Get-VgProperty $lens 'reversal_condition') }
             $bundleLenses += $bundleLens
         }

@@ -273,7 +273,11 @@
           "type": "array", "minItems": 3, "maxItems": 5, "uniqueItems": true,
           "items": {
             "type": "object", "additionalProperties": false,
-            "required": ["lens_id", "traveler", "context_tags", "rule_path", "outcome_id", "trade_off"],
+            "required": ["lens_id", "traveler", "context_tags", "rule_path", "outcome_id"],
+            "anyOf": [
+              { "required": ["trade_off"] },
+              { "required": ["reversal_condition"] }
+            ],
             "properties": {
               "lens_id": { "$ref": "#/$defs/stableId" },
               "traveler": { "allOf": [{ "$ref": "#/$defs/safeText" }], "maxLength": 80 },
@@ -743,7 +747,11 @@
           "items": {
             "type": "object",
             "additionalProperties": false,
-            "required": ["lens_id", "traveler", "context_tags", "outcome_id", "outcome", "trade_off", "rule_path"],
+            "required": ["lens_id", "traveler", "context_tags", "outcome_id", "outcome", "rule_path"],
+            "anyOf": [
+              { "required": ["trade_off"] },
+              { "required": ["reversal_condition"] }
+            ],
             "properties": {
               "lens_id": { "$ref": "#/$defs/stableId" },
               "traveler": { "allOf": [{ "$ref": "#/$defs/safeText" }], "maxLength": 80 },
