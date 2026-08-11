@@ -465,6 +465,25 @@ function Test-SchemaNode {
         }
     }
 
+    if (Test-HasProperty $SchemaNode 'anyOf') {
+        $anyOfMatched = $false
+        foreach ($childSchema in (Get-Property $SchemaNode 'anyOf')) {
+            $childMatched = $false
+            try {
+                $childMatched = (@(Test-SchemaNode $Value $childSchema $RootSchema $Path).Count -eq 0)
+            } catch {
+                $childMatched = $false
+            }
+            if ($childMatched) {
+                $anyOfMatched = $true
+                break
+            }
+        }
+        if (-not $anyOfMatched) {
+            $nodeErrors += "$Path does not satisfy anyOf"
+        }
+    }
+
     if (Test-HasProperty $SchemaNode 'type') {
         $expectedType = [string](Get-Property $SchemaNode 'type')
         $typeMatches = switch ($expectedType) {
@@ -1210,8 +1229,37 @@ function Invoke-FixtureValidation {
         }
     }
 
+    function Assert-BundleSchemaValidatorParity {
+        param([string]$Name, $Value, [bool]$ExpectedValid)
+        $script:fixtureChecks++
+        try {
+            $exportedErrors = @(Test-VgSchemaDocument -Document $Value -Schema $Schema -DefinitionName 'resolvedBundleV2' -DocumentId "fixture/$Name exported")
+            $internalErrors = @(Get-ResolvedBundleV2ContractErrors $Value $Schema "fixture/$Name internal")
+            if ($ExpectedValid) {
+                if ($exportedErrors.Count -ne 0 -or $internalErrors.Count -ne 0) {
+                    $script:fixtureErrors += "E_FIXTURE fixture/${Name}: valid bundle validators disagreed or rejected the bundle"
+                }
+            } elseif ($exportedErrors.Count -ne 1 -or $internalErrors.Count -ne 1 -or
+                -not $exportedErrors[0].StartsWith('E_SCHEMA ', [System.StringComparison]::Ordinal) -or
+                -not $internalErrors[0].StartsWith('E_SCHEMA ', [System.StringComparison]::Ordinal)) {
+                $script:fixtureErrors += "E_FIXTURE fixture/${Name}: invalid bundle did not produce one deterministic E_SCHEMA from both validators"
+            }
+        } catch {
+            $script:fixtureErrors += "E_FIXTURE fixture/${Name}: bundle validator parity check threw unexpectedly"
+        }
+    }
+
     $positiveBundle = New-PositiveBundle
     Assert-BundleAccepted 'resolved-bundle-v2-positive' $positiveBundle
+    $tradeOffOnlyBundle = Copy-FixtureObject $positiveBundle
+    Assert-BundleSchemaValidatorParity 'resolved-bundle-v2-trade-off-only-anyof' $tradeOffOnlyBundle $true
+    $reversalOnlyBundle = Copy-FixtureObject $positiveBundle
+    [void]$reversalOnlyBundle.traveler_lenses[0].Remove('trade_off')
+    $reversalOnlyBundle.traveler_lenses[0].reversal_condition = 'Choose the other option when the transfer constraint changes.'
+    Assert-BundleSchemaValidatorParity 'resolved-bundle-v2-reversal-only-anyof' $reversalOnlyBundle $true
+    $missingTradeOffAndReversalBundle = Copy-FixtureObject $positiveBundle
+    [void]$missingTradeOffAndReversalBundle.traveler_lenses[0].Remove('trade_off')
+    Assert-BundleSchemaValidatorParity 'resolved-bundle-v2-missing-trade-off-and-reversal-anyof' $missingTradeOffAndReversalBundle $false
 
     $copySource = [ordered]@{
         empty_array = @()
