@@ -195,19 +195,28 @@ function Get-ObjectPropertyNames {
     return @($Value.PSObject.Properties.Name)
 }
 
+function Test-IsNumericClrValue {
+    param($Value)
+    return ($Value -is [sbyte] -or $Value -is [byte] -or
+        $Value -is [int16] -or $Value -is [uint16] -or
+        $Value -is [int32] -or $Value -is [uint32] -or
+        $Value -is [int64] -or $Value -is [uint64] -or
+        $Value -is [single] -or $Value -is [double] -or
+        $Value -is [decimal] -or $Value -is [System.Numerics.BigInteger])
+}
+
 function Test-IsJsonNumber {
     param($Value)
+    if (-not (Test-IsNumericClrValue $Value)) {
+        return $false
+    }
     if ($Value -is [double]) {
         return (-not [double]::IsNaN($Value) -and -not [double]::IsInfinity($Value))
     }
     if ($Value -is [single]) {
         return (-not [single]::IsNaN($Value) -and -not [single]::IsInfinity($Value))
     }
-    return ($Value -is [sbyte] -or $Value -is [byte] -or
-        $Value -is [int16] -or $Value -is [uint16] -or
-        $Value -is [int32] -or $Value -is [uint32] -or
-        $Value -is [int64] -or $Value -is [uint64] -or
-        $Value -is [decimal] -or $Value -is [System.Numerics.BigInteger])
+    return $true
 }
 
 function Test-IsMathematicalInteger {
@@ -310,7 +319,7 @@ function Test-JsonValueEqual {
     if ($Left -is [bool] -or $Right -is [bool]) {
         return ($Left -is [bool] -and $Right -is [bool] -and $Left -eq $Right)
     }
-    if ((Test-IsJsonNumber $Left) -or (Test-IsJsonNumber $Right)) {
+    if ((Test-IsNumericClrValue $Left) -or (Test-IsNumericClrValue $Right)) {
         if (-not (Test-IsJsonNumber $Left) -or -not (Test-IsJsonNumber $Right)) {
             return $false
         }
@@ -1207,6 +1216,30 @@ function Invoke-FixtureValidation {
     Assert-Rejected 'unique-items-decimal-double-tenth-equal' (ConvertTo-FixtureObject @([decimal]0.1, [double]0.1)) $uniqueItemsSchema
     Assert-Rejected 'unique-items-exponent-decimal-equal' (ConvertTo-FixtureObject @([double]1e-5, [decimal]0.00001)) $uniqueItemsSchema
     Assert-Rejected 'unique-items-negative-zero-equal' (ConvertTo-FixtureObject @([double](-0.0), [int]0)) $uniqueItemsSchema
+    $numberTypeSchema = '{"type":"number"}' | ConvertFrom-Json
+    $nonfiniteFixtures = @(
+        [ordered]@{ name = 'positive-infinity'; token = 'Infinity'; value = [double]::PositiveInfinity }
+        [ordered]@{ name = 'negative-infinity'; token = '-Infinity'; value = [double]::NegativeInfinity }
+        [ordered]@{ name = 'nan'; token = 'NaN'; value = [double]::NaN }
+    )
+    foreach ($nonfiniteFixture in $nonfiniteFixtures) {
+        $script:fixtureChecks++
+        if (Test-JsonValueEqual $nonfiniteFixture.value $nonfiniteFixture.value) {
+            $script:fixtureErrors += "E_SCHEMA fixture/nonfinite-equality-$($nonfiniteFixture.name): nonfinite value compared equal to itself"
+        }
+        Assert-Accepted "unique-items-nonfinite-$($nonfiniteFixture.name)" (ConvertTo-FixtureObject @($nonfiniteFixture.value, $nonfiniteFixture.value)) $uniqueItemsSchema
+        Assert-Rejected "number-type-nonfinite-$($nonfiniteFixture.name)" $nonfiniteFixture.value $numberTypeSchema
+        try {
+            $parsedNonfinite = ("{`"value`":$($nonfiniteFixture.token)}" | ConvertFrom-Json).value
+            $script:fixtureChecks++
+            if (@(Test-SchemaNode $parsedNonfinite $numberTypeSchema $Schema '$').Count -eq 0 -or
+                (Test-JsonValueEqual $parsedNonfinite $parsedNonfinite)) {
+                $script:fixtureErrors += "E_SCHEMA fixture/nonfinite-convertfromjson-$($nonfiniteFixture.name): parsed nonfinite value did not fail closed"
+            }
+        } catch {
+            # Engines that reject non-standard JSON tokens already fail closed.
+        }
+    }
     $hugeIntegerA = [System.Numerics.BigInteger]::Parse('10000000000000000000000000000000000000000')
     $hugeIntegerB = [System.Numerics.BigInteger]::Parse('10000000000000000000000000000000000000001')
     $script:fixtureChecks++
