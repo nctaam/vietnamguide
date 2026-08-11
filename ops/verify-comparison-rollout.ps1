@@ -19,6 +19,17 @@ $requiredInputs = @(
     'ops/comparison-rollout-validator.psm1'
 )
 
+$requiredModuleExports = @(
+    'Read-VgJsonDocument'
+    'ConvertTo-VgCanonicalJson'
+    'Get-VgSha256Hex'
+    'Test-VgSchemaDocument'
+    'Resolve-VgComparisonPortfolio'
+    'Test-VgComparisonPortfolio'
+    'New-VgComparisonArtifact'
+    'Compare-VgArtifactDeterminism'
+)
+
 $baselinePaths = @(
     'destinations/ho-chi-minh-city-travel-guide'
     'itineraries/10-days-in-vietnam'
@@ -71,6 +82,22 @@ $requiredDefinitions = @(
     'ruleKind'
     'routeGroup'
     'changeReason'
+    'canonicalDomain'
+    'languageTag'
+    'mediaType'
+    'contextTag'
+    'sourceFreshnessState'
+    'publisherRecord'
+    'claimDefinition'
+    'notApplicableRecord'
+    'axisDefinition'
+    'outcomeDefinition'
+    'ruleDefinition'
+    'sourceMapping'
+    'sourceAssignment'
+    'comparisonPage'
+    'fixtureManifest'
+    'impactIndexEntry'
     'manifest'
     'sourceRegistry'
     'organizationRegistry'
@@ -101,6 +128,9 @@ $publicEnumContracts = [ordered]@{
     claimGroup = $enumContracts.claimGroup
     evidenceLabel = $enumContracts.evidenceLabel
     freshnessTier = $enumContracts.freshnessTier
+    mediaType = @('html', 'pdf', 'json')
+    sourceFreshnessState = @('current', 'stale', 'live_check_required')
+    expectedTitleMode = @('exact', 'pattern')
     ruleKind = $enumContracts.ruleKind
     routeGroup = $enumContracts.routeGroup
     changeReason = $enumContracts.changeReason
@@ -727,7 +757,18 @@ function Get-ResolvedBundleV2ContractErrors {
 function New-PositiveBundle {
     $optionA = [ordered]@{ option_id = 'option-a'; label = 'Option A'; summary = 'Best for direct access and a compact visit.' }
     $optionB = [ordered]@{ option_id = 'option-b'; label = 'Option B'; summary = 'Best for a slower pace and broader context.' }
-    $rule = [ordered]@{ order = 1; kind = 'hard_constraint'; condition = 'Choose the route that fits the available transfer window.'; outcome = 'Option A when the day is tightly constrained.' }
+    $rule = [ordered]@{
+        rule_id = 'rule-primary'
+        order = 1
+        kind = 'hard_constraint'
+        condition = 'Choose the route that fits the available transfer window.'
+        outcome = 'Option A when the day is tightly constrained.'
+        context_tags = @('short-time')
+        option_ids = @('option-a')
+        claim_ids = @('claim-access')
+        axis_ids = @('axis-1')
+        outcome_id = 'outcome-a'
+    }
     $assessmentA = [ordered]@{ option_id = 'option-a'; outcome = 'Faster access with less transfer overhead.' }
     $assessmentB = [ordered]@{ option_id = 'option-b'; outcome = 'More context when an overnight stop is possible.' }
     $axes = @()
@@ -736,6 +777,9 @@ function New-PositiveBundle {
             axis_id = "axis-$axisNumber"
             label = "Decision axis $axisNumber"
             explanation = 'Compare the practical trade-off using checked evidence.'
+            claim_ids = @('claim-access')
+            option_ids = @('option-a', 'option-b')
+            decisive = ($axisNumber -eq 1)
             assessments = @($assessmentA, $assessmentB)
             source_ids = @("source-$axisNumber")
         }
@@ -745,7 +789,10 @@ function New-PositiveBundle {
         $lenses += [ordered]@{
             lens_id = "lens-$lensNumber"
             traveler = "Traveler profile $lensNumber"
+            context_tags = @('short-time')
+            outcome_id = 'outcome-a'
             outcome = 'Use the ordered rule path and choose the option that fits the stated constraint.'
+            trade_off = 'A faster transfer provides less time for a deeper visit.'
             rule_path = @($rule)
         }
     }
@@ -754,9 +801,22 @@ function New-PositiveBundle {
     foreach ($sourceNumber in 1..6) {
         $sources += [ordered]@{
             source_id = "source-$sourceNumber"
+            publisher_id = "publisher-$sourceNumber"
+            publisher_name = "Publisher $sourceNumber"
+            organization_id = "organization-$sourceNumber"
+            canonical_domain = "source-$sourceNumber.example.vn"
+            source_class = if ($sourceNumber -eq 1) { 'national_official' } elseif ($sourceNumber -le 3) { 'local_official' } elseif ($sourceNumber -le 5) { 'operational' } else { 'independent_corroboration' }
+            title = "Checked source $sourceNumber"
+            url = "https://source-$sourceNumber.example.vn/guidance"
             evidence_label = if ($sourceNumber -eq 1) { 'primary' } elseif ($sourceNumber -eq 6) { 'live_check_required' } else { 'corroborating' }
             checked_on = '2026-08-03'
+            freshness_tier = if ($sourceNumber -eq 6) { 'live' } else { 'current' }
+            freshness_state = if ($sourceNumber -eq 6) { 'live_check_required' } else { 'current' }
+            localities = @('fixture-locality')
+            language = if ($sourceNumber -eq 2) { 'vi' } else { 'en' }
+            media_type = 'html'
             claim_groups = @($claimGroups[$sourceNumber - 1])
+            mappings = @([ordered]@{ claim_id = 'claim-access'; option_id = if (($sourceNumber % 2) -eq 0) { 'option-b' } else { 'option-a' }; axis_id = 'axis-1'; outcome_id = 'outcome-a' })
         }
     }
     $routes = @(
@@ -790,6 +850,7 @@ function New-PositiveBundle {
         localities = @('ho-chi-minh-city', 'mekong-delta')
         options = @($optionA, $optionB)
         primary_decision = [ordered]@{
+            outcome_id = 'outcome-a'
             outcome = 'option'
             winner_option_id = 'option-a'
             summary = 'Choose Option A for a tight day; choose Option B when depth matters more than transfer time.'
@@ -842,10 +903,16 @@ function New-SizedBundleFixture {
     $rules = @($bundle['primary_decision']['rules'])
     foreach ($ruleNumber in 2..8) {
         $rules += [ordered]@{
+            rule_id = "rule-$ruleNumber"
             order = $ruleNumber
             kind = if ($ruleNumber -eq 8) { 'tie_breaker' } else { 'preference' }
             condition = "Qualitative condition $ruleNumber for this decision path."
             outcome = "Qualitative outcome $ruleNumber without scoring or hidden weights."
+            context_tags = @('short-time')
+            option_ids = @('option-a')
+            claim_ids = @('claim-access')
+            axis_ids = @('axis-1')
+            outcome_id = 'outcome-a'
         }
     }
     $bundle['primary_decision']['rules'] = ConvertTo-FixtureObject $rules
@@ -868,6 +935,9 @@ function New-SizedBundleFixture {
             axis_id = "axis-$axisNumber"
             label = "Decision axis $axisNumber"
             explanation = "Checked explanation for decision axis $axisNumber."
+            claim_ids = @('claim-access')
+            option_ids = @('option-a', 'option-b', 'option-3', 'option-4')
+            decisive = ($axisNumber -eq 1)
             assessments = $assessments
             source_ids = @("source-$axisNumber")
         }
@@ -879,16 +949,25 @@ function New-SizedBundleFixture {
         $lensRules = @()
         foreach ($ruleNumber in 1..5) {
             $lensRules += [ordered]@{
+                rule_id = "lens-$lensNumber-rule-$ruleNumber"
                 order = $ruleNumber
                 kind = if ($ruleNumber -eq 1) { 'hard_constraint' } elseif ($ruleNumber -eq 5) { 'tie_breaker' } else { 'preference' }
                 condition = "Lens $lensNumber condition $ruleNumber."
                 outcome = "Lens $lensNumber qualitative outcome $ruleNumber."
+                context_tags = @('short-time')
+                option_ids = @('option-a')
+                claim_ids = @('claim-access')
+                axis_ids = @('axis-1')
+                outcome_id = 'outcome-a'
             }
         }
         $lenses += [ordered]@{
             lens_id = "lens-$lensNumber"
             traveler = "Traveler profile $lensNumber"
+            context_tags = @('short-time')
+            outcome_id = 'outcome-a'
             outcome = "Outcome for traveler profile $lensNumber."
+            trade_off = "Trade-off for traveler profile $lensNumber."
             rule_path = $lensRules
         }
     }
@@ -898,9 +977,22 @@ function New-SizedBundleFixture {
     foreach ($sourceNumber in 7..10) {
         $sources += [ordered]@{
             source_id = "source-$sourceNumber"
+            publisher_id = "publisher-$sourceNumber"
+            publisher_name = "Publisher $sourceNumber"
+            organization_id = "organization-$sourceNumber"
+            canonical_domain = "source-$sourceNumber.example.vn"
+            source_class = 'independent_corroboration'
+            title = "Checked source $sourceNumber"
+            url = "https://source-$sourceNumber.example.vn/guidance"
             evidence_label = 'corroborating'
             checked_on = '2026-08-03'
+            freshness_tier = 'current'
+            freshness_state = 'current'
+            localities = @('fixture-locality')
+            language = 'en'
+            media_type = 'html'
             claim_groups = @('experience_fit')
+            mappings = @([ordered]@{ claim_id = 'claim-access'; option_id = 'option-a'; axis_id = 'axis-1'; outcome_id = 'outcome-a' })
         }
     }
     $bundle['sources'] = ConvertTo-FixtureObject $sources
@@ -952,6 +1044,7 @@ function New-SizedBundleFixture {
     foreach ($lens in $bundle['traveler_lenses']) {
         Add-PaddingSlot $lens 'traveler' 80
         Add-PaddingSlot $lens 'outcome' 220
+        Add-PaddingSlot $lens 'trade_off' 220
         foreach ($ruleItem in $lens['rule_path']) {
             Add-PaddingSlot $ruleItem 'condition' 140
             Add-PaddingSlot $ruleItem 'outcome' 160
@@ -1009,12 +1102,17 @@ function Get-PublicEnumSchemaNodes {
     $sourceProbeProperties = Get-Property (Get-Definition $Schema 'sourceProbe') 'properties'
     $impactReportProperties = Get-Property (Get-Definition $Schema 'impactReport') 'properties'
     $backupProperties = Get-Property (Get-Definition $Schema 'backup') 'properties'
+    $sourceRegistryProperties = Get-Property (Get-Definition $Schema 'sourceRegistry') 'properties'
+    $sourceRegistryItemProperties = Get-Property (Get-Property (Get-Property $sourceRegistryProperties 'sources') 'items') 'properties'
 
     return [ordered]@{
         sourceClass = Get-Definition $Schema 'sourceClass'
         claimGroup = Get-Definition $Schema 'claimGroup'
         evidenceLabel = Get-Definition $Schema 'evidenceLabel'
         freshnessTier = Get-Definition $Schema 'freshnessTier'
+        mediaType = Get-Definition $Schema 'mediaType'
+        sourceFreshnessState = Get-Definition $Schema 'sourceFreshnessState'
+        expectedTitleMode = Get-Property $sourceRegistryItemProperties 'expected_title_mode'
         ruleKind = Get-Definition $Schema 'ruleKind'
         routeGroup = Get-Definition $Schema 'routeGroup'
         changeReason = Get-Definition $Schema 'changeReason'
@@ -1411,6 +1509,15 @@ function Invoke-FixtureValidation {
     }
 
     $manifestSchema = Get-Definition $Schema 'manifest'
+    $fixtureManifestPath = Join-Path $repoRoot 'ops/comparison-rollout/fixtures/minimal/manifest.json'.Replace('/', [System.IO.Path]::DirectorySeparatorChar)
+    $fixtureManifestDocument = [System.IO.File]::ReadAllText($fixtureManifestPath, [System.Text.Encoding]::UTF8) | ConvertFrom-Json
+    $productionPages = @()
+    foreach ($targetMapping in $targetMappings) {
+        $productionPage = Copy-FixtureObject (Get-Property $fixtureManifestDocument 'pages')[0]
+        $productionPage['path'] = $targetMapping.path
+        $productionPage['post_id'] = $targetMapping.post_id
+        $productionPages += $productionPage
+    }
     $manifestFixture = ConvertTo-FixtureObject ([ordered]@{
         manifest_version = 'manifest-v2'
         schema_version = 'v2'
@@ -1424,6 +1531,7 @@ function Invoke-FixtureValidation {
         permanent_controls = $permanentControls
         target_mappings = $targetMappings
         canary_activation = $canaryActivation
+        pages = $productionPages
     })
     Assert-Accepted 'manifest-contract' $manifestFixture $manifestSchema
     $script:fixtureChecks++
@@ -1499,6 +1607,318 @@ function Invoke-FixtureValidation {
     return [ordered]@{ errors = @($script:fixtureErrors); checks = $script:fixtureChecks }
 }
 
+function Invoke-ResolverFixtureValidation {
+    param(
+        [Parameter(Mandatory = $true)]$Schema,
+        [Parameter(Mandatory = $true)][datetime]$EvaluationDate
+    )
+
+    $script:resolverFixtureErrors = @()
+    $script:resolverFixtureChecks = 0
+
+    function Add-ResolverFailure {
+        param([string]$Code, [string]$Name, [string]$Explanation)
+        $script:resolverFixtureErrors += "$Code fixture/$Name`: $Explanation"
+    }
+
+    function Assert-ResolverTrue {
+        param([string]$Name, [bool]$Condition, [string]$Explanation)
+        $script:resolverFixtureChecks++
+        if (-not $Condition) {
+            Add-ResolverFailure 'E_FIXTURE' $Name $Explanation
+        }
+    }
+
+    function Get-PortfolioResult {
+        param($ManifestDocument, $SourceDocument, $OrganizationDocument, $IdentityDocument, [string]$Profile = 'Fixture')
+        return Test-VgComparisonPortfolio `
+            -Manifest $ManifestDocument `
+            -Sources $SourceDocument `
+            -Organizations $OrganizationDocument `
+            -Identities $IdentityDocument `
+            -Schema $Schema `
+            -Profile $Profile `
+            -AsOfDate $EvaluationDate
+    }
+
+    function Assert-PortfolioError {
+        param([string]$Name, $ManifestDocument, $SourceDocument, $OrganizationDocument, $IdentityDocument, [string]$ExpectedCode)
+        $script:resolverFixtureChecks++
+        try {
+            $mutationResult = Get-PortfolioResult $ManifestDocument $SourceDocument $OrganizationDocument $IdentityDocument
+            if (@($mutationResult.Errors | Where-Object { $_.StartsWith("$ExpectedCode ", [System.StringComparison]::Ordinal) }).Count -eq 0) {
+                Add-ResolverFailure 'E_FIXTURE' $Name "expected $ExpectedCode but received $([string]::Join(' | ', @($mutationResult.Errors)))"
+            }
+        } catch {
+            Add-ResolverFailure 'E_FIXTURE' $Name "validator threw instead of returning $ExpectedCode"
+        }
+    }
+
+    function Assert-NoPortfolioError {
+        param([string]$Name, $ManifestDocument, $SourceDocument, $OrganizationDocument, $IdentityDocument, [string]$ForbiddenCode)
+        $script:resolverFixtureChecks++
+        try {
+            $mutationResult = Get-PortfolioResult $ManifestDocument $SourceDocument $OrganizationDocument $IdentityDocument
+            if (@($mutationResult.Errors | Where-Object { $_.StartsWith("$ForbiddenCode ", [System.StringComparison]::Ordinal) }).Count -gt 0) {
+                Add-ResolverFailure 'E_FIXTURE' $Name "did not expect $ForbiddenCode at the exact integer boundary"
+            }
+        } catch {
+            Add-ResolverFailure 'E_FIXTURE' $Name 'validator threw while checking an exact integer boundary'
+        }
+    }
+
+    $canonicalA = ConvertTo-VgCanonicalJson -Value ([ordered]@{ b = 2; a = 1 })
+    $canonicalB = ConvertTo-VgCanonicalJson -Value ([ordered]@{ a = 1; b = 2 })
+    Assert-ResolverTrue 'canonical-ordinal-object-order' ($canonicalA -ceq '{"a":1,"b":2}' -and $canonicalA -ceq $canonicalB) 'object keys were not sorted with ordinal comparison'
+    Assert-ResolverTrue 'canonical-array-order' ((ConvertTo-VgCanonicalJson -Value @('z', 'a', 2, 1)) -ceq '["z","a",2,1]') 'array order was not preserved'
+    Assert-ResolverTrue 'canonical-scalars' ((ConvertTo-VgCanonicalJson -Value ([ordered]@{ n = $null; f = $false; t = $true; d = [decimal]1.25 })) -ceq '{"d":1.25,"f":false,"n":null,"t":true}') 'scalar serialization was not compact and culture-independent'
+    $hashA = Get-VgSha256Hex -Value ([ordered]@{ b = 2; a = 1 })
+    $hashB = Get-VgSha256Hex -Value ([ordered]@{ a = 1; b = 2 })
+    Assert-ResolverTrue 'canonical-hash-order-independent' ($hashA -ceq $hashB -and $hashA -cmatch '^[a-f0-9]{64}$') 'SHA-256 was not lowercase or canonical-order independent'
+
+    $tempFiles = @()
+    try {
+        $utf8NoBom = New-Object System.Text.UTF8Encoding($false, $true)
+        $validPath = [System.IO.Path]::GetTempFileName(); $tempFiles += $validPath
+        [System.IO.File]::WriteAllText($validPath, '{"message":"Vietnam"}', $utf8NoBom)
+        $validDocument = Read-VgJsonDocument -Path $validPath
+        Assert-ResolverTrue 'read-utf8-no-bom' ((Get-Property $validDocument 'message') -ceq 'Vietnam') 'valid UTF-8 without BOM was rejected'
+
+        foreach ($invalidDocument in @(
+            [ordered]@{ name = 'read-bom-rejected'; bytes = [byte[]](0xEF, 0xBB, 0xBF, 0x7B, 0x7D); code = 'E_UTF8' }
+            [ordered]@{ name = 'read-invalid-utf8-rejected'; bytes = [byte[]](0x7B, 0x22, 0x78, 0x22, 0x3A, 0x22, 0xC3, 0x28, 0x22, 0x7D); code = 'E_UTF8' }
+            [ordered]@{ name = 'read-duplicate-key-rejected'; text = '{"a":1,"a":2}'; code = 'E_DUPLICATE_KEY' }
+            [ordered]@{ name = 'read-nested-duplicate-key-rejected'; text = '{"a":{"x":1,"x":2}}'; code = 'E_DUPLICATE_KEY' }
+            [ordered]@{ name = 'read-control-corruption-rejected'; text = "{`"a`":`"bad$([char]1)value`"}"; code = 'E_JSON' }
+        )) {
+            $invalidPath = [System.IO.Path]::GetTempFileName(); $tempFiles += $invalidPath
+            if (Test-HasProperty $invalidDocument 'bytes') {
+                [System.IO.File]::WriteAllBytes($invalidPath, $invalidDocument.bytes)
+            } else {
+                [System.IO.File]::WriteAllText($invalidPath, $invalidDocument.text, $utf8NoBom)
+            }
+            $script:resolverFixtureChecks++
+            try {
+                [void](Read-VgJsonDocument -Path $invalidPath)
+                Add-ResolverFailure 'E_FIXTURE' $invalidDocument.name "expected $($invalidDocument.code) rejection"
+            } catch {
+                if (-not $_.Exception.Message.StartsWith("$($invalidDocument.code) ", [System.StringComparison]::Ordinal)) {
+                    Add-ResolverFailure 'E_FIXTURE' $invalidDocument.name "unexpected error '$($_.Exception.Message)'"
+                }
+            }
+        }
+    } finally {
+        foreach ($tempFile in $tempFiles) {
+            if (Test-Path -LiteralPath $tempFile -PathType Leaf) {
+                [System.IO.File]::Delete($tempFile)
+            }
+        }
+    }
+
+    $fixtureRoot = Join-Path $repoRoot 'ops/comparison-rollout/fixtures/minimal'.Replace('/', [System.IO.Path]::DirectorySeparatorChar)
+    $manifest = Read-VgJsonDocument -Path (Join-Path $fixtureRoot 'manifest.json')
+    $sources = Read-VgJsonDocument -Path (Join-Path $fixtureRoot 'sources.json')
+    $organizations = Read-VgJsonDocument -Path (Join-Path $fixtureRoot 'organizations.json')
+    $identities = Read-VgJsonDocument -Path (Join-Path $fixtureRoot 'identities.json')
+
+    foreach ($schemaFixture in @(
+        [ordered]@{ name = 'fixture-manifest-schema'; document = $manifest; definition = 'fixtureManifest' }
+        [ordered]@{ name = 'source-registry-schema'; document = $sources; definition = 'sourceRegistry' }
+        [ordered]@{ name = 'organization-registry-schema'; document = $organizations; definition = 'organizationRegistry' }
+        [ordered]@{ name = 'identity-registry-schema'; document = $identities; definition = 'identityRegistry' }
+    )) {
+        $schemaErrors = @(Test-VgSchemaDocument -Document $schemaFixture.document -Schema $Schema -DefinitionName $schemaFixture.definition -DocumentId "fixture/$($schemaFixture.name)")
+        Assert-ResolverTrue $schemaFixture.name ($schemaErrors.Count -eq 0) "valid fixture schema was rejected: $([string]::Join(' | ', $schemaErrors))"
+    }
+
+    $unknownNested = Copy-FixtureObject $manifest
+    $unknownNested.pages[0].axes[0]['unexpected'] = 'private'
+    $unknownErrors = @(Test-VgSchemaDocument -Document $unknownNested -Schema $Schema -DefinitionName 'fixtureManifest' -DocumentId 'fixture/unknown-nested')
+    Assert-ResolverTrue 'schema-unknown-nested-key' (@($unknownErrors | Where-Object { $_.StartsWith('E_SCHEMA ', [System.StringComparison]::Ordinal) }).Count -gt 0) 'unknown nested key was accepted'
+    $missingNested = Copy-FixtureObject $manifest
+    [void]$missingNested.pages[0].outcomes[0].Remove('trade_off')
+    $missingErrors = @(Test-VgSchemaDocument -Document $missingNested -Schema $Schema -DefinitionName 'fixtureManifest' -DocumentId 'fixture/missing-nested')
+    Assert-ResolverTrue 'schema-missing-nested-key' (@($missingErrors | Where-Object { $_.StartsWith('E_SCHEMA ', [System.StringComparison]::Ordinal) }).Count -gt 0) 'missing nested key was accepted'
+
+    $validResult = Get-PortfolioResult $manifest $sources $organizations $identities
+    $expectedShape = @('Ok', 'Errors', 'Hashes', 'ResolvedBundles', 'CoverageMatrix', 'ImpactIndex', 'StageInventories')
+    Assert-ResolverTrue 'portfolio-valid-fixture' ([bool]$validResult.Ok -and @($validResult.Errors).Count -eq 0) "minimal fixture failed: $([string]::Join(' | ', @($validResult.Errors)))"
+    Assert-ResolverTrue 'portfolio-exact-return-shape' (Test-OrdinalSequence @($validResult.PSObject.Properties.Name) $expectedShape) 'Test-VgComparisonPortfolio return shape changed'
+    Assert-ResolverTrue 'portfolio-return-types' ($validResult.Ok -is [bool] -and $validResult.Errors -is [array] -and $validResult.CoverageMatrix -is [array] -and $validResult.Hashes -is [System.Collections.IDictionary] -and $validResult.ResolvedBundles -is [System.Collections.IDictionary] -and $validResult.ImpactIndex -is [System.Collections.IDictionary] -and $validResult.StageInventories -is [System.Collections.IDictionary]) 'portfolio result property types changed'
+    foreach ($portfolioError in @($validResult.Errors)) {
+        Assert-ResolverTrue 'error-format' ($portfolioError -cmatch '^E_[A-Z0-9_]+ [^:]+: .+$') "invalid validator error format '$portfolioError'"
+    }
+
+    $fixturePath = 'compare/fixture-alpha-vs-beta'
+    $resolvedBundle = $validResult.ResolvedBundles[$fixturePath]
+    Assert-ResolverTrue 'resolved-bundle-schema' (@(Test-VgSchemaDocument -Document $resolvedBundle -Schema $Schema -DefinitionName 'resolvedBundleV2' -DocumentId $fixturePath).Count -eq 0) 'resolved bundle does not satisfy resolvedBundleV2'
+    Assert-ResolverTrue 'unused-rule-not-rendered' ((ConvertTo-VgCanonicalJson -Value $resolvedBundle) -cnotmatch 'rule-unused') 'unused rule catalog entry leaked into the bundle'
+    foreach ($impactEntry in $validResult.ImpactIndex.Values) {
+        Assert-ResolverTrue 'impact-index-ordinal-claims' (Test-OrdinalSequence @($impactEntry.claim_ids) @($impactEntry.claim_ids | Sort-Object -CaseSensitive)) "claim_ids are not ordinal-sorted for $($impactEntry.source_id)"
+        Assert-ResolverTrue 'impact-index-ordinal-axes' (Test-OrdinalSequence @($impactEntry.axis_ids) @($impactEntry.axis_ids | Sort-Object -CaseSensitive)) "axis_ids are not ordinal-sorted for $($impactEntry.source_id)"
+        Assert-ResolverTrue 'impact-index-ordinal-outcomes' (Test-OrdinalSequence @($impactEntry.outcome_ids) @($impactEntry.outcome_ids | Sort-Object -CaseSensitive)) "outcome_ids are not ordinal-sorted for $($impactEntry.source_id)"
+    }
+
+    $publisherMismatchSources = Copy-FixtureObject $sources
+    $publisherMismatchSources.sources[0].publisher_id = 'pub-beta-national'
+    Assert-PortfolioError 'publisher-organization-bijection' $manifest $publisherMismatchSources $organizations $identities 'E_PUBLISHER'
+
+    $aliasCollapsedSources = Copy-FixtureObject $sources
+    foreach ($sourceItem in $aliasCollapsedSources.sources) {
+        if ($sourceItem.source_id -ceq 'source-beta-national') {
+            $sourceItem.organization_id = 'org-alpha'; $sourceItem.publisher_id = 'pub-alpha-national'; $sourceItem.publisher_name = 'Alpha National'; $sourceItem.canonical_domain = 'national-alpha.example.vn'
+        }
+        if ($sourceItem.source_id -ceq 'source-beta-operator') {
+            $sourceItem.organization_id = 'org-alpha'; $sourceItem.publisher_id = 'pub-alpha-operator'; $sourceItem.publisher_name = 'Alpha Operator'; $sourceItem.canonical_domain = 'operator-alpha.example.vn'
+        }
+    }
+    Assert-PortfolioError 'same-organization-publishers-do-not-corroborate' $manifest $aliasCollapsedSources $organizations $identities 'E_NEGATIVE'
+
+    $duplicateEdgeManifest = Copy-FixtureObject $manifest
+    $duplicateMapping = Copy-FixtureObject $duplicateEdgeManifest.pages[0].source_assignments[0].mappings[0]
+    $duplicateEdgeManifest.pages[0].source_assignments[0].mappings += $duplicateMapping
+    $duplicateResult = Get-PortfolioResult $duplicateEdgeManifest $sources $organizations $identities
+    Assert-ResolverTrue 'edge-deduplication' ([bool]$duplicateResult.Ok) "duplicate edge changed validation: $([string]::Join(' | ', @($duplicateResult.Errors)))"
+
+    $mixedScopeManifest = Copy-FixtureObject $manifest
+    $mixedScopeManifest.pages[0].source_assignments[3].mappings += [ordered]@{ claim_id = 'claim-experience'; option_id = 'alpha'; axis_id = 'axis-experience'; outcome_id = 'outcome-alpha' }
+    Assert-PortfolioError 'all-options-mixed-scope' $mixedScopeManifest $sources $organizations $identities 'E_SCOPE'
+
+    $fortyPercentManifest = Copy-FixtureObject $manifest
+    foreach ($assignmentIndex in @(1, 7)) {
+        foreach ($mapping in $fortyPercentManifest.pages[0].source_assignments[$assignmentIndex].mappings) { $mapping.option_id = 'all_options' }
+    }
+    Assert-NoPortfolioError 'two-way-balance-exact-forty-percent' $fortyPercentManifest $sources $organizations $identities 'E_BALANCE'
+    $belowFortyManifest = Copy-FixtureObject $fortyPercentManifest
+    foreach ($mapping in $belowFortyManifest.pages[0].source_assignments[6].mappings) { $mapping.option_id = 'all_options' }
+    Assert-PortfolioError 'two-way-balance-below-forty-percent' $belowFortyManifest $sources $organizations $identities 'E_BALANCE'
+
+    $threeWayManifest = Copy-FixtureObject $manifest
+    $threeWayManifest.pages[0].options += [ordered]@{ option_id = 'gamma'; label = 'Gamma'; summary = 'A third comparison option.' }
+    foreach ($claim in $threeWayManifest.pages[0].claims) { $claim.option_ids += 'gamma' }
+    foreach ($axis in $threeWayManifest.pages[0].axes) {
+        $axis.option_ids += 'gamma'
+        $axis.assessments += [ordered]@{ option_id = 'gamma'; outcome = 'Gamma provides a third trade-off.' }
+    }
+    $threeWayOptions = @('alpha', 'alpha', 'alpha', 'beta', 'beta', 'beta', 'gamma', 'gamma')
+    for ($assignmentIndex = 0; $assignmentIndex -lt 8; $assignmentIndex++) {
+        foreach ($mapping in $threeWayManifest.pages[0].source_assignments[$assignmentIndex].mappings) { $mapping.option_id = $threeWayOptions[$assignmentIndex] }
+    }
+    Assert-NoPortfolioError 'three-way-balance-exact-twenty-five-percent' $threeWayManifest $sources $organizations $identities 'E_BALANCE'
+    $belowTwentyFiveManifest = Copy-FixtureObject $threeWayManifest
+    foreach ($mapping in $belowTwentyFiveManifest.pages[0].source_assignments[7].mappings) { $mapping.option_id = 'beta' }
+    Assert-PortfolioError 'three-way-balance-below-twenty-five-percent' $belowTwentyFiveManifest $sources $organizations $identities 'E_BALANCE'
+
+    $domainSources = Copy-FixtureObject $sources
+    $domainOrganizations = Copy-FixtureObject $organizations
+    $domainManifest = Copy-FixtureObject $manifest
+    foreach ($newSourceNumber in 9..10) {
+        $newSource = Copy-FixtureObject $domainSources.sources[5]
+        $newSource.source_id = "source-extra-$newSourceNumber"
+        $domainSources.sources += $newSource
+        $domainManifest.pages[0].source_assignments += [ordered]@{
+            source_id = $newSource.source_id
+            evidence_label = 'corroborating'
+            establishes = "Extra balance source $newSourceNumber."
+            decisive = $false
+            mappings = @([ordered]@{ claim_id = 'claim-experience'; option_id = if ($newSourceNumber -eq 9) { 'alpha' } else { 'beta' }; axis_id = 'axis-experience'; outcome_id = if ($newSourceNumber -eq 9) { 'outcome-alpha' } else { 'outcome-beta' } })
+        }
+    }
+    foreach ($sourceIndex in 0..3) {
+        $domainSources.sources[$sourceIndex].organization_id = 'org-alpha'
+        $domainSources.sources[$sourceIndex].publisher_id = 'pub-alpha-national'
+        $domainSources.sources[$sourceIndex].publisher_name = 'Alpha National'
+        $domainSources.sources[$sourceIndex].canonical_domain = 'national-alpha.example.vn'
+    }
+    Assert-NoPortfolioError 'domain-cap-exact-forty-percent' $domainManifest $domainSources $domainOrganizations $identities 'E_DOMAIN'
+    $domainSources.sources[4].organization_id = 'org-alpha'
+    $domainSources.sources[4].publisher_id = 'pub-alpha-national'
+    $domainSources.sources[4].publisher_name = 'Alpha National'
+    $domainSources.sources[4].canonical_domain = 'national-alpha.example.vn'
+    Assert-PortfolioError 'domain-cap-over-forty-percent' $domainManifest $domainSources $domainOrganizations $identities 'E_DOMAIN'
+
+    $missingAxisSide = Copy-FixtureObject $manifest
+    $missingAxisSide.pages[0].axes[0].assessments = @($missingAxisSide.pages[0].axes[0].assessments | Select-Object -First 1)
+    Assert-PortfolioError 'decisive-axis-missing-side' $missingAxisSide $sources $organizations $identities 'E_AXIS'
+
+    $orphanManifest = Copy-FixtureObject $manifest
+    $orphanManifest.pages[0].source_assignments[0].mappings[0].claim_id = 'claim-orphan'
+    Assert-PortfolioError 'provenance-orphan-claim' $orphanManifest $sources $organizations $identities 'E_PROVENANCE'
+
+    $cycleManifest = Copy-FixtureObject $manifest
+    $cycleManifest.pages[0].claims[0].claim_id = 'axis-access'
+    $cycleManifest.pages[0].axes[0].claim_ids = @('axis-access')
+    foreach ($assignment in $cycleManifest.pages[0].source_assignments) {
+        foreach ($mapping in $assignment.mappings) { if ($mapping.claim_id -ceq 'claim-access') { $mapping.claim_id = 'axis-access' } }
+    }
+    foreach ($ruleItem in $cycleManifest.pages[0].rule_catalog) {
+        for ($claimIndex = 0; $claimIndex -lt $ruleItem.claim_ids.Count; $claimIndex++) { if ($ruleItem.claim_ids[$claimIndex] -ceq 'claim-access') { $ruleItem.claim_ids[$claimIndex] = 'axis-access' } }
+    }
+    Assert-PortfolioError 'provenance-cycle' $cycleManifest $sources $organizations $identities 'E_CYCLE'
+
+    $badRuleOrder = Copy-FixtureObject $manifest
+    $badRuleOrder.pages[0].traveler_lenses[2].rule_path = @('rule-tie-combine', 'rule-preference-combine')
+    Assert-PortfolioError 'rule-path-order' $badRuleOrder $sources $organizations $identities 'E_RULE'
+    $badContext = Copy-FixtureObject $manifest
+    $badContext.pages[0].traveler_lenses[1].context_tags = @('short-time')
+    Assert-PortfolioError 'rule-context-intersection' $badContext $sources $organizations $identities 'E_RULE'
+    $badTerminal = Copy-FixtureObject $manifest
+    $badTerminal.pages[0].traveler_lenses[1].outcome_id = 'outcome-alpha'
+    Assert-PortfolioError 'rule-terminal-outcome' $badTerminal $sources $organizations $identities 'E_RULE'
+    $badTradeOff = Copy-FixtureObject $manifest
+    $badTradeOff.pages[0].traveler_lenses[1].trade_off = ''
+    Assert-PortfolioError 'rule-material-trade-off' $badTradeOff $sources $organizations $identities 'E_RULE'
+    foreach ($scoringField in @('weight', 'priority', 'score')) {
+        $scoredManifest = Copy-FixtureObject $manifest
+        $scoredManifest.pages[0].rule_catalog[0][$scoringField] = 1
+        Assert-PortfolioError "rule-reject-$scoringField" $scoredManifest $sources $organizations $identities 'E_RULE'
+    }
+
+    $sameIdentityManifest = Copy-FixtureObject $manifest
+    $sameIdentityManifest.pages[0].editorial.reviewed_by_identity_id = 'fixture-author'
+    Assert-PortfolioError 'distinct-author-reviewer-identities' $sameIdentityManifest $sources $organizations $identities 'E_IDENTITY'
+    $missingNotApplicable = Copy-FixtureObject $manifest
+    $missingNotApplicable.pages[0].claims[1].option_ids = @('alpha')
+    Assert-PortfolioError 'explicit-not-applicable-reason' $missingNotApplicable $sources $organizations $identities 'E_NOT_APPLICABLE'
+    $stalePrimarySources = Copy-FixtureObject $sources
+    $stalePrimarySources.sources[6].checked_on = '2020-01-01'
+    Assert-PortfolioError 'current-primary-timing' $manifest $stalePrimarySources $organizations $identities 'E_FRESHNESS'
+    $englishOnlySources = Copy-FixtureObject $sources
+    foreach ($sourceItem in $englishOnlySources.sources) { $sourceItem.language = 'en' }
+    Assert-PortfolioError 'locality-language-coverage' $manifest $englishOnlySources $organizations $identities 'E_LOCALITY'
+    $decisiveBackground = Copy-FixtureObject $manifest
+    $decisiveBackground.pages[0].source_assignments[3].decisive = $true
+    Assert-PortfolioError 'background-source-not-decisive' $decisiveBackground $sources $organizations $identities 'E_BACKGROUND'
+
+    $shuffledSources = Copy-FixtureObject $sources
+    [array]::Reverse($shuffledSources.sources)
+    $shuffledManifest = Copy-FixtureObject $manifest
+    [array]::Reverse($shuffledManifest.pages[0].source_assignments)
+    $shuffledArtifact = New-VgComparisonArtifact -Manifest $shuffledManifest -Sources $shuffledSources -Organizations $organizations -Identities $identities -Schema $Schema -Profile Fixture -AsOfDate $EvaluationDate
+    $orderedArtifact = New-VgComparisonArtifact -Manifest $manifest -Sources $sources -Organizations $organizations -Identities $identities -Schema $Schema -Profile Fixture -AsOfDate $EvaluationDate
+    Assert-ResolverTrue 'artifact-shuffled-input-determinism' (Compare-VgArtifactDeterminism -First $orderedArtifact -Second $shuffledArtifact) 'shuffled registry/assignment input changed the deterministic artifact'
+    Assert-ResolverTrue 'impact-index-shuffled-input-determinism' ((Get-VgSha256Hex -Value $orderedArtifact.impact_index) -ceq (Get-VgSha256Hex -Value $shuffledArtifact.impact_index)) 'shuffled input changed ImpactIndex'
+
+    $refreshedSources = Copy-FixtureObject $sources
+    $refreshedSources.sources[1].checked_on = '2026-08-03'
+    $refreshedResult = Get-PortfolioResult $manifest $refreshedSources $organizations $identities
+    Assert-ResolverTrue 'source-refresh-preserves-outcome' ((ConvertTo-VgCanonicalJson -Value $validResult.ResolvedBundles[$fixturePath].primary_decision) -ceq (ConvertTo-VgCanonicalJson -Value $refreshedResult.ResolvedBundles[$fixturePath].primary_decision)) 'source refresh mutated a reviewed outcome'
+
+    $productionResult = Get-PortfolioResult $manifest $sources $organizations $identities 'Production'
+    Assert-ResolverTrue 'fixture-fails-production-portfolio-gates' (-not $productionResult.Ok -and @($productionResult.Errors | Where-Object { $_.StartsWith('E_PORTFOLIO ', [System.StringComparison]::Ordinal) }).Count -gt 0) 'fixture profile was accepted as a Production portfolio'
+    $script:resolverFixtureChecks++
+    try {
+        [void](New-VgComparisonArtifact -Manifest $manifest -Sources $sources -Organizations $organizations -Identities $identities -Schema $Schema -Profile Production -AsOfDate $EvaluationDate)
+        Add-ResolverFailure 'E_FIXTURE' 'production-artifact-rejects-fixture' 'New-VgComparisonArtifact accepted a fixture manifest as Production'
+    } catch {
+        if (-not ($_.Exception.Message.StartsWith('E_PROFILE ', [System.StringComparison]::Ordinal) -or $_.Exception.Message.StartsWith('E_PORTFOLIO ', [System.StringComparison]::Ordinal) -or $_.Exception.Message.StartsWith('E_SCHEMA ', [System.StringComparison]::Ordinal))) {
+            Add-ResolverFailure 'E_FIXTURE' 'production-artifact-rejects-fixture' "unexpected production rejection '$($_.Exception.Message)'"
+        }
+    }
+
+    return [ordered]@{ errors = @($script:resolverFixtureErrors); checks = $script:resolverFixtureChecks }
+}
+
 function Write-VerificationResult {
     param(
         [Parameter(Mandatory = $true)][AllowEmptyCollection()][string[]]$Errors,
@@ -1523,6 +1943,24 @@ function Write-VerificationResult {
 $repoRoot = Get-RepoRoot
 $errors = @()
 $checks = 0
+$validatorModule = $null
+$validatorRelativePath = 'ops/comparison-rollout-validator.psm1'
+$validatorPath = Join-Path $repoRoot $validatorRelativePath.Replace('/', [System.IO.Path]::DirectorySeparatorChar)
+if (-not (Test-Path -LiteralPath $validatorPath -PathType Leaf)) {
+    $errors += "E_MODULE ${validatorRelativePath}: validator module is missing"
+} else {
+    try {
+        $validatorModule = Import-Module -Name $validatorPath -Force -PassThru -ErrorAction Stop
+        $actualExports = @($validatorModule.ExportedFunctions.Keys | Sort-Object -CaseSensitive)
+        $expectedExports = @($requiredModuleExports | Sort-Object -CaseSensitive)
+        $checks++
+        if (-not (Test-OrdinalSequence $actualExports $expectedExports)) {
+            $errors += "E_MODULE ${validatorRelativePath}: exported function surface does not match the exact eight-function contract"
+        }
+    } catch {
+        $errors += "E_MODULE ${validatorRelativePath}: module import failed"
+    }
+}
 
 $requiredForScope = if ($Scope -ceq 'fixtures') { @($requiredInputs[0]) } else { @($requiredInputs) }
 foreach ($relativePath in $requiredForScope) {
@@ -1564,6 +2002,16 @@ if ($Scope -ceq 'fixtures' -and $null -ne $schema -and $errors.Count -eq 0) {
     $fixtureResult = Invoke-FixtureValidation $schema
     $errors += @($fixtureResult.errors)
     $checks += [int]$fixtureResult.checks
+
+    if ($errors.Count -eq 0 -and $null -ne $validatorModule) {
+        try {
+            $resolverFixtureResult = Invoke-ResolverFixtureValidation -Schema $schema -EvaluationDate $AsOfDate
+            $errors += @($resolverFixtureResult.errors)
+            $checks += [int]$resolverFixtureResult.checks
+        } catch {
+            $errors += "E_MODULE ops/comparison-rollout-validator.psm1: resolver fixture execution failed: $($_.Exception.Message)"
+        }
+    }
 }
 
 Write-VerificationResult -Errors @($errors) -Checks $checks

@@ -1,0 +1,8 @@
+{
+  "registry_version": "identities-fixture-v1",
+  "generated_on": "2026-08-03",
+  "identities": [
+    {"identity_id": "fixture-author", "display_name": "Fixture Author", "public_profile_path": "about/fixture-author", "roles": ["author"]},
+    {"identity_id": "fixture-reviewer", "display_name": "Fixture Reviewer", "public_profile_path": "about/fixture-reviewer", "roles": ["reviewer"]}
+  ]
+}

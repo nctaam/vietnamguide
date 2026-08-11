@@ -343,11 +343,14 @@ git commit -m "test: define comparison rollout contracts"
 
 **Files:**
 - Create: `ops/comparison-rollout-validator.psm1`
+- Modify: `ops/comparison-rollout/schema.json` (schema-first prerequisite)
 - Create: `ops/comparison-rollout/fixtures/minimal/organizations.json`
 - Create: `ops/comparison-rollout/fixtures/minimal/sources.json`
 - Create: `ops/comparison-rollout/fixtures/minimal/identities.json`
 - Create: `ops/comparison-rollout/fixtures/minimal/manifest.json`
 - Modify: `ops/verify-comparison-rollout.ps1`
+
+Checkpoint: update `schema.json` before implementing the resolver. Add the Task 3 `$defs` and registry/page contracts first, verify Draft 2020-12 parsing and local `$ref` resolution, then run the RED module/export contract before production validator code.
 
 - [ ] **Step 1: Write failing fixtures for canonical serialization and strict keys**
 

@@ -1,0 +1,32 @@
+{
+  "registry_version": "organizations-fixture-v1",
+  "generated_on": "2026-08-03",
+  "organizations": [
+    {
+      "organization_id": "org-alpha",
+      "name": "Alpha Travel Authority",
+      "homepage_url": "https://alpha.example.vn",
+      "source_classes": ["national_official", "local_official", "operational", "independent_corroboration"],
+      "ownership_note": "Controls the Alpha publishers in this resolver fixture.",
+      "publishers": [
+        {"publisher_id": "pub-alpha-national", "publisher_name": "Alpha National", "canonical_domain": "national-alpha.example.vn", "aliases": ["national-alpha-alias.example.vn"]},
+        {"publisher_id": "pub-alpha-local", "publisher_name": "Alpha Local", "canonical_domain": "local-alpha.example.vn", "aliases": []},
+        {"publisher_id": "pub-alpha-operator", "publisher_name": "Alpha Operator", "canonical_domain": "operator-alpha.example.vn", "aliases": []},
+        {"publisher_id": "pub-alpha-independent", "publisher_name": "Alpha Independent", "canonical_domain": "independent-alpha.example.vn", "aliases": []}
+      ]
+    },
+    {
+      "organization_id": "org-beta",
+      "name": "Beta Travel Authority",
+      "homepage_url": "https://beta.example.vn",
+      "source_classes": ["national_official", "local_official", "operational", "independent_corroboration"],
+      "ownership_note": "Controls the Beta publishers in this resolver fixture.",
+      "publishers": [
+        {"publisher_id": "pub-beta-national", "publisher_name": "Beta National", "canonical_domain": "national-beta.example.vn", "aliases": ["national-beta-alias.example.vn"]},
+        {"publisher_id": "pub-beta-local", "publisher_name": "Beta Local", "canonical_domain": "local-beta.example.vn", "aliases": []},
+        {"publisher_id": "pub-beta-operator", "publisher_name": "Beta Operator", "canonical_domain": "operator-beta.example.vn", "aliases": []},
+        {"publisher_id": "pub-beta-independent", "publisher_name": "Beta Independent", "canonical_domain": "independent-beta.example.vn", "aliases": []}
+      ]
+    }
+  ]
+}

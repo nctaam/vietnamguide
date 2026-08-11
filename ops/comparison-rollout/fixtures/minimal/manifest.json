@@ -1,0 +1,113 @@
+{
+  "manifest_version": "manifest-fixture-v1",
+  "schema_version": "v2",
+  "previous_schema_version": "v1",
+  "activation_artifact_version": "activation-fixture-v1",
+  "activation_stage": "canary",
+  "pages": [
+    {
+      "path": "compare/fixture-alpha-vs-beta",
+      "post_id": 999,
+      "pre_update_fingerprint": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "post_update_fingerprint": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+      "archetype": "competing_day_trips",
+      "localities": ["fixture-province"],
+      "options": [
+        {"option_id": "alpha", "label": "Alpha", "summary": "Faster access with a compact visit."},
+        {"option_id": "beta", "label": "Beta", "summary": "Slower access with a deeper visit."}
+      ],
+      "editorial": {
+        "reviewed_guide": true,
+        "written_by_identity_id": "fixture-author",
+        "reviewed_by_identity_id": "fixture-reviewer",
+        "last_meaningful_update": "2026-08-03",
+        "update_summary": "Added checked evidence and qualitative decision paths.",
+        "change_reason": "decision_change",
+        "affected_public_labels": ["Decision frame", "Sources"]
+      },
+      "field_note": "A field check confirmed the transfer sequence and operating windows.",
+      "evidence_moat": ["The fixture joins source evidence to claims, axes, and reviewed outcomes."],
+      "claims": [
+        {"claim_id": "claim-access", "claim_group": "access_transport", "option_ids": ["alpha", "beta"], "decisive": true},
+        {"claim_id": "claim-timing", "claim_group": "timing_duration", "option_ids": ["alpha", "beta"], "decisive": false},
+        {"claim_id": "claim-experience", "claim_group": "experience_fit", "option_ids": ["alpha", "beta"], "decisive": false}
+      ],
+      "not_applicable": [],
+      "axes": [
+        {
+          "axis_id": "axis-access",
+          "label": "Access",
+          "explanation": "Compares transfer friction for each option.",
+          "claim_ids": ["claim-access"],
+          "option_ids": ["alpha", "beta"],
+          "decisive": true,
+          "assessments": [
+            {"option_id": "alpha", "outcome": "Alpha has the shorter transfer."},
+            {"option_id": "beta", "outcome": "Beta needs a longer transfer."}
+          ]
+        },
+        {
+          "axis_id": "axis-timing",
+          "label": "Timing",
+          "explanation": "Compares the usable visit window.",
+          "claim_ids": ["claim-timing"],
+          "option_ids": ["alpha", "beta"],
+          "decisive": false,
+          "assessments": [
+            {"option_id": "alpha", "outcome": "Alpha fits a short day."},
+            {"option_id": "beta", "outcome": "Beta rewards a longer day."}
+          ]
+        },
+        {
+          "axis_id": "axis-experience",
+          "label": "Experience fit",
+          "explanation": "Compares compact access with deeper context.",
+          "claim_ids": ["claim-experience"],
+          "option_ids": ["alpha", "beta"],
+          "decisive": false,
+          "assessments": [
+            {"option_id": "alpha", "outcome": "Alpha prioritizes convenience."},
+            {"option_id": "beta", "outcome": "Beta prioritizes depth."}
+          ]
+        }
+      ],
+      "outcomes": [
+        {"outcome_id": "outcome-alpha", "outcome_type": "option", "winner_option_id": "alpha", "summary": "Choose Alpha when transfer time is the hard limit.", "decisive": true, "settled": true, "negative": false, "live_check_required": false, "trade_off": "You trade experience depth for a shorter transfer.", "reversal_condition": "Choose Beta if the transfer window expands."},
+        {"outcome_id": "outcome-beta", "outcome_type": "option", "winner_option_id": "beta", "summary": "Choose Beta when experience depth matters more than speed.", "decisive": true, "settled": false, "negative": true, "live_check_required": false, "trade_off": "You accept a longer transfer and a tighter return window.", "reversal_condition": "Choose Alpha if the return window becomes restrictive."},
+        {"outcome_id": "outcome-combine", "outcome_type": "combine_or_sequence", "summary": "Sequence Alpha first and Beta on a later day.", "decisive": false, "settled": true, "negative": false, "live_check_required": false, "trade_off": "The sequence needs an extra day but preserves both experiences."}
+      ],
+      "primary_outcome_id": "outcome-alpha",
+      "rule_catalog": [
+        {"rule_id": "rule-hard-alpha", "kind": "hard_constraint", "condition": "The transfer window is under four hours.", "outcome": "Choose Alpha.", "context_tags": ["short-time"], "option_ids": ["alpha"], "claim_ids": ["claim-access"], "axis_ids": ["axis-access"], "outcome_id": "outcome-alpha"},
+        {"rule_id": "rule-preference-beta", "kind": "preference", "condition": "Experience depth matters more than transfer speed.", "outcome": "Choose Beta.", "context_tags": ["slow-travel"], "option_ids": ["beta"], "claim_ids": ["claim-experience"], "axis_ids": ["axis-experience"], "outcome_id": "outcome-beta"},
+        {"rule_id": "rule-preference-combine", "kind": "preference", "condition": "Both experiences are material to the trip.", "outcome": "Keep both options in sequence.", "context_tags": ["balanced"], "option_ids": ["alpha", "beta"], "claim_ids": ["claim-timing"], "axis_ids": ["axis-timing"], "outcome_id": "outcome-combine"},
+        {"rule_id": "rule-tie-combine", "kind": "tie_breaker", "condition": "An extra day is available after the first visit.", "outcome": "Sequence Alpha before Beta.", "context_tags": ["balanced"], "option_ids": ["alpha", "beta"], "claim_ids": ["claim-access"], "axis_ids": ["axis-access"], "outcome_id": "outcome-combine"},
+        {"rule_id": "rule-unused", "kind": "preference", "condition": "This catalog entry is intentionally unused.", "outcome": "Do not render this rule.", "context_tags": ["unused-context"], "option_ids": ["alpha"], "claim_ids": ["claim-experience"], "axis_ids": ["axis-experience"], "outcome_id": "outcome-alpha"}
+      ],
+      "traveler_lenses": [
+        {"lens_id": "lens-short", "traveler": "Traveler with a short transfer window", "context_tags": ["short-time"], "rule_path": ["rule-hard-alpha"], "outcome_id": "outcome-alpha", "trade_off": "Less depth in exchange for reliable timing.", "reversal_condition": "Use Beta when more time becomes available."},
+        {"lens_id": "lens-slow", "traveler": "Slow traveler seeking deeper context", "context_tags": ["slow-travel"], "rule_path": ["rule-preference-beta"], "outcome_id": "outcome-beta", "trade_off": "A longer transfer reduces schedule flexibility.", "reversal_condition": "Use Alpha when the return window tightens."},
+        {"lens_id": "lens-balanced", "traveler": "Traveler with an extra day", "context_tags": ["balanced"], "rule_path": ["rule-preference-combine", "rule-tie-combine"], "outcome_id": "outcome-combine", "trade_off": "The sequence costs one extra day."}
+      ],
+      "source_assignments": [
+        {"source_id": "source-alpha-national", "evidence_label": "primary", "establishes": "Alpha access and the decisive access axis.", "decisive": true, "mappings": [{"claim_id": "claim-access", "option_id": "alpha", "axis_id": "axis-access", "outcome_id": "outcome-alpha"}]},
+        {"source_id": "source-alpha-local", "evidence_label": "corroborating", "establishes": "Beta experience depth from a second controlling organization.", "decisive": true, "mappings": [{"claim_id": "claim-experience", "option_id": "beta", "axis_id": "axis-experience", "outcome_id": "outcome-beta"}]},
+        {"source_id": "source-alpha-operator", "evidence_label": "primary", "establishes": "Current Alpha timing and experience fit.", "decisive": true, "mappings": [{"claim_id": "claim-timing", "option_id": "alpha", "axis_id": "axis-timing", "outcome_id": "outcome-combine"}, {"claim_id": "claim-experience", "option_id": "alpha", "axis_id": "axis-experience", "outcome_id": "outcome-alpha"}]},
+        {"source_id": "source-alpha-independent", "evidence_label": "corroborating", "establishes": "Background context shared by all options.", "decisive": false, "mappings": [{"claim_id": "claim-experience", "option_id": "all_options", "axis_id": "axis-experience", "outcome_id": "outcome-combine"}]},
+        {"source_id": "source-beta-national", "evidence_label": "primary", "establishes": "Beta access and the decisive access axis.", "decisive": true, "mappings": [{"claim_id": "claim-access", "option_id": "beta", "axis_id": "axis-access", "outcome_id": "outcome-beta"}]},
+        {"source_id": "source-beta-local", "evidence_label": "corroborating", "establishes": "Alpha experience fit from a second controlling organization.", "decisive": true, "mappings": [{"claim_id": "claim-experience", "option_id": "alpha", "axis_id": "axis-experience", "outcome_id": "outcome-alpha"}]},
+        {"source_id": "source-beta-operator", "evidence_label": "primary", "establishes": "Current Beta timing and experience fit.", "decisive": true, "mappings": [{"claim_id": "claim-timing", "option_id": "beta", "axis_id": "axis-timing", "outcome_id": "outcome-combine"}, {"claim_id": "claim-experience", "option_id": "beta", "axis_id": "axis-experience", "outcome_id": "outcome-beta"}]},
+        {"source_id": "source-beta-independent", "evidence_label": "corroborating", "establishes": "Independent corroboration for Alpha access.", "decisive": true, "mappings": [{"claim_id": "claim-access", "option_id": "alpha", "axis_id": "axis-access", "outcome_id": "outcome-alpha"}]}
+      ],
+      "related_routes": [
+        {"path": "destinations/fixture-alpha", "label": "Explore Alpha", "route_group": "deepen_place"},
+        {"path": "destinations/fixture-beta", "label": "Explore Beta", "route_group": "deepen_place"},
+        {"path": "itineraries/fixture-alpha-route", "label": "Build an Alpha route", "route_group": "build_route"},
+        {"path": "itineraries/fixture-beta-route", "label": "Build a Beta route", "route_group": "build_route"},
+        {"path": "plan/fixture-access", "label": "Check access", "route_group": "check_practical"},
+        {"path": "plan/fixture-timing", "label": "Check timing", "route_group": "check_practical"}
+      ],
+      "module_flags": {"insert_source_trail": true, "insert_update_log": true}
+    }
+  ]
+}
