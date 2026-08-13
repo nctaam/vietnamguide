@@ -2491,6 +2491,7 @@ $schema = json_decode(file_get_contents($schemaPath), true, 512, JSON_THROW_ON_E
 $approvalSchema = ['$defs' => $schema['$defs'], '$ref' => '#/$defs/approvalArtifact'];
 $results = [];
 $results['canonical_numeric'] = vg_comparison_canonical_json(['one' => 1.0, 'negative_zero' => -0.0, 'fraction' => 1.25, 'exponent' => 1.0e20, 'safe_integer' => 9007199254740991.0]) === base64_decode(getenv('VG_COMPARISON_CANONICAL_NUMERIC_VECTOR'), true);
+$results['canonical_small_exponents'] = vg_comparison_canonical_json(['e5' => 1.0e-5, 'e6' => 1.0e-6, 'e7' => 1.0e-7, 'negative_e7' => -1.0e-7, 'e8' => 1.0e-8, 'negative_e20' => -1.0e-20, 'fraction_e7' => 1.23456789e-7]) === base64_decode(getenv('VG_COMPARISON_CANONICAL_SMALL_EXPONENT_VECTOR'), true);
 $results['canonical_literal'] = vg_comparison_canonical_json(array_diff_key($author, ['hmac_sha256' => true])) === base64_decode(getenv('VG_COMPARISON_CANONICAL_VECTOR'), true);
 $results['canonical_hash'] = vg_comparison_sha256(array_diff_key($author, ['hmac_sha256' => true])) === '268cacf50d0eb37b0353422154e3c82291924d04e1c3b0d258a651f8ad81df0f';
 $results['schema_valid'] = vg_comparison_validate_schema($author, $approvalSchema) === [];
@@ -2527,12 +2528,15 @@ echo json_encode($results, JSON_UNESCAPED_SLASHES | JSON_THROW_ON_ERROR);
             $previousSchemaPath = [Environment]::GetEnvironmentVariable('VG_COMPARISON_SCHEMA_PATH')
             $previousCanonicalVector = [Environment]::GetEnvironmentVariable('VG_COMPARISON_CANONICAL_VECTOR')
             $previousCanonicalNumericVector = [Environment]::GetEnvironmentVariable('VG_COMPARISON_CANONICAL_NUMERIC_VECTOR')
+            $previousCanonicalSmallExponentVector = [Environment]::GetEnvironmentVariable('VG_COMPARISON_CANONICAL_SMALL_EXPONENT_VECTOR')
             try {
                 [Environment]::SetEnvironmentVariable('VG_COMPARISON_LIBRARY_PATH', $phpLibraryPath)
                 [Environment]::SetEnvironmentVariable('VG_COMPARISON_SCHEMA_PATH', $schemaPath)
                 $canonicalVector = '{"artifact_version":"1","change_ids":["cmp-104-decision"],"change_reason":"decision_change","identity_id":"fixture-author","key_id":"comparison-approval-2026-01","manifest_hash":"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa","role":"author","timestamp_utc":"2026-08-03T00:00:00Z","wp_user_id":101}'
                 [Environment]::SetEnvironmentVariable('VG_COMPARISON_CANONICAL_VECTOR', [Convert]::ToBase64String([System.Text.Encoding]::UTF8.GetBytes($canonicalVector)))
                 [Environment]::SetEnvironmentVariable('VG_COMPARISON_CANONICAL_NUMERIC_VECTOR', 'eyJleHBvbmVudCI6MWUyMCwiZnJhY3Rpb24iOjEuMjUsIm5lZ2F0aXZlX3plcm8iOi0wLCJvbmUiOjEsInNhZmVfaW50ZWdlciI6OTAwNzE5OTI1NDc0MDk5MX0=')
+                $canonicalSmallExponentVector = ConvertTo-VgCanonicalJson -Value ([ordered]@{ e5 = [double]1.0e-5; e6 = [double]1.0e-6; e7 = [double]1.0e-7; negative_e7 = [double]-1.0e-7; e8 = [double]1.0e-8; negative_e20 = [double]-1.0e-20; fraction_e7 = [double]1.23456789e-7 })
+                [Environment]::SetEnvironmentVariable('VG_COMPARISON_CANONICAL_SMALL_EXPONENT_VECTOR', [Convert]::ToBase64String([System.Text.Encoding]::UTF8.GetBytes($canonicalSmallExponentVector)))
                 $vectorOutput = @(& $phpBinary '-d' 'display_errors=stderr' '-r' $phpVectorCode 2>&1)
                 $vectorExit = $LASTEXITCODE
             } finally {
@@ -2540,14 +2544,15 @@ echo json_encode($results, JSON_UNESCAPED_SLASHES | JSON_THROW_ON_ERROR);
                 [Environment]::SetEnvironmentVariable('VG_COMPARISON_SCHEMA_PATH', $previousSchemaPath)
                 [Environment]::SetEnvironmentVariable('VG_COMPARISON_CANONICAL_VECTOR', $previousCanonicalVector)
                 [Environment]::SetEnvironmentVariable('VG_COMPARISON_CANONICAL_NUMERIC_VECTOR', $previousCanonicalNumericVector)
+                [Environment]::SetEnvironmentVariable('VG_COMPARISON_CANONICAL_SMALL_EXPONENT_VECTOR', $previousCanonicalSmallExponentVector)
             }
-            $approvalChecks += 24
+            $approvalChecks += 25
             if ($vectorExit -ne 0 -or $vectorOutput.Count -ne 1) {
                 $approvalErrors += 'E_PHP ops/comparison-rollout-lib.php: PHP approval vector execution failed'
             } else {
                 try {
                     $vectorResults = [string]$vectorOutput[0] | ConvertFrom-Json
-                    foreach ($vectorName in @('canonical_numeric', 'canonical_literal', 'canonical_hash', 'schema_valid', 'valid_hmac', 'altered_scope', 'altered_hash', 'invalid_hmac', 'unknown_key', 'unset_key', 'ordinal_ordering', 'inactive_user', 'unauthorized_role', 'duplicate_identity', 'source_refresh_one_reviewer', 'reviewer_wp_role_mismatch', 'decision_four_eyes', 'altered_expected_scope', 'duplicate_artifact', 'same_wp_user', 'safe_compile_surface', 'safe_probe_surface', 'safe_insert_surface', 'wordpress_salt_secret')) {
+                    foreach ($vectorName in @('canonical_numeric', 'canonical_small_exponents', 'canonical_literal', 'canonical_hash', 'schema_valid', 'valid_hmac', 'altered_scope', 'altered_hash', 'invalid_hmac', 'unknown_key', 'unset_key', 'ordinal_ordering', 'inactive_user', 'unauthorized_role', 'duplicate_identity', 'source_refresh_one_reviewer', 'reviewer_wp_role_mismatch', 'decision_four_eyes', 'altered_expected_scope', 'duplicate_artifact', 'same_wp_user', 'safe_compile_surface', 'safe_probe_surface', 'safe_insert_surface', 'wordpress_salt_secret')) {
                         $vectorValue = Get-Property $vectorResults $vectorName
                         $vectorPassed = ($vectorValue -eq $true)
                         if (-not $vectorPassed) {

@@ -65,6 +65,9 @@ function _vg_comparison_encode_float(float $value): string
     $mantissa = $parts[1] . ($fraction === '' ? '' : '.' . $fraction);
     $digits = ltrim($parts[4], '0');
     $digits = $digits === '' ? '0' : $digits;
+    if ($parts[3] === '-' && strlen($digits) === 1) {
+        $digits = '0' . $digits;
+    }
     return $mantissa . 'e' . ($parts[3] === '-' ? '-' : '') . $digits;
 }
 
@@ -605,7 +608,8 @@ function _vg_comparison_self_test(): bool
     $value = ['z' => 1, 'a' => ['b' => 2, 'a' => 1]];
     return vg_comparison_canonical_json($value) === '{"a":{"a":1,"b":2},"z":1}'
         && vg_comparison_sha256($value) === hash('sha256', '{"a":{"a":1,"b":2},"z":1}')
-        && vg_comparison_canonical_json(['one' => 1.0, 'negative_zero' => -0.0, 'fraction' => 1.25]) === '{"fraction":1.25,"negative_zero":-0,"one":1}';
+        && vg_comparison_canonical_json(['one' => 1.0, 'negative_zero' => -0.0, 'fraction' => 1.25]) === '{"fraction":1.25,"negative_zero":-0,"one":1}'
+        && vg_comparison_canonical_json(['small' => 1.0e-7, 'negative' => -1.0e-7]) === '{"negative":-1e-07,"small":1e-07}';
 }
 
 if (PHP_SAPI === 'cli' && isset($argv) && realpath((string) ($argv[0] ?? '')) === __FILE__ && ($argv[1] ?? '') === '--self-test') {
