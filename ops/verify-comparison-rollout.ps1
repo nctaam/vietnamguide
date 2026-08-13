@@ -2840,6 +2840,7 @@ function Invoke-BundleRuntimeValidation {
     }
 
     $requiredKeys = @((Get-Definition $Schema 'resolvedBundleV2').required)
+    $positiveBundleJson = New-PositiveBundle | ConvertTo-Json -Depth 100 -Compress
     $runtimeCode = @'
 <?php
 declare(strict_types=1);
@@ -2870,7 +2871,7 @@ $results['schema_key_parity'] = vg_comparison_bundle_v2_required_keys() === $req
 $results['task6_deferred'] = $GLOBALS['vg_test_actions'] === [];
 $results['canonical_parity'] = vg_comparison_bundle_canonical_json(['z'=>1.0,'a'=>['nested'=>'slash/value'],'m'=>-0.0]) === '{"a":{"nested":"slash/value"},"m":-0,"z":1}';
 function vg_test_bundle(int $id, string $path): array {
-    $bundle = ['schema_version'=>'v2','bundle_hash'=>str_repeat('0',64),'manifest_version'=>'manifest-v2','source_registry_version'=>'sources-v2','organization_registry_version'=>'organizations-v2','activation_artifact_version'=>'activation-v2','path'=>$path,'post_id'=>$id,'editorial'=>['reviewed_guide'=>true],'archetype'=>'competing_day_trips','localities'=>['fixture-locality'],'options'=>[['option_id'=>'option-a']],'primary_decision'=>['outcome_id'=>'outcome-a'],'field_note'=>'Confirm live conditions.','evidence_moat'=>['Reviewed evidence.'],'axes'=>[['axis_id'=>'axis-a']],'traveler_lenses'=>[['lens_id'=>'lens-a']],'sources'=>[['source_id'=>'source-a']],'related_routes'=>[['path'=>'plan/vietnam-evisa']],'update_log'=>[['date'=>'2026-08-03']],'module_requirements'=>['validator_version'=>'validator-v2'],'provenance_hash'=>str_repeat('b',64),'render_contract'=>['page_language'=>'vi']];
+    $bundle=json_decode(base64_decode(getenv('VG_RUNTIME_POSITIVE_BUNDLE'),true),true,128,JSON_THROW_ON_ERROR);$bundle['path']=$path;$bundle['post_id']=$id;
     $hashable=$bundle; unset($hashable['bundle_hash']); $bundle['bundle_hash']=hash('sha256',vg_comparison_bundle_canonical_json($hashable)); return $bundle;
 }
 function vg_test_json(array $bundle): string { return json_encode($bundle, JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE|JSON_THROW_ON_ERROR); }
@@ -2907,6 +2908,73 @@ $p=new WP_Post(5210,'compare/runtime-snapshot-path');$b=vg_test_bundle($p->ID,$p
 $p=new WP_Post(5211,'compare/runtime-version');$b=vg_test_bundle($p->ID,$p->path);$b['schema_version']='v3';$cases['version']=[$p,$b,[],'E_VERSION'];
 $p=new WP_Post(5212,'compare/runtime-shape');$b=vg_test_bundle($p->ID,$p->path);$b['options']='bad';$b=vg_test_rehash($b);$cases['shape']=[$p,$b,[],'E_SCHEMA'];
 foreach($cases as $name=>[$p,$b,$expect,$reason]){vg_test_install($p,vg_test_json($b),$expect);$results[$name]=vg_test_reason(vg_comparison_load_bundle($p),$reason);}
+$schemaMutations=[
+    'top_missing'=>fn($b)=>array_diff_key($b,['field_note'=>true]),
+    'editorial_unknown'=>function($b){$b['editorial']['unknown']=true;return $b;},
+    'editorial_bool'=>function($b){$b['editorial']['reviewed_guide']='true';return $b;},
+    'editorial_id'=>function($b){$b['editorial']['written_by_identity_id']='UPPER';return $b;},
+    'editorial_date'=>function($b){$b['editorial']['last_meaningful_update']='2026-02-31';return $b;},
+    'editorial_text'=>function($b){$b['editorial']['update_summary']='<script>alert(1)</script>';return $b;},
+    'editorial_reason'=>function($b){$b['editorial']['change_reason']='unknown';return $b;},
+    'editorial_labels_duplicate'=>function($b){$b['editorial']['affected_public_labels']=['Sources','Sources'];return $b;},
+    'archetype_enum'=>function($b){$b['archetype']='generic';return $b;},
+    'localities_empty'=>function($b){$b['localities']=[];return $b;},
+    'localities_duplicate'=>function($b){$b['localities']=['hanoi','hanoi'];return $b;},
+    'option_count'=>function($b){$b['options']=[$b['options'][0]];return $b;},
+    'option_unknown'=>function($b){$b['options'][0]['unknown']=true;return $b;},
+    'option_label_length'=>function($b){$b['options'][0]['label']=str_repeat('x',49);return $b;},
+    'decision_outcome'=>function($b){$b['primary_decision']['outcome']='unknown';return $b;},
+    'decision_missing_winner'=>function($b){unset($b['primary_decision']['winner_option_id']);return $b;},
+    'decision_extra_winner'=>function($b){$b['primary_decision']['outcome']='no_clear_winner';return $b;},
+    'decision_combine_extra_winner'=>function($b){$b['primary_decision']['outcome']='combine_or_sequence';return $b;},
+    'decision_rule_unknown'=>function($b){$b['primary_decision']['rules'][0]['unknown']=true;return $b;},
+    'decision_rule_kind'=>function($b){$b['primary_decision']['rules'][0]['kind']='unknown';return $b;},
+    'decision_rule_order'=>function($b){$b['primary_decision']['rules'][0]['order']=9;return $b;},
+    'decision_rule_duplicate_ids'=>function($b){$b['primary_decision']['rules'][0]['claim_ids']=['claim-access','claim-access'];return $b;},
+    'field_note_control'=>function($b){$b['field_note']="bad\x00text";return $b;},
+    'moat_too_many'=>function($b){$b['evidence_moat']=['a','b','c','d','e'];return $b;},
+    'axes_count'=>function($b){$b['axes']=array_slice($b['axes'],0,2);return $b;},
+    'axis_unknown'=>function($b){$b['axes'][0]['unknown']=true;return $b;},
+    'axis_decisive_type'=>function($b){$b['axes'][0]['decisive']=1;return $b;},
+    'axis_assessment_count'=>function($b){$b['axes'][0]['assessments']=[$b['axes'][0]['assessments'][0]];return $b;},
+    'assessment_unknown'=>function($b){$b['axes'][0]['assessments'][0]['unknown']=true;return $b;},
+    'lenses_count'=>function($b){$b['traveler_lenses']=array_slice($b['traveler_lenses'],0,2);return $b;},
+    'lens_unknown'=>function($b){$b['traveler_lenses'][0]['unknown']=true;return $b;},
+    'lens_no_tradeoff'=>function($b){unset($b['traveler_lenses'][0]['trade_off'],$b['traveler_lenses'][0]['reversal_condition']);return $b;},
+    'lens_reversal_validity'=>function($b){unset($b['traveler_lenses'][0]['trade_off']);$b['traveler_lenses'][0]['reversal_condition']='<bad>';return $b;},
+    'lens_rule_order'=>function($b){$b['traveler_lenses'][0]['rule_path'][0]['order']=6;return $b;},
+    'sources_count'=>function($b){$b['sources']=array_slice($b['sources'],0,5);return $b;},
+    'source_unknown'=>function($b){$b['sources'][0]['unknown']=true;return $b;},
+    'source_class'=>function($b){$b['sources'][0]['source_class']='blog';return $b;},
+    'source_domain'=>function($b){$b['sources'][0]['canonical_domain']='bad_domain';return $b;},
+    'source_url'=>function($b){$b['sources'][0]['url']='javascript:alert(1)';return $b;},
+    'source_evidence'=>function($b){$b['sources'][0]['evidence_label']='strong';return $b;},
+    'source_date'=>function($b){$b['sources'][0]['checked_on']='2026-13-01';return $b;},
+    'source_freshness_tier'=>function($b){$b['sources'][0]['freshness_tier']='old';return $b;},
+    'source_freshness_state'=>function($b){$b['sources'][0]['freshness_state']='old';return $b;},
+    'source_language'=>function($b){$b['sources'][0]['language']='eng';return $b;},
+    'source_media'=>function($b){$b['sources'][0]['media_type']='xml';return $b;},
+    'source_claim_group'=>function($b){$b['sources'][0]['claim_groups']=['unknown'];return $b;},
+    'source_claim_group_duplicate'=>function($b){$b['sources'][0]['claim_groups']=['access_transport','access_transport'];return $b;},
+    'mapping_unknown'=>function($b){$b['sources'][0]['mappings'][0]['unknown']=true;return $b;},
+    'mapping_missing'=>function($b){unset($b['sources'][0]['mappings'][0]['axis_id']);return $b;},
+    'mapping_option_id'=>function($b){$b['sources'][0]['mappings'][0]['option_id']='UPPER';return $b;},
+    'mapping_outcome_id'=>function($b){$b['sources'][0]['mappings'][0]['outcome_id']='bad value';return $b;},
+    'routes_count'=>function($b){$b['related_routes']=array_slice($b['related_routes'],0,5);return $b;},
+    'route_unknown'=>function($b){$b['related_routes'][0]['unknown']=true;return $b;},
+    'route_group'=>function($b){$b['related_routes'][0]['route_group']='unknown';return $b;},
+    'route_group_coverage'=>function($b){foreach($b['related_routes'] as &$route){$route['route_group']='deepen_place';}unset($route);return $b;},
+    'update_unknown'=>function($b){$b['update_log'][0]['unknown']=true;return $b;},
+    'update_reason'=>function($b){$b['update_log'][0]['change_reason']='unknown';return $b;},
+    'module_unknown'=>function($b){$b['module_requirements']['unknown']=true;return $b;},
+    'module_cache_order'=>function($b){$b['module_requirements']['cache_key_fields']=array_reverse($b['module_requirements']['cache_key_fields']);return $b;},
+    'module_feature'=>function($b){$b['module_requirements']['required_features']=['unknown','decision_frame','evidence_labels'];return $b;},
+    'provenance_hash'=>function($b){$b['provenance_hash']='abc';return $b;},
+    'render_unknown'=>function($b){$b['render_contract']['unknown']=true;return $b;},
+    'render_language'=>function($b){$b['render_contract']['page_language']='english';return $b;},
+    'render_limit'=>function($b){$b['render_contract']['max_visible_characters']=1801;return $b;},
+];
+$mutationId=5600;foreach($schemaMutations as $name=>$mutate){$p=new WP_Post(++$mutationId,'compare/schema-'.str_replace('_','-',$name));$b=$mutate(vg_test_bundle($p->ID,$p->path));$b=vg_test_rehash($b);vg_test_install($p,vg_test_json($b));$results['schema_'.$name]=vg_test_reason(vg_comparison_load_bundle($p),'E_SCHEMA');}
 $p=new WP_Post(5301,'compare/runtime-v1');$v1=['schema_version'=>'v1','bundle_hash'=>str_repeat('0',64),'path'=>$p->path,'post_id'=>$p->ID,'title'=>'Runtime v1','decision'=>'Reviewed decision','sources'=>['a','b','c']];$h=$v1;unset($h['bundle_hash']);$v1['bundle_hash']=hash('sha256',vg_comparison_bundle_canonical_json($h));$before=serialize($v1);
 $results['v1_pure']=vg_comparison_migrate_bundle_v1_to_v2($v1)===[]&&serialize($v1)===$before;vg_test_install($p,vg_test_json($v1),['entry'=>['schema_version'=>'v1']]);$results['v1_fallback']=vg_test_reason(vg_comparison_load_bundle($p),'E_MIGRATION');
 for($id=5401;$id<=5412;++$id){$p=new WP_Post($id,"compare/private-$id");vg_test_install($p,'');vg_comparison_load_bundle($p);}vg_comparison_log_rejection('NOT_ALLOWED',9999);$logs=is_file($logFile)?file($logFile,FILE_IGNORE_NEW_LINES):[];$logs=array_values(array_filter($logs?:[],fn($line)=>str_contains($line,'VG_COMPARISON_REJECT')));
@@ -2918,6 +2986,7 @@ echo json_encode(['results'=>$results],JSON_THROW_ON_ERROR);
         [System.IO.File]::WriteAllText($tempRuntime, $runtimeCode, (New-Object System.Text.UTF8Encoding($false)))
         [Environment]::SetEnvironmentVariable('VG_RUNTIME_BOOTSTRAP', $bootstrapPath)
         [Environment]::SetEnvironmentVariable('VG_RUNTIME_REQUIRED_KEYS', [Convert]::ToBase64String([System.Text.Encoding]::UTF8.GetBytes(($requiredKeys | ConvertTo-Json -Compress))))
+        [Environment]::SetEnvironmentVariable('VG_RUNTIME_POSITIVE_BUNDLE', [Convert]::ToBase64String([System.Text.Encoding]::UTF8.GetBytes($positiveBundleJson)))
         $runtimeOutput = @(& $phpBinary '-d' 'display_errors=stderr' $tempRuntime 2>&1)
         $runtimeExit = $LASTEXITCODE
         $runtimeChecks++
@@ -2939,6 +3008,7 @@ echo json_encode(['results'=>$results],JSON_THROW_ON_ERROR);
     } finally {
         [Environment]::SetEnvironmentVariable('VG_RUNTIME_BOOTSTRAP', $null)
         [Environment]::SetEnvironmentVariable('VG_RUNTIME_REQUIRED_KEYS', $null)
+        [Environment]::SetEnvironmentVariable('VG_RUNTIME_POSITIVE_BUNDLE', $null)
         Remove-Item -LiteralPath $tempRuntime -Force -ErrorAction SilentlyContinue
     }
 

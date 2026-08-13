@@ -97,8 +97,131 @@ function vg_comparison_bundle_exact_keys(array $bundle, array $required): bool
 
 function vg_comparison_bundle_valid_path(string $path): bool
 {
-    return strlen($path) <= 160
+    return strlen($path) >= 3 && strlen($path) <= 160
         && preg_match('/^[a-z0-9]+(?:[a-z0-9-]*[a-z0-9])?(?:\/[a-z0-9]+(?:[a-z0-9-]*[a-z0-9])?)*$/D', $path) === 1;
+}
+
+function vg_comparison_bundle_string_length(string $value): int
+{
+    $count = preg_match_all('/./us', $value, $unused);
+    return $count === false ? strlen($value) : $count;
+}
+
+function vg_comparison_bundle_stable_id(mixed $value, int $max = 64): bool
+{
+    return is_string($value)
+        && vg_comparison_bundle_string_length($value) >= 3
+        && vg_comparison_bundle_string_length($value) <= $max
+        && preg_match('/^[a-z0-9][a-z0-9._-]*$/D', $value) === 1;
+}
+
+function vg_comparison_bundle_safe_text(mixed $value, int $max = 2000): bool
+{
+    return is_string($value)
+        && vg_comparison_bundle_string_length($value) >= 1
+        && vg_comparison_bundle_string_length($value) <= $max
+        && preg_match('/[\x00-\x1F\x7F<>]/', $value) !== 1
+        && preg_match('/(?:javascript:|data:text\/html)/i', $value) !== 1
+        && preg_match('/(?:^|\s)on[a-z]+\s*=/i', $value) !== 1;
+}
+
+function vg_comparison_bundle_iso_date(mixed $value): bool
+{
+    if (!is_string($value) || preg_match('/^(\d{4})-(\d{2})-(\d{2})$/D', $value, $parts) !== 1) {
+        return false;
+    }
+    return checkdate((int) $parts[2], (int) $parts[3], (int) $parts[1]);
+}
+
+function vg_comparison_bundle_http_url(mixed $value): bool
+{
+    return is_string($value)
+        && strlen($value) >= 10
+        && strlen($value) <= 2048
+        && preg_match('/^(?:https?):\/\/[^\x00-\x20\x7F<>"\']+$/D', $value) === 1;
+}
+
+function vg_comparison_bundle_canonical_domain(mixed $value): bool
+{
+    return is_string($value)
+        && strlen($value) >= 3
+        && strlen($value) <= 253
+        && preg_match('/^(?:[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?)(?:\.(?:[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?))+$/D', $value) === 1;
+}
+
+function vg_comparison_bundle_json_unique(array $value): bool
+{
+    $seen = [];
+    foreach ($value as $item) {
+        $key = vg_comparison_bundle_canonical_json($item);
+        if (isset($seen[$key])) {
+            return false;
+        }
+        $seen[$key] = true;
+    }
+    return true;
+}
+
+function vg_comparison_bundle_list(
+    mixed $value,
+    int $min,
+    int $max,
+    callable $validator,
+    bool $unique = false
+): bool {
+    if (!is_array($value) || !vg_comparison_bundle_is_list($value) || count($value) < $min || count($value) > $max) {
+        return false;
+    }
+    if ($unique && !vg_comparison_bundle_json_unique($value)) {
+        return false;
+    }
+    foreach ($value as $item) {
+        if (!$validator($item)) {
+            return false;
+        }
+    }
+    return true;
+}
+
+function vg_comparison_bundle_id_list(mixed $value, int $min, int $max, int $id_max = 64): bool
+{
+    return vg_comparison_bundle_list(
+        $value,
+        $min,
+        $max,
+        static fn(mixed $item): bool => vg_comparison_bundle_stable_id($item, $id_max),
+        true
+    );
+}
+
+function vg_comparison_bundle_rule_valid(mixed $rule, int $order_max): bool
+{
+    $keys = ['rule_id', 'order', 'kind', 'condition', 'outcome', 'context_tags', 'option_ids', 'claim_ids', 'axis_ids', 'outcome_id'];
+    return is_array($rule)
+        && vg_comparison_bundle_exact_keys($rule, $keys)
+        && vg_comparison_bundle_stable_id($rule['rule_id'])
+        && is_int($rule['order']) && $rule['order'] >= 1 && $rule['order'] <= $order_max
+        && in_array($rule['kind'], ['hard_constraint', 'preference', 'tie_breaker'], true)
+        && vg_comparison_bundle_safe_text($rule['condition'], 140)
+        && vg_comparison_bundle_safe_text($rule['outcome'], 160)
+        && vg_comparison_bundle_id_list($rule['context_tags'], 1, 8, 48)
+        && vg_comparison_bundle_id_list($rule['option_ids'], 1, 4)
+        && vg_comparison_bundle_id_list($rule['claim_ids'], 1, 12)
+        && vg_comparison_bundle_id_list($rule['axis_ids'], 1, 6)
+        && vg_comparison_bundle_stable_id($rule['outcome_id']);
+}
+
+function vg_comparison_bundle_source_mapping_valid(mixed $mapping): bool
+{
+    if (!is_array($mapping) || !vg_comparison_bundle_exact_keys($mapping, ['claim_id', 'option_id', 'axis_id', 'outcome_id'])) {
+        return false;
+    }
+    foreach ($mapping as $value) {
+        if (!vg_comparison_bundle_stable_id($value)) {
+            return false;
+        }
+    }
+    return true;
 }
 
 function vg_comparison_bundle_v2_shape_valid(array $bundle): bool
@@ -107,7 +230,7 @@ function vg_comparison_bundle_v2_shape_valid(array $bundle): bool
         return false;
     }
     foreach (['manifest_version', 'source_registry_version', 'organization_registry_version', 'activation_artifact_version'] as $key) {
-        if (!isset($bundle[$key]) || !is_string($bundle[$key]) || preg_match('/^[a-z0-9][a-z0-9._-]{2,63}$/D', $bundle[$key]) !== 1) {
+        if (!vg_comparison_bundle_stable_id($bundle[$key] ?? null)) {
             return false;
         }
     }
@@ -118,23 +241,186 @@ function vg_comparison_bundle_v2_shape_valid(array $bundle): bool
         || !vg_comparison_bundle_valid_path($bundle['path'])
         || !is_int($bundle['post_id'])
         || $bundle['post_id'] < 1
-        || !is_string($bundle['archetype'])
-        || !is_string($bundle['field_note'])
+        || !in_array($bundle['archetype'], ['competing_day_trips', 'city_or_heritage_base', 'coast_and_island', 'time_allocation', 'neighborhood', 'macro_region', 'attraction_and_landscape'], true)
+        || !vg_comparison_bundle_safe_text($bundle['field_note'], 320)
         || !is_string($bundle['provenance_hash'])
         || preg_match('/^[a-f0-9]{64}$/D', $bundle['provenance_hash']) !== 1) {
         return false;
     }
-    foreach (['editorial', 'primary_decision', 'module_requirements', 'render_contract'] as $key) {
-        if (!is_array($bundle[$key]) || vg_comparison_bundle_is_list($bundle[$key])) {
+
+    $editorial = $bundle['editorial'];
+    if (!is_array($editorial)
+        || !vg_comparison_bundle_exact_keys($editorial, ['reviewed_guide', 'written_by_identity_id', 'reviewed_by_identity_id', 'last_meaningful_update', 'update_summary', 'change_reason', 'affected_public_labels'])
+        || !is_bool($editorial['reviewed_guide'])
+        || !vg_comparison_bundle_stable_id($editorial['written_by_identity_id'])
+        || !vg_comparison_bundle_stable_id($editorial['reviewed_by_identity_id'])
+        || !vg_comparison_bundle_iso_date($editorial['last_meaningful_update'])
+        || !vg_comparison_bundle_safe_text($editorial['update_summary'], 240)
+        || !in_array($editorial['change_reason'], ['source_refresh', 'operational_change', 'decision_change', 'route_change', 'correction'], true)
+        || !vg_comparison_bundle_list($editorial['affected_public_labels'], 1, 8, static fn(mixed $item): bool => vg_comparison_bundle_safe_text($item, 64), true)) {
+        return false;
+    }
+
+    if (!vg_comparison_bundle_id_list($bundle['localities'], 1, 6)) {
+        return false;
+    }
+    if (!vg_comparison_bundle_list($bundle['options'], 2, 4, static function (mixed $option): bool {
+        return is_array($option)
+            && vg_comparison_bundle_exact_keys($option, ['option_id', 'label', 'summary'])
+            && vg_comparison_bundle_stable_id($option['option_id'])
+            && vg_comparison_bundle_safe_text($option['label'], 48)
+            && vg_comparison_bundle_safe_text($option['summary'], 180);
+    }, true)) {
+        return false;
+    }
+
+    $decision = $bundle['primary_decision'];
+    if (!is_array($decision)
+        || !vg_comparison_bundle_is_list($decision['rules'] ?? null)
+        || !in_array($decision['outcome'] ?? null, ['option', 'no_clear_winner', 'combine_or_sequence'], true)) {
+        return false;
+    }
+    $decision_keys = $decision['outcome'] === 'option'
+        ? ['outcome_id', 'outcome', 'winner_option_id', 'summary', 'rules']
+        : ['outcome_id', 'outcome', 'summary', 'rules'];
+    if (!vg_comparison_bundle_exact_keys($decision, $decision_keys)
+        || !vg_comparison_bundle_stable_id($decision['outcome_id'])
+        || ($decision['outcome'] === 'option' && !vg_comparison_bundle_stable_id($decision['winner_option_id']))
+        || !vg_comparison_bundle_safe_text($decision['summary'], 240)
+        || !vg_comparison_bundle_list($decision['rules'], 1, 8, static fn(mixed $rule): bool => vg_comparison_bundle_rule_valid($rule, 8))) {
+        return false;
+    }
+    if (!vg_comparison_bundle_list($bundle['evidence_moat'], 1, 4, static fn(mixed $item): bool => vg_comparison_bundle_safe_text($item, 240), true)) {
+        return false;
+    }
+
+    if (!vg_comparison_bundle_list($bundle['axes'], 3, 6, static function (mixed $axis): bool {
+        if (!is_array($axis) || !vg_comparison_bundle_exact_keys($axis, ['axis_id', 'label', 'explanation', 'claim_ids', 'option_ids', 'decisive', 'assessments', 'source_ids'])) {
+            return false;
+        }
+        return vg_comparison_bundle_stable_id($axis['axis_id'])
+            && vg_comparison_bundle_safe_text($axis['label'], 48)
+            && vg_comparison_bundle_safe_text($axis['explanation'], 180)
+            && vg_comparison_bundle_id_list($axis['claim_ids'], 1, 12)
+            && vg_comparison_bundle_id_list($axis['option_ids'], 2, 4)
+            && is_bool($axis['decisive'])
+            && vg_comparison_bundle_list($axis['assessments'], 2, 4, static function (mixed $assessment): bool {
+                return is_array($assessment)
+                    && vg_comparison_bundle_exact_keys($assessment, ['option_id', 'outcome'])
+                    && vg_comparison_bundle_stable_id($assessment['option_id'])
+                    && vg_comparison_bundle_safe_text($assessment['outcome'], 160);
+            })
+            && vg_comparison_bundle_id_list($axis['source_ids'], 1, 5);
+    }, true)) {
+        return false;
+    }
+
+    if (!vg_comparison_bundle_list($bundle['traveler_lenses'], 3, 5, static function (mixed $lens): bool {
+        if (!is_array($lens)) {
+            return false;
+        }
+        $has_trade_off = array_key_exists('trade_off', $lens);
+        $has_reversal = array_key_exists('reversal_condition', $lens);
+        if (!$has_trade_off && !$has_reversal) {
+            return false;
+        }
+        $keys = ['lens_id', 'traveler', 'context_tags', 'outcome_id', 'outcome', 'rule_path'];
+        if ($has_trade_off) { $keys[] = 'trade_off'; }
+        if ($has_reversal) { $keys[] = 'reversal_condition'; }
+        return vg_comparison_bundle_exact_keys($lens, $keys)
+            && vg_comparison_bundle_stable_id($lens['lens_id'])
+            && vg_comparison_bundle_safe_text($lens['traveler'], 80)
+            && vg_comparison_bundle_id_list($lens['context_tags'], 1, 8, 48)
+            && vg_comparison_bundle_stable_id($lens['outcome_id'])
+            && vg_comparison_bundle_safe_text($lens['outcome'], 220)
+            && (!$has_trade_off || vg_comparison_bundle_safe_text($lens['trade_off'], 220))
+            && (!$has_reversal || vg_comparison_bundle_safe_text($lens['reversal_condition'], 220))
+            && vg_comparison_bundle_list($lens['rule_path'], 1, 5, static fn(mixed $rule): bool => vg_comparison_bundle_rule_valid($rule, 5));
+    }, true)) {
+        return false;
+    }
+
+    $source_classes = ['national_official', 'local_official', 'operational', 'conditions_heritage', 'independent_corroboration'];
+    $claim_groups = ['access_transport', 'timing_duration', 'cost_booking', 'season_current_conditions', 'experience_fit', 'constraints_safety'];
+    if (!vg_comparison_bundle_list($bundle['sources'], 6, 10, static function (mixed $source) use ($source_classes, $claim_groups): bool {
+        $keys = ['source_id', 'publisher_id', 'publisher_name', 'organization_id', 'canonical_domain', 'source_class', 'title', 'url', 'checked_on', 'freshness_tier', 'freshness_state', 'localities', 'language', 'media_type', 'evidence_label', 'claim_groups', 'mappings'];
+        if (!is_array($source) || !vg_comparison_bundle_exact_keys($source, $keys)) {
+            return false;
+        }
+        return vg_comparison_bundle_stable_id($source['source_id'])
+            && vg_comparison_bundle_stable_id($source['publisher_id'])
+            && vg_comparison_bundle_safe_text($source['publisher_name'])
+            && vg_comparison_bundle_stable_id($source['organization_id'])
+            && vg_comparison_bundle_canonical_domain($source['canonical_domain'])
+            && in_array($source['source_class'], $source_classes, true)
+            && vg_comparison_bundle_safe_text($source['title'])
+            && vg_comparison_bundle_http_url($source['url'])
+            && in_array($source['evidence_label'], ['primary', 'corroborating', 'live_check_required'], true)
+            && vg_comparison_bundle_iso_date($source['checked_on'])
+            && in_array($source['freshness_tier'], ['live', 'current', 'stable'], true)
+            && in_array($source['freshness_state'], ['current', 'stale', 'live_check_required'], true)
+            && vg_comparison_bundle_id_list($source['localities'], 1, 12)
+            && is_string($source['language']) && preg_match('/^[a-z]{2}(?:-[A-Z]{2})?$/D', $source['language']) === 1
+            && in_array($source['media_type'], ['html', 'pdf', 'json'], true)
+            && vg_comparison_bundle_list($source['claim_groups'], 1, 6, static fn(mixed $item): bool => in_array($item, $claim_groups, true), true)
+            && vg_comparison_bundle_list($source['mappings'], 1, 24, 'vg_comparison_bundle_source_mapping_valid');
+    }, true)) {
+        return false;
+    }
+
+    $route_groups = [];
+    if (!vg_comparison_bundle_list($bundle['related_routes'], 6, 8, static function (mixed $route) use (&$route_groups): bool {
+        if (!is_array($route) || !vg_comparison_bundle_exact_keys($route, ['path', 'label', 'route_group'])) {
+            return false;
+        }
+        if (!is_string($route['path']) || !vg_comparison_bundle_valid_path($route['path'])
+            || !vg_comparison_bundle_safe_text($route['label'], 72)
+            || !in_array($route['route_group'], ['deepen_place', 'build_route', 'check_practical'], true)) {
+            return false;
+        }
+        $route_groups[$route['route_group']] = true;
+        return true;
+    }, true) || array_keys($route_groups) === []
+        || !isset($route_groups['deepen_place'], $route_groups['build_route'], $route_groups['check_practical'])) {
+        return false;
+    }
+
+    if (!vg_comparison_bundle_list($bundle['update_log'], 1, 12, static function (mixed $entry): bool {
+        return is_array($entry)
+            && vg_comparison_bundle_exact_keys($entry, ['date', 'summary', 'change_reason', 'affected_public_labels'])
+            && vg_comparison_bundle_iso_date($entry['date'])
+            && vg_comparison_bundle_safe_text($entry['summary'], 240)
+            && in_array($entry['change_reason'], ['source_refresh', 'operational_change', 'decision_change', 'route_change', 'correction'], true)
+            && vg_comparison_bundle_list($entry['affected_public_labels'], 1, 8, static fn(mixed $item): bool => vg_comparison_bundle_safe_text($item, 64), true);
+    })) {
+        return false;
+    }
+
+    $modules = $bundle['module_requirements'];
+    if (!is_array($modules)
+        || !vg_comparison_bundle_exact_keys($modules, ['validator_version', 'renderer_version', 'cache_key_fields', 'required_features'])
+        || !vg_comparison_bundle_stable_id($modules['validator_version'])
+        || !vg_comparison_bundle_stable_id($modules['renderer_version'])
+        || $modules['cache_key_fields'] !== ['path', 'bundle_hash', 'schema_version', 'source_registry_version', 'activation_artifact_version']
+        || !vg_comparison_bundle_list($modules['required_features'], 3, 6, static fn(mixed $item): bool => in_array($item, ['decision_frame', 'evidence_labels', 'source_checked_dates', 'related_routes', 'update_log', 'editorial_byline'], true), true)) {
+        return false;
+    }
+
+    $render = $bundle['render_contract'];
+    if (!is_array($render)
+        || !vg_comparison_bundle_exact_keys($render, ['decision_heading', 'source_heading', 'route_heading', 'update_heading', 'page_language', 'max_visible_characters'])) {
+        return false;
+    }
+    foreach (['decision_heading', 'source_heading', 'route_heading', 'update_heading'] as $key) {
+        if (!vg_comparison_bundle_safe_text($render[$key], 72)) {
             return false;
         }
     }
-    foreach (['localities', 'options', 'evidence_moat', 'axes', 'traveler_lenses', 'sources', 'related_routes', 'update_log'] as $key) {
-        if (!is_array($bundle[$key]) || !vg_comparison_bundle_is_list($bundle[$key]) || $bundle[$key] === []) {
-            return false;
-        }
-    }
-    return true;
+    return is_string($render['page_language'])
+        && preg_match('/^[a-z]{2}(?:-[A-Z]{2})?$/D', $render['page_language']) === 1
+        && is_int($render['max_visible_characters'])
+        && $render['max_visible_characters'] >= 1
+        && $render['max_visible_characters'] <= 1800;
 }
 
 function vg_comparison_bundle_v1_shape_valid(array $bundle): bool
