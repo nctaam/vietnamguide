@@ -50,13 +50,7 @@ function vg_comparison_approve_active_user(array $identity): object
     if (!is_object($user) || (class_exists('WP_User') && !$user instanceof WP_User)) {
         vg_comparison_approve_fail('The registered WordPress user does not exist.');
     }
-    if ((int) ($user->ID ?? 0) !== (int) $identity['wp_user_id']
-        || (int) ($user->user_status ?? 1) !== 0
-        || !empty($user->spam)
-        || !empty($user->deleted)
-        || !is_array($user->roles ?? null)
-        || $user->roles === []
-        || (string) ($user->display_name ?? '') !== (string) ($identity['display_name'] ?? '')) {
+    if (!_vg_comparison_wordpress_identity_active($identity)) {
         vg_comparison_approve_fail('The registered WordPress user is not active or does not match the registry.');
     }
     if (function_exists('get_current_user_id') && get_current_user_id() !== (int) $user->ID) {

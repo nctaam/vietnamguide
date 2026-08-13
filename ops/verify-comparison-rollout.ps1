@@ -2454,9 +2454,9 @@ if (!class_exists('WP_User')) {
         public array $roles;
         public bool $spam;
         public bool $deleted;
-        public function __construct(int $id, string $displayName, int $status = 0) {
+        public function __construct(int $id, string $displayName, array $roles, int $status = 0) {
             $this->ID = $id; $this->display_name = $displayName; $this->user_status = $status;
-            $this->roles = ['administrator']; $this->spam = false; $this->deleted = false;
+            $this->roles = $roles; $this->spam = false; $this->deleted = false;
         }
     }
 }
@@ -2470,7 +2470,7 @@ $registry = ['identities' => [
     ['identity_id' => 'fixture-author', 'wp_user_id' => 101, 'display_name' => 'Fixture Author', 'public_profile_path' => 'about/fixture-author', 'roles' => ['author']],
     ['identity_id' => 'fixture-reviewer', 'wp_user_id' => 202, 'display_name' => 'Fixture Reviewer', 'public_profile_path' => 'about/fixture-reviewer', 'roles' => ['reviewer']],
 ]];
-$GLOBALS['vg_comparison_test_users'] = [101 => new WP_User(101, 'Fixture Author'), 202 => new WP_User(202, 'Fixture Reviewer')];
+$GLOBALS['vg_comparison_test_users'] = [101 => new WP_User(101, 'Fixture Author', ['author']), 202 => new WP_User(202, 'Fixture Reviewer', ['editor'])];
 $make = static function (string $identityId, int $wpUserId, string $role, array $changeIds, string $reason) use ($manifestHash, $secret): array {
     $payload = ['artifact_version' => '1', 'manifest_hash' => $manifestHash, 'identity_id' => $identityId, 'wp_user_id' => $wpUserId, 'role' => $role, 'timestamp_utc' => '2026-08-03T00:00:00Z', 'change_ids' => $changeIds, 'change_reason' => $reason, 'key_id' => 'comparison-approval-2026-01'];
     $payload['hmac_sha256'] = hash_hmac('sha256', vg_comparison_canonical_json($payload), $secret);
@@ -2490,6 +2490,7 @@ $sameWpRegistry = $registry; $sameWpRegistry['identities'][1]['wp_user_id'] = 10
 $schema = json_decode(file_get_contents($schemaPath), true, 512, JSON_THROW_ON_ERROR);
 $approvalSchema = ['$defs' => $schema['$defs'], '$ref' => '#/$defs/approvalArtifact'];
 $results = [];
+$results['canonical_numeric'] = vg_comparison_canonical_json(['one' => 1.0, 'negative_zero' => -0.0, 'fraction' => 1.25, 'exponent' => 1.0e20, 'safe_integer' => 9007199254740991.0]) === base64_decode(getenv('VG_COMPARISON_CANONICAL_NUMERIC_VECTOR'), true);
 $results['canonical_literal'] = vg_comparison_canonical_json(array_diff_key($author, ['hmac_sha256' => true])) === base64_decode(getenv('VG_COMPARISON_CANONICAL_VECTOR'), true);
 $results['canonical_hash'] = vg_comparison_sha256(array_diff_key($author, ['hmac_sha256' => true])) === '268cacf50d0eb37b0353422154e3c82291924d04e1c3b0d258a651f8ad81df0f';
 $results['schema_valid'] = vg_comparison_validate_schema($author, $approvalSchema) === [];
@@ -2508,6 +2509,9 @@ $GLOBALS['vg_comparison_test_users'][101]->user_status = 0;
 $results['unauthorized_role'] = vg_comparison_verify_approval($unauthorized, $registry, $manifestHash)['ok'] === false;
 $results['duplicate_identity'] = vg_comparison_verify_approval($author, $duplicateRegistry, $manifestHash)['ok'] === false;
 $results['source_refresh_one_reviewer'] = _vg_comparison_verify_approval_set([$refresh], $registry, $manifestHash, ['change_reason' => 'source_refresh', 'outcomes_changed' => false])['ok'] === true;
+$GLOBALS['vg_comparison_test_users'][202]->roles = ['author'];
+$results['reviewer_wp_role_mismatch'] = vg_comparison_verify_approval($refresh, $registry, $manifestHash)['ok'] === false;
+$GLOBALS['vg_comparison_test_users'][202]->roles = ['editor'];
 $results['decision_four_eyes'] = _vg_comparison_verify_approval_set([$author, $reviewer], $registry, $manifestHash, ['change_reason' => 'decision_change'])['ok'] === true;
 $results['altered_expected_scope'] = _vg_comparison_verify_approval_set([$author, $reviewer], $registry, $manifestHash, ['change_reason' => 'decision_change', 'change_ids' => ['cmp-104-source-refresh']])['ok'] === false;
 $results['duplicate_artifact'] = _vg_comparison_verify_approval_set([$author, $author], $registry, $manifestHash, ['change_reason' => 'decision_change'])['ok'] === false;
@@ -2522,25 +2526,28 @@ echo json_encode($results, JSON_UNESCAPED_SLASHES | JSON_THROW_ON_ERROR);
             $previousLibraryPath = [Environment]::GetEnvironmentVariable('VG_COMPARISON_LIBRARY_PATH')
             $previousSchemaPath = [Environment]::GetEnvironmentVariable('VG_COMPARISON_SCHEMA_PATH')
             $previousCanonicalVector = [Environment]::GetEnvironmentVariable('VG_COMPARISON_CANONICAL_VECTOR')
+            $previousCanonicalNumericVector = [Environment]::GetEnvironmentVariable('VG_COMPARISON_CANONICAL_NUMERIC_VECTOR')
             try {
                 [Environment]::SetEnvironmentVariable('VG_COMPARISON_LIBRARY_PATH', $phpLibraryPath)
                 [Environment]::SetEnvironmentVariable('VG_COMPARISON_SCHEMA_PATH', $schemaPath)
                 $canonicalVector = '{"artifact_version":"1","change_ids":["cmp-104-decision"],"change_reason":"decision_change","identity_id":"fixture-author","key_id":"comparison-approval-2026-01","manifest_hash":"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa","role":"author","timestamp_utc":"2026-08-03T00:00:00Z","wp_user_id":101}'
                 [Environment]::SetEnvironmentVariable('VG_COMPARISON_CANONICAL_VECTOR', [Convert]::ToBase64String([System.Text.Encoding]::UTF8.GetBytes($canonicalVector)))
+                [Environment]::SetEnvironmentVariable('VG_COMPARISON_CANONICAL_NUMERIC_VECTOR', 'eyJleHBvbmVudCI6MWUyMCwiZnJhY3Rpb24iOjEuMjUsIm5lZ2F0aXZlX3plcm8iOi0wLCJvbmUiOjEsInNhZmVfaW50ZWdlciI6OTAwNzE5OTI1NDc0MDk5MX0=')
                 $vectorOutput = @(& $phpBinary '-d' 'display_errors=stderr' '-r' $phpVectorCode 2>&1)
                 $vectorExit = $LASTEXITCODE
             } finally {
                 [Environment]::SetEnvironmentVariable('VG_COMPARISON_LIBRARY_PATH', $previousLibraryPath)
                 [Environment]::SetEnvironmentVariable('VG_COMPARISON_SCHEMA_PATH', $previousSchemaPath)
                 [Environment]::SetEnvironmentVariable('VG_COMPARISON_CANONICAL_VECTOR', $previousCanonicalVector)
+                [Environment]::SetEnvironmentVariable('VG_COMPARISON_CANONICAL_NUMERIC_VECTOR', $previousCanonicalNumericVector)
             }
-            $approvalChecks += 22
+            $approvalChecks += 24
             if ($vectorExit -ne 0 -or $vectorOutput.Count -ne 1) {
                 $approvalErrors += 'E_PHP ops/comparison-rollout-lib.php: PHP approval vector execution failed'
             } else {
                 try {
                     $vectorResults = [string]$vectorOutput[0] | ConvertFrom-Json
-                    foreach ($vectorName in @('canonical_literal', 'canonical_hash', 'schema_valid', 'valid_hmac', 'altered_scope', 'altered_hash', 'invalid_hmac', 'unknown_key', 'unset_key', 'ordinal_ordering', 'inactive_user', 'unauthorized_role', 'duplicate_identity', 'source_refresh_one_reviewer', 'decision_four_eyes', 'altered_expected_scope', 'duplicate_artifact', 'same_wp_user', 'safe_compile_surface', 'safe_probe_surface', 'safe_insert_surface', 'wordpress_salt_secret')) {
+                    foreach ($vectorName in @('canonical_numeric', 'canonical_literal', 'canonical_hash', 'schema_valid', 'valid_hmac', 'altered_scope', 'altered_hash', 'invalid_hmac', 'unknown_key', 'unset_key', 'ordinal_ordering', 'inactive_user', 'unauthorized_role', 'duplicate_identity', 'source_refresh_one_reviewer', 'reviewer_wp_role_mismatch', 'decision_four_eyes', 'altered_expected_scope', 'duplicate_artifact', 'same_wp_user', 'safe_compile_surface', 'safe_probe_surface', 'safe_insert_surface', 'wordpress_salt_secret')) {
                         $vectorValue = Get-Property $vectorResults $vectorName
                         $vectorPassed = ($vectorValue -eq $true)
                         if (-not $vectorPassed) {

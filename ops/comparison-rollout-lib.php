@@ -49,10 +49,61 @@ function _vg_comparison_canonicalize(mixed $value): mixed
 
 function vg_comparison_canonical_json(mixed $value): string
 {
-    return json_encode(
-        _vg_comparison_canonicalize($value),
-        JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_PRESERVE_ZERO_FRACTION | JSON_THROW_ON_ERROR
-    );
+    return _vg_comparison_encode_canonical($value);
+}
+
+function _vg_comparison_encode_float(float $value): string
+{
+    if (!is_finite($value)) {
+        throw new InvalidArgumentException('Non-finite numbers are not valid JSON.');
+    }
+    $encoded = strtolower(json_encode($value, JSON_THROW_ON_ERROR));
+    if (preg_match('/^(-?\d+)(?:\.(\d+))?e([+-]?)(\d+)$/D', $encoded, $parts) !== 1) {
+        return preg_replace('/\.0$/D', '', $encoded) ?? $encoded;
+    }
+    $fraction = isset($parts[2]) ? rtrim($parts[2], '0') : '';
+    $mantissa = $parts[1] . ($fraction === '' ? '' : '.' . $fraction);
+    $digits = ltrim($parts[4], '0');
+    $digits = $digits === '' ? '0' : $digits;
+    return $mantissa . 'e' . ($parts[3] === '-' ? '-' : '') . $digits;
+}
+
+function _vg_comparison_encode_canonical(mixed $value): string
+{
+    if (is_array($value)) {
+        if (_vg_comparison_is_list($value)) {
+            return '[' . implode(',', array_map('_vg_comparison_encode_canonical', $value)) . ']';
+        }
+        $keys = array_keys($value);
+        foreach ($keys as $key) {
+            if (!is_string($key)) {
+                throw new InvalidArgumentException('Canonical object keys must be strings.');
+            }
+        }
+        sort($keys, SORT_STRING);
+        $pairs = [];
+        foreach ($keys as $key) {
+            $pairs[] = json_encode($key, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_THROW_ON_ERROR)
+                . ':' . _vg_comparison_encode_canonical($value[$key]);
+        }
+        return '{' . implode(',', $pairs) . '}';
+    }
+    if (is_string($value)) {
+        return json_encode($value, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_THROW_ON_ERROR);
+    }
+    if (is_int($value)) {
+        return (string) $value;
+    }
+    if (is_float($value)) {
+        return _vg_comparison_encode_float($value);
+    }
+    if (is_bool($value)) {
+        return $value ? 'true' : 'false';
+    }
+    if ($value === null) {
+        return 'null';
+    }
+    throw new InvalidArgumentException('Only JSON-compatible values can be canonicalized.');
 }
 
 function vg_comparison_sha256(mixed $value): string
@@ -376,7 +427,30 @@ function _vg_comparison_wordpress_identity_active(array $identity): bool
     if (!empty($user->spam) || !empty($user->deleted) || !is_array($user->roles ?? null) || $user->roles === []) {
         return false;
     }
-    return (string) ($user->display_name ?? '') === (string) ($identity['display_name'] ?? '');
+    if ((string) ($user->display_name ?? '') !== (string) ($identity['display_name'] ?? '')) {
+        return false;
+    }
+    // Reviewer authority excludes WordPress author/contributor/subscriber roles.
+    $wordpressRoleAllowlist = [
+        'author' => ['administrator', 'editor', 'author'],
+        'reviewer' => ['administrator', 'editor'],
+    ];
+    foreach ($identity['roles'] as $editorialRole) {
+        if (!isset($wordpressRoleAllowlist[$editorialRole])) {
+            return false;
+        }
+        $authorized = false;
+        foreach ($user->roles as $wordpressRole) {
+            if (is_string($wordpressRole) && in_array($wordpressRole, $wordpressRoleAllowlist[$editorialRole], true)) {
+                $authorized = true;
+                break;
+            }
+        }
+        if (!$authorized) {
+            return false;
+        }
+    }
+    return true;
 }
 
 function vg_comparison_verify_approval(array $artifact, array $identity_registry, string $manifest_hash): array
@@ -530,7 +604,8 @@ function _vg_comparison_self_test(): bool
 {
     $value = ['z' => 1, 'a' => ['b' => 2, 'a' => 1]];
     return vg_comparison_canonical_json($value) === '{"a":{"a":1,"b":2},"z":1}'
-        && vg_comparison_sha256($value) === hash('sha256', '{"a":{"a":1,"b":2},"z":1}');
+        && vg_comparison_sha256($value) === hash('sha256', '{"a":{"a":1,"b":2},"z":1}')
+        && vg_comparison_canonical_json(['one' => 1.0, 'negative_zero' => -0.0, 'fraction' => 1.25]) === '{"fraction":1.25,"negative_zero":-0,"one":1}';
 }
 
 if (PHP_SAPI === 'cli' && isset($argv) && realpath((string) ($argv[0] ?? '')) === __FILE__ && ($argv[1] ?? '') === '--self-test') {
