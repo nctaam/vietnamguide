@@ -68,11 +68,7 @@ function vg_comparison_bundle_canonical_json(mixed $value): string
         return (string) $value;
     }
     if (is_float($value)) {
-        if (!is_finite($value)) {
-            throw new InvalidArgumentException('Non-finite number.');
-        }
-        $encoded = strtolower(json_encode($value, JSON_THROW_ON_ERROR));
-        return preg_replace('/\.0(?=e|$)/D', '', $encoded) ?? $encoded;
+        throw new InvalidArgumentException('Floats are not valid comparison bundle values.');
     }
     if (is_bool($value)) {
         return $value ? 'true' : 'false';
@@ -160,6 +156,28 @@ function vg_comparison_bundle_json_unique(array $value): bool
         $seen[$key] = true;
     }
     return true;
+}
+
+function vg_comparison_bundle_contains_float(mixed $value): bool
+{
+    if (is_float($value)) {
+        return true;
+    }
+    if (is_array($value)) {
+        foreach ($value as $item) {
+            if (vg_comparison_bundle_contains_float($item)) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
+function vg_comparison_bundle_raw_has_float(string $json): bool
+{
+    $without_strings = preg_replace('~"(?:\\\\.|[^"\\\\])*"~s', '""', $json);
+    return is_string($without_strings)
+        && preg_match('/(?:\d+\.\d*|\d*\.\d+|\d+[eE][+-]?\d+)/', $without_strings) === 1;
 }
 
 function vg_comparison_bundle_list(
@@ -564,6 +582,45 @@ function vg_comparison_bundle_reject(string $code, int $post_id): array
     return ['ok' => false, 'reason' => $code];
 }
 
+function vg_comparison_bundle_snapshot_valid(array $snapshot): bool
+{
+    $keys = ['snapshot_version', 'activation_stage', 'activated_on', 'manifest_version', 'activation_artifact_version', 'paths', 'bundle_hashes'];
+    if (!vg_comparison_bundle_exact_keys($snapshot, $keys)
+        || !vg_comparison_bundle_stable_id($snapshot['snapshot_version'])
+        || !in_array($snapshot['activation_stage'], ['baseline', 'canary', 'full'], true)
+        || !is_string($snapshot['activated_on'])
+        || preg_match('/^\d{4}-(0[1-9]|1[0-2])-([0-2]\d|3[01])T([01]\d|2[0-3]):[0-5]\d:[0-5]\dZ$/D', $snapshot['activated_on']) !== 1
+        || !vg_comparison_bundle_stable_id($snapshot['manifest_version'])
+        || !vg_comparison_bundle_stable_id($snapshot['activation_artifact_version'])
+        || !vg_comparison_bundle_list($snapshot['paths'], 1, 17, static fn(mixed $path): bool => is_string($path) && vg_comparison_bundle_valid_path($path), true)) {
+        return false;
+    }
+    $sorted_paths = $snapshot['paths'];
+    sort($sorted_paths, SORT_STRING);
+    if ($sorted_paths !== $snapshot['paths']) {
+        return false;
+    }
+    $entry_paths = [];
+    if (!vg_comparison_bundle_list($snapshot['bundle_hashes'], count($snapshot['paths']), count($snapshot['paths']), static function (mixed $entry) use ($snapshot, &$entry_paths): bool {
+        if (!is_array($entry)
+            || !vg_comparison_bundle_exact_keys($entry, ['path', 'bundle_hash', 'schema_version', 'source_registry_version', 'activation_artifact_version'])
+            || !is_string($entry['path'])
+            || !vg_comparison_bundle_valid_path($entry['path'])
+            || !is_string($entry['bundle_hash'])
+            || preg_match('/^[a-f0-9]{64}$/D', $entry['bundle_hash']) !== 1
+            || !in_array($entry['schema_version'], ['v1', 'v2'], true)
+            || !vg_comparison_bundle_stable_id($entry['source_registry_version'])
+            || $entry['activation_artifact_version'] !== $snapshot['activation_artifact_version']) {
+            return false;
+        }
+        $entry_paths[] = $entry['path'];
+        return true;
+    }, true)) {
+        return false;
+    }
+    return $entry_paths === $snapshot['paths'];
+}
+
 function vg_comparison_bundle_expectations(string $path): array
 {
     if (!is_callable('vg_comparison_activation_snapshot')
@@ -573,6 +630,7 @@ function vg_comparison_bundle_expectations(string $path): array
     $snapshot = vg_comparison_activation_snapshot();
     $organization_version = vg_comparison_organization_registry_version();
     if (!is_array($snapshot)
+        || !vg_comparison_bundle_snapshot_valid($snapshot)
         || !is_string($organization_version)
         || $organization_version === ''
         || !isset($snapshot['manifest_version'], $snapshot['activation_artifact_version'], $snapshot['paths'], $snapshot['bundle_hashes'])
@@ -605,68 +663,87 @@ function vg_comparison_load_bundle(WP_Post|int $post): array
 {
     static $cache = [];
     $post_id = is_int($post) ? $post : $post->ID;
-    if (isset($cache[$post_id])) {
-        return $cache[$post_id];
-    }
 
     try {
-        $post_object = $post instanceof WP_Post ? $post : (function_exists('get_post') ? get_post($post) : false);
+        $post_object = function_exists('get_post') ? get_post($post_id) : false;
         if (!$post_object instanceof WP_Post || $post_object->ID !== $post_id || $post_id < 1) {
-            return $cache[$post_id] = vg_comparison_bundle_reject('E_POST', max(0, $post_id));
+            return vg_comparison_bundle_reject('E_POST', max(0, $post_id));
         }
         $path = is_callable('vg_get_guide_path')
             ? vg_get_guide_path($post_object)
             : (function_exists('get_page_uri') ? get_page_uri($post_object) : '');
         if (!is_string($path) || !vg_comparison_bundle_valid_path($path)) {
-            return $cache[$post_id] = vg_comparison_bundle_reject('E_PATH', $post_id);
+            return vg_comparison_bundle_reject('E_PATH', $post_id);
         }
         if (!is_callable('vg_is_comparison_rollout_active_path') || !vg_is_comparison_rollout_active_path($path)) {
-            return $cache[$post_id] = vg_comparison_bundle_reject('E_INACTIVE', $post_id);
+            $fingerprint = $post_id . ':' . $path . ':inactive';
+            return $cache[$fingerprint] ??= vg_comparison_bundle_reject('E_INACTIVE', $post_id);
+        }
+        $expected = vg_comparison_bundle_expectations($path);
+        if ($expected === []) {
+            return vg_comparison_bundle_reject('E_ACTIVATION', $post_id);
+        }
+        $fingerprint = implode(':', [
+            $post_id,
+            $path,
+            $expected['manifest_version'],
+            $expected['activation_artifact_version'],
+            $expected['organization_registry_version'],
+            $expected['entry']['bundle_hash'],
+            $expected['entry']['schema_version'],
+            $expected['entry']['source_registry_version'],
+            $expected['entry']['activation_artifact_version'],
+        ]);
+        if (isset($cache[$fingerprint])) {
+            return $cache[$fingerprint];
         }
 
         $raw = get_post_meta($post_id, 'vg_eeat_comparison_bundle', true);
         if (!is_string($raw) || $raw === '') {
-            return $cache[$post_id] = vg_comparison_bundle_reject('E_META', $post_id);
+            return $cache[$fingerprint] = vg_comparison_bundle_reject('E_META', $post_id);
         }
         if (strlen($raw) > 65536) {
-            return $cache[$post_id] = vg_comparison_bundle_reject('E_SIZE', $post_id);
+            return $cache[$fingerprint] = vg_comparison_bundle_reject('E_SIZE', $post_id);
         }
         if (str_starts_with($raw, "\xEF\xBB\xBF")) {
-            return $cache[$post_id] = vg_comparison_bundle_reject('E_BOM', $post_id);
+            return $cache[$fingerprint] = vg_comparison_bundle_reject('E_BOM', $post_id);
         }
         if (!preg_match('//u', $raw)) {
-            return $cache[$post_id] = vg_comparison_bundle_reject('E_UTF8', $post_id);
+            return $cache[$fingerprint] = vg_comparison_bundle_reject('E_UTF8', $post_id);
         }
         if (preg_match('/[\x00-\x08\x0B\x0C\x0E-\x1F\x7F]/', $raw)) {
-            return $cache[$post_id] = vg_comparison_bundle_reject('E_CONTROL', $post_id);
+            return $cache[$fingerprint] = vg_comparison_bundle_reject('E_CONTROL', $post_id);
         }
         if (vg_comparison_bundle_duplicate_keys($raw)) {
-            return $cache[$post_id] = vg_comparison_bundle_reject('E_JSON_DUPLICATE', $post_id);
+            return $cache[$fingerprint] = vg_comparison_bundle_reject('E_JSON_DUPLICATE', $post_id);
+        }
+        if (vg_comparison_bundle_raw_has_float($raw)) {
+            return $cache[$fingerprint] = vg_comparison_bundle_reject('E_SCHEMA', $post_id);
         }
         try {
             $bundle = json_decode($raw, true, 128, JSON_THROW_ON_ERROR);
         } catch (JsonException) {
-            return $cache[$post_id] = vg_comparison_bundle_reject('E_JSON', $post_id);
+            return $cache[$fingerprint] = vg_comparison_bundle_reject('E_JSON', $post_id);
         }
-        if (!is_array($bundle) || vg_comparison_bundle_is_list($bundle)) {
-            return $cache[$post_id] = vg_comparison_bundle_reject('E_SCHEMA', $post_id);
+        if (!is_array($bundle) || vg_comparison_bundle_is_list($bundle) || vg_comparison_bundle_contains_float($bundle)) {
+            return $cache[$fingerprint] = vg_comparison_bundle_reject('E_SCHEMA', $post_id);
         }
         $schema_version = $bundle['schema_version'] ?? null;
         if (!is_string($schema_version)
             || !in_array($schema_version, ['v' . VG_COMPARISON_BUNDLE_SCHEMA_CURRENT, 'v' . VG_COMPARISON_BUNDLE_SCHEMA_PREVIOUS], true)) {
-            return $cache[$post_id] = vg_comparison_bundle_reject('E_VERSION', $post_id);
+            return $cache[$fingerprint] = vg_comparison_bundle_reject('E_VERSION', $post_id);
         }
         $valid_shape = $schema_version === 'v' . VG_COMPARISON_BUNDLE_SCHEMA_CURRENT
             ? vg_comparison_bundle_v2_shape_valid($bundle)
             : vg_comparison_bundle_v1_shape_valid($bundle);
         if (!$valid_shape) {
-            return $cache[$post_id] = vg_comparison_bundle_reject('E_SCHEMA', $post_id);
+            return $cache[$fingerprint] = vg_comparison_bundle_reject('E_SCHEMA', $post_id);
         }
         if ($bundle['path'] !== $path) {
-            return $cache[$post_id] = vg_comparison_bundle_reject('E_PATH', $post_id);
+            return $cache[$fingerprint] = vg_comparison_bundle_reject('E_PATH', $post_id);
         }
         if ($bundle['post_id'] !== $post_id) {
-            return $cache[$post_id] = vg_comparison_bundle_reject('E_POST_ID', $post_id);
+            return $cache[$fingerprint] = vg_comparison_bundle_reject('E_POST_ID', $post_id);
         }
 
         $bundle_hash = $bundle['bundle_hash'];
@@ -674,42 +751,38 @@ function vg_comparison_load_bundle(WP_Post|int $post): array
         $hashable = $bundle;
         unset($hashable['bundle_hash']);
         if (!hash_equals($bundle_hash, hash('sha256', vg_comparison_bundle_canonical_json($hashable)))) {
-            return $cache[$post_id] = vg_comparison_bundle_reject('E_BUNDLE_HASH', $post_id);
-        }
-        $expected = vg_comparison_bundle_expectations($path);
-        if ($expected === []) {
-            return $cache[$post_id] = vg_comparison_bundle_reject('E_ACTIVATION', $post_id);
+            return $cache[$fingerprint] = vg_comparison_bundle_reject('E_BUNDLE_HASH', $post_id);
         }
         if ($expected['activation_artifact_version'] !== VG_COMPARISON_ACTIVATION_ARTIFACT_VERSION
             || $expected['entry']['activation_artifact_version'] !== VG_COMPARISON_ACTIVATION_ARTIFACT_VERSION) {
-            return $cache[$post_id] = vg_comparison_bundle_reject('E_ACTIVATION_VERSION', $post_id);
+            return $cache[$fingerprint] = vg_comparison_bundle_reject('E_ACTIVATION_VERSION', $post_id);
         }
         if ($expected['entry']['bundle_hash'] !== $bundle_hash
             || $expected['entry']['schema_version'] !== $schema_version) {
-            return $cache[$post_id] = vg_comparison_bundle_reject('E_BUNDLE_HASH', $post_id);
+            return $cache[$fingerprint] = vg_comparison_bundle_reject('E_BUNDLE_HASH', $post_id);
         }
         if ($schema_version === 'v' . VG_COMPARISON_BUNDLE_SCHEMA_PREVIOUS) {
             $bundle = vg_comparison_migrate_bundle_v1_to_v2($bundle);
             if ($bundle === [] || !vg_comparison_bundle_v2_shape_valid($bundle)) {
-                return $cache[$post_id] = vg_comparison_bundle_reject('E_MIGRATION', $post_id);
+                return $cache[$fingerprint] = vg_comparison_bundle_reject('E_MIGRATION', $post_id);
             }
             $schema_version = $bundle['schema_version'];
             $bundle_hash = $bundle['bundle_hash'];
         }
         if ($bundle['activation_artifact_version'] !== VG_COMPARISON_ACTIVATION_ARTIFACT_VERSION) {
-            return $cache[$post_id] = vg_comparison_bundle_reject('E_ACTIVATION_VERSION', $post_id);
+            return $cache[$fingerprint] = vg_comparison_bundle_reject('E_ACTIVATION_VERSION', $post_id);
         }
         if ($bundle['manifest_version'] !== $expected['manifest_version']) {
-            return $cache[$post_id] = vg_comparison_bundle_reject('E_MANIFEST_VERSION', $post_id);
+            return $cache[$fingerprint] = vg_comparison_bundle_reject('E_MANIFEST_VERSION', $post_id);
         }
         if ($bundle['source_registry_version'] !== $expected['entry']['source_registry_version']) {
-            return $cache[$post_id] = vg_comparison_bundle_reject('E_SOURCE_REGISTRY_VERSION', $post_id);
+            return $cache[$fingerprint] = vg_comparison_bundle_reject('E_SOURCE_REGISTRY_VERSION', $post_id);
         }
         if ($bundle['organization_registry_version'] !== $expected['organization_registry_version']) {
-            return $cache[$post_id] = vg_comparison_bundle_reject('E_ORGANIZATION_REGISTRY_VERSION', $post_id);
+            return $cache[$fingerprint] = vg_comparison_bundle_reject('E_ORGANIZATION_REGISTRY_VERSION', $post_id);
         }
         $activation_version = $bundle['activation_artifact_version'];
-        return $cache[$post_id] = [
+        return $cache[$fingerprint] = [
             'ok' => true,
             'bundle' => $bundle,
             'bundle_hash' => $bundle_hash,
@@ -723,6 +796,6 @@ function vg_comparison_load_bundle(WP_Post|int $post): array
             ]),
         ];
     } catch (Throwable) {
-        return $cache[$post_id] = vg_comparison_bundle_reject('E_RUNTIME', max(0, $post_id));
+        return vg_comparison_bundle_reject('E_RUNTIME', max(0, $post_id));
     }
 }

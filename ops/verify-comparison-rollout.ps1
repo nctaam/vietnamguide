@@ -2850,6 +2850,7 @@ $GLOBALS['vg_test_meta'] = [];
 $GLOBALS['vg_test_reads'] = [];
 $GLOBALS['vg_test_active'] = [];
 $GLOBALS['vg_test_snapshot'] = [];
+$GLOBALS['vg_test_snapshots'] = [];
 $GLOBALS['vg_test_org'] = 'organizations-v2';
 $GLOBALS['vg_test_actions'] = [];
 $GLOBALS['vg_test_throw'] = 0;
@@ -2858,7 +2859,7 @@ function get_post(int $id): WP_Post|false { if ($id === $GLOBALS['vg_test_throw'
 function get_page_uri(WP_Post $post): string { return $post->path; }
 function vg_get_guide_path(WP_Post $post): string { return $post->path; }
 function vg_is_comparison_rollout_active_path(string $path): bool { return in_array($path, $GLOBALS['vg_test_active'], true); }
-function vg_comparison_activation_snapshot(): array { return $GLOBALS['vg_test_snapshot']; }
+function vg_comparison_activation_snapshot(): array { if($GLOBALS['vg_test_snapshots']!==[]){return array_shift($GLOBALS['vg_test_snapshots']);}return $GLOBALS['vg_test_snapshot']; }
 function vg_comparison_organization_registry_version(): string { return $GLOBALS['vg_test_org']; }
 function get_post_meta(int $post_id, string $key, bool $single): mixed { $GLOBALS['vg_test_reads'][$post_id] = ($GLOBALS['vg_test_reads'][$post_id] ?? 0) + 1; return $GLOBALS['vg_test_meta'][$post_id] ?? ''; }
 $logFile = tempnam(sys_get_temp_dir(), 'vg-log-');
@@ -2869,7 +2870,8 @@ $requiredKeys = json_decode(base64_decode(getenv('VG_RUNTIME_REQUIRED_KEYS'), tr
 $results['constants'] = VG_COMPARISON_BUNDLE_SCHEMA_CURRENT === '2' && VG_COMPARISON_BUNDLE_SCHEMA_PREVIOUS === '1' && VG_COMPARISON_ACTIVATION_ARTIFACT_VERSION === 'activation-v2';
 $results['schema_key_parity'] = vg_comparison_bundle_v2_required_keys() === $requiredKeys;
 $results['task6_deferred'] = $GLOBALS['vg_test_actions'] === [];
-$results['canonical_parity'] = vg_comparison_bundle_canonical_json(['z'=>1.0,'a'=>['nested'=>'slash/value'],'m'=>-0.0]) === '{"a":{"nested":"slash/value"},"m":-0,"z":1}';
+$results['canonical_integer_parity'] = vg_comparison_bundle_canonical_json(['z'=>1,'a'=>['nested'=>'slash/value'],'m'=>0]) === '{"a":{"nested":"slash/value"},"m":0,"z":1}';
+$canonicalFloatRejected=false;try{vg_comparison_bundle_canonical_json(['float'=>1.0]);}catch(InvalidArgumentException){$canonicalFloatRejected=true;}$results['canonical_float_rejected']=$canonicalFloatRejected;
 function vg_test_bundle(int $id, string $path): array {
     $bundle=json_decode(base64_decode(getenv('VG_RUNTIME_POSITIVE_BUNDLE'),true),true,128,JSON_THROW_ON_ERROR);$bundle['path']=$path;$bundle['post_id']=$id;
     $hashable=$bundle; unset($hashable['bundle_hash']); $bundle['bundle_hash']=hash('sha256',vg_comparison_bundle_canonical_json($hashable)); return $bundle;
@@ -2877,16 +2879,18 @@ function vg_test_bundle(int $id, string $path): array {
 function vg_test_json(array $bundle): string { return json_encode($bundle, JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE|JSON_THROW_ON_ERROR); }
 function vg_test_rehash(array $bundle): array { $hashable=$bundle; unset($hashable['bundle_hash']); $bundle['bundle_hash']=hash('sha256',vg_comparison_bundle_canonical_json($hashable)); return $bundle; }
 function vg_test_install(WP_Post $post, string $raw, array $expect=[]): void {
-    $GLOBALS['vg_test_posts'][$post->ID]=$post; $GLOBALS['vg_test_meta'][$post->ID]=$raw; $GLOBALS['vg_test_active']=[$post->path]; $decoded=json_decode($raw,true); $defaults=is_array($decoded)?$decoded:[];
+    $GLOBALS['vg_test_snapshots']=[];$GLOBALS['vg_test_posts'][$post->ID]=$post; $GLOBALS['vg_test_meta'][$post->ID]=$raw; $GLOBALS['vg_test_active']=[$post->path]; $decoded=json_decode($raw,true); $defaults=is_array($decoded)?$decoded:[];
     $entry=['path'=>$post->path,'bundle_hash'=>$defaults['bundle_hash']??str_repeat('0',64),'schema_version'=>$defaults['schema_version']??'v2','source_registry_version'=>$defaults['source_registry_version']??'sources-v2','activation_artifact_version'=>'activation-v2'];
     if(isset($expect['entry'])){$entry=array_replace($entry,$expect['entry']);}
-    $GLOBALS['vg_test_snapshot']=['manifest_version'=>$expect['manifest_version']??($defaults['manifest_version']??'manifest-v2'),'activation_artifact_version'=>$expect['activation_artifact_version']??'activation-v2','paths'=>$expect['paths']??[$post->path],'bundle_hashes'=>[$entry]];
+    $GLOBALS['vg_test_snapshot']=['snapshot_version'=>'snapshot-v2','activation_stage'=>'canary','activated_on'=>'2026-08-03T00:00:00Z','manifest_version'=>$expect['manifest_version']??($defaults['manifest_version']??'manifest-v2'),'activation_artifact_version'=>$expect['activation_artifact_version']??'activation-v2','paths'=>$expect['paths']??[$post->path],'bundle_hashes'=>[$entry]];
+    if(isset($expect['snapshot'])){$GLOBALS['vg_test_snapshot']=array_replace($GLOBALS['vg_test_snapshot'],$expect['snapshot']);}
     $GLOBALS['vg_test_org']=$expect['organization_registry_version']??'organizations-v2';
 }
 function vg_test_reason(array $result,string $reason):bool{return $result===['ok'=>false,'reason'=>$reason];}
 $post=new WP_Post(5001,'compare/runtime-valid'); $bundle=vg_test_bundle($post->ID,$post->path); vg_test_install($post,vg_test_json($bundle)); $loaded=vg_comparison_load_bundle($post);
 $results['valid_exact']=$loaded===['ok'=>true,'bundle'=>$bundle,'bundle_hash'=>$bundle['bundle_hash'],'cache_key'=>implode(':',[$post->path,$bundle['bundle_hash'],'v2','sources-v2','organizations-v2','activation-v2'])];
 $results['single_read']=vg_comparison_load_bundle($post->ID)===$loaded&&$GLOBALS['vg_test_reads'][$post->ID]===1;
+$floatCases=['decimal'=>'1.0','exponent'=>'1e3'];$floatId=5050;foreach($floatCases as $name=>$literal){$p=new WP_Post(++$floatId,"compare/float-$name");$b=vg_test_bundle($p->ID,$p->path);$raw=vg_test_json($b);$needle='"max_visible_characters":1800';$replacement='"max_visible_characters":'.$literal;$raw=str_replace($needle,$replacement,$raw,$replaced);vg_test_install($p,$raw);$results['float_'.$name]=$replaced===1&&vg_test_reason(vg_comparison_load_bundle($p),'E_SCHEMA');}
 $inactive=new WP_Post(5002,'compare/runtime-inactive'); $GLOBALS['vg_test_posts'][$inactive->ID]=$inactive; $GLOBALS['vg_test_active']=[]; $results['inactive_zero_read']=vg_test_reason(vg_comparison_load_bundle($inactive),'E_INACTIVE')&&!isset($GLOBALS['vg_test_reads'][$inactive->ID]);
 $results['missing_post']=vg_test_reason(vg_comparison_load_bundle(5003),'E_POST'); $GLOBALS['vg_test_throw']=5004; $results['throwable']=vg_test_reason(vg_comparison_load_bundle(5004),'E_RUNTIME'); $GLOBALS['vg_test_throw']=0;
 $results['duplicate_top']=vg_comparison_bundle_duplicate_keys('{"a":1,"a":2}');
@@ -2905,9 +2909,27 @@ $p=new WP_Post(5207,'compare/runtime-activation');$b=vg_test_bundle($p->ID,$p->p
 $p=new WP_Post(5208,'compare/runtime-hash');$b=vg_test_bundle($p->ID,$p->path);$b['bundle_hash']=str_repeat('a',64);$cases['self_hash']=[$p,$b,['entry'=>['bundle_hash'=>str_repeat('a',64)]],'E_BUNDLE_HASH'];
 $p=new WP_Post(5209,'compare/runtime-snapshot');$b=vg_test_bundle($p->ID,$p->path);$cases['snapshot_hash']=[$p,$b,['entry'=>['bundle_hash'=>str_repeat('c',64)]],'E_BUNDLE_HASH'];
 $p=new WP_Post(5210,'compare/runtime-snapshot-path');$b=vg_test_bundle($p->ID,$p->path);$cases['snapshot_path']=[$p,$b,['paths'=>['compare/other']],'E_ACTIVATION'];
-$p=new WP_Post(5211,'compare/runtime-version');$b=vg_test_bundle($p->ID,$p->path);$b['schema_version']='v3';$cases['version']=[$p,$b,[],'E_VERSION'];
+$p=new WP_Post(5211,'compare/runtime-version');$b=vg_test_bundle($p->ID,$p->path);$b['schema_version']='v3';$b=vg_test_rehash($b);$cases['version']=[$p,$b,['entry'=>['schema_version'=>'v2','bundle_hash'=>$b['bundle_hash']]],'E_VERSION'];
 $p=new WP_Post(5212,'compare/runtime-shape');$b=vg_test_bundle($p->ID,$p->path);$b['options']='bad';$b=vg_test_rehash($b);$cases['shape']=[$p,$b,[],'E_SCHEMA'];
 foreach($cases as $name=>[$p,$b,$expect,$reason]){vg_test_install($p,vg_test_json($b),$expect);$results[$name]=vg_test_reason(vg_comparison_load_bundle($p),$reason);}
+$snapshotMutations=[
+    'missing_key'=>function($s){unset($s['snapshot_version']);return $s;},
+    'extra_key'=>function($s){$s['unknown']=true;return $s;},
+    'snapshot_version'=>function($s){$s['snapshot_version']='UPPER';return $s;},
+    'stage'=>function($s){$s['activation_stage']='partial';return $s;},
+    'date'=>function($s){$s['activated_on']='2026-08-03';return $s;},
+    'artifact'=>function($s){$s['activation_artifact_version']='activation-other';return $s;},
+    'paths_duplicate'=>function($s){$s['paths']=[$s['paths'][0],$s['paths'][0]];return $s;},
+    'paths_order'=>function($s){$s['paths']=[$s['paths'][0],'compare/a-path'];$second=$s['bundle_hashes'][0];$second['path']='compare/a-path';$s['bundle_hashes'][]=$second;return $s;},
+    'entry_extra'=>function($s){$s['bundle_hashes'][0]['unknown']=true;return $s;},
+    'entry_artifact'=>function($s){$s['bundle_hashes'][0]['activation_artifact_version']='activation-other';return $s;},
+    'entry_path_set'=>function($s){$s['bundle_hashes'][0]['path']='compare/other';return $s;},
+    'entry_duplicate'=>function($s){$s['paths'][]='compare/z-path';$second=$s['bundle_hashes'][0];$second['path']='compare/z-path';$s['bundle_hashes'][]=$second;$s['bundle_hashes'][]=$second;return $s;},
+    'entry_order'=>function($s){$s['paths']=[$s['paths'][0],'compare/z-path'];$second=$s['bundle_hashes'][0];$second['path']='compare/z-path';$s['bundle_hashes']=[$second,$s['bundle_hashes'][0]];return $s;},
+    'entry_schema'=>function($s){$s['bundle_hashes'][0]['schema_version']='v3';return $s;},
+    'entry_hash'=>function($s){$s['bundle_hashes'][0]['bundle_hash']='abc';return $s;},
+];
+$snapshotId=5500;foreach($snapshotMutations as $name=>$mutate){$p=new WP_Post(++$snapshotId,'compare/snapshot-'.str_replace('_','-',$name));$b=vg_test_bundle($p->ID,$p->path);vg_test_install($p,vg_test_json($b));$GLOBALS['vg_test_snapshot']=$mutate($GLOBALS['vg_test_snapshot']);$actual=vg_comparison_load_bundle($p);$results['snapshot_'.$name]=vg_test_reason($actual,'E_ACTIVATION');}
 $schemaMutations=[
     'top_missing'=>fn($b)=>array_diff_key($b,['field_note'=>true]),
     'editorial_unknown'=>function($b){$b['editorial']['unknown']=true;return $b;},
@@ -2977,6 +2999,8 @@ $schemaMutations=[
 $mutationId=5600;foreach($schemaMutations as $name=>$mutate){$p=new WP_Post(++$mutationId,'compare/schema-'.str_replace('_','-',$name));$b=$mutate(vg_test_bundle($p->ID,$p->path));$b=vg_test_rehash($b);vg_test_install($p,vg_test_json($b));$results['schema_'.$name]=vg_test_reason(vg_comparison_load_bundle($p),'E_SCHEMA');}
 $p=new WP_Post(5301,'compare/runtime-v1');$v1=['schema_version'=>'v1','bundle_hash'=>str_repeat('0',64),'path'=>$p->path,'post_id'=>$p->ID,'title'=>'Runtime v1','decision'=>'Reviewed decision','sources'=>['a','b','c']];$h=$v1;unset($h['bundle_hash']);$v1['bundle_hash']=hash('sha256',vg_comparison_bundle_canonical_json($h));$before=serialize($v1);
 $results['v1_pure']=vg_comparison_migrate_bundle_v1_to_v2($v1)===[]&&serialize($v1)===$before;vg_test_install($p,vg_test_json($v1),['entry'=>['schema_version'=>'v1']]);$results['v1_fallback']=vg_test_reason(vg_comparison_load_bundle($p),'E_MIGRATION');
+$authoritative=new WP_Post(5901,'compare/authoritative');$forged=new WP_Post(5901,'compare/forged');$validBundle=vg_test_bundle($authoritative->ID,$authoritative->path);vg_test_install($authoritative,vg_test_json($validBundle));$GLOBALS['vg_test_active']=[];$first=vg_comparison_load_bundle($forged);$GLOBALS['vg_test_active']=[$authoritative->path];$second=vg_comparison_load_bundle($authoritative->ID);$results['cache_reject_not_poisoned']=vg_test_reason($first,'E_INACTIVE')&&$second['ok']===true;
+$authoritative2=new WP_Post(5902,'compare/authoritative-two');$validBundle2=vg_test_bundle($authoritative2->ID,$authoritative2->path);vg_test_install($authoritative2,vg_test_json($validBundle2));$success=vg_comparison_load_bundle($authoritative2);$changed=$GLOBALS['vg_test_snapshot'];$changed['activation_artifact_version']='activation-other';$GLOBALS['vg_test_snapshots']=[$changed];$afterChange=vg_comparison_load_bundle($authoritative2->ID);$results['cache_success_not_stale']=$success['ok']===true&&vg_test_reason($afterChange,'E_ACTIVATION');
 for($id=5401;$id<=5412;++$id){$p=new WP_Post($id,"compare/private-$id");vg_test_install($p,'');vg_comparison_load_bundle($p);}vg_comparison_log_rejection('NOT_ALLOWED',9999);$logs=is_file($logFile)?file($logFile,FILE_IGNORE_NEW_LINES):[];$logs=array_values(array_filter($logs?:[],fn($line)=>str_contains($line,'VG_COMPARISON_REJECT')));
 $results['logs_bounded']=count($logs)>0&&count($logs)<=8;$joined=implode("\n",$logs);$results['logs_safe']=!str_contains($joined,'private-')&&!str_contains($joined,'NOT_ALLOWED')&&!str_contains($joined,'{')&&preg_match('/[a-f0-9]{64}/',$joined)!==1;@unlink($logFile);
 echo json_encode(['results'=>$results],JSON_THROW_ON_ERROR);
