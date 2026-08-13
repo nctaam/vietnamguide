@@ -412,7 +412,9 @@ function _vg_comparison_find_identity(array $registry, string $identityId): arra
         return ['ok' => false];
     }
     $found = null;
-    if (array_keys($registry) !== ['identities'] && array_keys($registry) !== ['registry_version', 'generated_on', 'identities']) {
+    $registryKeys = array_keys($registry);
+    sort($registryKeys, SORT_STRING);
+    if ($registryKeys !== ['identities'] && $registryKeys !== ['generated_on', 'identities', 'registry_version']) {
         return ['ok' => false];
     }
     if (count($registry['identities']) < 1 || count($registry['identities']) > 50) {
@@ -423,6 +425,7 @@ function _vg_comparison_find_identity(array $registry, string $identityId): arra
     foreach ($registry['identities'] as $identity) {
         if (!is_array($identity)
             || !isset($identity['identity_id'], $identity['wp_user_id'], $identity['display_name'], $identity['public_profile_path'], $identity['roles'])
+            || count(array_keys($identity)) !== 5
             || array_diff(array_keys($identity), ['identity_id', 'wp_user_id', 'display_name', 'public_profile_path', 'roles']) !== []
             || !_vg_comparison_stable_id($identity['identity_id'])
             || !is_int($identity['wp_user_id']) || $identity['wp_user_id'] < 1

@@ -2412,7 +2412,7 @@ function Invoke-ApprovalContractValidation {
 
     if (Test-Path -LiteralPath $phpSignerPath -PathType Leaf) {
         $signerSource = [System.IO.File]::ReadAllText($phpSignerPath, [System.Text.Encoding]::UTF8)
-        foreach ($needle in @('PHP_SAPI', 'comparison-approval-2026-01', 'VG_COMPARISON_APPROVAL_SECRET_2026_01', "fopen(`$outputPath, 'x')", 'chmod')) {
+        foreach ($needle in @('PHP_SAPI', 'comparison-approval-2026-01', 'VG_COMPARISON_APPROVAL_SECRET_2026_01', "fopen(`$resolvedOutput, 'x')", 'chmod')) {
             $approvalChecks++
             if ($signerSource.IndexOf($needle, [System.StringComparison]::Ordinal) -lt 0) {
                 $approvalErrors += "E_PHP ${phpSignerRelativePath}: missing signer safety contract '$needle'"
@@ -2445,9 +2445,21 @@ function Invoke-ApprovalContractValidation {
 
             $signerTempDirectory = Join-Path ([System.IO.Path]::GetTempPath()) ("vg-comparison-signer-" + [Guid]::NewGuid().ToString('N'))
             [void][System.IO.Directory]::CreateDirectory($signerTempDirectory)
+            $isolatedRepoRoot = Join-Path $signerTempDirectory 'repo'
+            $isolatedOpsPath = Join-Path $isolatedRepoRoot 'ops'
+            $isolatedRegistryDirectory = Join-Path $isolatedOpsPath 'comparison-rollout'
+            [void][System.IO.Directory]::CreateDirectory($isolatedRegistryDirectory)
+            $isolatedLibraryPath = Join-Path $isolatedOpsPath 'comparison-rollout-lib.php'
+            $isolatedSignerPath = Join-Path $isolatedOpsPath 'comparison-rollout-approve.php'
+            $isolatedRegistryPath = Join-Path $isolatedRegistryDirectory 'identities.json'
+            $alternateRegistryPath = Join-Path $isolatedOpsPath 'alternate-identities.json'
+            Copy-Item -LiteralPath $phpLibraryPath -Destination $isolatedLibraryPath
+            Copy-Item -LiteralPath $phpSignerPath -Destination $isolatedSignerPath
+            Copy-Item -LiteralPath $productionIdentityPath -Destination $isolatedRegistryPath
+            Copy-Item -LiteralPath $fixtureIdentityPath -Destination $alternateRegistryPath
             $signerOutputPath = Join-Path $signerTempDirectory 'approval.json'
             $signerArguments = @(
-                "--registry=$fixtureIdentityPath", '--identity-id=fixture-author', '--role=author',
+                "--registry=$isolatedRegistryPath", "--registry-hash=$((Get-FileHash -LiteralPath $isolatedRegistryPath -Algorithm SHA256).Hash.ToLowerInvariant())", '--identity-id=editorial-author-administrator', '--role=author',
                 "--manifest-hash=$('a' * 64)", '--change-ids=cmp-104-decision', '--change-reason=decision_change', "--output=$signerOutputPath"
             )
             $previousSignerSecret = [Environment]::GetEnvironmentVariable('VG_COMPARISON_APPROVAL_SECRET_2026_01')
@@ -2469,7 +2481,7 @@ function Invoke-ApprovalContractValidation {
             }
             try {
                 [Environment]::SetEnvironmentVariable('VG_COMPARISON_APPROVAL_SECRET_2026_01', $null)
-                $directSignerResult = Invoke-SignerProcess -Arguments (@($phpSignerPath) + $signerArguments)
+                $directSignerResult = Invoke-SignerProcess -Arguments (@($isolatedSignerPath) + $signerArguments)
                 $approvalChecks++
                 if ($directSignerResult.ExitCode -eq 0 -or $directSignerResult.Output.IndexOf('Run the signer through WP-CLI', [StringComparison]::Ordinal) -lt 0 -or (Test-Path -LiteralPath $signerOutputPath)) {
                     $approvalErrors += 'E_PHP ops/comparison-rollout-approve.php: direct PHP CLI signer did not fail closed without output'
@@ -2477,19 +2489,19 @@ function Invoke-ApprovalContractValidation {
 
                 $signerStubTemplate = @'
 define('WP_CLI', true);
-class WP_User { public int $ID = 101; public int $user_status = 0; public string $display_name = 'Fixture Author'; public array $roles = ['author']; public bool $spam = false; public bool $deleted = false; }
-function get_userdata(int $id): object|false { return $id === 101 ? new WP_User() : false; }
+class WP_User { public int $ID = 1; public int $user_status = 0; public string $display_name = 'Administrator'; public array $roles = ['administrator']; public bool $spam = false; public bool $deleted = false; }
+function get_userdata(int $id): object|false { return $id === 1 ? new WP_User() : false; }
 %CURRENT_USER_FUNCTION%
 $argv = json_decode(base64_decode(getenv('VG_SIGNER_ARGV'), true), true, 32, JSON_THROW_ON_ERROR);
 require getenv('VG_SIGNER_PATH');
 '@
-                $signerArgv = @($phpSignerPath) + $signerArguments
+                $signerArgv = @($isolatedSignerPath) + $signerArguments
                 [Environment]::SetEnvironmentVariable('VG_SIGNER_ARGV', [Convert]::ToBase64String([Text.Encoding]::UTF8.GetBytes(($signerArgv | ConvertTo-Json -Compress))))
-                [Environment]::SetEnvironmentVariable('VG_SIGNER_PATH', $phpSignerPath)
+                [Environment]::SetEnvironmentVariable('VG_SIGNER_PATH', $isolatedSignerPath)
                 foreach ($signerCase in @(
                     [ordered]@{ Name = 'missing-current-user-api'; Function = ''; Expected = 'Run the signer through WP-CLI' },
-                    [ordered]@{ Name = 'mismatched-current-user'; Function = 'function get_current_user_id(): int { return 202; }'; Expected = 'must exactly match' },
-                    [ordered]@{ Name = 'valid-wp-cli-reaches-key-gate'; Function = 'function get_current_user_id(): int { return 101; }'; Expected = 'dedicated approval key is unavailable' }
+                    [ordered]@{ Name = 'mismatched-current-user'; Function = 'function get_current_user_id(): int { return 2; }'; Expected = 'must exactly match' },
+                    [ordered]@{ Name = 'valid-wp-cli-reaches-key-gate'; Function = 'function get_current_user_id(): int { return 1; }'; Expected = 'dedicated approval key is unavailable' }
                 )) {
                     $stubCode = $signerStubTemplate.Replace('%CURRENT_USER_FUNCTION%', $signerCase.Function)
                     $stubResult = Invoke-SignerProcess -Arguments @('-r', $stubCode)
@@ -2499,8 +2511,62 @@ require getenv('VG_SIGNER_PATH');
                     }
                 }
 
+                [Environment]::SetEnvironmentVariable('VG_COMPARISON_APPROVAL_SECRET_2026_01', 'task4-test-secret-dedicated-2026-01')
+                $successStub = $signerStubTemplate.Replace('%CURRENT_USER_FUNCTION%', 'function get_current_user_id(): int { return 1; }')
+                $successResult = Invoke-SignerProcess -Arguments @('-r', $successStub)
+                $approvalChecks++
+                if ($successResult.ExitCode -ne 0 -or -not (Test-Path -LiteralPath $signerOutputPath -PathType Leaf)) {
+                    $approvalErrors += 'E_PHP ops/comparison-rollout-approve.php: isolated signer success vector did not create an artifact'
+                } else {
+                    $successBytes = [System.IO.File]::ReadAllBytes($signerOutputPath)
+                    $successText = [Text.Encoding]::UTF8.GetString($successBytes).TrimEnd("`r", "`n")
+                    try {
+                        $successArtifact = $successText | ConvertFrom-Json
+                        $successHmac = Get-Property $successArtifact 'hmac_sha256'
+                        $hmacProperty = $successArtifact.PSObject.Properties['hmac_sha256']
+                        $hmacProperty.Value = $null
+                        $payloadText = [regex]::Replace($successText, ',"hmac_sha256":"[a-f0-9]{64}"', '')
+                        [Environment]::SetEnvironmentVariable('VG_SIGNER_PAYLOAD', [Convert]::ToBase64String([Text.Encoding]::UTF8.GetBytes($payloadText)))
+                        $expectedHmac = & $phpBinary '-r' "echo hash_hmac('sha256', base64_decode(getenv('VG_SIGNER_PAYLOAD')), getenv('VG_COMPARISON_APPROVAL_SECRET_2026_01'));" 2>$null
+                        if ((Get-Property $successArtifact 'identity_id') -cne 'editorial-author-administrator' -or $successHmac -cne $expectedHmac) {
+                            $approvalErrors += 'E_PHP ops/comparison-rollout-approve.php: isolated signer artifact identity or HMAC was invalid'
+                        }
+                    } catch {
+                        $approvalErrors += "E_PHP ops/comparison-rollout-approve.php: isolated signer artifact verification failed: $($_.Exception.Message)"
+                    } finally {
+                        [Environment]::SetEnvironmentVariable('VG_SIGNER_PAYLOAD', $null)
+                    }
+                    $preserveResult = Invoke-SignerProcess -Arguments @('-r', $successStub)
+                    $approvalChecks++
+                    if ($preserveResult.ExitCode -eq 0 -or -not ([System.Linq.Enumerable]::SequenceEqual([byte[]]$successBytes, [byte[]][System.IO.File]::ReadAllBytes($signerOutputPath)))) {
+                        $approvalErrors += 'E_PHP ops/comparison-rollout-approve.php: second create overwrote the signed artifact'
+                    }
+                    Remove-Item -LiteralPath $signerOutputPath -Force
+                }
+
+                foreach ($failureStage in @('write', 'flush', 'chmod')) {
+                    [Environment]::SetEnvironmentVariable('VG_COMPARISON_APPROVAL_TEST_FAILURE', $failureStage)
+                    $failureResult = Invoke-SignerProcess -Arguments @('-r', $successStub)
+                    $approvalChecks++
+                    if ($failureResult.ExitCode -eq 0 -or (Test-Path -LiteralPath $signerOutputPath)) {
+                        $approvalErrors += "E_PHP ops/comparison-rollout-approve.php: induced $failureStage failure left a partial artifact"
+                    }
+                }
+                [Environment]::SetEnvironmentVariable('VG_COMPARISON_APPROVAL_TEST_FAILURE', $null)
+
+                $alternateRegistryArguments = @($signerArguments)
+                $alternateRegistryArguments[0] = "--registry=$alternateRegistryPath"
+                $alternateRegistryArguments[1] = "--registry-hash=$((Get-FileHash -LiteralPath $alternateRegistryPath -Algorithm SHA256).Hash.ToLowerInvariant())"
+                [Environment]::SetEnvironmentVariable('VG_SIGNER_ARGV', [Convert]::ToBase64String([Text.Encoding]::UTF8.GetBytes(((@($isolatedSignerPath) + $alternateRegistryArguments) | ConvertTo-Json -Compress))))
+                $alternateResult = Invoke-SignerProcess -Arguments @('-r', $successStub)
+                $approvalChecks++
+                if ($alternateResult.ExitCode -eq 0 -or (Test-Path -LiteralPath $signerOutputPath)) {
+                    $approvalErrors += 'E_PHP ops/comparison-rollout-approve.php: alternate in-repo registry was accepted'
+                }
+                [Environment]::SetEnvironmentVariable('VG_SIGNER_ARGV', [Convert]::ToBase64String([Text.Encoding]::UTF8.GetBytes(((@($isolatedSignerPath) + $signerArguments) | ConvertTo-Json -Compress))))
+
                 [System.IO.File]::WriteAllText($signerOutputPath, 'existing', (New-Object System.Text.UTF8Encoding($false)))
-                $existingSignerResult = Invoke-SignerProcess -Arguments @('-r', $signerStubTemplate.Replace('%CURRENT_USER_FUNCTION%', 'function get_current_user_id(): int { return 101; }'))
+                $existingSignerResult = Invoke-SignerProcess -Arguments @('-r', $signerStubTemplate.Replace('%CURRENT_USER_FUNCTION%', 'function get_current_user_id(): int { return 1; }'))
                 $approvalChecks++
                 if ($existingSignerResult.ExitCode -eq 0 -or [System.IO.File]::ReadAllText($signerOutputPath) -cne 'existing') {
                     $approvalErrors += 'E_PHP ops/comparison-rollout-approve.php: signer overwrote an existing output artifact'
@@ -2509,8 +2575,9 @@ require getenv('VG_SIGNER_PATH');
                 [Environment]::SetEnvironmentVariable('VG_COMPARISON_APPROVAL_SECRET_2026_01', $previousSignerSecret)
                 [Environment]::SetEnvironmentVariable('VG_SIGNER_ARGV', $null)
                 [Environment]::SetEnvironmentVariable('VG_SIGNER_PATH', $null)
+                [Environment]::SetEnvironmentVariable('VG_COMPARISON_APPROVAL_TEST_FAILURE', $null)
                 if (Test-Path -LiteralPath $signerOutputPath -PathType Leaf) { Remove-Item -LiteralPath $signerOutputPath -Force }
-                if (Test-Path -LiteralPath $signerTempDirectory -PathType Container) { Remove-Item -LiteralPath $signerTempDirectory -Force }
+                if (Test-Path -LiteralPath $signerTempDirectory -PathType Container) { Remove-Item -LiteralPath $signerTempDirectory -Recurse -Force }
             }
 
             $phpVectorCode = @'
@@ -2664,6 +2731,14 @@ echo json_encode($results, JSON_UNESCAPED_SLASHES | JSON_THROW_ON_ERROR);
                 'altered_expected_scope', 'duplicate_artifact', 'duplicate_wp_single', 'same_wp_user',
                 'safe_compile_surface', 'safe_probe_surface', 'safe_insert_surface', 'wordpress_salt_secret'
             )
+            $approvalChecks += 2
+            $truthyBooleanProbe = [pscustomobject]@{ string_value = 'True'; numeric_value = 1; boolean_value = $true }
+            foreach ($truthyName in @('string_value', 'numeric_value')) {
+                $truthyValue = Get-Property $truthyBooleanProbe $truthyName
+                if ($truthyValue -is [bool] -and $truthyValue -eq $true) {
+                    $approvalErrors += "E_APPROVAL fixture/${truthyName}: non-boolean truthy value was accepted"
+                }
+            }
             $approvalChecks += $approvalVectorNames.Count
             if ($vectorExit -ne 0 -or $vectorOutput.Count -ne 1) {
                 $approvalErrors += 'E_PHP ops/comparison-rollout-lib.php: PHP approval vector execution failed'
@@ -2672,7 +2747,7 @@ echo json_encode($results, JSON_UNESCAPED_SLASHES | JSON_THROW_ON_ERROR);
                     $vectorResults = [string]$vectorOutput[0] | ConvertFrom-Json
                     foreach ($vectorName in $approvalVectorNames) {
                         $vectorValue = Get-Property $vectorResults $vectorName
-                        $vectorPassed = ($vectorValue -ceq $true)
+                        $vectorPassed = ($vectorValue -is [bool] -and $vectorValue -eq $true)
                         if (-not $vectorPassed) {
                             $approvalErrors += "E_APPROVAL fixture/${vectorName}: PHP approval vector failed"
                         }

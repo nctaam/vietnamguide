@@ -41,6 +41,44 @@ function vg_comparison_approve_path_inside(string $path, string $root): bool
     return $path === $root || str_starts_with($path . '/', $root . '/');
 }
 
+function vg_comparison_approve_fail_if_link_component(string $path): void
+{
+    $cursor = $path;
+    while ($cursor !== dirname($cursor)) {
+        if (is_link($cursor)) {
+            vg_comparison_approve_fail('The output path must not contain symlink components.');
+        }
+        $cursor = dirname($cursor);
+    }
+}
+
+function vg_comparison_approve_cleanup(string $path, string $reason): never
+{
+    clearstatcache(true, $path);
+    if (file_exists($path) || is_link($path)) {
+        @unlink($path);
+        clearstatcache(true, $path);
+    }
+    if (file_exists($path) || is_link($path)) {
+        vg_comparison_approve_fail('Approval artifact cleanup failed after ' . $reason . '.');
+    }
+    vg_comparison_approve_fail($reason);
+}
+
+function vg_comparison_approve_test_failure(string $stage): bool
+{
+    return getenv('VG_COMPARISON_APPROVAL_TEST_FAILURE') === $stage;
+}
+
+function vg_comparison_approve_revalidate_directory(string $directory): void
+{
+    clearstatcache(true, $directory);
+    $resolved = realpath($directory);
+    if ($resolved === false || $resolved !== $directory || is_link($directory)) {
+        vg_comparison_approve_fail('The canonical output directory changed during signing.');
+    }
+}
+
 function vg_comparison_approve_active_user(array $identity): object
 {
     if (!defined('WP_CLI') || WP_CLI !== true || !function_exists('get_userdata') || !function_exists('get_current_user_id')) {
@@ -63,7 +101,7 @@ function vg_comparison_approve_active_user(array $identity): object
 function vg_comparison_approve_main(array $arguments): void
 {
     $options = vg_comparison_approve_options($arguments);
-    $required = ['registry', 'identity-id', 'role', 'manifest-hash', 'change-ids', 'change-reason', 'output'];
+    $required = ['registry', 'registry-hash', 'identity-id', 'role', 'manifest-hash', 'change-ids', 'change-reason', 'output'];
     foreach ($required as $name) {
         if (!isset($options[$name]) || $options[$name] === '') {
             vg_comparison_approve_fail("Missing required --{$name}=... argument.");
@@ -80,13 +118,15 @@ function vg_comparison_approve_main(array $arguments): void
     if ($outputDirectory === false) {
         vg_comparison_approve_fail('The output directory must already exist.');
     }
+    vg_comparison_approve_fail_if_link_component(dirname($outputPath));
     $resolvedOutput = $outputDirectory . DIRECTORY_SEPARATOR . basename($outputPath);
-    if (is_link($outputDirectory) || is_link($resolvedOutput) || file_exists($resolvedOutput)) {
+    if (is_link($resolvedOutput) || file_exists($resolvedOutput)) {
         vg_comparison_approve_fail('The output path must be a new regular file in a non-symlink directory.');
     }
+    $expectedRegistryPath = realpath(__DIR__ . '/comparison-rollout/identities.json');
     $registryPath = realpath($options['registry']);
-    if ($registryPath === false || ($repoRoot !== false && !vg_comparison_approve_path_inside($registryPath, $repoRoot))) {
-        vg_comparison_approve_fail('The identity registry must be the reviewed registry inside this repository.');
+    if ($expectedRegistryPath === false || $registryPath === false || $registryPath !== $expectedRegistryPath || is_link($options['registry'])) {
+        vg_comparison_approve_fail('The identity registry must be the exact reviewed production registry.');
     }
     if (($repoRoot !== false && vg_comparison_approve_path_inside($resolvedOutput, $repoRoot))
         || ($webRoot !== false && vg_comparison_approve_path_inside($resolvedOutput, $webRoot))) {
@@ -96,6 +136,9 @@ function vg_comparison_approve_main(array $arguments): void
     $registryText = @file_get_contents($registryPath);
     if (!is_string($registryText)) {
         vg_comparison_approve_fail('The identity registry could not be read.');
+    }
+    if (preg_match('/^[a-f0-9]{64}$/D', $options['registry-hash']) !== 1 || !hash_equals($options['registry-hash'], hash('sha256', $registryText))) {
+        vg_comparison_approve_fail('The reviewed identity registry hash does not match.');
     }
     try {
         $registry = json_decode($registryText, true, 64, JSON_THROW_ON_ERROR);
@@ -151,33 +194,53 @@ function vg_comparison_approve_main(array $arguments): void
     $handle = null;
     $created = false;
     try {
-        $handle = fopen($outputPath, 'x');
+        vg_comparison_approve_revalidate_directory($outputDirectory);
+        $handle = fopen($resolvedOutput, 'x');
         if ($handle === false) {
             vg_comparison_approve_fail('The output file already exists or cannot be created.');
         }
         $created = true;
-        $written = fwrite($handle, $encoded);
-        if ($written !== strlen($encoded) || !fflush($handle)) {
+        vg_comparison_approve_revalidate_directory($outputDirectory);
+        $handleStat = fstat($handle);
+        $pathStat = @lstat($resolvedOutput);
+        if (!is_array($handleStat) || !is_array($pathStat) || (($pathStat['mode'] ?? 0) & 0170000) !== 0100000
+            || (isset($handleStat['dev'], $handleStat['ino'], $pathStat['dev'], $pathStat['ino'])
+                && ($handleStat['dev'] !== $pathStat['dev'] || $handleStat['ino'] !== $pathStat['ino']))) {
             fclose($handle);
             $handle = null;
-            @unlink($outputPath);
-            $created = false;
-            vg_comparison_approve_fail('The approval artifact could not be written completely.');
+            vg_comparison_approve_cleanup($resolvedOutput, 'The created approval artifact did not match its open handle');
+        }
+        $written = vg_comparison_approve_test_failure('write') ? false : fwrite($handle, $encoded);
+        if ($written !== strlen($encoded) || vg_comparison_approve_test_failure('flush') || !fflush($handle)) {
+            fclose($handle);
+            $handle = null;
+            vg_comparison_approve_cleanup($resolvedOutput, 'The approval artifact could not be written completely');
         }
         fclose($handle);
         $handle = null;
-        if (!chmod($outputPath, 0600)) {
-            @unlink($outputPath);
-            $created = false;
-            vg_comparison_approve_fail('The approval artifact permissions could not be restricted to 0600.');
+        vg_comparison_approve_revalidate_directory($outputDirectory);
+        if (vg_comparison_approve_test_failure('chmod') || !chmod($resolvedOutput, 0600)) {
+            vg_comparison_approve_cleanup($resolvedOutput, 'The approval artifact permissions could not be restricted to 0600');
+        }
+        clearstatcache(true, $resolvedOutput);
+        $finalStat = @lstat($resolvedOutput);
+        if (!is_array($finalStat) || (($finalStat['mode'] ?? 0) & 0170000) !== 0100000) {
+            vg_comparison_approve_cleanup($resolvedOutput, 'The final approval artifact was not a regular file');
         }
         $created = false;
     } finally {
         if (is_resource($handle)) {
             fclose($handle);
         }
-        if ($created && is_file($outputPath)) {
-            @unlink($outputPath);
+        if ($created) {
+            clearstatcache(true, $resolvedOutput);
+            if (file_exists($resolvedOutput) || is_link($resolvedOutput)) {
+                @unlink($resolvedOutput);
+                clearstatcache(true, $resolvedOutput);
+            }
+            if (file_exists($resolvedOutput) || is_link($resolvedOutput)) {
+                fwrite(STDERR, "Approval artifact cleanup failed.\n");
+            }
         }
         umask($oldUmask);
     }
