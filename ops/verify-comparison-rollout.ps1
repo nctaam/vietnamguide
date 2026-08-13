@@ -2376,8 +2376,8 @@ function Invoke-ApprovalContractValidation {
             $productionIdentities = Read-VgJsonDocument -Path $productionIdentityPath
             $productionIdentityErrors = @(Test-VgSchemaDocument -Document $productionIdentities -Schema $Schema -DefinitionName 'identityRegistry' -DocumentId $productionIdentityRelativePath)
             $approvalChecks++
-            if (@($productionIdentityErrors | Where-Object { $_ -match 'identities has too few items' }).Count -eq 0) {
-                $approvalErrors += "E_APPROVAL ${productionIdentityRelativePath}: expected fail-closed rejection until a distinct production reviewer exists"
+            if ($productionIdentityErrors.Count -ne 1 -or $productionIdentityErrors[0] -notmatch 'identities has too few items') {
+                $approvalErrors += "E_APPROVAL ${productionIdentityRelativePath}: expected only the reviewer-minimum schema rejection until a distinct production reviewer exists"
             }
             $approvalChecks++
             $productionIdentityList = Get-Property $productionIdentities 'identities'
@@ -2443,6 +2443,76 @@ function Invoke-ApprovalContractValidation {
                 $approvalErrors += 'E_PHP ops/comparison-rollout-lib.php: PHP approval self-test failed'
             }
 
+            $signerTempDirectory = Join-Path ([System.IO.Path]::GetTempPath()) ("vg-comparison-signer-" + [Guid]::NewGuid().ToString('N'))
+            [void][System.IO.Directory]::CreateDirectory($signerTempDirectory)
+            $signerOutputPath = Join-Path $signerTempDirectory 'approval.json'
+            $signerArguments = @(
+                "--registry=$fixtureIdentityPath", '--identity-id=fixture-author', '--role=author',
+                "--manifest-hash=$('a' * 64)", '--change-ids=cmp-104-decision', '--change-reason=decision_change', "--output=$signerOutputPath"
+            )
+            $previousSignerSecret = [Environment]::GetEnvironmentVariable('VG_COMPARISON_APPROVAL_SECRET_2026_01')
+            function Invoke-SignerProcess {
+                param([Parameter(Mandatory = $true)][string[]]$Arguments)
+                $startInfo = New-Object System.Diagnostics.ProcessStartInfo
+                $startInfo.FileName = $phpBinary
+                $startInfo.UseShellExecute = $false
+                $startInfo.RedirectStandardOutput = $true
+                $startInfo.RedirectStandardError = $true
+                $startInfo.Arguments = (($Arguments | ForEach-Object { '"' + ([string]$_).Replace('\\', '\\\\').Replace('"', '\"') + '"' }) -join ' ')
+                $process = New-Object System.Diagnostics.Process
+                $process.StartInfo = $startInfo
+                [void]$process.Start()
+                $standardOutput = $process.StandardOutput.ReadToEnd()
+                $standardError = $process.StandardError.ReadToEnd()
+                $process.WaitForExit()
+                return [ordered]@{ ExitCode = $process.ExitCode; Output = $standardOutput + $standardError }
+            }
+            try {
+                [Environment]::SetEnvironmentVariable('VG_COMPARISON_APPROVAL_SECRET_2026_01', $null)
+                $directSignerResult = Invoke-SignerProcess -Arguments (@($phpSignerPath) + $signerArguments)
+                $approvalChecks++
+                if ($directSignerResult.ExitCode -eq 0 -or $directSignerResult.Output.IndexOf('Run the signer through WP-CLI', [StringComparison]::Ordinal) -lt 0 -or (Test-Path -LiteralPath $signerOutputPath)) {
+                    $approvalErrors += 'E_PHP ops/comparison-rollout-approve.php: direct PHP CLI signer did not fail closed without output'
+                }
+
+                $signerStubTemplate = @'
+define('WP_CLI', true);
+class WP_User { public int $ID = 101; public int $user_status = 0; public string $display_name = 'Fixture Author'; public array $roles = ['author']; public bool $spam = false; public bool $deleted = false; }
+function get_userdata(int $id): object|false { return $id === 101 ? new WP_User() : false; }
+%CURRENT_USER_FUNCTION%
+$argv = json_decode(base64_decode(getenv('VG_SIGNER_ARGV'), true), true, 32, JSON_THROW_ON_ERROR);
+require getenv('VG_SIGNER_PATH');
+'@
+                $signerArgv = @($phpSignerPath) + $signerArguments
+                [Environment]::SetEnvironmentVariable('VG_SIGNER_ARGV', [Convert]::ToBase64String([Text.Encoding]::UTF8.GetBytes(($signerArgv | ConvertTo-Json -Compress))))
+                [Environment]::SetEnvironmentVariable('VG_SIGNER_PATH', $phpSignerPath)
+                foreach ($signerCase in @(
+                    [ordered]@{ Name = 'missing-current-user-api'; Function = ''; Expected = 'Run the signer through WP-CLI' },
+                    [ordered]@{ Name = 'mismatched-current-user'; Function = 'function get_current_user_id(): int { return 202; }'; Expected = 'must exactly match' },
+                    [ordered]@{ Name = 'valid-wp-cli-reaches-key-gate'; Function = 'function get_current_user_id(): int { return 101; }'; Expected = 'dedicated approval key is unavailable' }
+                )) {
+                    $stubCode = $signerStubTemplate.Replace('%CURRENT_USER_FUNCTION%', $signerCase.Function)
+                    $stubResult = Invoke-SignerProcess -Arguments @('-r', $stubCode)
+                    $approvalChecks++
+                    if ($stubResult.ExitCode -eq 0 -or $stubResult.Output.IndexOf($signerCase.Expected, [StringComparison]::Ordinal) -lt 0 -or (Test-Path -LiteralPath $signerOutputPath)) {
+                        $approvalErrors += "E_PHP ops/comparison-rollout-approve.php: signer vector $($signerCase.Name) failed or left partial output"
+                    }
+                }
+
+                [System.IO.File]::WriteAllText($signerOutputPath, 'existing', (New-Object System.Text.UTF8Encoding($false)))
+                $existingSignerResult = Invoke-SignerProcess -Arguments @('-r', $signerStubTemplate.Replace('%CURRENT_USER_FUNCTION%', 'function get_current_user_id(): int { return 101; }'))
+                $approvalChecks++
+                if ($existingSignerResult.ExitCode -eq 0 -or [System.IO.File]::ReadAllText($signerOutputPath) -cne 'existing') {
+                    $approvalErrors += 'E_PHP ops/comparison-rollout-approve.php: signer overwrote an existing output artifact'
+                }
+            } finally {
+                [Environment]::SetEnvironmentVariable('VG_COMPARISON_APPROVAL_SECRET_2026_01', $previousSignerSecret)
+                [Environment]::SetEnvironmentVariable('VG_SIGNER_ARGV', $null)
+                [Environment]::SetEnvironmentVariable('VG_SIGNER_PATH', $null)
+                if (Test-Path -LiteralPath $signerOutputPath -PathType Leaf) { Remove-Item -LiteralPath $signerOutputPath -Force }
+                if (Test-Path -LiteralPath $signerTempDirectory -PathType Container) { Remove-Item -LiteralPath $signerTempDirectory -Force }
+            }
+
             $phpVectorCode = @'
 $library = getenv('VG_COMPARISON_LIBRARY_PATH');
 $schemaPath = getenv('VG_COMPARISON_SCHEMA_PATH');
@@ -2461,7 +2531,7 @@ if (!class_exists('WP_User')) {
     }
 }
 $GLOBALS['vg_comparison_test_users'] = [];
-function get_userdata(int $id): WP_User|false { return $GLOBALS['vg_comparison_test_users'][$id] ?? false; }
+function get_userdata(int $id): object|false { return $GLOBALS['vg_comparison_test_users'][$id] ?? false; }
 require $library;
 $secret = 'task4-test-secret-dedicated-2026-01';
 putenv('VG_COMPARISON_APPROVAL_SECRET_2026_01=' . $secret);
@@ -2478,6 +2548,8 @@ $make = static function (string $identityId, int $wpUserId, string $role, array 
 };
 $author = $make('fixture-author', 101, 'author', ['cmp-104-decision'], 'decision_change');
 $reviewer = $make('fixture-reviewer', 202, 'reviewer', ['cmp-104-decision'], 'decision_change');
+$authorCorrection = $make('fixture-author', 101, 'author', ['cmp-104-decision'], 'correction');
+$reviewerCorrection = $make('fixture-reviewer', 202, 'reviewer', ['cmp-104-decision'], 'correction');
 $refresh = $make('fixture-reviewer', 202, 'reviewer', ['cmp-104-source-refresh'], 'source_refresh');
 $alteredScope = $author; $alteredScope['change_ids'] = ['cmp-104-source-refresh'];
 $alteredHash = $author; $alteredHash['manifest_hash'] = str_repeat('b', 64);
@@ -2487,6 +2559,15 @@ $unordered = $make('fixture-author', 101, 'author', ['cmp-104-source-refresh', '
 $unauthorized = $make('fixture-author', 101, 'reviewer', ['cmp-104-decision'], 'decision_change');
 $duplicateRegistry = $registry; $duplicateRegistry['identities'][] = ['identity_id' => 'fixture-author', 'wp_user_id' => 303, 'display_name' => 'Duplicate', 'public_profile_path' => 'about/duplicate', 'roles' => ['author']];
 $sameWpRegistry = $registry; $sameWpRegistry['identities'][1]['wp_user_id'] = 101; $sameWpRegistry['identities'][1]['display_name'] = 'Fixture Author'; $sameWpReviewer = $make('fixture-reviewer', 101, 'reviewer', ['cmp-104-decision'], 'decision_change');
+$exact64 = str_repeat('a', 64); $over64 = str_repeat('a', 65);
+$shape64 = $author; $shape64['identity_id'] = $exact64; $shape64['key_id'] = $exact64; $shape64['change_ids'] = [$exact64];
+$shape65Identity = $shape64; $shape65Identity['identity_id'] = $over64;
+$shape65Key = $shape64; $shape65Key['key_id'] = $over64;
+$shape65Change = $shape64; $shape65Change['change_ids'] = [$over64];
+$sixtyFourChanges = []; for ($i = 0; $i < 64; $i++) { $sixtyFourChanges[] = sprintf('cmp-%03d', $i); }
+$sixtyFiveChanges = $sixtyFourChanges; $sixtyFiveChanges[] = 'cmp-064';
+$shape64Changes = $author; $shape64Changes['change_ids'] = $sixtyFourChanges;
+$shape65Changes = $author; $shape65Changes['change_ids'] = $sixtyFiveChanges;
 $schema = json_decode(file_get_contents($schemaPath), true, 512, JSON_THROW_ON_ERROR);
 $approvalSchema = ['$defs' => $schema['$defs'], '$ref' => '#/$defs/approvalArtifact'];
 $results = [];
@@ -2495,6 +2576,8 @@ $results['canonical_small_exponents'] = vg_comparison_canonical_json(['e5' => 1.
 $results['canonical_literal'] = vg_comparison_canonical_json(array_diff_key($author, ['hmac_sha256' => true])) === base64_decode(getenv('VG_COMPARISON_CANONICAL_VECTOR'), true);
 $results['canonical_hash'] = vg_comparison_sha256(array_diff_key($author, ['hmac_sha256' => true])) === '268cacf50d0eb37b0353422154e3c82291924d04e1c3b0d258a651f8ad81df0f';
 $results['schema_valid'] = vg_comparison_validate_schema($author, $approvalSchema) === [];
+$results['stable_id_boundaries'] = _vg_comparison_approval_shape_valid($shape64) === true && _vg_comparison_approval_shape_valid($shape65Identity) === false && _vg_comparison_approval_shape_valid($shape65Key) === false && _vg_comparison_approval_shape_valid($shape65Change) === false;
+$results['change_count_boundaries'] = _vg_comparison_approval_shape_valid($shape64Changes) === true && _vg_comparison_approval_shape_valid($shape65Changes) === false;
 $results['valid_hmac'] = vg_comparison_verify_approval($author, $registry, $manifestHash)['ok'] === true;
 $results['altered_scope'] = vg_comparison_verify_approval($alteredScope, $registry, $manifestHash)['ok'] === false;
 $results['altered_hash'] = vg_comparison_verify_approval($alteredHash, $registry, $manifestHash)['ok'] === false;
@@ -2507,16 +2590,39 @@ $results['ordinal_ordering'] = vg_comparison_verify_approval($unordered, $regist
 $GLOBALS['vg_comparison_test_users'][101]->user_status = 1;
 $results['inactive_user'] = vg_comparison_verify_approval($author, $registry, $manifestHash)['ok'] === false;
 $GLOBALS['vg_comparison_test_users'][101]->user_status = 0;
+$originalAuthorUser = $GLOBALS['vg_comparison_test_users'][101];
+$GLOBALS['vg_comparison_test_users'][101] = new WP_User(999, 'Fixture Author', ['author']);
+$results['wp_user_id_mismatch'] = vg_comparison_verify_approval($author, $registry, $manifestHash)['ok'] === false;
+$GLOBALS['vg_comparison_test_users'][101] = new WP_User(101, 'Fixture Author', ['author']); $GLOBALS['vg_comparison_test_users'][101]->spam = true;
+$results['wp_user_spam'] = vg_comparison_verify_approval($author, $registry, $manifestHash)['ok'] === false;
+$GLOBALS['vg_comparison_test_users'][101] = new WP_User(101, 'Fixture Author', ['author']); $GLOBALS['vg_comparison_test_users'][101]->deleted = true;
+$results['wp_user_deleted'] = vg_comparison_verify_approval($author, $registry, $manifestHash)['ok'] === false;
+$GLOBALS['vg_comparison_test_users'][101] = new WP_User(101, 'Fixture Author', []);
+$results['wp_user_empty_roles'] = vg_comparison_verify_approval($author, $registry, $manifestHash)['ok'] === false;
+$GLOBALS['vg_comparison_test_users'][101] = new WP_User(101, 'Wrong Display', ['author']);
+$results['wp_user_display_mismatch'] = vg_comparison_verify_approval($author, $registry, $manifestHash)['ok'] === false;
+$GLOBALS['vg_comparison_test_users'][101] = (object) ['ID' => 101, 'user_status' => 0, 'display_name' => 'Fixture Author', 'roles' => ['author'], 'spam' => false, 'deleted' => false];
+$results['wp_user_invalid_type'] = vg_comparison_verify_approval($author, $registry, $manifestHash)['ok'] === false;
+$GLOBALS['vg_comparison_test_users'][101] = $originalAuthorUser;
 $results['unauthorized_role'] = vg_comparison_verify_approval($unauthorized, $registry, $manifestHash)['ok'] === false;
 $results['duplicate_identity'] = vg_comparison_verify_approval($author, $duplicateRegistry, $manifestHash)['ok'] === false;
-$results['source_refresh_one_reviewer'] = _vg_comparison_verify_approval_set([$refresh], $registry, $manifestHash, ['change_reason' => 'source_refresh', 'outcomes_changed' => false])['ok'] === true;
+$results['source_refresh_one_reviewer'] = _vg_comparison_verify_approval_set([$refresh], $registry, $manifestHash, ['change_reason' => 'source_refresh', 'change_ids' => ['cmp-104-source-refresh'], 'outcomes_changed' => false])['ok'] === true;
 $GLOBALS['vg_comparison_test_users'][202]->roles = ['author'];
 $results['reviewer_wp_role_mismatch'] = vg_comparison_verify_approval($refresh, $registry, $manifestHash)['ok'] === false;
 $GLOBALS['vg_comparison_test_users'][202]->roles = ['editor'];
-$results['decision_four_eyes'] = _vg_comparison_verify_approval_set([$author, $reviewer], $registry, $manifestHash, ['change_reason' => 'decision_change'])['ok'] === true;
+$results['decision_four_eyes'] = _vg_comparison_verify_approval_set([$author, $reviewer], $registry, $manifestHash, ['change_reason' => 'decision_change', 'change_ids' => ['cmp-104-decision']])['ok'] === true;
+$results['omitted_expected_scope'] = _vg_comparison_verify_approval_set([$author, $reviewer], $registry, $manifestHash, ['change_reason' => 'decision_change'])['ok'] === false;
+$results['malformed_impact_boolean'] = _vg_comparison_verify_approval_set([$authorCorrection], $registry, $manifestHash, ['change_reason' => 'correction', 'change_ids' => ['cmp-104-decision'], 'outcomes_changed' => 'true'])['ok'] === false;
+$results['unknown_impact_key'] = _vg_comparison_verify_approval_set([$authorCorrection], $registry, $manifestHash, ['change_reason' => 'correction', 'change_ids' => ['cmp-104-decision'], 'unknown' => false])['ok'] === false;
+foreach (['outcomes_changed', 'primary_outcome_changed', 'hard_constraints_changed', 'negative_recommendations_changed', 'archetype_changed', 'decisive_axes_changed'] as $trigger) {
+    $impact = ['change_reason' => 'correction', 'change_ids' => ['cmp-104-decision'], $trigger => true];
+    $results['four_eyes_' . $trigger] = _vg_comparison_verify_approval_set([$authorCorrection], $registry, $manifestHash, $impact)['ok'] === false
+        && _vg_comparison_verify_approval_set([$authorCorrection, $reviewerCorrection], $registry, $manifestHash, $impact)['ok'] === true;
+}
 $results['altered_expected_scope'] = _vg_comparison_verify_approval_set([$author, $reviewer], $registry, $manifestHash, ['change_reason' => 'decision_change', 'change_ids' => ['cmp-104-source-refresh']])['ok'] === false;
-$results['duplicate_artifact'] = _vg_comparison_verify_approval_set([$author, $author], $registry, $manifestHash, ['change_reason' => 'decision_change'])['ok'] === false;
-$results['same_wp_user'] = _vg_comparison_verify_approval_set([$author, $sameWpReviewer], $sameWpRegistry, $manifestHash, ['change_reason' => 'decision_change'])['ok'] === false;
+$results['duplicate_artifact'] = _vg_comparison_verify_approval_set([$author, $author], $registry, $manifestHash, ['change_reason' => 'decision_change', 'change_ids' => ['cmp-104-decision']])['ok'] === false;
+$results['duplicate_wp_single'] = vg_comparison_verify_approval($author, $sameWpRegistry, $manifestHash)['ok'] === false;
+$results['same_wp_user'] = _vg_comparison_verify_approval_set([$author, $sameWpReviewer], $sameWpRegistry, $manifestHash, ['change_reason' => 'decision_change', 'change_ids' => ['cmp-104-decision']])['ok'] === false;
 $results['safe_compile_surface'] = vg_comparison_compile_portfolio([], [], [], [], [])['ok'] === false;
 $results['safe_probe_surface'] = vg_comparison_probe_source([], [])['ok'] === false;
 $results['safe_insert_surface'] = vg_comparison_insert_modules('unchanged', [])['ok'] === false;
@@ -2546,15 +2652,27 @@ echo json_encode($results, JSON_UNESCAPED_SLASHES | JSON_THROW_ON_ERROR);
                 [Environment]::SetEnvironmentVariable('VG_COMPARISON_CANONICAL_NUMERIC_VECTOR', $previousCanonicalNumericVector)
                 [Environment]::SetEnvironmentVariable('VG_COMPARISON_CANONICAL_SMALL_EXPONENT_VECTOR', $previousCanonicalSmallExponentVector)
             }
-            $approvalChecks += 25
+            $approvalVectorNames = @(
+                'canonical_numeric', 'canonical_small_exponents', 'canonical_literal', 'canonical_hash', 'schema_valid',
+                'stable_id_boundaries', 'change_count_boundaries', 'valid_hmac', 'altered_scope', 'altered_hash',
+                'invalid_hmac', 'unknown_key', 'unset_key', 'ordinal_ordering', 'inactive_user', 'wp_user_id_mismatch',
+                'wp_user_spam', 'wp_user_deleted', 'wp_user_empty_roles', 'wp_user_display_mismatch', 'wp_user_invalid_type',
+                'unauthorized_role', 'duplicate_identity', 'source_refresh_one_reviewer', 'reviewer_wp_role_mismatch',
+                'decision_four_eyes', 'omitted_expected_scope', 'malformed_impact_boolean', 'unknown_impact_key',
+                'four_eyes_outcomes_changed', 'four_eyes_primary_outcome_changed', 'four_eyes_hard_constraints_changed',
+                'four_eyes_negative_recommendations_changed', 'four_eyes_archetype_changed', 'four_eyes_decisive_axes_changed',
+                'altered_expected_scope', 'duplicate_artifact', 'duplicate_wp_single', 'same_wp_user',
+                'safe_compile_surface', 'safe_probe_surface', 'safe_insert_surface', 'wordpress_salt_secret'
+            )
+            $approvalChecks += $approvalVectorNames.Count
             if ($vectorExit -ne 0 -or $vectorOutput.Count -ne 1) {
                 $approvalErrors += 'E_PHP ops/comparison-rollout-lib.php: PHP approval vector execution failed'
             } else {
                 try {
                     $vectorResults = [string]$vectorOutput[0] | ConvertFrom-Json
-                    foreach ($vectorName in @('canonical_numeric', 'canonical_small_exponents', 'canonical_literal', 'canonical_hash', 'schema_valid', 'valid_hmac', 'altered_scope', 'altered_hash', 'invalid_hmac', 'unknown_key', 'unset_key', 'ordinal_ordering', 'inactive_user', 'unauthorized_role', 'duplicate_identity', 'source_refresh_one_reviewer', 'reviewer_wp_role_mismatch', 'decision_four_eyes', 'altered_expected_scope', 'duplicate_artifact', 'same_wp_user', 'safe_compile_surface', 'safe_probe_surface', 'safe_insert_surface', 'wordpress_salt_secret')) {
+                    foreach ($vectorName in $approvalVectorNames) {
                         $vectorValue = Get-Property $vectorResults $vectorName
-                        $vectorPassed = ($vectorValue -eq $true)
+                        $vectorPassed = ($vectorValue -ceq $true)
                         if (-not $vectorPassed) {
                             $approvalErrors += "E_APPROVAL fixture/${vectorName}: PHP approval vector failed"
                         }

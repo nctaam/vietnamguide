@@ -43,7 +43,7 @@ function vg_comparison_approve_path_inside(string $path, string $root): bool
 
 function vg_comparison_approve_active_user(array $identity): object
 {
-    if (!function_exists('get_userdata')) {
+    if (!defined('WP_CLI') || WP_CLI !== true || !function_exists('get_userdata') || !function_exists('get_current_user_id')) {
         vg_comparison_approve_fail('Run the signer through WP-CLI after WordPress is loaded.');
     }
     $user = get_userdata((int) ($identity['wp_user_id'] ?? 0));
@@ -53,7 +53,8 @@ function vg_comparison_approve_active_user(array $identity): object
     if (!_vg_comparison_wordpress_identity_active($identity)) {
         vg_comparison_approve_fail('The registered WordPress user is not active or does not match the registry.');
     }
-    if (function_exists('get_current_user_id') && get_current_user_id() !== (int) $user->ID) {
+    $currentUserId = get_current_user_id();
+    if (!is_int($currentUserId) || $currentUserId < 1 || $currentUserId !== (int) $user->ID) {
         vg_comparison_approve_fail('The current WordPress user must exactly match the signing identity.');
     }
     return $user;
@@ -80,6 +81,9 @@ function vg_comparison_approve_main(array $arguments): void
         vg_comparison_approve_fail('The output directory must already exist.');
     }
     $resolvedOutput = $outputDirectory . DIRECTORY_SEPARATOR . basename($outputPath);
+    if (is_link($outputDirectory) || is_link($resolvedOutput) || file_exists($resolvedOutput)) {
+        vg_comparison_approve_fail('The output path must be a new regular file in a non-symlink directory.');
+    }
     $registryPath = realpath($options['registry']);
     if ($registryPath === false || ($repoRoot !== false && !vg_comparison_approve_path_inside($registryPath, $repoRoot))) {
         vg_comparison_approve_fail('The identity registry must be the reviewed registry inside this repository.');
@@ -144,21 +148,37 @@ function vg_comparison_approve_main(array $arguments): void
     $encoded = vg_comparison_canonical_json($artifact) . PHP_EOL;
 
     $oldUmask = umask(0077);
+    $handle = null;
+    $created = false;
     try {
         $handle = fopen($outputPath, 'x');
         if ($handle === false) {
             vg_comparison_approve_fail('The output file already exists or cannot be created.');
         }
+        $created = true;
         $written = fwrite($handle, $encoded);
         if ($written !== strlen($encoded) || !fflush($handle)) {
             fclose($handle);
+            $handle = null;
+            @unlink($outputPath);
+            $created = false;
             vg_comparison_approve_fail('The approval artifact could not be written completely.');
         }
         fclose($handle);
+        $handle = null;
         if (!chmod($outputPath, 0600)) {
+            @unlink($outputPath);
+            $created = false;
             vg_comparison_approve_fail('The approval artifact permissions could not be restricted to 0600.');
         }
+        $created = false;
     } finally {
+        if (is_resource($handle)) {
+            fclose($handle);
+        }
+        if ($created && is_file($outputPath)) {
+            @unlink($outputPath);
+        }
         umask($oldUmask);
     }
     fwrite(STDOUT, 'Approval artifact created.' . PHP_EOL);

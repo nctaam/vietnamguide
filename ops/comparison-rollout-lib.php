@@ -349,12 +349,12 @@ function _vg_comparison_wordpress_secret_values(): array
 
 function _vg_comparison_sorted_unique_change_ids(mixed $value): bool
 {
-    if (!is_array($value) || !_vg_comparison_is_list($value) || $value === []) {
+    if (!is_array($value) || !_vg_comparison_is_list($value) || $value === [] || count($value) > 64) {
         return false;
     }
     $prior = null;
     foreach ($value as $item) {
-        if (!is_string($item) || preg_match('/^[a-z0-9][a-z0-9._-]{2,127}$/D', $item) !== 1) {
+        if (!_vg_comparison_stable_id($item)) {
             return false;
         }
         if ($prior !== null && strcmp($prior, $item) >= 0) {
@@ -363,6 +363,25 @@ function _vg_comparison_sorted_unique_change_ids(mixed $value): bool
         $prior = $item;
     }
     return true;
+}
+
+function _vg_comparison_stable_id(mixed $value): bool
+{
+    return is_string($value) && strlen($value) >= 3 && strlen($value) <= 64
+        && preg_match('/^[a-z0-9][a-z0-9._-]*$/D', $value) === 1;
+}
+
+function _vg_comparison_safe_text(mixed $value): bool
+{
+    return is_string($value) && $value !== '' && strlen($value) <= 2000
+        && preg_match('/[\x00-\x1F\x7F<>]/', $value) !== 1
+        && preg_match('/(?:javascript:|data:text\/html|(?:^|\s)on[a-zA-Z]+\s*=)/i', $value) !== 1;
+}
+
+function _vg_comparison_page_path(mixed $value): bool
+{
+    return is_string($value) && strlen($value) >= 3 && strlen($value) <= 160
+        && preg_match('/^[a-z0-9]+(?:[a-z0-9-]*[a-z0-9])?(?:\/[a-z0-9]+(?:[a-z0-9-]*[a-z0-9])?)*$/D', $value) === 1;
 }
 
 function _vg_comparison_approval_shape_valid(array $artifact): bool
@@ -377,13 +396,13 @@ function _vg_comparison_approval_shape_valid(array $artifact): bool
     }
     return $artifact['artifact_version'] === '1'
         && is_string($artifact['manifest_hash']) && preg_match('/^[a-f0-9]{64}$/D', $artifact['manifest_hash']) === 1
-        && is_string($artifact['identity_id']) && preg_match('/^[a-z0-9][a-z0-9._-]{2,127}$/D', $artifact['identity_id']) === 1
+        && _vg_comparison_stable_id($artifact['identity_id'])
         && is_int($artifact['wp_user_id']) && $artifact['wp_user_id'] >= 1
         && in_array($artifact['role'], ['author', 'reviewer'], true)
         && is_string($artifact['timestamp_utc']) && _vg_comparison_is_strict_utc($artifact['timestamp_utc'])
         && _vg_comparison_sorted_unique_change_ids($artifact['change_ids'])
         && in_array($artifact['change_reason'], ['source_refresh', 'operational_change', 'decision_change', 'route_change', 'correction'], true)
-        && is_string($artifact['key_id'])
+        && _vg_comparison_stable_id($artifact['key_id'])
         && is_string($artifact['hmac_sha256']) && preg_match('/^[a-f0-9]{64}$/D', $artifact['hmac_sha256']) === 1;
 }
 
@@ -393,21 +412,32 @@ function _vg_comparison_find_identity(array $registry, string $identityId): arra
         return ['ok' => false];
     }
     $found = null;
+    if (array_keys($registry) !== ['identities'] && array_keys($registry) !== ['registry_version', 'generated_on', 'identities']) {
+        return ['ok' => false];
+    }
+    if (count($registry['identities']) < 1 || count($registry['identities']) > 50) {
+        return ['ok' => false];
+    }
     $identityIds = [];
+    $wpUserIds = [];
     foreach ($registry['identities'] as $identity) {
         if (!is_array($identity)
             || !isset($identity['identity_id'], $identity['wp_user_id'], $identity['display_name'], $identity['public_profile_path'], $identity['roles'])
-            || !is_string($identity['identity_id'])
+            || array_diff(array_keys($identity), ['identity_id', 'wp_user_id', 'display_name', 'public_profile_path', 'roles']) !== []
+            || !_vg_comparison_stable_id($identity['identity_id'])
             || !is_int($identity['wp_user_id']) || $identity['wp_user_id'] < 1
-            || !is_string($identity['display_name']) || $identity['display_name'] === ''
-            || !is_string($identity['public_profile_path']) || $identity['public_profile_path'] === ''
-            || !is_array($identity['roles']) || $identity['roles'] === []) {
+            || !_vg_comparison_safe_text($identity['display_name'])
+            || !_vg_comparison_page_path($identity['public_profile_path'])
+            || !is_array($identity['roles']) || !_vg_comparison_is_list($identity['roles']) || $identity['roles'] === [] || count($identity['roles']) > 2
+            || count(array_unique($identity['roles'], SORT_STRING)) !== count($identity['roles'])
+            || array_diff($identity['roles'], ['author', 'reviewer']) !== []) {
             return ['ok' => false];
         }
-        if (isset($identityIds[$identity['identity_id']])) {
+        if (isset($identityIds[$identity['identity_id']]) || isset($wpUserIds[$identity['wp_user_id']])) {
             return ['ok' => false];
         }
         $identityIds[$identity['identity_id']] = true;
+        $wpUserIds[$identity['wp_user_id']] = true;
         if ($identity['identity_id'] === $identityId) {
             $found = $identity;
         }
@@ -511,8 +541,18 @@ function _vg_comparison_requires_four_eyes(array $impact): bool
 
 function _vg_comparison_verify_approval_set(array $artifacts, array $identity_registry, string $manifest_hash, array $impact): array
 {
-    if ($artifacts === [] || !isset($impact['change_reason']) || !is_string($impact['change_reason'])) {
+    $allowedImpactKeys = ['change_reason', 'change_ids', 'outcomes_changed', 'primary_outcome_changed', 'hard_constraints_changed', 'negative_recommendations_changed', 'archetype_changed', 'decisive_axes_changed'];
+    if ($artifacts === [] || array_diff(array_keys($impact), $allowedImpactKeys) !== []
+        || !isset($impact['change_reason'], $impact['change_ids'])
+        || !is_string($impact['change_reason'])
+        || !in_array($impact['change_reason'], ['source_refresh', 'operational_change', 'decision_change', 'route_change', 'correction'], true)
+        || !_vg_comparison_sorted_unique_change_ids($impact['change_ids'])) {
         return _vg_comparison_fail('E_APPROVAL_SET');
+    }
+    foreach (['outcomes_changed', 'primary_outcome_changed', 'hard_constraints_changed', 'negative_recommendations_changed', 'archetype_changed', 'decisive_axes_changed'] as $booleanField) {
+        if (array_key_exists($booleanField, $impact) && !is_bool($impact[$booleanField])) {
+            return _vg_comparison_fail('E_APPROVAL_SET');
+        }
     }
     $verified = [];
     $artifactHashes = [];
@@ -533,7 +573,7 @@ function _vg_comparison_verify_approval_set(array $artifacts, array $identity_re
     }
 
     $first = $verified[0];
-    $expectedChangeIds = $impact['change_ids'] ?? $first['change_ids'];
+    $expectedChangeIds = $impact['change_ids'];
     foreach ($verified as $artifact) {
         if ($artifact['change_reason'] !== $impact['change_reason']
             || $artifact['change_reason'] !== $first['change_reason']
