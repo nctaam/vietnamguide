@@ -2418,6 +2418,15 @@ function Invoke-ApprovalContractValidation {
                 $approvalErrors += "E_PHP ${phpSignerRelativePath}: missing signer safety contract '$needle'"
             }
         }
+        $approvalChecks += 2
+        $fchmodIndex = $signerSource.IndexOf('fchmod($handle, 0600)', [StringComparison]::Ordinal)
+        $fcloseAfterFchmodIndex = $signerSource.IndexOf('fclose($handle)', [Math]::Max(0, $fchmodIndex), [StringComparison]::Ordinal)
+        if ($fchmodIndex -lt 0 -or $fcloseAfterFchmodIndex -lt $fchmodIndex) {
+            $approvalErrors += 'E_PHP ops/comparison-rollout-approve.php: signer must fchmod the open handle before fclose'
+        }
+        if ($signerSource -match '(?<!f)chmod\s*\(\s*\$[A-Za-z_]') {
+            $approvalErrors += 'E_PHP ops/comparison-rollout-approve.php: path-based chmod is forbidden'
+        }
     }
 
     if ((Test-Path -LiteralPath $phpLibraryPath -PathType Leaf) -and (Test-Path -LiteralPath $phpSignerPath -PathType Leaf)) {
@@ -2501,7 +2510,7 @@ require getenv('VG_SIGNER_PATH');
                 foreach ($signerCase in @(
                     [ordered]@{ Name = 'missing-current-user-api'; Function = ''; Expected = 'Run the signer through WP-CLI' },
                     [ordered]@{ Name = 'mismatched-current-user'; Function = 'function get_current_user_id(): int { return 2; }'; Expected = 'must exactly match' },
-                    [ordered]@{ Name = 'valid-wp-cli-reaches-key-gate'; Function = 'function get_current_user_id(): int { return 1; }'; Expected = 'dedicated approval key is unavailable' }
+                    [ordered]@{ Name = 'valid-wp-cli-reaches-platform-gate'; Function = 'function get_current_user_id(): int { return 1; }'; Expected = 'POSIX platform with verifiable Unix 0600' }
                 )) {
                     $stubCode = $signerStubTemplate.Replace('%CURRENT_USER_FUNCTION%', $signerCase.Function)
                     $stubResult = Invoke-SignerProcess -Arguments @('-r', $stubCode)
@@ -2515,8 +2524,12 @@ require getenv('VG_SIGNER_PATH');
                 $successStub = $signerStubTemplate.Replace('%CURRENT_USER_FUNCTION%', 'function get_current_user_id(): int { return 1; }')
                 $successResult = Invoke-SignerProcess -Arguments @('-r', $successStub)
                 $approvalChecks++
-                if ($successResult.ExitCode -ne 0 -or -not (Test-Path -LiteralPath $signerOutputPath -PathType Leaf)) {
-                    $approvalErrors += 'E_PHP ops/comparison-rollout-approve.php: isolated signer success vector did not create an artifact'
+                if ([Environment]::OSVersion.Platform -eq [PlatformID]::Win32NT) {
+                    if ($successResult.ExitCode -eq 0 -or $successResult.Output.IndexOf('POSIX platform with verifiable Unix 0600', [StringComparison]::Ordinal) -lt 0 -or (Test-Path -LiteralPath $signerOutputPath)) {
+                        $approvalErrors += 'E_PHP ops/comparison-rollout-approve.php: Windows signer did not refuse unverifiable Unix permissions'
+                    }
+                } elseif ($successResult.ExitCode -ne 0 -or -not (Test-Path -LiteralPath $signerOutputPath -PathType Leaf)) {
+                    $approvalErrors += 'E_PHP ops/comparison-rollout-approve.php: isolated POSIX signer success vector did not create an artifact'
                 } else {
                     $successBytes = [System.IO.File]::ReadAllBytes($signerOutputPath)
                     $successText = [Text.Encoding]::UTF8.GetString($successBytes).TrimEnd("`r", "`n")
@@ -2544,12 +2557,14 @@ require getenv('VG_SIGNER_PATH');
                     Remove-Item -LiteralPath $signerOutputPath -Force
                 }
 
-                foreach ($failureStage in @('write', 'flush', 'chmod')) {
-                    [Environment]::SetEnvironmentVariable('VG_COMPARISON_APPROVAL_TEST_FAILURE', $failureStage)
-                    $failureResult = Invoke-SignerProcess -Arguments @('-r', $successStub)
-                    $approvalChecks++
-                    if ($failureResult.ExitCode -eq 0 -or (Test-Path -LiteralPath $signerOutputPath)) {
-                        $approvalErrors += "E_PHP ops/comparison-rollout-approve.php: induced $failureStage failure left a partial artifact"
+                if ([Environment]::OSVersion.Platform -ne [PlatformID]::Win32NT) {
+                    foreach ($failureStage in @('write', 'flush', 'chmod')) {
+                        [Environment]::SetEnvironmentVariable('VG_COMPARISON_APPROVAL_TEST_FAILURE', $failureStage)
+                        $failureResult = Invoke-SignerProcess -Arguments @('-r', $successStub)
+                        $approvalChecks++
+                        if ($failureResult.ExitCode -eq 0 -or (Test-Path -LiteralPath $signerOutputPath)) {
+                            $approvalErrors += "E_PHP ops/comparison-rollout-approve.php: induced $failureStage failure left a partial artifact"
+                        }
                     }
                 }
                 [Environment]::SetEnvironmentVariable('VG_COMPARISON_APPROVAL_TEST_FAILURE', $null)

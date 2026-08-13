@@ -79,6 +79,19 @@ function vg_comparison_approve_revalidate_directory(string $directory): void
     }
 }
 
+function vg_comparison_approve_require_posix_directory(string $directory): array
+{
+    if (PHP_OS_FAMILY === 'Windows' || !function_exists('fchmod') || !function_exists('posix_geteuid')) {
+        vg_comparison_approve_fail('Approval artifacts require a POSIX platform with verifiable Unix 0600 permissions.');
+    }
+    $stat = @lstat($directory);
+    if (!is_array($stat) || (($stat['mode'] ?? 0) & 0170000) !== 0040000 || is_link($directory)
+        || ($stat['uid'] ?? -1) !== posix_geteuid() || (($stat['mode'] ?? 0) & 0777) !== 0700) {
+        vg_comparison_approve_fail('The canonical output directory must be owned by the effective user with mode 0700.');
+    }
+    return $stat;
+}
+
 function vg_comparison_approve_active_user(array $identity): object
 {
     if (!defined('WP_CLI') || WP_CLI !== true || !function_exists('get_userdata') || !function_exists('get_current_user_id')) {
@@ -158,6 +171,8 @@ function vg_comparison_approve_main(array $arguments): void
     }
     vg_comparison_approve_active_user($identity);
 
+    $outputDirectoryStat = vg_comparison_approve_require_posix_directory($outputDirectory);
+
     $changeIds = array_values(array_filter(explode(',', $options['change-ids']), static fn (string $item): bool => $item !== ''));
     sort($changeIds, SORT_STRING);
     if (!_vg_comparison_sorted_unique_change_ids($changeIds)) {
@@ -201,6 +216,13 @@ function vg_comparison_approve_main(array $arguments): void
         }
         $created = true;
         vg_comparison_approve_revalidate_directory($outputDirectory);
+        $currentDirectoryStat = vg_comparison_approve_require_posix_directory($outputDirectory);
+        if (($currentDirectoryStat['dev'] ?? null) !== ($outputDirectoryStat['dev'] ?? null)
+            || ($currentDirectoryStat['ino'] ?? null) !== ($outputDirectoryStat['ino'] ?? null)) {
+            fclose($handle);
+            $handle = null;
+            vg_comparison_approve_cleanup($resolvedOutput, 'The canonical output directory identity changed during signing');
+        }
         $handleStat = fstat($handle);
         $pathStat = @lstat($resolvedOutput);
         if (!is_array($handleStat) || !is_array($pathStat) || (($pathStat['mode'] ?? 0) & 0170000) !== 0100000
@@ -216,15 +238,36 @@ function vg_comparison_approve_main(array $arguments): void
             $handle = null;
             vg_comparison_approve_cleanup($resolvedOutput, 'The approval artifact could not be written completely');
         }
-        fclose($handle);
-        $handle = null;
-        vg_comparison_approve_revalidate_directory($outputDirectory);
-        if (vg_comparison_approve_test_failure('chmod') || !chmod($resolvedOutput, 0600)) {
+        if (function_exists('fsync') && !fsync($handle)) {
+            fclose($handle);
+            $handle = null;
+            vg_comparison_approve_cleanup($resolvedOutput, 'The approval artifact could not be synchronized');
+        }
+        if (vg_comparison_approve_test_failure('chmod') || !fchmod($handle, 0600)) {
+            fclose($handle);
+            $handle = null;
             vg_comparison_approve_cleanup($resolvedOutput, 'The approval artifact permissions could not be restricted to 0600');
         }
         clearstatcache(true, $resolvedOutput);
+        $handleStat = fstat($handle);
+        $pathStat = @lstat($resolvedOutput);
+        $currentDirectoryStat = vg_comparison_approve_require_posix_directory($outputDirectory);
+        if (!is_array($handleStat) || !is_array($pathStat) || (($handleStat['mode'] ?? 0) & 0170000) !== 0100000
+            || (($handleStat['mode'] ?? 0) & 0777) !== 0600 || (($pathStat['mode'] ?? 0) & 0777) !== 0600
+            || ($handleStat['dev'] ?? null) !== ($pathStat['dev'] ?? null) || ($handleStat['ino'] ?? null) !== ($pathStat['ino'] ?? null)
+            || ($currentDirectoryStat['dev'] ?? null) !== ($outputDirectoryStat['dev'] ?? null)
+            || ($currentDirectoryStat['ino'] ?? null) !== ($outputDirectoryStat['ino'] ?? null)) {
+            fclose($handle);
+            $handle = null;
+            vg_comparison_approve_cleanup($resolvedOutput, 'The open approval artifact permissions or identity could not be verified');
+        }
+        $verifiedHandleStat = $handleStat;
+        fclose($handle);
+        $handle = null;
+        clearstatcache(true, $resolvedOutput);
         $finalStat = @lstat($resolvedOutput);
-        if (!is_array($finalStat) || (($finalStat['mode'] ?? 0) & 0170000) !== 0100000) {
+        if (!is_array($finalStat) || (($finalStat['mode'] ?? 0) & 0170000) !== 0100000 || (($finalStat['mode'] ?? 0) & 0777) !== 0600
+            || ($finalStat['dev'] ?? null) !== ($verifiedHandleStat['dev'] ?? null) || ($finalStat['ino'] ?? null) !== ($verifiedHandleStat['ino'] ?? null)) {
             vg_comparison_approve_cleanup($resolvedOutput, 'The final approval artifact was not a regular file');
         }
         $created = false;
