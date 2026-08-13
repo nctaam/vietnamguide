@@ -1,0 +1,13 @@
+{
+  "registry_version": "identities-production-v1",
+  "generated_on": "2026-08-13",
+  "identities": [
+    {
+      "identity_id": "editorial-author-administrator",
+      "wp_user_id": 1,
+      "display_name": "Administrator",
+      "public_profile_path": "author/administrator",
+      "roles": ["author"]
+    }
+  ]
+}

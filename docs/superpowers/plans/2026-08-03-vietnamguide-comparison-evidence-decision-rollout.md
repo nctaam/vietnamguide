@@ -419,7 +419,11 @@ git commit -m "feat: validate comparison evidence graphs"
 - Create: `ops/comparison-rollout-lib.php`
 - Create: `ops/comparison-rollout-approve.php`
 - Create: `ops/comparison-rollout/identities.json`
+- Modify: `ops/comparison-rollout/schema.json` (schema-first prerequisite)
+- Modify: `ops/comparison-rollout/fixtures/minimal/identities.json` (`wp_user_id` is required)
 - Modify: `ops/verify-comparison-rollout.ps1`
+
+Checkpoint: update the identity-registry and flat signed-approval schemas first, update the minimal identity fixture for required WordPress user IDs, and demonstrate the targeted RED PHP contract before implementing the approval library or signer.
 
 - [ ] **Step 1: Write RED approval vectors**
 

@@ -521,9 +521,10 @@
           "items": {
             "type": "object",
             "additionalProperties": false,
-            "required": ["identity_id", "display_name", "public_profile_path", "roles"],
+            "required": ["identity_id", "wp_user_id", "display_name", "public_profile_path", "roles"],
             "properties": {
               "identity_id": { "$ref": "#/$defs/stableId" },
+              "wp_user_id": { "type": "integer", "minimum": 1 },
               "display_name": { "$ref": "#/$defs/safeText" },
               "public_profile_path": { "$ref": "#/$defs/pagePath" },
               "roles": {
@@ -945,28 +946,28 @@
     "approvalArtifact": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["artifact_version", "path", "bundle_hash", "schema_version", "approvals", "approved_on"],
+      "required": ["artifact_version", "manifest_hash", "identity_id", "wp_user_id", "role", "timestamp_utc", "change_ids", "change_reason", "key_id", "hmac_sha256"],
       "properties": {
-        "artifact_version": { "$ref": "#/$defs/stableId" },
-        "path": { "$ref": "#/$defs/pagePath" },
-        "bundle_hash": { "$ref": "#/$defs/sha256" },
-        "schema_version": { "const": "v2" },
-        "approvals": {
-          "type": "array",
-          "minItems": 2,
-          "maxItems": 2,
-          "items": {
-            "type": "object",
-            "additionalProperties": false,
-            "required": ["role", "identity_id", "approved_on"],
-            "properties": {
-              "role": { "type": "string", "enum": ["author", "reviewer"] },
-              "identity_id": { "$ref": "#/$defs/stableId" },
-              "approved_on": { "$ref": "#/$defs/isoDate" }
-            }
-          }
+        "artifact_version": { "const": "1" },
+        "manifest_hash": { "$ref": "#/$defs/sha256" },
+        "identity_id": { "$ref": "#/$defs/stableId" },
+        "wp_user_id": { "type": "integer", "minimum": 1 },
+        "role": { "type": "string", "enum": ["author", "reviewer"] },
+        "timestamp_utc": {
+          "type": "string",
+          "pattern": "^[0-9]{4}-(0[1-9]|1[0-2])-([0-2][0-9]|3[01])T([01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]Z$",
+          "format": "date-time"
         },
-        "approved_on": { "$ref": "#/$defs/isoDate" }
+        "change_ids": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 64,
+          "uniqueItems": true,
+          "items": { "$ref": "#/$defs/stableId" }
+        },
+        "change_reason": { "$ref": "#/$defs/changeReason" },
+        "key_id": { "$ref": "#/$defs/stableId" },
+        "hmac_sha256": { "$ref": "#/$defs/sha256" }
       }
     },
     "backup": {

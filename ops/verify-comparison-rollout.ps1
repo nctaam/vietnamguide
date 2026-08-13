@@ -2,7 +2,7 @@ param(
     [string]$RepoRootOverride = '',
     [switch]$Json,
     [switch]$EmitArtifact,
-    [ValidateSet('fixtures', 'canary', 'six', 'portfolio')]
+    [ValidateSet('approvals', 'fixtures', 'canary', 'six', 'portfolio')]
     [string]$Scope = 'portfolio',
     [datetime]$AsOfDate = [datetime]'2026-08-03T00:00:00Z'
 )
@@ -28,6 +28,18 @@ $requiredModuleExports = @(
     'Test-VgComparisonPortfolio'
     'New-VgComparisonArtifact'
     'Compare-VgArtifactDeterminism'
+)
+
+$requiredPhpFunctions = @(
+    'vg_comparison_canonical_json'
+    'vg_comparison_sha256'
+    'vg_comparison_validate_schema'
+    'vg_comparison_compile_portfolio'
+    'vg_comparison_probe_source'
+    'vg_comparison_verify_approval'
+    'vg_comparison_content_fingerprint'
+    'vg_comparison_insert_modules'
+    'vg_comparison_render_metrics'
 )
 
 $baselinePaths = @(
@@ -1117,7 +1129,6 @@ function Get-PublicEnumSchemaNodes {
     $approvalProperties = Get-Property (Get-Definition $Schema 'approvalArtifact') 'properties'
     $primaryDecisionProperties = Get-Property (Get-Property $bundleProperties 'primary_decision') 'properties'
     $moduleProperties = Get-Property (Get-Property $bundleProperties 'module_requirements') 'properties'
-    $approvalItemProperties = Get-Property (Get-Property (Get-Property $approvalProperties 'approvals') 'items') 'properties'
     $sourceProbeProperties = Get-Property (Get-Definition $Schema 'sourceProbe') 'properties'
     $impactReportProperties = Get-Property (Get-Definition $Schema 'impactReport') 'properties'
     $backupProperties = Get-Property (Get-Definition $Schema 'backup') 'properties'
@@ -1136,7 +1147,7 @@ function Get-PublicEnumSchemaNodes {
         routeGroup = Get-Definition $Schema 'routeGroup'
         changeReason = Get-Definition $Schema 'changeReason'
         activationStage = Get-Property $manifestProperties 'activation_stage'
-        approvalRole = Get-Property $approvalItemProperties 'role'
+        approvalRole = Get-Property $approvalProperties 'role'
         terminalOutcome = Get-Property $primaryDecisionProperties 'outcome'
         archetype = Get-Property $bundleProperties 'archetype'
         requiredFeature = Get-Property (Get-Property $moduleProperties 'required_features') 'items'
@@ -1196,6 +1207,12 @@ function Invoke-FixtureValidation {
         if ($validationErrors.Count -eq 0) {
             $script:fixtureErrors += "E_SCHEMA fixture/${Name}: expected rejection but value was accepted"
         }
+    }
+
+    function Assert-ApprovalVectorTrue {
+        param([string]$Name, [bool]$Condition, [string]$Explanation)
+        $script:fixtureChecks++
+        if (-not $Condition) { $script:fixtureErrors += "E_APPROVAL fixture/${Name}: $Explanation" }
     }
 
     function Assert-BundleAccepted {
@@ -1605,21 +1622,29 @@ function Invoke-FixtureValidation {
     }
 
     $approvalSchema = Get-Definition $Schema 'approvalArtifact'
-    $approvalFixture = ConvertTo-FixtureObject ([ordered]@{
-        artifact_version = 'approval-v2'
-        path = 'compare/da-nang-vs-hoi-an'
-        bundle_hash = ('c' * 64)
-        schema_version = 'v2'
-        approvals = @(
-            [ordered]@{ role = 'author'; identity_id = 'author-one'; approved_on = '2026-08-03' }
-            [ordered]@{ role = 'reviewer'; identity_id = 'reviewer-one'; approved_on = '2026-08-03' }
-        )
-        approved_on = '2026-08-03'
-    })
-    Assert-Accepted 'approval-role-positive' $approvalFixture $approvalSchema
-    $badRole = Copy-FixtureObject $approvalFixture
-    $badRole.approvals[1].role = 'editor'
-    Assert-Rejected 'approval-role-enum' $badRole $approvalSchema
+    $approvalPayload = [ordered]@{
+        artifact_version = '1'
+        manifest_hash = ('a' * 64)
+        identity_id = 'fixture-author'
+        wp_user_id = 101
+        role = 'author'
+        timestamp_utc = '2026-08-03T00:00:00Z'
+        change_ids = @('cmp-104-decision')
+        change_reason = 'decision_change'
+        key_id = 'comparison-approval-2026-01'
+    }
+    $approvalCanonical = ConvertTo-VgCanonicalJson -Value $approvalPayload
+    Assert-ApprovalVectorTrue 'approval-canonical-literal' ($approvalCanonical -ceq '{"artifact_version":"1","change_ids":["cmp-104-decision"],"change_reason":"decision_change","identity_id":"fixture-author","key_id":"comparison-approval-2026-01","manifest_hash":"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa","role":"author","timestamp_utc":"2026-08-03T00:00:00Z","wp_user_id":101}') 'approval payload canonical ordering changed'
+    Assert-ApprovalVectorTrue 'approval-canonical-sha256-literal' ((Get-VgSha256Hex -Value $approvalPayload) -ceq '268cacf50d0eb37b0353422154e3c82291924d04e1c3b0d258a651f8ad81df0f') 'approval payload SHA-256 parity vector changed'
+    $approvalFixture = Copy-FixtureObject $approvalPayload
+    $approvalFixture['hmac_sha256'] = '802e95adf764dff476f34115485015883ea007ee9406d02897d46da20debf898'
+    Assert-Accepted 'approval-flat-artifact-positive' $approvalFixture $approvalSchema
+    $unknownApprovalKey = Copy-FixtureObject $approvalFixture
+    $unknownApprovalKey['reviewer_notes'] = 'private'
+    Assert-Rejected 'approval-flat-artifact-unknown-key' $unknownApprovalKey $approvalSchema
+    $missingHmac = Copy-FixtureObject $approvalFixture
+    [void]$missingHmac.Remove('hmac_sha256')
+    Assert-Rejected 'approval-flat-artifact-missing-hmac' $missingHmac $approvalSchema
 
     foreach ($terminalOutcome in @('option', 'no_clear_winner', 'combine_or_sequence')) {
         $terminalFixture = Copy-FixtureObject $positiveBundle
@@ -2303,6 +2328,217 @@ function Invoke-ResolverFixtureValidation {
     return [ordered]@{ errors = @($script:resolverFixtureErrors); checks = $script:resolverFixtureChecks }
 }
 
+function Invoke-ApprovalContractValidation {
+    param([Parameter(Mandatory = $true)]$Schema)
+
+    $approvalErrors = @()
+    $approvalChecks = 0
+    $fixtureIdentityRelativePath = 'ops/comparison-rollout/fixtures/minimal/identities.json'
+    $fixtureIdentityPath = Join-Path $repoRoot $fixtureIdentityRelativePath.Replace('/', [System.IO.Path]::DirectorySeparatorChar)
+    $productionIdentityRelativePath = 'ops/comparison-rollout/identities.json'
+    $productionIdentityPath = Join-Path $repoRoot $productionIdentityRelativePath.Replace('/', [System.IO.Path]::DirectorySeparatorChar)
+    $phpLibraryRelativePath = 'ops/comparison-rollout-lib.php'
+    $phpLibraryPath = Join-Path $repoRoot $phpLibraryRelativePath.Replace('/', [System.IO.Path]::DirectorySeparatorChar)
+    $phpSignerRelativePath = 'ops/comparison-rollout-approve.php'
+    $phpSignerPath = Join-Path $repoRoot $phpSignerRelativePath.Replace('/', [System.IO.Path]::DirectorySeparatorChar)
+
+    foreach ($requiredApprovalFile in @(
+        [ordered]@{ Relative = $fixtureIdentityRelativePath; Path = $fixtureIdentityPath; Code = 'E_FILE' }
+        [ordered]@{ Relative = $productionIdentityRelativePath; Path = $productionIdentityPath; Code = 'E_FILE' }
+        [ordered]@{ Relative = $phpLibraryRelativePath; Path = $phpLibraryPath; Code = 'E_PHP' }
+        [ordered]@{ Relative = $phpSignerRelativePath; Path = $phpSignerPath; Code = 'E_PHP' }
+    )) {
+        $approvalChecks++
+        if (-not (Test-Path -LiteralPath $requiredApprovalFile.Path -PathType Leaf)) {
+            $approvalErrors += "$($requiredApprovalFile.Code) $($requiredApprovalFile.Relative): required approval contract file is missing"
+        }
+    }
+
+    if (Test-Path -LiteralPath $fixtureIdentityPath -PathType Leaf) {
+        try {
+            $fixtureIdentities = Read-VgJsonDocument -Path $fixtureIdentityPath
+            $identitySchemaErrors = @(Test-VgSchemaDocument -Document $fixtureIdentities -Schema $Schema -DefinitionName 'identityRegistry' -DocumentId $fixtureIdentityRelativePath)
+            $approvalChecks++
+            if ($identitySchemaErrors.Count -gt 0) { $approvalErrors += $identitySchemaErrors }
+            $missingWpUser = Copy-FixtureObject $fixtureIdentities
+            [void]$missingWpUser.identities[0].Remove('wp_user_id')
+            $approvalChecks++
+            if (@(Test-VgSchemaDocument -Document $missingWpUser -Schema $Schema -DefinitionName 'identityRegistry' -DocumentId 'fixture/identity-missing-wp-user').Count -eq 0) {
+                $approvalErrors += 'E_SCHEMA fixture/identity-missing-wp-user: identityRegistry accepted a missing wp_user_id'
+            }
+        } catch {
+            $approvalErrors += $_.Exception.Message
+        }
+    }
+
+    if (Test-Path -LiteralPath $productionIdentityPath -PathType Leaf) {
+        try {
+            $productionIdentities = Read-VgJsonDocument -Path $productionIdentityPath
+            $productionIdentityErrors = @(Test-VgSchemaDocument -Document $productionIdentities -Schema $Schema -DefinitionName 'identityRegistry' -DocumentId $productionIdentityRelativePath)
+            $approvalChecks++
+            if (@($productionIdentityErrors | Where-Object { $_ -match 'identities has too few items' }).Count -eq 0) {
+                $approvalErrors += "E_APPROVAL ${productionIdentityRelativePath}: expected fail-closed rejection until a distinct production reviewer exists"
+            }
+            $approvalChecks++
+            $productionIdentityList = Get-Property $productionIdentities 'identities'
+            if (-not (Test-IsArray $productionIdentityList) -or $productionIdentityList.Count -ne 1) {
+                $approvalErrors += "E_APPROVAL ${productionIdentityRelativePath}: production registry must contain only the reviewed single author until a reviewer is provisioned"
+            } else {
+                $productionIdentity = $productionIdentityList[0]
+                if ((Get-Property $productionIdentity 'identity_id') -cne 'editorial-author-administrator' -or
+                    [int](Get-Property $productionIdentity 'wp_user_id') -ne 1 -or
+                    (Get-Property $productionIdentity 'display_name') -cne 'Administrator' -or
+                    (Get-Property $productionIdentity 'public_profile_path') -cne 'author/administrator' -or
+                    -not (Test-IsArray (Get-Property $productionIdentity 'roles')) -or
+                    (Get-Property $productionIdentity 'roles').Count -ne 1 -or
+                    (Get-Property $productionIdentity 'roles')[0] -cne 'author') {
+                    $approvalErrors += "E_APPROVAL ${productionIdentityRelativePath}: production identity does not match the reviewed WordPress user fact"
+                }
+            }
+        } catch {
+            $approvalErrors += $_.Exception.Message
+        }
+    }
+
+    if (Test-Path -LiteralPath $phpLibraryPath -PathType Leaf) {
+        $librarySource = [System.IO.File]::ReadAllText($phpLibraryPath, [System.Text.Encoding]::UTF8)
+        foreach ($functionName in $requiredPhpFunctions) {
+            $approvalChecks++
+            if ($librarySource -cnotmatch "function\s+$([regex]::Escape($functionName))\s*\(") {
+                $approvalErrors += "E_PHP ${phpLibraryRelativePath}: missing public function $functionName"
+            }
+        }
+    }
+
+    if (Test-Path -LiteralPath $phpSignerPath -PathType Leaf) {
+        $signerSource = [System.IO.File]::ReadAllText($phpSignerPath, [System.Text.Encoding]::UTF8)
+        foreach ($needle in @('PHP_SAPI', 'comparison-approval-2026-01', 'VG_COMPARISON_APPROVAL_SECRET_2026_01', "fopen(`$outputPath, 'x')", 'chmod')) {
+            $approvalChecks++
+            if ($signerSource.IndexOf($needle, [System.StringComparison]::Ordinal) -lt 0) {
+                $approvalErrors += "E_PHP ${phpSignerRelativePath}: missing signer safety contract '$needle'"
+            }
+        }
+    }
+
+    if ((Test-Path -LiteralPath $phpLibraryPath -PathType Leaf) -and (Test-Path -LiteralPath $phpSignerPath -PathType Leaf)) {
+        $phpBinary = [Environment]::GetEnvironmentVariable('VG_COMPARISON_PHP_BINARY')
+        if ([string]::IsNullOrWhiteSpace($phpBinary)) {
+            $phpCommand = Get-Command php -CommandType Application -ErrorAction SilentlyContinue | Select-Object -First 1
+            if ($null -ne $phpCommand) { $phpBinary = $phpCommand.Source }
+        }
+        $approvalChecks++
+        if ([string]::IsNullOrWhiteSpace($phpBinary) -or -not (Test-Path -LiteralPath $phpBinary -PathType Leaf)) {
+            $approvalErrors += 'E_PHP php: PHP binary is unavailable; set VG_COMPARISON_PHP_BINARY'
+        } else {
+            $previousSecret = [Environment]::GetEnvironmentVariable('VG_COMPARISON_APPROVAL_SECRET_2026_01')
+            try {
+                [Environment]::SetEnvironmentVariable('VG_COMPARISON_APPROVAL_SECRET_2026_01', 'task4-test-secret-dedicated-2026-01')
+                $selfTestOutput = @(& $phpBinary $phpLibraryPath '--self-test' 2>&1)
+                $selfTestExit = $LASTEXITCODE
+            } finally {
+                [Environment]::SetEnvironmentVariable('VG_COMPARISON_APPROVAL_SECRET_2026_01', $previousSecret)
+            }
+            $approvalChecks++
+            if ($selfTestExit -ne 0 -or $selfTestOutput.Count -ne 1 -or [string]$selfTestOutput[0] -cne 'Comparison rollout PHP self-tests passed.') {
+                $approvalErrors += 'E_PHP ops/comparison-rollout-lib.php: PHP approval self-test failed'
+            }
+
+            $phpVectorCode = @'
+$library = getenv('VG_COMPARISON_LIBRARY_PATH');
+$schemaPath = getenv('VG_COMPARISON_SCHEMA_PATH');
+require $library;
+$secret = 'task4-test-secret-dedicated-2026-01';
+putenv('VG_COMPARISON_APPROVAL_SECRET_2026_01=' . $secret);
+$manifestHash = str_repeat('a', 64);
+$registry = ['identities' => [
+    ['identity_id' => 'fixture-author', 'wp_user_id' => 101, 'display_name' => 'Fixture Author', 'public_profile_path' => 'about/fixture-author', 'roles' => ['author'], 'active' => true],
+    ['identity_id' => 'fixture-reviewer', 'wp_user_id' => 202, 'display_name' => 'Fixture Reviewer', 'public_profile_path' => 'about/fixture-reviewer', 'roles' => ['reviewer'], 'active' => true],
+]];
+$make = static function (string $identityId, int $wpUserId, string $role, array $changeIds, string $reason) use ($manifestHash, $secret): array {
+    $payload = ['artifact_version' => '1', 'manifest_hash' => $manifestHash, 'identity_id' => $identityId, 'wp_user_id' => $wpUserId, 'role' => $role, 'timestamp_utc' => '2026-08-03T00:00:00Z', 'change_ids' => $changeIds, 'change_reason' => $reason, 'key_id' => 'comparison-approval-2026-01'];
+    $payload['hmac_sha256'] = hash_hmac('sha256', vg_comparison_canonical_json($payload), $secret);
+    return $payload;
+};
+$author = $make('fixture-author', 101, 'author', ['cmp-104-decision'], 'decision_change');
+$reviewer = $make('fixture-reviewer', 202, 'reviewer', ['cmp-104-decision'], 'decision_change');
+$refresh = $make('fixture-reviewer', 202, 'reviewer', ['cmp-104-source-refresh'], 'source_refresh');
+$alteredScope = $author; $alteredScope['change_ids'] = ['cmp-104-source-refresh'];
+$alteredHash = $author; $alteredHash['manifest_hash'] = str_repeat('b', 64);
+$invalidHmac = $author; $invalidHmac['hmac_sha256'] = str_repeat('0', 64);
+$unknownKey = $author; $unknownKey['key_id'] = 'comparison-approval-2026-02';
+$unordered = $make('fixture-author', 101, 'author', ['cmp-104-source-refresh', 'cmp-104-decision'], 'decision_change');
+$inactiveRegistry = $registry; $inactiveRegistry['identities'][0]['active'] = false;
+$unauthorized = $author; $unauthorized['role'] = 'reviewer';
+$duplicateRegistry = $registry; $duplicateRegistry['identities'][] = ['identity_id' => 'fixture-author', 'wp_user_id' => 303, 'display_name' => 'Duplicate', 'public_profile_path' => 'about/duplicate', 'roles' => ['author'], 'active' => true];
+$sameWpRegistry = $registry; $sameWpRegistry['identities'][1]['wp_user_id'] = 101; $sameWpReviewer = $make('fixture-reviewer', 101, 'reviewer', ['cmp-104-decision'], 'decision_change');
+$schema = json_decode(file_get_contents($schemaPath), true, 512, JSON_THROW_ON_ERROR);
+$approvalSchema = ['$defs' => $schema['$defs'], '$ref' => '#/$defs/approvalArtifact'];
+$results = [];
+$results['canonical_literal'] = vg_comparison_canonical_json(array_diff_key($author, ['hmac_sha256' => true])) === base64_decode(getenv('VG_COMPARISON_CANONICAL_VECTOR'), true);
+$results['canonical_hash'] = vg_comparison_sha256(array_diff_key($author, ['hmac_sha256' => true])) === '268cacf50d0eb37b0353422154e3c82291924d04e1c3b0d258a651f8ad81df0f';
+$results['schema_valid'] = vg_comparison_validate_schema($author, $approvalSchema) === [];
+$results['valid_hmac'] = vg_comparison_verify_approval($author, $registry, $manifestHash)['ok'] === true;
+$results['altered_scope'] = vg_comparison_verify_approval($alteredScope, $registry, $manifestHash)['ok'] === false;
+$results['altered_hash'] = vg_comparison_verify_approval($alteredHash, $registry, $manifestHash)['ok'] === false;
+$results['invalid_hmac'] = vg_comparison_verify_approval($invalidHmac, $registry, $manifestHash)['ok'] === false;
+$results['unknown_key'] = vg_comparison_verify_approval($unknownKey, $registry, $manifestHash)['ok'] === false;
+$savedSecret = getenv('VG_COMPARISON_APPROVAL_SECRET_2026_01'); putenv('VG_COMPARISON_APPROVAL_SECRET_2026_01');
+$results['unset_key'] = vg_comparison_verify_approval($author, $registry, $manifestHash)['ok'] === false;
+putenv('VG_COMPARISON_APPROVAL_SECRET_2026_01=' . $savedSecret);
+$results['ordinal_ordering'] = vg_comparison_verify_approval($unordered, $registry, $manifestHash)['ok'] === false;
+$results['inactive_user'] = vg_comparison_verify_approval($author, $inactiveRegistry, $manifestHash)['ok'] === false;
+$results['unauthorized_role'] = vg_comparison_verify_approval($unauthorized, $registry, $manifestHash)['ok'] === false;
+$results['duplicate_identity'] = vg_comparison_verify_approval($author, $duplicateRegistry, $manifestHash)['ok'] === false;
+$results['source_refresh_one_reviewer'] = _vg_comparison_verify_approval_set([$refresh], $registry, $manifestHash, ['change_reason' => 'source_refresh', 'outcomes_changed' => false])['ok'] === true;
+$results['decision_four_eyes'] = _vg_comparison_verify_approval_set([$author, $reviewer], $registry, $manifestHash, ['change_reason' => 'decision_change'])['ok'] === true;
+$results['altered_expected_scope'] = _vg_comparison_verify_approval_set([$author, $reviewer], $registry, $manifestHash, ['change_reason' => 'decision_change', 'change_ids' => ['cmp-104-source-refresh']])['ok'] === false;
+$results['duplicate_artifact'] = _vg_comparison_verify_approval_set([$author, $author], $registry, $manifestHash, ['change_reason' => 'decision_change'])['ok'] === false;
+$results['same_wp_user'] = _vg_comparison_verify_approval_set([$author, $sameWpReviewer], $sameWpRegistry, $manifestHash, ['change_reason' => 'decision_change'])['ok'] === false;
+$results['safe_compile_surface'] = vg_comparison_compile_portfolio([], [], [], [], [])['ok'] === false;
+$results['safe_probe_surface'] = vg_comparison_probe_source([], [])['ok'] === false;
+$results['safe_insert_surface'] = vg_comparison_insert_modules('unchanged', [])['ok'] === false;
+define('AUTH_KEY', $secret);
+$results['wordpress_salt_secret'] = vg_comparison_verify_approval($author, $registry, $manifestHash)['ok'] === false;
+echo json_encode($results, JSON_UNESCAPED_SLASHES | JSON_THROW_ON_ERROR);
+'@
+            $previousLibraryPath = [Environment]::GetEnvironmentVariable('VG_COMPARISON_LIBRARY_PATH')
+            $previousSchemaPath = [Environment]::GetEnvironmentVariable('VG_COMPARISON_SCHEMA_PATH')
+            $previousCanonicalVector = [Environment]::GetEnvironmentVariable('VG_COMPARISON_CANONICAL_VECTOR')
+            try {
+                [Environment]::SetEnvironmentVariable('VG_COMPARISON_LIBRARY_PATH', $phpLibraryPath)
+                [Environment]::SetEnvironmentVariable('VG_COMPARISON_SCHEMA_PATH', $schemaPath)
+                $canonicalVector = '{"artifact_version":"1","change_ids":["cmp-104-decision"],"change_reason":"decision_change","identity_id":"fixture-author","key_id":"comparison-approval-2026-01","manifest_hash":"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa","role":"author","timestamp_utc":"2026-08-03T00:00:00Z","wp_user_id":101}'
+                [Environment]::SetEnvironmentVariable('VG_COMPARISON_CANONICAL_VECTOR', [Convert]::ToBase64String([System.Text.Encoding]::UTF8.GetBytes($canonicalVector)))
+                $vectorOutput = @(& $phpBinary '-d' 'display_errors=stderr' '-r' $phpVectorCode 2>&1)
+                $vectorExit = $LASTEXITCODE
+            } finally {
+                [Environment]::SetEnvironmentVariable('VG_COMPARISON_LIBRARY_PATH', $previousLibraryPath)
+                [Environment]::SetEnvironmentVariable('VG_COMPARISON_SCHEMA_PATH', $previousSchemaPath)
+                [Environment]::SetEnvironmentVariable('VG_COMPARISON_CANONICAL_VECTOR', $previousCanonicalVector)
+            }
+            $approvalChecks += 22
+            if ($vectorExit -ne 0 -or $vectorOutput.Count -ne 1) {
+                $approvalErrors += 'E_PHP ops/comparison-rollout-lib.php: PHP approval vector execution failed'
+            } else {
+                try {
+                    $vectorResults = [string]$vectorOutput[0] | ConvertFrom-Json
+                    foreach ($vectorName in @('canonical_literal', 'canonical_hash', 'schema_valid', 'valid_hmac', 'altered_scope', 'altered_hash', 'invalid_hmac', 'unknown_key', 'unset_key', 'ordinal_ordering', 'inactive_user', 'unauthorized_role', 'duplicate_identity', 'source_refresh_one_reviewer', 'decision_four_eyes', 'altered_expected_scope', 'duplicate_artifact', 'same_wp_user', 'safe_compile_surface', 'safe_probe_surface', 'safe_insert_surface', 'wordpress_salt_secret')) {
+                        $vectorValue = Get-Property $vectorResults $vectorName
+                        $vectorPassed = ($vectorValue -eq $true)
+                        if (-not $vectorPassed) {
+                            $approvalErrors += "E_APPROVAL fixture/${vectorName}: PHP approval vector failed"
+                        }
+                    }
+                } catch {
+                    $approvalErrors += 'E_PHP ops/comparison-rollout-lib.php: PHP approval vector output was invalid'
+                }
+            }
+        }
+    }
+
+    return [ordered]@{ errors = @($approvalErrors); checks = $approvalChecks }
+}
+
 function Write-VerificationResult {
     param(
         [Parameter(Mandatory = $true)][AllowEmptyCollection()][string[]]$Errors,
@@ -2346,7 +2582,7 @@ if (-not (Test-Path -LiteralPath $validatorPath -PathType Leaf)) {
     }
 }
 
-$requiredForScope = if ($Scope -ceq 'fixtures') { @($requiredInputs[0]) } else { @($requiredInputs) }
+$requiredForScope = if ($Scope -ceq 'fixtures' -or $Scope -ceq 'approvals') { @($requiredInputs[0]) } else { @($requiredInputs) }
 foreach ($relativePath in $requiredForScope) {
     $nativePath = $relativePath.Replace('/', [System.IO.Path]::DirectorySeparatorChar)
     if (-not (Test-Path -LiteralPath (Join-Path $repoRoot $nativePath) -PathType Leaf)) {
@@ -2380,6 +2616,12 @@ if (Test-Path -LiteralPath $schemaPath -PathType Leaf) {
     } catch {
         $errors += "E_SCHEMA ${schemaRelativePath}: invalid JSON schema"
     }
+}
+
+if ($Scope -ceq 'approvals' -and $null -ne $schema -and $errors.Count -eq 0) {
+    $approvalResult = Invoke-ApprovalContractValidation -Schema $schema
+    $errors += @($approvalResult.errors)
+    $checks += [int]$approvalResult.checks
 }
 
 if ($Scope -ceq 'fixtures' -and $null -ne $schema -and $errors.Count -eq 0) {
