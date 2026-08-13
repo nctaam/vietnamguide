@@ -2446,14 +2446,31 @@ function Invoke-ApprovalContractValidation {
             $phpVectorCode = @'
 $library = getenv('VG_COMPARISON_LIBRARY_PATH');
 $schemaPath = getenv('VG_COMPARISON_SCHEMA_PATH');
+if (!class_exists('WP_User')) {
+    class WP_User {
+        public int $ID;
+        public int $user_status;
+        public string $display_name;
+        public array $roles;
+        public bool $spam;
+        public bool $deleted;
+        public function __construct(int $id, string $displayName, int $status = 0) {
+            $this->ID = $id; $this->display_name = $displayName; $this->user_status = $status;
+            $this->roles = ['administrator']; $this->spam = false; $this->deleted = false;
+        }
+    }
+}
+$GLOBALS['vg_comparison_test_users'] = [];
+function get_userdata(int $id): WP_User|false { return $GLOBALS['vg_comparison_test_users'][$id] ?? false; }
 require $library;
 $secret = 'task4-test-secret-dedicated-2026-01';
 putenv('VG_COMPARISON_APPROVAL_SECRET_2026_01=' . $secret);
 $manifestHash = str_repeat('a', 64);
 $registry = ['identities' => [
-    ['identity_id' => 'fixture-author', 'wp_user_id' => 101, 'display_name' => 'Fixture Author', 'public_profile_path' => 'about/fixture-author', 'roles' => ['author'], 'active' => true],
-    ['identity_id' => 'fixture-reviewer', 'wp_user_id' => 202, 'display_name' => 'Fixture Reviewer', 'public_profile_path' => 'about/fixture-reviewer', 'roles' => ['reviewer'], 'active' => true],
+    ['identity_id' => 'fixture-author', 'wp_user_id' => 101, 'display_name' => 'Fixture Author', 'public_profile_path' => 'about/fixture-author', 'roles' => ['author']],
+    ['identity_id' => 'fixture-reviewer', 'wp_user_id' => 202, 'display_name' => 'Fixture Reviewer', 'public_profile_path' => 'about/fixture-reviewer', 'roles' => ['reviewer']],
 ]];
+$GLOBALS['vg_comparison_test_users'] = [101 => new WP_User(101, 'Fixture Author'), 202 => new WP_User(202, 'Fixture Reviewer')];
 $make = static function (string $identityId, int $wpUserId, string $role, array $changeIds, string $reason) use ($manifestHash, $secret): array {
     $payload = ['artifact_version' => '1', 'manifest_hash' => $manifestHash, 'identity_id' => $identityId, 'wp_user_id' => $wpUserId, 'role' => $role, 'timestamp_utc' => '2026-08-03T00:00:00Z', 'change_ids' => $changeIds, 'change_reason' => $reason, 'key_id' => 'comparison-approval-2026-01'];
     $payload['hmac_sha256'] = hash_hmac('sha256', vg_comparison_canonical_json($payload), $secret);
@@ -2467,10 +2484,9 @@ $alteredHash = $author; $alteredHash['manifest_hash'] = str_repeat('b', 64);
 $invalidHmac = $author; $invalidHmac['hmac_sha256'] = str_repeat('0', 64);
 $unknownKey = $author; $unknownKey['key_id'] = 'comparison-approval-2026-02';
 $unordered = $make('fixture-author', 101, 'author', ['cmp-104-source-refresh', 'cmp-104-decision'], 'decision_change');
-$inactiveRegistry = $registry; $inactiveRegistry['identities'][0]['active'] = false;
-$unauthorized = $author; $unauthorized['role'] = 'reviewer';
-$duplicateRegistry = $registry; $duplicateRegistry['identities'][] = ['identity_id' => 'fixture-author', 'wp_user_id' => 303, 'display_name' => 'Duplicate', 'public_profile_path' => 'about/duplicate', 'roles' => ['author'], 'active' => true];
-$sameWpRegistry = $registry; $sameWpRegistry['identities'][1]['wp_user_id'] = 101; $sameWpReviewer = $make('fixture-reviewer', 101, 'reviewer', ['cmp-104-decision'], 'decision_change');
+$unauthorized = $make('fixture-author', 101, 'reviewer', ['cmp-104-decision'], 'decision_change');
+$duplicateRegistry = $registry; $duplicateRegistry['identities'][] = ['identity_id' => 'fixture-author', 'wp_user_id' => 303, 'display_name' => 'Duplicate', 'public_profile_path' => 'about/duplicate', 'roles' => ['author']];
+$sameWpRegistry = $registry; $sameWpRegistry['identities'][1]['wp_user_id'] = 101; $sameWpRegistry['identities'][1]['display_name'] = 'Fixture Author'; $sameWpReviewer = $make('fixture-reviewer', 101, 'reviewer', ['cmp-104-decision'], 'decision_change');
 $schema = json_decode(file_get_contents($schemaPath), true, 512, JSON_THROW_ON_ERROR);
 $approvalSchema = ['$defs' => $schema['$defs'], '$ref' => '#/$defs/approvalArtifact'];
 $results = [];
@@ -2486,7 +2502,9 @@ $savedSecret = getenv('VG_COMPARISON_APPROVAL_SECRET_2026_01'); putenv('VG_COMPA
 $results['unset_key'] = vg_comparison_verify_approval($author, $registry, $manifestHash)['ok'] === false;
 putenv('VG_COMPARISON_APPROVAL_SECRET_2026_01=' . $savedSecret);
 $results['ordinal_ordering'] = vg_comparison_verify_approval($unordered, $registry, $manifestHash)['ok'] === false;
-$results['inactive_user'] = vg_comparison_verify_approval($author, $inactiveRegistry, $manifestHash)['ok'] === false;
+$GLOBALS['vg_comparison_test_users'][101]->user_status = 1;
+$results['inactive_user'] = vg_comparison_verify_approval($author, $registry, $manifestHash)['ok'] === false;
+$GLOBALS['vg_comparison_test_users'][101]->user_status = 0;
 $results['unauthorized_role'] = vg_comparison_verify_approval($unauthorized, $registry, $manifestHash)['ok'] === false;
 $results['duplicate_identity'] = vg_comparison_verify_approval($author, $duplicateRegistry, $manifestHash)['ok'] === false;
 $results['source_refresh_one_reviewer'] = _vg_comparison_verify_approval_set([$refresh], $registry, $manifestHash, ['change_reason' => 'source_refresh', 'outcomes_changed' => false])['ok'] === true;

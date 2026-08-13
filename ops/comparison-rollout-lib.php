@@ -363,11 +363,8 @@ function _vg_comparison_find_identity(array $registry, string $identityId): arra
 
 function _vg_comparison_wordpress_identity_active(array $identity): bool
 {
-    if (($identity['active'] ?? true) !== true) {
-        return false;
-    }
     if (!function_exists('get_userdata')) {
-        return true;
+        return false;
     }
     $user = get_userdata((int) ($identity['wp_user_id'] ?? 0));
     if (!is_object($user) || (class_exists('WP_User') && !$user instanceof WP_User)) {
