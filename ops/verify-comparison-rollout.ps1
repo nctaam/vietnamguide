@@ -2,7 +2,7 @@ param(
     [string]$RepoRootOverride = '',
     [switch]$Json,
     [switch]$EmitArtifact,
-    [ValidateSet('approvals', 'fixtures', 'canary', 'six', 'portfolio')]
+    [ValidateSet('approvals', 'runtime', 'fixtures', 'canary', 'six', 'portfolio')]
     [string]$Scope = 'portfolio',
     [datetime]$AsOfDate = [datetime]'2026-08-03T00:00:00Z'
 )
@@ -2777,6 +2777,194 @@ echo json_encode($results, JSON_UNESCAPED_SLASHES | JSON_THROW_ON_ERROR);
     return [ordered]@{ errors = @($approvalErrors); checks = $approvalChecks }
 }
 
+function Invoke-BundleRuntimeValidation {
+    param([Parameter(Mandatory = $true)]$Schema)
+
+    $runtimeErrors = @()
+    $runtimeChecks = 0
+    $bootstrapRelativePath = 'wordpress/wp-content/mu-plugins/vietnamguide-z-comparison.php'
+    $bundleRelativePath = 'wordpress/wp-content/mu-plugins/vietnamguide-comparison/bundle.php'
+    $bootstrapPath = Join-Path $repoRoot $bootstrapRelativePath.Replace('/', [System.IO.Path]::DirectorySeparatorChar)
+    $bundlePath = Join-Path $repoRoot $bundleRelativePath.Replace('/', [System.IO.Path]::DirectorySeparatorChar)
+    foreach ($runtimeFile in @(
+        [ordered]@{ Relative = $bootstrapRelativePath; Path = $bootstrapPath }
+        [ordered]@{ Relative = $bundleRelativePath; Path = $bundlePath }
+    )) {
+        $runtimeChecks++
+        if (-not (Test-Path -LiteralPath $runtimeFile.Path -PathType Leaf)) {
+            $runtimeErrors += "E_RUNTIME $($runtimeFile.Relative): required runtime file is missing"
+        }
+    }
+    if ($runtimeErrors.Count -gt 0) {
+        return [ordered]@{ errors = @($runtimeErrors); checks = $runtimeChecks }
+    }
+
+    $bootstrapSource = [System.IO.File]::ReadAllText($bootstrapPath, [System.Text.Encoding]::UTF8)
+    $bundleSource = [System.IO.File]::ReadAllText($bundlePath, [System.Text.Encoding]::UTF8)
+    $runtimeChecks++
+    if ([regex]::Matches($bundleSource, "get_post_meta\(\`$post_id,\s*'vg_eeat_comparison_bundle',\s*true\)").Count -ne 1) {
+        $runtimeErrors += "E_RUNTIME ${bundleRelativePath}: loader must contain exactly one approved metadata read"
+    }
+    $runtimeChecks++
+    if (($bootstrapSource + "`n" + $bundleSource) -match '(?i)wp_remote_get|curl_[a-z_]*|\bcurl\b|do_shortcode|the_content|template_redirect|\bexit\s*\(|\bdie\s*\(|run_id|[A-Za-z]:\\\\') {
+        $runtimeErrors += 'E_RUNTIME comparison loader: forbidden fetch, evaluation, suppression, run-ID, or local-path surface found'
+    }
+    $runtimeChecks++
+    if ($bootstrapSource -notmatch "add_action\(\s*'init'.*20\s*\)" -or $bootstrapSource -notmatch "is_callable\(\s*'vg_comparison_register_shortcode_replacements'\s*\)") {
+        $runtimeErrors += "E_RUNTIME ${bootstrapRelativePath}: shortcode registration must be callable-gated at init priority 20"
+    }
+    $runtimeChecks++
+    if ($bootstrapSource -notmatch "is_file\(\`$render_file\)" -or $bootstrapSource -notmatch "is_file\(\`$shortcodes_file\)" -or $bootstrapSource -notmatch "require_once\s+\`$bundle_file") {
+        $runtimeErrors += "E_RUNTIME ${bootstrapRelativePath}: bundle include must be required and Task 6 includes conditional"
+    }
+
+    $phpBinary = [Environment]::GetEnvironmentVariable('VG_COMPARISON_PHP_BINARY')
+    if ([string]::IsNullOrWhiteSpace($phpBinary)) {
+        $phpCommand = Get-Command php -CommandType Application -ErrorAction SilentlyContinue | Select-Object -First 1
+        if ($null -ne $phpCommand) { $phpBinary = $phpCommand.Source }
+    }
+    $runtimeChecks++
+    if ([string]::IsNullOrWhiteSpace($phpBinary) -or -not (Test-Path -LiteralPath $phpBinary -PathType Leaf)) {
+        $runtimeErrors += 'E_RUNTIME php: PHP binary is unavailable; set VG_COMPARISON_PHP_BINARY'
+        return [ordered]@{ errors = @($runtimeErrors); checks = $runtimeChecks }
+    }
+    foreach ($runtimeFilePath in @($bootstrapPath, $bundlePath)) {
+        $lintOutput = @(& $phpBinary '-l' $runtimeFilePath 2>&1)
+        $runtimeChecks++
+        if ($LASTEXITCODE -ne 0) {
+            $runtimeErrors += "E_RUNTIME ${runtimeFilePath}: PHP lint failed"
+        }
+    }
+    if ($runtimeErrors.Count -gt 0) {
+        return [ordered]@{ errors = @($runtimeErrors); checks = $runtimeChecks }
+    }
+
+    $requiredKeys = @((Get-Definition $Schema 'resolvedBundleV2').required)
+    $runtimeCode = @'
+<?php
+declare(strict_types=1);
+final class WP_Post { public function __construct(public int $ID, public string $path) {} }
+$GLOBALS['vg_test_posts'] = [];
+$GLOBALS['vg_test_meta'] = [];
+$GLOBALS['vg_test_reads'] = [];
+$GLOBALS['vg_test_active'] = [];
+$GLOBALS['vg_test_snapshot'] = [];
+$GLOBALS['vg_test_org'] = 'organizations-v2';
+$GLOBALS['vg_test_actions'] = [];
+$GLOBALS['vg_test_throw'] = 0;
+function add_action(string $hook, callable|string $callback, int $priority = 10): void { $GLOBALS['vg_test_actions'][] = [$hook, $callback, $priority]; }
+function get_post(int $id): WP_Post|false { if ($id === $GLOBALS['vg_test_throw']) { throw new RuntimeException('private'); } return $GLOBALS['vg_test_posts'][$id] ?? false; }
+function get_page_uri(WP_Post $post): string { return $post->path; }
+function vg_get_guide_path(WP_Post $post): string { return $post->path; }
+function vg_is_comparison_rollout_active_path(string $path): bool { return in_array($path, $GLOBALS['vg_test_active'], true); }
+function vg_comparison_activation_snapshot(): array { return $GLOBALS['vg_test_snapshot']; }
+function vg_comparison_organization_registry_version(): string { return $GLOBALS['vg_test_org']; }
+function get_post_meta(int $post_id, string $key, bool $single): mixed { $GLOBALS['vg_test_reads'][$post_id] = ($GLOBALS['vg_test_reads'][$post_id] ?? 0) + 1; return $GLOBALS['vg_test_meta'][$post_id] ?? ''; }
+$logFile = tempnam(sys_get_temp_dir(), 'vg-log-');
+ini_set('log_errors', '1'); ini_set('error_log', $logFile);
+require getenv('VG_RUNTIME_BOOTSTRAP');
+$results = [];
+$requiredKeys = json_decode(base64_decode(getenv('VG_RUNTIME_REQUIRED_KEYS'), true), true, 32, JSON_THROW_ON_ERROR);
+$results['constants'] = VG_COMPARISON_BUNDLE_SCHEMA_CURRENT === '2' && VG_COMPARISON_BUNDLE_SCHEMA_PREVIOUS === '1' && VG_COMPARISON_ACTIVATION_ARTIFACT_VERSION === 'activation-v2';
+$results['schema_key_parity'] = vg_comparison_bundle_v2_required_keys() === $requiredKeys;
+$results['task6_deferred'] = $GLOBALS['vg_test_actions'] === [];
+$results['canonical_parity'] = vg_comparison_bundle_canonical_json(['z'=>1.0,'a'=>['nested'=>'slash/value'],'m'=>-0.0]) === '{"a":{"nested":"slash/value"},"m":-0,"z":1}';
+function vg_test_bundle(int $id, string $path): array {
+    $bundle = ['schema_version'=>'v2','bundle_hash'=>str_repeat('0',64),'manifest_version'=>'manifest-v2','source_registry_version'=>'sources-v2','organization_registry_version'=>'organizations-v2','activation_artifact_version'=>'activation-v2','path'=>$path,'post_id'=>$id,'editorial'=>['reviewed_guide'=>true],'archetype'=>'competing_day_trips','localities'=>['fixture-locality'],'options'=>[['option_id'=>'option-a']],'primary_decision'=>['outcome_id'=>'outcome-a'],'field_note'=>'Confirm live conditions.','evidence_moat'=>['Reviewed evidence.'],'axes'=>[['axis_id'=>'axis-a']],'traveler_lenses'=>[['lens_id'=>'lens-a']],'sources'=>[['source_id'=>'source-a']],'related_routes'=>[['path'=>'plan/vietnam-evisa']],'update_log'=>[['date'=>'2026-08-03']],'module_requirements'=>['validator_version'=>'validator-v2'],'provenance_hash'=>str_repeat('b',64),'render_contract'=>['page_language'=>'vi']];
+    $hashable=$bundle; unset($hashable['bundle_hash']); $bundle['bundle_hash']=hash('sha256',vg_comparison_bundle_canonical_json($hashable)); return $bundle;
+}
+function vg_test_json(array $bundle): string { return json_encode($bundle, JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE|JSON_THROW_ON_ERROR); }
+function vg_test_rehash(array $bundle): array { $hashable=$bundle; unset($hashable['bundle_hash']); $bundle['bundle_hash']=hash('sha256',vg_comparison_bundle_canonical_json($hashable)); return $bundle; }
+function vg_test_install(WP_Post $post, string $raw, array $expect=[]): void {
+    $GLOBALS['vg_test_posts'][$post->ID]=$post; $GLOBALS['vg_test_meta'][$post->ID]=$raw; $GLOBALS['vg_test_active']=[$post->path]; $decoded=json_decode($raw,true); $defaults=is_array($decoded)?$decoded:[];
+    $entry=['path'=>$post->path,'bundle_hash'=>$defaults['bundle_hash']??str_repeat('0',64),'schema_version'=>$defaults['schema_version']??'v2','source_registry_version'=>$defaults['source_registry_version']??'sources-v2','activation_artifact_version'=>'activation-v2'];
+    if(isset($expect['entry'])){$entry=array_replace($entry,$expect['entry']);}
+    $GLOBALS['vg_test_snapshot']=['manifest_version'=>$expect['manifest_version']??($defaults['manifest_version']??'manifest-v2'),'activation_artifact_version'=>$expect['activation_artifact_version']??'activation-v2','paths'=>$expect['paths']??[$post->path],'bundle_hashes'=>[$entry]];
+    $GLOBALS['vg_test_org']=$expect['organization_registry_version']??'organizations-v2';
+}
+function vg_test_reason(array $result,string $reason):bool{return $result===['ok'=>false,'reason'=>$reason];}
+$post=new WP_Post(5001,'compare/runtime-valid'); $bundle=vg_test_bundle($post->ID,$post->path); vg_test_install($post,vg_test_json($bundle)); $loaded=vg_comparison_load_bundle($post);
+$results['valid_exact']=$loaded===['ok'=>true,'bundle'=>$bundle,'bundle_hash'=>$bundle['bundle_hash'],'cache_key'=>implode(':',[$post->path,$bundle['bundle_hash'],'v2','sources-v2','organizations-v2','activation-v2'])];
+$results['single_read']=vg_comparison_load_bundle($post->ID)===$loaded&&$GLOBALS['vg_test_reads'][$post->ID]===1;
+$inactive=new WP_Post(5002,'compare/runtime-inactive'); $GLOBALS['vg_test_posts'][$inactive->ID]=$inactive; $GLOBALS['vg_test_active']=[]; $results['inactive_zero_read']=vg_test_reason(vg_comparison_load_bundle($inactive),'E_INACTIVE')&&!isset($GLOBALS['vg_test_reads'][$inactive->ID]);
+$results['missing_post']=vg_test_reason(vg_comparison_load_bundle(5003),'E_POST'); $GLOBALS['vg_test_throw']=5004; $results['throwable']=vg_test_reason(vg_comparison_load_bundle(5004),'E_RUNTIME'); $GLOBALS['vg_test_throw']=0;
+$results['duplicate_top']=vg_comparison_bundle_duplicate_keys('{"a":1,"a":2}');
+$results['duplicate_nested']=vg_comparison_bundle_duplicate_keys('{"a":{"b":1,"b":2}}');
+$results['duplicate_escaped']=vg_comparison_bundle_duplicate_keys('{"a\\u0062":1,"ab":2}');
+$rawCases=['empty'=>['','E_META'],'oversize'=>[str_repeat('x',65537),'E_SIZE'],'bom'=>["\xEF\xBB\xBF{}",'E_BOM'],'utf8'=>["{\"x\":\"\xC3\x28\"}",'E_UTF8'],'control'=>["{\"x\":\"bad\x00\"}",'E_CONTROL'],'duplicate'=>['{"a":1,"a":2}','E_JSON_DUPLICATE'],'json'=>['{"a":','E_JSON'],'root'=>['[]','E_SCHEMA']]; $id=5100;
+foreach($rawCases as $name=>[$raw,$reason]){$p=new WP_Post(++$id,"compare/runtime-$name");vg_test_install($p,$raw);$one=vg_comparison_load_bundle($p);$results[$name]=vg_test_reason($one,$reason)&&vg_comparison_load_bundle($p)===$one&&$GLOBALS['vg_test_reads'][$p->ID]===1;}
+$cases=[];
+$p=new WP_Post(5201,'compare/runtime-key');$b=vg_test_bundle($p->ID,$p->path);$b['unknown']=true;$b=vg_test_rehash($b);$cases['unknown_key']=[$p,$b,[],'E_SCHEMA'];
+$p=new WP_Post(5202,'compare/runtime-path');$b=vg_test_bundle($p->ID,'compare/runtime-other');$cases['path']=[$p,$b,[],'E_PATH'];
+$p=new WP_Post(5203,'compare/runtime-post');$b=vg_test_bundle(999,$p->path);$cases['post_id']=[$p,$b,[],'E_POST_ID'];
+$p=new WP_Post(5204,'compare/runtime-manifest');$b=vg_test_bundle($p->ID,$p->path);$cases['manifest']=[$p,$b,['manifest_version'=>'manifest-other'],'E_MANIFEST_VERSION'];
+$p=new WP_Post(5205,'compare/runtime-source');$b=vg_test_bundle($p->ID,$p->path);$cases['source']=[$p,$b,['entry'=>['source_registry_version'=>'sources-other']],'E_SOURCE_REGISTRY_VERSION'];
+$p=new WP_Post(5206,'compare/runtime-org');$b=vg_test_bundle($p->ID,$p->path);$cases['org']=[$p,$b,['organization_registry_version'=>'organizations-other'],'E_ORGANIZATION_REGISTRY_VERSION'];
+$p=new WP_Post(5207,'compare/runtime-activation');$b=vg_test_bundle($p->ID,$p->path);$b['activation_artifact_version']='activation-other';$b=vg_test_rehash($b);$cases['activation']=[$p,$b,['activation_artifact_version'=>'activation-other','entry'=>['activation_artifact_version'=>'activation-other']],'E_ACTIVATION_VERSION'];
+$p=new WP_Post(5208,'compare/runtime-hash');$b=vg_test_bundle($p->ID,$p->path);$b['bundle_hash']=str_repeat('a',64);$cases['self_hash']=[$p,$b,['entry'=>['bundle_hash'=>str_repeat('a',64)]],'E_BUNDLE_HASH'];
+$p=new WP_Post(5209,'compare/runtime-snapshot');$b=vg_test_bundle($p->ID,$p->path);$cases['snapshot_hash']=[$p,$b,['entry'=>['bundle_hash'=>str_repeat('c',64)]],'E_BUNDLE_HASH'];
+$p=new WP_Post(5210,'compare/runtime-snapshot-path');$b=vg_test_bundle($p->ID,$p->path);$cases['snapshot_path']=[$p,$b,['paths'=>['compare/other']],'E_ACTIVATION'];
+$p=new WP_Post(5211,'compare/runtime-version');$b=vg_test_bundle($p->ID,$p->path);$b['schema_version']='v3';$cases['version']=[$p,$b,[],'E_VERSION'];
+$p=new WP_Post(5212,'compare/runtime-shape');$b=vg_test_bundle($p->ID,$p->path);$b['options']='bad';$b=vg_test_rehash($b);$cases['shape']=[$p,$b,[],'E_SCHEMA'];
+foreach($cases as $name=>[$p,$b,$expect,$reason]){vg_test_install($p,vg_test_json($b),$expect);$results[$name]=vg_test_reason(vg_comparison_load_bundle($p),$reason);}
+$p=new WP_Post(5301,'compare/runtime-v1');$v1=['schema_version'=>'v1','bundle_hash'=>str_repeat('0',64),'path'=>$p->path,'post_id'=>$p->ID,'title'=>'Runtime v1','decision'=>'Reviewed decision','sources'=>['a','b','c']];$h=$v1;unset($h['bundle_hash']);$v1['bundle_hash']=hash('sha256',vg_comparison_bundle_canonical_json($h));$before=serialize($v1);
+$results['v1_pure']=vg_comparison_migrate_bundle_v1_to_v2($v1)===[]&&serialize($v1)===$before;vg_test_install($p,vg_test_json($v1),['entry'=>['schema_version'=>'v1']]);$results['v1_fallback']=vg_test_reason(vg_comparison_load_bundle($p),'E_MIGRATION');
+for($id=5401;$id<=5412;++$id){$p=new WP_Post($id,"compare/private-$id");vg_test_install($p,'');vg_comparison_load_bundle($p);}vg_comparison_log_rejection('NOT_ALLOWED',9999);$logs=is_file($logFile)?file($logFile,FILE_IGNORE_NEW_LINES):[];$logs=array_values(array_filter($logs?:[],fn($line)=>str_contains($line,'VG_COMPARISON_REJECT')));
+$results['logs_bounded']=count($logs)>0&&count($logs)<=8;$joined=implode("\n",$logs);$results['logs_safe']=!str_contains($joined,'private-')&&!str_contains($joined,'NOT_ALLOWED')&&!str_contains($joined,'{')&&preg_match('/[a-f0-9]{64}/',$joined)!==1;@unlink($logFile);
+echo json_encode(['results'=>$results],JSON_THROW_ON_ERROR);
+'@
+    $tempRuntime = [System.IO.Path]::GetTempFileName()
+    try {
+        [System.IO.File]::WriteAllText($tempRuntime, $runtimeCode, (New-Object System.Text.UTF8Encoding($false)))
+        [Environment]::SetEnvironmentVariable('VG_RUNTIME_BOOTSTRAP', $bootstrapPath)
+        [Environment]::SetEnvironmentVariable('VG_RUNTIME_REQUIRED_KEYS', [Convert]::ToBase64String([System.Text.Encoding]::UTF8.GetBytes(($requiredKeys | ConvertTo-Json -Compress))))
+        $runtimeOutput = @(& $phpBinary '-d' 'display_errors=stderr' $tempRuntime 2>&1)
+        $runtimeExit = $LASTEXITCODE
+        $runtimeChecks++
+        if ($runtimeExit -ne 0 -or $runtimeOutput.Count -ne 1) {
+            $runtimeErrors += 'E_RUNTIME comparison loader: PHP runtime vector execution failed'
+        } else {
+            try {
+                $runtimeResult = ([string]$runtimeOutput[0]) | ConvertFrom-Json
+                foreach ($property in @($runtimeResult.results.PSObject.Properties)) {
+                    $runtimeChecks++
+                    if ($property.Value -ne $true) {
+                        $runtimeErrors += "E_RUNTIME fixture/$($property.Name): PHP runtime vector failed"
+                    }
+                }
+            } catch {
+                $runtimeErrors += 'E_RUNTIME comparison loader: PHP runtime vector output was invalid'
+            }
+        }
+    } finally {
+        [Environment]::SetEnvironmentVariable('VG_RUNTIME_BOOTSTRAP', $null)
+        [Environment]::SetEnvironmentVariable('VG_RUNTIME_REQUIRED_KEYS', $null)
+        Remove-Item -LiteralPath $tempRuntime -Force -ErrorAction SilentlyContinue
+    }
+
+    $constantCode = @'
+<?php
+define('VG_COMPARISON_BUNDLE_SCHEMA_CURRENT', '999');
+require getenv('VG_RUNTIME_BOOTSTRAP');
+echo function_exists('vg_comparison_load_bundle') ? 'unsafe' : 'blocked';
+'@
+    $tempConstant = [System.IO.Path]::GetTempFileName()
+    try {
+        [System.IO.File]::WriteAllText($tempConstant, $constantCode, (New-Object System.Text.UTF8Encoding($false)))
+        [Environment]::SetEnvironmentVariable('VG_RUNTIME_BOOTSTRAP', $bootstrapPath)
+        $constantOutput = @(& $phpBinary $tempConstant 2>&1)
+        $runtimeChecks++
+        if ($LASTEXITCODE -ne 0 -or $constantOutput.Count -ne 1 -or [string]$constantOutput[0] -cne 'blocked') {
+            $runtimeErrors += "E_RUNTIME ${bootstrapRelativePath}: inconsistent predefined constants did not fail closed"
+        }
+    } finally {
+        [Environment]::SetEnvironmentVariable('VG_RUNTIME_BOOTSTRAP', $null)
+        Remove-Item -LiteralPath $tempConstant -Force -ErrorAction SilentlyContinue
+    }
+
+    return [ordered]@{ errors = @($runtimeErrors); checks = $runtimeChecks }
+}
+
 function Write-VerificationResult {
     param(
         [Parameter(Mandatory = $true)][AllowEmptyCollection()][string[]]$Errors,
@@ -2820,7 +3008,7 @@ if (-not (Test-Path -LiteralPath $validatorPath -PathType Leaf)) {
     }
 }
 
-$requiredForScope = if ($Scope -ceq 'fixtures' -or $Scope -ceq 'approvals') { @($requiredInputs[0]) } else { @($requiredInputs) }
+$requiredForScope = if ($Scope -ceq 'fixtures' -or $Scope -ceq 'approvals' -or $Scope -ceq 'runtime') { @($requiredInputs[0]) } else { @($requiredInputs) }
 foreach ($relativePath in $requiredForScope) {
     $nativePath = $relativePath.Replace('/', [System.IO.Path]::DirectorySeparatorChar)
     if (-not (Test-Path -LiteralPath (Join-Path $repoRoot $nativePath) -PathType Leaf)) {
@@ -2860,6 +3048,12 @@ if ($Scope -ceq 'approvals' -and $null -ne $schema -and $errors.Count -eq 0) {
     $approvalResult = Invoke-ApprovalContractValidation -Schema $schema
     $errors += @($approvalResult.errors)
     $checks += [int]$approvalResult.checks
+}
+
+if ($Scope -ceq 'runtime' -and $null -ne $schema -and $errors.Count -eq 0) {
+    $runtimeResult = Invoke-BundleRuntimeValidation -Schema $schema
+    $errors += @($runtimeResult.errors)
+    $checks += [int]$runtimeResult.checks
 }
 
 if ($Scope -ceq 'fixtures' -and $null -ne $schema -and $errors.Count -eq 0) {
