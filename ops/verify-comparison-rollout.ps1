@@ -2083,7 +2083,38 @@ function Invoke-ResolverFixtureValidation {
     $ruleEvidenceEdgeMismatch = Copy-FixtureObject $manifest
     $ruleEvidenceEdgeMismatch.pages[0].axes[2].claim_ids += @('claim-access')
     $ruleEvidenceEdgeMismatch.pages[0].rule_catalog[0].axis_ids = @('axis-experience')
-    Assert-PortfolioExactError 'rule-evidence-edge-relationship' $ruleEvidenceEdgeMismatch $sources $organizations $identities "E_RULE $fixturePath rule=rule-hard-alpha: no evidence mapping covers claim_id 'claim-access', axis_id 'axis-experience', option_id 'alpha'"
+    Assert-PortfolioExactError 'rule-evidence-edge-relationship' $ruleEvidenceEdgeMismatch $sources $organizations $identities "E_RULE $fixturePath rule=rule-hard-alpha: no complete option-specific evidence tuple matches the rule scope and outcome_id 'outcome-alpha'"
+    $wrongOutcomeTuple = Copy-FixtureObject $manifest
+    $wrongOutcomeTuple.pages[0].source_assignments[0].mappings = @($wrongOutcomeTuple.pages[0].source_assignments[0].mappings | Where-Object { [string](Get-Property $_ 'outcome_id') -cne 'outcome-combine' })
+    $wrongOutcomeTuple.pages[0].rule_catalog[0].outcome_id = 'outcome-combine'
+    $wrongOutcomeTuple.pages[0].traveler_lenses[0].outcome_id = 'outcome-combine'
+    $wrongOutcomeTuple.pages[0].traveler_lenses[2].rule_path = @('rule-preference-combine')
+    Assert-PortfolioExactError 'rule-evidence-tuple-requires-exact-outcome' $wrongOutcomeTuple $sources $organizations $identities "E_RULE $fixturePath rule=rule-hard-alpha: no complete option-specific evidence tuple matches the rule scope and outcome_id 'outcome-combine'"
+    $pairedRulePaths = Copy-FixtureObject $manifest
+    $pairedRulePaths.pages[0].rule_catalog[2].claim_ids = @('claim-timing', 'claim-access')
+    $pairedRulePaths.pages[0].rule_catalog[2].axis_ids = @('axis-timing', 'axis-access')
+    $pairedRuleResult = Get-PortfolioResult $pairedRulePaths $sources $organizations $identities
+    Assert-ResolverTrue 'rule-evidence-allows-paired-claim-axis-paths' ([bool]$pairedRuleResult.Ok -and @($pairedRuleResult.Errors).Count -eq 0) "valid paired rule paths failed full portfolio validation: $([string]::Join(' | ', @($pairedRuleResult.Errors)))"
+    $missingRuleClaimTuple = Copy-FixtureObject $pairedRulePaths
+    $missingRuleClaimTuple.pages[0].claims[2].option_ids = @('alpha', 'beta')
+    $missingRuleClaimTuple.pages[0].axes[1].claim_ids += @('claim-experience')
+    $missingRuleClaimTuple.pages[0].rule_catalog[2].claim_ids += @('claim-experience')
+    Assert-PortfolioExactError 'rule-evidence-requires-every-claim' $missingRuleClaimTuple $sources $organizations $identities "E_RULE $fixturePath rule=rule-preference-combine: no complete evidence tuple covers claim_id 'claim-experience' within the rule scope and outcome_id 'outcome-combine'"
+    $missingRuleAxisTuple = Copy-FixtureObject $pairedRulePaths
+    $missingRuleAxisTuple.pages[0].axes[2].claim_ids += @('claim-timing')
+    $missingRuleAxisTuple.pages[0].rule_catalog[2].axis_ids += @('axis-experience')
+    Assert-PortfolioExactError 'rule-evidence-requires-every-axis' $missingRuleAxisTuple $sources $organizations $identities "E_RULE $fixturePath rule=rule-preference-combine: no complete evidence tuple covers axis_id 'axis-experience' within the rule scope and outcome_id 'outcome-combine'"
+    $missingRuleOptionTuple = Copy-FixtureObject $manifest
+    $missingRuleOptionTuple.pages[0].source_assignments[4].mappings = @($missingRuleOptionTuple.pages[0].source_assignments[4].mappings | Where-Object { [string](Get-Property $_ 'outcome_id') -cne 'outcome-combine' })
+    $missingRuleOptionTuple.pages[0].source_assignments[6].mappings[0].outcome_id = 'outcome-beta'
+    Assert-PortfolioExactError 'rule-evidence-requires-every-option' $missingRuleOptionTuple $sources $organizations $identities "E_RULE $fixturePath rule=rule-preference-combine: no complete evidence tuple covers option_id 'beta' within the rule scope and outcome_id 'outcome-combine'"
+    $backgroundOnlyRuleOption = Copy-FixtureObject $manifest
+    $backgroundOnlyRuleOption.pages[0].source_assignments[6].mappings[0].outcome_id = 'outcome-beta'
+    $backgroundOnlyRuleOption.pages[0].source_assignments[3].mappings[0].claim_id = 'claim-timing'
+    $backgroundOnlyRuleOption.pages[0].source_assignments[3].mappings[0].axis_id = 'axis-timing'
+    $backgroundOnlySources = Copy-FixtureObject $sources
+    $backgroundOnlySources.sources[3].claim_groups += @('timing_duration')
+    Assert-PortfolioExactError 'rule-evidence-rejects-all-options-only-coverage' $backgroundOnlyRuleOption $backgroundOnlySources $organizations $identities "E_RULE $fixturePath rule=rule-preference-combine: no complete evidence tuple covers option_id 'beta' within the rule scope and outcome_id 'outcome-combine'"
     $continuedHardConstraint = Copy-FixtureObject $manifest
     $continuedHardConstraint.pages[0].traveler_lenses[0].context_tags = @('short-time', 'unused-context')
     $continuedHardConstraint.pages[0].traveler_lenses[0].rule_path = @('rule-hard-alpha', 'rule-unused')
@@ -2208,7 +2239,10 @@ function Invoke-ResolverFixtureValidation {
     $decisiveBackground.pages[0].source_assignments[3].decisive = $true
     Assert-PortfolioError 'background-source-not-decisive' $decisiveBackground $sources $organizations $identities 'E_BACKGROUND'
     $backgroundIndependence = Copy-FixtureObject $manifest
-    $backgroundIndependence.pages[0].source_assignments[2].mappings[0].outcome_id = 'outcome-alpha'
+    $backgroundIndependence.pages[0].source_assignments[0].mappings += [ordered]@{ claim_id = 'claim-access'; option_id = 'beta'; axis_id = 'axis-access'; outcome_id = 'outcome-combine' }
+    $backgroundIndependence.pages[0].source_assignments[2].mappings += [ordered]@{ claim_id = 'claim-timing'; option_id = 'beta'; axis_id = 'axis-timing'; outcome_id = 'outcome-combine' }
+    $backgroundIndependence.pages[0].source_assignments[4].mappings[1].outcome_id = 'outcome-alpha'
+    $backgroundIndependence.pages[0].source_assignments[6].mappings[0].outcome_id = 'outcome-alpha'
     Assert-PortfolioError 'background-source-does-not-settle-outcome' $backgroundIndependence $sources $organizations $identities 'E_SETTLED'
     $duplicateRelatedRoute = Copy-FixtureObject $manifest
     $duplicateRelatedRoute.pages[0].related_routes[1].path = $duplicateRelatedRoute.pages[0].related_routes[0].path

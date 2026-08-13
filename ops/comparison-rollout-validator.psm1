@@ -829,6 +829,7 @@ function Invoke-VgComparisonPortfolio {
         $pageDomains = New-VgStringObjectMap
         $assignmentBySource = New-VgStringObjectMap
         $supportRows = New-Object System.Collections.ArrayList
+        $ruleEvidenceTuples = New-Object System.Collections.ArrayList
         $coverageKeys = New-VgStringSet
         $pageHasVietnameseLocal = $false
         $assignedEvidenceLocalities = New-VgStringSet
@@ -896,7 +897,15 @@ function Invoke-VgComparisonPortfolio {
                 [void](Get-VgProperty $impactWorking[$sourceId] 'claims').Add($claimId); [void](Get-VgProperty $impactWorking[$sourceId] 'axes').Add($axisId); [void](Get-VgProperty $impactWorking[$sourceId] 'outcomes').Add($outcomeId)
                 if ($optionId -cne 'all_options') { [void]$optionEdges.Add("$path$([char]0x1F)$optionId$([char]0x1F)$sourceId") }
                 $claimGroup = if ($validClaim) { [string](Get-VgProperty $claimById[$claimId] 'claim_group') } else { 'unknown' }
-                if ($validClaim -and @((Get-VgProperty $source 'claim_groups')) -cnotcontains $claimGroup) { Add-VgError $errors 'E_SOURCE' "$path source=$sourceId" "source registry does not authorize claim_group '$claimGroup'" }
+                $sourceAuthorizesClaim = ($validClaim -and @((Get-VgProperty $source 'claim_groups')) -ccontains $claimGroup)
+                if ($validClaim -and -not $sourceAuthorizesClaim) { Add-VgError $errors 'E_SOURCE' "$path source=$sourceId" "source registry does not authorize claim_group '$claimGroup'" }
+                $validSpecificOption = ($optionId -cne 'all_options' -and $optionById.ContainsKey($optionId))
+                $validClaimOption = ($validClaim -and $validSpecificOption -and @((Get-VgProperty $claimById[$claimId] 'option_ids')) -ccontains $optionId)
+                $validAxisClaim = ($validAxis -and @((Get-VgProperty $axisById[$axisId] 'claim_ids')) -ccontains $claimId)
+                $validAxisOption = ($validAxis -and $validSpecificOption -and @((Get-VgProperty $axisById[$axisId] 'option_ids')) -ccontains $optionId)
+                if (-not $hasAllOptions -and $validClaim -and $validAxis -and $validOutcome -and $validClaimOption -and $validAxisClaim -and $validAxisOption -and $sourceAuthorizesClaim) {
+                    [void]$ruleEvidenceTuples.Add([ordered]@{ claim_id = $claimId; axis_id = $axisId; option_id = $optionId; outcome_id = $outcomeId })
+                }
                 $supportOptions = if ($optionId -ceq 'all_options') { $optionIds } else { @($optionId) }
                 foreach ($supportOption in $supportOptions) {
                     [void]$supportRows.Add([ordered]@{ option_id = $supportOption; claim_id = $claimId; claim_group = $claimGroup; axis_id = $axisId; outcome_id = $outcomeId; source_id = $sourceId; organization_id = [string](Get-VgProperty $source 'organization_id'); source_class = $sourceClass; evidence_label = [string](Get-VgProperty $assignment 'evidence_label'); freshness_state = $freshnessState; expired = $sourceExpired; decisive = [bool](Get-VgProperty $assignment 'decisive'); background = $hasAllOptions })
@@ -1001,23 +1010,38 @@ function Invoke-VgComparisonPortfolio {
             if (-not $usedRuleIds.Contains($ruleId)) { continue }
             foreach ($claimId in $ruleClaimIds) {
                 if (-not $claimById.ContainsKey($claimId)) { continue }
-                foreach ($axisId in $ruleAxisIds) {
-                    if (-not $axisById.ContainsKey($axisId)) { continue }
-                    if (@((Get-VgProperty $axisById[$axisId] 'claim_ids')) -cnotcontains $claimId) { Add-VgError $errors 'E_RULE' "$path rule=$ruleId" "claim_id '$claimId' is not declared by axis_id '$axisId'" }
+                $declaringAxes = @($ruleAxisIds | Where-Object { $axisById.ContainsKey($_) -and @((Get-VgProperty $axisById[$_] 'claim_ids')) -ccontains $claimId })
+                if ($declaringAxes.Count -eq 0) {
+                    $firstKnownAxisId = @($ruleAxisIds | Where-Object { $axisById.ContainsKey($_) } | Select-Object -First 1)
+                    if ($firstKnownAxisId.Count -gt 0) { Add-VgError $errors 'E_RULE' "$path rule=$ruleId" "claim_id '$claimId' is not declared by axis_id '$($firstKnownAxisId[0])'" }
+                }
+                $compatibleClaimOptions = @($ruleOptionIds | Where-Object { $optionById.ContainsKey($_) -and @((Get-VgProperty $claimById[$claimId] 'option_ids')) -ccontains $_ })
+                if ($compatibleClaimOptions.Count -eq 0) {
+                    $firstKnownOptionId = @($ruleOptionIds | Where-Object { $optionById.ContainsKey($_) } | Select-Object -First 1)
+                    if ($firstKnownOptionId.Count -gt 0) { Add-VgError $errors 'E_RULE' "$path rule=$ruleId" "option_id '$($firstKnownOptionId[0])' is outside claim_id '$claimId' scope" }
                 }
             }
-            foreach ($optionId in $ruleOptionIds) {
-                if (-not $optionById.ContainsKey($optionId)) { continue }
-                foreach ($claimId in $ruleClaimIds) {
-                    if (-not $claimById.ContainsKey($claimId)) { continue }
-                    if (@((Get-VgProperty $claimById[$claimId] 'option_ids')) -cnotcontains $optionId) { Add-VgError $errors 'E_RULE' "$path rule=$ruleId" "option_id '$optionId' is outside claim_id '$claimId' scope" }
-                    foreach ($axisId in $ruleAxisIds) {
-                        if (-not $axisById.ContainsKey($axisId)) { continue }
-                        if (@((Get-VgProperty $axisById[$axisId] 'option_ids')) -cnotcontains $optionId) { Add-VgError $errors 'E_RULE' "$path rule=$ruleId" "option_id '$optionId' is outside axis_id '$axisId' scope" }
-                        if (@($supportRows | Where-Object { $_.claim_id -ceq $claimId -and $_.axis_id -ceq $axisId -and $_.option_id -ceq $optionId }).Count -eq 0) { Add-VgError $errors 'E_RULE' "$path rule=$ruleId" "no evidence mapping covers claim_id '$claimId', axis_id '$axisId', option_id '$optionId'" }
-                    }
+            foreach ($axisId in $ruleAxisIds) {
+                if (-not $axisById.ContainsKey($axisId)) { continue }
+                $compatibleAxisOptions = @($ruleOptionIds | Where-Object { $optionById.ContainsKey($_) -and @((Get-VgProperty $axisById[$axisId] 'option_ids')) -ccontains $_ })
+                if ($compatibleAxisOptions.Count -eq 0) {
+                    $firstKnownOptionId = @($ruleOptionIds | Where-Object { $optionById.ContainsKey($_) } | Select-Object -First 1)
+                    if ($firstKnownOptionId.Count -gt 0) { Add-VgError $errors 'E_RULE' "$path rule=$ruleId" "option_id '$($firstKnownOptionId[0])' is outside axis_id '$axisId' scope" }
                 }
-                if ($outcomeById.ContainsKey($ruleOutcomeId) -and @($supportRows | Where-Object { $_.outcome_id -ceq $ruleOutcomeId -and $_.option_id -ceq $optionId }).Count -eq 0) { Add-VgError $errors 'E_RULE' "$path rule=$ruleId" "no evidence mapping covers outcome_id '$ruleOutcomeId', option_id '$optionId'" }
+            }
+            $ruleTuples = @($ruleEvidenceTuples | Where-Object { $_.outcome_id -ceq $ruleOutcomeId -and $ruleOptionIds -ccontains $_.option_id -and $ruleClaimIds -ccontains $_.claim_id -and $ruleAxisIds -ccontains $_.axis_id })
+            if ($outcomeById.ContainsKey($ruleOutcomeId) -and $ruleTuples.Count -eq 0) {
+                Add-VgError $errors 'E_RULE' "$path rule=$ruleId" "no complete option-specific evidence tuple matches the rule scope and outcome_id '$ruleOutcomeId'"
+            } else {
+                foreach ($claimId in $ruleClaimIds) {
+                    if ($claimById.ContainsKey($claimId) -and @($ruleTuples | Where-Object { $_.claim_id -ceq $claimId }).Count -eq 0) { Add-VgError $errors 'E_RULE' "$path rule=$ruleId" "no complete evidence tuple covers claim_id '$claimId' within the rule scope and outcome_id '$ruleOutcomeId'" }
+                }
+                foreach ($axisId in $ruleAxisIds) {
+                    if ($axisById.ContainsKey($axisId) -and @($ruleTuples | Where-Object { $_.axis_id -ceq $axisId }).Count -eq 0) { Add-VgError $errors 'E_RULE' "$path rule=$ruleId" "no complete evidence tuple covers axis_id '$axisId' within the rule scope and outcome_id '$ruleOutcomeId'" }
+                }
+                foreach ($optionId in $ruleOptionIds) {
+                    if ($optionById.ContainsKey($optionId) -and @($ruleTuples | Where-Object { $_.option_id -ceq $optionId }).Count -eq 0) { Add-VgError $errors 'E_RULE' "$path rule=$ruleId" "no complete evidence tuple covers option_id '$optionId' within the rule scope and outcome_id '$ruleOutcomeId'" }
+                }
             }
             if ($outcomeById.ContainsKey($ruleOutcomeId) -and [string](Get-VgProperty $outcomeById[$ruleOutcomeId] 'outcome_type') -ceq 'option') {
                 $winnerOptionId = [string](Get-VgProperty $outcomeById[$ruleOutcomeId] 'winner_option_id')
