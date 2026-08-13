@@ -72,4 +72,3 @@ if (is_file($shortcodes_file)) {
 if (is_callable('vg_comparison_register_shortcode_replacements') && function_exists('add_action')) {
     add_action('init', 'vg_comparison_register_shortcode_replacements', 20);
 }
-
