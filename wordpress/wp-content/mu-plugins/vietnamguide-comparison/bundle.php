@@ -56,13 +56,13 @@ function vg_comparison_bundle_canonical_json(mixed $value): string
         sort($keys, SORT_STRING);
         $pairs = [];
         foreach ($keys as $key) {
-            $pairs[] = json_encode($key, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_THROW_ON_ERROR)
+            $pairs[] = json_encode($key, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_LINE_TERMINATORS | JSON_THROW_ON_ERROR)
                 . ':' . vg_comparison_bundle_canonical_json($value[$key]);
         }
         return '{' . implode(',', $pairs) . '}';
     }
     if (is_string($value)) {
-        return json_encode($value, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_THROW_ON_ERROR);
+        return json_encode($value, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_LINE_TERMINATORS | JSON_THROW_ON_ERROR);
     }
     if (is_int($value)) {
         return (string) $value;
@@ -586,18 +586,46 @@ function vg_comparison_bundle_snapshot_valid(array $snapshot): bool
 {
     $keys = ['snapshot_version', 'activation_stage', 'activated_on', 'manifest_version', 'activation_artifact_version', 'paths', 'bundle_hashes'];
     if (!vg_comparison_bundle_exact_keys($snapshot, $keys)
-        || !vg_comparison_bundle_stable_id($snapshot['snapshot_version'])
+        || $snapshot['snapshot_version'] !== 'snapshot-v2'
         || !in_array($snapshot['activation_stage'], ['baseline', 'canary', 'full'], true)
-        || !is_string($snapshot['activated_on'])
-        || preg_match('/^\d{4}-(0[1-9]|1[0-2])-([0-2]\d|3[01])T([01]\d|2[0-3]):[0-5]\d:[0-5]\dZ$/D', $snapshot['activated_on']) !== 1
+        || !vg_comparison_bundle_iso_date($snapshot['activated_on'])
         || !vg_comparison_bundle_stable_id($snapshot['manifest_version'])
-        || !vg_comparison_bundle_stable_id($snapshot['activation_artifact_version'])
-        || !vg_comparison_bundle_list($snapshot['paths'], 1, 17, static fn(mixed $path): bool => is_string($path) && vg_comparison_bundle_valid_path($path), true)) {
+        || $snapshot['activation_artifact_version'] !== VG_COMPARISON_ACTIVATION_ARTIFACT_VERSION) {
         return false;
     }
-    $sorted_paths = $snapshot['paths'];
-    sort($sorted_paths, SORT_STRING);
-    if ($sorted_paths !== $snapshot['paths']) {
+    $baseline_paths = [
+        'destinations/ho-chi-minh-city-travel-guide',
+        'itineraries/10-days-in-vietnam',
+        'itineraries/7-days-in-vietnam',
+        'itineraries/14-days-in-vietnam',
+        'itineraries/21-days-in-vietnam',
+        'itineraries/hanoi-in-2-days',
+        'compare/ha-long-bay-vs-lan-ha-bay',
+        'plan/vietnam-evisa',
+    ];
+    $canary_paths = array_merge($baseline_paths, [
+        'compare/old-quarter-vs-french-quarter-vs-west-lake',
+        'compare/ninh-binh-day-trip-vs-overnight',
+        'compare/north-central-south-vietnam',
+    ]);
+    $full_paths = array_merge($baseline_paths, [
+        'compare/cu-chi-tunnels-vs-mekong-delta-day-trip',
+        'compare/da-nang-vs-hoi-an',
+        'compare/hoi-an-vs-hue',
+        'compare/mui-ne-vs-nha-trang',
+        'compare/ninh-binh-day-trip-vs-overnight',
+        'compare/north-central-south-vietnam',
+        'compare/old-quarter-vs-french-quarter-vs-west-lake',
+        'compare/phu-quoc-vs-nha-trang',
+        'compare/trang-an-vs-tam-coc',
+    ]);
+    $expected_paths = match ($snapshot['activation_stage']) {
+        'baseline' => $baseline_paths,
+        'canary' => $canary_paths,
+        'full' => $full_paths,
+    };
+    if (!vg_comparison_bundle_list($snapshot['paths'], count($expected_paths), count($expected_paths), static fn(mixed $path): bool => is_string($path) && vg_comparison_bundle_valid_path($path), true)
+        || $snapshot['paths'] !== $expected_paths) {
         return false;
     }
     $entry_paths = [];
@@ -662,12 +690,17 @@ function vg_comparison_bundle_expectations(string $path): array
 function vg_comparison_load_bundle(WP_Post|int $post): array
 {
     static $cache = [];
-    $post_id = is_int($post) ? $post : $post->ID;
+    $candidate_post_id = is_int($post) ? $post : $post->ID;
+    $log_post_id = is_int($candidate_post_id) && $candidate_post_id >= 1 ? $candidate_post_id : 0;
+    if (!is_int($candidate_post_id) || $candidate_post_id < 1) {
+        return vg_comparison_bundle_reject('E_POST', $log_post_id);
+    }
+    $post_id = $candidate_post_id;
 
     try {
         $post_object = function_exists('get_post') ? get_post($post_id) : false;
-        if (!$post_object instanceof WP_Post || $post_object->ID !== $post_id || $post_id < 1) {
-            return vg_comparison_bundle_reject('E_POST', max(0, $post_id));
+        if (!$post_object instanceof WP_Post || $post_object->ID !== $post_id) {
+            return vg_comparison_bundle_reject('E_POST', $log_post_id);
         }
         $path = is_callable('vg_get_guide_path')
             ? vg_get_guide_path($post_object)
@@ -796,6 +829,6 @@ function vg_comparison_load_bundle(WP_Post|int $post): array
             ]),
         ];
     } catch (Throwable) {
-        return vg_comparison_bundle_reject('E_RUNTIME', max(0, $post_id));
+        return vg_comparison_bundle_reject('E_RUNTIME', $log_post_id);
     }
 }
