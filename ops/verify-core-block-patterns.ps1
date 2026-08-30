@@ -199,10 +199,10 @@ $Patterns = @(
 )
 
 $PreservedPatterns = @{
-    'planning-paths.php' = '6e859560a3e76a3f94cfbc2555cfd820e464fd728ffe579e67bc796484bfcef1'
-    'editorial-itineraries.php' = '81f36d0c5cf3b41c3ac1f77bd2f30f5227d46ac4f6c70bb2e73abd550b148b80'
-    'decision-guides.php' = 'df8353a9c33e0668ab45f24104eec15de38160a229123c5288235e59e167ad83'
-    'practical-essentials.php' = 'a0a2b567f6f2aa99ff769a38d5bf2375688e62b6d6f5fc7574aa4082fa9721a4'
+    'planning-paths.php' = 'c88ca0f08567585b0cd98a6fd78d7b4521496576cacd5c38f10eddf321b080e2'
+    'editorial-itineraries.php' = 'edd5aa99330ef3c51cd7a23df3287fbfb269c5f2db73229d80395938c73b3317'
+    'decision-guides.php' = 'd15218fc80e4514e49b1fa5285ec960983e5bc2c1b4fd2204db5e0a5f451d921'
+    'practical-essentials.php' = '0d18fa9c3a83c0d8bdec5e9efc56a53dab89f6eeb3388f7ba3a199c2c4bd1217'
 }
 
 $ExpectedFiles = @($Patterns.File) + @($PreservedPatterns.Keys)
