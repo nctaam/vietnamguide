@@ -875,7 +875,10 @@ Require-Contains $PageTemplate "get_template_part('template-parts/guide', 'page'
 Require-Contains $PageTemplate "get_template_part('template-parts/content', 'page');"
 Require-Matches $DefaultPart '\A<\?php\s+if\s*\(!\s*defined\(''ABSPATH''\)\s*\)\s*\{\s*exit;\s*\}' 'ABSPATH guard at the start of the default page template part'
 Require-Contains $DefaultPart '<h1>'
-Require-Contains $DefaultPart 'the_content();'
+Require-Contains $DefaultPart 'get_the_content();'
+Require-Contains $DefaultPart 'echo $content;'
+Require-Contains $DefaultPart 'WP_HTML_Tag_Processor'
+Require-Contains $DefaultPart "'H1'"
 Require-Contains $GuidePart '! is_array($args ?? null)'
 Require-Contains $GuidePart '! vg_is_valid_guide_context($args)'
 Require-Contains $GuidePart 'return;'
