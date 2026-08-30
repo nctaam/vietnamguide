@@ -34,6 +34,10 @@ function Get-CorePluginCompatibilityFingerprint {
     $AuthorizedRegions = @(
         @{ Name = 'vg_register_pattern_category'; Marker = '__VG_REGISTER_PATTERN_CATEGORY__' }
         @{ Name = 'vg_add_affiliate_link_attributes'; Marker = '__VG_ADD_AFFILIATE_LINK_ATTRIBUTES__' }
+        @{ Name = 'vg_public_editorial_author_name'; Marker = '__VG_PUBLIC_EDITORIAL_AUTHOR_NAME__' }
+        @{ Name = 'vg_is_forbidden_public_author_name'; Marker = '__VG_IS_FORBIDDEN_PUBLIC_AUTHOR_NAME__' }
+        @{ Name = 'vg_rewrite_schema_author_value'; Marker = '__VG_REWRITE_SCHEMA_AUTHOR_VALUE__' }
+        @{ Name = 'vg_filter_rank_math_json_ld'; Marker = '__VG_FILTER_RANK_MATH_JSON_LD__' }
     )
 
     foreach ($Region in $AuthorizedRegions) {
@@ -105,9 +109,14 @@ function Test-CorePluginContract {
     # Plugin identity and the actual top-level direct-access guard.
     Require-ContractMatch $Failures $CaseName 'Plugin Name metadata' $PluginContent '(?m)^\s*\*\s*Plugin Name:\s*VietnamGuide Core\s*$'
     Require-ContractMatch $Failures $CaseName 'Version 0.1.6 metadata' $PluginContent '(?m)^\s*\*\s*Version:\s*0\.1\.6\s*$'
+    Require-ContractMatch $Failures $CaseName 'public editorial author name helper' $PluginContent '(?m)^function\s+vg_public_editorial_author_name\s*\('
+    Require-ContractMatch $Failures $CaseName 'editorial team display string' $PluginContent 'VietnamGuide editorial team'
+    Require-ContractMatch $Failures $CaseName 'forbidden author helper' $PluginContent '(?m)^function\s+vg_is_forbidden_public_author_name\s*\('
+    Require-ContractMatch $Failures $CaseName 'rank math json ld filter' $PluginContent 'rank_math/json_ld'
+    Require-ContractMatch $Failures $CaseName 'rank math json ld callback' $PluginContent 'vg_filter_rank_math_json_ld'
     Require-ContractMatch $Failures $CaseName 'top-level ABSPATH guard' $PluginContent '(?ms)\A<\?php\s*/\*\*.*?^\s*\*/\s*if\s*\(\s*!\s*defined\s*\(\s*[''"]ABSPATH[''"]\s*\)\s*\)\s*\{\s*exit\s*;\s*\}'
 
-    $ExpectedCompatibilityFingerprint = 'b4bd55544a1c7a86eda065ce92dcc02aa9dab53027cc5be2aff494e501069aa6'
+    $ExpectedCompatibilityFingerprint = '71b49033114e8007e5c19fb8ebc1a89e0d0dad88d0fe92dd381a28700db096ce'
     $ActualCompatibilityFingerprint = Get-CorePluginCompatibilityFingerprint $PluginContent
     if ($ActualCompatibilityFingerprint -cne $ExpectedCompatibilityFingerprint) {
         Add-ContractFailure $Failures $CaseName "Immutable plugin fingerprint expected $ExpectedCompatibilityFingerprint, found $ActualCompatibilityFingerprint"

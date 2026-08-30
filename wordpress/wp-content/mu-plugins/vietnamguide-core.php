@@ -786,6 +786,58 @@ function vg_register_admin_first_acf_fields(): void
 }
 add_action('acf/init', 'vg_register_admin_first_acf_fields');
 
+function vg_public_editorial_author_name(): string
+{
+    return 'VietnamGuide editorial team';
+}
+
+function vg_is_forbidden_public_author_name(string $name): bool
+{
+    $normalized = strtolower(trim($name));
+
+    return $normalized === '' || $normalized === 'administrator' || $normalized === 'admin';
+}
+
+function vg_rewrite_schema_author_value(mixed $value): mixed
+{
+    if (is_string($value)) {
+        return vg_is_forbidden_public_author_name($value)
+            ? vg_public_editorial_author_name()
+            : $value;
+    }
+
+    if (! is_array($value)) {
+        return $value;
+    }
+
+    if (array_is_list($value)) {
+        return array_map('vg_rewrite_schema_author_value', $value);
+    }
+
+    $type = $value['@type'] ?? null;
+    $is_person = $type === 'Person' || (is_array($type) && in_array('Person', $type, true));
+    if ($is_person && array_key_exists('name', $value) && is_string($value['name']) && vg_is_forbidden_public_author_name($value['name'])) {
+        $value['name'] = vg_public_editorial_author_name();
+    }
+
+    if (array_key_exists('author', $value)) {
+        $value['author'] = vg_rewrite_schema_author_value($value['author']);
+    }
+    if (array_key_exists('@graph', $value) && is_array($value['@graph'])) {
+        $value['@graph'] = vg_rewrite_schema_author_value($value['@graph']);
+    }
+
+    return $value;
+}
+
+function vg_filter_rank_math_json_ld(array $data): array
+{
+    $rewritten = vg_rewrite_schema_author_value($data);
+
+    return is_array($rewritten) ? $rewritten : $data;
+}
+add_filter('rank_math/json_ld', 'vg_filter_rank_math_json_ld', 99);
+
 function vg_register_pattern_category(): void
 {
     if (! function_exists('register_block_pattern_category')) {
