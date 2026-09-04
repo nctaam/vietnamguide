@@ -146,6 +146,15 @@ $pilot_types = [
     'itineraries/hanoi-in-2-days' => 'itinerary',
     'compare/ha-long-bay-vs-lan-ha-bay' => 'comparison',
     'plan/vietnam-evisa' => 'practical',
+    'compare/cu-chi-tunnels-vs-mekong-delta-day-trip' => 'comparison',
+    'compare/da-nang-vs-hoi-an' => 'comparison',
+    'compare/hoi-an-vs-hue' => 'comparison',
+    'compare/mui-ne-vs-nha-trang' => 'comparison',
+    'compare/ninh-binh-day-trip-vs-overnight' => 'comparison',
+    'compare/north-central-south-vietnam' => 'comparison',
+    'compare/old-quarter-vs-french-quarter-vs-west-lake' => 'comparison',
+    'compare/phu-quoc-vs-nha-trang' => 'comparison',
+    'compare/trang-an-vs-tam-coc' => 'comparison',
 ];
 $pilot_posts = [];
 
@@ -154,7 +163,7 @@ if ($runtime_ready) {
     $check(
         vg_guide_pilot_paths() === array_keys($pilot_types),
         'pilot strict context',
-        'the runtime pilot allowlist does not match the eight expected paths in order'
+        'the runtime pilot allowlist does not match the expected paths in order'
     );
 
     foreach ($pilot_types as $path => $expected_type) {

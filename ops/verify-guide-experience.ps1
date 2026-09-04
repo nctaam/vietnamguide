@@ -1048,7 +1048,8 @@ Require-Contains $LiveVerifier 'destinations/ho-chi-minh-city-travel-guide'
 Require-Contains $LiveVerifier 'itineraries/10-days-in-vietnam'
 Require-Contains $LiveVerifier 'compare/ha-long-bay-vs-lan-ha-bay'
 Require-Contains $LiveVerifier 'plan/vietnam-evisa'
-Require-Contains $LiveVerifier 'eight expected paths'
+Require-Contains $LiveVerifier 'the expected paths'
+Require-NotContains $LiveVerifier 'eight expected paths'
 Require-NotContains $LiveVerifier 'four expected paths'
 Require-Matches $LiveVerifier '\$pseudo_inspection\s*=\s*vg_inspect_guide_html\s*\(\s*\$pseudo_html\s*\)\s*;' 'pseudo inspection assignment uses the semantic HTML inspector'
 Require-Matches $LiveVerifier '(?:(?<!\s)(?<!->)(?<!::)(?<!\\)\s+|(?<![A-Za-z0-9_\\>:\s]))vg_prepare_guide_content\s*\(\s*\$pseudo_post\s*\)\s*;' 'pseudo content fixture calls production content preparation'
@@ -1296,6 +1297,15 @@ if ($null -ne $PublicVerifierContent) {
             'itineraries/hanoi-in-2-days'
             'compare/ha-long-bay-vs-lan-ha-bay'
             'plan/vietnam-evisa'
+            'compare/cu-chi-tunnels-vs-mekong-delta-day-trip'
+            'compare/da-nang-vs-hoi-an'
+            'compare/hoi-an-vs-hue'
+            'compare/mui-ne-vs-nha-trang'
+            'compare/ninh-binh-day-trip-vs-overnight'
+            'compare/north-central-south-vietnam'
+            'compare/old-quarter-vs-french-quarter-vs-west-lake'
+            'compare/phu-quoc-vs-nha-trang'
+            'compare/trang-an-vs-tam-coc'
         )
         if (($PublicPilotPaths -join "`n") -cne ($ExpectedPublicPilotPaths -join "`n")) {
             $Failures.Add("Expected exact ordered public pilot paths; found: $($PublicPilotPaths -join ', ')")
@@ -1304,9 +1314,9 @@ if ($null -ne $PublicVerifierContent) {
         $NonPilotPaths = @(Get-TopLevelLiteralStringArray $PublicVerifierAst 'NonPilotPaths' 'public non-pilot path inventory')
         Require-ExactOrdinalSet 'public non-pilot path' $NonPilotPaths @(
             'destinations/hanoi-travel-guide'
-            'compare/da-nang-vs-hoi-an'
             'plan/sim-esim-vietnam'
             'plan/transport-within-vietnam'
+            'compare'
         )
     }
 }
@@ -1340,6 +1350,15 @@ if ($null -ne $LiveVerifierContent -and $null -ne $PhpCommandPath) {
             'itineraries/hanoi-in-2-days=itinerary'
             'compare/ha-long-bay-vs-lan-ha-bay=comparison'
             'plan/vietnam-evisa=practical'
+            'compare/cu-chi-tunnels-vs-mekong-delta-day-trip=comparison'
+            'compare/da-nang-vs-hoi-an=comparison'
+            'compare/hoi-an-vs-hue=comparison'
+            'compare/mui-ne-vs-nha-trang=comparison'
+            'compare/ninh-binh-day-trip-vs-overnight=comparison'
+            'compare/north-central-south-vietnam=comparison'
+            'compare/old-quarter-vs-french-quarter-vs-west-lake=comparison'
+            'compare/phu-quoc-vs-nha-trang=comparison'
+            'compare/trang-an-vs-tam-coc=comparison'
         )
         if (($LivePilotTypeMappings -join "`n") -cne ($ExpectedLivePilotTypeMappings -join "`n")) {
             $Failures.Add("Expected exact ordered live pilot type mappings; found: $($LivePilotTypeMappings -join ', ')")
@@ -1367,6 +1386,15 @@ if ($null -ne $PilotFunction) {
             'itineraries/hanoi-in-2-days'
             'compare/ha-long-bay-vs-lan-ha-bay'
             'plan/vietnam-evisa'
+            'compare/cu-chi-tunnels-vs-mekong-delta-day-trip'
+            'compare/da-nang-vs-hoi-an'
+            'compare/hoi-an-vs-hue'
+            'compare/mui-ne-vs-nha-trang'
+            'compare/ninh-binh-day-trip-vs-overnight'
+            'compare/north-central-south-vietnam'
+            'compare/old-quarter-vs-french-quarter-vs-west-lake'
+            'compare/phu-quoc-vs-nha-trang'
+            'compare/trang-an-vs-tam-coc'
         )
         if (($PilotPaths -join "`n") -cne ($ExpectedPilotPaths -join "`n")) {
             $Failures.Add("Expected exact ordered pilot paths; found: $($PilotPaths -join ', ')")

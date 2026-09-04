@@ -14,6 +14,15 @@ function vg_guide_pilot_paths(): array
         'itineraries/hanoi-in-2-days',
         'compare/ha-long-bay-vs-lan-ha-bay',
         'plan/vietnam-evisa',
+        'compare/cu-chi-tunnels-vs-mekong-delta-day-trip',
+        'compare/da-nang-vs-hoi-an',
+        'compare/hoi-an-vs-hue',
+        'compare/mui-ne-vs-nha-trang',
+        'compare/ninh-binh-day-trip-vs-overnight',
+        'compare/north-central-south-vietnam',
+        'compare/old-quarter-vs-french-quarter-vs-west-lake',
+        'compare/phu-quoc-vs-nha-trang',
+        'compare/trang-an-vs-tam-coc',
     ];
 }
 
