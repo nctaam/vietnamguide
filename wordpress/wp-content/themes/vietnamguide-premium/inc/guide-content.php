@@ -105,10 +105,25 @@ function vg_collect_guide_heading_plan(string $html): ?array
     $headings = [];
     $currentHeading = null;
     $reservedIds = [];
+    $chromeStack = [];
 
     while ($processor->next_token()) {
         $tokenName = $processor->get_token_name();
         $isTagCloser = $processor->is_tag_closer();
+
+        if (is_string($tokenName) && isset($tokenName[0]) && $tokenName[0] !== '#') {
+            if (! $isTagCloser) {
+                if (
+                    $processor->has_class('vg-source-snapshot')
+                    || $processor->has_class('vg-source-diversity')
+                    || $processor->has_class('vg-related-routes')
+                ) {
+                    $chromeStack[] = $tokenName;
+                }
+            } elseif ($chromeStack !== [] && end($chromeStack) === $tokenName) {
+                array_pop($chromeStack);
+            }
+        }
 
         if (! $isTagCloser && 'H2' !== $tokenName) {
             $elementId = null;
@@ -144,7 +159,8 @@ function vg_collect_guide_heading_plan(string $html): ?array
                 $idAttribute = $processor->get_attribute('id');
                 $currentHeading = [
                     'original_id' => is_string($idAttribute) ? $idAttribute : null,
-                    'opt_out' => is_string($tocAttribute) && strcasecmp(trim($tocAttribute), 'false') === 0,
+                    'opt_out' => (is_string($tocAttribute) && strcasecmp(trim($tocAttribute), 'false') === 0)
+                        || $chromeStack !== [],
                     'label_parts' => [],
                 ];
             }

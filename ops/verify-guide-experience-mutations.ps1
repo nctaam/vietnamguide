@@ -74,6 +74,17 @@ $Mutations = @(
         Replace = '            if (! isset($assignedIds[$originalId])) {'
     }
     @{
+        Name = 'chrome heading TOC opt-out removal'
+        File = 'wordpress/wp-content/themes/vietnamguide-premium/inc/guide-content.php'
+        Find = @'
+                    'opt_out' => (is_string($tocAttribute) && strcasecmp(trim($tocAttribute), 'false') === 0)
+                        || $chromeStack !== [],
+'@
+        Replace = @'
+                    'opt_out' => is_string($tocAttribute) && strcasecmp(trim($tocAttribute), 'false') === 0,
+'@
+    }
+    @{
         Name = 'public guide asset status guard removal'
         File = 'ops/verify-guide-experience-public.ps1'
         Find = 'if ($StatusCode -ne 200) {'
@@ -962,7 +973,7 @@ $pilot_types = [
     }
 )
 
-$ExpectedMutationCount = 111
+$ExpectedMutationCount = 112
 if ($Mutations.Count -ne $ExpectedMutationCount) {
     throw "Expected $ExpectedMutationCount guide-experience mutations, found $($Mutations.Count)"
 }
