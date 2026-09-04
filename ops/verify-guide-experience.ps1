@@ -951,7 +951,7 @@ Require-Contains $MutationVerifier 'live pilot type called function GLOBALS inde
 Require-Contains $MutationVerifier 'live pilot type called function explicit global compound assignment regression'
 Require-Contains $MutationVerifier 'live pilot type unset regression'
 Require-Contains $MutationVerifier 'live pilot type indexed unset regression'
-Require-Contains $MutationVerifier '$ExpectedMutationCount = 111'
+Require-Contains $MutationVerifier '$ExpectedMutationCount = 112'
 Require-Contains $MutationVerifier '$DuplicateMutationNames.Count -ne 0'
 Require-Contains $MutationVerifier 'page guide function availability guard removal'
 Require-Contains $MutationVerifier 'global reduced-motion scroll override removal'
@@ -1466,6 +1466,13 @@ Require-FunctionContains $ContentProvider 'vg_collect_guide_heading_plan' '$plan
 Require-FunctionContains $ContentProvider 'vg_collect_guide_heading_plan' 'if (! isset($reservedIds[$originalId]) && ! isset($assignedIds[$originalId])) {'
 Require-FunctionContains $ContentProvider 'vg_collect_guide_heading_plan' 'sanitize_title($label)'
 Require-FunctionContains $ContentProvider 'vg_collect_guide_heading_plan' '$eligible = ! $heading[''opt_out''] && $label !== '''';'
+Require-FunctionContains $ContentProvider 'vg_collect_guide_heading_plan' '$chromeStack = [];'
+Require-FunctionContains $ContentProvider 'vg_collect_guide_heading_plan' "has_class('vg-source-snapshot')"
+Require-FunctionContains $ContentProvider 'vg_collect_guide_heading_plan' "has_class('vg-source-diversity')"
+Require-FunctionContains $ContentProvider 'vg_collect_guide_heading_plan' "has_class('vg-related-routes')"
+Require-FunctionContains $ContentProvider 'vg_collect_guide_heading_plan' '|| $chromeStack !== []'
+Require-Contains "$ThemeRoot/assets/css/guide-patterns.css" '.vg-source-snapshot'
+Require-Contains "$ThemeRoot/assets/css/guide-patterns.css" '.vg-source-diversity'
 Require-FunctionContains $ContentProvider 'vg_apply_guide_heading_plan' "next_tag('H2')"
 Require-FunctionContains $ContentProvider 'vg_apply_guide_heading_plan' "get_attribute('id')"
 Require-FunctionContains $ContentProvider 'vg_apply_guide_heading_plan' 'if ($plannedId !== $currentId) {'
