@@ -1,0 +1,43 @@
+{
+  "schemaVersion": 1,
+  "canonicalFormat": "sha256-utf8-lf-ordinal-relative-path-tab-lowercase-file-sha256",
+  "sections": [
+    {
+      "name": "theme",
+      "source": "live-theme/vietnamguide-premium",
+      "target": "wordpress/wp-content/themes/vietnamguide-premium",
+      "count": 46,
+      "digest": "f0b722f67df5dfeb9f747d5b077d826bd6c0769b919b41d09895ff274251c24b",
+      "exclude": []
+    },
+    {
+      "name": "mu-plugin",
+      "source": "live-mu-plugins/mu-plugins/vietnamguide-core.php",
+      "target": "wordpress/wp-content/mu-plugins/vietnamguide-core.php",
+      "count": 1,
+      "digest": "0a6e3f279d24da3bbca13bd329fec954d52fbc52159cd580a8b36262db7a50d2",
+      "exclude": []
+    },
+    {
+      "name": "docs",
+      "source": "project-webroot/docs",
+      "target": "docs",
+      "count": 4,
+      "digest": "79ef208184e7e7816fc9e50b33f5d9929229c8868336544018f3210ddfd8a612",
+      "exclude": [
+        "RECOVERY.md"
+      ]
+    },
+    {
+      "name": "ops",
+      "source": "project-webroot/ops",
+      "target": "ops",
+      "count": 157,
+      "digest": "7a92f3c8c863439260ab74a28d61fa8a016ecfcf4e51209ba2479965ebd551d6",
+      "exclude": [
+        "backups/**",
+        "*.sql"
+      ]
+    }
+  ]
+}

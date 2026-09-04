@@ -1,0 +1,55 @@
+{
+  "schemaVersion": 1,
+  "entries": [
+    {
+      "relativePath": "ops/verify-core-block-patterns.ps1",
+      "length": 14206,
+      "sha256": "30f4be5818b15e4cd8c3ad9b616aeddebd77ff97aa4922a3c89dfaaa35b23c85"
+    },
+    {
+      "relativePath": "ops/verify-core-mu-plugin.ps1",
+      "length": 30539,
+      "sha256": "1334d35e895a8eac7d5122b482a188f19072ae5b636c46ce44f6257fd1a1419d"
+    },
+    {
+      "relativePath": "ops/verify-core-mu-plugin-live.php",
+      "length": 9743,
+      "sha256": "280424139dc8b29ba2911d7d3caf1a203499c742efd6d6a243b0d98a7dc8e842"
+    },
+    {
+      "relativePath": "ops/verify-homepage-theme.ps1",
+      "length": 30042,
+      "sha256": "0c58f228806da1d121bce622d991f738f3d4552c4bf9dbbb3a8640dbb474558b"
+    },
+    {
+      "relativePath": "ops/verify-guide-experience.ps1",
+      "length": 121518,
+      "sha256": "60f2446f513dae8ff9ea84b6a90823bb8ab35b30dd3699602ca65d41f95b21ec"
+    },
+    {
+      "relativePath": "ops/verify-guide-experience-mutations.ps1",
+      "length": 44511,
+      "sha256": "8bb44777a33bf89478e54189f7377155b4e17eba7de71f60fae27c88563d6108"
+    },
+    {
+      "relativePath": "ops/verify-guide-experience-tokenizer.php",
+      "length": 25434,
+      "sha256": "9b65e83952e5d82dc835d6c4d56e6f93c396d9334e877117f7def4bbc99c25f4"
+    },
+    {
+      "relativePath": "ops/verify-guide-experience-public.ps1",
+      "length": 55723,
+      "sha256": "03b018f463abe474d06b7006a5cdc952d757cd26825d0a1c9700f20f24873543"
+    },
+    {
+      "relativePath": "ops/verify-guide-experience-live.php",
+      "length": 26254,
+      "sha256": "33bf8f3791bd6b8e5cc6aff1a7cc2dbfa8a7df8df9d639ba262f431879f30643"
+    },
+    {
+      "relativePath": "ops/verify-guide-experience-js-runtime.js",
+      "length": 3703,
+      "sha256": "031feabe4d0934a13085f9066e42088c941d5dd60be0e649b2b89e2c67eeeb4b"
+    }
+  ]
+}
