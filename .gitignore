@@ -1,2 +1,36 @@
+# Local agent and worktree state
+.agents/
+.qa/
 .superpowers/
 .worktrees/
+.codex/
+
+# Production data, exports, snapshots, and backups
+*.sql
+*.wxr
+*.wpress
+**/backups/
+**/snapshots/
+**/exports/
+**/secret/
+**/secrets/
+**/credential/
+**/credentials/
+wordpress/wp-content/uploads/
+*production-snapshot*/
+*recovery-export*/
+
+# Secrets and machine-local configuration
+.env
+.env.*
+!.env.example
+wp-config.php
+*.pem
+*.key
+*.p12
+*.pfx
+*.jks
+*.keystore
+.htpasswd
+*credentials*.json
+*secret*.json

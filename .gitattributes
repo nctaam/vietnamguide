@@ -1,0 +1,9 @@
+# Preserve verified production artifact bytes exactly in Git.
+wordpress/** -text
+ops/** -text
+docs/editorial/** -text
+docs/superpowers/** -text
+wordpress/** whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+ops/** whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+docs/editorial/** whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+docs/superpowers/** whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
