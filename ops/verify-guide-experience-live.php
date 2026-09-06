@@ -196,6 +196,13 @@ $pilot_types = [
     'plan/hanoi-to-ha-giang-transport' => 'practical',
     'plan/hanoi-to-sapa-transport' => 'practical',
     'compare/sapa-vs-ha-giang' => 'comparison',
+    'destinations/hoi-an-ancient-town-guide' => 'destination',
+    'destinations/hue-imperial-city-guide' => 'destination',
+    'destinations/da-nang-beaches-guide' => 'destination',
+    'destinations/phong-nha-travel-guide' => 'destination',
+    'compare/hanoi-vs-ho-chi-minh-city' => 'comparison',
+    'compare/mekong-delta-overnight-vs-day-trip' => 'comparison',
+    'plan/best-vietnam-routes-first-time-visitors' => 'practical',
 ];
 $pilot_posts = [];
 

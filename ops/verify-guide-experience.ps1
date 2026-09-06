@@ -1347,6 +1347,13 @@ if ($null -ne $PublicVerifierContent) {
             'plan/hanoi-to-ha-giang-transport'
             'plan/hanoi-to-sapa-transport'
             'compare/sapa-vs-ha-giang'
+            'destinations/hoi-an-ancient-town-guide'
+            'destinations/hue-imperial-city-guide'
+            'destinations/da-nang-beaches-guide'
+            'destinations/phong-nha-travel-guide'
+            'compare/hanoi-vs-ho-chi-minh-city'
+            'compare/mekong-delta-overnight-vs-day-trip'
+            'plan/best-vietnam-routes-first-time-visitors'
         )
         if (($PublicPilotPaths -join "`n") -cne ($ExpectedPublicPilotPaths -join "`n")) {
             $Failures.Add("Expected exact ordered public pilot paths; found: $($PublicPilotPaths -join ', ')")
@@ -1441,6 +1448,13 @@ if ($null -ne $LiveVerifierContent -and $null -ne $PhpCommandPath) {
             'plan/hanoi-to-ha-giang-transport=practical'
             'plan/hanoi-to-sapa-transport=practical'
             'compare/sapa-vs-ha-giang=comparison'
+            'destinations/hoi-an-ancient-town-guide=destination'
+            'destinations/hue-imperial-city-guide=destination'
+            'destinations/da-nang-beaches-guide=destination'
+            'destinations/phong-nha-travel-guide=destination'
+            'compare/hanoi-vs-ho-chi-minh-city=comparison'
+            'compare/mekong-delta-overnight-vs-day-trip=comparison'
+            'plan/best-vietnam-routes-first-time-visitors=practical'
         )
         if (($LivePilotTypeMappings -join "`n") -cne ($ExpectedLivePilotTypeMappings -join "`n")) {
             $Failures.Add("Expected exact ordered live pilot type mappings; found: $($LivePilotTypeMappings -join ', ')")
@@ -1518,6 +1532,13 @@ if ($null -ne $PilotFunction) {
             'plan/hanoi-to-ha-giang-transport'
             'plan/hanoi-to-sapa-transport'
             'compare/sapa-vs-ha-giang'
+            'destinations/hoi-an-ancient-town-guide'
+            'destinations/hue-imperial-city-guide'
+            'destinations/da-nang-beaches-guide'
+            'destinations/phong-nha-travel-guide'
+            'compare/hanoi-vs-ho-chi-minh-city'
+            'compare/mekong-delta-overnight-vs-day-trip'
+            'plan/best-vietnam-routes-first-time-visitors'
         )
         if (($PilotPaths -join "`n") -cne ($ExpectedPilotPaths -join "`n")) {
             $Failures.Add("Expected exact ordered pilot paths; found: $($PilotPaths -join ', ')")

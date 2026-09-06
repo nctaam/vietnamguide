@@ -1105,6 +1105,13 @@ $PilotPaths = @(
     'plan/hanoi-to-ha-giang-transport'
     'plan/hanoi-to-sapa-transport'
     'compare/sapa-vs-ha-giang'
+    'destinations/hoi-an-ancient-town-guide'
+    'destinations/hue-imperial-city-guide'
+    'destinations/da-nang-beaches-guide'
+    'destinations/phong-nha-travel-guide'
+    'compare/hanoi-vs-ho-chi-minh-city'
+    'compare/mekong-delta-overnight-vs-day-trip'
+    'plan/best-vietnam-routes-first-time-visitors'
 )
 
 foreach ($PilotPath in $PilotPaths) {
