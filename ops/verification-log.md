@@ -166,3 +166,35 @@ Date: 2026-07-28 (Asia/Saigon)
   - Crawled all 32 internal content links from `https://vietnamguide.net/`.
   - All 32 links returned HTTP 200 with matching canonical URLs and no broken or retired link targets.
 - Mutation suite: 112/112 mutations rejected across the test suite (`verify-guide-experience-mutations.ps1`), confirming 100% contract enforcement.
+
+## 87-Guide Experience Expansion & Complete Draft Publication Milestone - 2026-09-06
+
+- Scope: Published all 34 remaining database draft/unpublished articles across Batches 1 to 5C, bringing live Guide Experience coverage to 100% of applicable editorial content (87 guides total; 102 total published pages including 4 hubs, home, and policy/contact pages; 0 drafts; 0 trash).
+- Published Batches:
+  - Batch 1 (Ha Giang Loop & Sapa Core - 5 URLs): `itineraries/ha-giang-loop-3-days`, `itineraries/ha-giang-loop-4-days`, `destinations/ha-giang-travel-guide`, `destinations/sapa-travel-guide`, `plan/sapa-trekking-guide` (`578c6be`).
+  - Batch 2 (Central Heritage & Comparisons - 7 URLs): `itineraries/hue-in-2-days`, `destinations/hue-travel-guide`, `compare/hanoi-vs-ho-chi-minh-city`, `compare/hoi-an-vs-hue`, `compare/ha-long-bay-vs-bai-tu-long-bay`, `compare/sapa-vs-ha-giang`, `compare/phu-quoc-vs-da-nang` (`c6d96cc`).
+  - Batch 3 (Seasonal & Tet Travel Cluster - 5 URLs): `plan/best-time-to-visit-vietnam-weather`, `plan/vietnam-in-december`, `plan/vietnam-in-january`, `plan/tet-holiday-travel-guide`, `compare/vietnam-north-vs-south` (`79226ff`).
+  - Batch 4 (Planning & Preparation Cluster - 9 URLs): `plan/vietnam-budget-guide-cost-of-travel`, `plan/vietnam-travel-scams`, `plan/vietnam-packing-list`, `plan/vietnam-trip-cost-calculator`, `destinations/vietnam-islands-guide`, `destinations/vietnam-off-the-beaten-path`, `itineraries/3-weeks-in-vietnam-slow-travel`, `itineraries/vietnam-budget-backpacking-route`, `itineraries/vietnam-motorbike-route` (`326747d`).
+  - Batch 5A (Ha Giang Safety & Easy Rider - 2 URLs): `plan/ha-giang-loop-safety`, `plan/ha-giang-loop-self-drive-vs-easy-rider` (`67fc037`).
+  - Batch 5B (Sapa Trekking & Accommodation - 2 URLs): `plan/sapa-without-a-guide`, `plan/sapa-homestay-vs-hotel` (`61c4a4b`).
+  - Batch 5C (Northern Terraces & Regional Detours - 4 URLs): `plan/best-time-for-northern-vietnam`, `compare/vietnam-rice-terraces-guide`, `destinations/mu-cang-chai-travel-guide`, `destinations/pu-luong-travel-guide` (`d136dc2`).
+- Content Contracts & Normalization:
+  - Every published page adheres strictly to the single-H1 contract via semantic hero block (`wp:group {"className":"vg-guide-hero"}`).
+  - Standardized TOC anchor targets (`jump-anchor` on all major section H2s).
+  - Standardized Schema `author` / `creator` as `VietnamGuide editorial team` across all entities.
+  - Zero placeholder/stale drafts remain in the database (100% clean publication status).
+- Allowlist & Router Synchronization:
+  - Exact identical ordering maintained across all 4 canonical sync files:
+    1. `wordpress/wp-content/themes/vietnamguide-premium/inc/guide-routing.php`
+    2. `ops/verify-guide-experience-live.php`
+    3. `ops/verify-guide-experience-public.ps1`
+    4. `ops/verify-guide-experience.ps1`
+- Verification Results:
+  - Local AST / Context Tokenizer (`ops/verify-guide-experience.ps1`): 112/112 PASSED.
+  - Remote Live Runtime (`ops/verify-guide-experience-live.php`): 87/87 PASSED.
+  - Public HTTPS Live Verifier (`ops/verify-guide-experience-public.ps1`): 87/87 PASSED (100% HTTP 200, 1 H1, real `data-vg-guide` shell, TOC/jump navigation, reviewed CSS/JS, 4 hubs non-pilot passthrough).
+  - Mutation Test Suite (`ops/verify-guide-experience-mutations.ps1`): 112/112 rejected mutations PASSED (0 failures, 0 regressions).
+  - Core Block Patterns (`ops/verify-core-block-patterns.ps1`): PASSED.
+  - Core MU-Plugin (`ops/verify-core-mu-plugin.ps1`): PASSED.
+  - Homepage Theme (`ops/verify-homepage-theme.ps1`): PASSED.
+
