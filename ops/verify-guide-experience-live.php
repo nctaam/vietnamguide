@@ -219,6 +219,8 @@ $pilot_types = [
     'plan/best-vietnam-cities-for-first-time-visitors' => 'practical',
     'plan/ha-giang-safety-guide' => 'practical',
     'compare/ha-giang-easy-rider-vs-self-drive' => 'comparison',
+    'plan/sapa-trekking-guided-vs-self-guided' => 'practical',
+    'destinations/where-to-stay-in-sapa' => 'destination',
 ];
 $pilot_posts = [];
 

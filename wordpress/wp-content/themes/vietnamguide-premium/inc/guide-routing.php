@@ -87,6 +87,8 @@ function vg_guide_pilot_paths(): array
         'plan/best-vietnam-cities-for-first-time-visitors',
         'plan/ha-giang-safety-guide',
         'compare/ha-giang-easy-rider-vs-self-drive',
+        'plan/sapa-trekking-guided-vs-self-guided',
+        'destinations/where-to-stay-in-sapa',
     ];
 }
 
