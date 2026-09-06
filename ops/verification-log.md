@@ -136,3 +136,33 @@ Date: 2026-07-28 (Asia/Saigon)
 - Browser metadata: agent-browser `0.33.1`, HeadlessChrome `151`, DPR `1`, timestamps `2026-08-02T08:23:06.310Z`-`2026-08-02T08:24:44.410Z`.
 - Independent review: specification verdict `SPEC COMPLIANT`; quality re-review `APPROVED` with no Critical, Important, or Minor findings.
 - Scope and safety: deployment was limited to theme payloads, with no post-content rewrite except the explicit Hanoi semantic-class repair recorded above. The helper was removed and backups were preserved. SSH credentials were unavailable/rejected, so the guarded WordPress route was used; no credentials are recorded here.
+
+## Live Packaging Implementation & Full Guide Experience Rollout - 2026-09-06
+
+- Source commits:
+  - Task 1 to 5: Baseline fixes for single H1 on default templates, homepage pattern canonical URL alignment, schema author normalization (`VietnamGuide editorial team`), and Gutenberg source snapshot styles.
+  - Task 6 (Stage A - Comparisons): `1214d9b` `feat: enable guide experience on remaining comparison pages`
+  - Task 7 (Stage B - Destinations): `24f8cc0` `feat: enable guide experience on published destination pages`
+  - Task 8 (Stage C - Practical Plans): `17dea9a` `feat: enable guide experience on published plan pages`, `61c5353` `fix: support vg-guide-hero-cover in vg_inspect_guide_html for cover-based plan heroes`, and `4690965` `fix: support vg-guide-hero-cover in live verifier semantic inspector`.
+- Deployment route: Direct SSH & SCP deployment to VPS `66.42.48.146:2209` (`root`) via dedicated deploy bot SSH key (`~/.ssh/deploy_bot_key`).
+- Backup paths on VPS:
+  - Stage A / Initial baseline: `/usr/local/lsws/vietnamguide.net/backup-website/pre-deploy-20260906_114500.tar.gz`
+  - Stage B: `/usr/local/lsws/vietnamguide.net/backup-website/pre-deploy-20260906_121126.tar.gz`
+  - Stage C: `/usr/local/lsws/vietnamguide.net/backup-website/pre-deploy-20260906_131811.tar.gz`
+- Cache purge: LiteSpeed Cache purged via WP-CLI (`wp --allow-root --path=/usr/local/lsws/vietnamguide.net/html litespeed-purge all`) after each deployment stage.
+- Production live verifier:
+  - Server-side WP-CLI execution of `verify-guide-experience-live.php` exited `0` with output `Success: VietnamGuide guide experience live verification passed.`.
+  - All 53 pilot URLs verified for canonical path, type classification, strict guide context, single hero H1, zero body H1, valid headings, valid TOC, and reading time.
+- Production public verifier:
+  - Execution of `verify-guide-experience-public.ps1` against `https://vietnamguide.net` exited `0` with output:
+    `VietnamGuide public guide experience verification passed for https://vietnamguide.net.`
+  - All 53 pilot URLs confirmed returning HTTP 200, exactly one H1, real guide shell (`data-vg-guide`), TOC/jump navigation, and valid reviewed CSS/JS assets.
+  - All 4 non-pilot URLs (`compare`, `destinations`, `plan`, `itineraries`) confirmed returning HTTP 200 with no guide shell or guide navigation.
+- Fail-closed destination/plan paths: None. All 53 published pilot URLs successfully render the full Guide Experience shell after normalizing `vg-guide-hero-cover` block recognition.
+- Schema author verification:
+  - Sampled `/plan/sim-esim-vietnam/` and `/destinations/hanoi-travel-guide/`.
+  - Verified JSON-LD schema `author` / `creator` contains `VietnamGuide editorial team` and string `Administrator` is completely absent.
+- Homepage link crawl:
+  - Crawled all 32 internal content links from `https://vietnamguide.net/`.
+  - All 32 links returned HTTP 200 with matching canonical URLs and no broken or retired link targets.
+- Mutation suite: 112/112 mutations rejected across the test suite (`verify-guide-experience-mutations.ps1`), confirming 100% contract enforcement.
