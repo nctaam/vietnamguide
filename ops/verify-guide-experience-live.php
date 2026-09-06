@@ -217,6 +217,8 @@ $pilot_types = [
     'plan/ninh-binh-without-rushing' => 'practical',
     'plan/ha-long-bay-cruise-questions-before-booking' => 'practical',
     'plan/best-vietnam-cities-for-first-time-visitors' => 'practical',
+    'plan/ha-giang-safety-guide' => 'practical',
+    'compare/ha-giang-easy-rider-vs-self-drive' => 'comparison',
 ];
 $pilot_posts = [];
 

@@ -85,6 +85,8 @@ function vg_guide_pilot_paths(): array
         'plan/ninh-binh-without-rushing',
         'plan/ha-long-bay-cruise-questions-before-booking',
         'plan/best-vietnam-cities-for-first-time-visitors',
+        'plan/ha-giang-safety-guide',
+        'compare/ha-giang-easy-rider-vs-self-drive',
     ];
 }
 

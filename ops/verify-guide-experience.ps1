@@ -1368,6 +1368,8 @@ if ($null -ne $PublicVerifierContent) {
             'plan/ninh-binh-without-rushing'
             'plan/ha-long-bay-cruise-questions-before-booking'
             'plan/best-vietnam-cities-for-first-time-visitors'
+            'plan/ha-giang-safety-guide'
+            'compare/ha-giang-easy-rider-vs-self-drive'
         )
         if (($PublicPilotPaths -join "`n") -cne ($ExpectedPublicPilotPaths -join "`n")) {
             $Failures.Add("Expected exact ordered public pilot paths; found: $($PublicPilotPaths -join ', ')")
@@ -1483,6 +1485,8 @@ if ($null -ne $LiveVerifierContent -and $null -ne $PhpCommandPath) {
             'plan/ninh-binh-without-rushing=practical'
             'plan/ha-long-bay-cruise-questions-before-booking=practical'
             'plan/best-vietnam-cities-for-first-time-visitors=practical'
+            'plan/ha-giang-safety-guide=practical'
+            'compare/ha-giang-easy-rider-vs-self-drive=comparison'
         )
         if (($LivePilotTypeMappings -join "`n") -cne ($ExpectedLivePilotTypeMappings -join "`n")) {
             $Failures.Add("Expected exact ordered live pilot type mappings; found: $($LivePilotTypeMappings -join ', ')")
@@ -1581,6 +1585,8 @@ if ($null -ne $PilotFunction) {
             'plan/ninh-binh-without-rushing'
             'plan/ha-long-bay-cruise-questions-before-booking'
             'plan/best-vietnam-cities-for-first-time-visitors'
+            'plan/ha-giang-safety-guide'
+            'compare/ha-giang-easy-rider-vs-self-drive'
         )
         if (($PilotPaths -join "`n") -cne ($ExpectedPilotPaths -join "`n")) {
             $Failures.Add("Expected exact ordered pilot paths; found: $($PilotPaths -join ', ')")
