@@ -191,6 +191,11 @@ $pilot_types = [
     'plan/hanoi-airport-to-old-quarter' => 'practical',
     'plan/hanoi-to-ninh-binh-transport' => 'practical',
     'plan/ninh-binh-to-ha-long-bay-transfer' => 'practical',
+    'destinations/ha-giang-loop-planning-guide' => 'destination',
+    'destinations/sapa-travel-guide' => 'destination',
+    'plan/hanoi-to-ha-giang-transport' => 'practical',
+    'plan/hanoi-to-sapa-transport' => 'practical',
+    'compare/sapa-vs-ha-giang' => 'comparison',
 ];
 $pilot_posts = [];
 

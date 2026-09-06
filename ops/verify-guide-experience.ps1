@@ -1342,6 +1342,11 @@ if ($null -ne $PublicVerifierContent) {
             'plan/hanoi-airport-to-old-quarter'
             'plan/hanoi-to-ninh-binh-transport'
             'plan/ninh-binh-to-ha-long-bay-transfer'
+            'destinations/ha-giang-loop-planning-guide'
+            'destinations/sapa-travel-guide'
+            'plan/hanoi-to-ha-giang-transport'
+            'plan/hanoi-to-sapa-transport'
+            'compare/sapa-vs-ha-giang'
         )
         if (($PublicPilotPaths -join "`n") -cne ($ExpectedPublicPilotPaths -join "`n")) {
             $Failures.Add("Expected exact ordered public pilot paths; found: $($PublicPilotPaths -join ', ')")
@@ -1431,6 +1436,11 @@ if ($null -ne $LiveVerifierContent -and $null -ne $PhpCommandPath) {
             'plan/hanoi-airport-to-old-quarter=practical'
             'plan/hanoi-to-ninh-binh-transport=practical'
             'plan/ninh-binh-to-ha-long-bay-transfer=practical'
+            'destinations/ha-giang-loop-planning-guide=destination'
+            'destinations/sapa-travel-guide=destination'
+            'plan/hanoi-to-ha-giang-transport=practical'
+            'plan/hanoi-to-sapa-transport=practical'
+            'compare/sapa-vs-ha-giang=comparison'
         )
         if (($LivePilotTypeMappings -join "`n") -cne ($ExpectedLivePilotTypeMappings -join "`n")) {
             $Failures.Add("Expected exact ordered live pilot type mappings; found: $($LivePilotTypeMappings -join ', ')")
@@ -1503,6 +1513,11 @@ if ($null -ne $PilotFunction) {
             'plan/hanoi-airport-to-old-quarter'
             'plan/hanoi-to-ninh-binh-transport'
             'plan/ninh-binh-to-ha-long-bay-transfer'
+            'destinations/ha-giang-loop-planning-guide'
+            'destinations/sapa-travel-guide'
+            'plan/hanoi-to-ha-giang-transport'
+            'plan/hanoi-to-sapa-transport'
+            'compare/sapa-vs-ha-giang'
         )
         if (($PilotPaths -join "`n") -cne ($ExpectedPilotPaths -join "`n")) {
             $Failures.Add("Expected exact ordered pilot paths; found: $($PilotPaths -join ', ')")

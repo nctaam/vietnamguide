@@ -59,6 +59,11 @@ function vg_guide_pilot_paths(): array
         'plan/hanoi-airport-to-old-quarter',
         'plan/hanoi-to-ninh-binh-transport',
         'plan/ninh-binh-to-ha-long-bay-transfer',
+        'destinations/ha-giang-loop-planning-guide',
+        'destinations/sapa-travel-guide',
+        'plan/hanoi-to-ha-giang-transport',
+        'plan/hanoi-to-sapa-transport',
+        'compare/sapa-vs-ha-giang',
     ];
 }
 
