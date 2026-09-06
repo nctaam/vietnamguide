@@ -181,6 +181,16 @@ $pilot_types = [
     'destinations/best-day-trips-from-hanoi' => 'destination',
     'destinations/where-to-stay-in-ninh-binh' => 'destination',
     'destinations/tam-coc-travel-guide' => 'destination',
+    'plan/best-time-to-visit-vietnam' => 'practical',
+    'plan/vietnam-travel-guide' => 'practical',
+    'plan/transport-within-vietnam' => 'practical',
+    'plan/money-cash-cards-atms' => 'practical',
+    'plan/sim-esim-vietnam' => 'practical',
+    'plan/safety-scams-vietnam' => 'practical',
+    'plan/health-travel-insurance-vietnam' => 'practical',
+    'plan/hanoi-airport-to-old-quarter' => 'practical',
+    'plan/hanoi-to-ninh-binh-transport' => 'practical',
+    'plan/ninh-binh-to-ha-long-bay-transfer' => 'practical',
 ];
 $pilot_posts = [];
 

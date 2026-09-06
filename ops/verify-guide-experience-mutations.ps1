@@ -435,8 +435,8 @@ foreach ($PilotPath in $PilotPaths) {
     @{
         Name = 'public non-pilot required quoted-comment regression'
         File = 'ops/verify-guide-experience-public.ps1'
-        Find = "    'plan/sim-esim-vietnam'"
-        Replace = "    # 'plan/sim-esim-vietnam'"
+        Find = "    'plan'"
+        Replace = "    # 'plan'"
     }
     @{
         Name = 'public pilot path case regression'
@@ -461,14 +461,14 @@ foreach ($NonPilotPath in $NonPilotPaths) {
     @{
         Name = 'public non-pilot path case regression'
         File = 'ops/verify-guide-experience-public.ps1'
-        Find = "    'plan/sim-esim-vietnam'"
-        Replace = "    'Plan/sim-esim-vietnam'"
+        Find = "    'plan'"
+        Replace = "    'Plan'"
     }
     @{
         Name = 'public non-pilot path duplicate regression'
         File = 'ops/verify-guide-experience-public.ps1'
         Find = "    'compare'"
-        Replace = "    'plan/sim-esim-vietnam'"
+        Replace = "    'plan'"
     }
     @{
         Name = 'public non-pilot indexed assignment regression'

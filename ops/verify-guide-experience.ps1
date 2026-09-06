@@ -1332,6 +1332,16 @@ if ($null -ne $PublicVerifierContent) {
             'destinations/best-day-trips-from-hanoi'
             'destinations/where-to-stay-in-ninh-binh'
             'destinations/tam-coc-travel-guide'
+            'plan/best-time-to-visit-vietnam'
+            'plan/vietnam-travel-guide'
+            'plan/transport-within-vietnam'
+            'plan/money-cash-cards-atms'
+            'plan/sim-esim-vietnam'
+            'plan/safety-scams-vietnam'
+            'plan/health-travel-insurance-vietnam'
+            'plan/hanoi-airport-to-old-quarter'
+            'plan/hanoi-to-ninh-binh-transport'
+            'plan/ninh-binh-to-ha-long-bay-transfer'
         )
         if (($PublicPilotPaths -join "`n") -cne ($ExpectedPublicPilotPaths -join "`n")) {
             $Failures.Add("Expected exact ordered public pilot paths; found: $($PublicPilotPaths -join ', ')")
@@ -1339,10 +1349,10 @@ if ($null -ne $PublicVerifierContent) {
 
         $NonPilotPaths = @(Get-TopLevelLiteralStringArray $PublicVerifierAst 'NonPilotPaths' 'public non-pilot path inventory')
         Require-ExactOrdinalSet 'public non-pilot path' $NonPilotPaths @(
-            'plan/sim-esim-vietnam'
-            'plan/transport-within-vietnam'
             'compare'
             'destinations'
+            'plan'
+            'itineraries'
         )
     }
 }
@@ -1411,6 +1421,16 @@ if ($null -ne $LiveVerifierContent -and $null -ne $PhpCommandPath) {
             'destinations/best-day-trips-from-hanoi=destination'
             'destinations/where-to-stay-in-ninh-binh=destination'
             'destinations/tam-coc-travel-guide=destination'
+            'plan/best-time-to-visit-vietnam=practical'
+            'plan/vietnam-travel-guide=practical'
+            'plan/transport-within-vietnam=practical'
+            'plan/money-cash-cards-atms=practical'
+            'plan/sim-esim-vietnam=practical'
+            'plan/safety-scams-vietnam=practical'
+            'plan/health-travel-insurance-vietnam=practical'
+            'plan/hanoi-airport-to-old-quarter=practical'
+            'plan/hanoi-to-ninh-binh-transport=practical'
+            'plan/ninh-binh-to-ha-long-bay-transfer=practical'
         )
         if (($LivePilotTypeMappings -join "`n") -cne ($ExpectedLivePilotTypeMappings -join "`n")) {
             $Failures.Add("Expected exact ordered live pilot type mappings; found: $($LivePilotTypeMappings -join ', ')")
@@ -1473,6 +1493,16 @@ if ($null -ne $PilotFunction) {
             'destinations/best-day-trips-from-hanoi'
             'destinations/where-to-stay-in-ninh-binh'
             'destinations/tam-coc-travel-guide'
+            'plan/best-time-to-visit-vietnam'
+            'plan/vietnam-travel-guide'
+            'plan/transport-within-vietnam'
+            'plan/money-cash-cards-atms'
+            'plan/sim-esim-vietnam'
+            'plan/safety-scams-vietnam'
+            'plan/health-travel-insurance-vietnam'
+            'plan/hanoi-airport-to-old-quarter'
+            'plan/hanoi-to-ninh-binh-transport'
+            'plan/ninh-binh-to-ha-long-bay-transfer'
         )
         if (($PilotPaths -join "`n") -cne ($ExpectedPilotPaths -join "`n")) {
             $Failures.Add("Expected exact ordered pilot paths; found: $($PilotPaths -join ', ')")

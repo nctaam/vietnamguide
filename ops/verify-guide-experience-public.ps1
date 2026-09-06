@@ -1090,6 +1090,16 @@ $PilotPaths = @(
     'destinations/best-day-trips-from-hanoi'
     'destinations/where-to-stay-in-ninh-binh'
     'destinations/tam-coc-travel-guide'
+    'plan/best-time-to-visit-vietnam'
+    'plan/vietnam-travel-guide'
+    'plan/transport-within-vietnam'
+    'plan/money-cash-cards-atms'
+    'plan/sim-esim-vietnam'
+    'plan/safety-scams-vietnam'
+    'plan/health-travel-insurance-vietnam'
+    'plan/hanoi-airport-to-old-quarter'
+    'plan/hanoi-to-ninh-binh-transport'
+    'plan/ninh-binh-to-ha-long-bay-transfer'
 )
 
 foreach ($PilotPath in $PilotPaths) {
@@ -1145,10 +1155,10 @@ if ($null -ne $Homepage) {
 }
 
 $NonPilotPaths = @(
-    'plan/sim-esim-vietnam'
-    'plan/transport-within-vietnam'
     'compare'
     'destinations'
+    'plan'
+    'itineraries'
 )
 
 foreach ($NonPilotPath in $NonPilotPaths) {
