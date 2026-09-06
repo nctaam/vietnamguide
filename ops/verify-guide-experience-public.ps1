@@ -1130,6 +1130,10 @@ $PilotPaths = @(
     'compare/ha-giang-easy-rider-vs-self-drive'
     'plan/sapa-trekking-guided-vs-self-guided'
     'destinations/where-to-stay-in-sapa'
+    'plan/best-time-for-northern-vietnam'
+    'compare/vietnam-rice-terraces-guide'
+    'destinations/mu-cang-chai-travel-guide'
+    'destinations/pu-luong-travel-guide'
 )
 
 foreach ($PilotPath in $PilotPaths) {

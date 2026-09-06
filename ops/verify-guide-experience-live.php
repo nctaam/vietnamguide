@@ -221,6 +221,10 @@ $pilot_types = [
     'compare/ha-giang-easy-rider-vs-self-drive' => 'comparison',
     'plan/sapa-trekking-guided-vs-self-guided' => 'practical',
     'destinations/where-to-stay-in-sapa' => 'destination',
+    'plan/best-time-for-northern-vietnam' => 'practical',
+    'compare/vietnam-rice-terraces-guide' => 'comparison',
+    'destinations/mu-cang-chai-travel-guide' => 'destination',
+    'destinations/pu-luong-travel-guide' => 'destination',
 ];
 $pilot_posts = [];
 

@@ -1372,6 +1372,10 @@ if ($null -ne $PublicVerifierContent) {
             'compare/ha-giang-easy-rider-vs-self-drive'
             'plan/sapa-trekking-guided-vs-self-guided'
             'destinations/where-to-stay-in-sapa'
+            'plan/best-time-for-northern-vietnam'
+            'compare/vietnam-rice-terraces-guide'
+            'destinations/mu-cang-chai-travel-guide'
+            'destinations/pu-luong-travel-guide'
         )
         if (($PublicPilotPaths -join "`n") -cne ($ExpectedPublicPilotPaths -join "`n")) {
             $Failures.Add("Expected exact ordered public pilot paths; found: $($PublicPilotPaths -join ', ')")
@@ -1491,6 +1495,10 @@ if ($null -ne $LiveVerifierContent -and $null -ne $PhpCommandPath) {
             'compare/ha-giang-easy-rider-vs-self-drive=comparison'
             'plan/sapa-trekking-guided-vs-self-guided=practical'
             'destinations/where-to-stay-in-sapa=destination'
+            'plan/best-time-for-northern-vietnam=practical'
+            'compare/vietnam-rice-terraces-guide=comparison'
+            'destinations/mu-cang-chai-travel-guide=destination'
+            'destinations/pu-luong-travel-guide=destination'
         )
         if (($LivePilotTypeMappings -join "`n") -cne ($ExpectedLivePilotTypeMappings -join "`n")) {
             $Failures.Add("Expected exact ordered live pilot type mappings; found: $($LivePilotTypeMappings -join ', ')")
@@ -1593,6 +1601,10 @@ if ($null -ne $PilotFunction) {
             'compare/ha-giang-easy-rider-vs-self-drive'
             'plan/sapa-trekking-guided-vs-self-guided'
             'destinations/where-to-stay-in-sapa'
+            'plan/best-time-for-northern-vietnam'
+            'compare/vietnam-rice-terraces-guide'
+            'destinations/mu-cang-chai-travel-guide'
+            'destinations/pu-luong-travel-guide'
         )
         if (($PilotPaths -join "`n") -cne ($ExpectedPilotPaths -join "`n")) {
             $Failures.Add("Expected exact ordered pilot paths; found: $($PilotPaths -join ', ')")
