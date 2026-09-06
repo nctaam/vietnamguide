@@ -120,7 +120,7 @@ $inspect_semantic_html = static function (string $html): ?array {
             $id = $processor->get_attribute('id');
             $h2_ids[] = is_string($id) ? $id : '';
         }
-        if (true === $processor->has_class('vg-guide-hero')) {
+        if (true === $processor->has_class('vg-guide-hero') || true === $processor->has_class('vg-guide-hero-cover')) {
             $has_hero_class = true;
         }
     }
