@@ -1359,6 +1359,15 @@ if ($null -ne $PublicVerifierContent) {
             'plan/vietnam-in-february'
             'plan/tet-in-vietnam-travel-guide'
             'plan/vietnam-rainy-season-flexible-route'
+            'plan/vietnam-first-trip-planning-checklist'
+            'plan/what-to-pack-for-vietnam-region-season'
+            'plan/vietnam-airport-arrival-checklist'
+            'plan/vietnam-food-safety-street-food-etiquette'
+            'plan/where-to-stay-in-vietnam-base-decisions'
+            'plan/hanoi-first-time-visitor-mistakes'
+            'plan/ninh-binh-without-rushing'
+            'plan/ha-long-bay-cruise-questions-before-booking'
+            'plan/best-vietnam-cities-for-first-time-visitors'
         )
         if (($PublicPilotPaths -join "`n") -cne ($ExpectedPublicPilotPaths -join "`n")) {
             $Failures.Add("Expected exact ordered public pilot paths; found: $($PublicPilotPaths -join ', ')")
@@ -1465,6 +1474,15 @@ if ($null -ne $LiveVerifierContent -and $null -ne $PhpCommandPath) {
             'plan/vietnam-in-february=practical'
             'plan/tet-in-vietnam-travel-guide=practical'
             'plan/vietnam-rainy-season-flexible-route=practical'
+            'plan/vietnam-first-trip-planning-checklist=practical'
+            'plan/what-to-pack-for-vietnam-region-season=practical'
+            'plan/vietnam-airport-arrival-checklist=practical'
+            'plan/vietnam-food-safety-street-food-etiquette=practical'
+            'plan/where-to-stay-in-vietnam-base-decisions=practical'
+            'plan/hanoi-first-time-visitor-mistakes=practical'
+            'plan/ninh-binh-without-rushing=practical'
+            'plan/ha-long-bay-cruise-questions-before-booking=practical'
+            'plan/best-vietnam-cities-for-first-time-visitors=practical'
         )
         if (($LivePilotTypeMappings -join "`n") -cne ($ExpectedLivePilotTypeMappings -join "`n")) {
             $Failures.Add("Expected exact ordered live pilot type mappings; found: $($LivePilotTypeMappings -join ', ')")
@@ -1554,6 +1572,15 @@ if ($null -ne $PilotFunction) {
             'plan/vietnam-in-february'
             'plan/tet-in-vietnam-travel-guide'
             'plan/vietnam-rainy-season-flexible-route'
+            'plan/vietnam-first-trip-planning-checklist'
+            'plan/what-to-pack-for-vietnam-region-season'
+            'plan/vietnam-airport-arrival-checklist'
+            'plan/vietnam-food-safety-street-food-etiquette'
+            'plan/where-to-stay-in-vietnam-base-decisions'
+            'plan/hanoi-first-time-visitor-mistakes'
+            'plan/ninh-binh-without-rushing'
+            'plan/ha-long-bay-cruise-questions-before-booking'
+            'plan/best-vietnam-cities-for-first-time-visitors'
         )
         if (($PilotPaths -join "`n") -cne ($ExpectedPilotPaths -join "`n")) {
             $Failures.Add("Expected exact ordered pilot paths; found: $($PilotPaths -join ', ')")

@@ -1117,6 +1117,15 @@ $PilotPaths = @(
     'plan/vietnam-in-february'
     'plan/tet-in-vietnam-travel-guide'
     'plan/vietnam-rainy-season-flexible-route'
+    'plan/vietnam-first-trip-planning-checklist'
+    'plan/what-to-pack-for-vietnam-region-season'
+    'plan/vietnam-airport-arrival-checklist'
+    'plan/vietnam-food-safety-street-food-etiquette'
+    'plan/where-to-stay-in-vietnam-base-decisions'
+    'plan/hanoi-first-time-visitor-mistakes'
+    'plan/ninh-binh-without-rushing'
+    'plan/ha-long-bay-cruise-questions-before-booking'
+    'plan/best-vietnam-cities-for-first-time-visitors'
 )
 
 foreach ($PilotPath in $PilotPaths) {

@@ -208,6 +208,15 @@ $pilot_types = [
     'plan/vietnam-in-february' => 'practical',
     'plan/tet-in-vietnam-travel-guide' => 'practical',
     'plan/vietnam-rainy-season-flexible-route' => 'practical',
+    'plan/vietnam-first-trip-planning-checklist' => 'practical',
+    'plan/what-to-pack-for-vietnam-region-season' => 'practical',
+    'plan/vietnam-airport-arrival-checklist' => 'practical',
+    'plan/vietnam-food-safety-street-food-etiquette' => 'practical',
+    'plan/where-to-stay-in-vietnam-base-decisions' => 'practical',
+    'plan/hanoi-first-time-visitor-mistakes' => 'practical',
+    'plan/ninh-binh-without-rushing' => 'practical',
+    'plan/ha-long-bay-cruise-questions-before-booking' => 'practical',
+    'plan/best-vietnam-cities-for-first-time-visitors' => 'practical',
 ];
 $pilot_posts = [];
 
