@@ -1,0 +1,61 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Verify Guide Experience (Local AST)",
+      "type": "shell",
+      "command": "pwsh -NoProfile -File ops/verify-guide-experience.ps1",
+      "group": {
+        "kind": "test",
+        "isDefault": true
+      },
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "Verify Guide Experience (Mutations)",
+      "type": "shell",
+      "command": "pwsh -NoProfile -File ops/verify-guide-experience-mutations.ps1",
+      "group": "test",
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "Verify Public Live HTTPS",
+      "type": "shell",
+      "command": "powershell -NoProfile -File ops/verify-guide-experience-public.ps1",
+      "group": "test",
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "Verify Live Server (Remote WP-CLI)",
+      "type": "shell",
+      "command": "python ops/run_remote.py \"wp --allow-root --path=/usr/local/lsws/vietnamguide.net/html eval-file /usr/local/lsws/vietnamguide.net/html/ops/verify-guide-experience-live.php\"",
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "Purge LiteSpeed Cache & Flush Rewrites",
+      "type": "shell",
+      "command": "python ops/run_remote.py \"wp --allow-root --path=/usr/local/lsws/vietnamguide.net/html rewrite flush && wp --allow-root --path=/usr/local/lsws/vietnamguide.net/html litespeed-purge all\"",
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared"
+      },
+      "problemMatcher": []
+    }
+  ]
+}

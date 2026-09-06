@@ -1,0 +1,34 @@
+# VietnamGuide - Project Guidelines & Rules
+# Canonical Location: M:\Projects\vietnamguide
+
+## 1. Project Directory & Workspaces
+- Canonical Local Root: M:\Projects\vietnamguide
+- All source files, edits, git commits, and tool executions MUST operate within M:\Projects\vietnamguide.
+- Do NOT read or write to D:\Documents\vietnamguide or C:\Users\NCTaam\projects\vietnamguide.
+
+## 2. Architecture & Tech Stack
+- Platform: WordPress 6.8+ on AlmaLinux 8 VPS
+- Web Server: OpenLiteSpeed with LSCache active
+- Theme: `wordpress/wp-content/themes/vietnamguide-premium` (Guide Experience Design System)
+- Must-Use Plugin: `wordpress/wp-content/mu-plugins/vietnamguide-core.php` (Core security, single H1, Rank Math schema author normalization, admin-first guards)
+- Editorial Standards: Evidence-led Concierge model, Single H1 contract, Schema Author = "VietnamGuide editorial team", pilot routing allowlist in `inc/guide-routing.php`.
+
+## 3. Remote VPS Credentials & Deployment
+- Host: 66.42.48.146:2209
+- User: root
+- Private Key: C:/Users/NCTaam/.ssh/deploy_bot_key
+- Remote Web Root: /usr/local/lsws/vietnamguide.net/html
+- Remote Web Owner: vietnamguidewpnet:vietnamguidewpnet
+- Remote Backup Dir: /usr/local/lsws/vietnamguide.net/backup-website
+- Automation Overwrite Guard: `VG_ADMIN_FIRST_ALLOW_AUTOMATION_OVERWRITE=1` required when updating post fields via WP-CLI.
+
+## 4. Verification Suites
+- Local AST & Routing: `pwsh -NoProfile -File ops/verify-guide-experience.ps1`
+- Local Mutation Suite: `pwsh -NoProfile -File ops/verify-guide-experience-mutations.ps1`
+- Remote Live Verifier: `wp --allow-root --path=/usr/local/lsws/vietnamguide.net/html eval-file /usr/local/lsws/vietnamguide.net/html/ops/verify-guide-experience-live.php`
+- Public HTTPS Verifier: `powershell -NoProfile -File ops/verify-guide-experience-public.ps1`
+
+## 5. Git Workflow
+- Active Branch: `master`
+- Remote: `origin` (`https://github.com/nctaam/vietnamguide.git`)
+- Follow Conventional Commits format (`feat:`, `fix:`, `docs:`, `refactor:`, `test:`).
