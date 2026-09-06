@@ -67,7 +67,7 @@ function vg_inspect_guide_html(string $html): ?array
             $h1Count++;
         }
 
-        if (true === $processor->has_class('vg-guide-hero')) {
+        if (true === $processor->has_class('vg-guide-hero') || true === $processor->has_class('vg-guide-hero-cover')) {
             $hasHeroClass = true;
         }
     }
