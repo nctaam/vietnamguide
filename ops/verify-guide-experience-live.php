@@ -203,6 +203,11 @@ $pilot_types = [
     'compare/hanoi-vs-ho-chi-minh-city' => 'comparison',
     'compare/mekong-delta-overnight-vs-day-trip' => 'comparison',
     'plan/best-vietnam-routes-first-time-visitors' => 'practical',
+    'plan/vietnam-in-december' => 'practical',
+    'plan/vietnam-in-january' => 'practical',
+    'plan/vietnam-in-february' => 'practical',
+    'plan/tet-in-vietnam-travel-guide' => 'practical',
+    'plan/vietnam-rainy-season-flexible-route' => 'practical',
 ];
 $pilot_posts = [];
 

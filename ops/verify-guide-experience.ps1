@@ -1354,6 +1354,11 @@ if ($null -ne $PublicVerifierContent) {
             'compare/hanoi-vs-ho-chi-minh-city'
             'compare/mekong-delta-overnight-vs-day-trip'
             'plan/best-vietnam-routes-first-time-visitors'
+            'plan/vietnam-in-december'
+            'plan/vietnam-in-january'
+            'plan/vietnam-in-february'
+            'plan/tet-in-vietnam-travel-guide'
+            'plan/vietnam-rainy-season-flexible-route'
         )
         if (($PublicPilotPaths -join "`n") -cne ($ExpectedPublicPilotPaths -join "`n")) {
             $Failures.Add("Expected exact ordered public pilot paths; found: $($PublicPilotPaths -join ', ')")
@@ -1455,6 +1460,11 @@ if ($null -ne $LiveVerifierContent -and $null -ne $PhpCommandPath) {
             'compare/hanoi-vs-ho-chi-minh-city=comparison'
             'compare/mekong-delta-overnight-vs-day-trip=comparison'
             'plan/best-vietnam-routes-first-time-visitors=practical'
+            'plan/vietnam-in-december=practical'
+            'plan/vietnam-in-january=practical'
+            'plan/vietnam-in-february=practical'
+            'plan/tet-in-vietnam-travel-guide=practical'
+            'plan/vietnam-rainy-season-flexible-route=practical'
         )
         if (($LivePilotTypeMappings -join "`n") -cne ($ExpectedLivePilotTypeMappings -join "`n")) {
             $Failures.Add("Expected exact ordered live pilot type mappings; found: $($LivePilotTypeMappings -join ', ')")
@@ -1539,6 +1549,11 @@ if ($null -ne $PilotFunction) {
             'compare/hanoi-vs-ho-chi-minh-city'
             'compare/mekong-delta-overnight-vs-day-trip'
             'plan/best-vietnam-routes-first-time-visitors'
+            'plan/vietnam-in-december'
+            'plan/vietnam-in-january'
+            'plan/vietnam-in-february'
+            'plan/tet-in-vietnam-travel-guide'
+            'plan/vietnam-rainy-season-flexible-route'
         )
         if (($PilotPaths -join "`n") -cne ($ExpectedPilotPaths -join "`n")) {
             $Failures.Add("Expected exact ordered pilot paths; found: $($PilotPaths -join ', ')")
