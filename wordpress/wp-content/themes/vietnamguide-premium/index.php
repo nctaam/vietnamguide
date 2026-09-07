@@ -34,6 +34,27 @@ get_header();
                                 ]);
                                 ?>
                             </div>
+                            <?php if (is_single()) : ?>
+                                <aside class="vg-editorial-card" aria-label="<?php esc_attr_e('Editorial standards', 'vietnamguide-premium'); ?>">
+                                    <div class="vg-editorial-card__badge">
+                                        <span class="vg-badge-icon" aria-hidden="true">&#10003;</span>
+                                        <?php esc_html_e('Fact-Checked & Ground-Verified', 'vietnamguide-premium'); ?>
+                                    </div>
+                                    <p class="vg-editorial-card__copy">
+                                        <?php esc_html_e('Researched and maintained by the VietnamGuide Editorial Desk. Written without sponsored placement. All recommendations are independently evaluated against local conditions, transit schedules, and official regulations.', 'vietnamguide-premium'); ?>
+                                    </p>
+                                    <a href="<?php echo esc_url(vg_home_url('source-update-policy')); ?>" class="vg-editorial-card__link">
+                                        <?php esc_html_e('Read our source and update policy', 'vietnamguide-premium'); ?> &rarr;
+                                    </a>
+                                </aside>
+                                <div class="vg-share-bar">
+                                    <span class="vg-share-label"><?php esc_html_e('Share this guide:', 'vietnamguide-premium'); ?></span>
+                                    <button type="button" class="vg-copy-link" data-vg-copy-link aria-label="<?php esc_attr_e('Copy guide link to clipboard', 'vietnamguide-premium'); ?>">
+                                        <span class="vg-copy-link__icon" aria-hidden="true">&#128279;</span>
+                                        <span class="vg-copy-link__text"><?php esc_html_e('Copy link', 'vietnamguide-premium'); ?></span>
+                                    </button>
+                                </div>
+                            <?php endif; ?>
                         </article>
                     <?php endwhile; ?>
                 </div>

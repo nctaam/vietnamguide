@@ -448,4 +448,21 @@ Date: 2026-07-28 (Asia/Saigon)
   - Public HTTPS Production Verifier (`ops/verify-guide-experience-public.ps1`): PASSED (100% on all 87 guides).
   - Stage 10 Live Verifier (`scratch/verify_stage10_live.py`): PASSED (100% on live back-to-top button in HTML, enqueued CSS, enqueued JS, and in-situ search form on 404 empty state).
 
+## Editorial E-E-A-T Card, Share Link System & Typographic Polish - 2026-09-07
+
+- Architecture & Scope (Stage 11):
+  - Elevated editorial authority, sharing ergonomics, and typography across the WordPress theme:
+    - Editorial E-E-A-T Trust Card: Added `.vg-editorial-card` in `index.php` for single articles, featuring "Fact-Checked & Ground-Verified" badge with jade checkmark, independent evaluation declaration, and direct link to `/source-update-policy/`.
+    - Tactical Share Bar & Link Copying: Integrated `.vg-share-bar` with `.vg-copy-link` button in `index.php`, styled with smooth spring hover and active green feedback state. Added clipboard API handler in `homepage.js` displaying temporary "Link copied!" confirmation badge.
+    - Keyboard Productivity Shortcut: Added global `/` key event listener in `homepage.js` to automatically focus and select search inputs (`.search-field, .wp-block-search__input, input[type="search"]`) whenever travelers press slash outside of form inputs.
+    - Modern Typography Balance: Added `text-wrap: balance;` for `h1, h2, h3, h4` and `text-wrap: pretty;` for `p, li` in `homepage.css`, eliminating typographic widows and orphans across all viewports.
+- Verification Evidence:
+  - Local AST / Contract (`ops/verify-guide-experience.ps1`): PASSED (112/112).
+  - Local Homepage Theme Checks (`ops/verify-homepage-theme.ps1`): PASSED.
+  - Core MU-Plugin Fingerprint & Mutations (`ops/verify-core-mu-plugin.ps1`): PASSED (Fingerprint `71b49033114e8007e5c19fb8ebc1a89e0d0dad88d0fe92dd381a28700db096ce` perfectly preserved).
+  - Remote Live Runtime (`verify-guide-experience-live.php` via WP-CLI): PASSED (87/87).
+  - Public HTTPS Production Verifier (`ops/verify-guide-experience-public.ps1`): PASSED (100% on all 87 routes).
+  - Stage 11 Live Verifier (`scratch/verify_stage11_live.py`): PASSED (100% on live `text-wrap: balance`, `.vg-editorial-card`, `.vg-share-bar`, `.vg-copy-link`, clipboard copy JS listener, `/` keyboard shortcut, and search results page).
+
+
 

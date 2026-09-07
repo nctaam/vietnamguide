@@ -100,4 +100,35 @@
       window.scrollTo({ top: 0, behavior: reducedMotion ? 'auto' : 'smooth' });
     });
   }
+
+  var copyBtn = document.querySelector('[data-vg-copy-link]');
+  if (copyBtn) {
+    copyBtn.addEventListener('click', function () {
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(window.location.href).then(function () {
+          var textSpan = copyBtn.querySelector('.vg-copy-link__text');
+          if (textSpan) {
+            var originalText = textSpan.textContent;
+            textSpan.textContent = 'Link copied!';
+            copyBtn.classList.add('is-copied');
+            setTimeout(function () {
+              textSpan.textContent = originalText;
+              copyBtn.classList.remove('is-copied');
+            }, 2400);
+          }
+        });
+      }
+    });
+  }
+
+  document.addEventListener('keydown', function (e) {
+    if (e.key === '/' && !['INPUT', 'TEXTAREA', 'SELECT'].includes(document.activeElement.tagName)) {
+      var searchInput = document.querySelector('.search-field, .wp-block-search__input, input[type="search"]');
+      if (searchInput) {
+        e.preventDefault();
+        searchInput.focus();
+        searchInput.select();
+      }
+    }
+  });
 }());

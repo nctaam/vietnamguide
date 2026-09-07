@@ -36,6 +36,14 @@ body {
   text-rendering: optimizeLegibility;
 }
 
+h1, h2, h3, h4 {
+  text-wrap: balance;
+}
+
+p, li {
+  text-wrap: pretty;
+}
+
 body.vg-menu-open {
   overflow: hidden;
 }
@@ -1540,6 +1548,107 @@ html:not(.vg-js) body.home .vg-site-header {
 
 .vg-author-byline {
   color: var(--vg-ink);
+}
+
+/* Editorial E-E-A-T Card & Share Bar */
+.vg-editorial-card {
+  margin: 48px 0 32px;
+  padding: 24px 28px;
+  border: 1px solid var(--vg-line);
+  border-left: 4px solid var(--vg-jade);
+  background: color-mix(in srgb, var(--vg-paper) 60%, var(--vg-white));
+  box-shadow: 0 2px 8px rgba(16, 20, 23, 0.04);
+}
+
+.vg-editorial-card__badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+  color: var(--vg-jade);
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.vg-badge-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--vg-jade);
+  color: var(--vg-white);
+  font-size: 11px;
+}
+
+.vg-editorial-card__copy {
+  margin: 0 0 14px;
+  font-size: 15px;
+  line-height: 1.6;
+  color: rgba(16, 20, 23, 0.85);
+}
+
+.vg-editorial-card__link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--vg-jade);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  transition: color 180ms ease;
+}
+
+.vg-editorial-card__link:hover {
+  color: var(--vg-blue);
+}
+
+.vg-share-bar {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin: 28px 0 40px;
+  padding: 16px 20px;
+  border: 1px solid var(--vg-line);
+  background: var(--vg-white);
+}
+
+.vg-share-label {
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: rgba(16, 20, 23, 0.65);
+}
+
+.vg-copy-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  border: 1px solid var(--vg-line);
+  background: var(--vg-paper);
+  color: var(--vg-ink);
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 180ms ease;
+}
+
+.vg-copy-link:hover {
+  border-color: var(--vg-gold);
+  background: var(--vg-white);
+  color: var(--vg-gold);
+}
+
+.vg-copy-link.is-copied {
+  border-color: var(--vg-jade);
+  background: var(--vg-jade);
+  color: var(--vg-white);
 }
 
 /* Form and Search Elements */
