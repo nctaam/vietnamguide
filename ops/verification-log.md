@@ -375,3 +375,23 @@ Date: 2026-07-28 (Asia/Saigon)
   - Remote Live Runtime (`verify-guide-experience-live.php` via WP-CLI): PASSED (87/87).
   - Public HTTPS Production Verifier (`ops/verify-guide-experience-public.ps1`): PASSED (100% on all 87 guides).
   - Stage 6 Live Verifier (`scratch/verify_stage6_live.py`): PASSED (Live frosted header blur, button physics, footer gold border, `/about/` page typography, and 404 empty state CTAs).
+
+## Hub Ecosystem Components & Form/Search WordPress Polish - 2026-09-07
+
+- Architecture & Scope:
+  - Addressed and completed styling for 10 core interface classes appearing across all 5 major strategic hub portals (`/destinations/`, `/itineraries/`, `/compare/`, `/costs/`, `/plan/`) and over 160 guide callout blocks across the site:
+    - `.vg-hub-hero` & `.vg-hub-lede`: Editorial lead intro typography (`clamp(20px, 2.2vw, 24px)` with high legibility line-height).
+    - `.vg-hub-grid` & `.vg-hub-grid-two`: Responsive CSS Grid containers (3-column and 2-column layouts collapsing cleanly to single-column on mobile viewports).
+    - `.vg-hub-card`: Silk-white card component with subtle border line, soft shadow, display serif titles, and Emil Kowalski spring hover interaction (`transform: translateY(-2px); box-shadow: 0 8px 24px rgba(16, 20, 23, 0.08);`).
+    - `.vg-hub-note`: Editorial strategic callout box with 4px Imperial Jade left border, warm tinted silk background, and distinct guide links.
+    - `.vg-check-list` & `.vg-feature-list`: Stylized numbered badge lists and jade bulleted decision criteria.
+    - `.vg-next-action`: High-conversion hub transition callout with Stitch-styled action CTA button.
+    - `.vg-post-date`: Standardized uppercase jade date badge in archive article cards.
+    - Form & Search Elements: Complete luxury restyling of `.search-form`, `.wp-block-search`, inputs, textareas, and submit buttons with gold focus outlines and jade submit buttons.
+- Verification Evidence:
+  - Local AST / Contract (`ops/verify-guide-experience.ps1`): PASSED (112/112).
+  - Local Homepage Theme Checks (`ops/verify-homepage-theme.ps1`): PASSED.
+  - Core MU-Plugin Fingerprint & Mutations (`ops/verify-core-mu-plugin.ps1`): PASSED (Fingerprint `71b49033114e8007e5c19fb8ebc1a89e0d0dad88d0fe92dd381a28700db096ce` perfectly preserved).
+  - Remote Live Runtime (`verify-guide-experience-live.php` via WP-CLI): PASSED (87/87).
+  - Public HTTPS Production Verifier (`ops/verify-guide-experience-public.ps1`): PASSED (100% on all 87 guides).
+  - Stage 7 Live Verifier (`scratch/verify_stage7_live.py`): PASSED (100% on live CSS classes and all 5 hub portals).

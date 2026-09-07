@@ -56,6 +56,9 @@ get_header();
                             <?php the_post(); ?>
                             <article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
                                 <header>
+                                    <time class="vg-post-date" datetime="<?php echo esc_attr(get_the_date('c')); ?>">
+                                        <?php echo esc_html(get_the_date()); ?>
+                                    </time>
                                     <h2>
                                         <a href="<?php echo esc_url(get_permalink()); ?>">
                                             <?php echo esc_html(get_the_title()); ?>
