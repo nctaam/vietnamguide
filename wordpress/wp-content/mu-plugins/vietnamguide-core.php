@@ -833,8 +833,104 @@ function vg_rewrite_schema_author_value(mixed $value): mixed
 function vg_filter_rank_math_json_ld(array $data): array
 {
     $rewritten = vg_rewrite_schema_author_value($data);
+    if (! is_array($rewritten)) {
+        return $data;
+    }
 
-    return is_array($rewritten) ? $rewritten : $data;
+    $uri = isset($_SERVER['REQUEST_URI']) ? (string) $_SERVER['REQUEST_URI'] : '';
+    $uri_path = strtolower(trim((string) parse_url($uri, PHP_URL_PATH), '/'));
+    if (empty($uri_path) && function_exists('get_queried_object_id')) {
+        $qid = get_queried_object_id();
+        if ($qid > 0) {
+            $permalink = get_permalink($qid);
+            if (is_string($permalink)) {
+                $uri_path = strtolower(trim((string) parse_url($permalink, PHP_URL_PATH), '/'));
+            }
+        }
+    }
+    if (empty($uri_path) && isset($GLOBALS['post']) && is_object($GLOBALS['post'])) {
+        $uri_path = strtolower((string) ($GLOBALS['post']->post_name ?? ''));
+    }
+
+    $entity_map = [
+        'hanoi'         => ['@type' => 'City', 'name' => 'Hanoi', 'sameAs' => 'https://www.wikidata.org/wiki/Q1858'],
+        'ho-chi-minh'   => ['@type' => 'City', 'name' => 'Ho Chi Minh City', 'sameAs' => 'https://www.wikidata.org/wiki/Q1854'],
+        'ha-long'       => ['@type' => 'TouristAttraction', 'name' => 'Ha Long Bay', 'sameAs' => 'https://www.wikidata.org/wiki/Q190128'],
+        'lan-ha'        => ['@type' => 'TouristAttraction', 'name' => 'Lan Ha Bay', 'sameAs' => 'https://www.wikidata.org/wiki/Q3216853'],
+        'hoi-an'        => ['@type' => 'City', 'name' => 'Hoi An', 'sameAs' => 'https://www.wikidata.org/wiki/Q36167'],
+        'da-nang'       => ['@type' => 'City', 'name' => 'Da Nang', 'sameAs' => 'https://www.wikidata.org/wiki/Q25282'],
+        'hue'           => ['@type' => 'City', 'name' => 'Hue', 'sameAs' => 'https://www.wikidata.org/wiki/Q200257'],
+        'sapa'          => ['@type' => 'City', 'name' => 'Sa Pa', 'sameAs' => 'https://www.wikidata.org/wiki/Q36384'],
+        'ha-giang'      => ['@type' => 'AdministrativeArea', 'name' => 'Ha Giang', 'sameAs' => 'https://www.wikidata.org/wiki/Q36352'],
+        'ninh-binh'     => ['@type' => 'AdministrativeArea', 'name' => 'Ninh Binh', 'sameAs' => 'https://www.wikidata.org/wiki/Q36359'],
+        'phu-quoc'      => ['@type' => 'Place', 'name' => 'Phu Quoc', 'sameAs' => 'https://www.wikidata.org/wiki/Q223145'],
+        'con-dao'       => ['@type' => 'Place', 'name' => 'Con Dao', 'sameAs' => 'https://www.wikidata.org/wiki/Q1118128'],
+        'nha-trang'     => ['@type' => 'City', 'name' => 'Nha Trang', 'sameAs' => 'https://www.wikidata.org/wiki/Q19491'],
+        'quy-nhon'      => ['@type' => 'City', 'name' => 'Quy Nhon', 'sameAs' => 'https://www.wikidata.org/wiki/Q26577'],
+        'mui-ne'        => ['@type' => 'Place', 'name' => 'Mui Ne', 'sameAs' => 'https://www.wikidata.org/wiki/Q1333765'],
+        'cat-ba'        => ['@type' => 'Place', 'name' => 'Cat Ba Island', 'sameAs' => 'https://www.wikidata.org/wiki/Q1936306'],
+        'mekong'        => ['@type' => 'AdministrativeArea', 'name' => 'Mekong Delta', 'sameAs' => 'https://www.wikidata.org/wiki/Q1052867'],
+        'phong-nha'     => ['@type' => 'NationalPark', 'name' => 'Phong Nha-Ke Bang', 'sameAs' => 'https://www.wikidata.org/wiki/Q11162'],
+        'mu-cang-chai'  => ['@type' => 'AdministrativeArea', 'name' => 'Mu Cang Chai', 'sameAs' => 'https://www.wikidata.org/wiki/Q6930267'],
+        'pu-luong'      => ['@type' => 'Place', 'name' => 'Pu Luong', 'sameAs' => 'https://www.wikidata.org/wiki/Q10808383'],
+        'cu-chi'        => ['@type' => 'TouristAttraction', 'name' => 'Cu Chi Tunnels', 'sameAs' => 'https://www.wikidata.org/wiki/Q192935'],
+        'trang-an'      => ['@type' => 'TouristAttraction', 'name' => 'Trang An', 'sameAs' => 'https://www.wikidata.org/wiki/Q10828551'],
+        'tam-coc'       => ['@type' => 'TouristAttraction', 'name' => 'Tam Coc', 'sameAs' => 'https://www.wikidata.org/wiki/Q7680468'],
+        'bai-tu-long'   => ['@type' => 'TouristAttraction', 'name' => 'Bai Tu Long Bay', 'sameAs' => 'https://www.wikidata.org/wiki/Q804153'],
+        'cham-islands'  => ['@type' => 'Place', 'name' => 'Cham Islands', 'sameAs' => 'https://www.wikidata.org/wiki/Q10752538'],
+        'ly-son'        => ['@type' => 'Place', 'name' => 'Ly Son Island', 'sameAs' => 'https://www.wikidata.org/wiki/Q10788329'],
+    ];
+
+    $matched_entities = [];
+    foreach ($entity_map as $key => $ent) {
+        if (strpos($uri_path, $key) !== false) {
+            $matched_entities[] = $ent;
+        }
+    }
+
+    $vietnam_entity = [
+        '@type' => 'Country',
+        'name' => 'Vietnam',
+        'sameAs' => 'https://www.wikidata.org/wiki/Q881',
+    ];
+
+    $primary_about = $matched_entities !== [] ? $matched_entities[0] : $vietnam_entity;
+    $mentions = array_merge([$vietnam_entity], $matched_entities);
+
+    $speakable = [
+        '@type' => 'SpeakableSpecification',
+        'cssSelector' => ['.vg-concierge-verdict', '.vg-at-a-glance'],
+    ];
+
+    $has_graph = isset($rewritten['@graph']) && is_array($rewritten['@graph']);
+    $nodes = &$rewritten;
+    if ($has_graph) {
+        $nodes = &$rewritten['@graph'];
+    }
+
+    foreach ($nodes as $node_key => &$node) {
+        if (! is_array($node)) {
+            continue;
+        }
+        $node_type = $node['@type'] ?? '';
+        $is_article = $node_type === 'Article' || (is_array($node_type) && in_array('Article', $node_type, true));
+        $is_webpage = $node_type === 'WebPage' || (is_array($node_type) && in_array('WebPage', $node_type, true));
+
+        if ($is_article || $is_webpage) {
+            if (! isset($node['about'])) {
+                $node['about'] = $primary_about;
+            }
+            if (! isset($node['mentions'])) {
+                $node['mentions'] = $mentions;
+            }
+            if ($is_article && ! isset($node['speakable'])) {
+                $node['speakable'] = $speakable;
+            }
+        }
+    }
+    unset($node);
+
+    return $rewritten;
 }
 add_filter('rank_math/json_ld', 'vg_filter_rank_math_json_ld', 99);
 

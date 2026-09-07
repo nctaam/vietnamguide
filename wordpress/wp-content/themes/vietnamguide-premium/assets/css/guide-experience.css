@@ -57,23 +57,34 @@
 .vg-guide-meta {
   display: flex;
   flex-wrap: wrap;
-  gap: 10px 24px;
+  gap: 8px 12px;
+  align-items: center;
   width: min(calc(100% - 96px), var(--vg-spine-max, 1186px));
   margin-inline: auto;
   padding-block: 18px;
   border-bottom: 1px solid var(--vg-line);
   color: var(--vg-guide-muted);
-  font-size: 13px;
+  font-size: 12px;
   font-weight: 700;
   letter-spacing: .06em;
   line-height: 1.35;
   text-transform: uppercase;
 }
 
+.vg-guide-meta span {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 12px;
+  border: 1px solid color-mix(in srgb, var(--vg-ink) 12%, transparent);
+  border-radius: 4px;
+  background: color-mix(in srgb, var(--vg-white) 65%, transparent);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  box-shadow: 0 1px 3px rgba(1, 45, 29, .03);
+}
+
 .vg-guide-meta span + span::before {
-  margin-right: 24px;
-  color: var(--vg-gold);
-  content: "\00b7";
+  display: none;
 }
 
 .vg-guide-jump {
@@ -282,6 +293,23 @@
   border-left: 4px solid var(--vg-gold);
 }
 
+.vg-guide-article .vg-concierge-verdict {
+  background: linear-gradient(180deg, var(--vg-white) 0%, color-mix(in srgb, var(--vg-paper) 32%, var(--vg-white)) 100%);
+  border-left: 4px solid var(--vg-gold);
+  box-shadow: 0 10px 32px rgba(1, 45, 29, .04);
+}
+
+.vg-guide-article .vg-verdict-lede {
+  color: var(--vg-guide-forest);
+  font-size: clamp(19px, 1.55vw, 22px);
+  line-height: 1.6;
+}
+
+.vg-guide-article .vg-field-note {
+  border-left: 4px solid var(--vg-jade);
+  background: color-mix(in srgb, var(--vg-white) 88%, var(--vg-limestone));
+}
+
 .vg-guide-article .vg-concierge-verdict > :first-child,
 .vg-guide-article .vg-at-a-glance > :first-child,
 .vg-guide-article .vg-related-routes > :first-child,
@@ -452,6 +480,18 @@
   font-weight: 800;
   letter-spacing: .08em;
   text-transform: uppercase;
+}
+
+.vg-guide-article .vg-decision-table tbody tr:nth-child(even),
+.vg-guide-article .vg-decision-table__scroll tbody tr:nth-child(even),
+.vg-guide-article .wp-block-table tbody tr:nth-child(even) {
+  background: color-mix(in srgb, var(--vg-paper) 45%, var(--vg-white));
+}
+
+.vg-guide-article .vg-decision-table td:first-child,
+.vg-guide-article .vg-decision-table__scroll td:first-child {
+  color: var(--vg-guide-forest);
+  font-weight: 700;
 }
 
 .vg-guide-article .vg-timeline {

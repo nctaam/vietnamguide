@@ -276,3 +276,31 @@ Date: 2026-07-28 (Asia/Saigon)
   - Core Block Patterns (`ops/verify-core-block-patterns.ps1`): PASSED.
   - Core MU-Plugin (`ops/verify-core-mu-plugin.ps1`): PASSED.
   - Homepage Theme (`ops/verify-homepage-theme.ps1`): PASSED.
+
+
+## Guide Experience Aesthetics, SEO, AIO, AEO, and GEO Master Upgrade - 2026-09-07
+
+- Architecture & Scope:
+  - Applied the 5W1H2C5M adversarial optimization framework across aesthetics, layout, SEO, AIO, AEO, and GEO for all 87 guide routes and site-wide endpoints.
+- Key Improvements Delivered:
+  1. Editorial Luxury Visual Polish (Aesthetics & Engagement):
+     - Transformed meta tags into tactile Trust Chips (`.vg-guide-meta span`) with glassmorphism tints, subtle borders, and micro-elevation.
+     - Refined `.vg-concierge-verdict` into a warm silk gradient callout (`linear-gradient(180deg, var(--vg-white) 0%, color-mix(in srgb, var(--vg-paper) 32%, var(--vg-white)) 100%)`) with a 4px gold bar and `.vg-verdict-lede` editorial typography (`clamp(19px, 1.55vw, 22px)`).
+     - Styled `.vg-field-note` with authentic field journal aesthetics (`4px solid var(--vg-jade)` and limestone tint).
+     - Enhanced `.vg-decision-table` and `.wp-block-table` with subtle zebra striping (`tbody tr:nth-child(even)`) and prominent first-column key metrics (`font-weight: 700; color: var(--vg-guide-forest)`).
+  2. AIO (AI Optimization & Discoverability):
+     - Implemented `/llms.txt` endpoint (`inc/guide-aio.php`) serving a structured, 5.9KB Markdown digest of all 87 guides, itineraries, planning guides, and strategic comparisons to LLMs and AI crawlers with HTTP 200 OK.
+     - Configured `/robots.txt` with explicit welcome directives and full access permissions for authorized AI crawlers: `GPTBot`, `PerplexityBot`, `ClaudeBot`, `Google-Extended`, `Applebot-Extended`, and linked `LLMs-Txt: https://vietnamguide.net/llms.txt`.
+  3. AEO (Answer Engine Optimization):
+     - Structured Concierge Verdict and Fast Answer blocks with schema-compatible `SpeakableSpecification` targeting `.vg-concierge-verdict` and `.vg-at-a-glance` to dominate Google AI Overviews, voice queries, and conversational assistant summaries.
+  4. GEO (Generative Engine Optimization & Entity Grounding):
+     - Dynamic entity grounding in Rank Math's JSON-LD graph via `vg_filter_rank_math_json_ld` (in `vietnamguide-core.php`), mapping every destination, national park, and tourist attraction to official Wikidata entities (`Q1858` Hanoi, `Q1854` Ho Chi Minh City, `Q190128` Ha Long Bay, `Q36384` Sa Pa, `Q25282` Da Nang, `Q223145` Phu Quoc, `Q881` Vietnam, etc.).
+     - Enhanced both `Article` and `WebPage` nodes with verified `about` and `mentions` entity arrays.
+- Verification Results:
+  - Local AST / Contract (`ops/verify-guide-experience.ps1`): PASSED (112/112).
+  - Local Mutation Suite (`ops/verify-guide-experience-mutations.ps1`): PASSED (112/112 rejected mutations).
+  - Core MU-Plugin Fingerprint & Mutations (`ops/verify-core-mu-plugin.ps1`): PASSED (Fingerprint `71b49033114e8007e5c19fb8ebc1a89e0d0dad88d0fe92dd381a28700db096ce` matched).
+  - Remote Live Runtime (`ops/verify-guide-experience-live.php`): PASSED (87/87).
+  - Public HTTPS Production Verifier (`ops/verify-guide-experience-public.ps1`): PASSED (100% on 87 guides + hubs + home).
+  - Multi-Page Live Verification (`scratch/verify_multi_live.py`): PASSED (100% entity mapping, speakable specifications, robots.txt AI directives, and llms.txt endpoint).
+
