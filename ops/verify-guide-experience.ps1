@@ -2005,7 +2005,7 @@ foreach ($Selector in $KeyGuideSelectors) {
     Require-Contains $GuideCss $Selector
 }
 
-Require-Contains $GuideCss 'grid-template-columns: minmax(148px, 190px) minmax(0, 760px) minmax(190px, 240px)'
+Require-Contains $GuideCss 'grid-template-columns: minmax(160px, 176px) minmax(0, 690px) minmax(200px, 224px)'
 Require-Contains $GuideCss '@media (max-width: 1100px)'
 Require-Contains $GuideCss '@media (max-width: 960px)'
 Require-Contains $GuideCss '@media (max-width: 620px)'

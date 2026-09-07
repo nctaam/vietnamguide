@@ -198,6 +198,37 @@ Date: 2026-07-28 (Asia/Saigon)
   - Core MU-Plugin (`ops/verify-core-mu-plugin.ps1`): PASSED.
 - Homepage Theme (`ops/verify-homepage-theme.ps1`): PASSED.
 
+## Guide Experience Layout & Spatial Grid Milestone (5W1H2C5M Adversarial Upgrade) - 2026-09-07
+
+- Architecture & Scope:
+  - Re-architected the macro-layout, spatial grid, reading ergonomics, and vertical modular cadence in `wordpress/wp-content/themes/vietnamguide-premium/assets/css/guide-experience.css` and synchronized AST contract in `ops/verify-guide-experience.ps1`.
+- Key Improvements Delivered:
+  1. Golden-Ratio 3-Column Spine Grid (`.vg-guide-spine`):
+     - Transitioned from `minmax(148px, 190px) minmax(0, 760px) minmax(190px, 240px)` with `clamp(28px, 4vw, 64px)` to `minmax(160px, 176px) minmax(0, 690px) minmax(200px, 224px)` with `clamp(24px, 3.2vw, 48px)`.
+     - Total width reduced from 1318px to 1186px, eliminating grid-shrink collisions inside the 1280px `--vg-wide` container on laptop displays.
+  2. Optimal Typographic Measure (Line Length / CPL):
+     - Center article column locked to 690px max-width, producing 68–74 characters per line at body font size `clamp(17px, 1.45vw, 19px)`. Complies with Bringhurst typographic standards and WCAG 1.4.12 guidance to prevent reading fatigue on long-form guides.
+  3. Vertical Modular Cadence (8-pt Scale):
+     - Standardized arbitrary margins (`36px`, `44px`, `72px`, `104px`) to clean 8-pt modular values:
+       - Heading 2: `margin: clamp(56px, 7vw, 96px) 0 24px;` (preserving `clamp(34px, 4vw, 56px)` and `scroll-margin-top` contract).
+       - Heading 3: `margin: 40px 0 16px;`.
+       - Callouts & Notes (`.vg-concierge-verdict`, `.vg-field-note`, etc.): `margin-block: clamp(32px, 5vw, 64px);`.
+       - Route Cards Grid: `margin-block: 40px;`.
+  4. Visual Weight Balance & Rail Symmetry:
+     - Softened right Trust Card shadow to `rgba(1, 45, 29, .05)` and normalized padding to `16px 18px` to prevent visual heaviness pulling reader gaze away from central editorial prose.
+     - Updated `.alignwide` breakout formula to `min(1040px, calc(100vw - 96px))` with symmetrical compensation `(690px - ...) / 2`.
+  5. Mobile Table Symmetric Centering:
+     - Replaced asymmetrical `-6px` margin on small screens (`<= 620px`) with symmetrical `margin-inline: -10px; width: calc(100% + 20px); max-width: calc(100vw - 12px);`, eliminating horizontal viewport wobble and preserving 100% WCAG 1.4.10 reflow.
+- Verification Results:
+  - Local AST / Contract (`ops/verify-guide-experience.ps1`): PASSED (112/112).
+  - Local Mutation Suite (`ops/verify-guide-experience-mutations.ps1`): PASSED (112/112 rejected mutations).
+  - Remote Live Runtime (`ops/verify-guide-experience-live.php`): PASSED (87/87).
+  - Public HTTPS Production Verifier (`ops/verify-guide-experience-public.ps1`): PASSED (100% on 87 guides + hubs + home).
+  - Core Block Patterns (`ops/verify-core-block-patterns.ps1`): PASSED.
+  - Core MU-Plugin (`ops/verify-core-mu-plugin.ps1`): PASSED.
+  - Homepage Theme (`ops/verify-homepage-theme.ps1`): PASSED.
+
+
 ## Guide Experience UI/UX Polish Milestone (5W1H2C5M Adversarial Upgrade) - 2026-09-07
 
 - Architecture & Scope:

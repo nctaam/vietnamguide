@@ -81,8 +81,8 @@
 
 .vg-guide-spine {
   display: grid;
-  grid-template-columns: minmax(148px, 190px) minmax(0, 760px) minmax(190px, 240px);
-  gap: clamp(28px, 4vw, 64px);
+  grid-template-columns: minmax(160px, 176px) minmax(0, 690px) minmax(200px, 224px);
+  gap: clamp(24px, 3.2vw, 44px);
   justify-content: center;
   width: min(calc(100% - 96px), var(--vg-wide));
   margin-inline: auto;
@@ -177,7 +177,7 @@
 }
 
 .vg-guide-article h2 {
-  margin: clamp(64px, 8vw, 104px) 0 24px;
+  margin: clamp(56px, 7vw, 96px) 0 24px;
   scroll-margin-top: calc(var(--vg-header-height) + 24px);
   color: var(--vg-jade);
   font-size: clamp(34px, 4vw, 56px);
@@ -186,7 +186,7 @@
 }
 
 .vg-guide-article h3 {
-  margin: 44px 0 16px;
+  margin: 40px 0 16px;
   color: var(--vg-ink);
   font-size: clamp(25px, 3vw, 34px);
   letter-spacing: -.02em;
@@ -227,9 +227,9 @@
 }
 
 .vg-guide-article .alignwide {
-  width: min(1080px, calc(100vw - 96px));
+  width: min(1040px, calc(100vw - 96px));
   max-width: none;
-  margin-inline: max(calc((760px - min(1080px, calc(100vw - 96px))) / 2), calc(50% - 50vw + 48px));
+  margin-inline: max(calc((690px - min(1040px, calc(100vw - 96px))) / 2), calc(50% - 50vw + 48px));
 }
 
 .vg-guide-trust {
@@ -243,10 +243,10 @@
 .vg-guide-trust > div {
   display: grid;
   gap: 5px;
-  padding: 17px 18px;
+  padding: 16px 18px;
   border-top: 3px solid var(--vg-gold);
   background: var(--vg-white);
-  box-shadow: 0 12px 36px rgba(1, 45, 29, .07);
+  box-shadow: 0 8px 28px rgba(1, 45, 29, .05);
 }
 
 .vg-guide-trust strong {
@@ -269,7 +269,7 @@
 .vg-guide-article .vg-related-routes,
 .vg-guide-article .vg-proof-panel,
 .vg-guide-article .vg-source-trail {
-  margin-block: clamp(36px, 6vw, 72px);
+  margin-block: clamp(32px, 5vw, 64px);
   padding: clamp(24px, 4vw, 40px);
   border: 1px solid var(--vg-line);
   background: var(--vg-white);
@@ -377,7 +377,7 @@
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 20px;
-  margin-block: 44px;
+  margin-block: 40px;
 }
 
 .vg-guide-article .vg-related-card,
@@ -751,9 +751,9 @@
 
   .vg-guide-article .vg-decision-table__scroll,
   .vg-guide-article .wp-block-table {
-    width: calc(100vw - 20px);
-    max-width: calc(100vw - 20px);
-    margin-inline: -6px;
+    width: calc(100% + 20px);
+    max-width: calc(100vw - 12px);
+    margin-inline: -10px;
   }
 
   .vg-guide-article .vg-proof-panel dl > div,
