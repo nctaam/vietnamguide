@@ -41,6 +41,13 @@ if (class_exists('WP_HTML_Tag_Processor')) {
                 ]);
                 ?>
             </div>
+            <div class="vg-share-bar">
+                <span class="vg-share-label"><?php esc_html_e('Share this page:', 'vietnamguide-premium'); ?></span>
+                <button type="button" class="vg-copy-link" data-vg-copy-link aria-label="<?php esc_attr_e('Copy page link to clipboard', 'vietnamguide-premium'); ?>">
+                    <span class="vg-copy-link__icon" aria-hidden="true">&#128279;</span>
+                    <span class="vg-copy-link__text"><?php esc_html_e('Copy link', 'vietnamguide-premium'); ?></span>
+                </button>
+            </div>
         </article>
     </div>
 </section>

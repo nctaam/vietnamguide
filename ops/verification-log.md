@@ -464,5 +464,19 @@ Date: 2026-07-28 (Asia/Saigon)
   - Public HTTPS Production Verifier (`ops/verify-guide-experience-public.ps1`): PASSED (100% on all 87 routes).
   - Stage 11 Live Verifier (`scratch/verify_stage11_live.py`): PASSED (100% on live `text-wrap: balance`, `.vg-editorial-card`, `.vg-share-bar`, `.vg-copy-link`, clipboard copy JS listener, `/` keyboard shortcut, and search results page).
 
+## Reading Progress Indicator, Static Page Share Bar & Selection Craft - 2026-09-07
+
+- Architecture & Scope (Stage 12):
+  - Completed interaction ergonomics and unified sharing across all page types:
+    - Precision Reading Progress Indicator: Added `.vg-reading-progress` attached to `.vg-site-header` in `homepage.css` and `homepage.js`, with dual-tone gradient fill (`linear-gradient(90deg, var(--vg-gold), var(--vg-jade))`) using RAF-throttled passive scroll listening. Automatically hidden in `@media (prefers-reduced-motion: reduce)` and `@media print`.
+    - Standard Content Page Share Bar: Integrated `.vg-share-bar` with `.vg-copy-link` button in `template-parts/content-page.php`, bringing one-click sharing and copy-link confirmation to all static editorial/legal pages (`/about/`, `/editorial-policy/`, `/source-update-policy/`, `/privacy-policy/`, `/contact/`).
+    - Delegated Copy Link Handler: Refactored `homepage.js` to handle any `[data-vg-copy-link]` element via event delegation, ensuring instant clipboard copy and visual feedback across both static and dynamic articles.
+    - Heritage Gold Text Selection: Added `::selection { background: var(--vg-gold); color: var(--vg-ink); }` in `homepage.css` for consistent, luxury brand contrast when readers select travel tips.
+- Verification Evidence:
+  - Local AST / Contract (`ops/verify-guide-experience.ps1`): PASSED (112/112).
+  - Local Homepage Theme Checks (`ops/verify-homepage-theme.ps1`): PASSED.
+  - Core MU-Plugin Fingerprint & Mutations (`ops/verify-core-mu-plugin.ps1`): PASSED (Fingerprint `71b49033114e8007e5c19fb8ebc1a89e0d0dad88d0fe92dd381a28700db096ce` perfectly preserved).
+
+
 
 

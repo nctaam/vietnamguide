@@ -36,6 +36,11 @@ body {
   text-rendering: optimizeLegibility;
 }
 
+::selection {
+  background: var(--vg-gold);
+  color: var(--vg-ink);
+}
+
 h1, h2, h3, h4 {
   text-wrap: balance;
 }
@@ -142,6 +147,18 @@ img {
   backdrop-filter: blur(12px);
   color: var(--vg-ink);
   transition: background-color 240ms ease, border-color 240ms ease, color 240ms ease;
+}
+
+.vg-reading-progress {
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  height: 2.5px;
+  width: 0%;
+  background: linear-gradient(90deg, var(--vg-gold), var(--vg-jade));
+  pointer-events: none;
+  z-index: 10;
+  transition: width 60ms linear;
 }
 
 .home .vg-site-header {
@@ -2353,6 +2370,10 @@ nav[aria-label="Breadcrumbs"] a:hover {
   .vg-js [data-vg-reveal] {
     opacity: 1;
     transform: none;
+  }
+
+  .vg-reading-progress {
+    display: none !important;
   }
 }
 

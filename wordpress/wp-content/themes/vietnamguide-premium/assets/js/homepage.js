@@ -101,25 +101,52 @@
     });
   }
 
-  var copyBtn = document.querySelector('[data-vg-copy-link]');
-  if (copyBtn) {
-    copyBtn.addEventListener('click', function () {
-      if (navigator.clipboard && navigator.clipboard.writeText) {
-        navigator.clipboard.writeText(window.location.href).then(function () {
-          var textSpan = copyBtn.querySelector('.vg-copy-link__text');
-          if (textSpan) {
-            var originalText = textSpan.textContent;
-            textSpan.textContent = 'Link copied!';
-            copyBtn.classList.add('is-copied');
-            setTimeout(function () {
-              textSpan.textContent = originalText;
-              copyBtn.classList.remove('is-copied');
-            }, 2400);
-          }
-        });
+  var siteHeader = document.querySelector('.vg-site-header');
+  if (siteHeader && !reducedMotion) {
+    var progressBar = document.createElement('div');
+    progressBar.className = 'vg-reading-progress';
+    progressBar.setAttribute('aria-hidden', 'true');
+    siteHeader.appendChild(progressBar);
+
+    var progressTicking = false;
+    function updateReadingProgress() {
+      var docElem = document.documentElement;
+      var maxScroll = docElem.scrollHeight - window.innerHeight;
+      var percent = maxScroll > 0 ? (window.scrollY / maxScroll) * 100 : 0;
+      progressBar.style.width = Math.min(100, Math.max(0, percent)) + '%';
+      progressTicking = false;
+    }
+
+    window.addEventListener('scroll', function () {
+      if (!progressTicking) {
+        window.requestAnimationFrame(updateReadingProgress);
+        progressTicking = true;
       }
-    });
+    }, { passive: true });
+    updateReadingProgress();
   }
+
+  document.addEventListener('click', function (e) {
+    var target = e.target;
+    var copyBtn = target && target.closest ? target.closest('[data-vg-copy-link]') : null;
+    if (!copyBtn) {
+      return;
+    }
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(window.location.href).then(function () {
+        var textSpan = copyBtn.querySelector('.vg-copy-link__text');
+        if (textSpan) {
+          var originalText = textSpan.textContent;
+          textSpan.textContent = 'Link copied!';
+          copyBtn.classList.add('is-copied');
+          setTimeout(function () {
+            textSpan.textContent = originalText;
+            copyBtn.classList.remove('is-copied');
+          }, 2400);
+        }
+      });
+    }
+  });
 
   document.addEventListener('keydown', function (e) {
     if (e.key === '/' && !['INPUT', 'TEXTAREA', 'SELECT'].includes(document.activeElement.tagName)) {
