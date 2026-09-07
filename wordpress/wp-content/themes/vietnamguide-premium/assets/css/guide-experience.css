@@ -2,6 +2,7 @@
   --vg-guide-progress: 0;
   --vg-guide-muted: #5e625e;
   --vg-guide-forest: #012d1d;
+  --vg-spine-max: 1186px;
   overflow-x: clip;
   background: var(--vg-paper);
   color: var(--vg-ink);
@@ -57,7 +58,7 @@
   display: flex;
   flex-wrap: wrap;
   gap: 10px 24px;
-  width: min(calc(100% - 96px), var(--vg-wide));
+  width: min(calc(100% - 96px), var(--vg-spine-max, 1186px));
   margin-inline: auto;
   padding-block: 18px;
   border-bottom: 1px solid var(--vg-line);
@@ -82,9 +83,9 @@
 .vg-guide-spine {
   display: grid;
   grid-template-columns: minmax(160px, 176px) minmax(0, 690px) minmax(200px, 224px);
-  gap: clamp(24px, 3.2vw, 44px);
+  gap: clamp(24px, 3.2vw, 48px);
   justify-content: center;
-  width: min(calc(100% - 96px), var(--vg-wide));
+  width: min(calc(100% - 96px), var(--vg-spine-max, 1186px));
   margin-inline: auto;
   padding-block: clamp(64px, 8vw, 112px);
 }
@@ -563,6 +564,8 @@
 }
 
 .vg-guide-related {
+  width: min(calc(100% - 96px), var(--vg-spine-max, 1186px));
+  margin-inline: auto;
   padding-block: clamp(64px, 8vw, 104px);
   border-top: 1px solid var(--vg-line);
 }
@@ -580,6 +583,9 @@
 }
 
 .vg-guide-related ul {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 0 clamp(24px, 4vw, 48px);
   margin: 0;
   padding: 0;
   border-top: 1px solid var(--vg-line);
@@ -636,10 +642,16 @@
 
   .vg-guide-jump {
     display: block;
+    position: sticky;
+    top: var(--vg-header-height);
+    z-index: 95;
     width: 100%;
     overflow-x: auto;
     border-bottom: 1px solid var(--vg-line);
-    background: color-mix(in srgb, var(--vg-paper) 96%, transparent);
+    background: color-mix(in srgb, var(--vg-paper) 92%, transparent);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    box-shadow: 0 4px 16px rgba(1, 45, 29, .06);
     overscroll-behavior-inline: contain;
     scrollbar-width: none;
     mask-image: linear-gradient(to right, #000 calc(100% - 32px), transparent 100%);
@@ -695,6 +707,10 @@
     grid-column: 1;
     grid-template-columns: repeat(2, minmax(0, 1fr));
     margin-top: 20px;
+  }
+
+  .vg-guide-article h2 {
+    scroll-margin-top: calc(var(--vg-header-height) + 84px);
   }
 
   .vg-guide-article .alignwide {

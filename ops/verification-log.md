@@ -198,6 +198,33 @@ Date: 2026-07-28 (Asia/Saigon)
   - Core MU-Plugin (`ops/verify-core-mu-plugin.ps1`): PASSED.
 - Homepage Theme (`ops/verify-homepage-theme.ps1`): PASSED.
 
+## Guide Experience Layout Phase 2 Milestone (Sticky Mobile Nav & Optical Alignment) - 2026-09-07
+
+- Architecture & Scope:
+  - Deep layout optimization in `wordpress/wp-content/themes/vietnamguide-premium/assets/css/guide-experience.css` targeting mobile navigation stickiness, optical left-edge alignment, and editorial 2-column related routes grid.
+- Key Improvements Delivered:
+  1. Optical Left-Edge Alignment (`--vg-spine-max: 1186px`):
+     - Synchronized maximum width across `.vg-guide-meta`, `.vg-guide-spine`, and `.vg-guide-related` using `width: min(calc(100% - 96px), var(--vg-spine-max, 1186px))`.
+     - Eliminated the 47px left-edge misalignment between the meta ribbon and table of contents rail, achieving a clean vertical axis of symmetry.
+  2. Mobile Sticky Jump Navigation (`.vg-guide-jump`):
+     - Upgraded to `position: sticky; top: var(--vg-header-height); z-index: 95;` with `backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);` and subtle shadow `0 4px 16px rgba(1, 45, 29, .06)`.
+     - Allows mobile readers to access one-tap section jumping from any point in long-form guides (3,000–5,000 words).
+  3. Mobile Heading Scroll Margin Compensation (WCAG 2.4.11):
+     - Added `.vg-guide-article h2 { scroll-margin-top: calc(var(--vg-header-height) + 84px); }` under `@media (max-width: 960px)`.
+     - Prevents target section headings from being obscured beneath the sticky jump bar when jumping to anchors on mobile.
+  4. Editorial 2-Column Related Guides Grid:
+     - Converted `.vg-guide-related ul` from a single wide list into an editorial responsive grid (`grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 0 clamp(24px, 4vw, 48px);`).
+     - Delivers magazine-quality end-of-guide navigation on desktop and tablet while maintaining a clean single column on mobile screens.
+- Verification Results:
+  - Local AST / Contract (`ops/verify-guide-experience.ps1`): PASSED (112/112).
+  - Local Mutation Suite (`ops/verify-guide-experience-mutations.ps1`): PASSED (112/112 rejected mutations).
+  - Remote Live Runtime (`ops/verify-guide-experience-live.php`): PASSED (87/87).
+  - Public HTTPS Production Verifier (`ops/verify-guide-experience-public.ps1`): PASSED (100% on 87 guides + hubs + home).
+  - Core Block Patterns (`ops/verify-core-block-patterns.ps1`): PASSED.
+  - Core MU-Plugin (`ops/verify-core-mu-plugin.ps1`): PASSED.
+  - Homepage Theme (`ops/verify-homepage-theme.ps1`): PASSED.
+
+
 ## Guide Experience Layout & Spatial Grid Milestone (5W1H2C5M Adversarial Upgrade) - 2026-09-07
 
 - Architecture & Scope:
