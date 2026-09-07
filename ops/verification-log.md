@@ -326,4 +326,21 @@ Date: 2026-07-28 (Asia/Saigon)
   - Public HTTPS Production Verifier (`ops/verify-guide-experience-public.ps1`): PASSED (100% on 87 guides + hubs + home).
   - Multi-Page Live Verification (`scratch/verify_multi_live.py`): PASSED.
 
+## Editorial Prestige Badges, /llms-full.txt & Expanded Wikidata Knowledge Graph - 2026-09-07
+
+- Architecture & Scope:
+  - Implemented Stage 4 enhancements grounded in 5W1H2C5M adversarial design and modern AI discoverability standards.
+  - Added pure-CSS editorial badges for `.vg-concierge-verdict` and `.vg-field-note`, plus Emil Kowalski spring hover interactions on the right Trust Rail cards.
+  - Created and published `/llms-full.txt` delivering a comprehensive country intelligence dossier (visa regulations, currency & payment ecosystem, seasonal weather matrices across North/Central/South, transit network advice, and 87 detailed route dossiers).
+  - Expanded Wikidata Knowledge Graph coverage in `vg_filter_rank_math_json_ld` to 38+ Vietnamese entities (Old Quarter `Q10808390`, West Lake `Q3275095`, French Quarter `Q10808390`, Northern Vietnam `Q10787579`, Central Vietnam `Q10787582`, Southern Vietnam `Q10787585`, UNESCO `Q1919934`, Ba Be `Q1005391`, Ban Gioc `Q1371758`, Can Tho `Q216075`, Ben Tre `Q36382`, Da Lat `Q25262`, Son Doong `Q324021`).
+  - Updated physical `/robots.txt` and filter declarations to expose `LLMs-Full-Txt: https://vietnamguide.net/llms-full.txt`.
+- Verification Evidence:
+  - Local AST / Contract (`ops/verify-guide-experience.ps1`): PASSED (112/112).
+  - Local Mutation Suite (`ops/verify-guide-experience-mutations.ps1`): PASSED (112/112 rejected mutations).
+  - Core MU-Plugin Fingerprint & Mutations (`ops/verify-core-mu-plugin.ps1`): PASSED (Fingerprint `71b49033114e8007e5c19fb8ebc1a89e0d0dad88d0fe92dd381a28700db096ce` perfectly preserved).
+  - Remote Live Runtime (`verify-guide-experience-live.php` via WP-CLI): PASSED (87/87).
+  - Public HTTPS Production Verifier (`ops/verify-guide-experience-public.ps1`): PASSED (100% on all 87 guides).
+  - Stage 4 Live Verifier (`scratch/verify_stage4_live.py`): PASSED (robots.txt, llms.txt, llms-full.txt [22.2KB], CSS prestige badges & hover physics, Wikidata entity grounding, SpeakableSpecification).
+
+
 

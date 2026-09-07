@@ -879,6 +879,19 @@ function vg_filter_rank_math_json_ld(array $data): array
         'bai-tu-long'   => ['@type' => 'TouristAttraction', 'name' => 'Bai Tu Long Bay', 'sameAs' => 'https://www.wikidata.org/wiki/Q804153'],
         'cham-islands'  => ['@type' => 'Place', 'name' => 'Cham Islands', 'sameAs' => 'https://www.wikidata.org/wiki/Q10752538'],
         'ly-son'        => ['@type' => 'Place', 'name' => 'Ly Son Island', 'sameAs' => 'https://www.wikidata.org/wiki/Q10788329'],
+        'old-quarter'   => ['@type' => 'TouristAttraction', 'name' => 'Old Quarter, Hanoi', 'sameAs' => 'https://www.wikidata.org/wiki/Q10808390'],
+        'west-lake'     => ['@type' => 'TouristAttraction', 'name' => 'West Lake (Hanoi)', 'sameAs' => 'https://www.wikidata.org/wiki/Q3275095'],
+        'french-quarter'=> ['@type' => 'TouristAttraction', 'name' => 'French Quarter, Hanoi', 'sameAs' => 'https://www.wikidata.org/wiki/Q10808390'],
+        'north'         => ['@type' => 'AdministrativeArea', 'name' => 'Northern Vietnam', 'sameAs' => 'https://www.wikidata.org/wiki/Q10787579'],
+        'central'       => ['@type' => 'AdministrativeArea', 'name' => 'Central Vietnam', 'sameAs' => 'https://www.wikidata.org/wiki/Q10787582'],
+        'south'         => ['@type' => 'AdministrativeArea', 'name' => 'Southern Vietnam', 'sameAs' => 'https://www.wikidata.org/wiki/Q10787585'],
+        'unesco'        => ['@type' => 'TouristAttraction', 'name' => 'World Heritage Sites in Vietnam', 'sameAs' => 'https://www.wikidata.org/wiki/Q1919934'],
+        'ba-be'         => ['@type' => 'NationalPark', 'name' => 'Ba Be National Park', 'sameAs' => 'https://www.wikidata.org/wiki/Q1005391'],
+        'ban-gioc'      => ['@type' => 'TouristAttraction', 'name' => 'Ban Gioc–Detian Falls', 'sameAs' => 'https://www.wikidata.org/wiki/Q1371758'],
+        'can-tho'       => ['@type' => 'City', 'name' => 'Can Tho', 'sameAs' => 'https://www.wikidata.org/wiki/Q216075'],
+        'ben-tre'       => ['@type' => 'AdministrativeArea', 'name' => 'Ben Tre Province', 'sameAs' => 'https://www.wikidata.org/wiki/Q36382'],
+        'da-lat'        => ['@type' => 'City', 'name' => 'Da Lat', 'sameAs' => 'https://www.wikidata.org/wiki/Q25262'],
+        'son-doong'     => ['@type' => 'TouristAttraction', 'name' => 'Hang Son Doong', 'sameAs' => 'https://www.wikidata.org/wiki/Q324021'],
     ];
 
     $matched_entities = [];
