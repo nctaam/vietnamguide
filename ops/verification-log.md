@@ -196,5 +196,25 @@ Date: 2026-07-28 (Asia/Saigon)
   - Mutation Test Suite (`ops/verify-guide-experience-mutations.ps1`): 112/112 rejected mutations PASSED (0 failures, 0 regressions).
   - Core Block Patterns (`ops/verify-core-block-patterns.ps1`): PASSED.
   - Core MU-Plugin (`ops/verify-core-mu-plugin.ps1`): PASSED.
-  - Homepage Theme (`ops/verify-homepage-theme.ps1`): PASSED.
+- Homepage Theme (`ops/verify-homepage-theme.ps1`): PASSED.
 
+## Guide Experience UI/UX Polish Milestone (5W1H2C5M Adversarial Upgrade) - 2026-09-07
+
+- Architecture & Scope:
+  - Enhanced `guide-experience.css` and `guide-experience.js` across all 87 live Guide Experience URLs based on the 5W1H2C5M adversarial UI specification.
+- Key Improvements Delivered:
+  1. Reading Progress Bar GPU Compositing: Upgraded from layout-thrashing `width: calc(...)` to hardware-accelerated `transform: scaleX(calc(var(--vg-guide-progress) / 100))` with `transform-origin: 0 50%`, `will-change: transform`, and gradient glow (`box-shadow: 0 1px 6px rgba(197, 160, 89, .4)`). Preserved contract `background: var(--vg-gold);`.
+  2. Mobile Jump Navigation Auto-Centering & Accessibility:
+     - Raised touch target height to WCAG 2.2 AA compliant 44px (`min-height: 44px`, `padding: 10px 16px`, `display: inline-flex`).
+     - Added smooth auto-scroll centering in `setActive()` when sections change during reading, eliminating spatial disorientation without scroll hijacking.
+     - Added subtle CSS scroll affordance mask (`mask-image: linear-gradient(to right, #000 calc(100% - 32px), transparent 100%)`).
+  3. Decision Table Scroll Shadows: Implemented pure CSS background scroll shadows on `.vg-decision-table__scroll` and `.wp-block-table`, giving instant visual affordance when tables overflow horizontally on mobile screens.
+  4. Spatial TOC Step Numbers: Added numbered section indicators (`01`, `02`, `03`...) using CSS counters (`counter-reset: vg-toc-step`, `counter(vg-toc-step, decimal-leading-zero)`) in mono font, highlighting active reading position.
+- Verification Results:
+  - Local AST / Contract (`ops/verify-guide-experience.ps1`): PASSED (112/112).
+  - JavaScript Runtime Test (`ops/verify-guide-experience-js-runtime.js`): PASSED.
+  - Remote Live Runtime (`ops/verify-guide-experience-live.php`): PASSED (87/87).
+  - Public HTTPS Production Verifier (`ops/verify-guide-experience-public.ps1`): PASSED (100% on 87 guides + hubs + home).
+  - Core Block Patterns (`ops/verify-core-block-patterns.ps1`): PASSED.
+  - Core MU-Plugin (`ops/verify-core-mu-plugin.ps1`): PASSED.
+  - Homepage Theme (`ops/verify-homepage-theme.ps1`): PASSED.

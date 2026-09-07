@@ -76,6 +76,13 @@
       target.link.classList.toggle('is-active', isActive);
       if (isActive) {
         target.link.setAttribute('aria-current', 'location');
+        if (typeof target.link.closest === 'function') {
+          var jumpRail = target.link.closest('.vg-guide-jump');
+          if (jumpRail && typeof jumpRail.scrollTo === 'function') {
+            var offset = target.link.offsetLeft - (jumpRail.clientWidth / 2) + (target.link.offsetWidth / 2);
+            jumpRail.scrollTo({ left: Math.max(0, offset), behavior: 'smooth' });
+          }
+        }
       } else {
         target.link.removeAttribute('aria-current');
       }
