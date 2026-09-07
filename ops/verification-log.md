@@ -342,5 +342,23 @@ Date: 2026-07-28 (Asia/Saigon)
   - Public HTTPS Production Verifier (`ops/verify-guide-experience-public.ps1`): PASSED (100% on all 87 guides).
   - Stage 4 Live Verifier (`scratch/verify_stage4_live.py`): PASSED (robots.txt, llms.txt, llms-full.txt [22.2KB], CSS prestige badges & hover physics, Wikidata entity grounding, SpeakableSpecification).
 
+## Stitch Comparison Screen, Editorial Typography Polish & Schema BreadcrumbList - 2026-09-07
+
+- Architecture & Scope:
+  - Generated third reference screen on Google Stitch AI (`1938f814ef5c4a1988f6b2cfa5ba7c98` - "Ha Long vs Lan Ha | Editorial Comparison", 2560x5878 DESKTOP) exploring head-to-head route duel cards, dark forest zebra matrix, and resident captain pull-quotes.
+  - Implemented complete editorial typography styling in `guide-experience.css`:
+    - `.vg-guide-article blockquote`: Warm silk background, 4px Heritage Gold border, Lora italic 24px, uppercase `<cite>` tracking 0.08em.
+    - `.vg-guide-article figure` & `figcaption`: Centered, 13px muted typography with generous vertical margins.
+    - `.vg-guide-article hr`: Centered 120px elegant section dividers.
+    - `.vg-guide-article ul` & `ol` markers: Jade green bullet points and Heritage Gold monospace numeral markers.
+  - Enhanced Schema JSON-LD in `vg_filter_rank_math_json_ld`: Linked `Article` directly to `BreadcrumbList` (`#breadcrumb`) to provide direct hierarchical breadcrumb indexing for search engines and AI answer engines.
+- Verification Evidence:
+  - Local AST / Contract (`ops/verify-guide-experience.ps1`): PASSED (112/112).
+  - Core MU-Plugin Fingerprint & Mutations (`ops/verify-core-mu-plugin.ps1`): PASSED (Fingerprint `71b49033114e8007e5c19fb8ebc1a89e0d0dad88d0fe92dd381a28700db096ce` perfectly preserved).
+  - Remote Live Runtime (`verify-guide-experience-live.php` via WP-CLI): PASSED (87/87).
+  - Public HTTPS Production Verifier (`ops/verify-guide-experience-public.ps1`): PASSED (100% on all 87 guides).
+  - Stage 5 Live Verifier (`scratch/verify_stage5_live.py`): PASSED (Live CSS typography rules & Article BreadcrumbList schema links).
+
+
 
 

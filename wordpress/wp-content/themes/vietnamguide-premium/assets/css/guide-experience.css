@@ -244,6 +244,81 @@
   margin-inline: max(calc((690px - min(1040px, calc(100vw - 96px))) / 2), calc(50% - 50vw + 48px));
 }
 
+.vg-guide-article blockquote,
+.vg-guide-article .wp-block-quote {
+  position: relative;
+  margin: clamp(32px, 5vw, 56px) 0;
+  padding: clamp(20px, 3.5vw, 36px) clamp(24px, 4vw, 44px);
+  border-left: 4px solid var(--vg-gold);
+  background: color-mix(in srgb, var(--vg-paper) 40%, var(--vg-white));
+  box-shadow: 0 8px 30px rgba(1, 45, 29, .03);
+}
+
+.vg-guide-article blockquote p,
+.vg-guide-article .wp-block-quote p {
+  margin: 0 0 12px;
+  color: var(--vg-guide-forest);
+  font-family: var(--vg-display);
+  font-size: clamp(20px, 2.1vw, 26px);
+  font-style: italic;
+  line-height: 1.45;
+}
+
+.vg-guide-article blockquote cite,
+.vg-guide-article .wp-block-quote cite {
+  display: block;
+  color: var(--vg-guide-muted);
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 700;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+
+.vg-guide-article figure,
+.vg-guide-article .wp-block-image {
+  margin-block: clamp(28px, 4.5vw, 48px);
+}
+
+.vg-guide-article figcaption,
+.vg-guide-article .wp-element-caption {
+  margin-top: 10px;
+  color: var(--vg-guide-muted);
+  font-size: 13px;
+  font-style: normal;
+  line-height: 1.5;
+  text-align: center;
+}
+
+.vg-guide-article hr,
+.vg-guide-article .wp-block-separator {
+  max-width: 120px;
+  margin: clamp(48px, 7vw, 80px) auto;
+  border: 0;
+  border-top: 2px solid var(--vg-line);
+}
+
+.vg-guide-article ul,
+.vg-guide-article ol {
+  margin: 24px 0;
+  padding-left: 28px;
+}
+
+.vg-guide-article li + li {
+  margin-top: 10px;
+}
+
+.vg-guide-article ul > li::marker {
+  color: var(--vg-jade);
+}
+
+.vg-guide-article ol > li::marker {
+  color: var(--vg-gold);
+  font-family: var(--vg-mono, monospace);
+  font-weight: 700;
+}
+
+
 .vg-guide-trust {
   position: sticky;
   top: calc(var(--vg-header-height) + 32px);

@@ -939,6 +939,11 @@ function vg_filter_rank_math_json_ld(array $data): array
             if ($is_article && ! isset($node['speakable'])) {
                 $node['speakable'] = $speakable;
             }
+            if ($is_article && ! isset($node['breadcrumb'])) {
+                $canonical_base = function_exists('home_url') ? untrailingslashit(home_url()) : 'https://vietnamguide.net';
+                $breadcrumb_id = ($uri_path !== '') ? "{$canonical_base}/{$uri_path}/#breadcrumb" : "{$canonical_base}/#breadcrumb";
+                $node['breadcrumb'] = ['@id' => $breadcrumb_id];
+            }
         }
     }
     unset($node);
