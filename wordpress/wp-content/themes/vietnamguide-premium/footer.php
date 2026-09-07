@@ -29,6 +29,7 @@
             <ul class="vg-footer-links vg-footer-links--legal">
                 <li><a href="<?php echo esc_url(vg_home_url('about')); ?>"><?php esc_html_e('About', 'vietnamguide-premium'); ?></a></li>
                 <li><a href="<?php echo esc_url(vg_home_url('contact')); ?>"><?php esc_html_e('Contact', 'vietnamguide-premium'); ?></a></li>
+                <li><a href="<?php echo esc_url(vg_home_url('privacy-policy')); ?>"><?php esc_html_e('Privacy policy', 'vietnamguide-premium'); ?></a></li>
                 <li><a href="<?php echo esc_url(vg_home_url('affiliate-disclosure')); ?>"><?php esc_html_e('Affiliate disclosure', 'vietnamguide-premium'); ?></a></li>
                 <li><a href="<?php echo esc_url(vg_home_url('source-update-policy')); ?>"><?php esc_html_e('Source policy', 'vietnamguide-premium'); ?></a></li>
             </ul>

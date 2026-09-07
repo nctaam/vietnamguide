@@ -409,6 +409,27 @@ Date: 2026-07-28 (Asia/Saigon)
   - Local AST / Contract (`ops/verify-guide-experience.ps1`): PASSED (112/112).
   - Local Homepage Theme Checks (`ops/verify-homepage-theme.ps1`): PASSED.
   - Core MU-Plugin Fingerprint & Mutations (`ops/verify-core-mu-plugin.ps1`): PASSED (Fingerprint `71b49033114e8007e5c19fb8ebc1a89e0d0dad88d0fe92dd381a28700db096ce` perfectly preserved).
+  - Stage 8 Live Verifier (`scratch/verify_stage8_live.py`): PASSED (100% on live CSS classes, print styles, active nav, scroll margin, and byline).
+
+## WordPress Core Gutenberg Blocks, Responsive Tables, Editorial Comments & Privacy Integration - 2026-09-07
+
+- Architecture & Scope (Stage 9):
+  - Elevated the WordPress core publishing framework with comprehensive, brand-consistent styling:
+    - Gutenberg Core Blocks: Styled `.wp-block-table` with touch-scrolling wrappers (`overflow-x: auto; -webkit-overflow-scrolling: touch`), subtle limestone headers, and zebra striping for data density and mobile zero-overflow.
+    - Tactile Editorial Buttons: Styled `.wp-block-button__link` with Imperial Jade background, tactile spring hover curve, and gold focus rings.
+    - Editorial Pullquotes: Added `.wp-block-pullquote` with Heritage Gold borders, Source Serif 4 italic quotes, and uppercase attribution.
+    - Code & Monospace Blocks: Styled `.wp-block-code`, `pre`, and `code` with limestone backgrounds, soft borders, and code syntax contrast.
+    - Golden Divider Separators: Added `.wp-block-separator` and `hr` with golden rule styling.
+    - Figure & Media Captions: Polished `figcaption` and `.wp-element-caption` with centered, muted ink typography.
+    - Taxonomy & Tag Cloud Badges: Styled `.tag-cloud-link` and `.wp-block-tag-cloud` with limestone pill badges and jade hover states.
+    - Discussion & Comment Architecture: Complete editorial dialogue styling for `.comments-area`, `.comment-list`, `.comment`, `.children`, `.comment-author`, `.comment-metadata`, `.reply a`, `.comment-respond`, and `.comment-form`.
+    - Form CRO: Standardized `<label>` typography hierarchy, submit buttons, and focus states.
+    - Footer Privacy Policy: Added `/privacy-policy/` link to `footer.php` and `qa/homepage-preview.html` to ensure complete international E-E-A-T and GDPR/legal transparency.
+- Verification Evidence:
+  - Local AST / Contract (`ops/verify-guide-experience.ps1`): PASSED (112/112).
+  - Local Homepage Theme Checks (`ops/verify-homepage-theme.ps1`): PASSED.
+  - Core MU-Plugin Fingerprint & Mutations (`ops/verify-core-mu-plugin.ps1`): PASSED (Fingerprint `71b49033114e8007e5c19fb8ebc1a89e0d0dad88d0fe92dd381a28700db096ce` perfectly preserved).
   - Remote Live Runtime (`verify-guide-experience-live.php` via WP-CLI): PASSED (87/87).
   - Public HTTPS Production Verifier (`ops/verify-guide-experience-public.ps1`): PASSED (100% on all 87 guides).
-  - Stage 8 Live Verifier (`scratch/verify_stage8_live.py`): PASSED (100% on live CSS classes, print styles, active nav, scroll margin, and byline).
+  - Stage 9 Live Verifier (`scratch/verify_stage9_live.py`): PASSED (100% on live Privacy Policy footer link, Gutenberg CSS classes, comment system, and HTTP 200 on /privacy-policy/).
+
