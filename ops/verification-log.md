@@ -476,7 +476,23 @@ Date: 2026-07-28 (Asia/Saigon)
   - Local AST / Contract (`ops/verify-guide-experience.ps1`): PASSED (112/112).
   - Local Homepage Theme Checks (`ops/verify-homepage-theme.ps1`): PASSED.
   - Core MU-Plugin Fingerprint & Mutations (`ops/verify-core-mu-plugin.ps1`): PASSED (Fingerprint `71b49033114e8007e5c19fb8ebc1a89e0d0dad88d0fe92dd381a28700db096ce` perfectly preserved).
+  - Remote Live Runtime (`verify-guide-experience-live.php` via WP-CLI): PASSED (87/87).
+  - Public HTTPS Production Verifier (`ops/verify-guide-experience-public.ps1`): PASSED (100% on all 87 routes).
+  - Stage 12 Live Verifier (`scratch/verify_stage12_live.py`): PASSED (100% on reading progress indicator, static page share bar, and text selection styling).
 
+## Gutenberg Media Blocks, List Markers & Anchor Target Animation - 2026-09-07
 
-
-
+- Architecture & Scope (Stage 13):
+  - Elevated Gutenberg block ergonomics, visual media presentation, and anchor deep-linking:
+    - Gutenberg Media & Image Blocks (`.wp-block-image`): Styled content images with rounded corners (`border-radius: 4px`), soft elevation shadow (`0 4px 20px rgba(16, 20, 23, 0.08)`), responsive alignment handling (`.aligncenter`, `.alignleft`, `.alignright`, `.alignwide`, `.alignfull`), and centered responsive margins.
+    - Gutenberg Modern Gallery Grid (`.wp-block-gallery`): Implemented responsive CSS Grid with `repeat(auto-fit, minmax(220px, 1fr))`, uniform 16px gap, 4:3 aspect ratio containment, and subtle scale-on-hover micro-interaction (`transform: scale(1.03)`).
+    - Responsive Video & Embed Containers (`.wp-block-embed`, `.wp-block-embed__wrapper`): Added rounded wrapper with soft elevation shadow and 100% width responsive iframe handling.
+    - Heritage List Typographic Markers: Added Heritage Gold (`var(--vg-gold)`) custom `::marker` bullets for unordered lists and Jade bold numbers for ordered lists inside `.vg-entry-content`.
+    - Deep-Link Anchor Pulse Animation (`:target`): Implemented 1400ms golden pulse animation (`@keyframes vg-target-highlight`) when readers navigate to in-page anchors, footnotes, or TOC links, providing instantaneous contextual visual confirmation. Completely disabled under `@media (prefers-reduced-motion: reduce)`.
+- Verification Evidence:
+  - Local AST / Contract (`ops/verify-guide-experience.ps1`): PASSED (112/112).
+  - Local Homepage Theme Checks (`ops/verify-homepage-theme.ps1`): PASSED.
+  - Core MU-Plugin Fingerprint & Mutations (`ops/verify-core-mu-plugin.ps1`): PASSED (Fingerprint `71b49033114e8007e5c19fb8ebc1a89e0d0dad88d0fe92dd381a28700db096ce` perfectly preserved).
+  - Remote Live Runtime (`verify-guide-experience-live.php` via WP-CLI): PASSED (87/87).
+  - Public HTTPS Production Verifier (`ops/verify-guide-experience-public.ps1`): PASSED (100% on all 87 routes).
+  - Stage 13 Live Verifier (`scratch/verify_stage13_live.py`): PASSED (100% on live `:target` pulse animation, `.wp-block-gallery`, `.wp-block-image`, `.wp-block-embed__wrapper`, gold `::marker`, and reduced-motion override).
