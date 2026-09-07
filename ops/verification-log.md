@@ -357,8 +357,21 @@ Date: 2026-07-28 (Asia/Saigon)
   - Core MU-Plugin Fingerprint & Mutations (`ops/verify-core-mu-plugin.ps1`): PASSED (Fingerprint `71b49033114e8007e5c19fb8ebc1a89e0d0dad88d0fe92dd381a28700db096ce` perfectly preserved).
   - Remote Live Runtime (`verify-guide-experience-live.php` via WP-CLI): PASSED (87/87).
   - Public HTTPS Production Verifier (`ops/verify-guide-experience-public.ps1`): PASSED (100% on all 87 guides).
-  - Stage 5 Live Verifier (`scratch/verify_stage5_live.py`): PASSED (Live CSS typography rules & Article BreadcrumbList schema links).
+## WordPress Global Ecosystem Polish & Architectural Completion - 2026-09-07
 
-
-
-
+- Architecture & Scope:
+  - Applied comprehensive global styling and architectural upgrades across the entire WordPress ecosystem (grounded in 5W1H2C5M methodology and Google Stitch design tokens):
+    - Global Header: Upgraded sticky header on all interior/guide/archive pages to luxury frosted glass blur (`color-mix(in srgb, var(--vg-paper) 88%, transparent)` with `backdrop-filter: blur(12px)`), matching modern high-end editorial publications.
+    - Header CTA Button: Added tactile spring physics with cubic-bezier timing curve and active scaling feedback (`:active { transform: translateY(0) scale(0.98); }`).
+    - Global Footer: Introduced 2px Heritage Gold top accent border (`border-top: 2px solid var(--vg-gold)`) and micro-interactive hover translate (`transform: translateX(3px)`) on footer links.
+    - Accessibility: Defined standard `.screen-reader-text` rules ensuring screen reader compatibility across all dynamic WordPress widgets and pagination elements.
+    - Standard Content Pages (`.vg-entry-content`): Configured dedicated editorial typography for pages such as `/about/`, `/contact/`, and disclosure pages (760px reading column, Lora display serif headings with border accents, jade links with underlines, custom list spacing, gold-accented blockquotes, and zebra-styled tables).
+    - Post Archives & Lists (`.vg-post-list`): Structured post article cards, excerpt summaries, and numeric pagination (`.navigation.pagination`) with custom gold active state.
+    - 404 & Empty Search State (`.vg-empty-state` in `index.php`): Enhanced empty states with structured messaging and dual luxury action buttons ("Return to Home" and "Browse Itineraries").
+- Verification Evidence:
+  - Local AST / Contract (`ops/verify-guide-experience.ps1`): PASSED (112/112).
+  - Local Homepage Theme Checks (`ops/verify-homepage-theme.ps1`): PASSED.
+  - Core MU-Plugin Fingerprint & Mutations (`ops/verify-core-mu-plugin.ps1`): PASSED (Fingerprint `71b49033114e8007e5c19fb8ebc1a89e0d0dad88d0fe92dd381a28700db096ce` perfectly preserved).
+  - Remote Live Runtime (`verify-guide-experience-live.php` via WP-CLI): PASSED (87/87).
+  - Public HTTPS Production Verifier (`ops/verify-guide-experience-public.ps1`): PASSED (100% on all 87 guides).
+  - Stage 6 Live Verifier (`scratch/verify_stage6_live.py`): PASSED (Live frosted header blur, button physics, footer gold border, `/about/` page typography, and 404 empty state CTAs).

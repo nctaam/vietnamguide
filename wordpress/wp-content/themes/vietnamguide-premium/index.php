@@ -82,26 +82,36 @@ get_header();
     <?php else : ?>
         <section class="vg-section">
             <div class="vg-shell">
-                <header class="vg-section-heading">
-                    <h1>
+                <div class="vg-empty-state">
+                    <header class="vg-section-heading">
+                        <h1>
+                            <?php if (is_404()) : ?>
+                                <?php esc_html_e('Page not found', 'vietnamguide-premium'); ?>
+                            <?php elseif (is_search()) : ?>
+                                <?php esc_html_e('No search results', 'vietnamguide-premium'); ?>
+                            <?php else : ?>
+                                <?php esc_html_e('Nothing found', 'vietnamguide-premium'); ?>
+                            <?php endif; ?>
+                        </h1>
+                    </header>
+                    <p>
                         <?php if (is_404()) : ?>
-                            <?php esc_html_e('Page not found', 'vietnamguide-premium'); ?>
+                            <?php esc_html_e('The page you requested may have moved or no longer exists.', 'vietnamguide-premium'); ?>
                         <?php elseif (is_search()) : ?>
-                            <?php esc_html_e('No search results', 'vietnamguide-premium'); ?>
+                            <?php esc_html_e('Try another search term or explore the latest travel guidance.', 'vietnamguide-premium'); ?>
                         <?php else : ?>
-                            <?php esc_html_e('Nothing found', 'vietnamguide-premium'); ?>
+                            <?php esc_html_e('There is no published travel guidance here yet.', 'vietnamguide-premium'); ?>
                         <?php endif; ?>
-                    </h1>
-                </header>
-                <p>
-                    <?php if (is_404()) : ?>
-                        <?php esc_html_e('The page you requested may have moved or no longer exists.', 'vietnamguide-premium'); ?>
-                    <?php elseif (is_search()) : ?>
-                        <?php esc_html_e('Try another search term or explore the latest travel guidance.', 'vietnamguide-premium'); ?>
-                    <?php else : ?>
-                        <?php esc_html_e('There is no published travel guidance here yet.', 'vietnamguide-premium'); ?>
-                    <?php endif; ?>
-                </p>
+                    </p>
+                    <div class="vg-empty-state__actions">
+                        <a href="<?php echo esc_url(home_url('/')); ?>" class="vg-button">
+                            <?php esc_html_e('Return to Home', 'vietnamguide-premium'); ?>
+                        </a>
+                        <a href="<?php echo esc_url(home_url('/#itineraries')); ?>" class="vg-button vg-button--secondary">
+                            <?php esc_html_e('Browse Itineraries', 'vietnamguide-premium'); ?>
+                        </a>
+                    </div>
+                </div>
             </div>
         </section>
     <?php endif; ?>
