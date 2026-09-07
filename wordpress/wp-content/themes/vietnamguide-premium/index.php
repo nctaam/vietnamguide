@@ -15,6 +15,15 @@ get_header();
                         <article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
                             <header class="vg-section-heading">
                                 <h1><?php echo esc_html(get_the_title()); ?></h1>
+                                <?php if (is_single()) : ?>
+                                    <div class="vg-post-meta">
+                                        <time class="vg-post-date" datetime="<?php echo esc_attr(get_the_date('c')); ?>">
+                                            <?php echo esc_html(get_the_date()); ?>
+                                        </time>
+                                        <span class="vg-meta-separator" aria-hidden="true">•</span>
+                                        <span class="vg-author-byline"><?php esc_html_e('VietnamGuide Editorial Desk', 'vietnamguide-premium'); ?></span>
+                                    </div>
+                                <?php endif; ?>
                             </header>
                             <div class="vg-entry-content">
                                 <?php the_content(); ?>

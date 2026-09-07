@@ -392,6 +392,23 @@ Date: 2026-07-28 (Asia/Saigon)
   - Local AST / Contract (`ops/verify-guide-experience.ps1`): PASSED (112/112).
   - Local Homepage Theme Checks (`ops/verify-homepage-theme.ps1`): PASSED.
   - Core MU-Plugin Fingerprint & Mutations (`ops/verify-core-mu-plugin.ps1`): PASSED (Fingerprint `71b49033114e8007e5c19fb8ebc1a89e0d0dad88d0fe92dd381a28700db096ce` perfectly preserved).
-  - Remote Live Runtime (`verify-guide-experience-live.php` via WP-CLI): PASSED (87/87).
   - Public HTTPS Production Verifier (`ops/verify-guide-experience-public.ps1`): PASSED (100% on all 87 guides).
   - Stage 7 Live Verifier (`scratch/verify_stage7_live.py`): PASSED (100% on live CSS classes and all 5 hub portals).
+
+## Comprehensive WordPress Interface Completion & Editorial Standards - 2026-09-07
+
+- Architecture & Scope:
+  - Completed 6 core editorial interface standards across the entire WordPress ecosystem:
+    - Active Navigation Indicator: Styled `.current-menu-item a`, `.current-menu-ancestor a`, and `a[aria-current="page"]` with Imperial Jade text and persistent underlines (`transform: scaleX(1); background: var(--vg-jade)`), plus golden accents on dark headers.
+    - Mobile Menu Drawer Craft: Enhanced `.vg-js .vg-primary-navigation` with frosted glass blur (`color-mix(in srgb, var(--vg-paper) 95%, transparent); backdrop-filter: blur(16px); box-shadow: 0 16px 36px rgba(16, 20, 23, 0.12)`), tactile touch padding, and active colors.
+    - Global Scroll Margin Offset: Defined `scroll-margin-top: calc(var(--vg-header-height) + 24px)` on `.vg-section`, `.vg-section-heading`, `.vg-hub-section`, `.vg-entry-content [id]`, and `:target` to ensure in-page anchor links never tuck behind the sticky frosted header.
+    - FAQ / Details Accordion: Styled `.vg-entry-content details` and `.wp-block-details` with subtle borders, silk-white background, custom gold disclosure indicators (`+` rotating to `×` on open).
+    - Single Post Editorial Byline: Integrated `.vg-post-meta` featuring formatted publication date, gold separator bullet, and "VietnamGuide Editorial Desk" attribution for single articles in `index.php`.
+    - Print Stylesheet (`@media print`): Comprehensive print media query that hides screen chrome (header, navigation, jump drawers, footer links, newsletter), forces clean pure-white background and crisp ink text, avoids page breaks inside tables and cards, and displays explicit URLs for hyperlinks.
+- Verification Evidence:
+  - Local AST / Contract (`ops/verify-guide-experience.ps1`): PASSED (112/112).
+  - Local Homepage Theme Checks (`ops/verify-homepage-theme.ps1`): PASSED.
+  - Core MU-Plugin Fingerprint & Mutations (`ops/verify-core-mu-plugin.ps1`): PASSED (Fingerprint `71b49033114e8007e5c19fb8ebc1a89e0d0dad88d0fe92dd381a28700db096ce` perfectly preserved).
+  - Remote Live Runtime (`verify-guide-experience-live.php` via WP-CLI): PASSED (87/87).
+  - Public HTTPS Production Verifier (`ops/verify-guide-experience-public.ps1`): PASSED (100% on all 87 guides).
+  - Stage 8 Live Verifier (`scratch/verify_stage8_live.py`): PASSED (100% on live CSS classes, print styles, active nav, scroll margin, and byline).
