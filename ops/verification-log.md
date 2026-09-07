@@ -304,3 +304,26 @@ Date: 2026-07-28 (Asia/Saigon)
   - Public HTTPS Production Verifier (`ops/verify-guide-experience-public.ps1`): PASSED (100% on 87 guides + hubs + home).
   - Multi-Page Live Verification (`scratch/verify_multi_live.py`): PASSED (100% entity mapping, speakable specifications, robots.txt AI directives, and llms.txt endpoint).
 
+
+## Google Stitch Integration & Complete 87-Guide AIO Milestone - 2026-09-07
+
+- Architecture & Scope:
+  - Connected the VietnamGuide ecosystem to Google Stitch AI design engine, established project-level design tokens in `.stitch/DESIGN.md`, and generated reference Desktop and Mobile editorial screens.
+  - Dynamically linked `/llms.txt` to `vg_guide_pilot_paths()` to ensure 100% of the 87 published travel guides are indexed for AI search crawlers.
+- Key Deliverables:
+  1. Google Stitch Project Setup:
+     - Project: `VietnamGuide.net - High-End Travel Intelligence` (`projects/12083447832634731669`).
+     - Design System: `assets/12133140360766387486` (`VietnamGuide Editorial Luxury`).
+     - Screen 1: `6eda3c408f82416192c164d33cac86f0` (Desktop Guide Reading Experience with 1186px Spine Grid, Lora + Inter, Silk Gradient Verdict, Sticky TOC).
+     - Screen 2: `ec54a33bbab54bc89eabbd5f1db658cc` (Mobile Editorial Experience with 390px viewport, Sticky Jump Navigation, and 44px touch targets).
+  2. AIO Complete Directory:
+     - Updated `inc/guide-aio.php` to dynamically group all 87 routes into Core Destination Guides, Curated Route Itineraries, Strategic Route Comparisons, and Logistics Preparation.
+     - Verified live `/llms.txt` returning HTTP 200 OK, 8.6KB, 87 canonical guide links.
+- Verification Results:
+  - Local AST / Contract (`ops/verify-guide-experience.ps1`): PASSED (112/112).
+  - Core MU-Plugin Fingerprint & Mutations (`ops/verify-core-mu-plugin.ps1`): PASSED (Fingerprint matched).
+  - Remote Live Runtime (`ops/verify-guide-experience-live.php`): PASSED (87/87).
+  - Public HTTPS Production Verifier (`ops/verify-guide-experience-public.ps1`): PASSED (100% on 87 guides + hubs + home).
+  - Multi-Page Live Verification (`scratch/verify_multi_live.py`): PASSED.
+
+
