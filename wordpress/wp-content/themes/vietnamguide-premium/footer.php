@@ -39,6 +39,9 @@
         &copy; <?php echo esc_html(wp_date('Y')); ?> VietnamGuide.net
     </p>
 </footer>
+<button class="vg-back-to-top" type="button" aria-label="<?php esc_attr_e('Back to top', 'vietnamguide-premium'); ?>" data-vg-back-to-top>
+    <span aria-hidden="true">&uarr;</span>
+</button>
 <?php wp_footer(); ?>
 </body>
 </html>

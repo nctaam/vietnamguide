@@ -88,4 +88,16 @@
   revealItems.forEach(function (item) {
     revealObserver.observe(item);
   });
+
+  var backToTop = document.querySelector('[data-vg-back-to-top]');
+  if (backToTop) {
+    function toggleBackToTop() {
+      backToTop.classList.toggle('is-visible', window.scrollY > 480);
+    }
+    window.addEventListener('scroll', toggleBackToTop, { passive: true });
+    toggleBackToTop();
+    backToTop.addEventListener('click', function () {
+      window.scrollTo({ top: 0, behavior: reducedMotion ? 'auto' : 'smooth' });
+    });
+  }
 }());

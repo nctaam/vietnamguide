@@ -123,6 +123,7 @@ get_header();
                             <?php esc_html_e('Browse Itineraries', 'vietnamguide-premium'); ?>
                         </a>
                     </div>
+                    <?php get_search_form(); ?>
                 </div>
             </div>
         </section>

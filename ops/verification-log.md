@@ -430,6 +430,22 @@ Date: 2026-07-28 (Asia/Saigon)
   - Local Homepage Theme Checks (`ops/verify-homepage-theme.ps1`): PASSED.
   - Core MU-Plugin Fingerprint & Mutations (`ops/verify-core-mu-plugin.ps1`): PASSED (Fingerprint `71b49033114e8007e5c19fb8ebc1a89e0d0dad88d0fe92dd381a28700db096ce` perfectly preserved).
   - Remote Live Runtime (`verify-guide-experience-live.php` via WP-CLI): PASSED (87/87).
-  - Public HTTPS Production Verifier (`ops/verify-guide-experience-public.ps1`): PASSED (100% on all 87 guides).
   - Stage 9 Live Verifier (`scratch/verify_stage9_live.py`): PASSED (100% on live Privacy Policy footer link, Gutenberg CSS classes, comment system, and HTTP 200 on /privacy-policy/).
+
+## Interactive Tactile Floating Back-to-Top, In-Situ 404 Search Recovery & Breadcrumb Elevation - 2026-09-07
+
+- Architecture & Scope (Stage 10):
+  - Completed interaction polish and recovery experience across the WordPress theme:
+    - Floating Tactile Back-to-Top Action: Added `.vg-back-to-top` floating action button in `footer.php`, `homepage.css`, and `homepage.js`. Activated after scrolling 480px down, featuring frosted glass blur backdrop (`backdrop-filter: blur(12px)`), Heritage Gold hover borders, Emil Kowalski tactile spring hover curves (`transform: translateY(-3px) scale(1.04)`), and hidden in print stylesheets.
+    - In-situ Recovery Search on 404 / Empty States: Embedded `get_search_form()` directly inside `.vg-empty-state` in `index.php`, allowing travelers landing on broken URLs or zero-result queries to immediately execute alternative searches without navigating away.
+    - Breadcrumbs & Navigation Hierarchy: Added dedicated styling for `.vg-breadcrumbs`, `.breadcrumb-trail`, `.breadcrumbs`, and `nav[aria-label="Breadcrumb"]` with gold separators (`›`), uppercase 13px bold tracking, and jade hover transitions.
+    - Fixture Synchronization: Mirrored the Back-to-Top action in `qa/homepage-preview.html`.
+- Verification Evidence:
+  - Local AST / Contract (`ops/verify-guide-experience.ps1`): PASSED (112/112).
+  - Local Homepage Theme Checks (`ops/verify-homepage-theme.ps1`): PASSED.
+  - Core MU-Plugin Fingerprint & Mutations (`ops/verify-core-mu-plugin.ps1`): PASSED (Fingerprint `71b49033114e8007e5c19fb8ebc1a89e0d0dad88d0fe92dd381a28700db096ce` perfectly preserved).
+  - Remote Live Runtime (`verify-guide-experience-live.php` via WP-CLI): PASSED (87/87).
+  - Public HTTPS Production Verifier (`ops/verify-guide-experience-public.ps1`): PASSED (100% on all 87 guides).
+  - Stage 10 Live Verifier (`scratch/verify_stage10_live.py`): PASSED (100% on live back-to-top button in HTML, enqueued CSS, enqueued JS, and in-situ search form on 404 empty state).
+
 
