@@ -99,6 +99,18 @@ img {
   transform: translateY(0);
 }
 
+.vg-sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
 .vg-shell {
   width: min(calc(100% - 96px), var(--vg-wide));
   margin-inline: auto;
@@ -482,6 +494,13 @@ html:not(.vg-js) body.home .vg-site-header {
   border-color: var(--vg-ink);
   background: var(--vg-ink);
   color: var(--vg-white);
+}
+
+.vg-button:active,
+.vg-button--ghost:active,
+.vg-button--secondary:active,
+.vg-button--light:active {
+  transform: translateY(0) scale(0.97);
 }
 
 .vg-planning-paths {
@@ -1053,6 +1072,10 @@ html:not(.vg-js) body.home .vg-site-header {
   background: var(--vg-blue);
   color: var(--vg-white);
   transform: translateY(-2px);
+}
+
+.vg-entry-content .wp-block-button__link:active {
+  transform: translateY(0) scale(0.97);
 }
 
 .vg-entry-content .wp-block-pullquote {
@@ -1681,6 +1704,12 @@ html:not(.vg-js) body.home .vg-site-header {
   border-left: 4px solid var(--vg-jade);
   background: color-mix(in srgb, var(--vg-paper) 60%, var(--vg-white));
   box-shadow: 0 2px 8px rgba(16, 20, 23, 0.04);
+  transition: box-shadow 220ms ease, transform 220ms ease;
+}
+
+.vg-editorial-card:hover {
+  box-shadow: 0 6px 20px rgba(16, 20, 23, 0.08);
+  transform: translateY(-1px);
 }
 
 .vg-editorial-card__badge {
@@ -1752,6 +1781,7 @@ html:not(.vg-js) body.home .vg-site-header {
   display: inline-flex;
   align-items: center;
   gap: 8px;
+  min-height: 44px;
   padding: 8px 16px;
   border: 1px solid var(--vg-line);
   background: var(--vg-paper);
@@ -1759,13 +1789,17 @@ html:not(.vg-js) body.home .vg-site-header {
   font-size: 13px;
   font-weight: 700;
   cursor: pointer;
-  transition: all 180ms ease;
+  transition: background-color 180ms ease, border-color 180ms ease, color 180ms ease, transform 180ms ease;
 }
 
 .vg-copy-link:hover {
   border-color: var(--vg-gold);
   background: var(--vg-white);
   color: var(--vg-gold);
+}
+
+.vg-copy-link:active {
+  transform: scale(0.96);
 }
 
 .vg-copy-link.is-copied {
@@ -1788,7 +1822,7 @@ html:not(.vg-js) body.home .vg-site-header {
 .search-form:focus-within,
 .wp-block-search__inside-wrapper:focus-within {
   border-color: var(--vg-gold);
-  box-shadow: 0 0 0 2px var(--vg-gold);
+  box-shadow: 0 0 0 3px rgba(185, 135, 57, 0.28);
 }
 
 .search-field,
@@ -1805,6 +1839,7 @@ html:not(.vg-js) body.home .vg-site-header {
 
 .search-submit,
 .wp-block-search__button {
+  min-height: 48px;
   padding: 12px 20px;
   border: 0;
   background: var(--vg-jade);
@@ -1812,12 +1847,17 @@ html:not(.vg-js) body.home .vg-site-header {
   font-size: 14px;
   font-weight: 800;
   cursor: pointer;
-  transition: background-color 180ms ease;
+  transition: background-color 180ms ease, transform 180ms ease;
 }
 
 .search-submit:hover,
 .wp-block-search__button:hover {
   background: var(--vg-blue);
+}
+
+.search-submit:active,
+.wp-block-search__button:active {
+  transform: scale(0.97);
 }
 
 input[type="text"],
@@ -2484,6 +2524,10 @@ nav[aria-label="Breadcrumbs"] a:hover {
 
   :target {
     animation: none !important;
+  }
+
+  .vg-editorial-card:hover {
+    transform: none !important;
   }
 }
 

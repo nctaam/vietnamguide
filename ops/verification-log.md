@@ -496,3 +496,23 @@ Date: 2026-07-28 (Asia/Saigon)
   - Remote Live Runtime (`verify-guide-experience-live.php` via WP-CLI): PASSED (87/87).
   - Public HTTPS Production Verifier (`ops/verify-guide-experience-public.ps1`): PASSED (100% on all 87 routes).
   - Stage 13 Live Verifier (`scratch/verify_stage13_live.py`): PASSED (100% on live `:target` pulse animation, `.wp-block-gallery`, `.wp-block-image`, `.wp-block-embed__wrapper`, gold `::marker`, and reduced-motion override).
+
+## Multi-Skill Adversarial Deep Overhaul: Tactile Physicality & Screen Reader Accessibility - 2026-09-09
+
+- Architecture & Scope (Stage 14):
+  - Executed a deep, cross-disciplinary adversarial overhaul driven by Emil Kowalski UI motion principles (`emil-design-eng`), WCAG 2.2 AAA accessibility (`ui-a11y`), and strict contract preservation (`security-auditor`):
+    - Tactile Physicality on All Interactive Elements: Introduced physical `:active` depression (`transform: translateY(0) scale(0.97)`) across all button variants (`.vg-button`, `.vg-button--ghost`, `.vg-button--secondary`, `.vg-button--light`, `.wp-block-button__link`, `.search-submit`, `.wp-block-search__button`, and `.vg-copy-link`), delivering physical tactile feedback on both mouse click and mobile touch.
+    - Specific Transition Properties: Refactored `.vg-copy-link` from generic `transition: all` to explicit hardware-accelerated properties (`background-color`, `border-color`, `color`, `transform`), eliminating layout thrashing.
+    - Accessible Screen Reader Utility (`.vg-sr-only`): Added universally compliant visually hidden utility class to `homepage.css`.
+    - Live Screen Reader Clipboard Announcement: Implemented `announceA11y()` in `homepage.js` utilizing a polite ARIA live region (`role="status"`, `aria-live="polite"`, `aria-atomic="true"`), immediately announcing "Link copied to clipboard" to screen reader users upon clicking copy buttons.
+    - Robust Clipboard Fallback: Engineered a fallback copy routine (`fallbackCopyText`) utilizing a temporary hidden textarea and `document.execCommand('copy')` if `navigator.clipboard` is restricted or rejected.
+    - Editorial Trust Card Micro-Elevation: Added subtle hover lift (`transform: translateY(-1px); box-shadow: 0 6px 20px rgba(16, 20, 23, 0.08)`) with smooth 220ms transition, automatically disabled under `prefers-reduced-motion: reduce`.
+    - Minimum Touch Target Compliance: Enforced `min-height: 44px;` on `.vg-copy-link` and `min-height: 48px;` on `.search-submit`, satisfying WCAG 2.5.8 (Target Size).
+- Verification Evidence:
+  - Local AST / Contract (`ops/verify-guide-experience.ps1`): PASSED (112/112).
+  - Local Homepage Theme Checks (`ops/verify-homepage-theme.ps1`): PASSED.
+  - Core MU-Plugin Fingerprint & Mutations (`ops/verify-core-mu-plugin.ps1`): PASSED (Fingerprint `71b49033114e8007e5c19fb8ebc1a89e0d0dad88d0fe92dd381a28700db096ce` perfectly preserved).
+  - Remote Live Runtime (`verify-guide-experience-live.php` via WP-CLI): PASSED (87/87).
+  - Public HTTPS Production Verifier (`ops/verify-guide-experience-public.ps1`): PASSED (100% on all 87 routes).
+  - Stage 14 Live Verifier (`scratch/verify_stage14_live.py`): PASSED (100% on live `.vg-sr-only`, button `:active` scale(0.97), `.vg-copy-link:active`, `.vg-editorial-card:hover`, a11y live announcer, fallback clipboard copy, and `aria-live`).
+
