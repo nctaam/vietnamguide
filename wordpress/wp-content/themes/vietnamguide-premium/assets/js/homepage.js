@@ -98,6 +98,10 @@
     toggleBackToTop();
     backToTop.addEventListener('click', function () {
       window.scrollTo({ top: 0, behavior: reducedMotion ? 'auto' : 'smooth' });
+      var main = document.getElementById('main');
+      if (main && main.focus) {
+        main.focus({ preventScroll: true });
+      }
     });
   }
 

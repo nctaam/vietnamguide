@@ -546,3 +546,21 @@ Date: 2026-07-28 (Asia/Saigon)
   - Public HTTPS Production Verifier (`ops/verify-guide-experience-public.ps1` via Windows PowerShell 5.1): PASSED (100% on all 87 routes).
   - Stage 15 Live Verifier (`scratch/verify_stage15_live.py`): PASSED (100% on live tag cloud active/transition, details summary focus-visible/active/cubic-bezier, pagination active/transition, form aria-invalid/submit active, print exclusion, and pattern button active).
 
+## Multi-Skill Adversarial Deep Overhaul: Navigation Focus Appearance, Menu Toggle Spring & Focus Restoration - 2026-09-09
+
+- Architecture & Scope (Stage 16):
+  - Advanced cross-disciplinary adversarial surgery targeting header navigation, skip-link focus visibility, mobile menu toggle mechanics, footer link ergonomics, and back-to-top focus restoration:
+    - Skip-to-Content Focus & Active State: Enhanced `.vg-skip-link:focus, .vg-skip-link:focus-visible` with contrasting 2px ink outline, 2px offset, and drop shadow, plus `:active` scale(0.98), ensuring keyboard navigation users have unmistakable spatial orientation.
+    - Header & Navigation Focus Visible: Added high-contrast gold focus rings (`outline: 2px solid var(--vg-gold); outline-offset: 4px; border-radius: 2px`) to `.vg-wordmark:focus-visible`, `.vg-nav-list a:focus-visible`, and `.vg-header-action:focus-visible` (WCAG 2.4.7 / 2.4.11).
+    - Mobile Menu Toggle Touch Ergonomics & Icon Dynamics: Enforced 44x44px minimum touch target (`min-height: 44px; min-width: 44px; justify-content: center;`) on `.vg-menu-toggle` satisfying WCAG 2.5.8. Added `:focus-visible` outline and `:active` tactile compression (`scale(0.96)`). Upgraded icon transform to spring mechanical curve `transition: transform 220ms cubic-bezier(0.23, 1, 0.32, 1)`.
+    - Footer Links & Touch Ergonomics: Added high-contrast gold outline and active shift (`transform: translateX(1px)`) to `.vg-footer-links a:focus-visible` and `:active`.
+    - Back-to-Top Target Size & Focus Order Restoration: Raised mobile touch target from 42px to 44px (`width: 44px; height: 44px`) adhering to WCAG 2.5.8. Added `:focus-visible` gold outline. In `homepage.js`, programmatic focus restoration to `#main` upon scroll-to-top completion restores keyboard focus flow to the top of the content tree per WCAG 2.4.3.
+    - Comprehensive Reduced-Motion Coverage: Extended `@media (prefers-reduced-motion: reduce)` to cancel all newly introduced transforms across skip-link, menu toggle, header action, footer links, and back-to-top.
+- Verification Evidence:
+  - Local AST / Contract (`ops/verify-guide-experience.ps1`): PASSED (112/112).
+  - Local Homepage Theme Checks (`ops/verify-homepage-theme.ps1`): PASSED.
+  - Core MU-Plugin Fingerprint & Mutations (`ops/verify-core-mu-plugin.ps1`): PASSED (Fingerprint `71b49033114e8007e5c19fb8ebc1a89e0d0dad88d0fe92dd381a28700db096ce` perfectly preserved).
+  - Remote Live Runtime (`verify-guide-experience-live.php` via WP-CLI): PASSED (87/87).
+  - Public HTTPS Production Verifier (`ops/verify-guide-experience-public.ps1` via Windows PowerShell 5.1): PASSED (100% on all 87 routes).
+  - Stage 16 Live Verifier (`scratch/verify_stage16_live.py`): PASSED (100% on live wordmark, nav link, header action, skip link, menu toggle, footer link focus-visible/active, 44px touch target, and back-to-top main.focus restoration).
+

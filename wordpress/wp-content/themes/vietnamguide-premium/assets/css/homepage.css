@@ -95,8 +95,16 @@ img {
   transition: transform 180ms ease;
 }
 
-.vg-skip-link:focus {
+.vg-skip-link:focus,
+.vg-skip-link:focus-visible {
   transform: translateY(0);
+  outline: 2px solid var(--vg-ink);
+  outline-offset: 2px;
+  box-shadow: 0 4px 16px rgba(16, 20, 23, 0.24);
+}
+
+.vg-skip-link:active {
+  transform: translateY(0) scale(0.98);
 }
 
 .vg-sr-only {
@@ -234,6 +242,12 @@ html:not(.vg-js) body.home .vg-site-header {
   line-height: 1;
 }
 
+.vg-wordmark:focus-visible {
+  outline: 2px solid var(--vg-gold);
+  outline-offset: 4px;
+  border-radius: 2px;
+}
+
 .vg-primary-navigation {
   justify-self: center;
 }
@@ -275,6 +289,12 @@ html:not(.vg-js) body.home .vg-site-header {
   transform: scaleX(1);
 }
 
+.vg-nav-list a:focus-visible {
+  outline: 2px solid var(--vg-gold);
+  outline-offset: 4px;
+  border-radius: 2px;
+}
+
 .vg-nav-list .current-menu-item a,
 .vg-nav-list .current-menu-ancestor a,
 .vg-nav-list a[aria-current="page"] {
@@ -310,11 +330,14 @@ html:not(.vg-js) body.home .vg-site-header {
   transition: background-color 180ms ease, color 180ms ease, transform 180ms cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 180ms ease;
 }
 
-.vg-header-action:hover {
+.vg-header-action:hover,
+.vg-header-action:focus-visible {
   background: var(--vg-ink);
   color: var(--vg-white);
   transform: translateY(-1px);
   box-shadow: 0 4px 12px rgba(16, 20, 23, 0.12);
+  outline: 2px solid var(--vg-gold);
+  outline-offset: 2px;
 }
 
 .vg-header-action:active {
@@ -329,6 +352,9 @@ html:not(.vg-js) body.home .vg-site-header {
 .vg-menu-toggle {
   display: none;
   align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  min-width: 44px;
   gap: 10px;
   padding: 10px 0 10px 10px;
   border: 0;
@@ -339,6 +365,17 @@ html:not(.vg-js) body.home .vg-site-header {
   font-weight: 800;
   letter-spacing: 0.06em;
   text-transform: uppercase;
+  transition: transform 160ms ease;
+}
+
+.vg-menu-toggle:focus-visible {
+  outline: 2px solid var(--vg-gold);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+.vg-menu-toggle:active {
+  transform: scale(0.96);
 }
 
 .vg-menu-toggle__icon,
@@ -349,7 +386,7 @@ html:not(.vg-js) body.home .vg-site-header {
   height: 1px;
   background: currentColor;
   content: '';
-  transition: transform 180ms ease;
+  transition: transform 220ms cubic-bezier(0.23, 1, 0.32, 1);
 }
 
 .vg-menu-toggle__icon {
@@ -886,6 +923,12 @@ html:not(.vg-js) body.home .vg-site-header {
 .vg-footer-links a:focus-visible {
   color: var(--vg-white);
   transform: translateX(3px);
+  outline: 2px solid var(--vg-gold);
+  outline-offset: 2px;
+}
+
+.vg-footer-links a:active {
+  transform: translateX(1px);
 }
 
 .vg-site-footer__copyright {
@@ -2536,12 +2579,15 @@ nav[aria-label="Breadcrumbs"] a:hover {
   transform: translateY(0);
 }
 
-.vg-back-to-top:hover {
+.vg-back-to-top:hover,
+.vg-back-to-top:focus-visible {
   border-color: var(--vg-gold);
   background: var(--vg-white);
   color: var(--vg-gold);
   transform: translateY(-3px) scale(1.04);
   box-shadow: 0 8px 24px rgba(16, 20, 23, 0.12);
+  outline: 2px solid var(--vg-gold);
+  outline-offset: 2px;
 }
 
 .vg-back-to-top:active {
@@ -2558,8 +2604,8 @@ nav[aria-label="Breadcrumbs"] a:hover {
   .vg-back-to-top {
     bottom: 20px;
     right: 20px;
-    width: 42px;
-    height: 42px;
+    width: 44px;
+    height: 44px;
   }
 }
 
@@ -2602,12 +2648,26 @@ nav[aria-label="Breadcrumbs"] a:hover {
   .navigation.pagination .page-numbers:active,
   .form-submit #submit:active,
   input[type="submit"]:active,
-  button[type="submit"]:active {
+  button[type="submit"]:active,
+  .vg-skip-link:active,
+  .vg-menu-toggle:active,
+  .vg-back-to-top:hover,
+  .vg-back-to-top:focus-visible,
+  .vg-back-to-top:active,
+  .vg-header-action:hover,
+  .vg-header-action:focus-visible,
+  .vg-header-action:active,
+  .vg-footer-links a:hover,
+  .vg-footer-links a:focus-visible,
+  .vg-footer-links a:active {
     transform: none !important;
   }
 
   .vg-entry-content summary::after,
-  .wp-block-details summary::after {
+  .wp-block-details summary::after,
+  .vg-menu-toggle__icon,
+  .vg-menu-toggle__icon::before,
+  .vg-menu-toggle__icon::after {
     transition: none !important;
   }
 }
