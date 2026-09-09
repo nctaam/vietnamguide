@@ -73,6 +73,10 @@
   transform: translateY(-2px);
 }
 
+.vg-pattern-button .wp-block-button__link:active {
+  transform: translateY(0) scale(0.97);
+}
+
 .vg-pattern-button--ghost .wp-block-button__link {
   border-color: color-mix(in srgb, var(--vg-white) 72%, transparent);
   background: transparent;
@@ -690,6 +694,7 @@
 
   .vg-pattern-button .wp-block-button__link:hover,
   .vg-pattern-button .wp-block-button__link:focus-visible,
+  .vg-pattern-button .wp-block-button__link:active,
   .vg-pattern-route-selector__list a:hover > span:last-child,
   .vg-pattern-route-selector__list a:focus-visible > span:last-child {
     transform: none;

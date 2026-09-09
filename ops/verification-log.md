@@ -516,3 +516,33 @@ Date: 2026-07-28 (Asia/Saigon)
   - Public HTTPS Production Verifier (`ops/verify-guide-experience-public.ps1`): PASSED (100% on all 87 routes).
   - Stage 14 Live Verifier (`scratch/verify_stage14_live.py`): PASSED (100% on live `.vg-sr-only`, button `:active` scale(0.97), `.vg-copy-link:active`, `.vg-editorial-card:hover`, a11y live announcer, fallback clipboard copy, and `aria-live`).
 
+## Multi-Skill Adversarial Deep Overhaul: Accordion Spring Physicality, Form Error States & Zero-`transition: all` Craft - 2026-09-09
+
+- Architecture & Scope (Stage 15):
+  - Advanced cross-disciplinary adversarial surgery harmonizing Emil Kowalski UI motion (`emil-design-eng`), WCAG 2.2 AAA accessibility (`ui-a11y`), and strict security/contract zero-regression (`security-auditor`):
+    - Accordion / Disclosure `<details>` & `<summary>` Spring Dynamics & A11y:
+      - Fixed missing keyboard focus outline on `.vg-entry-content summary, .wp-block-details summary` by adding high-contrast `:focus-visible` ring (`outline: 2px solid var(--vg-gold); outline-offset: 3px; border-radius: 2px`), resolving WCAG 2.4.7 (Focus Visible).
+      - Replaced generic 200ms ease with snappy mechanical spring curve (`transition: transform 220ms cubic-bezier(0.23, 1, 0.32, 1)`) on `summary::after` icon rotation.
+      - Added tactile tap compression (`summary:active { transform: scale(0.99); transform-origin: left center; }`).
+      - Enforced `min-height: 44px` on `<summary>` per WCAG 2.5.8 touch target ergonomics.
+    - Zero `transition: all` Elimination:
+      - Refactored tag cloud (`.wp-block-tag-cloud a`) and pagination (`.navigation.pagination .page-numbers`) from `transition: all 180ms ease` to explicit hardware-accelerated properties (`background-color`, `border-color`, `color`, `transform`), achieving 100% elimination of generic `transition: all` across the entire CSS codebase.
+      - Added tactile `:active` state on tag links (`scale(0.97)`) and pagination items (`scale(0.95)`).
+    - Accessible Form Controls & Validation States:
+      - Added WCAG 3.3.1 compliant error states for `[aria-invalid="true"]` inputs (`input`, `textarea`, `select`) featuring distinct `#c53030` border and focus ring with red tint (`box-shadow: 0 0 0 3px rgba(197, 48, 48, 0.25)`).
+      - Added semantic `.vg-form-error` and `.error-message` styling.
+      - Added tactile compression (`transform: translateY(0) scale(0.97)`) on all submit buttons (`.form-submit #submit:active`, `input[type="submit"]:active`, `button[type="submit"]:active`).
+    - Pattern Button Touch Physicality:
+      - Added `:active` compression on Gutenberg pattern buttons (`.vg-pattern-button .wp-block-button__link:active`) in `guide-patterns.css`.
+    - Sanitary Print Media Stylesheet:
+      - Explicitly excluded interactive chrome (`.vg-share-bar`, `.vg-copy-link`, `.search-form`, `.wp-block-search`, `.navigation.pagination`, `.comments-area`) in `@media print`, guaranteeing clean editorial prints and PDF exports.
+    - Strict Motion Hygiene:
+      - Extended `@media (prefers-reduced-motion: reduce)` to cancel transforms on summary, tags, pagination, and submit buttons, plus instant rotation on `summary::after`.
+- Verification Evidence:
+  - Local AST / Contract (`ops/verify-guide-experience.ps1`): PASSED (112/112).
+  - Local Homepage Theme Checks (`ops/verify-homepage-theme.ps1`): PASSED.
+  - Core MU-Plugin Fingerprint & Mutations (`ops/verify-core-mu-plugin.ps1`): PASSED (Fingerprint `71b49033114e8007e5c19fb8ebc1a89e0d0dad88d0fe92dd381a28700db096ce` perfectly preserved).
+  - Remote Live Runtime (`verify-guide-experience-live.php` via WP-CLI): PASSED (87/87).
+  - Public HTTPS Production Verifier (`ops/verify-guide-experience-public.ps1` via Windows PowerShell 5.1): PASSED (100% on all 87 routes).
+  - Stage 15 Live Verifier (`scratch/verify_stage15_live.py`): PASSED (100% on live tag cloud active/transition, details summary focus-visible/active/cubic-bezier, pagination active/transition, form aria-invalid/submit active, print exclusion, and pattern button active).
+
