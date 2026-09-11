@@ -696,13 +696,14 @@ Date: 2026-07-28 (Asia/Saigon)
     - Enriched Rank Math SEO's JSON-LD graph via `rank_math/json_ld` filter (priority 100):
       - Injects full Schema.org `TouristDestination` node with Wikidata `sameAs`, `touristType`, `includesAttraction`, and cross-entity links.
       - Injects full `TouristTrip` node containing an ordered `ItemList` of multi-day route itineraries.
-      - Injects full `TravelAction` node defining transit methods, origin/destination nodes, and organization agent.
-      - Bi-directionally links `WebPage` and `Article` schema nodes via `subjectOf: { "@id": "#tourist-destination" }`.
+      - Injects full `TravelAction` node defining transit methods, origin/destination nodes, and organization agent (`instrument.@type` as `Thing`).
+      - Schema.org Invariants & Inverse Properties: `WebPage` and `Article` nodes link to `TouristDestination` via `about: { "@id": "#tourist-destination" }`; `TouristDestination` links back to `WebPage` via `subjectOf: { "@id": "#webpage" }`.
+      - Per-graph idempotence enforcement: node injection checks for existing `@id` membership, eliminating static process pollution.
   - Contextual Next-Step Journey Links (`inc/guide-seo.php` & `assets/css/guide-patterns.css`):
     - Implemented `vg_render_contextual_journey_html()` rendering semantic `.vg-contextual-journey` sections with next-step cards, badges, transit estimates, and route guide links.
-    - Added auto-suppression of self-links (a guide never points to itself in its next-step journey grid).
-    - Registered shortcodes `[vg_journey_links]` and `[vg_contextual_journey]`.
-    - Integrated with `the_content` filter (priority 30) for singular posts and pages, guarded against hero blocks and duplicate injection.
+    - Added auto-suppression of self-links (a guide never points to itself in its next-step journey grid), normalized across both relative paths and canonical absolute URLs.
+    - Registered shortcodes `[vg_journey_links]` and `[vg_contextual_journey]`, accepting optional `cluster` override attributes with resilient PHP 8 type signatures.
+    - Integrated with `the_content` filter (priority 30) for singular posts and pages, guarded against front page, home, feeds, hero header blocks, and duplicate injection.
     - Calibrated CSS in `guide-patterns.css` using 100% semantic CSS variables (`var(--vg-*)`), 0 hardcoded hex values, Emil Kowalski spring micro-interactions (`cubic-bezier(0.34, 1.56, 0.64, 1)`), hover elevation (`translateY(-3px)`), tactile press (`scale(0.985)`), and full `@media (prefers-reduced-motion: reduce)` accessibility overrides.
 - Verification Evidence:
   - Local Homepage Theme Checks (`ops/verify-homepage-theme.ps1`): PASSED.
@@ -714,3 +715,4 @@ Date: 2026-07-28 (Asia/Saigon)
   - Public HTTPS Production Verifier (`ops/verify-guide-experience-public.ps1` via Windows PowerShell 5.1): PASSED (100% on all 87 public routes).
   - Production SHA-256 Parity: PASSED (100% exact match across all modified theme files: `guide-seo.php`, `guide-patterns.css`).
   - Live Schema & HTML Verification: PASSED (`TouristDestination`, `TouristTrip`, `TravelAction`, and `.vg-contextual-journey` verified live on production endpoints).
+  - Dedicated Walkthrough Documentation (`walkthrough.md`): CREATED and synchronized.

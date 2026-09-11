@@ -650,6 +650,7 @@ function vg_find_travel_cluster_by_path(string $path): array
         || str_contains($normalized, 'nha-trang')
         || str_contains($normalized, 'quy-nhon')
         || str_contains($normalized, 'mui-ne')
+        || str_contains($normalized, 'ly-son')
     ) {
         return $clusters['coastal_islands'];
     }
@@ -664,7 +665,8 @@ function vg_get_active_journey_links_for_path(array $cluster, string $current_pa
 {
     $links = $cluster['journey_links'] ?? [];
     $filtered = [];
-    $normalizedCurrent = strtolower(trim($current_path, '/'));
+    $currentPathParsed = (string) parse_url($current_path, PHP_URL_PATH);
+    $normalizedCurrent = strtolower(trim($currentPathParsed !== '' ? $currentPathParsed : $current_path, '/'));
 
     foreach ($links as $link) {
         $linkPath = strtolower(trim((string) parse_url($link['url'], PHP_URL_PATH), '/'));
@@ -708,16 +710,27 @@ function vg_get_active_journey_links_for_path(array $cluster, string $current_pa
 function vg_render_contextual_journey_html(?array $cluster = null, string $current_path = ''): string
 {
     if ($current_path === '') {
-        $uri = isset($_SERVER['REQUEST_URI']) ? (string) $_SERVER['REQUEST_URI'] : '';
-        $current_path = strtolower(trim((string) parse_url($uri, PHP_URL_PATH), '/'));
-        if (empty($current_path) && function_exists('get_queried_object_id')) {
-            $qid = get_queried_object_id();
+        if (function_exists('get_the_ID')) {
+            $qid = (int) get_the_ID();
             if ($qid > 0) {
                 $permalink = get_permalink($qid);
-                if (is_string($permalink)) {
+                if (is_string($permalink) && $permalink !== '') {
                     $current_path = strtolower(trim((string) parse_url($permalink, PHP_URL_PATH), '/'));
                 }
             }
+        }
+        if ($current_path === '' && function_exists('get_queried_object_id')) {
+            $qid = (int) get_queried_object_id();
+            if ($qid > 0) {
+                $permalink = get_permalink($qid);
+                if (is_string($permalink) && $permalink !== '') {
+                    $current_path = strtolower(trim((string) parse_url($permalink, PHP_URL_PATH), '/'));
+                }
+            }
+        }
+        if ($current_path === '') {
+            $uri = isset($_SERVER['REQUEST_URI']) ? (string) $_SERVER['REQUEST_URI'] : '';
+            $current_path = strtolower(trim((string) parse_url($uri, PHP_URL_PATH), '/'));
         }
     }
 
@@ -769,10 +782,20 @@ function vg_render_contextual_journey_html(?array $cluster = null, string $curre
 
 /**
  * Shortcode handler for manual placement in editorial articles or hubs: [vg_journey_links]
+ * Supports optional cluster attribute: [vg_journey_links cluster="central_heritage"]
  */
-function vg_contextual_journey_shortcode(array $atts = []): string
+function vg_contextual_journey_shortcode($atts = []): string
 {
-    return vg_render_contextual_journey_html();
+    $cluster_id = '';
+    if (is_array($atts) && ! empty($atts['cluster'])) {
+        $cluster_id = sanitize_key((string) $atts['cluster']);
+    }
+    $cluster = null;
+    if ($cluster_id !== '') {
+        $registry = vg_get_travel_clusters_registry();
+        $cluster = $registry[$cluster_id] ?? null;
+    }
+    return vg_render_contextual_journey_html($cluster);
 }
 add_shortcode('vg_journey_links', 'vg_contextual_journey_shortcode');
 add_shortcode('vg_contextual_journey', 'vg_contextual_journey_shortcode');
@@ -781,6 +804,9 @@ add_shortcode('vg_contextual_journey', 'vg_contextual_journey_shortcode');
  * Automatically inject Contextual Journey Links into singular content.
  */
 add_filter('the_content', static function (string $content): string {
+    if (is_front_page() || is_home()) {
+        return $content;
+    }
     if (! is_singular() && ! is_page()) {
         return $content;
     }
@@ -793,22 +819,33 @@ add_filter('the_content', static function (string $content): string {
     // Guard against injecting into hero blocks or already injected content
     if (
         str_contains($content, 'vg-guide-hero')
-        || str_contains($content, 'vg-hero')
         || str_contains($content, 'vg-contextual-journey')
     ) {
         return $content;
     }
 
-    $uri = isset($_SERVER['REQUEST_URI']) ? (string) $_SERVER['REQUEST_URI'] : '';
-    $uri_path = strtolower(trim((string) parse_url($uri, PHP_URL_PATH), '/'));
-    if (empty($uri_path) && function_exists('get_queried_object_id')) {
-        $qid = get_queried_object_id();
+    $uri_path = '';
+    if (function_exists('get_the_ID')) {
+        $qid = (int) get_the_ID();
         if ($qid > 0) {
             $permalink = get_permalink($qid);
-            if (is_string($permalink)) {
+            if (is_string($permalink) && $permalink !== '') {
                 $uri_path = strtolower(trim((string) parse_url($permalink, PHP_URL_PATH), '/'));
             }
         }
+    }
+    if ($uri_path === '' && function_exists('get_queried_object_id')) {
+        $qid = (int) get_queried_object_id();
+        if ($qid > 0) {
+            $permalink = get_permalink($qid);
+            if (is_string($permalink) && $permalink !== '') {
+                $uri_path = strtolower(trim((string) parse_url($permalink, PHP_URL_PATH), '/'));
+            }
+        }
+    }
+    if ($uri_path === '') {
+        $uri = isset($_SERVER['REQUEST_URI']) ? (string) $_SERVER['REQUEST_URI'] : '';
+        $uri_path = strtolower(trim((string) parse_url($uri, PHP_URL_PATH), '/'));
     }
 
     $journeyHtml = vg_render_contextual_journey_html(null, $uri_path);
@@ -823,27 +860,28 @@ add_filter('the_content', static function (string $content): string {
  * Rich Travel Schema Structured Data Filter for Rank Math JSON-LD Graph.
  * Enriches the graph with TouristDestination, TouristTrip, and TravelAction entities.
  */
-function vg_rich_travel_schema_filter(array $data): array
+function vg_rich_travel_schema_filter($data, $context = null): array
 {
-    static $alreadyProcessed = false;
-    if ($alreadyProcessed) {
-        return $data;
+    if (! is_array($data)) {
+        return (array) $data;
     }
-    $alreadyProcessed = true;
 
-    $uri = isset($_SERVER['REQUEST_URI']) ? (string) $_SERVER['REQUEST_URI'] : '';
-    $uri_path = strtolower(trim((string) parse_url($uri, PHP_URL_PATH), '/'));
-    if (empty($uri_path) && function_exists('get_queried_object_id')) {
-        $qid = get_queried_object_id();
+    $uri_path = '';
+    if (function_exists('get_queried_object_id')) {
+        $qid = (int) get_queried_object_id();
         if ($qid > 0) {
             $permalink = get_permalink($qid);
-            if (is_string($permalink)) {
+            if (is_string($permalink) && $permalink !== '') {
                 $uri_path = strtolower(trim((string) parse_url($permalink, PHP_URL_PATH), '/'));
             }
         }
     }
-    if (empty($uri_path) && isset($GLOBALS['post']) && is_object($GLOBALS['post'])) {
+    if ($uri_path === '' && isset($GLOBALS['post']) && is_object($GLOBALS['post'])) {
         $uri_path = strtolower((string) ($GLOBALS['post']->post_name ?? ''));
+    }
+    if ($uri_path === '') {
+        $uri = isset($_SERVER['REQUEST_URI']) ? (string) $_SERVER['REQUEST_URI'] : '';
+        $uri_path = strtolower(trim((string) parse_url($uri, PHP_URL_PATH), '/'));
     }
 
     $cluster = vg_find_travel_cluster_by_path($uri_path);
@@ -853,6 +891,15 @@ function vg_rich_travel_schema_filter(array $data): array
     $dest_id = "{$current_url}#tourist-destination";
     $trip_id = "{$current_url}#tourist-trip";
     $action_id = "{$current_url}#travel-action";
+    $webpage_id = "{$current_url}#webpage";
+
+    // Idempotence check: return early if destination node already exists in this graph
+    $existing_nodes = isset($data['@graph']) && is_array($data['@graph']) ? $data['@graph'] : $data;
+    foreach ($existing_nodes as $existing) {
+        if (is_array($existing) && ($existing['@id'] ?? '') === $dest_id) {
+            return $data;
+        }
+    }
 
     // 1. TouristDestination Node
     $dest_schema = $cluster['destination_schema'];
@@ -867,6 +914,9 @@ function vg_rich_travel_schema_filter(array $data): array
             '@type'  => 'Country',
             'name'   => 'Vietnam',
             'sameAs' => 'https://www.wikidata.org/wiki/Q881',
+        ],
+        'subjectOf'        => [
+            '@id' => $webpage_id,
         ],
     ];
     if (! empty($dest_schema['wikidata'])) {
@@ -955,12 +1005,12 @@ function vg_rich_travel_schema_filter(array $data): array
         'toLocation'   => $to_locations,
         'result'       => ['@id' => $trip_id],
         'instrument'   => [
-            '@type' => 'TravelMethod',
+            '@type' => 'Thing',
             'name'  => $action_schema['method'] ?? 'Express Highway & Rail',
         ],
     ];
 
-    // Connect to WebPage/Article in graph
+    // Connect WebPage and Article nodes to TouristDestination via Schema.org 'about' property
     $nodes = &$data;
     if (isset($data['@graph']) && is_array($data['@graph'])) {
         $nodes = &$data['@graph'];
@@ -974,7 +1024,26 @@ function vg_rich_travel_schema_filter(array $data): array
         $is_article = $node_type === 'Article' || (is_array($node_type) && in_array('Article', $node_type, true));
         $is_webpage = $node_type === 'WebPage' || (is_array($node_type) && in_array('WebPage', $node_type, true));
         if ($is_article || $is_webpage) {
-            $node['subjectOf'] = ['@id' => $dest_id];
+            // CreativeWork.about -> TouristDestination is standard Schema.org
+            if (! isset($node['about'])) {
+                $node['about'] = ['@id' => $dest_id];
+            } elseif (is_array($node['about'])) {
+                $isAssoc = array_keys($node['about']) !== range(0, count($node['about']) - 1);
+                if ($isAssoc) {
+                    $node['about'] = [$node['about'], ['@id' => $dest_id]];
+                } else {
+                    $alreadyLinked = false;
+                    foreach ($node['about'] as $ab) {
+                        if (is_array($ab) && ($ab['@id'] ?? '') === $dest_id) {
+                            $alreadyLinked = true;
+                            break;
+                        }
+                    }
+                    if (! $alreadyLinked) {
+                        $node['about'][] = ['@id' => $dest_id];
+                    }
+                }
+            }
         }
     }
     unset($node);
