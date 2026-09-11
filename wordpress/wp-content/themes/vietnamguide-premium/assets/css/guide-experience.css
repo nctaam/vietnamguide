@@ -143,7 +143,7 @@
   font-size: 14px;
   line-height: 1.35;
   text-decoration: none;
-  transition: color 160ms ease, transform 160ms ease;
+  transition: color 160ms ease, transform 160ms cubic-bezier(0.23, 1, 0.32, 1);
 }
 
 .vg-guide-toc a::before {
@@ -171,6 +171,10 @@
 .vg-guide-toc a.is-active {
   color: var(--vg-jade);
   transform: translateX(3px);
+}
+
+.vg-guide-toc a:active {
+  transform: translateX(1px);
 }
 
 .vg-guide-article {
@@ -334,12 +338,19 @@
   border-top: 3px solid var(--vg-gold);
   background: var(--vg-white);
   box-shadow: 0 8px 28px rgba(1, 45, 29, .05);
-  transition: transform 160ms cubic-bezier(0.16, 1, 0.3, 1), box-shadow 160ms ease;
+  transition: transform 180ms cubic-bezier(0.23, 1, 0.32, 1), box-shadow 180ms ease;
 }
 
-.vg-guide-trust > div:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 12px 32px rgba(1, 45, 29, .08);
+@media (hover: hover) and (pointer: fine) {
+  .vg-guide-trust > div:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 32px rgba(1, 45, 29, .08);
+  }
+}
+
+.vg-guide-trust > div:active {
+  transform: translateY(0) scale(0.98);
+  box-shadow: 0 4px 16px rgba(1, 45, 29, .04);
 }
 
 
@@ -504,6 +515,17 @@
   font-weight: 600;
   line-height: 1.15;
   text-decoration: none;
+  transition: color 160ms ease, transform 120ms cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .vg-guide-article .vg-related-route-list a:hover {
+    color: var(--vg-gold);
+  }
+}
+
+.vg-guide-article .vg-related-route-list a:active {
+  transform: translateX(2px);
 }
 
 .vg-guide-article .vg-related-cards,
@@ -750,14 +772,24 @@
   font-weight: 600;
   line-height: 1.15;
   text-decoration: none;
+  transition: color 160ms ease, transform 120ms cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.vg-guide-related a:active {
+  transform: scale(0.99);
 }
 
 .vg-guide-related a span {
   color: var(--vg-gold);
-  transition: transform 180ms ease;
+  transition: transform 180ms cubic-bezier(0.23, 1, 0.32, 1);
 }
 
-.vg-guide-related a:hover span,
+@media (hover: hover) and (pointer: fine) {
+  .vg-guide-related a:hover span {
+    transform: translateX(6px);
+  }
+}
+
 .vg-guide-related a:focus-visible span {
   transform: translateX(6px);
 }
@@ -828,7 +860,7 @@
     line-height: 1.2;
     text-decoration: none;
     white-space: nowrap;
-    transition: background-color 160ms ease, border-color 160ms ease, color 160ms ease;
+    transition: background-color 160ms ease, border-color 160ms ease, color 160ms ease, transform 120ms cubic-bezier(0.23, 1, 0.32, 1);
   }
 
   .vg-guide-jump a:hover,
@@ -837,6 +869,10 @@
     border-color: var(--vg-jade);
     background: var(--vg-jade);
     color: var(--vg-white);
+  }
+
+  .vg-guide-jump a:active {
+    transform: scale(0.96);
   }
 
   .vg-guide-spine {
@@ -939,8 +975,16 @@
   .vg-guide-toc a:hover,
   .vg-guide-toc a:focus-visible,
   .vg-guide-toc a.is-active,
+  .vg-guide-toc a:active,
+  .vg-guide-trust > div:hover,
+  .vg-guide-trust > div:active,
+  .vg-guide-article .vg-related-route-list a:hover,
+  .vg-guide-article .vg-related-route-list a:active,
+  .vg-guide-related a:hover,
+  .vg-guide-related a:active,
   .vg-guide-related a:hover span,
-  .vg-guide-related a:focus-visible span {
+  .vg-guide-related a:focus-visible span,
+  .vg-guide-jump a:active {
     transform: none;
   }
 }

@@ -564,3 +564,34 @@ Date: 2026-07-28 (Asia/Saigon)
   - Public HTTPS Production Verifier (`ops/verify-guide-experience-public.ps1` via Windows PowerShell 5.1): PASSED (100% on all 87 routes).
   - Stage 16 Live Verifier (`scratch/verify_stage16_live.py`): PASSED (100% on live wordmark, nav link, header action, skip link, menu toggle, footer link focus-visible/active, 44px touch target, and back-to-top main.focus restoration).
 
+## Multi-Skill Adversarial Deep Overhaul: Guide Experience Tactile Physicality, Fine-Pointer Touch Guards & Spring Physics - 2026-09-11
+
+- Architecture & Scope (Stage 17):
+  - Advanced cross-disciplinary adversarial surgery targeting the long-form Guide Experience (`assets/css/guide-experience.css`), combining Emil Kowalski UI motion principles (`emil-design-eng`), WCAG 2.2 AAA accessibility (`ui-a11y`), and zero-regression security rigor (`security-auditor`):
+    - TOC Navigation Spine Links:
+      - Added tactile `:active` state (`transform: translateX(1px);`) on `.vg-guide-toc a` delivering immediate physical feedback when pressed.
+      - Upgraded transform transition to Kowalski spring curve (`transition: color 160ms ease, transform 160ms cubic-bezier(0.23, 1, 0.32, 1);`).
+    - Sticky Trust Cards & Route Ergonomics:
+      - Added `@media (hover: hover) and (pointer: fine)` query around `.vg-guide-trust > div:hover`, eliminating sticky hover artifacts on touchscreens where cards remained stuck in elevated state after tapping.
+      - Added tactile `:active` tap compression (`transform: translateY(0) scale(0.98); box-shadow: 0 4px 16px rgba(1, 45, 29, .04);`).
+      - Upgraded elevation spring curve to `cubic-bezier(0.23, 1, 0.32, 1)`.
+    - Editorial Route Links & Related Guide Navigation:
+      - Added fine-pointer hover guard and tactile `:active` translation (`transform: translateX(2px);`) on `.vg-guide-article .vg-related-route-list a`.
+      - Added tactile `:active` scale compression (`transform: scale(0.99);`) on `.vg-guide-related a`.
+      - Wrapped related guide arrow animation under `@media (hover: hover) and (pointer: fine)` with spring curve (`cubic-bezier(0.23, 1, 0.32, 1)`).
+    - Mobile Jump Navigation Bar:
+      - Added spring transform transition and tactile `:active` compression (`transform: scale(0.96);`) on `.vg-guide-jump a`.
+    - Comprehensive Reduced-Motion Hygiene:
+      - Extended `@media (prefers-reduced-motion: reduce)` to cancel all new hover/active transforms across trust cards, TOC links, jump links, related route links, and related guide arrows.
+    - Zero Unscoped CSS Leaks:
+      - All selectors verified strictly under `.vg-` namespace, passing `Require-GuideCssScoped`.
+- Verification Evidence:
+  - Local AST / Contract (`ops/verify-guide-experience.ps1`): PASSED.
+  - Local AST Mutations (`ops/verify-guide-experience-mutations.ps1`): PASSED (112/112 rejected).
+  - Local Homepage Theme Checks (`ops/verify-homepage-theme.ps1`): PASSED.
+  - Core MU-Plugin Fingerprint & Mutations (`ops/verify-core-mu-plugin.ps1`): PASSED (Fingerprint `71b49033114e8007e5c19fb8ebc1a89e0d0dad88d0fe92dd381a28700db096ce` perfectly preserved).
+  - Remote Live Runtime (`verify-guide-experience-live.php` via WP-CLI): PASSED (87/87).
+  - Public HTTPS Production Verifier (`ops/verify-guide-experience-public.ps1` via Windows PowerShell 5.1): PASSED (100% on all 87 routes).
+  - Stage 17 Live Verifier (`scratch/verify_stage17_live.py`): PASSED (Exact SHA-256 parity: `b06d2a4fcf18139a1bb9cfeda62a89447ea2cb16e8adf705cb1ab7fa3de54d35`).
+
+
