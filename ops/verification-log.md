@@ -777,4 +777,40 @@ Date: 2026-07-28 (Asia/Saigon)
   - Production Live Verification: PASSED (HTTP 200 on `https://vietnamguide.net/costs/vietnam-travel-cost/`, `https://vietnamguide.net/costs/`, root `.vg-cost-calculator`, dual-currency toggle, breakdown bar, and reactive calculation engine verified live).
   - Public HTTPS Production Verifier (`ops/verify-guide-experience-public.ps1` via Windows PowerShell 5.1): PASSED (100% on all 87 public routes).
 
+## Interactive Seasonality & Packing Weather Matrix (Stage 23) - 2026-09-11
+
+- Architecture & Scope (Stage 23):
+  - Engineered an interactive, client-side climate intelligence tool (`.vg-season-matrix`) on the `/plan/best-time-to-visit-vietnam/` pillar page and `/plan/what-to-pack-vietnam/` to eliminate the pervasive "national weather fallacy" and provide precise regional routing guidance.
+  - Interactive Multi-Perspective Climate Engine (`vg_render_season_matrix_html()`):
+    - Dual Perspective Switcher: Toggle between "By Travel Month" (Jan–Dec) and "12-Month Route & Season Heatmap" (Classic 10d, Northern Peaks, Central Coast, Southern Sun).
+    - 3-Zone Regional Climate Matrix:
+      - Zone 1 (North): Hanoi, Halong, Sa Pa, Ninh Binh, Ha Giang with Halong swimming feasibility and mountain elevation offsets (Sa Pa 8–10°C colder).
+      - Zone 2 (Central): Hue, Da Nang, Hoi An, Phong Nha, Quy Nhon with sea states and critical autumn flood/typhoon risk warnings.
+      - Zone 3 (South): HCMC, Mekong Delta, Phu Quoc, Con Dao with golden dry season and green season dynamics.
+    - Traffic-Light Risk Gauge: Prime (🟢), Moderate (🟡), and High Risk/Pivot (🔴).
+    - Cultural & Festival Radar: Surfacing major events (Tết Nguyên Đán travel surges, Da Nang Fireworks, Golden Rice Harvest, Mid-Autumn Festival, Ok Om Bok).
+    - Smart Dynamic Packing Checklist:
+      - Month-tailored items across 4 categories: Clothing & Layering, Footwear & Transit, Health & Sun Defense, Electronics & Dry Gear.
+      - Exclusive "Bring from Home" vs "Buy in Vietnam for Cheap" guidance tags.
+      - Real-time progress counter with percentage fill bar.
+      - Carry-on weight estimator (~5.2kg / 11.5 lbs) mapped against 7kg domestic flight carry-on rules.
+      - State persistence via `localStorage` (saved checked items & selected month across sessions).
+    - Dual Temperature Units (°C / °F) toggle.
+    - One-touch "Copy Month Briefing & Checklist" and dedicated `@media print` single-page clean sheet output.
+    - Contextual deep linking to top guide routes for the active month.
+  - Integration:
+    - Auto-injected following the hero section on `/plan/best-time-to-visit-vietnam/` via `the_content` filter.
+    - Shortcode `[vg_season_matrix]` available for modular embedding.
+- Verification Evidence:
+  - Local Homepage Theme Checks (`ops/verify-homepage-theme.ps1`): PASSED.
+  - Core MU-Plugin Fingerprint & Mutations (`ops/verify-core-mu-plugin.ps1`): PASSED (Fingerprint `71b49033114e8007e5c19fb8ebc1a89e0d0dad88d0fe92dd381a28700db096ce` perfectly preserved).
+  - Core Block Patterns Test (`ops/verify-core-block-patterns.ps1`): PASSED.
+  - Guide Experience Baseline Checks (`ops/verify-guide-experience.ps1`): PASSED.
+  - Guide Experience AST Mutation Suite (`ops/verify-guide-experience-mutations.ps1`): PASSED (112/112 mutations rejected).
+  - Production SFTP SHA-256 Parity: PASSED (100% exact match across all modified theme files: `inc/guide-season-matrix.php`, `functions.php`, `assets/css/homepage.css`).
+  - Production Live Verification: PASSED (HTTP 200 on `https://vietnamguide.net/plan/best-time-to-visit-vietnam/`, root `.vg-season-matrix`, 12-month switcher, dual-perspective route heatmap, and dynamic packing checklist verified live).
+  - Public HTTPS Production Verifier (`ops/verify-guide-experience-public.ps1` via Windows PowerShell 5.1): PASSED (100% on all 87 public routes).
+
+
+
 
