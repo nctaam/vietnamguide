@@ -80,3 +80,17 @@ add_action('template_redirect', static function (): void {
     wp_safe_redirect($target, 301);
     exit;
 });
+
+// Core Web Vitals & Resource Hints: Preconnect to media CDN and preload LCP hero image
+add_action('wp_head', static function (): void {
+    echo '<link rel="preconnect" href="https://upload.wikimedia.org" crossorigin>' . "\n";
+    echo '<link rel="dns-prefetch" href="https://upload.wikimedia.org">' . "\n";
+
+    if (is_singular()) {
+        $heroImage = vg_get_default_og_image_url();
+        if ($heroImage !== '') {
+            echo '<link rel="preload" as="image" href="' . esc_url($heroImage) . '" fetchpriority="high">' . "\n";
+        }
+    }
+}, 1);
+

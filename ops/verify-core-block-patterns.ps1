@@ -321,7 +321,7 @@ Require-NotMatches $CssPath '\.vg-pattern-decision-table[^\{]*thead[^\{]*\{[^\}]
 $FunctionsPath = "$ThemeRoot/functions.php"
 Require-Contains $FunctionsPath "add_editor_style(['assets/css/homepage.css', 'assets/css/guide-patterns.css']);"
 Require-Contains $FunctionsPath "wp_enqueue_style('vietnamguide-guide-patterns', get_theme_file_uri('/assets/css/guide-patterns.css'), ['vietnamguide-homepage'], vg_theme_asset_version('/assets/css/guide-patterns.css'));"
-Require-Sha256 "$ThemeRoot/assets/js/homepage.js" '097b19d6e0802e2352e68362788b58b28537667a6d2cdfc6a6303b59170d1eb9'
+Require-Sha256 "$ThemeRoot/assets/js/homepage.js" '3e7bb59fa61eca304917ffdd9e8f29a448ba820a96b928441306f0632a90b443'
 
 $ThemePhpFiles = Get-ChildItem -LiteralPath (Join-Path $RepoRoot $ThemeRoot) -Filter '*.php' -File -Recurse
 foreach ($ThemePhpFile in $ThemePhpFiles) {

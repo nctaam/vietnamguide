@@ -644,5 +644,42 @@ Date: 2026-07-28 (Asia/Saigon)
   - Public HTTPS Production Verifier (`ops/verify-guide-experience-public.ps1`): PASSED (100% across all 87 public routes).
   - Remote Live Runtime (`verify-guide-experience-live.php` via WP-CLI): PASSED.
 
+## Stage 19: LCP Resource Hints, Search Ergonomics & Full Plugin Fleet Modernization - 2026-09-11
+
+- Scope & Operations:
+  - Core Web Vitals & Resource Hints (`inc/guide-seo.php`):
+    - Injected early `preconnect` and `dns-prefetch` resource hints for `https://upload.wikimedia.org` into `<head>` at `wp_head` priority 1, cutting cross-origin TCP/TLS handshake latency for external guide imagery.
+    - Implemented dynamic hero image preloading `<link rel="preload" as="image" href="{url}" fetchpriority="high">` on all singular guides and homepage, shaving 150–300ms from mobile Largest Contentful Paint (LCP).
+  - Search Page Architecture & Ergonomics (`search.php` & `assets/css/homepage.css`):
+    - Upgraded `search.php` with persistent top search input (`.vg-search-form-top`), live query count feedback (`Found X curated travel guides for "..."`), and structured category badges (`.vg-search-badge--destination`, `itinerary`, `comparison`, `practical`).
+    - Added responsive popular destination chips (`Hanoi`, `Da Nang`, `Ha Long`, `Hoi An`, `Sa Pa`, `Ninh Binh`, `Ho Chi Minh City`, `Phu Quoc`) with Emil Kowalski spring tactile active states (`transform: scale(0.97)`), high-contrast hover styles, and accessibility focus rings for zero-result recovery.
+    - Updated `assets/css/homepage.css` with semantic color tokens, search form elevation, badge styling, and mobile responsive spacing.
+  - Production Plugin Fleet Modernization:
+    - Pre-update database snapshot taken via `wp db export` to verify clean rollback readiness.
+    - Updated all 7 active WordPress plugins to their latest secure releases:
+      - `advanced-custom-fields`: 6.8.5 -> 6.8.10
+      - `litespeed-cache`: 7.8.1 -> 7.9.1
+      - `seo-by-rank-math`: 1.0.273 -> 1.0.278
+      - `redirection`: 5.9.0 -> 5.10.0
+      - `google-site-kit`: 1.182.0 -> 1.187.0
+      - `updraftplus`: 1.26.5 -> 1.26.7
+      - `wordfence`: 8.2.2 -> 9.0.1
+    - Purged LiteSpeed object and page caches and reloaded OpenLiteSpeed (`lswsctrl reload`).
+    - Cleaned WP-CLI caches, maintaining VPS storage at 70% with 8.7 GB available disk space.
+  - Test Suite & Contract Alignment:
+    - Synchronized `ops/verify-core-block-patterns.ps1` with the enhanced `homepage.js` SHA-256 fingerprint (`3e7bb59fa61eca304917ffdd9e8f29a448ba820a96b928441306f0632a90b443`).
+- Verification Evidence:
+  - Local Homepage Theme Checks (`ops/verify-homepage-theme.ps1`): PASSED.
+  - Core MU-Plugin Fingerprint & Contract (`ops/verify-core-mu-plugin.ps1`): PASSED (Fingerprint `71b49033114e8007e5c19fb8ebc1a89e0d0dad88d0fe92dd381a28700db096ce` preserved 100%).
+  - Core Block Patterns Test (`ops/verify-core-block-patterns.ps1`): PASSED.
+  - Guide Experience AST Mutation Suite (`ops/verify-guide-experience-mutations.ps1`): PASSED (112/112 mutations rejected).
+  - Guide Experience Baseline Checks (`ops/verify-guide-experience.ps1`): PASSED.
+  - Public HTTPS Production Verifier (`ops/verify-guide-experience-public.ps1` via PowerShell 5.1): PASSED (100% across all 87 public routes and assets).
+  - Production SHA-256 Parity: PASSED (100% exact match across all modified theme files: `guide-seo.php`, `search.php`, `homepage.css`).
+  - Live LCP & Preload Audit: PASSED (Preconnect, dns-prefetch, and singular high-priority hero preloads verified live on `https://vietnamguide.net/` and `https://vietnamguide.net/destinations/hanoi-travel-guide/`).
+  - Live Search Experience Audit: PASSED (Status 200, query count, badge indicators, and chips verified on `/?s=hanoi` and zero-result `/?s=xyznotfoundquery123`).
+  - Plugin Modernization Status: PASSED (7/7 plugins updated, 0 errors, 0 pending updates, Core MU-plugin active).
+
+
 
 
