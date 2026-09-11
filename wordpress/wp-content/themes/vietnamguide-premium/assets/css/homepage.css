@@ -3163,6 +3163,584 @@ nav[aria-label="Breadcrumbs"] a:hover {
   transform: scale(0.97);
 }
 
+/* ==========================================================================
+   Interactive Cost Calculator Component (.vg-cost-calculator)
+   Stage 22: Budget Estimator by Duration, Style, Party Size, & Flights
+   ========================================================================== */
+
+.vg-cost-calculator {
+  background: var(--vg-sand, #f8f6f0);
+  border: 1px solid var(--vg-line, #e6e0d4);
+  border-radius: 16px;
+  padding: clamp(24px, 3.5vw, 40px);
+  margin: 40px auto;
+  max-width: 1200px;
+}
+
+.vg-calc-header {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: clamp(24px, 3vw, 32px);
+  border-bottom: 1px solid var(--vg-line, #e6e0d4);
+  padding-bottom: 20px;
+}
+
+@media (min-width: 768px) {
+  .vg-calc-header {
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: space-between;
+  }
+}
+
+.vg-calc-heading-group {
+  max-width: 700px;
+}
+
+.vg-calc-badge {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--vg-gold-text, #7e5802);
+  margin-bottom: 6px;
+}
+
+.vg-calc-title {
+  font-family: var(--vg-display, serif);
+  font-size: clamp(24px, 2.8vw, 34px);
+  font-weight: 600;
+  line-height: 1.2;
+  color: var(--vg-ink, #101417);
+  margin: 0 0 8px;
+}
+
+.vg-calc-subtitle {
+  font-size: clamp(14px, 1.3vw, 16px);
+  line-height: 1.5;
+  color: var(--vg-muted, #555e65);
+  margin: 0;
+}
+
+.vg-calc-currency-toggle {
+  display: inline-flex;
+  background: var(--vg-white, #ffffff);
+  border: 1px solid var(--vg-line, #dcd5c9);
+  border-radius: 9999px;
+  padding: 3px;
+  align-self: flex-start;
+  box-shadow: 0 1px 3px rgba(16, 20, 23, 0.05);
+}
+
+.vg-calc-currency-btn {
+  appearance: none;
+  background: transparent;
+  border: none;
+  font-family: var(--vg-body, sans-serif);
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--vg-muted, #555e65);
+  padding: 6px 14px;
+  border-radius: 9999px;
+  cursor: pointer;
+  transition: background-color 150ms ease, color 150ms ease, transform 150ms ease;
+}
+
+.vg-calc-currency-btn:hover {
+  color: var(--vg-ink, #101417);
+}
+
+.vg-calc-currency-btn.is-active {
+  background: var(--vg-jade, #184e3a);
+  color: var(--vg-white, #ffffff);
+  box-shadow: 0 1px 4px rgba(24, 78, 58, 0.25);
+}
+
+.vg-calc-currency-btn:active {
+  transform: scale(0.97);
+}
+
+.vg-calc-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: clamp(24px, 3vw, 36px);
+}
+
+@media (min-width: 900px) {
+  .vg-calc-grid {
+    grid-template-columns: 1.15fr 0.85fr;
+    align-items: start;
+  }
+}
+
+/* Controls Column */
+.vg-calc-controls {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.vg-calc-field {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.vg-calc-field-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.vg-calc-field-label {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  font-size: 14px;
+  color: var(--vg-ink, #101417);
+}
+
+.vg-calc-field-value {
+  font-weight: 800;
+  font-size: 15px;
+  color: var(--vg-jade, #184e3a);
+  background: rgba(24, 78, 58, 0.08);
+  padding: 2px 10px;
+  border-radius: 6px;
+}
+
+.vg-calc-slider-wrapper {
+  padding: 6px 0;
+}
+
+.vg-calc-slider {
+  appearance: none;
+  width: 100%;
+  height: 8px;
+  background: #dcd5c9;
+  border-radius: 4px;
+  outline: none;
+  cursor: pointer;
+  transition: background 150ms ease;
+}
+
+.vg-calc-slider::-webkit-slider-thumb {
+  appearance: none;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: var(--vg-jade, #184e3a);
+  border: 3px solid var(--vg-white, #ffffff);
+  box-shadow: 0 2px 6px rgba(16, 20, 23, 0.25);
+  cursor: pointer;
+  transition: transform 150ms ease, background-color 150ms ease;
+}
+
+.vg-calc-slider::-webkit-slider-thumb:hover {
+  transform: scale(1.15);
+  background: #113829;
+}
+
+.vg-calc-slider::-moz-range-thumb {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: var(--vg-jade, #184e3a);
+  border: 3px solid var(--vg-white, #ffffff);
+  box-shadow: 0 2px 6px rgba(16, 20, 23, 0.25);
+  cursor: pointer;
+}
+
+.vg-calc-presets {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.vg-calc-preset-chip {
+  appearance: none;
+  border: 1px solid var(--vg-line, #dcd5c9);
+  background: var(--vg-white, #ffffff);
+  color: var(--vg-ink, #101417);
+  font-family: var(--vg-body, sans-serif);
+  font-size: 12px;
+  font-weight: 600;
+  padding: 5px 12px;
+  border-radius: 9999px;
+  cursor: pointer;
+  transition: all 150ms ease;
+}
+
+.vg-calc-preset-chip:hover {
+  border-color: var(--vg-gold, #c29b38);
+  transform: translateY(-1px);
+}
+
+.vg-calc-preset-chip:active {
+  transform: scale(0.97);
+}
+
+.vg-calc-preset-chip.is-active {
+  background: var(--vg-jade, #184e3a);
+  border-color: var(--vg-jade, #184e3a);
+  color: var(--vg-white, #ffffff);
+}
+
+/* Travel Style Radio Cards */
+.vg-calc-style-options {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.vg-calc-style-card {
+  position: relative;
+  display: block;
+  background: var(--vg-white, #ffffff);
+  border: 1px solid var(--vg-line, #e6e0d4);
+  border-radius: 10px;
+  padding: 14px 16px;
+  cursor: pointer;
+  transition: all 150ms ease;
+}
+
+.vg-calc-style-card:hover {
+  border-color: var(--vg-gold, #c29b38);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(16, 20, 23, 0.05);
+}
+
+.vg-calc-style-card.is-selected {
+  border-color: var(--vg-jade, #184e3a);
+  background: #fbfdfc;
+  box-shadow: 0 0 0 1px var(--vg-jade, #184e3a), 0 4px 12px rgba(24, 78, 58, 0.08);
+}
+
+.vg-calc-radio {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.vg-calc-style-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 4px;
+}
+
+.vg-calc-style-name {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--vg-ink, #101417);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.vg-calc-tag-rec {
+  font-size: 10px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  background: rgba(194, 155, 56, 0.15);
+  color: var(--vg-gold-text, #7e5802);
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
+.vg-calc-style-rate {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--vg-jade, #184e3a);
+}
+
+.vg-calc-style-desc {
+  display: block;
+  font-size: 12px;
+  line-height: 1.45;
+  color: var(--vg-muted, #555e65);
+}
+
+/* Dual Sub-Columns */
+.vg-calc-dual-fields {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 18px;
+}
+
+@media (min-width: 600px) {
+  .vg-calc-dual-fields {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.vg-calc-pill-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.vg-calc-pill-btn {
+  appearance: none;
+  flex: 1 1 calc(50% - 6px);
+  border: 1px solid var(--vg-line, #dcd5c9);
+  background: var(--vg-white, #ffffff);
+  color: var(--vg-ink, #101417);
+  font-family: var(--vg-body, sans-serif);
+  font-size: 12px;
+  font-weight: 600;
+  padding: 8px 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  text-align: center;
+  transition: all 150ms ease;
+  white-space: nowrap;
+}
+
+.vg-calc-pill-btn:hover {
+  border-color: var(--vg-gold, #c29b38);
+}
+
+.vg-calc-pill-btn:active {
+  transform: scale(0.97);
+}
+
+.vg-calc-pill-btn.is-active {
+  background: var(--vg-jade, #184e3a);
+  border-color: var(--vg-jade, #184e3a);
+  color: var(--vg-white, #ffffff);
+}
+
+/* Right Column: Live Results */
+.vg-calc-summary-card {
+  background: var(--vg-white, #ffffff);
+  border: 1px solid var(--vg-line, #e6e0d4);
+  border-radius: 14px;
+  padding: clamp(20px, 2.5vw, 28px);
+  box-shadow: 0 4px 16px rgba(16, 20, 23, 0.04);
+}
+
+.vg-calc-summary-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.vg-calc-summary-badge {
+  font-size: 11px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--vg-gold-text, #7e5802);
+}
+
+.vg-calc-daily-rate {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--vg-jade, #184e3a);
+  background: rgba(24, 78, 58, 0.06);
+  padding: 2px 8px;
+  border-radius: 4px;
+}
+
+.vg-calc-total-wrap {
+  margin-bottom: 6px;
+}
+
+.vg-calc-total-main {
+  font-family: var(--vg-display, serif);
+  font-size: clamp(34px, 4vw, 44px);
+  font-weight: 700;
+  line-height: 1.1;
+  color: var(--vg-ink, #101417);
+}
+
+.vg-calc-total-converted {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--vg-muted, #555e65);
+  margin-top: 4px;
+}
+
+.vg-calc-parties-note {
+  font-size: 12px;
+  color: var(--vg-muted, #555e65);
+  margin-bottom: 20px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--vg-line, #f0eae1);
+}
+
+/* Proportion Bar */
+.vg-calc-bar-wrapper {
+  margin-bottom: 20px;
+}
+
+.vg-calc-bar-labels {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--vg-muted, #555e65);
+  margin-bottom: 8px;
+}
+
+.vg-bar-label-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.vg-bar-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.vg-dot-stay, .vg-seg-stay { background: #184e3a; }
+.vg-dot-food, .vg-seg-food { background: #c29b38; }
+.vg-dot-transit, .vg-seg-transit { background: #2b6cb0; }
+.vg-dot-tours, .vg-seg-tours { background: #9f7aea; }
+
+.vg-calc-bar {
+  display: flex;
+  height: 10px;
+  border-radius: 6px;
+  overflow: hidden;
+  background: #ece7de;
+}
+
+.vg-bar-segment {
+  height: 100%;
+  transition: width 200ms ease;
+}
+
+/* Breakdown List */
+.vg-calc-breakdown-list {
+  list-style: none;
+  margin: 0 0 16px;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.vg-calc-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  font-size: 13px;
+  line-height: 1.4;
+}
+
+.vg-calc-item-left {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--vg-ink, #101417);
+}
+
+.vg-calc-item-name {
+  font-weight: 500;
+}
+
+.vg-calc-item-right {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 700;
+}
+
+.vg-calc-item-amount {
+  color: var(--vg-ink, #101417);
+}
+
+.vg-calc-item-pct {
+  font-size: 11px;
+  color: var(--vg-muted, #555e65);
+  font-weight: 500;
+}
+
+.vg-calc-disclaimer {
+  font-size: 11px;
+  line-height: 1.45;
+  color: var(--vg-muted, #555e65);
+  margin: 0 0 20px;
+  font-style: italic;
+}
+
+/* Actions */
+.vg-calc-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.vg-calc-btn-copy {
+  appearance: none;
+  flex: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: var(--vg-jade, #184e3a);
+  color: var(--vg-white, #ffffff);
+  border: none;
+  font-family: var(--vg-body, sans-serif);
+  font-size: 13px;
+  font-weight: 700;
+  padding: 10px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 150ms ease;
+}
+
+.vg-calc-btn-copy:hover {
+  background: var(--vg-ink, #101417);
+  transform: translateY(-1px);
+}
+
+.vg-calc-btn-copy:active {
+  transform: scale(0.97);
+}
+
+.vg-calc-btn-copy.is-copied {
+  background: #2e7d32;
+}
+
+.vg-calc-btn-reset {
+  appearance: none;
+  background: transparent;
+  border: 1px solid var(--vg-line, #dcd5c9);
+  color: var(--vg-muted, #555e65);
+  font-family: var(--vg-body, sans-serif);
+  font-size: 13px;
+  font-weight: 600;
+  padding: 10px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 150ms ease;
+}
+
+.vg-calc-btn-reset:hover {
+  color: var(--vg-ink, #101417);
+  border-color: var(--vg-ink, #101417);
+}
+
+.vg-calc-btn-reset:active {
+  transform: scale(0.97);
+}
+
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto !important;
@@ -3217,7 +3795,13 @@ nav[aria-label="Breadcrumbs"] a:hover {
   .vg-finder-pill:active,
   .vg-finder-card:hover,
   .vg-finder-empty-reset:active,
-  .vg-finder-cta:active {
+  .vg-finder-cta:active,
+  .vg-calc-currency-btn:active,
+  .vg-calc-preset-chip:active,
+  .vg-calc-pill-btn:active,
+  .vg-calc-btn-copy:active,
+  .vg-calc-btn-reset:active,
+  .vg-calc-style-card:hover {
     transform: none !important;
   }
 

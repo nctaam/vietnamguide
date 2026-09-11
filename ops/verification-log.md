@@ -748,3 +748,33 @@ Date: 2026-07-28 (Asia/Saigon)
   - Public HTTPS Production Verifier (`ops/verify-guide-experience-public.ps1` via Windows PowerShell 5.1): PASSED (100% on all 87 public routes).
   - Production SFTP SHA-256 Parity: PASSED (100% exact match across all modified theme files: `inc/guide-itinerary-finder.php`, `functions.php`, `assets/css/homepage.css`).
   - Production Live Verification: PASSED (HTTP 200 on `https://vietnamguide.net/itineraries/`, root `.vg-itinerary-finder`, all 8 cards, and reactive JS verified live).
+
+## Interactive Budget & Travel Cost Calculator (Stage 22) - 2026-09-11
+
+- Architecture & Scope (Stage 22):
+  - Engineered an interactive, client-side budget estimation tool (`.vg-cost-calculator`) on the `/costs/vietnam-travel-cost/` pillar page and `/costs/` hub to provide transparent on-the-ground cost calculations across duration, comfort style, party size, and domestic flight hops.
+  - Interactive Calculation Engine (`vg_render_cost_calculator_html()`):
+    - Trip duration slider: Range 3 to 30 days with 4 quick presets: 7d (Highlights), 10d (Classic), 14d (Balanced), 21d (In-Depth).
+    - 3 travel comfort tiers: Backpacker ($35/day base), Flashpacker/Mid-Range ($80/day base - Popular), Luxury Boutique ($195/day base).
+    - Party size multipliers with room sharing and local transit sharing optimization: Solo (1x), Couple (shared room saving ~35% on accommodation, shared local Grab/taxi rides saving ~35%), Group (3x), Family (4x).
+    - Domestic flights toggle: 0 (Overland), 1, 2, or 3+ flight legs at $65 USD (~1,650,000 VND) per flight leg per traveler.
+    - Dual currency toggle: Real-time dynamic switching between USD ($) and VND (₫) anchored at 1 USD = 25,500 VND.
+  - Visual Breakdown & Tactile Actions:
+    - 4-segment visual proportion bar: Stay (35-40%), Food & Dining (25-30%), Transit & Flights (15-22%), Activities & Tours (14-18%).
+    - "Copy Budget Summary" action with clipboard fallback and visual confirmation badge ("Copied to Clipboard!").
+    - Emil Kowalski spring micro-interactions (`transform: scale(0.97)` on active press), focus-visible ring, and WCAG 2.2 AA contrast tokens.
+    - Dedicated screen-reader ARIA live region (`aria-live="polite"`).
+  - Integration:
+    - Auto-injected following the hero section on `/costs/vietnam-travel-cost/` and `/costs/` via `the_content` filter.
+    - Shortcode `[vg_cost_calculator]` available for modular embedding.
+- Verification Evidence:
+  - Local Homepage Theme Checks (`ops/verify-homepage-theme.ps1`): PASSED.
+  - Core MU-Plugin Fingerprint & Mutations (`ops/verify-core-mu-plugin.ps1`): PASSED (Fingerprint `71b49033114e8007e5c19fb8ebc1a89e0d0dad88d0fe92dd381a28700db096ce` perfectly preserved).
+  - Core Block Patterns Test (`ops/verify-core-block-patterns.ps1`): PASSED.
+  - Guide Experience Baseline Checks (`ops/verify-guide-experience.ps1`): PASSED.
+  - Guide Experience AST Mutation Suite (`ops/verify-guide-experience-mutations.ps1`): PASSED (112/112 mutations rejected).
+  - Production SFTP SHA-256 Parity: PASSED (100% exact match across all modified theme files: `inc/guide-cost-calculator.php`, `functions.php`, `assets/css/homepage.css`).
+  - Production Live Verification: PASSED (HTTP 200 on `https://vietnamguide.net/costs/vietnam-travel-cost/`, `https://vietnamguide.net/costs/`, root `.vg-cost-calculator`, dual-currency toggle, breakdown bar, and reactive calculation engine verified live).
+  - Public HTTPS Production Verifier (`ops/verify-guide-experience-public.ps1` via Windows PowerShell 5.1): PASSED (100% on all 87 public routes).
+
+
