@@ -680,6 +680,37 @@ Date: 2026-07-28 (Asia/Saigon)
   - Live Search Experience Audit: PASSED (Status 200, query count, badge indicators, and chips verified on `/?s=hanoi` and zero-result `/?s=xyznotfoundquery123`).
   - Plugin Modernization Status: PASSED (7/7 plugins updated, 0 errors, 0 pending updates, Core MU-plugin active).
 
+## Stage 20: Rich Travel Structured Data & Contextual Route Journey Architecture - 2026-09-11
 
-
-
+- Scope & Operations:
+  - Rich Travel Structured Data (`TouristDestination`, `TouristTrip`, `TravelAction` in `inc/guide-seo.php`):
+    - Implemented `vg_get_travel_clusters_registry()` with 8 comprehensive regional travel clusters covering all 88 published routes across Vietnam:
+      - Northern Golden Triangle (Hanoi hub -> Ha Long Bay, Ninh Binh, Sa Pa)
+      - Maritime Karsts & Islands (Ha Long Bay hub -> Lan Ha Bay, Cat Ba Island, Bai Tu Long)
+      - Terrestrial Karsts & Valleys (Ninh Binh hub -> Trang An, Tam Coc, Cuc Phuong)
+      - Central Heritage & Coastal Gateway (Da Nang / Hoi An hub -> Hue, Cham Islands, My Khe)
+      - Southern Riverine & Heritage Route (Ho Chi Minh City hub -> Mekong Delta, Cu Chi, Can Tho)
+      - Tonkinese Alps & Northern Highlands (Sa Pa hub -> Fansipan, Bac Ha, Mu Cang Chai, Ha Giang)
+      - Tropical Coastal & Southern Islands (Phu Quoc / Nha Trang hub -> Con Dao, Mui Ne, An Thoi)
+      - Vietnam Grand Overland Circuit (National hub -> North-to-South transit hubs)
+    - Enriched Rank Math SEO's JSON-LD graph via `rank_math/json_ld` filter (priority 100):
+      - Injects full Schema.org `TouristDestination` node with Wikidata `sameAs`, `touristType`, `includesAttraction`, and cross-entity links.
+      - Injects full `TouristTrip` node containing an ordered `ItemList` of multi-day route itineraries.
+      - Injects full `TravelAction` node defining transit methods, origin/destination nodes, and organization agent.
+      - Bi-directionally links `WebPage` and `Article` schema nodes via `subjectOf: { "@id": "#tourist-destination" }`.
+  - Contextual Next-Step Journey Links (`inc/guide-seo.php` & `assets/css/guide-patterns.css`):
+    - Implemented `vg_render_contextual_journey_html()` rendering semantic `.vg-contextual-journey` sections with next-step cards, badges, transit estimates, and route guide links.
+    - Added auto-suppression of self-links (a guide never points to itself in its next-step journey grid).
+    - Registered shortcodes `[vg_journey_links]` and `[vg_contextual_journey]`.
+    - Integrated with `the_content` filter (priority 30) for singular posts and pages, guarded against hero blocks and duplicate injection.
+    - Calibrated CSS in `guide-patterns.css` using 100% semantic CSS variables (`var(--vg-*)`), 0 hardcoded hex values, Emil Kowalski spring micro-interactions (`cubic-bezier(0.34, 1.56, 0.64, 1)`), hover elevation (`translateY(-3px)`), tactile press (`scale(0.985)`), and full `@media (prefers-reduced-motion: reduce)` accessibility overrides.
+- Verification Evidence:
+  - Local Homepage Theme Checks (`ops/verify-homepage-theme.ps1`): PASSED.
+  - Core MU-Plugin Fingerprint & Contract (`ops/verify-core-mu-plugin.ps1`): PASSED (Fingerprint `71b49033114e8007e5c19fb8ebc1a89e0d0dad88d0fe92dd381a28700db096ce` perfectly preserved).
+  - Core Block Patterns Test (`ops/verify-core-block-patterns.ps1`): PASSED (0 hardcoded hex colors).
+  - Guide Experience AST Mutation Suite (`ops/verify-guide-experience-mutations.ps1`): PASSED (112/112 mutations rejected).
+  - Guide Experience Baseline Checks (`ops/verify-guide-experience.ps1`): PASSED.
+  - Remote Live Runtime (`verify-guide-experience-live.php` via WP-CLI): PASSED.
+  - Public HTTPS Production Verifier (`ops/verify-guide-experience-public.ps1` via Windows PowerShell 5.1): PASSED (100% on all 87 public routes).
+  - Production SHA-256 Parity: PASSED (100% exact match across all modified theme files: `guide-seo.php`, `guide-patterns.css`).
+  - Live Schema & HTML Verification: PASSED (`TouristDestination`, `TouristTrip`, `TravelAction`, and `.vg-contextual-journey` verified live on production endpoints).
