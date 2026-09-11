@@ -628,4 +628,21 @@ Date: 2026-07-28 (Asia/Saigon)
   - Category 301 Redirect: PASSED (`/category/destinations/` -> HTTP 301 -> `/destinations/`).
   - Dedicated Templates: PASSED (Live 404 and search templates verified).
 
+## Production VPS Maintenance & Storage Hygiene Optimization - 2026-09-11
+
+- Scope & Operations:
+  - Pruned automated backups in `/root/bikip-backups/auto` older than 4 days (`20260904`, `20260905`, `20260906`, `20260907`), freeing 780 MB.
+  - Updated `/root/bikip-maintenance/backup-bikip.sh` retention configuration: `BACKUP_RETENTION_DAYS=4` and `KEEP_LATEST_BACKUPS=4` to enforce rolling 4-day retention automatically on nightly cron.
+  - Cleaned DNF package cache (`dnf clean all`, 274 MB freed) and NPM cache (`npm cache clean --force`, 413 MB freed).
+  - Pruned stale/duplicate manual backups in `/var/backups/newspet` and obsolete 2025 archive in `/usr/local/backup-website/audiohay.net`.
+  - Pruned historical releases in `/var/www/lichcupdien/releases` and `/root/camnang-releases` (retained 2 latest releases each).
+  - Cleaned old `/tmp` artifacts and vacuumed systemd journal logs.
+- Verification Evidence:
+  - Disk Usage: Reduced from **79% (23.3 GB used, 6.1 GB available)** down to **69% (20.0 GB used, 8.9 GB available)**, reclaiming **2.87 GB** of disk space and fulfilling the < 70% threshold.
+  - Retained Backups: Latest 4 daily backups (`20260908`, `20260909`, `20260910`, `20260911`) in `/root/bikip-backups/auto` verified intact.
+  - Service Health: OpenLiteSpeed (`lsws`) and Database (`mariadb`) verified active.
+  - Public HTTPS Production Verifier (`ops/verify-guide-experience-public.ps1`): PASSED (100% across all 87 public routes).
+  - Remote Live Runtime (`verify-guide-experience-live.php` via WP-CLI): PASSED.
+
+
 
