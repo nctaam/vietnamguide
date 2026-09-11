@@ -2770,6 +2770,399 @@ nav[aria-label="Breadcrumbs"] a:hover {
   }
 }
 
+
+/* ==========================================================================
+   Interactive Itinerary Finder Component (.vg-itinerary-finder)
+   Stage 21: Route Selection by Duration, Travel Style, & Airport Gateway
+   ========================================================================== */
+
+.vg-itinerary-finder {
+  background: var(--vg-sand, #f8f6f0);
+  border: 1px solid var(--vg-line, #e6e0d4);
+  border-radius: 16px;
+  padding: clamp(28px, 4vw, 48px);
+  margin: 40px auto;
+  max-width: 1200px;
+}
+
+.vg-finder-intro {
+  text-align: center;
+  max-width: 720px;
+  margin: 0 auto clamp(24px, 3vw, 36px);
+}
+
+.vg-finder-kicker {
+  display: inline-block;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--vg-gold-text, #7e5802);
+  margin-bottom: 8px;
+}
+
+.vg-finder-title {
+  font-family: var(--vg-display, serif);
+  font-size: clamp(28px, 3.2vw, 40px);
+  font-weight: 600;
+  line-height: 1.15;
+  color: var(--vg-ink, #101417);
+  margin: 0 0 12px;
+}
+
+.vg-finder-subtitle {
+  font-size: clamp(15px, 1.4vw, 17px);
+  line-height: 1.55;
+  color: var(--vg-muted, #555e65);
+  margin: 0;
+}
+
+.vg-finder-controls {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  background: var(--vg-white, #ffffff);
+  border: 1px solid var(--vg-line, #e6e0d4);
+  border-radius: 12px;
+  padding: clamp(18px, 2.5vw, 28px);
+  margin-bottom: 24px;
+}
+
+.vg-finder-group {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+@media (min-width: 768px) {
+  .vg-finder-group {
+    flex-direction: row;
+    align-items: center;
+    gap: 16px;
+  }
+}
+
+.vg-finder-label {
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--vg-ink, #101417);
+  min-width: 130px;
+  flex-shrink: 0;
+}
+
+.vg-finder-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.vg-finder-pill {
+  appearance: none;
+  border: 1px solid var(--vg-line, #dcd5c9);
+  background: var(--vg-sand, #f8f6f0);
+  color: var(--vg-ink, #101417);
+  font-family: var(--vg-body, sans-serif);
+  font-size: 13px;
+  font-weight: 600;
+  padding: 6px 14px;
+  border-radius: 9999px;
+  cursor: pointer;
+  line-height: 1.3;
+  transition: transform 150ms cubic-bezier(0.34, 1.56, 0.64, 1),
+              background-color 150ms ease,
+              border-color 150ms ease,
+              color 150ms ease,
+              box-shadow 150ms ease;
+}
+
+.vg-finder-pill:hover {
+  background: var(--vg-white, #ffffff);
+  border-color: var(--vg-gold, #c29b38);
+  transform: translateY(-1px);
+}
+
+.vg-finder-pill:active {
+  transform: scale(0.97);
+}
+
+.vg-finder-pill.is-active {
+  background: var(--vg-jade, #184e3a);
+  border-color: var(--vg-jade, #184e3a);
+  color: var(--vg-white, #ffffff);
+  box-shadow: 0 2px 6px rgba(24, 78, 58, 0.25);
+}
+
+.vg-finder-pill:focus-visible {
+  outline: 2px solid var(--vg-gold, #c29b38);
+  outline-offset: 2px;
+}
+
+.vg-finder-status-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  padding: 0 4px;
+}
+
+.vg-finder-count-text {
+  font-size: 14px;
+  color: var(--vg-muted, #555e65);
+  margin: 0;
+}
+
+.vg-finder-count-text strong {
+  color: var(--vg-ink, #101417);
+  font-weight: 700;
+}
+
+.vg-finder-reset-btn {
+  background: transparent;
+  border: none;
+  color: var(--vg-gold-text, #7e5802);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: 4px;
+  text-decoration: underline;
+  transition: color 150ms ease;
+}
+
+.vg-finder-reset-btn:hover {
+  color: var(--vg-ink, #101417);
+}
+
+.vg-finder-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+}
+
+@media (min-width: 680px) {
+  .vg-finder-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.vg-finder-card {
+  background: var(--vg-white, #ffffff);
+  border: 1px solid var(--vg-line, #e6e0d4);
+  border-radius: 12px;
+  padding: clamp(20px, 2.5vw, 26px);
+  display: flex;
+  flex-direction: column;
+  transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease;
+}
+
+.vg-finder-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 24px rgba(16, 20, 23, 0.08);
+  border-color: var(--vg-gold, #c29b38);
+}
+
+.vg-finder-card[hidden] {
+  display: none !important;
+}
+
+.vg-finder-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.vg-finder-duration {
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  color: var(--vg-jade, #184e3a);
+  background: rgba(24, 78, 58, 0.08);
+  padding: 3px 10px;
+  border-radius: 6px;
+}
+
+.vg-finder-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.vg-finder-badge {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  color: var(--vg-muted, #555e65);
+  background: var(--vg-sand, #f8f6f0);
+  padding: 2px 8px;
+  border-radius: 4px;
+}
+
+.vg-finder-card-title {
+  font-family: var(--vg-display, serif);
+  font-size: clamp(19px, 1.8vw, 22px);
+  font-weight: 600;
+  line-height: 1.25;
+  margin: 0 0 10px;
+}
+
+.vg-finder-card-title a {
+  color: var(--vg-ink, #101417);
+  text-decoration: none;
+}
+
+.vg-finder-card-title a:hover {
+  color: var(--vg-jade, #184e3a);
+}
+
+.vg-finder-route {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--vg-gold-text, #7e5802);
+  margin-bottom: 12px;
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  line-height: 1.4;
+}
+
+.vg-finder-route-icon {
+  font-size: 11px;
+  flex-shrink: 0;
+}
+
+.vg-finder-card-desc {
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--vg-muted, #555e65);
+  margin: 0 0 14px;
+}
+
+.vg-finder-highlights {
+  list-style: none;
+  margin: 0 0 20px;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 13px;
+  line-height: 1.45;
+  color: var(--vg-ink, #101417);
+}
+
+.vg-finder-highlights li {
+  position: relative;
+  padding-left: 18px;
+}
+
+.vg-finder-highlights li::before {
+  content: "—";
+  position: absolute;
+  left: 0;
+  color: var(--vg-gold, #c29b38);
+  font-weight: 700;
+}
+
+.vg-finder-card-footer {
+  margin-top: auto;
+  padding-top: 14px;
+  border-top: 1px solid var(--vg-line, #e6e0d4);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.vg-finder-gateway-note {
+  font-size: 12px;
+  color: var(--vg-muted, #555e65);
+}
+
+.vg-finder-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--vg-jade, #184e3a);
+  text-decoration: none;
+  transition: transform 150ms ease, color 150ms ease;
+}
+
+.vg-finder-cta:hover {
+  color: var(--vg-ink, #101417);
+  transform: translateX(2px);
+}
+
+.vg-finder-cta:active {
+  transform: scale(0.97);
+}
+
+.vg-finder-empty {
+  background: var(--vg-white, #ffffff);
+  border: 1px dashed var(--vg-line, #dcd5c9);
+  border-radius: 12px;
+  padding: 48px 24px;
+  text-align: center;
+}
+
+.vg-finder-empty[hidden] {
+  display: none !important;
+}
+
+.vg-finder-empty-inner {
+  max-width: 440px;
+  margin: 0 auto;
+}
+
+.vg-finder-empty-icon {
+  font-size: 32px;
+  display: block;
+  margin-bottom: 12px;
+}
+
+.vg-finder-empty-title {
+  font-family: var(--vg-display, serif);
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--vg-ink, #101417);
+  margin: 0 0 8px;
+}
+
+.vg-finder-empty-desc {
+  font-size: 14px;
+  color: var(--vg-muted, #555e65);
+  margin: 0 0 20px;
+  line-height: 1.5;
+}
+
+.vg-finder-empty-reset {
+  appearance: none;
+  background: var(--vg-jade, #184e3a);
+  color: var(--vg-white, #ffffff);
+  border: none;
+  font-family: var(--vg-body, sans-serif);
+  font-size: 14px;
+  font-weight: 700;
+  padding: 10px 22px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 150ms ease, transform 150ms ease;
+}
+
+.vg-finder-empty-reset:hover {
+  background: var(--vg-ink, #101417);
+  transform: translateY(-1px);
+}
+
+.vg-finder-empty-reset:active {
+  transform: scale(0.97);
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto !important;
@@ -2820,7 +3213,11 @@ nav[aria-label="Breadcrumbs"] a:hover {
   .vg-header-action:active,
   .vg-footer-links a:hover,
   .vg-footer-links a:focus-visible,
-  .vg-footer-links a:active {
+  .vg-footer-links a:active,
+  .vg-finder-pill:active,
+  .vg-finder-card:hover,
+  .vg-finder-empty-reset:active,
+  .vg-finder-cta:active {
     transform: none !important;
   }
 

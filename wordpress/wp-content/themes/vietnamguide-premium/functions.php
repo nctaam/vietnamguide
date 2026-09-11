@@ -6,6 +6,7 @@ require_once get_theme_file_path('/inc/guide-content.php');
 require_once get_theme_file_path('/inc/guide-context.php');
 require_once get_theme_file_path('/inc/guide-aio.php');
 require_once get_theme_file_path('/inc/guide-seo.php');
+require_once get_theme_file_path('/inc/guide-itinerary-finder.php');
 
 function vg_theme_asset_version(string $relativePath): string
 {

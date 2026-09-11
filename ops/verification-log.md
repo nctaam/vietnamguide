@@ -716,3 +716,35 @@ Date: 2026-07-28 (Asia/Saigon)
   - Production SHA-256 Parity: PASSED (100% exact match across all modified theme files: `guide-seo.php`, `guide-patterns.css`).
   - Live Schema & HTML Verification: PASSED (`TouristDestination`, `TouristTrip`, `TravelAction`, and `.vg-contextual-journey` verified live on production endpoints).
   - Dedicated Walkthrough Documentation (`walkthrough.md`): CREATED and synchronized.
+
+## Interactive Route & Itinerary Finder Component (Stage 21) - 2026-09-11
+
+- Architecture & Scope (Stage 21):
+  - Engineered an interactive, client-side route selection tool (`.vg-itinerary-finder`) to eliminate decision fatigue on the `/itineraries/` hub page (Post ID 8) and provide instant matching based on trip duration, travel style, and entry airport gateway.
+  - Curated authoritative itinerary catalog (`vg_get_itinerary_finder_catalog()`) covering 8 primary route archetypes:
+    1. 10-Day Classic Vietnam (`/itineraries/10-days-in-vietnam/`)
+    2. 14-Day Slow & Balanced Route (`/itineraries/14-days-in-vietnam/`)
+    3. 7-Day Northern Highlights (`/itineraries/7-days-in-vietnam/`)
+    4. 21-Day Grand Vietnam Journey (`/itineraries/21-days-in-vietnam/`)
+    5. 2-3 Days Hanoi City Break (`/itineraries/hanoi-in-2-days/`)
+    6. 3-5 Days Ha Giang Loop Adventure (`/destinations/ha-giang-loop-planning-guide/`)
+    7. 3-4 Days Sa Pa Mountain & Terraces (`/destinations/sapa-travel-guide/`)
+    8. 4-7 Days Con Dao Coastal & Island Finish (`/destinations/con-dao-travel-guide/`)
+  - Interaction & Accessibility Engineering:
+    - Zero external dependencies: Pure modern Vanilla JS component with immediate client-side reactive filtering.
+    - Full keyboard & screen reader support: Proper semantic roles (`role="group"`), `aria-pressed` toggle state, and dynamic ARIA live region (`aria-live="polite"`, `aria-atomic="true"`) announcing filtered count updates.
+    - Emil Kowalski spring micro-interactions (`transform: scale(0.97)` on active press, smooth hover elevation) and WCAG 2.2 AA calibrated contrast tokens (`--vg-gold-text: #7e5802`, `--vg-jade: #184e3a`).
+    - Zero-result recovery state with one-click "Reset All Filters" action.
+    - Full `@media (prefers-reduced-motion: reduce)` motion hygiene overrides.
+  - Seamless Content Integration:
+    - Auto-injection immediately following the hero lede on the `/itineraries/` hub page via `the_content` filter.
+    - Shortcode `[vg_itinerary_finder]` support for modular embedding in custom landing pages or block patterns.
+- Verification Evidence:
+  - Local Homepage Theme Checks (`ops/verify-homepage-theme.ps1`): PASSED.
+  - Core MU-Plugin Fingerprint & Mutations (`ops/verify-core-mu-plugin.ps1`): PASSED (Fingerprint `71b49033114e8007e5c19fb8ebc1a89e0d0dad88d0fe92dd381a28700db096ce` perfectly preserved).
+  - Core Block Patterns Test (`ops/verify-core-block-patterns.ps1`): PASSED.
+  - Guide Experience Baseline Checks (`ops/verify-guide-experience.ps1`): PASSED.
+  - Guide Experience AST Mutation Suite (`ops/verify-guide-experience-mutations.ps1`): PASSED (112/112 mutations rejected).
+  - Public HTTPS Production Verifier (`ops/verify-guide-experience-public.ps1` via Windows PowerShell 5.1): PASSED (100% on all 87 public routes).
+  - Production SFTP SHA-256 Parity: PASSED (100% exact match across all modified theme files: `inc/guide-itinerary-finder.php`, `functions.php`, `assets/css/homepage.css`).
+  - Production Live Verification: PASSED (HTTP 200 on `https://vietnamguide.net/itineraries/`, root `.vg-itinerary-finder`, all 8 cards, and reactive JS verified live).
