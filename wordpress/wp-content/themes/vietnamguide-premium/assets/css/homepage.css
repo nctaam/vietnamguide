@@ -5,6 +5,8 @@
   --vg-jade: #0e6f5c;
   --vg-blue: #173b56;
   --vg-gold: #b98739;
+  --vg-gold-text: #7e5802;
+  --vg-gold-light: #f3d484;
   --vg-coral: #c95f4a;
   --vg-white: #ffffff;
   --vg-line: rgba(16, 20, 23, .16);
@@ -740,7 +742,7 @@ html:not(.vg-js) body.home .vg-site-header {
 }
 
 .vg-comparisons .vg-kicker {
-  color: var(--vg-gold);
+  color: var(--vg-gold-light);
 }
 
 .vg-comparisons h2 {
@@ -1031,7 +1033,7 @@ html:not(.vg-js) body.home .vg-site-header {
 }
 
 .vg-entry-content ul li::marker {
-  color: var(--vg-gold);
+  color: var(--vg-gold-text);
 }
 
 .vg-entry-content ol li::marker {
@@ -1379,7 +1381,7 @@ html:not(.vg-js) body.home .vg-site-header {
 
 .vg-entry-content summary::after,
 .wp-block-details summary::after {
-  color: var(--vg-gold);
+  color: var(--vg-gold-text);
   content: '+';
   font-family: var(--vg-body);
   font-size: 22px;
@@ -1756,7 +1758,7 @@ html:not(.vg-js) body.home .vg-site-header {
 }
 
 .vg-meta-separator {
-  color: var(--vg-gold);
+  color: var(--vg-gold-text);
 }
 
 .vg-author-byline {
@@ -1862,7 +1864,7 @@ html:not(.vg-js) body.home .vg-site-header {
 .vg-copy-link:hover {
   border-color: var(--vg-gold);
   background: var(--vg-white);
-  color: var(--vg-gold);
+  color: var(--vg-gold-text);
 }
 
 .vg-copy-link:active {
@@ -2546,7 +2548,7 @@ nav[aria-label="Breadcrumbs"] a:hover {
 .breadcrumb-trail .separator,
 .breadcrumbs .separator {
   display: inline-block;
-  color: var(--vg-gold);
+  color: var(--vg-gold-text);
 }
 
 /* Back to Top Tactile Floating Action */
@@ -2583,7 +2585,7 @@ nav[aria-label="Breadcrumbs"] a:hover {
 .vg-back-to-top:focus-visible {
   border-color: var(--vg-gold);
   background: var(--vg-white);
-  color: var(--vg-gold);
+  color: var(--vg-gold-text);
   transform: translateY(-3px) scale(1.04);
   box-shadow: 0 8px 24px rgba(16, 20, 23, 0.12);
   outline: 2px solid var(--vg-gold);

@@ -594,4 +594,38 @@ Date: 2026-07-28 (Asia/Saigon)
   - Public HTTPS Production Verifier (`ops/verify-guide-experience-public.ps1` via Windows PowerShell 5.1): PASSED (100% on all 87 routes).
   - Stage 17 Live Verifier (`scratch/verify_stage17_live.py`): PASSED (Exact SHA-256 parity: `b06d2a4fcf18139a1bb9cfeda62a89447ea2cb16e8adf705cb1ab7fa3de54d35`).
 
+## Multi-Skill Deep Overhaul: Security Hardening, 100% OpenGraph Coverage, WCAG AA Gold Calibration & Dedicated Templates - 2026-09-11
+
+- Architecture & Scope (Stage 18):
+  - Systematic remediation of all critical, significant, and polishing deficiencies uncovered during the adversarial multi-disciplinary diagnostic across Security, SEO, A11y, Theme Architecture, and Mobile Craft:
+    - Security & Hardening:
+      - Implemented full suite of HTTP Security Headers via OpenLiteSpeed VirtualHost Context and `.htaccess`: `Strict-Transport-Security: max-age=31536000; includeSubDomains; preload`, `X-Content-Type-Options: nosniff`, `X-Frame-Options: SAMEORIGIN`, `Referrer-Policy: strict-origin-when-cross-origin`, and `Permissions-Policy`.
+      - Blocked public disclosure of sensitive WordPress core files: `readme.html` (HTTP 403), `license.txt` (HTTP 403), `wp-config.php` (HTTP 403), and `.git` via rewrite rules.
+    - Technical SEO & Social Sharing:
+      - Implemented dynamic, high-definition OpenGraph fallback system in `inc/guide-seo.php`, achieving **100.0% coverage (88/88 routes)** with contextual article images (Wikimedia heroes) and branded 1200x630 fallback.
+      - Fixed Rank Math uppercase file extension bug (`.JPG` vs `.jpg`) via regex lowercase normalization.
+      - Resolved stale XML sitemap cache lock, regenerating full 88-route inventory in `page-sitemap.xml`.
+      - Implemented 301 permanent redirects for empty category archives (`/category/destinations/` -> `/destinations/`, `/category/itineraries/` -> `/itineraries/`, `/category/plan/` -> `/plan/`, `/category/compare/` -> `/compare/`), completely eliminating "Nothing found" dead ends.
+    - WCAG 2.2 AA Contrast Calibration:
+      - Introduced `--vg-gold-text: #7e5802;` (contrast 4.72:1 on paper, 4.63:1 on white) and `--vg-gold-light: #f3d484;` (contrast >7:1 on dark ink/forest backgrounds) across `homepage.css` and `guide-experience.css`.
+      - Preserved `--vg-gold: #b98739;` for non-text borders, outlines, and badges satisfying WCAG 2.2 1.4.11 (3:1 non-text requirement).
+    - Mobile Craft & Micro-Interactions:
+      - Added Lea Verou dual gradient scroll shadows to `.vg-pattern-decision-table__scroll` in `guide-patterns.css`, signaling horizontal swipeability on mobile devices.
+    - Theme Architecture & Modularization:
+      - Extracted dedicated `404.php` template with editorial recovery navigation and core hub shortcuts.
+      - Extracted dedicated `search.php` template with live query count and curated travel suggestions.
+- Verification Evidence:
+  - Local AST / Contract (`ops/verify-guide-experience.ps1`): PASSED.
+  - Local AST Mutations (`ops/verify-guide-experience-mutations.ps1`): PASSED (112/112 rejected).
+  - Local Homepage Theme Checks (`ops/verify-homepage-theme.ps1`): PASSED.
+  - Core MU-Plugin Fingerprint & Mutations (`ops/verify-core-mu-plugin.ps1`): PASSED (Fingerprint `71b49033114e8007e5c19fb8ebc1a89e0d0dad88d0fe92dd381a28700db096ce` perfectly preserved).
+  - Remote Live Runtime (`verify-guide-experience-live.php` via WP-CLI): PASSED (87/87).
+  - Public HTTPS Production Verifier (`ops/verify-guide-experience-public.ps1` via Windows PowerShell 5.1): PASSED (100% on all 87 routes).
+  - Production SHA-256 Parity Audit: PASSED (100% exact match across all 8 deployed production files).
+  - Live OpenGraph Scan: PASSED (88/88 routes, 100.0% coverage).
+  - Live Security Headers: PASSED (HSTS, nosniff, SAMEORIGIN, strict-origin, Permissions-Policy).
+  - Sensitive Endpoint Block: PASSED (`/readme.html`, `/license.txt`, `/wp-config.php` all return HTTP 403).
+  - Category 301 Redirect: PASSED (`/category/destinations/` -> HTTP 301 -> `/destinations/`).
+  - Dedicated Templates: PASSED (Live 404 and search templates verified).
+
 

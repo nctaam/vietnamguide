@@ -321,6 +321,15 @@
   margin-top: clamp(40px, 5vw, 64px);
   overflow-x: auto;
   border-block: 1px solid var(--vg-line);
+  background:
+    linear-gradient(to right, var(--vg-paper) 30%, transparent),
+    linear-gradient(to left, var(--vg-paper) 30%, transparent) 100% 0,
+    radial-gradient(farthest-side at 0 50%, rgba(1, 45, 29, .12), transparent),
+    radial-gradient(farthest-side at 100% 50%, rgba(1, 45, 29, .12), transparent) 100% 0;
+  background-color: var(--vg-paper);
+  background-repeat: no-repeat;
+  background-size: 40px 100%, 40px 100%, 14px 100%, 14px 100%;
+  background-attachment: local, local, scroll, scroll;
   -webkit-overflow-scrolling: touch;
 }
 

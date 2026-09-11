@@ -317,7 +317,7 @@
 }
 
 .vg-guide-article ol > li::marker {
-  color: var(--vg-gold);
+  color: var(--vg-gold-text);
   font-family: var(--vg-mono, monospace);
   font-weight: 700;
 }
@@ -407,7 +407,7 @@
   content: "Concierge Verdict";
   display: inline-block;
   margin-bottom: 12px;
-  color: var(--vg-gold);
+  color: var(--vg-gold-text);
   font-size: 11px;
   font-weight: 800;
   letter-spacing: .1em;
@@ -503,7 +503,7 @@
 }
 
 .vg-guide-article .vg-related-route-step {
-  color: var(--vg-gold);
+  color: var(--vg-gold-text);
   font-size: 12px;
   font-weight: 800;
   letter-spacing: .1em;
@@ -520,7 +520,7 @@
 
 @media (hover: hover) and (pointer: fine) {
   .vg-guide-article .vg-related-route-list a:hover {
-    color: var(--vg-gold);
+    color: var(--vg-gold-text);
   }
 }
 
