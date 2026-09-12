@@ -926,3 +926,42 @@ Date: 2026-07-28 (Asia/Saigon)
   - Guide Experience AST Mutation Suite (`ops/verify-guide-experience-mutations.ps1`): PASSED (112/112 AST mutations rejected).
   - Production SFTP SHA-256 Parity: PASSED (100% exact match across all modified theme files: `guide-cost-calculator.php`, `guide-itinerary-finder.php`, `guide-season-matrix.php`, `guide-visa-checker.php`).
   - Public HTTPS Production Verifier (`ops/verify-guide-experience-public.ps1` via Windows PowerShell 5.1): PASSED (100% on all 87 public routes).
+
+## Interactive Airport Transit & Scam Shield Navigator Deployment (Stage 28) - 2026-09-12
+
+- Architecture & Scope (Stage 28):
+  - Built and deployed the Interactive Airport Transit & Scam Shield Navigator component (`.vg-airport-navigator`, shortcode `[vg_airport_navigator]`):
+    - File: `wordpress/wp-content/themes/vietnamguide-premium/inc/guide-airport-navigator.php`
+    - Gateway Coverage: 5 premier international gateways (HAN - Noi Bai, SGN - Tan Son Nhat, DAD - Da Nang, CXR - Cam Ranh / Nha Trang, PQC - Phu Quoc).
+    - Fair Fare Matrix & Estimator:
+      - App-based (GrabCar / Be / Xanh SM) vs Metered Taxis (Mai Linh `024.38.38.38.38` / `028.38.38.38.38`, Vinasun `028.38.27.27.27`) vs Express Public Transit (Bus 86, Bus 109, Bus 18, VinBus electric).
+      - Transparent airport toll breakdown (10k - 15k VND gate exit fee, night surcharges, exact route distance benchmarks).
+    - Terminal Gate-to-Curb Navigation:
+      - Exact terminal exit protocols, pillar designations, and rideshare pickup rules (including Tan Son Nhat SGN domestic terminal TCP multi-story parking garage Level 3-5 Grab pickup zone).
+    - Concierge Scam Shield (5 Arrival Traps Solved):
+      - 1. Counterfeit "Grab" drivers claiming cancellation or inflated cash rates.
+      - 2. Rigged pulse meters / fast meters.
+      - 3. Currency confusion trick (switching 500,000 VND blue note for 20,000 VND blue note).
+      - 4. "Your hotel is closed/under renovation" diversion trap.
+      - 5. Inflated gate exit tolls (demanding 100k+ VND instead of official 10k-15k VND).
+    - Visual & Print Styling:
+      - Integrated into `assets/css/homepage.css` with responsive layout, tactile Kowalski spring micro-interactions, WCAG 2.2 AA contrast, and clean `@media print` rules.
+  - TOC Safety & Hero Protection:
+    - Enforced zero `<h2>` tag contract (`<div class="vg-an-title" role="heading" aria-level="2">`) to guarantee TOC jump link purity in `inc/guide-content.php`.
+    - Enforced hero group protection (`strpos($content, 'vg-guide-hero') !== false`) and post ID idempotence guards (`static $injectedPosts = []`).
+    - Contextual auto-injection on 4 high-intent arrival and transit routes:
+      - `/plan/vietnam-airport-arrival-checklist/`
+      - `/plan/transport-within-vietnam/`
+      - `/plan/safety-and-scams-in-vietnam/`
+      - `/plan/vietnam-first-trip-planning-checklist/`
+- Verification Evidence:
+  - Unit & Contract Tests (`ops/tests/test-interactive-shortcodes.py`): PASSED (5/5 tests).
+  - Local Homepage Theme Checks (`ops/verify-homepage-theme.ps1`): PASSED.
+  - Core MU-Plugin Invariants (`ops/verify-core-mu-plugin.ps1`): PASSED (Fingerprint `71b49033114e8007e5c19fb8ebc1a89e0d0dad88d0fe92dd381a28700db096ce` preserved).
+  - Core Block Patterns (`ops/verify-core-block-patterns.ps1`): PASSED.
+  - Guide Experience Baseline (`ops/verify-guide-experience.ps1`): PASSED.
+  - Anti-AI Slop Quality Verifier (`ops/verify-anti-ai-slop.ps1 -SelfTest`): PASSED.
+  - Guide Experience AST Mutation Suite (`ops/verify-guide-experience-mutations.ps1`): PASSED (112/112 AST mutations rejected).
+  - Production SFTP SHA-256 Parity: PASSED (100% hash parity across `guide-airport-navigator.php`, `functions.php`, and `homepage.css`).
+  - OpenLiteSpeed Cache Purge & LSWS Reload: Executed cleanly.
+  - Public HTTPS Production Verifier (`ops/verify-guide-experience-public.ps1` via Windows PowerShell 5.1): PASSED (100% on all 87 public routes).

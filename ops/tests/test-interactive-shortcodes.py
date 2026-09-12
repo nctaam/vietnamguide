@@ -17,6 +17,7 @@ FILES = {
     'season_matrix': os.path.join(THEME_INC, 'guide-season-matrix.php'),
     'cost_calculator': os.path.join(THEME_INC, 'guide-cost-calculator.php'),
     'itinerary_finder': os.path.join(THEME_INC, 'guide-itinerary-finder.php'),
+    'airport_navigator': os.path.join(THEME_INC, 'guide-airport-navigator.php'),
 }
 
 
@@ -30,12 +31,13 @@ class TestInteractiveShortcodes(unittest.TestCase):
                 self.contents[key] = f.read()
 
     def test_shortcodes_registered(self):
-        """All 4 components must register their corresponding shortcode."""
+        """All 5 components must register their corresponding shortcode."""
         expected_shortcodes = {
             'visa_checker': 'vg_visa_checker',
             'season_matrix': 'vg_season_matrix',
             'cost_calculator': 'vg_cost_calculator',
             'itinerary_finder': 'vg_itinerary_finder',
+            'airport_navigator': 'vg_airport_navigator',
         }
         for key, sc in expected_shortcodes.items():
             pattern = rf"add_shortcode\(\s*['\"]{sc}['\"]\s*,"
@@ -91,6 +93,12 @@ class TestInteractiveShortcodes(unittest.TestCase):
         # Itinerary finder targets
         self.assertIn('itineraries', self.contents['itinerary_finder'])
         self.assertIn('best-vietnam-routes-first-time-visitors', self.contents['itinerary_finder'])
+
+        # Airport navigator targets
+        self.assertIn('vietnam-airport-arrival-checklist', self.contents['airport_navigator'])
+        self.assertIn('transport-within-vietnam', self.contents['airport_navigator'])
+        self.assertIn('safety-and-scams-in-vietnam', self.contents['airport_navigator'])
+        self.assertIn('vietnam-first-trip-planning-checklist', self.contents['airport_navigator'])
 
     def test_php_syntax_linter(self):
         """All modified PHP files must pass php -l syntax check."""
