@@ -19,6 +19,7 @@ FILES = {
     'itinerary_finder': os.path.join(THEME_INC, 'guide-itinerary-finder.php'),
     'airport_navigator': os.path.join(THEME_INC, 'guide-airport-navigator.php'),
 }
+SEO_FILE = os.path.join(THEME_INC, 'guide-seo.php')
 
 
 class TestInteractiveShortcodes(unittest.TestCase):
@@ -188,6 +189,15 @@ class TestInteractiveShortcodes(unittest.TestCase):
             self.contents['cost_calculator'],
             "Cost calculator must clamp duration and passenger inputs."
         )
+
+    def test_schema_geocoordinates_coverage(self):
+        """Destination schema must feature GeoCoordinates (latitude, longitude) for rich snippets."""
+        self.assertTrue(os.path.isfile(SEO_FILE), f"Missing SEO file: {SEO_FILE}")
+        with open(SEO_FILE, 'r', encoding='utf-8') as f:
+            seo_content = f.read()
+        self.assertIn('GeoCoordinates', seo_content, "Schema must generate GeoCoordinates type.")
+        self.assertIn("'latitude'", seo_content, "Cluster registry must specify latitude.")
+        self.assertIn("'longitude'", seo_content, "Cluster registry must specify longitude.")
 
 
 if __name__ == '__main__':
