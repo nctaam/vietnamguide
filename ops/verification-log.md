@@ -811,6 +811,35 @@ Date: 2026-07-28 (Asia/Saigon)
   - Production Live Verification: PASSED (HTTP 200 on `https://vietnamguide.net/plan/best-time-to-visit-vietnam/`, root `.vg-season-matrix`, 12-month switcher, dual-perspective route heatmap, and dynamic packing checklist verified live).
   - Public HTTPS Production Verifier (`ops/verify-guide-experience-public.ps1` via Windows PowerShell 5.1): PASSED (100% on all 87 public routes).
 
+## Interactive Visa Exemption & E-Visa Requirements Checker (Stage 24) - 2026-09-12
 
-
-
+- Architecture & Scope (Stage 24):
+  - Engineered an interactive, zero-dependency client-side immigration intelligence engine (`.vg-visa-checker`) on `/plan/vietnam-evisa/` to eliminate travel uncertainty, clarify Resolution 128/NQ-CP vs 127/NQ-CP rules, and protect inbound tourists from third-party agency scams charging $80–$150 USD for $25 statutory visas.
+  - Interactive Visa Intelligence Engine (`vg_render_visa_checker_html()`):
+    - Instant Nationality Selector & Fast Chips: Fuzzy-searchable select box for 150+ countries with quick chips for top inbound source markets (🇬🇧 UK, 🇺🇸 US, 🇦🇺 Australia, 🇩🇪 Germany, 🇫🇷 France, 🇰🇷 South Korea, 🇯🇵 Japan, 🇨🇦 Canada, 🇮🇳 India, 🇸🇬 Singapore).
+    - Traffic-Light Status Engine:
+      - 🟢 45-Day Unilateral Visa Exemption (Resolution 128/NQ-CP: UK, Germany, France, Italy, Spain, Japan, South Korea, Russia, Belarus, Denmark, Sweden, Norway, Finland; abolished 30-day waiting gap between entries).
+      - 🟢 14–30 Day Bilateral Exemption (ASEAN partners: Thailand, Singapore, Malaysia, Indonesia, Cambodia, Laos [30d]; Philippines [21d]; Brunei, Myanmar [14d]).
+      - 🟡 90-Day Universal E-Visa (Resolution 127/NQ-CP: US, Canada, Australia, New Zealand, India, Ireland, Switzerland, EU member states, etc.).
+      - 🟡 Chinese E-Passport Advisory: Specific guidance for e-passports with map line (issued loose-leaf visa sticker at border control).
+      - 🏝️ Phu Quoc Special Economic Zone Rule: 30-day visa exemption for ALL nationalities arriving directly by international flight or sealed domestic transit.
+    - Planned Trip Duration Slider (1–90 days) & Border Entry Type Toggle (Single vs Multiple Entry):
+      - Contextual smart warnings: If a UK traveler selects 50 days, the engine flags that stay exceeds the 45-day exemption limit and instructs applying for a 90-day E-visa. If multiple entries are selected, it highlights the benefit of a multi-entry e-visa.
+    - Statutory Cost Display: $0 USD for exemptions vs official $25 USD (Single) / $50 USD (Multiple) on the government portal, illustrating $25–$125 savings vs middleman agencies.
+    - Interactive Passport Expiry Calculator: Date picker for planned Vietnam arrival automatically computes the exact minimum required passport expiration date (6 months / 183 days buffer) with instant validation guidance.
+    - Document & Photo Standards: Specifications for portrait photo (4x6cm, white background, no glasses) and bio-data page scan (full spread, all 4 corners, crisp MRZ code).
+    - Anti-Scam Shield: Prominently identifies unofficial middleman websites charging $80–$150 USD and provides a direct, secure button to the official Vietnam Immigration Department portal (`https://evisa.xuatnhapcanh.gov.vn/`).
+    - 33 Approved Checkpoints Drawer: Collapsible accordion cataloging all 8 international airports, 16 land border gates, and 9 seaports authorized for E-visa entry/exit.
+    - One-Click Summary Copy: Tactile clipboard button copying formatted travel requirements to clipboard with visual toast feedback.
+  - Integration:
+    - Auto-injected in the guide article body on `/plan/vietnam-evisa/` via `the_content` filter, guarded by `strpos($content, 'vg-guide-hero') === false` and `static $alreadyInjected` to guarantee singular DOM insertion without heading or TOC pollution.
+    - Shortcode `[vg_visa_checker]` available for modular embedding across any planning guide.
+- Verification Evidence:
+  - Local Homepage Theme Checks (`ops/verify-homepage-theme.ps1`): PASSED.
+  - Core MU-Plugin Fingerprint & Mutations (`ops/verify-core-mu-plugin.ps1`): PASSED (Fingerprint `71b49033114e8007e5c19fb8ebc1a89e0d0dad88d0fe92dd381a28700db096ce` perfectly preserved).
+  - Core Block Patterns Test (`ops/verify-core-block-patterns.ps1`): PASSED.
+  - Guide Experience Baseline Checks (`ops/verify-guide-experience.ps1`): PASSED.
+  - Guide Experience AST Mutation Suite (`ops/verify-guide-experience-mutations.ps1`): PASSED (112/112 mutations rejected).
+  - Production SFTP SHA-256 Parity: PASSED (100% exact match across all modified theme files: `inc/guide-visa-checker.php`, `functions.php`, `assets/css/homepage.css`).
+  - Production Live Verification: PASSED (HTTP 200 on `https://vietnamguide.net/plan/vietnam-evisa/`, `.vg-visa-checker` container, zero duplicate IDs, verified live).
+  - Public HTTPS Production Verifier (`ops/verify-guide-experience-public.ps1` via Windows PowerShell 5.1): PASSED (100% on all 87 public routes).

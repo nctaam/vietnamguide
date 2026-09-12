@@ -9,6 +9,7 @@ require_once get_theme_file_path('/inc/guide-seo.php');
 require_once get_theme_file_path('/inc/guide-itinerary-finder.php');
 require_once get_theme_file_path('/inc/guide-cost-calculator.php');
 require_once get_theme_file_path('/inc/guide-season-matrix.php');
+require_once get_theme_file_path('/inc/guide-visa-checker.php');
 
 function vg_theme_asset_version(string $relativePath): string
 {
