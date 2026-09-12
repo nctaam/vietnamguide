@@ -93,6 +93,35 @@ class TestPolicyCadence(unittest.TestCase):
         self.assertGreaterEqual(report['edi'], 10.0, f"EDI must be >= 10.0, got {report['edi']}")
         self.assertTrue(report['passed'])
 
+    def test_calibrated_articles_achieve_perfect_hls(self):
+        """Verify all 6 remediated articles achieve HLS 100 with zero cadence defects."""
+        import urllib.request
+        calibrated_urls = [
+            "https://vietnamguide.net/itineraries/7-days-in-vietnam/",
+            "https://vietnamguide.net/itineraries/21-days-in-vietnam/",
+            "https://vietnamguide.net/destinations/best-day-trips-from-ho-chi-minh-city/",
+            "https://vietnamguide.net/plan/vietnam-first-trip-planning-checklist/",
+            "https://vietnamguide.net/plan/vietnam-rainy-season-flexible-route/",
+            "https://vietnamguide.net/plan/what-to-pack-for-vietnam-region-season/",
+        ]
+        headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'}
+        for url in calibrated_urls:
+            with self.subTest(url=url):
+                try:
+                    req = urllib.request.Request(url, headers=headers)
+                    with urllib.request.urlopen(req, timeout=10) as resp:
+                        html = resp.read().decode('utf-8')
+                except Exception as e:
+                    self.skipTest(f"Network unavailable for {url}: {e}")
+
+                report = analyze_text(html, source_name=url)
+                self.assertEqual(report['hls_score'], 100, f"{url} HLS must be 100, got {report['hls_score']}")
+                self.assertEqual(len(report.get('repetitive_openers_violations', [])), 0, f"{url} has repetitive openers")
+                self.assertEqual(len(report.get('local_cadence_violations', [])), 0, f"{url} has local cadence monotony")
+                tier_slop = sum(len(report.get(f'tier{i}_violations', [])) for i in range(1, 9))
+                self.assertEqual(tier_slop, 0, f"{url} has Tier 1-8 slop violations: {tier_slop}")
+                self.assertTrue(report['passed'], f"{url} did not pass quality gate")
+
 
 if __name__ == '__main__':
     unittest.main()

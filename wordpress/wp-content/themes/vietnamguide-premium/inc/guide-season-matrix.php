@@ -753,7 +753,7 @@ function vg_render_season_matrix_html(): string
                 <!-- North Vietnam -->
                 <article class="vg-sm-region-card vg-card-north" aria-labelledby="vg-title-north">
                     <div class="vg-sm-card-top">
-                        <span class="vg-sm-region-kicker"><?php esc_html_e('Zone 1: Northern Peaks & Karsts', 'vietnamguide-premium'); ?></span>
+                        <span class="vg-sm-region-kicker"><?php esc_html_e('Northern Peaks & Karsts', 'vietnamguide-premium'); ?></span>
                         <span class="vg-sm-risk-badge vg-risk-low" id="vg-risk-north">Prime</span>
                     </div>
                     <h3 class="vg-sm-region-name" id="vg-title-north">North Vietnam</h3>
@@ -792,7 +792,7 @@ function vg_render_season_matrix_html(): string
                 <!-- Central Vietnam -->
                 <article class="vg-sm-region-card vg-card-central" aria-labelledby="vg-title-central">
                     <div class="vg-sm-card-top">
-                        <span class="vg-sm-region-kicker"><?php esc_html_e('Zone 2: Central Heritage Coast', 'vietnamguide-premium'); ?></span>
+                        <span class="vg-sm-region-kicker"><?php esc_html_e('Central Heritage Coast', 'vietnamguide-premium'); ?></span>
                         <span class="vg-sm-risk-badge vg-risk-moderate" id="vg-risk-central">Moderate</span>
                     </div>
                     <h3 class="vg-sm-region-name" id="vg-title-central">Central Vietnam</h3>
@@ -831,7 +831,7 @@ function vg_render_season_matrix_html(): string
                 <!-- South Vietnam -->
                 <article class="vg-sm-region-card vg-card-south" aria-labelledby="vg-title-south">
                     <div class="vg-sm-card-top">
-                        <span class="vg-sm-region-kicker"><?php esc_html_e('Zone 3: Southern Sun & Islands', 'vietnamguide-premium'); ?></span>
+                        <span class="vg-sm-region-kicker"><?php esc_html_e('Southern Sun & Islands', 'vietnamguide-premium'); ?></span>
                         <span class="vg-sm-risk-badge vg-risk-low" id="vg-risk-south">Prime (Gold)</span>
                     </div>
                     <h3 class="vg-sm-region-name" id="vg-title-south">South Vietnam</h3>
