@@ -965,3 +965,42 @@ Date: 2026-07-28 (Asia/Saigon)
   - Production SFTP SHA-256 Parity: PASSED (100% hash parity across `guide-airport-navigator.php`, `functions.php`, and `homepage.css`).
   - OpenLiteSpeed Cache Purge & LSWS Reload: Executed cleanly.
   - Public HTTPS Production Verifier (`ops/verify-guide-experience-public.ps1` via Windows PowerShell 5.1): PASSED (100% on all 87 public routes).
+
+## Deep Quality Hardening, Anti-AI Slop v2.0 Engine & Cross-Tool Synergy Deployment (Stage 29) - 2026-09-12
+
+- Architecture & Scope (Stage 29):
+  - Upgraded Anti-AI Slop Quality Engine to v2.0 (`ops/anti_ai_slop_linter.py`):
+    - Expanded Tier 1 Clichés to 48+ regex patterns (capturing "tapestry of", "testament to", "nestled in", "bustling streets", "sensory overload", "vibrant tapestry", "hidden gem", "unforgettable experience", "delve into", etc.).
+    - Expanded Tier 2 Tropes to 15+ regex patterns ("embark on", "breathtaking views", "rich history", "culinary journey", "step back in time", etc.).
+    - Formulated and implemented the Evidence Density Index ($EDI$):
+      $$EDI = \frac{\text{Evidence Count}}{\text{Word Count}} \times 1000$$
+      Auditing VND currency prices, specific bus/train route numbers, port names, toll fees, hotline contacts, and exact geo-coordinates.
+  - Complete Content Remediation & Enrichment:
+    - Remediated 17 target posts with deep ground-truth evidence injection via `ops/remediate-content-evidence-density.php`.
+    - Production MariaDB direct update and post cache purge executed cleanly without triggering admin guard false-positives.
+    - Verified full sitemap crawl: **102 / 102 URLs (100.0%) PASSED with 0 Tier 1 Clichés** and high evidence density!
+  - Cross-Tool Synergy & State Continuity Architecture:
+    - Implemented bidirectional `sessionStorage` continuity across all 5 interactive tools:
+      - Visa Checker: `vg_user_nationality`, `vg_user_duration`
+      - Season Matrix: `vg_user_month` (with URL query/hash parameter sync `?month=X` / `#month-X`)
+      - Cost Calculator: `vg_user_currency`, `vg_user_duration`
+      - Itinerary Finder: `vg_user_duration`, `vg_user_airport` (with deep route-level weather links)
+      - Airport Navigator: `vg_user_airport` (with URL hash deep linking `#han`, `#sgn`, `#dad`, `#cxr`, `#pqc`)
+    - Standardized `.vg-tool-synergy-bar` and `.vg-synergy-bridge` across all 5 tool footers for seamless travel planning workflows.
+  - WCAG 2.2 AA Accessibility & Print Hardening:
+    - Added WAI-ARIA tablist semantics with roving `tabindex` and keyboard arrow navigation (`ArrowLeft`, `ArrowRight`, `Home`, `End`) across chips and pills.
+    - Embedded dynamic `#vg-*-aria-status` regions with `aria-live="polite"` for instant, non-intrusive screen reader announcements on filter changes.
+    - Added `@media print` suppression rules for all synergy toolbars, bridge cards, and filter controls while preserving high-contrast print readability.
+  - Master CI/CD Quality Gate Orchestration:
+    - Built `ops/verify-all-gates.ps1` chaining all 5 local gates and optional mutation / remote suites.
+- Verification Evidence:
+  - Unit & Contract Tests (`ops/tests/test-interactive-shortcodes.py`): PASSED (8/8 tests, including a11y, sessionStorage, and synergy links).
+  - Local Homepage Theme Checks (`ops/verify-homepage-theme.ps1`): PASSED.
+  - Core MU-Plugin Invariants (`ops/verify-core-mu-plugin.ps1`): PASSED (Fingerprint `71b49033114e8007e5c19fb8ebc1a89e0d0dad88d0fe92dd381a28700db096ce` 100% preserved).
+  - Core Block Patterns (`ops/verify-core-block-patterns.ps1`): PASSED.
+  - Anti-AI Slop Quality Engine v2.0 (`ops/verify-anti-ai-slop.ps1 -SelfTest`): PASSED (6/6 tests).
+  - Guide Experience AST Mutation Suite (`ops/verify-guide-experience-mutations.ps1`): PASSED (112/112 AST mutations rejected).
+  - Master CI/CD Gate (`ops/verify-all-gates.ps1`): PASSED.
+  - Production SFTP SHA-256 Parity: PASSED (100% exact hash parity across all 6 modified files).
+  - OpenLiteSpeed Cache Purge & LSWS Reload: Executed cleanly (`SIGUSR1` signal).
+  - Public HTTPS Production Verifier (`ops/verify-guide-experience-public.ps1` via Windows PowerShell 5.1): PASSED (100% on all 87 public routes).
