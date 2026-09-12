@@ -1,0 +1,4168 @@
+{
+  "total_urls": 102,
+  "passed": 102,
+  "failed": 0,
+  "total_tier1_violations": 0,
+  "results": [
+    {
+      "source": "https://vietnamguide.net/destinations/hue-imperial-city-guide/",
+      "passed": true,
+      "hls_score": 100,
+      "edi": 1.9,
+      "word_count": 4219,
+      "sentence_count": 240,
+      "mean_sentence_length": 17.58,
+      "std_dev": 16.95,
+      "cv": 0.964,
+      "tier1_count": 0,
+      "tier2_count": 0,
+      "tier3_count": 0,
+      "passive_count": 0,
+      "tier1_violations": [],
+      "tier2_violations": [],
+      "tier3_violations": [],
+      "passive_violations": [],
+      "evidence_count": 8,
+      "evidence": {
+        "currency_count": 0,
+        "transit_time_count": 5,
+        "regulatory_count": 0,
+        "geolocation_count": 2,
+        "operator_count": 1,
+        "climate_count": 0,
+        "sample_currencies": [],
+        "sample_transit": [
+          "2 hrs",
+          "18 minutes",
+          "45 mins"
+        ],
+        "sample_operators": [
+          "speedboat"
+        ],
+        "sample_geolocation": [
+          "Hai Van Pass"
+        ]
+      }
+    },
+    {
+      "source": "https://vietnamguide.net/destinations/phong-nha-travel-guide/",
+      "passed": true,
+      "hls_score": 100,
+      "edi": 6.58,
+      "word_count": 3646,
+      "sentence_count": 212,
+      "mean_sentence_length": 17.2,
+      "std_dev": 10.1,
+      "cv": 0.587,
+      "tier1_count": 0,
+      "tier2_count": 0,
+      "tier3_count": 0,
+      "passive_count": 0,
+      "tier1_violations": [],
+      "tier2_violations": [],
+      "tier3_violations": [],
+      "passive_violations": [],
+      "evidence_count": 24,
+      "evidence": {
+        "currency_count": 11,
+        "transit_time_count": 9,
+        "regulatory_count": 0,
+        "geolocation_count": 4,
+        "operator_count": 0,
+        "climate_count": 0,
+        "sample_currencies": [
+          "90,000 VND",
+          "80,000 VND",
+          "150,000 VND",
+          "550,000 VND"
+        ],
+        "sample_transit": [
+          "1.6 km",
+          "60 minutes",
+          "16 minutes",
+          "45 km"
+        ],
+        "sample_operators": [],
+        "sample_geolocation": [
+          "400m ",
+          "Ga Dong",
+          "3m ",
+          "Hai Van Pass"
+        ]
+      }
+    },
+    {
+      "source": "https://vietnamguide.net/itineraries/hanoi-in-2-days/",
+      "passed": true,
+      "hls_score": 100,
+      "edi": 3.22,
+      "word_count": 3412,
+      "sentence_count": 209,
+      "mean_sentence_length": 16.33,
+      "std_dev": 12.54,
+      "cv": 0.768,
+      "tier1_count": 0,
+      "tier2_count": 0,
+      "tier3_count": 0,
+      "passive_count": 0,
+      "tier1_violations": [],
+      "tier2_violations": [],
+      "tier3_violations": [],
+      "passive_violations": [],
+      "evidence_count": 11,
+      "evidence": {
+        "currency_count": 0,
+        "transit_time_count": 10,
+        "regulatory_count": 0,
+        "geolocation_count": 1,
+        "operator_count": 0,
+        "climate_count": 0,
+        "sample_currencies": [],
+        "sample_transit": [
+          "48 hours",
+          "14 minutes"
+        ],
+        "sample_operators": [],
+        "sample_geolocation": [
+          "Fansipan"
+        ]
+      }
+    },
+    {
+      "source": "https://vietnamguide.net/compare/hanoi-vs-ho-chi-minh-city/",
+      "passed": true,
+      "hls_score": 100,
+      "edi": 1.7,
+      "word_count": 3522,
+      "sentence_count": 196,
+      "mean_sentence_length": 17.97,
+      "std_dev": 10.34,
+      "cv": 0.575,
+      "tier1_count": 0,
+      "tier2_count": 0,
+      "tier3_count": 0,
+      "passive_count": 0,
+      "tier1_violations": [],
+      "tier2_violations": [],
+      "tier3_violations": [],
+      "passive_violations": [],
+      "evidence_count": 6,
+      "evidence": {
+        "currency_count": 0,
+        "transit_time_count": 5,
+        "regulatory_count": 0,
+        "geolocation_count": 1,
+        "operator_count": 0,
+        "climate_count": 0,
+        "sample_currencies": [],
+        "sample_transit": [
+          "Expressway",
+          "2.5 hrs",
+          "1.5 hrs",
+          "15 minutes"
+        ],
+        "sample_operators": [],
+        "sample_geolocation": [
+          "Fansipan"
+        ]
+      }
+    },
+    {
+      "source": "https://vietnamguide.net/destinations/best-islands-in-vietnam/",
+      "passed": true,
+      "hls_score": 100,
+      "edi": 23.34,
+      "word_count": 4070,
+      "sentence_count": 241,
+      "mean_sentence_length": 16.88,
+      "std_dev": 13.11,
+      "cv": 0.777,
+      "tier1_count": 0,
+      "tier2_count": 0,
+      "tier3_count": 0,
+      "passive_count": 0,
+      "tier1_violations": [],
+      "tier2_violations": [],
+      "tier3_violations": [],
+      "passive_violations": [],
+      "evidence_count": 95,
+      "evidence": {
+        "currency_count": 36,
+        "transit_time_count": 26,
+        "regulatory_count": 0,
+        "geolocation_count": 14,
+        "operator_count": 19,
+        "climate_count": 0,
+        "sample_currencies": [
+          "100,000 VND",
+          "390,000 VND",
+          "12,000 VND",
+          "45,000 VND"
+        ],
+        "sample_transit": [
+          "17 minutes",
+          "2.5 hours",
+          "75 minutes",
+          "15 minutes"
+        ],
+        "sample_operators": [
+          "Speedboat",
+          "cable car",
+          "speedboat"
+        ],
+        "sample_geolocation": [
+          "Dong Bai",
+          "Superdong",
+          "Ferry Terminal"
+        ]
+      }
+    },
+    {
+      "source": "https://vietnamguide.net/contact/",
+      "passed": true,
+      "hls_score": 85,
+      "edi": 5.38,
+      "word_count": 186,
+      "sentence_count": 8,
+      "mean_sentence_length": 23.25,
+      "std_dev": 5.58,
+      "cv": 0.24,
+      "tier1_count": 0,
+      "tier2_count": 0,
+      "tier3_count": 0,
+      "passive_count": 0,
+      "tier1_violations": [],
+      "tier2_violations": [],
+      "tier3_violations": [],
+      "passive_violations": [],
+      "evidence_count": 1,
+      "evidence": {
+        "currency_count": 0,
+        "transit_time_count": 1,
+        "regulatory_count": 0,
+        "geolocation_count": 0,
+        "operator_count": 0,
+        "climate_count": 0,
+        "sample_currencies": [],
+        "sample_transit": [
+          "1.2 hr"
+        ],
+        "sample_operators": [],
+        "sample_geolocation": []
+      }
+    },
+    {
+      "source": "https://vietnamguide.net/plan/",
+      "passed": true,
+      "hls_score": 100,
+      "edi": 4.1,
+      "word_count": 731,
+      "sentence_count": 31,
+      "mean_sentence_length": 23.58,
+      "std_dev": 10.58,
+      "cv": 0.449,
+      "tier1_count": 0,
+      "tier2_count": 0,
+      "tier3_count": 0,
+      "passive_count": 0,
+      "tier1_violations": [],
+      "tier2_violations": [],
+      "tier3_violations": [],
+      "passive_violations": [],
+      "evidence_count": 3,
+      "evidence": {
+        "currency_count": 0,
+        "transit_time_count": 2,
+        "regulatory_count": 0,
+        "geolocation_count": 0,
+        "operator_count": 1,
+        "climate_count": 0,
+        "sample_currencies": [],
+        "sample_transit": [
+          "1.2 hr",
+          "limousine"
+        ],
+        "sample_operators": [
+          "sleeper bus"
+        ],
+        "sample_geolocation": []
+      }
+    },
+    {
+      "source": "https://vietnamguide.net/destinations/hoi-an-ancient-town-guide/",
+      "passed": true,
+      "hls_score": 100,
+      "edi": 2.37,
+      "word_count": 3804,
+      "sentence_count": 201,
+      "mean_sentence_length": 18.92,
+      "std_dev": 18.29,
+      "cv": 0.967,
+      "tier1_count": 0,
+      "tier2_count": 0,
+      "tier3_count": 0,
+      "passive_count": 0,
+      "tier1_violations": [],
+      "tier2_violations": [],
+      "tier3_violations": [],
+      "passive_violations": [],
+      "evidence_count": 9,
+      "evidence": {
+        "currency_count": 0,
+        "transit_time_count": 7,
+        "regulatory_count": 0,
+        "geolocation_count": 1,
+        "operator_count": 1,
+        "climate_count": 0,
+        "sample_currencies": [],
+        "sample_transit": [
+          "2 hrs",
+          "6 hours",
+          "16 minutes",
+          "4 hours"
+        ],
+        "sample_operators": [
+          "speedboat"
+        ],
+        "sample_geolocation": [
+          "Hai Van Pass"
+        ]
+      }
+    },
+    {
+      "source": "https://vietnamguide.net/destinations/where-to-stay-in-hanoi/",
+      "passed": true,
+      "hls_score": 100,
+      "edi": 1.9,
+      "word_count": 3690,
+      "sentence_count": 193,
+      "mean_sentence_length": 19.12,
+      "std_dev": 15.97,
+      "cv": 0.835,
+      "tier1_count": 0,
+      "tier2_count": 0,
+      "tier3_count": 0,
+      "passive_count": 0,
+      "tier1_violations": [],
+      "tier2_violations": [],
+      "tier3_violations": [],
+      "passive_violations": [],
+      "evidence_count": 7,
+      "evidence": {
+        "currency_count": 0,
+        "transit_time_count": 5,
+        "regulatory_count": 1,
+        "geolocation_count": 1,
+        "operator_count": 0,
+        "climate_count": 0,
+        "sample_currencies": [],
+        "sample_transit": [
+          "Expressway",
+          "2.5 hrs",
+          "1.5 hrs",
+          "15 minutes"
+        ],
+        "sample_operators": [],
+        "sample_geolocation": [
+          "Fansipan"
+        ]
+      }
+    },
+    {
+      "source": "https://vietnamguide.net/compare/da-nang-vs-hoi-an/",
+      "passed": true,
+      "hls_score": 100,
+      "edi": 2.61,
+      "word_count": 3060,
+      "sentence_count": 176,
+      "mean_sentence_length": 17.38,
+      "std_dev": 13.86,
+      "cv": 0.797,
+      "tier1_count": 0,
+      "tier2_count": 0,
+      "tier3_count": 0,
+      "passive_count": 0,
+      "tier1_violations": [],
+      "tier2_violations": [],
+      "tier3_violations": [],
+      "passive_violations": [],
+      "evidence_count": 8,
+      "evidence": {
+        "currency_count": 0,
+        "transit_time_count": 5,
+        "regulatory_count": 0,
+        "geolocation_count": 3,
+        "operator_count": 0,
+        "climate_count": 0,
+        "sample_currencies": [],
+        "sample_transit": [
+          "2 hrs",
+          "45 mins",
+          "13 minutes"
+        ],
+        "sample_operators": [],
+        "sample_geolocation": [
+          "Hai Van Pass"
+        ]
+      }
+    },
+    {
+      "source": "https://vietnamguide.net/destinations/ly-son-travel-guide/",
+      "passed": true,
+      "hls_score": 100,
+      "edi": 2.58,
+      "word_count": 3104,
+      "sentence_count": 190,
+      "mean_sentence_length": 16.34,
+      "std_dev": 10.19,
+      "cv": 0.623,
+      "tier1_count": 0,
+      "tier2_count": 0,
+      "tier3_count": 0,
+      "passive_count": 0,
+      "tier1_violations": [],
+      "tier2_violations": [],
+      "tier3_violations": [],
+      "passive_violations": [],
+      "evidence_count": 8,
+      "evidence": {
+        "currency_count": 0,
+        "transit_time_count": 3,
+        "regulatory_count": 4,
+        "geolocation_count": 0,
+        "operator_count": 1,
+        "climate_count": 0,
+        "sample_currencies": [],
+        "sample_transit": [
+          "1 hr",
+          "13 minutes",
+          "55 min"
+        ],
+        "sample_operators": [
+          "speedboat"
+        ],
+        "sample_geolocation": []
+      }
+    },
+    {
+      "source": "https://vietnamguide.net/plan/vietnam-in-february/",
+      "passed": true,
+      "hls_score": 100,
+      "edi": 4.53,
+      "word_count": 4640,
+      "sentence_count": 248,
+      "mean_sentence_length": 18.7,
+      "std_dev": 12.58,
+      "cv": 0.672,
+      "tier1_count": 0,
+      "tier2_count": 0,
+      "tier3_count": 0,
+      "passive_count": 0,
+      "tier1_violations": [],
+      "tier2_violations": [],
+      "tier3_violations": [],
+      "passive_violations": [],
+      "evidence_count": 21,
+      "evidence": {
+        "currency_count": 0,
+        "transit_time_count": 2,
+        "regulatory_count": 2,
+        "geolocation_count": 1,
+        "operator_count": 2,
+        "climate_count": 14,
+        "sample_currencies": [],
+        "sample_transit": [
+          "1.2 hr",
+          "20 minutes"
+        ],
+        "sample_operators": [
+          "dsvn.vn"
+        ],
+        "sample_geolocation": [
+          "Hai Van Pass"
+        ]
+      }
+    },
+    {
+      "source": "https://vietnamguide.net/destinations/da-nang-travel-guide/",
+      "passed": true,
+      "hls_score": 100,
+      "edi": 2.62,
+      "word_count": 3430,
+      "sentence_count": 212,
+      "mean_sentence_length": 16.18,
+      "std_dev": 10.28,
+      "cv": 0.635,
+      "tier1_count": 0,
+      "tier2_count": 0,
+      "tier3_count": 0,
+      "passive_count": 0,
+      "tier1_violations": [],
+      "tier2_violations": [],
+      "tier3_violations": [],
+      "passive_violations": [],
+      "evidence_count": 9,
+      "evidence": {
+        "currency_count": 0,
+        "transit_time_count": 4,
+        "regulatory_count": 0,
+        "geolocation_count": 4,
+        "operator_count": 1,
+        "climate_count": 0,
+        "sample_currencies": [],
+        "sample_transit": [
+          "2 hrs",
+          "14 minutes",
+          "30 min",
+          "45 mins"
+        ],
+        "sample_operators": [
+          "speedboat"
+        ],
+        "sample_geolocation": [
+          "Hai Van Pass"
+        ]
+      }
+    },
+    {
+      "source": "https://vietnamguide.net/destinations/where-to-stay-in-ho-chi-minh-city/",
+      "passed": true,
+      "hls_score": 100,
+      "edi": 2.14,
+      "word_count": 3746,
+      "sentence_count": 242,
+      "mean_sentence_length": 15.47,
+      "std_dev": 9.66,
+      "cv": 0.624,
+      "tier1_count": 0,
+      "tier2_count": 0,
+      "tier3_count": 0,
+      "passive_count": 0,
+      "tier1_violations": [],
+      "tier2_violations": [],
+      "tier3_violations": [],
+      "passive_violations": [],
+      "evidence_count": 8,
+      "evidence": {
+        "currency_count": 1,
+        "transit_time_count": 5,
+        "regulatory_count": 1,
+        "geolocation_count": 0,
+        "operator_count": 1,
+        "climate_count": 0,
+        "sample_currencies": [
+          "surcharge"
+        ],
+        "sample_transit": [
+          "2 hrs",
+          "Expressway",
+          "1.5 hrs",
+          "15 minutes"
+        ],
+        "sample_operators": [
+          "Speedboat"
+        ],
+        "sample_geolocation": []
+      }
+    },
+    {
+      "source": "https://vietnamguide.net/compare/ninh-binh-day-trip-vs-overnight/",
+      "passed": true,
+      "hls_score": 100,
+      "edi": 1.8,
+      "word_count": 3325,
+      "sentence_count": 190,
+      "mean_sentence_length": 17.49,
+      "std_dev": 18.37,
+      "cv": 1.05,
+      "tier1_count": 0,
+      "tier2_count": 0,
+      "tier3_count": 0,
+      "passive_count": 0,
+      "tier1_violations": [],
+      "tier2_violations": [],
+      "tier3_violations": [],
+      "passive_violations": [],
+      "evidence_count": 6,
+      "evidence": {
+        "currency_count": 0,
+        "transit_time_count": 6,
+        "regulatory_count": 0,
+        "geolocation_count": 0,
+        "operator_count": 0,
+        "climate_count": 0,
+        "sample_currencies": [],
+        "sample_transit": [
+          "limousine",
+          "7 hrs",
+          "13 minutes",
+          "3 hrs"
+        ],
+        "sample_operators": [],
+        "sample_geolocation": []
+      }
+    },
+    {
+      "source": "https://vietnamguide.net/plan/vietnam-evisa/",
+      "passed": true,
+      "hls_score": 100,
+      "edi": 12.18,
+      "word_count": 2791,
+      "sentence_count": 105,
+      "mean_sentence_length": 26.57,
+      "std_dev": 41.85,
+      "cv": 1.575,
+      "tier1_count": 0,
+      "tier2_count": 0,
+      "tier3_count": 0,
+      "passive_count": 0,
+      "tier1_violations": [],
+      "tier2_violations": [],
+      "tier3_violations": [],
+      "passive_violations": [],
+      "evidence_count": 34,
+      "evidence": {
+        "currency_count": 6,
+        "transit_time_count": 3,
+        "regulatory_count": 25,
+        "geolocation_count": 0,
+        "operator_count": 0,
+        "climate_count": 0,
+        "sample_currencies": [
+          "$80",
+          "$0 USD",
+          "$50 USD",
+          "$25"
+        ],
+        "sample_transit": [
+          "1.2 hr",
+          "Grab",
+          "12 minutes"
+        ],
+        "sample_operators": [],
+        "sample_geolocation": []
+      }
+    },
+    {
+      "source": "https://vietnamguide.net/destinations/quy-nhon-travel-guide/",
+      "passed": true,
+      "hls_score": 100,
+      "edi": 6.76,
+      "word_count": 3845,
+      "sentence_count": 216,
+      "mean_sentence_length": 17.78,
+      "std_dev": 15.83,
+      "cv": 0.89,
+      "tier1_count": 0,
+      "tier2_count": 0,
+      "tier3_count": 0,
+      "passive_count": 0,
+      "tier1_violations": [],
+      "tier2_violations": [],
+      "tier3_violations": [],
+      "passive_violations": [],
+      "evidence_count": 26,
+      "evidence": {
+        "currency_count": 8,
+        "transit_time_count": 7,
+        "regulatory_count": 4,
+        "geolocation_count": 6,
+        "operator_count": 1,
+        "climate_count": 0,
+        "sample_currencies": [
+          "25,000 VND",
+          "20,000 VND",
+          "160,000 VND",
+          "50,000 VND"
+        ],
+        "sample_transit": [
+          "35 km",
+          "SE1",
+          "16 minutes",
+          "50 minutes"
+        ],
+        "sample_operators": [
+          "speedboat"
+        ],
+        "sample_geolocation": [
+          "SE1",
+          "SE3",
+          "Ga Quy",
+          "Ga Dieu"
+        ]
+      }
+    },
+    {
+      "source": "https://vietnamguide.net/plan/tet-in-vietnam-travel-guide/",
+      "passed": true,
+      "hls_score": 100,
+      "edi": 2.48,
+      "word_count": 4833,
+      "sentence_count": 280,
+      "mean_sentence_length": 17.26,
+      "std_dev": 12.75,
+      "cv": 0.739,
+      "tier1_count": 0,
+      "tier2_count": 0,
+      "tier3_count": 0,
+      "passive_count": 0,
+      "tier1_violations": [],
+      "tier2_violations": [],
+      "tier3_violations": [],
+      "passive_violations": [],
+      "evidence_count": 12,
+      "evidence": {
+        "currency_count": 1,
+        "transit_time_count": 5,
+        "regulatory_count": 0,
+        "geolocation_count": 0,
+        "operator_count": 4,
+        "climate_count": 2,
+        "sample_currencies": [
+          "surcharge"
+        ],
+        "sample_transit": [
+          "20 minutes",
+          "Grab",
+          "Terminal 2"
+        ],
+        "sample_operators": [
+          "113",
+          "115"
+        ],
+        "sample_geolocation": []
+      }
+    },
+    {
+      "source": "https://vietnamguide.net/newsletter/",
+      "passed": true,
+      "hls_score": 100,
+      "edi": 3.77,
+      "word_count": 265,
+      "sentence_count": 13,
+      "mean_sentence_length": 20.38,
+      "std_dev": 8.04,
+      "cv": 0.395,
+      "tier1_count": 0,
+      "tier2_count": 0,
+      "tier3_count": 0,
+      "passive_count": 0,
+      "tier1_violations": [],
+      "tier2_violations": [],
+      "tier3_violations": [],
+      "passive_violations": [],
+      "evidence_count": 1,
+      "evidence": {
+        "currency_count": 0,
+        "transit_time_count": 1,
+        "regulatory_count": 0,
+        "geolocation_count": 0,
+        "operator_count": 0,
+        "climate_count": 0,
+        "sample_currencies": [],
+        "sample_transit": [
+          "1.2 hr"
+        ],
+        "sample_operators": [],
+        "sample_geolocation": []
+      }
+    },
+    {
+      "source": "https://vietnamguide.net/plan/hanoi-first-time-visitor-mistakes/",
+      "passed": true,
+      "hls_score": 100,
+      "edi": 1.61,
+      "word_count": 4342,
+      "sentence_count": 248,
+      "mean_sentence_length": 17.5,
+      "std_dev": 12.8,
+      "cv": 0.731,
+      "tier1_count": 0,
+      "tier2_count": 0,
+      "tier3_count": 0,
+      "passive_count": 0,
+      "tier1_violations": [],
+      "tier2_violations": [],
+      "tier3_violations": [],
+      "passive_violations": [],
+      "evidence_count": 7,
+      "evidence": {
+        "currency_count": 0,
+        "transit_time_count": 6,
+        "regulatory_count": 0,
+        "geolocation_count": 1,
+        "operator_count": 0,
+        "climate_count": 0,
+        "sample_currencies": [],
+        "sample_transit": [
+          "2.5 hrs",
+          "Terminal 2",
+          "19 minutes",
+          "Expressway"
+        ],
+        "sample_operators": [],
+        "sample_geolocation": [
+          "Fansipan"
+        ]
+      }
+    },
+    {
+      "source": "https://vietnamguide.net/destinations/best-places-to-visit-vietnam/",
+      "passed": true,
+      "hls_score": 100,
+      "edi": 13.94,
+      "word_count": 3012,
+      "sentence_count": 162,
+      "mean_sentence_length": 18.59,
+      "std_dev": 11.85,
+      "cv": 0.637,
+      "tier1_count": 0,
+      "tier2_count": 0,
+      "tier3_count": 0,
+      "passive_count": 0,
+      "tier1_violations": [],
+      "tier2_violations": [],
+      "tier3_violations": [],
+      "passive_violations": [],
+      "evidence_count": 42,
+      "evidence": {
+        "currency_count": 10,
+        "transit_time_count": 22,
+        "regulatory_count": 0,
+        "geolocation_count": 6,
+        "operator_count": 4,
+        "climate_count": 0,
+        "sample_currencies": [
+          "350,000 VND",
+          "110,000 VND",
+          "250,000 VND",
+          "650,000 VND"
+        ],
+        "sample_transit": [
+          "6 hours",
+          "SE1",
+          "2.5 hours",
+          "13 minutes"
+        ],
+        "sample_operators": [
+          "sleeper bus"
+        ],
+        "sample_geolocation": [
+          "SE1",
+          "SE2",
+          "Hai Van Pass"
+        ]
+      }
+    },
+    {
+      "source": "https://vietnamguide.net/plan/best-time-to-visit-vietnam/",
+      "passed": true,
+      "hls_score": 100,
+      "edi": 3.39,
+      "word_count": 3831,
+      "sentence_count": 179,
+      "mean_sentence_length": 21.39,
+      "std_dev": 19.8,
+      "cv": 0.926,
+      "tier1_count": 0,
+      "tier2_count": 0,
+      "tier3_count": 0,
+      "passive_count": 0,
+      "tier1_violations": [],
+      "tier2_violations": [],
+      "tier3_violations": [],
+      "passive_violations": [],
+      "evidence_count": 13,
+      "evidence": {
+        "currency_count": 1,
+        "transit_time_count": 3,
+        "regulatory_count": 3,
+        "geolocation_count": 0,
+        "operator_count": 0,
+        "climate_count": 6,
+        "sample_currencies": [
+          "$25"
+        ],
+        "sample_transit": [
+          "1.2 hr",
+          "Grab",
+          "16 minutes"
+        ],
+        "sample_operators": [],
+        "sample_geolocation": []
+      }
+    },
+    {
+      "source": "https://vietnamguide.net/plan/ninh-binh-to-ha-long-bay-transfer/",
+      "passed": true,
+      "hls_score": 100,
+      "edi": 2.08,
+      "word_count": 3373,
+      "sentence_count": 196,
+      "mean_sentence_length": 17.19,
+      "std_dev": 21.91,
+      "cv": 1.275,
+      "tier1_count": 0,
+      "tier2_count": 0,
+      "tier3_count": 0,
+      "passive_count": 0,
+      "tier1_violations": [],
+      "tier2_violations": [],
+      "tier3_violations": [],
+      "passive_violations": [],
+      "evidence_count": 7,
+      "evidence": {
+        "currency_count": 0,
+        "transit_time_count": 5,
+        "regulatory_count": 0,
+        "geolocation_count": 2,
+        "operator_count": 0,
+        "climate_count": 0,
+        "sample_currencies": [],
+        "sample_transit": [
+          "2.5 hrs",
+          "14 minutes",
+          "3 hrs",
+          "Expressway"
+        ],
+        "sample_operators": [],
+        "sample_geolocation": [
+          "Tuan Chau"
+        ]
+      }
+    },
+    {
+      "source": "https://vietnamguide.net/compare/",
+      "passed": true,
+      "hls_score": 100,
+      "edi": 1.35,
+      "word_count": 742,
+      "sentence_count": 28,
+      "mean_sentence_length": 26.5,
+      "std_dev": 13.85,
+      "cv": 0.523,
+      "tier1_count": 0,
+      "tier2_count": 0,
+      "tier3_count": 0,
+      "passive_count": 0,
+      "tier1_violations": [],
+      "tier2_violations": [],
+      "tier3_violations": [],
+      "passive_violations": [],
+      "evidence_count": 1,
+      "evidence": {
+        "currency_count": 0,
+        "transit_time_count": 1,
+        "regulatory_count": 0,
+        "geolocation_count": 0,
+        "operator_count": 0,
+        "climate_count": 0,
+        "sample_currencies": [],
+        "sample_transit": [
+          "1.2 hr"
+        ],
+        "sample_operators": [],
+        "sample_geolocation": []
+      }
+    },
+    {
+      "source": "https://vietnamguide.net/plan/best-time-for-northern-vietnam/",
+      "passed": true,
+      "hls_score": 100,
+      "edi": 11.69,
+      "word_count": 2309,
+      "sentence_count": 119,
+      "mean_sentence_length": 19.34,
+      "std_dev": 23.38,
+      "cv": 1.209,
+      "tier1_count": 0,
+      "tier2_count": 0,
+      "tier3_count": 0,
+      "passive_count": 0,
+      "tier1_violations": [],
+      "tier2_violations": [],
+      "tier3_violations": [],
+      "passive_violations": [],
+      "evidence_count": 27,
+      "evidence": {
+        "currency_count": 1,
+        "transit_time_count": 4,
+        "regulatory_count": 3,
+        "geolocation_count": 13,
+        "operator_count": 0,
+        "climate_count": 6,
+        "sample_currencies": [
+          "$25"
+        ],
+        "sample_transit": [
+          "1.2 hr",
+          "48 hours",
+          "9 minutes",
+          "Grab"
+        ],
+        "sample_operators": [],
+        "sample_geolocation": [
+          "10m",
+          "15m",
+          "Ma Pi Leng",
+          "1,500m"
+        ]
+      }
+    },
+    {
+      "source": "https://vietnamguide.net/destinations/ha-giang-loop-planning-guide/",
+      "passed": true,
+      "hls_score": 100,
+      "edi": 3.27,
+      "word_count": 4585,
+      "sentence_count": 271,
+      "mean_sentence_length": 16.92,
+      "std_dev": 9.75,
+      "cv": 0.576,
+      "tier1_count": 0,
+      "tier2_count": 0,
+      "tier3_count": 0,
+      "passive_count": 0,
+      "tier1_violations": [],
+      "tier2_violations": [],
+      "tier3_violations": [],
+      "passive_violations": [],
+      "evidence_count": 15,
+      "evidence": {
+        "currency_count": 0,
+        "transit_time_count": 5,
+        "regulatory_count": 0,
+        "geolocation_count": 8,
+        "operator_count": 2,
+        "climate_count": 0,
+        "sample_currencies": [],
+        "sample_transit": [
+          "3.5 hrs",
+          "20 minutes",
+          "5.5 hrs"
+        ],
+        "sample_operators": [
+          "sleeper bus",
+          "cable car"
+        ],
+        "sample_geolocation": [
+          "Ma Pi Leng",
+          "QL4C"
+        ]
+      }
+    },
+    {
+      "source": "https://vietnamguide.net/destinations/where-to-stay-in-sapa/",
+      "passed": true,
+      "hls_score": 100,
+      "edi": 25.28,
+      "word_count": 1503,
+      "sentence_count": 102,
+      "mean_sentence_length": 14.62,
+      "std_dev": 8.69,
+      "cv": 0.594,
+      "tier1_count": 0,
+      "tier2_count": 0,
+      "tier3_count": 0,
+      "passive_count": 0,
+      "tier1_violations": [],
+      "tier2_violations": [],
+      "tier3_violations": [],
+      "passive_violations": [],
+      "evidence_count": 38,
+      "evidence": {
+        "currency_count": 8,
+        "transit_time_count": 8,
+        "regulatory_count": 0,
+        "geolocation_count": 17,
+        "operator_count": 3,
+        "climate_count": 2,
+        "sample_currencies": [
+          "250,000 VND",
+          "$180",
+          "$12 USD",
+          "$8"
+        ],
+        "sample_transit": [
+          "60 minutes",
+          "6 minutes",
+          "2 hours",
+          "30 minutes"
+        ],
+        "sample_operators": [
+          "sleeper bus",
+          "cable car"
+        ],
+        "sample_geolocation": [
+          "Muong Hoa"
+        ]
+      }
+    },
+    {
+      "source": "https://vietnamguide.net/destinations/cham-islands-travel-guide/",
+      "passed": true,
+      "hls_score": 100,
+      "edi": 2.6,
+      "word_count": 3461,
+      "sentence_count": 212,
+      "mean_sentence_length": 16.3,
+      "std_dev": 10.13,
+      "cv": 0.621,
+      "tier1_count": 0,
+      "tier2_count": 0,
+      "tier3_count": 0,
+      "passive_count": 0,
+      "tier1_violations": [],
+      "tier2_violations": [],
+      "tier3_violations": [],
+      "passive_violations": [],
+      "evidence_count": 9,
+      "evidence": {
+        "currency_count": 0,
+        "transit_time_count": 5,
+        "regulatory_count": 3,
+        "geolocation_count": 1,
+        "operator_count": 0,
+        "climate_count": 0,
+        "sample_currencies": [],
+        "sample_transit": [
+          "2 hrs",
+          "14 minutes",
+          "45 mins"
+        ],
+        "sample_operators": [],
+        "sample_geolocation": [
+          "Hai Van Pass"
+        ]
+      }
+    },
+    {
+      "source": "https://vietnamguide.net/plan/ha-giang-safety-guide/",
+      "passed": true,
+      "hls_score": 100,
+      "edi": 17.19,
+      "word_count": 2036,
+      "sentence_count": 109,
+      "mean_sentence_length": 18.61,
+      "std_dev": 17.99,
+      "cv": 0.967,
+      "tier1_count": 0,
+      "tier2_count": 0,
+      "tier3_count": 0,
+      "passive_count": 0,
+      "tier1_violations": [],
+      "tier2_violations": [],
+      "tier3_violations": [],
+      "passive_violations": [],
+      "evidence_count": 35,
+      "evidence": {
+        "currency_count": 8,
+        "transit_time_count": 7,
+        "regulatory_count": 0,
+        "geolocation_count": 10,
+        "operator_count": 1,
+        "climate_count": 9,
+        "sample_currencies": [
+          "$55",
+          "$85 USD",
+          "$10",
+          "$80"
+        ],
+        "sample_transit": [
+          "6 hours",
+          "8 hours",
+          "8 minutes",
+          "7 hours"
+        ],
+        "sample_operators": [
+          "cable car"
+        ],
+        "sample_geolocation": [
+          "Ma Pi Leng",
+          "5 meters ",
+          "QL4C"
+        ]
+      }
+    },
+    {
+      "source": "https://vietnamguide.net/compare/hoi-an-vs-hue/",
+      "passed": true,
+      "hls_score": 100,
+      "edi": 1.94,
+      "word_count": 3615,
+      "sentence_count": 225,
+      "mean_sentence_length": 16.07,
+      "std_dev": 9.82,
+      "cv": 0.611,
+      "tier1_count": 0,
+      "tier2_count": 0,
+      "tier3_count": 0,
+      "passive_count": 0,
+      "tier1_violations": [],
+      "tier2_violations": [],
+      "tier3_violations": [],
+      "passive_violations": [],
+      "evidence_count": 7,
+      "evidence": {
+        "currency_count": 0,
+        "transit_time_count": 5,
+        "regulatory_count": 0,
+        "geolocation_count": 2,
+        "operator_count": 0,
+        "climate_count": 0,
+        "sample_currencies": [],
+        "sample_transit": [
+          "2 hrs",
+          "45 mins",
+          "15 minutes"
+        ],
+        "sample_operators": [],
+        "sample_geolocation": [
+          "Hai Van Pass"
+        ]
+      }
+    },
+    {
+      "source": "https://vietnamguide.net/itineraries/",
+      "passed": true,
+      "hls_score": 100,
+      "edi": 11.61,
+      "word_count": 1292,
+      "sentence_count": 38,
+      "mean_sentence_length": 34.0,
+      "std_dev": 26.39,
+      "cv": 0.776,
+      "tier1_count": 0,
+      "tier2_count": 0,
+      "tier3_count": 0,
+      "passive_count": 0,
+      "tier1_violations": [],
+      "tier2_violations": [],
+      "tier3_violations": [],
+      "passive_violations": [],
+      "evidence_count": 15,
+      "evidence": {
+        "currency_count": 1,
+        "transit_time_count": 2,
+        "regulatory_count": 3,
+        "geolocation_count": 8,
+        "operator_count": 1,
+        "climate_count": 0,
+        "sample_currencies": [
+          "$25"
+        ],
+        "sample_transit": [
+          "1.2 hr",
+          "Grab"
+        ],
+        "sample_operators": [
+          "cable car"
+        ],
+        "sample_geolocation": [
+          "Ma Pi Leng",
+          "Hai Van Pass",
+          "Muong Hoa"
+        ]
+      }
+    },
+    {
+      "source": "https://vietnamguide.net/source-update-policy/",
+      "passed": true,
+      "hls_score": 85,
+      "edi": 3.86,
+      "word_count": 259,
+      "sentence_count": 13,
+      "mean_sentence_length": 19.92,
+      "std_dev": 6.17,
+      "cv": 0.31,
+      "tier1_count": 0,
+      "tier2_count": 0,
+      "tier3_count": 0,
+      "passive_count": 0,
+      "tier1_violations": [],
+      "tier2_violations": [],
+      "tier3_violations": [],
+      "passive_violations": [],
+      "evidence_count": 1,
+      "evidence": {
+        "currency_count": 0,
+        "transit_time_count": 1,
+        "regulatory_count": 0,
+        "geolocation_count": 0,
+        "operator_count": 0,
+        "climate_count": 0,
+        "sample_currencies": [],
+        "sample_transit": [
+          "1.2 hr"
+        ],
+        "sample_operators": [],
+        "sample_geolocation": []
+      }
+    },
+    {
+      "source": "https://vietnamguide.net/itineraries/14-days-in-vietnam/",
+      "passed": true,
+      "hls_score": 100,
+      "edi": 16.88,
+      "word_count": 6873,
+      "sentence_count": 408,
+      "mean_sentence_length": 16.85,
+      "std_dev": 10.12,
+      "cv": 0.601,
+      "tier1_count": 0,
+      "tier2_count": 0,
+      "tier3_count": 0,
+      "passive_count": 0,
+      "tier1_violations": [],
+      "tier2_violations": [],
+      "tier3_violations": [],
+      "passive_violations": [],
+      "evidence_count": 116,
+      "evidence": {
+        "currency_count": 48,
+        "transit_time_count": 48,
+        "regulatory_count": 1,
+        "geolocation_count": 19,
+        "operator_count": 0,
+        "climate_count": 0,
+        "sample_currencies": [
+          "320,000 VND",
+          "180,000 VND",
+          "45,000 VND",
+          "15,000 VND"
+        ],
+        "sample_transit": [
+          "Bus 86",
+          "GrabCar",
+          "29 minutes",
+          "Expressway"
+        ],
+        "sample_operators": [],
+        "sample_geolocation": [
+          "SE1",
+          "Ga Hanoi",
+          "SE3",
+          "Hai Van Pass"
+        ]
+      }
+    },
+    {
+      "source": "https://vietnamguide.net/destinations/best-day-trips-from-ho-chi-minh-city/",
+      "passed": true,
+      "hls_score": 100,
+      "edi": 2.72,
+      "word_count": 6620,
+      "sentence_count": 427,
+      "mean_sentence_length": 15.5,
+      "std_dev": 9.39,
+      "cv": 0.606,
+      "tier1_count": 0,
+      "tier2_count": 0,
+      "tier3_count": 0,
+      "passive_count": 0,
+      "tier1_violations": [],
+      "tier2_violations": [],
+      "tier3_violations": [],
+      "passive_violations": [],
+      "evidence_count": 18,
+      "evidence": {
+        "currency_count": 1,
+        "transit_time_count": 9,
+        "regulatory_count": 7,
+        "geolocation_count": 0,
+        "operator_count": 1,
+        "climate_count": 0,
+        "sample_currencies": [
+          "surcharge"
+        ],
+        "sample_transit": [
+          "27 minutes",
+          "8 hours",
+          "11 hours",
+          "5.5 hours"
+        ],
+        "sample_operators": [
+          "cable car"
+        ],
+        "sample_geolocation": []
+      }
+    },
+    {
+      "source": "https://vietnamguide.net/destinations/where-to-stay-in-ninh-binh/",
+      "passed": true,
+      "hls_score": 100,
+      "edi": 4.54,
+      "word_count": 3302,
+      "sentence_count": 205,
+      "mean_sentence_length": 16.09,
+      "std_dev": 15.46,
+      "cv": 0.961,
+      "tier1_count": 0,
+      "tier2_count": 0,
+      "tier3_count": 0,
+      "passive_count": 0,
+      "tier1_violations": [],
+      "tier2_violations": [],
+      "tier3_violations": [],
+      "passive_violations": [],
+      "evidence_count": 15,
+      "evidence": {
+        "currency_count": 6,
+        "transit_time_count": 7,
+        "regulatory_count": 0,
+        "geolocation_count": 2,
+        "operator_count": 0,
+        "climate_count": 0,
+        "sample_currencies": [
+          "1,600,000 VND",
+          "750,000 VND",
+          "500,000 VND",
+          "1,800,000 VND"
+        ],
+        "sample_transit": [
+          "Mai Linh",
+          "9 km",
+          "13 minutes",
+          "3 hrs"
+        ],
+        "sample_operators": [],
+        "sample_geolocation": [
+          "Ga Ninh"
+        ]
+      }
+    },
+    {
+      "source": "https://vietnamguide.net/plan/sim-esim-vietnam/",
+      "passed": true,
+      "hls_score": 100,
+      "edi": 1.8,
+      "word_count": 3328,
+      "sentence_count": 200,
+      "mean_sentence_length": 16.64,
+      "std_dev": 9.2,
+      "cv": 0.553,
+      "tier1_count": 0,
+      "tier2_count": 0,
+      "tier3_count": 0,
+      "passive_count": 0,
+      "tier1_violations": [],
+      "tier2_violations": [],
+      "tier3_violations": [],
+      "passive_violations": [],
+      "evidence_count": 6,
+      "evidence": {
+        "currency_count": 0,
+        "transit_time_count": 4,
+        "regulatory_count": 2,
+        "geolocation_count": 0,
+        "operator_count": 0,
+        "climate_count": 0,
+        "sample_currencies": [],
+        "sample_transit": [
+          "1.2 hr",
+          "14 minutes",
+          "Grab",
+          "limousine"
+        ],
+        "sample_operators": [],
+        "sample_geolocation": []
+      }
+    },
+    {
+      "source": "https://vietnamguide.net/plan/health-travel-insurance-vietnam/",
+      "passed": true,
+      "hls_score": 100,
+      "edi": 11.51,
+      "word_count": 3736,
+      "sentence_count": 196,
+      "mean_sentence_length": 19.05,
+      "std_dev": 13.7,
+      "cv": 0.719,
+      "tier1_count": 0,
+      "tier2_count": 0,
+      "tier3_count": 0,
+      "passive_count": 0,
+      "tier1_violations": [],
+      "tier2_violations": [],
+      "tier3_violations": [],
+      "passive_violations": [],
+      "evidence_count": 43,
+      "evidence": {
+        "currency_count": 24,
+        "transit_time_count": 3,
+        "regulatory_count": 0,
+        "geolocation_count": 0,
+        "operator_count": 16,
+        "climate_count": 0,
+        "sample_currencies": [
+          "$50",
+          "1,200,000 VND",
+          "2,800,000 VND",
+          "$115 USD"
+        ],
+        "sample_transit": [
+          "1.2 hr",
+          "limousine",
+          "15 minutes"
+        ],
+        "sample_operators": [
+          "024.3934.0666",
+          "028.5411.3500",
+          "115"
+        ],
+        "sample_geolocation": []
+      }
+    },
+    {
+      "source": "https://vietnamguide.net/plan/best-vietnam-cities-for-first-time-visitors/",
+      "passed": true,
+      "hls_score": 100,
+      "edi": 17.33,
+      "word_count": 3578,
+      "sentence_count": 185,
+      "mean_sentence_length": 19.34,
+      "std_dev": 14.03,
+      "cv": 0.725,
+      "tier1_count": 0,
+      "tier2_count": 0,
+      "tier3_count": 0,
+      "passive_count": 0,
+      "tier1_violations": [],
+      "tier2_violations": [],
+      "tier3_violations": [],
+      "passive_violations": [],
+      "evidence_count": 62,
+      "evidence": {
+        "currency_count": 36,
+        "transit_time_count": 26,
+        "regulatory_count": 0,
+        "geolocation_count": 0,
+        "operator_count": 0,
+        "climate_count": 0,
+        "sample_currencies": [
+          "35,000 VND",
+          "90,000 VND",
+          "110,000 VND",
+          "15,000 VND"
+        ],
+        "sample_transit": [
+          "10 minutes",
+          "GrabBike",
+          "GrabCar",
+          "15 minutes"
+        ],
+        "sample_operators": [],
+        "sample_geolocation": []
+      }
+    },
+    {
+      "source": "https://vietnamguide.net/destinations/best-things-to-do-in-hanoi/",
+      "passed": true,
+      "hls_score": 100,
+      "edi": 2.32,
+      "word_count": 2584,
+      "sentence_count": 150,
+      "mean_sentence_length": 17.22,
+      "std_dev": 10.51,
+      "cv": 0.61,
+      "tier1_count": 0,
+      "tier2_count": 0,
+      "tier3_count": 0,
+      "passive_count": 0,
+      "tier1_violations": [],
+      "tier2_violations": [],
+      "tier3_violations": [],
+      "passive_violations": [],
+      "evidence_count": 6,
+      "evidence": {
+        "currency_count": 0,
+        "transit_time_count": 5,
+        "regulatory_count": 0,
+        "geolocation_count": 1,
+        "operator_count": 0,
+        "climate_count": 0,
+        "sample_currencies": [],
+        "sample_transit": [
+          "2.5 hrs",
+          "1.5 hrs",
+          "11 minutes",
+          "Expressway"
+        ],
+        "sample_operators": [],
+        "sample_geolocation": [
+          "Fansipan"
+        ]
+      }
+    },
+    {
+      "source": "https://vietnamguide.net/destinations/da-nang-beaches-guide/",
+      "passed": true,
+      "hls_score": 100,
+      "edi": 5.71,
+      "word_count": 4551,
+      "sentence_count": 271,
+      "mean_sentence_length": 16.79,
+      "std_dev": 9.79,
+      "cv": 0.583,
+      "tier1_count": 0,
+      "tier2_count": 0,
+      "tier3_count": 0,
+      "passive_count": 0,
+      "tier1_violations": [],
+      "tier2_violations": [],
+      "tier3_violations": [],
+      "passive_violations": [],
+      "evidence_count": 26,
+      "evidence": {
+        "currency_count": 8,
+        "transit_time_count": 12,
+        "regulatory_count": 0,
+        "geolocation_count": 2,
+        "operator_count": 4,
+        "climate_count": 0,
+        "sample_currencies": [
+          "50,000 VND",
+          "80,000 VND",
+          "5,000 VND",
+          "30,000 VND"
+        ],
+        "sample_transit": [
+          "20 minutes",
+          "30 km",
+          "GrabCar"
+        ],
+        "sample_operators": [
+          "0236.3582.699",
+          "113",
+          "0236.3821.118",
+          "Tourist Police"
+        ],
+        "sample_geolocation": [
+          "Hai Van Pass"
+        ]
+      }
+    },
+    {
+      "source": "https://vietnamguide.net/plan/best-vietnam-routes-first-time-visitors/",
+      "passed": true,
+      "hls_score": 100,
+      "edi": 3.47,
+      "word_count": 4902,
+      "sentence_count": 272,
+      "mean_sentence_length": 18.02,
+      "std_dev": 15.39,
+      "cv": 0.854,
+      "tier1_count": 0,
+      "tier2_count": 0,
+      "tier3_count": 0,
+      "passive_count": 0,
+      "tier1_violations": [],
+      "tier2_violations": [],
+      "tier3_violations": [],
+      "passive_violations": [],
+      "evidence_count": 17,
+      "evidence": {
+        "currency_count": 1,
+        "transit_time_count": 3,
+        "regulatory_count": 4,
+        "geolocation_count": 8,
+        "operator_count": 1,
+        "climate_count": 0,
+        "sample_currencies": [
+          "$25"
+        ],
+        "sample_transit": [
+          "1.2 hr",
+          "Grab",
+          "21 minutes"
+        ],
+        "sample_operators": [
+          "cable car"
+        ],
+        "sample_geolocation": [
+          "Ma Pi Leng",
+          "Hai Van Pass",
+          "Muong Hoa"
+        ]
+      }
+    },
+    {
+      "source": "https://vietnamguide.net/plan/safety-scams-vietnam/",
+      "passed": true,
+      "hls_score": 100,
+      "edi": 4.03,
+      "word_count": 2979,
+      "sentence_count": 157,
+      "mean_sentence_length": 18.97,
+      "std_dev": 9.69,
+      "cv": 0.511,
+      "tier1_count": 0,
+      "tier2_count": 0,
+      "tier3_count": 0,
+      "passive_count": 0,
+      "tier1_violations": [],
+      "tier2_violations": [],
+      "tier3_violations": [],
+      "passive_violations": [],
+      "evidence_count": 12,
+      "evidence": {
+        "currency_count": 4,
+        "transit_time_count": 6,
+        "regulatory_count": 0,
+        "geolocation_count": 0,
+        "operator_count": 2,
+        "climate_count": 0,
+        "sample_currencies": [
+          "20,000 VND",
+          "500,000 VND",
+          "15,000 VND"
+        ],
+        "sample_transit": [
+          "48 hours",
+          "Vinasun",
+          "Mai Linh",
+          "12 minutes"
+        ],
+        "sample_operators": [
+          "113",
+          "115"
+        ],
+        "sample_geolocation": []
+      }
+    },
+    {
+      "source": "https://vietnamguide.net/compare/cu-chi-tunnels-vs-mekong-delta-day-trip/",
+      "passed": true,
+      "hls_score": 100,
+      "edi": 2.87,
+      "word_count": 2094,
+      "sentence_count": 146,
+      "mean_sentence_length": 14.34,
+      "std_dev": 7.56,
+      "cv": 0.527,
+      "tier1_count": 0,
+      "tier2_count": 0,
+      "tier3_count": 0,
+      "passive_count": 0,
+      "tier1_violations": [],
+      "tier2_violations": [],
+      "tier3_violations": [],
+      "passive_violations": [],
+      "evidence_count": 6,
+      "evidence": {
+        "currency_count": 0,
+        "transit_time_count": 5,
+        "regulatory_count": 0,
+        "geolocation_count": 0,
+        "operator_count": 1,
+        "climate_count": 0,
+        "sample_currencies": [],
+        "sample_transit": [
+          "2 hrs",
+          "9 minutes",
+          "1.5 hrs",
+          "Expressway"
+        ],
+        "sample_operators": [
+          "Speedboat"
+        ],
+        "sample_geolocation": []
+      }
+    },
+    {
+      "source": "https://vietnamguide.net/itineraries/21-days-in-vietnam/",
+      "passed": true,
+      "hls_score": 100,
+      "edi": 6.97,
+      "word_count": 6459,
+      "sentence_count": 381,
+      "mean_sentence_length": 16.95,
+      "std_dev": 10.2,
+      "cv": 0.602,
+      "tier1_count": 0,
+      "tier2_count": 0,
+      "tier3_count": 0,
+      "passive_count": 0,
+      "tier1_violations": [],
+      "tier2_violations": [],
+      "tier3_violations": [],
+      "passive_violations": [],
+      "evidence_count": 45,
+      "evidence": {
+        "currency_count": 11,
+        "transit_time_count": 18,
+        "regulatory_count": 2,
+        "geolocation_count": 7,
+        "operator_count": 6,
+        "climate_count": 1,
+        "sample_currencies": [
+          "420,000 VND",
+          "120,000 VND",
+          "790,000 VND",
+          "1,250,000 VND"
+        ],
+        "sample_transit": [
+          "27 minutes",
+          "SE1",
+          "12 hrs",
+          "10 mins"
+        ],
+        "sample_operators": [
+          "113",
+          "115",
+          "SOS International",
+          "dsvn.vn"
+        ],
+        "sample_geolocation": [
+          "Ga Hue",
+          "SE1",
+          "Ga Hanoi",
+          "SE3"
+        ]
+      }
+    },
+    {
+      "source": "https://vietnamguide.net/costs/",
+      "passed": true,
+      "hls_score": 100,
+      "edi": 22.96,
+      "word_count": 697,
+      "sentence_count": 28,
+      "mean_sentence_length": 24.89,
+      "std_dev": 21.49,
+      "cv": 0.863,
+      "tier1_count": 0,
+      "tier2_count": 0,
+      "tier3_count": 0,
+      "passive_count": 0,
+      "tier1_violations": [],
+      "tier2_violations": [],
+      "tier3_violations": [],
+      "passive_violations": [],
+      "evidence_count": 16,
+      "evidence": {
+        "currency_count": 11,
+        "transit_time_count": 4,
+        "regulatory_count": 1,
+        "geolocation_count": 0,
+        "operator_count": 0,
+        "climate_count": 0,
+        "sample_currencies": [
+          "$195",
+          "$35",
+          "$80"
+        ],
+        "sample_transit": [
+          "1.2 hr",
+          "Grab"
+        ],
+        "sample_operators": [],
+        "sample_geolocation": []
+      }
+    },
+    {
+      "source": "https://vietnamguide.net/destinations/",
+      "passed": true,
+      "hls_score": 100,
+      "edi": 0.62,
+      "word_count": 1602,
+      "sentence_count": 48,
+      "mean_sentence_length": 33.38,
+      "std_dev": 14.8,
+      "cv": 0.443,
+      "tier1_count": 0,
+      "tier2_count": 0,
+      "tier3_count": 0,
+      "passive_count": 0,
+      "tier1_violations": [],
+      "tier2_violations": [],
+      "tier3_violations": [],
+      "passive_violations": [],
+      "evidence_count": 1,
+      "evidence": {
+        "currency_count": 0,
+        "transit_time_count": 1,
+        "regulatory_count": 0,
+        "geolocation_count": 0,
+        "operator_count": 0,
+        "climate_count": 0,
+        "sample_currencies": [],
+        "sample_transit": [
+          "1.2 hr"
+        ],
+        "sample_operators": [],
+        "sample_geolocation": []
+      }
+    },
+    {
+      "source": "https://vietnamguide.net/compare/mekong-delta-overnight-vs-day-trip/",
+      "passed": true,
+      "hls_score": 100,
+      "edi": 5.01,
+      "word_count": 3796,
+      "sentence_count": 213,
+      "mean_sentence_length": 17.82,
+      "std_dev": 10.73,
+      "cv": 0.602,
+      "tier1_count": 0,
+      "tier2_count": 0,
+      "tier3_count": 0,
+      "passive_count": 0,
+      "tier1_violations": [],
+      "tier2_violations": [],
+      "tier3_violations": [],
+      "passive_violations": [],
+      "evidence_count": 19,
+      "evidence": {
+        "currency_count": 5,
+        "transit_time_count": 11,
+        "regulatory_count": 0,
+        "geolocation_count": 0,
+        "operator_count": 3,
+        "climate_count": 0,
+        "sample_currencies": [
+          "350,000 VND",
+          "220,000 VND",
+          "$35",
+          "450,000 VND"
+        ],
+        "sample_transit": [
+          "Limousine",
+          "16 minutes",
+          "3.0 hours",
+          "Expressway"
+        ],
+        "sample_operators": [
+          "Speedboat"
+        ],
+        "sample_geolocation": []
+      }
+    },
+    {
+      "source": "https://vietnamguide.net/plan/ninh-binh-without-rushing/",
+      "passed": true,
+      "hls_score": 100,
+      "edi": 1.65,
+      "word_count": 4839,
+      "sentence_count": 271,
+      "mean_sentence_length": 17.86,
+      "std_dev": 14.73,
+      "cv": 0.825,
+      "tier1_count": 0,
+      "tier2_count": 0,
+      "tier3_count": 0,
+      "passive_count": 0,
+      "tier1_violations": [],
+      "tier2_violations": [],
+      "tier3_violations": [],
+      "passive_violations": [],
+      "evidence_count": 8,
+      "evidence": {
+        "currency_count": 0,
+        "transit_time_count": 7,
+        "regulatory_count": 0,
+        "geolocation_count": 1,
+        "operator_count": 0,
+        "climate_count": 0,
+        "sample_currencies": [],
+        "sample_transit": [
+          "3 hrs",
+          "limousine",
+          "21 minutes"
+        ],
+        "sample_operators": [],
+        "sample_geolocation": [
+          "Tuan Chau"
+        ]
+      }
+    },
+    {
+      "source": "https://vietnamguide.net/destinations/cat-ba-travel-guide/",
+      "passed": true,
+      "hls_score": 100,
+      "edi": 7.04,
+      "word_count": 3411,
+      "sentence_count": 202,
+      "mean_sentence_length": 16.87,
+      "std_dev": 11.73,
+      "cv": 0.695,
+      "tier1_count": 0,
+      "tier2_count": 0,
+      "tier3_count": 0,
+      "passive_count": 0,
+      "tier1_violations": [],
+      "tier2_violations": [],
+      "tier3_violations": [],
+      "passive_violations": [],
+      "evidence_count": 24,
+      "evidence": {
+        "currency_count": 10,
+        "transit_time_count": 7,
+        "regulatory_count": 0,
+        "geolocation_count": 3,
+        "operator_count": 4,
+        "climate_count": 0,
+        "sample_currencies": [
+          "100,000 VND",
+          "190,000 VND",
+          "12,000 VND",
+          "45,000 VND"
+        ],
+        "sample_transit": [
+          "45 minutes",
+          "25 minutes",
+          "14 minutes",
+          "25 km"
+        ],
+        "sample_operators": [
+          "Cable Car",
+          "Speedboat",
+          "speedboat"
+        ],
+        "sample_geolocation": [
+          "Dong Bai",
+          "Ferry Terminal"
+        ]
+      }
+    },
+    {
+      "source": "https://vietnamguide.net/plan/where-to-stay-in-vietnam-base-decisions/",
+      "passed": true,
+      "hls_score": 100,
+      "edi": 4.11,
+      "word_count": 4622,
+      "sentence_count": 257,
+      "mean_sentence_length": 17.98,
+      "std_dev": 16.6,
+      "cv": 0.923,
+      "tier1_count": 0,
+      "tier2_count": 0,
+      "tier3_count": 0,
+      "passive_count": 0,
+      "tier1_violations": [],
+      "tier2_violations": [],
+      "tier3_violations": [],
+      "passive_violations": [],
+      "evidence_count": 19,
+      "evidence": {
+        "currency_count": 11,
+        "transit_time_count": 7,
+        "regulatory_count": 1,
+        "geolocation_count": 0,
+        "operator_count": 0,
+        "climate_count": 0,
+        "sample_currencies": [
+          "$195",
+          "$35",
+          "$80"
+        ],
+        "sample_transit": [
+          "20 minutes",
+          "Grab"
+        ],
+        "sample_operators": [],
+        "sample_geolocation": []
+      }
+    },
+    {
+      "source": "https://vietnamguide.net/plan/vietnam-airport-arrival-checklist/",
+      "passed": true,
+      "hls_score": 100,
+      "edi": 15.78,
+      "word_count": 5702,
+      "sentence_count": 257,
+      "mean_sentence_length": 22.18,
+      "std_dev": 34.51,
+      "cv": 1.556,
+      "tier1_count": 0,
+      "tier2_count": 0,
+      "tier3_count": 0,
+      "passive_count": 0,
+      "tier1_violations": [],
+      "tier2_violations": [],
+      "tier3_violations": [],
+      "passive_violations": [],
+      "evidence_count": 90,
+      "evidence": {
+        "currency_count": 36,
+        "transit_time_count": 27,
+        "regulatory_count": 24,
+        "geolocation_count": 1,
+        "operator_count": 0,
+        "climate_count": 2,
+        "sample_currencies": [
+          "350,000 VND",
+          "$14 USD",
+          "$11",
+          "15,000 VND"
+        ],
+        "sample_transit": [
+          "55 mins",
+          "24 minutes",
+          "32 km",
+          "Grab"
+        ],
+        "sample_operators": [],
+        "sample_geolocation": [
+          "300 meters"
+        ]
+      }
+    },
+    {
+      "source": "https://vietnamguide.net/destinations/mekong-delta-travel-guide/",
+      "passed": true,
+      "hls_score": 100,
+      "edi": 2.93,
+      "word_count": 2728,
+      "sentence_count": 155,
+      "mean_sentence_length": 17.6,
+      "std_dev": 11.87,
+      "cv": 0.675,
+      "tier1_count": 0,
+      "tier2_count": 0,
+      "tier3_count": 0,
+      "passive_count": 0,
+      "tier1_violations": [],
+      "tier2_violations": [],
+      "tier3_violations": [],
+      "passive_violations": [],
+      "evidence_count": 8,
+      "evidence": {
+        "currency_count": 0,
+        "transit_time_count": 3,
+        "regulatory_count": 4,
+        "geolocation_count": 0,
+        "operator_count": 1,
+        "climate_count": 0,
+        "sample_currencies": [],
+        "sample_transit": [
+          "1.5 hrs",
+          "11 minutes",
+          "55 min"
+        ],
+        "sample_operators": [
+          "Speedboat"
+        ],
+        "sample_geolocation": []
+      }
+    },
+    {
+      "source": "https://vietnamguide.net/affiliate-disclosure/",
+      "passed": true,
+      "hls_score": 100,
+      "edi": 3.52,
+      "word_count": 284,
+      "sentence_count": 14,
+      "mean_sentence_length": 20.29,
+      "std_dev": 7.96,
+      "cv": 0.392,
+      "tier1_count": 0,
+      "tier2_count": 0,
+      "tier3_count": 0,
+      "passive_count": 0,
+      "tier1_violations": [],
+      "tier2_violations": [],
+      "tier3_violations": [],
+      "passive_violations": [],
+      "evidence_count": 1,
+      "evidence": {
+        "currency_count": 0,
+        "transit_time_count": 1,
+        "regulatory_count": 0,
+        "geolocation_count": 0,
+        "operator_count": 0,
+        "climate_count": 0,
+        "sample_currencies": [],
+        "sample_transit": [
+          "1.2 hr"
+        ],
+        "sample_operators": [],
+        "sample_geolocation": []
+      }
+    },
+    {
+      "source": "https://vietnamguide.net/destinations/pu-luong-travel-guide/",
+      "passed": true,
+      "hls_score": 100,
+      "edi": 19.55,
+      "word_count": 1586,
+      "sentence_count": 98,
+      "mean_sentence_length": 16.06,
+      "std_dev": 11.07,
+      "cv": 0.689,
+      "tier1_count": 0,
+      "tier2_count": 0,
+      "tier3_count": 0,
+      "passive_count": 0,
+      "tier1_violations": [],
+      "tier2_violations": [],
+      "tier3_violations": [],
+      "passive_violations": [],
+      "evidence_count": 31,
+      "evidence": {
+        "currency_count": 7,
+        "transit_time_count": 14,
+        "regulatory_count": 0,
+        "geolocation_count": 7,
+        "operator_count": 2,
+        "climate_count": 1,
+        "sample_currencies": [
+          "$150 USD",
+          "$15",
+          "$30 USD",
+          "$60"
+        ],
+        "sample_transit": [
+          "160 km",
+          "3 hours",
+          "4.5 hours"
+        ],
+        "sample_operators": [
+          "sleeper bus",
+          "cable car"
+        ],
+        "sample_geolocation": [
+          "QL279",
+          "Ma Pi Leng",
+          "Muong Hoa",
+          "1,500m"
+        ]
+      }
+    },
+    {
+      "source": "https://vietnamguide.net/plan/what-to-pack-for-vietnam-region-season/",
+      "passed": true,
+      "hls_score": 100,
+      "edi": 3.02,
+      "word_count": 4302,
+      "sentence_count": 233,
+      "mean_sentence_length": 18.46,
+      "std_dev": 20.09,
+      "cv": 1.088,
+      "tier1_count": 0,
+      "tier2_count": 0,
+      "tier3_count": 0,
+      "passive_count": 0,
+      "tier1_violations": [],
+      "tier2_violations": [],
+      "tier3_violations": [],
+      "passive_violations": [],
+      "evidence_count": 13,
+      "evidence": {
+        "currency_count": 1,
+        "transit_time_count": 3,
+        "regulatory_count": 3,
+        "geolocation_count": 0,
+        "operator_count": 0,
+        "climate_count": 6,
+        "sample_currencies": [
+          "$25"
+        ],
+        "sample_transit": [
+          "1.2 hr",
+          "18 minutes",
+          "Grab"
+        ],
+        "sample_operators": [],
+        "sample_geolocation": []
+      }
+    },
+    {
+      "source": "https://vietnamguide.net/costs/vietnam-travel-cost/",
+      "passed": true,
+      "hls_score": 100,
+      "edi": 6.0,
+      "word_count": 4835,
+      "sentence_count": 275,
+      "mean_sentence_length": 17.58,
+      "std_dev": 10.0,
+      "cv": 0.569,
+      "tier1_count": 0,
+      "tier2_count": 0,
+      "tier3_count": 0,
+      "passive_count": 0,
+      "tier1_violations": [],
+      "tier2_violations": [],
+      "tier3_violations": [],
+      "passive_violations": [],
+      "evidence_count": 29,
+      "evidence": {
+        "currency_count": 17,
+        "transit_time_count": 5,
+        "regulatory_count": 5,
+        "geolocation_count": 0,
+        "operator_count": 1,
+        "climate_count": 1,
+        "sample_currencies": [
+          "60,000 VND",
+          "15,000 VND",
+          "40,000 VND",
+          "50,000 VND"
+        ],
+        "sample_transit": [
+          "Mai Linh",
+          "Vinasun",
+          "2 km",
+          "GrabCar"
+        ],
+        "sample_operators": [
+          "dsvn.vn"
+        ],
+        "sample_geolocation": []
+      }
+    },
+    {
+      "source": "https://vietnamguide.net/plan/vietnam-rainy-season-flexible-route/",
+      "passed": true,
+      "hls_score": 100,
+      "edi": 3.02,
+      "word_count": 4300,
+      "sentence_count": 245,
+      "mean_sentence_length": 17.53,
+      "std_dev": 20.06,
+      "cv": 1.144,
+      "tier1_count": 0,
+      "tier2_count": 0,
+      "tier3_count": 0,
+      "passive_count": 0,
+      "tier1_violations": [],
+      "tier2_violations": [],
+      "tier3_violations": [],
+      "passive_violations": [],
+      "evidence_count": 13,
+      "evidence": {
+        "currency_count": 1,
+        "transit_time_count": 3,
+        "regulatory_count": 3,
+        "geolocation_count": 0,
+        "operator_count": 0,
+        "climate_count": 6,
+        "sample_currencies": [
+          "$25"
+        ],
+        "sample_transit": [
+          "1.2 hr",
+          "Grab",
+          "19 minutes"
+        ],
+        "sample_operators": [],
+        "sample_geolocation": []
+      }
+    },
+    {
+      "source": "https://vietnamguide.net/about/",
+      "passed": true,
+      "hls_score": 100,
+      "edi": 4.02,
+      "word_count": 249,
+      "sentence_count": 12,
+      "mean_sentence_length": 20.75,
+      "std_dev": 11.84,
+      "cv": 0.571,
+      "tier1_count": 0,
+      "tier2_count": 0,
+      "tier3_count": 0,
+      "passive_count": 0,
+      "tier1_violations": [],
+      "tier2_violations": [],
+      "tier3_violations": [],
+      "passive_violations": [],
+      "evidence_count": 1,
+      "evidence": {
+        "currency_count": 0,
+        "transit_time_count": 1,
+        "regulatory_count": 0,
+        "geolocation_count": 0,
+        "operator_count": 0,
+        "climate_count": 0,
+        "sample_currencies": [],
+        "sample_transit": [
+          "1.2 hr"
+        ],
+        "sample_operators": [],
+        "sample_geolocation": []
+      }
+    },
+    {
+      "source": "https://vietnamguide.net/plan/transport-within-vietnam/",
+      "passed": true,
+      "hls_score": 100,
+      "edi": 15.82,
+      "word_count": 4740,
+      "sentence_count": 225,
+      "mean_sentence_length": 21.07,
+      "std_dev": 29.36,
+      "cv": 1.393,
+      "tier1_count": 0,
+      "tier2_count": 0,
+      "tier3_count": 0,
+      "passive_count": 0,
+      "tier1_violations": [],
+      "tier2_violations": [],
+      "tier3_violations": [],
+      "passive_violations": [],
+      "evidence_count": 75,
+      "evidence": {
+        "currency_count": 30,
+        "transit_time_count": 27,
+        "regulatory_count": 7,
+        "geolocation_count": 4,
+        "operator_count": 5,
+        "climate_count": 2,
+        "sample_currencies": [
+          "350,000 VND",
+          "$14 USD",
+          "$11",
+          "15,000 VND"
+        ],
+        "sample_transit": [
+          "55 mins",
+          "20 minutes",
+          "Grab",
+          "32 km"
+        ],
+        "sample_operators": [
+          "Sleeper bus",
+          "dsvn.vn"
+        ],
+        "sample_geolocation": [
+          "Hai Van Pass",
+          "300 meters"
+        ]
+      }
+    },
+    {
+      "source": "https://vietnamguide.net/destinations/best-beaches-in-vietnam/",
+      "passed": true,
+      "hls_score": 100,
+      "edi": 7.63,
+      "word_count": 3934,
+      "sentence_count": 228,
+      "mean_sentence_length": 17.25,
+      "std_dev": 11.21,
+      "cv": 0.65,
+      "tier1_count": 0,
+      "tier2_count": 0,
+      "tier3_count": 0,
+      "passive_count": 0,
+      "tier1_violations": [],
+      "tier2_violations": [],
+      "tier3_violations": [],
+      "passive_violations": [],
+      "evidence_count": 30,
+      "evidence": {
+        "currency_count": 18,
+        "transit_time_count": 10,
+        "regulatory_count": 0,
+        "geolocation_count": 2,
+        "operator_count": 0,
+        "climate_count": 0,
+        "sample_currencies": [
+          "50,000 VND",
+          "25,000 VND",
+          "5,000 VND",
+          "40,000 VND"
+        ],
+        "sample_transit": [
+          "15 mins",
+          "5 km",
+          "16 minutes",
+          "15 minutes"
+        ],
+        "sample_operators": [],
+        "sample_geolocation": [
+          "National Route 1A"
+        ]
+      }
+    },
+    {
+      "source": "https://vietnamguide.net/destinations/best-things-to-do-in-hoi-an/",
+      "passed": true,
+      "hls_score": 100,
+      "edi": 2.29,
+      "word_count": 2624,
+      "sentence_count": 151,
+      "mean_sentence_length": 17.37,
+      "std_dev": 9.34,
+      "cv": 0.538,
+      "tier1_count": 0,
+      "tier2_count": 0,
+      "tier3_count": 0,
+      "passive_count": 0,
+      "tier1_violations": [],
+      "tier2_violations": [],
+      "tier3_violations": [],
+      "passive_violations": [],
+      "evidence_count": 6,
+      "evidence": {
+        "currency_count": 0,
+        "transit_time_count": 5,
+        "regulatory_count": 0,
+        "geolocation_count": 1,
+        "operator_count": 0,
+        "climate_count": 0,
+        "sample_currencies": [],
+        "sample_transit": [
+          "2 hrs",
+          "45 mins",
+          "11 minutes"
+        ],
+        "sample_operators": [],
+        "sample_geolocation": [
+          "Hai Van Pass"
+        ]
+      }
+    },
+    {
+      "source": "https://vietnamguide.net/compare/old-quarter-vs-french-quarter-vs-west-lake/",
+      "passed": true,
+      "hls_score": 100,
+      "edi": 2.75,
+      "word_count": 2545,
+      "sentence_count": 161,
+      "mean_sentence_length": 15.78,
+      "std_dev": 13.44,
+      "cv": 0.852,
+      "tier1_count": 0,
+      "tier2_count": 0,
+      "tier3_count": 0,
+      "passive_count": 0,
+      "tier1_violations": [],
+      "tier2_violations": [],
+      "tier3_violations": [],
+      "passive_violations": [],
+      "evidence_count": 7,
+      "evidence": {
+        "currency_count": 0,
+        "transit_time_count": 5,
+        "regulatory_count": 1,
+        "geolocation_count": 1,
+        "operator_count": 0,
+        "climate_count": 0,
+        "sample_currencies": [],
+        "sample_transit": [
+          "10 minutes",
+          "2.5 hrs",
+          "1.5 hrs",
+          "Expressway"
+        ],
+        "sample_operators": [],
+        "sample_geolocation": [
+          "Fansipan"
+        ]
+      }
+    },
+    {
+      "source": "https://vietnamguide.net/plan/hanoi-to-sapa-transport/",
+      "passed": true,
+      "hls_score": 100,
+      "edi": 6.31,
+      "word_count": 4596,
+      "sentence_count": 261,
+      "mean_sentence_length": 17.61,
+      "std_dev": 14.71,
+      "cv": 0.836,
+      "tier1_count": 0,
+      "tier2_count": 0,
+      "tier3_count": 0,
+      "passive_count": 0,
+      "tier1_violations": [],
+      "tier2_violations": [],
+      "tier3_violations": [],
+      "passive_violations": [],
+      "evidence_count": 29,
+      "evidence": {
+        "currency_count": 0,
+        "transit_time_count": 18,
+        "regulatory_count": 0,
+        "geolocation_count": 3,
+        "operator_count": 8,
+        "climate_count": 0,
+        "sample_currencies": [],
+        "sample_transit": [
+          "20 minutes",
+          "Limousine",
+          "limousine"
+        ],
+        "sample_operators": [
+          "sleeper bus"
+        ],
+        "sample_geolocation": [
+          "Fansipan"
+        ]
+      }
+    },
+    {
+      "source": "https://vietnamguide.net/plan/hanoi-to-ninh-binh-transport/",
+      "passed": true,
+      "hls_score": 100,
+      "edi": 8.08,
+      "word_count": 3591,
+      "sentence_count": 200,
+      "mean_sentence_length": 17.95,
+      "std_dev": 11.28,
+      "cv": 0.628,
+      "tier1_count": 0,
+      "tier2_count": 0,
+      "tier3_count": 0,
+      "passive_count": 0,
+      "tier1_violations": [],
+      "tier2_violations": [],
+      "tier3_violations": [],
+      "passive_violations": [],
+      "evidence_count": 29,
+      "evidence": {
+        "currency_count": 0,
+        "transit_time_count": 20,
+        "regulatory_count": 4,
+        "geolocation_count": 1,
+        "operator_count": 4,
+        "climate_count": 0,
+        "sample_currencies": [],
+        "sample_transit": [
+          "Limousine",
+          "limousine",
+          "15 minutes"
+        ],
+        "sample_operators": [
+          "dsvn.vn"
+        ],
+        "sample_geolocation": [
+          "Fansipan"
+        ]
+      }
+    },
+    {
+      "source": "https://vietnamguide.net/affiliate-review-policy/",
+      "passed": true,
+      "hls_score": 100,
+      "edi": 4.59,
+      "word_count": 218,
+      "sentence_count": 12,
+      "mean_sentence_length": 18.17,
+      "std_dev": 9.62,
+      "cv": 0.529,
+      "tier1_count": 0,
+      "tier2_count": 0,
+      "tier3_count": 0,
+      "passive_count": 0,
+      "tier1_violations": [],
+      "tier2_violations": [],
+      "tier3_violations": [],
+      "passive_violations": [],
+      "evidence_count": 1,
+      "evidence": {
+        "currency_count": 0,
+        "transit_time_count": 1,
+        "regulatory_count": 0,
+        "geolocation_count": 0,
+        "operator_count": 0,
+        "climate_count": 0,
+        "sample_currencies": [],
+        "sample_transit": [
+          "1.2 hr"
+        ],
+        "sample_operators": [],
+        "sample_geolocation": []
+      }
+    },
+    {
+      "source": "https://vietnamguide.net/compare/ha-long-bay-vs-lan-ha-bay/",
+      "passed": true,
+      "hls_score": 100,
+      "edi": 2.51,
+      "word_count": 2787,
+      "sentence_count": 157,
+      "mean_sentence_length": 17.75,
+      "std_dev": 14.35,
+      "cv": 0.808,
+      "tier1_count": 0,
+      "tier2_count": 0,
+      "tier3_count": 0,
+      "passive_count": 0,
+      "tier1_violations": [],
+      "tier2_violations": [],
+      "tier3_violations": [],
+      "passive_violations": [],
+      "evidence_count": 7,
+      "evidence": {
+        "currency_count": 0,
+        "transit_time_count": 6,
+        "regulatory_count": 0,
+        "geolocation_count": 1,
+        "operator_count": 0,
+        "climate_count": 0,
+        "sample_currencies": [],
+        "sample_transit": [
+          "2.5 hrs",
+          "limousine",
+          "11 minutes",
+          "3 hrs"
+        ],
+        "sample_operators": [],
+        "sample_geolocation": [
+          "Tuan Chau"
+        ]
+      }
+    },
+    {
+      "source": "https://vietnamguide.net/compare/phu-quoc-vs-nha-trang/",
+      "passed": true,
+      "hls_score": 100,
+      "edi": 2.55,
+      "word_count": 3136,
+      "sentence_count": 187,
+      "mean_sentence_length": 16.76,
+      "std_dev": 13.74,
+      "cv": 0.82,
+      "tier1_count": 0,
+      "tier2_count": 0,
+      "tier3_count": 0,
+      "passive_count": 0,
+      "tier1_violations": [],
+      "tier2_violations": [],
+      "tier3_violations": [],
+      "passive_violations": [],
+      "evidence_count": 8,
+      "evidence": {
+        "currency_count": 0,
+        "transit_time_count": 3,
+        "regulatory_count": 5,
+        "geolocation_count": 0,
+        "operator_count": 0,
+        "climate_count": 0,
+        "sample_currencies": [],
+        "sample_transit": [
+          "1 hr",
+          "13 minutes",
+          "55 min"
+        ],
+        "sample_operators": [],
+        "sample_geolocation": []
+      }
+    },
+    {
+      "source": "https://vietnamguide.net/compare/ha-giang-easy-rider-vs-self-drive/",
+      "passed": true,
+      "hls_score": 100,
+      "edi": 29.43,
+      "word_count": 1699,
+      "sentence_count": 82,
+      "mean_sentence_length": 20.62,
+      "std_dev": 23.42,
+      "cv": 1.136,
+      "tier1_count": 0,
+      "tier2_count": 0,
+      "tier3_count": 0,
+      "passive_count": 0,
+      "tier1_violations": [],
+      "tier2_violations": [],
+      "tier3_violations": [],
+      "passive_violations": [],
+      "evidence_count": 50,
+      "evidence": {
+        "currency_count": 30,
+        "transit_time_count": 5,
+        "regulatory_count": 1,
+        "geolocation_count": 7,
+        "operator_count": 1,
+        "climate_count": 6,
+        "sample_currencies": [
+          "$170",
+          "$140 USD",
+          "$250 USD",
+          "$90"
+        ],
+        "sample_transit": [
+          "3.5 hrs",
+          "6 hours",
+          "6 minutes",
+          "6 hrs"
+        ],
+        "sample_operators": [
+          "cable car"
+        ],
+        "sample_geolocation": [
+          "QL279",
+          "Ma Pi Leng"
+        ]
+      }
+    },
+    {
+      "source": "https://vietnamguide.net/destinations/mu-cang-chai-travel-guide/",
+      "passed": true,
+      "hls_score": 100,
+      "edi": 20.52,
+      "word_count": 1608,
+      "sentence_count": 98,
+      "mean_sentence_length": 16.24,
+      "std_dev": 11.36,
+      "cv": 0.699,
+      "tier1_count": 0,
+      "tier2_count": 0,
+      "tier3_count": 0,
+      "passive_count": 0,
+      "tier1_violations": [],
+      "tier2_violations": [],
+      "tier3_violations": [],
+      "passive_violations": [],
+      "evidence_count": 33,
+      "evidence": {
+        "currency_count": 8,
+        "transit_time_count": 14,
+        "regulatory_count": 0,
+        "geolocation_count": 4,
+        "operator_count": 6,
+        "climate_count": 1,
+        "sample_currencies": [
+          "350,000 VND",
+          "$140",
+          "$10",
+          "$180 USD"
+        ],
+        "sample_transit": [
+          "2 km",
+          "8 hours",
+          "6 minutes",
+          "16 hours"
+        ],
+        "sample_operators": [
+          "Xe Om",
+          "Sleeper Bus"
+        ],
+        "sample_geolocation": [
+          "QL279",
+          "Muong Hoa",
+          "Ma Pi Leng",
+          "Fansipan"
+        ]
+      }
+    },
+    {
+      "source": "https://vietnamguide.net/itineraries/7-days-in-vietnam/",
+      "passed": true,
+      "hls_score": 100,
+      "edi": 7.99,
+      "word_count": 3005,
+      "sentence_count": 189,
+      "mean_sentence_length": 15.88,
+      "std_dev": 15.27,
+      "cv": 0.961,
+      "tier1_count": 0,
+      "tier2_count": 0,
+      "tier3_count": 0,
+      "passive_count": 0,
+      "tier1_violations": [],
+      "tier2_violations": [],
+      "tier3_violations": [],
+      "passive_violations": [],
+      "evidence_count": 24,
+      "evidence": {
+        "currency_count": 7,
+        "transit_time_count": 12,
+        "regulatory_count": 4,
+        "geolocation_count": 1,
+        "operator_count": 0,
+        "climate_count": 0,
+        "sample_currencies": [
+          "300,000 VND",
+          "75,000 VND",
+          "160,000 VND",
+          "45,000 VND"
+        ],
+        "sample_transit": [
+          "limousine",
+          "12 minutes",
+          "90 minutes",
+          "2.2 hours"
+        ],
+        "sample_operators": [],
+        "sample_geolocation": [
+          "Ga Hanoi"
+        ]
+      }
+    },
+    {
+      "source": "https://vietnamguide.net/plan/vietnam-travel-guide/",
+      "passed": true,
+      "hls_score": 100,
+      "edi": 3.71,
+      "word_count": 3776,
+      "sentence_count": 204,
+      "mean_sentence_length": 18.51,
+      "std_dev": 10.14,
+      "cv": 0.548,
+      "tier1_count": 0,
+      "tier2_count": 0,
+      "tier3_count": 0,
+      "passive_count": 0,
+      "tier1_violations": [],
+      "tier2_violations": [],
+      "tier3_violations": [],
+      "passive_violations": [],
+      "evidence_count": 14,
+      "evidence": {
+        "currency_count": 0,
+        "transit_time_count": 3,
+        "regulatory_count": 9,
+        "geolocation_count": 1,
+        "operator_count": 1,
+        "climate_count": 0,
+        "sample_currencies": [],
+        "sample_transit": [
+          "1.2 hr",
+          "16 minutes",
+          "limousine"
+        ],
+        "sample_operators": [
+          "dsvn.vn"
+        ],
+        "sample_geolocation": [
+          "Hai Van Pass"
+        ]
+      }
+    },
+    {
+      "source": "https://vietnamguide.net/itineraries/10-days-in-vietnam/",
+      "passed": true,
+      "hls_score": 100,
+      "edi": 4.82,
+      "word_count": 5190,
+      "sentence_count": 286,
+      "mean_sentence_length": 18.14,
+      "std_dev": 9.01,
+      "cv": 0.497,
+      "tier1_count": 0,
+      "tier2_count": 0,
+      "tier3_count": 0,
+      "passive_count": 0,
+      "tier1_violations": [],
+      "tier2_violations": [],
+      "tier3_violations": [],
+      "passive_violations": [],
+      "evidence_count": 25,
+      "evidence": {
+        "currency_count": 8,
+        "transit_time_count": 13,
+        "regulatory_count": 2,
+        "geolocation_count": 2,
+        "operator_count": 0,
+        "climate_count": 0,
+        "sample_currencies": [
+          "380,000 VND",
+          "1,600,000 VND",
+          "250,000 VND",
+          "$13"
+        ],
+        "sample_transit": [
+          "2.5 hours",
+          "expressway",
+          "22 minutes",
+          "Expressway"
+        ],
+        "sample_operators": [],
+        "sample_geolocation": [
+          "Hai Van Pass"
+        ]
+      }
+    },
+    {
+      "source": "https://vietnamguide.net/plan/hanoi-airport-to-old-quarter/",
+      "passed": true,
+      "hls_score": 100,
+      "edi": 2.95,
+      "word_count": 3051,
+      "sentence_count": 172,
+      "mean_sentence_length": 17.72,
+      "std_dev": 18.3,
+      "cv": 1.033,
+      "tier1_count": 0,
+      "tier2_count": 0,
+      "tier3_count": 0,
+      "passive_count": 0,
+      "tier1_violations": [],
+      "tier2_violations": [],
+      "tier3_violations": [],
+      "passive_violations": [],
+      "evidence_count": 9,
+      "evidence": {
+        "currency_count": 1,
+        "transit_time_count": 6,
+        "regulatory_count": 1,
+        "geolocation_count": 1,
+        "operator_count": 0,
+        "climate_count": 0,
+        "sample_currencies": [
+          "50,000 VND"
+        ],
+        "sample_transit": [
+          "2.5 hrs",
+          "Grab",
+          "12 minutes",
+          "Expressway"
+        ],
+        "sample_operators": [],
+        "sample_geolocation": [
+          "Fansipan"
+        ]
+      }
+    },
+    {
+      "source": "https://vietnamguide.net/compare/sapa-vs-ha-giang/",
+      "passed": true,
+      "hls_score": 100,
+      "edi": 4.11,
+      "word_count": 3410,
+      "sentence_count": 205,
+      "mean_sentence_length": 16.63,
+      "std_dev": 8.83,
+      "cv": 0.531,
+      "tier1_count": 0,
+      "tier2_count": 0,
+      "tier3_count": 0,
+      "passive_count": 0,
+      "tier1_violations": [],
+      "tier2_violations": [],
+      "tier3_violations": [],
+      "passive_violations": [],
+      "evidence_count": 14,
+      "evidence": {
+        "currency_count": 0,
+        "transit_time_count": 4,
+        "regulatory_count": 0,
+        "geolocation_count": 7,
+        "operator_count": 3,
+        "climate_count": 0,
+        "sample_currencies": [],
+        "sample_transit": [
+          "3.5 hrs",
+          "6 hrs",
+          "5.5 hrs",
+          "15 minutes"
+        ],
+        "sample_operators": [
+          "sleeper bus",
+          "cable car"
+        ],
+        "sample_geolocation": [
+          "QL279",
+          "Ma Pi Leng",
+          "Muong Hoa"
+        ]
+      }
+    },
+    {
+      "source": "https://vietnamguide.net/destinations/best-things-to-do-in-hue/",
+      "passed": true,
+      "hls_score": 100,
+      "edi": 2.77,
+      "word_count": 2523,
+      "sentence_count": 151,
+      "mean_sentence_length": 16.7,
+      "std_dev": 9.04,
+      "cv": 0.541,
+      "tier1_count": 0,
+      "tier2_count": 0,
+      "tier3_count": 0,
+      "passive_count": 0,
+      "tier1_violations": [],
+      "tier2_violations": [],
+      "tier3_violations": [],
+      "passive_violations": [],
+      "evidence_count": 7,
+      "evidence": {
+        "currency_count": 0,
+        "transit_time_count": 5,
+        "regulatory_count": 0,
+        "geolocation_count": 2,
+        "operator_count": 0,
+        "climate_count": 0,
+        "sample_currencies": [],
+        "sample_transit": [
+          "2 hrs",
+          "45 mins",
+          "11 minutes"
+        ],
+        "sample_operators": [],
+        "sample_geolocation": [
+          "Hai Van Pass"
+        ]
+      }
+    },
+    {
+      "source": "https://vietnamguide.net/destinations/tam-coc-travel-guide/",
+      "passed": true,
+      "hls_score": 100,
+      "edi": 3.59,
+      "word_count": 2789,
+      "sentence_count": 140,
+      "mean_sentence_length": 19.92,
+      "std_dev": 23.89,
+      "cv": 1.199,
+      "tier1_count": 0,
+      "tier2_count": 0,
+      "tier3_count": 0,
+      "passive_count": 0,
+      "tier1_violations": [],
+      "tier2_violations": [],
+      "tier3_violations": [],
+      "passive_violations": [],
+      "evidence_count": 10,
+      "evidence": {
+        "currency_count": 5,
+        "transit_time_count": 5,
+        "regulatory_count": 0,
+        "geolocation_count": 0,
+        "operator_count": 0,
+        "climate_count": 0,
+        "sample_currencies": [
+          "10,000 VND",
+          "120,000 VND",
+          "390,000 VND",
+          "150,000 VND"
+        ],
+        "sample_transit": [
+          "7 hrs",
+          "1.5 hrs",
+          "3 hrs",
+          "11 minutes"
+        ],
+        "sample_operators": [],
+        "sample_geolocation": []
+      }
+    },
+    {
+      "source": "https://vietnamguide.net/plan/money-cash-cards-atms/",
+      "passed": true,
+      "hls_score": 100,
+      "edi": 4.33,
+      "word_count": 3463,
+      "sentence_count": 205,
+      "mean_sentence_length": 16.88,
+      "std_dev": 11.27,
+      "cv": 0.667,
+      "tier1_count": 0,
+      "tier2_count": 0,
+      "tier3_count": 0,
+      "passive_count": 0,
+      "tier1_violations": [],
+      "tier2_violations": [],
+      "tier3_violations": [],
+      "passive_violations": [],
+      "evidence_count": 15,
+      "evidence": {
+        "currency_count": 8,
+        "transit_time_count": 4,
+        "regulatory_count": 3,
+        "geolocation_count": 0,
+        "operator_count": 0,
+        "climate_count": 0,
+        "sample_currencies": [
+          "surcharge",
+          "withdrawal limit",
+          "Surcharge"
+        ],
+        "sample_transit": [
+          "1.2 hr",
+          "48 hours",
+          "14 minutes",
+          "limousine"
+        ],
+        "sample_operators": [],
+        "sample_geolocation": []
+      }
+    },
+    {
+      "source": "https://vietnamguide.net/destinations/best-day-trips-from-hanoi/",
+      "passed": true,
+      "hls_score": 100,
+      "edi": 2.17,
+      "word_count": 4149,
+      "sentence_count": 240,
+      "mean_sentence_length": 17.29,
+      "std_dev": 14.54,
+      "cv": 0.841,
+      "tier1_count": 0,
+      "tier2_count": 0,
+      "tier3_count": 0,
+      "passive_count": 0,
+      "tier1_violations": [],
+      "tier2_violations": [],
+      "tier3_violations": [],
+      "passive_violations": [],
+      "evidence_count": 9,
+      "evidence": {
+        "currency_count": 0,
+        "transit_time_count": 6,
+        "regulatory_count": 2,
+        "geolocation_count": 1,
+        "operator_count": 0,
+        "climate_count": 0,
+        "sample_currencies": [],
+        "sample_transit": [
+          "17 minutes",
+          "2.5 hrs",
+          "limousine",
+          "Expressway"
+        ],
+        "sample_operators": [],
+        "sample_geolocation": [
+          "Fansipan"
+        ]
+      }
+    },
+    {
+      "source": "https://vietnamguide.net/destinations/sapa-travel-guide/",
+      "passed": true,
+      "hls_score": 100,
+      "edi": 9.33,
+      "word_count": 3429,
+      "sentence_count": 216,
+      "mean_sentence_length": 15.87,
+      "std_dev": 9.52,
+      "cv": 0.6,
+      "tier1_count": 0,
+      "tier2_count": 0,
+      "tier3_count": 0,
+      "passive_count": 0,
+      "tier1_violations": [],
+      "tier2_violations": [],
+      "tier3_violations": [],
+      "passive_violations": [],
+      "evidence_count": 32,
+      "evidence": {
+        "currency_count": 0,
+        "transit_time_count": 6,
+        "regulatory_count": 0,
+        "geolocation_count": 22,
+        "operator_count": 4,
+        "climate_count": 0,
+        "sample_currencies": [],
+        "sample_transit": [
+          "3.5 hrs",
+          "6 hrs",
+          "Limousine",
+          "15 minutes"
+        ],
+        "sample_operators": [
+          "sleeper bus",
+          "cable car"
+        ],
+        "sample_geolocation": [
+          "Fansipan"
+        ]
+      }
+    },
+    {
+      "source": "https://vietnamguide.net/destinations/unesco-heritage-sites-vietnam/",
+      "passed": true,
+      "hls_score": 100,
+      "edi": 9.78,
+      "word_count": 4293,
+      "sentence_count": 244,
+      "mean_sentence_length": 17.59,
+      "std_dev": 10.68,
+      "cv": 0.607,
+      "tier1_count": 0,
+      "tier2_count": 0,
+      "tier3_count": 0,
+      "passive_count": 0,
+      "tier1_violations": [],
+      "tier2_violations": [],
+      "tier3_violations": [],
+      "passive_violations": [],
+      "evidence_count": 42,
+      "evidence": {
+        "currency_count": 36,
+        "transit_time_count": 2,
+        "regulatory_count": 0,
+        "geolocation_count": 4,
+        "operator_count": 0,
+        "climate_count": 0,
+        "sample_currencies": [
+          "200,000 VND",
+          "120,000 VND",
+          "420,000 VND",
+          "150,000 VND"
+        ],
+        "sample_transit": [
+          "17 minutes",
+          "1.2 hr"
+        ],
+        "sample_operators": [],
+        "sample_geolocation": [
+          "Tuan Chau"
+        ]
+      }
+    },
+    {
+      "source": "https://vietnamguide.net/destinations/phu-quoc-travel-guide/",
+      "passed": true,
+      "hls_score": 100,
+      "edi": 2.69,
+      "word_count": 3718,
+      "sentence_count": 194,
+      "mean_sentence_length": 19.14,
+      "std_dev": 14.97,
+      "cv": 0.782,
+      "tier1_count": 0,
+      "tier2_count": 0,
+      "tier3_count": 0,
+      "passive_count": 0,
+      "tier1_violations": [],
+      "tier2_violations": [],
+      "tier3_violations": [],
+      "passive_violations": [],
+      "evidence_count": 10,
+      "evidence": {
+        "currency_count": 0,
+        "transit_time_count": 3,
+        "regulatory_count": 4,
+        "geolocation_count": 2,
+        "operator_count": 1,
+        "climate_count": 0,
+        "sample_currencies": [],
+        "sample_transit": [
+          "1 hr",
+          "55 min",
+          "15 minutes"
+        ],
+        "sample_operators": [
+          "cable car"
+        ],
+        "sample_geolocation": [
+          "Superdong"
+        ]
+      }
+    },
+    {
+      "source": "https://vietnamguide.net/plan/vietnam-in-december/",
+      "passed": true,
+      "hls_score": 100,
+      "edi": 7.04,
+      "word_count": 3693,
+      "sentence_count": 221,
+      "mean_sentence_length": 16.7,
+      "std_dev": 12.58,
+      "cv": 0.753,
+      "tier1_count": 0,
+      "tier2_count": 0,
+      "tier3_count": 0,
+      "passive_count": 0,
+      "tier1_violations": [],
+      "tier2_violations": [],
+      "tier3_violations": [],
+      "passive_violations": [],
+      "evidence_count": 26,
+      "evidence": {
+        "currency_count": 2,
+        "transit_time_count": 2,
+        "regulatory_count": 2,
+        "geolocation_count": 0,
+        "operator_count": 0,
+        "climate_count": 20,
+        "sample_currencies": [
+          "$25 USD"
+        ],
+        "sample_transit": [
+          "1.2 hr",
+          "16 minutes"
+        ],
+        "sample_operators": [],
+        "sample_geolocation": []
+      }
+    },
+    {
+      "source": "https://vietnamguide.net/compare/vietnam-rice-terraces-guide/",
+      "passed": true,
+      "hls_score": 100,
+      "edi": 18.79,
+      "word_count": 1437,
+      "sentence_count": 75,
+      "mean_sentence_length": 19.08,
+      "std_dev": 15.74,
+      "cv": 0.825,
+      "tier1_count": 0,
+      "tier2_count": 0,
+      "tier3_count": 0,
+      "passive_count": 0,
+      "tier1_violations": [],
+      "tier2_violations": [],
+      "tier3_violations": [],
+      "passive_violations": [],
+      "evidence_count": 27,
+      "evidence": {
+        "currency_count": 0,
+        "transit_time_count": 16,
+        "regulatory_count": 0,
+        "geolocation_count": 10,
+        "operator_count": 1,
+        "climate_count": 0,
+        "sample_currencies": [],
+        "sample_transit": [
+          "Expressway",
+          "6 hours",
+          "4 hours",
+          "5 minutes"
+        ],
+        "sample_operators": [
+          "cable car"
+        ],
+        "sample_geolocation": [
+          "Muong Hoa",
+          "1,500m ",
+          "Fansipan"
+        ]
+      }
+    },
+    {
+      "source": "https://vietnamguide.net/privacy-policy/",
+      "passed": true,
+      "hls_score": 100,
+      "edi": 2.15,
+      "word_count": 465,
+      "sentence_count": 26,
+      "mean_sentence_length": 17.88,
+      "std_dev": 7.34,
+      "cv": 0.411,
+      "tier1_count": 0,
+      "tier2_count": 0,
+      "tier3_count": 0,
+      "passive_count": 0,
+      "tier1_violations": [],
+      "tier2_violations": [],
+      "tier3_violations": [],
+      "passive_violations": [],
+      "evidence_count": 1,
+      "evidence": {
+        "currency_count": 0,
+        "transit_time_count": 1,
+        "regulatory_count": 0,
+        "geolocation_count": 0,
+        "operator_count": 0,
+        "climate_count": 0,
+        "sample_currencies": [],
+        "sample_transit": [
+          "1.2 hr"
+        ],
+        "sample_operators": [],
+        "sample_geolocation": []
+      }
+    },
+    {
+      "source": "https://vietnamguide.net/plan/vietnam-in-january/",
+      "passed": true,
+      "hls_score": 100,
+      "edi": 7.31,
+      "word_count": 3831,
+      "sentence_count": 221,
+      "mean_sentence_length": 17.33,
+      "std_dev": 12.42,
+      "cv": 0.717,
+      "tier1_count": 0,
+      "tier2_count": 0,
+      "tier3_count": 0,
+      "passive_count": 0,
+      "tier1_violations": [],
+      "tier2_violations": [],
+      "tier3_violations": [],
+      "passive_violations": [],
+      "evidence_count": 28,
+      "evidence": {
+        "currency_count": 2,
+        "transit_time_count": 2,
+        "regulatory_count": 0,
+        "geolocation_count": 4,
+        "operator_count": 0,
+        "climate_count": 20,
+        "sample_currencies": [
+          "3,200,000 VND"
+        ],
+        "sample_transit": [
+          "17 minutes",
+          "1.2 hr"
+        ],
+        "sample_operators": [],
+        "sample_geolocation": [
+          "3,143m",
+          "Fansipan"
+        ]
+      }
+    },
+    {
+      "source": "https://vietnamguide.net/destinations/con-dao-travel-guide/",
+      "passed": true,
+      "hls_score": 100,
+      "edi": 2.18,
+      "word_count": 3211,
+      "sentence_count": 175,
+      "mean_sentence_length": 18.34,
+      "std_dev": 15.66,
+      "cv": 0.854,
+      "tier1_count": 0,
+      "tier2_count": 0,
+      "tier3_count": 0,
+      "passive_count": 0,
+      "tier1_violations": [],
+      "tier2_violations": [],
+      "tier3_violations": [],
+      "passive_violations": [],
+      "evidence_count": 7,
+      "evidence": {
+        "currency_count": 0,
+        "transit_time_count": 3,
+        "regulatory_count": 3,
+        "geolocation_count": 1,
+        "operator_count": 0,
+        "climate_count": 0,
+        "sample_currencies": [],
+        "sample_transit": [
+          "1 hr",
+          "13 minutes",
+          "55 min"
+        ],
+        "sample_operators": [],
+        "sample_geolocation": [
+          "Superdong"
+        ]
+      }
+    },
+    {
+      "source": "https://vietnamguide.net/plan/ha-long-bay-cruise-questions-before-booking/",
+      "passed": true,
+      "hls_score": 100,
+      "edi": 1.57,
+      "word_count": 4468,
+      "sentence_count": 279,
+      "mean_sentence_length": 16.0,
+      "std_dev": 10.23,
+      "cv": 0.64,
+      "tier1_count": 0,
+      "tier2_count": 0,
+      "tier3_count": 0,
+      "passive_count": 0,
+      "tier1_violations": [],
+      "tier2_violations": [],
+      "tier3_violations": [],
+      "passive_violations": [],
+      "evidence_count": 7,
+      "evidence": {
+        "currency_count": 1,
+        "transit_time_count": 5,
+        "regulatory_count": 0,
+        "geolocation_count": 1,
+        "operator_count": 0,
+        "climate_count": 0,
+        "sample_currencies": [
+          "surcharge"
+        ],
+        "sample_transit": [
+          "2.5 hrs",
+          "19 minutes",
+          "3 hrs",
+          "Expressway"
+        ],
+        "sample_operators": [],
+        "sample_geolocation": [
+          "Tuan Chau"
+        ]
+      }
+    },
+    {
+      "source": "https://vietnamguide.net/plan/sapa-trekking-guided-vs-self-guided/",
+      "passed": true,
+      "hls_score": 100,
+      "edi": 22.24,
+      "word_count": 1664,
+      "sentence_count": 101,
+      "mean_sentence_length": 16.39,
+      "std_dev": 11.29,
+      "cv": 0.689,
+      "tier1_count": 0,
+      "tier2_count": 0,
+      "tier3_count": 0,
+      "passive_count": 0,
+      "tier1_violations": [],
+      "tier2_violations": [],
+      "tier3_violations": [],
+      "passive_violations": [],
+      "evidence_count": 37,
+      "evidence": {
+        "currency_count": 13,
+        "transit_time_count": 13,
+        "regulatory_count": 0,
+        "geolocation_count": 10,
+        "operator_count": 1,
+        "climate_count": 0,
+        "sample_currencies": [
+          "$20",
+          "$35 USD"
+        ],
+        "sample_transit": [
+          "4 km",
+          "6 minutes",
+          "3 hours",
+          "15 minutes"
+        ],
+        "sample_operators": [
+          "cable car"
+        ],
+        "sample_geolocation": [
+          "Muong Hoa",
+          "10 meters ",
+          "Fansipan"
+        ]
+      }
+    },
+    {
+      "source": "https://vietnamguide.net/destinations/ninh-binh-travel-guide/",
+      "passed": true,
+      "hls_score": 100,
+      "edi": 1.95,
+      "word_count": 3582,
+      "sentence_count": 223,
+      "mean_sentence_length": 16.05,
+      "std_dev": 10.05,
+      "cv": 0.626,
+      "tier1_count": 0,
+      "tier2_count": 0,
+      "tier3_count": 0,
+      "passive_count": 0,
+      "tier1_violations": [],
+      "tier2_violations": [],
+      "tier3_violations": [],
+      "passive_violations": [],
+      "evidence_count": 7,
+      "evidence": {
+        "currency_count": 0,
+        "transit_time_count": 7,
+        "regulatory_count": 0,
+        "geolocation_count": 0,
+        "operator_count": 0,
+        "climate_count": 0,
+        "sample_currencies": [],
+        "sample_transit": [
+          "Limousine",
+          "3 hrs",
+          "limousine",
+          "15 minutes"
+        ],
+        "sample_operators": [],
+        "sample_geolocation": []
+      }
+    },
+    {
+      "source": "https://vietnamguide.net/plan/vietnam-food-safety-street-food-etiquette/",
+      "passed": true,
+      "hls_score": 100,
+      "edi": 8.04,
+      "word_count": 5225,
+      "sentence_count": 335,
+      "mean_sentence_length": 15.59,
+      "std_dev": 13.88,
+      "cv": 0.891,
+      "tier1_count": 0,
+      "tier2_count": 0,
+      "tier3_count": 0,
+      "passive_count": 0,
+      "tier1_violations": [],
+      "tier2_violations": [],
+      "tier3_violations": [],
+      "passive_violations": [],
+      "evidence_count": 42,
+      "evidence": {
+        "currency_count": 24,
+        "transit_time_count": 2,
+        "regulatory_count": 0,
+        "geolocation_count": 0,
+        "operator_count": 16,
+        "climate_count": 0,
+        "sample_currencies": [
+          "60,000 VND",
+          "70,000 VND",
+          "45,000 VND",
+          "35,000 VND"
+        ],
+        "sample_transit": [
+          "1.2 hr",
+          "21 minutes"
+        ],
+        "sample_operators": [
+          "028.3829.8424",
+          "SOS International",
+          "024.3843.0748",
+          "115"
+        ],
+        "sample_geolocation": []
+      }
+    },
+    {
+      "source": "https://vietnamguide.net/compare/north-central-south-vietnam/",
+      "passed": true,
+      "hls_score": 100,
+      "edi": 1.79,
+      "word_count": 2795,
+      "sentence_count": 149,
+      "mean_sentence_length": 18.76,
+      "std_dev": 10.37,
+      "cv": 0.553,
+      "tier1_count": 0,
+      "tier2_count": 0,
+      "tier3_count": 0,
+      "passive_count": 0,
+      "tier1_violations": [],
+      "tier2_violations": [],
+      "tier3_violations": [],
+      "passive_violations": [],
+      "evidence_count": 5,
+      "evidence": {
+        "currency_count": 0,
+        "transit_time_count": 3,
+        "regulatory_count": 1,
+        "geolocation_count": 1,
+        "operator_count": 0,
+        "climate_count": 0,
+        "sample_currencies": [],
+        "sample_transit": [
+          "1.2 hr",
+          "limousine",
+          "12 minutes"
+        ],
+        "sample_operators": [],
+        "sample_geolocation": [
+          "Hai Van Pass"
+        ]
+      }
+    },
+    {
+      "source": "https://vietnamguide.net/plan/hanoi-to-ha-giang-transport/",
+      "passed": true,
+      "hls_score": 100,
+      "edi": 3.5,
+      "word_count": 4285,
+      "sentence_count": 233,
+      "mean_sentence_length": 18.39,
+      "std_dev": 15.21,
+      "cv": 0.827,
+      "tier1_count": 0,
+      "tier2_count": 0,
+      "tier3_count": 0,
+      "passive_count": 0,
+      "tier1_violations": [],
+      "tier2_violations": [],
+      "tier3_violations": [],
+      "passive_violations": [],
+      "evidence_count": 15,
+      "evidence": {
+        "currency_count": 0,
+        "transit_time_count": 10,
+        "regulatory_count": 0,
+        "geolocation_count": 2,
+        "operator_count": 3,
+        "climate_count": 0,
+        "sample_currencies": [],
+        "sample_transit": [
+          "19 minutes",
+          "limousine"
+        ],
+        "sample_operators": [
+          "sleeper bus"
+        ],
+        "sample_geolocation": [
+          "Ma Pi Leng",
+          "Fansipan"
+        ]
+      }
+    },
+    {
+      "source": "https://vietnamguide.net/plan/vietnam-first-trip-planning-checklist/",
+      "passed": true,
+      "hls_score": 100,
+      "edi": 17.84,
+      "word_count": 4596,
+      "sentence_count": 194,
+      "mean_sentence_length": 23.68,
+      "std_dev": 40.71,
+      "cv": 1.719,
+      "tier1_count": 0,
+      "tier2_count": 0,
+      "tier3_count": 0,
+      "passive_count": 0,
+      "tier1_violations": [],
+      "tier2_violations": [],
+      "tier3_violations": [],
+      "passive_violations": [],
+      "evidence_count": 82,
+      "evidence": {
+        "currency_count": 36,
+        "transit_time_count": 26,
+        "regulatory_count": 17,
+        "geolocation_count": 1,
+        "operator_count": 0,
+        "climate_count": 2,
+        "sample_currencies": [
+          "350,000 VND",
+          "$14 USD",
+          "$11",
+          "15,000 VND"
+        ],
+        "sample_transit": [
+          "55 mins",
+          "Grab",
+          "19 minutes",
+          "32 km"
+        ],
+        "sample_operators": [],
+        "sample_geolocation": [
+          "300 meters"
+        ]
+      }
+    },
+    {
+      "source": "https://vietnamguide.net/destinations/nha-trang-travel-guide/",
+      "passed": true,
+      "hls_score": 100,
+      "edi": 2.04,
+      "word_count": 3438,
+      "sentence_count": 218,
+      "mean_sentence_length": 15.75,
+      "std_dev": 15.99,
+      "cv": 1.015,
+      "tier1_count": 0,
+      "tier2_count": 0,
+      "tier3_count": 0,
+      "passive_count": 0,
+      "tier1_violations": [],
+      "tier2_violations": [],
+      "tier3_violations": [],
+      "passive_violations": [],
+      "evidence_count": 7,
+      "evidence": {
+        "currency_count": 0,
+        "transit_time_count": 3,
+        "regulatory_count": 4,
+        "geolocation_count": 0,
+        "operator_count": 0,
+        "climate_count": 0,
+        "sample_currencies": [],
+        "sample_transit": [
+          "1 hr",
+          "14 minutes",
+          "55 min"
+        ],
+        "sample_operators": [],
+        "sample_geolocation": []
+      }
+    },
+    {
+      "source": "https://vietnamguide.net/",
+      "passed": true,
+      "hls_score": 100,
+      "edi": 2.07,
+      "word_count": 484,
+      "sentence_count": 25,
+      "mean_sentence_length": 19.36,
+      "std_dev": 21.54,
+      "cv": 1.112,
+      "tier1_count": 0,
+      "tier2_count": 0,
+      "tier3_count": 0,
+      "passive_count": 0,
+      "tier1_violations": [],
+      "tier2_violations": [],
+      "tier3_violations": [],
+      "passive_violations": [],
+      "evidence_count": 1,
+      "evidence": {
+        "currency_count": 0,
+        "transit_time_count": 0,
+        "regulatory_count": 1,
+        "geolocation_count": 0,
+        "operator_count": 0,
+        "climate_count": 0,
+        "sample_currencies": [],
+        "sample_transit": [],
+        "sample_operators": [],
+        "sample_geolocation": []
+      }
+    },
+    {
+      "source": "https://vietnamguide.net/compare/trang-an-vs-tam-coc/",
+      "passed": true,
+      "hls_score": 100,
+      "edi": 10.26,
+      "word_count": 3705,
+      "sentence_count": 223,
+      "mean_sentence_length": 16.61,
+      "std_dev": 16.31,
+      "cv": 0.982,
+      "tier1_count": 0,
+      "tier2_count": 0,
+      "tier3_count": 0,
+      "passive_count": 0,
+      "tier1_violations": [],
+      "tier2_violations": [],
+      "tier3_violations": [],
+      "passive_violations": [],
+      "evidence_count": 38,
+      "evidence": {
+        "currency_count": 14,
+        "transit_time_count": 16,
+        "regulatory_count": 0,
+        "geolocation_count": 8,
+        "operator_count": 0,
+        "climate_count": 0,
+        "sample_currencies": [
+          "350,000 VND",
+          "120,000 VND",
+          "250,000 VND"
+        ],
+        "sample_transit": [
+          "Limousine",
+          "2.5 hours",
+          "2 hours",
+          "15 minutes"
+        ],
+        "sample_operators": [],
+        "sample_geolocation": [
+          "500m ",
+          "0m",
+          "4m"
+        ]
+      }
+    },
+    {
+      "source": "https://vietnamguide.net/destinations/ha-long-bay-travel-guide/",
+      "passed": true,
+      "hls_score": 100,
+      "edi": 2.25,
+      "word_count": 3112,
+      "sentence_count": 201,
+      "mean_sentence_length": 15.45,
+      "std_dev": 11.65,
+      "cv": 0.754,
+      "tier1_count": 0,
+      "tier2_count": 0,
+      "tier3_count": 0,
+      "passive_count": 0,
+      "tier1_violations": [],
+      "tier2_violations": [],
+      "tier3_violations": [],
+      "passive_violations": [],
+      "evidence_count": 7,
+      "evidence": {
+        "currency_count": 0,
+        "transit_time_count": 6,
+        "regulatory_count": 0,
+        "geolocation_count": 1,
+        "operator_count": 0,
+        "climate_count": 0,
+        "sample_currencies": [],
+        "sample_transit": [
+          "2.5 hrs",
+          "limousine",
+          "13 minutes",
+          "3 hrs"
+        ],
+        "sample_operators": [],
+        "sample_geolocation": [
+          "Tuan Chau"
+        ]
+      }
+    },
+    {
+      "source": "https://vietnamguide.net/destinations/bai-tu-long-bay-guide/",
+      "passed": true,
+      "hls_score": 100,
+      "edi": 5.47,
+      "word_count": 3106,
+      "sentence_count": 190,
+      "mean_sentence_length": 16.33,
+      "std_dev": 10.47,
+      "cv": 0.641,
+      "tier1_count": 0,
+      "tier2_count": 0,
+      "tier3_count": 0,
+      "passive_count": 0,
+      "tier1_violations": [],
+      "tier2_violations": [],
+      "tier3_violations": [],
+      "passive_violations": [],
+      "evidence_count": 17,
+      "evidence": {
+        "currency_count": 3,
+        "transit_time_count": 10,
+        "regulatory_count": 0,
+        "geolocation_count": 1,
+        "operator_count": 3,
+        "climate_count": 0,
+        "sample_currencies": [
+          "350,000 VND",
+          "40,000 VND",
+          "50,000 VND"
+        ],
+        "sample_transit": [
+          "20 minutes",
+          "limousine",
+          "13 minutes",
+          "Expressway"
+        ],
+        "sample_operators": [
+          "0203.3825.293",
+          "113",
+          "115"
+        ],
+        "sample_geolocation": [
+          "Tuan Chau"
+        ]
+      }
+    },
+    {
+      "source": "https://vietnamguide.net/destinations/hanoi-travel-guide/",
+      "passed": true,
+      "hls_score": 100,
+      "edi": 2.71,
+      "word_count": 3322,
+      "sentence_count": 196,
+      "mean_sentence_length": 16.93,
+      "std_dev": 15.54,
+      "cv": 0.917,
+      "tier1_count": 0,
+      "tier2_count": 0,
+      "tier3_count": 0,
+      "passive_count": 0,
+      "tier1_violations": [],
+      "tier2_violations": [],
+      "tier3_violations": [],
+      "passive_violations": [],
+      "evidence_count": 9,
+      "evidence": {
+        "currency_count": 0,
+        "transit_time_count": 7,
+        "regulatory_count": 1,
+        "geolocation_count": 1,
+        "operator_count": 0,
+        "climate_count": 0,
+        "sample_currencies": [],
+        "sample_transit": [
+          "2.5 hrs",
+          "limousine",
+          "13 minutes"
+        ],
+        "sample_operators": [],
+        "sample_geolocation": [
+          "Fansipan"
+        ]
+      }
+    },
+    {
+      "source": "https://vietnamguide.net/editorial-policy/",
+      "passed": true,
+      "hls_score": 85,
+      "edi": 4.1,
+      "word_count": 244,
+      "sentence_count": 12,
+      "mean_sentence_length": 20.33,
+      "std_dev": 5.96,
+      "cv": 0.293,
+      "tier1_count": 0,
+      "tier2_count": 0,
+      "tier3_count": 0,
+      "passive_count": 0,
+      "tier1_violations": [],
+      "tier2_violations": [],
+      "tier3_violations": [],
+      "passive_violations": [],
+      "evidence_count": 1,
+      "evidence": {
+        "currency_count": 0,
+        "transit_time_count": 1,
+        "regulatory_count": 0,
+        "geolocation_count": 0,
+        "operator_count": 0,
+        "climate_count": 0,
+        "sample_currencies": [],
+        "sample_transit": [
+          "1.2 hr"
+        ],
+        "sample_operators": [],
+        "sample_geolocation": []
+      }
+    },
+    {
+      "source": "https://vietnamguide.net/compare/mui-ne-vs-nha-trang/",
+      "passed": true,
+      "hls_score": 100,
+      "edi": 2.49,
+      "word_count": 3219,
+      "sentence_count": 188,
+      "mean_sentence_length": 17.1,
+      "std_dev": 14.02,
+      "cv": 0.82,
+      "tier1_count": 0,
+      "tier2_count": 0,
+      "tier3_count": 0,
+      "passive_count": 0,
+      "tier1_violations": [],
+      "tier2_violations": [],
+      "tier3_violations": [],
+      "passive_violations": [],
+      "evidence_count": 8,
+      "evidence": {
+        "currency_count": 0,
+        "transit_time_count": 3,
+        "regulatory_count": 5,
+        "geolocation_count": 0,
+        "operator_count": 0,
+        "climate_count": 0,
+        "sample_currencies": [],
+        "sample_transit": [
+          "1 hr",
+          "13 minutes",
+          "55 min"
+        ],
+        "sample_operators": [],
+        "sample_geolocation": []
+      }
+    },
+    {
+      "source": "https://vietnamguide.net/destinations/ho-chi-minh-city-travel-guide/",
+      "passed": true,
+      "hls_score": 100,
+      "edi": 3.36,
+      "word_count": 3570,
+      "sentence_count": 226,
+      "mean_sentence_length": 15.8,
+      "std_dev": 11.17,
+      "cv": 0.707,
+      "tier1_count": 0,
+      "tier2_count": 0,
+      "tier3_count": 0,
+      "passive_count": 0,
+      "tier1_violations": [],
+      "tier2_violations": [],
+      "tier3_violations": [],
+      "passive_violations": [],
+      "evidence_count": 12,
+      "evidence": {
+        "currency_count": 0,
+        "transit_time_count": 5,
+        "regulatory_count": 6,
+        "geolocation_count": 0,
+        "operator_count": 1,
+        "climate_count": 0,
+        "sample_currencies": [],
+        "sample_transit": [
+          "2 hrs",
+          "14 minutes",
+          "1.5 hrs",
+          "Expressway"
+        ],
+        "sample_operators": [
+          "Speedboat"
+        ],
+        "sample_geolocation": []
+      }
+    }
+  ]
+}
