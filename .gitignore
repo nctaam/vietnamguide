@@ -4,6 +4,8 @@
 .superpowers/
 .worktrees/
 .codex/
+__pycache__/
+*.pyc
 
 # Production data, exports, snapshots, and backups
 *.sql

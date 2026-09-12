@@ -871,3 +871,33 @@ Date: 2026-07-28 (Asia/Saigon)
   - Production SFTP SHA-256 Parity: PASSED (100% exact match across all 5 modified theme files: `guide-visa-checker.php`, `guide-cost-calculator.php`, `guide-itinerary-finder.php`, `guide-season-matrix.php`, `assets/css/homepage.css`).
   - Production Database & Transient Optimization: PASSED (All 38 tables optimized, expired transients cleared).
   - Public HTTPS Production Verifier (`ops/verify-guide-experience-public.ps1` via Windows PowerShell 5.1): PASSED (100% on all 87 public routes, zero duplicate IDs, zero TOC pollution).
+
+## Anti-AI Slop Quality Engine, Comprehensive Content Audit & Ground-Truth Remediation (Stage 26) - 2026-09-12
+
+- Architecture & Scope (Stage 26):
+  - Formulated the definitive **Anti-AI Slop Style Guide & Quality Constitution** (`docs/editorial/anti-ai-slop-style-guide.md`) containing:
+    - Blacklist of 150+ forbidden AI clichés across 6 categories (Empty Superlatives, Formulaic Transitions, Cliché Metaphors, Generic Recommendations, Fake Sensory Phrases, Robotic Summaries).
+    - "Constraint-First" Content Formula (Decision &rarr; Physical/Legal Constraints &rarr; Trade-off Friction &rarr; Ground-Truth Data &rarr; Concierge Verdict).
+    - Quantitative Human-Likeness Score (HLS $\ge 80/100$, Cliché Count = 0, Sentence Length $CV \ge 0.45$).
+    - Ground-Truth Realities (Resolution 128/NQ-CP 45-day exemption, Resolution 127/NQ-CP 90-day e-visa, Hanoi Ga A vs Ga B train gates, Mai Linh/Vinasun verified taxi numbers, airport Grab bays, climate microclimates).
+  - Engineered the automated **Anti-AI Slop Linter & Metric Engine** (`ops/anti_ai_slop_linter.py` & `ops/verify-anti-ai-slop.ps1`):
+    - HTML tag stripping with URL preservation so citation links do not trigger false positives.
+    - Sentence tokenization and Coefficient of Variation ($CV = \sigma / \mu$) cadence measurement.
+    - Ground-truth evidence anchor detection (VND/USD currency, transit codes, official legal decrees).
+    - Full XML sitemap crawler capable of auditing the entire production site in batch.
+  - Executed Comprehensive Baseline Audit across all 102 URLs on `https://vietnamguide.net`:
+    - Baseline: 96 URLs passed pristine (94.1%); 6 URLs flagged for targeted review (`ops/reports/anti-ai-slop-audit-2026-09-12.json`).
+  - Executed Content Remediation (`ops/remediate-audit-slop-content.php` & postmeta SQL updates):
+    - Replaced classic AI slop opening in `destinations/pu-luong-travel-guide` with concrete concierge data (160 km southwest of Hanoi, 4 to 4.5h road, Black Thai stilt homestays).
+    - Refined cliché occurrences in editorial critiques and source metadata across `da-nang-beaches-guide`, `bai-tu-long-bay-guide`, `ha-long-bay-cruise-questions-before-booking`, `cu-chi-tunnels-vs-mekong-delta-day-trip`, and `hanoi-vs-ho-chi-minh-city`.
+  - Re-audited full production sitemap post-remediation (`ops/reports/anti-ai-slop-audit-2026-09-12-remediated.json`):
+    - **102 / 102 URLs (100.0%) PASSED with 0 Tier 1 Clichés** and average HLS score of 98.4/100.
+- Verification Evidence:
+  - Anti-AI Slop Unit Tests (`ops/tests/test-anti-ai-slop.py`): PASSED (4/4 tests).
+  - Anti-AI Slop PowerShell Verifier (`ops/verify-anti-ai-slop.ps1 -SelfTest`): PASSED.
+  - Production Full Sitemap Audit: PASSED (102/102 URLs, 0 Tier 1 violations).
+  - Local Homepage Theme Checks (`ops/verify-homepage-theme.ps1`): PASSED.
+  - Core MU-Plugin Invariants (`ops/verify-core-mu-plugin.ps1`): PASSED (Fingerprint `71b49033114e8007e5c19fb8ebc1a89e0d0dad88d0fe92dd381a28700db096ce` preserved).
+  - Core Block Patterns (`ops/verify-core-block-patterns.ps1`): PASSED.
+  - Guide Experience Baseline (`ops/verify-guide-experience.ps1`): PASSED.
+  - Public HTTPS Production Verifier (`ops/verify-guide-experience-public.ps1` via Windows PowerShell 5.1): PASSED (100% on all 87 public routes).
