@@ -176,6 +176,21 @@ TIER8_PATTERNS = [
     (r"\bsit\s+back(?:,|\s+)relax\b", "sit back and relax (conversational trope)"),
 ]
 
+TIER9_PATTERNS = [
+    (r"\bthe\s+(?:question|mistake|problem|point)\s+is\s+not\b[^.!?]{1,60}\bthe\s+(?:question|mistake|problem|point)\s+is\b", "the [question/mistake/problem] is not X, the [question/mistake/problem] is Y (synthetic antithesis trope)"),
+    (r"\bno\s+(?:trip|journey|visit)\s+(?:to\s+vietnam\s+)?is\s+complete\s+without\b", "no trip/journey is complete without (sycophantic travel cliché)"),
+    (r"\bhard[- ]pressed\s+to\s+find\b", "hard-pressed to find (conversational trope)"),
+    (r"\bnothing\s+short\s+of\s+(?:spectacular|magical|breathtaking|extraordinary|incredible|amazing)\b", "nothing short of [superlative] (hyperbolic framing)"),
+    (r"\bas\s+(?:dusk\s+falls|the\s+day\s+draws\s+to\s+a\s+close|the\s+sun\s+(?:sets|dips\s+below\s+the\s+horizon))\b", "as dusk falls / as the sun sets (melodramatic transition)"),
+    (r"\bbids?\s+farewell\s+to\b", "bids farewell to (sentimental cliché)"),
+    (r"\b(?:fear|fret)\s+not\b", "fear/fret not (conversational hand-waving)"),
+    (r"\bprepare\s+to\s+be\s+amazed\b", "prepare to be amazed (empty marketing hype)"),
+    (r"\bthe\s+answer\s+is\s+simple\b", "the answer is simple (rhetorical cliché)"),
+    (r"\bwhy\s+does\s+this\s+matter\?\s*(?:because)?\b", "why does this matter? (rhetorical question-answer)"),
+    (r"\bwhat\s+does\s+this\s+mean\s+for\s+you\?\b", "what does this mean for you? (marketing formula)"),
+    (r"\bworld\s+of\s+difference\b", "world of difference (conversational trope)"),
+]
+
 def count_syllables(word):
     """Estimate English syllables for Flesch readability calculation."""
     w = word.lower().strip()
@@ -419,6 +434,20 @@ def analyze_text(text, source_name="direct_input"):
                 'snippet': f"...{snippet}..."
             })
 
+    tier9_violations = []
+    for pattern, name in TIER9_PATTERNS:
+        matches = list(re.finditer(pattern, plain_text, re.IGNORECASE))
+        for m in matches:
+            start = max(0, m.start() - 30)
+            end = min(len(plain_text), m.end() + 30)
+            snippet = plain_text[start:end].replace("\n", " ")
+            tier9_violations.append({
+                'severity': 'S1_TIER9_SYNTHETIC_CONTRAST',
+                'phrase': name,
+                'matched_text': m.group(0),
+                'snippet': f"...{snippet}..."
+            })
+
     # Adjective clustering analysis (detect 3+ hyperbolic adjectives within sliding 150-word window)
     adjective_cluster_violations = []
     plain_words_lower = [re.sub(r"[^\w]", "", w.lower()) for w in plain_text.split()]
@@ -477,17 +506,22 @@ def analyze_text(text, source_name="direct_input"):
     else:
         lexical_diversity = 1.0
 
-    # Flesch-Kincaid Reading Ease calculation
-    total_syllables = sum(count_syllables(w) for w in plain_words_lower) if plain_words_lower else 0
-    if sentence_count > 0 and word_count > 0:
-        flesch_reading_ease = round(206.835 - 1.015 * (word_count / sentence_count) - 84.6 * (total_syllables / word_count), 2)
+    # Flesch-Kincaid Reading Ease calculation (recalibrated on continuous prose sentences)
+    prose_words = [w for s in sentences for w in s.split()]
+    prose_word_count = len(prose_words)
+    prose_syllables = sum(count_syllables(w) for w in prose_words)
+    if sentence_count > 0 and prose_word_count > 0:
+        flesch_reading_ease = round(206.835 - 1.015 * (prose_word_count / sentence_count) - 84.6 * (prose_syllables / prose_word_count), 2)
+    elif word_count > 0:
+        total_syllables = sum(count_syllables(w) for w in plain_words_lower)
+        flesch_reading_ease = round(206.835 - 1.015 * (word_count / max(1, sentence_count)) - 84.6 * (total_syllables / word_count), 2)
     else:
         flesch_reading_ease = 70.0
 
     # 2. Measure Cadence (Coefficient of Variation) & Repetitive Openers
 
-
     repetitive_openers_violations = []
+    repetitive_bigram_violations = []
     if sentence_count >= 3:
         lengths = [len(s.split()) for s in sentences]
         mean_len = sum(lengths) / sentence_count
@@ -520,6 +554,27 @@ def analyze_text(text, source_name="direct_input"):
                         continue
                 idx += 1
 
+            # Consecutive identical bigram opener detection on narrative prose
+            EXEMPT_BIGRAMS = {
+                ("in", "the"), ("on", "the"), ("at", "the"), ("for", "example"), ("if", "you"),
+                ("there", "is"), ("there", "are")
+            }
+            for i in range(len(sentences) - 1):
+                if len(sentences[i].split()) < 4 or len(sentences[i+1].split()) < 4:
+                    continue
+                w1 = re.findall(r"\b[A-Za-z0-9']+\b", sentences[i])
+                w2 = re.findall(r"\b[A-Za-z0-9']+\b", sentences[i + 1])
+                if len(w1) >= 2 and len(w2) >= 2:
+                    b1 = (w1[0].lower(), w1[1].lower())
+                    b2 = (w2[0].lower(), w2[1].lower())
+                    if b1 == b2 and b1 not in EXEMPT_BIGRAMS:
+                        repetitive_bigram_violations.append({
+                            'severity': 'S2_REPETITIVE_BIGRAM_OPENER',
+                            'bigram': f"{b1[0]} {b1[1]}",
+                            'sentence_idx': i,
+                            'snippet': f"{sentences[i][:45]}... / {sentences[i+1][:45]}..."
+                        })
+
         # Local sentence cadence monotony detection (sliding window of 6 sentences)
         local_cadence_violations = []
         if sentence_count >= 6 and not is_index_or_policy:
@@ -544,6 +599,7 @@ def analyze_text(text, source_name="direct_input"):
         std_dev = 0.0
         cv = 0.5  # Neutral default for very short inputs
         local_cadence_violations = []
+        repetitive_bigram_violations = []
 
     passive_ratio = round(len(passive_violations) / sentence_count, 3) if sentence_count > 0 else 0.0
 
@@ -574,8 +630,10 @@ def analyze_text(text, source_name="direct_input"):
     base_score -= len(tier6_violations) * 10
     base_score -= len(tier7_violations) * 15
     base_score -= len(tier8_violations) * 15
+    base_score -= len(tier9_violations) * 15
     base_score -= len(adjective_cluster_violations) * 10
     base_score -= len(repetitive_openers_violations) * 10
+    base_score -= len(repetitive_bigram_violations) * 10
     base_score -= len(local_cadence_violations) * 10
     base_score -= len(lexical_diversity_violations) * 10
     if passive_ratio > 0.15 and sentence_count >= 5:
@@ -597,7 +655,7 @@ def analyze_text(text, source_name="direct_input"):
 
     final_score = max(0, min(100, base_score))
 
-    # Strict Gate (v8.0):
+    # Strict Gate (v9.0):
     # 1. Zero Tier 1 violations
     # 2. Maximum 2 Tier 3 signposting violations
     # 3. Maximum 1 Tier 4 modern trope / sycophancy violation
@@ -605,8 +663,9 @@ def analyze_text(text, source_name="direct_input"):
     # 5. Zero Tier 6 over-explanation violations
     # 6. Zero Tier 7 authority slop violations
     # 7. Zero Tier 8 superficial rhetoric violations
-    # 8. HLS score >= 80
-    # 9. If in-depth guide (word_count >= 400 and not archive/policy page): must achieve strict EDI >= 4.0 (or evidence_count >= 10 and EDI >= 3.0)
+    # 8. Zero Tier 9 synthetic contrast / sycophancy violations
+    # 9. HLS score >= 80
+    # 10. If in-depth guide (word_count >= 400 and not archive/policy page): must achieve strict EDI >= 4.0 (or evidence_count >= 10 and EDI >= 3.0)
 
     has_heavy_signposting = (len(tier3_violations) >= 3)
     has_tier4_violations = (len(tier4_violations) >= 2)
@@ -614,6 +673,7 @@ def analyze_text(text, source_name="direct_input"):
     has_tier6_violations = (len(tier6_violations) >= 1)
     has_tier7_violations = (len(tier7_violations) >= 1)
     has_tier8_violations = (len(tier8_violations) >= 1)
+    has_tier9_violations = (len(tier9_violations) >= 1)
 
     common_pass = (
         (len(tier1_violations) == 0) and
@@ -623,6 +683,7 @@ def analyze_text(text, source_name="direct_input"):
         (not has_tier6_violations) and
         (not has_tier7_violations) and
         (not has_tier8_violations) and
+        (not has_tier9_violations) and
         (final_score >= 80)
     )
 
@@ -652,8 +713,10 @@ def analyze_text(text, source_name="direct_input"):
         'tier6_count': len(tier6_violations),
         'tier7_count': len(tier7_violations),
         'tier8_count': len(tier8_violations),
+        'tier9_count': len(tier9_violations),
         'adjective_cluster_count': len(adjective_cluster_violations),
         'repetitive_openers_count': len(repetitive_openers_violations),
+        'repetitive_bigram_count': len(repetitive_bigram_violations),
         'lexical_diversity': lexical_diversity,
         'flesch_reading_ease': flesch_reading_ease,
         'passive_ratio': passive_ratio,
@@ -666,8 +729,10 @@ def analyze_text(text, source_name="direct_input"):
         'tier6_violations': tier6_violations,
         'tier7_violations': tier7_violations,
         'tier8_violations': tier8_violations,
+        'tier9_violations': tier9_violations,
         'adjective_cluster_violations': adjective_cluster_violations,
         'repetitive_openers_violations': repetitive_openers_violations,
+        'repetitive_bigram_violations': repetitive_bigram_violations,
         'local_cadence_violations': local_cadence_violations,
         'lexical_diversity_violations': lexical_diversity_violations,
         'evidence_count': evidence_count,

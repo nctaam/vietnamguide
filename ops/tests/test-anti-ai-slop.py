@@ -305,6 +305,46 @@ class TestAntiAiSlopLinter(unittest.TestCase):
         self.assertGreater(report.get('lexical_diversity', 0.0), 0.65)
         self.assertTrue(report['passed'])
 
+    def test_tier9_synthetic_contrast_and_sycophancy(self):
+        text = (
+            "The question is not whether Ha Long is scenic. The question is whether you should cruise overnight. "
+            "No trip to Vietnam is complete without tasting street pho in Hanoi. "
+            "Travelers will be hard-pressed to find a more authentic harbor. "
+            "As dusk falls over the river, Hoi An bids farewell to the day. "
+            "Fear not, we have got you covered with this guide. "
+            "The view from the top is nothing short of spectacular."
+        )
+        report = linter.analyze_text(text, source_name="test-tier9")
+        self.assertIn('tier9_violations', report, "Report must include tier9_violations")
+        self.assertGreaterEqual(report.get('tier9_count', 0), 4, "Must detect Tier 9 synthetic contrast and sycophancy")
+        self.assertFalse(report['passed'], "Tier 9 synthetic tropes must fail strict quality gate")
+
+    def test_consecutive_identical_bigram_openers(self):
+        text = (
+            "Use a group tour when the schedule is simple and fixed timing is acceptable. "
+            "Use a private driver when comfort, family pacing, and route flexibility matter more. "
+            "Book tickets at the station counter three days ahead of travel date."
+        )
+        report = linter.analyze_text(text, source_name="test-bigram-openers")
+        self.assertIn('repetitive_bigram_violations', report, "Report must include repetitive_bigram_violations")
+        self.assertGreaterEqual(report.get('repetitive_bigram_count', 0), 1)
+        self.assertIn('use a', [v['bigram'] for v in report.get('repetitive_bigram_violations', [])])
+
+    def test_recalibrated_prose_flesch_reading_ease(self):
+        # A page with large table markup where narrative prose sentences are concise
+        html = (
+            "<p>Hanoi railway station operates daily trains south along the coast. "
+            "Passengers reserve four-berth soft sleeper tickets at counter five. "
+            "Tickets cost 1,150,000 VND per person to Hue city.</p>"
+            "<table><tr><td>Departure 19:30</td><td>Arrival 08:45</td></tr>"
+            "<tr><td>Train SE3</td><td>Air-conditioned soft berth</td></tr>"
+            "<tr><td>Luggage limit 20kg</td><td>Pillar 4 pickup</td></tr></table>"
+        )
+        report = linter.analyze_text(html, source_name="test-prose-flesch")
+        self.assertGreater(report.get('flesch_reading_ease', 0.0), 30.0)
+        self.assertLess(report.get('flesch_reading_ease', 100.0), 85.0)
+        self.assertTrue(report['passed'])
+
 
 if __name__ == '__main__':
     unittest.main()
