@@ -125,6 +125,7 @@ function vg_get_travel_clusters_registry(): array
                 'name'         => 'Hanoi',
                 'description'  => 'Vietnam\'s 1,000-year-old capital city, featuring the atmospheric Old Quarter, French colonial boulevards, vibrant street-food culture, and seamless overland connectivity to Ha Long Bay and Ninh Binh.',
                 'wikidata'     => 'https://www.wikidata.org/wiki/Q1858',
+                'wikipedia'    => 'https://en.wikipedia.org/wiki/Hanoi',
                 'tourist_type' => ['Cultural tourism', 'Culinary tourism', 'Urban exploration', 'Historical tourism'],
                 'attractions'  => [
                     ['name' => 'Old Quarter', 'wikidata' => 'https://www.wikidata.org/wiki/Q10808390'],
@@ -183,6 +184,7 @@ function vg_get_travel_clusters_registry(): array
                 'name'         => 'Ha Long Bay & Lan Ha Bay',
                 'description'  => 'UNESCO World Heritage marine wonder characterized by thousands of soaring limestone karsts, secluded floating fishing villages, and emerald sea channels.',
                 'wikidata'     => 'https://www.wikidata.org/wiki/Q190128',
+                'wikipedia'    => 'https://en.wikipedia.org/wiki/H%E1%BA%A1_Long_Bay',
                 'tourist_type' => ['Marine cruise tourism', 'Nature & landscapes', 'Sea kayaking', 'UNESCO heritage'],
                 'attractions'  => [
                     ['name' => 'Ha Long Bay', 'wikidata' => 'https://www.wikidata.org/wiki/Q190128'],
@@ -240,7 +242,8 @@ function vg_get_travel_clusters_registry(): array
                 'geo'          => ['latitude' => 20.2506, 'longitude' => 105.9745],
                 'name'         => 'Ninh Binh (Trang An & Tam Coc)',
                 'description'  => 'Often celebrated as "Ha Long Bay on land," Ninh Binh enchants travelers with limestone peaks emerging from emerald rice fields, UNESCO paddleboat grottoes, and ancient dynastic temples.',
-                'wikidata'     => 'https://www.wikidata.org/wiki/Q36359',
+                'wikidata'     => 'https://www.wikidata.org/wiki/Q36352',
+                'wikipedia'    => 'https://en.wikipedia.org/wiki/Ninh_B%C3%ACnh_province',
                 'tourist_type' => ['Ecotourism', 'Rural exploration', 'UNESCO landscape', 'Cycling tourism'],
                 'attractions'  => [
                     ['name' => 'Trang An Landscape Complex', 'wikidata' => 'https://www.wikidata.org/wiki/Q10828551'],
@@ -299,12 +302,13 @@ function vg_get_travel_clusters_registry(): array
                 'name'         => 'Da Nang, Hoi An & Hue',
                 'description'  => 'Central Vietnam\'s cultural and coastal heartland, spanning the royal palaces of Hue, the lantern-lit UNESCO trading lanes of Hoi An, and the beaches and Marble Mountains of Da Nang.',
                 'wikidata'     => 'https://www.wikidata.org/wiki/Q25282',
+                'wikipedia'    => 'https://en.wikipedia.org/wiki/Da_Nang',
                 'tourist_type' => ['Heritage tourism', 'Beach resort travel', 'Culinary exploration', 'Cultural travel'],
                 'attractions'  => [
                     ['name' => 'Hoi An Ancient Town', 'wikidata' => 'https://www.wikidata.org/wiki/Q36167'],
                     ['name' => 'Imperial City of Hue', 'wikidata' => 'https://www.wikidata.org/wiki/Q200257'],
                     ['name' => 'My Khe Beach & Marble Mountains', 'wikidata' => 'https://www.wikidata.org/wiki/Q25282'],
-                    ['name' => 'Hai Van Pass', 'wikidata' => 'https://www.wikidata.org/wiki/Q25282'],
+                    ['name' => 'Hai Van Pass', 'wikidata' => 'https://www.wikidata.org/wiki/Q1005837'],
                 ],
             ],
             'trip_schema' => [
@@ -364,6 +368,7 @@ function vg_get_travel_clusters_registry(): array
                 'name'         => 'Ho Chi Minh City & Mekong Delta',
                 'description'  => 'Vietnam\'s bustling southern economic powerhouse, famed for French colonial landmarks, Saigon street-food alleys, wartime history, and gateway to the waterways of the Mekong Delta.',
                 'wikidata'     => 'https://www.wikidata.org/wiki/Q1854',
+                'wikipedia'    => 'https://en.wikipedia.org/wiki/Ho_Chi_Minh_City',
                 'tourist_type' => ['Urban exploration', 'Culinary tourism', 'Historical tourism', 'Riverine ecotourism'],
                 'attractions'  => [
                     ['name' => 'War Remnants Museum', 'wikidata' => 'https://www.wikidata.org/wiki/Q1854'],
@@ -422,6 +427,7 @@ function vg_get_travel_clusters_registry(): array
                 'name'         => 'Sa Pa & Northern Highlands',
                 'description'  => 'Vietnam\'s dramatic northern mountain frontier, showcasing Fansipan summit, sculpted rice terraces, colorful ethnic hill-tribe markets, and the epic Ha Giang karst loop.',
                 'wikidata'     => 'https://www.wikidata.org/wiki/Q36384',
+                'wikipedia'    => 'https://en.wikipedia.org/wiki/Sa_Pa',
                 'tourist_type' => ['Mountain trekking', 'Adventure travel', 'Ethnic cultural immersion', 'Landscape photography'],
                 'attractions'  => [
                     ['name' => 'Fansipan Summit', 'wikidata' => 'https://www.wikidata.org/wiki/Q1005391'],
@@ -487,6 +493,7 @@ function vg_get_travel_clusters_registry(): array
                 'name'         => 'Phu Quoc, Con Dao & Central Coast',
                 'description'  => 'Vietnam\'s idyllic island retreats and sun-drenched coastal havens, offering powder-white sands, coral reef biodiversity, and calm turquoise seas.',
                 'wikidata'     => 'https://www.wikidata.org/wiki/Q223145',
+                'wikipedia'    => 'https://en.wikipedia.org/wiki/Ph%C3%BA_Qu%E1%BB%91c',
                 'tourist_type' => ['Beach resort tourism', 'Marine biodiversity', 'Relaxation', 'Scuba diving'],
                 'attractions'  => [
                     ['name' => 'Phu Quoc National Park', 'wikidata' => 'https://www.wikidata.org/wiki/Q223145'],
@@ -544,6 +551,7 @@ function vg_get_travel_clusters_registry(): array
                 'name'         => 'Vietnam',
                 'description'  => 'An extraordinary Southeast Asian destination blending 3,200 km of coastline, UNESCO World Heritage treasures, limestone karst bays, and globally renowned culinary culture.',
                 'wikidata'     => 'https://www.wikidata.org/wiki/Q881',
+                'wikipedia'    => 'https://en.wikipedia.org/wiki/Vietnam',
                 'tourist_type' => ['Cultural tourism', 'Nature & adventure', 'Culinary exploration', 'Heritage tourism'],
                 'attractions'  => [
                     ['name' => 'Ha Long Bay', 'wikidata' => 'https://www.wikidata.org/wiki/Q190128'],
@@ -935,8 +943,23 @@ function vg_rich_travel_schema_filter($data, $context = null): array
             '@id' => $webpage_id,
         ],
     ];
+    $same_as = [];
     if (! empty($dest_schema['wikidata'])) {
-        $dest_node['sameAs'] = $dest_schema['wikidata'];
+        $same_as[] = $dest_schema['wikidata'];
+    }
+    if (! empty($dest_schema['wikipedia'])) {
+        $same_as[] = $dest_schema['wikipedia'];
+    }
+    if (! empty($dest_schema['sameAs'])) {
+        if (is_array($dest_schema['sameAs'])) {
+            $same_as = array_merge($same_as, $dest_schema['sameAs']);
+        } else {
+            $same_as[] = $dest_schema['sameAs'];
+        }
+    }
+    $same_as = array_values(array_unique(array_filter($same_as)));
+    if (! empty($same_as)) {
+        $dest_node['sameAs'] = (count($same_as) === 1) ? $same_as[0] : $same_as;
     }
     if (! empty($dest_schema['geo'])) {
         $dest_node['geo'] = [

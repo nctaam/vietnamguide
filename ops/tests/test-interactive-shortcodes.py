@@ -223,6 +223,20 @@ class TestInteractiveShortcodes(unittest.TestCase):
         self.assertIn("'addressRegion'", seo_content, "Cluster registry must specify addressRegion.")
         self.assertIn("'hasMap'", seo_content, "Destination node must feature hasMap property.")
 
+    def test_schema_wikidata_knowledge_graph_links(self):
+        """TouristDestination schema must feature canonical Wikidata and Wikipedia sameAs links."""
+        with open(SEO_FILE, 'r', encoding='utf-8') as f:
+            seo_content = f.read()
+        self.assertIn("'wikidata'", seo_content)
+        self.assertIn("'wikipedia'", seo_content)
+        self.assertIn('https://www.wikidata.org/wiki/Q1858', seo_content)  # Hanoi
+        self.assertIn('https://www.wikidata.org/wiki/Q190128', seo_content)  # Ha Long
+        self.assertIn('https://www.wikidata.org/wiki/Q36352', seo_content)  # Ninh Binh
+        self.assertIn('https://www.wikidata.org/wiki/Q25282', seo_content)  # Da Nang
+        self.assertIn('https://www.wikidata.org/wiki/Q1854', seo_content)  # HCMC
+        self.assertIn('https://en.wikipedia.org/wiki/Hanoi', seo_content)
+        self.assertIn('https://en.wikipedia.org/wiki/Vietnam', seo_content)
+
 
 if __name__ == '__main__':
     unittest.main()
