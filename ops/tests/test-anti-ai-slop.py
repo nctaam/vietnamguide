@@ -92,6 +92,39 @@ class TestAntiAiSlopLinter(unittest.TestCase):
         self.assertGreaterEqual(report['evidence']['transit_time_count'], 2)
         self.assertGreaterEqual(report['evidence']['regulatory_count'], 1)
 
+    def test_tier1_expanded_subtle_cliches(self):
+        subtle_slop = (
+            "Ha Long Bay is truly a paradise for nature lovers. "
+            "It is the crown jewel of northern Vietnam and a stone's throw away from Cat Ba. "
+            "An unforgettable adventure awaits as you unravel the secrets of the bay. "
+            "Whether you seek relaxation or simply stunning landscapes, it embodies the spirit of discovery. "
+            "Let's delve into what makes this scenic wonder special."
+        )
+        report = linter.analyze_text(subtle_slop)
+        self.assertGreaterEqual(len(report['tier1_violations']), 4, "Should catch subtle marketing and AI clichés")
+        self.assertFalse(report['passed'], "Subtle slop must fail")
+
+    def test_evidence_density_index_edi(self):
+        # 500 words with zero evidence -> low EDI
+        filler_sentence = "This destination has ancient streets with lanterns and pleasant breezes along the peaceful riverside. "
+        low_evidence_text = filler_sentence * 35  # ~500 words
+        report_low = linter.analyze_text(low_evidence_text)
+        self.assertIn('edi', report_low, "Report must include Evidence Density Index (EDI)")
+        self.assertLess(report_low['edi'], 4.0, "Low evidence text must have EDI < 4.0")
+        self.assertFalse(report_low['passed'], "Long article with EDI < 4.0 must fail")
+
+        # Text with high evidence density
+        high_evidence_text = (
+            "From Ga Hanoi, train SE3 departs at 19:20 and arrives in Hue at 08:30 (ticket 680,000 VND for soft sleeper 4-berth). "
+            "Admission to Hue Imperial City is 200,000 VND per adult. "
+            "Bus 86 from Noi Bai costs 45,000 VND, while GrabCar costs 300,000 VND to Hoan Kiem. "
+            "Under Resolution 128/NQ-CP, visitors receive a 45-day exemption or can apply for a $25 USD 90-day e-visa. "
+            "The 130 km expressway journey takes 2.0 hours."
+        )
+        report_high = linter.analyze_text(high_evidence_text)
+        self.assertGreaterEqual(report_high['edi'], 10.0, "High evidence text must have high EDI")
+        self.assertTrue(report_high['passed'], "High evidence text without clichés must pass")
+
 
 if __name__ == '__main__':
     unittest.main()

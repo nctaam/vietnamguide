@@ -18,11 +18,12 @@ import xml.etree.ElementTree as ET
 # ==============================================================================
 
 TIER1_PATTERNS = [
-    (r"\bnestled\s+(?:in|within|amongst|against|in\s+the\s+heart\s+of)\b", "nestled in / nestled in the heart of"),
+    (r"\bnestled\s+(?:in|within|amongst|against|amidst|between|in\s+the\s+heart\s+of)\b", "nestled in / nestled in the heart of / amidst"),
     (r"\bwhether\s+you(?:'re|\s+are)\s+a\s+[a-z\s]+(?:or|buff|seeker)\b", "whether you're a [x] or [y]"),
+    (r"\bwhether\s+you\s+seek\b|\bwhether\s+you(?:'re|\s+are)\s+seeking\b|\bwhether\s+you(?:'re|\s+are)\s+looking\s+for\b", "whether you seek / looking for"),
     (r"\blook\s+no\s+further\s+than\b", "look no further than"),
     (r"\bwithout\s+further\s+ado\b", "without further ado"),
-    (r"\ba\s+testament\s+to\b", "a testament to"),
+    (r"\ba\s+testament\s+to\b|\bserves?\s+as\s+a\s+testament\s+to\b|\bstands?\s+as\s+a\s+testament\s+to\b", "a testament to / serves as a testament to"),
     (r"\b(?:a\s+)?rich\s+tapestry\b|\btapestry\s+of\b", "rich tapestry / tapestry of"),
     (r"\bbustling\s+metropolis\b", "bustling metropolis"),
     (r"\bsteeped\s+in\s+history\b", "steeped in history"),
@@ -34,10 +35,24 @@ TIER1_PATTERNS = [
     (r"\bpicturesque\s+(?:town|village|scenery|landscape)?\b", "picturesque"),
     (r"\bpostcard[- ]perfect\b", "postcard-perfect"),
     (r"\bunforgettable\s+(?:journey|experience|trip|memory|adventure)\b", "unforgettable journey/experience"),
+    (r"\b(?:an\s+)?unforgettable\s+adventure\s+awaits\b|\badventure\s+awaits\b", "adventure awaits"),
     (r"\boff\s+the\s+beaten\s+(?:path|track)\b", "off the beaten path"),
     (r"\bmelting\s+pot\b", "melting pot"),
     (r"\bkaleidoscope\s+of\b", "kaleidoscope of"),
-    (r"\boasis\s+of\s+tranquility\b", "oasis of tranquility"),
+    (r"\boasis\s+of\s+(?:tranquility|peace|calm)\b|\bhaven\s+of\s+(?:peace|tranquility)\b", "oasis/haven of tranquility/peace"),
+    (r"\bparadise\s+for\s+(?:nature\s+)?(?:lovers|foodies|travelers|backpackers|adventurers)\b", "paradise for lovers of"),
+    (r"\b(?:the\s+)?crown\s+jewel\b|\bjewel\s+in\s+the\s+crown\b", "crown jewel / jewel in the crown"),
+    (r"\b(?:a\s+)?stone'?s\s+throw\s+(?:away\s+)?(?:from)?\b", "a stone's throw away"),
+    (r"\bunravel\s+the\s+secrets\b|\bunlock\s+the\s+secrets\b|\bdiscover\s+the\s+secrets\b", "unravel/unlock the secrets"),
+    (r"\bembodies\s+the\s+spirit\s+of\b|\bcaptures?\s+the\s+essence\s+of\b", "embodies the spirit / essence of"),
+    (r"\bscenic\s+wonder[s]?\b|\bwonders?\s+of\s+nature\b", "scenic wonder / wonder of nature"),
+    (r"\blet'?s\s+(?:delve|dive)\s+into\b", "let's delve/dive into"),
+    (r"\bstep\s+back\s+in\s+time\b", "step back in time"),
+    (r"\bin\s+a\s+nutshell\b", "in a nutshell"),
+    (r"\bat\s+the\s+end\s+of\s+the\s+day\b", "at the end of the day"),
+    (r"\bquintessential\s+(?:experience|vietnamese|charm|destination)\b", "quintessential experience"),
+    (r"\bbucket[- ]list\s+(?:destination|trip|experience)?\b", "bucket-list destination"),
+    (r"\bonce[- ]in[- ]a[- ]lifetime\s+(?:experience|trip|opportunity|adventure)\b", "once-in-a-lifetime"),
     (r"\bsymphony\s+of\s+flavors\b", "symphony of flavors"),
     (r"\btantalize\s+your\s+taste\s*buds\b", "tantalize your taste buds"),
     (r"\bfeast\s+for\s+the\s+(?:eyes|senses)\b", "feast for the eyes/senses"),
@@ -47,21 +62,28 @@ TIER1_PATTERNS = [
     (r"\ball\s+in\s+all\b", "all in all"),
     (r"\bto\s+wrap\s+things\s+up\b", "to wrap things up"),
     (r"\bso\s+pack\s+your\s+bags\b", "so pack your bags"),
-    (r"\bhas\s+something\s+for\s+everyone\b", "has something for everyone"),
+    (r"\bhas\s+something\s+for\s+everyone\b|\bsomething\s+(?:to\s+offer\s+)?for\s+every(?:one|\s+kind\s+of\s+traveler)\b", "has something for everyone"),
     (r"\b(?:safe|happy)\s+travels!?\b", "happy travels / safe travels"),
     (r"\bdelve\s+(?:deep|into)\b", "delve into"),
     (r"\bcaptivating\s+blend\b", "captivating blend"),
 ]
 
 TIER2_PATTERNS = [
-    (r"\bprices\s+vary\s+widely\b", "prices vary widely"),
+    (r"\bprices\s+vary\s+widely\b|\bcosts?\s+vary\s+depending\s+on\b", "prices/costs vary widely"),
     (r"\btake\s+a\s+taxi\s+or\s+(?:public\s+)?bus\b", "take a taxi or bus (vague transit)"),
     (r"\bit\s+is\s+recommended\s+to\b", "it is recommended to (passive voice)"),
+    (r"\b(?:it\s+is|it's)\s+worth\s+(?:noting|mentioning)\s+that\b", "it is worth noting/mentioning that"),
+    (r"\b(?:it\s+is|it's)\s+important\s+to\s+remember\s+that\b", "it is important to remember that"),
+    (r"\bkeep\s+in\s+mind\s+that\b", "keep in mind that"),
+    (r"\bplays?\s+(?:a|an)\s+(?:crucial|vital|important|key)\s+role\b", "plays a crucial/vital role"),
+    (r"\bneedless\s+to\s+say\b", "needless to say"),
+    (r"\bhire\s+a\s+reputable\s+guide\b", "hire a reputable guide (vague advice)"),
     (r"\bpack\s+comfortable\s+walking\s+shoes\b", "pack comfortable walking shoes (generic advice)"),
     (r"\bbe\s+mindful\s+of\s+your\s+belongings\b", "be mindful of your belongings (vague security)"),
     (r"\bremember\s+to\s+stay\s+hydrated\b", "remember to stay hydrated"),
     (r"\ba\s+plethora\s+of\b", "a plethora of"),
     (r"\bvibrant\s+(?:culture|city|atmosphere|nightlife)\b", "vibrant [noun]"),
+    (r"\bcheck\s+online\s+for\s+(?:schedules?|tickets?|prices?)\b", "check online for schedules (vague instruction)"),
 ]
 
 # ==============================================================================
@@ -80,6 +102,11 @@ TRANSIT_TIME_REGEX = re.compile(
 
 REGULATORY_REGEX = re.compile(
     r"(?:\b(?:resolution\s+\d+|decree\s+\d+|e[- ]?visa|45[- ]day\s+exemption|90[- ]day\s+e[- ]visa|immigration\s+department|customs|dsvn\.vn|loose[- ]leaf\s+visa)\b)",
+    re.IGNORECASE
+)
+
+GEOLOCATION_REGEX = re.compile(
+    r"(?:\b\d{1,4}(?:,\d{3})*\s*(?:m|meters?|metres?)\s*(?:altitude|peak|above\s+sea\s+level)?\b|\b(?:national\s+route\s+\d+[a-z]?|quốc\s+lộ\s+\d+[a-z]?|ql\d+[a-z]?|hai\s+van\s+pass|o\s+quy\s+ho|ma\s+pi\s+leng|fansipan|muong\s+hoa|dong\s+bai|tuan\s+chau|superdong)\b|\b(?:se\d+|tn\d+|ga\s+[a-z]+|bến\s+phà\s+[a-z]+|ferry\s+terminal)\b)",
     re.IGNORECASE
 )
 
@@ -176,7 +203,14 @@ def analyze_text(text, source_name="direct_input"):
     currency_matches = list(CURRENCY_REGEX.finditer(plain_text))
     transit_matches = list(TRANSIT_TIME_REGEX.finditer(plain_text))
     regulatory_matches = list(REGULATORY_REGEX.finditer(plain_text))
-    evidence_count = len(currency_matches) + len(transit_matches) + len(regulatory_matches)
+    geolocation_matches = list(GEOLOCATION_REGEX.finditer(plain_text))
+    evidence_count = len(currency_matches) + len(transit_matches) + len(regulatory_matches) + len(geolocation_matches)
+
+    # Evidence Density Index (EDI): Evidence anchors per 1,000 words
+    if word_count > 0:
+        edi = round((evidence_count / word_count) * 1000.0, 2)
+    else:
+        edi = 0.0
 
     # 4. Calculate Score
     base_score = 100
@@ -196,12 +230,21 @@ def analyze_text(text, source_name="direct_input"):
         base_score -= 15
 
     final_score = max(0, min(100, base_score))
-    passed = (len(tier1_violations) == 0) and (final_score >= 80)
+
+    # Strict Gate:
+    # 1. Zero Tier 1 violations
+    # 2. HLS score >= 80
+    # 3. If word_count >= 400: must achieve EDI >= 4.0 (concierge evidence density)
+    if word_count >= 400:
+        passed = (len(tier1_violations) == 0) and (final_score >= 80) and (edi >= 4.0)
+    else:
+        passed = (len(tier1_violations) == 0) and (final_score >= 80)
 
     return {
         'source': source_name,
         'passed': passed,
         'hls_score': final_score,
+        'edi': edi,
         'word_count': word_count,
         'sentence_count': sentence_count,
         'mean_sentence_length': round(mean_len, 2),
@@ -216,8 +259,10 @@ def analyze_text(text, source_name="direct_input"):
             'currency_count': len(currency_matches),
             'transit_time_count': len(transit_matches),
             'regulatory_count': len(regulatory_matches),
+            'geolocation_count': len(geolocation_matches),
             'sample_currencies': list(set([m.group(0) for m in currency_matches[:4]])),
             'sample_transit': list(set([m.group(0) for m in transit_matches[:4]])),
+            'sample_geolocation': list(set([m.group(0) for m in geolocation_matches[:4]])),
         }
     }
 
