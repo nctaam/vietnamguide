@@ -6623,3 +6623,28 @@ nav[aria-label="Breadcrumbs"] a:hover {
 
 }
 
+/* WCAG 2.2 AAA Screen Reader Live Announcer & High-Contrast Focus Rings */
+.vg-sr-live {
+    position: absolute !important;
+    width: 1px !important;
+    height: 1px !important;
+    padding: 0 !important;
+    margin: -1px !important;
+    overflow: hidden !important;
+    clip: rect(0, 0, 0, 0) !important;
+    white-space: nowrap !important;
+    border: 0 !important;
+}
+
+.vg-finder-pill:focus-visible,
+.vg-vc-chip:focus-visible,
+.vg-sm-month-pill:focus-visible,
+.vg-an-chip:focus-visible,
+.vg-calc-preset-chip:focus-visible,
+.vg-calc-currency-btn:focus-visible,
+.vg-calc-slider:focus-visible,
+.vg-vc-slider:focus-visible {
+    outline: 2px solid var(--vg-gold, #c5a059) !important;
+    outline-offset: 3px !important;
+    box-shadow: 0 0 0 4px rgba(197, 160, 89, 0.35) !important;
+}

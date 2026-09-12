@@ -1060,7 +1060,7 @@ function vg_render_season_matrix_html(): string
             </div>
         </div>
 
-        <div id="vg-season-aria-status" class="screen-reader-text" aria-live="polite"></div>
+        <div id="vg-season-aria-status" class="screen-reader-text" role="status" aria-live="polite" aria-atomic="true"></div>
     </section>
 
     <!-- Embedded Raw Data in Script -->

@@ -199,6 +199,22 @@ class TestInteractiveShortcodes(unittest.TestCase):
         self.assertIn("'latitude'", seo_content, "Cluster registry must specify latitude.")
         self.assertIn("'longitude'", seo_content, "Cluster registry must specify longitude.")
 
+    def test_wcag_aaa_aria_live_announcers(self):
+        """All 5 interactive shortcodes must include an aria-live='polite' region for screen reader feedback."""
+        for name, path in FILES.items():
+            with open(path, 'r', encoding='utf-8') as f:
+                code = f.read()
+            self.assertIn('aria-live="polite"', code, f"{name} must provide an aria-live='polite' status container.")
+            self.assertIn('role="status"', code, f"{name} must assign role='status' to live announcer.")
+
+    def test_keyboard_accessibility_contracts(self):
+        """Interactive chips and pills must support keyboard focus and Enter/Space event handlers."""
+        for name, path in FILES.items():
+            with open(path, 'r', encoding='utf-8') as f:
+                code = f.read()
+            self.assertTrue('keydown' in code or 'tabindex="0"' in code or '<button' in code,
+                            f"{name} must support accessible keyboard interaction.")
+
 
 if __name__ == '__main__':
     unittest.main()

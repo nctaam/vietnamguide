@@ -249,7 +249,7 @@ function vg_render_cost_calculator_html(): string
             </div>
         </div>
 
-        <div id="vg-calc-aria-status" class="screen-reader-text" aria-live="polite"></div>
+        <div id="vg-calc-aria-status" class="screen-reader-text" role="status" aria-live="polite" aria-atomic="true"></div>
     </section>
 
     <script>
