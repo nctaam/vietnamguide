@@ -120,6 +120,19 @@ TIER4_PATTERNS = [
     (r"\bembark\s+on\s+(?:a|an|your)\s+journey\b", "embark on a journey (formulaic phrasing)"),
 ]
 
+TIER5_PATTERNS = [
+    (r"\bculinary\s+delight[s]?\b", "culinary delight(s) (empty travel fluff)"),
+    (r"\bfoodie[s']?\s+paradise\b", "foodie paradise (cliché praise)"),
+    (r"\bburst(?:ing|s)?\s+with\s+flavor[s]?\b", "bursting with flavor (sensory trope)"),
+    (r"\ba\s+sight\s+to\s+behold\b", "a sight to behold (cliché praise)"),
+    (r"\bunmatched\s+beauty\b|\bincomparable\s+beauty\b", "unmatched/incomparable beauty (empty superlative)"),
+    (r"\bleave[s]?\s+(?:you|visitors?|travelers?)\s+in\s+awe\b", "leaves in awe (emotional hyperbole)"),
+    (r"\btruly\s+something\s+special\b", "truly something special (vague fluff)"),
+    (r"\ba\s+trip\s+you\s+won'?t\s+(?:soon\s+)?forget\b", "a trip you won't soon forget (marketing closer)"),
+    (r"\bworld\s+of\s+its\s+own\b|\ba\s+world\s+away\b", "world of its own (vague geography)"),
+    (r"\bstepping\s+into\s+a\s+postcard\b|\bstraight\s+out\s+of\s+a\s+postcard\b", "stepping into a postcard (visual cliché)"),
+]
+
 # ==============================================================================
 # EVIDENCE PATTERNS
 # ==============================================================================
@@ -273,13 +286,44 @@ def analyze_text(text, source_name="direct_input"):
                 'snippet': f"...{snippet}..."
             })
 
-    # 2. Measure Cadence (Coefficient of Variation)
+    tier5_violations = []
+    for pattern, name in TIER5_PATTERNS:
+        matches = list(re.finditer(pattern, plain_text, re.IGNORECASE))
+        for m in matches:
+            start = max(0, m.start() - 30)
+            end = min(len(plain_text), m.end() + 30)
+            snippet = plain_text[start:end].replace("\n", " ")
+            tier5_violations.append({
+                'severity': 'S2_TRAVEL_FLUFF',
+                'phrase': name,
+                'matched_text': m.group(0),
+                'snippet': f"...{snippet}..."
+            })
+
+    # 2. Measure Cadence (Coefficient of Variation) & Repetitive Openers
+    repetitive_openers_violations = []
     if sentence_count >= 3:
         lengths = [len(s.split()) for s in sentences]
         mean_len = sum(lengths) / sentence_count
         variance = sum((l - mean_len) ** 2 for l in lengths) / sentence_count
         std_dev = math.sqrt(variance)
         cv = std_dev / mean_len if mean_len > 0 else 0.0
+
+        for idx in range(len(sentences) - 2):
+            s1_words = re.findall(r"\b[A-Za-z0-9']+\b", sentences[idx])
+            s2_words = re.findall(r"\b[A-Za-z0-9']+\b", sentences[idx + 1])
+            s3_words = re.findall(r"\b[A-Za-z0-9']+\b", sentences[idx + 2])
+            if s1_words and s2_words and s3_words:
+                first1 = s1_words[0].lower()
+                first2 = s2_words[0].lower()
+                first3 = s3_words[0].lower()
+                if first1 == first2 == first3:
+                    repetitive_openers_violations.append({
+                        'severity': 'S3_REPETITIVE_OPENER',
+                        'opener': first1,
+                        'sentence_start_idx': idx,
+                        'snippet': f"{sentences[idx][:40]}... / {sentences[idx+1][:40]}... / {sentences[idx+2][:40]}..."
+                    })
     else:
         mean_len = float(word_count)
         std_dev = 0.0
@@ -308,6 +352,8 @@ def analyze_text(text, source_name="direct_input"):
     base_score -= len(tier3_violations) * 10
     base_score -= len(passive_violations) * 5
     base_score -= len(tier4_violations) * 10
+    base_score -= len(tier5_violations) * 15
+    base_score -= len(repetitive_openers_violations) * 15
 
     # Cadence factor
     if cv >= 0.45:
@@ -323,12 +369,13 @@ def analyze_text(text, source_name="direct_input"):
 
     final_score = max(0, min(100, base_score))
 
-    # Strict Gate (v4.0):
+    # Strict Gate (v5.0):
     # 1. Zero Tier 1 violations
     # 2. Maximum 2 Tier 3 signposting violations
     # 3. Maximum 1 Tier 4 modern trope / sycophancy violation
-    # 4. HLS score >= 80
-    # 5. If in-depth guide (word_count >= 400 and not archive/policy page): must achieve strict EDI >= 4.0
+    # 4. Zero Tier 5 travel fluff violations
+    # 5. HLS score >= 80
+    # 6. If in-depth guide (word_count >= 400 and not archive/policy page): must achieve strict EDI >= 4.0
     INDEX_OR_POLICY_SLUGS = (
         'privacy-policy', 'editorial-policy', 'affiliate-disclosure', 'affiliate-review-policy',
         'source-update-policy', 'contact', 'newsletter', 'about'
@@ -337,13 +384,14 @@ def analyze_text(text, source_name="direct_input"):
 
     has_heavy_signposting = (len(tier3_violations) >= 3)
     has_tier4_violations = (len(tier4_violations) >= 2)
+    has_tier5_violations = (len(tier5_violations) >= 1)
 
     if is_index_or_policy:
-        passed = (len(tier1_violations) == 0) and (not has_heavy_signposting) and (not has_tier4_violations) and (final_score >= 80)
+        passed = (len(tier1_violations) == 0) and (not has_heavy_signposting) and (not has_tier4_violations) and (not has_tier5_violations) and (final_score >= 80)
     elif word_count >= 400:
-        passed = (len(tier1_violations) == 0) and (not has_heavy_signposting) and (not has_tier4_violations) and (final_score >= 80) and (edi >= 4.0)
+        passed = (len(tier1_violations) == 0) and (not has_heavy_signposting) and (not has_tier4_violations) and (not has_tier5_violations) and (final_score >= 80) and (edi >= 4.0)
     else:
-        passed = (len(tier1_violations) == 0) and (not has_heavy_signposting) and (not has_tier4_violations) and (final_score >= 80)
+        passed = (len(tier1_violations) == 0) and (not has_heavy_signposting) and (not has_tier4_violations) and (not has_tier5_violations) and (final_score >= 80)
 
     return {
         'source': source_name,
@@ -360,11 +408,15 @@ def analyze_text(text, source_name="direct_input"):
         'tier3_count': len(tier3_violations),
         'passive_count': len(passive_violations),
         'tier4_count': len(tier4_violations),
+        'tier5_count': len(tier5_violations),
+        'repetitive_openers_count': len(repetitive_openers_violations),
         'tier1_violations': tier1_violations,
         'tier2_violations': tier2_violations,
         'tier3_violations': tier3_violations,
         'passive_violations': passive_violations,
         'tier4_violations': tier4_violations,
+        'tier5_violations': tier5_violations,
+        'repetitive_openers_violations': repetitive_openers_violations,
         'evidence_count': evidence_count,
         'evidence': {
             'currency_count': len(currency_matches),

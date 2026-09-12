@@ -185,6 +185,29 @@ class TestAntiAiSlopLinter(unittest.TestCase):
         self.assertGreaterEqual(len(report['tier4_violations']), 2, "Must detect Tier 4 sycophancy and conversational filler")
         self.assertFalse(report['passed'], "Tier 4 conversational filler must fail")
 
+    def test_tier5_empty_superlatives_and_travel_fluff(self):
+        fluff_text = (
+            "Hanoi is a culinary delight and a foodie paradise that bursts with flavor. "
+            "The ancient landscape is a sight to behold, offering unmatched beauty. "
+            "This destination will leave you in awe and is truly something special."
+        )
+        report = linter.analyze_text(fluff_text)
+        self.assertIn('tier5_violations', report)
+        self.assertGreaterEqual(len(report['tier5_violations']), 3, "Must detect Tier 5 empty superlatives and travel fluff")
+        self.assertFalse(report['passed'], "Tier 5 travel fluff must fail strict quality gate")
+
+    def test_repetitive_sentence_opener_detection(self):
+        repetitive_text = (
+            "The morning market opens at dawn along the river. "
+            "The vendors arrange fresh dragon fruit and herbs. "
+            "The wooden boats glide quietly through the mist. "
+            "The tourists arrive around eight in the morning."
+        )
+        report = linter.analyze_text(repetitive_text)
+        self.assertIn('repetitive_openers_violations', report)
+        self.assertGreaterEqual(len(report['repetitive_openers_violations']), 1, "Must detect 3+ consecutive sentences with identical opener")
+        self.assertLess(report['hls_score'], 100, "Repetitive sentence openers must trigger a cadence penalty")
+
 
 if __name__ == '__main__':
     unittest.main()
