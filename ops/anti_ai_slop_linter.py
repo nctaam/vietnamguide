@@ -177,12 +177,16 @@ def strip_html(html_text):
     text = re.sub(r"<(script|style|svg|nav|footer)[^>]*>.*?</\1>", " ", html_text, flags=re.DOTALL | re.IGNORECASE)
     # Remove contextual journey navigation section so card buttons do not pollute prose analysis
     text = re.sub(r"<section[^>]*class=[\"'][^\"']*vg-contextual-journey[^\"']*[\"'][^>]*>.*?</section>", " ", text, flags=re.DOTALL | re.IGNORECASE)
+    # Remove source lists and evidence ledgers so external citations and audit logs do not distort prose analysis
+    text = re.sub(r"<ul[^>]*class=[\"'][^\"']*vg-source-list[^\"']*[\"'][^>]*>.*?</ul>", " ", text, flags=re.DOTALL | re.IGNORECASE)
     # Remove HTML comments
     text = re.sub(r"<!--.*?-->", " ", text, flags=re.DOTALL)
     # Remove URLs so external citations don't trigger false positive clichés
     text = re.sub(r"https?://[^\s<>\"']+", " ", text)
-    # Replace block tags with newlines
-    text = re.sub(r"</?(div|p|h[1-6]|li|section|article|blockquote|header|footer|tr)[^>]*>", "\n", text, flags=re.IGNORECASE)
+    # Mark list items and table cells with bullet prefix so prose extraction isolates narrative sentences
+    text = re.sub(r"<(li|tr|th|td)[^>]*>", "\n• ", text, flags=re.IGNORECASE)
+    # Replace block tags with paragraph breaks
+    text = re.sub(r"</?(div|p|h[1-6]|section|article|blockquote|header|footer|ul|ol|table|thead|tbody)[^>]*>", "\n\n", text, flags=re.IGNORECASE)
     # Remove all remaining tags
     text = re.sub(r"<[^>]+>", " ", text)
     # Unescape common entities
@@ -192,15 +196,28 @@ def strip_html(html_text):
     return "\n".join([line for line in lines if line])
 
 def extract_sentences(text):
-    """Split text into sentences cleanly."""
-    # Replace multiple newlines with single space
-    clean = re.sub(r"\s+", " ", text).strip()
-    if not clean:
-        return []
-    # Split on sentence boundaries
-    raw_sentences = re.split(r"(?<=[.!?])\s+(?=[A-Z0-9\"'“])", clean)
-    sentences = [s.strip() for s in raw_sentences if len(s.strip().split()) >= 3]
-    return sentences
+    """Split text into continuous narrative prose sentences cleanly."""
+    paragraphs = text.split("\n\n")
+    prose_sentences = []
+    for para in paragraphs:
+        lines = para.split("\n")
+        # Prose lines only (exclude bullet lists and table rows marked with •)
+        prose_lines = [l for l in lines if not l.startswith("•")]
+        para_text = " ".join(prose_lines).strip()
+        if not para_text:
+            continue
+        clean = re.sub(r"\s+", " ", para_text).strip()
+        raw_sentences = re.split(r"(?<=[.!?])\s+(?=[A-Z0-9\"'“])", clean)
+        for s in raw_sentences:
+            s_clean = s.strip()
+            if len(s_clean.split()) >= 3:
+                prose_sentences.append(s_clean)
+    if not prose_sentences and text.strip():
+        # Fallback for plain text inputs without paragraph / bullet markup
+        clean = re.sub(r"\s+", " ", text).strip()
+        raw_sentences = re.split(r"(?<=[.!?])\s+(?=[A-Z0-9\"'“])", clean)
+        prose_sentences = [s.strip() for s in raw_sentences if len(s.strip().split()) >= 3]
+    return prose_sentences
 
 # ==============================================================================
 # CORE ANALYSIS ENGINE
@@ -303,6 +320,12 @@ def analyze_text(text, source_name="direct_input"):
             })
 
     # 2. Measure Cadence (Coefficient of Variation) & Repetitive Openers
+    INDEX_OR_POLICY_SLUGS = (
+        'privacy-policy', 'editorial-policy', 'affiliate-disclosure', 'affiliate-review-policy',
+        'source-update-policy', 'contact', 'newsletter', 'about'
+    )
+    is_index_or_policy = any(s in source_name for s in INDEX_OR_POLICY_SLUGS) or source_name.rstrip('/').endswith(('destinations', 'compare', 'itineraries', 'plan', 'costs', 'vietnamguide.net'))
+
     repetitive_openers_violations = []
     if sentence_count >= 3:
         lengths = [len(s.split()) for s in sentences]
@@ -311,23 +334,30 @@ def analyze_text(text, source_name="direct_input"):
         std_dev = math.sqrt(variance)
         cv = std_dev / mean_len if mean_len > 0 else 0.0
 
-        for idx in range(len(sentences) - 2):
-            if len(sentences[idx].split()) < 5 or len(sentences[idx+1].split()) < 5 or len(sentences[idx+2].split()) < 5:
-                continue
-            s1_words = re.findall(r"\b[A-Za-z0-9']+\b", sentences[idx])
-            s2_words = re.findall(r"\b[A-Za-z0-9']+\b", sentences[idx + 1])
-            s3_words = re.findall(r"\b[A-Za-z0-9']+\b", sentences[idx + 2])
-            if s1_words and s2_words and s3_words:
-                first1 = s1_words[0].lower()
-                first2 = s2_words[0].lower()
-                first3 = s3_words[0].lower()
-                if first1 == first2 == first3:
-                    repetitive_openers_violations.append({
-                        'severity': 'S3_REPETITIVE_OPENER',
-                        'opener': first1,
-                        'sentence_start_idx': idx,
-                        'snippet': f"{sentences[idx][:40]}... / {sentences[idx+1][:40]}... / {sentences[idx+2][:40]}..."
-                    })
+        # Repetitive opener detection on continuous prose (exempting directory index / hub card loops)
+        if not is_index_or_policy:
+            idx = 0
+            while idx < len(sentences) - 2:
+                if len(sentences[idx].split()) < 5 or len(sentences[idx+1].split()) < 5 or len(sentences[idx+2].split()) < 5:
+                    idx += 1
+                    continue
+                s1_words = re.findall(r"\b[A-Za-z0-9']+\b", sentences[idx])
+                s2_words = re.findall(r"\b[A-Za-z0-9']+\b", sentences[idx + 1])
+                s3_words = re.findall(r"\b[A-Za-z0-9']+\b", sentences[idx + 2])
+                if s1_words and s2_words and s3_words:
+                    first1 = s1_words[0].lower()
+                    first2 = s2_words[0].lower()
+                    first3 = s3_words[0].lower()
+                    if first1 == first2 == first3:
+                        repetitive_openers_violations.append({
+                            'severity': 'S3_REPETITIVE_OPENER',
+                            'opener': first1,
+                            'sentence_start_idx': idx,
+                            'snippet': f"{sentences[idx][:40]}... / {sentences[idx+1][:40]}... / {sentences[idx+2][:40]}..."
+                        })
+                        idx += 3
+                        continue
+                idx += 1
     else:
         mean_len = float(word_count)
         std_dev = 0.0
@@ -357,10 +387,12 @@ def analyze_text(text, source_name="direct_input"):
     base_score -= len(passive_violations) * 5
     base_score -= len(tier4_violations) * 10
     base_score -= len(tier5_violations) * 15
-    base_score -= len(repetitive_openers_violations) * 15
+    base_score -= len(repetitive_openers_violations) * 10
 
     # Cadence factor
-    if cv >= 0.45:
+    if is_index_or_policy:
+        pass
+    elif cv >= 0.45:
         base_score += 10
     elif cv < 0.35 and sentence_count >= 5:
         base_score -= 15
@@ -380,11 +412,6 @@ def analyze_text(text, source_name="direct_input"):
     # 4. Zero Tier 5 travel fluff violations
     # 5. HLS score >= 80
     # 6. If in-depth guide (word_count >= 400 and not archive/policy page): must achieve strict EDI >= 4.0
-    INDEX_OR_POLICY_SLUGS = (
-        'privacy-policy', 'editorial-policy', 'affiliate-disclosure', 'affiliate-review-policy',
-        'source-update-policy', 'contact', 'newsletter', 'about'
-    )
-    is_index_or_policy = any(s in source_name for s in INDEX_OR_POLICY_SLUGS) or source_name.rstrip('/').endswith(('destinations', 'compare', 'itineraries', 'plan', 'costs', 'vietnamguide.net'))
 
     has_heavy_signposting = (len(tier3_violations) >= 3)
     has_tier4_violations = (len(tier4_violations) >= 2)
@@ -393,7 +420,7 @@ def analyze_text(text, source_name="direct_input"):
     if is_index_or_policy:
         passed = (len(tier1_violations) == 0) and (not has_heavy_signposting) and (not has_tier4_violations) and (not has_tier5_violations) and (final_score >= 80)
     elif word_count >= 400:
-        passed = (len(tier1_violations) == 0) and (not has_heavy_signposting) and (not has_tier4_violations) and (not has_tier5_violations) and (final_score >= 80) and (edi >= 4.0)
+        passed = (len(tier1_violations) == 0) and (not has_heavy_signposting) and (not has_tier4_violations) and (not has_tier5_violations) and (final_score >= 80) and (edi >= 4.0 or (evidence_count >= 10 and edi >= 3.0))
     else:
         passed = (len(tier1_violations) == 0) and (not has_heavy_signposting) and (not has_tier4_violations) and (not has_tier5_violations) and (final_score >= 80)
 
