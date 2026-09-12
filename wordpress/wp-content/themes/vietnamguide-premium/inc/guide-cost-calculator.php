@@ -35,6 +35,19 @@ function vg_render_cost_calculator_html(): string
             </div>
         </div>
 
+        <noscript>
+            <div class="vg-calc-noscript-card" style="background:#f8f9fa;border:1px solid #cbd5e1;border-radius:8px;padding:20px;margin-bottom:24px;">
+                <p style="font-weight:700;margin-bottom:8px;color:#1a365d;">📋 2026 Vietnam Travel Daily Budget Benchmarks (No-JavaScript Reference):</p>
+                <p style="font-size:0.9rem;margin-bottom:12px;color:#475569;">Interactive calculator features require JavaScript. Here is the authoritative daily cost breakdown across travel tiers:</p>
+                <ul style="margin-bottom:0;padding-left:20px;font-size:0.9rem;line-height:1.6;">
+                    <li><strong>Backpacker / Budget:</strong> $35 USD (~890,000 VND) / person / day (hostel dorm, street food, bus transit).</li>
+                    <li><strong>Flashpacker / Mid-Range:</strong> $75 USD (~1,900,000 VND) / person / day (3-star hotel, casual restaurants, Grab rides).</li>
+                    <li><strong>Comfort / Boutique:</strong> $160 USD (~4,060,000 VND) / person / day (4-star boutique hotel, guided tours, domestic flights).</li>
+                    <li><strong>Luxury / Bespoke:</strong> $350+ USD (~8,900,000+ VND) / person / day (5-star resorts, private vehicles, luxury cruises).</li>
+                </ul>
+            </div>
+        </noscript>
+
         <div class="vg-calc-grid">
             <!-- Left Column: Controls -->
             <div class="vg-calc-controls">
@@ -451,12 +464,12 @@ function vg_render_cost_calculator_html(): string
             try {
                 var urlParams = new URLSearchParams(window.location.search);
                 var qDays = parseInt(urlParams.get('days'), 10);
-                if (!isNaN(qDays) && qDays >= 3 && qDays <= 30) {
-                    state.days = qDays;
+                if (!isNaN(qDays)) {
+                    state.days = Math.min(30, Math.max(3, qDays));
                 } else {
                     var sDays = parseInt(getSafeStorage('vg_user_duration'), 10);
-                    if (!isNaN(sDays) && sDays >= 3 && sDays <= 30) {
-                        state.days = sDays;
+                    if (!isNaN(sDays)) {
+                        state.days = Math.min(30, Math.max(3, sDays));
                     }
                 }
 
@@ -476,8 +489,8 @@ function vg_render_cost_calculator_html(): string
                 }
 
                 var qParty = parseInt(urlParams.get('party'), 10);
-                if (!isNaN(qParty) && qParty >= 1 && qParty <= 4) {
-                    state.party = qParty;
+                if (!isNaN(qParty)) {
+                    state.party = Math.min(6, Math.max(1, qParty));
                 }
             } catch(e) {}
 
@@ -485,7 +498,7 @@ function vg_render_cost_calculator_html(): string
             if (slider) {
                 slider.value = state.days;
                 slider.addEventListener('input', function (e) {
-                    state.days = parseInt(e.target.value, 10) || 10;
+                    state.days = Math.min(30, Math.max(3, parseInt(e.target.value, 10) || 10));
                     setSafeStorage('vg_user_duration', state.days);
                     var presetChips = root.querySelectorAll('.vg-calc-preset-chip');
                     presetChips.forEach(function (chip) {

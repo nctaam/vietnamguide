@@ -419,6 +419,19 @@ function vg_render_airport_navigator_html(): string
             </div>
         </div>
 
+        <noscript>
+            <div class="vg-airport-noscript-card" style="background:#f8f9fa;border:1px solid #cbd5e1;border-radius:8px;padding:20px;margin-bottom:24px;">
+                <p style="font-weight:700;margin-bottom:8px;color:#1a365d;">✈️ 2026 Vietnam Major Airports Transit Summary (No-JavaScript Reference):</p>
+                <p style="font-size:0.9rem;margin-bottom:12px;color:#475569;">Interactive airport navigator requires JavaScript. Flat arrival transfer benchmarks:</p>
+                <ul style="margin-bottom:0;padding-left:20px;font-size:0.9rem;line-height:1.6;">
+                    <li><strong>Hanoi Noi Bai (HAN):</strong> Express Bus 86 costs 45,000 VND (Pillar 2, T2); GrabCar to Hoan Kiem costs 280,000–320,000 VND (40 mins).</li>
+                    <li><strong>HCMC Tan Son Nhat (SGN):</strong> Yellow Bus 109 costs 20,000 VND to Ben Thanh; GrabCar pickup from Pillar 4 (International) costs 140,000–180,000 VND (25 mins).</li>
+                    <li><strong>Da Nang International (DAD):</strong> 4 km to downtown; GrabCar to city center costs 45,000–65,000 VND; to Hoi An costs 320,000–380,000 VND (45 mins).</li>
+                    <li><strong>Cam Ranh / Nha Trang (CXR):</strong> Dat Moi Bus 18 costs 60,000 VND; GrabCar to Nha Trang costs 320,000–380,000 VND (45 mins).</li>
+                </ul>
+            </div>
+        </noscript>
+
         <!-- Airport Selector Chips -->
         <div class="vg-an-airports-bar" role="tablist" aria-label="<?php esc_attr_e('Select Arrival Airport', 'vietnamguide-premium'); ?>">
             <span class="vg-an-bar-label"><?php esc_html_e('Select Airport:', 'vietnamguide-premium'); ?></span>

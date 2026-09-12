@@ -179,6 +179,19 @@ function vg_render_visa_checker_html(): string
             <p class="vg-vc-subtitle">Select your nationality and planned stay duration to instantly calculate your official entry status, statutory fees, passport validity deadlines, and avoid third-party agency scams.</p>
         </div>
 
+        <noscript>
+            <div class="vg-visa-noscript-card" style="background:#f8f9fa;border:1px solid #cbd5e1;border-radius:8px;padding:20px;margin-bottom:24px;">
+                <p style="font-weight:700;margin-bottom:8px;color:#1a365d;">🛂 2026 Vietnam Visa Policy Summary (No-JavaScript Reference):</p>
+                <p style="font-size:0.9rem;margin-bottom:12px;color:#475569;">Interactive checker requires JavaScript. Authoritative statutory visa rules under Resolution 128/NQ-CP &amp; Decree 127:</p>
+                <ul style="margin-bottom:0;padding-left:20px;font-size:0.9rem;line-height:1.6;">
+                    <li><strong>45-Day Visa Exemption:</strong> UK, Germany, France, Italy, Spain, Japan, South Korea, Russia, Sweden, Norway, Denmark, Finland, Belarus.</li>
+                    <li><strong>30-Day Visa Exemption (ASEAN):</strong> Singapore, Thailand, Malaysia, Indonesia, Philippines (21 days), Cambodia, Laos.</li>
+                    <li><strong>90-Day E-Visa:</strong> Available to all countries and territories via the official portal <code>xuatnhapcanh.gov.vn</code> ($25 USD single entry / $50 USD multiple entry).</li>
+                    <li><strong>Phu Quoc 30-Day Island Exemption:</strong> Applicable for direct international air arrivals at PQC airport.</li>
+                </ul>
+            </div>
+        </noscript>
+
         <!-- Interactive Control Bar -->
         <div class="vg-vc-controls">
             <!-- Nationality Input & Quick Chips -->

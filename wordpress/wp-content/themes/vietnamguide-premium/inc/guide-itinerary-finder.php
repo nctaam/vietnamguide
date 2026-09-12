@@ -203,6 +203,19 @@ function vg_render_itinerary_finder_html(): string
             <p class="vg-finder-subtitle"><?php esc_html_e('Filter Vietnam itineraries by trip duration, travel style, and starting airport to match your travel rhythm.', 'vietnamguide-premium'); ?></p>
         </div>
 
+        <noscript>
+            <div class="vg-itinerary-noscript-card" style="background:#f8f9fa;border:1px solid #cbd5e1;border-radius:8px;padding:20px;margin-bottom:24px;">
+                <p style="font-weight:700;margin-bottom:8px;color:#1a365d;">🗺️ 2026 Recommended Classic Vietnam Routes (No-JavaScript Reference):</p>
+                <p style="font-size:0.9rem;margin-bottom:12px;color:#475569;">Interactive itinerary finder requires JavaScript. Core route benchmarks for first-timers:</p>
+                <ul style="margin-bottom:0;padding-left:20px;font-size:0.9rem;line-height:1.6;">
+                    <li><strong>7-Day Golden Highlights:</strong> Hanoi (2d) &rarr; Ha Long Bay Cruise (1d) &rarr; Hoi An Ancient Town (3d).</li>
+                    <li><strong>10-Day Classic Route:</strong> Hanoi (2d) &rarr; Ha Long (1d) &rarr; Da Nang/Hoi An (3d) &rarr; HCMC &amp; Mekong Delta (3d).</li>
+                    <li><strong>14-Day Complete Cross-Country:</strong> Hanoi (2d) &rarr; Ninh Binh (2d) &rarr; Ha Long (1d) &rarr; Hue (2d) &rarr; Hoi An (3d) &rarr; HCMC &amp; Mekong (3d).</li>
+                    <li><strong>21-Day In-Depth Northern Loop &amp; Islands:</strong> Adds Ha Giang Loop (4d) and Phu Quoc island beaches (3d).</li>
+                </ul>
+            </div>
+        </noscript>
+
         <div class="vg-finder-controls">
             <div class="vg-finder-group" role="group" aria-labelledby="vg-filter-duration-label">
                 <span class="vg-finder-label" id="vg-filter-duration-label"><?php esc_html_e('Trip Length', 'vietnamguide-premium'); ?></span>

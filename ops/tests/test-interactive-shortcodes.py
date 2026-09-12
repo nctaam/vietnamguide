@@ -167,6 +167,28 @@ class TestInteractiveShortcodes(unittest.TestCase):
                 f"Component {key} must feature exception-safe storage access with localStorage fallback."
             )
 
+    def test_noscript_fallback_presence(self):
+        """All 5 interactive components must contain a semantic <noscript> fallback block."""
+        for key, content in self.contents.items():
+            self.assertIn(
+                '<noscript>',
+                content,
+                f"Component {key} must contain a <noscript> block for zero-JS resilience."
+            )
+
+    def test_input_bounds_clamping_and_whitelisting(self):
+        """Cost calculator and interactive widgets must clamp numerical inputs with Math.min/Math.max."""
+        self.assertIn(
+            'Math.max',
+            self.contents['cost_calculator'],
+            "Cost calculator must clamp duration and passenger inputs."
+        )
+        self.assertIn(
+            'Math.min',
+            self.contents['cost_calculator'],
+            "Cost calculator must clamp duration and passenger inputs."
+        )
+
 
 if __name__ == '__main__':
     unittest.main()

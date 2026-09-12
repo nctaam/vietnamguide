@@ -717,6 +717,18 @@ function vg_render_season_matrix_html(): string
             </div>
         </div>
 
+        <noscript>
+            <div class="vg-season-noscript-card" style="background:#f8f9fa;border:1px solid #cbd5e1;border-radius:8px;padding:20px;margin-bottom:24px;">
+                <p style="font-weight:700;margin-bottom:8px;color:#1a365d;">🌤️ 2026 Vietnam Regional Seasons &amp; Climate Guide (No-JavaScript Reference):</p>
+                <p style="font-size:0.9rem;margin-bottom:12px;color:#475569;">Interactive season matrix requires JavaScript. Authoritative regional weather windows:</p>
+                <ul style="margin-bottom:0;padding-left:20px;font-size:0.9rem;line-height:1.6;">
+                    <li><strong>Northern Vietnam (Hanoi, Sapa, Ha Long):</strong> Cool, dry autumn/winter (Oct–Apr); hot, humid summer with rains (May–Sep); winter cold dips to 10–14°C.</li>
+                    <li><strong>Central Vietnam (Hue, Da Nang, Hoi An):</strong> Dry and sunny beach weather (Feb–Aug); monsoon rains and typhoon flood risk (Sep–Nov).</li>
+                    <li><strong>Southern Vietnam (HCMC, Mekong, Phu Quoc):</strong> Warm tropical weather year-round (28–34°C); dry season (Nov–Apr); green rainy season (May–Oct).</li>
+                </ul>
+            </div>
+        </noscript>
+
         <!-- Mode A: By Travel Month Panel -->
         <div id="vg-sm-month-panel" class="vg-sm-panel" role="tabpanel" aria-labelledby="vg-tab-month">
             <!-- Month Selector Bar -->
