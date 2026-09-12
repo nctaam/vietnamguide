@@ -173,8 +173,10 @@ OPERATOR_HOTLINE_REGEX = re.compile(
 
 def strip_html(html_text):
     """Strip script, style, comments, and tags to extract plain text."""
-    # Remove script and style
-    text = re.sub(r"<(script|style|svg)[^>]*>.*?</\1>", " ", html_text, flags=re.DOTALL | re.IGNORECASE)
+    # Remove script, style, svg, nav, and footer
+    text = re.sub(r"<(script|style|svg|nav|footer)[^>]*>.*?</\1>", " ", html_text, flags=re.DOTALL | re.IGNORECASE)
+    # Remove contextual journey navigation section so card buttons do not pollute prose analysis
+    text = re.sub(r"<section[^>]*class=[\"'][^\"']*vg-contextual-journey[^\"']*[\"'][^>]*>.*?</section>", " ", text, flags=re.DOTALL | re.IGNORECASE)
     # Remove HTML comments
     text = re.sub(r"<!--.*?-->", " ", text, flags=re.DOTALL)
     # Remove URLs so external citations don't trigger false positive clichés
@@ -310,6 +312,8 @@ def analyze_text(text, source_name="direct_input"):
         cv = std_dev / mean_len if mean_len > 0 else 0.0
 
         for idx in range(len(sentences) - 2):
+            if len(sentences[idx].split()) < 5 or len(sentences[idx+1].split()) < 5 or len(sentences[idx+2].split()) < 5:
+                continue
             s1_words = re.findall(r"\b[A-Za-z0-9']+\b", sentences[idx])
             s2_words = re.findall(r"\b[A-Za-z0-9']+\b", sentences[idx + 1])
             s3_words = re.findall(r"\b[A-Za-z0-9']+\b", sentences[idx + 2])
