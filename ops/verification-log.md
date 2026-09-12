@@ -1118,3 +1118,44 @@ Date: 2026-07-28 (Asia/Saigon)
   - OpenLiteSpeed Cache Purge & LSWS Reload: Executed cleanly (`SIGUSR1` signal).
   - Public HTTPS Production Verifier (`ops/verify-guide-experience-public.ps1`): PASSED (87/87 routes return HTTP 200).
   - Production Sitemap v7.0 Crawl (`ops/reports/anti-ai-slop-audit-v7-latest.json`): PASSED (102/102 URLs passed, 0 Tier 1, 0 Tier 4, 0 Tier 5, 0 Tier 6, 0 Tier 7 slop, avg $HLS = 99.41$, 96/102 URLs at $HLS = 100$, avg $EDI = 9.70$, avg 28.00 evidence items per URL).
+
+## Stage 35 Verification - Anti-AI Slop Quality Engine v8.0, 100% HLS Cadence Perfection (102/102 at HLS=100) & Automated Regression (September 12, 2026)
+- Goals:
+  - Deepen existing foundations with strict zero feature creep (no new custom post types, public URLs, shortcodes, or plugins).
+  - Upgrade Anti-AI Slop Quality Engine to v8.0 with Tier 8 superficial rhetoric/synthetic contrast/cliché tropes, Type-Token Ratio (TTR) lexical diversity analysis, and Flesch-Kincaid Reading Ease reporting.
+  - Eliminate repetitive sentence openers and local cadence monotony across the 6 remaining sub-100 articles (Posts 220, 224, 268, 473, 482, 475) to achieve 102/102 (100.0%) URLs at $HLS = 100$.
+  - Expand policy & cadence test suite (`ops/tests/test-policy-cadence.py`) with regression coverage asserting $HLS = 100$, 0 repetitive openers, and 0 local monotony on all 6 calibrated guides.
+  - Verify master CI/CD gates (5/5), 87 public HTTPS routes (HTTP 200), and full 102/102 sitemap URLs with 0 Tier 1–8 slop and 100.0% at $HLS = 100$.
+- Changes Implemented:
+  - Anti-AI Slop Engine v8.0 (`ops/anti_ai_slop_linter.py`, `ops/tests/test-anti-ai-slop.py`):
+    - Added `TIER8_PATTERNS` regex suite targeting superficial rhetoric and cliché marketing tropes ("while it is true that", "it is easy to see why", "leaves much to be desired", "a force to be reckoned with", "at first glance", "on the surface", "scratch the surface", "peel back the layers", "hustle and bustle", "feast for the senses", "a stone's throw away", "hidden oasis").
+    - Added syllable counter (`count_syllables()`), windowed Type-Token Ratio (`lexical_diversity` over sliding 100-word windows with 0.40 threshold), and Flesch-Kincaid Reading Ease formula (`flesch_reading_ease`).
+    - Refined `strip_html` to exclude bottom navigation sections (`vg-related-routes`) alongside `vg-contextual-journey` while preserving data evidence in interactive components.
+    - Expanded unit test suite from 18 to 21 tests (21/21 passing).
+  - MariaDB Cadence Remediation across 6 Guides (`ops/remediate-hls100-perfection-v8.php`):
+    - Post 220 (`/itineraries/7-days-in-vietnam/`): Remediated repetitive timeline openers and transfer pressure local monotony; achieved $HLS = 100$, 0 repetitive openers, 0 monotony, $EDI = 9.23$, $CV = 0.657$.
+    - Post 224 (`/itineraries/21-days-in-vietnam/`): Remediated repetitive timeline openers, night allocation, and transfer handoffs monotony; achieved $HLS = 100$, 0 repetitive openers, 0 monotony, $EDI = 7.59$, $CV = 0.475$.
+    - Post 268 (`/destinations/best-day-trips-from-ho-chi-minh-city/`): Remediated repetitive FAQ openers and operator due diligence monotony; achieved $HLS = 100$, 0 repetitive openers, 0 monotony, $EDI = 5.78$, $CV = 0.544$.
+    - Post 473 (`/plan/vietnam-first-trip-planning-checklist/`): Remediated opening sentence repetition and duration matrix cadence; achieved $HLS = 100$, 0 repetitive openers, 0 monotony, $EDI = 23.76$, $CV = 1.222$.
+    - Post 482 (`/plan/vietnam-rainy-season-flexible-route/`): Remediated repetitive preparation openers and route flexibility cadence; achieved $HLS = 100$, 0 repetitive openers, 0 monotony, $EDI = 5.11$, $CV = 1.220$.
+    - Post 475 (`/plan/what-to-pack-for-vietnam-region-season/`): Remediated clothing contrast opener repetition and wardrobe cadence; achieved $HLS = 100$, 0 repetitive openers, 0 monotony, $EDI = 5.43$, $CV = 1.205$.
+  - Season Matrix Component Polish (`wordpress/wp-content/themes/vietnamguide-premium/inc/guide-season-matrix.php`):
+    - Replaced generic zone kicker labels ("Zone 1: Northern Peaks & Karsts", "Zone 2...", "Zone 3...") with natural editorial headers ("Northern Peaks & Karsts", "Central Heritage Coast", "Southern Sun & Islands").
+    - Deployed to production VPS, verified hash parity, and purged LiteSpeed cache.
+  - Automated Regression Test Suite (`ops/tests/test-policy-cadence.py`):
+    - Added `test_calibrated_articles_achieve_perfect_hls` testing all 6 production endpoints via live HTTPS requests for $HLS = 100$, 0 repetitive openers, 0 local monotony, and 0 Tier 1-8 slop (6/6 tests passing).
+- Verification Evidence:
+  - Anti-AI Slop Engine v8.0 Unit Tests (`ops/tests/test-anti-ai-slop.py`): PASSED (21/21 tests).
+  - Policy & Cadence Regression Suite (`ops/tests/test-policy-cadence.py`): PASSED (6/6 tests).
+  - Interactive Shortcodes & A11y Suite (`ops/tests/test-interactive-shortcodes.py`): PASSED (17/17 tests).
+  - Master CI/CD Gate Orchestration (`ops/verify-all-gates.ps1`): PASSED (5/5 quality gates).
+  - Core MU-Plugin Invariant Suite (`ops/verify-core-mu-plugin.ps1`): PASSED (Fingerprint `71b49033114e8007e5c19fb8ebc1a89e0d0dad88d0fe92dd381a28700db096ce` preserved; all 16 AST safety mutations rejected).
+  - Public HTTPS Production Verifier (`ops/verify-guide-experience-public.ps1`): PASSED (87/87 routes return HTTP 200 with full DOM integrity).
+  - Production Sitemap v8.0 Crawl (`ops/reports/anti-ai-slop-audit-v8-latest.json`): PASSED:
+    - Total URLs Evaluated: 102 / 102
+    - Passed Quality Gate: 102 / 102 (100.0%)
+    - Perfect $HLS = 100$ Score: **102 / 102 (100.0%)**
+    - Average Human-Likeness Score ($HLS$): **100.00 / 100.0**
+    - Average Evidence Density Index ($EDI$): **10.74 per 1,000 words**
+    - Average Lexical Diversity (TTR): **0.726**
+    - Total Tier 1–8 Slop Violations: **0 across all 102 URLs**
