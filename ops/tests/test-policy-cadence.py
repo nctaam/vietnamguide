@@ -79,6 +79,20 @@ class TestPolicyCadence(unittest.TestCase):
         self.assertGreaterEqual(report['cv'], 0.45, f"CV must be >= 0.45, got {report['cv']}")
         self.assertTrue(report['passed'])
 
+    def test_remediated_hub_benchmarks(self):
+        hub_text = (
+            "Distances in Vietnam deceive travelers. "
+            "Plan intercity transfers using verified 2026 transit times, highway routes, and tariff baselines across main travel corridors. "
+            "Shared limousines from Hanoi to Ha Long Bay take 2.5 hours via Expressway CT04 with fares from 250,000 to 300,000 VND. "
+            "Hanoi to Ninh Binh takes only 1.5 hours. "
+            "GrabCar transit between Da Nang and Hoi An Ancient Town averages 320,000 to 420,000 VND along the coastal road, whereas Train SE19 from Ga Hue to Ga Da Nang takes 2.5 hours via Hai Van Pass with soft seat tickets at 120,000 VND. "
+            "Express vans to the Mekong Delta depart Western Bus Station for 140,000 to 180,000 VND."
+        )
+        report = analyze_text(hub_text, source_name="destinations-hub")
+        self.assertEqual(report['hls_score'], 100, f"HLS must be 100, got {report['hls_score']}")
+        self.assertGreaterEqual(report['edi'], 10.0, f"EDI must be >= 10.0, got {report['edi']}")
+        self.assertTrue(report['passed'])
+
 
 if __name__ == '__main__':
     unittest.main()
