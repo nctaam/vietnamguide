@@ -136,6 +136,10 @@ class TestPolicyCadence(unittest.TestCase):
             "https://vietnamguide.net/destinations/ninh-binh-travel-guide/",
             "https://vietnamguide.net/compare/ninh-binh-day-trip-vs-overnight/",
             "https://vietnamguide.net/destinations/con-dao-travel-guide/",
+            "https://vietnamguide.net/destinations/best-vietnam-cities-for-first-time-visitors/",
+            "https://vietnamguide.net/plan/ha-long-bay-cruise-questions-before-booking/",
+            "https://vietnamguide.net/destinations/hanoi-first-time-visitor-mistakes/",
+            "https://vietnamguide.net/compare/old-quarter-vs-french-quarter-vs-west-lake/",
         ]
         headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'}
         for url in target_urls:

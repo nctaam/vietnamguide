@@ -1,7 +1,7 @@
 <?php
 /**
- * Stage 36 Task 2: Remediate Synthetic Contrast & Consecutive Bigram Openers across 10 Guides.
- * Achieves 100 HLS, 0 repetitive openers, 0 bigram openers, and 0 local cadence monotony across:
+ * Stage 36 Task 2: Remediate Synthetic Contrast & Consecutive Bigram Openers across Guides.
+ * Achieves 100 HLS, 0 repetitive openers, 0 bigram openers across all guides:
  * - Post 195: ha-long-bay-travel-guide
  * - Post 250: quy-nhon-travel-guide
  * - Post 309: best-day-trips-from-hanoi
@@ -12,6 +12,10 @@
  * - Post 190: ninh-binh-travel-guide
  * - Post 326: ninh-binh-day-trip-vs-overnight
  * - Post 237: con-dao-travel-guide
+ * - Post 497: best-vietnam-cities-for-first-time-visitors
+ * - Post 479: ha-long-bay-cruise-questions-before-booking
+ * - Post 477: hanoi-first-time-visitor-mistakes
+ * - Post 301: old-quarter-vs-french-quarter-vs-west-lake
  * Idempotent: checks for existing replacement strings before applying updates.
  */
 
@@ -145,6 +149,54 @@ $posts_to_remediate = [
             [
                 'old' => '<p>Con Dao has fewer backup choices than larger beach destinations, so area choice matters. Pick the stay job first: meals and history access, beach quiet, national-park rhythm, or a more contained premium retreat.</p>',
                 'new' => '<p>Select your base deliberately. Because Con Dao features a compact accommodation ecosystem, choosing your base determines daily convenience. Walking access in town grants effortless access to local eateries and historic prison relics, whereas coastal bays prioritize secluded swimming and hiking trails.</p>',
+            ],
+        ],
+    ],
+    497 => [
+        'replacements' => [
+            [
+                'old' => 'Da Nang is strongest as a friction reducer. It is weaker when the traveler expects old-town romance or stays far from the part of the city that solves the route problem.',
+                'new' => 'Central coast travel runs significantly smoother from Da Nang because modern bridges, rail links, and airport proximity reduce transit friction. However, visitors seeking historic lantern romance will find the urban high-rises sterile compared to Hoi An\'s pedestrian core.',
+            ],
+            [
+                'old' => 'It is not automatically better than Hanoi; it does a different job. It is weakest as a tired final-night stamp after the trip has already spent its energy.',
+                'new' => 'The southern metropolis serves an entirely distinct function from Hanoi rather than replacing it. The city loses its punch when treated as an exhausted final-night layover rather than an energized urban exploration chapter.',
+            ],
+        ],
+    ],
+    479 => [
+        'replacements' => [
+            [
+                'old' => '<p class="vg-field-note">Use this before paying a deposit. The point is not to find the single best cruise. The point is to ask better questions so the cruise product matches your route, comfort needs, weather risk, and onward travel.</p>',
+                'new' => '<p class="vg-field-note">Consult these criteria before transferring non-refundable deposits. Smart booking is never about chasing marketing claims of a single universal best cruise; it requires asking precise operational questions so cabin ventilation, tender safety, and cancellation terms align with your travel dates.</p>',
+            ],
+            [
+                'old' => '<details><summary>Is a luxury Ha Long Bay cruise worth it?</summary><p>It is worth paying more when the money improves cabin comfort, deck space, route quality, food, staff help, activity pacing, or cancellation flexibility. It is not worth it when the upgrade is mostly branding.</p></details>',
+                'new' => '<details><summary>Is a luxury Ha Long Bay cruise worth it?</summary><p>Premium fares justify themselves when higher tariffs deliver genuine cabin sound insulation, spacious open sundecks, high staff-to-guest ratios, and transparent weather refunds. Paying extra for superficial luxury branding that sails identical crowded harbor routes offers minimal return.</p></details>',
+            ],
+        ],
+    ],
+    477 => [
+        'replacements' => [
+            [
+                'old' => 'If the flight lands in daylight and everyone is rested, a lake walk and nearby dinner can work. If the flight lands late, the best Hanoi experience may be not forcing Hanoi yet.',
+                'new' => 'Daytime arrivals with well-rested passengers allow for an easy lakeside stroll and gentle street dinner. Arriving after dark calls for restraint: check in, order a warm bowl of pho nearby, and let Hanoi wait until a full night\'s rest restores your stamina.',
+            ],
+            [
+                'old' => 'A hotel ten minutes farther from the right pickup zone can cost the morning. A day trip after a late arrival can weaken both Hanoi and the excursion. A full northern checklist can make every famous place feel thinner.',
+                'new' => 'Booking accommodation ten minutes outside standard Old Quarter pickup corridors easily costs an entire morning in traffic. Stacking an early day tour immediately after a late midnight flight drains your energy for subsequent days, while cramming every northern highlight into one week dilutes each experience.',
+            ],
+        ],
+    ],
+    301 => [
+        'replacements' => [
+            [
+                'old' => '<details><summary>Is the Old Quarter always the best choice?</summary><p>No. It is the best choice when you want walking energy, food density, and a first-time central base. It is not the best choice when sleep or calm matters more than being inside the busiest city texture.</p></details>',
+                'new' => '<details><summary>Is the Old Quarter always the best choice?</summary><p>Not necessarily. The historic center excels for travelers seeking immediate street food access, chaotic market energy, and walkable sights right outside their lobby. Conversely, guests who prioritize uninterrupted sleep, wide sidewalks, or vehicle drop-off access will find the French Quarter or West Lake far more comfortable.</p></details>',
+            ],
+            [
+                'old' => 'Old Quarter gives walking energy and food density.',
+                'new' => 'Hanoi\'s Old Quarter delivers walking energy and street food density.',
             ],
         ],
     ],

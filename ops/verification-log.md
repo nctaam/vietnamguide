@@ -1159,3 +1159,40 @@ Date: 2026-07-28 (Asia/Saigon)
     - Average Evidence Density Index ($EDI$): **10.74 per 1,000 words**
     - Average Lexical Diversity (TTR): **0.726**
     - Total Tier 1–8 Slop Violations: **0 across all 102 URLs**
+
+## Stage 36 Verification - Anti-AI Slop Quality Engine v9.0, Synthetic Contrast & Consecutive Bigram Monotony Elimination (September 12, 2026)
+- Goals:
+  - Deepen and perfect existing content and Anti-AI Slop quality engines with strict zero feature creep (no new custom post types, public URLs, shortcodes, or plugins).
+  - Upgrade Anti-AI Slop Quality Engine to v9.0 (`TIER9_PATTERNS` targeting synthetic antithesis contrast tropes e.g. "the question/mistake/problem is not X, the question/mistake/problem is Y", "no trip/journey is complete without", "hard-pressed to find", "nothing short of [superlative]", "as dusk falls", "fear/fret not", "prepare to be amazed", etc.).
+  - Recalibrate Flesch Reading Ease formula to evaluate continuous narrative prose tokens rather than raw document word count, eliminating skewed negative scores on tabular/structured data pages.
+  - Implement consecutive identical bigram opener detection (`repetitive_bigram_violations`) with a 10-point penalty to detect rhythmic AI parallelisms.
+  - Remediate synthetic contrast structures and consecutive bigram monotony across 14 target guides in MariaDB via `ops/remediate-bigram-cadence-v9.php`, achieving 102/102 (100.0%) URLs at $HLS = 100$ under v9.0 rules.
+  - Expand automated regression test suite (`ops/tests/test-policy-cadence.py`) to assert $HLS = 100$, 0 repetitive openers, 0 bigram openers, and 0 slop across all remediated guides.
+  - Verify master CI/CD quality gates (5/5), 87 public HTTPS routes (HTTP 200), and full 102/102 production sitemap crawl v9.0 with 0 Tier 1–9 slop and 102/102 at $HLS = 100$.
+- Changes Implemented:
+  - Anti-AI Slop Engine v9.0 (`ops/anti_ai_slop_linter.py`, `ops/tests/test-anti-ai-slop.py`):
+    - Added `TIER9_PATTERNS` regex suite targeting synthetic antithesis, binary framing clichés, and hollow marketing formulas.
+    - Recalibrated `flesch_reading_ease` on narrative prose tokens (`prose_words = [w for s in sentences for w in s.split()]`), ensuring accurate, positive readability scores across all guide formats (sitemap average: 52.78).
+    - Added `repetitive_bigram_violations` detecting consecutive sentences starting with the identical 2-word phrase.
+    - Expanded unit test suite from 21 to 24 tests (24/24 passing).
+  - MariaDB Content Remediation across 14 Guides (`ops/remediate-bigram-cadence-v9.php`):
+    - Remediated synthetic contrast and bigram opener patterns across Posts 195, 250, 309, 279, 499, 19, 482, 190, 326, 237, 497, 479, 477, and 301.
+    - Deployed to production VPS via SFTP, executed in CLI context, updated post content in MariaDB, and purged LiteSpeed cache.
+  - Automated Regression Test Suite (`ops/tests/test-policy-cadence.py`):
+    - Added `test_remediated_bigram_cadence_achieves_perfect_hls` testing 14 live production endpoints over HTTPS for $HLS = 100$, 0 Tier 1 slop, 0 Tier 9 slop, 0 repetitive single openers, and 0 repetitive bigram openers (7/7 tests passing).
+- Verification Evidence:
+  - Anti-AI Slop Engine v9.0 Unit Tests (`ops/tests/test-anti-ai-slop.py`): PASSED (24/24 tests).
+  - Policy & Cadence Regression Suite (`ops/tests/test-policy-cadence.py`): PASSED (7/7 tests).
+  - Interactive Shortcodes & A11y Suite (`ops/tests/test-interactive-shortcodes.py`): PASSED (17/17 tests).
+  - Master CI/CD Gate Orchestration (`ops/verify-all-gates.ps1`): PASSED (5/5 quality gates).
+  - Core MU-Plugin Invariant Suite (`ops/verify-core-mu-plugin.ps1`): PASSED (Fingerprint `71b49033114e8007e5c19fb8ebc1a89e0d0dad88d0fe92dd381a28700db096ce` preserved; all 16 AST safety mutations rejected).
+  - Public HTTPS Production Verifier (`ops/verify-guide-experience-public.ps1`): PASSED (87/87 routes return HTTP 200 with full DOM integrity).
+  - Production Sitemap v9.0 Crawl (`ops/reports/anti-ai-slop-audit-v9-latest.json`): PASSED:
+    - Total URLs Evaluated: 102 / 102
+    - Passed Quality Gate: 102 / 102 (100.0%)
+    - Perfect $HLS = 100$ Score: **102 / 102 (100.0%)**
+    - Average Human-Likeness Score ($HLS$): **100.00 / 100.0**
+    - Average Evidence Density Index ($EDI$): **10.75 per 1,000 words**
+    - Average Lexical Diversity (TTR): **0.727**
+    - Average Flesch Reading Ease: **52.78** (range: 14.17 - 68.51, zero negative scores)
+    - Total Tier 1–9 Slop Violations: **0 across all 102 URLs**
