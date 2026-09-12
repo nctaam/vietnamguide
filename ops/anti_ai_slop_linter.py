@@ -233,8 +233,8 @@ def strip_html(html_text):
     """Strip script, style, comments, and tags to extract plain text."""
     # Remove script, style, svg, nav, and footer
     text = re.sub(r"<(script|style|svg|nav|footer)[^>]*>.*?</\1>", " ", html_text, flags=re.DOTALL | re.IGNORECASE)
-    # Remove contextual journey navigation section so card buttons do not pollute prose analysis
-    text = re.sub(r"<section[^>]*class=[\"'][^\"']*vg-contextual-journey[^\"']*[\"'][^>]*>.*?</section>", " ", text, flags=re.DOTALL | re.IGNORECASE)
+    # Remove contextual journey, related routes, and season matrix interactive widgets so navigation and tabs do not pollute prose analysis
+    text = re.sub(r"<section[^>]*class=[\"'][^\"']*(?:vg-contextual-journey|vg-related-routes|vg-season-matrix)[^\"']*[\"'][^>]*>.*?</section>", " ", text, flags=re.DOTALL | re.IGNORECASE)
     # Remove source lists and evidence ledgers so external citations and audit logs do not distort prose analysis
     text = re.sub(r"<ul[^>]*class=[\"'][^\"']*vg-source-list[^\"']*[\"'][^>]*>.*?</ul>", " ", text, flags=re.DOTALL | re.IGNORECASE)
     # Remove HTML comments
