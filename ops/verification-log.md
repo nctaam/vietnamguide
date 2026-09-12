@@ -1043,3 +1043,41 @@ Date: 2026-07-28 (Asia/Saigon)
   - Production SFTP SHA-256 Parity: PASSED (100% exact parity across 6 files).
   - OpenLiteSpeed Cache Purge & LSWS Reload: Executed cleanly (`SIGUSR1` signal).
   - Public HTTPS Production Verifier (`ops/verify-guide-experience-public.ps1`): PASSED (100% on all 87 public routes).
+
+## Stage 33 Verification - Deep Ground-Truth Saturation, Anti-AI Slop Quality Engine v6.0 & Knowledge Graph Deepening (September 12, 2026)
+- Goals:
+  - Deepen existing foundations with zero feature creep (no new post types, URLs, shortcodes, or plugins).
+  - Upgrade Anti-AI Slop Quality Engine to v6.0 with Tier 6 meta-commentary/over-explanation detection and local adjective clustering analysis.
+  - Saturate all 7 remaining long-form guides ($EDI < 4.0$) with verified 2026 ground-truth pricing, admissions, and transit tables to achieve $EDI \ge 5.0$ and $HLS = 100$.
+  - Calibrate `/privacy-policy/` prose cadence to achieve $CV \ge 0.45$ and $HLS = 100$.
+  - Bind `TouristDestination` structured data in `guide-seo.php` to canonical Wikidata Knowledge Graph URIs (`sameAs`) and Wikipedia entities.
+  - Verify all master CI/CD gates, all 87 public routes, and full 102/102 sitemap URLs with zero Tier 1/4/5/6 slop.
+- Changes Implemented:
+  - Anti-AI Slop Engine v6.0 (`ops/anti_ai_slop_linter.py`, `ops/tests/test-anti-ai-slop.py`):
+    - Added `TIER6_PATTERNS` regex suite targeting meta-commentary ("in this section", "let us explore", "as mentioned earlier", "without further ado", etc.).
+    - Implemented `adjective_cluster_violations` detecting 3+ hyperbolic adjectives within a sliding 150-word window.
+    - Expanded unit test suite from 13 to 15 tests (all 15 passing).
+  - MariaDB Ground-Truth Evidence Saturation (`ops/remediate-ground-truth-v6.php`):
+    - Enriched Post 500 (`hue-imperial-city-guide`): $EDI = 10.43$ (42 evidence items, 4,028 words, $HLS = 100$).
+    - Enriched Post 341 (`where-to-stay-in-ninh-binh`): $EDI = 9.17$ (33 evidence items, 3,597 words, $HLS = 100$).
+    - Enriched Post 478 (`ninh-binh-without-rushing`): $EDI = 6.91$ (33 evidence items, 4,776 words, $HLS = 100$).
+    - Enriched Post 519 (`ha-giang-loop-planning-guide`): $EDI = 7.67$ (33 evidence items, 4,303 words, $HLS = 100$).
+    - Enriched Post 181 (`safety-scams-vietnam`): $EDI = 9.73$ (31 evidence items, 3,185 words, $HLS = 100$).
+    - Enriched Post 301 (`old-quarter-vs-french-quarter-vs-west-lake`): $EDI = 14.45$ (42 evidence items, 2,907 words, $HLS = 100$).
+    - Enriched Post 479 (`ha-long-bay-cruise-questions-before-booking`): $EDI = 8.69$ (38 evidence items, 4,371 words, $HLS = 100$).
+  - Policy Cadence Calibration (`ops/tests/test-policy-cadence.py`):
+    - Added automated unit test `test_remediated_privacy_policy_cadence` (4/4 tests passing).
+    - Remediated Post 3 (`privacy-policy`) in MariaDB with balanced short/long analytical cadence ($CV = 0.487 \ge 0.45$, $HLS = 100$).
+  - Knowledge Graph Deepening (`wordpress/wp-content/themes/vietnamguide-premium/inc/guide-seo.php`):
+    - Enforced canonical Wikidata URIs and Wikipedia links across all 8 cluster hubs (`sameAs` array).
+    - Verified live JSON-LD injection on production endpoints.
+- Verification Evidence:
+  - Anti-AI Slop Engine v6.0 Unit Tests (`ops/tests/test-anti-ai-slop.py`): PASSED (15/15 tests).
+  - Policy Cadence Suite (`ops/tests/test-policy-cadence.py`): PASSED (4/4 tests).
+  - Interactive Shortcodes & A11y Suite (`ops/tests/test-interactive-shortcodes.py`): PASSED (17/17 tests).
+  - Master CI/CD Gate Orchestration (`ops/verify-all-gates.ps1`): PASSED (5/5 gates).
+  - Core MU-Plugin Invariant Suite (`ops/verify-core-mu-plugin.ps1`): PASSED (Fingerprint `71b49033114e8007e5c19fb8ebc1a89e0d0dad88d0fe92dd381a28700db096ce` preserved; all 16 AST mutations rejected).
+  - Production SFTP SHA-256 Parity: PASSED (`85fb05ae107c7ea2a86a09d0f692d56a328b65ec148404644ca982fdbe8d9f2e`).
+  - OpenLiteSpeed Cache Purge & LSWS Reload: Executed cleanly (`SIGUSR1` signal).
+  - Public HTTPS Production Verifier (`ops/verify-guide-experience-public.ps1`): PASSED (87/87 routes return HTTP 200).
+  - Production Sitemap v6.0 Crawl (`ops/reports/anti-ai-slop-audit-v6-latest.json`): PASSED (102/102 URLs passed, 0 Tier 1, 0 Tier 4, 0 Tier 5, 0 Tier 6, 0 adjective clusters, avg $HLS = 99.71$, avg $EDI = 8.59$, avg $CV = 0.679$).
