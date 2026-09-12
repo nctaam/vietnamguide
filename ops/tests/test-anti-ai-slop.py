@@ -208,6 +208,30 @@ class TestAntiAiSlopLinter(unittest.TestCase):
         self.assertGreaterEqual(len(report['repetitive_openers_violations']), 1, "Must detect 3+ consecutive sentences with identical opener")
         self.assertLess(report['hls_score'], 100, "Repetitive sentence openers must trigger a cadence penalty")
 
+    def test_tier6_over_explanation_and_meta_commentary(self):
+        meta_slop = (
+            "It is worth noting that Hanoi is a blend of tradition and modernity. "
+            "It is important to remember that visitors must be mindful of customs. "
+            "The old town serves as a testament to the country's rich history, "
+            "standing as a beacon of Vietnamese resilience. "
+            "Let us delve deeper into this vibrant tapestry of street food."
+        )
+        report = linter.analyze_text(meta_slop)
+        self.assertIn('tier6_violations', report, "Report must include tier6_violations")
+        self.assertGreaterEqual(len(report['tier6_violations']), 3, "Must detect Tier 6 meta-commentary and empty signifiers")
+        self.assertFalse(report['passed'], "Tier 6 meta-commentary must fail strict quality gate")
+
+    def test_repetitive_adjective_clustering(self):
+        clustered_text = (
+            "The stunning bay offers breathtaking views from every angle. "
+            "This stunning landmark is a truly breathtaking sight for travelers seeking unique experiences. "
+            "The unique karst formations create a breathtaking panorama that remains stunning at dusk."
+        )
+        report = linter.analyze_text(clustered_text)
+        self.assertIn('adjective_cluster_violations', report, "Report must include adjective_cluster_violations")
+        self.assertGreaterEqual(len(report['adjective_cluster_violations']), 1, "Must detect excessive clustering of hyperbolic adjectives")
+        self.assertLess(report['hls_score'], 100, "Adjective clustering must trigger a score penalty")
+
 
 if __name__ == '__main__':
     unittest.main()

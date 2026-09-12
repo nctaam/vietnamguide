@@ -133,6 +133,22 @@ TIER5_PATTERNS = [
     (r"\bstepping\s+into\s+a\s+postcard\b|\bstraight\s+out\s+of\s+a\s+postcard\b", "stepping into a postcard (visual cliché)"),
 ]
 
+TIER6_PATTERNS = [
+    (r"\bit\s+is\s+worth\s+noting\s+that\b", "it is worth noting that (meta-commentary filler)"),
+    (r"\bit\s+is\s+important\s+to\s+(?:remember|note|keep\s+in\s+mind)\s+that\b", "it is important to remember/note that (over-explanation)"),
+    (r"\bit\s+is\s+essential\s+to\s+note\s+that\b", "it is essential to note that (over-explanation)"),
+    (r"\b(?:a\s+)?blend\s+of\s+tradition\s+and\s+modernity\b|\bwhere\s+tradition\s+meets\s+modernity\b", "blend of tradition and modernity (lazy cultural cliché)"),
+    (r"\bvibrant\s+tapestry\b", "vibrant tapestry (formulaic metaphor)"),
+    (r"\bstanding\s+as\s+a\s+beacon\s+of\b|\ba\s+beacon\s+of\b", "beacon of (grandiose metaphor)"),
+    (r"\bdelve\s+deeper\s+into\b", "delve deeper into (conversational filler)"),
+    (r"\b(?:a\s+)?testament\s+to\b|\bserves\s+as\s+a\s+testament\s+to\b", "testament to (formulaic praise)"),
+    (r"\ba\s+journey\s+of\s+self[- ]discovery\b", "journey of self-discovery (pretentious marketing)"),
+]
+
+HYPERBOLIC_ADJECTIVES = {
+    "stunning", "breathtaking", "unique", "captivating", "unforgettable", "magical", "mesmerizing", "enchanting"
+}
+
 # ==============================================================================
 # EVIDENCE PATTERNS
 # ==============================================================================
@@ -319,6 +335,45 @@ def analyze_text(text, source_name="direct_input"):
                 'snippet': f"...{snippet}..."
             })
 
+    tier6_violations = []
+    for pattern, name in TIER6_PATTERNS:
+        matches = list(re.finditer(pattern, plain_text, re.IGNORECASE))
+        for m in matches:
+            start = max(0, m.start() - 30)
+            end = min(len(plain_text), m.end() + 30)
+            snippet = plain_text[start:end].replace("\n", " ")
+            tier6_violations.append({
+                'severity': 'S2_OVER_EXPLANATION',
+                'phrase': name,
+                'matched_text': m.group(0),
+                'snippet': f"...{snippet}..."
+            })
+
+    # Adjective clustering analysis (detect 3+ hyperbolic adjectives within sliding 150-word window)
+    adjective_cluster_violations = []
+    plain_words_lower = [re.sub(r"[^\w]", "", w.lower()) for w in plain_text.split()]
+    if len(plain_words_lower) <= 150:
+        found_adj = [w for w in plain_words_lower if w in HYPERBOLIC_ADJECTIVES]
+        if len(found_adj) >= 3:
+            adjective_cluster_violations.append({
+                'severity': 'S2_ADJECTIVE_CLUSTERING',
+                'matched_words': found_adj,
+                'word_window_idx': 0,
+                'snippet': " ".join(plain_words_lower[:30]) + "..."
+            })
+    else:
+        for w_idx in range(0, len(plain_words_lower) - 150 + 1, 50):
+            sub_window = plain_words_lower[w_idx:w_idx + 150]
+            found_adj = [w for w in sub_window if w in HYPERBOLIC_ADJECTIVES]
+            if len(found_adj) >= 3:
+                adjective_cluster_violations.append({
+                    'severity': 'S2_ADJECTIVE_CLUSTERING',
+                    'matched_words': found_adj,
+                    'word_window_idx': w_idx,
+                    'snippet': " ".join(sub_window[:30]) + "..."
+                })
+                break
+
     # 2. Measure Cadence (Coefficient of Variation) & Repetitive Openers
     INDEX_OR_POLICY_SLUGS = (
         'privacy-policy', 'editorial-policy', 'affiliate-disclosure', 'affiliate-review-policy',
@@ -387,6 +442,8 @@ def analyze_text(text, source_name="direct_input"):
     base_score -= len(passive_violations) * 5
     base_score -= len(tier4_violations) * 10
     base_score -= len(tier5_violations) * 15
+    base_score -= len(tier6_violations) * 10
+    base_score -= len(adjective_cluster_violations) * 10
     base_score -= len(repetitive_openers_violations) * 10
 
     # Cadence factor
@@ -405,24 +462,26 @@ def analyze_text(text, source_name="direct_input"):
 
     final_score = max(0, min(100, base_score))
 
-    # Strict Gate (v5.0):
+    # Strict Gate (v6.0):
     # 1. Zero Tier 1 violations
     # 2. Maximum 2 Tier 3 signposting violations
     # 3. Maximum 1 Tier 4 modern trope / sycophancy violation
     # 4. Zero Tier 5 travel fluff violations
-    # 5. HLS score >= 80
-    # 6. If in-depth guide (word_count >= 400 and not archive/policy page): must achieve strict EDI >= 4.0
+    # 5. Zero Tier 6 over-explanation violations
+    # 6. HLS score >= 80
+    # 7. If in-depth guide (word_count >= 400 and not archive/policy page): must achieve strict EDI >= 4.0 (or evidence_count >= 10 and EDI >= 3.0)
 
     has_heavy_signposting = (len(tier3_violations) >= 3)
     has_tier4_violations = (len(tier4_violations) >= 2)
     has_tier5_violations = (len(tier5_violations) >= 1)
+    has_tier6_violations = (len(tier6_violations) >= 1)
 
     if is_index_or_policy:
-        passed = (len(tier1_violations) == 0) and (not has_heavy_signposting) and (not has_tier4_violations) and (not has_tier5_violations) and (final_score >= 80)
+        passed = (len(tier1_violations) == 0) and (not has_heavy_signposting) and (not has_tier4_violations) and (not has_tier5_violations) and (not has_tier6_violations) and (final_score >= 80)
     elif word_count >= 400:
-        passed = (len(tier1_violations) == 0) and (not has_heavy_signposting) and (not has_tier4_violations) and (not has_tier5_violations) and (final_score >= 80) and (edi >= 4.0 or (evidence_count >= 10 and edi >= 3.0))
+        passed = (len(tier1_violations) == 0) and (not has_heavy_signposting) and (not has_tier4_violations) and (not has_tier5_violations) and (not has_tier6_violations) and (final_score >= 80) and (edi >= 4.0 or (evidence_count >= 10 and edi >= 3.0))
     else:
-        passed = (len(tier1_violations) == 0) and (not has_heavy_signposting) and (not has_tier4_violations) and (not has_tier5_violations) and (final_score >= 80)
+        passed = (len(tier1_violations) == 0) and (not has_heavy_signposting) and (not has_tier4_violations) and (not has_tier5_violations) and (not has_tier6_violations) and (final_score >= 80)
 
     return {
         'source': source_name,
@@ -440,6 +499,8 @@ def analyze_text(text, source_name="direct_input"):
         'passive_count': len(passive_violations),
         'tier4_count': len(tier4_violations),
         'tier5_count': len(tier5_violations),
+        'tier6_count': len(tier6_violations),
+        'adjective_cluster_count': len(adjective_cluster_violations),
         'repetitive_openers_count': len(repetitive_openers_violations),
         'tier1_violations': tier1_violations,
         'tier2_violations': tier2_violations,
@@ -447,6 +508,8 @@ def analyze_text(text, source_name="direct_input"):
         'passive_violations': passive_violations,
         'tier4_violations': tier4_violations,
         'tier5_violations': tier5_violations,
+        'tier6_violations': tier6_violations,
+        'adjective_cluster_violations': adjective_cluster_violations,
         'repetitive_openers_violations': repetitive_openers_violations,
         'evidence_count': evidence_count,
         'evidence': {
