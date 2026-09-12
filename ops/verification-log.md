@@ -1081,3 +1081,40 @@ Date: 2026-07-28 (Asia/Saigon)
   - OpenLiteSpeed Cache Purge & LSWS Reload: Executed cleanly (`SIGUSR1` signal).
   - Public HTTPS Production Verifier (`ops/verify-guide-experience-public.ps1`): PASSED (87/87 routes return HTTP 200).
   - Production Sitemap v6.0 Crawl (`ops/reports/anti-ai-slop-audit-v6-latest.json`): PASSED (102/102 URLs passed, 0 Tier 1, 0 Tier 4, 0 Tier 5, 0 Tier 6, 0 adjective clusters, avg $HLS = 99.71$, avg $EDI = 8.59$, avg $CV = 0.679$).
+
+## Stage 34 Verification - Deep Ground-Truth Saturation (EDI >= 6.0), Anti-AI Slop Quality Engine v7.0 & Hub Ground-Truth Calibration (September 12, 2026)
+- Goals:
+  - Deepen existing foundations with strict zero feature creep (no new post types, URLs, shortcodes, or plugins).
+  - Upgrade Anti-AI Slop Quality Engine to v7.0 with Tier 7 false-authority / sycophantic markers, local sentence cadence monotony sliding window (6 sentences, $CV_{local} < 0.20$), and passive voice density thresholds ($> 0.15$).
+  - Calibrate hub landing pages (`/destinations/`, `/compare/`, `/plan/`) to achieve $HLS = 100$ and evidence saturation.
+  - Saturate the 8 lowest-density long-form guides ($EDI < 4.5$) with verified 2026 ground-truth admission tariffs, transit corridors, and bank ATM limits to achieve $EDI \ge 6.0$ and $HLS = 100$.
+  - Verify all master CI/CD gates (5/5), all 87 public routes (HTTP 200), and full 102/102 sitemap URLs with 0 Tier 1–7 slop.
+- Changes Implemented:
+  - Anti-AI Slop Engine v7.0 (`ops/anti_ai_slop_linter.py`, `ops/tests/test-anti-ai-slop.py`):
+    - Added `TIER7_PATTERNS` regex suite targeting false authority, sycophancy, and concluding fluff ("it's no secret that", "as any seasoned traveler knows", "needless to say", "make no mistake", "in conclusion", etc.).
+    - Implemented `local_cadence_violations` detecting local sentence cadence monotony using a sliding window of 6 sentences with $CV_{local} < 0.20$.
+    - Implemented `passive_ratio` thresholding passive voice density ($> 0.15$).
+    - Expanded unit test suite from 15 to 18 tests (18/18 passing).
+  - Hub Landing Pages Ground-Truth & HLS 100 Calibration (`ops/tests/test-policy-cadence.py`):
+    - Enriched Post 7 (`/destinations/`): Regional transit corridors and lodging baselines deployed. $HLS = 100$, $EDI = 19.91$ (36 evidence items).
+    - Enriched Post 9 (`/compare/`): Comparative pricing and transit benchmarks deployed. $HLS = 100$, $EDI = 26.29$ (25 evidence items).
+    - Enriched Post 6 (`/plan/`): Transport and planning baselines deployed. $HLS = 100$, $EDI = 32.71$ (28 evidence items).
+    - Added `test_remediated_hub_benchmarks` to `ops/tests/test-policy-cadence.py` (5/5 tests passing).
+  - MariaDB Ground-Truth Evidence Saturation for 8 Core Guides (`ops/remediate-ground-truth-v7.php`):
+    - Enriched Post 499 (`hoi-an-ancient-town-guide`): $EDI = 8.89$ (33 evidence items, $HLS = 100$, $CV = 0.705$).
+    - Enriched Post 241 (`phu-quoc-vs-nha-trang`): $EDI = 9.66$ (33 evidence items, $HLS = 100$, $CV = 0.584$).
+    - Enriched Post 158 (`money-cash-cards-atms`): $EDI = 9.50$ (34 evidence items, $HLS = 100$, $CV = 0.524$).
+    - Enriched Post 15 (`sim-esim-vietnam`): $EDI = 7.29$ (26 evidence items, $HLS = 100$, $CV = 0.591$).
+    - Enriched Post 173 (`best-things-to-do-in-hanoi`): $EDI = 7.72$ (22 evidence items, $HLS = 100$, $CV = 0.638$).
+    - Enriched Post 184 (`best-things-to-do-in-hue`): $EDI = 8.51$ (24 evidence items, $HLS = 100$, $CV = 0.613$).
+    - Enriched Post 21 (`ha-long-bay-vs-lan-ha-bay`): $EDI = 9.78$ (30 evidence items, $HLS = 100$, $CV = 0.637$).
+    - Enriched Post 201 (`bai-tu-long-bay-guide`): $EDI = 8.61$ (28 evidence items, $HLS = 100$, $CV = 0.716$).
+- Verification Evidence:
+  - Anti-AI Slop Engine v7.0 Unit Tests (`ops/tests/test-anti-ai-slop.py`): PASSED (18/18 tests).
+  - Policy & Hub Cadence Suite (`ops/tests/test-policy-cadence.py`): PASSED (5/5 tests).
+  - Interactive Shortcodes & A11y Suite (`ops/tests/test-interactive-shortcodes.py`): PASSED (17/17 tests).
+  - Master CI/CD Gate Orchestration (`ops/verify-all-gates.ps1`): PASSED (5/5 gates).
+  - Core MU-Plugin Invariant Suite (`ops/verify-core-mu-plugin.ps1`): PASSED (Fingerprint `71b49033114e8007e5c19fb8ebc1a89e0d0dad88d0fe92dd381a28700db096ce` preserved; all 16 AST mutations rejected).
+  - OpenLiteSpeed Cache Purge & LSWS Reload: Executed cleanly (`SIGUSR1` signal).
+  - Public HTTPS Production Verifier (`ops/verify-guide-experience-public.ps1`): PASSED (87/87 routes return HTTP 200).
+  - Production Sitemap v7.0 Crawl (`ops/reports/anti-ai-slop-audit-v7-latest.json`): PASSED (102/102 URLs passed, 0 Tier 1, 0 Tier 4, 0 Tier 5, 0 Tier 6, 0 Tier 7 slop, avg $HLS = 99.41$, 96/102 URLs at $HLS = 100$, avg $EDI = 9.70$, avg 28.00 evidence items per URL).
