@@ -38,6 +38,7 @@ function vg_get_itinerary_finder_catalog(): array
                 'Vibrant cafe culture and historical landmarks in Saigon',
             ],
             'url'             => '/itineraries/10-days-in-vietnam/',
+            'season_url'      => '/plan/best-time-to-visit-vietnam/#month-nov',
             'cta_label'       => 'View 10-Day Itinerary',
         ],
         [
@@ -57,6 +58,7 @@ function vg_get_itinerary_finder_catalog(): array
                 'Cycling through Hoi An rice fields to An Bang Beach',
             ],
             'url'             => '/itineraries/14-days-in-vietnam/',
+            'season_url'      => '/plan/best-time-to-visit-vietnam/#month-feb',
             'cta_label'       => 'View 14-Day Itinerary',
         ],
         [
@@ -76,6 +78,7 @@ function vg_get_itinerary_finder_catalog(): array
                 'Sunrise tai chi and sea kayaking among Lan Ha limestone karsts',
             ],
             'url'             => '/itineraries/7-days-in-vietnam/',
+            'season_url'      => '/plan/best-time-to-visit-vietnam/#month-oct',
             'cta_label'       => 'View 7-Day Itinerary',
         ],
         [
@@ -95,6 +98,7 @@ function vg_get_itinerary_finder_catalog(): array
                 'Floating markets and orchard homestays in the Mekong Delta',
             ],
             'url'             => '/itineraries/21-days-in-vietnam/',
+            'season_url'      => '/plan/best-time-to-visit-vietnam/#month-mar',
             'cta_label'       => 'View 21-Day Itinerary',
         ],
         [
@@ -114,6 +118,7 @@ function vg_get_itinerary_finder_catalog(): array
                 'Curated evening pho and bun cha trail in Hoan Kiem',
             ],
             'url'             => '/itineraries/hanoi-in-2-days/',
+            'season_url'      => '/plan/best-time-to-visit-vietnam/#month-oct',
             'cta_label'       => 'View Hanoi 2-Day Guide',
         ],
         [
@@ -133,6 +138,7 @@ function vg_get_itinerary_finder_catalog(): array
                 'Cooling off at Du Gia mountain waterfall after mountain riding',
             ],
             'url'             => '/destinations/ha-giang-loop-planning-guide/',
+            'season_url'      => '/plan/best-time-to-visit-vietnam/#month-oct',
             'cta_label'       => 'View Ha Giang Loop Guide',
         ],
         [
@@ -152,6 +158,7 @@ function vg_get_itinerary_finder_catalog(): array
                 'Ascending the rooftop of Indochina via Fansipan Legend cable car',
             ],
             'url'             => '/destinations/sapa-travel-guide/',
+            'season_url'      => '/plan/best-time-to-visit-vietnam/#month-sep',
             'cta_label'       => 'View Sa Pa Travel Guide',
         ],
         [
@@ -171,6 +178,7 @@ function vg_get_itinerary_finder_catalog(): array
                 'Peaceful, unhurried island pace with coastal seafood dining',
             ],
             'url'             => '/destinations/con-dao-travel-guide/',
+            'season_url'      => '/plan/best-time-to-visit-vietnam/#month-dec',
             'cta_label'       => 'View Con Dao Island Guide',
         ],
     ];
@@ -277,9 +285,14 @@ function vg_render_itinerary_finder_html(): string
                         <span class="vg-finder-gateway-note">
                             <span aria-hidden="true">&#9992;</span> <?php echo esc_html($item['gateway_label']); ?>
                         </span>
-                        <a href="<?php echo esc_url($item['url']); ?>" class="vg-finder-cta">
-                            <?php echo esc_html($item['cta_label']); ?> <span aria-hidden="true">&rarr;</span>
-                        </a>
+                        <div class="vg-finder-card-links">
+                            <a href="<?php echo esc_url(home_url($item['season_url'] ?? '/plan/best-time-to-visit-vietnam/')); ?>" class="vg-finder-weather-link vg-synergy-bridge" title="<?php esc_attr_e('Check best month and weather for this route', 'vietnamguide-premium'); ?>">
+                                <span aria-hidden="true">🌤️</span> <?php esc_html_e('Weather', 'vietnamguide-premium'); ?>
+                            </a>
+                            <a href="<?php echo esc_url($item['url']); ?>" class="vg-finder-cta">
+                                <?php echo esc_html($item['cta_label']); ?> <span aria-hidden="true">&rarr;</span>
+                            </a>
+                        </div>
                     </div>
                 </article>
             <?php endforeach; ?>
@@ -296,26 +309,33 @@ function vg_render_itinerary_finder_html(): string
             </div>
         </div>
 
-        <div class="vg-finder-toolkit">
+        <div class="vg-finder-toolkit vg-tool-synergy-bar">
             <div class="vg-finder-tk-title"><?php esc_html_e('Essential Trip Planning Toolkit', 'vietnamguide-premium'); ?></div>
             <div class="vg-finder-tk-grid">
-                <a href="<?php echo esc_url(home_url('/costs/vietnam-travel-cost/')); ?>" class="vg-finder-tk-card">
+                <a href="<?php echo esc_url(home_url('/costs/vietnam-travel-cost/')); ?>" class="vg-finder-tk-card vg-synergy-bridge">
                     <span class="vg-finder-tk-badge">💰 <?php esc_html_e('Budget', 'vietnamguide-premium'); ?></span>
                     <strong><?php esc_html_e('Trip Cost Calculator', 'vietnamguide-premium'); ?></strong>
                     <span><?php esc_html_e('Estimate 3–30 day spending by comfort tier &rarr;', 'vietnamguide-premium'); ?></span>
                 </a>
-                <a href="<?php echo esc_url(home_url('/plan/vietnam-evisa/')); ?>" class="vg-finder-tk-card">
+                <a href="<?php echo esc_url(home_url('/plan/vietnam-evisa/')); ?>" class="vg-finder-tk-card vg-synergy-bridge">
                     <span class="vg-finder-tk-badge">🛂 <?php esc_html_e('Visa', 'vietnamguide-premium'); ?></span>
                     <strong><?php esc_html_e('Visa & E-Visa Checker', 'vietnamguide-premium'); ?></strong>
                     <span><?php esc_html_e('Verify 45-day exemption vs $25 e-visa rules &rarr;', 'vietnamguide-premium'); ?></span>
                 </a>
-                <a href="<?php echo esc_url(home_url('/plan/best-time-to-visit-vietnam/')); ?>" class="vg-finder-tk-card">
+                <a href="<?php echo esc_url(home_url('/plan/vietnam-airport-arrival-checklist/')); ?>" class="vg-finder-tk-card vg-synergy-bridge">
+                    <span class="vg-finder-tk-badge">✈️ <?php esc_html_e('Transit', 'vietnamguide-premium'); ?></span>
+                    <strong><?php esc_html_e('Airport Transit Navigator', 'vietnamguide-premium'); ?></strong>
+                    <span><?php esc_html_e('Grab bays & scam shields for HAN, SGN & DAD &rarr;', 'vietnamguide-premium'); ?></span>
+                </a>
+                <a href="<?php echo esc_url(home_url('/plan/best-time-to-visit-vietnam/')); ?>" class="vg-finder-tk-card vg-synergy-bridge">
                     <span class="vg-finder-tk-badge">☀️ <?php esc_html_e('Climate', 'vietnamguide-premium'); ?></span>
                     <strong><?php esc_html_e('Seasonality & Packing Matrix', 'vietnamguide-premium'); ?></strong>
                     <span><?php esc_html_e('12-month regional weather & packing list &rarr;', 'vietnamguide-premium'); ?></span>
                 </a>
             </div>
         </div>
+
+        <div id="vg-finder-aria-status" class="screen-reader-text" aria-live="polite"></div>
     </section>
     <script>
     (function () {
@@ -331,12 +351,40 @@ function vg_render_itinerary_finder_html(): string
             var emptyState = root.querySelector('.vg-finder-empty');
             var emptyResetBtn = root.querySelector('.vg-finder-empty-reset');
             var pills = root.querySelectorAll('.vg-finder-pill');
+            var ariaStatus = document.getElementById('vg-finder-aria-status');
 
             var filters = {
                 duration: 'all',
                 style: 'all',
                 gateway: 'all'
             };
+
+            // Restore from sessionStorage if present
+            try {
+                var savedDuration = parseInt(sessionStorage.getItem('vg_user_duration'), 10);
+                if (savedDuration) {
+                    if (savedDuration <= 5) filters.duration = 'short';
+                    else if (savedDuration <= 8) filters.duration = '7d';
+                    else if (savedDuration <= 12) filters.duration = '10d';
+                    else if (savedDuration <= 18) filters.duration = '14d';
+                    else filters.duration = '21d';
+                }
+
+                var savedAirport = sessionStorage.getItem('vg_user_airport');
+                if (savedAirport === 'HAN') filters.gateway = 'hanoi';
+                else if (savedAirport === 'SGN') filters.gateway = 'hcmc';
+            } catch(e) {}
+
+            function syncPillUI() {
+                for (var i = 0; i < pills.length; i++) {
+                    var pill = pills[i];
+                    var group = pill.getAttribute('data-group');
+                    var val = pill.getAttribute('data-value');
+                    var active = (filters[group] === val);
+                    pill.classList.toggle('is-active', active);
+                    pill.setAttribute('aria-pressed', active ? 'true' : 'false');
+                }
+            }
 
             function update() {
                 var visibleCount = 0;
@@ -371,30 +419,39 @@ function vg_render_itinerary_finder_html(): string
                 if (emptyState) {
                     emptyState.hidden = (visibleCount > 0);
                 }
+
+                if (ariaStatus) {
+                    ariaStatus.textContent = 'Showing ' + visibleCount + ' curated itineraries matching selected filters.';
+                }
             }
 
             function resetAll() {
                 filters.duration = 'all';
                 filters.style = 'all';
                 filters.gateway = 'all';
-
-                for (var i = 0; i < pills.length; i++) {
-                    var pill = pills[i];
-                    var isAll = pill.getAttribute('data-value') === 'all';
-                    pill.classList.toggle('is-active', isAll);
-                    pill.setAttribute('aria-pressed', isAll ? 'true' : 'false');
-                }
+                syncPillUI();
                 update();
             }
 
             for (var i = 0; i < pills.length; i++) {
-                (function (pill) {
+                (function (pill, idx) {
                     pill.addEventListener('click', function () {
                         var group = pill.getAttribute('data-group');
                         var value = pill.getAttribute('data-value');
                         if (!group || !value) return;
 
                         filters[group] = value;
+
+                        // Save to sessionStorage for cross-tool continuity
+                        try {
+                            if (group === 'duration') {
+                                var dMap = { '7d': 7, '10d': 10, '14d': 14, '21d': 21, 'short': 3 };
+                                if (dMap[value]) sessionStorage.setItem('vg_user_duration', dMap[value]);
+                            } else if (group === 'gateway') {
+                                if (value === 'hanoi') sessionStorage.setItem('vg_user_airport', 'HAN');
+                                else if (value === 'hcmc') sessionStorage.setItem('vg_user_airport', 'SGN');
+                            }
+                        } catch(err) {}
 
                         var groupPills = root.querySelectorAll('.vg-finder-pill[data-group="' + group + '"]');
                         for (var j = 0; j < groupPills.length; j++) {
@@ -405,7 +462,23 @@ function vg_render_itinerary_finder_html(): string
                         }
                         update();
                     });
-                })(pills[i]);
+
+                    pill.addEventListener('keydown', function (e) {
+                        var group = pill.getAttribute('data-group');
+                        var groupPills = root.querySelectorAll('.vg-finder-pill[data-group="' + group + '"]');
+                        var currentIdxInGroup = Array.prototype.indexOf.call(groupPills, pill);
+                        var targetIdx = -1;
+
+                        if (e.key === 'ArrowRight') targetIdx = (currentIdxInGroup + 1) % groupPills.length;
+                        else if (e.key === 'ArrowLeft') targetIdx = (currentIdxInGroup - 1 + groupPills.length) % groupPills.length;
+
+                        if (targetIdx !== -1) {
+                            e.preventDefault();
+                            groupPills[targetIdx].focus();
+                            groupPills[targetIdx].click();
+                        }
+                    });
+                })(pills[i], i);
             }
 
             if (resetBtn) {
@@ -414,6 +487,9 @@ function vg_render_itinerary_finder_html(): string
             if (emptyResetBtn) {
                 emptyResetBtn.addEventListener('click', resetAll);
             }
+
+            syncPillUI();
+            update();
         }
 
         if (document.readyState === 'loading') {

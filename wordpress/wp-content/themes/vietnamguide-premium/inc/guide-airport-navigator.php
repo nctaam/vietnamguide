@@ -649,31 +649,33 @@ function vg_render_airport_navigator_html(): string
         </div>
 
         <!-- Cross-Tool Synergy & Next Steps Bridge -->
-        <div class="vg-an-next-steps">
+        <div class="vg-an-next-steps vg-tool-synergy-bar">
             <span class="vg-an-steps-kicker"><?php esc_html_e('Continue Planning Your Journey', 'vietnamguide-premium'); ?></span>
             <div class="vg-an-steps-grid">
-                <a href="<?php echo esc_url(home_url('/plan/vietnam-evisa/')); ?>" class="vg-an-step-link">
+                <a href="<?php echo esc_url(home_url('/plan/vietnam-evisa/')); ?>" class="vg-an-step-link vg-synergy-bridge">
                     <span class="vg-an-step-icon">🛂</span>
                     <span class="vg-an-step-title"><?php esc_html_e('Visa Exemption & E-Visa Checker', 'vietnamguide-premium'); ?></span>
                     <span class="vg-an-step-desc"><?php esc_html_e('Verify entry rules & avoid middleman fees', 'vietnamguide-premium'); ?></span>
                 </a>
-                <a href="<?php echo esc_url(home_url('/costs/vietnam-travel-cost/')); ?>" class="vg-an-step-link">
+                <a href="<?php echo esc_url(home_url('/costs/vietnam-travel-cost/')); ?>" class="vg-an-step-link vg-synergy-bridge">
                     <span class="vg-an-step-icon">💰</span>
                     <span class="vg-an-step-title"><?php esc_html_e('Travel Cost Calculator', 'vietnamguide-premium'); ?></span>
                     <span class="vg-an-step-desc"><?php esc_html_e('Calculate realistic daily travel budgets', 'vietnamguide-premium'); ?></span>
                 </a>
-                <a href="<?php echo esc_url(home_url('/plan/best-time-to-visit-vietnam/')); ?>" class="vg-an-step-link">
+                <a href="<?php echo esc_url(home_url('/plan/best-time-to-visit-vietnam/')); ?>" class="vg-an-step-link vg-synergy-bridge">
                     <span class="vg-an-step-icon">🌤️</span>
                     <span class="vg-an-step-title"><?php esc_html_e('Regional Weather & Packing Matrix', 'vietnamguide-premium'); ?></span>
                     <span class="vg-an-step-desc"><?php esc_html_e('Check 3-climate monsoon patterns', 'vietnamguide-premium'); ?></span>
                 </a>
-                <a href="<?php echo esc_url(home_url('/itineraries/')); ?>" class="vg-an-step-link">
+                <a href="<?php echo esc_url(home_url('/itineraries/')); ?>" class="vg-an-step-link vg-synergy-bridge">
                     <span class="vg-an-step-icon">🗺️</span>
                     <span class="vg-an-step-title"><?php esc_html_e('Interactive Itinerary Finder', 'vietnamguide-premium'); ?></span>
                     <span class="vg-an-step-desc"><?php esc_html_e('Filter tested routes from 7 to 21 days', 'vietnamguide-premium'); ?></span>
                 </a>
             </div>
         </div>
+
+        <div id="vg-an-aria-status" class="screen-reader-text" aria-live="polite"></div>
     </section>
 
     <!-- Vanilla Client-Side Controller -->
@@ -720,17 +722,23 @@ function vg_render_airport_navigator_html(): string
         var pickupText = document.getElementById('vg-an-pickup-text');
         var pickupWarning = document.getElementById('vg-an-pickup-warning');
         var step4Detail = document.getElementById('vg-an-step4-detail');
+        var ariaStatus = document.getElementById('vg-an-aria-status');
 
         function updateAirport(code) {
             var data = airportsData[code];
             if (!data) return;
             currentAirport = code;
 
+            try {
+                sessionStorage.setItem('vg_user_airport', code);
+            } catch(e) {}
+
             // Update chips
             chips.forEach(function(c) {
                 var match = c.getAttribute('data-airport') === code;
                 c.classList.toggle('active', match);
                 c.setAttribute('aria-selected', match ? 'true' : 'false');
+                c.setAttribute('tabindex', match ? '0' : '-1');
             });
 
             // Update banner
@@ -766,6 +774,10 @@ function vg_render_airport_navigator_html(): string
                 });
                 updateZone(0);
             }
+
+            if (ariaStatus) {
+                ariaStatus.textContent = 'Active gateway updated to ' + data.name + ' (' + data.code + '), ' + data.city;
+            }
         }
 
         function updateZone(idx) {
@@ -786,11 +798,31 @@ function vg_render_airport_navigator_html(): string
             }
         }
 
-        // Chip click events
-        chips.forEach(function(chip) {
+        // Chip click events & keyboard arrow navigation
+        chips.forEach(function(chip, idx) {
             chip.addEventListener('click', function() {
                 var code = this.getAttribute('data-airport');
                 updateAirport(code);
+            });
+
+            chip.addEventListener('keydown', function(e) {
+                var targetIdx = -1;
+                if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+                    targetIdx = (idx + 1) % chips.length;
+                } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+                    targetIdx = (idx - 1 + chips.length) % chips.length;
+                } else if (e.key === 'Home') {
+                    targetIdx = 0;
+                } else if (e.key === 'End') {
+                    targetIdx = chips.length - 1;
+                }
+
+                if (targetIdx !== -1) {
+                    e.preventDefault();
+                    chips[targetIdx].focus();
+                    var code = chips[targetIdx].getAttribute('data-airport');
+                    updateAirport(code);
+                }
             });
         });
 
@@ -801,8 +833,8 @@ function vg_render_airport_navigator_html(): string
             });
         }
 
-        // Tab click events
-        tabs.forEach(function(tab) {
+        // Tab click events & keyboard navigation
+        tabs.forEach(function(tab, idx) {
             tab.addEventListener('click', function() {
                 var tabId = this.getAttribute('data-tab');
 
@@ -810,12 +842,32 @@ function vg_render_airport_navigator_html(): string
                     var match = t === tab;
                     t.classList.toggle('active', match);
                     t.setAttribute('aria-selected', match ? 'true' : 'false');
+                    t.setAttribute('tabindex', match ? '0' : '-1');
                 });
 
                 panels.forEach(function(p) {
                     var match = p.id === 'vg-panel-' + tabId;
                     p.classList.toggle('active', match);
                 });
+            });
+
+            tab.addEventListener('keydown', function(e) {
+                var targetIdx = -1;
+                if (e.key === 'ArrowRight') {
+                    targetIdx = (idx + 1) % tabs.length;
+                } else if (e.key === 'ArrowLeft') {
+                    targetIdx = (idx - 1 + tabs.length) % tabs.length;
+                } else if (e.key === 'Home') {
+                    targetIdx = 0;
+                } else if (e.key === 'End') {
+                    targetIdx = tabs.length - 1;
+                }
+
+                if (targetIdx !== -1) {
+                    e.preventDefault();
+                    tabs[targetIdx].focus();
+                    tabs[targetIdx].click();
+                }
             });
         });
 
@@ -847,8 +899,21 @@ function vg_render_airport_navigator_html(): string
             });
         }
 
-        // Initialize default
-        updateAirport('HAN');
+        // Initialize: prioritize URL hash, then sessionStorage, then default to HAN
+        var initialAirport = 'HAN';
+        var hash = (window.location.hash || '').replace('#', '').toUpperCase();
+        if (hash && airportsData[hash]) {
+            initialAirport = hash;
+        } else {
+            try {
+                var stored = sessionStorage.getItem('vg_user_airport');
+                if (stored && airportsData[stored]) {
+                    initialAirport = stored;
+                }
+            } catch(e) {}
+        }
+
+        updateAirport(initialAirport);
     })();
     </script>
     <?php

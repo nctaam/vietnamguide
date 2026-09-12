@@ -438,26 +438,31 @@ function vg_render_visa_checker_html(): string
             </div>
 
             <!-- Cross-Tool Contextual Bridge: Next Steps -->
-            <div class="vg-vc-next-steps" id="vg-vc-next-steps">
+            <div class="vg-vc-next-steps vg-tool-synergy-bar" id="vg-vc-next-steps">
                 <div class="vg-vc-ns-head">
                     <span class="vg-vc-ns-icon">🗺️</span>
-                    <div class="vg-vc-ns-title">Next Steps for Your Vietnam Journey</div>
+                    <div class="vg-vc-ns-title"><?php esc_html_e('Next Steps for Your Vietnam Journey', 'vietnamguide-premium'); ?></div>
                 </div>
                 <div class="vg-vc-ns-grid">
-                    <a href="<?php echo esc_url(home_url('/itineraries/')); ?>" class="vg-vc-ns-card" id="vg-vc-ns-itinerary">
-                        <span class="vg-vc-ns-tag">Recommended Route</span>
-                        <strong class="vg-vc-ns-name" id="vg-vc-ns-itinerary-title">Explore Itineraries</strong>
-                        <span class="vg-vc-ns-desc">Day-by-day routes matching your stay duration &rarr;</span>
+                    <a href="<?php echo esc_url(home_url('/itineraries/')); ?>" class="vg-vc-ns-card vg-synergy-bridge" id="vg-vc-ns-itinerary">
+                        <span class="vg-vc-ns-tag"><?php esc_html_e('Recommended Route', 'vietnamguide-premium'); ?></span>
+                        <strong class="vg-vc-ns-name" id="vg-vc-ns-itinerary-title"><?php esc_html_e('Explore Itineraries', 'vietnamguide-premium'); ?></strong>
+                        <span class="vg-vc-ns-desc"><?php esc_html_e('Day-by-day routes matching your stay duration', 'vietnamguide-premium'); ?> &rarr;</span>
                     </a>
-                    <a href="<?php echo esc_url(home_url('/costs/vietnam-travel-cost/')); ?>" class="vg-vc-ns-card" id="vg-vc-ns-cost">
-                        <span class="vg-vc-ns-tag">Budget Calculator</span>
-                        <strong class="vg-vc-ns-name">Calculate Travel Budget</strong>
-                        <span class="vg-vc-ns-desc">Estimate hotel, food, and domestic transit &rarr;</span>
+                    <a href="<?php echo esc_url(home_url('/plan/vietnam-airport-arrival-checklist/')); ?>" class="vg-vc-ns-card vg-synergy-bridge" id="vg-vc-ns-airport">
+                        <span class="vg-vc-ns-tag"><?php esc_html_e('Arrival Transit', 'vietnamguide-premium'); ?></span>
+                        <strong class="vg-vc-ns-name"><?php esc_html_e('Airport Transit Navigator', 'vietnamguide-premium'); ?></strong>
+                        <span class="vg-vc-ns-desc"><?php esc_html_e('Grab bays, metered taxi numbers & scam shields for HAN/SGN/DAD', 'vietnamguide-premium'); ?> &rarr;</span>
                     </a>
-                    <a href="<?php echo esc_url(home_url('/plan/best-time-to-visit-vietnam/')); ?>" class="vg-vc-ns-card" id="vg-vc-ns-weather">
-                        <span class="vg-vc-ns-tag">Weather &amp; Packing</span>
-                        <strong class="vg-vc-ns-name">Regional Climate Matrix</strong>
-                        <span class="vg-vc-ns-desc">12-month climate guide &amp; packing list &rarr;</span>
+                    <a href="<?php echo esc_url(home_url('/costs/vietnam-travel-cost/')); ?>" class="vg-vc-ns-card vg-synergy-bridge" id="vg-vc-ns-cost">
+                        <span class="vg-vc-ns-tag"><?php esc_html_e('Budget Calculator', 'vietnamguide-premium'); ?></span>
+                        <strong class="vg-vc-ns-name"><?php esc_html_e('Calculate Travel Budget', 'vietnamguide-premium'); ?></strong>
+                        <span class="vg-vc-ns-desc"><?php esc_html_e('Estimate hotel, food, and domestic transit', 'vietnamguide-premium'); ?> &rarr;</span>
+                    </a>
+                    <a href="<?php echo esc_url(home_url('/plan/best-time-to-visit-vietnam/')); ?>" class="vg-vc-ns-card vg-synergy-bridge" id="vg-vc-ns-weather">
+                        <span class="vg-vc-ns-tag"><?php esc_html_e('Weather & Packing', 'vietnamguide-premium'); ?></span>
+                        <strong class="vg-vc-ns-name"><?php esc_html_e('Regional Climate Matrix', 'vietnamguide-premium'); ?></strong>
+                        <span class="vg-vc-ns-desc"><?php esc_html_e('12-month climate guide & packing list', 'vietnamguide-premium'); ?> &rarr;</span>
                     </a>
                 </div>
             </div>
@@ -471,6 +476,8 @@ function vg_render_visa_checker_html(): string
                 <span class="vg-vc-copy-hint">Copy formatted requirements checklist to clipboard for your travel notes.</span>
             </div>
         </div>
+
+        <div id="vg-vc-aria-status" class="screen-reader-text" aria-live="polite"></div>
     </section>
 
     <!-- Isolated Client-Side Logic -->
@@ -604,6 +611,17 @@ function vg_render_visa_checker_html(): string
             if (costLink) {
                 costLink.href = '<?php echo esc_url(home_url('/costs/vietnam-travel-cost/')); ?>?days=' + currentDuration;
             }
+
+            // Save state to sessionStorage
+            try {
+                sessionStorage.setItem('vg_user_nationality', currentCountry);
+                sessionStorage.setItem('vg_user_duration', currentDuration);
+            } catch(e) {}
+
+            var ariaStatus = document.getElementById('vg-vc-aria-status');
+            if (ariaStatus) {
+                ariaStatus.textContent = 'Visa requirements updated: ' + statusText.textContent + ' for ' + countryInfo.name + '. Estimated fee: ' + costAmount.textContent + '.';
+            }
         }
 
         // Country Select Listener
@@ -619,8 +637,8 @@ function vg_render_visa_checker_html(): string
             });
         }
 
-        // Fast Chips Listener
-        chips.forEach(chip => {
+        // Fast Chips Listener & Keyboard Navigation
+        chips.forEach((chip, idx) => {
             chip.addEventListener('click', function () {
                 chips.forEach(c => {
                     c.classList.remove('active');
@@ -631,6 +649,17 @@ function vg_render_visa_checker_html(): string
                 currentCountry = this.getAttribute('data-country');
                 if (countrySelect) countrySelect.value = currentCountry;
                 updateVisaStatus();
+            });
+
+            chip.addEventListener('keydown', function (e) {
+                let targetIdx = -1;
+                if (e.key === 'ArrowRight' || e.key === 'ArrowDown') targetIdx = (idx + 1) % chips.length;
+                else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') targetIdx = (idx - 1 + chips.length) % chips.length;
+                if (targetIdx !== -1) {
+                    e.preventDefault();
+                    chips[targetIdx].focus();
+                    chips[targetIdx].click();
+                }
             });
         });
 
@@ -643,8 +672,8 @@ function vg_render_visa_checker_html(): string
             });
         }
 
-        // Entry Mode Buttons Listener
-        toggleButtons.forEach(btn => {
+        // Entry Mode Buttons Listener & Keyboard Navigation
+        toggleButtons.forEach((btn, idx) => {
             btn.addEventListener('click', function () {
                 toggleButtons.forEach(b => {
                     b.classList.remove('active');
@@ -654,6 +683,17 @@ function vg_render_visa_checker_html(): string
                 this.setAttribute('aria-checked', 'true');
                 currentEntry = this.getAttribute('data-entry');
                 updateVisaStatus();
+            });
+
+            btn.addEventListener('keydown', function (e) {
+                let targetIdx = -1;
+                if (e.key === 'ArrowRight' || e.key === 'ArrowDown') targetIdx = (idx + 1) % toggleButtons.length;
+                else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') targetIdx = (idx - 1 + toggleButtons.length) % toggleButtons.length;
+                if (targetIdx !== -1) {
+                    e.preventDefault();
+                    toggleButtons[targetIdx].focus();
+                    toggleButtons[targetIdx].click();
+                }
             });
         });
 
@@ -716,6 +756,27 @@ function vg_render_visa_checker_html(): string
             }
             document.body.removeChild(ta);
         }
+
+        // Restore from sessionStorage if available
+        try {
+            const storedCountry = sessionStorage.getItem('vg_user_nationality');
+            if (storedCountry && dataset.countries[storedCountry]) {
+                currentCountry = storedCountry;
+                if (countrySelect) countrySelect.value = currentCountry;
+                chips.forEach(c => {
+                    const isActive = c.getAttribute('data-country') === currentCountry;
+                    c.classList.toggle('active', isActive);
+                    c.setAttribute('aria-pressed', isActive ? 'true' : 'false');
+                });
+            }
+
+            const storedDuration = parseInt(sessionStorage.getItem('vg_user_duration'), 10);
+            if (storedDuration && storedDuration >= 1 && storedDuration <= 90) {
+                currentDuration = storedDuration;
+                if (durationSlider) durationSlider.value = currentDuration;
+                if (durationVal) durationVal.textContent = currentDuration + ' days';
+            }
+        } catch(e) {}
 
         // Initialize
         calculatePassportExpiry();

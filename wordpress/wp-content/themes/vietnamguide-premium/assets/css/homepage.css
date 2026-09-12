@@ -3082,6 +3082,43 @@ nav[aria-label="Breadcrumbs"] a:hover {
   color: var(--vg-muted, #555e65);
 }
 
+.vg-finder-card-links {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.vg-finder-weather-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--vg-gold-text, #7e5802);
+  background: #fdf6e7;
+  border: 1px solid rgba(212, 160, 23, 0.28);
+  border-radius: 6px;
+  padding: 4px 8px;
+  text-decoration: none;
+  transition: all 180ms cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.vg-finder-weather-link:hover {
+  background: #faecd0;
+  border-color: var(--vg-gold, #c29b38);
+  transform: translateY(-1px);
+  color: #5a3f01;
+}
+
+.vg-finder-weather-link:active {
+  transform: scale(0.97);
+}
+
+.vg-finder-weather-link:focus-visible {
+  outline: 2px solid var(--vg-gold, #c29b38);
+  outline-offset: 2px;
+}
+
 .vg-finder-cta {
   display: inline-flex;
   align-items: center;
@@ -5474,7 +5511,8 @@ nav[aria-label="Breadcrumbs"] a:hover {
 .vg-vc-next-steps,
 .vg-calc-next-steps,
 .vg-finder-toolkit,
-.vg-sm-bridge {
+.vg-sm-bridge,
+.vg-tool-synergy-bar {
   margin-top: 28px;
   padding: 22px clamp(16px, 2.5vw, 24px);
   background: var(--vg-paper, #ffffff);
@@ -5514,12 +5552,21 @@ nav[aria-label="Breadcrumbs"] a:hover {
   gap: 14px;
 }
 
-@media (min-width: 768px) {
+@media (min-width: 640px) {
   .vg-vc-ns-grid,
   .vg-calc-ns-grid,
   .vg-finder-tk-grid,
   .vg-sm-bridge-grid {
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .vg-vc-ns-grid,
+  .vg-calc-ns-grid,
+  .vg-finder-tk-grid,
+  .vg-sm-bridge-grid {
+    grid-template-columns: repeat(4, 1fr);
   }
 }
 
@@ -5555,6 +5602,15 @@ nav[aria-label="Breadcrumbs"] a:hover {
 .vg-finder-tk-card:active,
 .vg-sm-bridge-card:active {
   transform: scale(0.98);
+}
+
+.vg-vc-ns-card:focus-visible,
+.vg-calc-ns-card:focus-visible,
+.vg-finder-tk-card:focus-visible,
+.vg-sm-bridge-card:focus-visible,
+.vg-synergy-bridge:focus-visible {
+  outline: 2px solid var(--vg-gold, #c29b38);
+  outline-offset: 2px;
 }
 
 .vg-vc-ns-tag,
@@ -6444,6 +6500,8 @@ nav[aria-label="Breadcrumbs"] a:hover {
   .vg-finder-controls,
   .vg-finder-status-bar,
   .vg-finder-toolkit,
+  .vg-finder-card-links,
+  .vg-finder-weather-link,
   .vg-sm-header .vg-sm-switcher,
   .vg-sm-actions,
   .vg-sm-bridge,
@@ -6452,7 +6510,9 @@ nav[aria-label="Breadcrumbs"] a:hover {
   .vg-an-airports-bar,
   .vg-an-tabs,
   .vg-an-zone-selector-bar,
-  .vg-an-next-steps {
+  .vg-an-next-steps,
+  .vg-tool-synergy-bar,
+  .vg-synergy-bridge {
     display: none !important;
   }
 

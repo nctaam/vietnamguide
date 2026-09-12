@@ -207,20 +207,25 @@ function vg_render_cost_calculator_html(): string
                         <button type="button" class="vg-calc-btn-reset" id="vg-calc-reset-btn"><?php esc_html_e('Reset', 'vietnamguide-premium'); ?></button>
                     </div>
 
-                    <div class="vg-calc-next-steps">
+                    <div class="vg-calc-next-steps vg-tool-synergy-bar">
                         <div class="vg-calc-ns-title"><?php esc_html_e('Next Steps for Your Vietnam Journey', 'vietnamguide-premium'); ?></div>
                         <div class="vg-calc-ns-grid">
-                            <a href="<?php echo esc_url(home_url('/itineraries/')); ?>" class="vg-calc-ns-card" id="vg-calc-ns-itin-card">
+                            <a href="<?php echo esc_url(home_url('/itineraries/')); ?>" class="vg-calc-ns-card vg-synergy-bridge" id="vg-calc-ns-itin-card">
                                 <span class="vg-calc-ns-badge"><?php esc_html_e('Matched Route', 'vietnamguide-premium'); ?></span>
                                 <strong id="vg-calc-ns-itin-label"><?php esc_html_e('Explore 10-Day Classic Route', 'vietnamguide-premium'); ?></strong>
                                 <span class="vg-calc-ns-sub"><?php esc_html_e('Day-by-day stops matching your budget', 'vietnamguide-premium'); ?> &rarr;</span>
                             </a>
-                            <a href="<?php echo esc_url(home_url('/plan/vietnam-evisa/')); ?>" class="vg-calc-ns-card">
+                            <a href="<?php echo esc_url(home_url('/plan/vietnam-evisa/')); ?>" class="vg-calc-ns-card vg-synergy-bridge">
                                 <span class="vg-calc-ns-badge"><?php esc_html_e('Entry & Visa', 'vietnamguide-premium'); ?></span>
                                 <strong><?php esc_html_e('Check Visa Exemption Rules', 'vietnamguide-premium'); ?></strong>
-                                <span class="vg-calc-ns-sub"><?php esc_html_e('45-day exemption vs $25 e-visa rules', 'vietnamguide-premium'); ?> &rarr;</span>
+                                <span class="vg-calc-ns-sub"><?php esc_html_e('Add $25 e-visa fee to pre-trip budget', 'vietnamguide-premium'); ?> &rarr;</span>
                             </a>
-                            <a href="<?php echo esc_url(home_url('/plan/best-time-to-visit-vietnam/')); ?>" class="vg-calc-ns-card">
+                            <a href="<?php echo esc_url(home_url('/plan/vietnam-airport-arrival-checklist/')); ?>" class="vg-calc-ns-card vg-synergy-bridge">
+                                <span class="vg-calc-ns-badge"><?php esc_html_e('Airport Transit', 'vietnamguide-premium'); ?></span>
+                                <strong><?php esc_html_e('Airport Navigator & Fares', 'vietnamguide-premium'); ?></strong>
+                                <span class="vg-calc-ns-sub"><?php esc_html_e('Grab bays & metered taxi fares for HAN/SGN/DAD', 'vietnamguide-premium'); ?> &rarr;</span>
+                            </a>
+                            <a href="<?php echo esc_url(home_url('/plan/best-time-to-visit-vietnam/')); ?>" class="vg-calc-ns-card vg-synergy-bridge">
                                 <span class="vg-calc-ns-badge"><?php esc_html_e('Weather & Seasons', 'vietnamguide-premium'); ?></span>
                                 <strong><?php esc_html_e('Regional Climate Matrix', 'vietnamguide-premium'); ?></strong>
                                 <span class="vg-calc-ns-sub"><?php esc_html_e('Packing checklist & rainfall radar', 'vietnamguide-premium'); ?> &rarr;</span>
@@ -409,10 +414,24 @@ function vg_render_cost_calculator_html(): string
             var root = document.getElementById('vg-cost-calculator');
             if (!root) return;
 
+            // Restore from sessionStorage if available
+            try {
+                var savedCur = sessionStorage.getItem('vg_user_currency');
+                if (savedCur === 'USD' || savedCur === 'VND') {
+                    state.currency = savedCur;
+                }
+                var savedDays = parseInt(sessionStorage.getItem('vg_user_duration'), 10);
+                if (savedDays >= 3 && savedDays <= 30) {
+                    state.days = savedDays;
+                }
+            } catch(e) {}
+
             var slider = document.getElementById('vg-calc-days-slider');
             if (slider) {
+                slider.value = state.days;
                 slider.addEventListener('input', function (e) {
                     state.days = parseInt(e.target.value, 10) || 10;
+                    try { sessionStorage.setItem('vg_user_duration', state.days); } catch(err) {}
                     var presetChips = root.querySelectorAll('.vg-calc-preset-chip');
                     presetChips.forEach(function (chip) {
                         var chipDays = parseInt(chip.getAttribute('data-days'), 10);
@@ -423,15 +442,30 @@ function vg_render_cost_calculator_html(): string
             }
 
             var presetChips = root.querySelectorAll('.vg-calc-preset-chip');
-            presetChips.forEach(function (chip) {
+            presetChips.forEach(function (chip, idx) {
+                var chipDays = parseInt(chip.getAttribute('data-days'), 10);
+                chip.classList.toggle('is-active', chipDays === state.days);
+
                 chip.addEventListener('click', function () {
                     var d = parseInt(chip.getAttribute('data-days'), 10);
                     if (d && slider) {
                         slider.value = d;
                         state.days = d;
+                        try { sessionStorage.setItem('vg_user_duration', d); } catch(err) {}
                         presetChips.forEach(function (c) { c.classList.remove('is-active'); });
                         chip.classList.add('is-active');
                         updateUI();
+                    }
+                });
+
+                chip.addEventListener('keydown', function (e) {
+                    var targetIdx = -1;
+                    if (e.key === 'ArrowRight') targetIdx = (idx + 1) % presetChips.length;
+                    else if (e.key === 'ArrowLeft') targetIdx = (idx - 1 + presetChips.length) % presetChips.length;
+                    if (targetIdx !== -1) {
+                        e.preventDefault();
+                        presetChips[targetIdx].focus();
+                        presetChips[targetIdx].click();
                     }
                 });
             });
@@ -452,7 +486,7 @@ function vg_render_cost_calculator_html(): string
             });
 
             var partyPills = root.querySelectorAll('[data-party]');
-            partyPills.forEach(function (pill) {
+            partyPills.forEach(function (pill, idx) {
                 pill.addEventListener('click', function () {
                     var p = parseInt(pill.getAttribute('data-party'), 10);
                     if (p) {
@@ -462,10 +496,21 @@ function vg_render_cost_calculator_html(): string
                         updateUI();
                     }
                 });
+
+                pill.addEventListener('keydown', function (e) {
+                    var targetIdx = -1;
+                    if (e.key === 'ArrowRight') targetIdx = (idx + 1) % partyPills.length;
+                    else if (e.key === 'ArrowLeft') targetIdx = (idx - 1 + partyPills.length) % partyPills.length;
+                    if (targetIdx !== -1) {
+                        e.preventDefault();
+                        partyPills[targetIdx].focus();
+                        partyPills[targetIdx].click();
+                    }
+                });
             });
 
             var flightPills = root.querySelectorAll('[data-flights]');
-            flightPills.forEach(function (pill) {
+            flightPills.forEach(function (pill, idx) {
                 pill.addEventListener('click', function () {
                     var f = parseInt(pill.getAttribute('data-flights'), 10);
                     if (typeof f === 'number' && !isNaN(f)) {
@@ -475,14 +520,30 @@ function vg_render_cost_calculator_html(): string
                         updateUI();
                     }
                 });
+
+                pill.addEventListener('keydown', function (e) {
+                    var targetIdx = -1;
+                    if (e.key === 'ArrowRight') targetIdx = (idx + 1) % flightPills.length;
+                    else if (e.key === 'ArrowLeft') targetIdx = (idx - 1 + flightPills.length) % flightPills.length;
+                    if (targetIdx !== -1) {
+                        e.preventDefault();
+                        flightPills[targetIdx].focus();
+                        flightPills[targetIdx].click();
+                    }
+                });
             });
 
             var curBtns = root.querySelectorAll('.vg-calc-currency-btn');
-            curBtns.forEach(function (btn) {
+            curBtns.forEach(function (btn, idx) {
+                var c = btn.getAttribute('data-currency');
+                var isMatch = (c === state.currency);
+                btn.classList.toggle('is-active', isMatch);
+                btn.setAttribute('aria-pressed', isMatch ? 'true' : 'false');
+
                 btn.addEventListener('click', function () {
-                    var c = btn.getAttribute('data-currency');
                     if (c && c !== state.currency) {
                         state.currency = c;
+                        try { sessionStorage.setItem('vg_user_currency', c); } catch(err) {}
                         curBtns.forEach(function (b) {
                             b.classList.remove('is-active');
                             b.setAttribute('aria-pressed', 'false');
@@ -490,6 +551,17 @@ function vg_render_cost_calculator_html(): string
                         btn.classList.add('is-active');
                         btn.setAttribute('aria-pressed', 'true');
                         updateUI();
+                    }
+                });
+
+                btn.addEventListener('keydown', function (e) {
+                    var targetIdx = -1;
+                    if (e.key === 'ArrowRight') targetIdx = (idx + 1) % curBtns.length;
+                    else if (e.key === 'ArrowLeft') targetIdx = (idx - 1 + curBtns.length) % curBtns.length;
+                    if (targetIdx !== -1) {
+                        e.preventDefault();
+                        curBtns[targetIdx].focus();
+                        curBtns[targetIdx].click();
                     }
                 });
             });

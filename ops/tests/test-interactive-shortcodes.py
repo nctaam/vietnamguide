@@ -111,5 +111,47 @@ class TestInteractiveShortcodes(unittest.TestCase):
             )
 
 
+    def test_aria_live_regions(self):
+        """All 5 interactive components must contain aria-live='polite' for WCAG 2.2 AA dynamic announcements."""
+        for key, content in self.contents.items():
+            self.assertIn(
+                'aria-live="polite"',
+                content,
+                f"Component {key} must have at least one element with aria-live='polite' for screen reader accessibility."
+            )
+
+    def test_session_storage_continuity(self):
+        """Interactive components must utilize sessionStorage for seamless user state continuity."""
+        session_keys = ['cost_calculator', 'airport_navigator', 'itinerary_finder', 'visa_checker', 'season_matrix']
+        for key in session_keys:
+            self.assertIn(
+                'sessionStorage',
+                self.contents[key],
+                f"Component {key} must use sessionStorage for cross-tool state persistence."
+            )
+
+    def test_cross_tool_synergy_links(self):
+        """Components must feature cross-tool synergy links connecting the travel planning workflow."""
+        # Airport navigator links to visa and cost calculator
+        self.assertIn('/plan/vietnam-evisa/', self.contents['airport_navigator'])
+        self.assertIn('/costs/vietnam-travel-cost/', self.contents['airport_navigator'])
+
+        # Cost calculator links to visa and itineraries
+        self.assertIn('/plan/vietnam-evisa/', self.contents['cost_calculator'])
+        self.assertIn('/itineraries/', self.contents['cost_calculator'])
+
+        # Itinerary finder links to climate/seasonality and costs
+        self.assertIn('/plan/best-time-to-visit-vietnam/', self.contents['itinerary_finder'])
+        self.assertIn('/costs/vietnam-travel-cost/', self.contents['itinerary_finder'])
+
+        # Visa checker links to itineraries, costs, and weather
+        self.assertIn('/itineraries/', self.contents['visa_checker'])
+        self.assertIn('/costs/vietnam-travel-cost/', self.contents['visa_checker'])
+
+        # Season matrix links to itinerary finder
+        self.assertIn('/itineraries/', self.contents['season_matrix'])
+
+
 if __name__ == '__main__':
     unittest.main()
+

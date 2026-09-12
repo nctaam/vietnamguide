@@ -1019,23 +1019,28 @@ function vg_render_season_matrix_html(): string
                 <span class="vg-legend-item"><span class="vg-heat-cell vg-heat-mod">Mod</span> Moderate Friction (Chilly high peaks or brief afternoon rain)</span>
                 <span class="vg-legend-item"><span class="vg-heat-cell vg-heat-high">Flood</span> High Risk / Pivot (Heavy monsoon flooding / rough seas)</span>
             </div>
-        <div class="vg-sm-bridge">
+        <div class="vg-sm-bridge vg-tool-synergy-bar">
             <div class="vg-sm-bridge-head">
                 <span class="vg-sm-bridge-icon">🧳</span>
                 <div class="vg-sm-bridge-title"><?php esc_html_e('Continue Planning Your Vietnam Journey', 'vietnamguide-premium'); ?></div>
             </div>
             <div class="vg-sm-bridge-grid">
-                <a href="<?php echo esc_url(home_url('/plan/vietnam-evisa/')); ?>" class="vg-sm-bridge-card">
+                <a href="<?php echo esc_url(home_url('/plan/vietnam-evisa/')); ?>" class="vg-sm-bridge-card vg-synergy-bridge">
                     <span class="vg-sm-bridge-tag"><?php esc_html_e('Visa & Entry', 'vietnamguide-premium'); ?></span>
                     <strong><?php esc_html_e('Visa Exemption & E-Visa Checker', 'vietnamguide-premium'); ?></strong>
                     <span><?php esc_html_e('Verify 45-day exemption vs $25 e-visa rules &rarr;', 'vietnamguide-premium'); ?></span>
                 </a>
-                <a href="<?php echo esc_url(home_url('/costs/vietnam-travel-cost/')); ?>" class="vg-sm-bridge-card">
+                <a href="<?php echo esc_url(home_url('/costs/vietnam-travel-cost/')); ?>" class="vg-sm-bridge-card vg-synergy-bridge">
                     <span class="vg-sm-bridge-tag"><?php esc_html_e('Budgeting', 'vietnamguide-premium'); ?></span>
                     <strong><?php esc_html_e('Trip Cost Calculator', 'vietnamguide-premium'); ?></strong>
                     <span><?php esc_html_e('Estimate 3–30 day spending by comfort tier &rarr;', 'vietnamguide-premium'); ?></span>
                 </a>
-                <a href="<?php echo esc_url(home_url('/itineraries/')); ?>" class="vg-sm-bridge-card">
+                <a href="<?php echo esc_url(home_url('/plan/vietnam-airport-arrival-checklist/')); ?>" class="vg-sm-bridge-card vg-synergy-bridge">
+                    <span class="vg-sm-bridge-tag"><?php esc_html_e('Airport Transit', 'vietnamguide-premium'); ?></span>
+                    <strong><?php esc_html_e('Airport Transit Navigator', 'vietnamguide-premium'); ?></strong>
+                    <span><?php esc_html_e('Grab bays & scam shields for HAN, SGN & DAD &rarr;', 'vietnamguide-premium'); ?></span>
+                </a>
+                <a href="<?php echo esc_url(home_url('/itineraries/')); ?>" class="vg-sm-bridge-card vg-synergy-bridge">
                     <span class="vg-sm-bridge-tag"><?php esc_html_e('Routes', 'vietnamguide-premium'); ?></span>
                     <strong><?php esc_html_e('Smart Route & Itinerary Finder', 'vietnamguide-premium'); ?></strong>
                     <span><?php esc_html_e('Filter 7, 10, 14, 21-day routes &rarr;', 'vietnamguide-premium'); ?></span>
@@ -1072,13 +1077,47 @@ function vg_render_season_matrix_html(): string
             checkedItems: {}
         };
 
-        // Load saved state from localStorage
-        try {
-            var savedMonth = localStorage.getItem('vg_sm_month');
-            if (savedMonth && DATA[savedMonth]) state.currentMonth = savedMonth;
+        // Priority 1: Check URL hash (#month-mar, #month-nov, etc.)
+        var hashMatch = (window.location.hash || '').toLowerCase().replace('#month-', '').replace('#', '');
+        var monthKeys = ['jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec'];
+        if (DATA[hashMatch]) {
+            state.currentMonth = hashMatch;
+        } else {
+            // Priority 2: Check query param (?month=mar or ?month=3)
+            try {
+                var urlParams = new URLSearchParams(window.location.search);
+                var qMonth = urlParams.get('month');
+                if (qMonth) {
+                    var qLower = qMonth.toLowerCase();
+                    if (DATA[qLower]) {
+                        state.currentMonth = qLower;
+                    } else {
+                        var mNum = parseInt(qMonth, 10);
+                        if (mNum >= 1 && mNum <= 12 && DATA[monthKeys[mNum - 1]]) {
+                            state.currentMonth = monthKeys[mNum - 1];
+                        }
+                    }
+                } else {
+                    // Priority 3: Check sessionStorage, then localStorage
+                    var sessionMonth = sessionStorage.getItem('vg_user_month');
+                    if (sessionMonth && DATA[sessionMonth]) {
+                        state.currentMonth = sessionMonth;
+                    } else {
+                        var savedMonth = localStorage.getItem('vg_sm_month');
+                        if (savedMonth && DATA[savedMonth]) state.currentMonth = savedMonth;
+                    }
+                }
+            } catch(e) {}
+        }
 
-            var savedUnit = localStorage.getItem('vg_sm_unit');
-            if (savedUnit && (savedUnit === 'c' || savedUnit === 'f')) state.unit = savedUnit;
+        try {
+            var sessionUnit = sessionStorage.getItem('vg_user_temp_unit');
+            if (sessionUnit && (sessionUnit === 'c' || sessionUnit === 'f')) {
+                state.unit = sessionUnit;
+            } else {
+                var savedUnit = localStorage.getItem('vg_sm_unit');
+                if (savedUnit && (savedUnit === 'c' || savedUnit === 'f')) state.unit = savedUnit;
+            }
 
             var savedChecks = localStorage.getItem('vg_sm_checks');
             if (savedChecks) state.checkedItems = JSON.parse(savedChecks);
@@ -1086,6 +1125,8 @@ function vg_render_season_matrix_html(): string
 
         function saveState() {
             try {
+                sessionStorage.setItem('vg_user_month', state.currentMonth);
+                sessionStorage.setItem('vg_user_temp_unit', state.unit);
                 localStorage.setItem('vg_sm_month', state.currentMonth);
                 localStorage.setItem('vg_sm_unit', state.unit);
                 localStorage.setItem('vg_sm_checks', JSON.stringify(state.checkedItems));
@@ -1095,6 +1136,12 @@ function vg_render_season_matrix_html(): string
         function updateView() {
             var m = DATA[state.currentMonth];
             if (!m) return;
+
+            // Aria live announcement
+            var ariaStatus = document.getElementById('vg-season-aria-status');
+            if (ariaStatus) {
+                ariaStatus.textContent = 'Active climate briefing updated to ' + m.name + ' (' + m.season_label + '). North: ' + m.north.status + ', Central: ' + m.central.status + ', South: ' + m.south.status;
+            }
 
             // Verdict
             var verdictTitle = document.getElementById('vg-sm-verdict-title');
@@ -1262,21 +1309,44 @@ function vg_render_season_matrix_html(): string
 
             // Month Pills
             var pills = root.querySelectorAll('.vg-sm-month-pill');
-            pills.forEach(function (pill) {
+            pills.forEach(function (pill, idx) {
                 var mKey = pill.getAttribute('data-month');
-                if (mKey === state.currentMonth) {
-                    pills.forEach(function (p) { p.classList.remove('is-active'); p.setAttribute('aria-selected', 'false'); });
-                    pill.classList.add('is-active');
-                    pill.setAttribute('aria-selected', 'true');
-                }
+                var isActive = (mKey === state.currentMonth);
+                pill.classList.toggle('is-active', isActive);
+                pill.setAttribute('aria-selected', isActive ? 'true' : 'false');
+                pill.setAttribute('tabindex', isActive ? '0' : '-1');
 
                 pill.addEventListener('click', function () {
                     state.currentMonth = mKey;
-                    pills.forEach(function (p) { p.classList.remove('is-active'); p.setAttribute('aria-selected', 'false'); });
+                    pills.forEach(function (p) {
+                        p.classList.remove('is-active');
+                        p.setAttribute('aria-selected', 'false');
+                        p.setAttribute('tabindex', '-1');
+                    });
                     pill.classList.add('is-active');
                     pill.setAttribute('aria-selected', 'true');
+                    pill.setAttribute('tabindex', '0');
                     saveState();
                     updateView();
+                });
+
+                pill.addEventListener('keydown', function (e) {
+                    var targetIdx = -1;
+                    if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+                        targetIdx = (idx + 1) % pills.length;
+                    } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+                        targetIdx = (idx - 1 + pills.length) % pills.length;
+                    } else if (e.key === 'Home') {
+                        targetIdx = 0;
+                    } else if (e.key === 'End') {
+                        targetIdx = pills.length - 1;
+                    }
+
+                    if (targetIdx !== -1) {
+                        e.preventDefault();
+                        pills[targetIdx].focus();
+                        pills[targetIdx].click();
+                    }
                 });
             });
 
