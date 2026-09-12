@@ -6332,6 +6332,89 @@ nav[aria-label="Breadcrumbs"] a:hover {
   color: rgba(16, 20, 23, 0.6);
 }
 
+/* ==========================================================================
+   Interactive Travel Tools Layout Shift Prevention ($CLS = 0) & Container Stabilization
+   Stage 30: Zero Layout Shift & WCAG 2.2 AA 44px Touch Targets
+   ========================================================================== */
+
+.vg-visa-checker,
+.vg-cost-calculator,
+.vg-itinerary-finder,
+.vg-season-matrix,
+.vg-airport-navigator {
+  contain-intrinsic-size: 1000px 680px;
+  content-visibility: auto;
+}
+
+.vg-visa-checker {
+  min-height: 520px;
+}
+
+.vg-cost-calculator {
+  min-height: 540px;
+}
+
+.vg-itinerary-finder {
+  min-height: 520px;
+}
+
+.vg-season-matrix {
+  min-height: 560px;
+}
+
+.vg-airport-navigator {
+  min-height: 540px;
+}
+
+/* WCAG 2.2 AA 44px Touch Targets & Micro-Interactions */
+.vg-finder-pill,
+.vg-vc-chip,
+.vg-sm-month-pill,
+.vg-an-chip,
+.vg-calc-preset-chip {
+  transition: transform 180ms cubic-bezier(0.34, 1.56, 0.64, 1),
+              background-color 150ms ease,
+              border-color 150ms ease,
+              color 150ms ease,
+              box-shadow 150ms ease;
+}
+
+.vg-finder-pill:active,
+.vg-vc-chip:active,
+.vg-sm-month-pill:active,
+.vg-an-chip:active,
+.vg-calc-preset-chip:active {
+  transform: scale(0.96) translateY(0);
+  transition-duration: 75ms;
+}
+
+@media (max-width: 768px) {
+  .vg-finder-pill,
+  .vg-vc-chip,
+  .vg-sm-month-pill,
+  .vg-an-chip,
+  .vg-calc-preset-chip,
+  .vg-calc-currency-btn,
+  .vg-calc-pill-btn,
+  .vg-vc-toggle-btn,
+  .vg-an-tab,
+  .vg-sm-mode-btn,
+  .vg-sm-unit-btn {
+    min-height: 44px;
+    box-sizing: border-box;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .vg-vc-quick-chips,
+  .vg-an-chips-wrapper,
+  .vg-calc-presets,
+  .vg-finder-pills {
+    gap: 10px;
+  }
+}
+
 
 @media (prefers-reduced-motion: reduce) {
   html {
