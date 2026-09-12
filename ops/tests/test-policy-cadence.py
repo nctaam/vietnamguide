@@ -118,9 +118,42 @@ class TestPolicyCadence(unittest.TestCase):
                 self.assertEqual(report['hls_score'], 100, f"{url} HLS must be 100, got {report['hls_score']}")
                 self.assertEqual(len(report.get('repetitive_openers_violations', [])), 0, f"{url} has repetitive openers")
                 self.assertEqual(len(report.get('local_cadence_violations', [])), 0, f"{url} has local cadence monotony")
-                tier_slop = sum(len(report.get(f'tier{i}_violations', [])) for i in range(1, 9))
-                self.assertEqual(tier_slop, 0, f"{url} has Tier 1-8 slop violations: {tier_slop}")
+                tier_slop = sum(len(report.get(f'tier{i}_violations', [])) for i in range(1, 10))
+                self.assertEqual(tier_slop, 0, f"{url} has Tier 1-9 slop violations: {tier_slop}")
                 self.assertTrue(report['passed'], f"{url} did not pass quality gate")
+
+    def test_remediated_bigram_cadence_achieves_perfect_hls(self):
+        """Verify that guides remediated in Stage 36 achieve HLS=100 with zero bigram opener monotony."""
+        import urllib.request
+        target_urls = [
+            "https://vietnamguide.net/destinations/ha-long-bay-travel-guide/",
+            "https://vietnamguide.net/destinations/quy-nhon-travel-guide/",
+            "https://vietnamguide.net/destinations/best-day-trips-from-hanoi/",
+            "https://vietnamguide.net/compare/cu-chi-tunnels-vs-mekong-delta-day-trip/",
+            "https://vietnamguide.net/destinations/hoi-an-ancient-town-guide/",
+            "https://vietnamguide.net/itineraries/10-days-in-vietnam/",
+            "https://vietnamguide.net/plan/vietnam-rainy-season-flexible-route/",
+            "https://vietnamguide.net/destinations/ninh-binh-travel-guide/",
+            "https://vietnamguide.net/compare/ninh-binh-day-trip-vs-overnight/",
+            "https://vietnamguide.net/destinations/con-dao-travel-guide/",
+        ]
+        headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'}
+        for url in target_urls:
+            with self.subTest(url=url):
+                try:
+                    req = urllib.request.Request(url, headers=headers)
+                    with urllib.request.urlopen(req, timeout=12) as resp:
+                        html = resp.read().decode('utf-8')
+                except Exception as e:
+                    self.skipTest(f"Network unavailable for {url}: {e}")
+
+                report = analyze_text(html, source_name=url)
+                self.assertEqual(report['hls_score'], 100, f"{url} HLS must be 100, got {report['hls_score']}")
+                self.assertEqual(report.get('tier1_count', 0), 0, f"{url} has Tier 1 slop")
+                self.assertEqual(report.get('tier9_count', 0), 0, f"{url} has Tier 9 slop")
+                self.assertEqual(report.get('repetitive_openers_count', 0), 0, f"{url} has repetitive openers")
+                self.assertEqual(report.get('repetitive_bigram_count', 0), 0, f"{url} has repetitive bigram openers")
+                self.assertTrue(report['passed'], f"{url} failed quality gate")
 
 
 if __name__ == '__main__':
