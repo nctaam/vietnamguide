@@ -26,7 +26,7 @@ function vg_render_cost_calculator_html(): string
         <div class="vg-calc-header">
             <div class="vg-calc-heading-group">
                 <span class="vg-calc-badge"><?php esc_html_e('Interactive Planning Tool', 'vietnamguide-premium'); ?></span>
-                <h2 class="vg-calc-title"><?php esc_html_e('Vietnam Travel Cost Calculator', 'vietnamguide-premium'); ?></h2>
+                <div class="vg-calc-title" role="heading" aria-level="2"><?php esc_html_e('Vietnam Travel Cost Calculator', 'vietnamguide-premium'); ?></div>
                 <p class="vg-calc-subtitle"><?php esc_html_e('Estimate realistic on-the-ground spending based on your trip length, travel style, party size, and domestic flight hops.', 'vietnamguide-premium'); ?></p>
             </div>
             <div class="vg-calc-currency-toggle" role="group" aria-label="<?php echo esc_attr__('Currency Selection', 'vietnamguide-premium'); ?>">
@@ -636,10 +636,23 @@ function vg_inject_cost_calculator_on_page(string $content): string
         return $content;
     }
 
+    // Never inject into hero block
+    if (strpos($content, 'vg-guide-hero') !== false) {
+        return $content;
+    }
+
+    static $injectedPosts = [];
+    $postId = get_the_ID();
+    if ($postId && isset($injectedPosts[$postId])) {
+        return $content;
+    }
+
     $isCostGuide = is_page('vietnam-travel-cost')
         || (is_singular('page') && get_post_field('post_name') === 'vietnam-travel-cost')
         || is_page('costs')
-        || (is_singular('page') && get_post_field('post_name') === 'costs');
+        || (is_singular('page') && get_post_field('post_name') === 'costs')
+        || is_page('where-to-stay-in-vietnam-base-decisions')
+        || (is_singular('page') && get_post_field('post_name') === 'where-to-stay-in-vietnam-base-decisions');
 
     if (! $isCostGuide) {
         return $content;
@@ -649,21 +662,19 @@ function vg_inject_cost_calculator_on_page(string $content): string
         return $content;
     }
 
+    if ($postId) {
+        $injectedPosts[$postId] = true;
+    }
+
     $calculatorHtml = vg_render_cost_calculator_html();
     $heroClose = '<!-- /wp:group -->';
     $pos = strpos($content, $heroClose);
 
     if ($pos !== false) {
         $insertAt = $pos + strlen($heroClose);
-        return substr($content, 0, $insertAt) . "
-
-" . $calculatorHtml . "
-
-" . substr($content, $insertAt);
+        return substr($content, 0, $insertAt) . "\n\n" . $calculatorHtml . "\n\n" . substr($content, $insertAt);
     }
 
-    return $calculatorHtml . "
-
-" . $content;
+    return $calculatorHtml . "\n\n" . $content;
 }
 add_filter('the_content', 'vg_inject_cost_calculator_on_page', 20);

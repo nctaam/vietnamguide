@@ -754,8 +754,9 @@ function vg_inject_visa_checker_on_page(string $content): string
         return $content;
     }
 
-    static $alreadyInjected = false;
-    if ($alreadyInjected) {
+    static $injectedPosts = [];
+    $postId = get_the_ID();
+    if ($postId && isset($injectedPosts[$postId])) {
         return $content;
     }
 
@@ -764,7 +765,13 @@ function vg_inject_visa_checker_on_page(string $content): string
         || (is_singular('page') && get_post_field('post_name') === 'vietnam-evisa')
         || is_page('vietnam-visa-guide')
         || is_page('plan/vietnam-visa-guide')
-        || (is_singular('page') && get_post_field('post_name') === 'vietnam-visa-guide');
+        || (is_singular('page') && get_post_field('post_name') === 'vietnam-visa-guide')
+        || is_page('vietnam-airport-arrival-checklist')
+        || is_page('plan/vietnam-airport-arrival-checklist')
+        || (is_singular('page') && get_post_field('post_name') === 'vietnam-airport-arrival-checklist')
+        || is_page('vietnam-first-trip-planning-checklist')
+        || is_page('plan/vietnam-first-trip-planning-checklist')
+        || (is_singular('page') && get_post_field('post_name') === 'vietnam-first-trip-planning-checklist');
 
     if (! $isTargetPage) {
         return $content;
@@ -774,7 +781,10 @@ function vg_inject_visa_checker_on_page(string $content): string
         return $content;
     }
 
-    $alreadyInjected = true;
+    if ($postId) {
+        $injectedPosts[$postId] = true;
+    }
+
     $checkerHtml = vg_render_visa_checker_html();
 
     return $checkerHtml . "\n\n" . $content;

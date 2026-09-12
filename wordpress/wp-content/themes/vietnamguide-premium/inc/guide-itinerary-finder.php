@@ -191,7 +191,7 @@ function vg_render_itinerary_finder_html(): string
     <section class="vg-itinerary-finder" id="itinerary-finder" aria-label="<?php esc_attr_e('Interactive Vietnam Itinerary Finder', 'vietnamguide-premium'); ?>">
         <div class="vg-finder-intro">
             <span class="vg-finder-kicker"><?php esc_html_e('Interactive Route Selector', 'vietnamguide-premium'); ?></span>
-            <h2 class="vg-finder-title"><?php esc_html_e('Find Your Perfect Vietnam Route', 'vietnamguide-premium'); ?></h2>
+            <div class="vg-finder-title" role="heading" aria-level="2"><?php esc_html_e('Find Your Perfect Vietnam Route', 'vietnamguide-premium'); ?></div>
             <p class="vg-finder-subtitle"><?php esc_html_e('Filter Vietnam itineraries by trip duration, travel style, and starting airport to match your travel rhythm.', 'vietnamguide-premium'); ?></p>
         </div>
 
@@ -450,12 +450,32 @@ function vg_inject_itinerary_finder_on_hub(string $content): string
         return $content;
     }
 
-    if (! is_page('itineraries') && ! (is_singular('page') && get_post_field('post_name') === 'itineraries')) {
+    // Never inject into hero block
+    if (strpos($content, 'vg-guide-hero') !== false) {
+        return $content;
+    }
+
+    static $injectedPosts = [];
+    $postId = get_the_ID();
+    if ($postId && isset($injectedPosts[$postId])) {
+        return $content;
+    }
+
+    $isTargetPage = is_page('itineraries')
+        || (is_singular('page') && get_post_field('post_name') === 'itineraries')
+        || is_page('best-vietnam-routes-first-time-visitors')
+        || (is_singular('page') && get_post_field('post_name') === 'best-vietnam-routes-first-time-visitors');
+
+    if (! $isTargetPage) {
         return $content;
     }
 
     if (has_shortcode($content, 'vg_itinerary_finder') || strpos($content, 'vg-itinerary-finder') !== false) {
         return $content;
+    }
+
+    if ($postId) {
+        $injectedPosts[$postId] = true;
     }
 
     $finderHtml = vg_render_itinerary_finder_html();
@@ -464,15 +484,9 @@ function vg_inject_itinerary_finder_on_hub(string $content): string
 
     if ($pos !== false) {
         $insertAt = $pos + strlen($heroClose);
-        return substr($content, 0, $insertAt) . "
-
-" . $finderHtml . "
-
-" . substr($content, $insertAt);
+        return substr($content, 0, $insertAt) . "\n\n" . $finderHtml . "\n\n" . substr($content, $insertAt);
     }
 
-    return $finderHtml . "
-
-" . $content;
+    return $finderHtml . "\n\n" . $content;
 }
 add_filter('the_content', 'vg_inject_itinerary_finder_on_hub', 20);

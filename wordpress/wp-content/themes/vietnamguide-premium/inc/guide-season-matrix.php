@@ -696,7 +696,7 @@ function vg_render_season_matrix_html(): string
         <div class="vg-sm-header">
             <div class="vg-sm-heading-group">
                 <span class="vg-sm-badge"><?php esc_html_e('Interactive Travel Intelligence', 'vietnamguide-premium'); ?></span>
-                <h2 class="vg-sm-title"><?php esc_html_e('Vietnam Regional Weather & Packing Matrix', 'vietnamguide-premium'); ?></h2>
+                <div class="vg-sm-title" role="heading" aria-level="2"><?php esc_html_e('Vietnam Regional Weather & Packing Matrix', 'vietnamguide-premium'); ?></div>
                 <p class="vg-sm-subtitle"><?php esc_html_e('Vietnam has three distinct climate zones with opposite monsoons. Select your travel month to see real-world conditions across North, Central, and South Vietnam, route recommendations, and a smart packing checklist.', 'vietnamguide-premium'); ?></p>
             </div>
             <div class="vg-sm-header-controls">
@@ -1425,10 +1425,27 @@ function vg_inject_season_matrix_on_page(string $content): string
         return $content;
     }
 
+    // Never inject into hero block
+    if (strpos($content, 'vg-guide-hero') !== false) {
+        return $content;
+    }
+
+    static $injectedPosts = [];
+    $postId = get_the_ID();
+    if ($postId && isset($injectedPosts[$postId])) {
+        return $content;
+    }
+
     $isTargetPage = is_page('best-time-to-visit-vietnam')
         || (is_singular('page') && get_post_field('post_name') === 'best-time-to-visit-vietnam')
+        || is_page('what-to-pack-for-vietnam-region-season')
+        || (is_singular('page') && get_post_field('post_name') === 'what-to-pack-for-vietnam-region-season')
         || is_page('what-to-pack-vietnam')
-        || (is_singular('page') && get_post_field('post_name') === 'what-to-pack-vietnam');
+        || (is_singular('page') && get_post_field('post_name') === 'what-to-pack-vietnam')
+        || is_page('best-time-for-northern-vietnam')
+        || (is_singular('page') && get_post_field('post_name') === 'best-time-for-northern-vietnam')
+        || is_page('vietnam-rainy-season-flexible-route')
+        || (is_singular('page') && get_post_field('post_name') === 'vietnam-rainy-season-flexible-route');
 
     if (! $isTargetPage) {
         return $content;
@@ -1436,6 +1453,10 @@ function vg_inject_season_matrix_on_page(string $content): string
 
     if (has_shortcode($content, 'vg_season_matrix') || strpos($content, 'vg-season-matrix') !== false) {
         return $content;
+    }
+
+    if ($postId) {
+        $injectedPosts[$postId] = true;
     }
 
     $matrixHtml = vg_render_season_matrix_html();

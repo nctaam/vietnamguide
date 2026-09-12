@@ -901,3 +901,28 @@ Date: 2026-07-28 (Asia/Saigon)
   - Core Block Patterns (`ops/verify-core-block-patterns.ps1`): PASSED.
   - Guide Experience Baseline (`ops/verify-guide-experience.ps1`): PASSED.
   - Public HTTPS Production Verifier (`ops/verify-guide-experience-public.ps1` via Windows PowerShell 5.1): PASSED (100% on all 87 public routes).
+
+## Interactive Toolkit Shortcode Expansion, Hero Protection & TOC Safety Enforcement (Stage 27) - 2026-09-12
+
+- Architecture & Scope (Stage 27):
+  - Eliminated Table of Contents (TOC) and heading pollution across all 4 interactive travel tools (`guide-cost-calculator.php`, `guide-itinerary-finder.php`, `guide-season-matrix.php`, `guide-visa-checker.php`) by replacing raw `<h2>` tags with `<div class="..." role="heading" aria-level="2">`. This ensures `WP_HTML_Tag_Processor` in `inc/guide-content.php` only indexes genuine editorial headings into article TOC jump navigations.
+  - Expanded contextual embeddings across high-intent travel planning routes:
+    - `[vg_visa_checker]`: Injected into `/plan/vietnam-airport-arrival-checklist/` and `/plan/vietnam-first-trip-planning-checklist/`.
+    - `[vg_season_matrix]`: Injected into `/plan/what-to-pack-for-vietnam-region-season/`, `/plan/best-time-for-northern-vietnam/`, and `/plan/vietnam-rainy-season-flexible-route/`.
+    - `[vg_cost_calculator]`: Injected into `/plan/where-to-stay-in-vietnam-base-decisions/`.
+    - `[vg_itinerary_finder]`: Injected into `/plan/best-vietnam-routes-first-time-visitors/`.
+  - Enforced DOM & Hero Split Hygiene:
+    - Added explicit hero block guards (`strpos($content, 'vg-guide-hero') !== false`) to prevent widget injection into hero groups.
+    - Added post ID idempotence guards (`static $injectedPosts = []`) across all injection hooks to guarantee single-pass rendering per article.
+  - Automated Testing:
+    - Created `ops/tests/test-interactive-shortcodes.py` covering shortcode registration, zero H2 heading contract, DOM ID uniqueness, target slug coverage, and `php -l` syntax validation (5/5 tests passing).
+- Verification Evidence:
+  - Interactive Shortcodes Contract & Unit Tests (`ops/tests/test-interactive-shortcodes.py`): PASSED (5/5 tests).
+  - Local Homepage Theme Checks (`ops/verify-homepage-theme.ps1`): PASSED.
+  - Core MU-Plugin Invariants (`ops/verify-core-mu-plugin.ps1`): PASSED (Fingerprint `71b49033114e8007e5c19fb8ebc1a89e0d0dad88d0fe92dd381a28700db096ce` preserved).
+  - Core Block Patterns (`ops/verify-core-block-patterns.ps1`): PASSED.
+  - Guide Experience Baseline (`ops/verify-guide-experience.ps1`): PASSED.
+  - Anti-AI Slop PowerShell Verifier (`ops/verify-anti-ai-slop.ps1 -SelfTest`): PASSED.
+  - Guide Experience AST Mutation Suite (`ops/verify-guide-experience-mutations.ps1`): PASSED (112/112 AST mutations rejected).
+  - Production SFTP SHA-256 Parity: PASSED (100% exact match across all modified theme files: `guide-cost-calculator.php`, `guide-itinerary-finder.php`, `guide-season-matrix.php`, `guide-visa-checker.php`).
+  - Public HTTPS Production Verifier (`ops/verify-guide-experience-public.ps1` via Windows PowerShell 5.1): PASSED (100% on all 87 public routes).
