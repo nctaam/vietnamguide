@@ -5465,6 +5465,131 @@ nav[aria-label="Breadcrumbs"] a:hover {
 }
 
 
+
+/* ==========================================================================
+   Cross-Tool Contextual Bridges & Synergy Toolkit
+   Unifies .vg-vc-next-steps, .vg-calc-next-steps, .vg-finder-toolkit, .vg-sm-bridge
+   ========================================================================== */
+
+.vg-vc-next-steps,
+.vg-calc-next-steps,
+.vg-finder-toolkit,
+.vg-sm-bridge {
+  margin-top: 28px;
+  padding: 22px clamp(16px, 2.5vw, 24px);
+  background: var(--vg-paper, #ffffff);
+  border: 1px solid var(--vg-line, #e6e0d4);
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(16, 20, 23, 0.03);
+}
+
+.vg-vc-ns-head,
+.vg-calc-ns-title,
+.vg-finder-tk-title,
+.vg-sm-bridge-head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--vg-ink, #101417);
+  margin-bottom: 16px;
+  padding-bottom: 10px;
+  border-bottom: 1px dashed var(--vg-line, #e6e0d4);
+}
+
+.vg-vc-ns-icon,
+.vg-sm-bridge-icon {
+  font-size: 16px;
+}
+
+.vg-vc-ns-grid,
+.vg-calc-ns-grid,
+.vg-finder-tk-grid,
+.vg-sm-bridge-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 14px;
+}
+
+@media (min-width: 768px) {
+  .vg-vc-ns-grid,
+  .vg-calc-ns-grid,
+  .vg-finder-tk-grid,
+  .vg-sm-bridge-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.vg-vc-ns-card,
+.vg-calc-ns-card,
+.vg-finder-tk-card,
+.vg-sm-bridge-card {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 16px;
+  background: #fbf9f5;
+  border: 1px solid var(--vg-line, #e6e0d4);
+  border-radius: 10px;
+  text-decoration: none;
+  color: var(--vg-ink, #101417);
+  transition: all 180ms cubic-bezier(0.34, 1.56, 0.64, 1);
+  box-sizing: border-box;
+}
+
+.vg-vc-ns-card:hover,
+.vg-calc-ns-card:hover,
+.vg-finder-tk-card:hover,
+.vg-sm-bridge-card:hover {
+  background: #ffffff;
+  border-color: var(--vg-gold, #d4a017);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(212, 160, 23, 0.12);
+}
+
+.vg-vc-ns-card:active,
+.vg-calc-ns-card:active,
+.vg-finder-tk-card:active,
+.vg-sm-bridge-card:active {
+  transform: scale(0.98);
+}
+
+.vg-vc-ns-tag,
+.vg-calc-ns-badge,
+.vg-finder-tk-badge,
+.vg-sm-bridge-tag {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--vg-gold-text, #7e5802);
+  margin-bottom: 2px;
+}
+
+.vg-vc-ns-name,
+.vg-calc-ns-card strong,
+.vg-finder-tk-card strong,
+.vg-sm-bridge-card strong {
+  font-size: 14px;
+  font-weight: 800;
+  line-height: 1.35;
+  color: var(--vg-ink, #101417);
+}
+
+.vg-vc-ns-desc,
+.vg-calc-ns-sub,
+.vg-finder-tk-card span:last-child,
+.vg-sm-bridge-card span:last-child {
+  font-size: 12px;
+  line-height: 1.45;
+  color: rgba(16, 20, 23, 0.65);
+}
+
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto !important;
@@ -5619,4 +5744,45 @@ nav[aria-label="Breadcrumbs"] a:hover {
     break-after: avoid;
     page-break-after: avoid;
   }
+  /* Interactive Travel Tools Print Optimization */
+  .vg-vc-controls,
+  .vg-vc-quick-chips,
+  .vg-vc-slider-wrap,
+  .vg-vc-action-bar,
+  .vg-vc-next-steps,
+  .vg-calc-controls,
+  .vg-calc-presets,
+  .vg-calc-actions,
+  .vg-calc-next-steps,
+  .vg-finder-controls,
+  .vg-finder-status-bar,
+  .vg-finder-toolkit,
+  .vg-sm-header .vg-sm-switcher,
+  .vg-sm-actions,
+  .vg-sm-bridge,
+  .vg-sm-checklist-actions {
+    display: none !important;
+  }
+
+  .vg-visa-checker,
+  .vg-cost-calculator,
+  .vg-itinerary-finder,
+  .vg-season-matrix {
+    border: 1pt solid #ccc !important;
+    background: #ffffff !important;
+    padding: 12pt !important;
+    margin: 12pt 0 !important;
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+
+  .vg-vc-verdict-banner,
+  .vg-calc-results,
+  .vg-sm-verdict-card {
+    border: 1pt solid #bbb !important;
+    background: #f9f9f9 !important;
+    padding: 10pt !important;
+  }
+
 }
+

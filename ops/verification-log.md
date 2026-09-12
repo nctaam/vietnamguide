@@ -843,3 +843,31 @@ Date: 2026-07-28 (Asia/Saigon)
   - Production SFTP SHA-256 Parity: PASSED (100% exact match across all modified theme files: `inc/guide-visa-checker.php`, `functions.php`, `assets/css/homepage.css`).
   - Production Live Verification: PASSED (HTTP 200 on `https://vietnamguide.net/plan/vietnam-evisa/`, `.vg-visa-checker` container, zero duplicate IDs, verified live).
   - Public HTTPS Production Verifier (`ops/verify-guide-experience-public.ps1` via Windows PowerShell 5.1): PASSED (100% on all 87 public routes).
+
+## Ecosystem Consolidation, Cross-Tool Synergy & VPS Hygiene (Stage 25) - 2026-09-12
+
+- Architecture & Scope (Stage 25):
+  - Consolidated and interconnected the 4 existing interactive travel tools (Stage 21 Itinerary Finder, Stage 22 Cost Calculator, Stage 23 Season Matrix, Stage 24 Visa Checker) into a unified travel ecosystem without adding redundant feature creep:
+    1. Cross-Tool Synergy & Dynamic Contextual Bridges:
+       - Visa Checker (`.vg-vc-next-steps`): Dynamically routes user to matched itineraries (`/itineraries/{7,10,14,21}-days-in-vietnam/`), Cost Calculator (`/costs/vietnam-travel-cost/?days={d}`), and Best Time to Visit (`/plan/best-time-to-visit-vietnam/`) based on active slider trip duration.
+       - Cost Calculator (`.vg-calc-next-steps`): Dynamically routes user to matched itineraries based on slider days, Visa Checker (`/plan/vietnam-evisa/`), and Season Matrix (`/plan/best-time-to-visit-vietnam/`).
+       - Itinerary Finder (`.vg-finder-toolkit`): Direct quick-access bridge connecting to Cost Calculator, Visa Requirements Checker, and Season Matrix.
+       - Season Matrix (`.vg-sm-bridge`): Next-step journey bridge linking to Visa Checker, Cost Calculator, and Itinerary Finder.
+    2. Standardized Clean `@media print` Optimization:
+       - Hides all interactive sliders, preset buttons, filter toggles, search inputs, quick chips, action bars, and navigation toolkits across all 4 tools.
+       - Renders crisp, printer-ready summary sheets with subtle 1pt borders, white background, and page-break isolation (`page-break-inside: avoid; break-inside: avoid`).
+    3. Accessibility (A11y) & Visual Polish:
+       - Enhanced keyboard navigation, semantic tokens, focus rings, and WCAG 2.2 AA contrast compliance.
+    4. Database & VPS Cache Hygiene:
+       - Cleaned expired WordPress transients via `wp transient delete --expired`.
+       - Recreated, analyzed, and optimized all 38 MariaDB tables via `wp db optimize` with zero fragmentation overhead.
+       - Purged LiteSpeed page cache directory (`/usr/local/lsws/vietnamguide.net/luucache/*`) and reloaded LSWS via graceful SIGUSR1.
+- Verification Evidence:
+  - Local Homepage Theme Checks (`ops/verify-homepage-theme.ps1`): PASSED.
+  - Core MU-Plugin Fingerprint & Mutations (`ops/verify-core-mu-plugin.ps1`): PASSED (Fingerprint `71b49033114e8007e5c19fb8ebc1a89e0d0dad88d0fe92dd381a28700db096ce` perfectly preserved).
+  - Core Block Patterns Test (`ops/verify-core-block-patterns.ps1`): PASSED.
+  - Guide Experience Baseline Checks (`ops/verify-guide-experience.ps1`): PASSED.
+  - Guide Experience AST Mutation Suite (`ops/verify-guide-experience-mutations.ps1`): PASSED (112/112 mutations rejected).
+  - Production SFTP SHA-256 Parity: PASSED (100% exact match across all 5 modified theme files: `guide-visa-checker.php`, `guide-cost-calculator.php`, `guide-itinerary-finder.php`, `guide-season-matrix.php`, `assets/css/homepage.css`).
+  - Production Database & Transient Optimization: PASSED (All 38 tables optimized, expired transients cleared).
+  - Public HTTPS Production Verifier (`ops/verify-guide-experience-public.ps1` via Windows PowerShell 5.1): PASSED (100% on all 87 public routes, zero duplicate IDs, zero TOC pollution).

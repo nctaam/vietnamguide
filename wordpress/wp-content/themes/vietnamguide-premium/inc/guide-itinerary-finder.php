@@ -295,6 +295,27 @@ function vg_render_itinerary_finder_html(): string
                 </button>
             </div>
         </div>
+
+        <div class="vg-finder-toolkit">
+            <div class="vg-finder-tk-title"><?php esc_html_e('Essential Trip Planning Toolkit', 'vietnamguide-premium'); ?></div>
+            <div class="vg-finder-tk-grid">
+                <a href="<?php echo esc_url(home_url('/costs/vietnam-travel-cost/')); ?>" class="vg-finder-tk-card">
+                    <span class="vg-finder-tk-badge">💰 <?php esc_html_e('Budget', 'vietnamguide-premium'); ?></span>
+                    <strong><?php esc_html_e('Trip Cost Calculator', 'vietnamguide-premium'); ?></strong>
+                    <span><?php esc_html_e('Estimate 3–30 day spending by comfort tier &rarr;', 'vietnamguide-premium'); ?></span>
+                </a>
+                <a href="<?php echo esc_url(home_url('/plan/vietnam-evisa/')); ?>" class="vg-finder-tk-card">
+                    <span class="vg-finder-tk-badge">🛂 <?php esc_html_e('Visa', 'vietnamguide-premium'); ?></span>
+                    <strong><?php esc_html_e('Visa & E-Visa Checker', 'vietnamguide-premium'); ?></strong>
+                    <span><?php esc_html_e('Verify 45-day exemption vs $25 e-visa rules &rarr;', 'vietnamguide-premium'); ?></span>
+                </a>
+                <a href="<?php echo esc_url(home_url('/plan/best-time-to-visit-vietnam/')); ?>" class="vg-finder-tk-card">
+                    <span class="vg-finder-tk-badge">☀️ <?php esc_html_e('Climate', 'vietnamguide-premium'); ?></span>
+                    <strong><?php esc_html_e('Seasonality & Packing Matrix', 'vietnamguide-premium'); ?></strong>
+                    <span><?php esc_html_e('12-month regional weather & packing list &rarr;', 'vietnamguide-premium'); ?></span>
+                </a>
+            </div>
+        </div>
     </section>
     <script>
     (function () {

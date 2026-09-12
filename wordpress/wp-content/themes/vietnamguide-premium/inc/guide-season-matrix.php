@@ -1019,6 +1019,28 @@ function vg_render_season_matrix_html(): string
                 <span class="vg-legend-item"><span class="vg-heat-cell vg-heat-mod">Mod</span> Moderate Friction (Chilly high peaks or brief afternoon rain)</span>
                 <span class="vg-legend-item"><span class="vg-heat-cell vg-heat-high">Flood</span> High Risk / Pivot (Heavy monsoon flooding / rough seas)</span>
             </div>
+        <div class="vg-sm-bridge">
+            <div class="vg-sm-bridge-head">
+                <span class="vg-sm-bridge-icon">🧳</span>
+                <div class="vg-sm-bridge-title"><?php esc_html_e('Continue Planning Your Vietnam Journey', 'vietnamguide-premium'); ?></div>
+            </div>
+            <div class="vg-sm-bridge-grid">
+                <a href="<?php echo esc_url(home_url('/plan/vietnam-evisa/')); ?>" class="vg-sm-bridge-card">
+                    <span class="vg-sm-bridge-tag"><?php esc_html_e('Visa & Entry', 'vietnamguide-premium'); ?></span>
+                    <strong><?php esc_html_e('Visa Exemption & E-Visa Checker', 'vietnamguide-premium'); ?></strong>
+                    <span><?php esc_html_e('Verify 45-day exemption vs $25 e-visa rules &rarr;', 'vietnamguide-premium'); ?></span>
+                </a>
+                <a href="<?php echo esc_url(home_url('/costs/vietnam-travel-cost/')); ?>" class="vg-sm-bridge-card">
+                    <span class="vg-sm-bridge-tag"><?php esc_html_e('Budgeting', 'vietnamguide-premium'); ?></span>
+                    <strong><?php esc_html_e('Trip Cost Calculator', 'vietnamguide-premium'); ?></strong>
+                    <span><?php esc_html_e('Estimate 3–30 day spending by comfort tier &rarr;', 'vietnamguide-premium'); ?></span>
+                </a>
+                <a href="<?php echo esc_url(home_url('/itineraries/')); ?>" class="vg-sm-bridge-card">
+                    <span class="vg-sm-bridge-tag"><?php esc_html_e('Routes', 'vietnamguide-premium'); ?></span>
+                    <strong><?php esc_html_e('Smart Route & Itinerary Finder', 'vietnamguide-premium'); ?></strong>
+                    <span><?php esc_html_e('Filter 7, 10, 14, 21-day routes &rarr;', 'vietnamguide-premium'); ?></span>
+                </a>
+            </div>
         </div>
 
         <div id="vg-season-aria-status" class="screen-reader-text" aria-live="polite"></div>

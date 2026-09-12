@@ -437,6 +437,31 @@ function vg_render_visa_checker_html(): string
                 </div>
             </div>
 
+            <!-- Cross-Tool Contextual Bridge: Next Steps -->
+            <div class="vg-vc-next-steps" id="vg-vc-next-steps">
+                <div class="vg-vc-ns-head">
+                    <span class="vg-vc-ns-icon">🗺️</span>
+                    <div class="vg-vc-ns-title">Next Steps for Your Vietnam Journey</div>
+                </div>
+                <div class="vg-vc-ns-grid">
+                    <a href="<?php echo esc_url(home_url('/itineraries/')); ?>" class="vg-vc-ns-card" id="vg-vc-ns-itinerary">
+                        <span class="vg-vc-ns-tag">Recommended Route</span>
+                        <strong class="vg-vc-ns-name" id="vg-vc-ns-itinerary-title">Explore Itineraries</strong>
+                        <span class="vg-vc-ns-desc">Day-by-day routes matching your stay duration &rarr;</span>
+                    </a>
+                    <a href="<?php echo esc_url(home_url('/costs/vietnam-travel-cost/')); ?>" class="vg-vc-ns-card" id="vg-vc-ns-cost">
+                        <span class="vg-vc-ns-tag">Budget Calculator</span>
+                        <strong class="vg-vc-ns-name">Calculate Travel Budget</strong>
+                        <span class="vg-vc-ns-desc">Estimate hotel, food, and domestic transit &rarr;</span>
+                    </a>
+                    <a href="<?php echo esc_url(home_url('/plan/best-time-to-visit-vietnam/')); ?>" class="vg-vc-ns-card" id="vg-vc-ns-weather">
+                        <span class="vg-vc-ns-tag">Weather &amp; Packing</span>
+                        <strong class="vg-vc-ns-name">Regional Climate Matrix</strong>
+                        <span class="vg-vc-ns-desc">12-month climate guide &amp; packing list &rarr;</span>
+                    </a>
+                </div>
+            </div>
+
             <!-- Copy Action Bar -->
             <div class="vg-vc-action-bar">
                 <button type="button" id="vg-vc-copy-summary" class="vg-vc-btn-copy">
@@ -555,6 +580,29 @@ function vg_render_visa_checker_html(): string
                 costAmount.textContent = currentEntry === 'multiple' ? '$50 USD' : '$25 USD';
                 costSub.textContent = `Official fee for ${currentEntry === 'multiple' ? 'Multiple Entry ($50)' : 'Single Entry ($25)'}. No agency markups!`;
                 if (maxDaysRule) maxDaysRule.textContent = '90';
+            }
+
+            // Update Cross-Tool Contextual Links
+            var itinLink = document.getElementById('vg-vc-ns-itinerary');
+            var itinTitle = document.getElementById('vg-vc-ns-itinerary-title');
+            var costLink = document.getElementById('vg-vc-ns-cost');
+            if (itinLink && itinTitle) {
+                if (currentDuration <= 8) {
+                    itinLink.href = '<?php echo esc_url(home_url('/itineraries/7-days-in-vietnam/')); ?>';
+                    itinTitle.textContent = '7-Day Essential Highlights Route';
+                } else if (currentDuration <= 12) {
+                    itinLink.href = '<?php echo esc_url(home_url('/itineraries/10-days-in-vietnam/')); ?>';
+                    itinTitle.textContent = '10-Day Classic North-to-South Route';
+                } else if (currentDuration <= 18) {
+                    itinLink.href = '<?php echo esc_url(home_url('/itineraries/14-days-in-vietnam/')); ?>';
+                    itinTitle.textContent = '14-Day Complete Grand Tour';
+                } else {
+                    itinLink.href = '<?php echo esc_url(home_url('/itineraries/21-days-in-vietnam/')); ?>';
+                    itinTitle.textContent = '21-Day Deep Discovery Journey';
+                }
+            }
+            if (costLink) {
+                costLink.href = '<?php echo esc_url(home_url('/costs/vietnam-travel-cost/')); ?>?days=' + currentDuration;
             }
         }
 

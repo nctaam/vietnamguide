@@ -206,6 +206,27 @@ function vg_render_cost_calculator_html(): string
                         </button>
                         <button type="button" class="vg-calc-btn-reset" id="vg-calc-reset-btn"><?php esc_html_e('Reset', 'vietnamguide-premium'); ?></button>
                     </div>
+
+                    <div class="vg-calc-next-steps">
+                        <div class="vg-calc-ns-title"><?php esc_html_e('Next Steps for Your Vietnam Journey', 'vietnamguide-premium'); ?></div>
+                        <div class="vg-calc-ns-grid">
+                            <a href="<?php echo esc_url(home_url('/itineraries/')); ?>" class="vg-calc-ns-card" id="vg-calc-ns-itin-card">
+                                <span class="vg-calc-ns-badge"><?php esc_html_e('Matched Route', 'vietnamguide-premium'); ?></span>
+                                <strong id="vg-calc-ns-itin-label"><?php esc_html_e('Explore 10-Day Classic Route', 'vietnamguide-premium'); ?></strong>
+                                <span class="vg-calc-ns-sub"><?php esc_html_e('Day-by-day stops matching your budget', 'vietnamguide-premium'); ?> &rarr;</span>
+                            </a>
+                            <a href="<?php echo esc_url(home_url('/plan/vietnam-evisa/')); ?>" class="vg-calc-ns-card">
+                                <span class="vg-calc-ns-badge"><?php esc_html_e('Entry & Visa', 'vietnamguide-premium'); ?></span>
+                                <strong><?php esc_html_e('Check Visa Exemption Rules', 'vietnamguide-premium'); ?></strong>
+                                <span class="vg-calc-ns-sub"><?php esc_html_e('45-day exemption vs $25 e-visa rules', 'vietnamguide-premium'); ?> &rarr;</span>
+                            </a>
+                            <a href="<?php echo esc_url(home_url('/plan/best-time-to-visit-vietnam/')); ?>" class="vg-calc-ns-card">
+                                <span class="vg-calc-ns-badge"><?php esc_html_e('Weather & Seasons', 'vietnamguide-premium'); ?></span>
+                                <strong><?php esc_html_e('Regional Climate Matrix', 'vietnamguide-premium'); ?></strong>
+                                <span class="vg-calc-ns-sub"><?php esc_html_e('Packing checklist & rainfall radar', 'vietnamguide-premium'); ?> &rarr;</span>
+                            </a>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -363,6 +384,24 @@ function vg_render_cost_calculator_html(): string
             var ariaStatus = document.getElementById('vg-calc-aria-status');
             if (ariaStatus) {
                 ariaStatus.textContent = 'Estimated Vietnam trip cost: ' + (cur === 'USD' ? formatUSD(calc.totalUSD) : formatVND(calc.totalUSD * USD_TO_VND)) + ' for ' + state.party + ' people across ' + state.days + ' days.';
+            }
+
+            var itinCard = document.getElementById('vg-calc-ns-itin-card');
+            var itinLabel = document.getElementById('vg-calc-ns-itin-label');
+            if (itinCard && itinLabel) {
+                if (state.days <= 8) {
+                    itinCard.href = '<?php echo esc_url(home_url('/itineraries/7-days-in-vietnam/')); ?>';
+                    itinLabel.textContent = 'Explore 7-Day Essential Route';
+                } else if (state.days <= 12) {
+                    itinCard.href = '<?php echo esc_url(home_url('/itineraries/10-days-in-vietnam/')); ?>';
+                    itinLabel.textContent = 'Explore 10-Day Classic Route';
+                } else if (state.days <= 18) {
+                    itinCard.href = '<?php echo esc_url(home_url('/itineraries/14-days-in-vietnam/')); ?>';
+                    itinLabel.textContent = 'Explore 14-Day Grand Tour';
+                } else {
+                    itinCard.href = '<?php echo esc_url(home_url('/itineraries/21-days-in-vietnam/')); ?>';
+                    itinLabel.textContent = 'Explore 21-Day Deep Route';
+                }
             }
         }
 
