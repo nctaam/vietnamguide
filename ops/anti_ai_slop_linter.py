@@ -86,17 +86,41 @@ TIER2_PATTERNS = [
     (r"\bcheck\s+online\s+for\s+(?:schedules?|tickets?|prices?)\b", "check online for schedules (vague instruction)"),
 ]
 
+TIER3_PATTERNS = [
+    (r"\bfirst\s+and\s+foremost\b", "first and foremost (structural signposting)"),
+    (r"\bwithout\s+further\s+ado\b", "without further ado (structural signposting)"),
+    (r"\bwhether\s+you\s+(?:are|'re)\s+a\b[^.!?]{1,60}\bor\b[^.!?]{1,60}", "whether you are a [x] or [y] (structural signposting)"),
+    (r"\bhas\s+something\s+for\s+everyone\b", "has something for everyone (formulaic cliché)"),
+    (r"\ball\s+in\s+all\b", "all in all (structural signposting)"),
+    (r"\bin\s+conclusion\b", "in conclusion (structural signposting)"),
+    (r"\bto\s+wrap\s+things\s+up\b", "to wrap things up (structural signposting)"),
+    (r"\blook\s+no\s+further\s+than\b", "look no further than (formulaic transition)"),
+    (r"\ba\s+myriad\s+of\b", "a myriad of (structural signposting)"),
+    (r"\bpicture\s+this\b", "picture this (formulaic hook)"),
+    (r"\blet(?:'s|\s+us)\s+dive\s+in\b", "let's dive in (formulaic transition)"),
+    (r"\bit\s+is\s+important\s+to\s+remember\s+that\b", "it is important to remember that (structural padding)"),
+]
+
+PASSIVE_AI_PADDING_PATTERNS = [
+    (r"\bvisitors?\s+(?:are|is)\s+treated\s+to\b", "visitors are treated to (passive observer)"),
+    (r"\bit\s+is\s+recommended\s+that\s+(?:one|visitors?|travelers?)\b", "it is recommended that [one/visitor] (passive instruction)"),
+    (r"\btravelers?\s+will\s+find\s+that\b", "travelers will find that (passive observer)"),
+    (r"\bone\s+can\s+(?:easily\s+)?(?:explore|experience|see|visit|enjoy)\b", "one can [easily] explore/experience (passive observer)"),
+    (r"\bit\s+should\s+be\s+noted\s+that\b", "it should be noted that (bureaucratic filler)"),
+    (r"\bit\s+can\s+be\s+seen\s+that\b", "it can be seen that (bureaucratic filler)"),
+]
+
 # ==============================================================================
 # EVIDENCE PATTERNS
 # ==============================================================================
 
 CURRENCY_REGEX = re.compile(
-    r"(?:\b(?:\d{1,3}(?:[.,]\d{3})*|\d+)\s*(?:VND|vnd|₫|đ)\b|\$\s*\d+(?:\.\d{2})?(?:\s*USD)?\b)",
+    r"(?:\b(?:\d{1,3}(?:[.,]\d{3})*|\d+)\s*(?:VND|vnd|₫|đ)\b|\$\s*\d+(?:\.\d{2})?(?:\s*USD)?\b|\b(?:withdrawal\s+limit|local\s+fee|markup|surcharge|toll\s+fee)\b)",
     re.IGNORECASE
 )
 
 TRANSIT_TIME_REGEX = re.compile(
-    r"(?:\b\d+(?:\.\d+)?\s*(?:hours?|hrs?|mins?|minutes?|km)\b|\b(?:grab(?:car|bike)?|mai\s+linh|vinasun|bus\s+\d+|expressway|limousine|ga\s+[ab]|terminal\s+\d+|pillar\s+\d+)\b)",
+    r"(?:\b\d+(?:\.\d+)?\s*(?:hours?|hrs?|mins?|minutes?|km)\b|\b(?:grab(?:car|bike)?|mai\s+linh|vinasun|bus\s+\d+|expressway|limousine|ga\s+[ab]|terminal\s+\d+|pillar\s+\d+|soft\s+sleeper|hard\s+sleeper|4[- ]berth|6[- ]berth|se\d+|tn\d+)\b)",
     re.IGNORECASE
 )
 
@@ -116,7 +140,7 @@ CLIMATE_REGEX = re.compile(
 )
 
 OPERATOR_HOTLINE_REGEX = re.compile(
-    r"(?:\b0\d{2,3}[-.]?\d{2,4}[-.]?\d{3,4}\b|\b(?:dsvn\.vn|vexere\.com|xuatnhapcanh\.gov\.vn|evisa\.xuatnhapcanh\.gov\.vn)\b|\b(?:sleeper\s+bus|cable\s+car|hydrofoil|speedboat|xe\s+om|cyclo)\b)",
+    r"(?:\b0\d{2,3}[-.]?\d{2,4}[-.]?\d{3,4}\b|\b(?:113|114|115)\b|\b(?:dsvn\.vn|vexere\.com|xuatnhapcanh\.gov\.vn|evisa\.xuatnhapcanh\.gov\.vn)\b|\b(?:sleeper\s+bus|cable\s+car|hydrofoil|speedboat|xe\s+om|cyclo|sos\s+international|tourist\s+police)\b)",
     re.IGNORECASE
 )
 
@@ -197,6 +221,34 @@ def analyze_text(text, source_name="direct_input"):
                 'snippet': f"...{snippet}..."
             })
 
+    tier3_violations = []
+    for pattern, name in TIER3_PATTERNS:
+        matches = list(re.finditer(pattern, plain_text, re.IGNORECASE))
+        for m in matches:
+            start = max(0, m.start() - 30)
+            end = min(len(plain_text), m.end() + 30)
+            snippet = plain_text[start:end].replace("\n", " ")
+            tier3_violations.append({
+                'severity': 'S3_SIGNPOSTING',
+                'phrase': name,
+                'matched_text': m.group(0),
+                'snippet': f"...{snippet}..."
+            })
+
+    passive_violations = []
+    for pattern, name in PASSIVE_AI_PADDING_PATTERNS:
+        matches = list(re.finditer(pattern, plain_text, re.IGNORECASE))
+        for m in matches:
+            start = max(0, m.start() - 30)
+            end = min(len(plain_text), m.end() + 30)
+            snippet = plain_text[start:end].replace("\n", " ")
+            passive_violations.append({
+                'severity': 'S3_PASSIVE',
+                'phrase': name,
+                'matched_text': m.group(0),
+                'snippet': f"...{snippet}..."
+            })
+
     # 2. Measure Cadence (Coefficient of Variation)
     if sentence_count >= 3:
         lengths = [len(s.split()) for s in sentences]
@@ -229,6 +281,8 @@ def analyze_text(text, source_name="direct_input"):
     base_score = 100
     base_score -= len(tier1_violations) * 25
     base_score -= len(tier2_violations) * 5
+    base_score -= len(tier3_violations) * 10
+    base_score -= len(passive_violations) * 5
 
     # Cadence factor
     if cv >= 0.45:
@@ -246,20 +300,23 @@ def analyze_text(text, source_name="direct_input"):
 
     # Strict Gate:
     # 1. Zero Tier 1 violations
-    # 2. HLS score >= 80
-    # 3. If in-depth guide (word_count >= 400 and not archive/policy page): must achieve EDI >= 2.0
+    # 2. Maximum 2 Tier 3 signposting violations
+    # 3. HLS score >= 80
+    # 4. If in-depth guide (word_count >= 400 and not archive/policy page): must achieve EDI >= 1.5 or evidence_count >= 5
     INDEX_OR_POLICY_SLUGS = (
         'privacy-policy', 'editorial-policy', 'affiliate-disclosure', 'affiliate-review-policy',
         'source-update-policy', 'contact', 'newsletter', 'about'
     )
     is_index_or_policy = any(s in source_name for s in INDEX_OR_POLICY_SLUGS) or source_name.rstrip('/').endswith(('destinations', 'compare', 'itineraries', 'plan', 'costs', 'vietnamguide.net'))
 
+    has_heavy_signposting = (len(tier3_violations) >= 3)
+
     if is_index_or_policy:
-        passed = (len(tier1_violations) == 0) and (final_score >= 80)
+        passed = (len(tier1_violations) == 0) and (not has_heavy_signposting) and (final_score >= 80)
     elif word_count >= 400:
-        passed = (len(tier1_violations) == 0) and (final_score >= 80) and (edi >= 1.5 or evidence_count >= 5)
+        passed = (len(tier1_violations) == 0) and (not has_heavy_signposting) and (final_score >= 80) and (edi >= 1.5 or evidence_count >= 5)
     else:
-        passed = (len(tier1_violations) == 0) and (final_score >= 80)
+        passed = (len(tier1_violations) == 0) and (not has_heavy_signposting) and (final_score >= 80)
 
     return {
         'source': source_name,
@@ -273,16 +330,23 @@ def analyze_text(text, source_name="direct_input"):
         'cv': round(cv, 3),
         'tier1_count': len(tier1_violations),
         'tier2_count': len(tier2_violations),
+        'tier3_count': len(tier3_violations),
+        'passive_count': len(passive_violations),
         'tier1_violations': tier1_violations,
         'tier2_violations': tier2_violations,
+        'tier3_violations': tier3_violations,
+        'passive_violations': passive_violations,
         'evidence_count': evidence_count,
         'evidence': {
             'currency_count': len(currency_matches),
             'transit_time_count': len(transit_matches),
             'regulatory_count': len(regulatory_matches),
             'geolocation_count': len(geolocation_matches),
+            'operator_count': len(operator_matches),
+            'climate_count': len(climate_matches),
             'sample_currencies': list(set([m.group(0) for m in currency_matches[:4]])),
             'sample_transit': list(set([m.group(0) for m in transit_matches[:4]])),
+            'sample_operators': list(set([m.group(0) for m in operator_matches[:4]])),
             'sample_geolocation': list(set([m.group(0) for m in geolocation_matches[:4]])),
         }
     }

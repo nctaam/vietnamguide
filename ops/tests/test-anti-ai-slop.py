@@ -125,6 +125,44 @@ class TestAntiAiSlopLinter(unittest.TestCase):
         self.assertGreaterEqual(report_high['edi'], 10.0, "High evidence text must have high EDI")
         self.assertTrue(report_high['passed'], "High evidence text without clichés must pass")
 
+    def test_tier3_structural_signposting(self):
+        signposting_text = (
+            "First and foremost, planning a trip to Vietnam requires proper timing. "
+            "Whether you are a budget backpacker or luxury traveler, the country has something for everyone. "
+            "Without further ado, let us look at the regional highlights. "
+            "It is important to remember that seasons differ between north and south. "
+            "All in all, Vietnam is a wonderful place to visit."
+        )
+        report = linter.analyze_text(signposting_text)
+        self.assertIn('tier3_violations', report, "Report must include tier3_violations")
+        self.assertGreaterEqual(len(report['tier3_violations']), 3, "Must catch formulaic signposting structures")
+        self.assertFalse(report['passed'], "Text heavily packed with structural signposting must fail")
+
+    def test_passive_voice_padding(self):
+        passive_text = (
+            "Visitors are treated to scenic mountain views upon arrival in Sapa. "
+            "It is recommended that one takes a local trekking guide for safety. "
+            "Travelers will find that the traditional ethnic villages offer handcrafted souvenirs. "
+            "One can easily explore the surrounding valleys on a rented motorbike."
+        )
+        report = linter.analyze_text(passive_text)
+        self.assertIn('passive_violations', report, "Report must include passive_violations")
+        self.assertGreaterEqual(len(report['passive_violations']), 2, "Must detect detached passive observer phrasing")
+
+    def test_expanded_evidence_patterns(self):
+        detailed_evidence_text = (
+            "Vietcombank ATMs enforce a 2,000,000 VND withdrawal limit per transaction with a 50,000 VND local fee, "
+            "whereas BIDV permits up to 5,000,000 VND. "
+            "For rail travel between Hanoi and Da Nang, choose the 4-berth soft sleeper on SE1 rather than 6-berth hard sleeper. "
+            "In emergencies, contact SOS International Hanoi at 024.3934.0666 or the National Tourist Police hotline 113. "
+            "Always submit your visa application directly via the official portal xuatnhapcanh.gov.vn."
+        )
+        report = linter.analyze_text(detailed_evidence_text)
+        self.assertGreaterEqual(report['evidence']['currency_count'], 2, "Must detect VND withdrawal limits and fee numbers")
+        self.assertGreaterEqual(report['evidence']['operator_count'], 2, "Must detect emergency hotlines and official portals")
+        self.assertGreaterEqual(report['evidence_count'], 5, "Must recognize specific transit and operational evidence")
+        self.assertTrue(report['passed'], "Evidence-dense operational guidance must pass")
+
 
 if __name__ == '__main__':
     unittest.main()
