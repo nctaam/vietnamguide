@@ -145,6 +145,20 @@ TIER6_PATTERNS = [
     (r"\ba\s+journey\s+of\s+self[- ]discovery\b", "journey of self-discovery (pretentious marketing)"),
 ]
 
+TIER7_PATTERNS = [
+    (r"\b(?:it(?:'s|\s+is)\s+no\s+secret\s+that)\b", "it's no secret that (false consensus)"),
+    (r"\bas\s+(?:any\s+)?seasoned\s+travelers?\s+know[s]?\b", "as any seasoned traveler knows (hollow authority)"),
+    (r"\bneedless\s+to\s+say\b", "needless to say (sycophantic filler)"),
+    (r"\bit\s+goes\s+without\s+saying\b", "it goes without saying (empty assertion)"),
+    (r"\bsuffice\s+it\s+to\s+say\b", "suffice it to say (formulaic hedging)"),
+    (r"\bat\s+the\s+end\s+of\s+the\s+day\b", "at the end of the day (conversational cliché)"),
+    (r"\bwhen\s+all\s+is\s+said\s+and\s+done\b", "when all is said and done (conversational cliché)"),
+    (r"\bmake\s+no\s+mistake\b", "make no mistake (hyperbolic framing)"),
+    (r"\btruth\s+be\s+told\b|\btruth,\s*be\s+told\b", "truth be told (artificial intimacy)"),
+    (r"\ball\s+in\s+all\b", "all in all (empty summary marker)"),
+    (r"\bin\s+conclusion\b|\bto\s+sum\s+up\b|\bwrapping\s+up\b|\bparting\s+thoughts\b|\bfinal\s+thoughts\b", "in conclusion / to sum up / final thoughts (AI summary boilerplate)"),
+]
+
 HYPERBOLIC_ADJECTIVES = {
     "stunning", "breathtaking", "unique", "captivating", "unforgettable", "magical", "mesmerizing", "enchanting"
 }
@@ -349,6 +363,20 @@ def analyze_text(text, source_name="direct_input"):
                 'snippet': f"...{snippet}..."
             })
 
+    tier7_violations = []
+    for pattern, name in TIER7_PATTERNS:
+        matches = list(re.finditer(pattern, plain_text, re.IGNORECASE))
+        for m in matches:
+            start = max(0, m.start() - 30)
+            end = min(len(plain_text), m.end() + 30)
+            snippet = plain_text[start:end].replace("\n", " ")
+            tier7_violations.append({
+                'severity': 'S1_TIER7_AUTHORITY_SLOP',
+                'phrase': name,
+                'matched_text': m.group(0),
+                'snippet': f"...{snippet}..."
+            })
+
     # Adjective clustering analysis (detect 3+ hyperbolic adjectives within sliding 150-word window)
     adjective_cluster_violations = []
     plain_words_lower = [re.sub(r"[^\w]", "", w.lower()) for w in plain_text.split()]
@@ -413,10 +441,33 @@ def analyze_text(text, source_name="direct_input"):
                         idx += 3
                         continue
                 idx += 1
+
+        # Local sentence cadence monotony detection (sliding window of 6 sentences)
+        local_cadence_violations = []
+        if sentence_count >= 6 and not is_index_or_policy:
+            sentence_word_lengths = [len(s.split()) for s in sentences]
+            for i in range(len(sentence_word_lengths) - 5):
+                window = sentence_word_lengths[i:i + 6]
+                win_mean = sum(window) / 6.0
+                if win_mean >= 8.0:
+                    win_var = sum((x - win_mean) ** 2 for x in window) / 6.0
+                    win_cv = math.sqrt(win_var) / win_mean if win_mean > 0 else 0.0
+                    if win_cv < 0.20:
+                        local_cadence_violations.append({
+                            'severity': 'S2_LOCAL_CADENCE_MONOTONY',
+                            'sentence_start_idx': i,
+                            'lengths': window,
+                            'local_cv': round(win_cv, 3),
+                            'snippet': f"{sentences[i][:40]}... [{window}]"
+                        })
+                        break
     else:
         mean_len = float(word_count)
         std_dev = 0.0
         cv = 0.5  # Neutral default for very short inputs
+        local_cadence_violations = []
+
+    passive_ratio = round(len(passive_violations) / sentence_count, 3) if sentence_count > 0 else 0.0
 
     # 3. Detect Evidence Anchors
     currency_matches = list(CURRENCY_REGEX.finditer(plain_text))
@@ -443,8 +494,12 @@ def analyze_text(text, source_name="direct_input"):
     base_score -= len(tier4_violations) * 10
     base_score -= len(tier5_violations) * 15
     base_score -= len(tier6_violations) * 10
+    base_score -= len(tier7_violations) * 15
     base_score -= len(adjective_cluster_violations) * 10
     base_score -= len(repetitive_openers_violations) * 10
+    base_score -= len(local_cadence_violations) * 10
+    if passive_ratio > 0.15 and sentence_count >= 5:
+        base_score -= 10
 
     # Cadence factor
     if is_index_or_policy:
@@ -462,26 +517,38 @@ def analyze_text(text, source_name="direct_input"):
 
     final_score = max(0, min(100, base_score))
 
-    # Strict Gate (v6.0):
+    # Strict Gate (v7.0):
     # 1. Zero Tier 1 violations
     # 2. Maximum 2 Tier 3 signposting violations
     # 3. Maximum 1 Tier 4 modern trope / sycophancy violation
     # 4. Zero Tier 5 travel fluff violations
     # 5. Zero Tier 6 over-explanation violations
-    # 6. HLS score >= 80
-    # 7. If in-depth guide (word_count >= 400 and not archive/policy page): must achieve strict EDI >= 4.0 (or evidence_count >= 10 and EDI >= 3.0)
+    # 6. Zero Tier 7 authority slop violations
+    # 7. HLS score >= 80
+    # 8. If in-depth guide (word_count >= 400 and not archive/policy page): must achieve strict EDI >= 4.0 (or evidence_count >= 10 and EDI >= 3.0)
 
     has_heavy_signposting = (len(tier3_violations) >= 3)
     has_tier4_violations = (len(tier4_violations) >= 2)
     has_tier5_violations = (len(tier5_violations) >= 1)
     has_tier6_violations = (len(tier6_violations) >= 1)
+    has_tier7_violations = (len(tier7_violations) >= 1)
+
+    common_pass = (
+        (len(tier1_violations) == 0) and
+        (not has_heavy_signposting) and
+        (not has_tier4_violations) and
+        (not has_tier5_violations) and
+        (not has_tier6_violations) and
+        (not has_tier7_violations) and
+        (final_score >= 80)
+    )
 
     if is_index_or_policy:
-        passed = (len(tier1_violations) == 0) and (not has_heavy_signposting) and (not has_tier4_violations) and (not has_tier5_violations) and (not has_tier6_violations) and (final_score >= 80)
+        passed = common_pass
     elif word_count >= 400:
-        passed = (len(tier1_violations) == 0) and (not has_heavy_signposting) and (not has_tier4_violations) and (not has_tier5_violations) and (not has_tier6_violations) and (final_score >= 80) and (edi >= 4.0 or (evidence_count >= 10 and edi >= 3.0))
+        passed = common_pass and (edi >= 4.0 or (evidence_count >= 10 and edi >= 3.0))
     else:
-        passed = (len(tier1_violations) == 0) and (not has_heavy_signposting) and (not has_tier4_violations) and (not has_tier5_violations) and (not has_tier6_violations) and (final_score >= 80)
+        passed = common_pass
 
     return {
         'source': source_name,
@@ -500,8 +567,10 @@ def analyze_text(text, source_name="direct_input"):
         'tier4_count': len(tier4_violations),
         'tier5_count': len(tier5_violations),
         'tier6_count': len(tier6_violations),
+        'tier7_count': len(tier7_violations),
         'adjective_cluster_count': len(adjective_cluster_violations),
         'repetitive_openers_count': len(repetitive_openers_violations),
+        'passive_ratio': passive_ratio,
         'tier1_violations': tier1_violations,
         'tier2_violations': tier2_violations,
         'tier3_violations': tier3_violations,
@@ -509,8 +578,10 @@ def analyze_text(text, source_name="direct_input"):
         'tier4_violations': tier4_violations,
         'tier5_violations': tier5_violations,
         'tier6_violations': tier6_violations,
+        'tier7_violations': tier7_violations,
         'adjective_cluster_violations': adjective_cluster_violations,
         'repetitive_openers_violations': repetitive_openers_violations,
+        'local_cadence_violations': local_cadence_violations,
         'evidence_count': evidence_count,
         'evidence': {
             'currency_count': len(currency_matches),

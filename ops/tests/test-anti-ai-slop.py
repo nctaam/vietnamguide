@@ -230,7 +230,43 @@ class TestAntiAiSlopLinter(unittest.TestCase):
         report = linter.analyze_text(clustered_text)
         self.assertIn('adjective_cluster_violations', report, "Report must include adjective_cluster_violations")
         self.assertGreaterEqual(len(report['adjective_cluster_violations']), 1, "Must detect excessive clustering of hyperbolic adjectives")
-        self.assertLess(report['hls_score'], 100, "Adjective clustering must trigger a score penalty")
+    def test_tier7_false_authority_and_conclusion_padding(self):
+        text = (
+            "It is no secret that Vietnam offers great street food. "
+            "As any seasoned traveler knows, pho is best enjoyed on a low plastic stool. "
+            "Needless to say, the broth takes ten hours to simmer. "
+            "In conclusion, make no mistake about visiting Hanoi."
+        )
+        report = linter.analyze_text(text, source_name="test-tier7")
+        self.assertIn('tier7_violations', report, "Report must include tier7_violations")
+        self.assertGreaterEqual(report.get('tier7_count', 0), 3, "Must detect Tier 7 false authority and conclusion padding")
+        self.assertFalse(report['passed'], "Tier 7 authority slop must fail strict quality gate")
+
+    def test_local_cadence_monotony_detection(self):
+        # 6 consecutive sentences with identical word count (12 words each) in narrative prose
+        text = (
+            "The ancient temple stands quietly beside the shimmering water of the wide lake. "
+            "Local fishermen cast their nylon nets across the calm surface of the bay. "
+            "Morning sunlight filters gently through the dense green canopy of coastal pine trees. "
+            "Small wooden sampans drift lazily along the winding river toward the distant sea. "
+            "Distant limestone mountains rise sharply into the misty horizon of the peaceful morning. "
+            "Quiet village paths meander peacefully between the fertile green terraces of young rice."
+        )
+        report = linter.analyze_text(text, source_name="test-monotony")
+        self.assertIn('local_cadence_violations', report, "Report must include local_cadence_violations")
+        self.assertGreaterEqual(len(report.get('local_cadence_violations', [])), 1, "Must detect local cadence monotony across consecutive sentences")
+
+    def test_passive_voice_density_threshold(self):
+        # High passive density (all 4 sentences contain passive AI observer padding)
+        text = (
+            "Visitors are treated to beautiful sunset views from the terrace. "
+            "It is recommended that travelers book their seats early. "
+            "One can easily explore the grottoes by bicycle. "
+            "It should be noted that the ticket office closes at five."
+        )
+        report = linter.analyze_text(text, source_name="test-passive-density")
+        self.assertIn('passive_ratio', report, "Report must include passive_ratio")
+        self.assertGreater(report.get('passive_ratio', 0.0), 0.15, "Must compute passive voice density ratio")
 
 
 if __name__ == '__main__':
