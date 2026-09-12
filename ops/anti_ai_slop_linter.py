@@ -110,6 +110,16 @@ PASSIVE_AI_PADDING_PATTERNS = [
     (r"\bit\s+can\s+be\s+seen\s+that\b", "it can be seen that (bureaucratic filler)"),
 ]
 
+TIER4_PATTERNS = [
+    (r"\brest\s+assured\s+(?:that)?\b", "rest assured (conversational padding)"),
+    (r"\bhas\s+you\s+covered\b", "has you covered (marketing trope)"),
+    (r"\bto\s+say\s+that\b[^.!?]{1,60}\bis\s+an\s+understatement\b", "to say that [...] is an understatement"),
+    (r"\bwithout\s+a\s+doubt\b", "without a doubt (conversational filler)"),
+    (r"\bit\s+goes\s+without\s+saying\s+(?:that)?\b", "it goes without saying that"),
+    (r"\bleaves?\s+an\s+indelible\s+mark\b", "leaves an indelible mark (sentimental trope)"),
+    (r"\bembark\s+on\s+(?:a|an|your)\s+journey\b", "embark on a journey (formulaic phrasing)"),
+]
+
 # ==============================================================================
 # EVIDENCE PATTERNS
 # ==============================================================================
@@ -249,6 +259,20 @@ def analyze_text(text, source_name="direct_input"):
                 'snippet': f"...{snippet}..."
             })
 
+    tier4_violations = []
+    for pattern, name in TIER4_PATTERNS:
+        matches = list(re.finditer(pattern, plain_text, re.IGNORECASE))
+        for m in matches:
+            start = max(0, m.start() - 30)
+            end = min(len(plain_text), m.end() + 30)
+            snippet = plain_text[start:end].replace("\n", " ")
+            tier4_violations.append({
+                'severity': 'S2_MODERN_TROPE',
+                'phrase': name,
+                'matched_text': m.group(0),
+                'snippet': f"...{snippet}..."
+            })
+
     # 2. Measure Cadence (Coefficient of Variation)
     if sentence_count >= 3:
         lengths = [len(s.split()) for s in sentences]
@@ -283,6 +307,7 @@ def analyze_text(text, source_name="direct_input"):
     base_score -= len(tier2_violations) * 5
     base_score -= len(tier3_violations) * 10
     base_score -= len(passive_violations) * 5
+    base_score -= len(tier4_violations) * 10
 
     # Cadence factor
     if cv >= 0.45:
@@ -298,11 +323,12 @@ def analyze_text(text, source_name="direct_input"):
 
     final_score = max(0, min(100, base_score))
 
-    # Strict Gate:
+    # Strict Gate (v4.0):
     # 1. Zero Tier 1 violations
     # 2. Maximum 2 Tier 3 signposting violations
-    # 3. HLS score >= 80
-    # 4. If in-depth guide (word_count >= 400 and not archive/policy page): must achieve EDI >= 1.5 or evidence_count >= 5
+    # 3. Maximum 1 Tier 4 modern trope / sycophancy violation
+    # 4. HLS score >= 80
+    # 5. If in-depth guide (word_count >= 400 and not archive/policy page): must achieve strict EDI >= 4.0
     INDEX_OR_POLICY_SLUGS = (
         'privacy-policy', 'editorial-policy', 'affiliate-disclosure', 'affiliate-review-policy',
         'source-update-policy', 'contact', 'newsletter', 'about'
@@ -310,13 +336,14 @@ def analyze_text(text, source_name="direct_input"):
     is_index_or_policy = any(s in source_name for s in INDEX_OR_POLICY_SLUGS) or source_name.rstrip('/').endswith(('destinations', 'compare', 'itineraries', 'plan', 'costs', 'vietnamguide.net'))
 
     has_heavy_signposting = (len(tier3_violations) >= 3)
+    has_tier4_violations = (len(tier4_violations) >= 2)
 
     if is_index_or_policy:
-        passed = (len(tier1_violations) == 0) and (not has_heavy_signposting) and (final_score >= 80)
+        passed = (len(tier1_violations) == 0) and (not has_heavy_signposting) and (not has_tier4_violations) and (final_score >= 80)
     elif word_count >= 400:
-        passed = (len(tier1_violations) == 0) and (not has_heavy_signposting) and (final_score >= 80) and (edi >= 1.5 or evidence_count >= 5)
+        passed = (len(tier1_violations) == 0) and (not has_heavy_signposting) and (not has_tier4_violations) and (final_score >= 80) and (edi >= 4.0)
     else:
-        passed = (len(tier1_violations) == 0) and (not has_heavy_signposting) and (final_score >= 80)
+        passed = (len(tier1_violations) == 0) and (not has_heavy_signposting) and (not has_tier4_violations) and (final_score >= 80)
 
     return {
         'source': source_name,
@@ -332,10 +359,12 @@ def analyze_text(text, source_name="direct_input"):
         'tier2_count': len(tier2_violations),
         'tier3_count': len(tier3_violations),
         'passive_count': len(passive_violations),
+        'tier4_count': len(tier4_violations),
         'tier1_violations': tier1_violations,
         'tier2_violations': tier2_violations,
         'tier3_violations': tier3_violations,
         'passive_violations': passive_violations,
+        'tier4_violations': tier4_violations,
         'evidence_count': evidence_count,
         'evidence': {
             'currency_count': len(currency_matches),

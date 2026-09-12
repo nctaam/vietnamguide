@@ -163,6 +163,28 @@ class TestAntiAiSlopLinter(unittest.TestCase):
         self.assertGreaterEqual(report['evidence_count'], 5, "Must recognize specific transit and operational evidence")
         self.assertTrue(report['passed'], "Evidence-dense operational guidance must pass")
 
+    def test_strict_edi_threshold_v4(self):
+        # 500-word article with weak evidence (only 1 currency anchor -> EDI ~2.0) must FAIL in v4
+        text = (
+            "This travel guide explores the historical landmarks of northern Vietnam with careful attention to culture. "
+            "Visitors can stroll along ancient corridors and witness local traditions in every village corner. "
+        ) * 15 + "Tickets cost 100,000 VND at the gate. "
+        report = linter.analyze_text(text)
+        self.assertLess(report['edi'], 4.0)
+        self.assertFalse(report['passed'], "In-depth guide with EDI < 4.0 must FAIL under v4 rules")
+
+    def test_tier4_sycophancy_and_modern_ai_tropes(self):
+        trope_text = (
+            "It is worth delving into how this creates a truly memorable tapestry. "
+            "Whether you are looking to embark on an adventure, rest assured that this vibrant hub has you covered. "
+            "To say that the food is good is an understatement. "
+            "Without a doubt, it goes without saying that Vietnam leaves an indelible mark."
+        )
+        report = linter.analyze_text(trope_text)
+        self.assertIn('tier4_violations', report)
+        self.assertGreaterEqual(len(report['tier4_violations']), 2, "Must detect Tier 4 sycophancy and conversational filler")
+        self.assertFalse(report['passed'], "Tier 4 conversational filler must fail")
+
 
 if __name__ == '__main__':
     unittest.main()
