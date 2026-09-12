@@ -53,6 +53,30 @@ class TestPolicyCadence(unittest.TestCase):
         report = analyze_text(source_text, source_name="source-update-policy")
         self.assertEqual(report['hls_score'], 100, f"HLS must be 100, got {report['hls_score']}")
         self.assertGreaterEqual(report['cv'], 0.45, f"CV must be >= 0.45, got {report['cv']}")
+    def test_remediated_privacy_policy_cadence(self):
+        privacy_text = (
+            "VietnamGuide.net operates an independent travel planning desk for international travelers. "
+            "We safeguard reader data. "
+            "We do not require user accounts or reader registrations. "
+            "When you browse our travel itineraries, web servers automatically capture standard technical access logs, including your masked IP address, browser user-agent, operating system, requested URL path, referring domain, and timestamp. "
+            "If you choose to contact our editorial desk directly via email regarding route updates, hotel closures, or transport corrections, we collect your email address and message contents to investigate your report. "
+            "We use zero third-party tracking cookies for targeted advertising. "
+            "Essential session cookies operate solely to support edge caching, rate limiting, and administrative security on our LiteSpeed web server cluster. "
+            "Aggregate website traffic analysis runs with anonymized IP addresses to observe popular destination guides and detect broken transport links without tracking individual identity across the web. "
+            "Our travel guides link directly to external logistics providers, official provincial tourism portals, and public transit schedules such as Vietnam Railways at dsvn.vn. "
+            "When you click an external link, you navigate to an independent third-party domain governed by its own data privacy terms. "
+            "We do not sell user data. "
+            "Commercial partnerships never dictate route rankings. "
+            "Technical web server access logs are retained for 30 days to diagnose network faults and block automated cyber attacks, after which log files are permanently deleted. "
+            "Inquiries sent to our editorial desk are retained for 180 days to resolve ongoing transit investigations. "
+            "All communication transmits across encrypted TLS 1.3 connections in accordance with Vietnam Personal Data Protection Decree 13/2023/ND-CP. "
+            "You maintain full authority to review, rectify, or request deletion of any email correspondence submitted to our desk. "
+            "For privacy inquiries or data removal requests, reach our compliance team at privacy@vietnamguide.net or contact our physical editorial liaison at 45 Le Duan Boulevard, Ben Nghe Ward, District 1, Ho Chi Minh City. "
+            "We respond within 48 business hours."
+        )
+        report = analyze_text(privacy_text, source_name="privacy-policy")
+        self.assertEqual(report['hls_score'], 100, f"HLS must be 100, got {report['hls_score']}")
+        self.assertGreaterEqual(report['cv'], 0.45, f"CV must be >= 0.45, got {report['cv']}")
         self.assertTrue(report['passed'])
 
 
