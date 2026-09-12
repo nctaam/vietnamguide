@@ -120,6 +120,7 @@ function vg_get_travel_clusters_registry(): array
             'hub'                => 'Hanoi',
             'hub_url'            => '/destinations/hanoi-travel-guide/',
             'destination_schema' => [
+                'addressRegion' => 'Hanoi',
                 'geo'          => ['latitude' => 21.0285, 'longitude' => 105.8542],
                 'name'         => 'Hanoi',
                 'description'  => 'Vietnam\'s 1,000-year-old capital city, featuring the atmospheric Old Quarter, French colonial boulevards, vibrant street-food culture, and seamless overland connectivity to Ha Long Bay and Ninh Binh.',
@@ -177,6 +178,7 @@ function vg_get_travel_clusters_registry(): array
             'hub'                => 'Ha Long Bay',
             'hub_url'            => '/destinations/ha-long-bay-travel-guide/',
             'destination_schema' => [
+                'addressRegion' => 'Quang Ninh',
                 'geo'          => ['latitude' => 20.9101, 'longitude' => 107.1839],
                 'name'         => 'Ha Long Bay & Lan Ha Bay',
                 'description'  => 'UNESCO World Heritage marine wonder characterized by thousands of soaring limestone karsts, secluded floating fishing villages, and emerald sea channels.',
@@ -234,6 +236,7 @@ function vg_get_travel_clusters_registry(): array
             'hub'                => 'Ninh Binh',
             'hub_url'            => '/destinations/ninh-binh-travel-guide/',
             'destination_schema' => [
+                'addressRegion' => 'Ninh Binh',
                 'geo'          => ['latitude' => 20.2506, 'longitude' => 105.9745],
                 'name'         => 'Ninh Binh (Trang An & Tam Coc)',
                 'description'  => 'Often celebrated as "Ha Long Bay on land," Ninh Binh enchants travelers with limestone peaks emerging from emerald rice fields, UNESCO paddleboat grottoes, and ancient dynastic temples.',
@@ -291,6 +294,7 @@ function vg_get_travel_clusters_registry(): array
             'hub'                => 'Da Nang',
             'hub_url'            => '/destinations/da-nang-travel-guide/',
             'destination_schema' => [
+                'addressRegion' => 'Da Nang, Hoi An & Thua Thien Hue',
                 'geo'          => ['latitude' => 15.8801, 'longitude' => 108.338],
                 'name'         => 'Da Nang, Hoi An & Hue',
                 'description'  => 'Central Vietnam\'s cultural and coastal heartland, spanning the royal palaces of Hue, the lantern-lit UNESCO trading lanes of Hoi An, and the beaches and Marble Mountains of Da Nang.',
@@ -355,6 +359,7 @@ function vg_get_travel_clusters_registry(): array
             'hub'                => 'Ho Chi Minh City',
             'hub_url'            => '/destinations/ho-chi-minh-city-travel-guide/',
             'destination_schema' => [
+                'addressRegion' => 'Ho Chi Minh City & Mekong Delta',
                 'geo'          => ['latitude' => 10.8231, 'longitude' => 106.6297],
                 'name'         => 'Ho Chi Minh City & Mekong Delta',
                 'description'  => 'Vietnam\'s bustling southern economic powerhouse, famed for French colonial landmarks, Saigon street-food alleys, wartime history, and gateway to the waterways of the Mekong Delta.',
@@ -412,6 +417,7 @@ function vg_get_travel_clusters_registry(): array
             'hub'                => 'Sa Pa & Ha Giang',
             'hub_url'            => '/destinations/sapa-travel-guide/',
             'destination_schema' => [
+                'addressRegion' => 'Lao Cai & Ha Giang',
                 'geo'          => ['latitude' => 22.3364, 'longitude' => 103.8438],
                 'name'         => 'Sa Pa & Northern Highlands',
                 'description'  => 'Vietnam\'s dramatic northern mountain frontier, showcasing Fansipan summit, sculpted rice terraces, colorful ethnic hill-tribe markets, and the epic Ha Giang karst loop.',
@@ -476,6 +482,7 @@ function vg_get_travel_clusters_registry(): array
             'hub'                => 'Phu Quoc & Con Dao',
             'hub_url'            => '/destinations/phu-quoc-travel-guide/',
             'destination_schema' => [
+                'addressRegion' => 'Kien Giang & Ba Ria - Vung Tau',
                 'geo'          => ['latitude' => 10.2899, 'longitude' => 103.984],
                 'name'         => 'Phu Quoc, Con Dao & Central Coast',
                 'description'  => 'Vietnam\'s idyllic island retreats and sun-drenched coastal havens, offering powder-white sands, coral reef biodiversity, and calm turquoise seas.',
@@ -532,6 +539,7 @@ function vg_get_travel_clusters_registry(): array
             'hub'                => 'Vietnam',
             'hub_url'            => '/plan/vietnam-travel-guide/',
             'destination_schema' => [
+                'addressRegion' => 'Vietnam',
                 'geo'          => ['latitude' => 16.0544, 'longitude' => 108.2022],
                 'name'         => 'Vietnam',
                 'description'  => 'An extraordinary Southeast Asian destination blending 3,200 km of coastline, UNESCO World Heritage treasures, limestone karst bays, and globally renowned culinary culture.',
@@ -935,6 +943,14 @@ function vg_rich_travel_schema_filter($data, $context = null): array
             '@type'     => 'GeoCoordinates',
             'latitude'  => (float) $dest_schema['geo']['latitude'],
             'longitude' => (float) $dest_schema['geo']['longitude'],
+        ];
+        $dest_node['hasMap'] = "https://www.openstreetmap.org/?mlat={$dest_schema['geo']['latitude']}&mlon={$dest_schema['geo']['longitude']}#map=12/{$dest_schema['geo']['latitude']}/{$dest_schema['geo']['longitude']}";
+    }
+    if (! empty($dest_schema['addressRegion'])) {
+        $dest_node['address'] = [
+            '@type'          => 'PostalAddress',
+            'addressCountry' => 'VN',
+            'addressRegion'  => $dest_schema['addressRegion'],
         ];
     }
     if (! empty($dest_schema['attractions'])) {

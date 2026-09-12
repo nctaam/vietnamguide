@@ -215,6 +215,14 @@ class TestInteractiveShortcodes(unittest.TestCase):
             self.assertTrue('keydown' in code or 'tabindex="0"' in code or '<button' in code,
                             f"{name} must support accessible keyboard interaction.")
 
+    def test_schema_postal_address_and_map(self):
+        """TouristDestination schema must feature PostalAddress (addressRegion, addressCountry) and hasMap."""
+        with open(SEO_FILE, 'r', encoding='utf-8') as f:
+            seo_content = f.read()
+        self.assertIn('PostalAddress', seo_content, "Schema must generate PostalAddress type.")
+        self.assertIn("'addressRegion'", seo_content, "Cluster registry must specify addressRegion.")
+        self.assertIn("'hasMap'", seo_content, "Destination node must feature hasMap property.")
+
 
 if __name__ == '__main__':
     unittest.main()
