@@ -159,9 +159,37 @@ TIER7_PATTERNS = [
     (r"\bin\s+conclusion\b|\bto\s+sum\s+up\b|\bwrapping\s+up\b|\bparting\s+thoughts\b|\bfinal\s+thoughts\b", "in conclusion / to sum up / final thoughts (AI summary boilerplate)"),
 ]
 
+TIER8_PATTERNS = [
+    (r"\b(?:it(?:'s|\s+is)\s+not\s+just\s+about\b[^.!?]{1,60}\bit(?:'s|\s+is)\s+about)\b", "not just about X, it's about Y (hollow synthetic contrast)"),
+    (r"\bfrom\s+[a-z0-9\s,-]{3,30}\s+to\s+[a-z0-9\s,-]{3,30}(?:,\s*)?vietnam\s+has\s+it\s+all\b", "from X to Y, Vietnam has it all (cliché formula)"),
+    (r"\b(?:rich\s+)?tapestry\s+of\b", "tapestry of [cultures/history] (cliché trope)"),
+    (r"\bmouth[- ]watering\s+(?:dishes|food|delicacies|flavors|cuisine)\b", "mouth-watering cuisine (sensory cliché)"),
+    (r"\bsteeped\s+in\s+history\b", "steeped in history (cliché descriptor)"),
+    (r"\bnestled\s+in\s+the\s+heart\s+of\b", "nestled in the heart of (formulaic geography)"),
+    (r"\ba\s+stone(?:'s)?\s+throw\s+(?:away\s+)?from\b", "a stone's throw from (formulaic proximity)"),
+    (r"\bhidden\s+gem[s]?\s+waiting\s+to\s+be\s+discovered\b", "hidden gems waiting to be discovered (cliché trope)"),
+    (r"\boasis\s+of\s+(?:calm|peace|tranquility)\b", "oasis of calm (cliché refuge)"),
+    (r"\bhave\s+you\s+ever\s+wondered\b", "have you ever wondered (formulaic hook)"),
+    (r"\bare\s+you\s+ready\s+to\b", "are you ready to (conversational filler)"),
+    (r"\blace\s+up\s+your\s+(?:hiking\s+)?boots\b", "lace up your boots (formulaic call-to-action)"),
+    (r"\bdon(?:'t|\s+not)\s+take\s+our\s+word\s+for\s+it\b", "don't take our word for it (sycophantic filler)"),
+    (r"\bsit\s+back(?:,|\s+)relax\b", "sit back and relax (conversational trope)"),
+]
+
+def count_syllables(word):
+    """Estimate English syllables for Flesch readability calculation."""
+    w = word.lower().strip()
+    if len(w) <= 3:
+        return 1
+    w = re.sub(r'(?:[^laeiouy]|ed|es|e)$', '', w)
+    w = re.sub(r'^y', '', w)
+    matches = re.findall(r'[aeiouy]{1,2}', w)
+    return max(1, len(matches))
+
 HYPERBOLIC_ADJECTIVES = {
     "stunning", "breathtaking", "unique", "captivating", "unforgettable", "magical", "mesmerizing", "enchanting"
 }
+
 
 # ==============================================================================
 # EVIDENCE PATTERNS
@@ -377,9 +405,24 @@ def analyze_text(text, source_name="direct_input"):
                 'snippet': f"...{snippet}..."
             })
 
+    tier8_violations = []
+    for pattern, name in TIER8_PATTERNS:
+        matches = list(re.finditer(pattern, plain_text, re.IGNORECASE))
+        for m in matches:
+            start = max(0, m.start() - 30)
+            end = min(len(plain_text), m.end() + 30)
+            snippet = plain_text[start:end].replace("\n", " ")
+            tier8_violations.append({
+                'severity': 'S1_TIER8_SUPERFICIAL_RHETORIC',
+                'phrase': name,
+                'matched_text': m.group(0),
+                'snippet': f"...{snippet}..."
+            })
+
     # Adjective clustering analysis (detect 3+ hyperbolic adjectives within sliding 150-word window)
     adjective_cluster_violations = []
     plain_words_lower = [re.sub(r"[^\w]", "", w.lower()) for w in plain_text.split()]
+
     if len(plain_words_lower) <= 150:
         found_adj = [w for w in plain_words_lower if w in HYPERBOLIC_ADJECTIVES]
         if len(found_adj) >= 3:
@@ -402,12 +445,47 @@ def analyze_text(text, source_name="direct_input"):
                 })
                 break
 
-    # 2. Measure Cadence (Coefficient of Variation) & Repetitive Openers
     INDEX_OR_POLICY_SLUGS = (
         'privacy-policy', 'editorial-policy', 'affiliate-disclosure', 'affiliate-review-policy',
         'source-update-policy', 'contact', 'newsletter', 'about'
     )
     is_index_or_policy = any(s in source_name for s in INDEX_OR_POLICY_SLUGS) or source_name.rstrip('/').endswith(('destinations', 'compare', 'itineraries', 'plan', 'costs', 'vietnamguide.net'))
+
+    # Lexical diversity analysis (Type-Token Ratio / windowed TTR)
+    lexical_diversity_violations = []
+    if len(plain_words_lower) >= 100:
+        window_size = 100
+        ttrs = []
+        for i in range(0, len(plain_words_lower) - window_size + 1, 25):
+            win_tokens = plain_words_lower[i:i + window_size]
+            ttrs.append(len(set(win_tokens)) / float(window_size))
+        lexical_diversity = round(sum(ttrs) / len(ttrs), 3) if ttrs else 1.0
+        if lexical_diversity < 0.40 and not is_index_or_policy:
+            lexical_diversity_violations.append({
+                'severity': 'S2_LOW_LEXICAL_DIVERSITY',
+                'ttr': lexical_diversity,
+                'snippet': f"Average Type-Token Ratio {lexical_diversity:.3f} below 0.40 threshold across text"
+            })
+    elif len(plain_words_lower) > 0:
+        lexical_diversity = round(len(set(plain_words_lower)) / float(len(plain_words_lower)), 3)
+        if lexical_diversity < 0.40 and len(plain_words_lower) >= 15 and not is_index_or_policy:
+            lexical_diversity_violations.append({
+                'severity': 'S2_LOW_LEXICAL_DIVERSITY',
+                'ttr': lexical_diversity,
+                'snippet': f"Overall Type-Token Ratio {lexical_diversity:.3f} below 0.40 threshold"
+            })
+    else:
+        lexical_diversity = 1.0
+
+    # Flesch-Kincaid Reading Ease calculation
+    total_syllables = sum(count_syllables(w) for w in plain_words_lower) if plain_words_lower else 0
+    if sentence_count > 0 and word_count > 0:
+        flesch_reading_ease = round(206.835 - 1.015 * (word_count / sentence_count) - 84.6 * (total_syllables / word_count), 2)
+    else:
+        flesch_reading_ease = 70.0
+
+    # 2. Measure Cadence (Coefficient of Variation) & Repetitive Openers
+
 
     repetitive_openers_violations = []
     if sentence_count >= 3:
@@ -495,9 +573,11 @@ def analyze_text(text, source_name="direct_input"):
     base_score -= len(tier5_violations) * 15
     base_score -= len(tier6_violations) * 10
     base_score -= len(tier7_violations) * 15
+    base_score -= len(tier8_violations) * 15
     base_score -= len(adjective_cluster_violations) * 10
     base_score -= len(repetitive_openers_violations) * 10
     base_score -= len(local_cadence_violations) * 10
+    base_score -= len(lexical_diversity_violations) * 10
     if passive_ratio > 0.15 and sentence_count >= 5:
         base_score -= 10
 
@@ -517,21 +597,23 @@ def analyze_text(text, source_name="direct_input"):
 
     final_score = max(0, min(100, base_score))
 
-    # Strict Gate (v7.0):
+    # Strict Gate (v8.0):
     # 1. Zero Tier 1 violations
     # 2. Maximum 2 Tier 3 signposting violations
     # 3. Maximum 1 Tier 4 modern trope / sycophancy violation
     # 4. Zero Tier 5 travel fluff violations
     # 5. Zero Tier 6 over-explanation violations
     # 6. Zero Tier 7 authority slop violations
-    # 7. HLS score >= 80
-    # 8. If in-depth guide (word_count >= 400 and not archive/policy page): must achieve strict EDI >= 4.0 (or evidence_count >= 10 and EDI >= 3.0)
+    # 7. Zero Tier 8 superficial rhetoric violations
+    # 8. HLS score >= 80
+    # 9. If in-depth guide (word_count >= 400 and not archive/policy page): must achieve strict EDI >= 4.0 (or evidence_count >= 10 and EDI >= 3.0)
 
     has_heavy_signposting = (len(tier3_violations) >= 3)
     has_tier4_violations = (len(tier4_violations) >= 2)
     has_tier5_violations = (len(tier5_violations) >= 1)
     has_tier6_violations = (len(tier6_violations) >= 1)
     has_tier7_violations = (len(tier7_violations) >= 1)
+    has_tier8_violations = (len(tier8_violations) >= 1)
 
     common_pass = (
         (len(tier1_violations) == 0) and
@@ -540,6 +622,7 @@ def analyze_text(text, source_name="direct_input"):
         (not has_tier5_violations) and
         (not has_tier6_violations) and
         (not has_tier7_violations) and
+        (not has_tier8_violations) and
         (final_score >= 80)
     )
 
@@ -568,8 +651,11 @@ def analyze_text(text, source_name="direct_input"):
         'tier5_count': len(tier5_violations),
         'tier6_count': len(tier6_violations),
         'tier7_count': len(tier7_violations),
+        'tier8_count': len(tier8_violations),
         'adjective_cluster_count': len(adjective_cluster_violations),
         'repetitive_openers_count': len(repetitive_openers_violations),
+        'lexical_diversity': lexical_diversity,
+        'flesch_reading_ease': flesch_reading_ease,
         'passive_ratio': passive_ratio,
         'tier1_violations': tier1_violations,
         'tier2_violations': tier2_violations,
@@ -579,9 +665,11 @@ def analyze_text(text, source_name="direct_input"):
         'tier5_violations': tier5_violations,
         'tier6_violations': tier6_violations,
         'tier7_violations': tier7_violations,
+        'tier8_violations': tier8_violations,
         'adjective_cluster_violations': adjective_cluster_violations,
         'repetitive_openers_violations': repetitive_openers_violations,
         'local_cadence_violations': local_cadence_violations,
+        'lexical_diversity_violations': lexical_diversity_violations,
         'evidence_count': evidence_count,
         'evidence': {
             'currency_count': len(currency_matches),
@@ -596,6 +684,7 @@ def analyze_text(text, source_name="direct_input"):
             'sample_geolocation': list(set([m.group(0) for m in geolocation_matches[:4]])),
         }
     }
+
 
 # ==============================================================================
 # SITEMAP & URL FETCHER

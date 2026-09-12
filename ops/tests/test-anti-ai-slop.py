@@ -268,6 +268,44 @@ class TestAntiAiSlopLinter(unittest.TestCase):
         self.assertIn('passive_ratio', report, "Report must include passive_ratio")
         self.assertGreater(report.get('passive_ratio', 0.0), 0.15, "Must compute passive voice density ratio")
 
+    def test_tier8_superficial_rhetoric_and_hollow_formulas(self):
+        text = (
+            "Vietnam is a rich tapestry of vibrant cultures and ancient customs. "
+            "It is not just about visiting pagodas, it is about connecting with heritage. "
+            "From vibrant street food stalls to secluded mountain valleys, Vietnam has it all. "
+            "Nestled in the heart of the capital lies an oasis of calm. "
+            "Have you ever wondered what makes street pho so special? "
+            "Be prepared to enjoy mouth-watering cuisine in every corner."
+        )
+        report = linter.analyze_text(text, source_name="test-tier8")
+        self.assertIn('tier8_violations', report, "Report must include tier8_violations")
+        self.assertGreaterEqual(report.get('tier8_count', 0), 4, "Must detect Tier 8 superficial rhetoric and hollow formulas")
+        self.assertFalse(report['passed'], "Tier 8 superficial rhetoric must fail strict quality gate")
+
+    def test_lexical_diversity_analysis(self):
+        # Extremely repetitive text with low vocabulary diversity
+        text = (
+            "The city is good. The city is nice. The city is big. "
+            "The city is old. The city is calm. The city is quiet. "
+            "The city is great. The city is cool. The city is fine."
+        )
+        report = linter.analyze_text(text, source_name="test-ttr")
+        self.assertIn('lexical_diversity', report, "Report must include lexical_diversity")
+        self.assertLess(report.get('lexical_diversity', 1.0), 0.50, "Repetitive text must have low lexical diversity")
+
+    def test_clean_text_passes_tier8_and_lexical_diversity(self):
+        text = (
+            "Ga Hanoi serves daily southbound Reunification Express trains departing every evening. "
+            "Passengers buy soft-berth four-person compartment tickets at counter five. "
+            "A standard second-class ticket costs 1,150,000 VND to Ga Hue. "
+            "Bring water and light snacks because station trolley carts offer limited options."
+        )
+        report = linter.analyze_text(text, source_name="test-clean-v8")
+        self.assertEqual(report.get('tier8_count', 0), 0)
+        self.assertGreater(report.get('lexical_diversity', 0.0), 0.65)
+        self.assertTrue(report['passed'])
+
 
 if __name__ == '__main__':
     unittest.main()
+
