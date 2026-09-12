@@ -692,6 +692,7 @@ function vg_render_airport_navigator_html(): string
         }
 
         var currentAirport = 'HAN';
+        var currentTab = 'fare-calc';
 
         // Elements
         var chips = root.querySelectorAll('.vg-an-chip');
@@ -729,9 +730,8 @@ function vg_render_airport_navigator_html(): string
             if (!data) return;
             currentAirport = code;
 
-            try {
-                sessionStorage.setItem('vg_user_airport', code);
-            } catch(e) {}
+            setSafeStorage('vg_user_airport', code);
+            syncUrlParams({ airport: code, tab: currentTab });
 
             // Update chips
             chips.forEach(function(c) {
@@ -837,6 +837,7 @@ function vg_render_airport_navigator_html(): string
         tabs.forEach(function(tab, idx) {
             tab.addEventListener('click', function() {
                 var tabId = this.getAttribute('data-tab');
+                currentTab = tabId;
 
                 tabs.forEach(function(t) {
                     var match = t === tab;
@@ -849,6 +850,8 @@ function vg_render_airport_navigator_html(): string
                     var match = p.id === 'vg-panel-' + tabId;
                     p.classList.toggle('active', match);
                 });
+
+                syncUrlParams({ airport: currentAirport, tab: tabId });
             });
 
             tab.addEventListener('keydown', function(e) {
@@ -899,19 +902,69 @@ function vg_render_airport_navigator_html(): string
             });
         }
 
-        // Initialize: prioritize URL hash, then sessionStorage, then default to HAN
-        var initialAirport = 'HAN';
-        var hash = (window.location.hash || '').replace('#', '').toUpperCase();
-        if (hash && airportsData[hash]) {
-            initialAirport = hash;
-        } else {
+        // Resilient safe storage helpers with localStorage fallback
+        function getSafeStorage(key) {
             try {
-                var stored = sessionStorage.getItem('vg_user_airport');
+                return sessionStorage.getItem(key) || localStorage.getItem(key);
+            } catch(e) {
+                try { return localStorage.getItem(key); } catch(e2) { return null; }
+            }
+        }
+
+        function setSafeStorage(key, val) {
+            try { sessionStorage.setItem(key, val); } catch(e) {}
+            try { localStorage.setItem(key, val); } catch(e) {}
+        }
+
+        // Bidirectional URL query state synchronization
+        function syncUrlParams(params) {
+            if (!window.history || !window.history.replaceState) return;
+            try {
+                var url = new URL(window.location.href);
+                Object.keys(params).forEach(function(k) {
+                    if (params[k] !== undefined && params[k] !== null && params[k] !== '') {
+                        url.searchParams.set(k, params[k]);
+                    }
+                });
+                window.history.replaceState(null, '', url.toString());
+            } catch(e) {}
+        }
+
+        // Initialize: prioritize URL query/hash, then safe storage, default to HAN
+        var initialAirport = 'HAN';
+        try {
+            var urlParams = new URLSearchParams(window.location.search);
+            var qAirport = (urlParams.get('airport') || '').toUpperCase();
+            var hash = (window.location.hash || '').replace('#', '').toUpperCase();
+            if (qAirport && airportsData[qAirport]) {
+                initialAirport = qAirport;
+            } else if (hash && airportsData[hash]) {
+                initialAirport = hash;
+            } else {
+                var stored = getSafeStorage('vg_user_airport');
                 if (stored && airportsData[stored]) {
                     initialAirport = stored;
                 }
-            } catch(e) {}
-        }
+            }
+
+            var qTab = urlParams.get('tab');
+            if (qTab && ['fare-calc', 'gate-nav', 'scam-shield', 'money-sim'].indexOf(qTab) !== -1) {
+                currentTab = qTab;
+                var targetTab = root.querySelector('.vg-an-tab[data-tab="' + qTab + '"]');
+                if (targetTab) {
+                    tabs.forEach(function(t) {
+                        var match = t === targetTab;
+                        t.classList.toggle('active', match);
+                        t.setAttribute('aria-selected', match ? 'true' : 'false');
+                        t.setAttribute('tabindex', match ? '0' : '-1');
+                    });
+                    panels.forEach(function(p) {
+                        var match = p.id === 'vg-panel-' + qTab;
+                        p.classList.toggle('active', match);
+                    });
+                }
+            }
+        } catch(e) {}
 
         updateAirport(initialAirport);
     })();

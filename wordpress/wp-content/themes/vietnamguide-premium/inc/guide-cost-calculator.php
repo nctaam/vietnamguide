@@ -408,21 +408,76 @@ function vg_render_cost_calculator_html(): string
                     itinLabel.textContent = 'Explore 21-Day Deep Route';
                 }
             }
+
+            // Save state to safe storage and sync URL params
+            setSafeStorage('vg_user_duration', state.days);
+            setSafeStorage('vg_user_currency', state.currency);
+            syncUrlParams({ days: state.days, currency: state.currency, tier: state.style, party: state.party });
+        }
+
+        // Resilient safe storage helpers with localStorage fallback
+        function getSafeStorage(key) {
+            try {
+                return sessionStorage.getItem(key) || localStorage.getItem(key);
+            } catch(e) {
+                try { return localStorage.getItem(key); } catch(e2) { return null; }
+            }
+        }
+
+        function setSafeStorage(key, val) {
+            try { sessionStorage.setItem(key, val); } catch(e) {}
+            try { localStorage.setItem(key, val); } catch(e) {}
+        }
+
+        // Bidirectional URL query state synchronization
+        function syncUrlParams(params) {
+            if (!window.history || !window.history.replaceState) return;
+            try {
+                var url = new URL(window.location.href);
+                Object.keys(params).forEach(function(k) {
+                    if (params[k] !== undefined && params[k] !== null && params[k] !== '') {
+                        url.searchParams.set(k, params[k]);
+                    }
+                });
+                window.history.replaceState(null, '', url.toString());
+            } catch(e) {}
         }
 
         function init() {
             var root = document.getElementById('vg-cost-calculator');
             if (!root) return;
 
-            // Restore from sessionStorage if available
+            // Restore from URL query params first, then safe storage with bounds/NaN protection
             try {
-                var savedCur = sessionStorage.getItem('vg_user_currency');
-                if (savedCur === 'USD' || savedCur === 'VND') {
-                    state.currency = savedCur;
+                var urlParams = new URLSearchParams(window.location.search);
+                var qDays = parseInt(urlParams.get('days'), 10);
+                if (!isNaN(qDays) && qDays >= 3 && qDays <= 30) {
+                    state.days = qDays;
+                } else {
+                    var sDays = parseInt(getSafeStorage('vg_user_duration'), 10);
+                    if (!isNaN(sDays) && sDays >= 3 && sDays <= 30) {
+                        state.days = sDays;
+                    }
                 }
-                var savedDays = parseInt(sessionStorage.getItem('vg_user_duration'), 10);
-                if (savedDays >= 3 && savedDays <= 30) {
-                    state.days = savedDays;
+
+                var qCur = (urlParams.get('currency') || '').toUpperCase();
+                if (qCur === 'USD' || qCur === 'VND') {
+                    state.currency = qCur;
+                } else {
+                    var sCur = (getSafeStorage('vg_user_currency') || '').toUpperCase();
+                    if (sCur === 'USD' || sCur === 'VND') {
+                        state.currency = sCur;
+                    }
+                }
+
+                var qStyle = (urlParams.get('tier') || urlParams.get('style') || '').toLowerCase();
+                if (RATES[qStyle]) {
+                    state.style = qStyle;
+                }
+
+                var qParty = parseInt(urlParams.get('party'), 10);
+                if (!isNaN(qParty) && qParty >= 1 && qParty <= 4) {
+                    state.party = qParty;
                 }
             } catch(e) {}
 
@@ -431,7 +486,7 @@ function vg_render_cost_calculator_html(): string
                 slider.value = state.days;
                 slider.addEventListener('input', function (e) {
                     state.days = parseInt(e.target.value, 10) || 10;
-                    try { sessionStorage.setItem('vg_user_duration', state.days); } catch(err) {}
+                    setSafeStorage('vg_user_duration', state.days);
                     var presetChips = root.querySelectorAll('.vg-calc-preset-chip');
                     presetChips.forEach(function (chip) {
                         var chipDays = parseInt(chip.getAttribute('data-days'), 10);
@@ -451,7 +506,7 @@ function vg_render_cost_calculator_html(): string
                     if (d && slider) {
                         slider.value = d;
                         state.days = d;
-                        try { sessionStorage.setItem('vg_user_duration', d); } catch(err) {}
+                        setSafeStorage('vg_user_duration', d);
                         presetChips.forEach(function (c) { c.classList.remove('is-active'); });
                         chip.classList.add('is-active');
                         updateUI();
@@ -543,7 +598,7 @@ function vg_render_cost_calculator_html(): string
                 btn.addEventListener('click', function () {
                     if (c && c !== state.currency) {
                         state.currency = c;
-                        try { sessionStorage.setItem('vg_user_currency', c); } catch(err) {}
+                        setSafeStorage('vg_user_currency', c);
                         curBtns.forEach(function (b) {
                             b.classList.remove('is-active');
                             b.setAttribute('aria-pressed', 'false');

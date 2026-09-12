@@ -1131,6 +1131,14 @@ function vg_render_season_matrix_html(): string
                 localStorage.setItem('vg_sm_unit', state.unit);
                 localStorage.setItem('vg_sm_checks', JSON.stringify(state.checkedItems));
             } catch (e) {}
+
+            if (window.history && window.history.replaceState) {
+                try {
+                    var url = new URL(window.location.href);
+                    url.searchParams.set('month', state.currentMonth);
+                    window.history.replaceState(null, '', url.toString());
+                } catch (e) {}
+            }
         }
 
         function updateView() {

@@ -340,6 +340,37 @@ function vg_render_itinerary_finder_html(): string
     <script>
     (function () {
         'use strict';
+
+        // Resilient safe storage helpers with localStorage fallback
+        function getSafeStorage(key) {
+            try {
+                return sessionStorage.getItem(key) || localStorage.getItem(key);
+            } catch(e) {
+                try { return localStorage.getItem(key); } catch(e2) { return null; }
+            }
+        }
+
+        function setSafeStorage(key, val) {
+            try { sessionStorage.setItem(key, val); } catch(e) {}
+            try { localStorage.setItem(key, val); } catch(e) {}
+        }
+
+        // Bidirectional URL query state synchronization
+        function syncUrlParams(params) {
+            if (!window.history || !window.history.replaceState) return;
+            try {
+                var url = new URL(window.location.href);
+                Object.keys(params).forEach(function(k) {
+                    if (params[k] !== undefined && params[k] !== null && params[k] !== '' && params[k] !== 'all') {
+                        url.searchParams.set(k, params[k]);
+                    } else {
+                        url.searchParams.delete(k);
+                    }
+                });
+                window.history.replaceState(null, '', url.toString());
+            } catch(e) {}
+        }
+
         function initItineraryFinder() {
             var root = document.getElementById('itinerary-finder');
             if (!root || root.hasAttribute('data-vg-initialized')) return;
@@ -359,20 +390,49 @@ function vg_render_itinerary_finder_html(): string
                 gateway: 'all'
             };
 
-            // Restore from sessionStorage if present
+            // Restore from URL query params first, then safe storage
             try {
-                var savedDuration = parseInt(sessionStorage.getItem('vg_user_duration'), 10);
-                if (savedDuration) {
-                    if (savedDuration <= 5) filters.duration = 'short';
-                    else if (savedDuration <= 8) filters.duration = '7d';
-                    else if (savedDuration <= 12) filters.duration = '10d';
-                    else if (savedDuration <= 18) filters.duration = '14d';
-                    else filters.duration = '21d';
+                var urlParams = new URLSearchParams(window.location.search);
+                var qDuration = urlParams.get('duration');
+                if (qDuration) {
+                    var validDurations = ['short', '7d', '10d', '14d', '21d'];
+                    if (validDurations.indexOf(qDuration) !== -1) {
+                        filters.duration = qDuration;
+                    } else {
+                        var numD = parseInt(qDuration, 10);
+                        if (!isNaN(numD)) {
+                            if (numD <= 5) filters.duration = 'short';
+                            else if (numD <= 8) filters.duration = '7d';
+                            else if (numD <= 12) filters.duration = '10d';
+                            else if (numD <= 18) filters.duration = '14d';
+                            else filters.duration = '21d';
+                        }
+                    }
+                } else {
+                    var savedDuration = parseInt(getSafeStorage('vg_user_duration'), 10);
+                    if (!isNaN(savedDuration) && savedDuration) {
+                        if (savedDuration <= 5) filters.duration = 'short';
+                        else if (savedDuration <= 8) filters.duration = '7d';
+                        else if (savedDuration <= 12) filters.duration = '10d';
+                        else if (savedDuration <= 18) filters.duration = '14d';
+                        else filters.duration = '21d';
+                    }
                 }
 
-                var savedAirport = sessionStorage.getItem('vg_user_airport');
-                if (savedAirport === 'HAN') filters.gateway = 'hanoi';
-                else if (savedAirport === 'SGN') filters.gateway = 'hcmc';
+                var qStyle = urlParams.get('style');
+                var validStyles = ['classic', 'adventure', 'culture', 'nature', 'food'];
+                if (qStyle && validStyles.indexOf(qStyle) !== -1) {
+                    filters.style = qStyle;
+                }
+
+                var qGateway = urlParams.get('gateway');
+                if (qGateway === 'hanoi' || qGateway === 'hcmc') {
+                    filters.gateway = qGateway;
+                } else {
+                    var savedAirport = getSafeStorage('vg_user_airport');
+                    if (savedAirport === 'HAN') filters.gateway = 'hanoi';
+                    else if (savedAirport === 'SGN') filters.gateway = 'hcmc';
+                }
             } catch(e) {}
 
             function syncPillUI() {
@@ -423,12 +483,16 @@ function vg_render_itinerary_finder_html(): string
                 if (ariaStatus) {
                     ariaStatus.textContent = 'Showing ' + visibleCount + ' curated itineraries matching selected filters.';
                 }
+
+                // Sync URL query parameters
+                syncUrlParams({ duration: filters.duration, style: filters.style, gateway: filters.gateway });
             }
 
             function resetAll() {
                 filters.duration = 'all';
                 filters.style = 'all';
                 filters.gateway = 'all';
+                syncUrlParams({ duration: 'all', style: 'all', gateway: 'all' });
                 syncPillUI();
                 update();
             }
@@ -442,14 +506,14 @@ function vg_render_itinerary_finder_html(): string
 
                         filters[group] = value;
 
-                        // Save to sessionStorage for cross-tool continuity
+                        // Save to safe storage for cross-tool continuity
                         try {
                             if (group === 'duration') {
                                 var dMap = { '7d': 7, '10d': 10, '14d': 14, '21d': 21, 'short': 3 };
-                                if (dMap[value]) sessionStorage.setItem('vg_user_duration', dMap[value]);
+                                if (dMap[value]) setSafeStorage('vg_user_duration', dMap[value]);
                             } else if (group === 'gateway') {
-                                if (value === 'hanoi') sessionStorage.setItem('vg_user_airport', 'HAN');
-                                else if (value === 'hcmc') sessionStorage.setItem('vg_user_airport', 'SGN');
+                                if (value === 'hanoi') setSafeStorage('vg_user_airport', 'HAN');
+                                else if (value === 'hcmc') setSafeStorage('vg_user_airport', 'SGN');
                             }
                         } catch(err) {}
 

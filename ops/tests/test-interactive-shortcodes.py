@@ -151,6 +151,22 @@ class TestInteractiveShortcodes(unittest.TestCase):
         # Season matrix links to itinerary finder
         self.assertIn('/itineraries/', self.contents['season_matrix'])
 
+    def test_url_query_sync_presence(self):
+        """All 5 interactive components must support URL query/hash parameter state synchronization."""
+        for key, content in self.contents.items():
+            self.assertTrue(
+                ('URLSearchParams' in content or 'window.location.search' in content or 'window.location.hash' in content) and 'history.replaceState' in content,
+                f"Component {key} must support bidirectional URL parameter state sync via history.replaceState."
+            )
+
+    def test_storage_fallback_resilience(self):
+        """Interactive components must feature resilient storage with fallback handling."""
+        for key, content in self.contents.items():
+            self.assertTrue(
+                'localStorage' in content and 'try' in content,
+                f"Component {key} must feature exception-safe storage access with localStorage fallback."
+            )
+
 
 if __name__ == '__main__':
     unittest.main()

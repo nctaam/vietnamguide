@@ -612,11 +612,10 @@ function vg_render_visa_checker_html(): string
                 costLink.href = '<?php echo esc_url(home_url('/costs/vietnam-travel-cost/')); ?>?days=' + currentDuration;
             }
 
-            // Save state to sessionStorage
-            try {
-                sessionStorage.setItem('vg_user_nationality', currentCountry);
-                sessionStorage.setItem('vg_user_duration', currentDuration);
-            } catch(e) {}
+            // Save state to storage and sync URL
+            setSafeStorage('vg_user_nationality', currentCountry);
+            setSafeStorage('vg_user_duration', currentDuration);
+            syncUrlParams({ nationality: currentCountry, days: currentDuration });
 
             var ariaStatus = document.getElementById('vg-vc-aria-status');
             if (ariaStatus) {
@@ -757,9 +756,39 @@ function vg_render_visa_checker_html(): string
             document.body.removeChild(ta);
         }
 
-        // Restore from sessionStorage if available
+        // Storage helper with localStorage fallback
+        function getSafeStorage(key) {
+            try {
+                return sessionStorage.getItem(key) || localStorage.getItem(key);
+            } catch(e) {
+                try { return localStorage.getItem(key); } catch(e2) { return null; }
+            }
+        }
+
+        function setSafeStorage(key, val) {
+            try { sessionStorage.setItem(key, val); } catch(e) {}
+            try { localStorage.setItem(key, val); } catch(e) {}
+        }
+
+        // URL query parameter state sync via history.replaceState
+        function syncUrlParams(params) {
+            if (!window.history || !window.history.replaceState) return;
+            try {
+                var url = new URL(window.location.href);
+                Object.keys(params).forEach(function(k) {
+                    if (params[k] !== undefined && params[k] !== null && params[k] !== '') {
+                        url.searchParams.set(k, params[k]);
+                    }
+                });
+                window.history.replaceState(null, '', url.toString());
+            } catch(e) {}
+        }
+
+        // Restore from URL query params first, then safe storage
         try {
-            const storedCountry = sessionStorage.getItem('vg_user_nationality');
+            var urlParams = new URLSearchParams(window.location.search);
+            var queryCountry = (urlParams.get('nationality') || urlParams.get('country') || '').toUpperCase();
+            var storedCountry = queryCountry || getSafeStorage('vg_user_nationality');
             if (storedCountry && dataset.countries[storedCountry]) {
                 currentCountry = storedCountry;
                 if (countrySelect) countrySelect.value = currentCountry;
@@ -770,9 +799,13 @@ function vg_render_visa_checker_html(): string
                 });
             }
 
-            const storedDuration = parseInt(sessionStorage.getItem('vg_user_duration'), 10);
-            if (storedDuration && storedDuration >= 1 && storedDuration <= 90) {
-                currentDuration = storedDuration;
+            var queryDays = parseInt(urlParams.get('days') || urlParams.get('duration'), 10);
+            var storedDays = (!isNaN(queryDays) && queryDays >= 1 && queryDays <= 90)
+                ? queryDays
+                : parseInt(getSafeStorage('vg_user_duration'), 10);
+
+            if (!isNaN(storedDays) && storedDays >= 1 && storedDays <= 90) {
+                currentDuration = storedDays;
                 if (durationSlider) durationSlider.value = currentDuration;
                 if (durationVal) durationVal.textContent = currentDuration + ' days';
             }
