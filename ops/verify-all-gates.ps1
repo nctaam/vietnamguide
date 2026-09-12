@@ -12,8 +12,8 @@ Write-Output "========================================================"
 Write-Output "   VietnamGuide CI/CD Master Quality Gate Orchestrator   "
 Write-Output "========================================================"
 
-# Gate 1: Anti-AI Slop Quality Gate (Self-Test v2.0)
-Write-Output "`n[GATE 1/5] Anti-AI Slop Quality Engine v2.0..."
+# Gate 1: Anti-AI Slop Quality Gate (Self-Test v3.0)
+Write-Output "`n[GATE 1/5] Anti-AI Slop Quality Engine v3.0..."
 & powershell -File (Join-Path $ScriptDir 'verify-anti-ai-slop.ps1') -SelfTest
 if ($LASTEXITCODE -ne 0) { throw "Gate 1 (Anti-AI Slop) failed!" }
 

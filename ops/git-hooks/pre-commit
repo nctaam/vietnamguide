@@ -1,0 +1,37 @@
+#!/bin/sh
+# VietnamGuide Git Pre-Commit Hook
+# Verifies Core MU-Plugin Invariant & Safety Suite before commits
+
+set -e
+
+echo "=== [Pre-Commit] Verifying VietnamGuide Invariants ==="
+
+# 1. Core MU-Plugin Invariant & Safety Mutation Suite
+echo "Checking Core MU-Plugin Invariant & Safety Mutation Suite..."
+powershell -NoProfile -ExecutionPolicy Bypass -File ops/verify-core-mu-plugin.ps1
+if [ $? -ne 0 ]; then
+    echo "ERROR: Core MU-Plugin invariant verification failed!"
+    exit 1
+fi
+echo "✓ Core MU-Plugin invariant and AST mutation suite passed."
+
+# 2. Anti-AI Slop Engine v3.0 Unit Tests
+echo "Running Anti-AI Slop v3.0 unit tests..."
+python ops/tests/test-anti-ai-slop.py
+if [ $? -ne 0 ]; then
+    echo "ERROR: Anti-AI Slop unit tests failed!"
+    exit 1
+fi
+echo "✓ Anti-AI Slop unit tests passed."
+
+# 3. Interactive Travel Tools Shortcodes & State Continuity Unit Tests
+echo "Running Interactive Shortcodes & State Continuity unit tests..."
+python ops/tests/test-interactive-shortcodes.py
+if [ $? -ne 0 ]; then
+    echo "ERROR: Interactive shortcodes unit tests failed!"
+    exit 1
+fi
+echo "✓ Interactive shortcodes unit tests passed."
+
+echo "=== [Pre-Commit] All local quality gates passed! ==="
+exit 0

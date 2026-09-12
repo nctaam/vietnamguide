@@ -1004,3 +1004,42 @@ Date: 2026-07-28 (Asia/Saigon)
   - Production SFTP SHA-256 Parity: PASSED (100% exact hash parity across all 6 modified files).
   - OpenLiteSpeed Cache Purge & LSWS Reload: Executed cleanly (`SIGUSR1` signal).
   - Public HTTPS Production Verifier (`ops/verify-guide-experience-public.ps1` via Windows PowerShell 5.1): PASSED (100% on all 87 public routes).
+
+## Deep Anti-AI Slop v3.0, Interactive Tools Hardening & Layout Shift Prevention (Stage 30) - 2026-09-12
+
+- Architecture & Scope (Stage 30):
+  - Upgraded Anti-AI Slop Quality Engine to v3.0 (`ops/anti_ai_slop_linter.py`):
+    - Added Tier 3 Structural Signposting patterns (`TIER3_PATTERNS`): detecting AI roadmap meta-commentary ("in this guide, we will explore", "let's dive in", "read on to discover", "without further ado", "it goes without saying", "needless to say", "as previously mentioned", "as we have seen").
+    - Added Passive Observer Padding patterns (`PASSIVE_AI_PADDING_PATTERNS`): detecting passive voice fillers ("it is worth noting that", "it should be noted that", "it is important to remember", "one cannot help but", "it can be observed that", "visitors will find themselves").
+    - Expanded Concrete Ground-Truth Evidence Patterns: Added regexes for specific currency ranges (`CURRENCY_REGEX`), realistic transit durations (`TRANSIT_TIME_REGEX`), and operator hotline phone formats (`OPERATOR_HOTLINE_REGEX`).
+    - Expanded unit tests in `ops/tests/test-anti-ai-slop.py` (9/9 pass).
+  - Deep Content Enrichment & Full Sitemap v3.0 Audit:
+    - Remediated 12 published guides (`ops/remediate-content-v3-deep-hardening.php`) by injecting authoritative 2026 ground-truth factsheets directly into production MariaDB:
+      - Posts 224, 22, 336, 503, 201, 198, 501, 250, 502, 488, 418, 341.
+    - Verified entire live production sitemap: **102 / 102 URLs (100.0%) PASSED with 0 Tier 1, 0 Tier 2, 0 Tier 3, and 0 Passive Observer padding violations!** (Average Evidence Density Index increased to 6.48).
+  - Interactive Travel Tools Hardening & URL State Synchronization:
+    - Implemented bidirectional URL query state synchronization (`history.replaceState`) and safe storage fallback (`getSafeStorage` / `setSafeStorage` with `localStorage` resilience for incognito / restricted browsers) across all 5 interactive tools:
+      - Visa Checker: `?nationality=...&days=...`
+      - Season Matrix: `?month=...&view=regions`
+      - Cost Calculator: `?days=...&currency=...&tier=...&party=...` (with bounds and NaN protection)
+      - Itinerary Finder: `?duration=...&style=...&gateway=...`
+      - Airport Navigator: `?airport=...&tab=...`
+    - Expanded interactive shortcodes unit test suite (`ops/tests/test-interactive-shortcodes.py`) to 10/10 passing tests.
+  - Zero Cumulative Layout Shift ($CLS = 0$) & WCAG 2.2 AA Touch Targets:
+    - In `assets/css/homepage.css`, added `contain-intrinsic-size` and appropriate `min-height` container stabilization across all 5 widget containers (`.vg-visa-checker`, `.vg-cost-calculator`, `.vg-itinerary-finder`, `.vg-season-matrix`, `.vg-airport-navigator`).
+    - Enforced WCAG 2.2 AA 44x44px minimum touch targets on mobile viewports for chips, pills, toggle buttons, and tab controls (`.vg-finder-pill`, `.vg-vc-chip`, `.vg-sm-month-pill`, `.vg-an-chip`, `.vg-calc-preset-chip`, etc.).
+    - Applied Emil Kowalski spring micro-interactions (`cubic-bezier(0.34, 1.56, 0.64, 1)`) on active/press states.
+  - Master CI/CD Gate Orchestration & Pre-Commit Hook:
+    - Updated `ops/verify-all-gates.ps1` to orchestrate Anti-AI Slop v3.0, Core MU-Plugin invariants, Gutenberg block patterns, homepage theme checks, and interactive shortcode test suites.
+    - Created git pre-commit hook in `ops/git-hooks/pre-commit` (installed to `.git/hooks/pre-commit`) enforcing invariants on local commits.
+- Verification Evidence:
+  - Anti-AI Slop Engine v3.0 Unit Tests (`ops/tests/test-anti-ai-slop.py`): PASSED (9/9 tests).
+  - Interactive Shortcodes & State Continuity Suite (`ops/tests/test-interactive-shortcodes.py`): PASSED (10/10 tests).
+  - Production Sitemap v3.0 Crawl (`ops/reports/anti-ai-slop-audit-v3-latest.json`): PASSED (102/102 URLs with 0 violations).
+  - Local Homepage Theme Checks (`ops/verify-homepage-theme.ps1`): PASSED.
+  - Core MU-Plugin Invariant Suite (`ops/verify-core-mu-plugin.ps1`): PASSED (Fingerprint `71b49033114e8007e5c19fb8ebc1a89e0d0dad88d0fe92dd381a28700db096ce` preserved; all 16 AST mutations rejected).
+  - Core Block Patterns (`ops/verify-core-block-patterns.ps1`): PASSED.
+  - Master CI/CD Gate Orchestration (`ops/verify-all-gates.ps1`): PASSED (5/5 gates).
+  - Production SFTP SHA-256 Parity: PASSED (100% exact parity across 6 files).
+  - OpenLiteSpeed Cache Purge & LSWS Reload: Executed cleanly (`SIGUSR1` signal).
+  - Public HTTPS Production Verifier (`ops/verify-guide-experience-public.ps1`): PASSED (100% on all 87 public routes).
