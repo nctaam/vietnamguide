@@ -93,6 +93,8 @@ def strip_html(html_text):
     text = re.sub(r"<(script|style|svg)[^>]*>.*?</\1>", " ", html_text, flags=re.DOTALL | re.IGNORECASE)
     # Remove HTML comments
     text = re.sub(r"<!--.*?-->", " ", text, flags=re.DOTALL)
+    # Remove URLs so external citations don't trigger false positive clichés
+    text = re.sub(r"https?://[^\s<>\"']+", " ", text)
     # Replace block tags with newlines
     text = re.sub(r"</?(div|p|h[1-6]|li|section|article|blockquote|header|footer|tr)[^>]*>", "\n", text, flags=re.IGNORECASE)
     # Remove all remaining tags
