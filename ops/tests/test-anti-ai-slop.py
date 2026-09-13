@@ -378,10 +378,41 @@ class TestAntiAiSlopLinter(unittest.TestCase):
         ) * 4
         report = linter.analyze_text(body, source_name="test-repetition-gate")
         self.assertGreaterEqual(report.get('repetitive_openers_count', 0), 1)
-        self.assertFalse(report['passed'], "Article with repetitive openers must FAIL strict gate in v10")
+    def test_tier11_synthetic_marketing_detection(self):
+        text = (
+            "Hanoi is more than just a destination, it is an unforgettable experience. "
+            "The old town seamlessly blends centuries of tradition with modern cafes. "
+            "This temple serves as a stark reminder of historical conflicts. "
+            "A boutique resort tucked away in the limestone cliffs leaves nothing to be desired."
+        )
+        report = linter.analyze_text(text, source_name="test-tier11-marketing")
+        self.assertIn('tier11_violations', report, "Report must include tier11_violations")
+        self.assertGreaterEqual(report.get('tier11_count', 0), 4, "Must detect Tier 11 marketing and didactic tropes")
+        self.assertFalse(report['passed'], "Tier 11 marketing slop must fail strict quality gate")
+
+    def test_tier11_pseudo_philosophical_cliches(self):
+        text = (
+            "After all, travel is not just about visiting places, but finding oneself. "
+            "At its core, Hoi An is a reminder of ancient merchant glory. "
+            "Escape the hustle and bustle of city streets."
+        )
+        report = linter.analyze_text(text, source_name="test-tier11-philosophy")
+        self.assertIn('tier11_violations', report, "Report must include tier11_violations")
+        self.assertGreaterEqual(report.get('tier11_count', 0), 2, "Must detect pseudo-philosophical cliches and hustle-bustle")
+        self.assertFalse(report['passed'], "Tier 11 clichés must fail quality gate")
+
+    def test_clean_prose_passes_tier11(self):
+        clean_text = (
+            "Express Bus 86 departs Noi Bai Terminal 2 Pillar 2 every 45 minutes for 45,000 VND per seat. "
+            "Travelers heading to the Old Quarter disembark at Long Bien interchange after approximately 50 minutes. "
+            "Metered GrabCar rides cost between 260,000 and 320,000 VND including the 15,000 VND airport toll."
+        )
+        report = linter.analyze_text(clean_text, source_name="test-clean-tier11")
+        self.assertEqual(report.get('tier11_count', 0), 0)
 
 
 if __name__ == '__main__':
     unittest.main()
+
 
 

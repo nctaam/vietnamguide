@@ -198,10 +198,37 @@ class TestPolicyCadence(unittest.TestCase):
                 self.assertEqual(report.get('tier1_count', 0), 0, f"{url} has Tier 1 slop")
                 self.assertEqual(report.get('tier9_count', 0), 0, f"{url} has Tier 9 slop")
                 self.assertEqual(report.get('tier10_count', 0), 0, f"{url} has Tier 10 slop")
+                self.assertEqual(report.get('tier11_count', 0), 0, f"{url} has Tier 11 slop")
                 self.assertEqual(report.get('repetitive_openers_count', 0), 0, f"{url} has repetitive single openers")
                 self.assertEqual(report.get('repetitive_bigram_count', 0), 0, f"{url} has repetitive bigram openers")
                 self.assertTrue(report['passed'], f"{url} failed quality gate")
 
+    def test_v11_tier11_marketing_perfection_on_core_guides(self):
+        """Verify that live production guides have zero Tier 11 slop and pass v11.0 quality gate."""
+        import urllib.request
+        sample_urls = [
+            "https://vietnamguide.net/destinations/hanoi-travel-guide/",
+            "https://vietnamguide.net/destinations/ha-long-bay-travel-guide/",
+            "https://vietnamguide.net/destinations/hoi-an-ancient-town-guide/",
+            "https://vietnamguide.net/destinations/da-nang-travel-guide/",
+            "https://vietnamguide.net/plan/vietnam-travel-guide/",
+        ]
+        headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'}
+        for url in sample_urls:
+            with self.subTest(url=url):
+                try:
+                    req = urllib.request.Request(url, headers=headers)
+                    with urllib.request.urlopen(req, timeout=12) as resp:
+                        html = resp.read().decode('utf-8')
+                except Exception as e:
+                    self.skipTest(f"Network unavailable for {url}: {e}")
+
+                report = analyze_text(html, source_name=url)
+                self.assertEqual(report['hls_score'], 100, f"{url} HLS must be 100")
+                self.assertEqual(report.get('tier11_count', 0), 0, f"{url} has Tier 11 marketing slop")
+                self.assertTrue(report['passed'], f"{url} failed v11.0 quality gate")
+
 
 if __name__ == '__main__':
     unittest.main()
+

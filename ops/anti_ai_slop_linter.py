@@ -204,6 +204,22 @@ TIER10_PATTERNS = [
     (r"\ba\s+wealth\s+of\b", "a wealth of (conversational fluff)"),
 ]
 
+TIER11_PATTERNS = [
+    (r"\bmore\s+than\s+just\s+a\b", "more than just a (empty marketing framing)"),
+    (r"\bnot\s+just\s+a\b[^.!?]{1,40}\b(?:it(?:'s|\s+is)\s+a|but\s+a)\b", "not just a X, but a Y (marketing trope)"),
+    (r"\bserves?\s+as\s+a\s+(?:poignant\s+|stark\s+|gentle\s+|constant\s+)?reminder\b", "serves as a reminder (didactic trope)"),
+    (r"\bseamlessly\s+(?:blends?|combines?|weaves?|integrates?)\b", "seamlessly blends/integrates (lazy synthesis)"),
+    (r"\b(?:take[s]?|elevat(?:e|ing|es))\s+(?:your\s+)?(?:trip|journey|experience|adventure)\s+to\s+the\s+next\s+level\b", "take to the next level (corporate marketing)"),
+    (r"\ba\s+feast\s+for\s+(?:both\s+)?(?:the\s+)?(?:eyes|senses|soul)\b", "feast for the eyes/senses (cliché)"),
+    (r"\btucked\s+away\s+in\b", "tucked away in (lazy travel trope)"),
+    (r"\bleaves?\s+nothing\s+to\s+be\s+desired\b", "leaves nothing to be desired (empty superlative)"),
+    (r"\bprepare\s+to\s+be\s+(?:amazed|captivated|enchanted|dazzled|blown\s+away)\b", "prepare to be amazed/captivated (hype staging)"),
+    (r"\bpaints?\s+a\s+(?:vivid\s+)?picture\s+of\b", "paints a [vivid] picture of (formulaic prose)"),
+    (r"\bafter\s+all,\s+travel\s+is\b", "after all, travel is (pseudo-philosophical filler)"),
+    (r"\bat\s+its\s+core,\s+[A-Za-z]+\s+is\b", "at its core, [X] is (formulaic essence)"),
+    (r"\bhustle\s+and\s+bustle\b", "hustle and bustle (travel cliché)"),
+]
+
 def count_syllables(word):
     """Estimate English syllables for Flesch readability calculation."""
     w = word.lower().strip()
@@ -475,6 +491,20 @@ def analyze_text(text, source_name="direct_input"):
                 'snippet': f"...{snippet}..."
             })
 
+    tier11_violations = []
+    for pattern, name in TIER11_PATTERNS:
+        matches = list(re.finditer(pattern, plain_text, re.IGNORECASE))
+        for m in matches:
+            start = max(0, m.start() - 30)
+            end = min(len(plain_text), m.end() + 30)
+            snippet = plain_text[start:end].replace("\n", " ")
+            tier11_violations.append({
+                'severity': 'S1_TIER11_MARKETING_SLOP',
+                'phrase': name,
+                'matched_text': m.group(0),
+                'snippet': f"...{snippet}..."
+            })
+
     # Adjective clustering analysis (detect 3+ hyperbolic adjectives within sliding 150-word window)
     adjective_cluster_violations = []
     plain_words_lower = [re.sub(r"[^\w]", "", w.lower()) for w in plain_text.split()]
@@ -659,6 +689,7 @@ def analyze_text(text, source_name="direct_input"):
     base_score -= len(tier8_violations) * 15
     base_score -= len(tier9_violations) * 15
     base_score -= len(tier10_violations) * 15
+    base_score -= len(tier11_violations) * 15
     base_score -= len(adjective_cluster_violations) * 10
     base_score -= len(repetitive_openers_violations) * 10
     base_score -= len(repetitive_bigram_violations) * 10
@@ -683,7 +714,7 @@ def analyze_text(text, source_name="direct_input"):
 
     final_score = max(0, min(100, base_score))
 
-    # Strict Gate (v10.0):
+    # Strict Gate (v11.0):
     # 1. Zero Tier 1 violations
     # 2. Maximum 2 Tier 3 signposting violations
     # 3. Maximum 1 Tier 4 modern trope / sycophancy violation
@@ -693,9 +724,10 @@ def analyze_text(text, source_name="direct_input"):
     # 7. Zero Tier 8 superficial rhetoric violations
     # 8. Zero Tier 9 synthetic contrast / sycophancy violations
     # 9. Zero Tier 10 binary parallelism / conversational hedge violations
-    # 10. Zero repetitive single-word or consecutive bigram openers on in-depth guides
-    # 11. HLS score >= 80
-    # 12. If in-depth guide (word_count >= 400 and not archive/policy page): must achieve strict EDI >= 4.0 (or evidence_count >= 10 and EDI >= 3.0)
+    # 10. Zero Tier 11 synthetic marketing / didactic framing violations
+    # 11. Zero repetitive single-word or consecutive bigram openers on in-depth guides
+    # 12. HLS score >= 80
+    # 13. If in-depth guide (word_count >= 400 and not archive/policy page): must achieve strict EDI >= 4.0 (or evidence_count >= 10 and EDI >= 3.0)
 
     has_heavy_signposting = (len(tier3_violations) >= 3)
     has_tier4_violations = (len(tier4_violations) >= 2)
@@ -705,6 +737,7 @@ def analyze_text(text, source_name="direct_input"):
     has_tier8_violations = (len(tier8_violations) >= 1)
     has_tier9_violations = (len(tier9_violations) >= 1)
     has_tier10_violations = (len(tier10_violations) >= 1)
+    has_tier11_violations = (len(tier11_violations) >= 1)
     has_repetitive_openers = (len(repetitive_openers_violations) >= 1)
     has_repetitive_bigrams = (len(repetitive_bigram_violations) >= 1)
 
@@ -718,6 +751,7 @@ def analyze_text(text, source_name="direct_input"):
         (not has_tier8_violations) and
         (not has_tier9_violations) and
         (not has_tier10_violations) and
+        (not has_tier11_violations) and
         (final_score >= 80)
     )
 
@@ -749,6 +783,7 @@ def analyze_text(text, source_name="direct_input"):
         'tier8_count': len(tier8_violations),
         'tier9_count': len(tier9_violations),
         'tier10_count': len(tier10_violations),
+        'tier11_count': len(tier11_violations),
         'adjective_cluster_count': len(adjective_cluster_violations),
         'repetitive_openers_count': len(repetitive_openers_violations),
         'repetitive_bigram_count': len(repetitive_bigram_violations),
@@ -766,6 +801,7 @@ def analyze_text(text, source_name="direct_input"):
         'tier8_violations': tier8_violations,
         'tier9_violations': tier9_violations,
         'tier10_violations': tier10_violations,
+        'tier11_violations': tier11_violations,
         'adjective_cluster_violations': adjective_cluster_violations,
         'repetitive_openers_violations': repetitive_openers_violations,
         'repetitive_bigram_violations': repetitive_bigram_violations,

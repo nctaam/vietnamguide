@@ -1230,3 +1230,37 @@ Date: 2026-07-28 (Asia/Saigon)
     - Total Tier 1–10 Slop Violations: **0 across all 102 URLs**
     - Total Repetitive Single Openers: **0 across all 102 URLs**
     - Total Repetitive Bigram Openers: **0 across all 102 URLs**
+
+## Stage 38 Verification - Anti-AI Slop Quality Engine v11.0, Tier 11 Synthetic Marketing & Didactic Framing Elimination (September 13, 2026)
+- Goals:
+  - Deepen and perfect existing content and Anti-AI Slop quality engines with strict zero feature creep (no new custom post types, public URLs, shortcodes, or plugins).
+  - Upgrade Anti-AI Slop Quality Engine to v11.0 (`TIER11_PATTERNS` targeting modern LLM marketing hype, empty superlatives, and didactic framing: "more than just a", "not just a X, but a Y", "serves as a [poignant/stark/gentle/constant] reminder", "seamlessly [blends/combines/weaves/integrates]", "take to the next level / elevate your experience", "feast for the eyes/senses", "tucked away in", "leaves nothing to be desired", "prepare to be amazed/captivated", "paints a [vivid] picture of", "after all, travel is", "at its core, X is", "hustle and bustle").
+  - Enforce strict quality gate requirement v11.0: in-depth guides (`word_count >= 400 and not is_index_or_policy`) require `not has_tier11_violations`, in addition to `not has_tier10_violations`, `not has_repetitive_openers`, and `not has_repetitive_bigrams`.
+  - Expand automated unit test suite (`ops/tests/test-anti-ai-slop.py`) to 30 tests covering Tier 11 detection, pseudo-philosophical clichés, and clean prose validation (30/30 passing).
+  - Expand automated regression test suite (`ops/tests/test-policy-cadence.py`) to 9 test suites verifying that live production guides achieve $HLS = 100$ with 0 Tier 11 marketing slop and pass the strict v11.0 gate (9/9 passing).
+  - Verify master CI/CD quality gates (5/5), 87 public HTTPS routes (HTTP 200), and full 102/102 production sitemap crawl v11.0 with 0 Tier 1–11 slop, 0 repetitive openers, 0 repetitive bigrams, and 102/102 at $HLS = 100$.
+- Changes Implemented:
+  - Anti-AI Slop Engine v11.0 (`ops/anti_ai_slop_linter.py`):
+    - Added `TIER11_PATTERNS` regex suite targeting synthetic marketing hype and didactic framing tropes.
+    - Updated scoring penalty (-15 points per Tier 11 violation) and added `has_tier11_violations` check to `common_pass`.
+    - Added `tier11_count` and `tier11_violations` to analysis return dictionary.
+  - Automated Unit Tests (`ops/tests/test-anti-ai-slop.py`):
+    - Added `test_tier11_synthetic_marketing_detection`, `test_tier11_pseudo_philosophical_cliches`, and `test_clean_prose_passes_tier11`.
+    - Expanded unit test suite from 27 to 30 tests (30/30 passing).
+  - Automated Regression Test Suite (`ops/tests/test-policy-cadence.py`):
+    - Added `test_v11_tier11_marketing_perfection_on_core_guides` testing live production endpoints over HTTPS for $HLS = 100$, 0 Tier 11 slop, and v11.0 gate pass (9/9 test suites passing).
+- Verification Evidence:
+  - Anti-AI Slop Engine v11.0 Unit Tests (`ops/tests/test-anti-ai-slop.py`): PASSED (30/30 tests).
+  - Policy & Cadence Regression Suite (`ops/tests/test-policy-cadence.py`): PASSED (9/9 tests).
+  - Interactive Shortcodes & A11y Suite (`ops/tests/test-interactive-shortcodes.py`): PASSED (17/17 tests).
+  - Master CI/CD Gate Orchestration (`ops/verify-all-gates.ps1`): PASSED (5/5 quality gates).
+  - Core MU-Plugin Invariant Suite (`ops/verify-core-mu-plugin.ps1`): PASSED (Fingerprint `71b49033114e8007e5c19fb8ebc1a89e0d0dad88d0fe92dd381a28700db096ce` preserved; all 16 AST safety mutations rejected).
+  - Public HTTPS Production Verifier (`ops/verify-guide-experience-public.ps1`): PASSED (87/87 routes return HTTP 200 with full DOM integrity).
+  - Production Sitemap v11.0 Crawl (`ops/reports/anti-ai-slop-audit-v11-latest.json`): PASSED:
+    - Total URLs Evaluated: 102 / 102
+    - Passed Quality Gate: 102 / 102 (100.0%)
+    - Perfect $HLS = 100$ Score: **102 / 102 (100.0%)**
+    - Average Human-Likeness Score ($HLS$): **100.00 / 100.0**
+    - Total Tier 1–11 Slop Violations: **0 across all 102 URLs**
+    - Total Repetitive Single Openers: **0 across all 102 URLs**
+    - Total Repetitive Bigram Openers: **0 across all 102 URLs**
