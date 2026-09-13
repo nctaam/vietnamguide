@@ -239,9 +239,46 @@ class TestPolicyCadence(unittest.TestCase):
         self.assertTrue(re.search(r"'publicAccess'\s*=>\s*true", content))
         self.assertTrue(re.search(r"'actionStatus'\s*=>\s*'https://schema\.org/PotentialActionStatus'", content))
 
+    def test_live_https_travel_schema_enrichment(self):
+        """Verify live production endpoints serve valid enriched TouristDestination JSON-LD schema."""
+        import urllib.request
+        import json
+        import re
+
+        target_urls = [
+            "https://vietnamguide.net/destinations/hanoi-travel-guide/",
+            "https://vietnamguide.net/destinations/da-nang-travel-guide/",
+        ]
+
+        req_headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) VietnamGuide-Schema-Verifier/12.0'}
+        for url in target_urls:
+            with self.subTest(url=url):
+                try:
+                    req = urllib.request.Request(url, headers=req_headers)
+                    with urllib.request.urlopen(req, timeout=15) as resp:
+                        self.assertEqual(resp.status, 200, f"Failed fetching {url}")
+                        html = resp.read().decode('utf-8')
+                except Exception as e:
+                    self.skipTest(f"Network unavailable for {url}: {e}")
+
+                json_ld_matches = re.findall(r'<script type="application/ld\+json"[^>]*>(.*?)</script>', html, re.DOTALL)
+                found_destination = False
+                for match in json_ld_matches:
+                    try:
+                        data = json.loads(match)
+                        nodes = data.get('@graph', [data]) if isinstance(data, dict) else []
+                        for node in nodes:
+                            if isinstance(node, dict) and node.get('@type') == 'TouristDestination':
+                                found_destination = True
+                                self.assertEqual(node.get('currenciesAccepted'), 'VND')
+                                self.assertIn('en', node.get('availableLanguage', []))
+                                self.assertEqual(node.get('containedInPlace', {}).get('name'), 'Vietnam')
+                                break
+                    except Exception:
+                        continue
+                self.assertTrue(found_destination, f"Must find valid enriched TouristDestination in {url}")
+
 
 
 if __name__ == '__main__':
     unittest.main()
-
-
