@@ -410,9 +410,63 @@ class TestAntiAiSlopLinter(unittest.TestCase):
         report = linter.analyze_text(clean_text, source_name="test-clean-tier11")
         self.assertEqual(report.get('tier11_count', 0), 0)
 
+    def test_tier12_travel_fluff_and_false_equivalence(self):
+        text = (
+            "A visit to the Imperial Citadel is a must for any itinerary. "
+            "The morning market offers a glimpse into local life along the river. "
+            "The ancient pagodas stand as a testament to the enduring heritage of Hue. "
+            "Whether you choose a private sampan or a group boat, you won't be disappointed. "
+            "This village is steeped in tradition and replete with handcrafted lanterns. "
+            "The sunset leaves an indelible impression on everyone who witnesses it. "
+            "In today's fast-paced world, finding tranquility is rare. "
+            "Before embarking on this route, check bus schedules. "
+            "Travelers can dive into the vibrant culture of the old quarter."
+        )
+        report = linter.analyze_text(text, source_name="test-tier12-slop")
+        self.assertIn('tier12_violations', report, "Report must include tier12_violations")
+        self.assertGreaterEqual(report.get('tier12_count', 0), 5, "Must detect Tier 12 travel fluff patterns")
+        self.assertFalse(report['passed'], "Tier 12 slop must fail quality gate")
+
+    def test_syntactic_participle_opener_monotony(self):
+        text = (
+            "Traveling through the northern highlands requires sturdy footwear and patience. "
+            "Exploring the mountain passes reveals remote ethnic hamlets along the ridge. "
+            "Navigating the steep gravel switchbacks demands low gear and steady throttle. "
+            "The provincial road QL4D connects Sa Pa with Lai Chau over O Quy Ho Pass."
+        )
+        report = linter.analyze_text(text, source_name="test-participle-monotony")
+        self.assertIn('syntactic_monotony_violations', report)
+        self.assertGreaterEqual(report.get('syntactic_monotony_count', 0), 1, "Must detect 3 consecutive participle openers")
+        self.assertFalse(report['passed'])
+
+    def test_syntactic_prepositional_opener_monotony(self):
+        text = (
+            "For budget backpackers, the overnight sleeper bus departs My Dinh at 21:00 for 250,000 VND. "
+            "For family groups, private limousine vans cost 450,000 VND per seat with hotel pickup. "
+            "For solo motorcyclists, motorcycle rental shops in Ha Giang charge 180,000 VND per day. "
+            "Always inspect brake pads and tire pressure before leaving town."
+        )
+        report = linter.analyze_text(text, source_name="test-prepositional-monotony")
+        self.assertIn('syntactic_monotony_violations', report)
+        self.assertGreaterEqual(report.get('syntactic_monotony_count', 0), 1, "Must detect 3 consecutive identical prepositional openers")
+        self.assertFalse(report['passed'])
+
+    def test_clean_prose_passes_tier12_and_syntactic_cadence(self):
+        clean_text = (
+            "Hanoi rail operations center on Ga Ha Noi at 120 Le Duan. "
+            "Southbound trains SE1 and SE3 depart daily for Da Nang and Ho Chi Minh City. "
+            "Fares for a 4-berth air-conditioned sleeper berth to Da Nang start at 850,000 VND. "
+            "Passengers reserve tickets at the station counter or through dsvn.vn using international cards."
+        )
+        report = linter.analyze_text(clean_text, source_name="test-clean-tier12")
+        self.assertEqual(report.get('tier12_count', 0), 0)
+        self.assertEqual(report.get('syntactic_monotony_count', 0), 0)
+        self.assertTrue(report['passed'])
+
 
 if __name__ == '__main__':
     unittest.main()
+
 
 
 

@@ -220,6 +220,20 @@ TIER11_PATTERNS = [
     (r"\bhustle\s+and\s+bustle\b", "hustle and bustle (travel cliché)"),
 ]
 
+TIER12_PATTERNS = [
+    (r"\ba\s+must\s+for\s+any\s+itinerary\b|\ban\s+essential\s+addition\s+to\s+any\s+itinerary\b", "must for any itinerary (travel formula)"),
+    (r"\boffers?\s+a\s+glimpse\s+into\b|\bprovides?\s+a\s+glimpse\s+(?:of|into)\b", "offers/provides a glimpse into (lazy observer trope)"),
+    (r"\btestament\s+to\s+the\s+(?:enduring|rich|resilient|vibrant)\b", "testament to the enduring/rich (didactic praise)"),
+    (r"\b(?:whether\s+you\s+choose|whichever\s+you\s+choose)\b[^.!?]{1,60}\byou\s+won'?t\s+be\s+disappointed\b|\beither\s+way,\s+you\s+can'?t\s+go\s+wrong\b", "won't be disappointed / can't go wrong (false equivalence cop-out)"),
+    (r"\bsteeped\s+in\s+tradition\b", "steeped in tradition (cliché descriptor)"),
+    (r"\breplete\s+with\b", "replete with (affected literary filler)"),
+    (r"\bleaves?\s+an\s+indelible\s+impression\b", "leaves an indelible impression (sentimental hyperbole)"),
+    (r"\bin\s+today'?s\s+fast[- ]paced\s+world\b", "in today's fast-paced world (AI cliché intro)"),
+    (r"\bembarking\s+on\s+this\b", "embarking on this (formulaic staging)"),
+    (r"\bdive\s+(?:headfirst\s+)?into\s+the\s+vibrant\s+culture\b", "dive into the vibrant culture (travel cliché)"),
+]
+
+
 def count_syllables(word):
     """Estimate English syllables for Flesch readability calculation."""
     w = word.lower().strip()
@@ -505,6 +519,21 @@ def analyze_text(text, source_name="direct_input"):
                 'snippet': f"...{snippet}..."
             })
 
+    tier12_violations = []
+    for pattern, name in TIER12_PATTERNS:
+        matches = list(re.finditer(pattern, plain_text, re.IGNORECASE))
+        for m in matches:
+            start = max(0, m.start() - 30)
+            end = min(len(plain_text), m.end() + 30)
+            snippet = plain_text[start:end].replace("\n", " ")
+            tier12_violations.append({
+                'severity': 'S1_TIER12_TRAVEL_FLUFF',
+                'phrase': name,
+                'matched_text': m.group(0),
+                'snippet': f"...{snippet}..."
+            })
+
+
     # Adjective clustering analysis (detect 3+ hyperbolic adjectives within sliding 150-word window)
     adjective_cluster_violations = []
     plain_words_lower = [re.sub(r"[^\w]", "", w.lower()) for w in plain_text.split()]
@@ -579,6 +608,7 @@ def analyze_text(text, source_name="direct_input"):
 
     repetitive_openers_violations = []
     repetitive_bigram_violations = []
+    syntactic_monotony_violations = []
     if sentence_count >= 3:
         lengths = [len(s.split()) for s in sentences]
         mean_len = sum(lengths) / sentence_count
@@ -632,6 +662,44 @@ def analyze_text(text, source_name="direct_input"):
                             'snippet': f"{sentences[i][:45]}... / {sentences[i+1][:45]}..."
                         })
 
+            # Syntactic opener monotony detection: triple participle (-ing) or triple identical preposition
+            COMMON_OPENER_PREPOSITIONS = {
+                'for', 'in', 'at', 'on', 'with', 'by', 'from', 'to', 'under', 'during', 'after', 'before'
+            }
+            for i in range(len(sentences) - 2):
+                if len(sentences[i].split()) < 4 or len(sentences[i+1].split()) < 4 or len(sentences[i+2].split()) < 4:
+                    continue
+                w1 = re.findall(r"\b[A-Za-z0-9']+\b", sentences[i])
+                w2 = re.findall(r"\b[A-Za-z0-9']+\b", sentences[i + 1])
+                w3 = re.findall(r"\b[A-Za-z0-9']+\b", sentences[i + 2])
+                if not (w1 and w2 and w3):
+                    continue
+                first1 = w1[0].lower()
+                first2 = w2[0].lower()
+                first3 = w3[0].lower()
+
+                # Rule A: Triple consecutive -ing participle openers
+                if first1.endswith('ing') and first2.endswith('ing') and first3.endswith('ing'):
+                    if len(first1) > 4 and len(first2) > 4 and len(first3) > 4:
+                        syntactic_monotony_violations.append({
+                            'severity': 'S2_SYNTACTIC_PARTICIPLE_MONOTONY',
+                            'opener_type': 'triple_ing_participle',
+                            'words': [first1, first2, first3],
+                            'sentence_start_idx': i,
+                            'snippet': f"{sentences[i][:35]}... / {sentences[i+1][:35]}... / {sentences[i+2][:35]}..."
+                        })
+
+                # Rule B: Triple consecutive identical prepositional openers
+                if first1 == first2 == first3 and first1 in COMMON_OPENER_PREPOSITIONS:
+                    syntactic_monotony_violations.append({
+                        'severity': 'S2_SYNTACTIC_PREPOSITION_MONOTONY',
+                        'opener_type': 'triple_identical_preposition',
+                        'preposition': first1,
+                        'sentence_start_idx': i,
+                        'snippet': f"{sentences[i][:35]}... / {sentences[i+1][:35]}... / {sentences[i+2][:35]}..."
+                    })
+
+
         # Local sentence cadence monotony detection (sliding window of 6 sentences)
         local_cadence_violations = []
         if sentence_count >= 6 and not is_index_or_policy:
@@ -657,6 +725,7 @@ def analyze_text(text, source_name="direct_input"):
         cv = 0.5  # Neutral default for very short inputs
         local_cadence_violations = []
         repetitive_bigram_violations = []
+        syntactic_monotony_violations = []
 
     passive_ratio = round(len(passive_violations) / sentence_count, 3) if sentence_count > 0 else 0.0
 
@@ -690,6 +759,8 @@ def analyze_text(text, source_name="direct_input"):
     base_score -= len(tier9_violations) * 15
     base_score -= len(tier10_violations) * 15
     base_score -= len(tier11_violations) * 15
+    base_score -= len(tier12_violations) * 15
+    base_score -= len(syntactic_monotony_violations) * 15
     base_score -= len(adjective_cluster_violations) * 10
     base_score -= len(repetitive_openers_violations) * 10
     base_score -= len(repetitive_bigram_violations) * 10
@@ -714,7 +785,7 @@ def analyze_text(text, source_name="direct_input"):
 
     final_score = max(0, min(100, base_score))
 
-    # Strict Gate (v11.0):
+    # Strict Gate (v12.0):
     # 1. Zero Tier 1 violations
     # 2. Maximum 2 Tier 3 signposting violations
     # 3. Maximum 1 Tier 4 modern trope / sycophancy violation
@@ -725,9 +796,11 @@ def analyze_text(text, source_name="direct_input"):
     # 8. Zero Tier 9 synthetic contrast / sycophancy violations
     # 9. Zero Tier 10 binary parallelism / conversational hedge violations
     # 10. Zero Tier 11 synthetic marketing / didactic framing violations
-    # 11. Zero repetitive single-word or consecutive bigram openers on in-depth guides
-    # 12. HLS score >= 80
-    # 13. If in-depth guide (word_count >= 400 and not archive/policy page): must achieve strict EDI >= 4.0 (or evidence_count >= 10 and EDI >= 3.0)
+    # 11. Zero Tier 12 travel fluff / false equivalence violations
+    # 12. Zero syntactic opener monotony violations
+    # 13. Zero repetitive single-word or consecutive bigram openers on in-depth guides
+    # 14. HLS score >= 80
+    # 15. If in-depth guide (word_count >= 400 and not archive/policy page): must achieve strict EDI >= 4.0 (or evidence_count >= 10 and EDI >= 3.0)
 
     has_heavy_signposting = (len(tier3_violations) >= 3)
     has_tier4_violations = (len(tier4_violations) >= 2)
@@ -738,6 +811,8 @@ def analyze_text(text, source_name="direct_input"):
     has_tier9_violations = (len(tier9_violations) >= 1)
     has_tier10_violations = (len(tier10_violations) >= 1)
     has_tier11_violations = (len(tier11_violations) >= 1)
+    has_tier12_violations = (len(tier12_violations) >= 1)
+    has_syntactic_monotony = (len(syntactic_monotony_violations) >= 1)
     has_repetitive_openers = (len(repetitive_openers_violations) >= 1)
     has_repetitive_bigrams = (len(repetitive_bigram_violations) >= 1)
 
@@ -752,6 +827,8 @@ def analyze_text(text, source_name="direct_input"):
         (not has_tier9_violations) and
         (not has_tier10_violations) and
         (not has_tier11_violations) and
+        (not has_tier12_violations) and
+        (not has_syntactic_monotony) and
         (final_score >= 80)
     )
 
@@ -761,6 +838,7 @@ def analyze_text(text, source_name="direct_input"):
         passed = common_pass and (not has_repetitive_openers) and (not has_repetitive_bigrams) and (edi >= 4.0 or (evidence_count >= 10 and edi >= 3.0))
     else:
         passed = common_pass
+
 
     return {
         'source': source_name,
@@ -784,6 +862,8 @@ def analyze_text(text, source_name="direct_input"):
         'tier9_count': len(tier9_violations),
         'tier10_count': len(tier10_violations),
         'tier11_count': len(tier11_violations),
+        'tier12_count': len(tier12_violations),
+        'syntactic_monotony_count': len(syntactic_monotony_violations),
         'adjective_cluster_count': len(adjective_cluster_violations),
         'repetitive_openers_count': len(repetitive_openers_violations),
         'repetitive_bigram_count': len(repetitive_bigram_violations),
@@ -802,7 +882,10 @@ def analyze_text(text, source_name="direct_input"):
         'tier9_violations': tier9_violations,
         'tier10_violations': tier10_violations,
         'tier11_violations': tier11_violations,
+        'tier12_violations': tier12_violations,
+        'syntactic_monotony_violations': syntactic_monotony_violations,
         'adjective_cluster_violations': adjective_cluster_violations,
+
         'repetitive_openers_violations': repetitive_openers_violations,
         'repetitive_bigram_violations': repetitive_bigram_violations,
         'local_cadence_violations': local_cadence_violations,
@@ -928,7 +1011,7 @@ if __name__ == '__main__':
                 else:
                     failed_count += 1
                 total_t1 += r['tier1_count']
-                print(f"[{idx}/{len(urls)}] Score: {r['hls_score']}/100 | T1: {r['tier1_count']} | {u}")
+                print(f"[{idx}/{len(urls)}] Score: {r['hls_score']}/100 | T1: {r['tier1_count']} | T12: {r['tier12_count']} | Syn: {r['syntactic_monotony_count']} | {u}")
             except Exception as e:
                 print(f"[{idx}/{len(urls)}] ERROR on {u}: {e}")
 
@@ -947,8 +1030,9 @@ if __name__ == '__main__':
             print(f"\nAudit complete. Saved {len(results)} reports to {args.out}")
 
         print(f"\n=== SITEMAP AUDIT SUMMARY ===")
-        print(f"Total: {len(urls)} | Passed: {passed_count} | Failed: {failed_count} | Total Tier 1 Clichés: {total_t1}")
+        print(f"Total: {len(urls)} | Passed: {passed_count} | Failed: {failed_count} | Pass Rate: {passed_count/len(urls)*100:.1f}%")
         sys.exit(0 if failed_count == 0 else 1)
+
 
     else:
         parser.print_help()
