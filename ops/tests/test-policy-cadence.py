@@ -159,6 +159,49 @@ class TestPolicyCadence(unittest.TestCase):
                 self.assertEqual(report.get('repetitive_bigram_count', 0), 0, f"{url} has repetitive bigram openers")
                 self.assertTrue(report['passed'], f"{url} failed quality gate")
 
+    def test_remediated_v10_guides_achieve_zero_repetition(self):
+        """Verify that guides remediated in Stage 37 achieve HLS=100 with zero repetitive single/bigram openers and zero Tier 1-10 slop."""
+        import urllib.request
+        v10_urls = [
+            "https://vietnamguide.net/plan/vietnam-evisa/",
+            "https://vietnamguide.net/itineraries/14-days-in-vietnam/",
+            "https://vietnamguide.net/plan/vietnam-travel-guide/",
+            "https://vietnamguide.net/plan/transport-within-vietnam/",
+            "https://vietnamguide.net/destinations/best-things-to-do-in-hanoi/",
+            "https://vietnamguide.net/destinations/best-beaches-in-vietnam/",
+            "https://vietnamguide.net/destinations/da-nang-travel-guide/",
+            "https://vietnamguide.net/compare/hoi-an-vs-hue/",
+            "https://vietnamguide.net/destinations/phu-quoc-travel-guide/",
+            "https://vietnamguide.net/destinations/ly-son-travel-guide/",
+            "https://vietnamguide.net/compare/trang-an-vs-tam-coc/",
+            "https://vietnamguide.net/plan/where-to-stay-in-vietnam-base-decisions/",
+            "https://vietnamguide.net/plan/vietnam-in-december/",
+            "https://vietnamguide.net/plan/vietnam-in-january/",
+            "https://vietnamguide.net/plan/vietnam-in-february/",
+            "https://vietnamguide.net/destinations/hue-imperial-city-guide/",
+            "https://vietnamguide.net/compare/mekong-delta-overnight-vs-day-trip/",
+            "https://vietnamguide.net/plan/hanoi-to-sapa-transport/",
+            "https://vietnamguide.net/destinations/where-to-stay-in-sapa/",
+        ]
+        headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'}
+        for url in v10_urls:
+            with self.subTest(url=url):
+                try:
+                    req = urllib.request.Request(url, headers=headers)
+                    with urllib.request.urlopen(req, timeout=12) as resp:
+                        html = resp.read().decode('utf-8')
+                except Exception as e:
+                    self.skipTest(f"Network unavailable for {url}: {e}")
+
+                report = analyze_text(html, source_name=url)
+                self.assertEqual(report['hls_score'], 100, f"{url} HLS must be 100, got {report['hls_score']}")
+                self.assertEqual(report.get('tier1_count', 0), 0, f"{url} has Tier 1 slop")
+                self.assertEqual(report.get('tier9_count', 0), 0, f"{url} has Tier 9 slop")
+                self.assertEqual(report.get('tier10_count', 0), 0, f"{url} has Tier 10 slop")
+                self.assertEqual(report.get('repetitive_openers_count', 0), 0, f"{url} has repetitive single openers")
+                self.assertEqual(report.get('repetitive_bigram_count', 0), 0, f"{url} has repetitive bigram openers")
+                self.assertTrue(report['passed'], f"{url} failed quality gate")
+
 
 if __name__ == '__main__':
     unittest.main()

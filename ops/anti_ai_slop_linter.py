@@ -191,6 +191,19 @@ TIER9_PATTERNS = [
     (r"\bworld\s+of\s+difference\b", "world of difference (conversational trope)"),
 ]
 
+TIER10_PATTERNS = [
+    (r"\b(?:it\s+is|they\s+are)\s+strongest\b.{1,100}?\b(?:it\s+is|they\s+are)\s+weaker\b", "it is strongest X, it is weaker Y (synthetic binary parallelism)"),
+    (r"\b(?:it\s+is|they\s+are)\s+often\b.{1,100}?\b(?:it\s+is|they\s+are)\s+not\s+automatically\b", "they are often X, they are not automatically Y (synthetic contrast)"),
+    (r"\bthat\s+is\s+not\s+[a-z-]+\.\s*that\s+is\s+[a-z-]+\b", "that is not X, that is Y (staccato antithesis cliché)"),
+    (r"\bwhy\s+(?:should|would)\s+you\s+choose\b[^.!?]{1,50}\?\s*(?:the\s+answer|simply)\b", "why should you choose X? the answer (rhetorical staging formula)"),
+    (r"\bwhat\s+happens\s+when\b[^.!?]{1,50}\?\s*(?:well|simply|the\s+answer)\b", "what happens when X? (rhetorical question staging)"),
+    (r"\b(?:with\s+that\s+(?:being\s+)?said|that\s+being\s+said|having\s+said\s+that)\b", "with that being said / that being said (hollow transition hedge)"),
+    (r"\bin\s+light\s+of\s+this\b", "in light of this (bureaucratic signposting)"),
+    (r"\bit\s+bears\s+repeating\s+that\b", "it bears repeating that (redundant emphasis)"),
+    (r"\bwhen\s+it\s+comes\s+to\b", "when it comes to (weak transition cliché)"),
+    (r"\ba\s+wealth\s+of\b", "a wealth of (conversational fluff)"),
+]
+
 def count_syllables(word):
     """Estimate English syllables for Flesch readability calculation."""
     w = word.lower().strip()
@@ -448,6 +461,20 @@ def analyze_text(text, source_name="direct_input"):
                 'snippet': f"...{snippet}..."
             })
 
+    tier10_violations = []
+    for pattern, name in TIER10_PATTERNS:
+        matches = list(re.finditer(pattern, plain_text, re.IGNORECASE))
+        for m in matches:
+            start = max(0, m.start() - 30)
+            end = min(len(plain_text), m.end() + 30)
+            snippet = plain_text[start:end].replace("\n", " ")
+            tier10_violations.append({
+                'severity': 'S1_TIER10_BINARY_PARALLELISM',
+                'phrase': name,
+                'matched_text': m.group(0),
+                'snippet': f"...{snippet}..."
+            })
+
     # Adjective clustering analysis (detect 3+ hyperbolic adjectives within sliding 150-word window)
     adjective_cluster_violations = []
     plain_words_lower = [re.sub(r"[^\w]", "", w.lower()) for w in plain_text.split()]
@@ -631,6 +658,7 @@ def analyze_text(text, source_name="direct_input"):
     base_score -= len(tier7_violations) * 15
     base_score -= len(tier8_violations) * 15
     base_score -= len(tier9_violations) * 15
+    base_score -= len(tier10_violations) * 15
     base_score -= len(adjective_cluster_violations) * 10
     base_score -= len(repetitive_openers_violations) * 10
     base_score -= len(repetitive_bigram_violations) * 10
@@ -655,7 +683,7 @@ def analyze_text(text, source_name="direct_input"):
 
     final_score = max(0, min(100, base_score))
 
-    # Strict Gate (v9.0):
+    # Strict Gate (v10.0):
     # 1. Zero Tier 1 violations
     # 2. Maximum 2 Tier 3 signposting violations
     # 3. Maximum 1 Tier 4 modern trope / sycophancy violation
@@ -664,8 +692,10 @@ def analyze_text(text, source_name="direct_input"):
     # 6. Zero Tier 7 authority slop violations
     # 7. Zero Tier 8 superficial rhetoric violations
     # 8. Zero Tier 9 synthetic contrast / sycophancy violations
-    # 9. HLS score >= 80
-    # 10. If in-depth guide (word_count >= 400 and not archive/policy page): must achieve strict EDI >= 4.0 (or evidence_count >= 10 and EDI >= 3.0)
+    # 9. Zero Tier 10 binary parallelism / conversational hedge violations
+    # 10. Zero repetitive single-word or consecutive bigram openers on in-depth guides
+    # 11. HLS score >= 80
+    # 12. If in-depth guide (word_count >= 400 and not archive/policy page): must achieve strict EDI >= 4.0 (or evidence_count >= 10 and EDI >= 3.0)
 
     has_heavy_signposting = (len(tier3_violations) >= 3)
     has_tier4_violations = (len(tier4_violations) >= 2)
@@ -674,6 +704,9 @@ def analyze_text(text, source_name="direct_input"):
     has_tier7_violations = (len(tier7_violations) >= 1)
     has_tier8_violations = (len(tier8_violations) >= 1)
     has_tier9_violations = (len(tier9_violations) >= 1)
+    has_tier10_violations = (len(tier10_violations) >= 1)
+    has_repetitive_openers = (len(repetitive_openers_violations) >= 1)
+    has_repetitive_bigrams = (len(repetitive_bigram_violations) >= 1)
 
     common_pass = (
         (len(tier1_violations) == 0) and
@@ -684,13 +717,14 @@ def analyze_text(text, source_name="direct_input"):
         (not has_tier7_violations) and
         (not has_tier8_violations) and
         (not has_tier9_violations) and
+        (not has_tier10_violations) and
         (final_score >= 80)
     )
 
     if is_index_or_policy:
         passed = common_pass
     elif word_count >= 400:
-        passed = common_pass and (edi >= 4.0 or (evidence_count >= 10 and edi >= 3.0))
+        passed = common_pass and (not has_repetitive_openers) and (not has_repetitive_bigrams) and (edi >= 4.0 or (evidence_count >= 10 and edi >= 3.0))
     else:
         passed = common_pass
 
@@ -714,6 +748,7 @@ def analyze_text(text, source_name="direct_input"):
         'tier7_count': len(tier7_violations),
         'tier8_count': len(tier8_violations),
         'tier9_count': len(tier9_violations),
+        'tier10_count': len(tier10_violations),
         'adjective_cluster_count': len(adjective_cluster_violations),
         'repetitive_openers_count': len(repetitive_openers_violations),
         'repetitive_bigram_count': len(repetitive_bigram_violations),
@@ -730,6 +765,7 @@ def analyze_text(text, source_name="direct_input"):
         'tier7_violations': tier7_violations,
         'tier8_violations': tier8_violations,
         'tier9_violations': tier9_violations,
+        'tier10_violations': tier10_violations,
         'adjective_cluster_violations': adjective_cluster_violations,
         'repetitive_openers_violations': repetitive_openers_violations,
         'repetitive_bigram_violations': repetitive_bigram_violations,

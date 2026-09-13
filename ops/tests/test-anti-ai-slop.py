@@ -345,7 +345,43 @@ class TestAntiAiSlopLinter(unittest.TestCase):
         self.assertLess(report.get('flesch_reading_ease', 100.0), 85.0)
         self.assertTrue(report['passed'])
 
+    def test_tier10_synthetic_binary_parallelism(self):
+        text = (
+            "It is strongest for active hikers. It is weaker for families with toddlers. "
+            "They are often suitable for short trips. They are not automatically practical for long journeys. "
+            "That is not anti-beach. That is route hygiene."
+        )
+        report = linter.analyze_text(text, source_name="test-tier10-parallelism")
+        self.assertIn('tier10_violations', report, "Report must include tier10_violations")
+        self.assertGreaterEqual(report.get('tier10_count', 0), 2, "Must detect binary antithesis patterns")
+        self.assertFalse(report['passed'], "Tier 10 synthetic binary parallelisms must fail quality gate")
+
+    def test_tier10_rhetorical_and_hedging_formulas(self):
+        text = (
+            "Why should you choose this bus route? The answer lies in scheduling flexibility. "
+            "With that being said, travelers must still book sleeper berths early. "
+            "In light of this, always carry small cash denominations in VND."
+        )
+        report = linter.analyze_text(text, source_name="test-tier10-hedges")
+        self.assertIn('tier10_violations', report, "Report must include tier10_violations")
+        self.assertGreaterEqual(report.get('tier10_count', 0), 2, "Must detect rhetorical question staging and hedges")
+        self.assertFalse(report['passed'], "Tier 10 conversational hedges must fail quality gate")
+
+    def test_strict_repetition_gate_v10(self):
+        # 500-word article with repetitive openers must fail strict gate in v10
+        body = (
+            "Choose Hue for historical monuments and quiet river mornings. "
+            "Choose Hoi An for lantern walks and culinary experiences. "
+            "Choose Da Nang for modern resort amenities and airport ease. "
+            "The journey between Hue and Da Nang takes 2.5 hours by SE19 train with fares at 120,000 VND. "
+            "GrabCar transfers between Da Nang and Hoi An cost approximately 350,000 VND along the coast. "
+        ) * 4
+        report = linter.analyze_text(body, source_name="test-repetition-gate")
+        self.assertGreaterEqual(report.get('repetitive_openers_count', 0), 1)
+        self.assertFalse(report['passed'], "Article with repetitive openers must FAIL strict gate in v10")
+
 
 if __name__ == '__main__':
     unittest.main()
+
 
