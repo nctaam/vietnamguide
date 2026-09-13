@@ -928,18 +928,22 @@ function vg_rich_travel_schema_filter($data, $context = null): array
     // 1. TouristDestination Node
     $dest_schema = $cluster['destination_schema'];
     $dest_node = [
-        '@type'            => 'TouristDestination',
-        '@id'              => $dest_id,
-        'name'             => $dest_schema['name'],
-        'description'      => $dest_schema['description'],
-        'url'              => $current_url,
-        'touristType'      => $dest_schema['tourist_type'],
-        'containedInPlace' => [
+        '@type'              => 'TouristDestination',
+        '@id'                => $dest_id,
+        'name'               => $dest_schema['name'],
+        'description'        => $dest_schema['description'],
+        'url'                => $current_url,
+        'touristType'        => $dest_schema['tourist_type'],
+        'currenciesAccepted'  => 'VND',
+        'availableLanguage'   => ['en', 'vi'],
+        'publicAccess'        => true,
+        'isAccessibleForFree' => false,
+        'containedInPlace'   => [
             '@type'  => 'Country',
             'name'   => 'Vietnam',
             'sameAs' => 'https://www.wikidata.org/wiki/Q881',
         ],
-        'subjectOf'        => [
+        'subjectOf'          => [
             '@id' => $webpage_id,
         ],
     ];
@@ -1014,6 +1018,18 @@ function vg_rich_travel_schema_filter($data, $context = null): array
         'name'        => $trip_schema['name'],
         'description' => $trip_schema['description'],
         'touristType' => $trip_schema['tourist_type'],
+        'provider'    => [
+            '@type' => 'Organization',
+            'name'  => 'VietnamGuide.net',
+            'url'   => "{$canonical_base}/",
+        ],
+        'offers'      => [
+            '@type'         => 'Offer',
+            'price'         => '0',
+            'priceCurrency' => 'USD',
+            'category'      => 'Free Editorial Route Planning',
+            'url'           => $current_url,
+        ],
         'itinerary'   => [
             '@type'           => 'ItemList',
             'numberOfItems'   => count($trip_items),
@@ -1046,6 +1062,7 @@ function vg_rich_travel_schema_filter($data, $context = null): array
         '@type'        => 'TravelAction',
         '@id'          => $action_id,
         'name'         => $action_schema['name'],
+        'actionStatus' => 'https://schema.org/PotentialActionStatus',
         'agent'        => [
             '@type' => 'Organization',
             'name'  => 'VietnamGuide.net',
@@ -1063,6 +1080,7 @@ function vg_rich_travel_schema_filter($data, $context = null): array
             'name'  => $action_schema['method'] ?? 'Express Highway & Rail',
         ],
     ];
+
 
     // Connect WebPage and Article nodes to TouristDestination via Schema.org 'about' property
     $nodes = &$data;

@@ -228,7 +228,20 @@ class TestPolicyCadence(unittest.TestCase):
                 self.assertEqual(report.get('tier11_count', 0), 0, f"{url} has Tier 11 marketing slop")
                 self.assertTrue(report['passed'], f"{url} failed v11.0 quality gate")
 
+    def test_seo_schema_travel_attributes(self):
+        """Verify guide-seo.php defines necessary rich travel attributes."""
+        import re
+        seo_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..', 'wordpress', 'wp-content', 'themes', 'vietnamguide-premium', 'inc', 'guide-seo.php'))
+        with open(seo_path, 'r', encoding='utf-8') as f:
+            content = f.read()
+        self.assertTrue(re.search(r"'currenciesAccepted'\s*=>\s*'VND'", content))
+        self.assertTrue(re.search(r"'availableLanguage'\s*=>\s*\[\s*'en',\s*'vi'\s*\]", content))
+        self.assertTrue(re.search(r"'publicAccess'\s*=>\s*true", content))
+        self.assertTrue(re.search(r"'actionStatus'\s*=>\s*'https://schema\.org/PotentialActionStatus'", content))
+
+
 
 if __name__ == '__main__':
     unittest.main()
+
 
