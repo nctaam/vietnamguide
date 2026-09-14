@@ -620,6 +620,7 @@ function vg_find_travel_cluster_by_path(string $path): array
         || str_contains($normalized, 'old-quarter')
         || str_contains($normalized, 'west-lake')
         || str_contains($normalized, 'french-quarter')
+        || str_contains($normalized, 'northern')
     ) {
         return $clusters['northern_triangle'];
     }
@@ -676,6 +677,8 @@ function vg_find_travel_cluster_by_path(string $path): array
         || str_contains($normalized, 'quy-nhon')
         || str_contains($normalized, 'mui-ne')
         || str_contains($normalized, 'ly-son')
+        || str_contains($normalized, 'beach')
+        || str_contains($normalized, 'island')
     ) {
         return $clusters['coastal_islands'];
     }
