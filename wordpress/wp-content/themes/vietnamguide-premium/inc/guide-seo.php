@@ -1124,17 +1124,169 @@ function vg_rich_travel_schema_filter($data, $context = null): array
     }
     unset($node);
 
-    // Append our rich travel Schema nodes to graph or schema array
+    // 4. FAQPage Node (if authoritative Q&As exist for this URI)
+    $faq_node = vg_get_page_faq_schema($uri_path, $current_url);
+
+    // 5. HowTo Node (if step-by-step process exists for this URI)
+    $howto_node = vg_get_page_howto_schema($uri_path, $current_url);
+
+    // Append our rich Schema nodes to graph or schema array
     if (isset($data['@graph']) && is_array($data['@graph'])) {
         $data['@graph'][] = $dest_node;
         $data['@graph'][] = $trip_node;
         $data['@graph'][] = $action_node;
+        if ($faq_node !== null) {
+            $data['@graph'][] = $faq_node;
+        }
+        if ($howto_node !== null) {
+            $data['@graph'][] = $howto_node;
+        }
     } else {
         $data['tourist_destination'] = $dest_node;
         $data['tourist_trip'] = $trip_node;
         $data['travel_action'] = $action_node;
+        if ($faq_node !== null) {
+            $data['faq_page'] = $faq_node;
+        }
+        if ($howto_node !== null) {
+            $data['howto'] = $howto_node;
+        }
     }
 
     return $data;
 }
+
+/**
+ * Authoritative FAQ Schema.org generator for high-intent travel planning queries.
+ */
+function vg_get_page_faq_schema(string $uri_path, string $current_url): ?array
+{
+    $slug = trim(basename($uri_path), '/');
+    $faq_registry = [
+        'vietnam-evisa' => [
+            ['q' => 'How much does a Vietnam e-visa cost?', 'a' => 'A single-entry Vietnam e-visa costs 25 USD, and a multiple-entry e-visa costs 50 USD. Fees are paid online by credit card and are non-refundable regardless of the application outcome.'],
+            ['q' => 'What is the official Vietnam e-visa website?', 'a' => 'The only official government portal for Vietnam e-visas is evisa.xuatnhapcanh.gov.vn (operated by the Vietnam Immigration Department). Avoid commercial third-party websites charging excessive processing markups.'],
+            ['q' => 'How far in advance should I apply for a Vietnam e-visa?', 'a' => 'Apply at least 2 weeks before your planned flight. Standard processing takes 3 to 5 business days, but processing stops during Vietnamese national holidays and technical maintenance windows.'],
+            ['q' => 'Can I change my port of entry after my Vietnam e-visa is approved?', 'a' => 'No. Your entry checkpoint must match the airport, land border, or seaport approved on your official e-visa document. Changing entry ports requires submitting a new visa application.'],
+            ['q' => 'Do I need to print a paper copy of my Vietnam e-visa?', 'a' => 'Yes. Airlines require a physical paper copy at departure check-in, and immigration officers stamp the paper letter upon arrival at the border checkpoint.'],
+        ],
+        'sim-esim-vietnam' => [
+            ['q' => 'Is eSIM or physical SIM better for traveling in Vietnam?', 'a' => 'An eSIM is convenient and activates before arrival if your phone is carrier-unlocked. A physical SIM card is preferable if your phone is locked or if you need a reliable local phone number to receive Grab driver calls.'],
+            ['q' => 'Which mobile network has the best coverage in Vietnam?', 'a' => 'Viettel provides the widest and most reliable 4G network coverage across Vietnam, especially in mountainous regions like Sapa and Ha Giang and offshore islands. Vinaphone is a solid secondary choice in major cities.'],
+            ['q' => 'Can I purchase a SIM card upon arrival at Vietnam airports?', 'a' => 'Yes. Official carrier kiosks (Viettel, Vinaphone, Mobifone) operate directly outside the baggage claim halls at Hanoi (Noi Bai), Ho Chi Minh City (Tan Son Nhat), and Da Nang international airports.'],
+        ],
+        'vietnam-airport-arrival-checklist' => [
+            ['q' => 'How much cash should I withdraw upon arrival at a Vietnam airport?', 'a' => 'Withdraw 1 to 2 million VND (approximately 40 to 80 USD) from official bank ATMs (such as Vietcombank or BIDV) in the arrivals hall to cover initial taxi fares and street expenses.'],
+            ['q' => 'How do I avoid taxi scams at Vietnam airports?', 'a' => 'Use the Grab app over airport Wi-Fi or visit official prepaid taxi counters (Mai Linh or Vinasun) inside the terminal. Never follow unbadged touts offering private transportation in the terminal corridors.'],
+            ['q' => 'How long does immigration clearance take at Hanoi and Saigon airports?', 'a' => 'Standard passport control takes 30 to 60 minutes. During peak arrival periods in late afternoon and evening, wait times can reach 90 minutes.'],
+        ],
+        'hanoi-to-sapa-transport' => [
+            ['q' => 'What is the fastest way to get from Hanoi to Sapa?', 'a' => 'A sleeper cabin bus or luxury limousine van traveling via the Noi Bai - Lao Cai expressway takes 5.5 to 6 hours door-to-door, which is faster and more direct than the train.'],
+            ['q' => 'Is the overnight train from Hanoi to Sapa comfortable?', 'a' => 'The overnight sleeper train offers a smooth ride with air-conditioned 4-berth cabins. It arrives in Lao Cai station at 5:30 AM, where you transfer to a 50-minute mountain shuttle van up to Sapa town.'],
+            ['q' => 'Can I book a private car transfer from Hanoi to Sapa?', 'a' => 'Yes. Private car transfers take approximately 5 hours door-to-door, offering total schedule flexibility and luggage convenience for families and small travel groups.'],
+        ],
+        'ha-giang-easy-rider-vs-self-drive' => [
+            ['q' => 'Can tourists legally ride a motorbike on the Ha Giang Loop?', 'a' => 'Vietnam only recognizes the 1968 International Driving Permit (IDP) with an active motorcycle endorsement. Driving on a 1949 IDP or home automobile license is illegal and voids travel medical insurance policies.'],
+            ['q' => 'What is an Easy Rider tour in Ha Giang?', 'a' => 'An Easy Rider is a professional local rider who navigates the motorcycle while you sit comfortably on the rear passenger pillion seat, allowing you to view mountain landscapes without driving hazards.'],
+            ['q' => 'How dangerous is driving the Ha Giang Loop independently?', 'a' => 'Independent driving carries real risks from steep mountain gradients, sharp hairpin turns on Ma Pi Leng Pass, loose gravel, unpredictable construction vehicles, and sudden mountain fog.'],
+        ],
+        'ha-long-bay-cruise-questions-before-booking' => [
+            ['q' => 'Should I choose a 2-day or 3-day Ha Long Bay cruise?', 'a' => 'A 2-day/1-night cruise gives 24 hours on the water and suits compact itineraries. A 3-day/2-night cruise travels deeper into quieter Lan Ha or Bai Tu Long bays with unhurried kayaking and swimming time.'],
+            ['q' => 'What amenities are included in an overnight Ha Long Bay cruise?', 'a' => 'Cruise rates include all onboard meals, private en-suite cabin, cave excursions, and kayak access. Highway transfers between Hanoi and the harbor and personal beverages are usually billed separately.'],
+            ['q' => 'What is the cruise cancellation policy during bad weather?', 'a' => 'The local maritime port authority suspends sailings during typhoons or dense fog for passenger safety. Reputable operators provide full refunds or day-tour alternatives in accordance with maritime law.'],
+        ],
+        'trang-an-vs-tam-coc' => [
+            ['q' => 'Is Trang An or Tam Coc better in Ninh Binh?', 'a' => 'Trang An features dramatic karst water cave tunnels, strict lifejacket rules, and organized UNESCO management. Tam Coc offers open river paddling through scenic rice fields with rowers using their feet.'],
+            ['q' => 'How long does the boat tour take in Trang An and Tam Coc?', 'a' => 'Trang An boat circuits last 2.5 to 3 hours through 3 to 4 caves. Tam Coc boat trips take approximately 1.5 to 2 hours along the Ngo Dong river.'],
+            ['q' => 'Which boat route in Trang An is recommended?', 'a' => 'Route 2 (visiting Dot Cave and Dia Linh Cave) and Route 3 (featuring the 1,000-meter cave) provide the finest combination of karst scenery, cave passages, and historic temples.'],
+        ],
+        'vietnam-travel-cost' => [
+            ['q' => 'What is a realistic daily travel budget for Vietnam?', 'a' => 'Budget backpackers spend 30 to 45 USD per day. Mid-range travelers staying in 3-star boutique hotels and taking domestic flights spend 70 to 120 USD per day. Luxury travelers spend 200 USD and up per day.'],
+            ['q' => 'Is Vietnam cheaper than Thailand for travelers?', 'a' => 'Vietnam is generally 15 to 25 percent less expensive than Thailand for street meals, local transportation, and city boutique accommodations, while guided expeditions and luxury cruises cost similar amounts.'],
+            ['q' => 'Do I need cash in Vietnam or are cards widely accepted?', 'a' => 'Credit cards are accepted at mid-range hotels, supermarkets, and established restaurants in major cities. Cash in Vietnamese Dong (VND) is essential for street dining, small market stalls, and rural taxis.'],
+        ],
+    ];
+
+    if (! isset($faq_registry[$slug])) {
+        return null;
+    }
+
+    $questions = [];
+    foreach ($faq_registry[$slug] as $item) {
+        $questions[] = [
+            '@type'          => 'Question',
+            'name'           => $item['q'],
+            'acceptedAnswer' => [
+                '@type' => 'Answer',
+                'text'  => $item['a'],
+            ],
+        ];
+    }
+
+    return [
+        '@type'      => 'FAQPage',
+        '@id'        => "{$current_url}#faq",
+        'isPartOf'   => ['@id' => "{$current_url}#webpage"],
+        'mainEntity' => $questions,
+    ];
+}
+
+/**
+ * Authoritative HowTo Schema.org generator for process and application guides.
+ */
+function vg_get_page_howto_schema(string $uri_path, string $current_url): ?array
+{
+    $slug = trim(basename($uri_path), '/');
+    $howto_registry = [
+        'vietnam-evisa' => [
+            'name'        => 'How to Apply for a Vietnam E-Visa Online',
+            'description' => 'Step-by-step instructions for submitting a valid Vietnam electronic visa application through the official government immigration portal.',
+            'steps'       => [
+                ['name' => 'Prepare Required Documents', 'text' => 'Ensure your passport has at least 6 months validity. Prepare a sharp JPEG digital scan of your passport bio page and a passport-style portrait photo on a plain white background without glasses.'],
+                ['name' => 'Access the Official Immigration Portal', 'text' => 'Visit the official government website at evisa.xuatnhapcanh.gov.vn. Avoid third-party commercial agency portals that charge marked-up intermediary fees.'],
+                ['name' => 'Complete the Application Form', 'text' => 'Fill in your full legal name, date of birth, passport details, temporary address in Vietnam, and select your specific entry and exit international border checkpoints.'],
+                ['name' => 'Pay the Visa Processing Fee', 'text' => 'Pay the official non-refundable fee (25 USD for single-entry up to 90 days, or 50 USD for multiple-entry) using an international debit or credit card.'],
+                ['name' => 'Track Status and Print Approval Letter', 'text' => 'Record your registration code. Check application status after 3 to 5 working days. Once approved, download and print two physical copies of the e-visa letter for departure check-in and border inspection.'],
+            ],
+        ],
+        'sim-esim-vietnam' => [
+            'name'        => 'How to Buy and Set Up an eSIM for Vietnam',
+            'description' => 'Step-by-step guide to purchasing, installing, and activating an electronic SIM profile for mobile data in Vietnam.',
+            'steps'       => [
+                ['name' => 'Verify Phone Compatibility', 'text' => 'Confirm your smartphone is carrier-unlocked and supports eSIM functionality in device cellular settings.'],
+                ['name' => 'Select Network and Data Plan', 'text' => 'Choose an authorized provider powered by the Viettel network for superior nationwide coverage, especially in highland and island destinations.'],
+                ['name' => 'Install eSIM via QR Code', 'text' => 'Receive your digital activation QR code by email. Open device settings, select Add eSIM, and scan the QR code before boarding your flight.'],
+                ['name' => 'Activate Data Roaming on Arrival', 'text' => 'Upon touchdown at any Vietnam international airport, switch your cellular data line to the Vietnam eSIM profile and toggle Data Roaming to ON.'],
+            ],
+        ],
+    ];
+
+    if (! isset($howto_registry[$slug])) {
+        return null;
+    }
+
+    $data = $howto_registry[$slug];
+    $steps = [];
+    $pos = 1;
+    foreach ($data['steps'] as $step) {
+        $steps[] = [
+            '@type'    => 'HowToStep',
+            'position' => (string) $pos,
+            'name'     => $step['name'],
+            'text'     => $step['text'],
+            'url'      => "{$current_url}#step-{$pos}",
+        ];
+        $pos++;
+    }
+
+    return [
+        '@type'       => 'HowTo',
+        '@id'         => "{$current_url}#howto",
+        'name'        => $data['name'],
+        'description' => $data['description'],
+        'isPartOf'    => ['@id' => "{$current_url}#webpage"],
+        'step'        => $steps,
+    ];
+}
+
 add_filter('rank_math/json_ld', 'vg_rich_travel_schema_filter', 100, 2);
