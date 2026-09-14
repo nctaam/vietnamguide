@@ -1121,6 +1121,34 @@ function vg_rich_travel_schema_filter($data, $context = null): array
                 }
             }
         }
+
+        $is_org = $node_type === 'Organization' || (is_array($node_type) && in_array('Organization', $node_type, true));
+        if ($is_org) {
+            $node['url'] = "{$canonical_base}/";
+            $node['publishingPrinciples'] = "{$canonical_base}/editorial-policy/";
+            $node['correctionsPolicy'] = "{$canonical_base}/source-update-policy/";
+            $node['knowsAbout'] = [
+                'Vietnam Travel Planning',
+                'Vietnam Transportation & Rail Logistics',
+                'Vietnam Visa Regulations & Entry Policies',
+                'Southeast Asia Tourism Safety',
+                'Sustainable Travel in Vietnam',
+            ];
+        }
+
+        $is_person = $node_type === 'Person' || (is_array($node_type) && in_array('Person', $node_type, true));
+        if ($is_person) {
+            $node['jobTitle'] = 'Editorial Desk & Field Research Team';
+            $node['description'] = 'Independent travel editors and on-the-ground researchers producing verified route logistics, safety checks, and practical travel guides for Vietnam.';
+            $node['publishingPrinciples'] = "{$canonical_base}/editorial-policy/";
+            $node['knowsAbout'] = [
+                'Vietnam Travel Logistics',
+                'Vietnam Visa Regulations',
+                'Public Transport and Rail in Vietnam',
+                'Destination Planning',
+                'Travel Safety in Southeast Asia',
+            ];
+        }
     }
     unset($node);
 
