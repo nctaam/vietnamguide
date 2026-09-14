@@ -81,8 +81,9 @@ add_action('template_redirect', static function (): void {
     exit;
 });
 
-// Core Web Vitals & Resource Hints: Preconnect to media CDN and preload LCP hero image
+// Core Web Vitals & Resource Hints: Preconnect to media CDN, preload LCP hero image, and verification
 add_action('wp_head', static function (): void {
+    echo '<meta name="google-site-verification" content="G5wVuwqeUiubxqR-z_1BOA5opV1xwI4PKy-piHsN6Xc">' . "\n";
     echo '<link rel="preconnect" href="https://upload.wikimedia.org" crossorigin>' . "\n";
     echo '<link rel="dns-prefetch" href="https://upload.wikimedia.org">' . "\n";
 
