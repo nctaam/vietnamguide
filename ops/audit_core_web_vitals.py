@@ -20,8 +20,8 @@ SAMPLE_URLS = [
     'https://vietnamguide.net/destinations/ha-long-bay-travel-guide/',
     'https://vietnamguide.net/plan/vietnam-evisa/',
     'https://vietnamguide.net/plan/best-time-to-visit-vietnam/',
-    'https://vietnamguide.net/routes/10-days-in-vietnam/',
-    'https://vietnamguide.net/plan/vietnam-travel-cost/',
+    'https://vietnamguide.net/itineraries/10-days-in-vietnam/',
+    'https://vietnamguide.net/costs/vietnam-travel-cost/',
 ]
 
 print("=== Auditing Core Web Vitals & Real Experience Performance ===")
@@ -35,15 +35,15 @@ for url in SAMPLE_URLS:
     
     try:
         with urllib.request.urlopen(req, timeout=10) as resp:
-            headers = dict(resp.info())
+            headers = {k.lower(): v for k, v in resp.headers.items()}
             raw_body = resp.read()
             ttfb = time.time() - start_time
             
             # Check encoding
-            encoding = headers.get('Content-Encoding', 'none')
-            content_type = headers.get('Content-Type', '')
-            cache_ctrl = headers.get('Cache-Control', 'none')
-            x_litespeed = headers.get('X-LiteSpeed-Cache', 'none')
+            encoding = headers.get('content-encoding', 'none')
+            content_type = headers.get('content-type', '')
+            cache_ctrl = headers.get('cache-control', 'none')
+            x_litespeed = headers.get('x-litespeed-cache', 'none')
             
             # If gzip, decompress
             if encoding == 'gzip':
