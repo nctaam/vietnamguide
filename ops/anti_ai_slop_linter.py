@@ -299,8 +299,8 @@ def strip_html(html_text):
     text = re.sub(r"<!--.*?-->", " ", text, flags=re.DOTALL)
     # Remove URLs so external citations don't trigger false positive clichés
     text = re.sub(r"https?://[^\s<>\"']+", " ", text)
-    # Mark list items and table cells with bullet prefix so prose extraction isolates narrative sentences
-    text = re.sub(r"<(li|tr|th|td)[^>]*>", "\n• ", text, flags=re.IGNORECASE)
+    # Mark list items, table cells, and captions with bullet prefix so prose extraction isolates narrative sentences
+    text = re.sub(r"<(li|tr|th|td|caption)[^>]*>", "\n• ", text, flags=re.IGNORECASE)
     # Replace block tags with paragraph breaks
     text = re.sub(r"</?(div|p|h[1-6]|section|article|blockquote|header|footer|ul|ol|table|thead|tbody)[^>]*>", "\n\n", text, flags=re.IGNORECASE)
     # Remove all remaining tags
