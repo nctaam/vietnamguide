@@ -599,6 +599,18 @@
   vertical-align: top;
 }
 
+.vg-guide-article caption.vg-table-caption {
+  padding: 14px 18px;
+  font-family: var(--vg-sans);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: .02em;
+  text-align: left;
+  color: var(--vg-guide-forest);
+  background: color-mix(in srgb, var(--vg-paper) 60%, var(--vg-white));
+  border-bottom: 2px solid var(--vg-gold);
+}
+
 .vg-guide-article .vg-decision-table thead th,
 .vg-guide-article .vg-decision-table__scroll thead th,
 .vg-guide-article .wp-block-table thead th {

@@ -20,16 +20,8 @@ REMOTE_ROOT = '/usr/local/lsws/vietnamguide.net/html'
 DEPLOY_FILES = [
     ('wordpress/wp-content/themes/vietnamguide-premium/inc/guide-seo.php',
      'wp-content/themes/vietnamguide-premium/inc/guide-seo.php'),
-    ('wordpress/wp-content/themes/vietnamguide-premium/inc/guide-airport-navigator.php',
-     'wp-content/themes/vietnamguide-premium/inc/guide-airport-navigator.php'),
-    ('wordpress/wp-content/themes/vietnamguide-premium/inc/guide-cost-calculator.php',
-     'wp-content/themes/vietnamguide-premium/inc/guide-cost-calculator.php'),
-    ('wordpress/wp-content/themes/vietnamguide-premium/inc/guide-itinerary-finder.php',
-     'wp-content/themes/vietnamguide-premium/inc/guide-itinerary-finder.php'),
-    ('wordpress/wp-content/themes/vietnamguide-premium/inc/guide-season-matrix.php',
-     'wp-content/themes/vietnamguide-premium/inc/guide-season-matrix.php'),
-    ('wordpress/wp-content/themes/vietnamguide-premium/inc/guide-visa-checker.php',
-     'wp-content/themes/vietnamguide-premium/inc/guide-visa-checker.php'),
+    ('wordpress/wp-content/themes/vietnamguide-premium/assets/css/guide-experience.css',
+     'wp-content/themes/vietnamguide-premium/assets/css/guide-experience.css'),
     ('wordpress/wp-content/themes/vietnamguide-premium/assets/css/homepage.css',
      'wp-content/themes/vietnamguide-premium/assets/css/homepage.css'),
 ]

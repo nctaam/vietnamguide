@@ -1233,6 +1233,26 @@ function vg_get_page_faq_schema(string $uri_path, string $current_url): ?array
             ['q' => 'Is Vietnam cheaper than Thailand for travelers?', 'a' => 'Vietnam is generally 15 to 25 percent less expensive than Thailand for street meals, local transportation, and city boutique accommodations, while guided expeditions and luxury cruises cost similar amounts.'],
             ['q' => 'Do I need cash in Vietnam or are cards widely accepted?', 'a' => 'Credit cards are accepted at mid-range hotels, supermarkets, and established restaurants in major cities. Cash in Vietnamese Dong (VND) is essential for street dining, small market stalls, and rural taxis.'],
         ],
+        'ha-long-bay-vs-lan-ha-bay' => [
+            ['q' => 'Is Ha Long Bay or Lan Ha Bay better?', 'a' => 'Lan Ha Bay offers quieter waters, fewer tourist boats, secluded sandy swimming coves, and unhurried kayaking around Cat Ba Island. Ha Long Bay provides iconic grand limestone cave formations (Sung Sot Cave) and panoramic viewpoint peaks (Ti Top Island), but with higher vessel traffic.'],
+            ['q' => 'Can I visit both Ha Long Bay and Lan Ha Bay on the same cruise?', 'a' => 'Most 2-day/1-night cruises operate in either Ha Long Bay or Lan Ha Bay due to port jurisdiction boundaries. Longer 3-day/2-night itineraries frequently navigate through connecting border waters into quieter coves.'],
+            ['q' => 'Which departure port is used for Lan Ha Bay cruises?', 'a' => 'Lan Ha Bay cruises depart primarily from Ben Beo harbor or Got and Tuan Chau ferry terminals connecting to Cat Ba Island, whereas Ha Long Bay cruises depart from Tuan Chau International Marina or Halong International Cruise Port.'],
+        ],
+        'da-nang-vs-hoi-an' => [
+            ['q' => 'Should I stay in Da Nang or Hoi An?', 'a' => 'Stay in Da Nang for expansive ocean beaches (My Khe), luxury high-rise resorts, modern seafood dining, and vibrant nightlife. Stay in Hoi An for historic pedestrian streets, lantern-lit riverside evenings, cooking schools, and tailor shops. The two destinations are only 45 minutes apart by taxi.'],
+            ['q' => 'How far is Hoi An from Da Nang and how do I travel between them?', 'a' => 'Hoi An is 30 kilometers (18.5 miles) south of Da Nang. The trip takes 40 to 45 minutes by taxi or Grab, costing approximately 250,000 to 350,000 VND (10 to 14 USD) each way.'],
+            ['q' => 'Can I visit Da Nang as a day trip from Hoi An?', 'a' => 'Yes. Many travelers base themselves in Hoi An for its atmospheric charm and make day trips to Da Nang to visit the Marble Mountains, Son Tra Peninsula (Monkey Mountain), and My Khe beach.'],
+        ],
+        'best-time-to-visit-vietnam' => [
+            ['q' => 'What is the best month to visit Vietnam overall?', 'a' => 'March and April, along with October and November, offer the most balanced weather conditions nationwide, with moderate temperatures and low rainfall across northern, central, and southern regions.'],
+            ['q' => 'When is the rainy season in central Vietnam (Da Nang, Hoi An, Hue)?', 'a' => 'The rainy and typhoon season in central Vietnam runs from September through December, with peak rainfall and localized river flooding risks in October and November.'],
+            ['q' => 'When is the best time to visit Sapa and northern mountain rice terraces?', 'a' => 'The best time to visit Sapa is September to early October for golden ripe harvest terraces, and April to May for the watering season with clear skies and mild trekking weather.'],
+        ],
+        'ninh-binh-to-ha-long-bay-transfer' => [
+            ['q' => 'How do I travel directly from Ninh Binh to Ha Long Bay?', 'a' => 'Take a direct shared limousine shuttle bus via National Highway 10 and the Hai Phong Expressway. The journey takes 3.5 to 4 hours door-to-door and costs 300,000 to 450,000 VND (12 to 18 USD), avoiding the need to backtrack through Hanoi.'],
+            ['q' => 'Can I make it from Ninh Binh to Ha Long Bay in time for a cruise boarding?', 'a' => 'Yes, if you depart Ninh Binh by 6:30 to 7:00 AM. Cruise boarding at Tuan Chau or Halong International Port typically closes between 11:30 AM and 12:00 PM. A private car offers maximum schedule security.'],
+            ['q' => 'Is there a train between Ninh Binh and Ha Long Bay?', 'a' => 'No direct train connects Ninh Binh and Ha Long Bay. Rail travel requires transferring trains in Hanoi, which takes over 7 hours and is not recommended compared to direct express highway limousines.'],
+        ],
     ];
 
     if (! isset($faq_registry[$slug])) {
@@ -1318,3 +1338,151 @@ function vg_get_page_howto_schema(string $uri_path, string $current_url): ?array
 }
 
 add_filter('rank_math/json_ld', 'vg_rich_travel_schema_filter', 100, 2);
+
+/**
+ * ==========================================================================
+ * Stage 21: Semantic Tabular Data & Table Caption Optimization
+ * ==========================================================================
+ * Automatically enhances decision tables with descriptive, query-focused
+ * <caption> elements, guarantees semantic <thead> with <th scope="col">, and
+ * formats row headers for Google Featured Snippet table extraction.
+ */
+
+function vg_humanize_table_class(string $classAttr): string
+{
+    static $curated = [
+        'vg-evisa-official-basics'                  => 'Vietnam E-Visa Official Requirements, Fees & Validity Rules',
+        'vg-evisa-decision-table'                   => 'Vietnam Visa Type Decision Matrix by Travel Purpose & Route',
+        'vg-evisa-mistake-checks'                   => 'Common E-Visa Application Pitfalls and Mitigation Steps',
+        'vg-sim-esim-basics-table'                  => 'Vietnam Mobile Connectivity Options: eSIM vs Physical SIM',
+        'vg-sim-packages-tariffs'                   => 'Official Vietnam 4G Data Packages, Carrier Tariffs & Registration',
+        'vg-sim-esim-decision-table'                => 'SIM vs eSIM Selection Matrix by Traveler Profile & Device',
+        'vg-trang-an-tam-coc-glance'                => 'Trang An vs Tam Coc Boating Verdict at a Glance',
+        'vg-trang-an-tam-coc-decision-matrix'       => 'Trang An vs Tam Coc Landscape, Safety & Circuit Comparison',
+        'vg-trang-an-tam-coc-route-comparison'      => 'Trang An Cave Routes vs Tam Coc River Experience',
+        'vg-ha-long-lan-ha-glance-table'            => 'Ha Long Bay vs Lan Ha Bay Cruise Verdict at a Glance',
+        'vg-halong-lanha-pricing'                   => 'Harbor Levies, Entrance Fees and Cruise Transit Costs',
+        'vg-ha-long-lan-ha-decision-matrix'         => 'Ha Long Bay vs Lan Ha Bay Scenery, Crowd Density & Logistics',
+        'vg-ninh-binh-ha-long-transfer-glance'      => 'Ninh Binh to Ha Long Bay Direct Transfer at a Glance',
+        'vg-ninh-binh-ha-long-transfer-mode-matrix' => 'Limousine Shuttle vs Private Car vs Rail Comparison',
+        'vg-cost-budget-ranges'                     => 'Vietnam Daily Travel Budget Ranges by Traveler Style',
+        'vg-cost-scenario-budgets'                  => 'Estimated Vietnam Land-Only Travel Expenses by Trip Length',
+        'vg-da-nang-hoi-an-glance-table'            => 'Da Nang vs Hoi An Destination Comparison at a Glance',
+        'vg-da-nang-hoi-an-matrix'                  => 'Da Nang vs Hoi An Beach, Heritage & Dining Comparison',
+        'vg-sapa-transport-modes'                   => 'Hanoi to Sapa Transport Modes: Speed, Cost & Comfort Comparison',
+        'vg-ha-giang-easy-rider-matrix'             => 'Ha Giang Loop Tour Modes: Easy Rider vs Self-Drive vs Private Car',
+    ];
+
+    $classes = preg_split('/\s+/', trim($classAttr));
+    foreach ($classes as $c) {
+        if (isset($curated[$c])) {
+            return $curated[$c];
+        }
+    }
+
+    $specific = '';
+    foreach ($classes as $c) {
+        if ($c !== 'vg-decision-table' && $c !== 'vg-comparison-matrix' && str_starts_with($c, 'vg-')) {
+            $specific = $c;
+            break;
+        }
+    }
+
+    if ($specific === '') {
+        return 'Vietnam Travel Planning & Decision Matrix';
+    }
+
+    $raw = str_replace(['vg-', '-table'], '', $specific);
+    $words = explode('-', $raw);
+    $capitalized = [];
+    $ignore = ['matrix', 'comparison'];
+    foreach ($words as $w) {
+        if (! in_array(strtolower($w), $ignore, true)) {
+            $capitalized[] = ucfirst(strtolower($w));
+        }
+    }
+
+    $title = implode(' ', $capitalized);
+    if (! str_ends_with(strtolower($title), 'matrix') && ! str_ends_with(strtolower($title), 'guide') && ! str_ends_with(strtolower($title), 'breakdown')) {
+        $title .= ' Comparison Matrix';
+    }
+
+    return $title;
+}
+
+function vg_enhance_table_markup(string $tableHtml): string
+{
+    if (! preg_match('/^<table\b([^>]*)>(.*)<\/table>$/is', trim($tableHtml), $m)) {
+        return $tableHtml;
+    }
+
+    $attrs = $m[1];
+    $inner = $m[2];
+
+    // 1. In existing thead, ensure all <th> have scope="col"
+    $inner = preg_replace_callback('/<thead\b([^>]*)>(.*?)<\/thead>/is', static function ($theadMatches) {
+        $theadAttrs = $theadMatches[1];
+        $theadContent = $theadMatches[2];
+        $theadContent = preg_replace_callback('/<th\b([^>]*)>/i', static function ($thMatches) {
+            $thAttrs = $thMatches[1];
+            if (stripos($thAttrs, 'scope=') === false) {
+                return '<th scope="col"' . $thAttrs . '>';
+            }
+            return $thMatches[0];
+        }, $theadContent);
+        return '<thead' . $theadAttrs . '>' . $theadContent . '</thead>';
+    }, $inner);
+
+    // 2. If table lacks <thead>, inspect the first <tr>
+    if (stripos($inner, '<thead') === false) {
+        if (preg_match('/<tr\b[^>]*>(.*?)<\/tr>/is', $inner, $firstTrMatches)) {
+            $trContent = $firstTrMatches[1];
+            // Check if it is a 2-column key-value glance table (e.g. data-label="Question")
+            if (stripos($trContent, 'data-label="Question"') !== false) {
+                $theadBlock = "\n<thead>\n<tr><th scope=\"col\">Decision Dimension</th><th scope=\"col\">Authoritative Guidance &amp; Verdict</th></tr>\n</thead>";
+                $inner = $theadBlock . "\n" . $inner;
+            } elseif (stripos($trContent, '<th') !== false) {
+                // If first row already uses <th>, wrap it in <thead>
+                $inner = preg_replace('/(<tr\b[^>]*>.*?<\/tr>)/is', "<thead>\n$1\n</thead>", $inner, 1);
+                $inner = preg_replace_callback('/<thead>\s*<tr\b([^>]*)>(.*?)<\/tr>\s*<\/thead>/is', static function ($m) {
+                    $trAttrs = $m[1];
+                    $thRow = preg_replace_callback('/<th\b([^>]*)>/i', static function ($thMatches) {
+                        $thAttrs = $thMatches[1];
+                        if (stripos($thAttrs, 'scope=') === false) {
+                            return '<th scope="col"' . $thAttrs . '>';
+                        }
+                        return $thMatches[0];
+                    }, $m[2]);
+                    return "<thead>\n<tr{$trAttrs}>{$thRow}</tr>\n</thead>";
+                }, $inner);
+            }
+        }
+    }
+
+    // 3. Ensure <caption> exists
+    if (stripos($inner, '<caption') === false) {
+        $classAttr = '';
+        if (preg_match('/class=[\'"]([^\'"]+)[\'"]/i', $attrs, $classMatch)) {
+            $classAttr = $classMatch[1];
+        }
+        $captionText = vg_humanize_table_class($classAttr);
+        $captionTag = "\n<caption class=\"vg-table-caption\">" . htmlspecialchars($captionText, ENT_QUOTES, 'UTF-8') . "</caption>";
+        $inner = $captionTag . "\n" . ltrim($inner);
+    }
+
+    return '<table' . $attrs . '>' . $inner . '</table>';
+}
+
+function vg_enhance_content_tables(string $content): string
+{
+    if (stripos($content, '<table') === false) {
+        return $content;
+    }
+
+    return preg_replace_callback('/<table\b[^>]*>.*?<\/table>/is', static function ($matches) {
+        return vg_enhance_table_markup($matches[0]);
+    }, $content);
+}
+
+add_filter('the_content', 'vg_enhance_content_tables', 20);
+
