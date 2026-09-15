@@ -4531,7 +4531,9 @@ nav[aria-label="Breadcrumbs"] a:hover {
   margin-bottom: 18px;
 }
 
-.vg-sm-heatmap-intro h3 {
+.vg-sm-heatmap-intro h3,
+.vg-sm-heatmap-intro .vg-sm-heatmap-title,
+.vg-sm-heatmap-title {
   font-family: var(--vg-display, serif);
   font-size: 22px;
   font-weight: 600;

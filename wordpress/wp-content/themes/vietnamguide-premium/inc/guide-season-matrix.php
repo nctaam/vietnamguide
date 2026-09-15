@@ -744,7 +744,7 @@ function vg_render_season_matrix_html(): string
             <!-- Strategic Monthly Verdict Banner -->
             <div class="vg-sm-verdict-banner" id="vg-sm-verdict-box">
                 <div class="vg-sm-verdict-tag"><?php esc_html_e('Strategic Route Verdict', 'vietnamguide-premium'); ?></div>
-                <h3 class="vg-sm-verdict-title" id="vg-sm-verdict-title">November Overview</h3>
+                <div class="vg-sm-verdict-title" id="vg-sm-verdict-title" role="heading" aria-level="3">November Overview</div>
                 <p class="vg-sm-verdict-text" id="vg-sm-verdict-text"><?php echo esc_html($months['nov']['verdict']); ?></p>
             </div>
 
@@ -756,7 +756,7 @@ function vg_render_season_matrix_html(): string
                         <span class="vg-sm-region-kicker"><?php esc_html_e('Northern Peaks & Karsts', 'vietnamguide-premium'); ?></span>
                         <span class="vg-sm-risk-badge vg-risk-low" id="vg-risk-north">Prime</span>
                     </div>
-                    <h3 class="vg-sm-region-name" id="vg-title-north">North Vietnam</h3>
+                    <div class="vg-sm-region-name" id="vg-title-north" role="heading" aria-level="3">North Vietnam</div>
                     <p class="vg-sm-region-cities">Hanoi, Ha Long Bay, Sa Pa, Ninh Binh, Ha Giang</p>
                     
                     <div class="vg-sm-temp-box">
@@ -795,7 +795,7 @@ function vg_render_season_matrix_html(): string
                         <span class="vg-sm-region-kicker"><?php esc_html_e('Central Heritage Coast', 'vietnamguide-premium'); ?></span>
                         <span class="vg-sm-risk-badge vg-risk-moderate" id="vg-risk-central">Moderate</span>
                     </div>
-                    <h3 class="vg-sm-region-name" id="vg-title-central">Central Vietnam</h3>
+                    <div class="vg-sm-region-name" id="vg-title-central" role="heading" aria-level="3">Central Vietnam</div>
                     <p class="vg-sm-region-cities">Hue, Da Nang, Hoi An, Phong Nha, Quy Nhon</p>
                     
                     <div class="vg-sm-temp-box">
@@ -834,7 +834,7 @@ function vg_render_season_matrix_html(): string
                         <span class="vg-sm-region-kicker"><?php esc_html_e('Southern Sun & Islands', 'vietnamguide-premium'); ?></span>
                         <span class="vg-sm-risk-badge vg-risk-low" id="vg-risk-south">Prime (Gold)</span>
                     </div>
-                    <h3 class="vg-sm-region-name" id="vg-title-south">South Vietnam</h3>
+                    <div class="vg-sm-region-name" id="vg-title-south" role="heading" aria-level="3">South Vietnam</div>
                     <p class="vg-sm-region-cities">Ho Chi Minh City, Mekong Delta, Phu Quoc, Con Dao</p>
                     
                     <div class="vg-sm-temp-box">
@@ -873,7 +873,7 @@ function vg_render_season_matrix_html(): string
                 <div class="vg-sm-radar-icon">🏮</div>
                 <div class="vg-sm-radar-content">
                     <span class="vg-sm-radar-tag"><?php esc_html_e('Cultural & Festival Radar', 'vietnamguide-premium'); ?></span>
-                    <h4 class="vg-sm-radar-title" id="vg-radar-event">Ok Om Bok Festival & Buckwheat Blooms</h4>
+                    <div class="vg-sm-radar-title" id="vg-radar-event" role="heading" aria-level="4">Ok Om Bok Festival & Buckwheat Blooms</div>
                     <p class="vg-sm-radar-note" id="vg-radar-note">Khmer Moon-Worship Festival in the Mekong Delta with thrilling traditional ghe ngo boat races. Buckwheat flower peaks in Ha Giang.</p>
                 </div>
             </div>
@@ -883,7 +883,7 @@ function vg_render_season_matrix_html(): string
                 <div class="vg-sm-packing-header">
                     <div>
                         <span class="vg-sm-packing-badge"><?php esc_html_e('Interactive Checklist', 'vietnamguide-premium'); ?></span>
-                        <h3 class="vg-sm-packing-title"><?php esc_html_e('Smart Packing List & Gear Advice', 'vietnamguide-premium'); ?></h3>
+                        <div class="vg-sm-packing-title" role="heading" aria-level="3"><?php esc_html_e('Smart Packing List & Gear Advice', 'vietnamguide-premium'); ?></div>
                         <p class="vg-sm-packing-subtitle"><?php esc_html_e('Tailored for your selected month. Check items as you pack (saved to your browser).', 'vietnamguide-premium'); ?></p>
                     </div>
                     <div class="vg-sm-packing-metrics">
@@ -923,7 +923,7 @@ function vg_render_season_matrix_html(): string
 
             <!-- Contextual Route Fit Guides -->
             <div class="vg-sm-routes-section">
-                <h4 class="vg-sm-routes-heading"><?php esc_html_e('Recommended Next Route Guides for this Month:', 'vietnamguide-premium'); ?></h4>
+                <div class="vg-sm-routes-heading" role="heading" aria-level="4"><?php esc_html_e('Recommended Next Route Guides for this Month:', 'vietnamguide-premium'); ?></div>
                 <div class="vg-sm-routes-grid" id="vg-sm-routes-container">
                     <!-- Populated via JavaScript dynamically -->
                 </div>
@@ -933,7 +933,7 @@ function vg_render_season_matrix_html(): string
         <!-- Mode B: Route Heatmap Panel -->
         <div id="vg-sm-route-panel" class="vg-sm-panel" role="tabpanel" aria-labelledby="vg-tab-route" hidden>
             <div class="vg-sm-heatmap-intro">
-                <h3><?php esc_html_e('12-Month Route & Season Heatmap', 'vietnamguide-premium'); ?></h3>
+                <div class="vg-sm-heatmap-title" role="heading" aria-level="3"><?php esc_html_e('12-Month Route & Season Heatmap', 'vietnamguide-premium'); ?></div>
                 <p><?php esc_html_e('Already know where you want to travel? See the optimal months of the year for each core Vietnam journey archetype.', 'vietnamguide-premium'); ?></p>
             </div>
             

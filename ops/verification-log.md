@@ -1301,3 +1301,43 @@ Date: 2026-07-28 (Asia/Saigon)
     - `/compare/ha-long-bay-vs-lan-ha-bay/`: "Reviewed September 15, 2026", "Updated September 15, 2026"
     - `/routes/hanoi-to-sapa-transport/`: "Reviewed September 15, 2026", "Updated September 15, 2026"
     - `/costs/vietnam-travel-cost/`: "Updated September 15, 2026"
+
+## Stage 40 Verification - Semantic Heading Hierarchy Perfection & Full Document Outline Hardening (September 15, 2026)
+- Goals:
+  - Eliminate all skipped heading levels across the site to achieve 100% semantic HTML document outline compliance for Google search indexers and screen readers.
+  - Fix heading jumps (`1->3`) identified on 5 key landing and planning pages where interactive shortcode widgets (`vg_season_matrix` and `vg_itinerary_finder`) emitted native `<h3>` and `<h4>` elements under a container styled with `<div role="heading" aria-level="2">`.
+  - Maintain the strict Table of Contents (TOC) invariant (`test_zero_h2_in_components`) preventing native `<h2>` pollution inside interactive widgets.
+  - Maintain WCAG 2.2 AA accessibility and ARIA semantics using explicit `role="heading"` and `aria-level="3"` / `aria-level="4"`.
+  - Verify 100% clean heading hierarchy across all 101 live endpoints, sub-200ms TTFB, and 100% LiteSpeed Cache hit rate.
+- Changes Implemented:
+  - Season Matrix Component (`wordpress/wp-content/themes/vietnamguide-premium/inc/guide-season-matrix.php`):
+    - Converted `.vg-sm-verdict-title` from `<h3>` to `<div role="heading" aria-level="3">`.
+    - Converted `.vg-sm-region-name` (`#vg-title-north`, `#vg-title-central`, `#vg-title-south`) from `<h3>` to `<div role="heading" aria-level="3">`.
+    - Converted `.vg-sm-radar-title` from `<h4>` to `<div role="heading" aria-level="4">`.
+    - Converted `.vg-sm-packing-title` from `<h3>` to `<div role="heading" aria-level="3">`.
+    - Converted `.vg-sm-routes-heading` from `<h4>` to `<div role="heading" aria-level="4">`.
+    - Converted heatmap title from `<h3>` to `<div class="vg-sm-heatmap-title" role="heading" aria-level="3">`.
+  - Itinerary Finder Component (`wordpress/wp-content/themes/vietnamguide-premium/inc/guide-itinerary-finder.php`):
+    - Converted `.vg-finder-card-title` from `<h3>` to `<div class="vg-finder-card-title" role="heading" aria-level="3">`.
+    - Converted `.vg-finder-empty-title` from `<h3>` to `<div class="vg-finder-empty-title" role="heading" aria-level="3">`.
+  - Theme Stylesheet (`wordpress/wp-content/themes/vietnamguide-premium/assets/css/homepage.css`):
+    - Added `.vg-sm-heatmap-title` selector to match `.vg-sm-heatmap-intro h3` typography and margins.
+  - Production Deployment & Verification (`ops/deploy_theme_updates.py`):
+    - Deployed all updated files to VPS via SFTP with 100% SHA-256 parity verification and LiteSpeed cache purge.
+- Verification Evidence:
+  - Local Unit & Shortcode Tests (`ops/tests/test-interactive-shortcodes.py`): PASSED (17/17 tests).
+  - Master CI/CD Gate Orchestration (`ops/verify-all-gates.ps1`): PASSED (5/5 quality gates).
+  - Core MU-Plugin Invariant Suite (`ops/verify-core-mu-plugin.ps1`): PASSED (Fingerprint `71b49033114e8007e5c19fb8ebc1a89e0d0dad88d0fe92dd381a28700db096ce` preserved; all 16 AST safety mutations rejected).
+  - Guide Experience AST Mutation Suite (`ops/verify-guide-experience-mutations.ps1`): PASSED (112/112 AST mutations rejected).
+  - Public HTTPS Production Verifier (`ops/verify-guide-experience-public.ps1`): PASSED (87/87 routes return HTTP 200 with full DOM integrity).
+  - Production Document Outline Audit across all 101 live URLs (`scratch/audit_seo_phase6.py`):
+    - Total pages audited: 101
+    - Canonical URL Mismatches: 0
+    - Missing og:title / og:description / og:image / twitter:card: 0
+    - Pages with H1 != 1: 0 (100% single H1)
+    - **Pages with skipped heading levels: 0 (100% clean outline, 0 jumps)**
+    - Pages with empty headings: 0
+    - Pages with missing BreadcrumbList schema: 0
+    - Average TTFB: **170.1 ms**
+    - LiteSpeed Cache hit rate: **100% (101/101 hits on warm cache)**
+    - Pages without gzip compression: 0

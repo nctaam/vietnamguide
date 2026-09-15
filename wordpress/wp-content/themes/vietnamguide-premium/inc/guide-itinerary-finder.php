@@ -279,11 +279,11 @@ function vg_render_itinerary_finder_html(): string
                             <?php endforeach; ?>
                         </div>
                     </div>
-                    <h3 class="vg-finder-card-title">
+                    <div class="vg-finder-card-title" role="heading" aria-level="3">
                         <a href="<?php echo esc_url($item['url']); ?>">
                             <?php echo esc_html($item['title']); ?>
                         </a>
-                    </h3>
+                    </div>
                     <div class="vg-finder-route">
                         <span class="vg-finder-route-icon" aria-hidden="true">&#9678;</span>
                         <span><?php echo wp_kses($item['route_summary'], ['rarr' => []]); ?></span>
@@ -314,7 +314,7 @@ function vg_render_itinerary_finder_html(): string
         <div class="vg-finder-empty" hidden>
             <div class="vg-finder-empty-inner">
                 <span class="vg-finder-empty-icon" aria-hidden="true">&#128269;</span>
-                <h3 class="vg-finder-empty-title"><?php esc_html_e('No itineraries match all selected filters', 'vietnamguide-premium'); ?></h3>
+                <div class="vg-finder-empty-title" role="heading" aria-level="3"><?php esc_html_e('No itineraries match all selected filters', 'vietnamguide-premium'); ?></div>
                 <p class="vg-finder-empty-desc"><?php esc_html_e('Try expanding your duration window or choosing "All Styles" to explore complementary routes.', 'vietnamguide-premium'); ?></p>
                 <button type="button" class="vg-finder-empty-reset">
                     <?php esc_html_e('Reset All Filters', 'vietnamguide-premium'); ?>
