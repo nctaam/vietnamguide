@@ -1255,12 +1255,40 @@ function vg_get_page_faq_schema(string $uri_path, string $current_url): ?array
         ],
     ];
 
-    if (! isset($faq_registry[$slug])) {
+    $raw_qas = $faq_registry[$slug] ?? null;
+
+    // Dynamic fallback: extract structured Q&As from authored details/summary markup if not in curated registry
+    if ($raw_qas === null && function_exists('get_queried_object')) {
+        $post = get_queried_object();
+        if (! ($post instanceof WP_Post) && function_exists('get_post')) {
+            $post = get_post();
+        }
+        if ($post instanceof WP_Post && ! empty($post->post_content)) {
+            $content = $post->post_content;
+            if (stripos($content, '<details') !== false) {
+                if (preg_match_all('/<details[^>]*>\s*<summary[^>]*>(.*?)<\/summary>\s*(?:<p[^>]*>)?(.*?)(?:<\/p>)?\s*<\/details>/is', $content, $matches, PREG_SET_ORDER)) {
+                    $dynamic_qas = [];
+                    foreach ($matches as $match) {
+                        $q = trim(html_entity_decode(wp_strip_all_tags($match[1]), ENT_QUOTES | ENT_HTML5, 'UTF-8'));
+                        $a = trim(html_entity_decode(wp_strip_all_tags($match[2]), ENT_QUOTES | ENT_HTML5, 'UTF-8'));
+                        if (mb_strlen($q) >= 10 && mb_strlen($a) >= 20) {
+                            $dynamic_qas[] = ['q' => $q, 'a' => $a];
+                        }
+                    }
+                    if (! empty($dynamic_qas)) {
+                        $raw_qas = $dynamic_qas;
+                    }
+                }
+            }
+        }
+    }
+
+    if (empty($raw_qas)) {
         return null;
     }
 
     $questions = [];
-    foreach ($faq_registry[$slug] as $item) {
+    foreach ($raw_qas as $item) {
         $questions[] = [
             '@type'          => 'Question',
             'name'           => $item['q'],

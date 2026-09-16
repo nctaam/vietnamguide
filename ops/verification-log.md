@@ -1341,3 +1341,28 @@ Date: 2026-07-28 (Asia/Saigon)
     - Average TTFB: **170.1 ms**
     - LiteSpeed Cache hit rate: **100% (101/101 hits on warm cache)**
     - Pages without gzip compression: 0
+
+## Stage 41 Verification - Site-Wide Dynamic FAQPage Schema Expansion & Rich Snippet Scaling (September 16, 2026)
+- Goals:
+  - Scale FAQPage Rich Results coverage across the entire site by automatically extracting structured Q&As from authored, visible `<details><summary>` blocks for any guide not explicitly hardcoded in the curated registry.
+  - Comply strictly with Google Search Central FAQ structured data guidelines: 100% of schema Q&As must correspond to real, visible content on the page.
+  - Validate that 100% of extracted Q&As maintain Zero AI Slop ($HLS = 100$), zero marketing hype, and factual travel logistics answers.
+  - Scale rich snippet eligibility on Google and Bing SERPs and provide direct, structured Q&A feeds for AI search engines (ChatGPT Search, Perplexity, Claude, Google AI Overviews).
+- Changes Implemented:
+  - Theme SEO Architecture (`wordpress/wp-content/themes/vietnamguide-premium/inc/guide-seo.php`):
+    - Upgraded `vg_get_page_faq_schema()` with intelligent dynamic fallback: if a guide slug is not in the hardcoded curated registry, the function inspects the queried post object's `post_content` for `<details><summary>` Q&As.
+    - Strips HTML tags, unescapes entities to clean UTF-8, enforces length thresholds (`mb_strlen($q) >= 10 && mb_strlen($a) >= 20`), and formats into valid Schema.org `Question` and `acceptedAnswer` nodes under `@id: "...#faq"`.
+  - Production Deployment & Cache Purge (`ops/deploy_theme_updates.py`):
+    - Deployed `guide-seo.php` via SFTP with 100% SHA-256 parity (`5301b8394533a634b7762562399ae55afe97d3b905dc1d571bbfb7f3e36f6841`).
+    - Purged LiteSpeed Cache and reloaded LSWS.
+  - IndexNow Resubmission (`ops/submit_indexnow.py`):
+    - Dispatched all 102 URLs to `api.indexnow.org` and `bing.com/indexnow` (both HTTP 200 OK).
+- Verification Evidence:
+  - Anti-AI Slop Audit on all Dynamic Q&As (`scratch/audit_dynamic_faq_slop.py`): PASSED (165 dynamic Q&As analyzed; 0 Tier 1, 0 Tier 2, 0 Tier 11 violations; 100% clean).
+  - Site-Wide FAQ Schema Live Production Audit (`scratch/audit_sitewide_faq_schema.py`):
+    - **Total Pages with Active FAQPage Schema:** **77 / 102 pages (75.5% of website)**
+    - **Total Rich Q&As in Live Schema:** **423 Q&As** (scaled from 38 Q&As across 12 guides to 423 Q&As across 77 guides)
+    - 100% of substantive travel guides featuring Q&As now have active, verified JSON-LD FAQPage nodes.
+  - Master CI/CD Gate Orchestration (`ops/verify-all-gates.ps1`): PASSED (5/5 quality gates).
+  - Core MU-Plugin Invariant Suite (`ops/verify-core-mu-plugin.ps1`): PASSED (Fingerprint `71b49033114e8007e5c19fb8ebc1a89e0d0dad88d0fe92dd381a28700db096ce` preserved; all 16 AST safety mutations rejected).
+  - Interactive Shortcodes & A11y Suite (`ops/tests/test-interactive-shortcodes.py`): PASSED (17/17 tests).
