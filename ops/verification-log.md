@@ -1366,3 +1366,29 @@ Date: 2026-07-28 (Asia/Saigon)
   - Master CI/CD Gate Orchestration (`ops/verify-all-gates.ps1`): PASSED (5/5 quality gates).
   - Core MU-Plugin Invariant Suite (`ops/verify-core-mu-plugin.ps1`): PASSED (Fingerprint `71b49033114e8007e5c19fb8ebc1a89e0d0dad88d0fe92dd381a28700db096ce` preserved; all 16 AST safety mutations rejected).
   - Interactive Shortcodes & A11y Suite (`ops/tests/test-interactive-shortcodes.py`): PASSED (17/17 tests).
+
+## Stage 42 Verification - Site-Wide Internal Link Canonicalization & 301 Redirect Elimination (September 17, 2026)
+- Goals:
+  - Crawl all 102 live URLs and extract every internal `<a href="...">` link across the site.
+  - Eliminate all internal 301 redirects to optimize Googlebot crawl budget, eliminate unnecessary redirect latency, and distribute internal PageRank directly to canonical URLs.
+  - Verify 0 broken links (404) and 0 internal redirects across the entire site.
+- Changes Implemented:
+  - Audited all 102 live URLs: discovered 0 broken links (404) and 17 internal link targets pointing to legacy permalinks triggering 301 redirects (from pre-migration `/travel-planning/`, `/transport/`, `/routes/`, and `/destinations/` paths).
+  - Executed WP-CLI / MariaDB automated link canonicalization:
+    - Updated 18 legacy redirect links across `post_content` of 11 published guides to their direct canonical HTTP 200 URLs (`/plan/...` and `/compare/...`).
+    - Updated 9 legacy `/travel-planning/` URLs stored inside `vg_eeat_related_routes` postmeta on posts 494 (`vietnam-in-january`), 495 (`vietnam-in-february`), and 496 (`tet-in-vietnam-travel-guide`) to direct `/plan/...` URLs.
+    - Synchronized local repository fixtures in `ops/archive-apply-scripts/` (`apply-tet-in-vietnam-travel-guide-post.php`, `apply-vietnam-in-february-post.php`, `apply-vietnam-in-january-post.php`) to maintain 100% repo-to-database parity.
+  - Completely purged LiteSpeed Cache and restarted OpenLiteSpeed (`lswsctrl restart`).
+  - Resubmitted all 102 URLs via IndexNow (`ops/submit_indexnow.py`) to `api.indexnow.org` and `bing.com/indexnow` (both HTTP 200 OK).
+- Verification Evidence:
+  - Full Site-Wide Link Target Audit (`scratch/audit_live_link_targets.py`):
+    - Total Targets Tested: 210
+    - Direct 200 OK: 209
+    - **Redirects (301/302): 0 (100% eliminated)**
+    - **Broken Links (404): 0**
+  - Master CI/CD Gate Orchestration:
+    - `ops/verify-homepage-theme.ps1`: PASSED
+    - `ops/verify-core-mu-plugin.ps1`: PASSED (Fingerprint `71b49033114e8007e5c19fb8ebc1a89e0d0dad88d0fe92dd381a28700db096ce` preserved; 16/16 mutations rejected)
+    - `ops/verify-core-block-patterns.ps1`: PASSED
+    - `ops/verify-guide-experience-mutations.ps1`: PASSED (112/112 AST mutations rejected)
+    - `ops/verify-guide-experience-public.ps1`: PASSED (87/87 public routes return HTTP 200 with full DOM integrity)

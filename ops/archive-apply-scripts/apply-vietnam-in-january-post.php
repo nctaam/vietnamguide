@@ -141,8 +141,8 @@ $meta_evidence_moat = implode("\n", [
 ]);
 $meta_related_routes = implode("\n", [
     'Best Time to Visit Vietnam | /plan/best-time-to-visit-vietnam/ | Use this for the broader seasonal frame before narrowing January trade-offs.',
-    'Tet in Vietnam Travel Guide | /travel-planning/tet-in-vietnam-travel-guide/ | Use this when January travel overlaps the Tet lead-up or holiday window.',
-    'What to Pack for Vietnam | /travel-planning/what-to-pack-for-vietnam-region-season/ | Use this to pack for cool north, dry south, and mixed-route luggage.',
+    'Tet in Vietnam Travel Guide | /plan/tet-in-vietnam-travel-guide/ | Use this when January travel overlaps the Tet lead-up or holiday window.',
+    'What to Pack for Vietnam | /plan/what-to-pack-for-vietnam-region-season/ | Use this to pack for cool north, dry south, and mixed-route luggage.',
     'Transport Within Vietnam | /plan/transport-within-vietnam/ | Use this before booking January flights, trains, buses, cruises, or holiday-period transfers.',
     '10 Days in Vietnam | /itineraries/10-days-in-vietnam/ | Use this when January travel needs a cleaner two-region route.',
     '14 Days in Vietnam | /itineraries/14-days-in-vietnam/ | Use this when two weeks allow north, central, and south with buffers.',
@@ -161,7 +161,7 @@ $content = <<<HTML
 <p class="vg-kicker">Month-by-month route planning</p>
 <h1>Vietnam in January: Best Routes, Weather and Tet Watchouts</h1>
 <p class="vg-guide-lede">January is one of Vietnam's most useful planning months when you choose the route with care. The north can be cool and atmospheric, the central coast is often improving but still not a blank-cheque beach promise, the south and islands usually carry strong warm-weather value, and the Tet lead-up can change prices, transport pressure, and opening rhythms.</p>
-<p class="vg-field-note">Use this with <a href="/plan/best-time-to-visit-vietnam/">Best Time to Visit Vietnam</a>, <a href="/travel-planning/tet-in-vietnam-travel-guide/">Tet in Vietnam Travel Guide</a>, <a href="/travel-planning/what-to-pack-for-vietnam-region-season/">What to Pack for Vietnam</a>, <a href="/plan/transport-within-vietnam/">Transport Within Vietnam</a>, and the <a href="/itineraries/10-days-in-vietnam/">10 Days in Vietnam</a> route planner before final payment.</p>
+<p class="vg-field-note">Use this with <a href="/plan/best-time-to-visit-vietnam/">Best Time to Visit Vietnam</a>, <a href="/plan/tet-in-vietnam-travel-guide/">Tet in Vietnam Travel Guide</a>, <a href="/plan/what-to-pack-for-vietnam-region-season/">What to Pack for Vietnam</a>, <a href="/plan/transport-within-vietnam/">Transport Within Vietnam</a>, and the <a href="/itineraries/10-days-in-vietnam/">10 Days in Vietnam</a> route planner before final payment.</p>
 </div>
 <figure class="vg-guide-hero-image"><img src="{$hero_image}" alt="Hoan Kiem Lake in Hanoi used as a January Vietnam route planning reference" loading="eager" decoding="async"><figcaption>January often rewards a north-first route when you pack layers and do not expect tropical heat in every region. Image: Alex 69200 vx / CC BY-SA 4.0.</figcaption></figure>
 </section>
@@ -249,7 +249,7 @@ $content = <<<HTML
 <tr><td data-label="Route shape">North plus central</td><td data-label="Best for">Travelers who want a classic first trip with heritage and food.</td><td data-label="What to skip first">A central beach promise that needs flawless weather.</td><td data-label="Next guide"><a href="/plan/best-time-to-visit-vietnam/">Best Time to Visit Vietnam</a></td></tr>
 <tr><td data-label="Route shape">North plus south</td><td data-label="Best for">Travelers who want cool north plus dry south warmth.</td><td data-label="What to skip first">Too many middle stops that make the flight day feel like a penalty.</td><td data-label="Next guide"><a href="/itineraries/14-days-in-vietnam/">14 Days in Vietnam</a></td></tr>
 <tr><td data-label="Route shape">South and island</td><td data-label="Best for">Travelers choosing January for warmth, low movement, and beach rest.</td><td data-label="What to skip first">A rushed Hanoi add-on unless the flights are excellent.</td><td data-label="Next guide"><a href="/destinations/phu-quoc-travel-guide/">Phu Quoc Travel Guide</a></td></tr>
-<tr><td data-label="Route shape">Tet-adjacent compact route</td><td data-label="Best for">Travelers close to Lunar New Year who need reliability over maximum coverage.</td><td data-label="What to skip first">Remote transfers and tight operator-dependent days.</td><td data-label="Next guide"><a href="/travel-planning/tet-in-vietnam-travel-guide/">Tet in Vietnam Travel Guide</a></td></tr>
+<tr><td data-label="Route shape">Tet-adjacent compact route</td><td data-label="Best for">Travelers close to Lunar New Year who need reliability over maximum coverage.</td><td data-label="What to skip first">Remote transfers and tight operator-dependent days.</td><td data-label="Next guide"><a href="/plan/tet-in-vietnam-travel-guide/">Tet in Vietnam Travel Guide</a></td></tr>
 </tbody>
 </table>
 
@@ -334,8 +334,8 @@ $content = <<<HTML
 <div class="vg-related-routes vg-january-related-manual">
 <ol class="vg-related-route-list">
 <li><span class="vg-related-route-step">01</span><a href="/plan/best-time-to-visit-vietnam/">Best Time to Visit Vietnam</a><span class="vg-related-route-note">Use this for the broader seasonal frame before choosing January-specific trade-offs.</span></li>
-<li><span class="vg-related-route-step">02</span><a href="/travel-planning/tet-in-vietnam-travel-guide/">Tet in Vietnam Travel Guide</a><span class="vg-related-route-note">Use this if January overlaps the holiday lead-up or peak.</span></li>
-<li><span class="vg-related-route-step">03</span><a href="/travel-planning/what-to-pack-for-vietnam-region-season/">What to Pack for Vietnam</a><span class="vg-related-route-note">Use this to balance cool north layers with dry south warmth.</span></li>
+<li><span class="vg-related-route-step">02</span><a href="/plan/tet-in-vietnam-travel-guide/">Tet in Vietnam Travel Guide</a><span class="vg-related-route-note">Use this if January overlaps the holiday lead-up or peak.</span></li>
+<li><span class="vg-related-route-step">03</span><a href="/plan/what-to-pack-for-vietnam-region-season/">What to Pack for Vietnam</a><span class="vg-related-route-note">Use this to balance cool north layers with dry south warmth.</span></li>
 <li><span class="vg-related-route-step">04</span><a href="/plan/transport-within-vietnam/">Transport Within Vietnam</a><span class="vg-related-route-note">Use this before booking holiday-adjacent movement.</span></li>
 <li><span class="vg-related-route-step">05</span><a href="/itineraries/10-days-in-vietnam/">10 Days in Vietnam</a><span class="vg-related-route-note">Use this when January travel needs a clean two-region route.</span></li>
 <li><span class="vg-related-route-step">06</span><a href="/destinations/phu-quoc-travel-guide/">Phu Quoc Travel Guide</a><span class="vg-related-route-note">Use this when dry south and island rest are the January goal.</span></li>

@@ -147,9 +147,9 @@ $meta_evidence_moat = implode("\n", [
 ]);
 $meta_related_routes = implode("\n", [
     'Best Time to Visit Vietnam | /plan/best-time-to-visit-vietnam/ | Use this for the broader seasonal frame before narrowing February trade-offs.',
-    'Tet in Vietnam Travel Guide | /travel-planning/tet-in-vietnam-travel-guide/ | Use this when February travel overlaps Tet timing, peak holiday days, or the post-Tet restart.',
-    'Vietnam in January | /travel-planning/vietnam-in-january/ | Use this if your dates sit before Tet or cross from January into February.',
-    'What to Pack for Vietnam | /travel-planning/what-to-pack-for-vietnam-region-season/ | Use this to pack for north warming slowly, central coast pivots, and southern heat.',
+    'Tet in Vietnam Travel Guide | /plan/tet-in-vietnam-travel-guide/ | Use this when February travel overlaps Tet timing, peak holiday days, or the post-Tet restart.',
+    'Vietnam in January | /plan/vietnam-in-january/ | Use this if your dates sit before Tet or cross from January into February.',
+    'What to Pack for Vietnam | /plan/what-to-pack-for-vietnam-region-season/ | Use this to pack for north warming slowly, central coast pivots, and southern heat.',
     'Transport Within Vietnam | /plan/transport-within-vietnam/ | Use this before booking holiday-adjacent flights, trains, buses, cruises, ferries, or private transfers.',
     '14 Days in Vietnam | /itineraries/14-days-in-vietnam/ | Use this when two weeks allow north, central, and south with buffers.',
     'Hoi An Ancient Town Guide | /destinations/hoi-an-ancient-town-guide/ | Use this when central Vietnam heritage and food should carry February value.',
@@ -167,7 +167,7 @@ $content = <<<HTML
 <p class="vg-kicker">Month-by-month route planning</p>
 <h1>Vietnam in February: Weather, Tet Timing and Best Routes</h1>
 <p class="vg-guide-lede">February can be one of Vietnam's most rewarding months when the route respects the calendar. The north is often warming slowly rather than turning tropical overnight, central Vietnam can offer real heritage and food value with improving coastal conditions, the south and islands usually carry strong warm-weather appeal, and Tet timing can reshape transport, openings, prices, and the rhythm of the trip.</p>
-<p class="vg-field-note">Use this with <a href="/plan/best-time-to-visit-vietnam/">Best Time to Visit Vietnam</a>, <a href="/travel-planning/tet-in-vietnam-travel-guide/">Tet in Vietnam Travel Guide</a>, <a href="/travel-planning/vietnam-in-january/">Vietnam in January</a>, <a href="/travel-planning/what-to-pack-for-vietnam-region-season/">What to Pack for Vietnam</a>, <a href="/plan/transport-within-vietnam/">Transport Within Vietnam</a>, and <a href="/itineraries/14-days-in-vietnam/">14 Days in Vietnam</a> before final payment.</p>
+<p class="vg-field-note">Use this with <a href="/plan/best-time-to-visit-vietnam/">Best Time to Visit Vietnam</a>, <a href="/plan/tet-in-vietnam-travel-guide/">Tet in Vietnam Travel Guide</a>, <a href="/plan/vietnam-in-january/">Vietnam in January</a>, <a href="/plan/what-to-pack-for-vietnam-region-season/">What to Pack for Vietnam</a>, <a href="/plan/transport-within-vietnam/">Transport Within Vietnam</a>, and <a href="/itineraries/14-days-in-vietnam/">14 Days in Vietnam</a> before final payment.</p>
 </div>
 <figure class="vg-guide-hero-image"><img src="{$hero_image}" alt="Hoi An Ancient Town used as a February Vietnam route planning reference" loading="eager" decoding="async"><figcaption>February often rewards a central Vietnam chapter when you choose Hoi An and Hue for heritage, food, and atmosphere instead of treating the coast as a weather promise. Image: Jakub Halun / CC BY-SA 4.0.</figcaption></figure>
 </section>
@@ -259,7 +259,7 @@ $content = <<<HTML
 <tr><td data-label="Route shape">Classic 14-day full route</td><td data-label="Best for">First-timers with enough time for Hanoi, Ninh Binh, bay, Hoi An/Hue, HCMC, and a selective southern finish.</td><td data-label="What to skip first">A weak one-night stop added only because February looks good everywhere.</td><td data-label="Next guide"><a href="/itineraries/14-days-in-vietnam/">14 Days in Vietnam</a></td></tr>
 <tr><td data-label="Route shape">Central heritage route</td><td data-label="Best for">Travelers who want Hoi An evenings, Hue history, Da Nang access, food, and a less rushed middle chapter.</td><td data-label="What to skip first">A pure beach promise that leaves no value if the coast is mixed.</td><td data-label="Next guide"><a href="/destinations/hoi-an-ancient-town-guide/">Hoi An Ancient Town Guide</a></td></tr>
 <tr><td data-label="Route shape">South and island route</td><td data-label="Best for">Travelers choosing February for warmth, rest, family ease, or a resort finish.</td><td data-label="What to skip first">A token north add-on that turns a rest trip into airports.</td><td data-label="Next guide"><a href="/destinations/phu-quoc-travel-guide/">Phu Quoc Travel Guide</a></td></tr>
-<tr><td data-label="Route shape">Tet-light compact route</td><td data-label="Best for">Travelers arriving near the holiday who need reliability more than maximum coverage.</td><td data-label="What to skip first">Remote transfers, one-night jumps, and meals that require every restaurant to run normally.</td><td data-label="Next guide"><a href="/travel-planning/tet-in-vietnam-travel-guide/">Tet in Vietnam Travel Guide</a></td></tr>
+<tr><td data-label="Route shape">Tet-light compact route</td><td data-label="Best for">Travelers arriving near the holiday who need reliability more than maximum coverage.</td><td data-label="What to skip first">Remote transfers, one-night jumps, and meals that require every restaurant to run normally.</td><td data-label="Next guide"><a href="/plan/tet-in-vietnam-travel-guide/">Tet in Vietnam Travel Guide</a></td></tr>
 <tr><td data-label="Route shape">North plus central</td><td data-label="Best for">Travelers who want cooler north, bay or Ninh Binh, Hoi An/Hue, and no need for a southern flight.</td><td data-label="What to skip first">Phu Quoc unless there are enough nights for a true island finish.</td><td data-label="Next guide"><a href="/plan/best-time-to-visit-vietnam/">Best Time to Visit Vietnam</a></td></tr>
 </tbody>
 </table>
@@ -349,8 +349,8 @@ $content = <<<HTML
 <div class="vg-related-routes vg-february-related-manual">
 <ol class="vg-related-route-list">
 <li><span class="vg-related-route-step">01</span><a href="/plan/best-time-to-visit-vietnam/">Best Time to Visit Vietnam</a><span class="vg-related-route-note">Use this for the broader seasonal frame before choosing February-specific trade-offs.</span></li>
-<li><span class="vg-related-route-step">02</span><a href="/travel-planning/tet-in-vietnam-travel-guide/">Tet in Vietnam Travel Guide</a><span class="vg-related-route-note">Use this when dates overlap the holiday peak or the post-Tet restart.</span></li>
-<li><span class="vg-related-route-step">03</span><a href="/travel-planning/vietnam-in-january/">Vietnam in January</a><span class="vg-related-route-note">Use this when your trip crosses the month boundary or begins before Tet.</span></li>
+<li><span class="vg-related-route-step">02</span><a href="/plan/tet-in-vietnam-travel-guide/">Tet in Vietnam Travel Guide</a><span class="vg-related-route-note">Use this when dates overlap the holiday peak or the post-Tet restart.</span></li>
+<li><span class="vg-related-route-step">03</span><a href="/plan/vietnam-in-january/">Vietnam in January</a><span class="vg-related-route-note">Use this when your trip crosses the month boundary or begins before Tet.</span></li>
 <li><span class="vg-related-route-step">04</span><a href="/destinations/hoi-an-ancient-town-guide/">Hoi An Ancient Town Guide</a><span class="vg-related-route-note">Use this when central Vietnam should carry the February route.</span></li>
 <li><span class="vg-related-route-step">05</span><a href="/destinations/hue-imperial-city-guide/">Hue Imperial City Guide</a><span class="vg-related-route-note">Use this when Hue deserves a protected imperial-history day.</span></li>
 <li><span class="vg-related-route-step">06</span><a href="/destinations/phu-quoc-travel-guide/">Phu Quoc Travel Guide</a><span class="vg-related-route-note">Use this when southern island rest is the reason for choosing February.</span></li>
