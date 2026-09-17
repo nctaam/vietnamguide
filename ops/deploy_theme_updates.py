@@ -20,8 +20,10 @@ REMOTE_ROOT = '/usr/local/lsws/vietnamguide.net/html'
 DEPLOY_FILES = [
     ('wordpress/wp-content/themes/vietnamguide-premium/inc/guide-seo.php',
      'wp-content/themes/vietnamguide-premium/inc/guide-seo.php'),
-    ('wordpress/wp-content/themes/vietnamguide-premium/inc/guide-aio.php',
-     'wp-content/themes/vietnamguide-premium/inc/guide-aio.php'),
+    ('wordpress/wp-content/themes/vietnamguide-premium/search.php',
+     'wp-content/themes/vietnamguide-premium/search.php'),
+    ('wordpress/wp-content/themes/vietnamguide-premium/assets/css/homepage.css',
+     'wp-content/themes/vietnamguide-premium/assets/css/homepage.css'),
 ]
 
 def get_sha256(filepath):

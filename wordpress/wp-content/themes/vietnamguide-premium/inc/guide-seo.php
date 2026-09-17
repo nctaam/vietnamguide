@@ -232,6 +232,13 @@ function vg_get_travel_clusters_registry(): array
                     'badge'   => 'Island Adventure',
                     'desc'    => 'Hiking coastal rainforest trails, rock climbing limestone crags, and Cannon Fort sunsets.',
                 ],
+                [
+                    'name'    => 'Bai Tu Long Bay Pristine Karsts',
+                    'url'     => '/destinations/bai-tu-long-bay-guide/',
+                    'transit' => '1.5 hrs luxury cruise transfer',
+                    'badge'   => 'Pristine Karst Bay',
+                    'desc'    => 'Serene uncrowded waters, Thien Canh Son cave, and tranquil kayaking.',
+                ],
             ],
         ],
 
@@ -290,6 +297,13 @@ function vg_get_travel_clusters_registry(): array
                     'transit' => '1.5 hrs via Limousine/Train',
                     'badge'   => 'Capital Hub',
                     'desc'    => 'Fast return to Hanoi for international flight departures or northern mountain routes.',
+                ],
+                [
+                    'name'    => 'Pu Luong Nature Reserve',
+                    'url'     => '/destinations/pu-luong-travel-guide/',
+                    'transit' => '3 hrs via scenic highway',
+                    'badge'   => 'Terraced Eco Valley',
+                    'desc'    => 'Escape crowds into lush terraced rice valleys, traditional stilt houses, and natural bamboo waterwheels.',
                 ],
             ],
         ],
@@ -357,6 +371,13 @@ function vg_get_travel_clusters_registry(): array
                     'badge'   => 'Marine Sanctuary',
                     'desc'    => 'Coral reef snorkeling, quiet sandy coves, and fresh island seafood on an offshore retreat.',
                 ],
+                [
+                    'name'    => 'Phong Nha Caves & Karsts',
+                    'url'     => '/destinations/phong-nha-travel-guide/',
+                    'transit' => '4 hrs north of Hue via Rail/Bus',
+                    'badge'   => 'Cave Kingdom',
+                    'desc'    => 'Venture underground into cavernous river grottos, Paradise Cave, and Son Doong expedition territory.',
+                ],
             ],
         ],
 
@@ -416,6 +437,13 @@ function vg_get_travel_clusters_registry(): array
                     'badge'   => 'Island Sanctuary',
                     'desc'    => 'Powder-white beaches, sunset cocktails, night market seafood, and seaside luxury.',
                 ],
+                [
+                    'name'    => 'Ho Chi Minh City Gateway',
+                    'url'     => '/destinations/ho-chi-minh-city-travel-guide/',
+                    'transit' => 'Return overland transfer',
+                    'badge'   => 'Southern Hub',
+                    'desc'    => 'Return from the delta to Saigon for rooftop dining, heritage museums, and night markets.',
+                ],
             ],
         ],
 
@@ -437,6 +465,7 @@ function vg_get_travel_clusters_registry(): array
                     ['name' => 'Ma Pi Leng Pass', 'wikidata' => 'https://www.wikidata.org/wiki/Q36352'],
                     ['name' => 'Mu Cang Chai Terraces', 'wikidata' => 'https://www.wikidata.org/wiki/Q6930267'],
                     ['name' => 'Dong Van Karst Plateau', 'wikidata' => 'https://www.wikidata.org/wiki/Q36352'],
+                    ['name' => 'Pu Luong Nature Reserve', 'wikidata' => 'https://www.wikidata.org/wiki/Q7257418'],
                 ],
             ],
             'trip_schema' => [
@@ -467,6 +496,13 @@ function vg_get_travel_clusters_registry(): array
                     'transit' => '3.5 hrs via O Quy Ho Pass',
                     'badge'   => 'Rice Amphitheaters',
                     'desc'    => 'Witness Vietnam\'s most photogenic golden terraced hillsides and serene ethnic homestays.',
+                ],
+                [
+                    'name'    => 'Pu Luong Nature Reserve',
+                    'url'     => '/destinations/pu-luong-travel-guide/',
+                    'transit' => '3.5 hrs via Mai Chau valley',
+                    'badge'   => 'Eco Valley Retreat',
+                    'desc'    => 'Tranquil waterwheels, terraced limestone valleys, and traditional Thai stilt house homestays.',
                 ],
                 [
                     'name'    => 'Sa Pa Alpine Town',
@@ -502,6 +538,7 @@ function vg_get_travel_clusters_registry(): array
                     ['name' => 'Phu Quoc National Park', 'wikidata' => 'https://www.wikidata.org/wiki/Q223145'],
                     ['name' => 'Con Dao Marine Park', 'wikidata' => 'https://www.wikidata.org/wiki/Q1118128'],
                     ['name' => 'Quy Nhon Coast', 'wikidata' => 'https://www.wikidata.org/wiki/Q26577'],
+                    ['name' => 'Ly Son Island', 'wikidata' => 'https://www.wikidata.org/wiki/Q10788220'],
                 ],
             ],
             'trip_schema' => [
@@ -520,6 +557,13 @@ function vg_get_travel_clusters_registry(): array
             ],
             'journey_links' => [
                 [
+                    'name'    => 'Phu Quoc Tropical Island',
+                    'url'     => '/destinations/phu-quoc-travel-guide/',
+                    'transit' => '55 min flight from SGN',
+                    'badge'   => 'Tropical Sanctuary',
+                    'desc'    => 'Powder-white beaches, sunset cocktails, night market seafood, and seaside luxury.',
+                ],
+                [
                     'name'    => 'Con Dao Protected Archipelago',
                     'url'     => '/destinations/con-dao-travel-guide/',
                     'transit' => 'Flight via SGN or Can Tho ferry',
@@ -532,6 +576,13 @@ function vg_get_travel_clusters_registry(): array
                     'transit' => '1 hr flight or coastal train',
                     'badge'   => 'Untouched Coast',
                     'desc'    => 'Uncrowded sandy bays, fresh seaside fishing shacks, and ancient Cham cliff towers.',
+                ],
+                [
+                    'name'    => 'Ly Son Volcanic Island',
+                    'url'     => '/destinations/ly-son-travel-guide/',
+                    'transit' => '35 min speedboat from Sa Ky Port',
+                    'badge'   => 'Volcanic Island',
+                    'desc'    => 'Extinct volcanic craters, garlic fields, turquoise crater seas, and Hang Pagoda sea cliff.',
                 ],
                 [
                     'name'    => 'Ho Chi Minh City Gateway',
@@ -1227,7 +1278,7 @@ function vg_get_page_faq_schema(string $uri_path, string $current_url): ?array
         ],
         'trang-an-vs-tam-coc' => [
             ['q' => 'Is Trang An or Tam Coc better in Ninh Binh?', 'a' => 'Trang An features dramatic karst water cave tunnels, strict lifejacket rules, and organized UNESCO management. Tam Coc offers open river paddling through scenic rice fields with rowers using their feet.'],
-            ['q' => 'How long does the boat tour take in Trang An and Tam Coc?', 'a' => 'Trang An boat circuits last 2.5 to 3 hours through 3 to 4 caves. Tam Coc boat trips take approximately 1.5 to 2 hours along the Ngo Dong river.'],
+            ['q' => 'How long does the boat tour take in Trang An and Tam Coc?', 'a' => 'Trang An boat circuits last 2.5 to 3 hours through 3 to 4 caves. Sampan excursions along the Ngo Dong river take approximately 1.5 to 2 hours.'],
             ['q' => 'Which boat route in Trang An is recommended?', 'a' => 'Route 2 (visiting Dot Cave and Dia Linh Cave) and Route 3 (featuring the 1,000-meter cave) provide the finest combination of karst scenery, cave passages, and historic temples.'],
         ],
         'vietnam-travel-cost' => [
@@ -1241,7 +1292,7 @@ function vg_get_page_faq_schema(string $uri_path, string $current_url): ?array
             ['q' => 'Which departure port is used for Lan Ha Bay cruises?', 'a' => 'Lan Ha Bay cruises depart primarily from Ben Beo harbor or Got and Tuan Chau ferry terminals connecting to Cat Ba Island, whereas Ha Long Bay cruises depart from Tuan Chau International Marina or Halong International Cruise Port.'],
         ],
         'da-nang-vs-hoi-an' => [
-            ['q' => 'Should I stay in Da Nang or Hoi An?', 'a' => 'Stay in Da Nang for expansive ocean beaches (My Khe), luxury high-rise resorts, modern seafood dining, and vibrant nightlife. Stay in Hoi An for historic pedestrian streets, lantern-lit riverside evenings, cooking schools, and tailor shops. The two destinations are only 45 minutes apart by taxi.'],
+            ['q' => 'Should I stay in Da Nang or Hoi An?', 'a' => 'Stay in Da Nang for expansive ocean beaches (My Khe), luxury high-rise resorts, modern seafood dining, and evening riverside entertainment. Stay in Hoi An for historic pedestrian streets, lantern-lit riverside evenings, cooking schools, and tailor shops. The two destinations are only 45 minutes apart by taxi.'],
             ['q' => 'How far is Hoi An from Da Nang and how do I travel between them?', 'a' => 'Hoi An is 30 kilometers (18.5 miles) south of Da Nang. The trip takes 40 to 45 minutes by taxi or Grab, costing approximately 250,000 to 350,000 VND (10 to 14 USD) each way.'],
             ['q' => 'Can I visit Da Nang as a day trip from Hoi An?', 'a' => 'Yes. Many travelers base themselves in Hoi An for its atmospheric charm and make day trips to Da Nang to visit the Marble Mountains, Son Tra Peninsula (Monkey Mountain), and My Khe beach.'],
         ],

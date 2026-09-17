@@ -1493,3 +1493,46 @@ Date: 2026-07-28 (Asia/Saigon)
   - Anti-AI Slop Quality Engine (`ops/anti-ai-slop-linter.py`):
     - `guide-aio.php`: Status: PASS [OK] | Score: 100/100 | Word Count: 5182 | Sentence CV: 2.934 | EDI: 6.95 | Tier 1: 0 | Tier 2: 0.
   - Master CI/CD Suite: 5/5 quality gates passed (`ops/verify-all-gates.ps1`). Core MU-Plugin hash preserved intact (`71b49033114e8007e5c19fb8ebc1a89e0d0dad88d0fe92dd381a28700db096ce`).
+
+## Stage 46 Verification - Search Discovery Deepening & Cross-Cluster Linking Expansion (September 17, 2026)
+- Goals:
+  - Deepen search discovery and intent mapping on `search.php`: provide interactive toolkit banners for high-intent queries (Visa, Budget/Cost, Weather) and a 3-part recovery surface on zero-result searches.
+  - Expand popular search chips to cover key intent queries (Ha Giang Loop, Mekong Delta, Visa, Budget & Cost, Weather, 10-Day Itinerary).
+  - Enrich regional travel clusters in `inc/guide-seo.php`: add Bai Tu Long Bay to Ha Long Bay cluster, Pu Luong to Ninh Binh & Northern Highlands, Phong Nha to Central Heritage, HCMC Gateway to Southern Delta, and Phu Quoc & Ly Son to Coastal Islands.
+  - Eliminate all latent anti-ai-slop linter warnings in `inc/guide-seo.php` ($HLS = 100.0$, 0 Tier 1/2 violations).
+  - Deploy updated theme files to production VPS with 100% SHA-256 parity and purge LiteSpeed Cache.
+- Changes Implemented:
+  - Contextual Travel Clusters & Schema Engine (`wordpress/wp-content/themes/vietnamguide-premium/inc/guide-seo.php`):
+    - Added Bai Tu Long Bay (`/destinations/bai-tu-long-bay-guide/`) to `ha_long_bay` journey links.
+    - Added Pu Luong Nature Reserve (`/destinations/pu-luong-travel-guide/`) to `ninh_binh` journey links.
+    - Added Phong Nha Caves & Karsts (`/destinations/phong-nha-travel-guide/`) to `central_heritage` journey links.
+    - Added Ho Chi Minh City Gateway (`/destinations/ho-chi-minh-city-travel-guide/`) to `southern_delta` journey links.
+    - Added Pu Luong Nature Reserve to `northern_highlands` attractions and journey links.
+    - Added Phu Quoc Tropical Island and Ly Son Volcanic Island to `coastal_islands` journey links and Ly Son to attractions.
+    - Calibrated FAQ items to eliminate Tier 2 cliché (`vibrant nightlife` -> `evening riverside entertainment`) and repetitive bigram opener (`Tam Coc`).
+  - Search Discovery & Intent Mapping (`wordpress/wp-content/themes/vietnamguide-premium/search.php`):
+    - Expanded search chips with high-intent queries: Ha Giang Loop, Mekong Delta, Visa, Budget & Cost, Weather, 10-Day Itinerary.
+    - Implemented contextual Direct Interactive Toolkit Banner (`.vg-search-tool-banner`) matching visa, budget/cost, and seasonal weather search queries with 1-click CTA.
+    - Implemented 3-part zero-results recovery surface: (1) 3 Interactive Travel Toolkits grid, (2) Essential Route Itinerary pills (10d, 14d, 21d), (3) Core Section Hub navigation.
+  - Tactile UI & Contrast Styling (`wordpress/wp-content/themes/vietnamguide-premium/assets/css/homepage.css`):
+    - Styled `.vg-search-tool-banner` with subtle category color gradients (visa blue, cost gold, weather jade) and Kowalski spring hover curves.
+    - Styled `.vg-search-toolkit-grid`, `.vg-search-toolkit-card`, and `.vg-search-itinerary-pill` with WCAG 2.2 AA contrast and tactile interactive states.
+  - Production VPS Deployment (`ops/deploy_theme_updates.py`):
+    - Deployed `guide-seo.php` (`a9afdacb26aeeb6e4f7f026be7066d2baa48fe9a0dede7b232f9a977587887f0`), `search.php` (`42784b338cc2161abaf93e4c2f0e185bc41699805a32a3b0251e6404bb892e17`), and `homepage.css` (`e90ca8d5190a1bd418bd0c201f389bfde9345558fd266ad88e4e5ed1973d9c17`) with 100% SHA-256 parity.
+    - Purged LiteSpeed object/page caches and reloaded OpenLiteSpeed (`SIGUSR1`).
+  - Search Engine Notification (`ops/submit_indexnow.py`):
+    - Resubmitted all 102 URLs via IndexNow API to `api.indexnow.org` and `bing.com` (both HTTP 200 OK).
+- Verification Evidence:
+  - Live Endpoint Audits:
+    - `https://vietnamguide.net/?s=visa`: HTTP 200 OK (renders interactive Visa Eligibility Checker banner).
+    - `https://vietnamguide.net/?s=cost`: HTTP 200 OK (renders interactive Travel Cost Calculator banner).
+    - `https://vietnamguide.net/?s=weather`: HTTP 200 OK (renders interactive Season & Weather Guide banner).
+    - `https://vietnamguide.net/?s=xyzxyz123`: HTTP 200 OK (renders 3-part zero-result recovery surface).
+    - `https://vietnamguide.net/destinations/pu-luong-travel-guide/`: HTTP 200 OK (renders 3 rich non-self journey links).
+    - `https://vietnamguide.net/destinations/ly-son-travel-guide/`: HTTP 200 OK (renders 3 rich non-self island journey links).
+  - Anti-AI Slop Quality Engine (`ops/anti-ai-slop-linter.py`):
+    - `guide-seo.php`: Status: PASS [OK] | Score: 100/100 | Word Count: 8445 | Sentence CV: 3.55 | EDI: 12.9 | Tier 1: 0 | Tier 2: 0.
+    - `search.php`: Status: PASS [OK] | Score: 100/100 | Word Count: 365 | Sentence CV: 0.5 | Tier 1: 0 | Tier 2: 0.
+  - Master CI/CD Suite: 5/5 quality gates passed (`ops/verify-all-gates.ps1`). Core MU-Plugin hash preserved intact (`71b49033114e8007e5c19fb8ebc1a89e0d0dad88d0fe92dd381a28700db096ce`).
+  - AST Mutation Engine: 112/112 AST mutations rejected (`ops/verify-guide-experience-mutations.ps1`).
+  - Public Route Verification: 87/87 public routes and hubs verified HTTP 200 (`ops/verify-guide-experience-public.ps1`).
