@@ -83,18 +83,30 @@ add_action('template_redirect', static function (): void {
     exit;
 });
 
-// Core Web Vitals & Resource Hints: Preconnect to media CDN, preload LCP hero image, and verification
+// Core Web Vitals & Resource Hints: Preconnect to media CDN, preload LCP hero image, verification, and PWA manifest
 add_action('wp_head', static function (): void {
-    echo '<meta name="google-site-verification" content="G5wVuwqeUiubxqR-z_1BOA5opV1xwI4PKy-piHsN6Xc">' . "\n";
-    echo '<link rel="preconnect" href="https://upload.wikimedia.org" crossorigin>' . "\n";
-    echo '<link rel="dns-prefetch" href="https://upload.wikimedia.org">' . "\n";
+    $themeUrl = get_stylesheet_directory_uri();
+    $headTags = [
+        '<meta name="google-site-verification" content="G5wVuwqeUiubxqR-z_1BOA5opV1xwI4PKy-piHsN6Xc">',
+        '<meta name="theme-color" content="#0e6f5c">',
+        '<meta name="apple-mobile-web-app-capable" content="yes">',
+        '<meta name="apple-mobile-web-app-status-bar-style" content="default">',
+        '<meta name="apple-mobile-web-app-title" content="VietnamGuide">',
+        '<link rel="manifest" href="' . esc_url($themeUrl . '/site.webmanifest') . '">',
+        '<link rel="apple-touch-icon" href="' . esc_url($themeUrl . '/assets/images/vg-icon-192.png') . '">',
+        '<link rel="icon" type="image/svg+xml" href="' . esc_url($themeUrl . '/assets/images/vg-icon.svg') . '">',
+        '<link rel="preconnect" href="https://upload.wikimedia.org" crossorigin>',
+        '<link rel="dns-prefetch" href="https://upload.wikimedia.org">',
+    ];
 
     if (is_singular()) {
         $heroImage = vg_get_default_og_image_url();
         if ($heroImage !== '') {
-            echo '<link rel="preload" as="image" href="' . esc_url($heroImage) . '" fetchpriority="high">' . "\n";
+            $headTags[] = '<link rel="preload" as="image" href="' . esc_url($heroImage) . '" fetchpriority="high">';
         }
     }
+
+    echo implode("\n", $headTags) . "\n";
 }, 1);
 
 /**

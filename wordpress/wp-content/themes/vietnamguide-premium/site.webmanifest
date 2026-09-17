@@ -1,0 +1,61 @@
+{
+  "name": "VietnamGuide - Practical Vietnam Travel Handbook",
+  "short_name": "VietnamGuide",
+  "description": "Essential, ground-truth travel planning guide for Vietnam with interactive route calculators, seasonal weather matrix, and visa verification.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#0a1f1a",
+  "theme_color": "#0e6f5c",
+  "icons": [
+    {
+      "src": "/wp-content/themes/vietnamguide-premium/assets/images/vg-icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/wp-content/themes/vietnamguide-premium/assets/images/vg-icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/wp-content/themes/vietnamguide-premium/assets/images/vg-icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Plan Your Trip",
+      "short_name": "Plan",
+      "description": "Comprehensive Vietnam travel planning hub",
+      "url": "/plan/",
+      "icons": [{ "src": "/wp-content/themes/vietnamguide-premium/assets/images/vg-icon.svg", "sizes": "any" }]
+    },
+    {
+      "name": "Visa Checker",
+      "short_name": "Visa",
+      "description": "Instant Vietnam visa exemption and e-visa rules",
+      "url": "/vietnam-visa-checker/",
+      "icons": [{ "src": "/wp-content/themes/vietnamguide-premium/assets/images/vg-icon.svg", "sizes": "any" }]
+    },
+    {
+      "name": "Cost Calculator",
+      "short_name": "Cost",
+      "description": "Calculate daily budget across 4 traveler tiers",
+      "url": "/vietnam-travel-cost/",
+      "icons": [{ "src": "/wp-content/themes/vietnamguide-premium/assets/images/vg-icon.svg", "sizes": "any" }]
+    },
+    {
+      "name": "Season & Weather",
+      "short_name": "Weather",
+      "description": "Interactive regional weather and monsoon matrix",
+      "url": "/vietnam-season-weather/",
+      "icons": [{ "src": "/wp-content/themes/vietnamguide-premium/assets/images/vg-icon.svg", "sizes": "any" }]
+    }
+  ]
+}

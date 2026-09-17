@@ -1536,3 +1536,45 @@ Date: 2026-07-28 (Asia/Saigon)
   - Master CI/CD Suite: 5/5 quality gates passed (`ops/verify-all-gates.ps1`). Core MU-Plugin hash preserved intact (`71b49033114e8007e5c19fb8ebc1a89e0d0dad88d0fe92dd381a28700db096ce`).
   - AST Mutation Engine: 112/112 AST mutations rejected (`ops/verify-guide-experience-mutations.ps1`).
   - Public Route Verification: 87/87 public routes and hubs verified HTTP 200 (`ops/verify-guide-experience-public.ps1`).
+
+## Stage 47 Verification - Deep Editorial Link Mesh, PWA Manifest & Print Architecture (September 17, 2026)
+- Goals:
+  - Deepen internal link graph across all 34 weakly linked editorial travel guides to ensure every guide in the 102-page library achieves $\ge 3$ to 4 incoming in-body editorial links.
+  - Implement full W3C Web App Manifest (`site.webmanifest`) and scalable vector/PNG icons (`vg-icon.svg`, `vg-icon-192.png`, `vg-icon-512.png`) with mobile home screen installation metadata and quick travel planning shortcuts.
+  - Optimize `@media print` CSS architecture for travelers printing or saving offline physical route itineraries and checklists.
+  - Maintain 100% Anti-AI Slop Quality Engine compliance ($HLS = 100.0$, 0 Tier 1/2 violations), preserve core MU-plugin invariant hash (`71b49033114e8007e5c19fb8ebc1a89e0d0dad88d0fe92dd381a28700db096ce`), and pass all master quality gates.
+- Changes Implemented:
+  - In-Content Editorial Link Mesh Expansion (`ops/apply_stage47_link_mesh.py`):
+    - Applied 38 targeted, high-context in-body editorial link insertions across 17 parent hub articles in the database (`Sf5bm6_posts`).
+    - Elevated all 34 substantive travel guides from 1–2 in-links to $\ge 3$ to 4 in-links (e.g., Pu Luong, Mu Cang Chai, Sapa Trekking, Phong Nha, Da Nang Beaches, Ly Son, Quy Nhon, Cham Islands, Hue Imperial City, Hanoi vs Saigon).
+    - Total in-content internal links increased from 982 to 1,046 (average 10.3 links/page).
+    - Weakly linked pages reduced from 38 down to 4 (only utility and legal policies remaining).
+  - W3C Web App Manifest & Mobile Installation (`site.webmanifest`, `inc/guide-seo.php`):
+    - Created `wordpress/wp-content/themes/vietnamguide-premium/site.webmanifest` with standalone display, theme color `#0e6f5c`, background `#0a1f1a`, and 4 instant travel shortcuts (`Plan Trip`, `Visa Checker`, `Cost Calculator`, `Season & Weather`).
+    - Designed scalable SVG and rendered high-res 192x192 and 512x512 PNG app icons (`vg-icon.svg`, `vg-icon-192.png`, `vg-icon-512.png`).
+    - Enriched `wp_head` in `inc/guide-seo.php` with manifest link, Apple touch icon, and mobile web app capability meta tags.
+  - Physical Travel Print Stylesheet Optimization (`assets/css/homepage.css`):
+    - Suppressed search toolkits, quick search chips, interactive action bars, and interactive widgets in print mode.
+    - Added crisp table border styling (`1px solid #d0d7de`) and `break-inside: avoid;` rules for route cards, day-by-day itineraries, and journey boxes.
+  - Production VPS Deployment (`ops/deploy_theme_updates.py`):
+    - Deployed `guide-seo.php`, `homepage.css`, `site.webmanifest`, and 3 icon assets with 100% SHA-256 parity.
+    - Purged LiteSpeed object/page caches and reloaded OpenLiteSpeed (`SIGUSR1`).
+  - Search Engine Notification (`ops/submit_indexnow.py`):
+    - Resubmitted all 102 URLs via IndexNow API to `api.indexnow.org` and `bing.com` (both HTTP 200 OK).
+- Verification Evidence:
+  - Internal Link Graph Audit (`ops/audit_internal_links.py`):
+    - Total in-content links: 1,046 (was 982).
+    - Weakly linked pages: 4 (was 38; 0 weakly linked editorial articles).
+  - Live Endpoint Audits:
+    - `https://vietnamguide.net/wp-content/themes/vietnamguide-premium/site.webmanifest`: HTTP 200 OK (2,163 bytes).
+    - `https://vietnamguide.net/wp-content/themes/vietnamguide-premium/assets/images/vg-icon.svg`: HTTP 200 OK (2,024 bytes).
+    - `https://vietnamguide.net/wp-content/themes/vietnamguide-premium/assets/images/vg-icon-192.png`: HTTP 200 OK (1,365 bytes).
+    - `https://vietnamguide.net/wp-content/themes/vietnamguide-premium/assets/images/vg-icon-512.png`: HTTP 200 OK (4,118 bytes).
+    - `https://vietnamguide.net/destinations/pu-luong-travel-guide/`: HTTP 200 OK.
+    - `https://vietnamguide.net/itineraries/14-days-in-vietnam/`: HTTP 200 OK.
+    - `https://vietnamguide.net/itineraries/10-days-in-vietnam/`: HTTP 200 OK.
+  - Anti-AI Slop Quality Engine (`ops/anti-ai-slop-linter.py`):
+    - `guide-seo.php`: Status: PASS [OK] | Score: 100/100 | Word Count: 8466 | Sentence CV: 3.525 | EDI: 109 evidence anchors | Tier 1: 0 | Tier 2: 0.
+  - Master CI/CD Suite: 5/5 quality gates passed (`ops/verify-all-gates.ps1`). Core MU-Plugin hash preserved intact (`71b49033114e8007e5c19fb8ebc1a89e0d0dad88d0fe92dd381a28700db096ce`).
+  - AST Mutation Engine: 112/112 AST mutations rejected (`ops/verify-guide-experience-mutations.ps1`).
+  - Public Route Verification: 87/87 public routes and hubs verified HTTP 200 (`ops/verify-guide-experience-public.ps1`).

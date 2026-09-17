@@ -6823,7 +6823,11 @@ nav[aria-label="Breadcrumbs"] a:hover {
   .vg-an-zone-selector-bar,
   .vg-an-next-steps,
   .vg-tool-synergy-bar,
-  .vg-synergy-bridge {
+  .vg-synergy-bridge,
+  .vg-search-tool-banner,
+  .vg-search-toolkit-grid,
+  .vg-search-chips,
+  .vg-search-quick-chips {
     display: none !important;
   }
 
@@ -6831,11 +6835,20 @@ nav[aria-label="Breadcrumbs"] a:hover {
   .vg-cost-calculator,
   .vg-itinerary-finder,
   .vg-season-matrix,
-  .vg-airport-navigator {
-    border: 1pt solid #ccc !important;
+  .vg-airport-navigator,
+  .vg-contextual-journey {
+    border: 1pt solid #cccccc !important;
     background: #ffffff !important;
     padding: 12pt !important;
     margin: 12pt 0 !important;
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+
+  .vg-contextual-journey__card {
+    border: 1pt solid #dddddd !important;
+    background: #fafafa !important;
+    box-shadow: none !important;
     page-break-inside: avoid;
     break-inside: avoid;
   }
@@ -6847,6 +6860,22 @@ nav[aria-label="Breadcrumbs"] a:hover {
     border: 1pt solid #bbb !important;
     background: #f9f9f9 !important;
     padding: 10pt !important;
+  }
+
+  table {
+    border-collapse: collapse !important;
+    width: 100% !important;
+  }
+
+  th, td {
+    border: 1pt solid #d0d7de !important;
+    padding: 6pt 8pt !important;
+    text-align: left !important;
+  }
+
+  th {
+    background: #f6f8fa !important;
+    font-weight: bold !important;
   }
 
 }
