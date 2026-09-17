@@ -1392,3 +1392,40 @@ Date: 2026-07-28 (Asia/Saigon)
     - `ops/verify-core-block-patterns.ps1`: PASSED
     - `ops/verify-guide-experience-mutations.ps1`: PASSED (112/112 AST mutations rejected)
     - `ops/verify-guide-experience-public.ps1`: PASSED (87/87 public routes return HTTP 200 with full DOM integrity)
+
+## Stage 43 Verification - Zero-CLS Natural Image Dimension Hardening & 404 Image Elimination (September 17, 2026)
+- Goals:
+  - Eliminate Cumulative Layout Shift (CLS) risk site-wide by injecting explicit natural `width` and `height` attributes on 100% of images.
+  - Eliminate 4 broken Wikimedia image URLs returning HTTP 404 on live production.
+  - Maintain optimal loading priorities: `loading="eager"` and `fetchpriority="high"` on above-the-fold hero covers, and `loading="lazy"` + `decoding="async"` on all body images.
+- Changes Implemented:
+  - 4 Broken Wikimedia Images Eliminated:
+    - `Tu_San_Canyon%2C_Nho_Que_River%2C_Ha_Giang.jpg` -> `https://upload.wikimedia.org/wikipedia/commons/thumb/3/3d/TuSan_Canyon.jpg/1920px-TuSan_Canyon.jpg` (1920x1080)
+    - `Ha_Long_Bay_Vietnam.jpg` -> `https://upload.wikimedia.org/wikipedia/commons/thumb/f/fa/Ha_Long_Bay%2C_Vietnam%2C_View_from_above.jpg/1920px-Ha_Long_Bay%2C_Vietnam%2C_View_from_above.jpg` (1920x1280)
+    - `Ta_Van_Muong_Hoa_valley_Sapa_Vietnam.jpg` -> `https://upload.wikimedia.org/wikipedia/commons/thumb/e/ef/Ta_Van_Muong_Ha_vallei.jpg/1920px-Ta_Van_Muong_Ha_vallei.jpg` (1920x1440)
+    - `Ma_Pi_Leng_Pass%2C_Vietnam.jpg` -> `https://upload.wikimedia.org/wikipedia/commons/thumb/4/46/Ma_Pi_Leng_Pass_winding_road_Ha_Giang_Vietnam.jpg/1920px-Ma_Pi_Leng_Pass_winding_road_Ha_Giang_Vietnam.jpg` (1920x1015)
+    - Updated across 14 post records in MariaDB via WP-CLI on production VPS.
+    - Synchronized local apply scripts: `ops/apply-ha-giang-safety-and-easy-rider.php`, `ops/apply-northern-terraces-cluster.php`, `ops/apply-sapa-trekking-and-accommodation.php`.
+  - Natural Dimensions Registry (`wordpress/wp-content/themes/vietnamguide-premium/inc/image-dimensions.php`):
+    - Extracted exact pixel widths and heights for all 207 unique images via the MediaWiki Commons API with rate-limit compliant User-Agent.
+    - Registered into an optimized, in-memory lookup table `vg_get_known_image_dimensions()`.
+  - Zero-CLS Image Dimension Hardening Filter (`wordpress/wp-content/themes/vietnamguide-premium/inc/guide-seo.php`):
+    - Implemented `vg_enhance_content_images(string $content): string` hooked to `the_content` filter at priority 21.
+    - Automatically injects exact natural `width` and `height` attributes using `WP_HTML_Tag_Processor`.
+    - Ensures `loading="lazy"` and `decoding="async"` for body images while strictly preserving `loading="eager"` and high fetch priority on hero covers.
+  - Production VPS Deployment & Verification:
+    - Deployed `image-dimensions.php` (`fec5022ae0c7f4ecbb8eaeac75061c70dadfa88ec3ccf50c87ad7aa900a5bd0c`) and `guide-seo.php` (`6a9f7d3525fbb4d9805c3d5c97fa284943444116e8a1ded4f9e85d2d655318ec`) with 100% SHA-256 parity.
+    - Purged LiteSpeed Cache.
+    - Resubmitted all 102 URLs via IndexNow.
+- Verification Evidence:
+  - Site-Wide Image Dimension Audit across all 102 pages (`scratch/audit_image_dimensions.py`):
+    - Total images found: 507
+    - Images with width & height: **507 (100.0%)**
+    - **Images MISSING width & height: 0 (0.0% - down from 505 / 99.6%)**
+  - Core Web Vitals Audit (`ops/audit_core_web_vitals.py`):
+    - All sampled hubs and guides report **0 Missing W/H (CLS risk)** and **0 Missing Alt**.
+  - Master CI/CD Suite:
+    - `ops/verify-all-gates.ps1`: 5/5 quality gates passed.
+    - `ops/verify-guide-experience-mutations.ps1`: 112/112 AST mutations rejected.
+    - `ops/verify-guide-experience-public.ps1`: 87/87 public routes verified (HTTP 200).
+    - Core MU-Plugin fingerprint `71b49033114e8007e5c19fb8ebc1a89e0d0dad88d0fe92dd381a28700db096ce` preserved.

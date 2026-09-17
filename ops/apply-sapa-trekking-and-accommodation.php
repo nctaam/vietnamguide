@@ -15,7 +15,7 @@ echo "=== Expanding and Publishing Sapa Trekking & Where to Stay Guides ===" . P
 
 $review_date = '2026-09-06';
 $sapa_terraces_img = 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/ca/Rice_terraces_in_Sapa%2C_Vietnam.jpg/1920px-Rice_terraces_in_Sapa%2C_Vietnam.jpg';
-$muong_hoa_img = 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/cb/Ta_Van_Muong_Hoa_valley_Sapa_Vietnam.jpg/1920px-Ta_Van_Muong_Hoa_valley_Sapa_Vietnam.jpg';
+$muong_hoa_img = 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/ef/Ta_Van_Muong_Ha_vallei.jpg/1920px-Ta_Van_Muong_Ha_vallei.jpg';
 
 // ==========================================
 // 1. Post 524: Sapa Trekking Guided vs Self-Guided

@@ -16,9 +16,9 @@ if (! defined('ABSPATH')) {
 echo "=== Expanding and Publishing Northern Terraces & Regional Detours Cluster ===" . PHP_EOL;
 
 $review_date = '2026-09-06';
-$halong_weather_img = 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/68/Ha_Long_Bay_Vietnam.jpg/1920px-Ha_Long_Bay_Vietnam.jpg';
+$halong_weather_img = 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/fa/Ha_Long_Bay%2C_Vietnam%2C_View_from_above.jpg/1920px-Ha_Long_Bay%2C_Vietnam%2C_View_from_above.jpg';
 $sapa_terraces_img = 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/ca/Rice_terraces_in_Sapa%2C_Vietnam.jpg/1920px-Rice_terraces_in_Sapa%2C_Vietnam.jpg';
-$muong_hoa_img = 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/cb/Ta_Van_Muong_Hoa_valley_Sapa_Vietnam.jpg/1920px-Ta_Van_Muong_Hoa_valley_Sapa_Vietnam.jpg';
+$muong_hoa_img = 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/ef/Ta_Van_Muong_Ha_vallei.jpg/1920px-Ta_Van_Muong_Ha_vallei.jpg';
 
 // ==========================================
 // 1. Post 526: Best Time for Northern Vietnam

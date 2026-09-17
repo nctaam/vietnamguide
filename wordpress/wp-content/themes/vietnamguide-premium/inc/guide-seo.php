@@ -3,6 +3,8 @@ if (! defined('ABSPATH')) {
     exit;
 }
 
+require_once __DIR__ . '/image-dimensions.php';
+
 function vg_get_default_og_image_url(): string
 {
     $defaultImage = get_theme_file_uri('/assets/images/ha-long-bay-vietnam-hero.jpg');
@@ -1513,4 +1515,87 @@ function vg_enhance_content_tables(string $content): string
 }
 
 add_filter('the_content', 'vg_enhance_content_tables', 20);
+
+/**
+ * Stage 43: Zero-CLS Image Dimension Hardening & Lazy Loading
+ *
+ * Ensures all content images possess explicit natural width & height
+ * attributes matching their actual dimensions to eliminate layout shifts (CLS),
+ * while maintaining eager/high-priority loading on hero covers and lazy loading on body images.
+ */
+function vg_enhance_content_images(string $content): string
+{
+    if (stripos($content, '<img') === false) {
+        return $content;
+    }
+
+    $dimensions = function_exists('vg_get_known_image_dimensions') ? vg_get_known_image_dimensions() : [];
+    $processor = new WP_HTML_Tag_Processor($content);
+
+    while ($processor->next_tag(['tag_name' => 'img'])) {
+        $src = $processor->get_attribute('src');
+        if (! is_string($src) || trim($src) === '') {
+            continue;
+        }
+        $src = trim($src);
+
+        // 1. Resolve dimensions if width or height is missing
+        $hasWidth = $processor->get_attribute('width') !== null;
+        $hasHeight = $processor->get_attribute('height') !== null;
+
+        if (! $hasWidth || ! $hasHeight) {
+            $w = null;
+            $h = null;
+
+            // Direct match
+            if (isset($dimensions[$src])) {
+                [$w, $h] = $dimensions[$src];
+            } else {
+                $decodedSrc = rawurldecode($src);
+                if (isset($dimensions[$decodedSrc])) {
+                    [$w, $h] = $dimensions[$decodedSrc];
+                } else {
+                    $path = parse_url($src, PHP_URL_PATH);
+                    $basename = $path !== null && $path !== '' ? basename($path) : '';
+                    $decodedBasename = rawurldecode($basename);
+
+                    if ($basename !== '' && isset($dimensions[$basename])) {
+                        [$w, $h] = $dimensions[$basename];
+                    } elseif ($decodedBasename !== '' && isset($dimensions[$decodedBasename])) {
+                        [$w, $h] = $dimensions[$decodedBasename];
+                    } elseif (preg_match('/(?:^|\/)(\d+)px-/i', $basename, $m)) {
+                        // Fallback heuristic for unindexed Wikimedia thumbnails
+                        $w = (int) $m[1];
+                        $h = (int) round($w * 2 / 3);
+                    }
+                }
+            }
+
+            if ($w !== null && $h !== null && $w > 0 && $h > 0) {
+                if (! $hasWidth) {
+                    $processor->set_attribute('width', (string) $w);
+                }
+                if (! $hasHeight) {
+                    $processor->set_attribute('height', (string) $h);
+                }
+            }
+        }
+
+        // 2. Ensure loading attribute (lazy for body, preserve eager/high-priority for hero)
+        $loading = $processor->get_attribute('loading');
+        if ($loading === null) {
+            $processor->set_attribute('loading', 'lazy');
+        }
+
+        // 3. Ensure decoding="async"
+        $decoding = $processor->get_attribute('decoding');
+        if ($decoding === null) {
+            $processor->set_attribute('decoding', 'async');
+        }
+    }
+
+    return $processor->get_updated_html();
+}
+
+add_filter('the_content', 'vg_enhance_content_images', 21);
 

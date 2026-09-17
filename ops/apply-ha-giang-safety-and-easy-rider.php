@@ -14,9 +14,9 @@ if (! defined('ABSPATH')) {
 echo "=== Expanding and Publishing Ha Giang Safety & Easy Rider Guides ===" . PHP_EOL;
 
 $review_date = '2026-09-06';
-$ma_pi_leng_img = 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/e6/Ma_Pi_Leng_Pass%2C_Vietnam.jpg/1920px-Ma_Pi_Leng_Pass%2C_Vietnam.jpg';
+$ma_pi_leng_img = 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/46/Ma_Pi_Leng_Pass_winding_road_Ha_Giang_Vietnam.jpg/1920px-Ma_Pi_Leng_Pass_winding_road_Ha_Giang_Vietnam.jpg';
 $dong_van_img = 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Dong_Van_Karst_Plateau_Geopark%2C_Vietnam.jpg/1920px-Dong_Van_Karst_Plateau_Geopark%2C_Vietnam.jpg';
-$tu_san_img = 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/13/Tu_San_Canyon%2C_Nho_Que_River%2C_Ha_Giang.jpg/1920px-Tu_San_Canyon%2C_Nho_Que_River%2C_Ha_Giang.jpg';
+$tu_san_img = 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/3d/TuSan_Canyon.jpg/1920px-TuSan_Canyon.jpg';
 
 // ==========================================
 // 1. Post 522: Ha Giang Safety Guide
