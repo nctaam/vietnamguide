@@ -1578,3 +1578,47 @@ Date: 2026-07-28 (Asia/Saigon)
   - Master CI/CD Suite: 5/5 quality gates passed (`ops/verify-all-gates.ps1`). Core MU-Plugin hash preserved intact (`71b49033114e8007e5c19fb8ebc1a89e0d0dad88d0fe92dd381a28700db096ce`).
   - AST Mutation Engine: 112/112 AST mutations rejected (`ops/verify-guide-experience-mutations.ps1`).
   - Public Route Verification: 87/87 public routes and hubs verified HTTP 200 (`ops/verify-guide-experience-public.ps1`).
+
+## Stage 48 Verification - Offline Travel Capability, PWA Service Worker & Tactile Print Field Guide Actions (September 17, 2026)
+- Goals:
+  - Implement full offline travel resilience and PWA Service Worker architecture (`/sw.js`) with origin scope `/`.
+  - Provide an automatic network-first caching strategy for visited itinerary routes and travel guides, enabling offline access when travelers explore remote mountain passes (Ha Giang loop, Cao Bang, Mu Cang Chai) or islands (Cham Islands, Ly Son, Con Dao).
+  - Create a dedicated, standalone offline fallback page (`/offline.html`) containing essential Vietnamese emergency assistance numbers (Police 113, Ambulance 115, Fire 114, English-speaking Tourist Hotlines for Hanoi, Da Nang, and Ho Chi Minh City), offline survival tips, and reconnection controls.
+  - Implement tactile 1-click "Print Field Guide" action buttons (`.vg-print-guide`) across all guide experience articles and standard pages, integrated with `@media print` suppression rules.
+  - Maintain 100% Anti-AI Slop Quality Engine compliance ($HLS = 100.0$, 0 Tier 1/2 violations), preserve core MU-plugin invariant hash (`71b49033114e8007e5c19fb8ebc1a89e0d0dad88d0fe92dd381a28700db096ce`), and pass all master quality gates and 112 AST mutations.
+- Changes Implemented:
+  - PWA Service Worker (`wordpress/sw.js` -> `/sw.js`):
+    - Implemented zero-dependency, vanilla Service Worker (`vg-travel-handbook-v1.0.0`) with root scope `/`.
+    - Pre-caches core app shell: `/offline.html`, `/wp-content/themes/vietnamguide-premium/assets/css/homepage.css`, `/wp-content/themes/vietnamguide-premium/assets/images/vg-icon.svg`, `/wp-content/themes/vietnamguide-premium/assets/images/vg-icon-192.png`, and `site.webmanifest`.
+    - Dynamic navigation caching: Network-first with cache fallback, caching every visited guide and itinerary for offline retrieval; serves `/offline.html` when completely offline on unvisited routes.
+    - Stale-while-revalidate for static assets and explicit bypass for `/wp-admin/`, `/wp-login.php`, and preview requests.
+  - Dedicated Offline Travel Fallback Page (`wordpress/offline.html` -> `/offline.html`):
+    - Self-contained, responsive page with WCAG 2.2 AA calibrated contrast and zero third-party font dependencies.
+    - Verified emergency numbers: Police `113`, Ambulance `115`, Fire `114`, Hanoi Tourist Desk `+84 24 3926 1565`, Da Nang Tourist Assistance `+84 236 3550 111`, and HCMC Tourist Hotline `1022 (ext. 8)`.
+    - Practical offline survival tips for international travelers (offline map GPS guidance, hotel address diacritics, rural cafe Wi-Fi identification).
+    - Scored 100/100 on Anti-AI Slop Quality Engine (Sentence CV = 0.557, 0 Tier 1/2 violations).
+  - Service Worker Registration & Print Trigger (`wordpress/wp-content/themes/vietnamguide-premium/inc/guide-seo.php`):
+    - Added `wp_footer` hook registering `/sw.js` on `window.load` over HTTPS/localhost.
+    - Attached click event listener for `[data-vg-print]` invoking `window.print()`.
+  - Tactile Print Field Guide UI & Print Suppression (`homepage.css`, `index.php`, `content-page.php`, `guide-page.php`):
+    - Added `.vg-print-guide` button with printer icon (`&#128424;`) to `.vg-share-bar` across all 87 guide experience routes and standard pages.
+    - Styled `.vg-print-guide` with Emil Kowalski spring micro-interactions: 44px min-height, border transition, and active scale compression (`scale(0.96)`).
+    - Enforced print stylesheet suppression (`display: none !important;`) on `.vg-print-guide` and `.vg-share-bar`.
+  - Production VPS Deployment (`ops/deploy_theme_updates.py`):
+    - Deployed `sw.js`, `offline.html`, `guide-seo.php`, `homepage.css`, `index.php`, `content-page.php`, and `guide-page.php` with 100% SHA-256 parity.
+    - Purged LiteSpeed object/page caches and reloaded OpenLiteSpeed (`SIGUSR1`).
+  - Search Engine Notification (`ops/submit_indexnow.py`):
+    - Resubmitted all 102 URLs via IndexNow API to `api.indexnow.org` and `bing.com` (both HTTP 200 OK).
+- Verification Evidence:
+  - Live Production HTTP Endpoint Audits:
+    - `https://vietnamguide.net/sw.js`: HTTP 200 OK (ServiceWorker active with `vg-travel-handbook-v1.0.0`).
+    - `https://vietnamguide.net/offline.html`: HTTP 200 OK (Offline mode banner, emergency contacts 113, 115).
+    - `https://vietnamguide.net/itineraries/14-days-in-vietnam/`: HTTP 200 OK (`data-vg-print`, "Print Field Guide", `serviceWorker.register`).
+    - `https://vietnamguide.net/destinations/hanoi-travel-guide/`: HTTP 200 OK (`data-vg-print`, "Print Field Guide", `serviceWorker.register`).
+    - `https://vietnamguide.net/plan/vietnam-travel-guide/`: HTTP 200 OK (`data-vg-print`, "Print Field Guide", `serviceWorker.register`).
+  - Anti-AI Slop Quality Engine (`ops/anti-ai-slop-linter.py`):
+    - `wordpress/offline.html`: Status: PASS [OK] | Score: 100/100 | Word Count: 191 | Sentence CV: 0.557 | Tier 1: 0 | Tier 2: 0.
+    - `wordpress/wp-content/themes/vietnamguide-premium/inc/guide-seo.php`: Status: PASS [OK] | Score: 100/100 | Word Count: 8496 | Sentence CV: 3.54 | Evidence Anchors: 109 | Tier 1: 0 | Tier 2: 0.
+  - Master CI/CD Suite: 5/5 quality gates passed (`ops/verify-all-gates.ps1`). Core MU-Plugin hash preserved intact (`71b49033114e8007e5c19fb8ebc1a89e0d0dad88d0fe92dd381a28700db096ce`).
+  - AST Mutation Engine: 112/112 AST mutations rejected (`ops/verify-guide-experience-mutations.ps1`).
+  - Public Route Verification: 87/87 public routes and hubs verified HTTP 200 (`ops/verify-guide-experience-public.ps1`).

@@ -1877,6 +1877,31 @@ html:not(.vg-js) body.home .vg-site-header {
   color: var(--vg-white);
 }
 
+.vg-print-guide {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  padding: 8px 16px;
+  border: 1px solid var(--vg-line);
+  background: var(--vg-paper);
+  color: var(--vg-ink);
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background-color 180ms ease, border-color 180ms ease, color 180ms ease, transform 180ms ease;
+}
+
+.vg-print-guide:hover {
+  border-color: var(--vg-forest);
+  background: var(--vg-white);
+  color: var(--vg-forest);
+}
+
+.vg-print-guide:active {
+  transform: scale(0.96);
+}
+
 /* Form and Search Elements */
 .search-form,
 .wp-block-search__inside-wrapper {
@@ -6755,6 +6780,7 @@ nav[aria-label="Breadcrumbs"] a:hover {
   .vg-actions,
   .vg-share-bar,
   .vg-copy-link,
+  .vg-print-guide,
   .search-form,
   .wp-block-search,
   .navigation.pagination,

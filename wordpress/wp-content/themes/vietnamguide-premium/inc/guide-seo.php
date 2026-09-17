@@ -109,6 +109,21 @@ add_action('wp_head', static function (): void {
     echo implode("\n", $headTags) . "\n";
 }, 1);
 
+// Register PWA Service Worker for offline field guide and handle print actions
+add_action('wp_footer', static function (): void {
+    $swUrl = esc_url(home_url('/sw.js'));
+    $inlineScript = '<script>'
+        . 'if ("serviceWorker" in navigator && (window.location.protocol === "https:" || window.location.hostname === "localhost")) {'
+        . 'window.addEventListener("load", function () { navigator.serviceWorker.register("' . $swUrl . '", { scope: "/" }).catch(function () {}); });'
+        . '}'
+        . 'document.addEventListener("click", function (e) {'
+        . 'var btn = e.target && e.target.closest ? e.target.closest("[data-vg-print]") : null;'
+        . 'if (btn) { window.print(); }'
+        . '});'
+        . '</script>';
+    printf('%s', $inlineScript);
+}, 99);
+
 /**
  * ==========================================================================
  * Stage 20: Rich Travel Structured Data & Contextual Destination Hub Linking

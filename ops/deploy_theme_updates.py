@@ -32,6 +32,18 @@ DEPLOY_FILES = [
      'wp-content/themes/vietnamguide-premium/assets/images/vg-icon-192.png'),
     ('wordpress/wp-content/themes/vietnamguide-premium/assets/images/vg-icon-512.png',
      'wp-content/themes/vietnamguide-premium/assets/images/vg-icon-512.png'),
+    ('wordpress/sw.js',
+     'sw.js'),
+    ('wordpress/offline.html',
+     'offline.html'),
+    ('wordpress/wp-content/themes/vietnamguide-premium/assets/js/homepage.js',
+     'wp-content/themes/vietnamguide-premium/assets/js/homepage.js'),
+    ('wordpress/wp-content/themes/vietnamguide-premium/index.php',
+     'wp-content/themes/vietnamguide-premium/index.php'),
+    ('wordpress/wp-content/themes/vietnamguide-premium/template-parts/content-page.php',
+     'wp-content/themes/vietnamguide-premium/template-parts/content-page.php'),
+    ('wordpress/wp-content/themes/vietnamguide-premium/template-parts/guide-page.php',
+     'wp-content/themes/vietnamguide-premium/template-parts/guide-page.php'),
 ]
 
 def get_sha256(filepath):

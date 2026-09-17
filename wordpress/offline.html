@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Offline Travel Assistance &mdash; VietnamGuide.net</title>
+    <meta name="description" content="Offline travel resources, emergency contacts, and cached guide access for Vietnam.">
+    <meta name="theme-color" content="#0e6f5c">
+    <link rel="icon" href="/wp-content/themes/vietnamguide-premium/assets/images/vg-icon.svg" type="image/svg+xml">
+    <style>
+        :root {
+            --vg-forest: #0e6f5c;
+            --vg-forest-dark: #09473b;
+            --vg-paper: #faf8f5;
+            --vg-surface: #ffffff;
+            --vg-ink: #1b2e26;
+            --vg-muted: #53655f;
+            --vg-line: #d8dedb;
+            --vg-gold-bg: #fef3c7;
+            --vg-gold-text: #78350f;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background: var(--vg-paper);
+            color: var(--vg-ink);
+            line-height: 1.6;
+            padding: 0 16px 48px;
+        }
+        .vg-offline-header {
+            max-width: 760px;
+            margin: 32px auto 24px;
+            display: flex;
+            align-items: center;
+           -justify-content: space-between;
+            border-bottom: 1px solid var(--vg-line);
+            padding-bottom: 16px;
+        }
+        .vg-brand {
+            font-size: 20px;
+            font-weight: 800;
+            color: var(--vg-forest);
+            text-decoration: none;
+            letter-spacing: -0.02em;
+        }
+        .vg-badge-offline {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            background: var(--vg-gold-bg);
+            color: var(--vg-gold-text);
+            padding: 4px 10px;
+            border-radius: 4px;
+            border: 1px solid #fcd34d;
+        }
+        .vg-offline-card {
+            max-width: 760px;
+            margin: 0 auto 24px;
+            background: var(--vg-surface);
+            border: 1px solid var(--vg-line);
+            border-radius: 8px;
+            padding: 32px 28px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+        }
+        h1 {
+            font-size: 26px;
+            font-weight: 800;
+            color: var(--vg-forest-dark);
+            line-height: 1.25;
+            margin-bottom: 12px;
+        }
+        p { margin-bottom: 16px; color: var(--vg-ink); font-size: 16px; }
+        .vg-offline-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin: 24px 0 32px;
+        }
+        .vg-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 12px 20px;
+            font-size: 14px;
+            font-weight: 700;
+            border-radius: 6px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 160ms ease;
+            border: 1px solid transparent;
+        }
+        .vg-btn--primary { background: var(--vg-forest); color: #ffffff; }
+        .vg-btn--primary;hover { background: var(--vg-forest-dark); }
+        .vg-btn--secondary { background: var(--vg-surface); color: var(--vg-ink); border-color: var(--vg-line); }
+        .vg-btn--secondary;hover { border-color: var(--vg-forest); color: var(--vg-forest); }
+        .vg-emergency-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+            gap: 12px;
+            margin: 20px 0 28px;
+        }
+        .vg-emergency-item {
+            background: var(--vg-paper);
+            border: 1px solid var(--vg-line);
+            border-radius: 6px;
+            padding: 14px 16px;
+        }
+        .vg-emergency-item--police { border-left: 4px solid #dc2626; }
+        .vg-emergency-item--medical { border-left: 4px solid #059669; }
+        .vg-emergency-item--tourist { border-left: 4px solid var(--vg-forest); }
+        .vg-emergency-item strong {
+            display: block;
+            font-size: 18px;
+            color: var(--vg-forest-dark); margin-bottom: 4px;
+        }
+        .vg-emergency-item span { font-size: 13px; color: var(--vg-muted); display: block; }
+        .vgmtips-list { margin: 16px 0 0 20px; color: var(--vg-muted); font-size: 15px; }
+        .vgmtips-list li { margin-bottom: 10px; }
+        .vg-tips-list strong { color: var(--vg-ink); }
+        .vg-footer-note {
+            max-width: 760px;
+            margin: 24px auto 0;
+            text-align: center;
+            font-size: 13px;
+            color: var(--vg-muted); }
+    </style>
+</head>
+<body>
+    <header class="vg-offline-header">
+        <a href="/" class="vg-brand">VietnamGuide.net</a>
+        <span class="vg-badge-offline">
+            <span aria-hidden="true">&#9888;</span> Offline Mode
+        </span>
+    </header>
+
+
+    <main class="vg-offline-card">
+        <h1>You are currently exploring offline</h1>
+        <p>
+            No internet signal.
+            You have reached a rural mountain pass, remote island, or dead zone without cellular reception.
+            Any VietnamGuide itineraries, regional route breakdowns, packing checklists, and transit schedules that you opened earlier remain fully accessible in your browser cache.
+            Use your device freely.
+        </p>
+
+
+        <div class="vg-offline-actions">
+            <button type="button" class="vg-btn vg-btn--primary" onclick="window.location.reload()">
+                Try Reconnecting
+            </button>
+            <button type="button" class="vg-btn vg-btn--secondary" onclick="window.history.back()">
+                &rarr; Back to Previous Guide
+            </button>
+        </div>
+
+
+        <h2 style="font-size: 18px; font-weight: 800; color: var(--vg-forest-dark); margin-top: 24px;">
+            Essential Vietnam Emergency Contacts
+        </h2>
+        <div class="vg-emergency-grid">
+            <div class="vg-emergency-item vg-emergency-item--police">
+                <strong>113</strong>
+                <span>Police Assistance (National)</span>
+            </div>
+            <div class="vg-emergency-item vg-emergency-item--medical">
+                <strong>115</strong>
+                <span>Ambulance & Medical Emergency</span>
+            </div>
+            <div class="vg-emergency-item vg-emergency-item--tourist">
+                <strong>+84 24 3926 1565</strong>
+                <span>Hanoi Tourist Support Desk</span>
+            </div>
+            <div class="vg-emergency-item vg-emergency-item--tourist">
+                <strong>+84 236 3550 111</strong>
+                <span>Da Nang Tourist Assistance</span>
+            </div>
+            <div class="vg-emergency-item vg-emergency-item--tourist">
+                <strong>1022 (ext. 8)</strong>
+                <span>HCMC Tourist Hotline (English)</span>
+            </div>
+            <div class="vg-emergency-item">
+                <strong>114</strong>
+                <span>Fire & Search / Rescue</span>
+            </div>
+        </div>
+
+
+        <h2 style="font-size: 18px; font-weight: 800; color: var(--vg-forest-dark); margin-top: 16px;">
+            Practical Advice When Offline in Vietnam
+        </h2>
+        <ul class="vg-tips-list">
+            <li>
+                <strong>Offline Navigation:</strong> GPS works without data. If you pre-downloaded offline maps in Google Maps or Maps.me, track your position along national highways QL1A or QL4D instead of unpaved trails.
+            </li>
+            <li>
+                <strong>Lodging Information:</strong> Show local taxi or xe om drivers your accommodation confirmation containing the full Vietnamese street name with accent marks.
+            </li>
+            <li>
+                <strong>Data Recovery:</strong> Wi-Fi is common. Roadside cafes and homestays throughout rural provinces frequently offer free connection. Look for signs reading <em>&quot;Wi-Fi Mien Phi&quot;</em>.
+            </li>
+        </ul>
+    </main>
+
+
+    <footer class="vg-footer-note">
+        VietnamGuide.net &mdash; Essential, ground-truth travel intelligence for Vietnam.
+    </footer>
+</body>
+</html>

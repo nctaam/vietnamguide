@@ -57,6 +57,17 @@ $relatedRoutes = is_array($args['related_routes'] ?? null) ? $args['related_rout
                 'after' => '</nav>',
             ]);
             ?>
+            <div class="vg-share-bar">
+                <span class="vg-share-label"><?php esc_html_e('Share this guide:', 'vietnamguide-premium'); ?></span>
+                <button type="button" class="vg-copy-link" data-vg-copy-link aria-label="<?php esc_attr_e('Copy guide link to clipboard', 'vietnamguide-premium'); ?>">
+                    <span class="vg-copy-link__icon" aria-hidden="true">&#128279;</span>
+                    <span class="vg-copy-link__text"><?php esc_html_e('Copy link', 'vietnamguide-premium'); ?></span>
+                </button>
+                <button type="button" class="vg-print-guide" data-vg-print aria-label="<?php esc_attr_e('Print or save field guide as PDF', 'vietnamguide-premium'); ?>">
+                    <span class="vg-print-guide__icon" aria-hidden="true">&#128424;</span>
+                    <span class="vg-print-guide__text"><?php esc_html_e('Print Field Guide', 'vietnamguide-premium'); ?></span>
+                </button>
+            </div>
         </div>
 
         <?php if ($bestFor !== '' || $skipIf !== '' || $reviewed !== '' || $sourceCount > 0) : ?>
