@@ -1429,3 +1429,39 @@ Date: 2026-07-28 (Asia/Saigon)
     - `ops/verify-guide-experience-mutations.ps1`: 112/112 AST mutations rejected.
     - `ops/verify-guide-experience-public.ps1`: 87/87 public routes verified (HTTP 200).
     - Core MU-Plugin fingerprint `71b49033114e8007e5c19fb8ebc1a89e0d0dad88d0fe92dd381a28700db096ce` preserved.
+
+## Stage 44 Verification - Complete Site-Wide SERP Meta Optimization & Schema Clean-Up (September 17, 2026)
+- Goals:
+  - Achieve 100% optimal title lengths (30–65 chars) and description lengths (120–165 chars) across all 102 pages on the website.
+  - Upgrade thin, low-CTR titles on 7 policy/concierge pages to brand-consistent, informative search titles.
+  - Calibrate descriptions across 7 policy pages and 3 guides to the high-converting 145–160 character snippet window ($HLS = 100$, 0 AI clichés).
+  - Clean up Schema.org JSON-LD Person/Organization strings in `guide-seo.php` to prevent HTML entity encoding (`&amp;`).
+- Changes Implemented:
+  - SERP Metadata Calibration in MariaDB (via WP-CLI on production VPS):
+    - Post 58 (`/about/`): Title: `About VietnamGuide - Independent Vietnam Travel Intelligence` (60 chars), Description: `Meet VietnamGuide: an independent, on-the-ground travel planning team delivering verified route logistics, safety checks, and practical advice for Vietnam.` (155 chars)
+    - Post 59 (`/editorial-policy/`): Title: `Editorial Policy & Standards - VietnamGuide` (43 chars), Description: `Explore VietnamGuide editorial standards: zero sponsored placements, independent route vetting, strict fact-checking, and unbiased travel recommendations.` (154 chars)
+    - Post 60 (`/source-update-policy/`): Title: `Source & Update Policy - VietnamGuide Travel Facts` (50 chars), Description: `Read how VietnamGuide verifies travel pricing, train timetables, visa rules, and safety alerts through primary sources, official portals, and quarterly audits.` (159 chars)
+    - Post 61 (`/contact/`): Title: `Contact Editorial Desk - VietnamGuide Travel Intelligence` (56 chars), Description: `Get in touch with the VietnamGuide editorial desk for fact corrections, route updates, feedback, or verified local intelligence. We respond within 48 hours.` (156 chars)
+    - Post 12 (`/affiliate-disclosure/`): Title: `Affiliate Disclosure & Transparency - VietnamGuide` (50 chars), Description: `Understand VietnamGuide affiliate disclosure: how we preserve editorial independence, never accept paid rankings, and transparently fund our field research.` (156 chars)
+    - Post 62 (`/affiliate-review-policy/`): Title: `Affiliate Review Policy & Criteria - VietnamGuide` (49 chars), Description: `Learn VietnamGuide strict partner vetting criteria: we only recommend transport providers, booking platforms, and services evaluated directly by our team.` (154 chars)
+    - Post 3 (`/privacy-policy/`): Title: `Privacy Policy - VietnamGuide Independent Travel Planning` (56 chars), Description: `Review VietnamGuide privacy policy: how we protect visitor data, handle analytics, respect reader choices, and maintain a secure, privacy-first travel guide.` (157 chars)
+    - Post 479 (`/plan/ha-long-bay-cruise-questions-before-booking/`): Description calibrated to 154 chars.
+    - Post 326 (`/compare/ninh-binh-day-trip-vs-overnight/`): Description calibrated to 153 chars.
+    - Post 22 (`/costs/vietnam-travel-cost/`): Description calibrated to 156 chars (down from 197 chars).
+  - Schema Entity Clean-Up (`wordpress/wp-content/themes/vietnamguide-premium/inc/guide-seo.php`):
+    - Converted literal `&` to `and` in `jobTitle` (`Editorial Desk and Field Research Team`) and `knowsAbout` properties.
+    - Deployed `guide-seo.php` with 100% SHA-256 parity (`3a16e90946f4d2128230557105c16dd0dcdea64e4151299b1719ce4d5d2e965d`).
+    - Purged LiteSpeed Cache.
+    - Synchronized local `ops/meta_inventory.json` with remote database.
+- Verification Evidence:
+  - Full Site-Wide SEO Audit across all 102 pages (`scratch/audit_seo_full_102.py`):
+    - **Titles**: **102 / 102 (100.0%) Optimal (30–65 chars)** | **0 short | 0 long**
+    - **Descriptions**: **102 / 102 (100.0%) Optimal (120–165 chars)** | **0 missing | 0 short | 0 long**
+    - **H1 Count**: **102 / 102 (100.0%) Single H1** | **0 invalid**
+    - **Canonical URLs**: **102 / 102 (100.0%) Match** | **0 mismatches**
+    - **Image Dimensions (CLS)**: **102 / 102 (100.0%) Compliant** | **0 missing W/H**
+    - **FAQPage Rich Schema**: **77 pages (423 structured Q&As)**
+    - **BreadcrumbList Schema**: **101 pages (100% of subpages)**
+  - Anti-AI Slop Quality Engine: All 10 calibrated descriptions verified at $HLS = 100.0$ with 0 Tier 1 clichés.
+  - Master CI/CD Suite: 5/5 quality gates passed (`verify-all-gates.ps1`). Core MU-plugin hash preserved.
+  - IndexNow Resubmission: 102 URLs dispatched to `api.indexnow.org` and `bing.com` (both HTTP 200 OK).

@@ -1131,8 +1131,8 @@ function vg_rich_travel_schema_filter($data, $context = null): array
             $node['correctionsPolicy'] = "{$canonical_base}/source-update-policy/";
             $node['knowsAbout'] = [
                 'Vietnam Travel Planning',
-                'Vietnam Transportation & Rail Logistics',
-                'Vietnam Visa Regulations & Entry Policies',
+                'Vietnam Transportation and Rail Logistics',
+                'Vietnam Visa Regulations and Entry Policies',
                 'Southeast Asia Tourism Safety',
                 'Sustainable Travel in Vietnam',
             ];
@@ -1140,7 +1140,7 @@ function vg_rich_travel_schema_filter($data, $context = null): array
 
         $is_person = $node_type === 'Person' || (is_array($node_type) && in_array('Person', $node_type, true));
         if ($is_person) {
-            $node['jobTitle'] = 'Editorial Desk & Field Research Team';
+            $node['jobTitle'] = 'Editorial Desk and Field Research Team';
             $node['description'] = 'Independent travel editors and on-the-ground researchers producing verified route logistics, safety checks, and practical travel guides for Vietnam.';
             $node['publishingPrinciples'] = "{$canonical_base}/editorial-policy/";
             $node['knowsAbout'] = [
