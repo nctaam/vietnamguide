@@ -18,6 +18,7 @@ FILES = {
     'cost_calculator': os.path.join(THEME_INC, 'guide-cost-calculator.php'),
     'itinerary_finder': os.path.join(THEME_INC, 'guide-itinerary-finder.php'),
     'airport_navigator': os.path.join(THEME_INC, 'guide-airport-navigator.php'),
+    'packing_checklist': os.path.join(THEME_INC, 'guide-packing-checklist.php'),
 }
 SEO_FILE = os.path.join(THEME_INC, 'guide-seo.php')
 
@@ -32,13 +33,14 @@ class TestInteractiveShortcodes(unittest.TestCase):
                 self.contents[key] = f.read()
 
     def test_shortcodes_registered(self):
-        """All 5 components must register their corresponding shortcode."""
+        """All 6 components must register their corresponding shortcode."""
         expected_shortcodes = {
             'visa_checker': 'vg_visa_checker',
             'season_matrix': 'vg_season_matrix',
             'cost_calculator': 'vg_cost_calculator',
             'itinerary_finder': 'vg_itinerary_finder',
             'airport_navigator': 'vg_airport_navigator',
+            'packing_checklist': 'vg_packing_checklist',
         }
         for key, sc in expected_shortcodes.items():
             pattern = rf"add_shortcode\(\s*['\"]{sc}['\"]\s*,"
@@ -101,6 +103,10 @@ class TestInteractiveShortcodes(unittest.TestCase):
         self.assertIn('safety-and-scams-in-vietnam', self.contents['airport_navigator'])
         self.assertIn('vietnam-first-trip-planning-checklist', self.contents['airport_navigator'])
 
+        # Packing checklist targets
+        self.assertIn('vietnam-first-trip-planning-checklist', self.contents['packing_checklist'])
+        self.assertIn('vietnam-airport-arrival-checklist', self.contents['packing_checklist'])
+
     def test_php_syntax_linter(self):
         """All modified PHP files must pass php -l syntax check."""
         for key, path in FILES.items():
@@ -113,7 +119,7 @@ class TestInteractiveShortcodes(unittest.TestCase):
 
 
     def test_aria_live_regions(self):
-        """All 5 interactive components must contain aria-live='polite' for WCAG 2.2 AA dynamic announcements."""
+        """All interactive components must contain aria-live='polite' for WCAG 2.2 AA dynamic announcements."""
         for key, content in self.contents.items():
             self.assertIn(
                 'aria-live="polite"',
@@ -123,7 +129,7 @@ class TestInteractiveShortcodes(unittest.TestCase):
 
     def test_session_storage_continuity(self):
         """Interactive components must utilize sessionStorage for seamless user state continuity."""
-        session_keys = ['cost_calculator', 'airport_navigator', 'itinerary_finder', 'visa_checker', 'season_matrix']
+        session_keys = ['cost_calculator', 'airport_navigator', 'itinerary_finder', 'visa_checker', 'season_matrix', 'packing_checklist']
         for key in session_keys:
             self.assertIn(
                 'sessionStorage',
@@ -151,6 +157,12 @@ class TestInteractiveShortcodes(unittest.TestCase):
 
         # Season matrix links to itinerary finder
         self.assertIn('/itineraries/', self.contents['season_matrix'])
+
+        # Packing checklist links to visa, costs, best time, and itineraries
+        self.assertIn('/plan/vietnam-evisa/', self.contents['packing_checklist'])
+        self.assertIn('/costs/vietnam-travel-cost/', self.contents['packing_checklist'])
+        self.assertIn('/plan/best-time-to-visit-vietnam/', self.contents['packing_checklist'])
+        self.assertIn('/itineraries/10-days-in-vietnam/', self.contents['packing_checklist'])
 
     def test_url_query_sync_presence(self):
         """All 5 interactive components must support URL query/hash parameter state synchronization."""

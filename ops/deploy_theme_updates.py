@@ -44,6 +44,10 @@ DEPLOY_FILES = [
      'wp-content/themes/vietnamguide-premium/template-parts/content-page.php'),
     ('wordpress/wp-content/themes/vietnamguide-premium/template-parts/guide-page.php',
      'wp-content/themes/vietnamguide-premium/template-parts/guide-page.php'),
+    ('wordpress/wp-content/themes/vietnamguide-premium/functions.php',
+     'wp-content/themes/vietnamguide-premium/functions.php'),
+    ('wordpress/wp-content/themes/vietnamguide-premium/inc/guide-packing-checklist.php',
+     'wp-content/themes/vietnamguide-premium/inc/guide-packing-checklist.php'),
 ]
 
 def get_sha256(filepath):

@@ -109,19 +109,189 @@ add_action('wp_head', static function (): void {
     echo implode("\n", $headTags) . "\n";
 }, 1);
 
-// Register PWA Service Worker for offline field guide and handle print actions
+// Register PWA Service Worker for offline field guide, mobile install prompt, and print handling
 add_action('wp_footer', static function (): void {
     $swUrl = esc_url(home_url('/sw.js'));
-    $inlineScript = '<script>'
-        . 'if ("serviceWorker" in navigator && (window.location.protocol === "https:" || window.location.hostname === "localhost")) {'
-        . 'window.addEventListener("load", function () { navigator.serviceWorker.register("' . $swUrl . '", { scope: "/" }).catch(function () {}); });'
-        . '}'
-        . 'document.addEventListener("click", function (e) {'
-        . 'var btn = e.target && e.target.closest ? e.target.closest("[data-vg-print]") : null;'
-        . 'if (btn) { window.print(); }'
-        . '});'
-        . '</script>';
-    printf('%s', $inlineScript);
+    ?>
+    <aside id="vg-pwa-banner" class="vg-pwa-banner" role="region" aria-label="<?php esc_attr_e('Install Vietnam Travel Field Guide', 'vietnamguide-premium'); ?>" style="display:none;">
+        <div class="vg-pwa-banner-inner">
+            <div class="vg-pwa-banner-text">
+                <span class="vg-pwa-badge"><?php esc_html_e('Offline Travel Guide', 'vietnamguide-premium'); ?></span>
+                <strong class="vg-pwa-title"><?php esc_html_e('Install VietnamGuide Field Guide', 'vietnamguide-premium'); ?></strong>
+                <p class="vg-pwa-desc"><?php esc_html_e('Access offline route itineraries, arrival checklists, and emergency tools without cellular coverage.', 'vietnamguide-premium'); ?></p>
+            </div>
+            <div class="vg-pwa-banner-actions">
+                <button type="button" id="vg-pwa-install-btn" class="vg-pwa-btn-install"><?php esc_html_e('Install App', 'vietnamguide-premium'); ?></button>
+                <button type="button" id="vg-pwa-dismiss-btn" class="vg-pwa-btn-dismiss" aria-label="<?php esc_attr_e('Dismiss install banner for 30 days', 'vietnamguide-premium'); ?>"><?php esc_html_e('Dismiss', 'vietnamguide-premium'); ?></button>
+            </div>
+        </div>
+    </aside>
+    <style>
+    .vg-pwa-banner {
+        position: fixed;
+        bottom: 16px;
+        left: 16px;
+        right: 16px;
+        max-width: 520px;
+        margin: 0 auto;
+        background: #ffffff;
+        border: 1px solid #cbd5e1;
+        border-radius: 12px;
+        box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.15), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+        padding: 16px;
+        z-index: 99999;
+        font-family: inherit;
+        animation: vgSlideUp 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    @keyframes vgSlideUp {
+        from { transform: translateY(100%); opacity: 0; }
+        to { transform: translateY(0); opacity: 1; }
+    }
+    .vg-pwa-banner-inner {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+    }
+    .vg-pwa-badge {
+        display: inline-block;
+        background: #f3d484;
+        color: #7e5802;
+        font-size: 0.7rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        padding: 2px 8px;
+        border-radius: 9999px;
+        margin-bottom: 4px;
+    }
+    .vg-pwa-title {
+        display: block;
+        font-size: 0.95rem;
+        color: #1a365d;
+        line-height: 1.3;
+    }
+    .vg-pwa-desc {
+        margin: 4px 0 0 0;
+        font-size: 0.8rem;
+        color: #475569;
+        line-height: 1.4;
+    }
+    .vg-pwa-banner-actions {
+        display: flex;
+        gap: 8px;
+        align-items: center;
+        justify-content: flex-end;
+    }
+    .vg-pwa-btn-install {
+        background: #1a365d;
+        color: #ffffff;
+        border: none;
+        border-radius: 6px;
+        padding: 8px 16px;
+        font-size: 0.82rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: background 0.15s ease;
+    }
+    .vg-pwa-btn-install:hover,
+    .vg-pwa-btn-install:focus {
+        background: #2a4365;
+    }
+    .vg-pwa-btn-dismiss {
+        background: #f1f5f9;
+        color: #64748b;
+        border: 1px solid #e2e8f0;
+        border-radius: 6px;
+        padding: 8px 12px;
+        font-size: 0.82rem;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.15s ease;
+    }
+    .vg-pwa-btn-dismiss:hover,
+    .vg-pwa-btn-dismiss:focus {
+        background: #e2e8f0;
+        color: #1e293b;
+    }
+    @media (min-width: 640px) {
+        .vg-pwa-banner-inner {
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .vg-pwa-banner-actions {
+            flex-shrink: 0;
+        }
+    }
+    </style>
+    <script>
+    (function () {
+        if ("serviceWorker" in navigator && (window.location.protocol === "https:" || window.location.hostname === "localhost")) {
+            window.addEventListener("load", function () {
+                navigator.serviceWorker.register("<?php echo $swUrl; ?>", { scope: "/" }).catch(function () {});
+            });
+        }
+
+        document.addEventListener("click", function (e) {
+            var btn = e.target && e.target.closest ? e.target.closest("[data-vg-print]") : null;
+            if (btn) { window.print(); }
+        });
+
+        var deferredPrompt = null;
+        var banner = document.getElementById("vg-pwa-banner");
+        var installBtn = document.getElementById("vg-pwa-install-btn");
+        var dismissBtn = document.getElementById("vg-pwa-dismiss-btn");
+        var STORAGE_KEY = "vg_pwa_dismissed";
+        var DISMISS_DAYS = 30;
+
+        function isDismissed() {
+            try {
+                var dismissedAt = localStorage.getItem(STORAGE_KEY);
+                if (!dismissedAt) return false;
+                var ageMs = Date.now() - parseInt(dismissedAt, 10);
+                return ageMs < DISMISS_DAYS * 86400000;
+            } catch (err) {
+                return false;
+            }
+        }
+
+        function setDismissed() {
+            try {
+                localStorage.setItem(STORAGE_KEY, Date.now().toString());
+            } catch (err) {}
+        }
+
+        window.addEventListener("beforeinstallprompt", function (e) {
+            e.preventDefault();
+            deferredPrompt = e;
+            if (banner && !isDismissed()) {
+                banner.style.display = "block";
+            }
+        });
+
+        if (installBtn) {
+            installBtn.addEventListener("click", function () {
+                if (deferredPrompt) {
+                    deferredPrompt.prompt();
+                    deferredPrompt.userChoice.then(function (choice) {
+                        if (choice.outcome === "accepted") {
+                            setDismissed();
+                        }
+                        deferredPrompt = null;
+                        if (banner) banner.style.display = "none";
+                    });
+                }
+            });
+        }
+
+        if (dismissBtn) {
+            dismissBtn.addEventListener("click", function () {
+                setDismissed();
+                if (banner) banner.style.display = "none";
+            });
+        }
+    })();
+    </script>
+    <?php
 }, 99);
 
 /**

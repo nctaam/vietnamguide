@@ -7,7 +7,7 @@
 
 'use strict';
 
-var CACHE_NAME = 'vg-travel-handbook-v1.0.0';
+var CACHE_NAME = 'vg-travel-handbook-v1.1.0';
 var OFFLINE_URL = '/offline.html';
 
 var PRECACHE_ASSETS = [
@@ -15,7 +15,12 @@ var PRECACHE_ASSETS = [
   '/wp-content/themes/vietnamguide-premium/assets/css/homepage.css',
   '/wp-content/themes/vietnamguide-premium/assets/images/vg-icon.svg',
   '/wp-content/themes/vietnamguide-premium/assets/images/vg-icon-192.png',
-  '/wp-content/themes/vietnamguide-premium/site.webmanifest'
+  '/wp-content/themes/vietnamguide-premium/site.webmanifest',
+  '/plan/vietnam-travel-guide/',
+  '/costs/vietnam-travel-cost/',
+  '/plan/best-time-to-visit-vietnam/',
+  '/plan/vietnam-evisa/',
+  '/itineraries/10-days-in-vietnam/'
 ];
 
 self.addEventListener('install', function (event) {

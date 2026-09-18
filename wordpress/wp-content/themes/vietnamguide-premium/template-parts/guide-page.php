@@ -74,8 +74,9 @@ $relatedRoutes = is_array($args['related_routes'] ?? null) ? $args['related_rout
             <aside class="vg-guide-trust" aria-label="<?php esc_attr_e('Guide context', 'vietnamguide-premium'); ?>">
                 <?php if ($bestFor !== '') : ?><div><strong><?php esc_html_e('Best for', 'vietnamguide-premium'); ?></strong><span><?php echo esc_html($bestFor); ?></span></div><?php endif; ?>
                 <?php if ($skipIf !== '') : ?><div><strong><?php esc_html_e('Skip if', 'vietnamguide-premium'); ?></strong><span><?php echo esc_html($skipIf); ?></span></div><?php endif; ?>
-                <?php if ($reviewed !== '') : ?><div><strong><?php esc_html_e('Last reviewed', 'vietnamguide-premium'); ?></strong><span><?php echo esc_html($reviewed); ?></span></div><?php endif; ?>
-                <?php if ($sourceCount > 0) : ?><div><strong><?php esc_html_e('Sources checked', 'vietnamguide-premium'); ?></strong><span><?php echo esc_html((string) $sourceCount); ?></span></div><?php endif; ?>
+                <?php if ($reviewed !== '') : ?><div><strong><?php esc_html_e('Last reviewed', 'vietnamguide-premium'); ?></strong><span><a href="<?php echo esc_url(home_url('/editorial-policy/')); ?>" style="color:inherit;text-decoration:underline;text-underline-offset:2px;"><?php echo esc_html($reviewed); ?></a></span></div><?php endif; ?>
+                <?php if ($sourceCount > 0) : ?><div><strong><?php esc_html_e('Sources checked', 'vietnamguide-premium'); ?></strong><span><a href="<?php echo esc_url(home_url('/source-update-policy/')); ?>" style="color:inherit;text-decoration:underline;text-underline-offset:2px;"><?php echo esc_html((string) $sourceCount); ?> <?php esc_html_e('verified sources', 'vietnamguide-premium'); ?></a></span></div><?php endif; ?>
+                <div><strong><?php esc_html_e('Standards', 'vietnamguide-premium'); ?></strong><span><a href="<?php echo esc_url(home_url('/affiliate-review-policy/')); ?>" style="color:inherit;text-decoration:underline;text-underline-offset:2px;"><?php esc_html_e('Zero Sponsored Bias', 'vietnamguide-premium'); ?></a></span></div>
             </aside>
         <?php endif; ?>
     </div>

@@ -11,6 +11,7 @@ require_once get_theme_file_path('/inc/guide-cost-calculator.php');
 require_once get_theme_file_path('/inc/guide-season-matrix.php');
 require_once get_theme_file_path('/inc/guide-visa-checker.php');
 require_once get_theme_file_path('/inc/guide-airport-navigator.php');
+require_once get_theme_file_path('/inc/guide-packing-checklist.php');
 
 function vg_theme_asset_version(string $relativePath): string
 {

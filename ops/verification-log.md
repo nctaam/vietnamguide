@@ -1622,3 +1622,45 @@ Date: 2026-07-28 (Asia/Saigon)
   - Master CI/CD Suite: 5/5 quality gates passed (`ops/verify-all-gates.ps1`). Core MU-Plugin hash preserved intact (`71b49033114e8007e5c19fb8ebc1a89e0d0dad88d0fe92dd381a28700db096ce`).
   - AST Mutation Engine: 112/112 AST mutations rejected (`ops/verify-guide-experience-mutations.ps1`).
   - Public Route Verification: 87/87 public routes and hubs verified HTTP 200 (`ops/verify-guide-experience-public.ps1`).
+
+## Stage 49 Verification - Interactive Route Packing Checklist, PWA Offline Pre-Caching, Mobile Install Banner & Complete Link Mesh Closure (September 18, 2026)
+- Goals:
+  - Implement zero-dependency client-side Interactive Route Packing & Preparation Checklist Widget (`[vg_packing_checklist]`) with 24 ground-verified preparation items, localStorage state retention across sessions, category filter tabs, live progress tracking, and print shortcut.
+  - Upgrade PWA Service Worker (`/sw.js`) to `vg-travel-handbook-v1.1.0` with pre-caching of the top 5 essential travel planning hubs (`/plan/vietnam-travel-guide/`, `/costs/vietnam-travel-cost/`, `/plan/best-time-to-visit-vietnam/`, `/plan/vietnam-evisa/`, `/itineraries/10-days-in-vietnam/`).
+  - Implement mobile PWA install notification banner in `inc/guide-seo.php` with `beforeinstallprompt` event capture, accessible bottom sheet UI, and 30-day dismissal persistence in `localStorage`.
+  - Close internal link mesh gaps for `/destinations/` by adding 3 contextual in-body links (elevating it from 2 to 5 incoming links), and add direct links to `/editorial-policy/`, `/source-update-policy/`, and `/affiliate-review-policy/` in the `.vg-guide-trust` block of `template-parts/guide-page.php`.
+  - Maintain 100% Anti-AI Slop Quality Engine compliance ($HLS = 100.0$, 0 Tier 1/2 violations), preserve core MU-plugin invariant hash (`71b49033114e8007e5c19fb8ebc1a89e0d0dad88d0fe92dd381a28700db096ce`), and pass all master quality gates and 112 AST mutations.
+- Changes Implemented:
+  - Interactive Route Packing Checklist Component (`inc/guide-packing-checklist.php`):
+    - Catalog of 24 ground-verified travel items categorized into 5 vital clusters: Documents & Money, Electronics & Navigation, Clothing & Modesty, Health & Medical Kit, and Mountain & Motorbike Adventure Gear.
+    - Zero-dependency client-side state handling with `localStorage` (key: `vg_packed_items`) and `sessionStorage` (key: `vg_checklist_active_filter`).
+    - Bidirectional URL parameter synchronization (`pack_cat`), WCAG 2.2 AA live announcer region (`role="status"`, `aria-live="polite"`), and semantic `<noscript>` fallback.
+    - Registered shortcode `[vg_packing_checklist]` and auto-injected on `vietnam-first-trip-planning-checklist` and `vietnam-airport-arrival-checklist`.
+  - Service Worker Upgrade (`wordpress/sw.js` -> `/sw.js`):
+    - Upgraded cache version to `vg-travel-handbook-v1.1.0`.
+    - Added 5 primary planning hubs to `PRECACHE_ASSETS` for instant offline availability on first install.
+  - Mobile PWA Install Prompt Banner (`wordpress/wp-content/themes/vietnamguide-premium/inc/guide-seo.php`):
+    - Added `beforeinstallprompt` listener, 30-day dismissal suppression check (`vg_pwa_dismissed`), and tactile bottom sheet with Install and Dismiss actions.
+  - Complete Link Mesh Closure (`ops/apply_destinations_link_mesh.py`, `template-parts/guide-page.php`):
+    - Added 3 contextual in-body links to `/destinations/` in `10-days-in-vietnam` (post ID 19), `14-days-in-vietnam` (post ID 20), and `vietnam-travel-cost` (post ID 22).
+    - Linked `/editorial-policy/`, `/source-update-policy/`, and `/affiliate-review-policy/` inside the `.vg-guide-trust` aside on all 87 guide pages.
+  - Production VPS Deployment (`ops/deploy_theme_updates.py`):
+    - Deployed 15 updated files with 100% SHA-256 parity and purged LiteSpeed cache.
+  - Search Engine Notification (`ops/submit_indexnow.py`):
+    - Resubmitted all 102 URLs via IndexNow API to `api.indexnow.org` and `bing.com` (both HTTP 200 OK).
+- Verification Evidence:
+  - Live Production HTTP Endpoint Audits:
+    - `https://vietnamguide.net/sw.js`: HTTP 200 OK (Cache `vg-travel-handbook-v1.1.0`, precaches 5 planning hubs).
+    - `https://vietnamguide.net/plan/vietnam-first-trip-planning-checklist/`: HTTP 200 OK (Packing widget active, 24 items, live announcer, PWA banner).
+    - `https://vietnamguide.net/itineraries/10-days-in-vietnam/`: HTTP 200 OK (`/destinations/` link, trust policy links).
+    - `https://vietnamguide.net/itineraries/14-days-in-vietnam/`: HTTP 200 OK (`/destinations/` link, trust policy links).
+    - `https://vietnamguide.net/costs/vietnam-travel-cost/`: HTTP 200 OK (`/destinations/` link, trust policy links).
+  - Anti-AI Slop Quality Engine (`ops/anti-ai-slop-linter.py`):
+    - `guide-packing-checklist.php`: Status: PASS [OK] | Score: 100/100 | Word Count: 1,465 | Sentence CV: 1.071 | Tier 1: 0 | Tier 2: 0.
+    - `guide-seo.php`: Status: PASS [OK] | Score: 100/100 | Word Count: 8,419 | Sentence CV: 3.501 | Evidence Anchors: 109 | Tier 1: 0 | Tier 2: 0.
+  - Master CI/CD Suite: 5/5 quality gates passed (`ops/verify-all-gates.ps1`). Core MU-Plugin hash preserved intact (`71b49033114e8007e5c19fb8ebc1a89e0d0dad88d0fe92dd381a28700db096ce`).
+  - AST Mutation Engine: 112/112 AST mutations rejected (`ops/verify-guide-experience-mutations.ps1`).
+  - Public Route Verification: 87/87 public routes and hubs verified HTTP 200 (`ops/verify-guide-experience-public.ps1`).
+  - Internal Link Graph Audit (`ops/audit_internal_links.py`):
+    - Total in-content links: 1,049 (was 1,046).
+    - `/destinations/` elevated from 2 to 5 in-content links (0 weakly linked editorial guide or hub pages).
