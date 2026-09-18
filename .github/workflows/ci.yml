@@ -1,0 +1,59 @@
+name: VietnamGuide CI Quality Gates
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  quality-gates:
+    name: Verify Quality Gates & Invariants
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'
+          extensions: mbstring, dom, json, libxml
+          coverage: none
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Lint PHP Syntax
+        run: |
+          find wordpress/wp-content/themes/vietnamguide-premium -type f -name "*.php" -exec php -l {} +
+
+      - name: Gate 1 - Anti-AI Slop Quality Engine Self-Test
+        run: |
+          python ops/tests/test-anti-ai-slop.py
+
+      - name: Gate 2 - Core MU-Plugin Invariant & Safety Contracts
+        shell: pwsh
+        run: |
+          ./ops/verify-core-mu-plugin.ps1
+
+      - name: Gate 3 - Gutenberg Core Block Patterns
+        shell: pwsh
+        run: |
+          ./ops/verify-core-block-patterns.ps1
+
+      - name: Gate 4 - Theme Structure & CSS Verification
+        shell: pwsh
+        run: |
+          ./ops/verify-homepage-theme.ps1
+
+      - name: Gate 5 - Interactive Shortcodes Unit Tests & A11y
+        run: |
+          python ops/tests/test-interactive-shortcodes.py
+
+      - name: Gate 6 - Policy Prose Cadence & Evidence Tests
+        run: |
+          python ops/tests/test-policy-cadence.py

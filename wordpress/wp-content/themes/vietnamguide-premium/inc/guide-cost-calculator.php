@@ -32,6 +32,9 @@ function vg_render_cost_calculator_html(): string
             <div class="vg-calc-currency-toggle" role="group" aria-label="<?php echo esc_attr__('Currency Selection', 'vietnamguide-premium'); ?>">
                 <button type="button" class="vg-calc-currency-btn is-active" data-currency="USD" aria-pressed="true">USD ($)</button>
                 <button type="button" class="vg-calc-currency-btn" data-currency="VND" aria-pressed="false">VND (₫)</button>
+                <button type="button" class="vg-calc-currency-btn" data-currency="EUR" aria-pressed="false">EUR (€)</button>
+                <button type="button" class="vg-calc-currency-btn" data-currency="GBP" aria-pressed="false">GBP (£)</button>
+                <button type="button" class="vg-calc-currency-btn" data-currency="AUD" aria-pressed="false">AUD (A$)</button>
             </div>
         </div>
 
@@ -40,10 +43,10 @@ function vg_render_cost_calculator_html(): string
                 <p style="font-weight:700;margin-bottom:8px;color:#1a365d;">📋 2026 Vietnam Travel Daily Budget Benchmarks (No-JavaScript Reference):</p>
                 <p style="font-size:0.9rem;margin-bottom:12px;color:#475569;">Interactive calculator features require JavaScript. Here is the authoritative daily cost breakdown across travel tiers:</p>
                 <ul style="margin-bottom:0;padding-left:20px;font-size:0.9rem;line-height:1.6;">
-                    <li><strong>Backpacker / Budget:</strong> $35 USD (~890,000 VND) / person / day (hostel dorm, street food, bus transit).</li>
-                    <li><strong>Flashpacker / Mid-Range:</strong> $75 USD (~1,900,000 VND) / person / day (3-star hotel, casual restaurants, Grab rides).</li>
-                    <li><strong>Comfort / Boutique:</strong> $160 USD (~4,060,000 VND) / person / day (4-star boutique hotel, guided tours, domestic flights).</li>
-                    <li><strong>Luxury / Bespoke:</strong> $350+ USD (~8,900,000+ VND) / person / day (5-star resorts, private vehicles, luxury cruises).</li>
+                    <li><strong>Backpacker / Budget:</strong> $35 USD (~890,000 VND / €32 / £27 / A$53) / person / day (hostel dorm, street food, bus transit).</li>
+                    <li><strong>Flashpacker / Mid-Range:</strong> $80 USD (~2,040,000 VND / €74 / £62 / A$122) / person / day (3-star hotel, casual restaurants, Grab rides).</li>
+                    <li><strong>Comfort / Boutique:</strong> $160 USD (~4,080,000 VND / €147 / £125 / A$243) / person / day (4-star boutique hotel, guided tours, domestic flights).</li>
+                    <li><strong>Luxury / Bespoke:</strong> $350+ USD (~8,900,000+ VND / €322+ / £273+ / A$532+) / person / day (5-star resorts, private vehicles, luxury cruises).</li>
                 </ul>
             </div>
         </noscript>
@@ -257,7 +260,11 @@ function vg_render_cost_calculator_html(): string
         'use strict';
 
         var USD_TO_VND = 25500;
+        var USD_TO_EUR = 0.92;
+        var USD_TO_GBP = 0.78;
+        var USD_TO_AUD = 1.52;
         var FLIGHT_COST_USD = 65;
+        var ALLOWED_CURRENCIES = ['USD', 'VND', 'EUR', 'GBP', 'AUD'];
 
         var RATES = {
             backpacker: { stay: 12, food: 12, transit: 5, activities: 6, label: 'Backpacker / Budget' },
@@ -281,12 +288,32 @@ function vg_render_cost_calculator_html(): string
             return Math.round(num).toLocaleString('vi-VN') + ' ₫';
         }
 
+        function formatCurrency(usdVal, cur) {
+            cur = cur || state.currency || 'USD';
+            if (cur === 'VND') {
+                return Math.round(usdVal * USD_TO_VND).toLocaleString('vi-VN') + ' ₫';
+            }
+            if (cur === 'EUR') {
+                return '€' + Math.round(usdVal * USD_TO_EUR).toLocaleString('en-US');
+            }
+            if (cur === 'GBP') {
+                return '£' + Math.round(usdVal * USD_TO_GBP).toLocaleString('en-US');
+            }
+            if (cur === 'AUD') {
+                return 'A$' + Math.round(usdVal * USD_TO_AUD).toLocaleString('en-US');
+            }
+            return '$' + Math.round(usdVal).toLocaleString('en-US');
+        }
+
         function formatConverted(usdVal, cur) {
             if (cur === 'USD') {
                 var vndVal = Math.round((usdVal * USD_TO_VND) / 100000) * 100000;
                 return '≈ ' + vndVal.toLocaleString('vi-VN') + ' VND';
-            } else {
+            } else if (cur === 'VND') {
                 return '≈ ' + formatUSD(usdVal) + ' USD';
+            } else {
+                var vndVal2 = Math.round((usdVal * USD_TO_VND) / 100000) * 100000;
+                return '≈ ' + formatUSD(usdVal) + ' USD (~' + vndVal2.toLocaleString('vi-VN') + ' VND)';
             }
         }
 
@@ -353,15 +380,13 @@ function vg_render_cost_calculator_html(): string
             var partyDisplay = document.getElementById('vg-calc-parties-display');
 
             if (totalDisplay) {
-                totalDisplay.textContent = cur === 'USD' ? formatUSD(calc.totalUSD) : formatVND(calc.totalUSD * USD_TO_VND);
+                totalDisplay.textContent = formatCurrency(calc.totalUSD, cur);
             }
             if (convertedDisplay) {
                 convertedDisplay.textContent = formatConverted(calc.totalUSD, cur);
             }
             if (dailyDisplay) {
-                dailyDisplay.textContent = cur === 'USD'
-                    ? '~' + formatUSD(calc.dailyAvgUSD) + ' / person / day'
-                    : '~' + formatVND(calc.dailyAvgUSD * USD_TO_VND) + ' / person / day';
+                dailyDisplay.textContent = '~' + formatCurrency(calc.dailyAvgUSD, cur) + ' / person / day';
             }
             if (partyDisplay) {
                 var partyDesc = state.party === 1 ? '1 solo traveler' : state.party + ' travelers';
@@ -374,10 +399,10 @@ function vg_render_cost_calculator_html(): string
             var amtTransit = document.getElementById('vg-amt-transit');
             var amtTours = document.getElementById('vg-amt-tours');
 
-            if (amtStay) amtStay.textContent = cur === 'USD' ? formatUSD(calc.stay) : formatVND(calc.stay * USD_TO_VND);
-            if (amtFood) amtFood.textContent = cur === 'USD' ? formatUSD(calc.food) : formatVND(calc.food * USD_TO_VND);
-            if (amtTransit) amtTransit.textContent = cur === 'USD' ? formatUSD(calc.transit) : formatVND(calc.transit * USD_TO_VND);
-            if (amtTours) amtTours.textContent = cur === 'USD' ? formatUSD(calc.activities) : formatVND(calc.activities * USD_TO_VND);
+            if (amtStay) amtStay.textContent = formatCurrency(calc.stay, cur);
+            if (amtFood) amtFood.textContent = formatCurrency(calc.food, cur);
+            if (amtTransit) amtTransit.textContent = formatCurrency(calc.transit, cur);
+            if (amtTours) amtTours.textContent = formatCurrency(calc.activities, cur);
 
             var pctStayElem = document.getElementById('vg-pct-stay');
             var pctFoodElem = document.getElementById('vg-pct-food');
@@ -401,7 +426,7 @@ function vg_render_cost_calculator_html(): string
 
             var ariaStatus = document.getElementById('vg-calc-aria-status');
             if (ariaStatus) {
-                ariaStatus.textContent = 'Estimated Vietnam trip cost: ' + (cur === 'USD' ? formatUSD(calc.totalUSD) : formatVND(calc.totalUSD * USD_TO_VND)) + ' for ' + state.party + ' people across ' + state.days + ' days.';
+                ariaStatus.textContent = 'Estimated Vietnam trip cost: ' + formatCurrency(calc.totalUSD, cur) + ' for ' + state.party + ' people across ' + state.days + ' days.';
             }
 
             var itinCard = document.getElementById('vg-calc-ns-itin-card');
@@ -474,11 +499,11 @@ function vg_render_cost_calculator_html(): string
                 }
 
                 var qCur = (urlParams.get('currency') || '').toUpperCase();
-                if (qCur === 'USD' || qCur === 'VND') {
+                if (ALLOWED_CURRENCIES.indexOf(qCur) !== -1) {
                     state.currency = qCur;
                 } else {
                     var sCur = (getSafeStorage('vg_user_currency') || '').toUpperCase();
-                    if (sCur === 'USD' || sCur === 'VND') {
+                    if (ALLOWED_CURRENCIES.indexOf(sCur) !== -1) {
                         state.currency = sCur;
                     }
                 }
@@ -639,6 +664,10 @@ function vg_render_cost_calculator_html(): string
                 copyBtn.addEventListener('click', function () {
                     var calc = calculate();
                     var r = RATES[state.style] || RATES.midrange;
+                    var summaryCur = state.currency || 'USD';
+                    var totalSecondary = summaryCur === 'VND'
+                        ? ' (' + formatUSD(calc.totalUSD) + ')'
+                        : ' (' + formatVND(calc.totalUSD * USD_TO_VND) + ')';
                     var summaryText = [
                         'Vietnam Travel Budget Estimate (VietnamGuide.net)',
                         '-----------------------------------------------',
@@ -646,18 +675,17 @@ function vg_render_cost_calculator_html(): string
                         'Travel Style: ' + r.label,
                         'Party Size: ' + state.party + (state.party === 1 ? ' traveler (Solo)' : ' travelers'),
                         'Domestic Flights: ' + state.flights + ' flight(s)',
-                        'Total Estimated Cost: ' + formatUSD(calc.totalUSD) + ' (' + formatVND(calc.totalUSD * USD_TO_VND) + ')',
-                        'Daily Average per Person: ~' + formatUSD(calc.dailyAvgUSD) + ' / day',
+                        'Total Estimated Cost: ' + formatCurrency(calc.totalUSD, summaryCur) + totalSecondary,
+                        'Daily Average per Person: ~' + formatCurrency(calc.dailyAvgUSD, summaryCur) + ' / day',
                         '',
                         'Cost Breakdown:',
-                        '- Accommodation: ' + formatUSD(calc.stay) + ' (' + calc.pctStay + '%)',
-                        '- Food & Dining: ' + formatUSD(calc.food) + ' (' + calc.pctFood + '%)',
-                        '- Transport & Flights: ' + formatUSD(calc.transit) + ' (' + calc.pctTransit + '%)',
-                        '- Activities & Sightseeing: ' + formatUSD(calc.activities) + ' (' + calc.pctTours + '%)',
+                        '- Accommodation: ' + formatCurrency(calc.stay, summaryCur) + ' (' + calc.pctStay + '%)',
+                        '- Food & Dining: ' + formatCurrency(calc.food, summaryCur) + ' (' + calc.pctFood + '%)',
+                        '- Transport & Flights: ' + formatCurrency(calc.transit, summaryCur) + ' (' + calc.pctTransit + '%)',
+                        '- Activities & Sightseeing: ' + formatCurrency(calc.activities, summaryCur) + ' (' + calc.pctTours + '%)',
                         '',
                         'Calculated at: https://vietnamguide.net/costs/vietnam-travel-cost/'
-                    ].join('
-');
+                    ].join('\n');
 
                     if (navigator.clipboard && navigator.clipboard.writeText) {
                         navigator.clipboard.writeText(summaryText).then(function () {
@@ -776,9 +804,14 @@ function vg_inject_cost_calculator_on_page(string $content): string
         return $content;
     }
 
-    // Never inject into hero block
+    $heroClose = '<!-- /wp:group -->';
+    $pos = strpos($content, $heroClose);
+
+    // If this is ONLY the isolated hero block (e.g. during guide context block splitting), do not inject
     if (strpos($content, 'vg-guide-hero') !== false) {
-        return $content;
+        if ($pos === false || trim(substr($content, $pos + strlen($heroClose))) === '') {
+            return $content;
+        }
     }
 
     static $injectedPosts = [];
@@ -787,12 +820,15 @@ function vg_inject_cost_calculator_on_page(string $content): string
         return $content;
     }
 
-    $isCostGuide = is_page('vietnam-travel-cost')
-        || (is_singular('page') && get_post_field('post_name') === 'vietnam-travel-cost')
+    $postSlug = $postId ? (string) get_post_field('post_name', $postId) : '';
+    $isCostGuide = in_array($postSlug, ['vietnam-travel-cost', 'costs', 'where-to-stay-in-vietnam-base-decisions'], true)
+        || is_page('vietnam-travel-cost')
+        || is_page('costs/vietnam-travel-cost')
         || is_page('costs')
-        || (is_singular('page') && get_post_field('post_name') === 'costs')
         || is_page('where-to-stay-in-vietnam-base-decisions')
-        || (is_singular('page') && get_post_field('post_name') === 'where-to-stay-in-vietnam-base-decisions');
+        || (is_singular('page') && $postSlug === 'vietnam-travel-cost')
+        || (is_singular('page') && $postSlug === 'costs')
+        || (is_singular('page') && $postSlug === 'where-to-stay-in-vietnam-base-decisions');
 
     if (! $isCostGuide) {
         return $content;
@@ -807,8 +843,6 @@ function vg_inject_cost_calculator_on_page(string $content): string
     }
 
     $calculatorHtml = vg_render_cost_calculator_html();
-    $heroClose = '<!-- /wp:group -->';
-    $pos = strpos($content, $heroClose);
 
     if ($pos !== false) {
         $insertAt = $pos + strlen($heroClose);

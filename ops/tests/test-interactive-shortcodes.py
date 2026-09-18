@@ -249,7 +249,28 @@ class TestInteractiveShortcodes(unittest.TestCase):
         self.assertIn('https://en.wikipedia.org/wiki/Hanoi', seo_content)
         self.assertIn('https://en.wikipedia.org/wiki/Vietnam', seo_content)
 
+    def test_multi_currency_support(self):
+        """Cost calculator must support 5 major currencies: USD, VND, EUR, GBP, AUD."""
+        calc_content = self.contents['cost_calculator']
+        currencies = ['USD', 'VND', 'EUR', 'GBP', 'AUD']
+        for cur in currencies:
+            self.assertIn(
+                f'data-currency="{cur}"',
+                calc_content,
+                f"Cost calculator must contain a currency button for {cur}."
+            )
+            self.assertIn(
+                f"'{cur}'",
+                calc_content,
+                f"Cost calculator JS must register currency {cur}."
+            )
+        self.assertIn('USD_TO_EUR', calc_content)
+        self.assertIn('USD_TO_GBP', calc_content)
+        self.assertIn('USD_TO_AUD', calc_content)
+        self.assertIn('formatCurrency', calc_content)
+
 
 if __name__ == '__main__':
     unittest.main()
+
 

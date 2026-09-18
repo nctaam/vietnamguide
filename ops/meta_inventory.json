@@ -3,7 +3,7 @@
     "ID": "3",
     "post_name": "privacy-policy",
     "post_title": "Privacy Policy",
-    "rm_title": "Privacy Policy - VietnamGuide Independent Travel Planning",
+    "rm_title": "VietnamGuide Privacy Policy & Independent Travel Data Terms",
     "rm_desc": "Review VietnamGuide privacy policy: how we protect visitor data, handle analytics, respect reader choices, and maintain a secure, privacy-first travel guide.",
     "rm_keyword": "VietnamGuide privacy policy"
   },
@@ -12,7 +12,7 @@
     "post_name": "home",
     "post_title": "Home",
     "rm_title": "Vietnam Travel Guide for International Visitors",
-    "rm_desc": "Independent Vietnam travel planning guide: compare realistic routes, honest travel costs, e-visa steps, regional weather, and destination decisions.",
+    "rm_desc": "Independent Vietnam travel guide: compare realistic routes, honest travel costs, e-visa steps, regional weather patterns, and smart destination decisions.",
     "rm_keyword": "Vietnam travel guide"
   },
   {
@@ -20,7 +20,7 @@
     "post_name": "plan",
     "post_title": "Plan",
     "rm_title": "Vietnam Travel Planning Guide for International Visitors",
-    "rm_desc": "Plan a smarter Vietnam trip with practical guidance on entry checks, route design, weather, money, SIM cards, transport, safety, and booking order.",
+    "rm_desc": "Essential Vietnam travel planning guide: practical advice on visa entry checks, route design, weather seasons, money, transport, and smart booking order.",
     "rm_keyword": "Vietnam travel planning"
   },
   {
@@ -28,14 +28,14 @@
     "post_name": "destinations",
     "post_title": "Destinations",
     "rm_title": "Vietnam Destinations Guide for International Travelers",
-    "rm_desc": "Choose where to go in Vietnam with practical destination guidance by region, travel style, weather, route efficiency, and first-trip priorities.",
+    "rm_desc": "Explore top Vietnam destinations with practical guidance by region, travel style, weather seasons, route efficiency, and first-trip travel priorities.",
     "rm_keyword": "Vietnam destinations"
   },
   {
     "ID": "8",
     "post_name": "itineraries",
     "post_title": "Itineraries",
-    "rm_title": "Vietnam Itineraries: 7, 10, 14 Day and Slower Routes",
+    "rm_title": "Vietnam Itinerary & Route Guide: 7, 10, 14 Day Plans",
     "rm_desc": "Build a realistic Vietnam itinerary with route guidance for 7-day, 10-day, 14-day, and slower trips, including pace, transfer, and destination trade-offs.",
     "rm_keyword": "Vietnam itinerary"
   },
@@ -59,15 +59,15 @@
     "ID": "11",
     "post_name": "newsletter",
     "post_title": "Newsletter",
-    "rm_title": "VietnamGuide Newsletter for Smarter Vietnam Travel Planning",
-    "rm_desc": "Follow VietnamGuide for concise Vietnam travel planning updates, route ideas, practical checklists, and destination decision notes.",
+    "rm_title": "Vietnam Travel Newsletter - Independent Route Intelligence",
+    "rm_desc": "Subscribe to our Vietnam travel newsletter for concise travel planning updates, verified route ideas, practical checklists, and destination decision notes.",
     "rm_keyword": "Vietnam travel newsletter"
   },
   {
     "ID": "12",
     "post_name": "affiliate-disclosure",
     "post_title": "Affiliate Disclosure",
-    "rm_title": "Affiliate Disclosure & Transparency - VietnamGuide",
+    "rm_title": "VietnamGuide Affiliate Disclosure & Editorial Integrity",
     "rm_desc": "Understand VietnamGuide affiliate disclosure: how we preserve editorial independence, never accept paid rankings, and transparently fund our field research.",
     "rm_keyword": "VietnamGuide affiliate disclosure"
   },
@@ -92,7 +92,7 @@
     "post_name": "sim-esim-vietnam",
     "post_title": "SIM and eSIM in Vietnam",
     "rm_title": "SIM and eSIM in Vietnam: Traveler Connectivity Guide",
-    "rm_desc": "Choose SIM or eSIM in Vietnam with device checks, local number needs, airport setup, coverage, hotspot, roaming backup, failure modes, and live checks.",
+    "rm_desc": "Choose SIM and eSIM in Vietnam with device checks, local number needs, airport setup, coverage, hotspot tethering, roaming backup, and live signal checks.",
     "rm_keyword": "SIM and eSIM in Vietnam"
   },
   {
@@ -100,7 +100,7 @@
     "post_name": "10-days-in-vietnam",
     "post_title": "10 Days in Vietnam",
     "rm_title": "10 Days in Vietnam: Best Route for First-Time Visitors",
-    "rm_desc": "Plan a 10-day Vietnam itinerary: balanced route order from Hanoi to Ho Chi Minh City, internal transfer timings, realistic night allocation, and costs.",
+    "rm_desc": "Plan 10 days in Vietnam with a balanced route order from Hanoi to Ho Chi Minh City, internal transfer timings, realistic night allocation, and daily costs.",
     "rm_keyword": "10 days in Vietnam"
   },
   {
@@ -132,31 +132,31 @@
     "post_name": "about",
     "post_title": "About VietnamGuide.net",
     "rm_title": "About VietnamGuide - Independent Vietnam Travel Intelligence",
-    "rm_desc": "Meet VietnamGuide: an independent, on-the-ground travel planning team delivering verified route logistics, safety checks, and practical advice for Vietnam.",
+    "rm_desc": "Learn more about VietnamGuide: an independent, on-the-ground travel planning team delivering verified route logistics, safety checks, and practical advice.",
     "rm_keyword": "about VietnamGuide"
   },
   {
     "ID": "59",
     "post_name": "editorial-policy",
     "post_title": "Editorial Policy",
-    "rm_title": "Editorial Policy & Standards - VietnamGuide",
-    "rm_desc": "Explore VietnamGuide editorial standards: zero sponsored placements, independent route vetting, strict fact-checking, and unbiased travel recommendations.",
+    "rm_title": "VietnamGuide Editorial Policy & Independent Standards",
+    "rm_desc": "Read the VietnamGuide editorial policy: zero sponsored placements, independent route vetting, strict fact-checking, and unbiased travel recommendations.",
     "rm_keyword": "VietnamGuide editorial policy"
   },
   {
     "ID": "60",
     "post_name": "source-update-policy",
     "post_title": "Source and Update Policy",
-    "rm_title": "Source & Update Policy - VietnamGuide Travel Facts",
-    "rm_desc": "Read how VietnamGuide verifies travel pricing, train timetables, visa rules, and safety alerts through primary sources, official portals, and quarterly audits.",
+    "rm_title": "VietnamGuide Source and Update Policy for Travel Facts",
+    "rm_desc": "Read the VietnamGuide source and update policy: how we verify travel pricing, train timetables, visa rules, and safety alerts through quarterly audits.",
     "rm_keyword": "VietnamGuide source and update policy"
   },
   {
     "ID": "61",
     "post_name": "contact",
     "post_title": "Contact",
-    "rm_title": "Contact Editorial Desk - VietnamGuide Travel Intelligence",
-    "rm_desc": "Get in touch with the VietnamGuide editorial desk for fact corrections, route updates, feedback, or verified local intelligence. We respond within 48 hours.",
+    "rm_title": "Contact VietnamGuide Editorial Desk & Travel Planners",
+    "rm_desc": "How to contact VietnamGuide: reach our editorial desk for fact corrections, route updates, travel inquiries, or verified local intelligence in 48 hours.",
     "rm_keyword": "contact VietnamGuide"
   },
   {
@@ -164,7 +164,7 @@
     "post_name": "affiliate-review-policy",
     "post_title": "Affiliate and Review Policy",
     "rm_title": "Affiliate Review Policy & Criteria - VietnamGuide",
-    "rm_desc": "Learn VietnamGuide strict partner vetting criteria: we only recommend transport providers, booking platforms, and services evaluated directly by our team.",
+    "rm_desc": "Read our affiliate review policy and partner vetting criteria: we only recommend transport providers, booking platforms, and services evaluated directly.",
     "rm_keyword": "affiliate review policy"
   },
   {
@@ -180,7 +180,7 @@
     "post_name": "north-central-south-vietnam",
     "post_title": "North vs Central vs South Vietnam",
     "rm_title": "North vs Central vs South Vietnam: Where to Go First",
-    "rm_desc": "Compare North, Central and South Vietnam for a first trip: best region by season, route length, traveler style, pacing, and what to skip.",
+    "rm_desc": "Compare North vs Central vs South Vietnam for a first trip: choose the best region by season, route length, travel style, pacing, and what to skip.",
     "rm_keyword": "North vs Central vs South Vietnam"
   },
   {
@@ -212,7 +212,7 @@
     "post_name": "unesco-heritage-sites-vietnam",
     "post_title": "UNESCO Heritage Sites in Vietnam",
     "rm_title": "UNESCO Heritage Sites in Vietnam: 2025 Route Guide",
-    "rm_desc": "Choose which UNESCO World Heritage Sites in Vietnam fit your route, with 2025 updates, first-trip priorities, skip logic, source checks, and photo proof.",
+    "rm_desc": "Choose which UNESCO heritage sites in Vietnam fit your route, with 2026 updates, first-trip priorities, skip logic, source checks, and verified photo proof.",
     "rm_keyword": "UNESCO heritage sites in Vietnam"
   },
   {
@@ -235,7 +235,7 @@
     "ID": "181",
     "post_name": "safety-scams-vietnam",
     "post_title": "Safety and Scams in Vietnam",
-    "rm_title": "Safety and Scams in Vietnam: Calm Risk Guide for Visitors",
+    "rm_title": "Vietnam Safety and Scams: Practical Risk Guide for Visitors",
     "rm_desc": "Vietnam safety and scams guide: practical advice on airport taxi fraud, fake Grab drivers, ATM skimming, street crossing safety, and emergency contacts.",
     "rm_keyword": "Vietnam safety and scams"
   },
@@ -251,7 +251,7 @@
     "ID": "187",
     "post_name": "health-travel-insurance-vietnam",
     "post_title": "Health and Travel Insurance for Vietnam",
-    "rm_title": "Health and Travel Insurance for Vietnam: What to Cover",
+    "rm_title": "Vietnam Travel Insurance & Health Guide: What to Cover",
     "rm_desc": "Vietnam travel insurance and health guide: international hospital networks in Hanoi and HCMC, motorbike injury coverage rules, vaccines, and pharmacies.",
     "rm_keyword": "Vietnam travel insurance"
   },
@@ -292,7 +292,7 @@
     "post_name": "best-beaches-in-vietnam",
     "post_title": "Best Beaches in Vietnam",
     "rm_title": "Best Beaches in Vietnam: Where to Go by Month",
-    "rm_desc": "Choose the best beach in Vietnam by month, route, and trip style: Phu Quoc, Da Nang, Hoi An, Nha Trang, Con Dao, Mui Ne, Quy Nhon, Cat Ba, or Phu Quy.",
+    "rm_desc": "Discover the best beaches in Vietnam by month, route, and trip style: Phu Quoc, Da Nang, Hoi An, Nha Trang, Con Dao, Mui Ne, Quy Nhon, Cat Ba, and Phu Quy.",
     "rm_keyword": "best beaches in Vietnam"
   },
   {
@@ -316,7 +316,7 @@
     "post_name": "7-days-in-vietnam",
     "post_title": "7 Days in Vietnam",
     "rm_title": "7 Days in Vietnam: Best One-Week Itinerary",
-    "rm_desc": "Plan a 7-day Vietnam itinerary: focused one-week routes covering the north (Hanoi, Ha Long Bay, Ninh Binh) or central region without rushing transfers.",
+    "rm_desc": "Plan 7 days in Vietnam with focused one-week routes covering the north (Hanoi, Ha Long Bay, Ninh Binh) or central region without rushing transfers.",
     "rm_keyword": "7 days in Vietnam"
   },
   {
@@ -324,7 +324,7 @@
     "post_name": "21-days-in-vietnam",
     "post_title": "21 Days in Vietnam",
     "rm_title": "21 Days in Vietnam: Best Three-Week Route for First Trips",
-    "rm_desc": "Complete 21-day Vietnam itinerary: full-country travel route from North to South with Ha Giang Loop, Sapa, Central Heritage, Saigon, and Mekong Delta.",
+    "rm_desc": "Plan 21 days in Vietnam with a complete full-country route from North to South featuring Ha Giang Loop, Sapa, Central Heritage, Saigon, and Mekong Delta.",
     "rm_keyword": "21 days in Vietnam"
   },
   {
@@ -468,7 +468,7 @@
     "post_name": "old-quarter-vs-french-quarter-vs-west-lake",
     "post_title": "Old Quarter vs French Quarter vs West Lake",
     "rm_title": "Old Quarter vs French Quarter vs West Lake: Best Hanoi Base",
-    "rm_desc": "Compare Hanoi's Old Quarter, French Quarter, and West Lake by sleep, walking, food, pickup clarity, family fit, premium calm, and longer-stay comfort.",
+    "rm_desc": "Compare Old Quarter vs French Quarter vs West Lake by sleep quality, walking, food, pickup clarity, family fit, premium calm, and longer-stay comfort.",
     "rm_keyword": "Old Quarter vs French Quarter vs West Lake"
   },
   {
@@ -500,7 +500,7 @@
     "post_name": "ninh-binh-day-trip-vs-overnight",
     "post_title": "Ninh Binh Day Trip vs Overnight",
     "rm_title": "Ninh Binh Day Trip vs Overnight: Which Is Better?",
-    "rm_desc": "Ninh Binh: Hanoi day trip or overnight stay? Practical verdict by route length, transfer pressure, Trang An vs Tam Coc, weather, cost, and hotel choices.",
+    "rm_desc": "Evaluate Ninh Binh day trip vs overnight stay: practical verdict by route length, transfer pressure, Trang An vs Tam Coc, weather, cost, and hotels.",
     "rm_keyword": "Ninh Binh day trip vs overnight"
   },
   {
@@ -508,7 +508,7 @@
     "post_name": "hanoi-to-ninh-binh-transport",
     "post_title": "Hanoi to Ninh Binh Transport",
     "rm_title": "Hanoi to Ninh Binh Transport: Train, Van or Car?",
-    "rm_desc": "How to get from Hanoi to Ninh Binh: compare train, limousine van, private car, day tour and onward transfers by drop-off, luggage, timing and route fit.",
+    "rm_desc": "Compare Hanoi to Ninh Binh transport options: evaluate train, limousine van, private car, and day tours by drop-off point, luggage space, and timing.",
     "rm_keyword": "Hanoi to Ninh Binh transport"
   },
   {
@@ -548,23 +548,23 @@
     "post_name": "vietnam-first-trip-planning-checklist",
     "post_title": "Vietnam First Trip Planning Checklist: What to Decide Before Booking",
     "rm_title": "Vietnam First Trip Planning Checklist",
-    "rm_desc": "Plan a first Vietnam trip before booking with entry checks, route shape, weather risk, cost anchors, arrival setup, and what to skip.",
+    "rm_desc": "Prepare with our Vietnam first trip planning checklist before booking: entry checks, route shape, weather risk, cost anchors, arrival setup, and tips.",
     "rm_keyword": "Vietnam first trip planning checklist"
   },
   {
     "ID": "474",
     "post_name": "best-vietnam-routes-first-time-visitors",
     "post_title": "Best Vietnam Routes for First-Time Visitors: North, Central, South or Open-Jaw?",
-    "rm_title": "Best Vietnam Routes for First-Time Visitors",
-    "rm_desc": "Compare route shapes before booking: north-only, central spine, south-only, open-jaw, and full-country routes for first-time Vietnam trips.",
-    "rm_keyword": "best vietnam routes first time visitors"
+    "rm_title": "Best Vietnam Routes for First-Time Visitors: Planning Guide",
+    "rm_desc": "Find the best Vietnam routes for first-time visitors: compare north-only, central heritage, south-only, and open-jaw itineraries before booking flights.",
+    "rm_keyword": "best Vietnam routes for first-time visitors"
   },
   {
     "ID": "475",
     "post_name": "what-to-pack-for-vietnam-region-season",
     "post_title": "What to Pack for Vietnam by Region and Season",
     "rm_title": "What to Pack for Vietnam by Region and Season",
-    "rm_desc": "Pack for Vietnam by region and season with north, central, south, mountain, coast, rain, and carry-on logic for first-time travelers.",
+    "rm_desc": "Learn what to pack for Vietnam by region and season with north, central, south, mountain trekking, coastal, rainy season, and carry-on gear logic.",
     "rm_keyword": "what to pack for Vietnam"
   },
   {
@@ -579,9 +579,9 @@
     "ID": "477",
     "post_name": "hanoi-first-time-visitor-mistakes",
     "post_title": "Hanoi First-Time Visitor Mistakes to Avoid",
-    "rm_title": "Hanoi First-Time Visitor Mistakes to Avoid",
-    "rm_desc": "Avoid common Hanoi first-time visitor mistakes around where to stay, arrival night, day trips, weather, and crowded northern Vietnam routes.",
-    "rm_keyword": "Hanoi first time visitor mistakes"
+    "rm_title": "Hanoi First-Time Visitor Mistakes to Avoid When Planning",
+    "rm_desc": "Avoid common Hanoi first-time visitor mistakes regarding hotel locations, arrival night transit, day trip booking pressure, and winter weather packing.",
+    "rm_keyword": "Hanoi first-time visitor mistakes"
   },
   {
     "ID": "478",
@@ -603,9 +603,9 @@
     "ID": "480",
     "post_name": "vietnam-food-safety-street-food-etiquette",
     "post_title": "Vietnam Food Safety and Street Food Etiquette for First-Timers",
-    "rm_title": "Vietnam Food Safety and Street Food Etiquette",
-    "rm_desc": "Vietnam street food safety and etiquette for first-timers: choose busy stalls, order politely, handle sauces, ice, drinks, cash, seating, and flexible meals.",
-    "rm_keyword": "Vietnam food safety street food etiquette"
+    "rm_title": "Vietnam Food Safety and Street Food Etiquette Guide",
+    "rm_desc": "Master Vietnam food safety and street food etiquette: choose clean busy stalls, order politely, handle sauces, ice, cash, seating, and flexible dining.",
+    "rm_keyword": "Vietnam food safety and street food etiquette"
   },
   {
     "ID": "481",
@@ -652,23 +652,23 @@
     "post_name": "tet-in-vietnam-travel-guide",
     "post_title": "Tet in Vietnam Travel Guide: What International Visitors Should Know",
     "rm_title": "Tet in Vietnam Travel Guide: Dates, Closures and Routes",
-    "rm_desc": "Plan Tet travel in Vietnam by exact dates, transport pressure, changed openings, respectful behavior, money, meals, medicine, route choices, and live checks.",
+    "rm_desc": "Authoritative Tet in Vietnam travel guide: exact dates, transport pressure, changed opening hours, holiday etiquette, cash needs, and route decisions.",
     "rm_keyword": "Tet in Vietnam travel guide"
   },
   {
     "ID": "497",
     "post_name": "best-vietnam-cities-for-first-time-visitors",
     "post_title": "Best Vietnam Cities for First-Time Visitors: Which Base Fits Your Route?",
-    "rm_title": "Best Vietnam Cities for First-Time Visitors",
-    "rm_desc": "Choose Vietnam city bases by route role, arrival logic, food, culture, beach comfort, day trips, skip logic, and transfer pressure.",
-    "rm_keyword": "best Vietnam cities for first time visitors"
+    "rm_title": "Best Vietnam Cities for First-Time Visitors: Route Guide",
+    "rm_desc": "Choose the best Vietnam cities for first-time visitors by route role, airport arrival logic, culinary culture, beach comfort, day trips, and pacing.",
+    "rm_keyword": "best Vietnam cities for first-time visitors"
   },
   {
     "ID": "498",
     "post_name": "hanoi-vs-ho-chi-minh-city",
     "post_title": "Hanoi vs Ho Chi Minh City: Which Should You Visit First?",
     "rm_title": "Hanoi vs Ho Chi Minh City: Which Should You Visit First?",
-    "rm_desc": "Compare Hanoi and Ho Chi Minh City by first-night comfort, route direction, weather, food, day trips, airport logic, and trip length.",
+    "rm_desc": "Compare Hanoi vs Ho Chi Minh City by first-night comfort, route direction, weather seasons, food scenes, day trips, airport logic, and trip length.",
     "rm_keyword": "Hanoi vs Ho Chi Minh City"
   },
   {
@@ -676,7 +676,7 @@
     "post_name": "hoi-an-ancient-town-guide",
     "post_title": "Hoi An Ancient Town Guide: When to Stay, Visit or Skip",
     "rm_title": "Hoi An Ancient Town Guide: When to Stay, Visit or Skip",
-    "rm_desc": "Decide whether to stay overnight in Hoi An, visit from Da Nang, go by day or evening, or skip when central Vietnam needs a cleaner route.",
+    "rm_desc": "Authoritative Hoi An Ancient Town guide: decide whether to stay overnight, visit from Da Nang, go by day or evening, or skip when routes need focus.",
     "rm_keyword": "Hoi An Ancient Town guide"
   },
   {
@@ -684,7 +684,7 @@
     "post_name": "hue-imperial-city-guide",
     "post_title": "Hue Imperial City Guide: How to Visit Without Rushing",
     "rm_title": "Hue Imperial City Guide: How to Visit Without Rushing",
-    "rm_desc": "Decide whether Hue Imperial City deserves a two-night stay, one-night stop, focused half-day, or clean skip by pacing, heat, tombs, and route order.",
+    "rm_desc": "Authoritative Hue Imperial City guide: decide whether Hue deserves a two-night stay, one-night stop, or half-day visit by pacing, heat, and tombs.",
     "rm_keyword": "Hue Imperial City guide"
   },
   {
@@ -692,7 +692,7 @@
     "post_name": "da-nang-beaches-guide",
     "post_title": "Da Nang Beaches Guide: My Khe, Non Nuoc or Hoi An Coast?",
     "rm_title": "Da Nang Beaches Guide: My Khe, Non Nuoc or Hoi An Coast?",
-    "rm_desc": "Choose between My Khe, Non Nuoc, Son Tra edge, Hoi An coast, or Hoi An town by season, hotel style, family needs, and route pressure.",
+    "rm_desc": "Authoritative Da Nang beaches guide: choose between My Khe, Non Nuoc, Son Tra edge, and Hoi An coast by weather season, hotel style, and family needs.",
     "rm_keyword": "Da Nang beaches guide"
   },
   {
@@ -700,7 +700,7 @@
     "post_name": "mekong-delta-overnight-vs-day-trip",
     "post_title": "Mekong Delta Overnight vs Day Trip: Which Is Worth It?",
     "rm_title": "Mekong Delta Overnight vs Day Trip: Which Is Worth It?",
-    "rm_desc": "Choose a Mekong Delta day trip, one-night Can Tho/Cai Rang stay, deeper route, or clean skip by timing, comfort, transfer risk, and route length.",
+    "rm_desc": "Decide between Mekong Delta overnight vs day trip: choose a quick day tour, Can Tho stay, deeper river route, or clean skip by timing and comfort.",
     "rm_keyword": "Mekong Delta overnight vs day trip"
   },
   {
@@ -708,7 +708,7 @@
     "post_name": "phong-nha-travel-guide",
     "post_title": "Phong Nha Travel Guide: Caves, Seasons and Route Fit",
     "rm_title": "Phong Nha Travel Guide: Caves, Seasons and Route Fit",
-    "rm_desc": "Decide whether Phong Nha is worth the cave detour by route fit, season, nights, fitness, insurance, and central Vietnam trade-offs.",
+    "rm_desc": "Authoritative Phong Nha travel guide: decide whether Phong Nha is worth the cave detour by route fit, season, nights needed, fitness, and trade-offs.",
     "rm_keyword": "Phong Nha travel guide"
   },
   {
@@ -716,7 +716,7 @@
     "post_name": "sapa-vs-ha-giang",
     "post_title": "Sapa vs Ha Giang: Terraces, Loop Roads or Softer Mountain Travel?",
     "rm_title": "Sapa vs Ha Giang: Terraces, Loop Roads or Softer Travel",
-    "rm_desc": "Choose Sapa, Ha Giang, both, or neither by scenery style, comfort, season, road safety, insurance, route length, and Hanoi transfer pressure.",
+    "rm_desc": "Compare Sapa vs Ha Giang: choose Sapa, Ha Giang, both, or neither by mountain scenery style, comfort, season, road safety, and Hanoi transfer pressure.",
     "rm_keyword": "Sapa vs Ha Giang"
   },
   {
@@ -724,7 +724,7 @@
     "post_name": "sapa-travel-guide",
     "post_title": "Sapa Travel Guide: Terraces, Trekking and Softer Mountain Travel",
     "rm_title": "Sapa Travel Guide: Terraces, Trekking and Softer Travel",
-    "rm_desc": "Plan Sapa by terraces, trekking, town vs valley stays, season, fog, transport from Hanoi, comfort, Fansipan, and when to skip it.",
+    "rm_desc": "Authoritative Sapa travel guide: plan trekking routes, village vs town lodging, Fansipan weather windows, sleeper bus transit from Hanoi, and pacing.",
     "rm_keyword": "Sapa Travel Guide"
   },
   {
@@ -732,7 +732,7 @@
     "post_name": "ha-giang-loop-planning-guide",
     "post_title": "Ha Giang Loop Planning Guide: Safety, Scenery and Route Fit",
     "rm_title": "Ha Giang Loop Planning Guide: Safety, Scenery, Route Fit",
-    "rm_desc": "Plan the Ha Giang Loop by safety, scenery, easy rider vs self-drive, license, insurance, weather, road fatigue, route length, and Hanoi buffers.",
+    "rm_desc": "Authoritative Ha Giang Loop planning guide: plan by safety, scenery, easy rider vs self-drive, license rules, weather, road fatigue, and Hanoi buffers.",
     "rm_keyword": "Ha Giang Loop planning guide"
   },
   {
@@ -756,31 +756,31 @@
     "post_name": "ha-giang-safety-guide",
     "post_title": "Ha Giang Safety Guide: Easy Rider, Self-Drive and Insurance Reality",
     "rm_title": "Ha Giang Safety Guide: Easy Rider vs Self-Drive Risks",
-    "rm_desc": "Essential Ha Giang Loop safety guide: evaluate easy rider vs self-drive risks, police checkpoints, hospital access, and valid motorbike insurance rules.",
+    "rm_desc": "Authoritative Ha Giang safety guide: evaluate easy rider vs self-drive risks, police checkpoints, hospital access, and valid motorbike insurance rules.",
     "rm_keyword": "ha giang safety guide"
   },
   {
     "ID": "523",
     "post_name": "ha-giang-easy-rider-vs-self-drive",
     "post_title": "Ha Giang Easy Rider vs Self-Drive: Which Is Right for You?",
-    "rm_title": "Ha Giang Easy Rider vs Self-Drive: Which Is Right for You?",
-    "rm_desc": "Decide between Ha Giang easy rider or self-drive: compare costs, license rules, road hazards, physical fatigue, and passenger comfort on the loop route.",
-    "rm_keyword": "ha giang easy rider vs self drive"
+    "rm_title": "Ha Giang Easy Rider vs Self-Drive: Motorbike Route Guide",
+    "rm_desc": "Decide between Ha Giang easy rider vs self-drive: compare tour costs, 1968 IDP license rules, road hazards, physical fatigue, and passenger safety.",
+    "rm_keyword": "Ha Giang easy rider vs self-drive"
   },
   {
     "ID": "524",
     "post_name": "sapa-trekking-guided-vs-self-guided",
     "post_title": "Sapa Trekking: Guided vs Self-Guided for First-Time Visitors",
-    "rm_title": "Sapa Trekking: Guided vs Self-Guided for First-Time Visitors",
-    "rm_desc": "Plan your Sapa trekking route: compare guided vs self-guided village walks, trail navigation, mud seasons, ethical homestays, and local guide costs.",
-    "rm_keyword": "sapa trekking guided vs self guided"
+    "rm_title": "Sapa Trekking Guided vs Self-Guided: Mountain Route Guide",
+    "rm_desc": "Plan Sapa trekking guided vs self-guided: compare trail navigation, mud seasons, village etiquette, homestay lodging, and local Hmong guide tariffs.",
+    "rm_keyword": "Sapa trekking guided vs self-guided"
   },
   {
     "ID": "525",
     "post_name": "where-to-stay-in-sapa",
     "post_title": "Where to Stay in Sapa: Town, Valley Lodge or Homestay?",
     "rm_title": "Where to Stay in Sapa: Town, Valley Lodge or Homestay?",
-    "rm_desc": "Choose the best Sapa base: compare central Sapa town hotels, Muong Hoa valley eco-lodges, and village homestays by views, quiet, and taxi access.",
+    "rm_desc": "Choose where to stay in Sapa: compare central town hotels, Muong Hoa valley eco-lodges, and village homestays by views, serenity, and taxi access.",
     "rm_keyword": "where to stay in sapa"
   },
   {
@@ -796,7 +796,7 @@
     "post_name": "vietnam-rice-terraces-guide",
     "post_title": "Vietnam Rice Terraces Guide: Sapa, Mu Cang Chai, Hoang Su Phi or Pu Luong?",
     "rm_title": "Vietnam Rice Terraces Guide: Sapa, Mu Cang Chai & More",
-    "rm_desc": "Compare Vietnam rice terrace destinations: Sapa, Mu Cang Chai, Hoang Su Phi, and Pu Luong by golden season timing, travel logistics, and scenery.",
+    "rm_desc": "Authoritative Vietnam rice terraces guide: compare Sapa, Mu Cang Chai, Hoang Su Phi, and Pu Luong by golden season harvest timing and scenery.",
     "rm_keyword": "vietnam rice terraces guide"
   },
   {
@@ -804,7 +804,7 @@
     "post_name": "mu-cang-chai-travel-guide",
     "post_title": "Mu Cang Chai Travel Guide: Rice Terraces Without Forcing the Route",
     "rm_title": "Mu Cang Chai Travel Guide: Golden Rice Terraces & Route",
-    "rm_desc": "Plan your Mu Cang Chai trip: golden harvest timing, Khau Pha Pass transport from Hanoi, local homestays, and whether the mountain detour fits your route.",
+    "rm_desc": "Authoritative Mu Cang Chai travel guide: plan golden harvest timing, Khau Pha Pass transport from Hanoi, local homestays, and mountain loop routes.",
     "rm_keyword": "mu cang chai travel guide"
   },
   {
@@ -812,7 +812,7 @@
     "post_name": "pu-luong-travel-guide",
     "post_title": "Pu Luong Travel Guide: Softer Countryside or Mountain Detour?",
     "rm_title": "Pu Luong Travel Guide: Countryside Retreat & Logistics",
-    "rm_desc": "Plan your Pu Luong getaway: valley retreats, water wheels, easy trekking, shuttle bus transfers from Hanoi or Ninh Binh, and best seasons to visit.",
+    "rm_desc": "Authoritative Pu Luong travel guide: plan valley retreats, water wheels, easy trekking, shuttle bus transfers from Hanoi or Ninh Binh, and seasons.",
     "rm_keyword": "pu luong travel guide"
   }
 ]

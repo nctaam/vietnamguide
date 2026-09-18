@@ -3514,12 +3514,15 @@ nav[aria-label="Breadcrumbs"] a:hover {
 
 .vg-calc-currency-toggle {
   display: inline-flex;
+  flex-wrap: wrap;
+  gap: 3px;
   background: var(--vg-white, #ffffff);
   border: 1px solid var(--vg-line, #dcd5c9);
   border-radius: 9999px;
   padding: 3px;
   align-self: flex-start;
   box-shadow: 0 1px 3px rgba(16, 20, 23, 0.05);
+  max-width: 100%;
 }
 
 .vg-calc-currency-btn {
@@ -3530,10 +3533,11 @@ nav[aria-label="Breadcrumbs"] a:hover {
   font-size: 13px;
   font-weight: 700;
   color: var(--vg-muted, #555e65);
-  padding: 6px 14px;
+  padding: 6px 12px;
   border-radius: 9999px;
   cursor: pointer;
   transition: background-color 150ms ease, color 150ms ease, transform 150ms ease;
+  white-space: nowrap;
 }
 
 .vg-calc-currency-btn:hover {
@@ -3548,6 +3552,20 @@ nav[aria-label="Breadcrumbs"] a:hover {
 
 .vg-calc-currency-btn:active {
   transform: scale(0.97);
+}
+
+@media (max-width: 640px) {
+  .vg-calc-currency-toggle {
+    border-radius: 12px;
+    padding: 4px;
+    gap: 4px;
+  }
+
+  .vg-calc-currency-btn {
+    padding: 5px 9px;
+    font-size: 12px;
+    border-radius: 8px;
+  }
 }
 
 .vg-calc-grid {
