@@ -329,7 +329,7 @@ function vg_render_packing_checklist(array $attributes = []): string
                         >
                         <span class="vg-checklist-box-custom" aria-hidden="true"></span>
                         <div class="vg-checklist-text-col">
-                            <span class="vg-checklist-name"><?php echo esc_html($item['item']); ?></span>
+                            <span class="vg-checklist-name"><?php echo esc_html(rtrim($item['item'], '.')) . '.'; ?></span>
                             <span class="vg-checklist-context"><?php echo esc_html($item['context']); ?></span>
                         </div>
                     </label>

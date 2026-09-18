@@ -1700,3 +1700,35 @@ Date: 2026-07-28 (Asia/Saigon)
   - SEO Inventory Audit (`ops/analyze_seo_inventory.py`): 102/102 optimal titles, descriptions, and exact-match focus keywords.
   - Core MU-Plugin Invariant: Hash `71b49033114e8007e5c19fb8ebc1a89e0d0dad88d0fe92dd381a28700db096ce` preserved.
   - Remote Live Runtime: `https://vietnamguide.net/costs/vietnam-travel-cost/` returns HTTP 200 with multi-currency buttons active.
+
+## Stage 51 Verification - Production Cadence Calibration, Interactive Widget Isolation & AIO/GEO Expansion (September 18, 2026)
+- Goals:
+  - Audit and resolve latent sentence cadence and anti-slop variance on live production routes.
+  - Fix local cadence monotony ($CV_{local} < 0.20$) discovered on `/plan/vietnam-first-trip-planning-checklist/` and `/plan/where-to-stay-in-vietnam-base-decisions/`.
+  - Isolate interactive widget UI labels from prose linting while ensuring semantic punctuation for screen-reader accessibility.
+  - Expand machine-readable AIO/GEO directories (`/llms.txt` and `/llms-full.txt`) with the 4th Interactive Toolkit (Route Packing Checklist) and 5-currency Cost Calculator capabilities.
+  - Validate 100% pass across all master CI/CD gates, unit tests, public route assertions, and IndexNow notifications.
+- Changes Implemented:
+  - Anti-AI Slop Quality Engine (`ops/anti_ai_slop_linter.py`):
+    - Extended `strip_html()` regex to exclude interactive travel widgets (`vg-checklist-widget`, `vg-cost-calculator`, `vg-visa-checker`, `vg-season-weather`) alongside navigation sections, preventing button labels and form controls from distorting narrative cadence analysis.
+  - Packing Checklist Accessibility (`wordpress/wp-content/themes/vietnamguide-premium/inc/guide-packing-checklist.php`):
+    - Added terminal period punctuation to `<span class="vg-checklist-name">` via `esc_html(rtrim($item['item'], '.')) . '.'`, providing natural screen-reader pause intervals and semantic separation from subsequent contextual descriptions.
+  - Production Content & Cadence Calibration (`ops/calibrate_where_to_stay.php`):
+    - Calibrated sentence rhythm in Post ID 481 (`/plan/where-to-stay-in-vietnam-base-decisions/`) to eliminate local sentence length monotony.
+    - Injected verified ground-truth base pricing and transit metrics across Hanoi, Hoi An, Ho Chi Minh City, and Da Nang.
+    - Applied live on VPS via WP-CLI with database updates and post cache clearance.
+  - AIO/GEO Engine Modernization (`wordpress/wp-content/themes/vietnamguide-premium/inc/guide-aio.php`):
+    - Updated Section 2 in `/llms.txt` and `/llms-full.txt` to include the 4th Interactive Toolkit (Vietnam Route Packing & Preparation Checklist) and document 5-currency support on the Travel Cost Calculator.
+  - Production Deployment & Verification (`ops/deploy_theme_updates.py`):
+    - Added `inc/guide-aio.php` to deploy pipeline.
+    - Deployed all updated files to VPS with 100% SHA-256 parity and purged LiteSpeed Cache via `SIGUSR1`.
+  - Search Engine Notification (`ops/submit_indexnow.py`):
+    - Resubmitted all 102 URLs via IndexNow API to `api.indexnow.org` and `bing.com` (both HTTP 200 OK).
+- Verification Evidence:
+  - Live Cadence Test Suite (`ops/tests/test-policy-cadence.py`): 11/11 live production endpoints passed (37.055s).
+  - Anti-AI Slop Quality Engine (`ops/tests/test-anti-ai-slop.py`): 34/34 tests passed (0.069s).
+  - Interactive Shortcode Suite (`ops/tests/test-interactive-shortcodes.py`): 18/18 tests passed (0.211s).
+  - Master CI/CD Suite (`ops/verify-all-gates.ps1`): All 5/5 quality gates passed successfully.
+  - Core MU-Plugin Invariant: Hash `71b49033114e8007e5c19fb8ebc1a89e0d0dad88d0fe92dd381a28700db096ce` preserved intact with all 16 mutation tests rejected.
+  - Public Route Verification (`ops/verify-guide-experience-public.ps1`): All 87 public routes and 4 hubs verified HTTP 200 with 100% DOM integrity.
+  - Live Machine-Readable Verification: `https://vietnamguide.net/llms.txt` (24,422 bytes) and `https://vietnamguide.net/llms-full.txt` (44,478 bytes) verified live with 4 toolkits and 5-currency definitions.
