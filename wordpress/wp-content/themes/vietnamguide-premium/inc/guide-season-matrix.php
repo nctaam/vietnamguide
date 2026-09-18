@@ -1057,6 +1057,11 @@ function vg_render_season_matrix_html(): string
                     <strong><?php esc_html_e('Smart Route & Itinerary Finder', 'vietnamguide-premium'); ?></strong>
                     <span><?php esc_html_e('Filter 7, 10, 14, 21-day routes &rarr;', 'vietnamguide-premium'); ?></span>
                 </a>
+                <a href="<?php echo esc_url(home_url('/plan/vietnam-first-trip-planning-checklist/')); ?>" class="vg-sm-bridge-card vg-synergy-bridge">
+                    <span class="vg-sm-bridge-tag"><?php esc_html_e('Gear & Packing', 'vietnamguide-premium'); ?></span>
+                    <strong><?php esc_html_e('Route Packing Checklist', 'vietnamguide-premium'); ?></strong>
+                    <span><?php esc_html_e('24-item seasonal gear list & rain gear prep &rarr;', 'vietnamguide-premium'); ?></span>
+                </a>
             </div>
         </div>
 

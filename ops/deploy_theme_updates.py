@@ -50,6 +50,14 @@ DEPLOY_FILES = [
      'wp-content/themes/vietnamguide-premium/inc/guide-packing-checklist.php'),
     ('wordpress/wp-content/themes/vietnamguide-premium/inc/guide-cost-calculator.php',
      'wp-content/themes/vietnamguide-premium/inc/guide-cost-calculator.php'),
+    ('wordpress/wp-content/themes/vietnamguide-premium/inc/guide-visa-checker.php',
+     'wp-content/themes/vietnamguide-premium/inc/guide-visa-checker.php'),
+    ('wordpress/wp-content/themes/vietnamguide-premium/inc/guide-season-matrix.php',
+     'wp-content/themes/vietnamguide-premium/inc/guide-season-matrix.php'),
+    ('wordpress/wp-content/themes/vietnamguide-premium/inc/guide-airport-navigator.php',
+     'wp-content/themes/vietnamguide-premium/inc/guide-airport-navigator.php'),
+    ('wordpress/wp-content/themes/vietnamguide-premium/inc/guide-itinerary-finder.php',
+     'wp-content/themes/vietnamguide-premium/inc/guide-itinerary-finder.php'),
     ('wordpress/wp-content/themes/vietnamguide-premium/inc/guide-aio.php',
      'wp-content/themes/vietnamguide-premium/inc/guide-aio.php'),
     ('wordpress/wp-content/themes/vietnamguide-premium/inc/guide-routing.php',
@@ -100,7 +108,7 @@ def deploy():
     ssh2.set_missing_host_key_policy(paramiko.AutoAddPolicy())
     ssh2.connect(SSH_HOST, port=SSH_PORT, username=SSH_USER, pkey=pkey, timeout=15)
 
-    purge_cmd = "rm -rf /usr/local/lsws/vietnamguide.net/luucache/* /usr/local/lsws/cachedata/* 2>/dev/null; /usr/local/lsws/bin/lswsctrl restart"
+    purge_cmd = "rm -rf /tmp/lshttpd/swap/* /usr/local/lsws/cachedata/* 2>/dev/null; /usr/local/lsws/bin/lswsctrl reload"
     stdin, stdout, stderr = ssh2.exec_command(purge_cmd)
     out = stdout.read().decode().strip()
     err = stderr.read().decode().strip()

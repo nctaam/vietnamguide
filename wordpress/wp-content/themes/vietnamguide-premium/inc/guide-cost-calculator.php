@@ -246,6 +246,11 @@ function vg_render_cost_calculator_html(): string
                                 <strong><?php esc_html_e('Regional Climate Matrix', 'vietnamguide-premium'); ?></strong>
                                 <span class="vg-calc-ns-sub"><?php esc_html_e('Packing checklist & rainfall radar', 'vietnamguide-premium'); ?> &rarr;</span>
                             </a>
+                            <a href="<?php echo esc_url(home_url('/plan/vietnam-first-trip-planning-checklist/')); ?>" class="vg-calc-ns-card vg-synergy-bridge">
+                                <span class="vg-calc-ns-badge"><?php esc_html_e('Packing & Gear', 'vietnamguide-premium'); ?></span>
+                                <strong><?php esc_html_e('Route Packing Checklist', 'vietnamguide-premium'); ?></strong>
+                                <span class="vg-calc-ns-sub"><?php esc_html_e('24-item gear checklist with progress tracker', 'vietnamguide-premium'); ?> &rarr;</span>
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -804,31 +809,17 @@ function vg_inject_cost_calculator_on_page(string $content): string
         return $content;
     }
 
-    $heroClose = '<!-- /wp:group -->';
-    $pos = strpos($content, $heroClose);
+    global $post;
+    $currentPost = $post instanceof WP_Post ? $post : get_post();
+    $postSlug = $currentPost ? (string) $currentPost->post_name : '';
+    $pageUri = $currentPost ? trim((string) get_page_uri($currentPost), '/') : '';
 
-    // If this is ONLY the isolated hero block (e.g. during guide context block splitting), do not inject
-    if (strpos($content, 'vg-guide-hero') !== false) {
-        if ($pos === false || trim(substr($content, $pos + strlen($heroClose))) === '') {
-            return $content;
-        }
-    }
-
-    static $injectedPosts = [];
-    $postId = get_the_ID();
-    if ($postId && isset($injectedPosts[$postId])) {
-        return $content;
-    }
-
-    $postSlug = $postId ? (string) get_post_field('post_name', $postId) : '';
     $isCostGuide = in_array($postSlug, ['vietnam-travel-cost', 'costs', 'where-to-stay-in-vietnam-base-decisions'], true)
-        || is_page('vietnam-travel-cost')
+        || in_array($pageUri, ['costs/vietnam-travel-cost', 'costs', 'plan/where-to-stay-in-vietnam-base-decisions'], true)
         || is_page('costs/vietnam-travel-cost')
+        || is_page('vietnam-travel-cost')
         || is_page('costs')
-        || is_page('where-to-stay-in-vietnam-base-decisions')
-        || (is_singular('page') && $postSlug === 'vietnam-travel-cost')
-        || (is_singular('page') && $postSlug === 'costs')
-        || (is_singular('page') && $postSlug === 'where-to-stay-in-vietnam-base-decisions');
+        || (is_singular('page') && $postSlug === 'vietnam-travel-cost');
 
     if (! $isCostGuide) {
         return $content;
@@ -838,15 +829,25 @@ function vg_inject_cost_calculator_on_page(string $content): string
         return $content;
     }
 
+    static $injectedPosts = [];
+    $postId = $currentPost ? $currentPost->ID : 0;
+    if ($postId && isset($injectedPosts[$postId])) {
+        return $content;
+    }
     if ($postId) {
         $injectedPosts[$postId] = true;
     }
 
     $calculatorHtml = vg_render_cost_calculator_html();
 
-    if ($pos !== false) {
-        $insertAt = $pos + strlen($heroClose);
-        return substr($content, 0, $insertAt) . "\n\n" . $calculatorHtml . "\n\n" . substr($content, $insertAt);
+    if (strpos($content, 'vg-guide-hero') !== false) {
+        $verdictPos = strpos($content, 'vg-concierge-verdict');
+        if ($verdictPos !== false) {
+            $insertAt = strrpos(substr($content, 0, $verdictPos), '<!-- wp:group');
+            if ($insertAt !== false) {
+                return substr($content, 0, $insertAt) . "\n\n" . $calculatorHtml . "\n\n" . substr($content, $insertAt);
+            }
+        }
     }
 
     return $calculatorHtml . "\n\n" . $content;

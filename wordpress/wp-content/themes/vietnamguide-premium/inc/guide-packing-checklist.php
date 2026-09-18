@@ -337,44 +337,44 @@ function vg_render_packing_checklist(array $attributes = []): string
             <?php endforeach; ?>
         </ul>
 
-        <div class="vg-checklist-synergy-wrap">
+        <div class="vg-checklist-synergy-wrap vg-tool-synergy-bar">
             <div class="vg-checklist-synergy-title">
-                <?php esc_html_e('Connected Vietnam Trip Planning Guides:', 'vietnamguide-premium'); ?>
+                <?php esc_html_e('Connected Vietnam Trip Planning Toolkits:', 'vietnamguide-premium'); ?>
             </div>
             <div class="vg-checklist-synergy-links">
-                <a href="/plan/vietnam-evisa/" class="vg-checklist-synergy-card">
+                <a href="<?php echo esc_url(home_url('/plan/vietnam-evisa/')); ?>" class="vg-checklist-synergy-card vg-synergy-bridge">
                     <span class="vg-checklist-synergy-icon" aria-hidden="true">&#128196;</span>
                     <div>
-                        <strong><?php esc_html_e('Vietnam E-Visa Official Guide', 'vietnamguide-premium'); ?></strong>
-                        <p><?php esc_html_e('Step-by-step portal application, photo specs & urgent processing.', 'vietnamguide-premium'); ?></p>
+                        <strong><?php esc_html_e('Visa Exemption & E-Visa Checker', 'vietnamguide-premium'); ?></strong>
+                        <p><?php esc_html_e('45-day exemption rules, port checks & official e-visa requirements.', 'vietnamguide-premium'); ?></p>
                     </div>
                 </a>
-                <a href="/costs/vietnam-travel-cost/" class="vg-checklist-synergy-card">
+                <a href="<?php echo esc_url(home_url('/costs/vietnam-travel-cost/')); ?>" class="vg-checklist-synergy-card vg-synergy-bridge">
                     <span class="vg-checklist-synergy-icon" aria-hidden="true">&#128176;</span>
                     <div>
                         <strong><?php esc_html_e('Vietnam Travel Cost Calculator', 'vietnamguide-premium'); ?></strong>
-                        <p><?php esc_html_e('Calculate realistic cash, boutique stays, and daily budgets.', 'vietnamguide-premium'); ?></p>
+                        <p><?php esc_html_e('Calculate realistic cash, boutique stays, and daily budgets in 5 currencies.', 'vietnamguide-premium'); ?></p>
                     </div>
                 </a>
-                <a href="/plan/best-time-to-visit-vietnam/" class="vg-checklist-synergy-card">
+                <a href="<?php echo esc_url(home_url('/plan/best-time-to-visit-vietnam/')); ?>" class="vg-checklist-synergy-card vg-synergy-bridge">
                     <span class="vg-checklist-synergy-icon" aria-hidden="true">&#9728;</span>
                     <div>
-                        <strong><?php esc_html_e('Best Time to Visit Vietnam', 'vietnamguide-premium'); ?></strong>
-                        <p><?php esc_html_e('Regional monsoon breakdown for North, Central & Southern coast.', 'vietnamguide-premium'); ?></p>
+                        <strong><?php esc_html_e('Regional Season & Weather Matrix', 'vietnamguide-premium'); ?></strong>
+                        <p><?php esc_html_e('12-month climate guide & rainfall radar across North, Central & South.', 'vietnamguide-premium'); ?></p>
                     </div>
                 </a>
-                <a href="/itineraries/10-days-in-vietnam/" class="vg-checklist-synergy-card">
+                <a href="<?php echo esc_url(home_url('/plan/vietnam-airport-arrival-checklist/')); ?>" class="vg-checklist-synergy-card vg-synergy-bridge">
+                    <span class="vg-checklist-synergy-icon" aria-hidden="true">&#9992;</span>
+                    <div>
+                        <strong><?php esc_html_e('Airport Transit Navigator & Scam Shield', 'vietnamguide-premium'); ?></strong>
+                        <p><?php esc_html_e('Grab bays, metered taxi fares & arrival steps for HAN, SGN & DAD.', 'vietnamguide-premium'); ?></p>
+                    </div>
+                </a>
+                <a href="<?php echo esc_url(home_url('/itineraries/')); ?>" class="vg-checklist-synergy-card vg-synergy-bridge" data-flagship="<?php echo esc_url(home_url('/itineraries/10-days-in-vietnam/')); ?>">
                     <span class="vg-checklist-synergy-icon" aria-hidden="true">&#128506;</span>
                     <div>
-                        <strong><?php esc_html_e('10-Day Classic Route', 'vietnamguide-premium'); ?></strong>
-                        <p><?php esc_html_e('Hanoi, Ha Long, Hoi An, and Saigon day-by-day logistics.', 'vietnamguide-premium'); ?></p>
-                    </div>
-                </a>
-                <a href="/destinations/" class="vg-checklist-synergy-card">
-                    <span class="vg-checklist-synergy-icon" aria-hidden="true">&#128642;</span>
-                    <div>
-                        <strong><?php esc_html_e('All Vietnam Destinations', 'vietnamguide-premium'); ?></strong>
-                        <p><?php esc_html_e('Explore 14 regional hubs, mountain loops, and tropical islands.', 'vietnamguide-premium'); ?></p>
+                        <strong><?php esc_html_e('Interactive Itinerary Finder', 'vietnamguide-premium'); ?></strong>
+                        <p><?php esc_html_e('Match 7, 10, 14, 21-day routes or open the 10-day classic route (/itineraries/10-days-in-vietnam/).', 'vietnamguide-premium'); ?></p>
                     </div>
                 </a>
             </div>

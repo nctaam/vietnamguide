@@ -685,6 +685,11 @@ function vg_render_airport_navigator_html(): string
                     <span class="vg-an-step-title"><?php esc_html_e('Interactive Itinerary Finder', 'vietnamguide-premium'); ?></span>
                     <span class="vg-an-step-desc"><?php esc_html_e('Filter tested routes from 7 to 21 days', 'vietnamguide-premium'); ?></span>
                 </a>
+                <a href="<?php echo esc_url(home_url('/plan/vietnam-first-trip-planning-checklist/')); ?>" class="vg-an-step-link vg-synergy-bridge">
+                    <span class="vg-an-step-icon">🎒</span>
+                    <span class="vg-an-step-title"><?php esc_html_e('Route Packing Checklist', 'vietnamguide-premium'); ?></span>
+                    <span class="vg-an-step-desc"><?php esc_html_e('24-item gear & document checklist with state persistence', 'vietnamguide-premium'); ?></span>
+                </a>
             </div>
         </div>
 

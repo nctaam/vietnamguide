@@ -342,8 +342,13 @@ function vg_render_itinerary_finder_html(): string
                 </a>
                 <a href="<?php echo esc_url(home_url('/plan/best-time-to-visit-vietnam/')); ?>" class="vg-finder-tk-card vg-synergy-bridge">
                     <span class="vg-finder-tk-badge">☀️ <?php esc_html_e('Climate', 'vietnamguide-premium'); ?></span>
-                    <strong><?php esc_html_e('Seasonality & Packing Matrix', 'vietnamguide-premium'); ?></strong>
-                    <span><?php esc_html_e('12-month regional weather & packing list &rarr;', 'vietnamguide-premium'); ?></span>
+                    <strong><?php esc_html_e('Seasonality & Weather Matrix', 'vietnamguide-premium'); ?></strong>
+                    <span><?php esc_html_e('12-month regional weather & climate patterns &rarr;', 'vietnamguide-premium'); ?></span>
+                </a>
+                <a href="<?php echo esc_url(home_url('/plan/vietnam-first-trip-planning-checklist/')); ?>" class="vg-finder-tk-card vg-synergy-bridge">
+                    <span class="vg-finder-tk-badge">🎒 <?php esc_html_e('Packing', 'vietnamguide-premium'); ?></span>
+                    <strong><?php esc_html_e('Route Packing Checklist', 'vietnamguide-premium'); ?></strong>
+                    <span><?php esc_html_e('Interactive 24-item gear checklist with progress tracker &rarr;', 'vietnamguide-premium'); ?></span>
                 </a>
             </div>
         </div>

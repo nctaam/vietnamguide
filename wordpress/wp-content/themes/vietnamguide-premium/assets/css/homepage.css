@@ -5838,7 +5838,8 @@ nav[aria-label="Breadcrumbs"] a:hover {
 .vg-vc-ns-grid,
 .vg-calc-ns-grid,
 .vg-finder-tk-grid,
-.vg-sm-bridge-grid {
+.vg-sm-bridge-grid,
+.vg-checklist-synergy-links {
   display: grid;
   grid-template-columns: 1fr;
   gap: 14px;
@@ -5848,24 +5849,37 @@ nav[aria-label="Breadcrumbs"] a:hover {
   .vg-vc-ns-grid,
   .vg-calc-ns-grid,
   .vg-finder-tk-grid,
-  .vg-sm-bridge-grid {
+  .vg-sm-bridge-grid,
+  .vg-checklist-synergy-links {
     grid-template-columns: repeat(2, 1fr);
   }
 }
 
-@media (min-width: 1024px) {
+@media (min-width: 960px) {
   .vg-vc-ns-grid,
   .vg-calc-ns-grid,
   .vg-finder-tk-grid,
-  .vg-sm-bridge-grid {
-    grid-template-columns: repeat(4, 1fr);
+  .vg-sm-bridge-grid,
+  .vg-checklist-synergy-links {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (min-width: 1200px) {
+  .vg-vc-ns-grid,
+  .vg-calc-ns-grid,
+  .vg-finder-tk-grid,
+  .vg-sm-bridge-grid,
+  .vg-checklist-synergy-links {
+    grid-template-columns: repeat(5, 1fr);
   }
 }
 
 .vg-vc-ns-card,
 .vg-calc-ns-card,
 .vg-finder-tk-card,
-.vg-sm-bridge-card {
+.vg-sm-bridge-card,
+.vg-checklist-synergy-card {
   display: flex;
   flex-direction: column;
   gap: 6px;
@@ -5882,7 +5896,8 @@ nav[aria-label="Breadcrumbs"] a:hover {
 .vg-vc-ns-card:hover,
 .vg-calc-ns-card:hover,
 .vg-finder-tk-card:hover,
-.vg-sm-bridge-card:hover {
+.vg-sm-bridge-card:hover,
+.vg-checklist-synergy-card:hover {
   background: #ffffff;
   border-color: var(--vg-gold, #d4a017);
   transform: translateY(-2px);
@@ -5892,7 +5907,8 @@ nav[aria-label="Breadcrumbs"] a:hover {
 .vg-vc-ns-card:active,
 .vg-calc-ns-card:active,
 .vg-finder-tk-card:active,
-.vg-sm-bridge-card:active {
+.vg-sm-bridge-card:active,
+.vg-checklist-synergy-card:active {
   transform: scale(0.98);
 }
 

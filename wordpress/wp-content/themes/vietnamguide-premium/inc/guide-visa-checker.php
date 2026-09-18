@@ -473,9 +473,14 @@ function vg_render_visa_checker_html(): string
                         <span class="vg-vc-ns-desc"><?php esc_html_e('Estimate hotel, food, and domestic transit', 'vietnamguide-premium'); ?> &rarr;</span>
                     </a>
                     <a href="<?php echo esc_url(home_url('/plan/best-time-to-visit-vietnam/')); ?>" class="vg-vc-ns-card vg-synergy-bridge" id="vg-vc-ns-weather">
-                        <span class="vg-vc-ns-tag"><?php esc_html_e('Weather & Packing', 'vietnamguide-premium'); ?></span>
+                        <span class="vg-vc-ns-tag"><?php esc_html_e('Weather & Seasons', 'vietnamguide-premium'); ?></span>
                         <strong class="vg-vc-ns-name"><?php esc_html_e('Regional Climate Matrix', 'vietnamguide-premium'); ?></strong>
-                        <span class="vg-vc-ns-desc"><?php esc_html_e('12-month climate guide & packing list', 'vietnamguide-premium'); ?> &rarr;</span>
+                        <span class="vg-vc-ns-desc"><?php esc_html_e('12-month climate guide & rainfall patterns', 'vietnamguide-premium'); ?> &rarr;</span>
+                    </a>
+                    <a href="<?php echo esc_url(home_url('/plan/vietnam-first-trip-planning-checklist/')); ?>" class="vg-vc-ns-card vg-synergy-bridge" id="vg-vc-ns-packing">
+                        <span class="vg-vc-ns-tag"><?php esc_html_e('Packing Checklist', 'vietnamguide-premium'); ?></span>
+                        <strong class="vg-vc-ns-name"><?php esc_html_e('Route Packing Checklist', 'vietnamguide-premium'); ?></strong>
+                        <span class="vg-vc-ns-desc"><?php esc_html_e('24-item interactive gear, documents & medical prep', 'vietnamguide-premium'); ?> &rarr;</span>
                     </a>
                 </div>
             </div>
