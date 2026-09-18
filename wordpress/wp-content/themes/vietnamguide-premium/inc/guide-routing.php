@@ -154,3 +154,28 @@ function vg_is_guide_experience_page(?WP_Post $post = null): bool
 
     return vg_get_guide_type($post) !== null;
 }
+
+/**
+ * Redirects legacy and vanity toolkit URLs to their canonical guide permalinks.
+ */
+function vg_handle_toolkit_vanity_redirects(): void
+{
+    if (is_admin()) {
+        return;
+    }
+
+    $req_uri = $_SERVER['REQUEST_URI'] ?? '';
+    $path = trim((string) (parse_url($req_uri, PHP_URL_PATH) ?? ''), '/');
+
+    $vanity_map = [
+        'vietnam-travel-cost'    => '/costs/vietnam-travel-cost/',
+        'vietnam-visa-checker'   => '/plan/vietnam-evisa/',
+        'vietnam-season-weather' => '/plan/best-time-to-visit-vietnam/',
+    ];
+
+    if (isset($vanity_map[$path])) {
+        wp_safe_redirect(home_url($vanity_map[$path]), 301);
+        exit;
+    }
+}
+add_action('template_redirect', 'vg_handle_toolkit_vanity_redirects', 1);

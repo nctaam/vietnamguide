@@ -2147,6 +2147,11 @@ html:not(.vg-js) body.home .vg-site-header {
   background: linear-gradient(135deg, rgba(14, 111, 92, 0.04) 0%, rgba(14, 111, 92, 0.08) 100%);
 }
 
+.vg-search-tool-banner--packing {
+  border-color: rgba(14, 111, 92, 0.3);
+  background: linear-gradient(135deg, rgba(14, 111, 92, 0.05) 0%, rgba(23, 59, 86, 0.08) 100%);
+}
+
 .vg-search-tool-banner__body {
   flex: 1;
 }
@@ -2165,7 +2170,8 @@ html:not(.vg-js) body.home .vg-site-header {
   color: var(--vg-blue);
 }
 
-.vg-search-tool-banner--weather .vg-search-tool-banner__badge {
+.vg-search-tool-banner--weather .vg-search-tool-banner__badge,
+.vg-search-tool-banner--packing .vg-search-tool-banner__badge {
   color: var(--vg-jade);
 }
 

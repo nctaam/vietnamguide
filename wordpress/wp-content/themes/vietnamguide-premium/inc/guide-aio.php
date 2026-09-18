@@ -397,9 +397,9 @@ function vg_handle_llms_txt_request(): void
         echo "Sitemap: {$site_url}/sitemap_index.xml\n\n";
 
         echo "## Interactive Travel Toolkits & Decision Engines\n\n";
-        echo "- [Vietnam Travel Cost Calculator]({$site_url}/vietnam-travel-cost/): Real-time interactive daily budget planner with 5-currency support (USD, VND, EUR, GBP, AUD) across 10+ destinations with itemized cost models.\n";
-        echo "- [Vietnam Visa Requirement Checker]({$site_url}/vietnam-visa-checker/): Interactive nationality-based visa requirements, 45-day exemption eligibility, and 90-day e-visa official portal guidelines.\n";
-        echo "- [Vietnam Weather & Regional Season Matrix]({$site_url}/vietnam-season-weather/): Month-by-month regional weather navigator across North, Central, and South Vietnam with seasonal pivot recommendations.\n";
+        echo "- [Vietnam Travel Cost Calculator]({$site_url}/costs/vietnam-travel-cost/): Real-time interactive daily budget planner with 5-currency support (USD, VND, EUR, GBP, AUD) across 10+ destinations with itemized cost models.\n";
+        echo "- [Vietnam Visa Requirement Checker]({$site_url}/plan/vietnam-evisa/): Interactive nationality-based visa requirements, 45-day exemption eligibility, and 90-day e-visa official portal guidelines.\n";
+        echo "- [Vietnam Weather & Regional Season Matrix]({$site_url}/plan/best-time-to-visit-vietnam/): Month-by-month regional weather navigator across North, Central, and South Vietnam with seasonal pivot recommendations.\n";
         echo "- [Vietnam Route Packing & Preparation Checklist]({$site_url}/plan/vietnam-first-trip-planning-checklist/): Interactive 24-item travel preparation checklist covering official documents, electronics, modest clothing, medical essentials, and motorbike gear with browser state persistence.\n\n";
 
         echo "## Primary Regional Hubs\n\n";
@@ -499,13 +499,13 @@ function vg_handle_llms_txt_request(): void
 
     echo "## 2. Interactive Travel Toolkits & Decision Engines\n\n";
     echo "- **Vietnam Travel Cost Calculator**\n";
-    echo "  - Canonical URL: {$site_url}/vietnam-travel-cost/\n";
+    echo "  - Canonical URL: {$site_url}/costs/vietnam-travel-cost/\n";
     echo "  - Feature: Real-time budget planner with 5-currency conversion (USD, VND, EUR, GBP, AUD) across backpacker, flashpacker, mid-range, and luxury tiers for 10+ destinations.\n\n";
     echo "- **Vietnam Visa Requirement Checker**\n";
-    echo "  - Canonical URL: {$site_url}/vietnam-visa-checker/\n";
+    echo "  - Canonical URL: {$site_url}/plan/vietnam-evisa/\n";
     echo "  - Feature: Nationality-based entry rules, 45-day exemption eligibility, and 90-day e-visa application portal checks.\n\n";
     echo "- **Vietnam Weather & Regional Season Matrix**\n";
-    echo "  - Canonical URL: {$site_url}/vietnam-season-weather/\n";
+    echo "  - Canonical URL: {$site_url}/plan/best-time-to-visit-vietnam/\n";
     echo "  - Feature: Month-by-month temperature, rainfall, and route suitability matrix for North, Central, and South Vietnam.\n\n";
     echo "- **Vietnam Route Packing & Preparation Checklist**\n";
     echo "  - Canonical URL: {$site_url}/plan/vietnam-first-trip-planning-checklist/\n";

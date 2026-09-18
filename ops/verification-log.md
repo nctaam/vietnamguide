@@ -1732,3 +1732,40 @@ Date: 2026-07-28 (Asia/Saigon)
   - Core MU-Plugin Invariant: Hash `71b49033114e8007e5c19fb8ebc1a89e0d0dad88d0fe92dd381a28700db096ce` preserved intact with all 16 mutation tests rejected.
   - Public Route Verification (`ops/verify-guide-experience-public.ps1`): All 87 public routes and 4 hubs verified HTTP 200 with 100% DOM integrity.
   - Live Machine-Readable Verification: `https://vietnamguide.net/llms.txt` (24,422 bytes) and `https://vietnamguide.net/llms-full.txt` (44,478 bytes) verified live with 4 toolkits and 5-currency definitions.
+
+## Stage 52 Verification - Canonical Toolkit Routing, PWA Offline Resilience & Search Engine Precision (September 18, 2026)
+- Goals:
+  - Eliminate 404 responses for legacy vanity toolkit URLs (`/vietnam-travel-cost/`, `/vietnam-visa-checker/`, `/vietnam-season-weather/`) via a zero-overhead canonical 301 redirect engine.
+  - Update all machine-readable AIO/GEO directories (`/llms.txt` and `/llms-full.txt`) with exact live canonical URLs.
+  - Expand PWA Web App Manifest (`site.webmanifest`) to 5 shortcuts including the newly introduced Packing Checklist.
+  - Upgrade PWA Service Worker to `v1.2.0` with full offline pre-caching of all 4 interactive decision tools.
+  - Enhance internal search engine (`search.php`) with high-intent query matching for packing/luggage queries and dedicated visual banner styles.
+  - Deploy to production VPS with 100% SHA-256 parity and submit 102 URLs to search engines via IndexNow.
+- Changes Implemented:
+  - Canonical 301 Vanity Redirect Engine (`wordpress/wp-content/themes/vietnamguide-premium/inc/guide-routing.php`):
+    - Added `vg_handle_toolkit_vanity_redirects` hooked to `template_redirect` priority 1.
+    - Seamlessly redirects `/vietnam-travel-cost/` $\to$ `/costs/vietnam-travel-cost/`, `/vietnam-visa-checker/` $\to$ `/plan/vietnam-evisa/`, and `/vietnam-season-weather/` $\to$ `/plan/best-time-to-visit-vietnam/` with HTTP 301 Moved Permanently.
+  - AIO/GEO Canonical Precision (`wordpress/wp-content/themes/vietnamguide-premium/inc/guide-aio.php`):
+    - Replaced all legacy URLs in Section 2 of `/llms.txt` and `/llms-full.txt` with their live canonical guide permalinks.
+  - PWA Manifest Expansion (`wordpress/wp-content/themes/vietnamguide-premium/site.webmanifest`):
+    - Updated shortcuts to canonical URLs and added 5th shortcut: "Packing Checklist" (`/plan/vietnam-first-trip-planning-checklist/`).
+  - PWA Offline Service Worker v1.2.0 (`wordpress/sw.js`):
+    - Incremented cache to `vg-travel-handbook-v1.2.0` and precached `/plan/vietnam-first-trip-planning-checklist/`.
+  - Search Engine Precision & Decision Banners (`wordpress/wp-content/themes/vietnamguide-premium/search.php` & `homepage.css`):
+    - Added query matching for packing/luggage keywords (`pack`, `packing`, `luggage`, `bag`, `checklist`, `cloth`, `gear`, `jacket`, `prep`).
+    - Styled `.vg-search-tool-banner--packing` in `assets/css/homepage.css` with Jade theme token palette.
+    - Added "Packing Checklist" chip to popular search chips list.
+  - Production VPS Deployment (`ops/deploy_theme_updates.py`):
+    - Added `inc/guide-routing.php` to deploy pipeline. Deployed all 17 files with 100% SHA-256 parity.
+    - Reloaded LSWS via `SIGUSR1` and purged all LiteSpeed cache.
+  - Search Resubmission (`ops/submit_indexnow.py`):
+    - Resubmitted all 102 sitemap URLs to `api.indexnow.org` and `bing.com` (both HTTP 200 OK).
+- Verification Evidence:
+  - Live 301 Redirect Tests: Verified all 3 vanity URLs return HTTP 301 with exact Location targets.
+  - Live PWA Verification: `site.webmanifest` confirms 5 shortcuts; `sw.js` confirms v1.2.0 active and packing checklist precached.
+  - Live Search Verification: `https://vietnamguide.net/?s=packing` renders `.vg-search-tool-banner--packing` with interactive CTA.
+  - Live Policy Cadence (`ops/tests/test-policy-cadence.py`): 11/11 tests passed (26.770s).
+  - Anti-AI Slop Quality Engine (`ops/tests/test-anti-ai-slop.py`): 34/34 tests passed.
+  - Interactive Shortcodes (`ops/tests/test-interactive-shortcodes.py`): 18/18 tests passed.
+  - Master CI/CD Suite (`ops/verify-all-gates.ps1`): All 5/5 quality gates passed.
+  - Core MU-Plugin Invariant: Hash `71b49033114e8007e5c19fb8ebc1a89e0d0dad88d0fe92dd381a28700db096ce` 100% preserved.

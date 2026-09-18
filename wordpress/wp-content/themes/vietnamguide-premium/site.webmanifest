@@ -40,21 +40,28 @@
       "name": "Visa Checker",
       "short_name": "Visa",
       "description": "Instant Vietnam visa exemption and e-visa rules",
-      "url": "/vietnam-visa-checker/",
+      "url": "/plan/vietnam-evisa/",
       "icons": [{ "src": "/wp-content/themes/vietnamguide-premium/assets/images/vg-icon.svg", "sizes": "any" }]
     },
     {
       "name": "Cost Calculator",
       "short_name": "Cost",
       "description": "Calculate daily budget across 4 traveler tiers",
-      "url": "/vietnam-travel-cost/",
+      "url": "/costs/vietnam-travel-cost/",
       "icons": [{ "src": "/wp-content/themes/vietnamguide-premium/assets/images/vg-icon.svg", "sizes": "any" }]
     },
     {
       "name": "Season & Weather",
       "short_name": "Weather",
       "description": "Interactive regional weather and monsoon matrix",
-      "url": "/vietnam-season-weather/",
+      "url": "/plan/best-time-to-visit-vietnam/",
+      "icons": [{ "src": "/wp-content/themes/vietnamguide-premium/assets/images/vg-icon.svg", "sizes": "any" }]
+    },
+    {
+      "name": "Packing Checklist",
+      "short_name": "Packing",
+      "description": "Interactive 24-item gear and travel preparation checklist",
+      "url": "/plan/vietnam-first-trip-planning-checklist/",
       "icons": [{ "src": "/wp-content/themes/vietnamguide-premium/assets/images/vg-icon.svg", "sizes": "any" }]
     }
   ]

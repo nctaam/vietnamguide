@@ -52,6 +52,8 @@ DEPLOY_FILES = [
      'wp-content/themes/vietnamguide-premium/inc/guide-cost-calculator.php'),
     ('wordpress/wp-content/themes/vietnamguide-premium/inc/guide-aio.php',
      'wp-content/themes/vietnamguide-premium/inc/guide-aio.php'),
+    ('wordpress/wp-content/themes/vietnamguide-premium/inc/guide-routing.php',
+     'wp-content/themes/vietnamguide-premium/inc/guide-routing.php'),
 ]
 
 def get_sha256(filepath):

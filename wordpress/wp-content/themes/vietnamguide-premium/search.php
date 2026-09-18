@@ -18,7 +18,7 @@ if ($q_clean !== '') {
             'badge'       => __('Interactive Decision Engine', 'vietnamguide-premium'),
             'title'       => __('Vietnam Visa Eligibility Checker', 'vietnamguide-premium'),
             'description' => __('Check your passport nationality for 45-day visa-free exemptions, official 90-day e-visa requirements, and entry checkpoints in 5 seconds.', 'vietnamguide-premium'),
-            'url'         => home_url('/vietnam-visa-checker/'),
+            'url'         => home_url('/plan/vietnam-evisa/'),
             'cta'         => __('Launch Visa Checker', 'vietnamguide-premium'),
         ];
     } elseif (str_contains($q_clean, 'cost') || str_contains($q_clean, 'budget') || str_contains($q_clean, 'price') || str_contains($q_clean, 'money') || str_contains($q_clean, 'expensive') || str_contains($q_clean, 'dong') || str_contains($q_clean, 'vnd')) {
@@ -27,7 +27,7 @@ if ($q_clean !== '') {
             'badge'       => __('Interactive Budget Engine', 'vietnamguide-premium'),
             'title'       => __('Vietnam Travel Cost Calculator', 'vietnamguide-premium'),
             'description' => __('Calculate realistic daily travel expenses across accommodation, transport, meals, and activities tailored to your trip style and group size.', 'vietnamguide-premium'),
-            'url'         => home_url('/vietnam-travel-cost/'),
+            'url'         => home_url('/costs/vietnam-travel-cost/'),
             'cta'         => __('Calculate Your Budget', 'vietnamguide-premium'),
         ];
     } elseif (str_contains($q_clean, 'weather') || str_contains($q_clean, 'rain') || str_contains($q_clean, 'season') || str_contains($q_clean, 'climate') || str_contains($q_clean, 'monsoon') || str_contains($q_clean, 'typhoon') || str_contains($q_clean, 'when to')) {
@@ -36,8 +36,17 @@ if ($q_clean !== '') {
             'badge'       => __('Interactive Seasonal Engine', 'vietnamguide-premium'),
             'title'       => __('Vietnam Season & Weather Guide', 'vietnamguide-premium'),
             'description' => __('Compare regional climate patterns month-by-month across North, Central, and South Vietnam to choose your optimal travel window.', 'vietnamguide-premium'),
-            'url'         => home_url('/vietnam-season-weather/'),
+            'url'         => home_url('/plan/best-time-to-visit-vietnam/'),
             'cta'         => __('Explore Weather Guide', 'vietnamguide-premium'),
+        ];
+    } elseif (str_contains($q_clean, 'pack') || str_contains($q_clean, 'luggage') || str_contains($q_clean, 'bag') || str_contains($q_clean, 'checklist') || str_contains($q_clean, 'cloth') || str_contains($q_clean, 'gear') || str_contains($q_clean, 'jacket') || str_contains($q_clean, 'prep')) {
+        $matched_toolkit = [
+            'type'        => 'packing',
+            'badge'       => __('Interactive Preparation Engine', 'vietnamguide-premium'),
+            'title'       => __('Vietnam Route Packing & Preparation Checklist', 'vietnamguide-premium'),
+            'description' => __('Interactive 24-item travel preparation checklist covering official documents, electronics, clothing, medical essentials, and motorbike gear with browser state persistence.', 'vietnamguide-premium'),
+            'url'         => home_url('/plan/vietnam-first-trip-planning-checklist/'),
+            'cta'         => __('Open Packing Checklist', 'vietnamguide-premium'),
         ];
     }
 }
@@ -91,6 +100,7 @@ if ($q_clean !== '') {
                         <a href="<?php echo esc_url(add_query_arg('s', 'Visa', home_url('/'))); ?>" class="vg-search-chip">Visa</a>
                         <a href="<?php echo esc_url(add_query_arg('s', 'Budget', home_url('/'))); ?>" class="vg-search-chip">Budget &amp; Cost</a>
                         <a href="<?php echo esc_url(add_query_arg('s', 'Weather', home_url('/'))); ?>" class="vg-search-chip">Weather</a>
+                        <a href="<?php echo esc_url(add_query_arg('s', 'Packing', home_url('/'))); ?>" class="vg-search-chip">Packing Checklist</a>
                         <a href="<?php echo esc_url(add_query_arg('s', '10 Days', home_url('/'))); ?>" class="vg-search-chip">10-Day Itinerary</a>
                     </div>
                 </div>
