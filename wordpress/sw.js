@@ -7,7 +7,7 @@
 
 'use strict';
 
-var CACHE_NAME = 'vg-travel-handbook-v1.2.0';
+var CACHE_NAME = 'vg-travel-handbook-v1.3.0';
 var OFFLINE_URL = '/offline.html';
 
 var PRECACHE_ASSETS = [
@@ -21,6 +21,8 @@ var PRECACHE_ASSETS = [
   '/plan/best-time-to-visit-vietnam/',
   '/plan/vietnam-evisa/',
   '/plan/vietnam-first-trip-planning-checklist/',
+  '/plan/vietnam-airport-arrival-checklist/',
+  '/itineraries/',
   '/itineraries/10-days-in-vietnam/'
 ];
 

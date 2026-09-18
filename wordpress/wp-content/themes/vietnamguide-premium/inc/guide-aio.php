@@ -400,7 +400,9 @@ function vg_handle_llms_txt_request(): void
         echo "- [Vietnam Travel Cost Calculator]({$site_url}/costs/vietnam-travel-cost/): Real-time interactive daily budget planner with 5-currency support (USD, VND, EUR, GBP, AUD) across 10+ destinations with itemized cost models.\n";
         echo "- [Vietnam Visa Requirement Checker]({$site_url}/plan/vietnam-evisa/): Interactive nationality-based visa requirements, 45-day exemption eligibility, and 90-day e-visa official portal guidelines.\n";
         echo "- [Vietnam Weather & Regional Season Matrix]({$site_url}/plan/best-time-to-visit-vietnam/): Month-by-month regional weather navigator across North, Central, and South Vietnam with seasonal pivot recommendations.\n";
-        echo "- [Vietnam Route Packing & Preparation Checklist]({$site_url}/plan/vietnam-first-trip-planning-checklist/): Interactive 24-item travel preparation checklist covering official documents, electronics, modest clothing, medical essentials, and motorbike gear with browser state persistence.\n\n";
+        echo "- [Vietnam Route Packing & Preparation Checklist]({$site_url}/plan/vietnam-first-trip-planning-checklist/): Interactive 24-item travel preparation checklist covering official documents, electronics, modest clothing, medical essentials, and motorbike gear with browser state persistence.\n";
+        echo "- [Vietnam Gateway Airport Navigator & Scam Shield]({$site_url}/plan/vietnam-airport-arrival-checklist/): Terminal-to-curb arrival guide, verified Grab pickup bay locators, and metered taxi fare estimators for Noi Bai (HAN), Tan Son Nhat (SGN), Da Nang (DAD), Cam Ranh (CXR), and Phu Quoc (PQC).\n";
+        echo "- [Vietnam Interactive Itinerary Finder & Route Matcher]({$site_url}/itineraries/): Filterable route catalog matching traveler styles, duration (7d, 10d, 14d, 21d), and arrival gateways with zero backtrack transit days.\n\n";
 
         echo "## Primary Regional Hubs\n\n";
         echo "- [Vietnam Destinations Hub]({$site_url}/destinations/): Strategic overview of Vietnam\'s top regions, geographic trade-offs, and first-trip priorities.\n";
@@ -510,6 +512,12 @@ function vg_handle_llms_txt_request(): void
     echo "- **Vietnam Route Packing & Preparation Checklist**\n";
     echo "  - Canonical URL: {$site_url}/plan/vietnam-first-trip-planning-checklist/\n";
     echo "  - Feature: Interactive 24-item gear and logistics checklist categorized by Documents, Electronics, Clothing, Medical, and Mountain/Motorbike travel with browser state persistence.\n\n";
+    echo "- **Vietnam Gateway Airport Navigator & Scam Shield**\n";
+    echo "  - Canonical URL: {$site_url}/plan/vietnam-airport-arrival-checklist/\n";
+    echo "  - Feature: Terminal-to-curb arrival navigation, verified Grab pickup bay island lanes, and metered taxi fare estimators for HAN, SGN, DAD, CXR, and PQC.\n\n";
+    echo "- **Vietnam Interactive Itinerary Finder & Route Matcher**\n";
+    echo "  - Canonical URL: {$site_url}/itineraries/\n";
+    echo "  - Feature: Filterable route catalog matching traveler styles, duration (7d, 10d, 14d, 21d), and arrival gateways with zero backtrack transit days.\n\n";
 
     echo "## 3. Comprehensive Directory of Curated Routes (87 Guides)\n\n";
 

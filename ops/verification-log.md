@@ -1769,3 +1769,47 @@ Date: 2026-07-28 (Asia/Saigon)
   - Interactive Shortcodes (`ops/tests/test-interactive-shortcodes.py`): 18/18 tests passed.
   - Master CI/CD Suite (`ops/verify-all-gates.ps1`): All 5/5 quality gates passed.
   - Core MU-Plugin Invariant: Hash `71b49033114e8007e5c19fb8ebc1a89e0d0dad88d0fe92dd381a28700db096ce` 100% preserved.
+
+## Stage 53 Verification - 6-Toolkit Decision Engine Unification, WebApplication Schema & Search Precision (September 18, 2026)
+- Goals:
+  - Unify all 6 interactive decision engines across Schema.org structured data, machine-readable AIO endpoints (`/llms.txt`, `/llms-full.txt`), internal search engine banners (`search.php`), and PWA offline storage (`sw.js`).
+  - The 6 Unified Decision Engines:
+    1. Cost Calculator (`/costs/vietnam-travel-cost/`)
+    2. Visa Requirement & Exemption Checker (`/plan/vietnam-evisa/`)
+    3. Weather & Season Matrix (`/plan/best-time-to-visit-vietnam/`)
+    4. Route Packing Checklist (`/plan/vietnam-first-trip-planning-checklist/`)
+    5. Gateway Airport Transit Navigator & Scam Shield (`/plan/vietnam-airport-arrival-checklist/`)
+    6. Interactive Itinerary Finder & Route Matcher (`/itineraries/`)
+  - Implement `WebApplication` / `SoftwareApplication` Schema.org generation in `guide-seo.php` for all 6 toolkits with `applicationCategory: "TravelApplication"`, `operatingSystem: "All"`, `browserRequirements`, `offers`, and itemized `featureList`.
+  - Expand `search.php` with high-intent query matching for Airport Transit (`type: transit`) and Itinerary Finder (`type: itinerary`) plus search chips.
+  - Add responsive CSS styling in `homepage.css` for `.vg-search-tool-banner--transit` and `.vg-search-tool-banner--itinerary`.
+  - Upgrade PWA Service Worker to `v1.3.0` precaching all 6 toolkits for complete offline resilience.
+  - Deploy to production VPS with 100% SHA-256 parity and submit 102 URLs to search engines via IndexNow.
+- Changes Implemented:
+  - WebApplication Schema.org Generation (`wordpress/wp-content/themes/vietnamguide-premium/inc/guide-seo.php`):
+    - Added `vg_get_page_webapplication_schema` generating Google-compliant `WebApplication` nodes with itemized feature lists and zero-cost offers for all 6 toolkits.
+    - Integrated into Rank Math JSON-LD graph filter (`rank_math/json_ld`).
+    - Added authoritative FAQs for `vietnam-first-trip-planning-checklist` and `itineraries`.
+  - AIO/GEO Directory Modernization (`wordpress/wp-content/themes/vietnamguide-premium/inc/guide-aio.php`):
+    - Updated Section 2 in both `/llms.txt` and `/llms-full.txt` to cover all 6 toolkits with canonical URLs and feature descriptions.
+  - Search Engine Precision & Decision Banners (`wordpress/wp-content/themes/vietnamguide-premium/search.php` & `homepage.css`):
+    - Added intent matching for Airport Transit (`transit`) and Itinerary Finder (`itinerary`).
+    - Added CSS classes `.vg-search-tool-banner--transit` and `.vg-search-tool-banner--itinerary` in `homepage.css`.
+    - Added search chips for "Airport Transit" and "Itinerary Finder".
+  - PWA Offline Service Worker v1.3.0 (`wordpress/sw.js`):
+    - Upgraded cache name to `vg-travel-handbook-v1.3.0` and precached `/plan/vietnam-airport-arrival-checklist/` and `/itineraries/`.
+  - Production VPS Deployment (`ops/deploy_theme_updates.py`):
+    - Deployed all updated files via SFTP with 100% SHA-256 parity and purged LiteSpeed Cache via `SIGUSR1`.
+  - Search Resubmission (`ops/submit_indexnow.py`):
+    - Resubmitted all 102 URLs to `api.indexnow.org` and `bing.com` (both HTTP 200 OK).
+- Verification Evidence:
+  - Live WebApplication Schema: 6/6 toolkits verified live with `WebApplication` JSON-LD schema nodes.
+  - Live Search Intent Banners: 6/6 queries (`airport`, `itinerary`, `packing`, `visa`, `budget`, `weather`) trigger corresponding interactive banners live.
+  - Live Service Worker v1.3.0: `https://vietnamguide.net/sw.js` verified with cache `vg-travel-handbook-v1.3.0` and all 6 toolkits precached.
+  - Live AIO Endpoints: `/llms.txt` and `/llms-full.txt` verified live with all 6 decision engines.
+  - Anti-AI Slop Quality Engine (`ops/tests/test-anti-ai-slop.py`): 34/34 tests passed.
+  - Interactive Shortcodes (`ops/tests/test-interactive-shortcodes.py`): 18/18 tests passed.
+  - Policy Cadence (`ops/tests/test-policy-cadence.py`): 11/11 tests passed (22.714s).
+  - Master CI/CD Suite (`ops/verify-all-gates.ps1`): All 5/5 quality gates passed.
+  - Public Route Verification (`ops/verify-guide-experience-public.ps1`): All 87 public routes passed with 100% DOM integrity.
+  - Core MU-Plugin Invariant: Hash `71b49033114e8007e5c19fb8ebc1a89e0d0dad88d0fe92dd381a28700db096ce` 100% preserved.

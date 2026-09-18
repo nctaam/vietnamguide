@@ -48,6 +48,24 @@ if ($q_clean !== '') {
             'url'         => home_url('/plan/vietnam-first-trip-planning-checklist/'),
             'cta'         => __('Open Packing Checklist', 'vietnamguide-premium'),
         ];
+    } elseif (str_contains($q_clean, 'airport') || str_contains($q_clean, 'flight') || str_contains($q_clean, 'arrival') || str_contains($q_clean, 'noi bai') || str_contains($q_clean, 'tan son nhat') || str_contains($q_clean, 'terminal') || str_contains($q_clean, 'taxi') || str_contains($q_clean, 'grab') || str_contains($q_clean, 'transfer') || str_contains($q_clean, 'transit')) {
+        $matched_toolkit = [
+            'type'        => 'transit',
+            'badge'       => __('Interactive Transit & Scam Shield', 'vietnamguide-premium'),
+            'title'       => __('Vietnam Gateway Airport Navigator & Scam Shield', 'vietnamguide-premium'),
+            'description' => __('Terminal-to-curb arrival navigation, verified Grab pickup bay island lanes, and metered taxi fare estimators for HAN, SGN, DAD, CXR, and PQC.', 'vietnamguide-premium'),
+            'url'         => home_url('/plan/vietnam-airport-arrival-checklist/'),
+            'cta'         => __('Open Airport Navigator', 'vietnamguide-premium'),
+        ];
+    } elseif (str_contains($q_clean, 'itinerary') || str_contains($q_clean, 'itineraries') || str_contains($q_clean, 'days') || str_contains($q_clean, 'schedule') || str_contains($q_clean, '7 days') || str_contains($q_clean, '10 days') || str_contains($q_clean, '14 days') || str_contains($q_clean, '21 days') || str_contains($q_clean, 'tour') || str_contains($q_clean, 'trip plan') || str_contains($q_clean, 'route planner')) {
+        $matched_toolkit = [
+            'type'        => 'itinerary',
+            'badge'       => __('Interactive Route Finder', 'vietnamguide-premium'),
+            'title'       => __('Vietnam Interactive Itinerary Finder & Route Matcher', 'vietnamguide-premium'),
+            'description' => __('Filter curated routes matching your travel style, trip duration (7d, 10d, 14d, 21d), and arrival gateway with zero wasted transit days.', 'vietnamguide-premium'),
+            'url'         => home_url('/itineraries/'),
+            'cta'         => __('Find Your Route', 'vietnamguide-premium'),
+        ];
     }
 }
 ?>
@@ -101,6 +119,8 @@ if ($q_clean !== '') {
                         <a href="<?php echo esc_url(add_query_arg('s', 'Budget', home_url('/'))); ?>" class="vg-search-chip">Budget &amp; Cost</a>
                         <a href="<?php echo esc_url(add_query_arg('s', 'Weather', home_url('/'))); ?>" class="vg-search-chip">Weather</a>
                         <a href="<?php echo esc_url(add_query_arg('s', 'Packing', home_url('/'))); ?>" class="vg-search-chip">Packing Checklist</a>
+                        <a href="<?php echo esc_url(add_query_arg('s', 'Airport', home_url('/'))); ?>" class="vg-search-chip">Airport Transit</a>
+                        <a href="<?php echo esc_url(add_query_arg('s', 'Itinerary', home_url('/'))); ?>" class="vg-search-chip">Itinerary Finder</a>
                         <a href="<?php echo esc_url(add_query_arg('s', '10 Days', home_url('/'))); ?>" class="vg-search-chip">10-Day Itinerary</a>
                     </div>
                 </div>

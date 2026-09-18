@@ -1408,6 +1408,9 @@ function vg_rich_travel_schema_filter($data, $context = null): array
     // 5. HowTo Node (if step-by-step process exists for this URI)
     $howto_node = vg_get_page_howto_schema($uri_path, $current_url);
 
+    // 6. WebApplication Node (if interactive toolkit exists for this URI)
+    $webapp_node = vg_get_page_webapplication_schema($uri_path, $current_url);
+
     // Append our rich Schema nodes to graph or schema array
     if (isset($data['@graph']) && is_array($data['@graph'])) {
         $data['@graph'][] = $dest_node;
@@ -1419,6 +1422,9 @@ function vg_rich_travel_schema_filter($data, $context = null): array
         if ($howto_node !== null) {
             $data['@graph'][] = $howto_node;
         }
+        if ($webapp_node !== null) {
+            $data['@graph'][] = $webapp_node;
+        }
     } else {
         $data['tourist_destination'] = $dest_node;
         $data['tourist_trip'] = $trip_node;
@@ -1428,6 +1434,9 @@ function vg_rich_travel_schema_filter($data, $context = null): array
         }
         if ($howto_node !== null) {
             $data['howto'] = $howto_node;
+        }
+        if ($webapp_node !== null) {
+            $data['web_application'] = $webapp_node;
         }
     }
 
@@ -1502,6 +1511,16 @@ function vg_get_page_faq_schema(string $uri_path, string $current_url): ?array
             ['q' => 'How do I travel directly from Ninh Binh to Ha Long Bay?', 'a' => 'Take a direct shared limousine shuttle bus via National Highway 10 and the Hai Phong Expressway. The journey takes 3.5 to 4 hours door-to-door and costs 300,000 to 450,000 VND (12 to 18 USD), avoiding the need to backtrack through Hanoi.'],
             ['q' => 'Can I make it from Ninh Binh to Ha Long Bay in time for a cruise boarding?', 'a' => 'Yes, if you depart Ninh Binh by 6:30 to 7:00 AM. Cruise boarding at Tuan Chau or Halong International Port typically closes between 11:30 AM and 12:00 PM. A private car offers maximum schedule security.'],
             ['q' => 'Is there a train between Ninh Binh and Ha Long Bay?', 'a' => 'No direct train connects Ninh Binh and Ha Long Bay. Rail travel requires transferring trains in Hanoi, which takes over 7 hours and is not recommended compared to direct express highway limousines.'],
+        ],
+        'vietnam-first-trip-planning-checklist' => [
+            ['q' => 'What travel documents are mandatory when entering Vietnam?', 'a' => 'You must present a valid passport with at least 6 months remaining validity from your entry date, an approved electronic visa (e-visa) printed copy or proof of visa exemption, and an onward or return flight ticket.'],
+            ['q' => 'Do electrical outlets in Vietnam require a plug adapter?', 'a' => 'Vietnam primarily uses Type A, Type C, and Type G electrical outlets running at 220V/50Hz. Most modern hotel sockets accept both flat two-prong US plugs (Type A) and round two-prong Euro plugs (Type C) without an adapter.'],
+            ['q' => 'Do I need prescription malaria medication for traveling in Vietnam?', 'a' => 'Major tourist cities and resort destinations (Hanoi, HCMC, Da Nang, Hoi An, Nha Trang, Phu Quoc) have negligible malaria risk. Antimalarial prophylaxis is generally only considered for deep remote jungle trekking along border zones. Dengue fever prevention via DEET insect repellent is the primary health priority.'],
+        ],
+        'itineraries' => [
+            ['q' => 'How many days do you need for a comprehensive first trip to Vietnam?', 'a' => 'A 10 to 14-day trip is the ideal duration for a first visit. Ten days allows you to explore the classic highlights (Hanoi, Ha Long Bay, Hoi An, and Ho Chi Minh City). Fourteen days provides enough breathing room to add Ninh Binh, Hue, or the Mekong Delta with realistic transit pacing.'],
+            ['q' => 'Is it better to travel North to South or South to North in Vietnam?', 'a' => 'Both directions work equally well because domestic flights and overnight sleeper trains connect all major hubs. Starting in Hanoi (North) offers an immediate immersion in historic culture and karst landscapes, finishing with relaxed tropical energy in the South.'],
+            ['q' => 'What is the most time-efficient way to travel between regions in Vietnam?', 'a' => 'Domestic flights on Vietnam Airlines or Vietjet between Hanoi, Da Nang, and Ho Chi Minh City take only 1 hour 20 minutes each, saving entire days compared to 16-to-30-hour overland bus or train journeys across the 1,600 km length of the country.'],
         ],
     ];
 
@@ -1612,6 +1631,118 @@ function vg_get_page_howto_schema(string $uri_path, string $current_url): ?array
         'description' => $data['description'],
         'isPartOf'    => ['@id' => "{$current_url}#webpage"],
         'step'        => $steps,
+    ];
+}
+
+/**
+ * Authoritative WebApplication Schema.org generator for interactive travel toolkits.
+ */
+function vg_get_page_webapplication_schema(string $uri_path, string $current_url): ?array
+{
+    $slug = trim(basename($uri_path), '/');
+    $webapp_registry = [
+        'vietnam-travel-cost' => [
+            'name'                => 'Vietnam Travel Cost Calculator',
+            'description'         => 'Interactive real-time budget calculator for Vietnam travel with 5-currency conversion (USD, VND, EUR, GBP, AUD) across backpacker, flashpacker, mid-range, and luxury tiers for 10+ destinations.',
+            'applicationCategory' => 'TravelApplication',
+            'featureList'         => [
+                '5-currency real-time exchange conversion (USD, VND, EUR, GBP, AUD)',
+                'Itemized expense breakdown for accommodation, transport, meals, and activities',
+                '4 traveler spending tiers (Backpacker, Flashpacker, Mid-Range, Luxury)',
+                '1-click formatted clipboard summary export',
+                'URL state persistence and local storage synchronization',
+            ],
+        ],
+        'vietnam-evisa' => [
+            'name'                => 'Vietnam Visa Requirement & Exemption Checker',
+            'description'         => 'Interactive nationality-based visa requirements, 45-day unilateral exemption rules, and official 90-day e-visa validation engine for international travelers.',
+            'applicationCategory' => 'TravelApplication',
+            'featureList'         => [
+                'Instant nationality lookup across 80+ countries',
+                '45-day unilateral exemption vs 30-day bilateral exemption status indicator',
+                '6-month passport validity expiration calculator',
+                '33 official international entry port gate inspector',
+                'Official government immigration portal link shield',
+            ],
+        ],
+        'best-time-to-visit-vietnam' => [
+            'name'                => 'Vietnam Weather & Regional Season Matrix',
+            'description'         => 'Interactive month-by-month regional climate matrix across North, Central, and South Vietnam with monsoon and route-fit indicators.',
+            'applicationCategory' => 'TravelApplication',
+            'featureList'         => [
+                '12-month climate navigator across Northern, Central, and Southern Vietnam',
+                'Regional rainfall, temperature, and sea swimming conditions',
+                'Mountain elevation temperature drop calculator',
+                'Seasonal weather risk radar and route pivot alternatives',
+            ],
+        ],
+        'vietnam-first-trip-planning-checklist' => [
+            'name'                => 'Vietnam Route Packing & Preparation Checklist',
+            'description'         => 'Interactive 24-item travel preparation checklist covering official documents, electronics, clothing, medical essentials, and motorbike gear with browser state persistence.',
+            'applicationCategory' => 'TravelApplication',
+            'featureList'         => [
+                '24 curated logistics and packing items with contextual explanations',
+                'Category filters for Documents, Electronics, Clothing, Medical, and Motorbike gear',
+                'Progress counter with completion status badge',
+                'Browser localStorage state persistence across sessions',
+                'Reset and completion management controls',
+            ],
+        ],
+        'vietnam-airport-arrival-checklist' => [
+            'name'                => 'Vietnam Gateway Airport Navigator & Scam Shield',
+            'description'         => 'Interactive terminal transit guide, verified Grab pickup bay locators, and metered taxi fare estimators for HAN, SGN, DAD, CXR, and PQC.',
+            'applicationCategory' => 'TravelApplication',
+            'featureList'         => [
+                'Terminal-to-curb arrival navigation for 5 international airports (HAN, SGN, DAD, CXR, PQC)',
+                'Verified Grab pickup island lanes and driver verification protocols',
+                'Official metered taxi fleet brands and dispatch queue locations',
+                'Zone-based transit cost and duration estimator to central city districts',
+                'Common airport scam shields and arrival cash ATM guide',
+            ],
+        ],
+        'itineraries' => [
+            'name'                => 'Vietnam Interactive Itinerary Finder & Route Matcher',
+            'description'         => 'Filterable route catalog matching traveler styles, duration (7d, 10d, 14d, 21d), and arrival gateways with zero wasted transit days.',
+            'applicationCategory' => 'TravelApplication',
+            'featureList'         => [
+                'Duration filters for 7-day, 10-day, 14-day, and 21-day routes',
+                'Travel pace and style filters (Classic, Slow Travel, Adventure, Beach)',
+                'Gateway arrival filters for Hanoi and Ho Chi Minh City',
+                'Step-by-step route highlights and seasonal booking recommendations',
+            ],
+        ],
+    ];
+
+    if (! isset($webapp_registry[$slug])) {
+        return null;
+    }
+
+    $app = $webapp_registry[$slug];
+
+    return [
+        '@type'               => 'WebApplication',
+        '@id'                 => "{$current_url}#webapp",
+        'name'                => $app['name'],
+        'description'         => $app['description'],
+        'url'                 => $current_url,
+        'applicationCategory' => $app['applicationCategory'],
+        'operatingSystem'     => 'All',
+        'browserRequirements' => 'Requires JavaScript. Supports all modern browsers.',
+        'offers'              => [
+            '@type'         => 'Offer',
+            'price'         => '0',
+            'priceCurrency' => 'USD',
+            'category'      => 'Free Travel Planning Software',
+        ],
+        'featureList'         => $app['featureList'],
+        'provider'            => [
+            '@type' => 'Organization',
+            'name'  => 'VietnamGuide.net',
+            'url'   => function_exists('home_url') ? untrailingslashit(home_url()) . '/' : 'https://vietnamguide.net/',
+        ],
+        'isPartOf'            => [
+            '@id' => "{$current_url}#webpage",
+        ],
     ];
 }
 
