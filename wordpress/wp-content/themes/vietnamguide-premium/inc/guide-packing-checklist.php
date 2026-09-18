@@ -337,6 +337,20 @@ function vg_render_packing_checklist(array $attributes = []): string
             <?php endforeach; ?>
         </ul>
 
+        <!-- Viral Social & Deep-Link Sharing Bar -->
+        <div class="vg-tool-share-bar">
+            <span class="vg-share-label"><?php esc_html_e('Share Checklist:', 'vietnamguide-premium'); ?></span>
+            <button type="button" class="vg-btn-share" id="vg-checklist-share-link">
+                <span>🔗 <?php esc_html_e('Copy Checklist Link', 'vietnamguide-premium'); ?></span>
+            </button>
+            <a href="#" class="vg-btn-share vg-btn-share--wa" id="vg-checklist-share-wa" target="_blank" rel="noopener noreferrer">
+                <span>💬 WhatsApp</span>
+            </a>
+            <a href="#" class="vg-btn-share vg-btn-share--tg" id="vg-checklist-share-tg" target="_blank" rel="noopener noreferrer">
+                <span>✈️ Telegram</span>
+            </a>
+        </div>
+
         <div class="vg-checklist-synergy-wrap vg-tool-synergy-bar">
             <div class="vg-checklist-synergy-title">
                 <?php esc_html_e('Connected Vietnam Trip Planning Toolkits:', 'vietnamguide-premium'); ?>
@@ -750,6 +764,14 @@ function vg_render_packing_checklist(array $attributes = []): string
                 if (announce && liveAnnouncer) {
                     liveAnnouncer.textContent = packedCount + ' of ' + totalCount + ' items packed, ' + pct + ' percent complete.';
                 }
+
+                // Update WhatsApp and Telegram share links dynamically
+                var shareUrl = window.location.href;
+                var shareMsg = 'Vietnam Route Packing Checklist (' + packedCount + ' of ' + totalCount + ' packed, ' + pct + '%): ' + shareUrl;
+                var waBtn = document.getElementById('vg-checklist-share-wa');
+                var tgBtn = document.getElementById('vg-checklist-share-tg');
+                if (waBtn) waBtn.href = 'https://api.whatsapp.com/send?text=' + encodeURIComponent(shareMsg);
+                if (tgBtn) tgBtn.href = 'https://t.me/share/url?url=' + encodeURIComponent(shareUrl) + '&text=' + encodeURIComponent(shareMsg);
             }
 
             function saveState() {
@@ -772,6 +794,14 @@ function vg_render_packing_checklist(array $attributes = []): string
                     }
                     saveState();
                     updateProgress(true);
+
+                    // Telemetry dispatch
+                    if (typeof window.vgTrack === 'function') {
+                        window.vgTrack('vg_checklist_toggle', {
+                            item_id: id,
+                            packed: box.checked
+                        });
+                    }
                 });
             });
 
@@ -844,6 +874,56 @@ function vg_render_packing_checklist(array $attributes = []): string
             if (printBtn) {
                 printBtn.addEventListener('click', function() {
                     window.print();
+                });
+            }
+
+            function showToast(msg) {
+                var toast = document.getElementById('vg-global-toast');
+                if (!toast) {
+                    toast = document.createElement('div');
+                    toast.id = 'vg-global-toast';
+                    toast.className = 'vg-toast';
+                    document.body.appendChild(toast);
+                }
+                toast.textContent = msg;
+                toast.classList.add('is-active');
+                setTimeout(function () { toast.classList.remove('is-active'); }, 3000);
+            }
+
+            var shareLinkBtn = document.getElementById('vg-checklist-share-link');
+            if (shareLinkBtn) {
+                shareLinkBtn.addEventListener('click', function () {
+                    var url = window.location.href;
+                    if (navigator.clipboard && navigator.clipboard.writeText) {
+                        navigator.clipboard.writeText(url).then(function () {
+                            showToast('✓ Link copied to clipboard - Share with your travel companion!');
+                            if (typeof window.vgTrack === 'function') {
+                                window.vgTrack('vg_share_plan', { tool: 'packing_checklist', channel: 'copy_link' });
+                            }
+                        }).catch(function () {
+                            prompt('Copy your link:', url);
+                        });
+                    } else {
+                        prompt('Copy your link:', url);
+                    }
+                });
+            }
+
+            var waBtnEl = document.getElementById('vg-checklist-share-wa');
+            if (waBtnEl) {
+                waBtnEl.addEventListener('click', function () {
+                    if (typeof window.vgTrack === 'function') {
+                        window.vgTrack('vg_share_plan', { tool: 'packing_checklist', channel: 'whatsapp' });
+                    }
+                });
+            }
+
+            var tgBtnEl = document.getElementById('vg-checklist-share-tg');
+            if (tgBtnEl) {
+                tgBtnEl.addEventListener('click', function () {
+                    if (typeof window.vgTrack === 'function') {
+                        window.vgTrack('vg_share_plan', { tool: 'packing_checklist', channel: 'telegram' });
+                    }
                 });
             }
 

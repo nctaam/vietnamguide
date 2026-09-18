@@ -62,6 +62,8 @@ DEPLOY_FILES = [
      'wp-content/themes/vietnamguide-premium/inc/guide-aio.php'),
     ('wordpress/wp-content/themes/vietnamguide-premium/inc/guide-routing.php',
      'wp-content/themes/vietnamguide-premium/inc/guide-routing.php'),
+    ('wordpress/wp-content/themes/vietnamguide-premium/inc/guide-analytics.php',
+     'wp-content/themes/vietnamguide-premium/inc/guide-analytics.php'),
 ]
 
 def get_sha256(filepath):
@@ -108,7 +110,7 @@ def deploy():
     ssh2.set_missing_host_key_policy(paramiko.AutoAddPolicy())
     ssh2.connect(SSH_HOST, port=SSH_PORT, username=SSH_USER, pkey=pkey, timeout=15)
 
-    purge_cmd = "rm -rf /tmp/lshttpd/swap/* /usr/local/lsws/cachedata/* 2>/dev/null; /usr/local/lsws/bin/lswsctrl reload"
+    purge_cmd = "rm -rf /tmp/lshttpd/swap/* /usr/local/lsws/cachedata/* /usr/local/lsws/vietnamguide.net/luucache/* 2>/dev/null; /usr/local/lsws/bin/lswsctrl restart"
     stdin, stdout, stderr = ssh2.exec_command(purge_cmd)
     out = stdout.read().decode().strip()
     err = stderr.read().decode().strip()

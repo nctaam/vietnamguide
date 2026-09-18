@@ -223,6 +223,19 @@ function vg_render_cost_calculator_html(): string
                         <button type="button" class="vg-calc-btn-reset" id="vg-calc-reset-btn"><?php esc_html_e('Reset', 'vietnamguide-premium'); ?></button>
                     </div>
 
+                    <div class="vg-tool-share-bar">
+                        <span class="vg-share-label"><?php esc_html_e('Share Plan:', 'vietnamguide-premium'); ?></span>
+                        <button type="button" class="vg-btn-share" id="vg-calc-share-link">
+                            <span>🔗 <?php esc_html_e('Copy Link', 'vietnamguide-premium'); ?></span>
+                        </button>
+                        <a href="#" class="vg-btn-share vg-btn-share--wa" id="vg-calc-share-wa" target="_blank" rel="noopener noreferrer">
+                            <span>💬 WhatsApp</span>
+                        </a>
+                        <a href="#" class="vg-btn-share vg-btn-share--tg" id="vg-calc-share-tg" target="_blank" rel="noopener noreferrer">
+                            <span>✈️ Telegram</span>
+                        </a>
+                    </div>
+
                     <div class="vg-calc-next-steps vg-tool-synergy-bar">
                         <div class="vg-calc-ns-title"><?php esc_html_e('Next Steps for Your Vietnam Journey', 'vietnamguide-premium'); ?></div>
                         <div class="vg-calc-ns-grid">
@@ -456,6 +469,26 @@ function vg_render_cost_calculator_html(): string
             setSafeStorage('vg_user_duration', state.days);
             setSafeStorage('vg_user_currency', state.currency);
             syncUrlParams({ days: state.days, currency: state.currency, tier: state.style, party: state.party });
+
+            // Update WhatsApp and Telegram share links dynamically
+            var shareUrl = window.location.href;
+            var rLabel = (RATES[state.style] || RATES.midrange).label;
+            var shareMsg = 'Vietnam Travel Budget: ' + formatCurrency(calc.totalUSD, cur) + ' for ' + state.party + (state.party === 1 ? ' solo traveler' : ' travelers') + ' (' + state.days + ' days, ' + rLabel + '). Full breakdown: ' + shareUrl;
+            var waBtn = document.getElementById('vg-calc-share-wa');
+            var tgBtn = document.getElementById('vg-calc-share-tg');
+            if (waBtn) waBtn.href = 'https://api.whatsapp.com/send?text=' + encodeURIComponent(shareMsg);
+            if (tgBtn) tgBtn.href = 'https://t.me/share/url?url=' + encodeURIComponent(shareUrl) + '&text=' + encodeURIComponent(shareMsg);
+
+            // Telemetry dispatch
+            if (typeof window.vgTrack === 'function') {
+                window.vgTrack('vg_calc_budget', {
+                    days: state.days,
+                    style: state.style,
+                    party: state.party,
+                    currency: state.currency,
+                    total_usd: Math.round(calc.totalUSD)
+                });
+            }
         }
 
         // Resilient safe storage helpers with localStorage fallback
@@ -710,27 +743,54 @@ function vg_render_cost_calculator_html(): string
                 });
             }
 
-            function fallbackCopy(text) {
-                var textArea = document.createElement('textarea');
-                textArea.value = text;
-                textArea.style.position = 'fixed';
-                textArea.style.opacity = '0';
-                document.body.appendChild(textArea);
-                textArea.focus();
-                textArea.select();
-                try {
-                    document.execCommand('copy');
-                    if (copyBtn) {
-                        var originalHtml = copyBtn.innerHTML;
-                        copyBtn.classList.add('is-copied');
-                        copyBtn.innerHTML = '<span>Copied to Clipboard!</span>';
-                        setTimeout(function () {
-                            copyBtn.innerHTML = originalHtml;
-                            copyBtn.classList.remove('is-copied');
-                        }, 2200);
+            function showToast(msg) {
+                var toast = document.getElementById('vg-global-toast');
+                if (!toast) {
+                    toast = document.createElement('div');
+                    toast.id = 'vg-global-toast';
+                    toast.className = 'vg-toast';
+                    document.body.appendChild(toast);
+                }
+                toast.textContent = msg;
+                toast.classList.add('is-active');
+                setTimeout(function () { toast.classList.remove('is-active'); }, 3000);
+            }
+
+            var shareLinkBtn = document.getElementById('vg-calc-share-link');
+            if (shareLinkBtn) {
+                shareLinkBtn.addEventListener('click', function () {
+                    var url = window.location.href;
+                    if (navigator.clipboard && navigator.clipboard.writeText) {
+                        navigator.clipboard.writeText(url).then(function () {
+                            showToast('✓ Link copied to clipboard - Share with your travel companion!');
+                            if (typeof window.vgTrack === 'function') {
+                                window.vgTrack('vg_share_plan', { tool: 'cost_calculator', channel: 'copy_link' });
+                            }
+                        }).catch(function () {
+                            fallbackCopy(url);
+                        });
+                    } else {
+                        fallbackCopy(url);
                     }
-                } catch (err) {}
-                document.body.removeChild(textArea);
+                });
+            }
+
+            var waBtnEl = document.getElementById('vg-calc-share-wa');
+            if (waBtnEl) {
+                waBtnEl.addEventListener('click', function () {
+                    if (typeof window.vgTrack === 'function') {
+                        window.vgTrack('vg_share_plan', { tool: 'cost_calculator', channel: 'whatsapp' });
+                    }
+                });
+            }
+
+            var tgBtnEl = document.getElementById('vg-calc-share-tg');
+            if (tgBtnEl) {
+                tgBtnEl.addEventListener('click', function () {
+                    if (typeof window.vgTrack === 'function') {
+                        window.vgTrack('vg_share_plan', { tool: 'cost_calculator', channel: 'telegram' });
+                    }
+                });
             }
 
             var resetBtn = document.getElementById('vg-calc-reset-btn');

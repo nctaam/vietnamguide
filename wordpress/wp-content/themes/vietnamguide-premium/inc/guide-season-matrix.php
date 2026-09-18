@@ -1031,6 +1031,21 @@ function vg_render_season_matrix_html(): string
                 <span class="vg-legend-item"><span class="vg-heat-cell vg-heat-mod">Mod</span> Moderate Friction (Chilly high peaks or brief afternoon rain)</span>
                 <span class="vg-legend-item"><span class="vg-heat-cell vg-heat-high">Flood</span> High Risk / Pivot (Heavy monsoon flooding / rough seas)</span>
             </div>
+
+        <!-- Viral Social & Deep-Link Sharing Bar -->
+        <div class="vg-tool-share-bar">
+            <span class="vg-share-label"><?php esc_html_e('Share Climate Guide:', 'vietnamguide-premium'); ?></span>
+            <button type="button" class="vg-btn-share" id="vg-sm-share-link">
+                <span>🔗 <?php esc_html_e('Copy Month Link', 'vietnamguide-premium'); ?></span>
+            </button>
+            <a href="#" class="vg-btn-share vg-btn-share--wa" id="vg-sm-share-wa" target="_blank" rel="noopener noreferrer">
+                <span>💬 WhatsApp</span>
+            </a>
+            <a href="#" class="vg-btn-share vg-btn-share--tg" id="vg-sm-share-tg" target="_blank" rel="noopener noreferrer">
+                <span>✈️ Telegram</span>
+            </a>
+        </div>
+
         <div class="vg-sm-bridge vg-tool-synergy-bar">
             <div class="vg-sm-bridge-head">
                 <span class="vg-sm-bridge-icon">🧳</span>
@@ -1197,6 +1212,22 @@ function vg_render_season_matrix_html(): string
             var ariaEl = document.getElementById('vg-season-aria-status');
             if (ariaEl) {
                 ariaEl.textContent = 'Viewing Vietnam weather intelligence for ' + m.name + '. ' + m.verdict;
+            }
+
+            // Update WhatsApp and Telegram share links dynamically
+            var shareUrl = window.location.href;
+            var shareMsg = 'Vietnam Weather & Climate Briefing for ' + m.name + ' (' + m.season_label + '): ' + m.verdict + ' Full matrix: ' + shareUrl;
+            var waBtn = document.getElementById('vg-sm-share-wa');
+            var tgBtn = document.getElementById('vg-sm-share-tg');
+            if (waBtn) waBtn.href = 'https://api.whatsapp.com/send?text=' + encodeURIComponent(shareMsg);
+            if (tgBtn) tgBtn.href = 'https://t.me/share/url?url=' + encodeURIComponent(shareUrl) + '&text=' + encodeURIComponent(shareMsg);
+
+            // Telemetry dispatch
+            if (typeof window.vgTrack === 'function') {
+                window.vgTrack('vg_weather_select', {
+                    month: state.currentMonth,
+                    season: m.season_label
+                });
             }
         }
 
@@ -1466,6 +1497,71 @@ function vg_render_season_matrix_html(): string
                 printBtn.addEventListener('click', function () {
                     window.print();
                 });
+            }
+
+            function showToast(msg) {
+                var toast = document.getElementById('vg-global-toast');
+                if (!toast) {
+                    toast = document.createElement('div');
+                    toast.id = 'vg-global-toast';
+                    toast.className = 'vg-toast';
+                    document.body.appendChild(toast);
+                }
+                toast.textContent = msg;
+                toast.classList.add('is-active');
+                setTimeout(function () { toast.classList.remove('is-active'); }, 3000);
+            }
+
+            var shareLinkBtn = document.getElementById('vg-sm-share-link');
+            if (shareLinkBtn) {
+                shareLinkBtn.addEventListener('click', function () {
+                    var url = window.location.href;
+                    if (navigator.clipboard && navigator.clipboard.writeText) {
+                        navigator.clipboard.writeText(url).then(function () {
+                            showToast('✓ Link copied to clipboard - Share with your travel companion!');
+                            if (typeof window.vgTrack === 'function') {
+                                window.vgTrack('vg_share_plan', { tool: 'season_matrix', channel: 'copy_link' });
+                            }
+                        }).catch(function () {
+                            fallbackCopy(url);
+                        });
+                    } else {
+                        fallbackCopy(url);
+                    }
+                });
+            }
+
+            var waBtnEl = document.getElementById('vg-sm-share-wa');
+            if (waBtnEl) {
+                waBtnEl.addEventListener('click', function () {
+                    if (typeof window.vgTrack === 'function') {
+                        window.vgTrack('vg_share_plan', { tool: 'season_matrix', channel: 'whatsapp' });
+                    }
+                });
+            }
+
+            var tgBtnEl = document.getElementById('vg-sm-share-tg');
+            if (tgBtnEl) {
+                tgBtnEl.addEventListener('click', function () {
+                    if (typeof window.vgTrack === 'function') {
+                        window.vgTrack('vg_share_plan', { tool: 'season_matrix', channel: 'telegram' });
+                    }
+                });
+            }
+
+            function fallbackCopy(text) {
+                var textArea = document.createElement('textarea');
+                textArea.value = text;
+                textArea.style.position = 'fixed';
+                textArea.style.opacity = '0';
+                document.body.appendChild(textArea);
+                textArea.focus();
+                textArea.select();
+                try {
+                    document.execCommand('copy');
+                    showToast('✓ Link copied to clipboard!');
+                } catch (err) {}
+                document.body.removeChild(textArea);
             }
 
             // Reset Checklist Action

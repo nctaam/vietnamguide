@@ -287,6 +287,20 @@ function vg_render_visa_checker_html(): string
                 </div>
             </div>
 
+            <!-- Viral Social & Deep-Link Sharing Bar -->
+            <div class="vg-tool-share-bar">
+                <span class="vg-share-label"><?php esc_html_e('Share Visa Advice:', 'vietnamguide-premium'); ?></span>
+                <button type="button" class="vg-btn-share" id="vg-vc-share-link">
+                    <span>🔗 <?php esc_html_e('Copy Link', 'vietnamguide-premium'); ?></span>
+                </button>
+                <a href="#" class="vg-btn-share vg-btn-share--wa" id="vg-vc-share-wa" target="_blank" rel="noopener noreferrer">
+                    <span>💬 WhatsApp</span>
+                </a>
+                <a href="#" class="vg-btn-share vg-btn-share--tg" id="vg-vc-share-tg" target="_blank" rel="noopener noreferrer">
+                    <span>✈️ Telegram</span>
+                </a>
+            </div>
+
             <!-- Detailed Grid: Rules, Checklist, Warnings -->
             <div class="vg-vc-details-grid">
                 <!-- Card 1: Statutory Entry Requirements -->
@@ -635,6 +649,24 @@ function vg_render_visa_checker_html(): string
             setSafeStorage('vg_user_duration', currentDuration);
             syncUrlParams({ nationality: currentCountry, days: currentDuration });
 
+            // Update WhatsApp and Telegram share links dynamically
+            const shareUrl = window.location.href;
+            const shareMsg = `Vietnam Entry & Visa Requirements for ${countryInfo.name} (${currentDuration} days): ${statusText.textContent}. Fee: ${costAmount.textContent}. Full requirements: ${shareUrl}`;
+            const waBtn = document.getElementById('vg-vc-share-wa');
+            const tgBtn = document.getElementById('vg-vc-share-tg');
+            if (waBtn) waBtn.href = 'https://api.whatsapp.com/send?text=' + encodeURIComponent(shareMsg);
+            if (tgBtn) tgBtn.href = 'https://t.me/share/url?url=' + encodeURIComponent(shareUrl) + '&text=' + encodeURIComponent(shareMsg);
+
+            // Telemetry dispatch
+            if (typeof window.vgTrack === 'function') {
+                window.vgTrack('vg_visa_check', {
+                    country: currentCountry,
+                    duration: currentDuration,
+                    entry: currentEntry,
+                    is_exempt: isExempt
+                });
+            }
+
             var ariaStatus = document.getElementById('vg-vc-aria-status');
             if (ariaStatus) {
                 ariaStatus.textContent = 'Visa requirements updated: ' + statusText.textContent + ' for ' + countryInfo.name + '. Estimated fee: ' + costAmount.textContent + '.';
@@ -772,6 +804,56 @@ function vg_render_visa_checker_html(): string
                 alert('Could not auto-copy. Please manually copy the requirements.');
             }
             document.body.removeChild(ta);
+        }
+
+        function showToast(msg) {
+            let toast = document.getElementById('vg-global-toast');
+            if (!toast) {
+                toast = document.createElement('div');
+                toast.id = 'vg-global-toast';
+                toast.className = 'vg-toast';
+                document.body.appendChild(toast);
+            }
+            toast.textContent = msg;
+            toast.classList.add('is-active');
+            setTimeout(() => { toast.classList.remove('is-active'); }, 3000);
+        }
+
+        const shareLinkBtn = document.getElementById('vg-vc-share-link');
+        if (shareLinkBtn) {
+            shareLinkBtn.addEventListener('click', function () {
+                const url = window.location.href;
+                if (navigator.clipboard && navigator.clipboard.writeText) {
+                    navigator.clipboard.writeText(url).then(() => {
+                        showToast('✓ Link copied to clipboard - Share with your travel companion!');
+                        if (typeof window.vgTrack === 'function') {
+                            window.vgTrack('vg_share_plan', { tool: 'visa_checker', channel: 'copy_link' });
+                        }
+                    }).catch(() => {
+                        fallbackCopy(url);
+                    });
+                } else {
+                    fallbackCopy(url);
+                }
+            });
+        }
+
+        const waBtnEl = document.getElementById('vg-vc-share-wa');
+        if (waBtnEl) {
+            waBtnEl.addEventListener('click', function () {
+                if (typeof window.vgTrack === 'function') {
+                    window.vgTrack('vg_share_plan', { tool: 'visa_checker', channel: 'whatsapp' });
+                }
+            });
+        }
+
+        const tgBtnEl = document.getElementById('vg-vc-share-tg');
+        if (tgBtnEl) {
+            tgBtnEl.addEventListener('click', function () {
+                if (typeof window.vgTrack === 'function') {
+                    window.vgTrack('vg_share_plan', { tool: 'visa_checker', channel: 'telegram' });
+                }
+            });
         }
 
         // Storage helper with localStorage fallback

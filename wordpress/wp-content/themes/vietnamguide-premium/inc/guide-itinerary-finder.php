@@ -322,6 +322,20 @@ function vg_render_itinerary_finder_html(): string
             </div>
         </div>
 
+        <!-- Viral Social & Deep-Link Sharing Bar -->
+        <div class="vg-tool-share-bar">
+            <span class="vg-share-label"><?php esc_html_e('Share Route:', 'vietnamguide-premium'); ?></span>
+            <button type="button" class="vg-btn-share" id="vg-finder-share-link">
+                <span>🔗 <?php esc_html_e('Copy Route Link', 'vietnamguide-premium'); ?></span>
+            </button>
+            <a href="#" class="vg-btn-share vg-btn-share--wa" id="vg-finder-share-wa" target="_blank" rel="noopener noreferrer">
+                <span>💬 WhatsApp</span>
+            </a>
+            <a href="#" class="vg-btn-share vg-btn-share--tg" id="vg-finder-share-tg" target="_blank" rel="noopener noreferrer">
+                <span>✈️ Telegram</span>
+            </a>
+        </div>
+
         <div class="vg-finder-toolkit vg-tool-synergy-bar">
             <div class="vg-finder-tk-title"><?php esc_html_e('Essential Trip Planning Toolkit', 'vietnamguide-premium'); ?></div>
             <div class="vg-finder-tk-grid">
@@ -504,6 +518,24 @@ function vg_render_itinerary_finder_html(): string
 
                 // Sync URL query parameters
                 syncUrlParams({ duration: filters.duration, style: filters.style, gateway: filters.gateway });
+
+                // Update WhatsApp and Telegram share links dynamically
+                var shareUrl = window.location.href;
+                var shareMsg = 'Vietnam Curated Travel Itinerary (' + (visibleCount > 0 ? visibleCount + ' route matches' : 'Curated routes') + '): ' + shareUrl;
+                var waBtn = document.getElementById('vg-finder-share-wa');
+                var tgBtn = document.getElementById('vg-finder-share-tg');
+                if (waBtn) waBtn.href = 'https://api.whatsapp.com/send?text=' + encodeURIComponent(shareMsg);
+                if (tgBtn) tgBtn.href = 'https://t.me/share/url?url=' + encodeURIComponent(shareUrl) + '&text=' + encodeURIComponent(shareMsg);
+
+                // Telemetry dispatch
+                if (typeof window.vgTrack === 'function') {
+                    window.vgTrack('vg_itinerary_filter', {
+                        duration: filters.duration,
+                        style: filters.style,
+                        gateway: filters.gateway,
+                        results: visibleCount
+                    });
+                }
             }
 
             function resetAll() {
@@ -568,6 +600,71 @@ function vg_render_itinerary_finder_html(): string
             }
             if (emptyResetBtn) {
                 emptyResetBtn.addEventListener('click', resetAll);
+            }
+
+            function showToast(msg) {
+                var toast = document.getElementById('vg-global-toast');
+                if (!toast) {
+                    toast = document.createElement('div');
+                    toast.id = 'vg-global-toast';
+                    toast.className = 'vg-toast';
+                    document.body.appendChild(toast);
+                }
+                toast.textContent = msg;
+                toast.classList.add('is-active');
+                setTimeout(function () { toast.classList.remove('is-active'); }, 3000);
+            }
+
+            var shareLinkBtn = document.getElementById('vg-finder-share-link');
+            if (shareLinkBtn) {
+                shareLinkBtn.addEventListener('click', function () {
+                    var url = window.location.href;
+                    if (navigator.clipboard && navigator.clipboard.writeText) {
+                        navigator.clipboard.writeText(url).then(function () {
+                            showToast('✓ Link copied to clipboard - Share with your travel companion!');
+                            if (typeof window.vgTrack === 'function') {
+                                window.vgTrack('vg_share_plan', { tool: 'itinerary_finder', channel: 'copy_link' });
+                            }
+                        }).catch(function () {
+                            fallbackCopy(url);
+                        });
+                    } else {
+                        fallbackCopy(url);
+                    }
+                });
+            }
+
+            var waBtnEl = document.getElementById('vg-finder-share-wa');
+            if (waBtnEl) {
+                waBtnEl.addEventListener('click', function () {
+                    if (typeof window.vgTrack === 'function') {
+                        window.vgTrack('vg_share_plan', { tool: 'itinerary_finder', channel: 'whatsapp' });
+                    }
+                });
+            }
+
+            var tgBtnEl = document.getElementById('vg-finder-share-tg');
+            if (tgBtnEl) {
+                tgBtnEl.addEventListener('click', function () {
+                    if (typeof window.vgTrack === 'function') {
+                        window.vgTrack('vg_share_plan', { tool: 'itinerary_finder', channel: 'telegram' });
+                    }
+                });
+            }
+
+            function fallbackCopy(text) {
+                var textArea = document.createElement('textarea');
+                textArea.value = text;
+                textArea.style.position = 'fixed';
+                textArea.style.opacity = '0';
+                document.body.appendChild(textArea);
+                textArea.focus();
+                textArea.select();
+                try {
+                    document.execCommand('copy');
+                    showToast('✓ Link copied to clipboard!');
+                } catch (err) {}
+                document.body.removeChild(textArea);
             }
 
             syncPillUI();

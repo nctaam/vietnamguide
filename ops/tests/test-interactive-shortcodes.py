@@ -287,8 +287,56 @@ class TestInteractiveShortcodes(unittest.TestCase):
         self.assertIn('USD_TO_AUD', calc_content)
         self.assertIn('formatCurrency', calc_content)
 
+    def test_viral_social_share_bars(self):
+        """All 6 interactive toolkits must feature a viral share bar with WhatsApp, Telegram, and Copy Link."""
+        for key, content in self.contents.items():
+            self.assertIn(
+                'vg-tool-share-bar',
+                content,
+                f"Toolkit {key} must contain a .vg-tool-share-bar container."
+            )
+            self.assertIn(
+                'vg-btn-share--wa',
+                content,
+                f"Toolkit {key} must feature a 1-click WhatsApp share button."
+            )
+            self.assertIn(
+                'vg-btn-share--tg',
+                content,
+                f"Toolkit {key} must feature a 1-click Telegram share button."
+            )
+            self.assertIn(
+                'showToast',
+                content,
+                f"Toolkit {key} must implement interactive toast feedback on link copy."
+            )
+
+    def test_telemetry_vgtrack_integration(self):
+        """All 6 interactive toolkits must dispatch telemetry events via window.vgTrack."""
+        expected_events = {
+            'cost_calculator': 'vg_calc_budget',
+            'visa_checker': 'vg_visa_check',
+            'season_matrix': 'vg_weather_select',
+            'airport_navigator': 'vg_airport_view',
+            'itinerary_finder': 'vg_itinerary_filter',
+            'packing_checklist': 'vg_checklist_toggle',
+        }
+        for key, event_name in expected_events.items():
+            self.assertIn(
+                event_name,
+                self.contents[key],
+                f"Toolkit {key} must dispatch telemetry event '{event_name}'."
+            )
+
+    def test_rss_feed_page_inclusion(self):
+        """guide-seo.php must filter main RSS query to include 'page' post type."""
+        with open(SEO_FILE, 'r', encoding='utf-8') as f:
+            seo_code = f.read()
+        self.assertIn("['page', 'post']", seo_code, "Main RSS query must include pages and posts.")
+
 
 if __name__ == '__main__':
     unittest.main()
+
 
 

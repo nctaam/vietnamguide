@@ -97,7 +97,13 @@ add_action('wp_head', static function (): void {
         '<link rel="icon" type="image/svg+xml" href="' . esc_url($themeUrl . '/assets/images/vg-icon.svg') . '">',
         '<link rel="preconnect" href="https://upload.wikimedia.org" crossorigin>',
         '<link rel="dns-prefetch" href="https://upload.wikimedia.org">',
+        '<link rel="alternate" type="application/rss+xml" title="' . esc_attr__('VietnamGuide - Travel Planning Advisory Feed', 'vietnamguide-premium') . '" href="' . esc_url(home_url('/feed/')) . '">',
     ];
+
+    $bingId = defined('VG_BING_VERIFICATION_ID') ? (string) VG_BING_VERIFICATION_ID : (string) get_option('vg_bing_verification_id', '');
+    if ($bingId !== '') {
+        $headTags[] = '<meta name="msvalidate.01" content="' . esc_attr($bingId) . '">';
+    }
 
     if (is_singular()) {
         $heroImage = vg_get_default_og_image_url();
@@ -1977,4 +1983,15 @@ function vg_enhance_content_images(string $content): string
 }
 
 add_filter('the_content', 'vg_enhance_content_images', 21);
+
+/**
+ * Include pages in the main RSS feed so search engines, feed aggregators,
+ * and discovery bots syndicate all Vietnam travel field guides and toolkits.
+ */
+add_filter('request', static function (array $query_vars): array {
+    if (isset($query_vars['feed']) && ! isset($query_vars['post_type'])) {
+        $query_vars['post_type'] = ['page', 'post'];
+    }
+    return $query_vars;
+});
 

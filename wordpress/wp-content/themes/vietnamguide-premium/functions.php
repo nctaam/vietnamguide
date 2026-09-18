@@ -12,6 +12,7 @@ require_once get_theme_file_path('/inc/guide-season-matrix.php');
 require_once get_theme_file_path('/inc/guide-visa-checker.php');
 require_once get_theme_file_path('/inc/guide-airport-navigator.php');
 require_once get_theme_file_path('/inc/guide-packing-checklist.php');
+require_once get_theme_file_path('/inc/guide-analytics.php');
 
 function vg_theme_asset_version(string $relativePath): string
 {
@@ -52,6 +53,7 @@ function vg_theme_asset_version(string $relativePath): string
 }
 
 add_action('after_setup_theme', static function (): void {
+    add_theme_support('automatic-feed-links');
     add_theme_support('title-tag');
     add_theme_support('post-thumbnails');
     add_theme_support('responsive-embeds');

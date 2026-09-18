@@ -661,6 +661,20 @@ function vg_render_airport_navigator_html(): string
             </div>
         </div>
 
+        <!-- Viral Social & Deep-Link Sharing Bar -->
+        <div class="vg-tool-share-bar">
+            <span class="vg-share-label"><?php esc_html_e('Share Airport Guide:', 'vietnamguide-premium'); ?></span>
+            <button type="button" class="vg-btn-share" id="vg-an-share-link">
+                <span>🔗 <?php esc_html_e('Copy Airport Link', 'vietnamguide-premium'); ?></span>
+            </button>
+            <a href="#" class="vg-btn-share vg-btn-share--wa" id="vg-an-share-wa" target="_blank" rel="noopener noreferrer">
+                <span>💬 WhatsApp</span>
+            </a>
+            <a href="#" class="vg-btn-share vg-btn-share--tg" id="vg-an-share-tg" target="_blank" rel="noopener noreferrer">
+                <span>✈️ Telegram</span>
+            </a>
+        </div>
+
         <!-- Cross-Tool Synergy & Next Steps Bridge -->
         <div class="vg-an-next-steps vg-tool-synergy-bar">
             <span class="vg-an-steps-kicker"><?php esc_html_e('Continue Planning Your Journey', 'vietnamguide-premium'); ?></span>
@@ -796,6 +810,23 @@ function vg_render_airport_navigator_html(): string
             if (ariaStatus) {
                 ariaStatus.textContent = 'Active gateway updated to ' + data.name + ' (' + data.code + '), ' + data.city;
             }
+
+            // Update WhatsApp and Telegram share links dynamically
+            var shareUrl = window.location.href;
+            var shareMsg = 'Vietnam Airport Arrival Guide for ' + data.name + ' (' + data.code + '): Verified Grab bays, official taxis & scam shields. Check here: ' + shareUrl;
+            var waBtn = document.getElementById('vg-an-share-wa');
+            var tgBtn = document.getElementById('vg-an-share-tg');
+            if (waBtn) waBtn.href = 'https://api.whatsapp.com/send?text=' + encodeURIComponent(shareMsg);
+            if (tgBtn) tgBtn.href = 'https://t.me/share/url?url=' + encodeURIComponent(shareUrl) + '&text=' + encodeURIComponent(shareMsg);
+
+            // Telemetry dispatch
+            if (typeof window.vgTrack === 'function') {
+                window.vgTrack('vg_airport_view', {
+                    airport: code,
+                    city: data.city,
+                    tab: currentTab
+                });
+            }
         }
 
         function updateZone(idx) {
@@ -916,6 +947,56 @@ function vg_render_airport_navigator_html(): string
                     });
                 } else {
                     prompt('Copy your airport arrival cheat sheet:', text);
+                }
+            });
+        }
+
+        function showToast(msg) {
+            var toast = document.getElementById('vg-global-toast');
+            if (!toast) {
+                toast = document.createElement('div');
+                toast.id = 'vg-global-toast';
+                toast.className = 'vg-toast';
+                document.body.appendChild(toast);
+            }
+            toast.textContent = msg;
+            toast.classList.add('is-active');
+            setTimeout(function () { toast.classList.remove('is-active'); }, 3000);
+        }
+
+        var shareLinkBtn = document.getElementById('vg-an-share-link');
+        if (shareLinkBtn) {
+            shareLinkBtn.addEventListener('click', function () {
+                var url = window.location.href;
+                if (navigator.clipboard && navigator.clipboard.writeText) {
+                    navigator.clipboard.writeText(url).then(function () {
+                        showToast('✓ Link copied to clipboard - Share with your travel companion!');
+                        if (typeof window.vgTrack === 'function') {
+                            window.vgTrack('vg_share_plan', { tool: 'airport_navigator', channel: 'copy_link' });
+                        }
+                    }).catch(function () {
+                        prompt('Copy your link:', url);
+                    });
+                } else {
+                    prompt('Copy your link:', url);
+                }
+            });
+        }
+
+        var waBtnEl = document.getElementById('vg-an-share-wa');
+        if (waBtnEl) {
+            waBtnEl.addEventListener('click', function () {
+                if (typeof window.vgTrack === 'function') {
+                    window.vgTrack('vg_share_plan', { tool: 'airport_navigator', channel: 'whatsapp' });
+                }
+            });
+        }
+
+        var tgBtnEl = document.getElementById('vg-an-share-tg');
+        if (tgBtnEl) {
+            tgBtnEl.addEventListener('click', function () {
+                if (typeof window.vgTrack === 'function') {
+                    window.vgTrack('vg_share_plan', { tool: 'airport_navigator', channel: 'telegram' });
                 }
             });
         }
