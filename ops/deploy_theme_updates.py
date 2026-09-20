@@ -64,6 +64,8 @@ DEPLOY_FILES = [
      'wp-content/themes/vietnamguide-premium/inc/guide-routing.php'),
     ('wordpress/wp-content/themes/vietnamguide-premium/inc/guide-analytics.php',
      'wp-content/themes/vietnamguide-premium/inc/guide-analytics.php'),
+    ('wordpress/.htaccess',
+     '.htaccess'),
 ]
 
 def get_sha256(filepath):

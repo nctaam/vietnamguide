@@ -349,6 +349,9 @@ function vg_render_packing_checklist(array $attributes = []): string
             <a href="#" class="vg-btn-share vg-btn-share--tg" id="vg-checklist-share-tg" target="_blank" rel="noopener noreferrer">
                 <span>✈️ Telegram</span>
             </a>
+            <button type="button" class="vg-btn-share vg-btn-share--qr" id="vg-checklist-share-qr" aria-label="<?php esc_attr_e('Show QR code for mobile', 'vietnamguide-premium'); ?>">
+                <span>📱 <?php esc_html_e('QR to Phone', 'vietnamguide-premium'); ?></span>
+            </button>
         </div>
 
         <div class="vg-checklist-synergy-wrap vg-tool-synergy-bar">
@@ -923,6 +926,18 @@ function vg_render_packing_checklist(array $attributes = []): string
                 tgBtnEl.addEventListener('click', function () {
                     if (typeof window.vgTrack === 'function') {
                         window.vgTrack('vg_share_plan', { tool: 'packing_checklist', channel: 'telegram' });
+                    }
+                });
+            }
+
+            var qrBtnEl = document.getElementById('vg-checklist-share-qr');
+            if (qrBtnEl) {
+                qrBtnEl.addEventListener('click', function () {
+                    if (typeof window.vgOpenQrModal === 'function') {
+                        window.vgOpenQrModal(window.location.href, '<?php esc_attr_e('Vietnam Route Packing Checklist', 'vietnamguide-premium'); ?>');
+                    }
+                    if (typeof window.vgTrack === 'function') {
+                        window.vgTrack('vg_share_plan', { tool: 'packing_checklist', channel: 'qr_code' });
                     }
                 });
             }

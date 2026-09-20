@@ -299,6 +299,9 @@ function vg_render_visa_checker_html(): string
                 <a href="#" class="vg-btn-share vg-btn-share--tg" id="vg-vc-share-tg" target="_blank" rel="noopener noreferrer">
                     <span>✈️ Telegram</span>
                 </a>
+                <button type="button" class="vg-btn-share vg-btn-share--qr" id="vg-vc-share-qr" aria-label="<?php esc_attr_e('Show QR code for mobile', 'vietnamguide-premium'); ?>">
+                    <span>📱 <?php esc_html_e('QR to Phone', 'vietnamguide-premium'); ?></span>
+                </button>
             </div>
 
             <!-- Detailed Grid: Rules, Checklist, Warnings -->
@@ -852,6 +855,18 @@ function vg_render_visa_checker_html(): string
             tgBtnEl.addEventListener('click', function () {
                 if (typeof window.vgTrack === 'function') {
                     window.vgTrack('vg_share_plan', { tool: 'visa_checker', channel: 'telegram' });
+                }
+            });
+        }
+
+        const qrBtnEl = document.getElementById('vg-vc-share-qr');
+        if (qrBtnEl) {
+            qrBtnEl.addEventListener('click', function () {
+                if (typeof window.vgOpenQrModal === 'function') {
+                    window.vgOpenQrModal(window.location.href, '<?php esc_attr_e('Vietnam Visa Entry Plan', 'vietnamguide-premium'); ?>');
+                }
+                if (typeof window.vgTrack === 'function') {
+                    window.vgTrack('vg_share_plan', { tool: 'visa_checker', channel: 'qr_code' });
                 }
             });
         }

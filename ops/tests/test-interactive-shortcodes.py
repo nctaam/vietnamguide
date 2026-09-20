@@ -11,6 +11,8 @@ import unittest
 
 REPO_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..'))
 THEME_INC = os.path.join(REPO_ROOT, 'wordpress', 'wp-content', 'themes', 'vietnamguide-premium', 'inc')
+THEME_DIR = os.path.join(REPO_ROOT, 'wordpress', 'wp-content', 'themes', 'vietnamguide-premium')
+HTACCESS_FILE = os.path.join(REPO_ROOT, 'wordpress', '.htaccess')
 
 FILES = {
     'visa_checker': os.path.join(THEME_INC, 'guide-visa-checker.php'),
@@ -333,6 +335,51 @@ class TestInteractiveShortcodes(unittest.TestCase):
         with open(SEO_FILE, 'r', encoding='utf-8') as f:
             seo_code = f.read()
         self.assertIn("['page', 'post']", seo_code, "Main RSS query must include pages and posts.")
+
+    def test_mobile_qr_share_integration(self):
+        """All 6 interactive toolkits must feature a QR to Phone share button and window.vgOpenQrModal."""
+        for key, content in self.contents.items():
+            self.assertIn(
+                'vg-btn-share--qr',
+                content,
+                f"Toolkit {key} must feature a .vg-btn-share--qr button for mobile transition."
+            )
+            self.assertIn(
+                'vgOpenQrModal',
+                content,
+                f"Toolkit {key} must wire click event to window.vgOpenQrModal."
+            )
+
+    def test_reading_experience_and_floating_dock(self):
+        """Guide experience template and assets must implement reading progress and floating dock."""
+        guide_part = os.path.join(THEME_DIR, 'template-parts', 'guide-page.php')
+        css_file = os.path.join(THEME_DIR, 'assets', 'css', 'homepage.css')
+        analytics_file = os.path.join(THEME_DIR, 'inc', 'guide-analytics.php')
+
+        with open(guide_part, 'r', encoding='utf-8') as f:
+            gp_code = f.read()
+        self.assertIn('vg-reading-progress', gp_code, "guide-page.php must contain reading progress bar.")
+        self.assertIn('vg-floating-dock', gp_code, "guide-page.php must contain floating tactical dock.")
+
+        with open(css_file, 'r', encoding='utf-8') as f:
+            css_code = f.read()
+        self.assertIn('.vg-reading-progress', css_code, "CSS must style reading progress.")
+        self.assertIn('.vg-floating-dock', css_code, "CSS must style floating dock.")
+        self.assertIn('.vg-qr-modal', css_code, "CSS must style QR modal.")
+
+        with open(analytics_file, 'r', encoding='utf-8') as f:
+            analytics_code = f.read()
+        self.assertIn('window.vgOpenQrModal', analytics_code, "guide-analytics.php must define window.vgOpenQrModal.")
+
+    def test_security_htaccess_hardening(self):
+        """wordpress/.htaccess must block scanner probes, xmlrpc, and brute-force wp-login."""
+        htaccess_file = HTACCESS_FILE
+        self.assertTrue(os.path.isfile(htaccess_file), f"Missing .htaccess at {htaccess_file}")
+        with open(htaccess_file, 'r', encoding='utf-8') as f:
+            ht_code = f.read()
+        self.assertIn('.env', ht_code, ".htaccess must block .env scanner probes.")
+        self.assertIn('xmlrpc', ht_code, ".htaccess must block xmlrpc.php.")
+        self.assertIn('access=editorial', ht_code, ".htaccess must protect wp-login.php with editorial access key.")
 
 
 if __name__ == '__main__':

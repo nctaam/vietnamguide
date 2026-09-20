@@ -234,6 +234,9 @@ function vg_render_cost_calculator_html(): string
                         <a href="#" class="vg-btn-share vg-btn-share--tg" id="vg-calc-share-tg" target="_blank" rel="noopener noreferrer">
                             <span>✈️ Telegram</span>
                         </a>
+                        <button type="button" class="vg-btn-share vg-btn-share--qr" id="vg-calc-share-qr" aria-label="<?php esc_attr_e('Show QR code for mobile', 'vietnamguide-premium'); ?>">
+                            <span>📱 <?php esc_html_e('QR to Phone', 'vietnamguide-premium'); ?></span>
+                        </button>
                     </div>
 
                     <div class="vg-calc-next-steps vg-tool-synergy-bar">
@@ -789,6 +792,18 @@ function vg_render_cost_calculator_html(): string
                 tgBtnEl.addEventListener('click', function () {
                     if (typeof window.vgTrack === 'function') {
                         window.vgTrack('vg_share_plan', { tool: 'cost_calculator', channel: 'telegram' });
+                    }
+                });
+            }
+
+            var qrBtnEl = document.getElementById('vg-calc-share-qr');
+            if (qrBtnEl) {
+                qrBtnEl.addEventListener('click', function () {
+                    if (typeof window.vgOpenQrModal === 'function') {
+                        window.vgOpenQrModal(window.location.href, '<?php esc_attr_e('Vietnam Travel Budget Plan', 'vietnamguide-premium'); ?>');
+                    }
+                    if (typeof window.vgTrack === 'function') {
+                        window.vgTrack('vg_share_plan', { tool: 'cost_calculator', channel: 'qr_code' });
                     }
                 });
             }

@@ -1044,6 +1044,9 @@ function vg_render_season_matrix_html(): string
             <a href="#" class="vg-btn-share vg-btn-share--tg" id="vg-sm-share-tg" target="_blank" rel="noopener noreferrer">
                 <span>✈️ Telegram</span>
             </a>
+            <button type="button" class="vg-btn-share vg-btn-share--qr" id="vg-sm-share-qr" aria-label="<?php esc_attr_e('Show QR code for mobile', 'vietnamguide-premium'); ?>">
+                <span>📱 <?php esc_html_e('QR to Phone', 'vietnamguide-premium'); ?></span>
+            </button>
         </div>
 
         <div class="vg-sm-bridge vg-tool-synergy-bar">
@@ -1545,6 +1548,18 @@ function vg_render_season_matrix_html(): string
                 tgBtnEl.addEventListener('click', function () {
                     if (typeof window.vgTrack === 'function') {
                         window.vgTrack('vg_share_plan', { tool: 'season_matrix', channel: 'telegram' });
+                    }
+                });
+            }
+
+            var qrBtnEl = document.getElementById('vg-sm-share-qr');
+            if (qrBtnEl) {
+                qrBtnEl.addEventListener('click', function () {
+                    if (typeof window.vgOpenQrModal === 'function') {
+                        window.vgOpenQrModal(window.location.href, '<?php esc_attr_e('Vietnam Season & Climate Guide', 'vietnamguide-premium'); ?>');
+                    }
+                    if (typeof window.vgTrack === 'function') {
+                        window.vgTrack('vg_share_plan', { tool: 'season_matrix', channel: 'qr_code' });
                     }
                 });
             }

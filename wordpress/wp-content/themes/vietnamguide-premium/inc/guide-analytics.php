@@ -89,3 +89,86 @@ add_action('wp_head', static function (): void {
     <?php endif; ?>
     <?php
 }, 2);
+
+/**
+ * Output Mobile QR Transfer Modal and global bridge in footer.
+ */
+add_action('wp_footer', static function (): void {
+    ?>
+    <div id="vg-qr-modal" class="vg-qr-modal" role="dialog" aria-modal="true" aria-labelledby="vg-qr-modal-title" style="display:none;">
+        <div class="vg-qr-backdrop" data-vg-qr-close></div>
+        <div class="vg-qr-card">
+            <div class="vg-qr-header">
+                <h3 class="vg-qr-title" id="vg-qr-modal-title"><?php esc_html_e('Open on Mobile', 'vietnamguide-premium'); ?></h3>
+                <button type="button" class="vg-qr-close" data-vg-qr-close aria-label="<?php esc_attr_e('Close QR dialog', 'vietnamguide-premium'); ?>">&times;</button>
+            </div>
+            <div class="vg-qr-body">
+                <div class="vg-qr-img-wrap">
+                    <img class="vg-qr-img" id="vg-qr-code-img" src="" alt="<?php esc_attr_e('QR Code to open plan on mobile', 'vietnamguide-premium'); ?>" width="180" height="180" />
+                </div>
+                <p class="vg-qr-desc"><?php esc_html_e('Scan with your mobile camera to access this plan on your journey.', 'vietnamguide-premium'); ?></p>
+                <div class="vg-qr-actions">
+                    <button type="button" class="vg-qr-copy-btn" id="vg-qr-copy-btn"><?php esc_html_e('Copy Link to Clipboard', 'vietnamguide-premium'); ?></button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+    (function () {
+        'use strict';
+        window.vgOpenQrModal = function (url, title) {
+            var modal = document.getElementById('vg-qr-modal');
+            if (!modal) return;
+            var titleEl = document.getElementById('vg-qr-modal-title');
+            if (titleEl && title) {
+                titleEl.textContent = title;
+            }
+            var qrImg = document.getElementById('vg-qr-code-img');
+            if (qrImg) {
+                var encoded = encodeURIComponent(url || window.location.href);
+                qrImg.src = 'https://api.qrserver.com/v1/create-qr-code/?size=200x200&margin=8&data=' + encoded;
+            }
+            modal.setAttribute('data-target-url', url || window.location.href);
+            modal.style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+            var closeBtn = modal.querySelector('.vg-qr-close');
+            if (closeBtn) closeBtn.focus();
+        };
+
+        function closeQrModal() {
+            var modal = document.getElementById('vg-qr-modal');
+            if (modal) {
+                modal.style.display = 'none';
+                document.body.style.overflow = '';
+            }
+        }
+
+        document.addEventListener('click', function (e) {
+            if (e.target && e.target.hasAttribute('data-vg-qr-close')) {
+                closeQrModal();
+            }
+        });
+
+        document.addEventListener('keydown', function (e) {
+            if (e.key === 'Escape') {
+                closeQrModal();
+            }
+        });
+
+        var copyBtn = document.getElementById('vg-qr-copy-btn');
+        if (copyBtn) {
+            copyBtn.addEventListener('click', function () {
+                var modal = document.getElementById('vg-qr-modal');
+                var targetUrl = (modal && modal.getAttribute('data-target-url')) || window.location.href;
+                if (navigator.clipboard && navigator.clipboard.writeText) {
+                    navigator.clipboard.writeText(targetUrl).then(function () {
+                        copyBtn.textContent = '✓ Link Copied!';
+                        setTimeout(function () { copyBtn.textContent = 'Copy Link to Clipboard'; }, 2200);
+                    });
+                }
+            });
+        }
+    })();
+    </script>
+    <?php
+}, 20);

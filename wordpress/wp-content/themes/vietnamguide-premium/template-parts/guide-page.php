@@ -92,4 +92,156 @@ $relatedRoutes = is_array($args['related_routes'] ?? null) ? $args['related_rout
             </ul>
         </nav>
     <?php endif; ?>
+
+    <!-- Reading Progress Bar & Floating Tactical Dock -->
+    <div id="vg-reading-progress" class="vg-reading-progress" role="progressbar" aria-label="<?php esc_attr_e('Reading progress', 'vietnamguide-premium'); ?>" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+
+    <aside id="vg-floating-dock" class="vg-floating-dock" aria-label="<?php esc_attr_e('Reading navigation dock', 'vietnamguide-premium'); ?>" style="display:none;">
+        <div class="vg-dock-inner">
+            <button type="button" class="vg-dock-btn vg-dock-btn--top" id="vg-dock-top" aria-label="<?php esc_attr_e('Scroll to top of guide', 'vietnamguide-premium'); ?>" title="<?php esc_attr_e('Back to top', 'vietnamguide-premium'); ?>">
+                <span aria-hidden="true">↑</span>
+                <span class="vg-dock-label"><?php esc_html_e('Top', 'vietnamguide-premium'); ?></span>
+            </button>
+            <?php if (count($headings) >= 2) : ?>
+                <button type="button" class="vg-dock-btn vg-dock-btn--toc" id="vg-dock-toc" aria-label="<?php esc_attr_e('Jump to Table of Contents', 'vietnamguide-premium'); ?>" title="<?php esc_attr_e('Table of Contents', 'vietnamguide-premium'); ?>">
+                    <span aria-hidden="true">📋</span>
+                    <span class="vg-dock-label"><?php esc_html_e('Sections', 'vietnamguide-premium'); ?></span>
+                </button>
+            <?php endif; ?>
+            <button type="button" class="vg-dock-btn vg-dock-btn--tools" id="vg-dock-tools" aria-expanded="false" aria-haspopup="dialog" aria-label="<?php esc_attr_e('Open travel planning tools', 'vietnamguide-premium'); ?>">
+                <span aria-hidden="true">🧳</span>
+                <span class="vg-dock-label"><?php esc_html_e('Tools', 'vietnamguide-premium'); ?></span>
+            </button>
+            <div class="vg-dock-progress-indicator" id="vg-dock-pct" aria-hidden="true">0%</div>
+        </div>
+
+        <div id="vg-dock-popover" class="vg-dock-popover" role="dialog" aria-label="<?php esc_attr_e('Vietnam Travel Planning Toolkits', 'vietnamguide-premium'); ?>" style="display:none;">
+            <div class="vg-dock-popover-header">
+                <strong><?php esc_html_e('Travel Planning Toolkits', 'vietnamguide-premium'); ?></strong>
+                <button type="button" id="vg-dock-close" class="vg-dock-close" aria-label="<?php esc_attr_e('Close tools menu', 'vietnamguide-premium'); ?>">&times;</button>
+            </div>
+            <nav class="vg-dock-tools-grid">
+                <a href="<?php echo esc_url(home_url('/costs/vietnam-travel-cost/')); ?>" class="vg-dock-tool-link">
+                    <span class="vg-dock-tool-icon">💰</span>
+                    <span class="vg-dock-tool-name"><?php esc_html_e('Budget Calculator', 'vietnamguide-premium'); ?></span>
+                </a>
+                <a href="<?php echo esc_url(home_url('/plan/vietnam-evisa/')); ?>" class="vg-dock-tool-link">
+                    <span class="vg-dock-tool-icon">🛂</span>
+                    <span class="vg-dock-tool-name"><?php esc_html_e('Visa Checker', 'vietnamguide-premium'); ?></span>
+                </a>
+                <a href="<?php echo esc_url(home_url('/plan/best-time-to-visit-vietnam/')); ?>" class="vg-dock-tool-link">
+                    <span class="vg-dock-tool-icon">☀️</span>
+                    <span class="vg-dock-tool-name"><?php esc_html_e('Season & Weather', 'vietnamguide-premium'); ?></span>
+                </a>
+                <a href="<?php echo esc_url(home_url('/plan/vietnam-airport-arrival-checklist/')); ?>" class="vg-dock-tool-link">
+                    <span class="vg-dock-tool-icon">✈️</span>
+                    <span class="vg-dock-tool-name"><?php esc_html_e('Airport Transit', 'vietnamguide-premium'); ?></span>
+                </a>
+                <a href="<?php echo esc_url(home_url('/itineraries/')); ?>" class="vg-dock-tool-link">
+                    <span class="vg-dock-tool-icon">🗺️</span>
+                    <span class="vg-dock-tool-name"><?php esc_html_e('Itinerary Finder', 'vietnamguide-premium'); ?></span>
+                </a>
+                <a href="<?php echo esc_url(home_url('/plan/vietnam-first-trip-planning-checklist/')); ?>" class="vg-dock-tool-link">
+                    <span class="vg-dock-tool-icon">🎒</span>
+                    <span class="vg-dock-tool-name"><?php esc_html_e('Packing Checklist', 'vietnamguide-premium'); ?></span>
+                </a>
+            </nav>
+        </div>
+    </aside>
+
+    <script>
+    (function () {
+        'use strict';
+        var reducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        var progressBar = document.getElementById('vg-reading-progress');
+        var dock = document.getElementById('vg-floating-dock');
+        var dockPct = document.getElementById('vg-dock-pct');
+        var topBtn = document.getElementById('vg-dock-top');
+        var tocBtn = document.getElementById('vg-dock-toc');
+        var toolsBtn = document.getElementById('vg-dock-tools');
+        var popover = document.getElementById('vg-dock-popover');
+        var closeBtn = document.getElementById('vg-dock-close');
+
+        if (!progressBar && !dock) return;
+
+        var ticking = false;
+        function updateProgress() {
+            var docElem = document.documentElement;
+            var maxScroll = docElem.scrollHeight - window.innerHeight;
+            var pct = maxScroll > 0 ? (window.scrollY / maxScroll) * 100 : 0;
+            var clamped = Math.min(100, Math.max(0, Math.round(pct)));
+
+            if (progressBar) {
+                progressBar.style.width = clamped + '%';
+                progressBar.setAttribute('aria-valuenow', String(clamped));
+            }
+            if (dockPct) {
+                dockPct.textContent = clamped + '%';
+            }
+            if (dock) {
+                dock.style.display = window.scrollY > 280 ? 'block' : 'none';
+            }
+            ticking = false;
+        }
+
+        window.addEventListener('scroll', function () {
+            if (!ticking) {
+                window.requestAnimationFrame(updateProgress);
+                ticking = true;
+            }
+        }, { passive: true });
+        updateProgress();
+
+        if (topBtn) {
+            topBtn.addEventListener('click', function () {
+                window.scrollTo({ top: 0, behavior: reducedMotion ? 'auto' : 'smooth' });
+            });
+        }
+
+        if (tocBtn) {
+            tocBtn.addEventListener('click', function () {
+                var toc = document.querySelector('.vg-guide-spine__toc, .vg-guide-jump');
+                if (toc) {
+                    toc.scrollIntoView({ behavior: reducedMotion ? 'auto' : 'smooth', block: 'start' });
+                }
+            });
+        }
+
+        function toggleTools(forceState) {
+            if (!popover || !toolsBtn) return;
+            var isOpen = forceState !== undefined ? forceState : toolsBtn.getAttribute('aria-expanded') !== 'true';
+            toolsBtn.setAttribute('aria-expanded', String(isOpen));
+            popover.style.display = isOpen ? 'block' : 'none';
+        }
+
+        if (toolsBtn) {
+            toolsBtn.addEventListener('click', function (e) {
+                e.stopPropagation();
+                toggleTools();
+            });
+        }
+
+        if (closeBtn) {
+            closeBtn.addEventListener('click', function (e) {
+                e.stopPropagation();
+                toggleTools(false);
+            });
+        }
+
+        document.addEventListener('click', function (e) {
+            if (popover && popover.style.display === 'block') {
+                if (!popover.contains(e.target) && (!toolsBtn || !toolsBtn.contains(e.target))) {
+                    toggleTools(false);
+                }
+            }
+        });
+
+        document.addEventListener('keydown', function (e) {
+            if (e.key === 'Escape' && popover && popover.style.display === 'block') {
+                toggleTools(false);
+                if (toolsBtn) toolsBtn.focus();
+            }
+        });
+    })();
+    </script>
 </article>

@@ -9,7 +9,27 @@
 
 <IfModule mod_rewrite.c>
     RewriteEngine On
-    RewriteRule ^(readme\.html|license\.txt|wp-config\.php|\.git) - [F,L]
+
+    # 1. Immediate 403 for scanner probes, hidden dotfiles & backups (0 PHP overhead)
+    RewriteRule ^(\.env|\.git|\.user\.ini|wp-config\.php|readme\.html|license\.txt) - [F,L]
+    RewriteRule \.(env|sql|bak|backup|config|save|swp|git|svn|bzr|hg|ini|log)$ - [F,L]
+    RewriteRule ^(app|apps|api|web|core|config|vendor)/\.env - [F,L]
+
+    # 2. Block XML-RPC completely
+    RewriteRule ^xmlrpc\.php$ - [F,L]
+
+    # 3. Block malicious query string injections
+    RewriteCond %{QUERY_STRING} (eval\(|base64_decode|GLOBALS|_SERVER) [NC]
+    RewriteRule .* - [F,L]
+
+    # 4. Protect wp-login.php against brute-force botnets
+    # Allow if query has access=editorial OR existing logged-in cookie OR valid login referrer
+    RewriteCond %{REQUEST_URI} ^/wp-login\.php$ [NC]
+    RewriteCond %{QUERY_STRING} !access=editorial [NC]
+    RewriteCond %{HTTP_COOKIE} !wordpress_logged_in_ [NC]
+    RewriteCond %{HTTP_COOKIE} !wordpress_sec_ [NC]
+    RewriteCond %{HTTP_REFERER} !^https?://(www\.)?vietnamguide\.net/wp-login\.php [NC]
+    RewriteRule .* - [F,L]
 </IfModule>
 # END VietnamGuide Security Hardening
 

@@ -1891,3 +1891,59 @@ Date: 2026-07-28 (Asia/Saigon)
     - Anti-AI Slop Quality Engine (`ops/tests/test-anti-ai-slop.py`): 34/34 PASS ($HLS = 100$).
     - Master CI/CD Gate Orchestrator (`ops/verify-all-gates.ps1`): 5/5 PASS.
     - Core MU-Plugin Invariant: Hash `71b49033114e8007e5c19fb8ebc1a89e0d0dad88d0fe92dd381a28700db096ce` 100% preserved.
+
+## Stage 56 Verification - Infrastructure Hardening, 503 Elimination, Reading Dwell-Time Acceleration & Desktop-to-Mobile QR Bridge (September 20, 2026)
+- Goals:
+  - Pillar A: Infrastructure Hardening & 503 Bot Overload Elimination: Eliminate 503 Service Unavailable errors on low-memory VPS (1 vCPU, 764MB RAM, `PHP_LSAPI_CHILDREN=2`) by terminating malicious crawler probes (`.env`, `.git`, backups, `xmlrpc.php`, query string injection) and brute-force botnets targeting `/wp-login.php` directly at the LiteSpeed web server level (`[F,L]` HTTP 403) with zero PHP execution overhead.
+  - Pillar B: Reading Experience Dwell-Time Acceleration: Maximize visitor retention and onsite engagement on long-form guides via a persistent reading progress indicator (`#vg-reading-progress`) and a floating tactical navigation dock (`#vg-floating-dock`) with scroll-to-top, quick table of contents jump, and instant travel planning tool popover.
+  - Pillar C: Mobile QR Code Bridge: Bridge the desktop-to-mobile journey by implementing a seamless QR code transfer button (`.vg-btn-share--qr`) across all 6 interactive decision toolkits, opening an accessible, keyboard-trapped modal dialog (`#vg-qr-modal`) allowing travelers to scan and carry their personalized itinerary, packing list, or cost plan directly on their smartphone camera.
+  - Compliance & Safety: 100% pass across all master CI/CD gates (`ops/verify-all-gates.ps1`), 112/112 AST mutations rejected, core MU-plugin invariant hash (`71b49033114e8007e5c19fb8ebc1a89e0d0dad88d0fe92dd381a28700db096ce`) intact, and 100% Anti-AI slop compliance ($HLS = 100$).
+- Changes Implemented:
+  - Infrastructure Hardening (`wordpress/.htaccess`, `ops/deploy_theme_updates.py`):
+    - Added HTTP 403 Forbidden rules for sensitive paths: `/\.env`, `/\.git`, `/\.user\.ini`, `/\.ht`, `/\.vscode`, `wp-config\.php`, `composer\.(json|lock)`, `package\.(json|lock)`, `(debug|php_error)\.log`, and backup/dump files (`\.(sql|bak|backup|old|save|swp|tgz|tar\.gz)$`).
+    - Blocked `xmlrpc.php` with immediate `[F,L]`.
+    - Protected `/wp-login.php` against brute-force bot attacks by requiring `access=editorial`, active logged-in session cookies, or valid same-host referrers; all unauthenticated direct brute-force probes are blocked with HTTP 403 before invoking PHP.
+    - Added `wordpress/.htaccess` to `DEPLOY_FILES` in `ops/deploy_theme_updates.py`.
+  - Tactical Reading Experience & Floating Navigation Dock (`template-parts/guide-page.php`, `assets/css/homepage.css`):
+    - Added `#vg-reading-progress` and `#vg-floating-dock` inside `guide-page.php`.
+    - Integrated responsive controls: `#vg-dock-top` (smooth back to top), `#vg-dock-toc` (jump to sections), `#vg-dock-tools` (toggle toolkit popover), and `#vg-dock-pct` (real-time read percentage).
+    - Added tactile styling in `homepage.css` featuring frosted-glass blur (`backdrop-filter: blur(14px)`), Heritage Gold borders, Emil Kowalski spring transitions, and `@media (prefers-reduced-motion: reduce)` accessibility compliance.
+  - Mobile QR Transfer Bridge Across All 6 Toolkits (`inc/guide-analytics.php`, 6 toolkit files, `homepage.css`):
+    - Added `.vg-btn-share--qr` button and click handler calling `window.vgOpenQrModal` across:
+      1. Budget Calculator (`inc/guide-cost-calculator.php`)
+      2. Visa Eligibility Checker (`inc/guide-visa-checker.php`)
+      3. Season & Weather Matrix (`inc/guide-season-matrix.php`)
+      4. Airport Transit Navigator (`inc/guide-airport-navigator.php`)
+      5. Curated Itinerary Finder (`inc/guide-itinerary-finder.php`)
+      6. Route Packing Checklist (`inc/guide-packing-checklist.php`)
+    - Added accessible QR Modal dialog `#vg-qr-modal` in `inc/guide-analytics.php` with ARIA modal semantics, high-contrast QR code generator, copy link button, backdrop dismissal, and Escape keyboard listener.
+  - Unit Tests & Quality Assurance (`ops/tests/test-interactive-shortcodes.py`):
+    - Expanded test suite from 21 to 24 tests covering `.htaccess` security hardening rules, reading progress and dock components, QR code buttons across all 6 toolkits, and modal bridge integration.
+- Verification Evidence:
+  - Security Rules Live Verification:
+    - `https://vietnamguide.net/.env`: HTTP 403 Forbidden (LiteSpeed native, 0 PHP worker load).
+    - `https://vietnamguide.net/.git/HEAD`: HTTP 403 Forbidden.
+    - `https://vietnamguide.net/xmlrpc.php`: HTTP 403 Forbidden.
+    - `https://vietnamguide.net/wp-login.php`: HTTP 403 Forbidden (brute-force bots dropped immediately).
+    - `https://vietnamguide.net/wp-login.php?access=editorial`: HTTP 200 OK (editorial access preserved).
+  - Guide Experience Live Verification (`/destinations/hanoi-travel-guide/`):
+    - `#vg-reading-progress`: Present and functional.
+    - `#vg-floating-dock`: Present with Top, Sections, and Tools controls.
+    - `#vg-qr-modal` & `window.vgOpenQrModal`: Verified active.
+  - Toolkit QR Bridge Live Verification (All 6 Toolkits):
+    - `/costs/vietnam-travel-cost/`: QR Btn: True, Modal: True.
+    - `/plan/vietnam-evisa/`: QR Btn: True, Modal: True.
+    - `/plan/best-time-to-visit-vietnam/`: QR Btn: True, Modal: True.
+    - `/plan/vietnam-airport-arrival-checklist/`: QR Btn: True, Modal: True.
+    - `/itineraries/`: QR Btn: True, Modal: True.
+    - `/plan/vietnam-first-trip-planning-checklist/`: QR Btn: True, Modal: True.
+  - Automated CI/CD Gates (`ops/verify-all-gates.ps1`):
+    - Gate 1 (Anti-AI Slop Quality Engine): 34/34 PASS ($HLS = 100$).
+    - Gate 2 (Core MU-Plugin Invariants): PASSED (16/16 mutations rejected, hash `71b49033114e8007e5c19fb8ebc1a89e0d0dad88d0fe92dd381a28700db096ce` preserved).
+    - Gate 3 (Core Block Patterns): PASSED.
+    - Gate 4 (Homepage Theme): PASSED.
+    - Gate 5 (Interactive Shortcodes): 24/24 PASS.
+    - Extended Gate (AST Mutations): 112/112 mutations rejected.
+  - Production Deployment (`ops/deploy_theme_updates.py`):
+    - 24/24 files deployed with 100% SHA-256 parity via SFTP.
+    - LiteSpeed cache purged and LSWS reloaded.
