@@ -73,6 +73,27 @@ def run_indexnow():
         print("STDERR:", res.stderr)
     return res.returncode == 0
 
+def verify_webmaster_endpoints():
+    print("\n--- Verifying Webmaster Authentication Endpoints ---")
+    endpoints = [
+        ("https://vietnamguide.net/BingSiteAuth.xml", "<users>"),
+        ("https://vietnamguide.net/852ef594b29d4da5a639612da3430b0f.txt", "852ef594b29d4da5a639612da3430b0f"),
+    ]
+    all_ok = True
+    for url, needle in endpoints:
+        req = urllib.request.Request(url, headers={'User-Agent': 'VietnamGuide-Pinger/1.0'})
+        try:
+            with urllib.request.urlopen(req, timeout=15) as resp:
+                content = resp.read().decode('utf-8', errors='ignore')
+                matched = needle in content
+                print(f"[AUTH ENDPOINT] {url} -> HTTP {resp.status} (Contains token: {matched})")
+                if resp.status != 200 or not matched:
+                    all_ok = False
+        except Exception as e:
+            print(f"[AUTH ENDPOINT] Failed for {url}: {e}")
+            all_ok = False
+    return all_ok
+
 def main():
     print("=== VietnamGuide Search Engine Discovery Acceleration ===")
     print(f"Target Feed: {FEED_URL}")
@@ -83,22 +104,26 @@ def main():
     if not feed_ok:
         print("[WARNING] Feed health verification did not pass.")
 
-    # 2. Ping WebSub Hubs for instant Google / feed reader discovery
+    # 2. Verify Webmaster Authentication Endpoints
+    auth_ok = verify_webmaster_endpoints()
+
+    # 3. Ping WebSub Hubs for instant Google / feed reader discovery
     print("\n--- Pinging WebSub / PubSubHubbub Hubs ---")
     hub_results = []
     for hub in WEBSUB_HUBS:
         ok = ping_websub_hub(hub, FEED_URL)
         hub_results.append(ok)
 
-    # 3. Dispatch IndexNow
+    # 4. Dispatch IndexNow
     indexnow_ok = run_indexnow()
 
     print("\n=== SUMMARY ===")
-    print(f"Feed Health : {'PASS' if feed_ok else 'FAIL'}")
-    print(f"WebSub Pings: {sum(hub_results)}/{len(WEBSUB_HUBS)} successful")
-    print(f"IndexNow    : {'PASS' if indexnow_ok else 'FAIL'}")
+    print(f"Feed Health     : {'PASS' if feed_ok else 'FAIL'}")
+    print(f"Webmaster Auth  : {'PASS' if auth_ok else 'FAIL'}")
+    print(f"WebSub Pings    : {sum(hub_results)}/{len(WEBSUB_HUBS)} successful")
+    print(f"IndexNow        : {'PASS' if indexnow_ok else 'FAIL'}")
 
-    if feed_ok and indexnow_ok:
+    if feed_ok and indexnow_ok and auth_ok:
         print("\n[SUCCESS] Search engine syndication and discovery dispatched.")
         sys.exit(0)
     else:

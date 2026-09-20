@@ -381,6 +381,36 @@ class TestInteractiveShortcodes(unittest.TestCase):
         self.assertIn('xmlrpc', ht_code, ".htaccess must block xmlrpc.php.")
         self.assertIn('access=editorial', ht_code, ".htaccess must protect wp-login.php with editorial access key.")
 
+    def test_search_engine_discovery_and_auto_ping(self):
+        """guide-seo.php must implement Webmaster verification tags, endpoints, and non-blocking Auto-Ping engine."""
+        seo_file = os.path.join(THEME_DIR, 'inc', 'guide-seo.php')
+        self.assertTrue(os.path.isfile(seo_file), f"Missing guide-seo.php at {seo_file}")
+        with open(seo_file, 'r', encoding='utf-8') as f:
+            seo_code = f.read()
+
+        # 1. Webmaster meta verification tags
+        self.assertIn('google-site-verification', seo_code, "Must output google-site-verification meta tag.")
+        self.assertIn('msvalidate.01', seo_code, "Must output msvalidate.01 meta tag for Bing Webmaster.")
+
+        # 2. Webmaster verification virtual endpoints
+        self.assertIn('vg_handle_webmaster_verification_endpoints', seo_code, "Must define verification endpoint handler.")
+        self.assertIn('bingsiteauth.xml', seo_code.lower(), "Must handle /BingSiteAuth.xml endpoint.")
+        self.assertIn('vg_dispatch_indexnow', seo_code, "Must define IndexNow dispatch function.")
+        self.assertIn('api.indexnow.org', seo_code, "Must target api.indexnow.org.")
+        self.assertIn('bing.com/indexnow', seo_code, "Must target bing.com/indexnow.")
+
+        # 3. WebSub / PubSubHubbub pings
+        self.assertIn('vg_dispatch_websub_pings', seo_code, "Must define WebSub pinger.")
+        self.assertIn('pubsubhubbub.appspot.com', seo_code, "Must ping pubsubhubbub hub.")
+        self.assertIn('superfeedr.com/hubbub', seo_code, "Must ping superfeedr hub.")
+
+        # 4. Post publish transition hook with non-blocking & debounce
+        self.assertIn('vg_handle_post_publish_discovery', seo_code, "Must define transition hook handler.")
+        self.assertIn('transition_post_status', seo_code, "Must hook into transition_post_status.")
+        self.assertIn('vg_ping_lock_', seo_code, "Must implement debounce lock transient.")
+        self.assertIn("'blocking'    => false", seo_code, "Must enforce non-blocking HTTP dispatch for editorial speed.")
+        self.assertIn('litespeed_purge_url', seo_code, "Must invalidate sitemap and feed cache upon publication.")
+
 
 if __name__ == '__main__':
     unittest.main()

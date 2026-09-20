@@ -86,8 +86,23 @@ add_action('template_redirect', static function (): void {
 // Core Web Vitals & Resource Hints: Preconnect to media CDN, preload LCP hero image, verification, and PWA manifest
 add_action('wp_head', static function (): void {
     $themeUrl = get_stylesheet_directory_uri();
-    $headTags = [
-        '<meta name="google-site-verification" content="G5wVuwqeUiubxqR-z_1BOA5opV1xwI4PKy-piHsN6Xc">',
+    $googleVerification = defined('VG_GOOGLE_SITE_VERIFICATION')
+        ? (string) VG_GOOGLE_SITE_VERIFICATION
+        : (string) get_option('vg_google_site_verification', 'G5wVuwqeUiubxqR-z_1BOA5opV1xwI4PKy-piHsN6Xc');
+
+    $headTags = [];
+    if ($googleVerification !== '') {
+        $headTags[] = '<meta name="google-site-verification" content="' . esc_attr($googleVerification) . '">';
+    }
+
+    $bingId = defined('VG_BING_VERIFICATION_ID')
+        ? (string) VG_BING_VERIFICATION_ID
+        : (string) get_option('vg_bing_verification_id', '852EF594B29D4DA5A639612DA3430B0F');
+    if ($bingId !== '') {
+        $headTags[] = '<meta name="msvalidate.01" content="' . esc_attr($bingId) . '">';
+    }
+
+    $headTags = array_merge($headTags, [
         '<meta name="theme-color" content="#0e6f5c">',
         '<meta name="apple-mobile-web-app-capable" content="yes">',
         '<meta name="apple-mobile-web-app-status-bar-style" content="default">',
@@ -98,12 +113,7 @@ add_action('wp_head', static function (): void {
         '<link rel="preconnect" href="https://upload.wikimedia.org" crossorigin>',
         '<link rel="dns-prefetch" href="https://upload.wikimedia.org">',
         '<link rel="alternate" type="application/rss+xml" title="' . esc_attr__('VietnamGuide - Travel Planning Advisory Feed', 'vietnamguide-premium') . '" href="' . esc_url(home_url('/feed/')) . '">',
-    ];
-
-    $bingId = defined('VG_BING_VERIFICATION_ID') ? (string) VG_BING_VERIFICATION_ID : (string) get_option('vg_bing_verification_id', '');
-    if ($bingId !== '') {
-        $headTags[] = '<meta name="msvalidate.01" content="' . esc_attr($bingId) . '">';
-    }
+    ]);
 
     if (is_singular()) {
         $heroImage = vg_get_default_og_image_url();
@@ -1994,4 +2004,189 @@ add_filter('request', static function (array $query_vars): array {
     }
     return $query_vars;
 });
+
+/**
+ * Serve Webmaster verification files (BingSiteAuth.xml and IndexNow key).
+ */
+function vg_handle_webmaster_verification_endpoints(): void
+{
+    $requestUri = $_SERVER['REQUEST_URI'] ?? '';
+    $path = trim((string) parse_url($requestUri, PHP_URL_PATH), '/');
+
+    // 1. Bing Webmaster XML verification file (/BingSiteAuth.xml)
+    if (strtolower($path) === 'bingsiteauth.xml') {
+        $bingId = defined('VG_BING_VERIFICATION_ID')
+            ? (string) VG_BING_VERIFICATION_ID
+            : (string) get_option('vg_bing_verification_id', '852EF594B29D4DA5A639612DA3430B0F');
+        header('Content-Type: application/xml; charset=utf-8');
+        header('X-Robots-Tag: noindex');
+        echo "<?xml version=\"1.0\"?>\n<users>\n    <user>" . esc_html(strtoupper($bingId)) . "</user>\n</users>\n";
+        exit;
+    }
+
+    // 2. IndexNow Key plain-text verification file (/{key}.txt)
+    $indexNowKey = defined('VG_INDEXNOW_KEY')
+        ? (string) VG_INDEXNOW_KEY
+        : (string) get_option('vg_indexnow_key', '852ef594b29d4da5a639612da3430b0f');
+    if ($indexNowKey !== '' && strtolower($path) === strtolower($indexNowKey . '.txt')) {
+        header('Content-Type: text/plain; charset=utf-8');
+        header('X-Robots-Tag: noindex');
+        echo esc_html($indexNowKey) . "\n";
+        exit;
+    }
+}
+add_action('init', 'vg_handle_webmaster_verification_endpoints', 1);
+
+/**
+ * Dispatch IndexNow API notifications for updated URLs.
+ *
+ * @param string[] $urls
+ * @return bool True if dispatched.
+ */
+function vg_dispatch_indexnow(array $urls): bool
+{
+    if (empty($urls)) {
+        return false;
+    }
+
+    $host = 'vietnamguide.net';
+    $key = defined('VG_INDEXNOW_KEY')
+        ? (string) VG_INDEXNOW_KEY
+        : (string) get_option('vg_indexnow_key', '852ef594b29d4da5a639612da3430b0f');
+    $keyLocation = "https://{$host}/{$key}.txt";
+
+    $payload = [
+        'host' => $host,
+        'key' => $key,
+        'keyLocation' => $keyLocation,
+        'urlList' => array_values(array_unique($urls)),
+    ];
+
+    $endpoints = [
+        'https://api.indexnow.org/indexnow',
+        'https://www.bing.com/indexnow',
+    ];
+
+    $args = [
+        'method'      => 'POST',
+        'timeout'     => 5,
+        'redirection' => 2,
+        'httpversion' => '1.1',
+        'blocking'    => false, // Non-blocking: zero latency for editorial UI
+        'headers'     => [
+            'Content-Type' => 'application/json; charset=utf-8',
+            'User-Agent'   => 'VietnamGuide-Pinger/1.0',
+        ],
+        'body'        => wp_json_encode($payload),
+        'data_format' => 'body',
+    ];
+
+    foreach ($endpoints as $endpoint) {
+        wp_remote_post($endpoint, $args);
+    }
+
+    return true;
+}
+
+/**
+ * Dispatch real-time WebSub / PubSubHubbub publish pings to Google & RSS aggregators.
+ */
+function vg_dispatch_websub_pings(string $feedUrl = ''): void
+{
+    if ($feedUrl === '') {
+        $feedUrl = home_url('/feed/');
+    }
+
+    $hubs = [
+        'https://pubsubhubbub.appspot.com/',
+        'https://superfeedr.com/hubbub',
+    ];
+
+    $args = [
+        'method'   => 'POST',
+        'timeout'  => 5,
+        'blocking' => false,
+        'headers'  => [
+            'Content-Type' => 'application/x-www-form-urlencoded',
+            'User-Agent'   => 'VietnamGuide-Pinger/1.0',
+        ],
+        'body'     => [
+            'hub.mode' => 'publish',
+            'hub.url'  => $feedUrl,
+        ],
+    ];
+
+    foreach ($hubs as $hub) {
+        wp_remote_post($hub, $args);
+    }
+}
+
+/**
+ * Invalidate LiteSpeed cache tags for sitemaps and feed so crawlers fetch fresh data immediately.
+ */
+function vg_purge_search_discovery_caches(string $postUrl): void
+{
+    if (function_exists('do_action')) {
+        do_action('litespeed_purge_url', $postUrl);
+        do_action('litespeed_purge_url', home_url('/feed/'));
+        do_action('litespeed_purge_url', home_url('/sitemap_index.xml'));
+        do_action('litespeed_purge_url', home_url('/page-sitemap.xml'));
+    }
+}
+
+/**
+ * Hook into post status transitions to automatically broadcast publishing signals to search engines.
+ *
+ * @param string  $new_status
+ * @param string  $old_status
+ * @param WP_Post $post
+ */
+function vg_handle_post_publish_discovery(string $new_status, string $old_status, WP_Post $post): void
+{
+    // 1. Only trigger when post is currently published
+    if ($new_status !== 'publish') {
+        return;
+    }
+
+    // 2. Only process public post types ('page' or 'post')
+    if (! in_array($post->post_type, ['page', 'post'], true)) {
+        return;
+    }
+
+    // 3. Ignore autosaves, revisions, or password-protected posts
+    if (wp_is_post_revision($post->ID) || wp_is_post_autosave($post->ID) || ! empty($post->post_password)) {
+        return;
+    }
+
+    // 4. Debounce protection: prevent duplicate pings within 120 seconds for the same post ID
+    $lockKey = 'vg_ping_lock_' . $post->ID;
+    if (get_transient($lockKey) !== false) {
+        return;
+    }
+    set_transient($lockKey, time(), 120);
+
+    $permalink = get_permalink($post->ID);
+    if (! is_string($permalink) || $permalink === '') {
+        return;
+    }
+
+    // 5. Invalidate sitemap & feed cache
+    vg_purge_search_discovery_caches($permalink);
+
+    // 6. Broadcast to IndexNow (Bing, Yandex, Naver, Seznam)
+    vg_dispatch_indexnow([$permalink]);
+
+    // 7. Broadcast to WebSub / PubSubHubbub (Google & RSS feed crawlers)
+    vg_dispatch_websub_pings();
+
+    // 8. Record telemetry in WordPress option for monitoring
+    update_option('vg_last_search_engine_ping', [
+        'timestamp' => current_time('mysql', true),
+        'post_id'   => $post->ID,
+        'post_type' => $post->post_type,
+        'url'       => $permalink,
+        'event'     => ($old_status === 'publish') ? 'post_updated' : 'post_published',
+    ], false);
+}
+add_action('transition_post_status', 'vg_handle_post_publish_discovery', 10, 3);
 

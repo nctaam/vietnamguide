@@ -66,6 +66,10 @@ DEPLOY_FILES = [
      'wp-content/themes/vietnamguide-premium/inc/guide-analytics.php'),
     ('wordpress/.htaccess',
      '.htaccess'),
+    ('wordpress/BingSiteAuth.xml',
+     'BingSiteAuth.xml'),
+    ('wordpress/852ef594b29d4da5a639612da3430b0f.txt',
+     '852ef594b29d4da5a639612da3430b0f.txt'),
 ]
 
 def get_sha256(filepath):

@@ -1947,3 +1947,48 @@ Date: 2026-07-28 (Asia/Saigon)
   - Production Deployment (`ops/deploy_theme_updates.py`):
     - 24/24 files deployed with 100% SHA-256 parity via SFTP.
     - LiteSpeed cache purged and LSWS reloaded.
+
+## Stage 57 Verification - Automated Google Search Console & Bing Webmaster Verification + Sitemaps Auto-Ping API (September 20, 2026)
+- Goals:
+  - Accelerate organic search engine crawl, indexation, and RSS feed discovery for all 102 published Vietnam travel guides, routes, and interactive decision toolkits.
+  - Implement two-way Webmaster authentication: Google Search Console verification meta tag and Bing Webmaster Tools (`msvalidate.01` meta tag, `/BingSiteAuth.xml` endpoint, and IndexNow key `852ef594b29d4da5a639612da3430b0f.txt`).
+  - Establish a real-time, non-blocking publishing signal pipeline inside WordPress (`transition_post_status` -> `'publish'`) that instantly broadcasts URL updates to IndexNow (Bing, Yandex, Naver, Seznam) and WebSub hubs (Google & feed readers).
+  - Invalidate LiteSpeed cache tags for sitemaps (`/sitemap_index.xml`, `/page-sitemap.xml`) and feed (`/feed/`) immediately upon post publication so crawlers fetch fresh `<lastmod>` timestamps.
+  - Provide 120-second debounce protection (`vg_ping_lock_{$post_id}`) preventing redundant network dispatches during rapid editorial revisions.
+  - Maintain 100% CI/CD compliance, Anti-AI Slop score ($HLS = 100$), and preserve core MU-plugin invariant hash (`71b49033114e8007e5c19fb8ebc1a89e0d0dad88d0fe92dd381a28700db096ce`).
+- Changes Implemented:
+  - Webmaster Authentication Engine (`wordpress/wp-content/themes/vietnamguide-premium/inc/guide-seo.php`):
+    - Dynamic Google verification meta tag supporting constant `VG_GOOGLE_SITE_VERIFICATION` and option `vg_google_site_verification` with verified fallback `G5wVuwqeUiubxqR-z_1BOA5opV1xwI4PKy-piHsN6Xc`.
+    - Dynamic Bing verification meta tag supporting constant `VG_BING_VERIFICATION_ID` and option `vg_bing_verification_id` with verified fallback `852EF594B29D4DA5A639612DA3430B0F`.
+    - Virtual endpoint handler `vg_handle_webmaster_verification_endpoints()` hooked to `init` with priority 1 serving `/BingSiteAuth.xml` and `/{key}.txt` with `X-Robots-Tag: noindex` headers.
+  - Static Webmaster Verification Assets (`wordpress/BingSiteAuth.xml`, `wordpress/852ef594b29d4da5a639612da3430b0f.txt`, `ops/deploy_theme_updates.py`):
+    - Deployed physical static files in webroot for 0ms OpenLiteSpeed native delivery without PHP invocation overhead.
+  - Real-Time Search Engine Auto-Ping Pipeline (`wordpress/wp-content/themes/vietnamguide-premium/inc/guide-seo.php`):
+    - `vg_dispatch_indexnow(array $urls)`: Dispatches JSON payload non-blocking (`'blocking' => false`) to `https://api.indexnow.org/indexnow` and `https://www.bing.com/indexnow`.
+    - `vg_dispatch_websub_pings(string $feedUrl)`: Dispatches non-blocking URL-encoded publishing pings to `https://pubsubhubbub.appspot.com/` and `https://superfeedr.com/hubbub`.
+    - `vg_purge_search_discovery_caches(string $postUrl)`: Triggers `litespeed_purge_url` action across the updated page, `/feed/`, `/sitemap_index.xml`, and `/page-sitemap.xml`.
+    - `vg_handle_post_publish_discovery(string $new_status, string $old_status, WP_Post $post)`: Hooked to `transition_post_status` (priority 10, 3 args), validating public post types (`page`, `post`), filtering revisions/autosaves/passwords, enforcing 120-second debounce lock, and recording telemetry in `vg_last_search_engine_ping`.
+  - Ops Discovery Tooling & Testing (`ops/ping_search_engines.py`, `ops/tests/test-interactive-shortcodes.py`):
+    - Added `verify_webmaster_endpoints()` in `ops/ping_search_engines.py`.
+    - Added `test_search_engine_discovery_and_auto_ping` in `ops/tests/test-interactive-shortcodes.py` (25/25 PASS).
+- Verification Evidence:
+  - Live Authentication Endpoints:
+    - `https://vietnamguide.net/BingSiteAuth.xml` -> HTTP 200 OK (Contains `<users><user>852EF594B29D4DA5A639612DA3430B0F</user></users>`).
+    - `https://vietnamguide.net/852ef594b29d4da5a639612da3430b0f.txt` -> HTTP 200 OK (Contains raw key `852ef594b29d4da5a639612da3430b0f`).
+    - `https://vietnamguide.net/` -> Confirmed `<meta name="google-site-verification" content="G5wVuwqeUiubxqR-z_1BOA5opV1xwI4PKy-piHsN6Xc">` and `<meta name="msvalidate.01" content="852EF594B29D4DA5A639612DA3430B0F">`.
+  - Live Syndication & Discovery Broadcast (`ops/ping_search_engines.py`):
+    - Feed Health: HTTP 200 OK (Valid RSS, 10 items).
+    - WebSub Pings: 2/2 successful (`pubsubhubbub.appspot.com` HTTP 204, `superfeedr.com` HTTP 200).
+    - IndexNow Bulk Dispatch: 102 URLs submitted to `api.indexnow.org` and `bing.com` (HTTP 200 OK).
+  - Live Post Publish Discovery Telemetry:
+    - Triggered post publication hook on live VPS: Cache tags purged for `/destinations/pu-luong-travel-guide/`, `/feed/`, `/sitemap_index.xml`, and `/page-sitemap.xml`.
+    - Confirmed telemetry recorded in `vg_last_search_engine_ping` option: `{"timestamp":"2026-09-20 02:51:20","post_id":529,"post_type":"page","url":"https://vietnamguide.net/destinations/pu-luong-travel-guide/","event":"post_updated"}`.
+  - Automated CI/CD Quality Gates (`ops/verify-all-gates.ps1`):
+    - Gate 1 (Anti-AI Slop Quality Engine): 34/34 PASS ($HLS = 100$).
+    - Gate 2 (Core MU-Plugin Invariants): PASSED (16/16 mutations rejected, hash `71b49033114e8007e5c19fb8ebc1a89e0d0dad88d0fe92dd381a28700db096ce` preserved).
+    - Gate 3 (Core Block Patterns): PASSED.
+    - Gate 4 (Homepage Theme): PASSED.
+    - Gate 5 (Interactive Shortcodes): 25/25 PASS.
+  - Production Deployment (`ops/deploy_theme_updates.py`):
+    - 26/26 files deployed with 100% SHA-256 parity via SFTP.
+    - LiteSpeed cache purged and LSWS reloaded.
