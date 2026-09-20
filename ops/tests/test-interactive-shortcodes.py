@@ -411,6 +411,32 @@ class TestInteractiveShortcodes(unittest.TestCase):
         self.assertIn("'blocking'    => false", seo_code, "Must enforce non-blocking HTTP dispatch for editorial speed.")
         self.assertIn('litespeed_purge_url', seo_code, "Must invalidate sitemap and feed cache upon publication.")
 
+    def test_route_budget_widget_and_presets(self):
+        """guide-cost-calculator.php must implement Route Presets and the [vg_route_budget] shortcode."""
+        calc_code = self.contents['cost_calculator']
+
+        # 1. Shortcode and render function
+        self.assertIn("add_shortcode('vg_route_budget'", calc_code, "Must register [vg_route_budget] shortcode.")
+        self.assertIn("function vg_render_route_budget_widget", calc_code, "Must define vg_render_route_budget_widget().")
+
+        # 2. Route presets coverage
+        self.assertIn("'ha-giang'", calc_code, "Must support ha-giang route preset.")
+        self.assertIn("'da-nang-hoi-an'", calc_code, "Must support da-nang-hoi-an route preset.")
+        self.assertIn("'hanoi-ninh-binh-halong'", calc_code, "Must support hanoi-ninh-binh-halong route preset.")
+        self.assertIn("'classic-10d'", calc_code, "Must support classic-10d route preset.")
+
+        # 3. Tactile route chips and route profile card
+        self.assertIn('vg-calc-route-chips', calc_code, "Must render route preset chips wrapper.")
+        self.assertIn('data-route="ha-giang"', calc_code, "Must render Ha Giang preset chip.")
+        self.assertIn('data-route="da-nang-hoi-an"', calc_code, "Must render Da Nang & Hoi An preset chip.")
+        self.assertIn('vg-calc-route-profile', calc_code, "Must render route profile verified costs card.")
+
+        # 4. Route budget widget markup contract
+        self.assertIn('vg-route-budget-widget', calc_code, "Widget must use .vg-route-budget-widget container.")
+        self.assertIn('vg-rb-mode-toggle', calc_code, "Widget must provide mode toggle.")
+        self.assertIn('vg-rb-currency-toggle', calc_code, "Widget must provide currency toggle.")
+        self.assertIn('vg-rb-btn-cta', calc_code, "Widget must provide CTA deep-linking to full calculator.")
+
 
 if __name__ == '__main__':
     unittest.main()

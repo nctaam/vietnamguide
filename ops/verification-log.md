@@ -1992,3 +1992,39 @@ Date: 2026-07-28 (Asia/Saigon)
   - Production Deployment (`ops/deploy_theme_updates.py`):
     - 26/26 files deployed with 100% SHA-256 parity via SFTP.
     - LiteSpeed cache purged and LSWS reloaded.
+
+## Stage 58 - Vietnam Travel Budget by Route Cluster & Preset Quick Calculator
+- Date: 2026-09-20
+- Scope: High-intent conversion cluster around "Vietnam Travel Budget by Route" (Chi phí du lịch theo tuyến), embedding interactive route budget calculators and publishing 3 dedicated route guides under `/costs/`.
+- Key Changes:
+  - Budget Calculator Component (`inc/guide-cost-calculator.php`):
+    - Added Popular Route Presets selector (`.vg-calc-route-chips`) supporting Ha Giang Loop (4d), Da Nang & Hoi An (5d), Hanoi - Bay (4d), and Classic North-to-South (10d).
+    - Added `#vg-calc-route-profile` card rendering itemized verified local expenses dynamically with direct links to dedicated route guides.
+    - Added URL parameter hydration via `?route=...` and synchronisation in `syncUrlParams`.
+    - Implemented `vg_render_route_budget_widget()` and registered `[vg_route_budget]` shortcode with multi-currency (USD, VND, EUR, GBP, AUD), mode toggles (Self-Drive vs Easy Rider; Backpacker vs Mid-Range), and zero `<h2>` TOC pollution.
+    - Upgraded `vg_inject_cost_calculator_on_page()` to prevent duplicate auto-injection when `[vg_route_budget]` is already embedded.
+  - CSS Styling & Micro-Interactions (`assets/css/homepage.css`):
+    - Added styles for `.vg-calc-route-presets-field`, `.vg-calc-route-chips`, `.vg-calc-route-chip`, and `.vg-calc-route-profile`.
+    - Added styles for `.vg-route-budget-widget` including tactile Emil Kowalski button feedback and responsive mobile viewports down to 320px.
+  - Dedicated Route Budget Content Hub (`ops/apply-route-budget-hub.php`):
+    - Published Child Page 1 (ID 600): `/costs/ha-giang-loop-cost-budget/` (Ha Giang Loop Cost & Budget: 4-Day Self-Drive vs Easy Rider Breakdown).
+    - Published Child Page 2 (ID 601): `/costs/da-nang-hoi-an-budget/` (Da Nang & Hoi An Travel Budget: 5-Day Realistic Spending Guide).
+    - Published Child Page 3 (ID 602): `/costs/hanoi-ninh-binh-ha-long-budget/` (Hanoi, Ninh Binh & Ha Long Bay Budget: 4-Day Northern Highlights Breakdown).
+    - Updated Hub Post 10 (`/costs/`) with "Vietnam Travel Budget by Route" cards and calculator shortcuts.
+    - Updated Pillar Guide Post 22 (`/costs/vietnam-travel-cost/`) with route preset shortcuts and deep links.
+  - Quality & Anti-AI Slop Compliance:
+    - 0 Tier 1 clichés ($HLS = 100$, Evidence count: 517).
+    - Unit tests in `ops/tests/test-interactive-shortcodes.py` expanded to 26/26 PASS.
+- Verification Evidence:
+  - Live Endpoints Verified (HTTP 200 OK):
+    - `https://vietnamguide.net/costs/ha-giang-loop-cost-budget/`: HTTP 200 OK (`widget=True`, `calc=False`, 0 `<h2>` TOC pollution).
+    - `https://vietnamguide.net/costs/da-nang-hoi-an-budget/`: HTTP 200 OK (`widget=True`, `calc=False`).
+    - `https://vietnamguide.net/costs/hanoi-ninh-binh-ha-long-budget/`: HTTP 200 OK (`widget=True`, `calc=False`).
+    - `https://vietnamguide.net/costs/`: HTTP 200 OK (`calc=True`, `chips=True`, `route_section=True`).
+    - `https://vietnamguide.net/costs/vietnam-travel-cost/?route=ha-giang`: HTTP 200 OK (`calc=True`, `chips=True`, `route_section=True`).
+  - Master CI/CD Quality Gates (`ops/verify-all-gates.ps1`):
+    - Gate 1 (Anti-AI Slop): 34/34 PASS.
+    - Gate 2 (Core MU-Plugin): PASSED (16/16 mutations rejected, hash `71b49033114e8007e5c19fb8ebc1a89e0d0dad88d0fe92dd381a28700db096ce` 100% preserved).
+    - Gate 3 (Core Block Patterns): PASSED.
+    - Gate 4 (Homepage Theme): PASSED.
+    - Gate 5 (Interactive Shortcodes): 26/26 PASS.

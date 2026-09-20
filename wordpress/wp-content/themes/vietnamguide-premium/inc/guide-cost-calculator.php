@@ -54,6 +54,20 @@ function vg_render_cost_calculator_html(): string
         <div class="vg-calc-grid">
             <!-- Left Column: Controls -->
             <div class="vg-calc-controls">
+                <!-- Popular Route Presets -->
+                <div class="vg-calc-field vg-calc-route-presets-field">
+                    <div class="vg-calc-field-header">
+                        <span class="vg-calc-field-label"><strong><?php esc_html_e('Popular Route Presets:', 'vietnamguide-premium'); ?></strong></span>
+                        <span class="vg-calc-route-hint" id="vg-calc-route-active-hint"><?php esc_html_e('Click to load itinerary pacing', 'vietnamguide-premium'); ?></span>
+                    </div>
+                    <div class="vg-calc-route-chips" role="group" aria-label="<?php echo esc_attr__('Popular route presets', 'vietnamguide-premium'); ?>">
+                        <button type="button" class="vg-calc-route-chip" data-route="ha-giang" title="<?php echo esc_attr__('Ha Giang Loop 4 Days', 'vietnamguide-premium'); ?>">🏍️ Ha Giang Loop (4d)</button>
+                        <button type="button" class="vg-calc-route-chip" data-route="da-nang-hoi-an" title="<?php echo esc_attr__('Da Nang & Hoi An 5 Days', 'vietnamguide-premium'); ?>">🏮 Da Nang &amp; Hoi An (5d)</button>
+                        <button type="button" class="vg-calc-route-chip" data-route="hanoi-ninh-binh-halong" title="<?php echo esc_attr__('Hanoi, Ninh Binh & Ha Long 4 Days', 'vietnamguide-premium'); ?>">⛵ Hanoi - Bay (4d)</button>
+                        <button type="button" class="vg-calc-route-chip" data-route="classic-10d" title="<?php echo esc_attr__('Classic North-to-South 10 Days', 'vietnamguide-premium'); ?>">🚂 North-to-South (10d)</button>
+                    </div>
+                </div>
+
                 <!-- Duration Slider -->
                 <div class="vg-calc-field">
                     <div class="vg-calc-field-header">
@@ -213,6 +227,18 @@ function vg_render_cost_calculator_html(): string
                         </li>
                     </ul>
 
+                    <!-- Route Profile Verified Cost Card -->
+                    <div class="vg-calc-route-profile" id="vg-calc-route-profile" style="display:none;" aria-live="polite">
+                        <div class="vg-calc-rp-header">
+                            <span class="vg-calc-rp-badge" id="vg-calc-rp-badge"><?php esc_html_e('Route Breakdown', 'vietnamguide-premium'); ?></span>
+                            <div class="vg-calc-rp-title" id="vg-calc-rp-title"><?php esc_html_e('Verified Local Route Costs', 'vietnamguide-premium'); ?></div>
+                        </div>
+                        <ul class="vg-calc-rp-items" id="vg-calc-rp-items"></ul>
+                        <a href="#" class="vg-calc-rp-link" id="vg-calc-rp-link">
+                            <span id="vg-calc-rp-link-text"><?php esc_html_e('View Detailed Route Budget Guide', 'vietnamguide-premium'); ?></span> &rarr;
+                        </a>
+                    </div>
+
                     <p class="vg-calc-disclaimer"><?php esc_html_e('*Estimates reflect real-world on-the-ground spending in Vietnam including entrance fees, tips, Grab rides, and cafe stops. Excludes international return flights.', 'vietnamguide-premium'); ?></p>
 
                     <div class="vg-calc-actions">
@@ -298,7 +324,71 @@ function vg_render_cost_calculator_html(): string
             style: 'midrange',
             party: 2,
             flights: 2,
-            currency: 'USD'
+            currency: 'USD',
+            route: null
+        };
+
+        var ROUTE_PRESETS = {
+            'ha-giang': {
+                name: 'Ha Giang Loop (4D3N)',
+                badge: 'Mountain Route',
+                days: 4,
+                style: 'backpacker',
+                party: 1,
+                flights: 0,
+                guideUrl: '<?php echo esc_url(home_url('/costs/ha-giang-loop-cost-budget/')); ?>',
+                items: [
+                    { name: 'VIP Sleeper Bus (Hanoi - Ha Giang Round-trip)', usd: 28 },
+                    { name: 'Motorbike Rental (4 days semi-auto)', usd: 36, alt: 'Easy Rider: ~$180' },
+                    { name: 'Homestays & Family Dinners (3 nights)', usd: 45 },
+                    { name: 'Dong Van Karst Plateau Permit & Nho Que Boat', usd: 18 }
+                ]
+            },
+            'da-nang-hoi-an': {
+                name: 'Da Nang & Hoi An (5D4N)',
+                badge: 'Heritage & Coast',
+                days: 5,
+                style: 'midrange',
+                party: 2,
+                flights: 2,
+                guideUrl: '<?php echo esc_url(home_url('/costs/da-nang-hoi-an-budget/')); ?>',
+                items: [
+                    { name: 'Round-trip Domestic Flights (HAN/SGN - DAD)', usd: 110 },
+                    { name: 'Boutique Hotels with Pool (4 nights)', usd: 180 },
+                    { name: 'Grab Rides & Hai Van Pass Scenic Car', usd: 45 },
+                    { name: 'Old Town Ticket, Ba Na Hills & Dining', usd: 95 }
+                ]
+            },
+            'hanoi-ninh-binh-halong': {
+                name: 'Hanoi, Ninh Binh & Ha Long (4D3N)',
+                badge: 'Northern Highlights',
+                days: 4,
+                style: 'midrange',
+                party: 2,
+                flights: 0,
+                guideUrl: '<?php echo esc_url(home_url('/costs/hanoi-ninh-binh-ha-long-budget/')); ?>',
+                items: [
+                    { name: 'Limousine Vans (Hanoi - Ninh Binh - Bay)', usd: 38 },
+                    { name: 'Trang An Boat & Hang Mua Passes', usd: 15 },
+                    { name: 'Ninh Binh Karst Eco-Bungalow (1 night)', usd: 35 },
+                    { name: 'Overnight Cruise in Ha Long / Lan Ha (2D1N)', usd: 165 }
+                ]
+            },
+            'classic-10d': {
+                name: 'Classic North-to-South (10D9N)',
+                badge: 'Cross-Country',
+                days: 10,
+                style: 'midrange',
+                party: 2,
+                flights: 2,
+                guideUrl: '<?php echo esc_url(home_url('/itineraries/10-days-in-vietnam/')); ?>',
+                items: [
+                    { name: 'Domestic Flights (Hanoi - Da Nang - HCMC)', usd: 130 },
+                    { name: 'Mid-Range Stays Across 3 Key Bases (9 nights)', usd: 380 },
+                    { name: 'Overnight Cruise & Heritage Passes', usd: 190 },
+                    { name: 'Daily Street Food, Bistros & Grab', usd: 240 }
+                ]
+            }
         };
 
         function formatUSD(num) {
@@ -468,10 +558,54 @@ function vg_render_cost_calculator_html(): string
                 }
             }
 
+            // Render Route Profile card if active
+            var routeProfile = document.getElementById('vg-calc-route-profile');
+            var routeHint = document.getElementById('vg-calc-route-active-hint');
+            if (state.route && ROUTE_PRESETS[state.route]) {
+                var rData = ROUTE_PRESETS[state.route];
+                if (routeProfile) {
+                    routeProfile.style.display = 'block';
+                    var badgeEl = document.getElementById('vg-calc-rp-badge');
+                    var titleEl = document.getElementById('vg-calc-rp-title');
+                    var itemsEl = document.getElementById('vg-calc-rp-items');
+                    var linkEl = document.getElementById('vg-calc-rp-link');
+                    var linkTextEl = document.getElementById('vg-calc-rp-link-text');
+
+                    if (badgeEl) badgeEl.textContent = rData.badge;
+                    if (titleEl) titleEl.textContent = rData.name + ' Verified Local Costs';
+                    if (linkEl) linkEl.href = rData.guideUrl;
+                    if (linkTextEl) linkTextEl.textContent = 'Explore Complete ' + rData.name + ' Budget Guide';
+
+                    if (itemsEl) {
+                        itemsEl.innerHTML = '';
+                        rData.items.forEach(function(item) {
+                            var li = document.createElement('li');
+                            li.className = 'vg-calc-rp-item';
+                            var convertedCost = formatCurrency(item.usd, cur);
+                            var altNote = item.alt ? ' <span class="vg-calc-rp-alt">(' + item.alt + ')</span>' : '';
+                            li.innerHTML = '<span class="vg-calc-rp-item-name">' + item.name + altNote + '</span><span class="vg-calc-rp-item-cost">' + convertedCost + '</span>';
+                            itemsEl.appendChild(li);
+                        });
+                    }
+                }
+                if (routeHint) {
+                    routeHint.textContent = 'Active preset: ' + ROUTE_PRESETS[state.route].name;
+                }
+                root.querySelectorAll('.vg-calc-route-chip').forEach(function(chip) {
+                    chip.classList.toggle('is-active', chip.getAttribute('data-route') === state.route);
+                });
+            } else {
+                if (routeProfile) routeProfile.style.display = 'none';
+                if (routeHint) routeHint.textContent = 'Click to load itinerary pacing';
+                root.querySelectorAll('.vg-calc-route-chip').forEach(function(chip) {
+                    chip.classList.remove('is-active');
+                });
+            }
+
             // Save state to safe storage and sync URL params
             setSafeStorage('vg_user_duration', state.days);
             setSafeStorage('vg_user_currency', state.currency);
-            syncUrlParams({ days: state.days, currency: state.currency, tier: state.style, party: state.party });
+            syncUrlParams({ days: state.days, currency: state.currency, tier: state.style, party: state.party, route: state.route || '' });
 
             // Update WhatsApp and Telegram share links dynamically
             var shareUrl = window.location.href;
@@ -558,6 +692,15 @@ function vg_render_cost_calculator_html(): string
                 if (!isNaN(qParty)) {
                     state.party = Math.min(6, Math.max(1, qParty));
                 }
+
+                var qRoute = (urlParams.get('route') || '').toLowerCase();
+                if (ROUTE_PRESETS[qRoute]) {
+                    state.route = qRoute;
+                    state.days = ROUTE_PRESETS[qRoute].days;
+                    state.style = ROUTE_PRESETS[qRoute].style;
+                    state.party = ROUTE_PRESETS[qRoute].party;
+                    state.flights = ROUTE_PRESETS[qRoute].flights;
+                }
             } catch(e) {}
 
             var slider = document.getElementById('vg-calc-days-slider');
@@ -600,6 +743,53 @@ function vg_render_cost_calculator_html(): string
                         e.preventDefault();
                         presetChips[targetIdx].focus();
                         presetChips[targetIdx].click();
+                    }
+                });
+            });
+
+            var routeChips = root.querySelectorAll('.vg-calc-route-chip');
+            routeChips.forEach(function (chip, idx) {
+                chip.addEventListener('click', function () {
+                    var rKey = chip.getAttribute('data-route');
+                    if (state.route === rKey) {
+                        state.route = null;
+                        syncUrlParams({ days: state.days, currency: state.currency, tier: state.style, party: state.party, route: '' });
+                    } else if (ROUTE_PRESETS[rKey]) {
+                        state.route = rKey;
+                        var p = ROUTE_PRESETS[rKey];
+                        state.days = p.days;
+                        state.style = p.style;
+                        state.party = p.party;
+                        state.flights = p.flights;
+
+                        if (slider) slider.value = p.days;
+                        presetChips.forEach(function (c) {
+                            c.classList.toggle('is-active', parseInt(c.getAttribute('data-days'), 10) === p.days);
+                        });
+                        styleRadios.forEach(function (r) {
+                            r.checked = (r.value === p.style);
+                            var card = r.closest('.vg-calc-style-card');
+                            if (card) card.classList.toggle('is-selected', r.value === p.style);
+                        });
+                        partyPills.forEach(function (btn) {
+                            btn.classList.toggle('is-active', parseInt(btn.getAttribute('data-party'), 10) === p.party);
+                        });
+                        flightPills.forEach(function (btn) {
+                            btn.classList.toggle('is-active', parseInt(btn.getAttribute('data-flights'), 10) === p.flights);
+                        });
+                        syncUrlParams({ days: state.days, currency: state.currency, tier: state.style, party: state.party, route: state.route });
+                    }
+                    updateUI();
+                });
+
+                chip.addEventListener('keydown', function (e) {
+                    var targetIdx = -1;
+                    if (e.key === 'ArrowRight') targetIdx = (idx + 1) % routeChips.length;
+                    else if (e.key === 'ArrowLeft') targetIdx = (idx - 1 + routeChips.length) % routeChips.length;
+                    if (targetIdx !== -1) {
+                        e.preventDefault();
+                        routeChips[targetIdx].focus();
+                        routeChips[targetIdx].click();
                     }
                 });
             });
@@ -843,6 +1033,11 @@ function vg_render_cost_calculator_html(): string
                         b.setAttribute('aria-pressed', isUsd ? 'true' : 'false');
                     });
 
+                    state.route = null;
+                    routeChips.forEach(function (c) {
+                        c.classList.remove('is-active');
+                    });
+
                     updateUI();
                 });
             }
@@ -873,6 +1068,377 @@ function vg_cost_calculator_shortcode(): string
 add_shortcode('vg_cost_calculator', 'vg_cost_calculator_shortcode');
 
 /**
+ * Renders an interactive, embeddable route budget widget for a specific itinerary route.
+ *
+ * @param array $args Widget configuration arguments.
+ * @return string HTML markup and client script.
+ */
+function vg_render_route_budget_widget(array $args = []): string
+{
+    static $widget_count = 0;
+    $widget_count++;
+    $uid = 'vg-rb-' . $widget_count . '-' . substr(md5(uniqid('', true)), 0, 6);
+
+    $route = isset($args['route']) ? sanitize_key($args['route']) : 'ha-giang';
+    if (! in_array($route, ['ha-giang', 'da-nang-hoi-an', 'hanoi-ninh-binh-halong'], true)) {
+        $route = 'ha-giang';
+    }
+
+    $configs = [
+        'ha-giang' => [
+            'name'       => __('Ha Giang Loop 4D3N Budget', 'vietnamguide-premium'),
+            'badge'      => __('Mountain Motorbike Route', 'vietnamguide-premium'),
+            'days'       => 4,
+            'guide_url'  => home_url('/costs/ha-giang-loop-cost-budget/'),
+            'modes'      => [
+                'mode_a' => [
+                    'key'        => 'self_drive',
+                    'label'      => __('Self-Drive Motorbike', 'vietnamguide-premium'),
+                    'tag'        => __('Budget Option', 'vietnamguide-premium'),
+                    'total_usd'  => 130,
+                    'stay_usd'   => 36,
+                    'food_usd'   => 38,
+                    'trans_usd'  => 40,
+                    'act_usd'    => 16,
+                    'calc_tier'  => 'backpacker',
+                    'items'      => [
+                        ['name' => __('Round-trip VIP Cabin Bus (Hanoi - Ha Giang)', 'vietnamguide-premium'), 'usd' => 28],
+                        ['name' => __('Semi-Automatic Motorbike Rental (4 days)', 'vietnamguide-premium'), 'usd' => 32],
+                        ['name' => __('Petrol for 380km Mountain Passes', 'vietnamguide-premium'), 'usd' => 14],
+                        ['name' => __('Authentic Homestays (Du Gia, Dong Van, Meo Vac - 3N)', 'vietnamguide-premium'), 'usd' => 36],
+                        ['name' => __('Family Dinners & Local Market Eats', 'vietnamguide-premium'), 'usd' => 38],
+                        ['name' => __('Dong Van Karst Plateau Permit & Nho Que Boat', 'vietnamguide-premium'), 'usd' => 16],
+                    ],
+                ],
+                'mode_b' => [
+                    'key'        => 'easy_rider',
+                    'label'      => __('Easy Rider (Local Driver-Guide)', 'vietnamguide-premium'),
+                    'tag'        => __('Recommended for Safety', 'vietnamguide-premium'),
+                    'total_usd'  => 240,
+                    'stay_usd'   => 45,
+                    'food_usd'   => 45,
+                    'trans_usd'  => 132,
+                    'act_usd'    => 18,
+                    'calc_tier'  => 'midrange',
+                    'items'      => [
+                        ['name' => __('Round-trip VIP Cabin Bus (Hanoi - Ha Giang)', 'vietnamguide-premium'), 'usd' => 28],
+                        ['name' => __('Licensed Easy Rider Driver-Guide + Fuel & Helmet', 'vietnamguide-premium'), 'usd' => 132],
+                        ['name' => __('Private Room Homestay Upgrades (3 nights)', 'vietnamguide-premium'), 'usd' => 45],
+                        ['name' => __('All Communal Family Dinners & Breakfasts', 'vietnamguide-premium'), 'usd' => 45],
+                        ['name' => __('Border Permit, Tu San Boat & Viewpoint Passes', 'vietnamguide-premium'), 'usd' => 18],
+                    ],
+                ],
+            ],
+        ],
+        'da-nang-hoi-an' => [
+            'name'       => __('Da Nang & Hoi An 5D4N Budget', 'vietnamguide-premium'),
+            'badge'      => __('Heritage & Coastal Route', 'vietnamguide-premium'),
+            'days'       => 5,
+            'guide_url'  => home_url('/costs/da-nang-hoi-an-budget/'),
+            'modes'      => [
+                'mode_a' => [
+                    'key'        => 'backpacker',
+                    'label'      => __('Backpacker / Hostels', 'vietnamguide-premium'),
+                    'tag'        => __('Budget Solo', 'vietnamguide-premium'),
+                    'total_usd'  => 175,
+                    'stay_usd'   => 48,
+                    'food_usd'   => 50,
+                    'trans_usd'  => 45,
+                    'act_usd'    => 32,
+                    'calc_tier'  => 'backpacker',
+                    'items'      => [
+                        ['name' => __('DAD Airport Bus & GrabBike Rides', 'vietnamguide-premium'), 'usd' => 18],
+                        ['name' => __('Shared Shuttle to Hoi An Ancient Town', 'vietnamguide-premium'), 'usd' => 8],
+                        ['name' => __('Social Hostel Dorms / Homestays (4 nights)', 'vietnamguide-premium'), 'usd' => 48],
+                        ['name' => __('Street Food (Mi Quang, Cao Lau, Banh Mi Phuong)', 'vietnamguide-premium'), 'usd' => 50],
+                        ['name' => __('Hoi An Ancient Town 5-Attraction Pass', 'vietnamguide-premium'), 'usd' => 5],
+                        ['name' => __('Marble Mountains & An Bang Beach Bicycle', 'vietnamguide-premium'), 'usd' => 8],
+                    ],
+                ],
+                'mode_b' => [
+                    'key'        => 'midrange',
+                    'label'      => __('Flashpacker / Mid-Range Comfort', 'vietnamguide-premium'),
+                    'tag'        => __('Most Popular', 'vietnamguide-premium'),
+                    'total_usd'  => 410,
+                    'stay_usd'   => 160,
+                    'food_usd'   => 115,
+                    'trans_usd'  => 70,
+                    'act_usd'    => 65,
+                    'calc_tier'  => 'midrange',
+                    'items'      => [
+                        ['name' => __('Private Car Transfers (DAD Airport & Hai Van Pass)', 'vietnamguide-premium'), 'usd' => 55],
+                        ['name' => __('Boutique Riverside & Beach Hotels with Pool (4N)', 'vietnamguide-premium'), 'usd' => 160],
+                        ['name' => __('Mix of Local Cafes, Bistros & Seafood Dinners', 'vietnamguide-premium'), 'usd' => 115],
+                        ['name' => __('Hoi An Ticket + Ba Na Hills / Golden Bridge', 'vietnamguide-premium'), 'usd' => 45],
+                        ['name' => __('Cocktails & An Bang Beach Loungers', 'vietnamguide-premium'), 'usd' => 20],
+                    ],
+                ],
+            ],
+        ],
+        'hanoi-ninh-binh-halong' => [
+            'name'       => __('Hanoi, Ninh Binh & Ha Long 4D3N Budget', 'vietnamguide-premium'),
+            'badge'      => __('Northern Landscapes & Cruise', 'vietnamguide-premium'),
+            'days'       => 4,
+            'guide_url'  => home_url('/costs/hanoi-ninh-binh-ha-long-budget/'),
+            'modes'      => [
+                'mode_a' => [
+                    'key'        => 'day_cruise',
+                    'label'      => __('Day Cruise + Countryside', 'vietnamguide-premium'),
+                    'tag'        => __('Active Value', 'vietnamguide-premium'),
+                    'total_usd'  => 210,
+                    'stay_usd'   => 68,
+                    'food_usd'   => 58,
+                    'trans_usd'  => 46,
+                    'act_usd'    => 38,
+                    'calc_tier'  => 'backpacker',
+                    'items'      => [
+                        ['name' => __('Luxury Limousine Vans (Hanoi - Ninh Binh - Bay)', 'vietnamguide-premium'), 'usd' => 38],
+                        ['name' => __('Trang An Eco Boat Tour & Hang Mua Peak', 'vietnamguide-premium'), 'usd' => 14],
+                        ['name' => __('Ninh Binh Karst Bungalow (1 night)', 'vietnamguide-premium'), 'usd' => 30],
+                        ['name' => __('Full-Day Ha Long Bay Cruise (6 hours with lunch)', 'vietnamguide-premium'), 'usd' => 48],
+                        ['name' => __('Hanoi Old Quarter Boutique Hotel (2 nights)', 'vietnamguide-premium'), 'usd' => 60],
+                    ],
+                ],
+                'mode_b' => [
+                    'key'        => 'overnight_cruise',
+                    'label'      => __('2D1N Boutique Overnight Cruise', 'vietnamguide-premium'),
+                    'tag'        => __('Signature Experience', 'vietnamguide-premium'),
+                    'total_usd'  => 395,
+                    'stay_usd'   => 195,
+                    'food_usd'   => 75,
+                    'trans_usd'  => 55,
+                    'act_usd'    => 70,
+                    'calc_tier'  => 'midrange',
+                    'items'      => [
+                        ['name' => __('Door-to-Door Limousine Transfers', 'vietnamguide-premium'), 'usd' => 45],
+                        ['name' => __('Trang An Boat Pass & Local Guide in Ninh Binh', 'vietnamguide-premium'), 'usd' => 18],
+                        ['name' => __('Ninh Binh Riverside Eco-Resort (1 night)', 'vietnamguide-premium'), 'usd' => 45],
+                        ['name' => __('4-Star Boutique Cruise Cabin (All meals, kayaking, cave)', 'vietnamguide-premium'), 'usd' => 175],
+                        ['name' => __('Hanoi French Quarter / Old Quarter Stay (1 night)', 'vietnamguide-premium'), 'usd' => 55],
+                    ],
+                ],
+            ],
+        ],
+    ];
+
+    $cfg = $configs[$route];
+    ob_start();
+    ?>
+    <section class="vg-route-budget-widget" id="<?php echo esc_attr($uid); ?>" aria-label="<?php echo esc_attr($cfg['name']); ?>">
+        <div class="vg-rb-header">
+            <div class="vg-rb-title-wrap">
+                <span class="vg-rb-badge"><?php echo esc_html($cfg['badge']); ?></span>
+                <div class="vg-rb-title" role="heading" aria-level="2"><?php echo esc_html($cfg['name']); ?></div>
+            </div>
+            <div class="vg-rb-currency-toggle" role="group" aria-label="<?php echo esc_attr__('Currency Selection', 'vietnamguide-premium'); ?>">
+                <button type="button" class="vg-rb-cur-btn is-active" data-cur="USD" aria-pressed="true">USD ($)</button>
+                <button type="button" class="vg-rb-cur-btn" data-cur="VND" aria-pressed="false">VND (₫)</button>
+                <button type="button" class="vg-rb-cur-btn" data-cur="EUR" aria-pressed="false">EUR (€)</button>
+                <button type="button" class="vg-rb-cur-btn" data-cur="GBP" aria-pressed="false">GBP (£)</button>
+                <button type="button" class="vg-rb-cur-btn" data-cur="AUD" aria-pressed="false">AUD (A$)</button>
+            </div>
+        </div>
+
+        <div class="vg-rb-mode-toggle" role="group" aria-label="<?php echo esc_attr__('Route budget style', 'vietnamguide-premium'); ?>">
+            <button type="button" class="vg-rb-mode-btn is-active" data-mode="mode_a" aria-pressed="true">
+                <span class="vg-rb-mode-name"><?php echo esc_html($cfg['modes']['mode_a']['label']); ?></span>
+                <span class="vg-rb-mode-tag"><?php echo esc_html($cfg['modes']['mode_a']['tag']); ?></span>
+            </button>
+            <button type="button" class="vg-rb-mode-btn" data-mode="mode_b" aria-pressed="false">
+                <span class="vg-rb-mode-name"><?php echo esc_html($cfg['modes']['mode_b']['label']); ?></span>
+                <span class="vg-rb-mode-tag"><?php echo esc_html($cfg['modes']['mode_b']['tag']); ?></span>
+            </button>
+        </div>
+
+        <div class="vg-rb-summary">
+            <div class="vg-rb-total-card">
+                <div class="vg-rb-total-top">
+                    <span class="vg-rb-total-label"><?php esc_html_e('Estimated Total Land Cost', 'vietnamguide-premium'); ?></span>
+                    <span class="vg-rb-daily-rate" id="<?php echo esc_attr($uid); ?>-daily-display">~$33 / day</span>
+                </div>
+                <div class="vg-rb-total-amount" id="<?php echo esc_attr($uid); ?>-total-display">$130</div>
+                <div class="vg-rb-converted-amount" id="<?php echo esc_attr($uid); ?>-converted-display">≈ 3,315,000 VND</div>
+                <div class="vg-rb-scope-note"><?php printf(esc_html__('Complete on-the-ground estimate for %d days (excludes international return flights)', 'vietnamguide-premium'), (int) $cfg['days']); ?></div>
+            </div>
+
+            <div class="vg-rb-breakdown-card">
+                <div class="vg-rb-bar-wrap">
+                    <div class="vg-rb-bar-labels">
+                        <span class="vg-bar-label-item"><span class="vg-bar-dot vg-dot-stay"></span> <?php esc_html_e('Stay', 'vietnamguide-premium'); ?></span>
+                        <span class="vg-bar-label-item"><span class="vg-bar-dot vg-dot-food"></span> <?php esc_html_e('Food', 'vietnamguide-premium'); ?></span>
+                        <span class="vg-bar-label-item"><span class="vg-bar-dot vg-dot-transit"></span> <?php esc_html_e('Transit', 'vietnamguide-premium'); ?></span>
+                        <span class="vg-bar-label-item"><span class="vg-bar-dot vg-dot-tours"></span> <?php esc_html_e('Passes', 'vietnamguide-premium'); ?></span>
+                    </div>
+                    <div class="vg-rb-bar" role="progressbar" aria-label="<?php echo esc_attr__('Route cost distribution', 'vietnamguide-premium'); ?>">
+                        <div class="vg-bar-segment vg-seg-stay" id="<?php echo esc_attr($uid); ?>-bar-stay" style="width: 28%;"></div>
+                        <div class="vg-bar-segment vg-seg-food" id="<?php echo esc_attr($uid); ?>-bar-food" style="width: 29%;"></div>
+                        <div class="vg-bar-segment vg-seg-transit" id="<?php echo esc_attr($uid); ?>-bar-transit" style="width: 31%;"></div>
+                        <div class="vg-bar-segment vg-seg-tours" id="<?php echo esc_attr($uid); ?>-bar-tours" style="width: 12%;"></div>
+                    </div>
+                </div>
+
+                <ul class="vg-rb-items-list" id="<?php echo esc_attr($uid); ?>-items-list"></ul>
+            </div>
+        </div>
+
+        <div class="vg-rb-footer">
+            <a href="<?php echo esc_url(home_url('/costs/vietnam-travel-cost/?route=' . $route)); ?>" class="vg-rb-btn-cta" id="<?php echo esc_attr($uid); ?>-cta-btn">
+                <span><?php esc_html_e('Customize Pacing in Full Budget Calculator', 'vietnamguide-premium'); ?> &rarr;</span>
+            </a>
+            <a href="<?php echo esc_url($cfg['guide_url']); ?>" class="vg-rb-btn-guide">
+                <span><?php esc_html_e('Read Full Route Budget Guide', 'vietnamguide-premium'); ?></span>
+            </a>
+        </div>
+
+        <div id="<?php echo esc_attr($uid); ?>-aria-status" class="screen-reader-text" role="status" aria-live="polite" aria-atomic="true"></div>
+    </section>
+
+    <script>
+    (function () {
+        'use strict';
+        var root = document.getElementById('<?php echo esc_js($uid); ?>');
+        if (!root) return;
+
+        var USD_TO_VND = 25500;
+        var USD_TO_EUR = 0.92;
+        var USD_TO_GBP = 0.78;
+        var USD_TO_AUD = 1.52;
+
+        var routeData = <?php echo wp_json_encode($cfg); ?>;
+        var currentCurrency = 'USD';
+        var currentMode = 'mode_a';
+
+        function formatVal(usd) {
+            if (currentCurrency === 'VND') return Math.round(usd * USD_TO_VND).toLocaleString('vi-VN') + ' ₫';
+            if (currentCurrency === 'EUR') return '€' + Math.round(usd * USD_TO_EUR).toLocaleString('en-US');
+            if (currentCurrency === 'GBP') return '£' + Math.round(usd * USD_TO_GBP).toLocaleString('en-US');
+            if (currentCurrency === 'AUD') return 'A$' + Math.round(usd * USD_TO_AUD).toLocaleString('en-US');
+            return '$' + Math.round(usd).toLocaleString('en-US');
+        }
+
+        function formatConverted(usd) {
+            if (currentCurrency === 'USD') {
+                var v = Math.round((usd * USD_TO_VND) / 10000) * 10000;
+                return '≈ ' + v.toLocaleString('vi-VN') + ' VND';
+            } else if (currentCurrency === 'VND') {
+                return '≈ $' + Math.round(usd).toLocaleString('en-US') + ' USD';
+            } else {
+                var v2 = Math.round((usd * USD_TO_VND) / 10000) * 10000;
+                return '≈ $' + Math.round(usd).toLocaleString('en-US') + ' USD (~' + v2.toLocaleString('vi-VN') + ' VND)';
+            }
+        }
+
+        function render() {
+            var mode = routeData.modes[currentMode] || routeData.modes.mode_a;
+            var days = routeData.days || 4;
+            var daily = mode.total_usd / days;
+
+            var totalDisplay = document.getElementById('<?php echo esc_js($uid); ?>-total-display');
+            var dailyDisplay = document.getElementById('<?php echo esc_js($uid); ?>-daily-display');
+            var convertedDisplay = document.getElementById('<?php echo esc_js($uid); ?>-converted-display');
+            var ctaBtn = document.getElementById('<?php echo esc_js($uid); ?>-cta-btn');
+
+            if (totalDisplay) totalDisplay.textContent = formatVal(mode.total_usd);
+            if (dailyDisplay) dailyDisplay.textContent = '~' + formatVal(daily) + ' / day';
+            if (convertedDisplay) convertedDisplay.textContent = formatConverted(mode.total_usd);
+
+            if (ctaBtn) {
+                ctaBtn.href = '<?php echo esc_url(home_url('/costs/vietnam-travel-cost/')); ?>?route=<?php echo esc_js($route); ?>&tier=' + (mode.calc_tier || 'midrange') + '&currency=' + currentCurrency;
+            }
+
+            var tot = mode.total_usd;
+            var pctStay = Math.round((mode.stay_usd / tot) * 100) || 30;
+            var pctFood = Math.round((mode.food_usd / tot) * 100) || 30;
+            var pctTrans = Math.round((mode.trans_usd / tot) * 100) || 25;
+            var pctAct = 100 - (pctStay + pctFood + pctTrans);
+
+            var barStay = document.getElementById('<?php echo esc_js($uid); ?>-bar-stay');
+            var barFood = document.getElementById('<?php echo esc_js($uid); ?>-bar-food');
+            var barTrans = document.getElementById('<?php echo esc_js($uid); ?>-bar-transit');
+            var barAct = document.getElementById('<?php echo esc_js($uid); ?>-bar-tours');
+
+            if (barStay) barStay.style.width = pctStay + '%';
+            if (barFood) barFood.style.width = pctFood + '%';
+            if (barTrans) barTrans.style.width = pctTrans + '%';
+            if (barAct) barAct.style.width = pctAct + '%';
+
+            var list = document.getElementById('<?php echo esc_js($uid); ?>-items-list');
+            if (list) {
+                list.innerHTML = '';
+                (mode.items || []).forEach(function (item) {
+                    var li = document.createElement('li');
+                    li.className = 'vg-rb-item';
+                    li.innerHTML = '<span class="vg-rb-item-name">' + item.name + '</span><span class="vg-rb-item-amount">' + formatVal(item.usd) + '</span>';
+                    list.appendChild(li);
+                });
+            }
+
+            var aria = document.getElementById('<?php echo esc_js($uid); ?>-aria-status');
+            if (aria) {
+                aria.textContent = routeData.name + ' (' + mode.label + '): ' + formatVal(mode.total_usd) + ' across ' + days + ' days.';
+            }
+        }
+
+        // Currency buttons
+        var curBtns = root.querySelectorAll('.vg-rb-cur-btn');
+        curBtns.forEach(function (btn) {
+            btn.addEventListener('click', function () {
+                var cur = btn.getAttribute('data-cur');
+                if (cur && cur !== currentCurrency) {
+                    currentCurrency = cur;
+                    curBtns.forEach(function (b) {
+                        var m = (b.getAttribute('data-cur') === cur);
+                        b.classList.toggle('is-active', m);
+                        b.setAttribute('aria-pressed', m ? 'true' : 'false');
+                    });
+                    render();
+                }
+            });
+        });
+
+        // Mode buttons
+        var modeBtns = root.querySelectorAll('.vg-rb-mode-btn');
+        modeBtns.forEach(function (btn) {
+            btn.addEventListener('click', function () {
+                var m = btn.getAttribute('data-mode');
+                if (m && m !== currentMode) {
+                    currentMode = m;
+                    modeBtns.forEach(function (b) {
+                        var isM = (b.getAttribute('data-mode') === m);
+                        b.classList.toggle('is-active', isM);
+                        b.setAttribute('aria-pressed', isM ? 'true' : 'false');
+                    });
+                    render();
+                }
+            });
+        });
+
+        render();
+    })();
+    </script>
+    <?php
+    return (string) ob_get_clean();
+}
+
+/**
+ * Shortcode handler for [vg_route_budget].
+ *
+ * @param array $atts Shortcode attributes.
+ * @return string
+ */
+function vg_route_budget_shortcode(array $atts = []): string
+{
+    $parsed = shortcode_atts([
+        'route' => 'ha-giang',
+        'days'  => 0,
+        'tier'  => 'midrange',
+    ], $atts, 'vg_route_budget');
+
+    return vg_render_route_budget_widget($parsed);
+}
+add_shortcode('vg_route_budget', 'vg_route_budget_shortcode');
+
+/**
  * Injects the Cost Calculator component on /costs/vietnam-travel-cost/ and /costs/ hub pages.
  *
  * @param string $content Post content.
@@ -900,7 +1466,7 @@ function vg_inject_cost_calculator_on_page(string $content): string
         return $content;
     }
 
-    if (has_shortcode($content, 'vg_cost_calculator') || strpos($content, 'vg-cost-calculator') !== false) {
+    if (has_shortcode($content, 'vg_cost_calculator') || has_shortcode($content, 'vg_route_budget') || strpos($content, 'vg-cost-calculator') !== false || strpos($content, 'vg-route-budget-widget') !== false) {
         return $content;
     }
 

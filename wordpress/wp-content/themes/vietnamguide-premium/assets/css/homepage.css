@@ -3716,6 +3716,57 @@ nav[aria-label="Breadcrumbs"] a:hover {
   color: var(--vg-white, #ffffff);
 }
 
+/* Route Presets in Budget Calculator */
+.vg-calc-route-presets-field {
+  margin-bottom: 20px;
+  padding-bottom: 16px;
+  border-bottom: 1px dashed var(--vg-line, #dcd5c9);
+}
+
+.vg-calc-route-hint {
+  font-size: 12px;
+  color: var(--vg-gold-text, #7e5802);
+  font-weight: 600;
+}
+
+.vg-calc-route-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.vg-calc-route-chip {
+  appearance: none;
+  border: 1px solid var(--vg-line, #dcd5c9);
+  background: var(--vg-white, #ffffff);
+  color: var(--vg-ink, #101417);
+  font-family: var(--vg-body, sans-serif);
+  font-size: 12px;
+  font-weight: 600;
+  padding: 6px 14px;
+  border-radius: 9999px;
+  cursor: pointer;
+  transition: all 150ms cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+}
+
+.vg-calc-route-chip:hover {
+  border-color: var(--vg-gold, #c29b38);
+  transform: translateY(-1px);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.08);
+}
+
+.vg-calc-route-chip:active {
+  transform: scale(0.97);
+}
+
+.vg-calc-route-chip.is-active {
+  background: var(--vg-ink, #101417);
+  border-color: var(--vg-ink, #101417);
+  color: var(--vg-white, #ffffff);
+}
+
 /* Travel Style Radio Cards */
 .vg-calc-style-options {
   display: flex;
@@ -3997,6 +4048,97 @@ nav[aria-label="Breadcrumbs"] a:hover {
   font-weight: 500;
 }
 
+/* Route Profile Verified Cost Card */
+.vg-calc-route-profile {
+  background: #ffffff;
+  border: 1px solid var(--vg-gold, #c29b38);
+  border-radius: 12px;
+  padding: 16px;
+  margin: 16px 0 20px;
+  box-shadow: 0 2px 8px rgba(194, 155, 56, 0.12);
+  animation: vgFadeIn 250ms ease forwards;
+}
+
+@keyframes vgFadeIn {
+  from { opacity: 0; transform: translateY(4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.vg-calc-rp-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.vg-calc-rp-badge {
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  background: #fdf6e7;
+  color: var(--vg-gold-text, #7e5802);
+  padding: 2px 8px;
+  border-radius: 4px;
+  border: 1px solid rgba(194, 155, 56, 0.3);
+}
+
+.vg-calc-rp-title {
+  font-family: var(--vg-display, serif);
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--vg-ink, #101417);
+}
+
+.vg-calc-rp-items {
+  list-style: none;
+  margin: 0 0 12px;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.vg-calc-rp-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  font-size: 12px;
+  line-height: 1.4;
+  padding-bottom: 6px;
+  border-bottom: 1px dashed var(--vg-line, #e6e0d4);
+}
+
+.vg-calc-rp-item-name {
+  color: var(--vg-ink, #101417);
+}
+
+.vg-calc-rp-alt {
+  font-size: 11px;
+  color: var(--vg-muted, #555e65);
+}
+
+.vg-calc-rp-item-cost {
+  color: var(--vg-jade, #184e3a);
+  font-weight: 700;
+}
+
+.vg-calc-rp-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--vg-jade, #184e3a);
+  text-decoration: none;
+  transition: color 150ms ease;
+}
+
+.vg-calc-rp-link:hover {
+  color: var(--vg-gold-text, #7e5802);
+  text-decoration: underline;
+}
+
 .vg-calc-disclaimer {
   font-size: 11px;
   line-height: 1.45;
@@ -4065,6 +4207,325 @@ nav[aria-label="Breadcrumbs"] a:hover {
 
 .vg-calc-btn-reset:active {
   transform: scale(0.97);
+}
+
+/* ==========================================================================
+   Interactive Embeddable Route Budget Widget (.vg-route-budget-widget)
+   Stage 58: Content Hub "Vietnam Travel Budget by Route"
+   ========================================================================== */
+.vg-route-budget-widget {
+  background: var(--vg-sand, #f8f6f0);
+  border: 1px solid var(--vg-line, #e6e0d4);
+  border-left: 4px solid var(--vg-jade, #184e3a);
+  border-radius: 12px;
+  padding: clamp(20px, 3vw, 28px);
+  margin: 32px 0;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.03);
+}
+
+.vg-rb-header {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 18px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--vg-line, #e6e0d4);
+}
+
+@media (min-width: 640px) {
+  .vg-rb-header {
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: space-between;
+  }
+}
+
+.vg-rb-badge {
+  display: inline-block;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--vg-gold-text, #7e5802);
+  margin-bottom: 4px;
+}
+
+.vg-rb-title {
+  font-family: var(--vg-display, serif);
+  font-size: clamp(20px, 2.2vw, 24px);
+  font-weight: 700;
+  line-height: 1.25;
+  color: var(--vg-ink, #101417);
+  margin: 0;
+}
+
+.vg-rb-currency-toggle {
+  display: inline-flex;
+  background: var(--vg-white, #ffffff);
+  border: 1px solid var(--vg-line, #dcd5c9);
+  border-radius: 8px;
+  padding: 3px;
+  gap: 2px;
+  align-self: flex-start;
+}
+
+.vg-rb-cur-btn {
+  appearance: none;
+  background: transparent;
+  border: none;
+  font-family: var(--vg-body, sans-serif);
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--vg-muted, #555e65);
+  padding: 4px 8px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 150ms ease;
+}
+
+.vg-rb-cur-btn:hover {
+  color: var(--vg-ink, #101417);
+}
+
+.vg-rb-cur-btn:active {
+  transform: scale(0.96);
+}
+
+.vg-rb-cur-btn.is-active {
+  background: var(--vg-jade, #184e3a);
+  color: var(--vg-white, #ffffff);
+}
+
+.vg-rb-mode-toggle {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-bottom: 18px;
+}
+
+@media (max-width: 480px) {
+  .vg-rb-mode-toggle {
+    grid-template-columns: 1fr;
+  }
+}
+
+.vg-rb-mode-btn {
+  appearance: none;
+  background: var(--vg-white, #ffffff);
+  border: 1px solid var(--vg-line, #dcd5c9);
+  border-radius: 8px;
+  padding: 10px 14px;
+  text-align: left;
+  cursor: pointer;
+  transition: all 150ms cubic-bezier(0.16, 1, 0.3, 1);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.vg-rb-mode-btn:hover {
+  border-color: var(--vg-gold, #c29b38);
+  transform: translateY(-1px);
+}
+
+.vg-rb-mode-btn:active {
+  transform: scale(0.98);
+}
+
+.vg-rb-mode-btn.is-active {
+  border-color: var(--vg-jade, #184e3a);
+  background: #f0f7f4;
+  box-shadow: 0 0 0 1px var(--vg-jade, #184e3a);
+}
+
+.vg-rb-mode-name {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--vg-ink, #101417);
+}
+
+.vg-rb-mode-tag {
+  font-size: 11px;
+  color: var(--vg-muted, #555e65);
+}
+
+.vg-rb-mode-btn.is-active .vg-rb-mode-tag {
+  color: var(--vg-jade, #184e3a);
+  font-weight: 600;
+}
+
+.vg-rb-summary {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+  margin-bottom: 18px;
+}
+
+@media (min-width: 768px) {
+  .vg-rb-summary {
+    grid-template-columns: 280px 1fr;
+  }
+}
+
+.vg-rb-total-card {
+  background: var(--vg-white, #ffffff);
+  border: 1px solid var(--vg-line, #e6e0d4);
+  border-radius: 10px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+}
+
+.vg-rb-total-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 8px;
+}
+
+.vg-rb-total-label {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--vg-muted, #555e65);
+}
+
+.vg-rb-daily-rate {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--vg-gold-text, #7e5802);
+}
+
+.vg-rb-total-amount {
+  font-family: var(--vg-display, serif);
+  font-size: clamp(26px, 3vw, 32px);
+  font-weight: 700;
+  color: var(--vg-jade, #184e3a);
+  line-height: 1.1;
+  margin-bottom: 4px;
+}
+
+.vg-rb-converted-amount {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--vg-muted, #555e65);
+  margin-bottom: 8px;
+}
+
+.vg-rb-scope-note {
+  font-size: 11px;
+  line-height: 1.4;
+  color: var(--vg-muted, #555e65);
+  margin-top: auto;
+  border-top: 1px solid var(--vg-line, #f0ede6);
+  padding-top: 8px;
+}
+
+.vg-rb-breakdown-card {
+  background: var(--vg-white, #ffffff);
+  border: 1px solid var(--vg-line, #e6e0d4);
+  border-radius: 10px;
+  padding: 16px;
+}
+
+.vg-rb-bar-wrap {
+  margin-bottom: 12px;
+}
+
+.vg-rb-bar-labels {
+  display: flex;
+  gap: 12px;
+  font-size: 11px;
+  color: var(--vg-muted, #555e65);
+  margin-bottom: 6px;
+}
+
+.vg-rb-bar {
+  display: flex;
+  height: 8px;
+  border-radius: 4px;
+  overflow: hidden;
+  background: #ede9e1;
+}
+
+.vg-rb-items-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.vg-rb-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  font-size: 12px;
+  line-height: 1.4;
+  border-bottom: 1px dashed var(--vg-line, #f0ede6);
+  padding-bottom: 4px;
+}
+
+.vg-rb-item:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.vg-rb-item-name {
+  color: var(--vg-ink, #101417);
+}
+
+.vg-rb-item-amount {
+  font-weight: 700;
+  color: var(--vg-ink, #101417);
+}
+
+.vg-rb-footer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.vg-rb-btn-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--vg-jade, #184e3a);
+  color: var(--vg-white, #ffffff);
+  font-size: 12px;
+  font-weight: 700;
+  padding: 8px 16px;
+  border-radius: 6px;
+  text-decoration: none;
+  transition: all 150ms ease;
+}
+
+.vg-rb-btn-cta:hover {
+  background: var(--vg-ink, #101417);
+  transform: translateY(-1px);
+}
+
+.vg-rb-btn-cta:active {
+  transform: scale(0.97);
+}
+
+.vg-rb-btn-guide {
+  display: inline-flex;
+  align-items: center;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--vg-ink, #101417);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  transition: color 150ms ease;
+}
+
+.vg-rb-btn-guide:hover {
+  color: var(--vg-gold-text, #7e5802);
 }
 
 /* ==========================================================================
