@@ -94,8 +94,8 @@ function vg_upsert_route_budget_page(string $slug, string $title, int $parent_id
 // 1. Page 1: Ha Giang Loop Cost & Budget (/costs/ha-giang-loop-cost-budget/)
 // ==============================================================================
 $p1_slug    = 'ha-giang-loop-cost-budget';
-$p1_title   = 'Ha Giang Loop Cost & Budget: 4-Day Self-Drive vs Easy Rider Breakdown';
-$p1_excerpt = 'Realistic 4-day Ha Giang Loop budget breakdown: compare self-drive vs easy rider costs, motorbike rental, fuel, permits, homestays, boat trips, and sleeper buses.';
+$p1_title   = 'Ha Giang Loop Cost: 4-Day Self-Drive vs Easy Rider Budget';
+$p1_excerpt = 'Realistic Ha Giang Loop cost breakdown: compare 4-day self-drive vs easy rider expenses, bike rental, fuel, permits, homestays, and sleeper buses.';
 $p1_img     = 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/46/Ma_Pi_Leng_Pass_winding_road_Ha_Giang_Vietnam.jpg/1280px-Ma_Pi_Leng_Pass_winding_road_Ha_Giang_Vietnam.jpg';
 
 $p1_content = <<<HTML
@@ -315,8 +315,8 @@ $p1_content = <<<HTML
 HTML;
 
 $p1_meta = [
-    'rank_math_title'         => 'Ha Giang Loop Cost & Budget: 4-Day Self-Drive vs Easy Rider Breakdown',
-    'rank_math_description'   => 'Realistic 4-day Ha Giang Loop budget breakdown: compare self-drive vs easy rider costs, motorbike rental, fuel, permits, homestays, boat trips, and sleeper buses.',
+    'rank_math_title'         => 'Ha Giang Loop Cost: 4-Day Self-Drive vs Easy Rider Budget',
+    'rank_math_description'   => 'Realistic Ha Giang Loop cost breakdown: compare 4-day self-drive vs easy rider expenses, bike rental, fuel, permits, homestays, and sleeper buses.',
     'rank_math_focus_keyword' => 'Ha Giang Loop cost',
     'vg_eeat_primary_decision'=> 'Compare realistic 4-day self-drive versus easy rider budget, permits, homestays, fuel, and sleeper bus costs on the Ha Giang Loop.',
     'vg_eeat_field_note'      => 'Ha Giang Loop expenses are dictated by transport choices and licensing risk. Self-driving saves money only for experienced riders with valid 1968 IDP permits; Easy Rider packages provide comprehensive safety and cultural value.',
@@ -328,8 +328,8 @@ vg_upsert_route_budget_page($p1_slug, $p1_title, $parent_id, $p1_content, $p1_ex
 // 2. Page 2: Da Nang & Hoi An Travel Budget (/costs/da-nang-hoi-an-budget/)
 // ==============================================================================
 $p2_slug    = 'da-nang-hoi-an-budget';
-$p2_title   = 'Da Nang & Hoi An Travel Budget: 5-Day Realistic Spending Guide';
-$p2_excerpt = 'Realistic 5-day Da Nang and Hoi An travel budget: compare backpacker, mid-range, and luxury spending across boutique hotels, Hai Van transfers, tickets, and dining.';
+$p2_title   = 'Da Nang & Hoi An Budget: 5-Day Realistic Spending Guide';
+$p2_excerpt = 'Realistic Da Nang Hoi An budget guide: compare 5-day backpacker, mid-range, and luxury spending across boutique hotels, transfers, tickets, and dining.';
 $p2_img     = 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d6/H%E1%BB%99i_An%2C_Ancient_Town%2C_2020-01_CN-11.jpg/1920px-H%E1%BB%99i_An%2C_Ancient_Town%2C_2020-01_CN-11.jpg';
 
 $p2_content = <<<HTML
@@ -528,9 +528,9 @@ $p2_content = <<<HTML
 HTML;
 
 $p2_meta = [
-    'rank_math_title'         => 'Da Nang & Hoi An Travel Budget: 5-Day Realistic Spending Guide',
-    'rank_math_description'   => 'Realistic 5-day Da Nang and Hoi An travel budget: compare backpacker, mid-range, and luxury spending across boutique hotels, Hai Van transfers, tickets, and dining.',
-    'rank_math_focus_keyword' => 'Da Nang Hoi An budget',
+    'rank_math_title'         => 'Da Nang & Hoi An Budget: 5-Day Realistic Spending Guide',
+    'rank_math_description'   => 'Realistic Da Nang & Hoi An budget guide: compare 5-day backpacker, mid-range, and luxury spending across boutique hotels, transfers, tickets, and dining.',
+    'rank_math_focus_keyword' => 'Da Nang & Hoi An budget',
     'vg_eeat_primary_decision'=> 'Plan realistic 5-day spending across Da Nang and Hoi An covering boutique beachfront hotels, heritage passes, airport transfers, and seafood dining.',
     'vg_eeat_field_note'      => 'Da Nang and Hoi An offer Vietnam\'s highest hospitality value per dollar. Low airport transfer friction and walkable heritage centers keep daily outlays predictable across all budget tiers.',
 ];
@@ -541,8 +541,8 @@ vg_upsert_route_budget_page($p2_slug, $p2_title, $parent_id, $p2_content, $p2_ex
 // 3. Page 3: Hanoi, Ninh Binh & Ha Long Bay Budget (/costs/hanoi-ninh-binh-ha-long-budget/)
 // ==============================================================================
 $p3_slug    = 'hanoi-ninh-binh-ha-long-budget';
-$p3_title   = 'Hanoi, Ninh Binh & Ha Long Bay Budget: 4-Day Northern Highlights Breakdown';
-$p3_excerpt = 'Itemized 4-day northern highlights travel budget: compare day cruises vs 2D1N boutique overnight cruises, limousine transfers, Trang An boats, and boutique stays.';
+$p3_title   = 'Hanoi, Ninh Binh & Ha Long Budget: 4-Day Travel Breakdown';
+$p3_excerpt = 'Hanoi Ninh Binh Ha Long budget guide: compare day cruises vs 2D1N overnight boutique cruise costs, limousine transfers, Trang An boats, and hotels.';
 $p3_img     = 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/fa/Ha_Long_Bay%2C_Vietnam%2C_View_from_above.jpg/1920px-Ha_Long_Bay%2C_Vietnam%2C_View_from_above.jpg';
 
 $p3_content = <<<HTML
@@ -754,9 +754,9 @@ $p3_content = <<<HTML
 HTML;
 
 $p3_meta = [
-    'rank_math_title'         => 'Hanoi, Ninh Binh & Ha Long Bay Budget: 4-Day Northern Highlights Breakdown',
-    'rank_math_description'   => 'Itemized 4-day northern highlights travel budget: compare day cruises vs 2D1N boutique overnight cruises, limousine transfers, Trang An boats, and boutique stays.',
-    'rank_math_focus_keyword' => 'Hanoi Ninh Binh Ha Long budget',
+    'rank_math_title'         => 'Hanoi, Ninh Binh & Ha Long Budget: 4-Day Travel Breakdown',
+    'rank_math_description'   => 'Hanoi, Ninh Binh & Ha Long budget guide: compare day cruises vs 2D1N overnight boutique cruise costs, limousine transfers, Trang An boats, and hotels.',
+    'rank_math_focus_keyword' => 'Hanoi, Ninh Binh & Ha Long budget',
     'vg_eeat_primary_decision'=> 'Compare day cruise versus overnight cruise packages, limousine transfers, and eco-lodge pricing across Hanoi, Ninh Binh, and Ha Long Bay.',
     'vg_eeat_field_note'      => 'The cruise cabin represents over 50% of the northern golden triangle budget. Combining a premier day cruise with an overnight Ninh Binh countryside stay saves $150 to $200 USD per person.',
 ];
