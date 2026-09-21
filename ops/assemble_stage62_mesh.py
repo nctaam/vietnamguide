@@ -1,0 +1,278 @@
+# -*- coding: utf-8 -*-
+"""
+VietnamGuide Stage 62: Exact Mesh Assembler and Validator.
+Constructs 28 surgical internal linking replacements across 24 posts,
+verifying that each target exists exactly once in the source contents.
+"""
+
+import json
+import sys
+
+sys.stdout.reconfigure(encoding='utf-8')
+
+sources = json.load(open('ops/stage62_source_contents.json', 'r', encoding='utf-8'))
+
+# List of 28 operations
+OPERATIONS = [
+    # =========================================================================
+    # Group 1: saigon-airport-to-district-1 (4 links)
+    # =========================================================================
+    {
+        "post_id": 262,
+        "slug": "ho-chi-minh-city-travel-guide",
+        "pillar": "saigon-airport-to-district-1",
+        "target": '<td data-label="Movement">Airport transfer</td><td data-label="Use it when...">Every HCMC route starts or ends through Tan Son Nhat.</td>',
+        "replacement": '<td data-label="Movement">Airport transfer</td><td data-label="Use it when...">Every HCMC route starts or ends through Tan Son Nhat (see our guide to <a href="/plan/saigon-airport-to-district-1/">Saigon airport to District 1</a> for Bus 109, Grab, and taxi options).</td>'
+    },
+    {
+        "post_id": 281,
+        "slug": "where-to-stay-in-ho-chi-minh-city",
+        "pillar": "saigon-airport-to-district-1",
+        "target": '<details><summary>Should I stay near Tan Son Nhat Airport?</summary><p>Stay near the airport for late arrivals, early flights, separate tickets, or fragile onward travel. If you have a real HCMC evening and a normal departure time, a central base usually gives better trip value.</p></details>',
+        "replacement": '<details><summary>Should I stay near Tan Son Nhat Airport?</summary><p>Stay near the airport for late arrivals, early flights, separate tickets, or fragile onward travel. If you have a real HCMC evening and a normal departure time, a central base usually gives better trip value (review transfer logistics in our <a href="/plan/saigon-airport-to-district-1/">Saigon airport to District 1</a> guide).</p></details>'
+    },
+    {
+        "post_id": 476,
+        "slug": "vietnam-airport-arrival-checklist",
+        "pillar": "saigon-airport-to-district-1",
+        "target": '<p>For the specific Hanoi handoff, use <a href="/plan/hanoi-airport-to-old-quarter/">Hanoi Airport to Old Quarter</a>. For country-wide movement decisions, use <a href="/plan/transport-within-vietnam/">Transport Within Vietnam</a>. The arrival rule stays the same across airports: if you cannot verify who is taking you, how payment works, and where the vehicle is going, pause before leaving the airport process.</p>',
+        "replacement": '<p>For specific city handoffs, use <a href="/plan/hanoi-airport-to-old-quarter/">Hanoi Airport to Old Quarter</a> and our <a href="/plan/saigon-airport-to-district-1/">Saigon Airport to District 1</a> guide. For country-wide movement decisions, use <a href="/plan/transport-within-vietnam/">Transport Within Vietnam</a>. The arrival rule stays the same across airports: if you cannot verify who is taking you, how payment works, and where the vehicle is going, pause before leaving the airport process.</p>'
+    },
+    {
+        "post_id": 615,
+        "slug": "saigon-street-food-guide",
+        "pillar": "saigon-airport-to-district-1",
+        "target": '<div class="wp-block-details">\n<summary><strong>How much should I budget per day for street food in Saigon?</strong></summary>\n<p>A generous daily street food budget is 200,000 to 350,000 VND ($8 to $14 USD) per person, covering a hearty breakfast of com tam, an afternoon banh mi with iced coffee, and an evening multi-dish seafood feast with beers.</p>\n</div>',
+        "replacement": '<div class="wp-block-details">\n<summary><strong>How much should I budget per day for street food in Saigon?</strong></summary>\n<p>A generous daily street food budget is 200,000 to 350,000 VND ($8 to $14 USD) per person, covering a hearty breakfast of com tam, an afternoon banh mi with iced cà phê sữa đá (see our <a href="/destinations/vietnam-coffee-guide/">Vietnam Coffee Guide</a>), and an evening multi-dish seafood feast with beers.</p>\n</div>\n\n<h2 class="wp-block-heading">Where to go next</h2>\n<p>Plan your Saigon stay and onward travel with our practical guides:</p>\n<ul class="wp-block-list">\n<li><a href="/destinations/ho-chi-minh-city-travel-guide/">Ho Chi Minh City Travel Guide</a> &mdash; complete city itinerary and neighborhood orientation.</li>\n<li><a href="/plan/saigon-airport-to-district-1/">Saigon Airport to District 1</a> &mdash; Bus 109, Grab, and taxi transfer options from Tan Son Nhat.</li>\n<li><a href="/destinations/vietnam-coffee-guide/">Vietnam Coffee Guide</a> &mdash; discover Saigon\'s best cà phê sữa đá and specialty roasters.</li>\n<li><a href="/destinations/where-to-stay-in-ho-chi-minh-city/">Where to Stay in Ho Chi Minh City</a> &mdash; neighborhood comparison for food lovers and first-timers.</li>\n</ul>'
+    },
+
+    # =========================================================================
+    # Group 2: da-nang-airport-to-hoi-an (4 links)
+    # =========================================================================
+    {
+        "post_id": 213,
+        "slug": "da-nang-travel-guide",
+        "pillar": "da-nang-airport-to-hoi-an",
+        "target": '<tr><td data-label="Question"><strong>Da Nang or Hoi An?</strong></td><td data-label="Answer">Da Nang for airport, beach, and logistics. Hoi An for Ancient Town evenings, food, cafes, and slower texture. Use the comparison before splitting bases.</td></tr>',
+        "replacement": '<tr><td data-label="Question"><strong>Da Nang or Hoi An?</strong></td><td data-label="Answer">Da Nang for airport, beach, and logistics. Hoi An for Ancient Town evenings, food, cafes, and slower texture (see transfer options in our <a href="/plan/da-nang-airport-to-hoi-an/">Da Nang airport to Hoi An</a> guide). Use the comparison before splitting bases.</td></tr>'
+    },
+    {
+        "post_id": 499,
+        "slug": "hoi-an-ancient-town-guide",
+        "pillar": "da-nang-airport-to-hoi-an",
+        "target": '<li><strong>Da Nang Airport (DAD) to Hoi An:</strong> 30 km; GrabCar costs 320,000–380,000 VND (45 mins); shared shuttle bus costs 130,000–150,000 VND per seat.</li>',
+        "replacement": '<li><strong>Da Nang Airport (DAD) to Hoi An:</strong> 30 km; GrabCar costs 320,000–380,000 VND (45 mins); shared shuttle bus costs 130,000–150,000 VND per seat (read our full <a href="/plan/da-nang-airport-to-hoi-an/">Da Nang airport to Hoi An</a> transfer breakdown).</li>'
+    },
+    {
+        "post_id": 209,
+        "slug": "da-nang-vs-hoi-an",
+        "pillar": "da-nang-airport-to-hoi-an",
+        "target": '<li><strong>Airport Logistics:</strong> Da Nang International Airport (DAD) is 4 km from My Khe Beach (GrabCar 70,000–90,000 VND) vs 30 km from Hoi An (GrabCar 320,000–380,000 VND).</li>',
+        "replacement": '<li><strong>Airport Logistics:</strong> Da Nang International Airport (DAD) is 4 km from My Khe Beach (GrabCar 70,000–90,000 VND) vs 30 km from Hoi An (GrabCar 320,000–380,000 VND; see our dedicated <a href="/plan/da-nang-airport-to-hoi-an/">Da Nang airport to Hoi An</a> guide).</li>'
+    },
+    {
+        "post_id": 155,
+        "slug": "transport-within-vietnam",
+        "pillar": "da-nang-airport-to-hoi-an",
+        "target": '<details><summary>When should I prebook airport transfers?</summary><p>Prebook when arriving late, traveling with family, carrying heavy luggage, connecting on separate tickets, or heading straight to a distant hotel. Keep it flexible when you have daylight, light luggage, and a simple city arrival.</p></details>',
+        "replacement": '<details><summary>When should I prebook airport transfers?</summary><p>Prebook when arriving late, traveling with family, carrying heavy luggage, connecting on separate tickets, or heading straight to a distant hotel (compare specific routes in our <a href="/plan/da-nang-airport-to-hoi-an/">Da Nang Airport to Hoi An</a> and <a href="/plan/hanoi-airport-to-old-quarter/">Hanoi Airport to Old Quarter</a> guides). Keep it flexible when you have daylight, light luggage, and a simple city arrival.</p></details>'
+    },
+
+    # =========================================================================
+    # Group 3: grab-in-vietnam-guide (4 links)
+    # =========================================================================
+    {
+        "post_id": 155,
+        "slug": "transport-within-vietnam",
+        "pillar": "grab-in-vietnam-guide",
+        "target": '<td data-label="Keep flexible when">You are in a compact city with easy ride-hailing and no fixed handoff.</td>',
+        "replacement": '<td data-label="Keep flexible when">You are in a compact city with easy ride-hailing (see our <a href="/plan/grab-in-vietnam-guide/">Grab in Vietnam guide</a>) and no fixed handoff.</td>'
+    },
+    {
+        "post_id": 15,
+        "slug": "sim-esim-vietnam",
+        "pillar": "grab-in-vietnam-guide",
+        "target": '<details><summary>Will a data-only eSIM work for Grab or ride-hailing?</summary><p>Often, but not always smoothly. Data lets you use apps, but a local number can reduce friction if a driver, hotel, or guide needs to call or verify you. Keep hotel pickup details offline as backup.</p></details>',
+        "replacement": '<details><summary>Will a data-only eSIM work for Grab or ride-hailing?</summary><p>Often, but not always smoothly. Data lets you use apps (see our <a href="/plan/grab-in-vietnam-guide/">Grab in Vietnam guide</a> for chat-based driver messaging and app setup), but a local number can reduce friction if a driver, hotel, or guide needs to call or verify you. Keep hotel pickup details offline as backup.</p></details>'
+    },
+    {
+        "post_id": 158,
+        "slug": "money-cash-cards-atms",
+        "pillar": "grab-in-vietnam-guide",
+        "target": '<tr><td data-label="Place or payment">Ride-hailing, taxis, local buses, tips</td><td data-label="Likely payment fit">Cash backup even when app/card is available.</td><td data-label="Traveler risk">Phone battery, app mismatch, driver payment preference, late-night problems.</td><td data-label="Best practice">Keep enough VND for a ride back to the hotel.</td></tr>',
+        "replacement": '<tr><td data-label="Place or payment">Ride-hailing, taxis, local buses, tips</td><td data-label="Likely payment fit">Cash backup even when app/card is available (see our <a href="/plan/grab-in-vietnam-guide/">Grab in Vietnam guide</a> for cashless card setups).</td><td data-label="Traveler risk">Phone battery, app mismatch, driver payment preference, late-night problems.</td><td data-label="Best practice">Keep enough VND for a ride back to the hotel.</td></tr>'
+    },
+    {
+        "post_id": 181,
+        "slug": "safety-scams-vietnam",
+        "pillar": "grab-in-vietnam-guide",
+        "target": '<tr><td data-label="Financial / safety channel">Airport Transport Shield</td><td data-label="Regulated fee / rate">280,000–340,000 VND (HAN) / 110,000–150,000 VND (SGN)</td><td data-label="Operational parameter">Fixed GrabCar or airport taxi rank fare</td><td data-label="Protective operational rule">Never follow solicitors inside terminal arrivals quoting 600,000–800,000 VND; use official app.</td></tr>',
+        "replacement": '<tr><td data-label="Financial / safety channel">Airport Transport Shield</td><td data-label="Regulated fee / rate">280,000–340,000 VND (HAN) / 110,000–150,000 VND (SGN)</td><td data-label="Operational parameter">Fixed GrabCar or airport taxi rank fare</td><td data-label="Protective operational rule">Never follow solicitors inside terminal arrivals quoting 600,000–800,000 VND; use official app (see our <a href="/plan/grab-in-vietnam-guide/">Grab in Vietnam guide</a>).</td></tr>'
+    },
+
+    # =========================================================================
+    # Group 4: tipping-in-vietnam (4 links)
+    # =========================================================================
+    {
+        "post_id": 22,
+        "slug": "vietnam-travel-cost",
+        "pillar": "tipping-in-vietnam",
+        "target": '<details><summary>What should I not hide inside a daily budget?</summary><p>Do not bury e-visa fees, airport transfers, domestic flights, trains, cruises, private cars, peak-date hotel jumps, and weather buffers inside an average day. List them separately before deciding whether the trip is basic, comfortable, or premium.</p></details>',
+        "replacement": '<details><summary>What should I not hide inside a daily budget?</summary><p>Do not bury e-visa fees, airport transfers, domestic flights, trains, cruises, private cars, discretionary gratuities (review customary amounts in our <a href="/plan/tipping-in-vietnam/">Tipping in Vietnam</a> guide), peak-date hotel jumps, and weather buffers inside an average day. List them separately before deciding whether the trip is basic, comfortable, or premium.</p></details>'
+    },
+    {
+        "post_id": 158,
+        "slug": "money-cash-cards-atms",
+        "pillar": "tipping-in-vietnam",
+        "target": '<tr><td data-label="Situation">Guides, drivers, spas, porter help</td><td data-label="Best first answer">VND cash for discretionary tips when service is strong.</td><td data-label="Why">Tipping is not the core payment method, but small notes make it easier to thank people without awkwardness.</td><td data-label="Live check">Whether service charge is already included and what feels appropriate locally.</td></tr>',
+        "replacement": '<tr><td data-label="Situation">Guides, drivers, spas, porter help</td><td data-label="Best first answer">VND cash for discretionary tips when service is strong (consult our <a href="/plan/tipping-in-vietnam/">Tipping in Vietnam</a> guide for customary amounts).</td><td data-label="Why">Tipping is not the core payment method, but small notes make it easier to thank people without awkwardness.</td><td data-label="Live check">Whether service charge is already included and what feels appropriate locally.</td></tr>'
+    },
+    {
+        "post_id": 480,
+        "slug": "vietnam-food-safety-street-food-etiquette",
+        "pillar": "tipping-in-vietnam",
+        "target": '<tr><td data-label="Small moment">Tipping</td><td data-label="Better habit">Do not force a tipping habit onto a tiny stall; round up only when it feels natural.</td><td data-label="Why it matters">Street food is usually a straightforward transaction.</td><td data-label="Common mistake">Making payment socially awkward.</td></tr>',
+        "replacement": '<tr><td data-label="Small moment">Tipping</td><td data-label="Better habit">Do not force a tipping habit onto a tiny stall; round up only when it feels natural (see our full <a href="/plan/tipping-in-vietnam/">Tipping in Vietnam</a> guide for restaurants, spas, and tours).</td><td data-label="Why it matters">Street food is usually a straightforward transaction.</td><td data-label="Common mistake">Making payment socially awkward.</td></tr>'
+    },
+    {
+        "post_id": 473,
+        "slug": "vietnam-first-trip-planning-checklist",
+        "pillar": "tipping-in-vietnam",
+        "target": '<li><span>03</span><strong>Cash and cards</strong><p>Get a practical amount of cash, not your whole trip budget. Keep cards and backup cash separated.</p></li>',
+        "replacement": '<li><span>03</span><strong>Cash and cards</strong><p>Get a practical amount of cash for small daily expenses and tips (see our <a href="/plan/tipping-in-vietnam/">Tipping in Vietnam</a> guide), not your whole trip budget. Keep cards and backup cash separated.</p></li>'
+    },
+
+    # =========================================================================
+    # Group 5: vietnam-coffee-guide (4 links)
+    # =========================================================================
+    {
+        "post_id": 614,
+        "slug": "hanoi-street-food-guide",
+        "pillar": "vietnam-coffee-guide",
+        "target": '<p>Invented during the 1946 French war when fresh dairy milk was scarce in Hanoi, egg coffee blends raw egg yolk whipped with sweetened condensed milk into a thick, airy meringue foam poured over hot Robusta coffee.</p>',
+        "replacement": '<p>Invented during the 1946 French war when fresh dairy milk was scarce in Hanoi, egg coffee blends raw egg yolk whipped with sweetened condensed milk into a thick, airy meringue foam poured over hot Robusta coffee (explore the history and variations in our complete <a href="/destinations/vietnam-coffee-guide/">Vietnam Coffee Guide</a>).</p>'
+    },
+    {
+        "post_id": 611,
+        "slug": "da-lat-travel-guide",
+        "pillar": "vietnam-coffee-guide",
+        "target": '<li><strong>Cau Dat Specialty Coffee Estates:</strong> Located 25 kilometers southeast at 1,650 meters altitude. Walk through Arabica coffee groves, observe parchment drying patios, and sample pour-overs at hillside roasteries.</li>',
+        "replacement": '<li><strong>Cau Dat Specialty Coffee Estates:</strong> Located 25 kilometers southeast at 1,650 meters altitude. Walk through Arabica coffee groves, observe parchment drying patios, and sample pour-overs at hillside roasteries (learn more about Vietnam\'s Arabica and Robusta growing regions in our <a href="/destinations/vietnam-coffee-guide/">Vietnam Coffee Guide</a>).</li>'
+    },
+    {
+        "post_id": 287,
+        "slug": "hanoi-travel-guide",
+        "pillar": "vietnam-coffee-guide",
+        "target": '<p>Hanoi is not the same page in every itinerary. It can be a soft landing, an Old Quarter culinary immersion (use our <a href="/destinations/hanoi-street-food-guide/">Hanoi street food guide</a> for stalls and etiquette), northern transport base, or final recovery stop before departure.</p>',
+        "replacement": '<p>Hanoi is not the same page in every itinerary. It can be a soft landing, an Old Quarter culinary immersion (use our <a href="/destinations/hanoi-street-food-guide/">Hanoi street food guide</a> for stalls and etiquette, and discover traditional egg coffee in our <a href="/destinations/vietnam-coffee-guide/">Vietnam Coffee Guide</a>), northern transport base, or final recovery stop before departure.</p>'
+    },
+    {
+        "post_id": 262,
+        "slug": "ho-chi-minh-city-travel-guide",
+        "pillar": "vietnam-coffee-guide",
+        "target": '<td data-label="Trip job">Food and markets</td><td data-label="Prioritize">District 1/3 base, guided food block, Ben Thanh or neighborhood market, cafe time, and walking/ride-hail ease.</td>',
+        "replacement": '<td data-label="Trip job">Food and markets</td><td data-label="Prioritize">District 1/3 base, guided food block, Ben Thanh or neighborhood market, cafe time (see our <a href="/destinations/vietnam-coffee-guide/">Vietnam Coffee Guide</a> for iconic cafes), and walking/ride-hail ease.</td>'
+    },
+
+    # =========================================================================
+    # Group 6: vietnam-in-march (4 links)
+    # =========================================================================
+    {
+        "post_id": 14,
+        "slug": "best-time-to-visit-vietnam",
+        "pillar": "vietnam-in-march",
+        "target": '<p class="vg-verdict-lede"><strong>For most first-time visitors, March-April and October-November are the easiest planning windows.</strong> Choose December-April for a southern or island-led trip (consult our month guides for <a href="/plan/vietnam-in-december/">Vietnam in December</a>, <a href="/plan/vietnam-in-january/">Vietnam in January</a>, and <a href="/plan/vietnam-in-february/">Vietnam in February</a>, alongside our <a href="/plan/tet-in-vietnam-travel-guide/">Tet in Vietnam guide</a>), be more careful with central-coast beach plans in late-year weather, and follow a <a href="/plan/vietnam-rainy-season-flexible-route/">flexible rainy season route</a> when navigating regional monsoons without forcing a full-country checklist.</p>',
+        "replacement": '<p class="vg-verdict-lede"><strong>For most first-time visitors, March-April and October-November are the easiest planning windows.</strong> Choose December-April for a southern or island-led trip (consult our month guides for <a href="/plan/vietnam-in-december/">Vietnam in December</a>, <a href="/plan/vietnam-in-january/">Vietnam in January</a>, <a href="/plan/vietnam-in-february/">Vietnam in February</a>, and our complete guide to <a href="/plan/vietnam-in-march/">Vietnam in March</a>, alongside our <a href="/plan/tet-in-vietnam-travel-guide/">Tet in Vietnam guide</a> and autumn insights in <a href="/plan/vietnam-in-november/">Vietnam in November</a>), be more careful with central-coast beach plans in late-year weather, and follow a <a href="/plan/vietnam-rainy-season-flexible-route/">flexible rainy season route</a> when navigating regional monsoons without forcing a full-country checklist.</p>'
+    },
+    {
+        "post_id": 495,
+        "slug": "vietnam-in-february",
+        "pillar": "vietnam-in-march",
+        "target": '<li><span class="vg-related-route-step">03</span><a href="/plan/vietnam-in-january/">Vietnam in January</a><span class="vg-related-route-note">Use this when your trip crosses the month boundary or begins before Tet.</span></li>',
+        "replacement": '<li><span class="vg-related-route-step">03</span><a href="/plan/vietnam-in-january/">Vietnam in January</a><span class="vg-related-route-note">Use this when your trip crosses the month boundary or begins before Tet.</span></li>\n<li><span class="vg-related-route-step">04</span><a href="/plan/vietnam-in-march/">Vietnam in March</a><span class="vg-related-route-note">Use this when your travel window extends into peak spring across central and northern Vietnam.</span></li>'
+    },
+    {
+        "post_id": 19,
+        "slug": "10-days-in-vietnam",
+        "pillar": "vietnam-in-march",
+        "target": '<tr><td data-label="Planning season">March-April</td><td data-label="Safer 10-day bias">The default north-plus-central route is often at its easiest if flights into Hanoi and out of Da Nang cooperate.</td><td data-label="What to protect">Bay quality, Ninh Binh depth, and a real Hoi An day.</td><td data-label="What not to pretend">That good weather makes a third region free.</td></tr>',
+        "replacement": '<tr><td data-label="Planning season">March-April</td><td data-label="Safer 10-day bias">The default north-plus-central route is often at its easiest if flights into Hanoi and out of Da Nang cooperate (review seasonal route details in our <a href="/plan/vietnam-in-march/">Vietnam in March</a> guide).</td><td data-label="What to protect">Bay quality, Ninh Binh depth, and a real Hoi An day.</td><td data-label="What not to pretend">That good weather makes a third region free.</td></tr>'
+    },
+    {
+        "post_id": 110,
+        "slug": "best-places-to-visit-vietnam",
+        "pillar": "vietnam-in-march",
+        "target": '<li>Planning order: start with the <a href="/plan/vietnam-travel-guide/">Vietnam Travel Guide</a>, then use <a href="/compare/north-central-south-vietnam/">North vs Central vs South Vietnam</a>, <a href="/plan/best-time-to-visit-vietnam/">Best Time</a>, <a href="/itineraries/10-days-in-vietnam/">10 Days in Vietnam</a>, and <a href="/costs/vietnam-travel-cost/">Vietnam Travel Cost</a> before committing money.</li>',
+        "replacement": '<li>Planning order: start with the <a href="/plan/vietnam-travel-guide/">Vietnam Travel Guide</a>, then use <a href="/compare/north-central-south-vietnam/">North vs Central vs South Vietnam</a>, <a href="/plan/best-time-to-visit-vietnam/">Best Time</a> (and seasonal highlights in <a href="/plan/vietnam-in-march/">Vietnam in March</a>), <a href="/itineraries/10-days-in-vietnam/">10 Days in Vietnam</a>, and <a href="/costs/vietnam-travel-cost/">Vietnam Travel Cost</a> before committing money.</li>'
+    },
+
+    # =========================================================================
+    # Group 7: vietnam-in-november (4 links)
+    # =========================================================================
+    {
+        "post_id": 493,
+        "slug": "vietnam-in-december",
+        "pillar": "vietnam-in-november",
+        "target": '<li><span class="vg-related-route-step">01</span><a href="/plan/best-time-to-visit-vietnam/">Best Time to Visit Vietnam</a><span class="vg-related-route-note">Use this for the broader seasonal frame before choosing December-specific trade-offs.</span></li>',
+        "replacement": '<li><span class="vg-related-route-step">01</span><a href="/plan/best-time-to-visit-vietnam/">Best Time to Visit Vietnam</a><span class="vg-related-route-note">Use this for the broader seasonal frame before choosing December-specific trade-offs.</span></li>\n<li><span class="vg-related-route-step">02</span><a href="/plan/vietnam-in-november/">Vietnam in November</a><span class="vg-related-route-note">Compare with late autumn conditions and Northern mountain trekking in the preceding month.</span></li>'
+    },
+    {
+        "post_id": 482,
+        "slug": "vietnam-rainy-season-flexible-route",
+        "pillar": "vietnam-in-november",
+        "target": '<details><summary>Which part of Vietnam is hardest to plan in rainy season?</summary><p>Central-coast and beach-led plans usually need the most caution because rain, wind, storm exposure, beach value, and transfer comfort can all matter. Exact dates still need live checks.</p></details>',
+        "replacement": '<details><summary>Which part of Vietnam is hardest to plan in rainy season?</summary><p>Central-coast and beach-led plans usually need the most caution because rain, wind, storm exposure, beach value, and transfer comfort can all matter (compare regional transitions in our <a href="/plan/vietnam-in-november/">Vietnam in November</a> guide). Exact dates still need live checks.</p></details>'
+    },
+    {
+        "post_id": 20,
+        "slug": "14-days-in-vietnam",
+        "pillar": "vietnam-in-november",
+        "target": '<tr><td data-label="Planning season">September-November</td><td data-label="Safer route bias">Be careful with central Vietnam weather exposure; north or south weighting may be wiser depending on exact dates.</td><td data-label="What to protect">Hoi An/Hue flexibility, bay weather policy, and alternate city days.</td><td data-label="What to avoid pretending">That central Vietnam beach or heritage days are guaranteed to behave like dry-season brochure images.</td></tr>',
+        "replacement": '<tr><td data-label="Planning season">September-November</td><td data-label="Safer route bias">Be careful with central Vietnam weather exposure; north or south weighting may be wiser depending on exact dates (see our <a href="/plan/vietnam-in-november/">Vietnam in November</a> guide for regional routing tips).</td><td data-label="What to protect">Hoi An/Hue flexibility, bay weather policy, and alternate city days.</td><td data-label="What to avoid pretending">That central Vietnam beach or heritage days are guaranteed to behave like dry-season brochure images.</td></tr>'
+    },
+    {
+        "post_id": 14,
+        "slug": "best-time-to-visit-vietnam",
+        "pillar": "vietnam-in-november",
+        "target": '<tr><td data-label="Question"><strong>Best all-round windows</strong></td><td data-label="VietnamGuide answer">March-April and October-November are usually the easiest starting points for many first trips, especially when the route mixes north and central Vietnam.</td></tr>',
+        "replacement": '<tr><td data-label="Question"><strong>Best all-round windows</strong></td><td data-label="VietnamGuide answer">March-April and October-November are usually the easiest starting points for many first trips (review autumn route strategies in our <a href="/plan/vietnam-in-november/">Vietnam in November</a> guide), especially when the route mixes north and central Vietnam.</td></tr>'
+    }
+]
+
+print(f"=== Validating {len(OPERATIONS)} Operations ===")
+valid_count = 0
+all_valid = True
+
+for idx, op in enumerate(OPERATIONS):
+    pid = str(op["post_id"])
+    slug = op["slug"]
+    target = op["target"]
+    pillar = op["pillar"]
+    
+    post = sources.get(pid)
+    if not post:
+        print(f"[{idx+1}/28 ERROR] Post ID {pid} not found in sources!")
+        all_valid = False
+        continue
+    
+    content = post["content"]
+    count = content.count(target)
+    if count == 0:
+        print(f"[{idx+1}/28 MISMATCH] Post {pid} ({slug}) for pillar '{pillar}': TARGET NOT FOUND!")
+        print(f"   Target preview: {target[:80]}...")
+        all_valid = False
+    elif count > 1:
+        print(f"[{idx+1}/28 AMBIGUOUS] Post {pid} ({slug}) for pillar '{pillar}': TARGET FOUND {count} TIMES!")
+        all_valid = False
+    else:
+        valid_count += 1
+        print(f"[{idx+1}/28 OK] Post {pid} ({slug}) -> '{pillar}' (Exact 1 match)")
+
+print(f"\nResult: {valid_count} / {len(OPERATIONS)} passed validation.")
+
+if all_valid and valid_count == len(OPERATIONS):
+    with open('ops/stage62_mesh_ops.json', 'w', encoding='utf-8') as f:
+        json.dump(OPERATIONS, f, indent=2, ensure_ascii=False)
+    print("SUCCESS: Saved ops/stage62_mesh_ops.json ready for deployment!")
+else:
+    print("FAILURE: Please fix the mismatched targets.")
