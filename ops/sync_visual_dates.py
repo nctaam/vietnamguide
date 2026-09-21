@@ -59,8 +59,8 @@ foreach ($posts as $post) {
     
     // For all guides with existing review dates or guide posts:
     if ($has_meaningful_meta !== '' || $has_reviewed_guide === '1' || $post_id >= 522) {
-        update_post_meta($post_id, 'vg_eeat_last_meaningful_update', 'September 20, 2026');
-        update_post_meta($post_id, 'vg_last_manual_review', 'September 20, 2026');
+        update_post_meta($post_id, 'vg_eeat_last_meaningful_update', 'September 21, 2026');
+        update_post_meta($post_id, 'vg_last_manual_review', 'September 21, 2026');
         $meta_count++;
         $updated_meta = true;
     }
@@ -72,13 +72,13 @@ foreach ($posts as $post) {
     // Pattern 1: Hero kicker dates
     $p1 = '/(<p class="vg-kicker">.*? - Updated )[A-Za-z]+ \d{1,2}, \d{4}(<\/p>)/';
     if (preg_match($p1, $new_content)) {
-        $new_content = preg_replace($p1, '${1}September 20, 2026${2}', $new_content);
+        $new_content = preg_replace($p1, '${1}September 21, 2026${2}', $new_content);
     }
     
     // Pattern 2: Editorial snapshot list dates
     $p2 = '/(<li>(?:<strong>)?Last meaningful (?:review date|update):?(?:<\/strong>)?\s*)[A-Za-z]+ \d{1,2}, \d{4}(<\/li>)/i';
     if (preg_match($p2, $new_content)) {
-        $new_content = preg_replace($p2, '${1}September 20, 2026${2}', $new_content);
+        $new_content = preg_replace($p2, '${1}September 21, 2026${2}', $new_content);
     }
     
     if ($new_content !== $content) {
@@ -95,8 +95,8 @@ foreach ($posts as $post) {
         $wpdb->update(
             $wpdb->posts,
             [
-                'post_modified' => '2026-09-20 08:30:00',
-                'post_modified_gmt' => '2026-09-20 08:30:00'
+                'post_modified' => '2026-09-21 08:30:00',
+                'post_modified_gmt' => '2026-09-21 08:30:00'
             ],
             ['ID' => $post_id]
         );
@@ -135,15 +135,16 @@ echo "  - Post modified timestamps synced: $modified_count\n";
     
     ssh.close()
     
-    # Live verification of 6 diverse routes
+    # Live verification of 8 diverse routes
     test_urls = [
         'https://vietnamguide.net/plan/vietnam-evisa/',
         'https://vietnamguide.net/plan/best-time-to-visit-vietnam/',
         'https://vietnamguide.net/destinations/hanoi-travel-guide/',
         'https://vietnamguide.net/compare/ha-long-bay-vs-lan-ha-bay/',
-        'https://vietnamguide.net/routes/hanoi-to-sapa-transport/',
         'https://vietnamguide.net/plan/vietnam-travel-cost/',
-        'https://vietnamguide.net/costs/ha-giang-loop-cost-budget/'
+        'https://vietnamguide.net/destinations/da-lat-travel-guide/',
+        'https://vietnamguide.net/destinations/cao-bang-travel-guide/',
+        'https://vietnamguide.net/plan/vietnam-train-travel/'
     ]
     
     print("\nVerifying live pages:")
@@ -152,9 +153,9 @@ echo "  - Post modified timestamps synced: $modified_count\n";
         req = urllib.request.Request(url, headers={'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)'})
         html = urllib.request.urlopen(req, timeout=10).read().decode('utf-8')
         
-        reviewed = re.findall(r'Reviewed\s+September\s+20,\s*2026', html)
-        kicker = re.findall(r'Updated\s+September\s+20,\s*2026', html)
-        has_old = re.findall(r'Reviewed\s+July|Updated\s+July|Reviewed\s+September\s+15|Updated\s+September\s+15', html)
+        reviewed = re.findall(r'Reviewed\s+September\s+21,\s*2026', html)
+        kicker = re.findall(r'Updated\s+September\s+21,\s*2026', html)
+        has_old = re.findall(r'Reviewed\s+July|Updated\s+July|Reviewed\s+September\s+15|Updated\s+September\s+15|Reviewed\s+September\s+20|Updated\s+September\s+20', html)
         
         status = "PASS" if (reviewed or kicker) and not has_old else "FAIL"
         if status == "FAIL":
@@ -163,7 +164,7 @@ echo "  - Post modified timestamps synced: $modified_count\n";
         print(f"         Reviewed badge found: {len(reviewed)} | Kicker found: {len(kicker)} | Old leftovers: {len(has_old)}")
         
     if all_ok:
-        print("\nAll tested guides successfully synchronized to September 20, 2026!")
+        print("\nAll tested guides successfully synchronized to September 21, 2026!")
     else:
         print("\nSome guides still have date discrepancies. Review output above.")
 

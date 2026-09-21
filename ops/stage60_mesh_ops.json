@@ -1,0 +1,74 @@
+[
+  {
+    "slug": "transport-within-vietnam",
+    "target": "<p>Fly if the itinerary is tight or the next day matters. Take the train when the overnight rhythm, city-center station, or scenic journey is part of the route. Check dsvn.vn for current train options before treating rail as the answer.</p>",
+    "replacement": "<p>Fly if the itinerary is tight or the next day matters. Take the train when the overnight rhythm, city-center station, or scenic journey is part of the route. For ticket booking procedures, berth choices, and scenic coastal rail advice, explore our <a href=\"/plan/vietnam-train-travel/\">Vietnam Train Travel &amp; Reunification Express guide</a>.</p>",
+    "post_id": "155"
+  },
+  {
+    "slug": "da-nang-travel-guide",
+    "target": "<p>Yes for Hoi An evenings and selected Hue movement, but avoid turning Da Nang into a commute hub. If Hoi An atmosphere or Hue history is the main reason for central Vietnam, an overnight in that place may be better.</p>",
+    "replacement": "<p>Yes for Hoi An evenings and selected Hue movement, but avoid turning Da Nang into a commute hub. If Hoi An atmosphere or Hue history is the main reason for central Vietnam, an overnight in that place may be better. For the scenic northward crossing to Hue, consider the coastal cliffside railway route detailed in our <a href=\"/plan/vietnam-train-travel/\">Vietnam Train Travel &amp; Hai Van Pass guide</a>.</p>",
+    "post_id": "213"
+  },
+  {
+    "slug": "hue-imperial-city-guide",
+    "target": "<p>Hue usually works as part of a central Vietnam sequence with Da Nang and Hoi An. The cleanest route uses one directional crossing over the Hai Van Pass instead of a same-day out-and-back. Use <a href=\"/compare/hoi-an-vs-hue/\">Hoi An vs Hue</a> if only one heritage chapter can be protected, and <a href=\"/compare/da-nang-vs-hoi-an/\">Da Nang vs Hoi An</a> if the sleep-base decision is still unresolved.</p>",
+    "replacement": "<p>Hue usually works as part of a central Vietnam sequence with Da Nang and Hoi An. The cleanest route uses one directional crossing over the Hai Van Pass—either by road or via the scenic coastal rail line (see our <a href=\"/plan/vietnam-train-travel/\">Vietnam Train Travel guide</a> for seat selection tips)—instead of a same-day out-and-back. Use <a href=\"/compare/hoi-an-vs-hue/\">Hoi An vs Hue</a> if only one heritage chapter can be protected, and <a href=\"/compare/da-nang-vs-hoi-an/\">Da Nang vs Hoi An</a> if the sleep-base decision is still unresolved.</p>",
+    "post_id": "500"
+  },
+  {
+    "slug": "hanoi-travel-guide",
+    "target": "<p>Hanoi transport planning is mostly about timing and energy. The airport is far enough from the center that a late arrival should not pretend to be a full city evening, and early pickups should shape the previous night.</p>",
+    "replacement": "<p>Hanoi transport planning is mostly about timing and energy. The airport is far enough from the center that a late arrival should not pretend to be a full city evening, and early pickups should shape the previous night. For travelers continuing southward without domestic flights, Hanoi Railway Station (Ga Ha Noi) anchors overnight sleeper trains to Hue and Da Nang (see our <a href=\"/plan/vietnam-train-travel/\">Vietnam Train Travel &amp; Reunification Express guide</a>).</p>",
+    "post_id": "287"
+  },
+  {
+    "slug": "nha-trang-travel-guide",
+    "target": "<p>Two nights is the fast minimum. Three or four nights is better if you want Nha Trang to feel like more than an airport-linked beach stop.</p>",
+    "replacement": "<p>Two nights is the fast minimum. Three or four nights is better if you want Nha Trang to feel like more than an airport-linked beach stop. For travelers combining coastal waters with cool alpine air, a 3-hour limousine shuttle climbs the Khanh Le Pass directly into the Central Highlands (see our <a href=\"/destinations/da-lat-travel-guide/\">Da Lat Travel Guide &amp; Highlands Route</a>).</p>",
+    "post_id": "244"
+  },
+  {
+    "slug": "ho-chi-minh-city-travel-guide",
+    "target": "<p>Two nights is the fast minimum. Three nights is the best first answer. Four nights works when you want both the city and one serious day trip without rushing the airport chain.</p>",
+    "replacement": "<p>Two nights is the fast minimum. Three nights is the best first answer. Four nights works when you want both the city and one serious day trip without rushing the airport chain. For an alpine contrast to southern humidity, short 50-minute domestic flights connect directly to the pine hills and coffee estates of the Central Highlands (explore our <a href=\"/destinations/da-lat-travel-guide/\">Da Lat Travel Guide</a>).</p>",
+    "post_id": "262"
+  },
+  {
+    "slug": "mui-ne-vs-nha-trang",
+    "target": "<p>Mui Ne competes with south-from-Ho-Chi-Minh-City time, central-coast stops, and any beach that needs sport conditions. Nha Trang competes with Da Nang, Hoi An, Quy Nhon, Phu Quoc, and the question of whether the route needs a city beach at all.</p>",
+    "replacement": "<p>Mui Ne competes with south-from-Ho-Chi-Minh-City time, central-coast stops, and any beach that needs sport conditions. Both coastal bases also serve as staging points climbing inland to the pine forests and cooler altitudes of the Central Highlands (detailed in our <a href=\"/destinations/da-lat-travel-guide/\">Da Lat Travel Guide</a>). Nha Trang competes with Da Nang, Hoi An, Quy Nhon, Phu Quoc, and the question of whether the route needs a city beach at all.</p>",
+    "post_id": "247"
+  },
+  {
+    "slug": "best-places-to-visit-vietnam",
+    "target": "<tr><td data-label=\"Anchor type\">Northern landscapes</td><td data-label=\"Examples to consider\">Ninh Binh, Ha Long or Lan Ha Bay, Sapa, Ha Giang, and northern countryside.</td><td data-label=\"What it changes\">The north can justify a focused route without crossing the whole country.</td><td data-label=\"Planning caution\">Remote mountain routes need weather, road, and time discipline.</td></tr>",
+    "replacement": "<tr><td data-label=\"Anchor type\">Northern landscapes</td><td data-label=\"Examples to consider\">Ninh Binh, Ha Long or Lan Ha Bay, Sapa, Ha Giang, and border geoparks like <a href=\"/destinations/cao-bang-travel-guide/\">Cao Bang &amp; Ban Gioc Waterfall</a>.</td><td data-label=\"What it changes\">The north can justify a focused route without crossing the whole country.</td><td data-label=\"Planning caution\">Remote mountain routes need weather, road, and time discipline.</td></tr>",
+    "post_id": "110"
+  },
+  {
+    "slug": "best-places-to-visit-vietnam",
+    "target": "<tr><td data-label=\"Anchor type\">Southern city, river, and island texture</td><td data-label=\"Examples to consider\">Ho Chi Minh City, Mekong Delta, Phu Quoc, and southern food culture.</td><td data-label=\"What it changes\">The south works best when chosen for its own energy, not as a final checkbox.</td><td data-label=\"Planning caution\">Phu Quoc and Mekong add-ons need season, flight, and transfer checks.</td></tr>",
+    "replacement": "<tr><td data-label=\"Anchor type\">Southern city, river, and island texture</td><td data-label=\"Examples to consider\">Ho Chi Minh City, Mekong Delta, Phu Quoc, and highland coffee retreats like <a href=\"/destinations/da-lat-travel-guide/\">Da Lat</a>.</td><td data-label=\"What it changes\">The south works best when chosen for its own energy, not as a final checkbox.</td><td data-label=\"Planning caution\">Phu Quoc and Mekong add-ons need season, flight, and transfer checks.</td></tr>",
+    "post_id": "110"
+  },
+  {
+    "slug": "ha-giang-loop-planning-guide",
+    "target": "<p>The classic loop usually starts from Ha Giang city and moves through mountain districts such as Quan Ba, Yen Minh, Dong Van, and Meo Vac, with Ma Pi Leng and the Dong Van Karst Plateau as major scenic anchors. Some slower versions add or adjust stops such as Du Gia, local villages, markets, viewpoints, or river/canyon side trips. The exact order matters less than whether the route has enough slack for real conditions.</p>",
+    "replacement": "<p>The classic loop usually starts from Ha Giang city and moves through mountain districts such as Quan Ba, Yen Minh, Dong Van, and Meo Vac, with Ma Pi Leng and the Dong Van Karst Plateau as major scenic anchors. Ambitious multi-day routes extend eastward from Meo Vac through Bao Lac toward Ban Gioc Waterfall (see our comprehensive <a href=\"/destinations/cao-bang-travel-guide/\">Cao Bang Travel Guide &amp; Loop Logistics</a>). Some slower versions add or adjust stops such as Du Gia, local villages, markets, viewpoints, or river/canyon side trips. The exact order matters less than whether the route has enough slack for real conditions.</p>",
+    "post_id": "519"
+  },
+  {
+    "slug": "best-day-trips-from-hanoi",
+    "target": "<p>Do not use a distant day trip before a flight unless the flight is late, the plan is private, and the return buffer is conservative. A final Hanoi food, lake, museum, or craft block is safer.</p>",
+    "replacement": "<p>Do not use a distant day trip before a flight unless the flight is late, the plan is private, and the return buffer is conservative. Furthermore, never attempt remote northern landmarks like Ban Gioc Waterfall as a single day trip&mdash;the 280-kilometer mountain drive requires an overnight loop (detailed in our <a href=\"/destinations/cao-bang-travel-guide/\">Cao Bang Travel Guide &amp; Loop Logistics</a>). A final Hanoi food, lake, museum, or craft block is far safer.</p>",
+    "post_id": "309"
+  },
+  {
+    "slug": "sapa-vs-ha-giang",
+    "target": "<p>Choose Ninh Binh when you want easier karst countryside and simpler Hanoi-linked logistics. Choose Sapa or Ha Giang only when the mountain chapter itself is worth the extra movement.</p>",
+    "replacement": "<p>Choose Ninh Binh when you want easier karst countryside and simpler Hanoi-linked logistics. Choose Sapa or Ha Giang only when the mountain chapter itself is worth the extra movement. For travelers seeking majestic frontier waterfalls and UNESCO geopark landscapes with gentler passenger pacing, explore our <a href=\"/destinations/cao-bang-travel-guide/\">Cao Bang Travel Guide</a>.</p>",
+    "post_id": "504"
+  }
+]
