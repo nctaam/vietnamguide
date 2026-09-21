@@ -1,0 +1,65 @@
+[
+  {
+    "post_id": 480,
+    "slug": "vietnam-food-safety-street-food-etiquette",
+    "description": "Link Hanoi, Saigon, and Da Nang street food guides from regional overview paragraph",
+    "target": "<p>Street food works differently by city and by travel day. Hanoi rewards walking radius and Old Quarter observation, but arrival fatigue can make the first night feel louder than expected. Hue is excellent for smaller food traditions and slower meals, but weather and heritage pacing matter. Hoi An can be easy and gentle, though tourist density can blur price and quality signals. Ho Chi Minh City has huge food range and night energy, but traffic, heat, and distance can punish overambitious food maps.</p>",
+    "replacement": "<p>Street food works differently by city and by travel day. Explore our dedicated <a href=\"/destinations/hanoi-street-food-guide/\">Hanoi street food guide</a> for morning pho and Old Quarter bun cha stalls, dive into nocturnal seafood and alley culture with our <a href=\"/destinations/saigon-street-food-guide/\">Saigon street food guide</a>, and discover coastal mi quang and banh xeo via the <a href=\"/destinations/da-nang-street-food-guide/\">Da Nang street food guide</a>. Hue is excellent for smaller food traditions and slower meals, but weather and heritage pacing matter. Hoi An can be easy and gentle, though tourist density can blur price and quality signals.</p>"
+  },
+  {
+    "post_id": 287,
+    "slug": "hanoi-travel-guide",
+    "description": "Link Hanoi street food guide from route role intro",
+    "target": "<p>Hanoi is not the same page in every itinerary. It can be a soft landing, food/culture chapter, northern transport base, or final recovery stop before departure.</p>",
+    "replacement": "<p>Hanoi is not the same page in every itinerary. It can be a soft landing, an Old Quarter culinary immersion (use our <a href=\"/destinations/hanoi-street-food-guide/\">Hanoi street food guide</a> for stalls and etiquette), northern transport base, or final recovery stop before departure.</p>"
+  },
+  {
+    "post_id": 320,
+    "slug": "hanoi-in-2-days",
+    "description": "Link Hanoi street food guide from Day 1 dinner planning",
+    "target": "<p>The first day should teach the city. Start with Hoan Kiem, step into the Old Quarter when energy is good, pause before the streets become noise, and let dinner do cultural work.</p>",
+    "replacement": "<p>The first day should teach the city. Start with Hoan Kiem, step into the Old Quarter when energy is good, pause before the streets become noise, and let dinner do cultural work (follow our <a href=\"/destinations/hanoi-street-food-guide/\">Hanoi street food guide</a> for authentic bun cha and cha ca stalls).</p>"
+  },
+  {
+    "post_id": 498,
+    "slug": "hanoi-vs-ho-chi-minh-city",
+    "description": "Link Hanoi and Saigon street food guides from food deciding factor section",
+    "target": "<p>If food is the deciding factor, choose by route. Hanoi pairs naturally with northern dishes, Old Quarter eating, and a first-trip attraction cluster. HCMC pairs naturally with southern dishes, night food energy, markets, and a better southern excursion base. If you have two weeks and open-jaw flights, both cities can earn their place. If you have one week, make one city deep instead of making two cities shallow.</p>",
+    "replacement": "<p>If food is the deciding factor, choose by route. Hanoi pairs naturally with delicate broths and sidewalk morning stalls (see our <a href=\"/destinations/hanoi-street-food-guide/\">Hanoi street food guide</a>), while HCMC pairs with bold marinades, night markets, and District 4 seafood (see our <a href=\"/destinations/saigon-street-food-guide/\">Saigon street food guide</a>). If you have two weeks and open-jaw flights, both cities can earn their place. If you have one week, make one city deep instead of making two cities shallow.</p>"
+  },
+  {
+    "post_id": 262,
+    "slug": "ho-chi-minh-city-travel-guide",
+    "description": "Link Saigon street food guide from What to prioritize first section",
+    "target": "<p>HCMC has more good options than most first trips can use. Start with the city job, then add blocks that support it.</p>",
+    "replacement": "<p>HCMC has more good options than most first trips can use. Start with the city job (use our <a href=\"/destinations/saigon-street-food-guide/\">Saigon street food guide</a> for nocturnal seafood and alley markets), then add blocks that support it.</p>"
+  },
+  {
+    "post_id": 281,
+    "slug": "where-to-stay-in-ho-chi-minh-city",
+    "description": "Link Saigon street food guide from District 3 neighborhood review",
+    "target": "<p>District 3 is often better for a calmer central stay. District 1 is easier for first-time sightseeing and short stays. Choose District 3 when cafes, museums, quieter streets, and sleep are more important than being closest to the classic core.</p>",
+    "replacement": "<p>District 3 is often better for a calmer central stay and authentic food alleys like Ban Co Market (see our <a href=\"/destinations/saigon-street-food-guide/\">Saigon street food guide</a>). District 1 is easier for first-time sightseeing and short stays. Choose District 3 when cafes, museums, quieter streets, and sleep are more important than being closest to the classic core.</p>"
+  },
+  {
+    "post_id": 213,
+    "slug": "da-nang-travel-guide",
+    "description": "Link Da Nang street food guide from What to prioritize first section",
+    "target": "<p>Da Nang gets better when the plan has hierarchy. Start with the base job, then add only the experiences that improve that job.</p>",
+    "replacement": "<p>Da Nang gets better when the plan has hierarchy. Start with the base job, pair coastal beach days with local food immersion (consult our <a href=\"/destinations/da-nang-street-food-guide/\">Da Nang street food guide</a> for mi quang and beachfront seafood), then add only the experiences that improve that job.</p>"
+  },
+  {
+    "post_id": 209,
+    "slug": "da-nang-vs-hoi-an",
+    "description": "Link Da Nang street food guide from beach comparison paragraph",
+    "target": "<p>Da Nang/My Khe is the cleaner beach base. Hoi An/An Bang is better when beach time is a relaxed complement to Ancient Town, food, cafes, and heritage rather than the main resort holiday.</p>",
+    "replacement": "<p>Da Nang/My Khe is the cleaner beach base and oceanic seafood hub (see our <a href=\"/destinations/da-nang-street-food-guide/\">Da Nang street food guide</a> for live clam stalls and mi quang). Hoi An/An Bang is better when beach time is a relaxed complement to Ancient Town, cafes, and heritage rather than the main resort holiday.</p>"
+  },
+  {
+    "post_id": 501,
+    "slug": "da-nang-beaches-guide",
+    "description": "Link Da Nang street food guide from My Khe independent dining recommendation",
+    "target": "<p>Non Nuoc is better for resort recovery, pool time, Marble Mountains access, and a quieter hotel-led stay. My Khe is better for independent food, city access, airport convenience, and flexible movement.</p>",
+    "replacement": "<p>Non Nuoc is better for resort recovery, pool time, Marble Mountains access, and a quieter hotel-led stay. My Khe is better for independent dining (consult our <a href=\"/destinations/da-nang-street-food-guide/\">Da Nang street food guide</a> for beachfront seafood and noodle stalls), city access, airport convenience, and flexible movement.</p>"
+  }
+]

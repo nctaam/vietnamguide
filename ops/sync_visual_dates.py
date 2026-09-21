@@ -144,7 +144,10 @@ echo "  - Post modified timestamps synced: $modified_count\n";
         'https://vietnamguide.net/plan/vietnam-travel-cost/',
         'https://vietnamguide.net/destinations/da-lat-travel-guide/',
         'https://vietnamguide.net/destinations/cao-bang-travel-guide/',
-        'https://vietnamguide.net/plan/vietnam-train-travel/'
+        'https://vietnamguide.net/plan/vietnam-train-travel/',
+        'https://vietnamguide.net/destinations/hanoi-street-food-guide/',
+        'https://vietnamguide.net/destinations/phu-yen-travel-guide/',
+        'https://vietnamguide.net/plan/phong-nha-cave-treks/'
     ]
     
     print("\nVerifying live pages:")
