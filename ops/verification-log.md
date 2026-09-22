@@ -2272,3 +2272,45 @@ Date: 2026-07-28 (Asia/Saigon)
      - Core MU-Plugin Invariants (`ops/verify-core-mu-plugin.ps1`): 16/16 mutations rejected, hash `71b49033114e8007e5c19fb8ebc1a89e0d0dad88d0fe92dd381a28700db096ce` 100% preserved.
      - CI/CD Quality Gates (`ops/verify-all-gates.ps1`): 5/5 GATES PASS.
      - Public HTTPS Production Verifier (`ops/verify-guide-experience-public.ps1`): 100% PASS across all live production endpoints.
+## Stage 65 - High-Intent Organic Traffic Pillar Expansion across Island Beaches, Mountain Cascades, Sleeper Buses & Scenic Transit (September 22, 2026)
+- Date: 2026-09-22
+- Scope: High-intent organic traffic expansion targeting premier island beach guides, nature vs resort island comparisons, highland waterfall adventures, overland sleeper bus transit logistics, DMZ war heritage routes, scenic mountain pass journeys, and summer weather strategy. Strict content-only policy with zero new features, shortcodes, or database schemas. Authored and deployed 7 high-intent travel pillars (Phu Quoc Beaches Guide, Con Dao vs Phu Quoc, Da Lat Waterfalls Guide, Vietnam Sleeper Bus Guide, Phong Nha to Hue Transport, Da Lat to Nha Trang Transport, Vietnam in June), hardened semantic internal linking mesh to guarantee >= 4 in-links per pillar (28 surgical 1-to-1 replacements applied with 0 errors), synchronized E-E-A-T freshness dates to September 22, 2026 across all 143 pages, and syndicated real-time search engine re-indexing signals via Bing IndexNow and Google WebSub.
+- Key Accomplishments:
+  1. Editorial Pillar Authoring & Anti-AI Slop Validation:
+     - Pillar 1 (ID 751): `/destinations/phu-quoc-beaches-guide/` ("Phu Quoc Beaches Guide: 7 Best Beaches & Coast Map (2026)", 57 chars, Meta Desc 149 chars, Focus Keyword `Phu Quoc beaches`). Ong Lang chill sunset coves; Bai Sao powder-white sand and watersports; Bai Khem emerald luxury enclave; Long Beach (Bai Truong) 20 km strip and night market access; Rach Vem stilt seafood restaurants and starfish conservation rules; seasonal monsoon wind shifts (calm west in Nov-Apr vs calm east in May-Oct).
+     - Pillar 2 (ID 752): `/compare/con-dao-vs-phu-quoc/` ("Con Dao vs Phu Quoc: Which Vietnam Island is Better? (2026)", 59 chars, Meta Desc 149 chars, Focus Keyword `Con Dao vs Phu Quoc`). Pristine nature sanctuary vs resort playground; national park marine reserve, turtle nesting on Bay Canh island (May-Oct), somber prison history and Vo Thi Sau shrine vs international airport, 30-day visa exemption, luxury mega-resorts, cable car, and lively nightlife; flight logistics (turboprop ATR-72/Embraer VCS vs wide-body PQC) and cost comparisons.
+     - Pillar 3 (ID 753): `/destinations/da-lat-waterfalls-guide/` ("Da Lat Waterfalls Guide: Top 5 Falls, Routes & Map (2026)", 57 chars, Meta Desc 147 chars, Focus Keyword `Da Lat waterfalls`). Pongour seven-tier volcanic amphitheater (40m drop, 100m wide); Datanla 2,400m alpine coaster and certified canyoning (25m waterfall abseil, cliff jumps); Elephant Waterfall (Thác Voi) raw spray and windy cave crawl; Prenn family gardens; full-day southwestern countryside loop logistics and canyoning safety protocols.
+     - Pillar 4 (ID 754): `/plan/vietnam-sleeper-bus-guide/` ("Vietnam Sleeper Bus Guide: Cabin vs Sleeper & Safety (2026)", 59 chars, Meta Desc 148 chars, Focus Keyword `Vietnam sleeper bus`). VIP luxury 20-cabin coaches (*xe cung điện / phòng nằm*, 190 cm flat-lie, privacy doors, USB ports) vs standard 40-berth crowded sleepers; berth selection tactics (lower deck rows 2-4 vs rear row vibrations); reputable operators (Futa Bus Lines, Sao Viet, Bang Phan); boarding shoe removal, extreme AC management, luggage hold rules, and rest stop navigation.
+     - Pillar 5 (ID 755): `/plan/phong-nha-to-hue-transport/` ("Phong Nha to Hue Transport: Bus, Train & DMZ Car (2026)", 55 chars, Meta Desc 148 chars, Focus Keyword `Phong Nha to Hue transport`). 215 km corridor options; direct tourist buses (4-4.5 hours, 220k-300k VND); scenic DMZ private car transfers (6-7 hours, 1.8M-2.3M VND) stopping at 17th Parallel (Hien Luong Bridge & Ben Hai River) and Vinh Moc subterranean civilian tunnels; Reunification Express train connection via Dong Hoi.
+     - Pillar 6 (ID 756): `/plan/da-lat-to-nha-trang-transport/` ("Da Lat to Nha Trang Transport: Bus, Limousine & Car (2026)", 58 chars, Meta Desc 147 chars, Focus Keyword `Da Lat to Nha Trang transport`). 135 km mountain descent along QL27C; 33 km Khanh Le mountain pass plunging 1,500 vertical meters through mist and waterfalls; 9-seat VIP DCar limousines (Cat Thien Hai, Lac Hong, 190k-240k VND door-to-door) vs Futa coaches; mountain pass cloud bank timing and car sickness prevention tips.
+     - Pillar 7 (ID 757): `/plan/vietnam-in-june/` ("Vietnam in June: Weather, Beach Sun & Route Guide (2026)", 56 chars, Meta Desc 146 chars, Focus Keyword `Vietnam in June`). Central coast golden dry season (Da Nang, Hoi An, Quy Nhon, Nha Trang enjoy 33-36°C sunshine, calm seas, prime Cham Islands snorkeling); northern lowland heatwaves and mountain harvest escapes (Sapa, Pu Luong); southern afternoon monsoon rhythm (sunny mornings, predictable 45-minute late-afternoon downpours); domestic summer family travel surge.
+     - Anti-AI Slop Compliance: 0 Tier 1 clichés ($HLS = 100$, 0 marketing fluff, rich empirical evidence items across all 7 guides).
+  2. Production Deployment & SERP Metadata Calibration (143 Pages):
+     - Published all 7 pillars on production VPS via automated WP-CLI scripts (`ops/deploy_stage65_pillars.py`).
+     - Total published pages elevated from 136 to 143 pages.
+     - Full SEO inventory audit (`ops/analyze_seo_inventory.py`): 0 long titles (> 60 chars), 0 missing focus keywords, 0 keyword mismatches, 0 non-SERP descriptions across all 143 published pages.
+  3. Semantic Internal Linking Mesh Hardening:
+     - Executed 28 surgical paragraph replacements across 28 authority parent guides (`ops/assemble_stage65_mesh.py`, `ops/apply_stage65_mesh.py`).
+     - Verified in-link counts (`ops/check_stage65_inlinks.py`):
+       - `phu-quoc-beaches-guide`: 5 in-links (ID 204, 234, 241, 720, 752)
+       - `con-dao-vs-phu-quoc`: 4 in-links (ID 20, 231, 237, 481)
+       - `da-lat-waterfalls-guide`: 5 in-links (ID 104, 224, 611, 718, 756)
+       - `vietnam-sleeper-bus-guide`: 4 in-links (ID 155, 473, 520, 521)
+       - `phong-nha-to-hue-transport`: 4 in-links (ID 184, 500, 503, 629)
+       - `da-lat-to-nha-trang-transport`: 5 in-links (ID 19, 244, 247, 474, 753)
+       - `vietnam-in-june`: 4 in-links (ID 14, 482, 685, 721)
+     - Site-wide internal link graph audit (`ops/audit_internal_links.py`): 1,352 total internal content links (average 9.5 outgoing links per page). **Zero orphan content guides and zero weakly linked content guides across all 143 pages**.
+  4. Editorial & E-E-A-T Date Synchronization (`ops/sync_visual_dates.py`):
+     - Synchronized 130 postmeta review dates and database `post_modified` timestamps to `September 22, 2026 10:00:00`.
+     - Sitemap lastmod audit (`ops/audit_sitemap_lastmod.py`): 143/143 pages verified with fresh September 22, 2026 timestamps.
+     - LiteSpeed cache completely purged and verified.
+  5. Search Engine Discovery & Real-Time Indexing (`ops/ping_search_engines.py`):
+     - Feed Health: HTTP 200 OK (Valid RSS 2.0, 10 items).
+     - Webmaster Authentication: Verified tokens on `/BingSiteAuth.xml` and `/852ef594b29d4da5a639612da3430b0f.txt`.
+     - WebSub / PubSubHubbub: 2/2 hubs pinged successfully (`pubsubhubbub.appspot.com` HTTP 204, `superfeedr.com` HTTP 200).
+     - IndexNow Bulk Dispatch: All 143 URLs submitted to `api.indexnow.org` and `bing.com` (both HTTP 200 OK).
+  6. CI/CD Master Verification Suite:
+     - Anti-AI Slop Quality Engine (`ops/tests/test-anti-ai-slop.py`): 34/34 PASS ($HLS = 100$).
+     - Core MU-Plugin Invariants (`ops/verify-core-mu-plugin.ps1`): 16/16 mutations rejected, hash `71b49033114e8007e5c19fb8ebc1a89e0d0dad88d0fe92dd381a28700db096ce` 100% preserved.
+     - CI/CD Quality Gates (`ops/verify-all-gates.ps1`): 5/5 GATES PASS.
+     - Public HTTPS Production Verifier (`ops/verify-guide-experience-public.ps1`): 100% PASS across all live production endpoints.
