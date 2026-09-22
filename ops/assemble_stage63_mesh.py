@@ -1,0 +1,286 @@
+# -*- coding: utf-8 -*-
+"""
+VietnamGuide Stage 63: Exact Mesh Assembler and Validator.
+Constructs 28 surgical internal linking replacements across 23 posts,
+verifying that each target exists exactly once in the source contents.
+"""
+
+import json
+import sys
+
+sys.stdout.reconfigure(encoding='utf-8')
+
+sources = json.load(open('ops/stage63_mesh_raw_sources.json', 'r', encoding='utf-8'))
+
+# List of 28 operations
+OPERATIONS = [
+    # =========================================================================
+    # Group 1: where-to-stay-in-da-nang (4 links)
+    # =========================================================================
+    {
+        "post_id": 213,
+        "slug": "da-nang-travel-guide",
+        "pillar": "where-to-stay-in-da-nang",
+        "target": '<details><summary>Is My Khe Beach a good place to stay?</summary><p>Yes when beach access, resort comfort, and a lower-stress middle chapter matter. Check the exact hotel position, road crossing, shade, room noise, pool quality, and whether the beach is still the best use of your season.</p></details>',
+        "replacement": '<details><summary>Is My Khe Beach a good place to stay?</summary><p>Yes when beach access, resort comfort, and a lower-stress middle chapter matter. Check our detailed guide on <a href="/destinations/where-to-stay-in-da-nang/">where to stay in Da Nang</a> for neighborhood breakdowns across My Khe, Han River, and Son Tra (including road crossing, room noise, and pool quality).</p></details>'
+    },
+    {
+        "post_id": 501,
+        "slug": "da-nang-beaches-guide",
+        "pillar": "where-to-stay-in-da-nang",
+        "target": '<details><summary>What is the best beach area to stay in Da Nang?</summary><p>My Khe or My An is the safest first-time default because it balances beach access, restaurants, taxis, airport convenience, and day-trip flexibility.</p></details>',
+        "replacement": '<details><summary>What is the best beach area to stay in Da Nang?</summary><p>My Khe or My An is the safest first-time default because it balances beach access, restaurants, taxis, airport convenience, and day-trip flexibility. Check our in-depth <a href="/destinations/where-to-stay-in-da-nang/">where to stay in Da Nang</a> guide for specific hotel recommendations and road-crossing details.</p></details>'
+    },
+    {
+        "post_id": 209,
+        "slug": "da-nang-vs-hoi-an",
+        "pillar": "where-to-stay-in-da-nang",
+        "target": '<details><summary>Can I stay in Da Nang and visit Hoi An?</summary><p>Yes. This is often the cleanest pattern for short stays, beach-first routes, families, or early flights. Protect one Hoi An evening rather than treating the town as a rushed daytime stop.</p></details>',
+        "replacement": '<details><summary>Can I stay in Da Nang and visit Hoi An?</summary><p>Yes. This is often the cleanest pattern for short stays, beach-first routes, families, or early flights (see neighborhood recommendations in our <a href="/destinations/where-to-stay-in-da-nang/">where to stay in Da Nang</a> guide). Protect one Hoi An evening rather than treating the town as a rushed daytime stop.</p></details>'
+    },
+    {
+        "post_id": 481,
+        "slug": "where-to-stay-in-vietnam-base-decisions",
+        "pillar": "where-to-stay-in-da-nang",
+        "target": '<p><a href="/destinations/where-to-stay-in-ninh-binh/">Where to Stay in Ninh Binh</a> protects countryside pacing.</p>\n<p><a href="/compare/da-nang-vs-hoi-an/">Da Nang vs Hoi An</a> decides the central Vietnam base split.</p>',
+        "replacement": '<p><a href="/destinations/where-to-stay-in-ninh-binh/">Where to Stay in Ninh Binh</a> protects countryside pacing.</p>\n<p><a href="/destinations/where-to-stay-in-da-nang/">Where to Stay in Da Nang</a> compares My Khe beachfront hotels with Han River center.</p>\n<p><a href="/compare/da-nang-vs-hoi-an/">Da Nang vs Hoi An</a> decides the central Vietnam base split.</p>'
+    },
+
+    # =========================================================================
+    # Group 2: where-to-stay-in-hoi-an (4 links)
+    # =========================================================================
+    {
+        "post_id": 499,
+        "slug": "hoi-an-ancient-town-guide",
+        "pillar": "where-to-stay-in-hoi-an",
+        "target": '<details><summary>Should I stay in Hoi An or Da Nang?</summary><p>Lodging inside Hoi An delivers car-free evening strolls, lantern-lit river markets, and exceptional regional dining right outside your hotel doorway. By contrast, Da Nang works far better for direct international flight connections, modern high-rise beachfronts, and multi-generational family groups. A day excursion between the two balances both priorities cleanly.</p></details>',
+        "replacement": '<details><summary>Should I stay in Hoi An or Da Nang?</summary><p>Lodging inside Hoi An delivers car-free evening strolls, lantern-lit river markets, and exceptional regional dining right outside your hotel doorway (see our complete neighborhood comparison on <a href="/destinations/where-to-stay-in-hoi-an/">where to stay in Hoi An</a>). By contrast, Da Nang works far better for direct international flight connections, modern high-rise beachfronts, and multi-generational family groups. A day excursion between the two balances both priorities cleanly.</p></details>'
+    },
+    {
+        "post_id": 178,
+        "slug": "best-things-to-do-in-hoi-an",
+        "pillar": "where-to-stay-in-hoi-an",
+        "target": '<details><summary>Should I stay in Hoi An or Da Nang?</summary><p>Stay in Hoi An when Ancient Town evenings, food, cafes, and slower walking are the point. Stay closer to Da Nang when flights, resort beach time, golf, or a very early airport move matter more. Do not split bases unless the route gains more than it loses.</p></details>',
+        "replacement": '<details><summary>Should I stay in Hoi An or Da Nang?</summary><p>Stay in Hoi An when Ancient Town evenings, food, cafes, and slower walking are the point (see our area guide on <a href="/destinations/where-to-stay-in-hoi-an/">where to stay in Hoi An</a> for Old Town vs An Bang Beach vs Cam Chau villas). Stay closer to Da Nang when flights, resort beach time, golf, or a very early airport move matter more. Do not split bases unless the route gains more than it loses.</p></details>'
+    },
+    {
+        "post_id": 209,
+        "slug": "da-nang-vs-hoi-an",
+        "pillar": "where-to-stay-in-hoi-an",
+        "target": '<details><summary>Should I split my stay between Da Nang and Hoi An?</summary><p>Only when the trip has enough nights. With two or three central nights, splitting often creates more packing than value. With four or more nights, a resort/beach chapter plus Hoi An old-town chapter can work well.</p></details>',
+        "replacement": '<details><summary>Should I split my stay between Da Nang and Hoi An?</summary><p>Only when the trip has enough nights. With two or three central nights, splitting often creates more packing than value. With four or more nights, compare boutique Old Town hotels against coastal villas in our <a href="/destinations/where-to-stay-in-hoi-an/">where to stay in Hoi An</a> guide.</p></details>'
+    },
+    {
+        "post_id": 481,
+        "slug": "where-to-stay-in-vietnam-base-decisions",
+        "pillar": "where-to-stay-in-hoi-an",
+        "target": '<details><summary>Is Da Nang or Hoi An the better base?</summary><p>Hoi An is better when old-town evenings are the main reason for the stay. Da Nang is better when beach access, airport ease, modern hotels, family space, and central-coast day trips matter more.</p></details>',
+        "replacement": '<details><summary>Is Da Nang or Hoi An the better base?</summary><p>Hoi An is better when old-town evenings are the main reason for the stay (see our complete <a href="/destinations/where-to-stay-in-hoi-an/">where to stay in Hoi An</a> area breakdown). Da Nang is better when beach access, airport ease, modern hotels, family space, and central-coast day trips matter more.</p></details>'
+    },
+
+    # =========================================================================
+    # Group 3: ha-long-bay-day-trip-vs-overnight-cruise (4 links)
+    # =========================================================================
+    {
+        "post_id": 195,
+        "slug": "ha-long-bay-travel-guide",
+        "pillar": "ha-long-bay-day-trip-vs-overnight-cruise",
+        "target": '<tr><td data-label="Question"><strong>How many days do I need?</strong></td><td data-label="Answer">One night is the best default. Day cruise is a compromise. Two nights are for slow or premium northern routes.</td></tr>',
+        "replacement": '<tr><td data-label="Question"><strong>How many days do I need?</strong></td><td data-label="Answer">One night is the best default. Day cruise is a compromise (review our <a href="/compare/ha-long-bay-day-trip-vs-overnight-cruise/">Ha Long Bay day trip vs overnight cruise</a> comparison). Two nights are for slow or premium northern routes.</td></tr>'
+    },
+    {
+        "post_id": 21,
+        "slug": "ha-long-bay-vs-lan-ha-bay",
+        "pillar": "ha-long-bay-day-trip-vs-overnight-cruise",
+        "target": '<details><summary>Should I book a day cruise or overnight cruise?</summary><p>Book overnight if the route can spare the time and the cruise gives real deck time, sunrise/sunset, and activities. Book a day cruise only when the transfer-to-bay ratio still feels acceptable.</p></details>',
+        "replacement": '<details><summary>Should I book a day cruise or overnight cruise?</summary><p>Book overnight if the route can spare the time and the cruise gives real deck time, sunrise/sunset, and activities. Book a day cruise only when the transfer-to-bay ratio still feels acceptable (consult our dedicated <a href="/compare/ha-long-bay-day-trip-vs-overnight-cruise/">Ha Long Bay day trip vs overnight cruise</a> guide for exact schedules and cost differences).</p></details>'
+    },
+    {
+        "post_id": 479,
+        "slug": "ha-long-bay-cruise-questions-before-booking",
+        "pillar": "ha-long-bay-day-trip-vs-overnight-cruise",
+        "target": '<details><summary>What is the most important question to ask before booking a Ha Long Bay cruise?</summary><p>Ask for the exact pier, route map, cabin category, pickup and return details, and written weather/cancellation policy. If those details are vague, the cruise is not ready to buy.</p></details>',
+        "replacement": '<details><summary>What is the most important question to ask before booking a Ha Long Bay cruise?</summary><p>Ask for the exact pier, route map, cabin category, pickup and return details, and written weather/cancellation policy. If those details are vague, the cruise is not ready to buy (compare trip durations in our <a href="/compare/ha-long-bay-day-trip-vs-overnight-cruise/">Ha Long Bay day trip vs overnight cruise</a> guide).</p></details>'
+    },
+    {
+        "post_id": 309,
+        "slug": "best-day-trips-from-hanoi",
+        "pillar": "ha-long-bay-day-trip-vs-overnight-cruise",
+        "target": '<details><summary>Can I visit Ha Long Bay as a day trip from Hanoi?</summary><p>Yes, but it is usually a logistics-heavy product. Choose it only when the operator is clear about route map, port, time on water, return window, and weather policy. If the bay matters, an overnight is usually better.</p></details>',
+        "replacement": '<details><summary>Can I visit Ha Long Bay as a day trip from Hanoi?</summary><p>Yes, but it is usually a logistics-heavy product involving 5 to 6 hours on Expressway 5B. Read our detailed <a href="/compare/ha-long-bay-day-trip-vs-overnight-cruise/">Ha Long Bay day trip vs overnight cruise</a> comparison before booking: choose a day cruise only when time is constrained, and upgrade to a 2D1N overnight cruise if sunset karst scenery and kayaking matter to your route.</p></details>'
+    },
+
+    # =========================================================================
+    # Group 4: hanoi-to-ha-long-bay-transport (4 links)
+    # =========================================================================
+    {
+        "post_id": 195,
+        "slug": "ha-long-bay-travel-guide",
+        "pillar": "hanoi-to-ha-long-bay-transport",
+        "target": '<li><strong>Hanoi Transfer:</strong> Expressway limousine departs Old Quarter hourly (300,000–350,000 VND, 2.5 hrs). Local bus from My Dinh station costs 140,000 VND (3.5 hrs).</li>',
+        "replacement": '<li><strong>Hanoi Transfer:</strong> Expressway limousine departs Old Quarter hourly (300,000–350,000 VND, 2.5 hrs; see our detailed <a href="/plan/hanoi-to-ha-long-bay-transport/">Hanoi to Ha Long Bay transport</a> guide). Local bus from My Dinh station costs 140,000 VND (3.5 hrs).</li>'
+    },
+    {
+        "post_id": 155,
+        "slug": "transport-within-vietnam",
+        "pillar": "hanoi-to-ha-long-bay-transport",
+        "target": '<details><summary>How should I think about ferries and boats?</summary><p>Use them where geography requires them: islands, bays, and river routes. Treat weather, last departure, port transfers, seasickness, luggage, and cancellation policy as live details rather than evergreen promises.</p></details>',
+        "replacement": '<details><summary>How should I think about ferries and boats?</summary><p>Use them where geography requires them: islands, bays, and river routes. For northern bay journeys, review our <a href="/plan/hanoi-to-ha-long-bay-transport/">Hanoi to Ha Long Bay transport</a> guide for Expressway 5B limousine connections before boarding. Treat weather, last departure, port transfers, seasickness, luggage, and cancellation policy as live details rather than evergreen promises.</p></details>'
+    },
+    {
+        "post_id": 287,
+        "slug": "hanoi-travel-guide",
+        "pillar": "hanoi-to-ha-long-bay-transport",
+        "target": '<details><summary>Should I visit Hanoi before Ninh Binh or Ha Long Bay?</summary><p>Usually yes. Hanoi works best before the first major northern landscape move because it helps with orientation, sleep, phone/cash setup, food confidence, and transfer coordination.</p></details>',
+        "replacement": '<details><summary>Should I visit Hanoi before Ninh Binh or Ha Long Bay?</summary><p>Usually yes. Hanoi works best before the first major northern landscape move because it helps with orientation, sleep, phone/cash setup, food confidence, and transfer coordination (review our <a href="/plan/hanoi-to-ha-long-bay-transport/">Hanoi to Ha Long Bay transport</a> guide for limousine pickups from Old Quarter hotels).</p></details>'
+    },
+    {
+        "post_id": 345,
+        "slug": "ninh-binh-to-ha-long-bay-transfer",
+        "pillar": "hanoi-to-ha-long-bay-transport",
+        "target": '<tr><td data-label="Mode">Return to Hanoi first</td><td data-label="Best for">Routes with a Hanoi buffer, separate bookings, or unclear cruise details.</td><td data-label="Before you pay">Whether backtracking costs more than it solves.</td><td data-label="Concierge judgment">Sometimes cleaner than forcing a brittle direct link.</td></tr>',
+        "replacement": '<tr><td data-label="Mode">Return to Hanoi first</td><td data-label="Best for">Routes with a Hanoi buffer, separate bookings, or unclear cruise details.</td><td data-label="Before you pay">Whether backtracking costs more than it solves (see our <a href="/plan/hanoi-to-ha-long-bay-transport/">Hanoi to Ha Long Bay transport</a> guide for limousine and shuttle connections).</td><td data-label="Concierge judgment">Sometimes cleaner than forcing a brittle direct link.</td></tr>'
+    },
+
+    # =========================================================================
+    # Group 5: da-nang-to-hue-train-vs-car (4 links)
+    # =========================================================================
+    {
+        "post_id": 155,
+        "slug": "transport-within-vietnam",
+        "pillar": "da-nang-to-hue-train-vs-car",
+        "target": '<tr><td data-label="Corridor">Hue - Da Nang - Hoi An</td><td data-label="Default premium answer">Private car via Hai Van Pass when stops matter.</td><td data-label="Good alternative">Train Hue-Da Nang plus a separate Hoi An transfer.</td><td data-label="Use caution with">Cheapest shared shuttle if luggage, weather, or timing matters.</td><td data-label="Editorial reason">This is one of the few transfers that can become a route highlight.</td></tr>',
+        "replacement": '<tr><td data-label="Corridor">Hue - Da Nang - Hoi An</td><td data-label="Default premium answer">Private car via Hai Van Pass when stops matter (see our <a href="/compare/da-nang-to-hue-train-vs-car/">Da Nang to Hue train vs car</a> comparison).</td><td data-label="Good alternative">Train Hue-Da Nang plus a separate Hoi An transfer.</td><td data-label="Use caution with">Cheapest shared shuttle if luggage, weather, or timing matters.</td><td data-label="Editorial reason">This is one of the few transfers that can become a route highlight.</td></tr>'
+    },
+    {
+        "post_id": 613,
+        "slug": "vietnam-train-travel",
+        "pillar": "da-nang-to-hue-train-vs-car",
+        "target": '<p>The 100-kilometer railway stretch between Da Nang and Hue is widely considered one of the most scenic rail journeys in Asia. Unlike the highway tunnel that bypasses the mountains, the train tracks hug vertical cliff faces high above the South China Sea:</p>',
+        "replacement": '<p>The 100-kilometer railway stretch between Da Nang and Hue is widely considered one of the most scenic rail journeys in Asia (see our comparison of <a href="/compare/da-nang-to-hue-train-vs-car/">Da Nang to Hue train vs car</a> for sightseeing stops and cost trade-offs). Unlike the highway tunnel that bypasses the mountains, the train tracks hug vertical cliff faces high above the South China Sea:</p>'
+    },
+    {
+        "post_id": 213,
+        "slug": "da-nang-travel-guide",
+        "pillar": "da-nang-to-hue-train-vs-car",
+        "target": 'For the scenic northward crossing to Hue, consider the coastal cliffside railway route detailed in our <a href="/plan/vietnam-train-travel/">Vietnam Train Travel &amp; Hai Van Pass guide</a>.',
+        "replacement": 'For the scenic northward crossing to Hue, compare private drivers against the coastal cliffside railway in our <a href="/compare/da-nang-to-hue-train-vs-car/">Da Nang to Hue train vs car</a> guide, or explore detailed rail schedules in our <a href="/plan/vietnam-train-travel/">Vietnam Train Travel &amp; Hai Van Pass guide</a>.'
+    },
+    {
+        "post_id": 500,
+        "slug": "hue-imperial-city-guide",
+        "pillar": "da-nang-to-hue-train-vs-car",
+        "target": '<p>Hue usually works as part of a central Vietnam sequence with Da Nang and Hoi An. The cleanest route uses one directional crossing over the Hai Van Pass—either by road or via the scenic coastal rail line (see our <a href="/plan/vietnam-train-travel/">Vietnam Train Travel guide</a> for seat selection tips)—instead of a same-day out-and-back.',
+        "replacement": '<p>Hue usually works as part of a central Vietnam sequence with Da Nang and Hoi An. The cleanest route uses one directional crossing over the Hai Van Pass—compare both options in our <a href="/compare/da-nang-to-hue-train-vs-car/">Da Nang to Hue train vs car</a> guide, and see our <a href="/plan/vietnam-train-travel/">Vietnam Train Travel guide</a> for seat selection tips—instead of a same-day out-and-back.'
+    },
+
+    # =========================================================================
+    # Group 6: vietnam-in-april (4 links)
+    # =========================================================================
+    {
+        "post_id": 14,
+        "slug": "best-time-to-visit-vietnam",
+        "pillar": "vietnam-in-april",
+        "target": 'and our complete guide to <a href="/plan/vietnam-in-march/">Vietnam in March</a>, alongside our <a href="/plan/tet-in-vietnam-travel-guide/">Tet in Vietnam guide</a>',
+        "replacement": 'and our guides to <a href="/plan/vietnam-in-march/">Vietnam in March</a> and <a href="/plan/vietnam-in-april/">Vietnam in April</a>, alongside our <a href="/plan/tet-in-vietnam-travel-guide/">Tet in Vietnam guide</a>'
+    },
+    {
+        "post_id": 650,
+        "slug": "vietnam-in-march",
+        "pillar": "vietnam-in-april",
+        "target": '<p>To design your March itinerary, explore our curated <a href="/itineraries/14-days-in-vietnam/">14 Days in Vietnam</a> route, compare seasonal options with the <a href="/plan/best-time-to-visit-vietnam/">Best Time to Visit Vietnam</a> master guide, check coast value in <a href="/destinations/best-beaches-in-vietnam/">Best Beaches in Vietnam</a>, and prepare with the <a href="/plan/vietnam-first-trip-planning-checklist/">First-Trip Planning Checklist</a>.</p>',
+        "replacement": '<p>To design your spring itinerary, see our next-month guide to <a href="/plan/vietnam-in-april/">Vietnam in April</a> for holiday surges and warmer beaches, explore our curated <a href="/itineraries/14-days-in-vietnam/">14 Days in Vietnam</a> route, compare seasonal options with the <a href="/plan/best-time-to-visit-vietnam/">Best Time to Visit Vietnam</a> master guide, check coast value in <a href="/destinations/best-beaches-in-vietnam/">Best Beaches in Vietnam</a>, and prepare with the <a href="/plan/vietnam-first-trip-planning-checklist/">First-Trip Planning Checklist</a>.</p>'
+    },
+    {
+        "post_id": 19,
+        "slug": "10-days-in-vietnam",
+        "pillar": "vietnam-in-april",
+        "target": '<tr><td data-label="Planning season">March-April</td><td data-label="Safer 10-day bias">The default north-plus-central route is often at its easiest if flights into Hanoi and out of Da Nang cooperate (review seasonal route details in our <a href="/plan/vietnam-in-march/">Vietnam in March</a> guide).</td>',
+        "replacement": '<tr><td data-label="Planning season">March-April</td><td data-label="Safer 10-day bias">The default north-plus-central route is often at its easiest if flights into Hanoi and out of Da Nang cooperate (review seasonal route details in our <a href="/plan/vietnam-in-march/">Vietnam in March</a> and <a href="/plan/vietnam-in-april/">Vietnam in April</a> guides).</td>'
+    },
+    {
+        "post_id": 110,
+        "slug": "best-places-to-visit-vietnam",
+        "pillar": "vietnam-in-april",
+        "target": '<a href="/plan/best-time-to-visit-vietnam/">Best Time</a> (and seasonal highlights in <a href="/plan/vietnam-in-march/">Vietnam in March</a>), <a href="/itineraries/10-days-in-vietnam/">10 Days in Vietnam</a>',
+        "replacement": '<a href="/plan/best-time-to-visit-vietnam/">Best Time</a> (and seasonal guides for <a href="/plan/vietnam-in-march/">Vietnam in March</a> and <a href="/plan/vietnam-in-april/">Vietnam in April</a>), <a href="/itineraries/10-days-in-vietnam/">10 Days in Vietnam</a>'
+    },
+
+    # =========================================================================
+    # Group 7: tap-water-in-vietnam (4 links)
+    # =========================================================================
+    {
+        "post_id": 187,
+        "slug": "health-travel-insurance-vietnam",
+        "pillar": "tap-water-in-vietnam",
+        "target": '<details><summary>Can I rely on public hospitals alone?</summary><p>You should know where the credible hospitals are, but insurance still matters. Major cities have better options than rural routes, and evacuation or direct billing can turn a bad day into a manageable one.</p></details>',
+        "replacement": '<details><summary>Can I rely on public hospitals alone?</summary><p>You should know where the credible hospitals are, but insurance still matters. Major cities have better options than rural routes, and evacuation or direct billing can turn a bad day into a manageable one.</p></details>\n<details><summary>Can you drink tap water in Vietnam?</summary><p>No. Never drink municipal tap water directly in Vietnam. Stick to sealed bottled water or boiled water, and review our dedicated <a href="/plan/tap-water-in-vietnam/">tap water in Vietnam</a> guide covering ice safety, brushing teeth, and stomach illness prevention.</p></details>'
+    },
+    {
+        "post_id": 480,
+        "slug": "vietnam-food-safety-street-food-etiquette",
+        "pillar": "tap-water-in-vietnam",
+        "target": '<details><summary>Should I avoid ice in Vietnam?</summary><p>Do not treat ice as one universal yes-or-no rule. If you are unsure, choose sealed drinks or hot drinks. Use ice only when the venue, turnover, and your own risk tolerance make sense.</p></details>',
+        "replacement": '<details><summary>Should I avoid ice in Vietnam?</summary><p>Do not treat ice as one universal yes-or-no rule. Most established cafes and restaurants use commercial machine-made tube ice (đá bi) which is purified and safe. In rural stalls or with crushed block ice, be cautious. For full details on water safety, ice types, and avoiding stomach illness, read our complete guide to <a href="/plan/tap-water-in-vietnam/">tap water in Vietnam</a>.</p></details>'
+    },
+    {
+        "post_id": 475,
+        "slug": "what-to-pack-for-vietnam-region-season",
+        "pillar": "tap-water-in-vietnam",
+        "target": '<tr><td data-label="Activity">City walking</td><td data-label="Pack first">Breathable tops, comfortable shoes, day bag, water bottle, sun protection.</td><td data-label="What it solves">Long walking days in Hanoi, Hoi An, Ho Chi Minh City, or Da Nang without foot fatigue.</td><td data-label="Common mistake">Too many outfit changes and not enough comfortable walking gear.</td></tr>',
+        "replacement": '<tr><td data-label="Activity">City walking</td><td data-label="Pack first">Breathable tops, comfortable shoes, day bag, reusable water bottle (see <a href="/plan/tap-water-in-vietnam/">tap water in Vietnam</a> rules), sun protection.</td><td data-label="What it solves">Long walking days in Hanoi, Hoi An, Ho Chi Minh City, or Da Nang without foot fatigue.</td><td data-label="Common mistake">Too many outfit changes and not enough comfortable walking gear.</td></tr>'
+    },
+    {
+        "post_id": 473,
+        "slug": "vietnam-first-trip-planning-checklist",
+        "pillar": "tap-water-in-vietnam",
+        "target": '<li><span>05</span><strong>First night</strong><p>Check in, eat close by, sleep. Do not schedule a must-do tour on arrival night.</p></li>',
+        "replacement": '<li><span>05</span><strong>First night</strong><p>Check in, drink bottled or filtered water (see our <a href="/plan/tap-water-in-vietnam/">tap water in Vietnam</a> guide), eat close by, and sleep. Do not schedule a must-do tour on arrival night.</p></li>'
+    }
+]
+
+def main():
+    print(f"=== Validating {len(OPERATIONS)} Link Mesh Operations ===")
+    errors = 0
+    pillar_counts = {}
+
+    for idx, op in enumerate(OPERATIONS, start=1):
+        slug = op['slug']
+        pillar = op['pillar']
+        target = op['target']
+        replacement = op['replacement']
+        pillar_counts[pillar] = pillar_counts.get(pillar, 0) + 1
+
+        if slug not in sources:
+            print(f"[{idx}/28] [ERROR] Slug '{slug}' not found in sources!")
+            errors += 1
+            continue
+
+        content = sources[slug]['content']
+        count = content.count(target)
+
+        if count == 0:
+            print(f"[{idx}/28] [ERROR] Target NOT FOUND in '{slug}' (Pillar: {pillar})")
+            print(f"   Target snippet: {target[:80]}...")
+            errors += 1
+        elif count > 1:
+            print(f"[{idx}/28] [ERROR] Target AMBIGUOUS ({count} occurrences) in '{slug}' (Pillar: {pillar})")
+            errors += 1
+        else:
+            print(f"[{idx}/28] [PASS] Perfect 1-to-1 match in '{slug}' -> {pillar}")
+
+    print("\n--- Pillar Inbound Link Distribution ---")
+    for pillar, count in pillar_counts.items():
+        print(f"  {pillar}: {count} links")
+
+    if errors == 0:
+        print("\n[SUCCESS] All 28 operations are verified 100% exact 1-to-1 matches!")
+        with open('ops/stage63_mesh_ops.json', 'w', encoding='utf-8') as f:
+            json.dump(OPERATIONS, f, ensure_ascii=False, indent=2)
+        print("Saved verified operations to ops/stage63_mesh_ops.json")
+    else:
+        print(f"\n[FAILURE] {errors} validation errors detected! Please correct target substrings.")
+        sys.exit(1)
+
+if __name__ == '__main__':
+    main()
