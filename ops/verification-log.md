@@ -2314,3 +2314,46 @@ Date: 2026-07-28 (Asia/Saigon)
      - Core MU-Plugin Invariants (`ops/verify-core-mu-plugin.ps1`): 16/16 mutations rejected, hash `71b49033114e8007e5c19fb8ebc1a89e0d0dad88d0fe92dd381a28700db096ce` 100% preserved.
      - CI/CD Quality Gates (`ops/verify-all-gates.ps1`): 5/5 GATES PASS.
      - Public HTTPS Production Verifier (`ops/verify-guide-experience-public.ps1`): 100% PASS across all live production endpoints.
+
+## Stage 66 - High-Intent Organic Traffic Pillar Expansion across Railway Heritage, War Tunnels, Mountain Cable Cars, Border Crossings & Imperial Street Food (September 22, 2026)
+- Date: 2026-09-22
+- Scope: High-intent organic search traffic expansion targeting railway heritage corridors, war history tunnel sector comparisons, mountain bridge engineering marvels, international cross-border overland routes, northern island transit, imperial ancient capital street cuisine, and mid-summer climate strategy. Strict content-only policy with zero new plugins, shortcodes, or database schemas. Authored and deployed 7 high-intent travel pillars (Hanoi Train Street Guide, Ben Duoc vs Ben Dinh Cu Chi Tunnels, Ba Na Hills Golden Bridge Guide, Vietnam to Cambodia Border Crossings, Hanoi to Cat Ba Island Transport, Hue Street Food Guide, Vietnam in July), hardened semantic internal linking mesh to guarantee >= 4 in-links per pillar (28 surgical replacements across 27 authority posts with 0 errors), synchronized E-E-A-T freshness dates to September 22, 2026 across all 150 published pages, and syndicated real-time search engine re-indexing signals via Bing IndexNow and Google WebSub.
+- Key Accomplishments:
+  1. Editorial Pillar Authoring & Anti-AI Slop Validation:
+     - Pillar 1 (ID 786): `/destinations/hanoi-train-street-guide/` ("Hanoi Train Street Guide: Timetable, Cafes & Rules (2026)", 57 chars, Meta Desc 148 chars, Focus Keyword `Hanoi train street`). Phung Hung vs Tran Phu sectors; active railway timetable (weekdays vs high-frequency weekend passes); police safety barriers and coffee shop escorts; photography protocols, trackside etiquette, and live railcar clearances.
+     - Pillar 2 (ID 787): `/compare/cu-chi-tunnels-ben-duoc-vs-ben-dinh/` ("Ben Duoc vs Ben Dinh: Which Cu Chi Tunnels Site to Visit?", 57 chars, Meta Desc 150 chars, Focus Keyword `Ben Duoc vs Ben Dinh`). Authentic military tunnels vs tourist-adapted tour bus destination; distance and travel times from Saigon (70 km vs 45 km); claustrophobic raw un-widened passages vs illuminated enlarged tunnels; Ben Duoc Memorial Temple with 44,000 etched martyr names vs shooting range noise and tour bus congestion.
+     - Pillar 3 (ID 788): `/destinations/ba-na-hills-golden-bridge-guide/` ("Ba Na Hills Golden Bridge: Cable Car, Fog & Map (2026)", 54 chars, Meta Desc 155 chars, Focus Keyword `Ba Na Hills Golden Bridge`). Giant fiberglass-reinforced hands at 1,414m elevation; world-record cable car lines (Hoi An - Marseille); early morning crowd evasion tactics (07:30 turnstile arrival); mountain weather forecast patterns, persistent afternoon fog, ticket pricing, and Sun World theme park navigation.
+     - Pillar 4 (ID 789): `/plan/vietnam-to-cambodia-border-crossings/` ("Vietnam to Cambodia Border Crossings: Routes & Visas (2026)", 59 chars, Meta Desc 153 chars, Focus Keyword `Vietnam to Cambodia border crossings`). Moc Bai / Bavet express buses (Saigon to Phnom Penh, 6-7 hours, 550k-750k VND); Song Tien / Kaam Samnor river ferries along the Mekong; Ha Tien / Prek Chak coastal crossing for Kampot and Koh Rong; border e-visa and visa-on-arrival requirements, departure tax avoidance, and border bus operator scam warnings.
+     - Pillar 5 (ID 790): `/plan/hanoi-to-cat-ba-island-transport/` ("Hanoi to Cat Ba Island Transport: Bus & Ferry Guide (2026)", 58 chars, Meta Desc 153 chars, Focus Keyword `Hanoi to Cat Ba island transport`). 150 km door-to-door transit; tourist combo packages (Old Quarter hotel pickup, Highway 5B expressway coach, fast passenger speedboat to Cai Vieng pier, connecting island bus to Cat Ba Town in 3.5 hours flat); avoiding Dong Bai vehicular ferry traffic jams on summer weekends; private transfer costs and Hai Phong speedboat alternatives.
+     - Pillar 6 (ID 791): `/destinations/hue-street-food-guide/` ("Hue Street Food Guide: 9 Essential Dishes & Stalls (2026)", 57 chars, Meta Desc 152 chars, Focus Keyword `Hue street food`). Royal court culinary legacy meets fiery Perfume River street flavors; authentic Bun Bo Hue broth simmering lemongrass and mam ruoc (Quan Cam, Ba Tuyet); the royal steamed cake trio (banh beo, banh nam, banh loc at Hanh Restaurant and Quan Ba Do); sizzling crispy yellow banh khoai with liver-peanut dip (Lac Thien); Con Hen peasant clam rice (Hoa Dong); student street snack banh ep; and sweet Che Hem (roasted pork dumplings in ginger syrup).
+     - Pillar 7 (ID 792): `/plan/vietnam-in-july/` ("Vietnam in July: Weather, Beach Sun & Rain Patterns (2026)", 58 chars, Meta Desc 152 chars, Focus Keyword `Vietnam in July`). Central coast dry-season apex (Da Nang, Hoi An, Quy Nhon, Nha Trang enjoy 33-37°C sunny days and glassy seas sheltered by the Truong Son rain shadow); Cham Islands and Hon Mun marine reserve coral snorkeling; northern lowland heatwaves and mountain harvest dynamics; southern afternoon monsoon rhythm (bright mornings, predictable 45-minute cloudbursts); and peak green turtle nesting season on Con Dao.
+     - Anti-AI Slop Compliance: 0 Tier 1 clichés ($HLS = 100$, 0 marketing fluff, high empirical evidence density across all 7 guides).
+  2. Production Deployment & SERP Metadata Calibration (150 Pages):
+     - Published all 7 pillars on production VPS via automated WP-CLI scripts (`ops/deploy_stage66_pillars.py`).
+     - Total published pages elevated from 143 to 150 pages.
+     - Full SEO inventory audit (`ops/analyze_seo_inventory.py`): 0 long titles (> 60 chars), 0 missing focus keywords, 0 keyword mismatches, 0 non-SERP descriptions across all 150 published pages.
+  3. Semantic Internal Linking Mesh Hardening:
+     - Executed 28 surgical paragraph replacements across 27 authority parent guides (`ops/assemble_stage66_mesh.py`, `ops/apply_stage66_mesh.py`).
+     - Verified in-link counts (`ops/check_stage66_inlinks.py`):
+       - `hanoi-train-street-guide`: 4 in-links (ID 287, 613, 614, 649)
+       - `cu-chi-tunnels-ben-duoc-vs-ben-dinh`: 4 in-links (ID 262, 615, 645, 715)
+       - `ba-na-hills-golden-bridge-guide`: 5 in-links (ID 213, 616, 646, 680, 792)
+       - `vietnam-to-cambodia-border-crossings`: 4 in-links (ID 13, 155, 645, 754)
+       - `hanoi-to-cat-ba-island-transport`: 4 in-links (ID 198, 316, 682, 683)
+       - `hue-street-food-guide`: 4 in-links (ID 184, 500, 684, 716)
+       - `vietnam-in-july`: 4 in-links (ID 14, 720, 721, 757)
+     - Site-wide internal link graph audit (`ops/audit_internal_links.py`): 1,406 total internal content links (average 9.4 outgoing links per page). **Zero orphan content guides and zero weakly linked content guides across all 150 pages**.
+  4. Editorial & E-E-A-T Date Synchronization (`ops/sync_visual_dates.py`):
+     - Synchronized 137 postmeta review dates and database `post_modified` timestamps to `September 22, 2026 11:00:00`.
+     - Sitemap lastmod audit (`ops/audit_sitemap_lastmod.py`): 150/150 pages verified with fresh September 22, 2026 timestamps.
+     - LiteSpeed cache completely purged and verified.
+  5. Search Engine Discovery & Real-Time Indexing (`ops/ping_search_engines.py`):
+     - Feed Health: HTTP 200 OK (Valid RSS 2.0, 10 items).
+     - Webmaster Authentication: Verified tokens on `/BingSiteAuth.xml` and `/852ef594b29d4da5a639612da3430b0f.txt`.
+     - WebSub / PubSubHubbub: 2/2 hubs pinged successfully (`pubsubhubbub.appspot.com` HTTP 204, `superfeedr.com` HTTP 200).
+     - IndexNow Bulk Dispatch: All 150 URLs submitted to `api.indexnow.org` and `bing.com` (both HTTP 200 OK).
+  6. CI/CD Master Verification Suite:
+     - Anti-AI Slop Quality Engine (`ops/tests/test-anti-ai-slop.py`): 34/34 PASS ($HLS = 100$).
+     - Core MU-Plugin Invariants (`ops/verify-core-mu-plugin.ps1`): 16/16 mutations rejected, hash `71b49033114e8007e5c19fb8ebc1a89e0d0dad88d0fe92dd381a28700db096ce` 100% preserved.
+     - CI/CD Quality Gates (`ops/verify-all-gates.ps1`): 5/5 GATES PASS.
+     - Public HTTPS Production Verifier (`ops/verify-guide-experience-public.ps1`): 100% PASS across all live production endpoints.
