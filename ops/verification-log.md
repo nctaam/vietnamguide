@@ -2229,3 +2229,46 @@ Date: 2026-07-28 (Asia/Saigon)
      - Core MU-Plugin Invariants (`ops/verify-core-mu-plugin.ps1`): 16/16 mutations rejected, hash `71b49033114e8007e5c19fb8ebc1a89e0d0dad88d0fe92dd381a28700db096ce` 100% preserved.
      - CI/CD Quality Gates (`ops/verify-all-gates.ps1`): 5/5 GATES PASS.
      - Public HTTPS Production Verifier (`ops/verify-guide-experience-public.ps1`): 100% PASS across all live production endpoints.
+
+## Stage 64 - High-Intent Organic Traffic Pillar Expansion across Night Markets, Karst Boat Tours, Sapa Trekking & Coastal Drives (September 22, 2026)
+- Date: 2026-09-22
+- Scope: High-intent organic traffic expansion targeting southern night markets, authentic Hoi An street food, karst boat tour decisions, mountain trekking routes, uncrowded coastal road trips, UNESCO marine reserves, and shoulder-season weather dynamics. Strict content-only policy with zero new features, shortcodes, or database schemas. Authored and deployed 7 high-intent travel pillars (Saigon Night Markets Guide, Hoi An Street Food Guide, Tam Coc vs Trang An Boat Tour, Sapa Trekking Routes Guide, Quy Nhon to Phu Yen Coastal Drive, Cham Islands Day Trip Guide, Vietnam in May), hardened semantic internal linking mesh to guarantee >= 4 in-links per pillar (28 surgical 1-to-1 replacements applied with 0 errors), synchronized E-E-A-T freshness dates to September 22, 2026 across all 136 pages, and syndicated real-time search engine re-indexing signals via Bing IndexNow and Google WebSub.
+- Key Accomplishments:
+  1. Editorial Pillar Authoring & Anti-AI Slop Validation:
+     - Pillar 1 (ID 715): `/destinations/saigon-night-markets-guide/` ("Saigon Night Markets: 5 Best Food & Street Markets (2026)", 57 chars, Meta Desc 148 chars, Focus Keyword `Saigon night markets`). Ho Thi Ky flower & Cambodian food street (grilled beef lemongrass skewers, snail bowls, chè Campuchia, 20k–50k VND); Ben Thanh exterior night stalls; Ba Chieu night market (legendary chicken sticky rice with char siu); Ha Ton Quyen Cantonese dumpling street; hygiene and grab transit tips.
+     - Pillar 2 (ID 716): `/destinations/hoi-an-street-food-guide/` ("Hoi An Street Food Guide: 9 Essential Dishes & Stalls (2026)", 60 chars, Meta Desc 148 chars, Focus Keyword `Hoi An street food`). Cao Lau noodle authenticity (Cham island wood ash lye, Ba Le well water, Tra Que herbs); Mi Quang turmeric noodles; White Rose dumplings (Bong Hong Trang workshop); Madam Khanh "Banh Mi Queen" vs Banh Mi Phuong; Ba Le Well grilled pork skewer sets; An Hoi night market snacks; food hygiene rules.
+     - Pillar 3 (ID 717): `/compare/tam-coc-vs-trang-an-boat-tour/` ("Tam Coc vs Trang An Boat Tour: Which is Better in 2026?", 55 chars, Meta Desc 150 chars, Focus Keyword `Tam Coc vs Trang An boat tour`). Trang An UNESCO complex (250k VND, routes 1-3, 1,000m Hang May cave, zero vendor harassment) vs Tam Coc (250k VND, Ngo Dong river, foot-rowing boatmen, golden harvest in late May, photo/snack vendor friction); crowd avoidance timing.
+     - Pillar 4 (ID 718): `/plan/sapa-trekking-routes-guide/` ("Sapa Trekking Routes Guide: Trails, Difficulty & Maps (2026)", 60 chars, Meta Desc 148 chars, Focus Keyword `Sapa trekking routes`). Classic day trek: Y Linh Ho – Lao Chai – Ta Van (12 km, moderate, terraced rice valleys); Cat Cat tourist trap assessment vs authentic valley alternatives; Remote 2-day hikes to Ban Ho, Giang Ta Chai, and Ta Phin (Red Dao herbal baths); Local Hmong female guides (400k–600k VND/day) vs self-guided navigation; mud season gear and footwear.
+     - Pillar 5 (ID 719): `/plan/quy-nhon-to-phu-yen-coastal-drive/` ("Quy Nhon to Phu Yen Coastal Drive: Route & Stops (2026)", 55 chars, Meta Desc 147 chars, Focus Keyword `Quy Nhon to Phu Yen coastal drive`). 100 km scenic road trip via QL1D and DT649; Quy Nhon highlights (Eo Gio, Ky Co beach, Queen's Beach); Phu Yen coastal wonders (Ganh Da Dia volcanic basalt columns, Mang Lang Church, O Loan Lagoon blood cockle feast, Bai Xep cliff meadow); private car hire (1.2M–1.6M VND/day) vs 125cc scooter safety.
+     - Pillar 6 (ID 720): `/plan/cham-islands-day-trip-guide/` ("Cham Islands Day Trip Guide: Speedboats & Snorkeling (2026)", 59 chars, Meta Desc 150 chars, Focus Keyword `Cham Islands day trip`). Cu Lao Cham archipelago (8 islands, UNESCO Biosphere Reserve); Cua Dai pier speedboat logistics (20 mins, 650k–850k VND day tour); snorkeling over coral gardens at Hon Dai / Bai Xep; strict plastic bag ban (*Nói không với túi nilon*); Bai Ong beach relaxation and seafood feast; strict seasonal window (March–September only).
+     - Pillar 7 (ID 721): `/plan/vietnam-in-may/` ("Vietnam in May: Weather, Crowds & Regional Travel (2026)", 56 chars, Meta Desc 150 chars, Focus Keyword `Vietnam in May`). Post-holiday shoulder season calm (drop in domestic travel after May 1 Reunification surge); Central coast beach prime (Da Nang, Hoi An, Nha Trang, Quy Nhon enjoy 32°C sunshine, calm seas); Early southwest monsoon in Southern Vietnam (brief, predictable afternoon showers); Northern transition into early summer (Tam Coc golden harvest, Sapa flooded mirror terraces).
+     - Anti-AI Slop Compliance: 0 Tier 1 clichés ($HLS = 100$, 0 marketing fluff, rich empirical evidence items across all 7 guides).
+  2. Production Deployment & SERP Metadata Calibration (136 Pages):
+     - Published all 7 pillars on production VPS via automated WP-CLI scripts (`ops/deploy_stage64_pillars.py`).
+     - Total published pages elevated from 129 to 136 pages.
+     - Full SEO inventory audit (`ops/analyze_seo_inventory.py`): 0 long titles (> 60 chars), 0 missing focus keywords, 0 keyword mismatches, 0 non-SERP descriptions across all 136 published pages.
+  3. Semantic Internal Linking Mesh Hardening:
+     - Executed 28 surgical paragraph replacements across 28 authority parent guides (`ops/assemble_stage64_mesh.py`, `ops/apply_stage64_mesh.py`).
+     - Verified in-link counts (`ops/check_stage64_inlinks.py`):
+       - `saigon-night-markets-guide`: 4 in-links (ID 262, 281, 480, 615)
+       - `hoi-an-street-food-guide`: 4 in-links (ID 178, 499, 616, 681)
+       - `tam-coc-vs-trang-an-boat-tour`: 4 in-links (ID 190, 326, 418, 628)
+       - `sapa-trekking-routes-guide`: 4 in-links (ID 504, 518, 524, 525)
+       - `quy-nhon-to-phu-yen-coastal-drive`: 4 in-links (ID 155, 224, 250, 626)
+       - `cham-islands-day-trip-guide`: 4 in-links (ID 254, 501, 627, 680)
+       - `vietnam-in-may`: 4 in-links (ID 14, 482, 650, 685)
+     - Site-wide internal link graph audit (`ops/audit_internal_links.py`): 1,297 total internal content links (average 9.5 outgoing links per page). **Zero orphan content guides and zero weakly linked content guides across all 136 pages**.
+  4. Editorial & E-E-A-T Date Synchronization (`ops/sync_visual_dates.py`):
+     - Synchronized 123 postmeta review dates and database `post_modified` timestamps to `September 22, 2026 09:00:00`.
+     - Sitemap lastmod audit (`ops/audit_sitemap_lastmod.py`): 136/136 pages verified with fresh September 22, 2026 timestamps.
+     - LiteSpeed cache completely purged and verified.
+  5. Search Engine Discovery & Real-Time Indexing (`ops/ping_search_engines.py`):
+     - Feed Health: HTTP 200 OK (Valid RSS 2.0, 10 items).
+     - Webmaster Authentication: Verified tokens on `/BingSiteAuth.xml` and `/852ef594b29d4da5a639612da3430b0f.txt`.
+     - WebSub / PubSubHubbub: 2/2 hubs pinged successfully (`pubsubhubbub.appspot.com` HTTP 204, `superfeedr.com` HTTP 200).
+     - IndexNow Bulk Dispatch: All 136 URLs submitted to `api.indexnow.org` and `bing.com` (both HTTP 200 OK).
+  6. CI/CD Master Verification Suite:
+     - Anti-AI Slop Quality Engine (`ops/tests/test-anti-ai-slop.py`): 34/34 PASS ($HLS = 100$).
+     - Core MU-Plugin Invariants (`ops/verify-core-mu-plugin.ps1`): 16/16 mutations rejected, hash `71b49033114e8007e5c19fb8ebc1a89e0d0dad88d0fe92dd381a28700db096ce` 100% preserved.
+     - CI/CD Quality Gates (`ops/verify-all-gates.ps1`): 5/5 GATES PASS.
+     - Public HTTPS Production Verifier (`ops/verify-guide-experience-public.ps1`): 100% PASS across all live production endpoints.

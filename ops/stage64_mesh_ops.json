@@ -1,0 +1,198 @@
+[
+  {
+    "post_id": 262,
+    "slug": "ho-chi-minh-city-travel-guide",
+    "pillar": "saigon-night-markets-guide",
+    "target": "<p>HCMC has more good options than most first trips can use. Start with the city job (use our <a href=\"/destinations/saigon-street-food-guide/\">Saigon street food guide</a> for nocturnal seafood and alley markets), then add blocks that support it.</p>",
+    "replacement": "<p>HCMC has more good options than most first trips can use. Start with the city job (use our <a href=\"/destinations/saigon-street-food-guide/\">Saigon street food guide</a> and <a href=\"/destinations/saigon-night-markets-guide/\">Saigon night markets guide</a> for nocturnal seafood and alley markets), then add blocks that support it.</p>"
+  },
+  {
+    "post_id": 480,
+    "slug": "vietnam-food-safety-street-food-etiquette",
+    "pillar": "saigon-night-markets-guide",
+    "target": "dive into nocturnal seafood and alley culture with our <a href=\"/destinations/saigon-street-food-guide/\">Saigon street food guide</a>, and discover coastal mi quang and banh xeo via the <a href=\"/destinations/da-nang-street-food-guide/\">Da Nang street food guide</a>.",
+    "replacement": "dive into nocturnal seafood and alley culture with our <a href=\"/destinations/saigon-street-food-guide/\">Saigon street food guide</a> and <a href=\"/destinations/saigon-night-markets-guide/\">Saigon night markets</a> overview, and discover coastal mi quang and banh xeo via the <a href=\"/destinations/da-nang-street-food-guide/\">Da Nang street food guide</a>."
+  },
+  {
+    "post_id": 281,
+    "slug": "where-to-stay-in-ho-chi-minh-city",
+    "pillar": "saigon-night-markets-guide",
+    "target": "<tr><td data-label=\"Question\"><strong>Best area for first-timers?</strong></td><td data-label=\"Answer\">District 1 around Dong Khoi, Nguyen Hue, Ben Thanh, or the quieter central edge. It keeps sights, food, ride-hailing, and pickup points simple.</td></tr>",
+    "replacement": "<tr><td data-label=\"Question\"><strong>Best area for first-timers?</strong></td><td data-label=\"Answer\">District 1 around Dong Khoi, Nguyen Hue, Ben Thanh (see our <a href=\"/destinations/saigon-night-markets-guide/\">Saigon night markets guide</a> for evening stalls), or the quieter central edge. It keeps sights, food, ride-hailing, and pickup points simple.</td></tr>"
+  },
+  {
+    "post_id": 615,
+    "slug": "saigon-street-food-guide",
+    "pillar": "saigon-night-markets-guide",
+    "target": "<li><a href=\"/destinations/where-to-stay-in-ho-chi-minh-city/\">Where to Stay in Ho Chi Minh City</a> &mdash; neighborhood comparison for food lovers and first-timers.</li>",
+    "replacement": "<li><a href=\"/destinations/where-to-stay-in-ho-chi-minh-city/\">Where to Stay in Ho Chi Minh City</a> &mdash; neighborhood comparison for food lovers and first-timers.</li>\n<li><a href=\"/destinations/saigon-night-markets-guide/\">Saigon Night Markets Guide</a> &mdash; street food alleys, opening times, and evening food stalls.</li>"
+  },
+  {
+    "post_id": 499,
+    "slug": "hoi-an-ancient-town-guide",
+    "pillar": "hoi-an-street-food-guide",
+    "target": "<details><summary>Is Hoi An Ancient Town worth visiting?</summary><p>Yes when old-town atmosphere, food, walking, heritage houses, river evenings, tailoring, or central Vietnam charm matter to the trip. It is less worth it when the route is too short and Hoi An becomes only another transfer.</p></details>",
+    "replacement": "<details><summary>Is Hoi An Ancient Town worth visiting?</summary><p>Yes when old-town atmosphere, walking, heritage houses, river evenings, and exceptional dining matter to the trip (see our <a href=\"/destinations/hoi-an-street-food-guide/\">Hoi An street food guide</a> for Cao Lau, White Rose dumplings, and night market stalls). It is less worth it when the route is too short and Hoi An becomes only another transfer.</p></details>"
+  },
+  {
+    "post_id": 178,
+    "slug": "best-things-to-do-in-hoi-an",
+    "pillar": "hoi-an-street-food-guide",
+    "target": "<details><summary>How many nights do I need in Hoi An?</summary><p>Two nights can work if you keep the plan selective: one Ancient Town evening, one heritage morning, and one food or cafe block. Three nights is the cleaner default for most premium first trips because it lets you add My Son, beach time, countryside, or recovery without hollowing out the town itself.</p></details>",
+    "replacement": "<details><summary>How many nights do I need in Hoi An?</summary><p>Two nights can work if you keep the plan selective: one Ancient Town evening, one heritage morning, and one dining block (explore our <a href=\"/destinations/hoi-an-street-food-guide/\">Hoi An street food guide</a> for iconic stalls like Madam Khanh and Bong Hong Trang). Three nights is the cleaner default for most premium first trips because it lets you add My Son, beach time, countryside, or recovery without hollowing out the town itself.</p></details>"
+  },
+  {
+    "post_id": 681,
+    "slug": "where-to-stay-in-hoi-an",
+    "pillar": "hoi-an-street-food-guide",
+    "target": "<li><a href=\"/destinations/best-things-to-do-in-hoi-an/\">Best Things to Do in Hoi An</a> &mdash; top experiences from tailor shops to cooking classes and night markets.</li>",
+    "replacement": "<li><a href=\"/destinations/best-things-to-do-in-hoi-an/\">Best Things to Do in Hoi An</a> &mdash; top experiences from tailor shops to cooking classes and night markets.</li>\n<li><a href=\"/destinations/hoi-an-street-food-guide/\">Hoi An Street Food Guide</a> &mdash; essential regional dishes, iconic family stalls, and hygiene advice.</li>"
+  },
+  {
+    "post_id": 616,
+    "slug": "da-nang-street-food-guide",
+    "pillar": "hoi-an-street-food-guide",
+    "target": "<p>While both are central noodle dishes, mi quang uses soft turmeric rice noodles with a shallow broth and various proteins (pork, chicken, shrimp). Cao lau is exclusive to neighboring Hoi An, made with chewy, thick, lye-water-soaked noodles, dry five-spice char siu pork, and no broth.</p>",
+    "replacement": "<p>While both are central noodle dishes, mi quang uses soft turmeric rice noodles with a shallow broth and various proteins (pork, chicken, shrimp). Cao lau is exclusive to neighboring Hoi An (explore our <a href=\"/destinations/hoi-an-street-food-guide/\">Hoi An street food guide</a> for authentic Ba Le well noodle stalls), made with chewy, thick, lye-water-soaked noodles, dry five-spice char siu pork, and no broth.</p>"
+  },
+  {
+    "post_id": 190,
+    "slug": "ninh-binh-travel-guide",
+    "pillar": "tam-coc-vs-trang-an-boat-tour",
+    "target": "Use Trang An or Tam Coc as the landscape anchor, add Hang Mua only when heat and knees allow,",
+    "replacement": "Use Trang An or Tam Coc as the landscape anchor (compare routes and scenery in our <a href=\"/compare/tam-coc-vs-trang-an-boat-tour/\">Tam Coc vs Trang An boat tour</a> guide), add Hang Mua only when heat and knees allow,"
+  },
+  {
+    "post_id": 326,
+    "slug": "ninh-binh-day-trip-vs-overnight",
+    "pillar": "tam-coc-vs-trang-an-boat-tour",
+    "target": "Start with the <a href=\"/destinations/ninh-binh-travel-guide/\">Ninh Binh Travel Guide</a>, then compare Hanoi excursion pressure in <a href=\"/destinations/best-day-trips-from-hanoi/\">Best Day Trips from Hanoi</a>.",
+    "replacement": "Start with the <a href=\"/destinations/ninh-binh-travel-guide/\">Ninh Binh Travel Guide</a>, check boat options in our <a href=\"/compare/tam-coc-vs-trang-an-boat-tour/\">Tam Coc vs Trang An boat tour</a> comparison, then compare Hanoi excursion pressure in <a href=\"/destinations/best-day-trips-from-hanoi/\">Best Day Trips from Hanoi</a>."
+  },
+  {
+    "post_id": 418,
+    "slug": "tam-coc-travel-guide",
+    "pillar": "tam-coc-vs-trang-an-boat-tour",
+    "target": "<li>Read <a href=\"/compare/trang-an-vs-tam-coc/\">Trang An vs Tam Coc</a>,",
+    "replacement": "<li>Read <a href=\"/compare/tam-coc-vs-trang-an-boat-tour/\">Tam Coc vs Trang An Boat Tour</a>, <a href=\"/compare/trang-an-vs-tam-coc/\">Trang An vs Tam Coc</a>,"
+  },
+  {
+    "post_id": 628,
+    "slug": "hang-mua-ninh-binh-guide",
+    "pillar": "tam-coc-vs-trang-an-boat-tour",
+    "target": "It offers direct views down into Tam Coc's Ngo Dong river, where flat-bottom sampan boats glide between limestone caverns.",
+    "replacement": "It offers direct views down into Tam Coc's Ngo Dong river (compare river trips in our <a href=\"/compare/tam-coc-vs-trang-an-boat-tour/\">Tam Coc vs Trang An boat tour</a> guide), where flat-bottom sampan boats glide between limestone caverns."
+  },
+  {
+    "post_id": 518,
+    "slug": "sapa-travel-guide",
+    "pillar": "sapa-trekking-routes-guide",
+    "target": "<details><summary>Do I need a trekking guide in Sapa?</summary><p>A guide is strongly useful for village context, muddy conditions, mixed fitness, and longer walks. Short self-guided walks can work when the route is obvious and the weather is stable.</p></details>",
+    "replacement": "<details><summary>Do I need a trekking guide in Sapa?</summary><p>A guide is strongly useful for village context, muddy conditions, and longer valley walks (explore our <a href=\"/plan/sapa-trekking-routes-guide/\">Sapa trekking routes guide</a> for trails from Y Linh Ho to Ta Van and Ban Ho). Short self-guided walks can work when the route is obvious and the weather is stable.</p></details>"
+  },
+  {
+    "post_id": 524,
+    "slug": "sapa-trekking-guided-vs-self-guided",
+    "pillar": "sapa-trekking-routes-guide",
+    "target": "visit our <a href=\"/destinations/sapa-travel-guide/\">Sapa Travel Guide</a>, <a href=\"/destinations/where-to-stay-in-sapa/\">Where to Stay in Sapa</a>,",
+    "replacement": "visit our <a href=\"/destinations/sapa-travel-guide/\">Sapa Travel Guide</a>, <a href=\"/plan/sapa-trekking-routes-guide/\">Sapa Trekking Routes Guide</a>, <a href=\"/destinations/where-to-stay-in-sapa/\">Where to Stay in Sapa</a>,"
+  },
+  {
+    "post_id": 525,
+    "slug": "where-to-stay-in-sapa",
+    "pillar": "sapa-trekking-routes-guide",
+    "target": "read our <a href=\"/destinations/sapa-travel-guide/\">Sapa Travel Guide</a>, <a href=\"/plan/sapa-trekking-guided-vs-self-guided/\">Sapa Trekking Guide</a>,",
+    "replacement": "read our <a href=\"/destinations/sapa-travel-guide/\">Sapa Travel Guide</a>, <a href=\"/plan/sapa-trekking-routes-guide/\">Sapa Trekking Routes Guide</a>, <a href=\"/plan/sapa-trekking-guided-vs-self-guided/\">Sapa Trekking Guide</a>,"
+  },
+  {
+    "post_id": 504,
+    "slug": "sapa-vs-ha-giang",
+    "pillar": "sapa-trekking-routes-guide",
+    "target": "<details><summary>Is Sapa too crowded?</summary><p>Sapa can be busy, especially around the town core, but it should not be reduced to crowds. Valley stays, guided walks, shoulder timing, and better accommodation choices can make it a useful mountain chapter.</p></details>",
+    "replacement": "<details><summary>Is Sapa too crowded?</summary><p>Sapa can be busy, especially around the town core, but it should not be reduced to crowds. Valley stays, exploring quieter trails (see our <a href=\"/plan/sapa-trekking-routes-guide/\">Sapa trekking routes guide</a> for trails beyond Cat Cat), shoulder timing, and better accommodation choices make it a rewarding mountain chapter.</p></details>"
+  },
+  {
+    "post_id": 250,
+    "slug": "quy-nhon-travel-guide",
+    "pillar": "quy-nhon-to-phu-yen-coastal-drive",
+    "target": "explore the wild southern headlands via the <a href=\"/destinations/phu-yen-travel-guide/\">Phu Yen Travel Guide</a>,",
+    "replacement": "experience the dramatic 100km road trip via our <a href=\"/plan/quy-nhon-to-phu-yen-coastal-drive/\">Quy Nhon to Phu Yen coastal drive</a> guide, explore the wild southern headlands via the <a href=\"/destinations/phu-yen-travel-guide/\">Phu Yen Travel Guide</a>,"
+  },
+  {
+    "post_id": 626,
+    "slug": "phu-yen-travel-guide",
+    "pillar": "quy-nhon-to-phu-yen-coastal-drive",
+    "target": "<p>Yes. Northern Phu Yen attractions like Ganh Da Dia and O Loan Lagoon sit only 35 kilometers south of Quy Nhon, making them an easy full-day excursion before returning to Quy Nhon for the night.</p>",
+    "replacement": "<p>Yes. Northern Phu Yen attractions like Ganh Da Dia and O Loan Lagoon sit only 35 kilometers south of Quy Nhon (explore our 100km road trip itinerary in the <a href=\"/plan/quy-nhon-to-phu-yen-coastal-drive/\">Quy Nhon to Phu Yen coastal drive</a> guide), making them an easy full-day excursion before returning to Quy Nhon for the night.</p>"
+  },
+  {
+    "post_id": 155,
+    "slug": "transport-within-vietnam",
+    "pillar": "quy-nhon-to-phu-yen-coastal-drive",
+    "target": "<tr><td data-label=\"Corridor\">Da Nang or Hoi An - Ho Chi Minh City</td><td data-label=\"Default premium answer\">Fly.</td><td data-label=\"Good alternative\">Train only for travelers intentionally slowing the central-south leg.</td><td data-label=\"Use caution with\">Sleeper bus unless budget is the main constraint.</td><td data-label=\"Editorial reason\">The flight usually protects enough time to justify airport friction.</td></tr>",
+    "replacement": "<tr><td data-label=\"Corridor\">Da Nang or Hoi An - Ho Chi Minh City</td><td data-label=\"Default premium answer\">Fly.</td><td data-label=\"Good alternative\">Train or coastal road trip (see our <a href=\"/plan/quy-nhon-to-phu-yen-coastal-drive/\">Quy Nhon to Phu Yen coastal drive</a>) for travelers intentionally slowing the central-south leg.</td><td data-label=\"Use caution with\">Sleeper bus unless budget is the main constraint.</td><td data-label=\"Editorial reason\">The flight usually protects enough time to justify airport friction.</td></tr>"
+  },
+  {
+    "post_id": 224,
+    "slug": "21-days-in-vietnam",
+    "pillar": "quy-nhon-to-phu-yen-coastal-drive",
+    "target": "<li><strong>Da Nang to Nha Trang Coastal Rail:</strong> Train SE3 departs 11:25, arrives 20:45 (9 hrs 20 mins, 530 km). Soft sleeper ticket is 680,000–790,000 VND; air-conditioned soft seat is 420,000 VND.</li>",
+    "replacement": "<li><strong>Da Nang to Nha Trang Coastal Rail:</strong> Train SE3 departs 11:25, arrives 20:45 (9 hrs 20 mins, 530 km). Soft sleeper ticket is 680,000–790,000 VND; travelers exploring the central coast by road can follow our scenic <a href=\"/plan/quy-nhon-to-phu-yen-coastal-drive/\">Quy Nhon to Phu Yen coastal drive</a>.</li>"
+  },
+  {
+    "post_id": 254,
+    "slug": "cham-islands-travel-guide",
+    "pillar": "cham-islands-day-trip-guide",
+    "target": "<li><strong>Best fit:</strong> a day trip from Hoi An when the weather, boat plan, and return timing are clear.</li>",
+    "replacement": "<li><strong>Best fit:</strong> a <a href=\"/plan/cham-islands-day-trip-guide/\">Cham Islands day trip</a> from Hoi An when the weather, boat plan, and return timing are clear.</li>"
+  },
+  {
+    "post_id": 627,
+    "slug": "ly-son-vs-cham-islands",
+    "pillar": "cham-islands-day-trip-guide",
+    "target": "dense tropical rainforest (explore our detailed <a href=\"/destinations/cham-islands-travel-guide/\">Cham Islands travel guide</a> for tour bookings and homestays).",
+    "replacement": "dense tropical rainforest (explore our detailed <a href=\"/destinations/cham-islands-travel-guide/\">Cham Islands travel guide</a> and <a href=\"/plan/cham-islands-day-trip-guide/\">Cham Islands day trip guide</a> for speedboat tours and homestays)."
+  },
+  {
+    "post_id": 501,
+    "slug": "da-nang-beaches-guide",
+    "pillar": "cham-islands-day-trip-guide",
+    "target": "<td data-label=\"Add only if easy\">Son Tra, Hoi An, Marble, or a route-specific day trip.</td>",
+    "replacement": "<td data-label=\"Add only if easy\">Son Tra, Hoi An, Marble, or a <a href=\"/plan/cham-islands-day-trip-guide/\">Cham Islands day trip</a>.</td>"
+  },
+  {
+    "post_id": 680,
+    "slug": "where-to-stay-in-da-nang",
+    "pillar": "cham-islands-day-trip-guide",
+    "target": "<li><a href=\"/destinations/where-to-stay-in-hoi-an/\">Where to Stay in Hoi An</a> &mdash; discover whether Ancient Town or An Bang Beach fits your travel style.</li>",
+    "replacement": "<li><a href=\"/destinations/where-to-stay-in-hoi-an/\">Where to Stay in Hoi An</a> &mdash; discover whether Ancient Town or An Bang Beach fits your travel style.</li>\n<li><a href=\"/plan/cham-islands-day-trip-guide/\">Cham Islands Day Trip Guide</a> &mdash; speedboats, coral reef snorkeling, and day tours from Cua Dai pier.</li>"
+  },
+  {
+    "post_id": 14,
+    "slug": "best-time-to-visit-vietnam",
+    "pillar": "vietnam-in-may",
+    "target": "and <a href=\"/plan/vietnam-in-april/\">Vietnam in April</a>, alongside our <a href=\"/plan/tet-in-vietnam-travel-guide/\">Tet in Vietnam guide</a>",
+    "replacement": ", <a href=\"/plan/vietnam-in-april/\">Vietnam in April</a>, and <a href=\"/plan/vietnam-in-may/\">Vietnam in May</a>, alongside our <a href=\"/plan/tet-in-vietnam-travel-guide/\">Tet in Vietnam guide</a>"
+  },
+  {
+    "post_id": 685,
+    "slug": "vietnam-in-april",
+    "pillar": "vietnam-in-may",
+    "target": "<li><a href=\"/plan/vietnam-in-march/\">Vietnam in March</a> &mdash; compare early spring conditions across the country.</li>",
+    "replacement": "<li><a href=\"/plan/vietnam-in-march/\">Vietnam in March</a> &mdash; compare early spring conditions across the country.</li>\n<li><a href=\"/plan/vietnam-in-may/\">Vietnam in May</a> &mdash; post-holiday shoulder season calm, central beach sunshine, and Tam Coc harvest.</li>"
+  },
+  {
+    "post_id": 650,
+    "slug": "vietnam-in-march",
+    "pillar": "vietnam-in-may",
+    "target": "see our next-month guide to <a href=\"/plan/vietnam-in-april/\">Vietnam in April</a> for holiday surges and warmer beaches,",
+    "replacement": "see our guides to <a href=\"/plan/vietnam-in-april/\">Vietnam in April</a> and <a href=\"/plan/vietnam-in-may/\">Vietnam in May</a> for shoulder season beach sunshine,"
+  },
+  {
+    "post_id": 482,
+    "slug": "vietnam-rainy-season-flexible-route",
+    "pillar": "vietnam-in-may",
+    "target": "<li><strong>Regional Rain Windows:</strong> North (Jul–Aug heavy downpours, 300 mm/month); Central (Sep–Nov typhoon flood risk, 500–700 mm/month); South (May–Oct brief 45-min afternoon downpours).</li>",
+    "replacement": "<li><strong>Regional Rain Windows:</strong> North (Jul–Aug heavy downpours, 300 mm/month); Central (Sep–Nov typhoon flood risk, 500–700 mm/month); South (check our <a href=\"/plan/vietnam-in-may/\">Vietnam in May</a> guide for the onset of May–Oct brief 45-min afternoon downpours).</li>"
+  }
+]
