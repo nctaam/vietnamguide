@@ -100,7 +100,7 @@ def submit_indexnow(endpoint, urls):
 
 def main():
     print(f"=== VietnamGuide IndexNow Auto-Submission ===")
-    print(f"Fetching URLs from {SITEMAP_URL}...")
+    print(f"Fetching URLs from {SITEMAP_INDEX_URL}...")
     urls = fetch_sitemap_urls()
     print(f"Found {len(urls)} URLs.")
 
