@@ -1710,5 +1710,75 @@
     "post_modified": "2026-09-23 15:00:00",
     "parent": 6,
     "url": "/plan/hanoi-to-ninh-binh-train-vs-limousine/"
+  },
+  {
+    "ID": 1097,
+    "post_name": "where-to-stay-in-ha-tien",
+    "post_title": "Where to Stay in Ha Tien (2026): Pier Hotels & Beach Bases",
+    "meta_title": "Where to Stay in Ha Tien (2026): Pier Hotels & Beach Bases",
+    "meta_desc": "Where to stay in Ha Tien: downtown pier hotels for Phu Quoc speedboats vs quiet Mui Nai beach resorts and riverfront guesthouses with 2026 room rates.",
+    "post_modified": "2026-09-23 15:20:00",
+    "parent": 7,
+    "url": "/destinations/where-to-stay-in-ha-tien/"
+  },
+  {
+    "ID": 1098,
+    "post_name": "saigon-to-vung-tau-transport",
+    "post_title": "Saigon to Vung Tau Transport (2026): Ferry vs Limousine",
+    "meta_title": "Saigon to Vung Tau Transport (2026): Ferry vs Limousine",
+    "meta_desc": "Saigon to Vung Tau transport guide: Greenlines DP high-speed hydrofoil ferry vs luxury DCar limousine vans with 2026 fares, schedules, and pier departures.",
+    "post_modified": "2026-09-23 15:20:00",
+    "parent": 6,
+    "url": "/plan/saigon-to-vung-tau-transport/"
+  },
+  {
+    "ID": 1099,
+    "post_name": "vietnam-travel-apps",
+    "post_title": "Best Travel Apps for Vietnam (2026): Rides, Maps & Pay",
+    "meta_title": "Best Travel Apps for Vietnam (2026): Rides, Maps & Pay",
+    "meta_desc": "Best travel apps for Vietnam: Grab and Xanh SM ride-hailing, BusMap transit routes, Google Translate offline packs, and cashless mobile payments tested.",
+    "post_modified": "2026-09-23 15:20:00",
+    "parent": 6,
+    "url": "/plan/vietnam-travel-apps/"
+  },
+  {
+    "ID": 1100,
+    "post_name": "central-highlands-vietnam-itinerary",
+    "post_title": "Central Highlands Vietnam Itinerary (2026): 5-7 Day Route",
+    "meta_title": "Central Highlands Vietnam Itinerary (2026): 5-7 Day Route",
+    "meta_desc": "Experience the Central Highlands Vietnam itinerary: 5 to 7 days from Da Lat to Lak Lake, Dray Nur waterfalls, and Buon Ma Thuot coffee plantations.",
+    "post_modified": "2026-09-23 15:20:00",
+    "parent": 8,
+    "url": "/itineraries/central-highlands-vietnam-itinerary/"
+  },
+  {
+    "ID": 1101,
+    "post_name": "where-to-stay-in-buon-ma-thuot",
+    "post_title": "Where to Stay in Buon Ma Thuot (2026): City & Eco-Stays",
+    "meta_title": "Where to Stay in Buon Ma Thuot (2026): City & Eco-Stays",
+    "meta_desc": "Where to stay in Buon Ma Thuot: central business hotels vs Ako Dhong Ede longhouses and peaceful Lak Lake eco-resorts with 2026 room rates and tips.",
+    "post_modified": "2026-09-23 15:20:00",
+    "parent": 7,
+    "url": "/destinations/where-to-stay-in-buon-ma-thuot/"
+  },
+  {
+    "ID": 1102,
+    "post_name": "vietnam-craft-beer-guide",
+    "post_title": "Vietnam Craft Beer Guide (2026): Breweries, Taps & Prices",
+    "meta_title": "Vietnam Craft Beer Guide (2026): Breweries, Taps & Prices",
+    "meta_desc": "Vietnam craft beer guide: top artisanal breweries in Saigon, Hanoi, and Da Nang, signature tropical IPAs, taproom locations, and 2026 pint prices.",
+    "post_modified": "2026-09-23 15:20:00",
+    "parent": 6,
+    "url": "/plan/vietnam-craft-beer-guide/"
+  },
+  {
+    "ID": 1103,
+    "post_name": "hanoi-to-sapa-train-vs-sleeper-bus",
+    "post_title": "Hanoi to Sapa: Sleeper Train vs Sleeper Bus (2026)",
+    "meta_title": "Hanoi to Sapa: Sleeper Train vs Sleeper Bus (2026)",
+    "meta_desc": "Compare Hanoi to Sapa travel: overnight railway sleeper train to Lao Cai vs luxury cabin sleeper bus direct to Sapa town. Fares, timing, and comfort.",
+    "post_modified": "2026-09-23 15:20:00",
+    "parent": 6,
+    "url": "/plan/hanoi-to-sapa-train-vs-sleeper-bus/"
   }
 ]
