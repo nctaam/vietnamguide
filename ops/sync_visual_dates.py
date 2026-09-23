@@ -101,8 +101,8 @@ foreach ($posts as $post) {
         $wpdb->update(
             $wpdb->posts,
             [
-                'post_modified' => '2026-09-23 09:30:00',
-                'post_modified_gmt' => '2026-09-23 09:30:00'
+                'post_modified' => '2026-09-23 10:30:00',
+                'post_modified_gmt' => '2026-09-23 10:30:00'
             ],
             ['ID' => $post_id]
         );
