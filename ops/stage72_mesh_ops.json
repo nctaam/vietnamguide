@@ -1,0 +1,214 @@
+[
+  {
+    "slug": "pu-luong-travel-guide",
+    "id": 529,
+    "search": "<p>For more regional planning, explore our <a href=\"/destinations/ninh-binh-travel-guide/\">Ninh Binh Travel Guide</a>, <a href=\"/destinations/sapa-travel-guide/\">Sapa Travel Guide</a>, <a href=\"/compare/vietnam-rice-terraces-guide/\">Vietnam Rice Terraces Comparison</a>, and <a href=\"/itineraries/14-days-in-vietnam/\">14 Days in Vietnam Itinerary</a>.</p>",
+    "replace": "<p>For more regional planning, explore our accommodation reviews on <a href=\"/destinations/where-to-stay-in-pu-luong/\">Where to Stay in Pu Luong</a> and <a href=\"/destinations/where-to-stay-in-mai-chau/\">Where to Stay in Mai Chau</a>, alongside our <a href=\"/destinations/ninh-binh-travel-guide/\">Ninh Binh Travel Guide</a>, <a href=\"/destinations/sapa-travel-guide/\">Sapa Travel Guide</a>, <a href=\"/compare/vietnam-rice-terraces-guide/\">Vietnam Rice Terraces Comparison</a>, and <a href=\"/itineraries/14-days-in-vietnam/\">14 Days in Vietnam Itinerary</a>.</p>",
+    "pillars": [
+      "where-to-stay-in-pu-luong",
+      "where-to-stay-in-mai-chau"
+    ]
+  },
+  {
+    "slug": "best-time-for-northern-vietnam",
+    "id": 526,
+    "search": "<a href=\"/destinations/ha-giang-loop-planning-guide/\">Ha Giang Loop Guide</a>, and master <a href=\"/plan/best-time-to-visit-vietnam/\">Best Time to Visit Vietnam</a>.</p>",
+    "replace": "<a href=\"/destinations/ha-giang-loop-planning-guide/\">Ha Giang Loop Guide</a>, our valley accommodation guides for <a href=\"/destinations/where-to-stay-in-mai-chau/\">Where to Stay in Mai Chau</a> and <a href=\"/destinations/where-to-stay-in-pu-luong/\">Where to Stay in Pu Luong</a>, and master <a href=\"/plan/best-time-to-visit-vietnam/\">Best Time to Visit Vietnam</a>.</p>",
+    "pillars": [
+      "where-to-stay-in-mai-chau",
+      "where-to-stay-in-pu-luong"
+    ]
+  },
+  {
+    "slug": "where-to-stay-in-vietnam-base-decisions",
+    "id": 481,
+    "search": "beach chapter (such as deciding <a href=\"/destinations/where-to-stay-in-mui-ne/\">where to stay in Mui Ne</a>), countryside night, early flight, or major transfer, it probably adds friction.",
+    "replace": "beach chapter (such as deciding <a href=\"/destinations/where-to-stay-in-mui-ne/\">where to stay in Mui Ne</a> or island seclusion in <a href=\"/destinations/where-to-stay-in-con-dao/\">where to stay in Con Dao</a>), countryside valley retreat (such as <a href=\"/destinations/where-to-stay-in-mai-chau/\">where to stay in Mai Chau</a> or terraced lodgings in <a href=\"/destinations/where-to-stay-in-pu-luong/\">where to stay in Pu Luong</a>), early flight, or major transfer, it probably adds friction.",
+    "pillars": [
+      "where-to-stay-in-mai-chau",
+      "where-to-stay-in-pu-luong",
+      "where-to-stay-in-con-dao"
+    ]
+  },
+  {
+    "slug": "best-day-trips-from-hanoi",
+    "id": 309,
+    "search": "<li>Use <a href=\"https://vietnamairport.vn/en/noi-bai-airport\" target=\"_blank\" rel=\"noopener\">Noi Bai airport</a>, <a href=\"/plan/transport-within-vietnam/\">Transport Within Vietnam</a>, <a href=\"/plan/health-travel-insurance-vietnam/\">Health and Travel Insurance for Vietnam</a>, and <a href=\"/plan/safety-scams-vietnam/\">Safety and Scams in Vietnam</a> before placing a long day trip near a flight, train, cruise pickup, or travel-insurance-sensitive activity.</li>",
+    "replace": "<li>Use <a href=\"https://vietnamairport.vn/en/noi-bai-airport\" target=\"_blank\" rel=\"noopener\">Noi Bai airport</a>, <a href=\"/plan/transport-within-vietnam/\">Transport Within Vietnam</a>, our valley overnight guide on <a href=\"/destinations/where-to-stay-in-mai-chau/\">Where to Stay in Mai Chau</a>, <a href=\"/plan/health-travel-insurance-vietnam/\">Health and Travel Insurance for Vietnam</a>, and <a href=\"/plan/safety-scams-vietnam/\">Safety and Scams in Vietnam</a> before placing a long day trip near a flight, train, cruise pickup, or travel-insurance-sensitive activity.</li>",
+    "pillars": [
+      "where-to-stay-in-mai-chau"
+    ]
+  },
+  {
+    "slug": "ninh-binh-without-rushing",
+    "id": 478,
+    "search": "<p>Two nights are worth it for family pace, photography, weather flexibility, Van Long, Cuc Phuong, or a premium slow route. They are not worth it if they weaken the rest of the Vietnam itinerary.</p>",
+    "replace": "<p>Two nights are worth it for family pace, photography, weather flexibility, Van Long, Cuc Phuong, connecting onward to <a href=\"/destinations/where-to-stay-in-pu-luong/\">Where to Stay in Pu Luong</a>, or a premium slow route. They are not worth it if they weaken the rest of the Vietnam itinerary.</p>",
+    "pillars": [
+      "where-to-stay-in-pu-luong"
+    ]
+  },
+  {
+    "slug": "con-dao-travel-guide",
+    "id": 237,
+    "search": "then compare island and beach value in <a href=\"/destinations/best-islands-in-vietnam/\">Best Islands in Vietnam</a>, <a href=\"/destinations/best-beaches-in-vietnam/\">Best Beaches in Vietnam</a>, and <a href=\"/destinations/phu-quoc-travel-guide/\">Phu Quoc Travel Guide</a>.",
+    "replace": "then compare island and beach value in <a href=\"/destinations/best-islands-in-vietnam/\">Best Islands in Vietnam</a>, our hotel guide on <a href=\"/destinations/where-to-stay-in-con-dao/\">Where to Stay in Con Dao</a>, <a href=\"/destinations/best-beaches-in-vietnam/\">Best Beaches in Vietnam</a>, and <a href=\"/destinations/phu-quoc-travel-guide/\">Phu Quoc Travel Guide</a>.",
+    "pillars": [
+      "where-to-stay-in-con-dao"
+    ]
+  },
+  {
+    "slug": "con-dao-vs-phu-quoc",
+    "id": 752,
+    "search": "<li><a href=\"/destinations/where-to-stay-in-phu-quoc/\">Where to Stay in Phu Quoc: Best Beaches &amp; Resort Areas</a></li>",
+    "replace": "<li><a href=\"/destinations/where-to-stay-in-phu-quoc/\">Where to Stay in Phu Quoc: Best Beaches &amp; Resort Areas</a></li>\n<li><a href=\"/destinations/where-to-stay-in-con-dao/\">Where to Stay in Con Dao: Best Areas &amp; Resorts</a></li>",
+    "pillars": [
+      "where-to-stay-in-con-dao"
+    ]
+  },
+  {
+    "slug": "where-to-stay-in-phu-quoc",
+    "id": 857,
+    "search": "<li><a href=\"/compare/con-dao-vs-phu-quoc/\">Con Dao vs Phu Quoc</a></li>",
+    "replace": "<li><a href=\"/compare/con-dao-vs-phu-quoc/\">Con Dao vs Phu Quoc</a></li>\n        <li><a href=\"/destinations/where-to-stay-in-con-dao/\">Where to Stay in Con Dao</a></li>",
+    "pillars": [
+      "where-to-stay-in-con-dao"
+    ]
+  },
+  {
+    "slug": "vietnam-first-trip-planning-checklist",
+    "id": 473,
+    "search": "The map looks better than the day feels (consult our <a href=\"/plan/vietnam-sleeper-bus-guide/\">Vietnam sleeper bus guide</a> and train guides before locking long overland legs).</p>",
+    "replace": "The map looks better than the day feels (consult our <a href=\"/plan/vietnam-sleeper-bus-guide/\">Vietnam sleeper bus guide</a>, train guides, and our dedicated <a href=\"/itineraries/vietnam-family-travel-guide/\">Vietnam Family Travel Guide</a> before locking long overland legs).</p>",
+    "pillars": [
+      "vietnam-family-travel-guide"
+    ]
+  },
+  {
+    "slug": "10-days-in-vietnam",
+    "id": 19,
+    "search": "Use the <a href=\"/plan/\">Plan hub</a> for entry, timing, safety, and logistics checks before the route becomes final.</p>",
+    "replace": "Use the <a href=\"/itineraries/vietnam-family-travel-guide/\">Vietnam Family Travel Guide</a> for kid-friendly pacing, and the <a href=\"/plan/\">Plan hub</a> for entry, timing, safety, and logistics checks before the route becomes final.</p>",
+    "pillars": [
+      "vietnam-family-travel-guide"
+    ]
+  },
+  {
+    "slug": "14-days-in-vietnam",
+    "id": 20,
+    "search": "This is especially true for families, older travelers, honeymooners, and anyone visiting in a season where one region clearly has better conditions than the others.</p>",
+    "replace": "This is especially true for families (review our <a href=\"/itineraries/vietnam-family-travel-guide/\">Vietnam Family Travel Guide</a>), older travelers, honeymooners, and anyone visiting in a season where one region clearly has better conditions than the others.</p>",
+    "pillars": [
+      "vietnam-family-travel-guide"
+    ]
+  },
+  {
+    "slug": "health-travel-insurance-vietnam",
+    "id": 187,
+    "search": "<a href=\"/costs/vietnam-travel-cost/\">Vietnam Travel Cost</a>, <a href=\"/itineraries/10-days-in-vietnam/\">10 Days in Vietnam</a>, and <a href=\"/itineraries/14-days-in-vietnam/\">14 Days in Vietnam</a>.</p>",
+    "replace": "<a href=\"/costs/vietnam-travel-cost/\">Vietnam Travel Cost</a>, <a href=\"/itineraries/vietnam-family-travel-guide/\">Vietnam Family Travel Guide</a>, <a href=\"/itineraries/10-days-in-vietnam/\">10 Days in Vietnam</a>, and <a href=\"/itineraries/14-days-in-vietnam/\">14 Days in Vietnam</a>.</p>",
+    "pillars": [
+      "vietnam-family-travel-guide"
+    ]
+  },
+  {
+    "slug": "da-nang-to-hue-train-vs-car",
+    "id": 684,
+    "search": "<li><a href=\"/plan/vietnam-train-travel/\">Vietnam Train Travel Guide</a> &mdash; ticketing rules, cabin classes, and railway safety nationwide.</li>",
+    "replace": "<li><a href=\"/plan/vietnam-train-travel/\">Vietnam Train Travel Guide</a> &mdash; ticketing rules, cabin classes, and railway safety nationwide.</li>\n<li><a href=\"/itineraries/central-vietnam-itinerary/\">Central Vietnam Itinerary</a> &mdash; complete 5 to 7-day circuit across Hue, Hai Van Pass, Da Nang, and Hoi An.</li>",
+    "pillars": [
+      "central-vietnam-itinerary"
+    ]
+  },
+  {
+    "slug": "7-days-in-vietnam",
+    "id": 220,
+    "search": "<a href=\"/compare/da-nang-vs-hoi-an/\">Da Nang vs Hoi An</a> when central Vietnam should lead.</p>",
+    "replace": "<a href=\"/compare/da-nang-vs-hoi-an/\">Da Nang vs Hoi An</a>, and our regional <a href=\"/itineraries/central-vietnam-itinerary/\">Central Vietnam Itinerary</a> when central Vietnam should lead.</p>",
+    "pillars": [
+      "central-vietnam-itinerary"
+    ]
+  },
+  {
+    "slug": "hue-imperial-city-guide",
+    "id": 500,
+    "search": "<li><span class=\"vg-related-route-step\">09</span><a href=\"/plan/hue-to-hoi-an-transport/\">Hue to Hoi An Transport</a><span class=\"vg-related-route-note\">Compare Hai Van Pass scenic train, luxury limousine bus, and private car stops.</span></li>",
+    "replace": "<li><span class=\"vg-related-route-step\">09</span><a href=\"/plan/hue-to-hoi-an-transport/\">Hue to Hoi An Transport</a><span class=\"vg-related-route-note\">Compare Hai Van Pass scenic train, luxury limousine bus, and private car stops.</span></li>\n<li><span class=\"vg-related-route-step\">10</span><a href=\"/itineraries/central-vietnam-itinerary/\">Central Vietnam Itinerary</a><span class=\"vg-related-route-note\">5 to 7-day coastal circuit linking Hue, Da Nang, and Hoi An.</span></li>\n<li><span class=\"vg-related-route-step\">11</span><a href=\"/plan/hanoi-to-hue-transport/\">Hanoi to Hue Transport</a><span class=\"vg-related-route-note\">Reunification Express overnight sleeper trains vs direct domestic flights.</span></li>",
+    "pillars": [
+      "central-vietnam-itinerary",
+      "hanoi-to-hue-transport"
+    ]
+  },
+  {
+    "slug": "hoi-an-ancient-town-guide",
+    "id": 499,
+    "search": "<li><span class=\"vg-related-route-step\">08</span><a href=\"/plan/hue-to-hoi-an-transport/\">Hue to Hoi An Transport</a><span class=\"vg-related-route-note\">Navigate coastal transfers via Hai Van Pass, heritage train, or private car.</span></li>",
+    "replace": "<li><span class=\"vg-related-route-step\">08</span><a href=\"/plan/hue-to-hoi-an-transport/\">Hue to Hoi An Transport</a><span class=\"vg-related-route-note\">Navigate coastal transfers via Hai Van Pass, heritage train, or private car.</span></li>\n<li><span class=\"vg-related-route-step\">09</span><a href=\"/itineraries/central-vietnam-itinerary/\">Central Vietnam Itinerary</a><span class=\"vg-related-route-note\">Plan 5 to 7 days linking Hoi An lantern alleys with Hue and Da Nang.</span></li>",
+    "pillars": [
+      "central-vietnam-itinerary"
+    ]
+  },
+  {
+    "slug": "vietnam-travel-cost",
+    "id": 22,
+    "search": "use <a href=\"/plan/sim-esim-vietnam/\">SIM and eSIM in Vietnam</a> before comparing roaming, local SIMs, and pre-trip eSIMs.</p>",
+    "replace": "use <a href=\"/plan/sim-esim-vietnam/\">SIM and eSIM in Vietnam</a>, and our regional budget guide on <a href=\"/costs/ho-chi-minh-city-mekong-budget/\">Ho Chi Minh City and Mekong Budget</a> before comparing roaming, local SIMs, and pre-trip eSIMs.</p>",
+    "pillars": [
+      "ho-chi-minh-city-mekong-budget"
+    ]
+  },
+  {
+    "slug": "ho-chi-minh-city-travel-guide",
+    "id": 262,
+    "search": "<a href=\"/destinations/phu-quoc-travel-guide/\">Phu Quoc Travel Guide</a>, and <a href=\"/destinations/con-dao-travel-guide/\">Con Dao Travel Guide</a> before building a south-ending route.</p>",
+    "replace": "<a href=\"/destinations/phu-quoc-travel-guide/\">Phu Quoc Travel Guide</a>, <a href=\"/costs/ho-chi-minh-city-mekong-budget/\">Ho Chi Minh City and Mekong Budget</a>, and <a href=\"/destinations/con-dao-travel-guide/\">Con Dao Travel Guide</a> before building a south-ending route.</p>",
+    "pillars": [
+      "ho-chi-minh-city-mekong-budget"
+    ]
+  },
+  {
+    "slug": "mekong-delta-overnight-vs-day-trip",
+    "id": 502,
+    "search": "<li><span class=\"vg-related-route-step\">08</span><a href=\"/destinations/where-to-stay-in-can-tho/\">Where to Stay in Can Tho</a><span class=\"vg-related-route-note\">Ninh Kieu Wharf walkability and delta river lodges.</span></li>",
+    "replace": "<li><span class=\"vg-related-route-step\">08</span><a href=\"/destinations/where-to-stay-in-can-tho/\">Where to Stay in Can Tho</a><span class=\"vg-related-route-note\">Ninh Kieu Wharf walkability and delta river lodges.</span></li>\n<li><span class=\"vg-related-route-step\">09</span><a href=\"/costs/ho-chi-minh-city-mekong-budget/\">Ho Chi Minh City and Mekong Budget</a><span class=\"vg-related-route-note\">5-day southern spending guide: Grab rides, street eats &amp; sampan charters.</span></li>",
+    "pillars": [
+      "ho-chi-minh-city-mekong-budget"
+    ]
+  },
+  {
+    "slug": "ho-chi-minh-city-in-2-days",
+    "id": 969,
+    "search": "<li><a href=\"/itineraries/hanoi-in-2-days/\">Hanoi in 2 Days</a>: Compare the southern commercial hub with Vietnam's historic northern capital.</li>",
+    "replace": "<li><a href=\"/itineraries/hanoi-in-2-days/\">Hanoi in 2 Days</a>: Compare the southern commercial hub with Vietnam's historic northern capital.</li>\n        <li><a href=\"/costs/ho-chi-minh-city-mekong-budget/\">Ho Chi Minh City and Mekong Budget</a>: 5-day spending guide for street food, rides, and delta trips.</li>",
+    "pillars": [
+      "ho-chi-minh-city-mekong-budget"
+    ]
+  },
+  {
+    "slug": "vietnam-train-travel",
+    "id": 613,
+    "search": "<li><a href=\"/destinations/hue-imperial-city-guide/\">Hue Imperial City Guide: Historic Capital Rail Arrivals</a></li>",
+    "replace": "<li><a href=\"/destinations/hue-imperial-city-guide/\">Hue Imperial City Guide: Historic Capital Rail Arrivals</a></li>\n<li><a href=\"/plan/hanoi-to-hue-transport/\">Hanoi to Hue Transport: SE1/SE3 Sleeper Trains &amp; Rail Guide</a></li>",
+    "pillars": [
+      "hanoi-to-hue-transport"
+    ]
+  },
+  {
+    "slug": "phong-nha-to-hue-transport",
+    "id": 755,
+    "search": "<li><a href=\"/destinations/hue-imperial-city-guide/\">Hue Imperial City Guide: Citadel, Royal Tombs &amp; Tickets</a></li>",
+    "replace": "<li><a href=\"/destinations/hue-imperial-city-guide/\">Hue Imperial City Guide: Citadel, Royal Tombs &amp; Tickets</a></li>\n<li><a href=\"/plan/hanoi-to-hue-transport/\">Hanoi to Hue Transport: Overnight Sleeper Trains vs Flights</a></li>",
+    "pillars": [
+      "hanoi-to-hue-transport"
+    ]
+  },
+  {
+    "slug": "hanoi-travel-guide",
+    "id": 287,
+    "search": "before choosing day trips, mountain extensions, or a flight south.</p>",
+    "replace": "before choosing day trips, mountain extensions, or overland transit via <a href=\"/plan/hanoi-to-hue-transport/\">Hanoi to Hue Transport</a>.</p>",
+    "pillars": [
+      "hanoi-to-hue-transport"
+    ]
+  }
+]

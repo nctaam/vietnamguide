@@ -1500,5 +1500,75 @@
     "post_modified": "2026-09-23 12:25:00",
     "parent": 6,
     "url": "/plan/da-nang-to-nha-trang-transport/"
+  },
+  {
+    "ID": 997,
+    "post_name": "where-to-stay-in-mai-chau",
+    "post_title": "Where to Stay in Mai Chau (2026): Best Areas & Lodges",
+    "meta_title": "Where to Stay in Mai Chau (2026): Best Areas & Lodges",
+    "meta_desc": "Where to stay in Mai Chau: Ban Lac & Pom Coong stilt homestays vs luxury valley eco-resorts with 2026 nightly room rates and transport tips.",
+    "post_modified": "2026-09-23 12:55:00",
+    "parent": 7,
+    "url": "/destinations/where-to-stay-in-mai-chau/"
+  },
+  {
+    "ID": 998,
+    "post_name": "where-to-stay-in-pu-luong",
+    "post_title": "Where to Stay in Pu Luong (2026): Best Villages & Bases",
+    "meta_title": "Where to Stay in Pu Luong (2026): Best Villages & Bases",
+    "meta_desc": "Where to stay in Pu Luong: Don village valley view retreats vs Ban Hieu waterwheel homestays with 2026 room rates, trekking bases & tips.",
+    "post_modified": "2026-09-23 12:55:00",
+    "parent": 7,
+    "url": "/destinations/where-to-stay-in-pu-luong/"
+  },
+  {
+    "ID": 999,
+    "post_name": "where-to-stay-in-con-dao",
+    "post_title": "Where to Stay in Con Dao (2026): Best Areas & Resorts",
+    "meta_title": "Where to Stay in Con Dao (2026): Best Areas & Resorts",
+    "meta_desc": "Where to stay in Con Dao: Con Son town heritage guesthouses vs Dat Doc bay luxury villas and quiet beaches with 2026 nightly hotel prices.",
+    "post_modified": "2026-09-23 12:55:00",
+    "parent": 7,
+    "url": "/destinations/where-to-stay-in-con-dao/"
+  },
+  {
+    "ID": 1000,
+    "post_name": "vietnam-family-travel-guide",
+    "post_title": "Vietnam Family Travel Guide (2026): Route & Kid Advice",
+    "meta_title": "Vietnam Family Travel Guide (2026): Route & Kid Advice",
+    "meta_desc": "Vietnam family travel guide: practical 10 to 14-day routes with kids, stroller access, child-friendly trains, meal tips and 2026 safety.",
+    "post_modified": "2026-09-23 12:55:00",
+    "parent": 8,
+    "url": "/itineraries/vietnam-family-travel-guide/"
+  },
+  {
+    "ID": 1001,
+    "post_name": "central-vietnam-itinerary",
+    "post_title": "Central Vietnam Itinerary (2026): 5 to 7-Day Route",
+    "meta_title": "Central Vietnam Itinerary (2026): 5 to 7-Day Route",
+    "meta_desc": "Central Vietnam itinerary: perfect 5 to 7-day route connecting Hue citadel, Hai Van Pass, Da Nang beaches, and Hoi An lantern streets.",
+    "post_modified": "2026-09-23 12:55:00",
+    "parent": 8,
+    "url": "/itineraries/central-vietnam-itinerary/"
+  },
+  {
+    "ID": 1002,
+    "post_name": "ho-chi-minh-city-mekong-budget",
+    "post_title": "Ho Chi Minh City and Mekong Budget (2026): 5-Day Cost",
+    "meta_title": "Ho Chi Minh City and Mekong Budget (2026): 5-Day Cost",
+    "meta_desc": "Ho Chi Minh City and Mekong budget: realistic 5-day spending guide covering Saigon street eats, Grab rides, delta boats & hotel tiers.",
+    "post_modified": "2026-09-23 12:55:00",
+    "parent": 10,
+    "url": "/costs/ho-chi-minh-city-mekong-budget/"
+  },
+  {
+    "ID": 1003,
+    "post_name": "hanoi-to-hue-transport",
+    "post_title": "Hanoi to Hue Transport (2026): Train, Flight or Bus",
+    "meta_title": "Hanoi to Hue Transport (2026): Train, Flight or Bus",
+    "meta_desc": "Hanoi to Hue transport options: SE1/SE3 sleeper trains, direct domestic flights, and overnight cabin buses compared with 2026 prices.",
+    "post_modified": "2026-09-23 12:55:00",
+    "parent": 6,
+    "url": "/plan/hanoi-to-hue-transport/"
   }
 ]
