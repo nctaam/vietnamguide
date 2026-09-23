@@ -1570,5 +1570,75 @@
     "post_modified": "2026-09-23 12:55:00",
     "parent": 6,
     "url": "/plan/hanoi-to-hue-transport/"
+  },
+  {
+    "ID": 1034,
+    "post_name": "where-to-stay-in-cao-bang",
+    "post_title": "Where to Stay in Cao Bang (2026): City Bases & Lodges",
+    "meta_title": "Where to Stay in Cao Bang (2026): City Bases & Lodges",
+    "meta_desc": "Where to stay in Cao Bang: city hotel bases vs Ban Gioc waterfall eco-lodges and Khuoi Ky stone village homestays with 2026 nightly rates.",
+    "post_modified": "2026-09-23 14:35:00",
+    "parent": 7,
+    "url": "/destinations/where-to-stay-in-cao-bang/"
+  },
+  {
+    "ID": 1035,
+    "post_name": "where-to-stay-in-phu-yen",
+    "post_title": "Where to Stay in Phu Yen (2026): Best Areas & Resorts",
+    "meta_title": "Where to Stay in Phu Yen (2026): Best Areas & Resorts",
+    "meta_desc": "Where to stay in Phu Yen: Tuy Hoa city beach hotels vs Xuan Dai bay luxury villas and Bai Xep seaside resorts with 2026 nightly prices.",
+    "post_modified": "2026-09-23 14:35:00",
+    "parent": 7,
+    "url": "/destinations/where-to-stay-in-phu-yen/"
+  },
+  {
+    "ID": 1036,
+    "post_name": "where-to-stay-in-ba-be",
+    "post_title": "Where to Stay in Ba Be (2026): Lake Homestays & Lodges",
+    "meta_title": "Where to Stay in Ba Be (2026): Lake Homestays & Lodges",
+    "meta_desc": "Where to stay in Ba Be: Pac Ngoi stilt village homestays on Ba Be Lake vs Bo Lu waterfront lodges and national park bases with 2026 rates.",
+    "post_modified": "2026-09-23 14:35:00",
+    "parent": 7,
+    "url": "/destinations/where-to-stay-in-ba-be/"
+  },
+  {
+    "ID": 1037,
+    "post_name": "pu-luong-trekking-routes-guide",
+    "post_title": "Pu Luong Trekking Guide (2026): Trails, Difficulty & Maps",
+    "meta_title": "Pu Luong Trekking Guide (2026): Trails, Difficulty & Maps",
+    "meta_desc": "Pu Luong trekking guide: trail maps, day hikes from Ban Don to Kho Muong, Hieu Waterfall walks, mountain guides, gear advice and 2026 costs.",
+    "post_modified": "2026-09-23 14:35:00",
+    "parent": 6,
+    "url": "/plan/pu-luong-trekking-routes-guide/"
+  },
+  {
+    "ID": 1038,
+    "post_name": "southern-vietnam-itinerary",
+    "post_title": "Southern Vietnam Itinerary (2026): 5 to 7-Day Route",
+    "meta_title": "Southern Vietnam Itinerary (2026): 5 to 7-Day Route",
+    "meta_desc": "Southern Vietnam itinerary: perfect 5 to 7-day route connecting Saigon, Mekong Delta floating markets, and tropical Phu Quoc island beaches.",
+    "post_modified": "2026-09-23 14:35:00",
+    "parent": 8,
+    "url": "/itineraries/southern-vietnam-itinerary/"
+  },
+  {
+    "ID": 1039,
+    "post_name": "vietnam-vegetarian-travel-guide",
+    "post_title": "Vegetarian in Vietnam (2026): Food Guide & Phrases",
+    "meta_title": "Vegetarian in Vietnam (2026): Food Guide & Phrases",
+    "meta_desc": "Vegetarian in Vietnam: essential plant-based guide, Buddhist com chay buffets, fish sauce watchouts, ordering cards and 2026 phrases.",
+    "post_modified": "2026-09-23 14:35:00",
+    "parent": 6,
+    "url": "/plan/vietnam-vegetarian-travel-guide/"
+  },
+  {
+    "ID": 1040,
+    "post_name": "hanoi-to-cao-bang-transport",
+    "post_title": "Hanoi to Cao Bang Transport (2026): Limousine & Bus",
+    "meta_title": "Hanoi to Cao Bang Transport (2026): Limousine & Bus",
+    "meta_desc": "Hanoi to Cao Bang transport guide: VIP limousine vans, sleeper buses, and scenic motorcycle routes to Ban Gioc Waterfall with 2026 fares.",
+    "post_modified": "2026-09-23 14:35:00",
+    "parent": 6,
+    "url": "/plan/hanoi-to-cao-bang-transport/"
   }
 ]
