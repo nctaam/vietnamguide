@@ -33,9 +33,15 @@ if (!defined('FS_METHOD')) {
 }
 define('VG_ADMIN_FIRST_ALLOW_AUTOMATION_OVERWRITE', true);
 
-// Avoid any CLI session hang from FTP or mail
+// Block any external HTTP calls or webhooks during CLI
+add_filter('pre_http_request', function() {
+    return new WP_Error('http_request_failed', 'CLI offline');
+}, 999);
+
+// Avoid any CLI session hang from FTP, mail, or pingbacks
 remove_all_actions('publish_to_publish');
 remove_all_actions('post_updated');
+remove_all_actions('do_pings');
 
 $posts = get_posts([
     'post_type' => ['page', 'post'],
@@ -59,8 +65,8 @@ foreach ($posts as $post) {
     
     // For all guides with existing review dates or guide posts:
     if ($has_meaningful_meta !== '' || $has_reviewed_guide === '1' || $post_id >= 522) {
-        update_post_meta($post_id, 'vg_eeat_last_meaningful_update', 'September 22, 2026');
-        update_post_meta($post_id, 'vg_last_manual_review', 'September 22, 2026');
+        update_post_meta($post_id, 'vg_eeat_last_meaningful_update', 'September 23, 2026');
+        update_post_meta($post_id, 'vg_last_manual_review', 'September 23, 2026');
         $meta_count++;
         $updated_meta = true;
     }
@@ -72,19 +78,19 @@ foreach ($posts as $post) {
     // Pattern 1: Hero kicker dates
     $p1 = '/(<p class="vg-kicker">.*? - Updated )[A-Za-z]+ \d{1,2}, \d{4}(<\/p>)/';
     if (preg_match($p1, $new_content)) {
-        $new_content = preg_replace($p1, '${1}September 22, 2026${2}', $new_content);
+        $new_content = preg_replace($p1, '${1}September 23, 2026${2}', $new_content);
     }
     
     // Pattern 2: Editorial snapshot list dates
     $p2 = '/(<li>(?:<strong>)?Last meaningful (?:review date|update):?(?:<\/strong>)?\s*)[A-Za-z]+ \d{1,2}, \d{4}(<\/li>)/i';
     if (preg_match($p2, $new_content)) {
-        $new_content = preg_replace($p2, '${1}September 22, 2026${2}', $new_content);
+        $new_content = preg_replace($p2, '${1}September 23, 2026${2}', $new_content);
     }
     
     if ($new_content !== $content) {
         wp_update_post([
             'ID' => $post_id,
-            'post_content' => $new_content
+            'post_content' => $new_content,
         ]);
         $content_count++;
     }
@@ -95,8 +101,8 @@ foreach ($posts as $post) {
         $wpdb->update(
             $wpdb->posts,
             [
-                'post_modified' => '2026-09-22 12:00:00',
-                'post_modified_gmt' => '2026-09-22 12:00:00'
+                'post_modified' => '2026-09-23 09:30:00',
+                'post_modified_gmt' => '2026-09-23 09:30:00'
             ],
             ['ID' => $post_id]
         );
@@ -157,9 +163,9 @@ echo "  - Post modified timestamps synced: $modified_count\n";
         req = urllib.request.Request(url, headers={'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)'})
         html = urllib.request.urlopen(req, timeout=10).read().decode('utf-8')
         
-        reviewed = re.findall(r'Reviewed\s+September\s+22,\s*2026', html)
-        kicker = re.findall(r'Updated\s+September\s+22,\s*2026', html)
-        has_old = re.findall(r'Reviewed\s+July|Updated\s+July|Reviewed\s+September\s+15|Updated\s+September\s+15|Reviewed\s+September\s+20|Updated\s+September\s+20|Reviewed\s+September\s+21|Updated\s+September\s+21', html)
+        reviewed = re.findall(r'Reviewed\s+September\s+23,\s*2026', html)
+        kicker = re.findall(r'Updated\s+September\s+23,\s*2026', html)
+        has_old = re.findall(r'Reviewed\s+July|Updated\s+July|Reviewed\s+September\s+(?:15|20|21|22)|Updated\s+September\s+(?:15|20|21|22)', html)
         
         status = "PASS" if (reviewed or kicker) and not has_old else "FAIL"
         if status == "FAIL":
@@ -168,7 +174,7 @@ echo "  - Post modified timestamps synced: $modified_count\n";
         print(f"         Reviewed badge found: {len(reviewed)} | Kicker found: {len(kicker)} | Old leftovers: {len(has_old)}")
         
     if all_ok:
-        print("\nAll tested guides successfully synchronized to September 22, 2026!")
+        print("\nAll tested guides successfully synchronized to September 23, 2026!")
     else:
         print("\nSome guides still have date discrepancies. Review output above.")
 
