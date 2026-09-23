@@ -14,6 +14,7 @@ import xml.etree.ElementTree as ET
 HOST = "vietnamguide.net"
 KEY = "852ef594b29d4da5a639612da3430b0f"
 KEY_LOCATION = f"https://{HOST}/{KEY}.txt"
+SITEMAP_INDEX_URL = f"https://{HOST}/sitemap_index.xml"
 SITEMAP_URL = f"https://{HOST}/page-sitemap.xml"
 
 ENDPOINTS = [
@@ -21,18 +22,45 @@ ENDPOINTS = [
     "https://www.bing.com/indexnow",
 ]
 
-def fetch_sitemap_urls():
+def fetch_xml(url):
     req = urllib.request.Request(
-        SITEMAP_URL,
+        url,
         headers={"User-Agent": "VietnamGuide-IndexNow-Bot/1.0"}
     )
     with urllib.request.urlopen(req, timeout=15) as resp:
-        xml_data = resp.read()
-    
-    root = ET.fromstring(xml_data)
+        return resp.read()
+
+def fetch_sitemap_urls():
     ns = {"sm": "http://www.sitemaps.org/schemas/sitemap/0.9"}
-    urls = [elem.text.strip() for elem in root.findall(".//sm:loc", ns) if elem.text]
-    return urls
+    try:
+        xml_data = fetch_xml(SITEMAP_INDEX_URL)
+        root = ET.fromstring(xml_data)
+        sitemap_locs = [elem.text.strip() for elem in root.findall(".//sm:sitemap/sm:loc", ns) if elem.text]
+    except Exception as e:
+        print(f"Warning: Failed to parse sitemap index ({e}), falling back to direct sitemap.")
+        sitemap_locs = [SITEMAP_URL]
+
+    if not sitemap_locs:
+        sitemap_locs = [SITEMAP_URL]
+
+    all_urls = []
+    for sm_url in sitemap_locs:
+        try:
+            sub_xml = fetch_xml(sm_url)
+            sub_root = ET.fromstring(sub_xml)
+            urls = [elem.text.strip() for elem in sub_root.findall(".//sm:loc", ns) if elem.text]
+            all_urls.extend(urls)
+        except Exception as e:
+            print(f"Error fetching child sitemap {sm_url}: {e}")
+
+    # Remove duplicates while preserving order
+    seen = set()
+    deduped = []
+    for u in all_urls:
+        if u not in seen:
+            seen.add(u)
+            deduped.append(u)
+    return deduped
 
 def submit_indexnow(endpoint, urls):
     payload = {

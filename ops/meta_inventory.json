@@ -1640,5 +1640,75 @@
     "post_modified": "2026-09-23 14:35:00",
     "parent": 6,
     "url": "/plan/hanoi-to-cao-bang-transport/"
+  },
+  {
+    "ID": 1066,
+    "post_name": "where-to-stay-in-dong-van",
+    "post_title": "Where to Stay in Dong Van (2026): Old Quarter & Stays",
+    "meta_title": "Where to Stay in Dong Van (2026): Old Quarter & Stays",
+    "meta_desc": "Where to stay in Dong Van: Old Quarter heritage homestays vs cliffside mountain retreats and budget guesthouses on the Ha Giang Loop with 2026 rates.",
+    "post_modified": "2026-09-23 15:00:00",
+    "parent": 7,
+    "url": "/destinations/where-to-stay-in-dong-van/"
+  },
+  {
+    "ID": 1067,
+    "post_name": "hanoi-to-ba-be-transport",
+    "post_title": "Hanoi to Ba Be Lake Transport (2026): Bus & Transfers",
+    "meta_title": "Hanoi to Ba Be Lake Transport (2026): Bus & Transfers",
+    "meta_desc": "Hanoi to Ba Be Lake transport guide: local direct buses, private car transfers, and driving routes via Thai Nguyen to Pac Ngoi village with 2026 fares.",
+    "post_modified": "2026-09-23 15:00:00",
+    "parent": 6,
+    "url": "/plan/hanoi-to-ba-be-transport/"
+  },
+  {
+    "ID": 1068,
+    "post_name": "vietnam-sim-card-airport-vs-city",
+    "post_title": "Vietnam SIM Card: Airport vs City Stores Guide (2026)",
+    "meta_title": "Vietnam SIM Card: Airport vs City Stores Guide (2026)",
+    "meta_desc": "Vietnam SIM card guide: buying at Noi Bai or Tan Son Nhat airport kiosks vs official Viettel and Vinaphone city shops, prices, and eSIM activation.",
+    "post_modified": "2026-09-23 15:00:00",
+    "parent": 6,
+    "url": "/plan/vietnam-sim-card-airport-vs-city/"
+  },
+  {
+    "ID": 1069,
+    "post_name": "northwest-vietnam-itinerary",
+    "post_title": "Northwest Vietnam Itinerary (2026): 6 to 8-Day Loop",
+    "meta_title": "Northwest Vietnam Itinerary (2026): 6 to 8-Day Loop",
+    "meta_desc": "Northwest Vietnam itinerary: realistic 6 to 8-day overland circuit connecting Hanoi, Mai Chau valley, Pu Luong nature reserve, and Ninh Binh karsts.",
+    "post_modified": "2026-09-23 15:00:00",
+    "parent": 8,
+    "url": "/itineraries/northwest-vietnam-itinerary/"
+  },
+  {
+    "ID": 1070,
+    "post_name": "where-to-stay-in-meo-vac",
+    "post_title": "Where to Stay in Meo Vac (2026): Pa Vi Stays & Town",
+    "meta_title": "Where to Stay in Meo Vac (2026): Pa Vi Stays & Town",
+    "meta_desc": "Where to stay in Meo Vac: clay stilt homestays in Pa Vi Hmong cultural village vs town hotels for Ma Pi Leng pass and Nho Que river with 2026 rates.",
+    "post_modified": "2026-09-23 15:00:00",
+    "parent": 7,
+    "url": "/destinations/where-to-stay-in-meo-vac/"
+  },
+  {
+    "ID": 1071,
+    "post_name": "vietnam-gluten-free-travel-guide",
+    "post_title": "Gluten-Free in Vietnam (2026): Celiac Travel Guide",
+    "meta_title": "Gluten-Free in Vietnam (2026): Celiac Travel Guide",
+    "meta_desc": "Gluten-free in Vietnam: essential celiac guide to naturally gluten-free rice dishes, soy sauce warnings, cross-contamination tips, and restaurant phrases.",
+    "post_modified": "2026-09-23 15:00:00",
+    "parent": 6,
+    "url": "/plan/vietnam-gluten-free-travel-guide/"
+  },
+  {
+    "ID": 1072,
+    "post_name": "hanoi-to-ninh-binh-train-vs-limousine",
+    "post_title": "Hanoi to Ninh Binh: Train vs Limousine Van (2026)",
+    "meta_title": "Hanoi to Ninh Binh: Train vs Limousine Van (2026)",
+    "meta_desc": "Hanoi to Ninh Binh transport comparison: express train from Hanoi station vs luxury limousine door-to-door vans with schedules, comfort, and 2026 fares.",
+    "post_modified": "2026-09-23 15:00:00",
+    "parent": 6,
+    "url": "/plan/hanoi-to-ninh-binh-train-vs-limousine/"
   }
 ]
