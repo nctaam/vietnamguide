@@ -1,12 +1,12 @@
-# -*- coding: utf-8 -*-
+﻿# -*- coding: utf-8 -*-
 """
 Surgical synchronization of on-page review dates and EEAT metadata.
 Ensures 100% harmony between:
-1. On-page hero kicker ("- Updated September 15, 2026")
-2. On-page hero meta badge ("Reviewed September 15, 2026")
-3. Editorial proof panel & update log ("Last meaningful update: September 15, 2026")
-4. XML Sitemaps (<lastmod>2026-09-15</lastmod>)
-5. JSON-LD Rich Schema (dateModified: 2026-09-15)
+1. On-page hero kicker ("- Updated September 24, 2026")
+2. On-page hero meta badge ("Reviewed September 24, 2026")
+3. Editorial proof panel & update log ("Last meaningful update: September 24, 2026")
+4. XML Sitemaps (<lastmod>2026-09-24</lastmod>)
+5. JSON-LD Rich Schema (dateModified: 2026-09-24)
 """
 import os
 import sys
@@ -21,7 +21,7 @@ KEY_PATH = r'C:\Users\NCTaam\.ssh\deploy_bot_key'
 REMOTE_PATH = '/usr/local/lsws/vietnamguide.net/html'
 
 def main():
-    print("=== SYNCHRONIZING ON-PAGE VISUAL & EEAT DATES ===")
+    print("=== SYNCHRONIZING ON-PAGE VISUAL & EEAT DATES (September 24, 2026) ===")
     pkey = paramiko.Ed25519Key.from_private_key_file(KEY_PATH)
     ssh = paramiko.SSHClient()
     ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
@@ -65,8 +65,8 @@ foreach ($posts as $post) {
     
     // For all guides with existing review dates or guide posts:
     if ($has_meaningful_meta !== '' || $has_reviewed_guide === '1' || $post_id >= 522) {
-        update_post_meta($post_id, 'vg_eeat_last_meaningful_update', 'September 23, 2026');
-        update_post_meta($post_id, 'vg_last_manual_review', 'September 23, 2026');
+        update_post_meta($post_id, 'vg_eeat_last_meaningful_update', 'September 24, 2026');
+        update_post_meta($post_id, 'vg_last_manual_review', 'September 24, 2026');
         $meta_count++;
         $updated_meta = true;
     }
@@ -78,13 +78,19 @@ foreach ($posts as $post) {
     // Pattern 1: Hero kicker dates
     $p1 = '/(<p class="vg-kicker">.*? - Updated )[A-Za-z]+ \d{1,2}, \d{4}(<\/p>)/';
     if (preg_match($p1, $new_content)) {
-        $new_content = preg_replace($p1, '${1}September 23, 2026${2}', $new_content);
+        $new_content = preg_replace($p1, '${1}September 24, 2026${2}', $new_content);
     }
     
     // Pattern 2: Editorial snapshot list dates
     $p2 = '/(<li>(?:<strong>)?Last meaningful (?:review date|update):?(?:<\/strong>)?\s*)[A-Za-z]+ \d{1,2}, \d{4}(<\/li>)/i';
     if (preg_match($p2, $new_content)) {
-        $new_content = preg_replace($p2, '${1}September 23, 2026${2}', $new_content);
+        $new_content = preg_replace($p2, '${1}September 24, 2026${2}', $new_content);
+    }
+
+    // Pattern 3: Guide hero meta "Updated [Date]"
+    $p3 = '/(<p class="vg-guide-meta">Updated )[A-Za-z]+ \d{1,2}, \d{4}(<\/p>)/';
+    if (preg_match($p3, $new_content)) {
+        $new_content = preg_replace($p3, '${1}September 24, 2026${2}', $new_content);
     }
     
     if ($new_content !== $content) {
@@ -101,8 +107,8 @@ foreach ($posts as $post) {
         $wpdb->update(
             $wpdb->posts,
             [
-                'post_modified' => '2026-09-23 12:25:00',
-                'post_modified_gmt' => '2026-09-23 12:25:00'
+                'post_modified' => '2026-09-24 15:40:00',
+                'post_modified_gmt' => '2026-09-24 15:40:00'
             ],
             ['ID' => $post_id]
         );
@@ -131,17 +137,14 @@ echo "  - Post modified timestamps synced: $modified_count\n";
     if err.strip():
         print("STDERR:", err)
         
-    # Clean up temp file
     ssh.exec_command('rm -f /tmp/sync_visual_dates.php')
     
-    # Purge cache
     print("Purging LiteSpeed cache...")
     ssh.exec_command('rm -rf /usr/local/lsws/cachedata/*')
     ssh.exec_command(f'wp litespeed-purge all --path={REMOTE_PATH} --allow-root')
     
     ssh.close()
     
-    # Live verification of diverse routes
     test_urls = [
         'https://vietnamguide.net/plan/vietnam-evisa/',
         'https://vietnamguide.net/plan/best-time-to-visit-vietnam/',
@@ -154,18 +157,20 @@ echo "  - Post modified timestamps synced: $modified_count\n";
         'https://vietnamguide.net/plan/hanoi-to-ha-long-bay-transport/',
         'https://vietnamguide.net/compare/da-nang-to-hue-train-vs-car/',
         'https://vietnamguide.net/plan/vietnam-in-april/',
-        'https://vietnamguide.net/plan/tap-water-in-vietnam/'
+        'https://vietnamguide.net/plan/tap-water-in-vietnam/',
+        'https://vietnamguide.net/destinations/where-to-stay-in-kon-tum/',
+        'https://vietnamguide.net/plan/vietnam-night-train-safety-tips/'
     ]
     
     print("\nVerifying live pages:")
     all_ok = True
     for url in test_urls:
         req = urllib.request.Request(url, headers={'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)'})
-        html = urllib.request.urlopen(req, timeout=10).read().decode('utf-8')
+        html = urllib.request.urlopen(req, timeout=15).read().decode('utf-8')
         
-        reviewed = re.findall(r'Reviewed\s+September\s+23,\s*2026', html)
-        kicker = re.findall(r'Updated\s+September\s+23,\s*2026', html)
-        has_old = re.findall(r'Reviewed\s+July|Updated\s+July|Reviewed\s+September\s+(?:15|20|21|22)|Updated\s+September\s+(?:15|20|21|22)', html)
+        reviewed = re.findall(r'Reviewed\s+September\s+24,\s*2026', html)
+        kicker = re.findall(r'Updated\s+September\s+24,\s*2026', html)
+        has_old = re.findall(r'Reviewed\s+July|Updated\s+July|Reviewed\s+September\s+(?:15|20|21|22|23)|Updated\s+September\s+(?:15|20|21|22|23)', html)
         
         status = "PASS" if (reviewed or kicker) and not has_old else "FAIL"
         if status == "FAIL":
@@ -174,7 +179,7 @@ echo "  - Post modified timestamps synced: $modified_count\n";
         print(f"         Reviewed badge found: {len(reviewed)} | Kicker found: {len(kicker)} | Old leftovers: {len(has_old)}")
         
     if all_ok:
-        print("\nAll tested guides successfully synchronized to September 23, 2026!")
+        print("\nAll tested guides successfully synchronized to September 24, 2026!")
     else:
         print("\nSome guides still have date discrepancies. Review output above.")
 
