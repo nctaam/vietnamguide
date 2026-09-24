@@ -1,7 +1,7 @@
 ﻿# -*- coding: utf-8 -*-
 """
-VietnamGuide Stage 78: Update Meta Inventory with 7 Newly Deployed Pillars
-Expands inventory from 227 to 234 entries.
+VietnamGuide Stage 79: Update Meta Inventory with 7 Newly Deployed Pillars
+Expands inventory from 234 to 241 entries.
 """
 import json
 import os
@@ -11,13 +11,13 @@ ops_dir = os.path.dirname(os.path.abspath(__file__))
 if ops_dir not in sys.path:
     sys.path.insert(0, ops_dir)
 
-import content_where_to_stay_kon_tum as p1
-import content_buon_ma_thuot_to_pleiku_transport as p2
-import content_where_to_stay_chau_doc as p3
-import content_vietnam_to_cambodia_boat_guide as p4
-import content_vietnam_night_train_safety_tips as p5
-import content_where_to_stay_dien_bien_phu as p6
-import content_hanoi_to_dien_bien_phu_transport as p7
+import content_nha_trang_to_quy_nhon_transport as p1
+import content_can_tho_to_chau_doc_transport as p2
+import content_hanoi_to_mai_chau_transport as p3
+import content_where_to_stay_ben_tre as p4
+import content_where_to_stay_lang_co as p5
+import content_vietnam_sleeper_bus_survival_guide as p6
+import content_hanoi_to_pu_luong_transport as p7
 
 def main():
     inv_file = os.path.join(ops_dir, 'meta_inventory.json')
@@ -29,7 +29,7 @@ def main():
 
     new_pillars = [
         {
-            "ID": 1201,
+            "ID": 1230,
             "post_name": p1.SLUG,
             "post_title": p1.TITLE,
             "rm_title": p1.TITLE,
@@ -37,12 +37,12 @@ def main():
             "rm_keyword": p1.FOCUS_KEYWORD,
             "meta_title": p1.TITLE,
             "meta_desc": p1.META_DESC,
-            "post_modified": "2026-09-24 15:30:00",
+            "post_modified": "2026-09-24 20:35:00",
             "parent": p1.PARENT_ID,
-            "url": f"/destinations/{p1.SLUG}/"
+            "url": f"/plan/{p1.SLUG}/"
         },
         {
-            "ID": 1202,
+            "ID": 1231,
             "post_name": p2.SLUG,
             "post_title": p2.TITLE,
             "rm_title": p2.TITLE,
@@ -50,12 +50,12 @@ def main():
             "rm_keyword": p2.FOCUS_KEYWORD,
             "meta_title": p2.TITLE,
             "meta_desc": p2.META_DESC,
-            "post_modified": "2026-09-24 15:30:00",
+            "post_modified": "2026-09-24 20:35:00",
             "parent": p2.PARENT_ID,
             "url": f"/plan/{p2.SLUG}/"
         },
         {
-            "ID": 1203,
+            "ID": 1232,
             "post_name": p3.SLUG,
             "post_title": p3.TITLE,
             "rm_title": p3.TITLE,
@@ -63,12 +63,12 @@ def main():
             "rm_keyword": p3.FOCUS_KEYWORD,
             "meta_title": p3.TITLE,
             "meta_desc": p3.META_DESC,
-            "post_modified": "2026-09-24 15:30:00",
+            "post_modified": "2026-09-24 20:35:00",
             "parent": p3.PARENT_ID,
-            "url": f"/destinations/{p3.SLUG}/"
+            "url": f"/plan/{p3.SLUG}/"
         },
         {
-            "ID": 1204,
+            "ID": 1233,
             "post_name": p4.SLUG,
             "post_title": p4.TITLE,
             "rm_title": p4.TITLE,
@@ -76,12 +76,12 @@ def main():
             "rm_keyword": p4.FOCUS_KEYWORD,
             "meta_title": p4.TITLE,
             "meta_desc": p4.META_DESC,
-            "post_modified": "2026-09-24 15:30:00",
+            "post_modified": "2026-09-24 20:35:00",
             "parent": p4.PARENT_ID,
-            "url": f"/plan/{p4.SLUG}/"
+            "url": f"/destinations/{p4.SLUG}/"
         },
         {
-            "ID": 1205,
+            "ID": 1234,
             "post_name": p5.SLUG,
             "post_title": p5.TITLE,
             "rm_title": p5.TITLE,
@@ -89,12 +89,12 @@ def main():
             "rm_keyword": p5.FOCUS_KEYWORD,
             "meta_title": p5.TITLE,
             "meta_desc": p5.META_DESC,
-            "post_modified": "2026-09-24 15:30:00",
+            "post_modified": "2026-09-24 20:35:00",
             "parent": p5.PARENT_ID,
-            "url": f"/plan/{p5.SLUG}/"
+            "url": f"/destinations/{p5.SLUG}/"
         },
         {
-            "ID": 1206,
+            "ID": 1235,
             "post_name": p6.SLUG,
             "post_title": p6.TITLE,
             "rm_title": p6.TITLE,
@@ -102,12 +102,12 @@ def main():
             "rm_keyword": p6.FOCUS_KEYWORD,
             "meta_title": p6.TITLE,
             "meta_desc": p6.META_DESC,
-            "post_modified": "2026-09-24 15:30:00",
+            "post_modified": "2026-09-24 20:35:00",
             "parent": p6.PARENT_ID,
-            "url": f"/destinations/{p6.SLUG}/"
+            "url": f"/plan/{p6.SLUG}/"
         },
         {
-            "ID": 1207,
+            "ID": 1236,
             "post_name": p7.SLUG,
             "post_title": p7.TITLE,
             "rm_title": p7.TITLE,
@@ -115,7 +115,7 @@ def main():
             "rm_keyword": p7.FOCUS_KEYWORD,
             "meta_title": p7.TITLE,
             "meta_desc": p7.META_DESC,
-            "post_modified": "2026-09-24 15:30:00",
+            "post_modified": "2026-09-24 20:35:00",
             "parent": p7.PARENT_ID,
             "url": f"/plan/{p7.SLUG}/"
         },

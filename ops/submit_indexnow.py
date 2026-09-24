@@ -27,7 +27,7 @@ def fetch_xml(url):
         url,
         headers={"User-Agent": "VietnamGuide-IndexNow-Bot/1.0"}
     )
-    with urllib.request.urlopen(req, timeout=15) as resp:
+    with urllib.request.urlopen(req, timeout=45) as resp:
         return resp.read()
 
 def fetch_sitemap_urls():
