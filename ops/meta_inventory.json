@@ -1574,12 +1574,15 @@
   {
     "ID": 1034,
     "post_name": "where-to-stay-in-cao-bang",
-    "post_title": "Where to Stay in Cao Bang (2026): City Bases & Lodges",
-    "meta_title": "Where to Stay in Cao Bang (2026): City Bases & Lodges",
-    "meta_desc": "Where to stay in Cao Bang: city hotel bases vs Ban Gioc waterfall eco-lodges and Khuoi Ky stone village homestays with 2026 nightly rates.",
-    "post_modified": "2026-09-23 14:35:00",
+    "post_title": "Where to Stay in Cao Bang (2026): City vs Waterfall",
+    "meta_title": "Where to Stay in Cao Bang (2026): City vs Waterfall",
+    "meta_desc": "Where to stay in Cao Bang: central Bang river hotels vs Ban Gioc waterfall stone homestays in Trung Khanh. 2026 room rates, districts, and border tips.",
+    "post_modified": "2026-09-26 10:45:00",
     "parent": 7,
-    "url": "/destinations/where-to-stay-in-cao-bang/"
+    "url": "/destinations/where-to-stay-in-cao-bang/",
+    "rm_title": "Where to Stay in Cao Bang (2026): City vs Waterfall",
+    "rm_desc": "Where to stay in Cao Bang: central Bang river hotels vs Ban Gioc waterfall stone homestays in Trung Khanh. 2026 room rates, districts, and border tips.",
+    "rm_keyword": "where to stay in Cao Bang"
   },
   {
     "ID": 1035,
@@ -1644,12 +1647,15 @@
   {
     "ID": 1066,
     "post_name": "where-to-stay-in-dong-van",
-    "post_title": "Where to Stay in Dong Van (2026): Old Quarter & Stays",
-    "meta_title": "Where to Stay in Dong Van (2026): Old Quarter & Stays",
-    "meta_desc": "Where to stay in Dong Van: Old Quarter heritage homestays vs cliffside mountain retreats and budget guesthouses on the Ha Giang Loop with 2026 rates.",
-    "post_modified": "2026-09-23 15:00:00",
+    "post_title": "Where to Stay in Dong Van (2026): Hotels & Homestays",
+    "meta_title": "Where to Stay in Dong Van (2026): Hotels & Homestays",
+    "meta_desc": "Where to stay in Dong Van: Old Quarter stone houses vs Ma Pi Leng canyon homestays. 2026 room rates, mountain view lodges, and Ha Giang Loop tips.",
+    "post_modified": "2026-09-26 10:45:00",
     "parent": 7,
-    "url": "/destinations/where-to-stay-in-dong-van/"
+    "url": "/destinations/where-to-stay-in-dong-van/",
+    "rm_title": "Where to Stay in Dong Van (2026): Hotels & Homestays",
+    "rm_desc": "Where to stay in Dong Van: Old Quarter stone houses vs Ma Pi Leng canyon homestays. 2026 room rates, mountain view lodges, and Ha Giang Loop tips.",
+    "rm_keyword": "where to stay in Dong Van"
   },
   {
     "ID": 1067,
@@ -1888,13 +1894,13 @@
   {
     "ID": 1169,
     "post_name": "da-lat-to-mui-ne-transport",
-    "post_title": "Da Lat to Mui Ne Transport (2026): Minivan vs Bus",
-    "rm_title": "Da Lat to Mui Ne Transport (2026): Minivan vs Bus",
-    "rm_desc": "Da Lat to Mui Ne transport guide: shared limousine minivans vs local buses and private cars via Dai Ninh Pass. Travel times, ticket costs, and road tips.",
+    "post_title": "Da Lat to Mui Ne Transport (2026): Bus, Van & Car",
+    "rm_title": "Da Lat to Mui Ne Transport (2026): Bus, Van & Car",
+    "rm_desc": "Da Lat to Mui Ne transport: shared limousine vans vs tourist coaches via Highway 28B and Dai Ninh Pass. 2026 schedules, ticket fares, and road advice.",
     "rm_keyword": "Da Lat to Mui Ne transport",
-    "meta_title": "Da Lat to Mui Ne Transport (2026): Minivan vs Bus",
-    "meta_desc": "Da Lat to Mui Ne transport guide: shared limousine minivans vs local buses and private cars via Dai Ninh Pass. Travel times, ticket costs, and road tips.",
-    "post_modified": "2026-09-23 16:30:00",
+    "meta_title": "Da Lat to Mui Ne Transport (2026): Bus, Van & Car",
+    "meta_desc": "Da Lat to Mui Ne transport: shared limousine vans vs tourist coaches via Highway 28B and Dai Ninh Pass. 2026 schedules, ticket fares, and road advice.",
+    "post_modified": "2026-09-26 10:45:00",
     "parent": 6,
     "url": "/plan/da-lat-to-mui-ne-transport/"
   },
@@ -2508,5 +2514,57 @@
     "post_modified": "2026-09-25 15:45:00",
     "parent": 6,
     "url": "/plan/kon-tum-to-da-nang-transport/"
+  },
+  {
+    "ID": 1425,
+    "post_name": "ha-long-to-ninh-binh-transport",
+    "post_title": "Ha Long to Ninh Binh Transport (2026): Bus vs Limousine",
+    "rm_title": "Ha Long to Ninh Binh Transport (2026): Bus vs Limousine",
+    "rm_desc": "Ha Long to Ninh Binh transport: pier limousine vans vs direct express buses via Hai Phong. 2026 ticket fares, travel times, pickups, and cruise transfers.",
+    "rm_keyword": "Ha Long to Ninh Binh transport",
+    "meta_title": "Ha Long to Ninh Binh Transport (2026): Bus vs Limousine",
+    "meta_desc": "Ha Long to Ninh Binh transport: pier limousine vans vs direct express buses via Hai Phong. 2026 ticket fares, travel times, pickups, and cruise transfers.",
+    "post_modified": "2026-09-26 10:45:00",
+    "parent": 6,
+    "url": "/plan/ha-long-to-ninh-binh-transport/"
+  },
+  {
+    "ID": 1426,
+    "post_name": "dong-hoi-to-hue-transport",
+    "post_title": "Dong Hoi to Hue Transport (2026): Train, Bus & DMZ Car",
+    "rm_title": "Dong Hoi to Hue Transport (2026): Train, Bus & DMZ Car",
+    "rm_desc": "Dong Hoi to Hue transport: Reunification Express trains vs direct limousine buses and private DMZ car tours. 2026 ticket fares, timetables, and tips.",
+    "rm_keyword": "Dong Hoi to Hue transport",
+    "meta_title": "Dong Hoi to Hue Transport (2026): Train, Bus & DMZ Car",
+    "meta_desc": "Dong Hoi to Hue transport: Reunification Express trains vs direct limousine buses and private DMZ car tours. 2026 ticket fares, timetables, and tips.",
+    "post_modified": "2026-09-26 10:45:00",
+    "parent": 6,
+    "url": "/plan/dong-hoi-to-hue-transport/"
+  },
+  {
+    "ID": 1428,
+    "post_name": "where-to-stay-in-vinh-hy",
+    "post_title": "Where to Stay in Vinh Hy (2026): Luxury vs Village",
+    "rm_title": "Where to Stay in Vinh Hy (2026): Luxury vs Village",
+    "rm_desc": "Where to stay in Vinh Hy: ultra-luxury Amanoi villas vs bay fishing village homestays in Nui Chua Park. 2026 room rates, secluded coves, and reef advice.",
+    "rm_keyword": "where to stay in Vinh Hy",
+    "meta_title": "Where to Stay in Vinh Hy (2026): Luxury vs Village",
+    "meta_desc": "Where to stay in Vinh Hy: ultra-luxury Amanoi villas vs bay fishing village homestays in Nui Chua Park. 2026 room rates, secluded coves, and reef advice.",
+    "post_modified": "2026-09-26 10:45:00",
+    "parent": 7,
+    "url": "/destinations/where-to-stay-in-vinh-hy/"
+  },
+  {
+    "ID": 1429,
+    "post_name": "quy-nhon-to-nha-trang-transport",
+    "post_title": "Quy Nhon to Nha Trang Transport (2026): Train vs Bus",
+    "rm_title": "Quy Nhon to Nha Trang Transport (2026): Train vs Bus",
+    "rm_desc": "Quy Nhon to Nha Trang transport: coastal Reunification Express trains vs limousine vans via Highway 1D. 2026 timetables, ticket fares, and station tips.",
+    "rm_keyword": "Quy Nhon to Nha Trang transport",
+    "meta_title": "Quy Nhon to Nha Trang Transport (2026): Train vs Bus",
+    "meta_desc": "Quy Nhon to Nha Trang transport: coastal Reunification Express trains vs limousine vans via Highway 1D. 2026 timetables, ticket fares, and station tips.",
+    "post_modified": "2026-09-26 10:45:00",
+    "parent": 6,
+    "url": "/plan/quy-nhon-to-nha-trang-transport/"
   }
 ]
