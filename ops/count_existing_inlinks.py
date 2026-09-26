@@ -12,13 +12,13 @@ SSH_KEY = r'C:\Users\NCTaam\.ssh\deploy_bot_key'
 WP_PATH = '/usr/local/lsws/vietnamguide.net/html'
 
 slugs = [
-    'where-to-stay-in-du-gia',
-    'where-to-stay-in-mang-den',
-    'nha-trang-to-da-lat-transport',
-    'ninh-binh-to-phong-nha-transport',
-    'cao-bang-to-ba-be-transport',
-    'ho-chi-minh-city-to-chau-doc-transport',
-    'where-to-stay-in-an-giang'
+    'where-to-stay-in-ly-son',
+    'mang-den-travel-guide',
+    'ba-be-lake-travel-guide',
+    'da-nang-to-ly-son-transport',
+    'hue-to-phong-nha-transport',
+    'mai-chau-to-pu-luong-transport',
+    'ha-tien-to-phu-quoc-ferry'
 ]
 
 php_script = f"""<?php
