@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-Count existing links to the 7 Stage 84 pillars in the VPS database.
+Count existing links to the 7 Stage 87 pillars in the VPS database.
 """
 import paramiko
 import json
@@ -12,13 +12,13 @@ SSH_KEY = r'C:\Users\NCTaam\.ssh\deploy_bot_key'
 WP_PATH = '/usr/local/lsws/vietnamguide.net/html'
 
 slugs = [
-    'where-to-stay-in-ly-son',
-    'mang-den-travel-guide',
-    'ba-be-lake-travel-guide',
-    'da-nang-to-ly-son-transport',
-    'hue-to-phong-nha-transport',
-    'mai-chau-to-pu-luong-transport',
-    'ha-tien-to-phu-quoc-ferry'
+    'where-to-stay-in-yen-minh',
+    'where-to-stay-in-quang-ngai',
+    'ha-giang-to-dong-van-transport',
+    'rach-gia-to-phu-quoc-ferry',
+    'can-tho-to-phu-quoc-transport',
+    'quy-nhon-to-hoi-an-transport',
+    'da-lat-to-pleiku-transport'
 ]
 
 php_script = f"""<?php
@@ -66,8 +66,16 @@ ssh.close()
 
 json_line = [l for l in out.strip().splitlines() if l.strip().startswith('{')][-1]
 data = json.loads(json_line)
-print("=== EXISTING INBOUND LINKS TO STAGE 85 PILLARS ===")
+print("=== INBOUND LINKS TO STAGE 87 PILLARS IN PRODUCTION DATABASE ===")
+all_pass = True
 for s, inlinks in data.items():
     print(f"\n[{s}]: {len(inlinks)} inbound links")
     for item in inlinks:
         print(f"  - {item['slug']} (ID: {item['id']})")
+    if len(inlinks) < 4:
+        all_pass = False
+
+if all_pass:
+    print("\nSUCCESS: All 7 Stage 87 pillars have at least 4 verified inbound links!")
+else:
+    print("\nWARNING: Some pillars have fewer than 4 inbound links!")
