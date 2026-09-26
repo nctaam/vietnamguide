@@ -1,0 +1,1257 @@
+{
+  "summary": {
+    "total": 301,
+    "with_images": 95,
+    "without_images": 206
+  },
+  "clusters": {
+    "other destination & practical guides": [
+      {
+        "id": 3,
+        "slug": "privacy-policy",
+        "title": "Privacy Policy",
+        "parent": 0
+      },
+      {
+        "id": 6,
+        "slug": "plan",
+        "title": "Plan",
+        "parent": 0
+      },
+      {
+        "id": 7,
+        "slug": "destinations",
+        "title": "Destinations",
+        "parent": 0
+      },
+      {
+        "id": 8,
+        "slug": "itineraries",
+        "title": "Itineraries",
+        "parent": 0
+      },
+      {
+        "id": 11,
+        "slug": "newsletter",
+        "title": "Newsletter",
+        "parent": 0
+      },
+      {
+        "id": 12,
+        "slug": "affiliate-disclosure",
+        "title": "Affiliate Disclosure",
+        "parent": 0
+      },
+      {
+        "id": 58,
+        "slug": "about",
+        "title": "About VietnamGuide.net",
+        "parent": 0
+      },
+      {
+        "id": 59,
+        "slug": "editorial-policy",
+        "title": "Editorial Policy",
+        "parent": 0
+      },
+      {
+        "id": 60,
+        "slug": "source-update-policy",
+        "title": "Source and Update Policy",
+        "parent": 0
+      },
+      {
+        "id": 61,
+        "slug": "contact",
+        "title": "Contact",
+        "parent": 0
+      },
+      {
+        "id": 62,
+        "slug": "affiliate-review-policy",
+        "title": "Affiliate and Review Policy",
+        "parent": 0
+      },
+      {
+        "id": 614,
+        "slug": "hanoi-street-food-guide",
+        "title": "Hanoi Street Food Guide: Best Dishes, Stalls & Tips (2026)",
+        "parent": 7
+      },
+      {
+        "id": 615,
+        "slug": "saigon-street-food-guide",
+        "title": "Saigon Street Food Guide: Night Markets & Must-Eats (2026)",
+        "parent": 7
+      },
+      {
+        "id": 616,
+        "slug": "da-nang-street-food-guide",
+        "title": "Da Nang Street Food Guide: Seafood, Mi Quang & Gems (2026)",
+        "parent": 7
+      },
+      {
+        "id": 626,
+        "slug": "phu-yen-travel-guide",
+        "title": "Phu Yen Travel Guide: Coastal Drive, Cliffs & Tips (2026)",
+        "parent": 7
+      },
+      {
+        "id": 628,
+        "slug": "hang-mua-ninh-binh-guide",
+        "title": "Hang Mua Ninh Binh: Dragon Peak, 500 Steps & Tips (2026)",
+        "parent": 7
+      },
+      {
+        "id": 629,
+        "slug": "phong-nha-cave-treks",
+        "title": "Phong Nha Cave Treks: 1 to 3-Day Expedition Guide (2026)",
+        "parent": 6
+      },
+      {
+        "id": 645,
+        "slug": "saigon-airport-to-district-1",
+        "title": "Saigon Airport to District 1: Bus 109, Grab & Taxis (2026)",
+        "parent": 6
+      },
+      {
+        "id": 646,
+        "slug": "da-nang-airport-to-hoi-an",
+        "title": "Da Nang Airport to Hoi An: Private Car, Taxi & Bus (2026)",
+        "parent": 6
+      },
+      {
+        "id": 647,
+        "slug": "grab-in-vietnam-guide",
+        "title": "Grab in Vietnam: App Setup, Payments, Airports & Tips (2026)",
+        "parent": 6
+      },
+      {
+        "id": 648,
+        "slug": "tipping-in-vietnam",
+        "title": "Tipping in Vietnam: Etiquette, Rules & Amounts (2026)",
+        "parent": 6
+      },
+      {
+        "id": 649,
+        "slug": "vietnam-coffee-guide",
+        "title": "Vietnam Coffee Guide: Egg, Salt, Coconut & Cafes (2026)",
+        "parent": 7
+      },
+      {
+        "id": 686,
+        "slug": "tap-water-in-vietnam",
+        "title": "Tap Water in Vietnam: Drinking, Ice, Brushing Teeth (2026)",
+        "parent": 6
+      },
+      {
+        "id": 715,
+        "slug": "saigon-night-markets-guide",
+        "title": "Saigon Night Markets: 5 Best Food & Street Markets (2026)",
+        "parent": 7
+      },
+      {
+        "id": 716,
+        "slug": "hoi-an-street-food-guide",
+        "title": "Hoi An Street Food Guide: 9 Essential Dishes & Stalls (2026)",
+        "parent": 7
+      },
+      {
+        "id": 718,
+        "slug": "sapa-trekking-routes-guide",
+        "title": "Sapa Trekking Routes Guide: Trails, Difficulty & Maps (2026)",
+        "parent": 6
+      },
+      {
+        "id": 719,
+        "slug": "quy-nhon-to-phu-yen-coastal-drive",
+        "title": "Quy Nhon to Phu Yen Coastal Drive: Route & Stops (2026)",
+        "parent": 6
+      },
+      {
+        "id": 720,
+        "slug": "cham-islands-day-trip-guide",
+        "title": "Cham Islands Day Trip Guide: Speedboats & Snorkeling (2026)",
+        "parent": 6
+      },
+      {
+        "id": 751,
+        "slug": "phu-quoc-beaches-guide",
+        "title": "Phu Quoc Beaches Guide: 7 Best Beaches & Coast Map (2026)",
+        "parent": 7
+      },
+      {
+        "id": 753,
+        "slug": "da-lat-waterfalls-guide",
+        "title": "Da Lat Waterfalls Guide: Top 5 Falls, Routes & Map (2026)",
+        "parent": 7
+      },
+      {
+        "id": 754,
+        "slug": "vietnam-sleeper-bus-guide",
+        "title": "Vietnam Sleeper Bus Guide: Cabin vs Sleeper & Safety (2026)",
+        "parent": 6
+      },
+      {
+        "id": 786,
+        "slug": "hanoi-train-street-guide",
+        "title": "Hanoi Train Street Guide: Timetable, Cafes & Rules (2026)",
+        "parent": 7
+      },
+      {
+        "id": 788,
+        "slug": "ba-na-hills-golden-bridge-guide",
+        "title": "Ba Na Hills Golden Bridge: Cable Car, Fog & Map (2026)",
+        "parent": 7
+      },
+      {
+        "id": 789,
+        "slug": "vietnam-to-cambodia-border-crossings",
+        "title": "Vietnam to Cambodia Border Crossings: Routes & Visas (2026)",
+        "parent": 6
+      },
+      {
+        "id": 791,
+        "slug": "hue-street-food-guide",
+        "title": "Hue Street Food Guide: 9 Essential Dishes & Stalls (2026)",
+        "parent": 7
+      },
+      {
+        "id": 822,
+        "slug": "mekong-delta-floating-markets-guide",
+        "title": "Mekong Delta Floating Markets: Cai Rang & Cai Be",
+        "parent": 7
+      },
+      {
+        "id": 824,
+        "slug": "da-lat-coffee-farms-guide",
+        "title": "Da Lat Coffee Farms: Arabica Tour & Cupping Guide",
+        "parent": 7
+      },
+      {
+        "id": 825,
+        "slug": "hoi-an-tailoring-guide",
+        "title": "Hoi An Tailoring Guide: Custom Suits & Dresses",
+        "parent": 7
+      },
+      {
+        "id": 855,
+        "slug": "best-things-to-do-in-ho-chi-minh-city",
+        "title": "Best Things to Do in Ho Chi Minh City (2026 Guide)",
+        "parent": 7
+      },
+      {
+        "id": 858,
+        "slug": "best-things-to-do-in-da-nang",
+        "title": "Best Things to Do in Da Nang: Beaches & Mountains",
+        "parent": 7
+      },
+      {
+        "id": 889,
+        "slug": "best-things-to-do-in-da-lat",
+        "title": "Best Things to Do in Da Lat: Highlands & Waterfalls",
+        "parent": 7
+      },
+      {
+        "id": 890,
+        "slug": "best-things-to-do-in-nha-trang",
+        "title": "Best Things to Do in Nha Trang: Beaches & Islands",
+        "parent": 7
+      },
+      {
+        "id": 891,
+        "slug": "best-things-to-do-in-phu-quoc",
+        "title": "Best Things to Do in Phu Quoc: Beaches & Cable Car",
+        "parent": 7
+      },
+      {
+        "id": 921,
+        "slug": "best-things-to-do-in-sapa",
+        "title": "Best Things to Do in Sapa: Treks, Fansipan & Peaks",
+        "parent": 7
+      },
+      {
+        "id": 922,
+        "slug": "best-things-to-do-in-ninh-binh",
+        "title": "Best Things to Do in Ninh Binh: Karsts, Boats & Caves",
+        "parent": 7
+      },
+      {
+        "id": 923,
+        "slug": "best-things-to-do-in-ha-long-bay",
+        "title": "Best Things to Do in Ha Long Bay: Caves & Cruises",
+        "parent": 7
+      },
+      {
+        "id": 924,
+        "slug": "best-things-to-do-in-mui-ne",
+        "title": "Best Things to Do in Mui Ne: Sand Dunes & Coastal Bays",
+        "parent": 7
+      },
+      {
+        "id": 926,
+        "slug": "best-things-to-do-in-quy-nhon",
+        "title": "Best Things to Do in Quy Nhon: Cliffs, Bays & Beaches",
+        "parent": 7
+      },
+      {
+        "id": 969,
+        "slug": "ho-chi-minh-city-in-2-days",
+        "title": "Ho Chi Minh City in 2 Days (2026): 48-Hour Itinerary",
+        "parent": 8
+      },
+      {
+        "id": 1000,
+        "slug": "vietnam-family-travel-guide",
+        "title": "Vietnam Family Travel Guide (2026): Route & Kid Advice",
+        "parent": 8
+      },
+      {
+        "id": 1037,
+        "slug": "pu-luong-trekking-routes-guide",
+        "title": "Pu Luong Trekking Guide (2026): Trails, Difficulty & Maps",
+        "parent": 6
+      },
+      {
+        "id": 1039,
+        "slug": "vietnam-vegetarian-travel-guide",
+        "title": "Vegetarian in Vietnam (2026): Food Guide & Phrases",
+        "parent": 6
+      },
+      {
+        "id": 1071,
+        "slug": "vietnam-gluten-free-travel-guide",
+        "title": "Gluten-Free in Vietnam (2026): Celiac Travel Guide",
+        "parent": 6
+      },
+      {
+        "id": 1099,
+        "slug": "vietnam-travel-apps",
+        "title": "Best Travel Apps for Vietnam (2026): Rides, Maps & Pay",
+        "parent": 6
+      },
+      {
+        "id": 1102,
+        "slug": "vietnam-craft-beer-guide",
+        "title": "Vietnam Craft Beer Guide (2026): Breweries, Taps & Prices",
+        "parent": 6
+      },
+      {
+        "id": 1141,
+        "slug": "vietnam-motorbike-license-laws",
+        "title": "Vietnam Motorbike License Laws (2026): IDP & Legal Rules",
+        "parent": 6
+      },
+      {
+        "id": 1142,
+        "slug": "vietnam-plug-adapter-electricity-guide",
+        "title": "Vietnam Plug Adapter & Electricity Guide (2026): Outlets",
+        "parent": 6
+      },
+      {
+        "id": 1171,
+        "slug": "vietnam-scooter-rental-checklist",
+        "title": "Vietnam Scooter Rental Checklist (2026): Bike Checks",
+        "parent": 6
+      },
+      {
+        "id": 1204,
+        "slug": "vietnam-to-cambodia-boat-guide",
+        "title": "Vietnam to Cambodia Boat Guide (2026): Fast Mekong Ferry",
+        "parent": 6
+      },
+      {
+        "id": 1205,
+        "slug": "vietnam-night-train-safety-tips",
+        "title": "Vietnam Night Train Safety Tips (2026): Sleeper Berths",
+        "parent": 6
+      },
+      {
+        "id": 1235,
+        "slug": "vietnam-sleeper-bus-survival-guide",
+        "title": "Vietnam Sleeper Bus Survival Guide (2026): Bunks & Tips",
+        "parent": 6
+      },
+      {
+        "id": 1277,
+        "slug": "phu-quoc-ferry-guide",
+        "title": "Phu Quoc Ferry Guide (2026): Fast Boats & Schedules",
+        "parent": 6
+      },
+      {
+        "id": 1316,
+        "slug": "vietnam-domestic-flights-guide",
+        "title": "Vietnam Domestic Flights Guide (2026): Airlines & Tips",
+        "parent": 6
+      },
+      {
+        "id": 1495,
+        "slug": "mang-den-travel-guide",
+        "title": "Mang Den Travel Guide (2026): Central Highlands Pine Oasis",
+        "parent": 7
+      },
+      {
+        "id": 1496,
+        "slug": "ba-be-lake-travel-guide",
+        "title": "Ba Be Lake Travel Guide (2026): Boat Tours & Homestays",
+        "parent": 7
+      }
+    ],
+    "comparisons & alternatives": [
+      {
+        "id": 9,
+        "slug": "compare",
+        "title": "Compare",
+        "parent": 0
+      },
+      {
+        "id": 627,
+        "slug": "ly-son-vs-cham-islands",
+        "title": "Ly Son vs Cham Islands: Which Central Island to Pick? (2026)",
+        "parent": 9
+      },
+      {
+        "id": 682,
+        "slug": "ha-long-bay-day-trip-vs-overnight-cruise",
+        "title": "Ha Long Bay Day Trip vs Overnight Cruise: 2026 Comparison",
+        "parent": 8
+      },
+      {
+        "id": 717,
+        "slug": "tam-coc-vs-trang-an-boat-tour",
+        "title": "Tam Coc vs Trang An Boat Tour: Which is Better in 2026?",
+        "parent": 9
+      },
+      {
+        "id": 752,
+        "slug": "con-dao-vs-phu-quoc",
+        "title": "Con Dao vs Phu Quoc: Which Vietnam Island is Better? (2026)",
+        "parent": 9
+      },
+      {
+        "id": 787,
+        "slug": "cu-chi-tunnels-ben-duoc-vs-ben-dinh",
+        "title": "Ben Duoc vs Ben Dinh: Which Cu Chi Tunnels Site to Visit?",
+        "parent": 9
+      },
+      {
+        "id": 1068,
+        "slug": "vietnam-sim-card-airport-vs-city",
+        "title": "Vietnam SIM Card: Airport vs City Stores Guide (2026)",
+        "parent": 6
+      },
+      {
+        "id": 1354,
+        "slug": "vietnam-train-vs-flight",
+        "title": "Vietnam Train vs Flight (2026): Travel Comparison",
+        "parent": 6
+      }
+    ],
+    "costs & practical": [
+      {
+        "id": 10,
+        "slug": "costs",
+        "title": "Costs",
+        "parent": 0
+      },
+      {
+        "id": 1002,
+        "slug": "ho-chi-minh-city-mekong-budget",
+        "title": "Ho Chi Minh City and Mekong Budget (2026): 5-Day Cost",
+        "parent": 10
+      }
+    ],
+    "itineraries & seasons": [
+      {
+        "id": 650,
+        "slug": "vietnam-in-march",
+        "title": "Vietnam in March: Weather, Regional Routes & Tips (2026)",
+        "parent": 6
+      },
+      {
+        "id": 651,
+        "slug": "vietnam-in-november",
+        "title": "Vietnam in November: Weather, Autumn Leaves & Tips (2026)",
+        "parent": 6
+      },
+      {
+        "id": 685,
+        "slug": "vietnam-in-april",
+        "title": "Vietnam in April: Weather, Holidays & Route Guide (2026)",
+        "parent": 6
+      },
+      {
+        "id": 721,
+        "slug": "vietnam-in-may",
+        "title": "Vietnam in May: Weather, Crowds & Regional Travel (2026)",
+        "parent": 6
+      },
+      {
+        "id": 757,
+        "slug": "vietnam-in-june",
+        "title": "Vietnam in June: Weather, Beach Sun & Route Guide (2026)",
+        "parent": 6
+      },
+      {
+        "id": 792,
+        "slug": "vietnam-in-july",
+        "title": "Vietnam in July: Weather, Beach Sun & Rain Patterns (2026)",
+        "parent": 6
+      },
+      {
+        "id": 820,
+        "slug": "vietnam-in-august",
+        "title": "Vietnam in August: Monsoon Surf, Rice Green & Heat",
+        "parent": 6
+      },
+      {
+        "id": 826,
+        "slug": "vietnam-in-september",
+        "title": "Vietnam in September: Typhoon Season & Smart Routes",
+        "parent": 6
+      },
+      {
+        "id": 854,
+        "slug": "vietnam-in-october",
+        "title": "Vietnam in October: Shoulder Season & Central Rains",
+        "parent": 6
+      },
+      {
+        "id": 1001,
+        "slug": "central-vietnam-itinerary",
+        "title": "Central Vietnam Itinerary (2026): 5 to 7-Day Route",
+        "parent": 8
+      },
+      {
+        "id": 1038,
+        "slug": "southern-vietnam-itinerary",
+        "title": "Southern Vietnam Itinerary (2026): 5 to 7-Day Route",
+        "parent": 8
+      },
+      {
+        "id": 1069,
+        "slug": "northwest-vietnam-itinerary",
+        "title": "Northwest Vietnam Itinerary (2026): 6 to 8-Day Loop",
+        "parent": 8
+      },
+      {
+        "id": 1100,
+        "slug": "central-highlands-vietnam-itinerary",
+        "title": "Central Highlands Vietnam Itinerary (2026): 5-7 Day Route",
+        "parent": 8
+      },
+      {
+        "id": 1140,
+        "slug": "northeast-vietnam-itinerary",
+        "title": "Northeast Vietnam Itinerary (2026): 5-7 Day Scenic Loop",
+        "parent": 8
+      }
+    ],
+    "where-to-stay (Hotels & Lodging)": [
+      {
+        "id": 680,
+        "slug": "where-to-stay-in-da-nang",
+        "title": "Where to Stay in Da Nang: Best Areas & Hotels (2026)",
+        "parent": 7
+      },
+      {
+        "id": 681,
+        "slug": "where-to-stay-in-hoi-an",
+        "title": "Where to Stay in Hoi An: Old Town vs Beach & Fields (2026)",
+        "parent": 7
+      },
+      {
+        "id": 821,
+        "slug": "where-to-stay-in-hue",
+        "title": "Where to Stay in Hue: Best Areas & Hotels (2026)",
+        "parent": 7
+      },
+      {
+        "id": 857,
+        "slug": "where-to-stay-in-phu-quoc",
+        "title": "Where to Stay in Phu Quoc: Best Beaches & Areas",
+        "parent": 7
+      },
+      {
+        "id": 860,
+        "slug": "where-to-stay-in-nha-trang",
+        "title": "Where to Stay in Nha Trang: Best Areas & Hotels",
+        "parent": 7
+      },
+      {
+        "id": 888,
+        "slug": "where-to-stay-in-da-lat",
+        "title": "Where to Stay in Da Lat: Best Areas & Hotels (2026)",
+        "parent": 7
+      },
+      {
+        "id": 892,
+        "slug": "where-to-stay-in-phong-nha",
+        "title": "Where to Stay in Phong Nha: Son Trach & Valleys",
+        "parent": 7
+      },
+      {
+        "id": 925,
+        "slug": "where-to-stay-in-mui-ne",
+        "title": "Where to Stay in Mui Ne: Beach Resorts & Coast Areas",
+        "parent": 7
+      },
+      {
+        "id": 964,
+        "slug": "where-to-stay-in-ha-long-bay",
+        "title": "Where to Stay in Ha Long Bay (2026): Best Areas & Bases",
+        "parent": 7
+      },
+      {
+        "id": 965,
+        "slug": "where-to-stay-in-quy-nhon",
+        "title": "Where to Stay in Quy Nhon (2026): Beach Areas & Resorts",
+        "parent": 7
+      },
+      {
+        "id": 966,
+        "slug": "where-to-stay-in-can-tho",
+        "title": "Where to Stay in Can Tho (2026): Best Areas & Hotels",
+        "parent": 7
+      },
+      {
+        "id": 967,
+        "slug": "where-to-stay-in-cat-ba",
+        "title": "Where to Stay on Cat Ba Island (2026): Best Areas",
+        "parent": 7
+      },
+      {
+        "id": 968,
+        "slug": "where-to-stay-in-ha-giang",
+        "title": "Where to Stay in Ha Giang (2026): Loop Bases & Stays",
+        "parent": 7
+      },
+      {
+        "id": 997,
+        "slug": "where-to-stay-in-mai-chau",
+        "title": "Where to Stay in Mai Chau (2026): Best Areas & Lodges",
+        "parent": 7
+      },
+      {
+        "id": 998,
+        "slug": "where-to-stay-in-pu-luong",
+        "title": "Where to Stay in Pu Luong (2026): Best Villages & Bases",
+        "parent": 7
+      },
+      {
+        "id": 999,
+        "slug": "where-to-stay-in-con-dao",
+        "title": "Where to Stay in Con Dao (2026): Best Areas & Resorts",
+        "parent": 7
+      },
+      {
+        "id": 1034,
+        "slug": "where-to-stay-in-cao-bang",
+        "title": "Where to Stay in Cao Bang (2026): City vs Waterfall",
+        "parent": 7
+      },
+      {
+        "id": 1035,
+        "slug": "where-to-stay-in-phu-yen",
+        "title": "Where to Stay in Phu Yen (2026): Best Areas & Resorts",
+        "parent": 7
+      },
+      {
+        "id": 1036,
+        "slug": "where-to-stay-in-ba-be",
+        "title": "Where to Stay in Ba Be (2026): Lake Homestays & Lodges",
+        "parent": 7
+      },
+      {
+        "id": 1066,
+        "slug": "where-to-stay-in-dong-van",
+        "title": "Where to Stay in Dong Van (2026): Hotels & Homestays",
+        "parent": 7
+      },
+      {
+        "id": 1070,
+        "slug": "where-to-stay-in-meo-vac",
+        "title": "Where to Stay in Meo Vac (2026): Pa Vi Stays & Town",
+        "parent": 7
+      },
+      {
+        "id": 1097,
+        "slug": "where-to-stay-in-ha-tien",
+        "title": "Where to Stay in Ha Tien (2026): Pier Hotels & Beach Bases",
+        "parent": 7
+      },
+      {
+        "id": 1101,
+        "slug": "where-to-stay-in-buon-ma-thuot",
+        "title": "Where to Stay in Buon Ma Thuot (2026): City & Eco-Stays",
+        "parent": 7
+      },
+      {
+        "id": 1136,
+        "slug": "where-to-stay-in-tam-coc",
+        "title": "Where to Stay in Tam Coc (2026): Homestays & Resorts",
+        "parent": 7
+      },
+      {
+        "id": 1137,
+        "slug": "where-to-stay-in-vung-tau",
+        "title": "Where to Stay in Vung Tau (2026): Best Beaches & Hotels",
+        "parent": 7
+      },
+      {
+        "id": 1168,
+        "slug": "where-to-stay-in-dong-hoi",
+        "title": "Where to Stay in Dong Hoi (2026): Nhat Le Beach & Hotels",
+        "parent": 7
+      },
+      {
+        "id": 1170,
+        "slug": "where-to-stay-in-pleiku",
+        "title": "Where to Stay in Pleiku (2026): Best City & Lake Hotels",
+        "parent": 7
+      },
+      {
+        "id": 1173,
+        "slug": "where-to-stay-in-mu-cang-chai",
+        "title": "Where to Stay in Mu Cang Chai (2026): Stays & Resorts",
+        "parent": 7
+      },
+      {
+        "id": 1201,
+        "slug": "where-to-stay-in-kon-tum",
+        "title": "Where to Stay in Kon Tum (2026): Best River & Town Stays",
+        "parent": 7
+      },
+      {
+        "id": 1203,
+        "slug": "where-to-stay-in-chau-doc",
+        "title": "Where to Stay in Chau Doc (2026): Sam Mountain & River",
+        "parent": 7
+      },
+      {
+        "id": 1206,
+        "slug": "where-to-stay-in-dien-bien-phu",
+        "title": "Where to Stay in Dien Bien Phu (2026): Valley Hotels",
+        "parent": 7
+      },
+      {
+        "id": 1233,
+        "slug": "where-to-stay-in-ben-tre",
+        "title": "Where to Stay in Ben Tre (2026): Best River & Eco-Stays",
+        "parent": 7
+      },
+      {
+        "id": 1234,
+        "slug": "where-to-stay-in-lang-co",
+        "title": "Where to Stay in Lang Co (2026): Beach & Lagoon Resorts",
+        "parent": 7
+      },
+      {
+        "id": 1275,
+        "slug": "where-to-stay-in-cam-ranh",
+        "title": "Where to Stay in Cam Ranh (2026): Bai Dai Beach Resorts",
+        "parent": 7
+      },
+      {
+        "id": 1276,
+        "slug": "where-to-stay-in-rach-gia",
+        "title": "Where to Stay in Rach Gia (2026): Ferry Port & City Stays",
+        "parent": 7
+      },
+      {
+        "id": 1315,
+        "slug": "where-to-stay-in-soc-trang",
+        "title": "Where to Stay in Soc Trang (2026): Hotels & Port Stays",
+        "parent": 7
+      },
+      {
+        "id": 1352,
+        "slug": "where-to-stay-in-bac-lieu",
+        "title": "Where to Stay in Bac Lieu (2026): Hotels & Farm Stays",
+        "parent": 7
+      },
+      {
+        "id": 1353,
+        "slug": "where-to-stay-in-ca-mau",
+        "title": "Where to Stay in Ca Mau (2026): Hotels & Eco-Lodges",
+        "parent": 7
+      },
+      {
+        "id": 1387,
+        "slug": "where-to-stay-in-hai-phong",
+        "title": "Where to Stay in Hai Phong (2026): Hotels & Districts",
+        "parent": 7
+      },
+      {
+        "id": 1390,
+        "slug": "where-to-stay-in-phan-rang",
+        "title": "Where to Stay in Phan Rang (2026): Hotels & Resorts",
+        "parent": 7
+      },
+      {
+        "id": 1392,
+        "slug": "where-to-stay-in-tam-dao",
+        "title": "Where to Stay in Tam Dao (2026): Hotels & Chalets",
+        "parent": 7
+      },
+      {
+        "id": 1428,
+        "slug": "where-to-stay-in-vinh-hy",
+        "title": "Where to Stay in Vinh Hy (2026): Luxury vs Village",
+        "parent": 7
+      },
+      {
+        "id": 1453,
+        "slug": "where-to-stay-in-du-gia",
+        "title": "Where to Stay in Du Gia (2026): Waterfall Homestays",
+        "parent": 7
+      },
+      {
+        "id": 1454,
+        "slug": "where-to-stay-in-mang-den",
+        "title": "Where to Stay in Mang Den (2026): Pine Forest Stays",
+        "parent": 7
+      },
+      {
+        "id": 1459,
+        "slug": "where-to-stay-in-an-giang",
+        "title": "Where to Stay in An Giang (2026): Chau Doc vs Long Xuyen",
+        "parent": 7
+      },
+      {
+        "id": 1494,
+        "slug": "where-to-stay-in-ly-son",
+        "title": "Where to Stay in Ly Son (2026): Big vs Small Island",
+        "parent": 7
+      },
+      {
+        "id": 1529,
+        "slug": "where-to-stay-in-yen-minh",
+        "title": "Where to Stay in Yen Minh (2026): Town vs Pine Valley",
+        "parent": 7
+      },
+      {
+        "id": 1530,
+        "slug": "where-to-stay-in-quang-ngai",
+        "title": "Where to Stay in Quang Ngai (2026): City vs Sa Ky Port",
+        "parent": 7
+      },
+      {
+        "id": 1561,
+        "slug": "where-to-stay-in-bac-ha",
+        "title": "Where to Stay in Bac Ha (2026): Town vs Village Stays",
+        "parent": 7
+      },
+      {
+        "id": 1562,
+        "slug": "where-to-stay-in-bao-lac",
+        "title": "Where to Stay in Bao Lac (2026): Mountain Transit Stays",
+        "parent": 7
+      },
+      {
+        "id": 1563,
+        "slug": "where-to-stay-in-bao-loc",
+        "title": "Where to Stay in Bao Loc (2026): Tea Hills vs Town Center",
+        "parent": 7
+      }
+    ],
+    "transport & ferries (Routes & Transit)": [
+      {
+        "id": 683,
+        "slug": "hanoi-to-ha-long-bay-transport",
+        "title": "Hanoi to Ha Long Bay Transport: Limousine, Bus & Car (2026)",
+        "parent": 6
+      },
+      {
+        "id": 684,
+        "slug": "da-nang-to-hue-train-vs-car",
+        "title": "Da Nang to Hue Train vs Car: Hai Van Pass Guide (2026)",
+        "parent": 8
+      },
+      {
+        "id": 755,
+        "slug": "phong-nha-to-hue-transport",
+        "title": "Phong Nha to Hue Transport: Bus, Train & DMZ Car (2026)",
+        "parent": 6
+      },
+      {
+        "id": 756,
+        "slug": "da-lat-to-nha-trang-transport",
+        "title": "Da Lat to Nha Trang Transport: Bus, Limousine & Car (2026)",
+        "parent": 6
+      },
+      {
+        "id": 790,
+        "slug": "hanoi-to-cat-ba-island-transport",
+        "title": "Hanoi to Cat Ba Island Transport: Bus & Ferry Guide (2026)",
+        "parent": 6
+      },
+      {
+        "id": 823,
+        "slug": "hanoi-to-phong-nha-transport",
+        "title": "Hanoi to Phong Nha: Train, Bus & Flight Options",
+        "parent": 6
+      },
+      {
+        "id": 856,
+        "slug": "ho-chi-minh-city-to-da-lat-transport",
+        "title": "Ho Chi Minh City to Da Lat: Bus, Flight & Car",
+        "parent": 6
+      },
+      {
+        "id": 859,
+        "slug": "ho-chi-minh-city-to-phu-quoc-transport",
+        "title": "Ho Chi Minh City to Phu Quoc: Flights & Ferry",
+        "parent": 6
+      },
+      {
+        "id": 893,
+        "slug": "hue-to-hoi-an-transport",
+        "title": "Hue to Hoi An: Train, Car, Bus & Hai Van Pass",
+        "parent": 6
+      },
+      {
+        "id": 894,
+        "slug": "ho-chi-minh-city-to-mui-ne-transport",
+        "title": "Ho Chi Minh City to Mui Ne: Express Bus, Train & Car",
+        "parent": 6
+      },
+      {
+        "id": 927,
+        "slug": "ho-chi-minh-city-to-can-tho-transport",
+        "title": "Ho Chi Minh City to Can Tho: Limousine, Bus & Car",
+        "parent": 6
+      },
+      {
+        "id": 970,
+        "slug": "da-nang-to-nha-trang-transport",
+        "title": "Da Nang to Nha Trang (2026): Train, Bus & Flight Guide",
+        "parent": 6
+      },
+      {
+        "id": 1003,
+        "slug": "hanoi-to-hue-transport",
+        "title": "Hanoi to Hue Transport (2026): Train, Flight or Bus",
+        "parent": 6
+      },
+      {
+        "id": 1040,
+        "slug": "hanoi-to-cao-bang-transport",
+        "title": "Hanoi to Cao Bang Transport (2026): Limousine & Bus",
+        "parent": 6
+      },
+      {
+        "id": 1067,
+        "slug": "hanoi-to-ba-be-transport",
+        "title": "Hanoi to Ba Be Lake Transport (2026): Bus & Transfers",
+        "parent": 6
+      },
+      {
+        "id": 1072,
+        "slug": "hanoi-to-ninh-binh-train-vs-limousine",
+        "title": "Hanoi to Ninh Binh: Train vs Limousine Van (2026)",
+        "parent": 6
+      },
+      {
+        "id": 1098,
+        "slug": "saigon-to-vung-tau-transport",
+        "title": "Saigon to Vung Tau Transport (2026): Ferry vs Limousine",
+        "parent": 6
+      },
+      {
+        "id": 1103,
+        "slug": "hanoi-to-sapa-train-vs-sleeper-bus",
+        "title": "Hanoi to Sapa: Sleeper Train vs Sleeper Bus (2026)",
+        "parent": 6
+      },
+      {
+        "id": 1138,
+        "slug": "da-nang-to-quy-nhon-transport",
+        "title": "Da Nang to Quy Nhon Transport (2026): Train vs Bus",
+        "parent": 6
+      },
+      {
+        "id": 1139,
+        "slug": "how-to-get-to-con-dao-flight-vs-ferry",
+        "title": "How to Get to Con Dao: Flight vs High-Speed Ferry (2026)",
+        "parent": 6
+      },
+      {
+        "id": 1169,
+        "slug": "da-lat-to-mui-ne-transport",
+        "title": "Da Lat to Mui Ne Transport (2026): Bus, Van & Car",
+        "parent": 6
+      },
+      {
+        "id": 1172,
+        "slug": "hanoi-to-mu-cang-chai-transport",
+        "title": "Hanoi to Mu Cang Chai Transport (2026): Bus vs Van",
+        "parent": 6
+      },
+      {
+        "id": 1174,
+        "slug": "da-nang-to-phong-nha-transport",
+        "title": "Da Nang to Phong Nha Transport (2026): Train vs Bus",
+        "parent": 6
+      },
+      {
+        "id": 1202,
+        "slug": "buon-ma-thuot-to-pleiku-transport",
+        "title": "Buon Ma Thuot to Pleiku Transport (2026): Bus vs Van",
+        "parent": 6
+      },
+      {
+        "id": 1207,
+        "slug": "hanoi-to-dien-bien-phu-transport",
+        "title": "Hanoi to Dien Bien Phu Transport (2026): Flight vs Bus",
+        "parent": 6
+      },
+      {
+        "id": 1230,
+        "slug": "nha-trang-to-quy-nhon-transport",
+        "title": "Nha Trang to Quy Nhon Transport (2026): Train vs Van",
+        "parent": 6
+      },
+      {
+        "id": 1231,
+        "slug": "can-tho-to-chau-doc-transport",
+        "title": "Can Tho to Chau Doc Transport (2026): Bus vs Limousine",
+        "parent": 6
+      },
+      {
+        "id": 1232,
+        "slug": "hanoi-to-mai-chau-transport",
+        "title": "Hanoi to Mai Chau Transport (2026): Bus vs Limousine",
+        "parent": 6
+      },
+      {
+        "id": 1236,
+        "slug": "hanoi-to-pu-luong-transport",
+        "title": "Hanoi to Pu Luong Transport (2026): Shuttle vs Car",
+        "parent": 6
+      },
+      {
+        "id": 1271,
+        "slug": "sapa-to-ha-giang-transport",
+        "title": "Sapa to Ha Giang Transport (2026): Bus vs Limousine",
+        "parent": 6
+      },
+      {
+        "id": 1272,
+        "slug": "ho-chi-minh-city-to-ben-tre-transport",
+        "title": "Ho Chi Minh City to Ben Tre Transport (2026): Van & Bus",
+        "parent": 6
+      },
+      {
+        "id": 1273,
+        "slug": "cat-ba-to-ninh-binh-transport",
+        "title": "Cat Ba to Ninh Binh Transport (2026): Tourist Bus Combo",
+        "parent": 6
+      },
+      {
+        "id": 1274,
+        "slug": "pleiku-to-kon-tum-transport",
+        "title": "Pleiku to Kon Tum Transport (2026): Bus, Taxi & Ride",
+        "parent": 6
+      },
+      {
+        "id": 1310,
+        "slug": "ha-giang-to-cao-bang-transport",
+        "title": "Ha Giang to Cao Bang Transport (2026): Bus vs Van",
+        "parent": 6
+      },
+      {
+        "id": 1311,
+        "slug": "sapa-to-mu-cang-chai-transport",
+        "title": "Sapa to Mu Cang Chai Transport (2026): Bus & Route",
+        "parent": 6
+      },
+      {
+        "id": 1312,
+        "slug": "can-tho-to-rach-gia-transport",
+        "title": "Can Tho to Rach Gia Transport (2026): Bus vs Van",
+        "parent": 6
+      },
+      {
+        "id": 1313,
+        "slug": "hue-to-dong-hoi-transport",
+        "title": "Hue to Dong Hoi Transport (2026): Train vs Bus",
+        "parent": 6
+      },
+      {
+        "id": 1314,
+        "slug": "da-lat-to-buon-ma-thuot-transport",
+        "title": "Da Lat to Buon Ma Thuot Transport (2026): Bus & Car",
+        "parent": 6
+      },
+      {
+        "id": 1348,
+        "slug": "hoi-an-to-quy-nhon-transport",
+        "title": "Hoi An to Quy Nhon Transport (2026): Train vs Bus",
+        "parent": 6
+      },
+      {
+        "id": 1349,
+        "slug": "hanoi-to-hai-phong-transport",
+        "title": "Hanoi to Hai Phong Transport (2026): Train vs Van",
+        "parent": 6
+      },
+      {
+        "id": 1350,
+        "slug": "can-tho-to-ha-tien-transport",
+        "title": "Can Tho to Ha Tien Transport (2026): Bus vs Van",
+        "parent": 6
+      },
+      {
+        "id": 1351,
+        "slug": "buon-ma-thuot-to-nha-trang-transport",
+        "title": "Buon Ma Thuot to Nha Trang Transport (2026): Bus & Car",
+        "parent": 6
+      },
+      {
+        "id": 1388,
+        "slug": "dong-hoi-to-phong-nha-transport",
+        "title": "Dong Hoi to Phong Nha Transport (2026): Bus vs Taxi",
+        "parent": 6
+      },
+      {
+        "id": 1389,
+        "slug": "can-tho-to-ca-mau-transport",
+        "title": "Can Tho to Ca Mau Transport (2026): Bus vs Van",
+        "parent": 6
+      },
+      {
+        "id": 1391,
+        "slug": "hanoi-to-tam-dao-transport",
+        "title": "Hanoi to Tam Dao Transport (2026): Bus, Van & Bike",
+        "parent": 6
+      },
+      {
+        "id": 1393,
+        "slug": "kon-tum-to-da-nang-transport",
+        "title": "Kon Tum to Da Nang Transport (2026): Bus vs Car",
+        "parent": 6
+      },
+      {
+        "id": 1425,
+        "slug": "ha-long-to-ninh-binh-transport",
+        "title": "Ha Long to Ninh Binh Transport (2026): Bus vs Limousine",
+        "parent": 6
+      },
+      {
+        "id": 1426,
+        "slug": "dong-hoi-to-hue-transport",
+        "title": "Dong Hoi to Hue Transport (2026): Train, Bus & DMZ Car",
+        "parent": 6
+      },
+      {
+        "id": 1429,
+        "slug": "quy-nhon-to-nha-trang-transport",
+        "title": "Quy Nhon to Nha Trang Transport (2026): Train vs Bus",
+        "parent": 6
+      },
+      {
+        "id": 1455,
+        "slug": "nha-trang-to-da-lat-transport",
+        "title": "Nha Trang to Da Lat Transport (2026): Bus vs Van",
+        "parent": 6
+      },
+      {
+        "id": 1456,
+        "slug": "ninh-binh-to-phong-nha-transport",
+        "title": "Ninh Binh to Phong Nha Transport (2026): Bus vs Train",
+        "parent": 6
+      },
+      {
+        "id": 1457,
+        "slug": "cao-bang-to-ba-be-transport",
+        "title": "Cao Bang to Ba Be Transport (2026): Bus vs Car",
+        "parent": 6
+      },
+      {
+        "id": 1458,
+        "slug": "ho-chi-minh-city-to-chau-doc-transport",
+        "title": "Ho Chi Minh City to Chau Doc Transport (2026): Bus & Van",
+        "parent": 6
+      },
+      {
+        "id": 1497,
+        "slug": "da-nang-to-ly-son-transport",
+        "title": "Da Nang to Ly Son Transport (2026): Train, Bus & Ferry",
+        "parent": 6
+      },
+      {
+        "id": 1498,
+        "slug": "hue-to-phong-nha-transport",
+        "title": "Hue to Phong Nha Transport (2026): Bus, Train & DMZ",
+        "parent": 6
+      },
+      {
+        "id": 1499,
+        "slug": "mai-chau-to-pu-luong-transport",
+        "title": "Mai Chau to Pu Luong Transport (2026): Van vs Bike",
+        "parent": 6
+      },
+      {
+        "id": 1500,
+        "slug": "ha-tien-to-phu-quoc-ferry",
+        "title": "Ha Tien to Phu Quoc Ferry (2026): Speedboat Guide",
+        "parent": 6
+      },
+      {
+        "id": 1531,
+        "slug": "ha-giang-to-dong-van-transport",
+        "title": "Ha Giang to Dong Van Transport (2026): Bus vs Motorbike",
+        "parent": 6
+      },
+      {
+        "id": 1532,
+        "slug": "rach-gia-to-phu-quoc-ferry",
+        "title": "Rach Gia to Phu Quoc Ferry (2026): Speedboat Guide",
+        "parent": 6
+      },
+      {
+        "id": 1533,
+        "slug": "can-tho-to-phu-quoc-transport",
+        "title": "Can Tho to Phu Quoc Transport (2026): Ferry vs Flight",
+        "parent": 6
+      },
+      {
+        "id": 1534,
+        "slug": "quy-nhon-to-hoi-an-transport",
+        "title": "Quy Nhon to Hoi An Transport (2026): Train, Bus & Car",
+        "parent": 6
+      },
+      {
+        "id": 1535,
+        "slug": "da-lat-to-pleiku-transport",
+        "title": "Da Lat to Pleiku Transport (2026): Sleeper Bus Guide",
+        "parent": 6
+      },
+      {
+        "id": 1564,
+        "slug": "sapa-to-bac-ha-transport",
+        "title": "Sapa to Bac Ha Transport (2026): Bus, Tour & Motorbike",
+        "parent": 6
+      },
+      {
+        "id": 1565,
+        "slug": "tran-de-to-con-dao-ferry",
+        "title": "Tran De to Con Dao Ferry (2026): Superdong Speedboat",
+        "parent": 6
+      },
+      {
+        "id": 1566,
+        "slug": "vung-tau-to-con-dao-ferry",
+        "title": "Vung Tau to Con Dao Ferry (2026): Express Catamaran",
+        "parent": 6
+      },
+      {
+        "id": 1567,
+        "slug": "pleiku-to-quy-nhon-transport",
+        "title": "Pleiku to Quy Nhon Transport (2026): Bus vs Private Car",
+        "parent": 6
+      }
+    ]
+  }
+}
