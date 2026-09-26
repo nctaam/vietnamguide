@@ -12,13 +12,13 @@ SSH_KEY = r'C:\Users\NCTaam\.ssh\deploy_bot_key'
 WP_PATH = '/usr/local/lsws/vietnamguide.net/html'
 
 slugs = [
-    'where-to-stay-in-dong-van',
-    'where-to-stay-in-cao-bang',
-    'ha-long-to-ninh-binh-transport',
-    'dong-hoi-to-hue-transport',
-    'da-lat-to-mui-ne-transport',
-    'where-to-stay-in-vinh-hy',
-    'quy-nhon-to-nha-trang-transport'
+    'where-to-stay-in-du-gia',
+    'where-to-stay-in-mang-den',
+    'nha-trang-to-da-lat-transport',
+    'ninh-binh-to-phong-nha-transport',
+    'cao-bang-to-ba-be-transport',
+    'ho-chi-minh-city-to-chau-doc-transport',
+    'where-to-stay-in-an-giang'
 ]
 
 php_script = f"""<?php
@@ -64,8 +64,9 @@ out = stdout.read().decode('utf-8')
 ssh.exec_command("rm -f /tmp/count_links.php")
 ssh.close()
 
-data = json.loads(out)
-print("=== EXISTING INBOUND LINKS TO STAGE 84 PILLARS ===")
+json_line = [l for l in out.strip().splitlines() if l.strip().startswith('{')][-1]
+data = json.loads(json_line)
+print("=== EXISTING INBOUND LINKS TO STAGE 85 PILLARS ===")
 for s, inlinks in data.items():
     print(f"\n[{s}]: {len(inlinks)} inbound links")
     for item in inlinks:
