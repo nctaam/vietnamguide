@@ -43,6 +43,40 @@
 <button class="vg-back-to-top" type="button" aria-label="<?php esc_attr_e('Back to top', 'vietnamguide-premium'); ?>" data-vg-back-to-top>
     <span aria-hidden="true">&uarr;</span>
 </button>
+<div id="vg-cookie-consent" class="vg-cookie-banner" role="dialog" aria-label="<?php esc_attr_e('Cookie and privacy notice', 'vietnamguide-premium'); ?>" style="display:none;">
+    <div class="vg-cookie-banner__inner">
+        <p class="vg-cookie-banner__text">
+            <?php esc_html_e('We use essential cookies and advertising cookies to support independent travel research and measure site usage in accordance with our', 'vietnamguide-premium'); ?>
+            <a href="<?php echo esc_url(vg_home_url('privacy-policy')); ?>" class="vg-cookie-banner__link"><?php esc_html_e('Privacy Policy', 'vietnamguide-premium'); ?></a>.
+        </p>
+        <div class="vg-cookie-banner__actions">
+            <button id="vg-cookie-accept" type="button" class="vg-cookie-banner__btn vg-cookie-banner__btn--accept">
+                <?php esc_html_e('Accept', 'vietnamguide-premium'); ?>
+            </button>
+        </div>
+    </div>
+</div>
+<script>
+(function() {
+    try {
+        if (!localStorage.getItem('vg_cookie_consent')) {
+            var b = document.getElementById('vg-cookie-consent');
+            if (b) {
+                b.style.display = 'block';
+                var btn = document.getElementById('vg-cookie-accept');
+                if (btn) {
+                    btn.addEventListener('click', function() {
+                        localStorage.setItem('vg_cookie_consent', 'accepted');
+                        b.style.opacity = '0';
+                        b.style.transform = 'translateY(16px)';
+                        setTimeout(function() { b.style.display = 'none'; }, 300);
+                    });
+                }
+            }
+        }
+    } catch(e) {}
+})();
+</script>
 <?php wp_footer(); ?>
 </body>
 </html>
