@@ -576,9 +576,16 @@ function vg_add_ai_crawler_directives(string $output, bool $public): string
     }
 
     $site_url = untrailingslashit(home_url());
+
+    // Google AdSense & Contextual Crawlers
+    $adsense_bots = ['Mediapartners-Google', 'AdsBot-Google'];
+    $adsense_lines = array_map(static fn(string $b): string => "User-agent: {$b}\nAllow: /", $adsense_bots);
+
     $bots = ['GPTBot', 'PerplexityBot', 'ClaudeBot', 'Google-Extended', 'Applebot-Extended'];
     $bot_lines = array_map(static fn(string $b): string => "User-agent: {$b}\nAllow: /", $bots);
-    $ai_directives = "\n# AI Agent & Answer Engine Discoverability\n"
+    $ai_directives = "\n# Google AdSense Crawlers\n"
+        . implode("\n\n", $adsense_lines) . "\n\n"
+        . "# AI Agent & Answer Engine Discoverability\n"
         . implode("\n\n", $bot_lines) . "\n\n"
         . "LLMs-Txt: {$site_url}/llms.txt\n"
         . "LLMs-Full-Txt: {$site_url}/llms-full.txt\n";

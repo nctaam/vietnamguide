@@ -20,6 +20,8 @@ REMOTE_ROOT = '/usr/local/lsws/vietnamguide.net/html'
 DEPLOY_FILES = [
     ('wordpress/wp-content/themes/vietnamguide-premium/header.php',
      'wp-content/themes/vietnamguide-premium/header.php'),
+    ('wordpress/wp-content/themes/vietnamguide-premium/footer.php',
+     'wp-content/themes/vietnamguide-premium/footer.php'),
     ('wordpress/ads.txt',
      'ads.txt'),
     ('wordpress/wp-content/themes/vietnamguide-premium/inc/guide-seo.php',

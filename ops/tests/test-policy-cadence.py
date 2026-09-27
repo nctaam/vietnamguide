@@ -60,7 +60,11 @@ class TestPolicyCadence(unittest.TestCase):
             "We do not require user accounts or reader registrations. "
             "When you browse our travel itineraries, web servers automatically capture standard technical access logs, including your masked IP address, browser user-agent, operating system, requested URL path, referring domain, and timestamp. "
             "If you choose to contact our editorial desk directly via email regarding route updates, hotel closures, or transport corrections, we collect your email address and message contents to investigate your report. "
-            "We use zero third-party tracking cookies for targeted advertising. "
+            "We partner with third-party vendors, including Google, to serve contextual advertisements across our travel guides. "
+            "Google uses advertising cookies, including the DoubleClick cookie, to serve ads based on your prior visits to VietnamGuide.net or other websites on the internet. "
+            "These advertising cookies allow Google and its advertising partners to display relevant ads according to your browsing patterns without accessing your personal identity. "
+            "You retain full control over personalized advertising cookies. "
+            "You may opt out of personalized advertising at any time by visiting Google Ads Settings at https://www.google.com/settings/ads or by accessing the Digital Advertising Alliance opt-out portal at https://www.aboutads.info. "
             "Essential session cookies operate solely to support edge caching, rate limiting, and administrative security on our LiteSpeed web server cluster. "
             "Aggregate website traffic analysis runs with anonymized IP addresses to observe popular destination guides and detect broken transport links without tracking individual identity across the web. "
             "Our travel guides link directly to external logistics providers, official provincial tourism portals, and public transit schedules such as Vietnam Railways at dsvn.vn. "
@@ -75,6 +79,31 @@ class TestPolicyCadence(unittest.TestCase):
             "We respond within 48 business hours."
         )
         report = analyze_text(privacy_text, source_name="privacy-policy")
+        self.assertEqual(report['hls_score'], 100, f"HLS must be 100, got {report['hls_score']}")
+        self.assertGreaterEqual(report['cv'], 0.45, f"CV must be >= 0.45, got {report['cv']}")
+        self.assertTrue(report['passed'])
+
+    def test_remediated_terms_of_service_cadence(self):
+        terms_text = (
+            "Welcome to VietnamGuide.net. "
+            "By accessing our travel guides, route comparisons, and transit itineraries, you accept these terms of service in full. "
+            "VietnamGuide operates an independent editorial desk dedicated to practical, field-verified trip planning across Vietnam. "
+            "Our guides serve informational purposes for independent international travelers. "
+            "Logistics in Vietnam change quickly. "
+            "Railway timetables, expressway toll tariffs, island ferry schedules, entrance fees, and immigration policies fluctuate according to seasonal weather, carrier operations, and government decrees. "
+            "While our editorial desk audits transport routes continuously, travelers must confirm time-critical departures and visa requirements directly with primary operators or official government portals before booking non-refundable tickets. "
+            "We do not operate transport services, hotels, or booking desks. "
+            "All original written guides, route comparison tables, map graphics, and editorial verdicts on VietnamGuide.net remain the intellectual property of VietnamGuide. "
+            "You may not reproduce, syndicate, or republish full guide texts without prior written consent from our editorial desk. "
+            "Photography featured across our destination and transport guides originates from authentic field documentation, verified Creative Commons licenses, and public domain repositories with explicit photographer attribution. "
+            "Our website displays contextual advertisements served by third-party ad networks, including Google AdSense. "
+            "We also maintain select commercial affiliate relationships with accredited travel providers. "
+            "These partnerships never dictate editorial verdicts, route rankings, or lodging reviews. "
+            "VietnamGuide assumes no liability for travel disruptions, missed connections, personal injuries, or financial losses arising from reliance on published information. "
+            "These terms are governed by the laws of the Socialist Republic of Vietnam. "
+            "For legal inquiries, copyright notices, or editorial corrections, contact our desk at editorial@vietnamguide.net or reach our physical liaison office at 45 Le Duan Boulevard, Ben Nghe Ward, District 1, Ho Chi Minh City."
+        )
+        report = analyze_text(terms_text, source_name="terms-of-service")
         self.assertEqual(report['hls_score'], 100, f"HLS must be 100, got {report['hls_score']}")
         self.assertGreaterEqual(report['cv'], 0.45, f"CV must be >= 0.45, got {report['cv']}")
         self.assertTrue(report['passed'])
