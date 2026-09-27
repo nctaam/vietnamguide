@@ -1,7 +1,7 @@
 {
   "total": 301,
-  "has_thumb_count": 223,
-  "no_thumb_count": 78,
+  "has_thumb_count": 287,
+  "no_thumb_count": 14,
   "has_vg_photo_count": 287,
   "no_vg_photo_count": 14,
   "no_figure_no_thumb": [
@@ -132,584 +132,7 @@
       "has_any_figure": false
     }
   ],
-  "has_figure_no_thumb": [
-    {
-      "id": 14,
-      "slug": "best-time-to-visit-vietnam",
-      "title": "Best Time to Visit Vietnam",
-      "parent": 6,
-      "thumb_id": null,
-      "has_vg_photo": true,
-      "has_any_figure": true
-    },
-    {
-      "id": 15,
-      "slug": "sim-esim-vietnam",
-      "title": "SIM and eSIM in Vietnam",
-      "parent": 6,
-      "thumb_id": null,
-      "has_vg_photo": true,
-      "has_any_figure": true
-    },
-    {
-      "id": 19,
-      "slug": "10-days-in-vietnam",
-      "title": "10 Days in Vietnam",
-      "parent": 8,
-      "thumb_id": null,
-      "has_vg_photo": true,
-      "has_any_figure": true
-    },
-    {
-      "id": 20,
-      "slug": "14-days-in-vietnam",
-      "title": "14 Days in Vietnam",
-      "parent": 8,
-      "thumb_id": null,
-      "has_vg_photo": true,
-      "has_any_figure": true
-    },
-    {
-      "id": 21,
-      "slug": "ha-long-bay-vs-lan-ha-bay",
-      "title": "Ha Long Bay vs Lan Ha Bay",
-      "parent": 9,
-      "thumb_id": null,
-      "has_vg_photo": true,
-      "has_any_figure": true
-    },
-    {
-      "id": 22,
-      "slug": "vietnam-travel-cost",
-      "title": "Vietnam Travel Cost",
-      "parent": 10,
-      "thumb_id": null,
-      "has_vg_photo": true,
-      "has_any_figure": true
-    },
-    {
-      "id": 98,
-      "slug": "vietnam-travel-guide",
-      "title": "Vietnam Travel Guide",
-      "parent": 6,
-      "thumb_id": null,
-      "has_vg_photo": true,
-      "has_any_figure": true
-    },
-    {
-      "id": 155,
-      "slug": "transport-within-vietnam",
-      "title": "Transport Within Vietnam",
-      "parent": 6,
-      "thumb_id": null,
-      "has_vg_photo": true,
-      "has_any_figure": true
-    },
-    {
-      "id": 158,
-      "slug": "money-cash-cards-atms",
-      "title": "Money in Vietnam: Cash, Cards and ATMs",
-      "parent": 6,
-      "thumb_id": null,
-      "has_vg_photo": true,
-      "has_any_figure": true
-    },
-    {
-      "id": 170,
-      "slug": "unesco-heritage-sites-vietnam",
-      "title": "UNESCO Heritage Sites in Vietnam",
-      "parent": 7,
-      "thumb_id": null,
-      "has_vg_photo": true,
-      "has_any_figure": true
-    },
-    {
-      "id": 173,
-      "slug": "best-things-to-do-in-hanoi",
-      "title": "Best Things to Do in Hanoi",
-      "parent": 7,
-      "thumb_id": null,
-      "has_vg_photo": true,
-      "has_any_figure": true
-    },
-    {
-      "id": 178,
-      "slug": "best-things-to-do-in-hoi-an",
-      "title": "Best Things to Do in Hoi An",
-      "parent": 7,
-      "thumb_id": null,
-      "has_vg_photo": true,
-      "has_any_figure": true
-    },
-    {
-      "id": 181,
-      "slug": "safety-scams-vietnam",
-      "title": "Safety and Scams in Vietnam",
-      "parent": 6,
-      "thumb_id": null,
-      "has_vg_photo": true,
-      "has_any_figure": true
-    },
-    {
-      "id": 184,
-      "slug": "best-things-to-do-in-hue",
-      "title": "Best Things to Do in Hue",
-      "parent": 7,
-      "thumb_id": null,
-      "has_vg_photo": true,
-      "has_any_figure": true
-    },
-    {
-      "id": 187,
-      "slug": "health-travel-insurance-vietnam",
-      "title": "Health and Travel Insurance for Vietnam",
-      "parent": 6,
-      "thumb_id": null,
-      "has_vg_photo": true,
-      "has_any_figure": true
-    },
-    {
-      "id": 190,
-      "slug": "ninh-binh-travel-guide",
-      "title": "Ninh Binh Travel Guide",
-      "parent": 7,
-      "thumb_id": null,
-      "has_vg_photo": true,
-      "has_any_figure": true
-    },
-    {
-      "id": 195,
-      "slug": "ha-long-bay-travel-guide",
-      "title": "Ha Long Bay Travel Guide",
-      "parent": 7,
-      "thumb_id": null,
-      "has_vg_photo": true,
-      "has_any_figure": true
-    },
-    {
-      "id": 198,
-      "slug": "cat-ba-travel-guide",
-      "title": "Cat Ba Travel Guide",
-      "parent": 7,
-      "thumb_id": null,
-      "has_vg_photo": true,
-      "has_any_figure": true
-    },
-    {
-      "id": 201,
-      "slug": "bai-tu-long-bay-guide",
-      "title": "Bai Tu Long Bay Guide",
-      "parent": 7,
-      "thumb_id": null,
-      "has_vg_photo": true,
-      "has_any_figure": true
-    },
-    {
-      "id": 204,
-      "slug": "best-beaches-in-vietnam",
-      "title": "Best Beaches in Vietnam",
-      "parent": 7,
-      "thumb_id": null,
-      "has_vg_photo": true,
-      "has_any_figure": true
-    },
-    {
-      "id": 209,
-      "slug": "da-nang-vs-hoi-an",
-      "title": "Da Nang vs Hoi An",
-      "parent": 9,
-      "thumb_id": null,
-      "has_vg_photo": true,
-      "has_any_figure": true
-    },
-    {
-      "id": 213,
-      "slug": "da-nang-travel-guide",
-      "title": "Da Nang Travel Guide",
-      "parent": 7,
-      "thumb_id": null,
-      "has_vg_photo": true,
-      "has_any_figure": true
-    },
-    {
-      "id": 220,
-      "slug": "7-days-in-vietnam",
-      "title": "7 Days in Vietnam",
-      "parent": 8,
-      "thumb_id": null,
-      "has_vg_photo": true,
-      "has_any_figure": true
-    },
-    {
-      "id": 224,
-      "slug": "21-days-in-vietnam",
-      "title": "21 Days in Vietnam",
-      "parent": 8,
-      "thumb_id": null,
-      "has_vg_photo": true,
-      "has_any_figure": true
-    },
-    {
-      "id": 227,
-      "slug": "hoi-an-vs-hue",
-      "title": "Hoi An vs Hue",
-      "parent": 9,
-      "thumb_id": null,
-      "has_vg_photo": true,
-      "has_any_figure": true
-    },
-    {
-      "id": 231,
-      "slug": "best-islands-in-vietnam",
-      "title": "Best Islands in Vietnam",
-      "parent": 7,
-      "thumb_id": null,
-      "has_vg_photo": true,
-      "has_any_figure": true
-    },
-    {
-      "id": 234,
-      "slug": "phu-quoc-travel-guide",
-      "title": "Phu Quoc Travel Guide",
-      "parent": 7,
-      "thumb_id": null,
-      "has_vg_photo": true,
-      "has_any_figure": true
-    },
-    {
-      "id": 237,
-      "slug": "con-dao-travel-guide",
-      "title": "Con Dao Travel Guide",
-      "parent": 7,
-      "thumb_id": null,
-      "has_vg_photo": true,
-      "has_any_figure": true
-    },
-    {
-      "id": 241,
-      "slug": "phu-quoc-vs-nha-trang",
-      "title": "Phu Quoc vs Nha Trang",
-      "parent": 9,
-      "thumb_id": null,
-      "has_vg_photo": true,
-      "has_any_figure": true
-    },
-    {
-      "id": 244,
-      "slug": "nha-trang-travel-guide",
-      "title": "Nha Trang Travel Guide",
-      "parent": 7,
-      "thumb_id": null,
-      "has_vg_photo": true,
-      "has_any_figure": true
-    },
-    {
-      "id": 247,
-      "slug": "mui-ne-vs-nha-trang",
-      "title": "Mui Ne vs Nha Trang",
-      "parent": 9,
-      "thumb_id": null,
-      "has_vg_photo": true,
-      "has_any_figure": true
-    },
-    {
-      "id": 250,
-      "slug": "quy-nhon-travel-guide",
-      "title": "Quy Nhon Travel Guide",
-      "parent": 7,
-      "thumb_id": null,
-      "has_vg_photo": true,
-      "has_any_figure": true
-    },
-    {
-      "id": 254,
-      "slug": "cham-islands-travel-guide",
-      "title": "Cham Islands Travel Guide",
-      "parent": 7,
-      "thumb_id": null,
-      "has_vg_photo": true,
-      "has_any_figure": true
-    },
-    {
-      "id": 257,
-      "slug": "ly-son-travel-guide",
-      "title": "Ly Son Travel Guide",
-      "parent": 7,
-      "thumb_id": null,
-      "has_vg_photo": true,
-      "has_any_figure": true
-    },
-    {
-      "id": 262,
-      "slug": "ho-chi-minh-city-travel-guide",
-      "title": "Ho Chi Minh City Travel Guide",
-      "parent": 7,
-      "thumb_id": null,
-      "has_vg_photo": true,
-      "has_any_figure": true
-    },
-    {
-      "id": 265,
-      "slug": "mekong-delta-travel-guide",
-      "title": "Mekong Delta Travel Guide",
-      "parent": 7,
-      "thumb_id": null,
-      "has_vg_photo": true,
-      "has_any_figure": true
-    },
-    {
-      "id": 268,
-      "slug": "best-day-trips-from-ho-chi-minh-city",
-      "title": "Best Day Trips from Ho Chi Minh City",
-      "parent": 7,
-      "thumb_id": null,
-      "has_vg_photo": true,
-      "has_any_figure": true
-    },
-    {
-      "id": 279,
-      "slug": "cu-chi-tunnels-vs-mekong-delta-day-trip",
-      "title": "Cu Chi Tunnels vs Mekong Delta Day Trip",
-      "parent": 9,
-      "thumb_id": null,
-      "has_vg_photo": true,
-      "has_any_figure": true
-    },
-    {
-      "id": 281,
-      "slug": "where-to-stay-in-ho-chi-minh-city",
-      "title": "Where to Stay in Ho Chi Minh City",
-      "parent": 7,
-      "thumb_id": null,
-      "has_vg_photo": true,
-      "has_any_figure": true
-    },
-    {
-      "id": 287,
-      "slug": "hanoi-travel-guide",
-      "title": "Hanoi Travel Guide",
-      "parent": 7,
-      "thumb_id": null,
-      "has_vg_photo": true,
-      "has_any_figure": true
-    },
-    {
-      "id": 294,
-      "slug": "where-to-stay-in-hanoi",
-      "title": "Where to Stay in Hanoi",
-      "parent": 7,
-      "thumb_id": null,
-      "has_vg_photo": true,
-      "has_any_figure": true
-    },
-    {
-      "id": 309,
-      "slug": "best-day-trips-from-hanoi",
-      "title": "Best Day Trips from Hanoi",
-      "parent": 7,
-      "thumb_id": null,
-      "has_vg_photo": true,
-      "has_any_figure": true
-    },
-    {
-      "id": 316,
-      "slug": "hanoi-airport-to-old-quarter",
-      "title": "Hanoi Airport to Old Quarter",
-      "parent": 6,
-      "thumb_id": null,
-      "has_vg_photo": true,
-      "has_any_figure": true
-    },
-    {
-      "id": 320,
-      "slug": "hanoi-in-2-days",
-      "title": "Hanoi in 2 Days",
-      "parent": 8,
-      "thumb_id": null,
-      "has_vg_photo": true,
-      "has_any_figure": true
-    },
-    {
-      "id": 326,
-      "slug": "ninh-binh-day-trip-vs-overnight",
-      "title": "Ninh Binh Day Trip vs Overnight",
-      "parent": 9,
-      "thumb_id": null,
-      "has_vg_photo": true,
-      "has_any_figure": true
-    },
-    {
-      "id": 331,
-      "slug": "hanoi-to-ninh-binh-transport",
-      "title": "Hanoi to Ninh Binh Transport",
-      "parent": 6,
-      "thumb_id": null,
-      "has_vg_photo": true,
-      "has_any_figure": true
-    },
-    {
-      "id": 336,
-      "slug": "trang-an-vs-tam-coc",
-      "title": "Trang An vs Tam Coc",
-      "parent": 9,
-      "thumb_id": null,
-      "has_vg_photo": true,
-      "has_any_figure": true
-    },
-    {
-      "id": 341,
-      "slug": "where-to-stay-in-ninh-binh",
-      "title": "Where to Stay in Ninh Binh",
-      "parent": 7,
-      "thumb_id": null,
-      "has_vg_photo": true,
-      "has_any_figure": true
-    },
-    {
-      "id": 345,
-      "slug": "ninh-binh-to-ha-long-bay-transfer",
-      "title": "Ninh Binh to Ha Long Bay Transfer",
-      "parent": 6,
-      "thumb_id": null,
-      "has_vg_photo": true,
-      "has_any_figure": true
-    },
-    {
-      "id": 418,
-      "slug": "tam-coc-travel-guide",
-      "title": "Tam Coc Travel Guide",
-      "parent": 7,
-      "thumb_id": null,
-      "has_vg_photo": true,
-      "has_any_figure": true
-    },
-    {
-      "id": 473,
-      "slug": "vietnam-first-trip-planning-checklist",
-      "title": "Vietnam First Trip Planning Checklist: What to Decide Before Booking",
-      "parent": 6,
-      "thumb_id": null,
-      "has_vg_photo": true,
-      "has_any_figure": true
-    },
-    {
-      "id": 474,
-      "slug": "best-vietnam-routes-first-time-visitors",
-      "title": "Best Vietnam Routes for First-Time Visitors: North, Central, South or Open-Jaw?",
-      "parent": 6,
-      "thumb_id": null,
-      "has_vg_photo": true,
-      "has_any_figure": true
-    },
-    {
-      "id": 475,
-      "slug": "what-to-pack-for-vietnam-region-season",
-      "title": "What to Pack for Vietnam by Region and Season",
-      "parent": 6,
-      "thumb_id": null,
-      "has_vg_photo": true,
-      "has_any_figure": true
-    },
-    {
-      "id": 476,
-      "slug": "vietnam-airport-arrival-checklist",
-      "title": "Vietnam Airport Arrival Checklist: Money, SIM, Transport and Scams",
-      "parent": 6,
-      "thumb_id": null,
-      "has_vg_photo": true,
-      "has_any_figure": true
-    },
-    {
-      "id": 477,
-      "slug": "hanoi-first-time-visitor-mistakes",
-      "title": "Hanoi First-Time Visitor Mistakes to Avoid",
-      "parent": 6,
-      "thumb_id": null,
-      "has_vg_photo": true,
-      "has_any_figure": true
-    },
-    {
-      "id": 478,
-      "slug": "ninh-binh-without-rushing",
-      "title": "Ninh Binh Without Rushing: How to Choose Boat, Base and Transfer",
-      "parent": 6,
-      "thumb_id": null,
-      "has_vg_photo": true,
-      "has_any_figure": true
-    },
-    {
-      "id": 479,
-      "slug": "ha-long-bay-cruise-questions-before-booking",
-      "title": "Ha Long Bay Cruise Questions to Ask Before Booking",
-      "parent": 6,
-      "thumb_id": null,
-      "has_vg_photo": true,
-      "has_any_figure": true
-    },
-    {
-      "id": 480,
-      "slug": "vietnam-food-safety-street-food-etiquette",
-      "title": "Vietnam Food Safety and Street Food Etiquette for First-Timers",
-      "parent": 6,
-      "thumb_id": null,
-      "has_vg_photo": true,
-      "has_any_figure": true
-    },
-    {
-      "id": 481,
-      "slug": "where-to-stay-in-vietnam-base-decisions",
-      "title": "Where to Stay in Vietnam: City Base Decisions Before Choosing Hotels",
-      "parent": 6,
-      "thumb_id": null,
-      "has_vg_photo": true,
-      "has_any_figure": true
-    },
-    {
-      "id": 482,
-      "slug": "vietnam-rainy-season-flexible-route",
-      "title": "Vietnam Rainy Season Travel: How to Build a Flexible Route",
-      "parent": 6,
-      "thumb_id": null,
-      "has_vg_photo": true,
-      "has_any_figure": true
-    },
-    {
-      "id": 493,
-      "slug": "vietnam-in-december",
-      "title": "Vietnam in December: Weather, Routes and What to Book Early",
-      "parent": 6,
-      "thumb_id": null,
-      "has_vg_photo": true,
-      "has_any_figure": true
-    },
-    {
-      "id": 494,
-      "slug": "vietnam-in-january",
-      "title": "Vietnam in January: Best Routes, Weather and Tet Watchouts",
-      "parent": 6,
-      "thumb_id": null,
-      "has_vg_photo": true,
-      "has_any_figure": true
-    },
-    {
-      "id": 495,
-      "slug": "vietnam-in-february",
-      "title": "Vietnam in February: Weather, Tet Timing and Best Routes",
-      "parent": 6,
-      "thumb_id": null,
-      "has_vg_photo": true,
-      "has_any_figure": true
-    },
-    {
-      "id": 496,
-      "slug": "tet-in-vietnam-travel-guide",
-      "title": "Tet in Vietnam Travel Guide: What International Visitors Should Know",
-      "parent": 6,
-      "thumb_id": null,
-      "has_vg_photo": true,
-      "has_any_figure": true
-    }
-  ],
+  "has_figure_no_thumb": [],
   "has_thumb_no_figure": [],
   "all_posts": [
     {
@@ -807,7 +230,7 @@
       "slug": "best-time-to-visit-vietnam",
       "title": "Best Time to Visit Vietnam",
       "parent": 6,
-      "thumb_id": null,
+      "thumb_id": 2035,
       "has_vg_photo": true,
       "has_any_figure": true
     },
@@ -816,7 +239,7 @@
       "slug": "sim-esim-vietnam",
       "title": "SIM and eSIM in Vietnam",
       "parent": 6,
-      "thumb_id": null,
+      "thumb_id": 2036,
       "has_vg_photo": true,
       "has_any_figure": true
     },
@@ -825,7 +248,7 @@
       "slug": "10-days-in-vietnam",
       "title": "10 Days in Vietnam",
       "parent": 8,
-      "thumb_id": null,
+      "thumb_id": 2037,
       "has_vg_photo": true,
       "has_any_figure": true
     },
@@ -834,7 +257,7 @@
       "slug": "14-days-in-vietnam",
       "title": "14 Days in Vietnam",
       "parent": 8,
-      "thumb_id": null,
+      "thumb_id": 2038,
       "has_vg_photo": true,
       "has_any_figure": true
     },
@@ -843,7 +266,7 @@
       "slug": "ha-long-bay-vs-lan-ha-bay",
       "title": "Ha Long Bay vs Lan Ha Bay",
       "parent": 9,
-      "thumb_id": null,
+      "thumb_id": 2039,
       "has_vg_photo": true,
       "has_any_figure": true
     },
@@ -852,7 +275,7 @@
       "slug": "vietnam-travel-cost",
       "title": "Vietnam Travel Cost",
       "parent": 10,
-      "thumb_id": null,
+      "thumb_id": 2040,
       "has_vg_photo": true,
       "has_any_figure": true
     },
@@ -906,7 +329,7 @@
       "slug": "vietnam-travel-guide",
       "title": "Vietnam Travel Guide",
       "parent": 6,
-      "thumb_id": null,
+      "thumb_id": 2041,
       "has_vg_photo": true,
       "has_any_figure": true
     },
@@ -933,7 +356,7 @@
       "slug": "transport-within-vietnam",
       "title": "Transport Within Vietnam",
       "parent": 6,
-      "thumb_id": null,
+      "thumb_id": 2042,
       "has_vg_photo": true,
       "has_any_figure": true
     },
@@ -942,7 +365,7 @@
       "slug": "money-cash-cards-atms",
       "title": "Money in Vietnam: Cash, Cards and ATMs",
       "parent": 6,
-      "thumb_id": null,
+      "thumb_id": 2043,
       "has_vg_photo": true,
       "has_any_figure": true
     },
@@ -951,7 +374,7 @@
       "slug": "unesco-heritage-sites-vietnam",
       "title": "UNESCO Heritage Sites in Vietnam",
       "parent": 7,
-      "thumb_id": null,
+      "thumb_id": 2044,
       "has_vg_photo": true,
       "has_any_figure": true
     },
@@ -960,7 +383,7 @@
       "slug": "best-things-to-do-in-hanoi",
       "title": "Best Things to Do in Hanoi",
       "parent": 7,
-      "thumb_id": null,
+      "thumb_id": 2045,
       "has_vg_photo": true,
       "has_any_figure": true
     },
@@ -969,7 +392,7 @@
       "slug": "best-things-to-do-in-hoi-an",
       "title": "Best Things to Do in Hoi An",
       "parent": 7,
-      "thumb_id": null,
+      "thumb_id": 2046,
       "has_vg_photo": true,
       "has_any_figure": true
     },
@@ -978,7 +401,7 @@
       "slug": "safety-scams-vietnam",
       "title": "Safety and Scams in Vietnam",
       "parent": 6,
-      "thumb_id": null,
+      "thumb_id": 2047,
       "has_vg_photo": true,
       "has_any_figure": true
     },
@@ -987,7 +410,7 @@
       "slug": "best-things-to-do-in-hue",
       "title": "Best Things to Do in Hue",
       "parent": 7,
-      "thumb_id": null,
+      "thumb_id": 2048,
       "has_vg_photo": true,
       "has_any_figure": true
     },
@@ -996,7 +419,7 @@
       "slug": "health-travel-insurance-vietnam",
       "title": "Health and Travel Insurance for Vietnam",
       "parent": 6,
-      "thumb_id": null,
+      "thumb_id": 2049,
       "has_vg_photo": true,
       "has_any_figure": true
     },
@@ -1005,7 +428,7 @@
       "slug": "ninh-binh-travel-guide",
       "title": "Ninh Binh Travel Guide",
       "parent": 7,
-      "thumb_id": null,
+      "thumb_id": 2050,
       "has_vg_photo": true,
       "has_any_figure": true
     },
@@ -1014,7 +437,7 @@
       "slug": "ha-long-bay-travel-guide",
       "title": "Ha Long Bay Travel Guide",
       "parent": 7,
-      "thumb_id": null,
+      "thumb_id": 2051,
       "has_vg_photo": true,
       "has_any_figure": true
     },
@@ -1023,7 +446,7 @@
       "slug": "cat-ba-travel-guide",
       "title": "Cat Ba Travel Guide",
       "parent": 7,
-      "thumb_id": null,
+      "thumb_id": 2052,
       "has_vg_photo": true,
       "has_any_figure": true
     },
@@ -1032,7 +455,7 @@
       "slug": "bai-tu-long-bay-guide",
       "title": "Bai Tu Long Bay Guide",
       "parent": 7,
-      "thumb_id": null,
+      "thumb_id": 2053,
       "has_vg_photo": true,
       "has_any_figure": true
     },
@@ -1041,7 +464,7 @@
       "slug": "best-beaches-in-vietnam",
       "title": "Best Beaches in Vietnam",
       "parent": 7,
-      "thumb_id": null,
+      "thumb_id": 2054,
       "has_vg_photo": true,
       "has_any_figure": true
     },
@@ -1050,7 +473,7 @@
       "slug": "da-nang-vs-hoi-an",
       "title": "Da Nang vs Hoi An",
       "parent": 9,
-      "thumb_id": null,
+      "thumb_id": 2055,
       "has_vg_photo": true,
       "has_any_figure": true
     },
@@ -1059,7 +482,7 @@
       "slug": "da-nang-travel-guide",
       "title": "Da Nang Travel Guide",
       "parent": 7,
-      "thumb_id": null,
+      "thumb_id": 2056,
       "has_vg_photo": true,
       "has_any_figure": true
     },
@@ -1068,7 +491,7 @@
       "slug": "7-days-in-vietnam",
       "title": "7 Days in Vietnam",
       "parent": 8,
-      "thumb_id": null,
+      "thumb_id": 2057,
       "has_vg_photo": true,
       "has_any_figure": true
     },
@@ -1077,7 +500,7 @@
       "slug": "21-days-in-vietnam",
       "title": "21 Days in Vietnam",
       "parent": 8,
-      "thumb_id": null,
+      "thumb_id": 2058,
       "has_vg_photo": true,
       "has_any_figure": true
     },
@@ -1086,7 +509,7 @@
       "slug": "hoi-an-vs-hue",
       "title": "Hoi An vs Hue",
       "parent": 9,
-      "thumb_id": null,
+      "thumb_id": 2059,
       "has_vg_photo": true,
       "has_any_figure": true
     },
@@ -1095,7 +518,7 @@
       "slug": "best-islands-in-vietnam",
       "title": "Best Islands in Vietnam",
       "parent": 7,
-      "thumb_id": null,
+      "thumb_id": 2060,
       "has_vg_photo": true,
       "has_any_figure": true
     },
@@ -1104,7 +527,7 @@
       "slug": "phu-quoc-travel-guide",
       "title": "Phu Quoc Travel Guide",
       "parent": 7,
-      "thumb_id": null,
+      "thumb_id": 2061,
       "has_vg_photo": true,
       "has_any_figure": true
     },
@@ -1113,7 +536,7 @@
       "slug": "con-dao-travel-guide",
       "title": "Con Dao Travel Guide",
       "parent": 7,
-      "thumb_id": null,
+      "thumb_id": 2062,
       "has_vg_photo": true,
       "has_any_figure": true
     },
@@ -1122,7 +545,7 @@
       "slug": "phu-quoc-vs-nha-trang",
       "title": "Phu Quoc vs Nha Trang",
       "parent": 9,
-      "thumb_id": null,
+      "thumb_id": 2063,
       "has_vg_photo": true,
       "has_any_figure": true
     },
@@ -1131,7 +554,7 @@
       "slug": "nha-trang-travel-guide",
       "title": "Nha Trang Travel Guide",
       "parent": 7,
-      "thumb_id": null,
+      "thumb_id": 2064,
       "has_vg_photo": true,
       "has_any_figure": true
     },
@@ -1140,7 +563,7 @@
       "slug": "mui-ne-vs-nha-trang",
       "title": "Mui Ne vs Nha Trang",
       "parent": 9,
-      "thumb_id": null,
+      "thumb_id": 2065,
       "has_vg_photo": true,
       "has_any_figure": true
     },
@@ -1149,7 +572,7 @@
       "slug": "quy-nhon-travel-guide",
       "title": "Quy Nhon Travel Guide",
       "parent": 7,
-      "thumb_id": null,
+      "thumb_id": 2066,
       "has_vg_photo": true,
       "has_any_figure": true
     },
@@ -1158,7 +581,7 @@
       "slug": "cham-islands-travel-guide",
       "title": "Cham Islands Travel Guide",
       "parent": 7,
-      "thumb_id": null,
+      "thumb_id": 2067,
       "has_vg_photo": true,
       "has_any_figure": true
     },
@@ -1167,7 +590,7 @@
       "slug": "ly-son-travel-guide",
       "title": "Ly Son Travel Guide",
       "parent": 7,
-      "thumb_id": null,
+      "thumb_id": 2068,
       "has_vg_photo": true,
       "has_any_figure": true
     },
@@ -1176,7 +599,7 @@
       "slug": "ho-chi-minh-city-travel-guide",
       "title": "Ho Chi Minh City Travel Guide",
       "parent": 7,
-      "thumb_id": null,
+      "thumb_id": 2069,
       "has_vg_photo": true,
       "has_any_figure": true
     },
@@ -1185,7 +608,7 @@
       "slug": "mekong-delta-travel-guide",
       "title": "Mekong Delta Travel Guide",
       "parent": 7,
-      "thumb_id": null,
+      "thumb_id": 2070,
       "has_vg_photo": true,
       "has_any_figure": true
     },
@@ -1194,7 +617,7 @@
       "slug": "best-day-trips-from-ho-chi-minh-city",
       "title": "Best Day Trips from Ho Chi Minh City",
       "parent": 7,
-      "thumb_id": null,
+      "thumb_id": 2071,
       "has_vg_photo": true,
       "has_any_figure": true
     },
@@ -1203,7 +626,7 @@
       "slug": "cu-chi-tunnels-vs-mekong-delta-day-trip",
       "title": "Cu Chi Tunnels vs Mekong Delta Day Trip",
       "parent": 9,
-      "thumb_id": null,
+      "thumb_id": 2072,
       "has_vg_photo": true,
       "has_any_figure": true
     },
@@ -1212,7 +635,7 @@
       "slug": "where-to-stay-in-ho-chi-minh-city",
       "title": "Where to Stay in Ho Chi Minh City",
       "parent": 7,
-      "thumb_id": null,
+      "thumb_id": 2073,
       "has_vg_photo": true,
       "has_any_figure": true
     },
@@ -1221,7 +644,7 @@
       "slug": "hanoi-travel-guide",
       "title": "Hanoi Travel Guide",
       "parent": 7,
-      "thumb_id": null,
+      "thumb_id": 2074,
       "has_vg_photo": true,
       "has_any_figure": true
     },
@@ -1230,7 +653,7 @@
       "slug": "where-to-stay-in-hanoi",
       "title": "Where to Stay in Hanoi",
       "parent": 7,
-      "thumb_id": null,
+      "thumb_id": 2075,
       "has_vg_photo": true,
       "has_any_figure": true
     },
@@ -1248,7 +671,7 @@
       "slug": "best-day-trips-from-hanoi",
       "title": "Best Day Trips from Hanoi",
       "parent": 7,
-      "thumb_id": null,
+      "thumb_id": 2076,
       "has_vg_photo": true,
       "has_any_figure": true
     },
@@ -1257,7 +680,7 @@
       "slug": "hanoi-airport-to-old-quarter",
       "title": "Hanoi Airport to Old Quarter",
       "parent": 6,
-      "thumb_id": null,
+      "thumb_id": 2077,
       "has_vg_photo": true,
       "has_any_figure": true
     },
@@ -1266,7 +689,7 @@
       "slug": "hanoi-in-2-days",
       "title": "Hanoi in 2 Days",
       "parent": 8,
-      "thumb_id": null,
+      "thumb_id": 2078,
       "has_vg_photo": true,
       "has_any_figure": true
     },
@@ -1275,7 +698,7 @@
       "slug": "ninh-binh-day-trip-vs-overnight",
       "title": "Ninh Binh Day Trip vs Overnight",
       "parent": 9,
-      "thumb_id": null,
+      "thumb_id": 2079,
       "has_vg_photo": true,
       "has_any_figure": true
     },
@@ -1284,7 +707,7 @@
       "slug": "hanoi-to-ninh-binh-transport",
       "title": "Hanoi to Ninh Binh Transport",
       "parent": 6,
-      "thumb_id": null,
+      "thumb_id": 2080,
       "has_vg_photo": true,
       "has_any_figure": true
     },
@@ -1293,7 +716,7 @@
       "slug": "trang-an-vs-tam-coc",
       "title": "Trang An vs Tam Coc",
       "parent": 9,
-      "thumb_id": null,
+      "thumb_id": 2081,
       "has_vg_photo": true,
       "has_any_figure": true
     },
@@ -1302,7 +725,7 @@
       "slug": "where-to-stay-in-ninh-binh",
       "title": "Where to Stay in Ninh Binh",
       "parent": 7,
-      "thumb_id": null,
+      "thumb_id": 2082,
       "has_vg_photo": true,
       "has_any_figure": true
     },
@@ -1311,7 +734,7 @@
       "slug": "ninh-binh-to-ha-long-bay-transfer",
       "title": "Ninh Binh to Ha Long Bay Transfer",
       "parent": 6,
-      "thumb_id": null,
+      "thumb_id": 2083,
       "has_vg_photo": true,
       "has_any_figure": true
     },
@@ -1320,7 +743,7 @@
       "slug": "tam-coc-travel-guide",
       "title": "Tam Coc Travel Guide",
       "parent": 7,
-      "thumb_id": null,
+      "thumb_id": 2084,
       "has_vg_photo": true,
       "has_any_figure": true
     },
@@ -1329,7 +752,7 @@
       "slug": "vietnam-first-trip-planning-checklist",
       "title": "Vietnam First Trip Planning Checklist: What to Decide Before Booking",
       "parent": 6,
-      "thumb_id": null,
+      "thumb_id": 2085,
       "has_vg_photo": true,
       "has_any_figure": true
     },
@@ -1338,7 +761,7 @@
       "slug": "best-vietnam-routes-first-time-visitors",
       "title": "Best Vietnam Routes for First-Time Visitors: North, Central, South or Open-Jaw?",
       "parent": 6,
-      "thumb_id": null,
+      "thumb_id": 2086,
       "has_vg_photo": true,
       "has_any_figure": true
     },
@@ -1347,7 +770,7 @@
       "slug": "what-to-pack-for-vietnam-region-season",
       "title": "What to Pack for Vietnam by Region and Season",
       "parent": 6,
-      "thumb_id": null,
+      "thumb_id": 2087,
       "has_vg_photo": true,
       "has_any_figure": true
     },
@@ -1356,7 +779,7 @@
       "slug": "vietnam-airport-arrival-checklist",
       "title": "Vietnam Airport Arrival Checklist: Money, SIM, Transport and Scams",
       "parent": 6,
-      "thumb_id": null,
+      "thumb_id": 2088,
       "has_vg_photo": true,
       "has_any_figure": true
     },
@@ -1365,7 +788,7 @@
       "slug": "hanoi-first-time-visitor-mistakes",
       "title": "Hanoi First-Time Visitor Mistakes to Avoid",
       "parent": 6,
-      "thumb_id": null,
+      "thumb_id": 2089,
       "has_vg_photo": true,
       "has_any_figure": true
     },
@@ -1374,7 +797,7 @@
       "slug": "ninh-binh-without-rushing",
       "title": "Ninh Binh Without Rushing: How to Choose Boat, Base and Transfer",
       "parent": 6,
-      "thumb_id": null,
+      "thumb_id": 2090,
       "has_vg_photo": true,
       "has_any_figure": true
     },
@@ -1383,7 +806,7 @@
       "slug": "ha-long-bay-cruise-questions-before-booking",
       "title": "Ha Long Bay Cruise Questions to Ask Before Booking",
       "parent": 6,
-      "thumb_id": null,
+      "thumb_id": 2091,
       "has_vg_photo": true,
       "has_any_figure": true
     },
@@ -1392,7 +815,7 @@
       "slug": "vietnam-food-safety-street-food-etiquette",
       "title": "Vietnam Food Safety and Street Food Etiquette for First-Timers",
       "parent": 6,
-      "thumb_id": null,
+      "thumb_id": 2092,
       "has_vg_photo": true,
       "has_any_figure": true
     },
@@ -1401,7 +824,7 @@
       "slug": "where-to-stay-in-vietnam-base-decisions",
       "title": "Where to Stay in Vietnam: City Base Decisions Before Choosing Hotels",
       "parent": 6,
-      "thumb_id": null,
+      "thumb_id": 2093,
       "has_vg_photo": true,
       "has_any_figure": true
     },
@@ -1410,7 +833,7 @@
       "slug": "vietnam-rainy-season-flexible-route",
       "title": "Vietnam Rainy Season Travel: How to Build a Flexible Route",
       "parent": 6,
-      "thumb_id": null,
+      "thumb_id": 2094,
       "has_vg_photo": true,
       "has_any_figure": true
     },
@@ -1419,7 +842,7 @@
       "slug": "vietnam-in-december",
       "title": "Vietnam in December: Weather, Routes and What to Book Early",
       "parent": 6,
-      "thumb_id": null,
+      "thumb_id": 2095,
       "has_vg_photo": true,
       "has_any_figure": true
     },
@@ -1428,7 +851,7 @@
       "slug": "vietnam-in-january",
       "title": "Vietnam in January: Best Routes, Weather and Tet Watchouts",
       "parent": 6,
-      "thumb_id": null,
+      "thumb_id": 2096,
       "has_vg_photo": true,
       "has_any_figure": true
     },
@@ -1437,7 +860,7 @@
       "slug": "vietnam-in-february",
       "title": "Vietnam in February: Weather, Tet Timing and Best Routes",
       "parent": 6,
-      "thumb_id": null,
+      "thumb_id": 2097,
       "has_vg_photo": true,
       "has_any_figure": true
     },
@@ -1446,7 +869,7 @@
       "slug": "tet-in-vietnam-travel-guide",
       "title": "Tet in Vietnam Travel Guide: What International Visitors Should Know",
       "parent": 6,
-      "thumb_id": null,
+      "thumb_id": 2098,
       "has_vg_photo": true,
       "has_any_figure": true
     },
