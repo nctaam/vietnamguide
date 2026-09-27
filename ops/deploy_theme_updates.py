@@ -14,10 +14,14 @@ SSH_PORT = 2209
 SSH_USER = 'root'
 SSH_KEY = r'C:\Users\NCTaam\.ssh\deploy_bot_key'
 
-REPO_ROOT = r'M:\Projects\vietnamguide'
+REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 REMOTE_ROOT = '/usr/local/lsws/vietnamguide.net/html'
 
 DEPLOY_FILES = [
+    ('wordpress/wp-content/themes/vietnamguide-premium/header.php',
+     'wp-content/themes/vietnamguide-premium/header.php'),
+    ('wordpress/ads.txt',
+     'ads.txt'),
     ('wordpress/wp-content/themes/vietnamguide-premium/inc/guide-seo.php',
      'wp-content/themes/vietnamguide-premium/inc/guide-seo.php'),
     ('wordpress/wp-content/themes/vietnamguide-premium/search.php',
