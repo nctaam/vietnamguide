@@ -1,0 +1,386 @@
+{
+  "passed": [
+    [
+      "hanoi-to-sapa-transport",
+      520
+    ],
+    [
+      "best-vietnam-cities-for-first-time-visitors",
+      497
+    ],
+    [
+      "hoi-an-ancient-town-guide",
+      499
+    ],
+    [
+      "hanoi-to-ha-giang-transport",
+      521
+    ],
+    [
+      "ha-giang-loop-planning-guide",
+      519
+    ]
+  ],
+  "still_failing": [
+    [
+      "tam-coc-travel-guide",
+      418,
+      70,
+      "syntactic_monotony: 2, repetitive_openers: 1, local_cadence: 1"
+    ],
+    [
+      "da-nang-vs-hoi-an",
+      209,
+      90,
+      "repetitive_openers: 1, repetitive_bigram: 1, local_cadence: 1"
+    ],
+    [
+      "ninh-binh-travel-guide",
+      190,
+      80,
+      "repetitive_openers: 1, repetitive_bigram: 2, local_cadence: 1"
+    ],
+    [
+      "how-to-get-to-con-dao-flight-vs-ferry",
+      1139,
+      70,
+      "repetitive_openers: 1, repetitive_bigram: 3, local_cadence: 1"
+    ],
+    [
+      "where-to-stay-in-mui-ne",
+      925,
+      70,
+      "repetitive_openers: 1, repetitive_bigram: 3, local_cadence: 1"
+    ],
+    [
+      "where-to-stay-in-meo-vac",
+      1070,
+      70,
+      "repetitive_openers: 1, repetitive_bigram: 3, local_cadence: 1"
+    ],
+    [
+      "ho-chi-minh-city-to-can-tho-transport",
+      927,
+      70,
+      "repetitive_openers: 1, repetitive_bigram: 3, local_cadence: 1"
+    ],
+    [
+      "best-day-trips-from-hanoi",
+      309,
+      90,
+      "repetitive_openers: 1, repetitive_bigram: 1, local_cadence: 1"
+    ],
+    [
+      "old-quarter-vs-french-quarter-vs-west-lake",
+      301,
+      80,
+      "repetitive_openers: 1, repetitive_bigram: 2, local_cadence: 1"
+    ],
+    [
+      "phu-quoc-vs-nha-trang",
+      241,
+      90,
+      "repetitive_openers: 1, repetitive_bigram: 1, local_cadence: 1"
+    ],
+    [
+      "bai-tu-long-bay-guide",
+      201,
+      80,
+      "repetitive_openers: 1, repetitive_bigram: 2, local_cadence: 1"
+    ],
+    [
+      "trang-an-vs-tam-coc",
+      336,
+      80,
+      "repetitive_openers: 1, repetitive_bigram: 2, local_cadence: 1"
+    ],
+    [
+      "vietnam-rainy-season-flexible-route",
+      482,
+      100,
+      "repetitive_openers: 1, local_cadence: 1"
+    ],
+    [
+      "where-to-stay-in-ho-chi-minh-city",
+      281,
+      90,
+      "repetitive_openers: 2, local_cadence: 1"
+    ],
+    [
+      "hoi-an-vs-hue",
+      227,
+      80,
+      "repetitive_openers: 2, repetitive_bigram: 1, local_cadence: 1"
+    ],
+    [
+      "ha-long-bay-travel-guide",
+      195,
+      90,
+      "repetitive_openers: 1, repetitive_bigram: 1, local_cadence: 1"
+    ],
+    [
+      "where-to-stay-in-ben-tre",
+      1233,
+      80,
+      "repetitive_openers: 1, repetitive_bigram: 2, local_cadence: 1"
+    ],
+    [
+      "where-to-stay-in-phu-quoc",
+      857,
+      80,
+      "repetitive_openers: 1, repetitive_bigram: 2, local_cadence: 1"
+    ],
+    [
+      "ninh-binh-without-rushing",
+      478,
+      80,
+      "repetitive_openers: 1, repetitive_bigram: 2, local_cadence: 1"
+    ],
+    [
+      "where-to-stay-in-chau-doc",
+      1203,
+      80,
+      "repetitive_bigram: 3, local_cadence: 1"
+    ],
+    [
+      "quy-nhon-travel-guide",
+      250,
+      90,
+      "repetitive_openers: 1, repetitive_bigram: 1, local_cadence: 1"
+    ],
+    [
+      "hanoi-in-2-days",
+      320,
+      100,
+      "repetitive_openers: 1, local_cadence: 1"
+    ],
+    [
+      "hanoi-travel-guide",
+      287,
+      90,
+      "repetitive_openers: 1, repetitive_bigram: 1, local_cadence: 1"
+    ],
+    [
+      "tet-in-vietnam-travel-guide",
+      496,
+      100,
+      "repetitive_bigram: 1, local_cadence: 1"
+    ],
+    [
+      "ha-long-bay-vs-lan-ha-bay",
+      21,
+      90,
+      "repetitive_openers: 1, repetitive_bigram: 1, local_cadence: 1"
+    ],
+    [
+      "mai-chau-to-pu-luong-transport",
+      1499,
+      85,
+      "tier1: 1, local_cadence: 1"
+    ],
+    [
+      "hanoi-to-phong-nha-transport",
+      823,
+      85,
+      "tier2: 1, repetitive_bigram: 2, local_cadence: 1"
+    ],
+    [
+      "hue-street-food-guide",
+      791,
+      85,
+      "tier1: 1, local_cadence: 1"
+    ],
+    [
+      "what-to-pack-for-vietnam-region-season",
+      475,
+      100,
+      "repetitive_openers: 1, local_cadence: 1"
+    ],
+    [
+      "best-time-to-visit-vietnam",
+      14,
+      90,
+      "repetitive_openers: 1, repetitive_bigram: 1, local_cadence: 1"
+    ],
+    [
+      "cu-chi-tunnels-vs-mekong-delta-day-trip",
+      279,
+      100,
+      "repetitive_openers: 1, local_cadence: 1"
+    ],
+    [
+      "hanoi-first-time-visitor-mistakes",
+      477,
+      90,
+      "repetitive_openers: 1, repetitive_bigram: 1, local_cadence: 1"
+    ],
+    [
+      "ly-son-travel-guide",
+      257,
+      100,
+      "repetitive_openers: 1, local_cadence: 1"
+    ],
+    [
+      "phong-nha-travel-guide",
+      503,
+      100,
+      "repetitive_openers: 1, local_cadence: 1"
+    ],
+    [
+      "da-nang-travel-guide",
+      213,
+      90,
+      "repetitive_openers: 1, repetitive_bigram: 1, local_cadence: 1"
+    ],
+    [
+      "21-days-in-vietnam",
+      224,
+      90,
+      "repetitive_bigram: 1, local_cadence: 1"
+    ],
+    [
+      "ho-chi-minh-city-travel-guide",
+      262,
+      100,
+      "repetitive_openers: 1, local_cadence: 1"
+    ],
+    [
+      "northwest-vietnam-itinerary",
+      1069,
+      90,
+      "repetitive_bigram: 2, local_cadence: 1"
+    ],
+    [
+      "pu-luong-trekking-routes-guide",
+      1037,
+      90,
+      "repetitive_bigram: 2, local_cadence: 1"
+    ],
+    [
+      "where-to-stay-in-da-lat",
+      888,
+      90,
+      "repetitive_openers: 1, repetitive_bigram: 2"
+    ],
+    [
+      "ha-long-bay-day-trip-vs-overnight-cruise",
+      682,
+      90,
+      "repetitive_openers: 1, repetitive_bigram: 2"
+    ],
+    [
+      "where-to-stay-in-hoi-an",
+      681,
+      90,
+      "repetitive_bigram: 2, local_cadence: 1"
+    ],
+    [
+      "safety-scams-vietnam",
+      181,
+      100,
+      "repetitive_openers: 1, local_cadence: 1"
+    ],
+    [
+      "vietnam-in-april",
+      685,
+      90,
+      "repetitive_openers: 1, repetitive_bigram: 2"
+    ],
+    [
+      "cat-ba-travel-guide",
+      198,
+      100,
+      "repetitive_openers: 1, local_cadence: 1"
+    ],
+    [
+      "hanoi-airport-to-old-quarter",
+      316,
+      100,
+      "repetitive_openers: 1, local_cadence: 1"
+    ],
+    [
+      "pleiku-to-kon-tum-transport",
+      1274,
+      90,
+      "repetitive_bigram: 2, local_cadence: 1"
+    ],
+    [
+      "vietnam-in-may",
+      721,
+      90,
+      "repetitive_openers: 1, repetitive_bigram: 2"
+    ],
+    [
+      "cat-ba-to-ninh-binh-transport",
+      1273,
+      90,
+      "repetitive_bigram: 2, local_cadence: 1"
+    ],
+    [
+      "ha-giang-easy-rider-vs-self-drive",
+      523,
+      90,
+      "repetitive_openers: 2, local_cadence: 1"
+    ],
+    [
+      "nha-trang-travel-guide",
+      244,
+      100,
+      "repetitive_openers: 1, local_cadence: 1"
+    ],
+    [
+      "hanoi-to-ninh-binh-transport",
+      331,
+      90,
+      "repetitive_openers: 1, repetitive_bigram: 1, local_cadence: 1"
+    ],
+    [
+      "ninh-binh-day-trip-vs-overnight",
+      326,
+      90,
+      "repetitive_openers: 2, local_cadence: 1"
+    ],
+    [
+      "best-things-to-do-in-hanoi",
+      173,
+      90,
+      "repetitive_openers: 1, repetitive_bigram: 1, local_cadence: 1"
+    ],
+    [
+      "14-days-in-vietnam",
+      20,
+      90,
+      "repetitive_openers: 1, repetitive_bigram: 1, local_cadence: 1"
+    ],
+    [
+      "where-to-stay-in-hanoi",
+      294,
+      90,
+      "repetitive_openers: 1, repetitive_bigram: 1, local_cadence: 1"
+    ],
+    [
+      "ha-long-bay-cruise-questions-before-booking",
+      479,
+      90,
+      "repetitive_openers: 1, repetitive_bigram: 1, local_cadence: 1"
+    ],
+    [
+      "where-to-stay-in-ninh-binh",
+      341,
+      90,
+      "repetitive_openers: 2, local_cadence: 1"
+    ],
+    [
+      "vietnam-food-safety-street-food-etiquette",
+      480,
+      90,
+      "repetitive_openers: 1, repetitive_bigram: 1, local_cadence: 1"
+    ],
+    [
+      "best-islands-in-vietnam",
+      231,
+      100,
+      "repetitive_openers: 1, local_cadence: 1"
+    ]
+  ]
+}
