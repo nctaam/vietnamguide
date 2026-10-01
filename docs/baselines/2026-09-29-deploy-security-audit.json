@@ -1,0 +1,2863 @@
+{
+  "schema_version": 1,
+  "scope": {
+    "root": "ops",
+    "excluded_directories": [
+      "__pycache__",
+      "archive-apply-scripts",
+      "backups",
+      "tests"
+    ],
+    "excluded_files": [
+      "deploy_security_audit.py"
+    ]
+  },
+  "summary": {
+    "candidate_count": 179,
+    "release_path_count": 1,
+    "release_ready_count": 1,
+    "blocked_release_count": 0,
+    "missing_release_count": 0,
+    "legacy_blocked_count": 177,
+    "finding_counts": {
+      "allow_root_command": 174,
+      "auto_add_host_key_policy": 177,
+      "hardcoded_host": 177,
+      "hardcoded_key_path": 177,
+      "hardcoded_remote_root": 159,
+      "missing_host_key_verification": 177,
+      "missing_known_hosts": 177,
+      "missing_validated_config": 177,
+      "root_user": 177
+    }
+  },
+  "release_paths": [
+    "deploy_theme_updates.py"
+  ],
+  "missing_release_paths": [],
+  "records": [
+    {
+      "path": "analyze_image_needs.py",
+      "findings": [
+        "allow_root_command",
+        "auto_add_host_key_policy",
+        "hardcoded_host",
+        "hardcoded_key_path",
+        "missing_host_key_verification",
+        "missing_known_hosts",
+        "missing_validated_config",
+        "root_user"
+      ],
+      "release_path": false,
+      "release_ready": false
+    },
+    {
+      "path": "analyze_traffic_logs.py",
+      "findings": [
+        "auto_add_host_key_policy",
+        "hardcoded_host",
+        "hardcoded_key_path",
+        "missing_host_key_verification",
+        "missing_known_hosts",
+        "missing_validated_config",
+        "root_user"
+      ],
+      "release_path": false,
+      "release_ready": false
+    },
+    {
+      "path": "apply_adsense_compliance.py",
+      "findings": [
+        "allow_root_command",
+        "auto_add_host_key_policy",
+        "hardcoded_host",
+        "hardcoded_key_path",
+        "hardcoded_remote_root",
+        "missing_host_key_verification",
+        "missing_known_hosts",
+        "missing_validated_config",
+        "root_user"
+      ],
+      "release_path": false,
+      "release_ready": false
+    },
+    {
+      "path": "apply_destinations_link_mesh.py",
+      "findings": [
+        "allow_root_command",
+        "auto_add_host_key_policy",
+        "hardcoded_host",
+        "hardcoded_key_path",
+        "hardcoded_remote_root",
+        "missing_host_key_verification",
+        "missing_known_hosts",
+        "missing_validated_config",
+        "root_user"
+      ],
+      "release_path": false,
+      "release_ready": false
+    },
+    {
+      "path": "apply_final_hardening_mesh.py",
+      "findings": [
+        "allow_root_command",
+        "auto_add_host_key_policy",
+        "hardcoded_host",
+        "hardcoded_key_path",
+        "hardcoded_remote_root",
+        "missing_host_key_verification",
+        "missing_known_hosts",
+        "missing_validated_config",
+        "root_user"
+      ],
+      "release_path": false,
+      "release_ready": false
+    },
+    {
+      "path": "apply_fix_234_237_python.py",
+      "findings": [
+        "allow_root_command",
+        "auto_add_host_key_policy",
+        "hardcoded_host",
+        "hardcoded_key_path",
+        "hardcoded_remote_root",
+        "missing_host_key_verification",
+        "missing_known_hosts",
+        "missing_validated_config",
+        "root_user"
+      ],
+      "release_path": false,
+      "release_ready": false
+    },
+    {
+      "path": "apply_internal_link_updates.py",
+      "findings": [
+        "allow_root_command",
+        "auto_add_host_key_policy",
+        "hardcoded_host",
+        "hardcoded_key_path",
+        "hardcoded_remote_root",
+        "missing_host_key_verification",
+        "missing_known_hosts",
+        "missing_validated_config",
+        "root_user"
+      ],
+      "release_path": false,
+      "release_ready": false
+    },
+    {
+      "path": "apply_remaining_mesh.py",
+      "findings": [
+        "allow_root_command",
+        "auto_add_host_key_policy",
+        "hardcoded_host",
+        "hardcoded_key_path",
+        "hardcoded_remote_root",
+        "missing_host_key_verification",
+        "missing_known_hosts",
+        "missing_validated_config",
+        "root_user"
+      ],
+      "release_path": false,
+      "release_ready": false
+    },
+    {
+      "path": "apply_route_budget_link_mesh.py",
+      "findings": [
+        "allow_root_command",
+        "auto_add_host_key_policy",
+        "hardcoded_host",
+        "hardcoded_key_path",
+        "hardcoded_remote_root",
+        "missing_host_key_verification",
+        "missing_known_hosts",
+        "missing_validated_config",
+        "root_user"
+      ],
+      "release_path": false,
+      "release_ready": false
+    },
+    {
+      "path": "apply_seo_harmonization.py",
+      "findings": [
+        "allow_root_command",
+        "auto_add_host_key_policy",
+        "hardcoded_host",
+        "hardcoded_key_path",
+        "hardcoded_remote_root",
+        "missing_host_key_verification",
+        "missing_known_hosts",
+        "missing_validated_config",
+        "root_user"
+      ],
+      "release_path": false,
+      "release_ready": false
+    },
+    {
+      "path": "apply_serp_optimizations.py",
+      "findings": [
+        "allow_root_command",
+        "auto_add_host_key_policy",
+        "hardcoded_host",
+        "hardcoded_key_path",
+        "hardcoded_remote_root",
+        "missing_host_key_verification",
+        "missing_known_hosts",
+        "missing_validated_config",
+        "root_user"
+      ],
+      "release_path": false,
+      "release_ready": false
+    },
+    {
+      "path": "apply_snippet_optimizations.py",
+      "findings": [
+        "allow_root_command",
+        "auto_add_host_key_policy",
+        "hardcoded_host",
+        "hardcoded_key_path",
+        "hardcoded_remote_root",
+        "missing_host_key_verification",
+        "missing_known_hosts",
+        "missing_validated_config",
+        "root_user"
+      ],
+      "release_path": false,
+      "release_ready": false
+    },
+    {
+      "path": "apply_stage47_link_mesh.py",
+      "findings": [
+        "allow_root_command",
+        "auto_add_host_key_policy",
+        "hardcoded_host",
+        "hardcoded_key_path",
+        "hardcoded_remote_root",
+        "missing_host_key_verification",
+        "missing_known_hosts",
+        "missing_validated_config",
+        "root_user"
+      ],
+      "release_path": false,
+      "release_ready": false
+    },
+    {
+      "path": "apply_stage60_mesh.py",
+      "findings": [
+        "allow_root_command",
+        "auto_add_host_key_policy",
+        "hardcoded_host",
+        "hardcoded_key_path",
+        "hardcoded_remote_root",
+        "missing_host_key_verification",
+        "missing_known_hosts",
+        "missing_validated_config",
+        "root_user"
+      ],
+      "release_path": false,
+      "release_ready": false
+    },
+    {
+      "path": "apply_stage61_mesh.py",
+      "findings": [
+        "allow_root_command",
+        "auto_add_host_key_policy",
+        "hardcoded_host",
+        "hardcoded_key_path",
+        "hardcoded_remote_root",
+        "missing_host_key_verification",
+        "missing_known_hosts",
+        "missing_validated_config",
+        "root_user"
+      ],
+      "release_path": false,
+      "release_ready": false
+    },
+    {
+      "path": "apply_stage61_part2_mesh.py",
+      "findings": [
+        "allow_root_command",
+        "auto_add_host_key_policy",
+        "hardcoded_host",
+        "hardcoded_key_path",
+        "hardcoded_remote_root",
+        "missing_host_key_verification",
+        "missing_known_hosts",
+        "missing_validated_config",
+        "root_user"
+      ],
+      "release_path": false,
+      "release_ready": false
+    },
+    {
+      "path": "apply_stage62_mesh.py",
+      "findings": [
+        "allow_root_command",
+        "auto_add_host_key_policy",
+        "hardcoded_host",
+        "hardcoded_key_path",
+        "hardcoded_remote_root",
+        "missing_host_key_verification",
+        "missing_known_hosts",
+        "missing_validated_config",
+        "root_user"
+      ],
+      "release_path": false,
+      "release_ready": false
+    },
+    {
+      "path": "apply_stage63_mesh.py",
+      "findings": [
+        "allow_root_command",
+        "auto_add_host_key_policy",
+        "hardcoded_host",
+        "hardcoded_key_path",
+        "hardcoded_remote_root",
+        "missing_host_key_verification",
+        "missing_known_hosts",
+        "missing_validated_config",
+        "root_user"
+      ],
+      "release_path": false,
+      "release_ready": false
+    },
+    {
+      "path": "apply_stage64_mesh.py",
+      "findings": [
+        "allow_root_command",
+        "auto_add_host_key_policy",
+        "hardcoded_host",
+        "hardcoded_key_path",
+        "hardcoded_remote_root",
+        "missing_host_key_verification",
+        "missing_known_hosts",
+        "missing_validated_config",
+        "root_user"
+      ],
+      "release_path": false,
+      "release_ready": false
+    },
+    {
+      "path": "apply_stage65_mesh.py",
+      "findings": [
+        "allow_root_command",
+        "auto_add_host_key_policy",
+        "hardcoded_host",
+        "hardcoded_key_path",
+        "hardcoded_remote_root",
+        "missing_host_key_verification",
+        "missing_known_hosts",
+        "missing_validated_config",
+        "root_user"
+      ],
+      "release_path": false,
+      "release_ready": false
+    },
+    {
+      "path": "apply_stage66_mesh.py",
+      "findings": [
+        "allow_root_command",
+        "auto_add_host_key_policy",
+        "hardcoded_host",
+        "hardcoded_key_path",
+        "hardcoded_remote_root",
+        "missing_host_key_verification",
+        "missing_known_hosts",
+        "missing_validated_config",
+        "root_user"
+      ],
+      "release_path": false,
+      "release_ready": false
+    },
+    {
+      "path": "apply_stage67_mesh.py",
+      "findings": [
+        "allow_root_command",
+        "auto_add_host_key_policy",
+        "hardcoded_host",
+        "hardcoded_key_path",
+        "hardcoded_remote_root",
+        "missing_host_key_verification",
+        "missing_known_hosts",
+        "missing_validated_config",
+        "root_user"
+      ],
+      "release_path": false,
+      "release_ready": false
+    },
+    {
+      "path": "apply_stage68_mesh.py",
+      "findings": [
+        "allow_root_command",
+        "auto_add_host_key_policy",
+        "hardcoded_host",
+        "hardcoded_key_path",
+        "hardcoded_remote_root",
+        "missing_host_key_verification",
+        "missing_known_hosts",
+        "missing_validated_config",
+        "root_user"
+      ],
+      "release_path": false,
+      "release_ready": false
+    },
+    {
+      "path": "apply_stage69_mesh.py",
+      "findings": [
+        "allow_root_command",
+        "auto_add_host_key_policy",
+        "hardcoded_host",
+        "hardcoded_key_path",
+        "hardcoded_remote_root",
+        "missing_host_key_verification",
+        "missing_known_hosts",
+        "missing_validated_config",
+        "root_user"
+      ],
+      "release_path": false,
+      "release_ready": false
+    },
+    {
+      "path": "apply_stage70_mesh.py",
+      "findings": [
+        "allow_root_command",
+        "auto_add_host_key_policy",
+        "hardcoded_host",
+        "hardcoded_key_path",
+        "hardcoded_remote_root",
+        "missing_host_key_verification",
+        "missing_known_hosts",
+        "missing_validated_config",
+        "root_user"
+      ],
+      "release_path": false,
+      "release_ready": false
+    },
+    {
+      "path": "apply_stage71_mesh.py",
+      "findings": [
+        "allow_root_command",
+        "auto_add_host_key_policy",
+        "hardcoded_host",
+        "hardcoded_key_path",
+        "hardcoded_remote_root",
+        "missing_host_key_verification",
+        "missing_known_hosts",
+        "missing_validated_config",
+        "root_user"
+      ],
+      "release_path": false,
+      "release_ready": false
+    },
+    {
+      "path": "apply_stage72_mesh.py",
+      "findings": [
+        "allow_root_command",
+        "auto_add_host_key_policy",
+        "hardcoded_host",
+        "hardcoded_key_path",
+        "hardcoded_remote_root",
+        "missing_host_key_verification",
+        "missing_known_hosts",
+        "missing_validated_config",
+        "root_user"
+      ],
+      "release_path": false,
+      "release_ready": false
+    },
+    {
+      "path": "apply_stage73_mesh.py",
+      "findings": [
+        "allow_root_command",
+        "auto_add_host_key_policy",
+        "hardcoded_host",
+        "hardcoded_key_path",
+        "hardcoded_remote_root",
+        "missing_host_key_verification",
+        "missing_known_hosts",
+        "missing_validated_config",
+        "root_user"
+      ],
+      "release_path": false,
+      "release_ready": false
+    },
+    {
+      "path": "apply_stage74_mesh.py",
+      "findings": [
+        "allow_root_command",
+        "auto_add_host_key_policy",
+        "hardcoded_host",
+        "hardcoded_key_path",
+        "hardcoded_remote_root",
+        "missing_host_key_verification",
+        "missing_known_hosts",
+        "missing_validated_config",
+        "root_user"
+      ],
+      "release_path": false,
+      "release_ready": false
+    },
+    {
+      "path": "apply_stage75_mesh.py",
+      "findings": [
+        "allow_root_command",
+        "auto_add_host_key_policy",
+        "hardcoded_host",
+        "hardcoded_key_path",
+        "hardcoded_remote_root",
+        "missing_host_key_verification",
+        "missing_known_hosts",
+        "missing_validated_config",
+        "root_user"
+      ],
+      "release_path": false,
+      "release_ready": false
+    },
+    {
+      "path": "apply_stage76_mesh.py",
+      "findings": [
+        "allow_root_command",
+        "auto_add_host_key_policy",
+        "hardcoded_host",
+        "hardcoded_key_path",
+        "hardcoded_remote_root",
+        "missing_host_key_verification",
+        "missing_known_hosts",
+        "missing_validated_config",
+        "root_user"
+      ],
+      "release_path": false,
+      "release_ready": false
+    },
+    {
+      "path": "apply_stage77_mesh.py",
+      "findings": [
+        "allow_root_command",
+        "auto_add_host_key_policy",
+        "hardcoded_host",
+        "hardcoded_key_path",
+        "hardcoded_remote_root",
+        "missing_host_key_verification",
+        "missing_known_hosts",
+        "missing_validated_config",
+        "root_user"
+      ],
+      "release_path": false,
+      "release_ready": false
+    },
+    {
+      "path": "apply_stage78_mesh.py",
+      "findings": [
+        "allow_root_command",
+        "auto_add_host_key_policy",
+        "hardcoded_host",
+        "hardcoded_key_path",
+        "hardcoded_remote_root",
+        "missing_host_key_verification",
+        "missing_known_hosts",
+        "missing_validated_config",
+        "root_user"
+      ],
+      "release_path": false,
+      "release_ready": false
+    },
+    {
+      "path": "apply_stage79_mesh.py",
+      "findings": [
+        "allow_root_command",
+        "auto_add_host_key_policy",
+        "hardcoded_host",
+        "hardcoded_key_path",
+        "hardcoded_remote_root",
+        "missing_host_key_verification",
+        "missing_known_hosts",
+        "missing_validated_config",
+        "root_user"
+      ],
+      "release_path": false,
+      "release_ready": false
+    },
+    {
+      "path": "apply_stage80_mesh.py",
+      "findings": [
+        "allow_root_command",
+        "auto_add_host_key_policy",
+        "hardcoded_host",
+        "hardcoded_key_path",
+        "hardcoded_remote_root",
+        "missing_host_key_verification",
+        "missing_known_hosts",
+        "missing_validated_config",
+        "root_user"
+      ],
+      "release_path": false,
+      "release_ready": false
+    },
+    {
+      "path": "apply_stage81_mesh.py",
+      "findings": [
+        "allow_root_command",
+        "auto_add_host_key_policy",
+        "hardcoded_host",
+        "hardcoded_key_path",
+        "hardcoded_remote_root",
+        "missing_host_key_verification",
+        "missing_known_hosts",
+        "missing_validated_config",
+        "root_user"
+      ],
+      "release_path": false,
+      "release_ready": false
+    },
+    {
+      "path": "apply_stage82_mesh.py",
+      "findings": [
+        "allow_root_command",
+        "auto_add_host_key_policy",
+        "hardcoded_host",
+        "hardcoded_key_path",
+        "hardcoded_remote_root",
+        "missing_host_key_verification",
+        "missing_known_hosts",
+        "missing_validated_config",
+        "root_user"
+      ],
+      "release_path": false,
+      "release_ready": false
+    },
+    {
+      "path": "apply_stage83_mesh.py",
+      "findings": [
+        "allow_root_command",
+        "auto_add_host_key_policy",
+        "hardcoded_host",
+        "hardcoded_key_path",
+        "hardcoded_remote_root",
+        "missing_host_key_verification",
+        "missing_known_hosts",
+        "missing_validated_config",
+        "root_user"
+      ],
+      "release_path": false,
+      "release_ready": false
+    },
+    {
+      "path": "apply_stage84_mesh.py",
+      "findings": [
+        "allow_root_command",
+        "auto_add_host_key_policy",
+        "hardcoded_host",
+        "hardcoded_key_path",
+        "hardcoded_remote_root",
+        "missing_host_key_verification",
+        "missing_known_hosts",
+        "missing_validated_config",
+        "root_user"
+      ],
+      "release_path": false,
+      "release_ready": false
+    },
+    {
+      "path": "apply_stage85_mesh.py",
+      "findings": [
+        "allow_root_command",
+        "auto_add_host_key_policy",
+        "hardcoded_host",
+        "hardcoded_key_path",
+        "hardcoded_remote_root",
+        "missing_host_key_verification",
+        "missing_known_hosts",
+        "missing_validated_config",
+        "root_user"
+      ],
+      "release_path": false,
+      "release_ready": false
+    },
+    {
+      "path": "apply_stage86_mesh.py",
+      "findings": [
+        "allow_root_command",
+        "auto_add_host_key_policy",
+        "hardcoded_host",
+        "hardcoded_key_path",
+        "hardcoded_remote_root",
+        "missing_host_key_verification",
+        "missing_known_hosts",
+        "missing_validated_config",
+        "root_user"
+      ],
+      "release_path": false,
+      "release_ready": false
+    },
+    {
+      "path": "apply_stage87_mesh.py",
+      "findings": [
+        "allow_root_command",
+        "auto_add_host_key_policy",
+        "hardcoded_host",
+        "hardcoded_key_path",
+        "hardcoded_remote_root",
+        "missing_host_key_verification",
+        "missing_known_hosts",
+        "missing_validated_config",
+        "root_user"
+      ],
+      "release_path": false,
+      "release_ready": false
+    },
+    {
+      "path": "apply_stage88_mesh.py",
+      "findings": [
+        "allow_root_command",
+        "auto_add_host_key_policy",
+        "hardcoded_host",
+        "hardcoded_key_path",
+        "hardcoded_remote_root",
+        "missing_host_key_verification",
+        "missing_known_hosts",
+        "missing_validated_config",
+        "root_user"
+      ],
+      "release_path": false,
+      "release_ready": false
+    },
+    {
+      "path": "audit_all_posts_media.py",
+      "findings": [
+        "allow_root_command",
+        "auto_add_host_key_policy",
+        "hardcoded_host",
+        "hardcoded_key_path",
+        "hardcoded_remote_root",
+        "missing_host_key_verification",
+        "missing_known_hosts",
+        "missing_validated_config",
+        "root_user"
+      ],
+      "release_path": false,
+      "release_ready": false
+    },
+    {
+      "path": "audit_group_b_hotlinks.py",
+      "findings": [
+        "allow_root_command",
+        "auto_add_host_key_policy",
+        "hardcoded_host",
+        "hardcoded_key_path",
+        "hardcoded_remote_root",
+        "missing_host_key_verification",
+        "missing_known_hosts",
+        "missing_validated_config",
+        "root_user"
+      ],
+      "release_path": false,
+      "release_ready": false
+    },
+    {
+      "path": "audit_internal_links.py",
+      "findings": [
+        "allow_root_command",
+        "auto_add_host_key_policy",
+        "hardcoded_host",
+        "hardcoded_key_path",
+        "missing_host_key_verification",
+        "missing_known_hosts",
+        "missing_validated_config",
+        "root_user"
+      ],
+      "release_path": false,
+      "release_ready": false
+    },
+    {
+      "path": "audit_remaining_posts.py",
+      "findings": [
+        "allow_root_command",
+        "auto_add_host_key_policy",
+        "hardcoded_host",
+        "hardcoded_key_path",
+        "hardcoded_remote_root",
+        "missing_host_key_verification",
+        "missing_known_hosts",
+        "missing_validated_config",
+        "root_user"
+      ],
+      "release_path": false,
+      "release_ready": false
+    },
+    {
+      "path": "audit_sitemap_lastmod.py",
+      "findings": [
+        "allow_root_command",
+        "auto_add_host_key_policy",
+        "hardcoded_host",
+        "hardcoded_key_path",
+        "missing_host_key_verification",
+        "missing_known_hosts",
+        "missing_validated_config",
+        "root_user"
+      ],
+      "release_path": false,
+      "release_ready": false
+    },
+    {
+      "path": "check_all_tags.py",
+      "findings": [
+        "allow_root_command",
+        "auto_add_host_key_policy",
+        "hardcoded_host",
+        "hardcoded_key_path",
+        "missing_host_key_verification",
+        "missing_known_hosts",
+        "missing_validated_config",
+        "root_user"
+      ],
+      "release_path": false,
+      "release_ready": false
+    },
+    {
+      "path": "check_batch3_anchors.py",
+      "findings": [
+        "allow_root_command",
+        "auto_add_host_key_policy",
+        "hardcoded_host",
+        "hardcoded_key_path",
+        "hardcoded_remote_root",
+        "missing_host_key_verification",
+        "missing_known_hosts",
+        "missing_validated_config",
+        "root_user"
+      ],
+      "release_path": false,
+      "release_ready": false
+    },
+    {
+      "path": "check_batch4_anchors.py",
+      "findings": [
+        "allow_root_command",
+        "auto_add_host_key_policy",
+        "hardcoded_host",
+        "hardcoded_key_path",
+        "hardcoded_remote_root",
+        "missing_host_key_verification",
+        "missing_known_hosts",
+        "missing_validated_config",
+        "root_user"
+      ],
+      "release_path": false,
+      "release_ready": false
+    },
+    {
+      "path": "check_batch5_anchors.py",
+      "findings": [
+        "allow_root_command",
+        "auto_add_host_key_policy",
+        "hardcoded_host",
+        "hardcoded_key_path",
+        "hardcoded_remote_root",
+        "missing_host_key_verification",
+        "missing_known_hosts",
+        "missing_validated_config",
+        "root_user"
+      ],
+      "release_path": false,
+      "release_ready": false
+    },
+    {
+      "path": "check_batch6_anchors.py",
+      "findings": [
+        "allow_root_command",
+        "auto_add_host_key_policy",
+        "hardcoded_host",
+        "hardcoded_key_path",
+        "hardcoded_remote_root",
+        "missing_host_key_verification",
+        "missing_known_hosts",
+        "missing_validated_config",
+        "root_user"
+      ],
+      "release_path": false,
+      "release_ready": false
+    },
+    {
+      "path": "check_batch7_anchors.py",
+      "findings": [
+        "allow_root_command",
+        "auto_add_host_key_policy",
+        "hardcoded_host",
+        "hardcoded_key_path",
+        "hardcoded_remote_root",
+        "missing_host_key_verification",
+        "missing_known_hosts",
+        "missing_validated_config",
+        "root_user"
+      ],
+      "release_path": false,
+      "release_ready": false
+    },
+    {
+      "path": "check_batch8a_targets.py",
+      "findings": [
+        "allow_root_command",
+        "auto_add_host_key_policy",
+        "hardcoded_host",
+        "hardcoded_key_path",
+        "hardcoded_remote_root",
+        "missing_host_key_verification",
+        "missing_known_hosts",
+        "missing_validated_config",
+        "root_user"
+      ],
+      "release_path": false,
+      "release_ready": false
+    },
+    {
+      "path": "check_budget_inlinks.py",
+      "findings": [
+        "allow_root_command",
+        "auto_add_host_key_policy",
+        "hardcoded_host",
+        "hardcoded_key_path",
+        "missing_host_key_verification",
+        "missing_known_hosts",
+        "missing_validated_config",
+        "root_user"
+      ],
+      "release_path": false,
+      "release_ready": false
+    },
+    {
+      "path": "check_faq_content.py",
+      "findings": [
+        "allow_root_command",
+        "auto_add_host_key_policy",
+        "hardcoded_host",
+        "hardcoded_key_path",
+        "missing_host_key_verification",
+        "missing_known_hosts",
+        "missing_validated_config",
+        "root_user"
+      ],
+      "release_path": false,
+      "release_ready": false
+    },
+    {
+      "path": "check_stage60_inlinks.py",
+      "findings": [
+        "allow_root_command",
+        "auto_add_host_key_policy",
+        "hardcoded_host",
+        "hardcoded_key_path",
+        "missing_host_key_verification",
+        "missing_known_hosts",
+        "missing_validated_config",
+        "root_user"
+      ],
+      "release_path": false,
+      "release_ready": false
+    },
+    {
+      "path": "check_stage61_inlinks.py",
+      "findings": [
+        "allow_root_command",
+        "auto_add_host_key_policy",
+        "hardcoded_host",
+        "hardcoded_key_path",
+        "missing_host_key_verification",
+        "missing_known_hosts",
+        "missing_validated_config",
+        "root_user"
+      ],
+      "release_path": false,
+      "release_ready": false
+    },
+    {
+      "path": "check_stage62_inlinks.py",
+      "findings": [
+        "allow_root_command",
+        "auto_add_host_key_policy",
+        "hardcoded_host",
+        "hardcoded_key_path",
+        "hardcoded_remote_root",
+        "missing_host_key_verification",
+        "missing_known_hosts",
+        "missing_validated_config",
+        "root_user"
+      ],
+      "release_path": false,
+      "release_ready": false
+    },
+    {
+      "path": "check_stage63_inlinks.py",
+      "findings": [
+        "allow_root_command",
+        "auto_add_host_key_policy",
+        "hardcoded_host",
+        "hardcoded_key_path",
+        "hardcoded_remote_root",
+        "missing_host_key_verification",
+        "missing_known_hosts",
+        "missing_validated_config",
+        "root_user"
+      ],
+      "release_path": false,
+      "release_ready": false
+    },
+    {
+      "path": "check_stage64_inlinks.py",
+      "findings": [
+        "allow_root_command",
+        "auto_add_host_key_policy",
+        "hardcoded_host",
+        "hardcoded_key_path",
+        "hardcoded_remote_root",
+        "missing_host_key_verification",
+        "missing_known_hosts",
+        "missing_validated_config",
+        "root_user"
+      ],
+      "release_path": false,
+      "release_ready": false
+    },
+    {
+      "path": "check_stage65_inlinks.py",
+      "findings": [
+        "allow_root_command",
+        "auto_add_host_key_policy",
+        "hardcoded_host",
+        "hardcoded_key_path",
+        "hardcoded_remote_root",
+        "missing_host_key_verification",
+        "missing_known_hosts",
+        "missing_validated_config",
+        "root_user"
+      ],
+      "release_path": false,
+      "release_ready": false
+    },
+    {
+      "path": "check_stage66_inlinks.py",
+      "findings": [
+        "allow_root_command",
+        "auto_add_host_key_policy",
+        "hardcoded_host",
+        "hardcoded_key_path",
+        "hardcoded_remote_root",
+        "missing_host_key_verification",
+        "missing_known_hosts",
+        "missing_validated_config",
+        "root_user"
+      ],
+      "release_path": false,
+      "release_ready": false
+    },
+    {
+      "path": "check_trans_anchors.py",
+      "findings": [
+        "allow_root_command",
+        "auto_add_host_key_policy",
+        "hardcoded_host",
+        "hardcoded_key_path",
+        "missing_host_key_verification",
+        "missing_known_hosts",
+        "missing_validated_config",
+        "root_user"
+      ],
+      "release_path": false,
+      "release_ready": false
+    },
+    {
+      "path": "classify_remaining.py",
+      "findings": [
+        "allow_root_command",
+        "auto_add_host_key_policy",
+        "hardcoded_host",
+        "hardcoded_key_path",
+        "hardcoded_remote_root",
+        "missing_host_key_verification",
+        "missing_known_hosts",
+        "missing_validated_config",
+        "root_user"
+      ],
+      "release_path": false,
+      "release_ready": false
+    },
+    {
+      "path": "content_quality_audit.py",
+      "findings": [
+        "allow_root_command",
+        "auto_add_host_key_policy",
+        "hardcoded_host",
+        "hardcoded_key_path",
+        "hardcoded_remote_root",
+        "missing_host_key_verification",
+        "missing_known_hosts",
+        "missing_validated_config",
+        "root_user"
+      ],
+      "release_path": false,
+      "release_ready": false
+    },
+    {
+      "path": "count_existing_inlinks.py",
+      "findings": [
+        "allow_root_command",
+        "auto_add_host_key_policy",
+        "hardcoded_host",
+        "hardcoded_key_path",
+        "hardcoded_remote_root",
+        "missing_host_key_verification",
+        "missing_known_hosts",
+        "missing_validated_config",
+        "root_user"
+      ],
+      "release_path": false,
+      "release_ready": false
+    },
+    {
+      "path": "deploy_batch1_images.py",
+      "findings": [
+        "allow_root_command",
+        "auto_add_host_key_policy",
+        "hardcoded_host",
+        "hardcoded_key_path",
+        "hardcoded_remote_root",
+        "missing_host_key_verification",
+        "missing_known_hosts",
+        "missing_validated_config",
+        "root_user"
+      ],
+      "release_path": false,
+      "release_ready": false
+    },
+    {
+      "path": "deploy_batch2.py",
+      "findings": [
+        "allow_root_command",
+        "auto_add_host_key_policy",
+        "hardcoded_host",
+        "hardcoded_key_path",
+        "hardcoded_remote_root",
+        "missing_host_key_verification",
+        "missing_known_hosts",
+        "missing_validated_config",
+        "root_user"
+      ],
+      "release_path": false,
+      "release_ready": false
+    },
+    {
+      "path": "deploy_batch2_images.py",
+      "findings": [
+        "allow_root_command",
+        "auto_add_host_key_policy",
+        "hardcoded_host",
+        "hardcoded_key_path",
+        "hardcoded_remote_root",
+        "missing_host_key_verification",
+        "missing_known_hosts",
+        "missing_validated_config",
+        "root_user"
+      ],
+      "release_path": false,
+      "release_ready": false
+    },
+    {
+      "path": "deploy_batch3.py",
+      "findings": [
+        "allow_root_command",
+        "auto_add_host_key_policy",
+        "hardcoded_host",
+        "hardcoded_key_path",
+        "hardcoded_remote_root",
+        "missing_host_key_verification",
+        "missing_known_hosts",
+        "missing_validated_config",
+        "root_user"
+      ],
+      "release_path": false,
+      "release_ready": false
+    },
+    {
+      "path": "deploy_batch3_images.py",
+      "findings": [
+        "allow_root_command",
+        "auto_add_host_key_policy",
+        "hardcoded_host",
+        "hardcoded_key_path",
+        "hardcoded_remote_root",
+        "missing_host_key_verification",
+        "missing_known_hosts",
+        "missing_validated_config",
+        "root_user"
+      ],
+      "release_path": false,
+      "release_ready": false
+    },
+    {
+      "path": "deploy_batch4_images.py",
+      "findings": [
+        "allow_root_command",
+        "auto_add_host_key_policy",
+        "hardcoded_host",
+        "hardcoded_key_path",
+        "hardcoded_remote_root",
+        "missing_host_key_verification",
+        "missing_known_hosts",
+        "missing_validated_config",
+        "root_user"
+      ],
+      "release_path": false,
+      "release_ready": false
+    },
+    {
+      "path": "deploy_batch5_images.py",
+      "findings": [
+        "allow_root_command",
+        "auto_add_host_key_policy",
+        "hardcoded_host",
+        "hardcoded_key_path",
+        "hardcoded_remote_root",
+        "missing_host_key_verification",
+        "missing_known_hosts",
+        "missing_validated_config",
+        "root_user"
+      ],
+      "release_path": false,
+      "release_ready": false
+    },
+    {
+      "path": "deploy_batch6_images.py",
+      "findings": [
+        "allow_root_command",
+        "auto_add_host_key_policy",
+        "hardcoded_host",
+        "hardcoded_key_path",
+        "hardcoded_remote_root",
+        "missing_host_key_verification",
+        "missing_known_hosts",
+        "missing_validated_config",
+        "root_user"
+      ],
+      "release_path": false,
+      "release_ready": false
+    },
+    {
+      "path": "deploy_batch7_images.py",
+      "findings": [
+        "allow_root_command",
+        "auto_add_host_key_policy",
+        "hardcoded_host",
+        "hardcoded_key_path",
+        "hardcoded_remote_root",
+        "missing_host_key_verification",
+        "missing_known_hosts",
+        "missing_validated_config",
+        "root_user"
+      ],
+      "release_path": false,
+      "release_ready": false
+    },
+    {
+      "path": "deploy_batch8a_images.py",
+      "findings": [
+        "allow_root_command",
+        "auto_add_host_key_policy",
+        "hardcoded_host",
+        "hardcoded_key_path",
+        "hardcoded_remote_root",
+        "missing_host_key_verification",
+        "missing_known_hosts",
+        "missing_validated_config",
+        "root_user"
+      ],
+      "release_path": false,
+      "release_ready": false
+    },
+    {
+      "path": "deploy_config.py",
+      "findings": [],
+      "release_path": false,
+      "release_ready": false
+    },
+    {
+      "path": "deploy_content_fixes.py",
+      "findings": [
+        "allow_root_command",
+        "auto_add_host_key_policy",
+        "hardcoded_host",
+        "hardcoded_key_path",
+        "hardcoded_remote_root",
+        "missing_host_key_verification",
+        "missing_known_hosts",
+        "missing_validated_config",
+        "root_user"
+      ],
+      "release_path": false,
+      "release_ready": false
+    },
+    {
+      "path": "deploy_expanded_45.py",
+      "findings": [
+        "allow_root_command",
+        "auto_add_host_key_policy",
+        "hardcoded_host",
+        "hardcoded_key_path",
+        "hardcoded_remote_root",
+        "missing_host_key_verification",
+        "missing_known_hosts",
+        "missing_validated_config",
+        "root_user"
+      ],
+      "release_path": false,
+      "release_ready": false
+    },
+    {
+      "path": "deploy_final_13.py",
+      "findings": [
+        "allow_root_command",
+        "auto_add_host_key_policy",
+        "hardcoded_host",
+        "hardcoded_key_path",
+        "hardcoded_remote_root",
+        "missing_host_key_verification",
+        "missing_known_hosts",
+        "missing_validated_config",
+        "root_user"
+      ],
+      "release_path": false,
+      "release_ready": false
+    },
+    {
+      "path": "deploy_group_b_full.py",
+      "findings": [
+        "allow_root_command",
+        "auto_add_host_key_policy",
+        "hardcoded_host",
+        "hardcoded_key_path",
+        "hardcoded_remote_root",
+        "missing_host_key_verification",
+        "missing_known_hosts",
+        "missing_validated_config",
+        "root_user"
+      ],
+      "release_path": false,
+      "release_ready": false
+    },
+    {
+      "path": "deploy_p1p2.py",
+      "findings": [
+        "allow_root_command",
+        "auto_add_host_key_policy",
+        "hardcoded_host",
+        "hardcoded_key_path",
+        "hardcoded_remote_root",
+        "missing_host_key_verification",
+        "missing_known_hosts",
+        "missing_validated_config",
+        "root_user"
+      ],
+      "release_path": false,
+      "release_ready": false
+    },
+    {
+      "path": "deploy_post_104.py",
+      "findings": [
+        "allow_root_command",
+        "auto_add_host_key_policy",
+        "hardcoded_host",
+        "hardcoded_key_path",
+        "hardcoded_remote_root",
+        "missing_host_key_verification",
+        "missing_known_hosts",
+        "missing_validated_config",
+        "root_user"
+      ],
+      "release_path": false,
+      "release_ready": false
+    },
+    {
+      "path": "deploy_stage60_pillars.py",
+      "findings": [
+        "allow_root_command",
+        "auto_add_host_key_policy",
+        "hardcoded_host",
+        "hardcoded_key_path",
+        "hardcoded_remote_root",
+        "missing_host_key_verification",
+        "missing_known_hosts",
+        "missing_validated_config",
+        "root_user"
+      ],
+      "release_path": false,
+      "release_ready": false
+    },
+    {
+      "path": "deploy_stage61_coastal_caves.py",
+      "findings": [
+        "allow_root_command",
+        "auto_add_host_key_policy",
+        "hardcoded_host",
+        "hardcoded_key_path",
+        "hardcoded_remote_root",
+        "missing_host_key_verification",
+        "missing_known_hosts",
+        "missing_validated_config",
+        "root_user"
+      ],
+      "release_path": false,
+      "release_ready": false
+    },
+    {
+      "path": "deploy_stage61_food.py",
+      "findings": [
+        "allow_root_command",
+        "auto_add_host_key_policy",
+        "hardcoded_host",
+        "hardcoded_key_path",
+        "hardcoded_remote_root",
+        "missing_host_key_verification",
+        "missing_known_hosts",
+        "missing_validated_config",
+        "root_user"
+      ],
+      "release_path": false,
+      "release_ready": false
+    },
+    {
+      "path": "deploy_stage62_pillars.py",
+      "findings": [
+        "allow_root_command",
+        "auto_add_host_key_policy",
+        "hardcoded_host",
+        "hardcoded_key_path",
+        "hardcoded_remote_root",
+        "missing_host_key_verification",
+        "missing_known_hosts",
+        "missing_validated_config",
+        "root_user"
+      ],
+      "release_path": false,
+      "release_ready": false
+    },
+    {
+      "path": "deploy_stage63_pillars.py",
+      "findings": [
+        "allow_root_command",
+        "auto_add_host_key_policy",
+        "hardcoded_host",
+        "hardcoded_key_path",
+        "hardcoded_remote_root",
+        "missing_host_key_verification",
+        "missing_known_hosts",
+        "missing_validated_config",
+        "root_user"
+      ],
+      "release_path": false,
+      "release_ready": false
+    },
+    {
+      "path": "deploy_stage64_pillars.py",
+      "findings": [
+        "allow_root_command",
+        "auto_add_host_key_policy",
+        "hardcoded_host",
+        "hardcoded_key_path",
+        "hardcoded_remote_root",
+        "missing_host_key_verification",
+        "missing_known_hosts",
+        "missing_validated_config",
+        "root_user"
+      ],
+      "release_path": false,
+      "release_ready": false
+    },
+    {
+      "path": "deploy_stage65_pillars.py",
+      "findings": [
+        "allow_root_command",
+        "auto_add_host_key_policy",
+        "hardcoded_host",
+        "hardcoded_key_path",
+        "hardcoded_remote_root",
+        "missing_host_key_verification",
+        "missing_known_hosts",
+        "missing_validated_config",
+        "root_user"
+      ],
+      "release_path": false,
+      "release_ready": false
+    },
+    {
+      "path": "deploy_stage66_pillars.py",
+      "findings": [
+        "allow_root_command",
+        "auto_add_host_key_policy",
+        "hardcoded_host",
+        "hardcoded_key_path",
+        "hardcoded_remote_root",
+        "missing_host_key_verification",
+        "missing_known_hosts",
+        "missing_validated_config",
+        "root_user"
+      ],
+      "release_path": false,
+      "release_ready": false
+    },
+    {
+      "path": "deploy_stage67_pillars.py",
+      "findings": [
+        "allow_root_command",
+        "auto_add_host_key_policy",
+        "hardcoded_host",
+        "hardcoded_key_path",
+        "hardcoded_remote_root",
+        "missing_host_key_verification",
+        "missing_known_hosts",
+        "missing_validated_config",
+        "root_user"
+      ],
+      "release_path": false,
+      "release_ready": false
+    },
+    {
+      "path": "deploy_stage68_pillars.py",
+      "findings": [
+        "allow_root_command",
+        "auto_add_host_key_policy",
+        "hardcoded_host",
+        "hardcoded_key_path",
+        "hardcoded_remote_root",
+        "missing_host_key_verification",
+        "missing_known_hosts",
+        "missing_validated_config",
+        "root_user"
+      ],
+      "release_path": false,
+      "release_ready": false
+    },
+    {
+      "path": "deploy_stage69_pillars.py",
+      "findings": [
+        "allow_root_command",
+        "auto_add_host_key_policy",
+        "hardcoded_host",
+        "hardcoded_key_path",
+        "hardcoded_remote_root",
+        "missing_host_key_verification",
+        "missing_known_hosts",
+        "missing_validated_config",
+        "root_user"
+      ],
+      "release_path": false,
+      "release_ready": false
+    },
+    {
+      "path": "deploy_stage70_pillars.py",
+      "findings": [
+        "allow_root_command",
+        "auto_add_host_key_policy",
+        "hardcoded_host",
+        "hardcoded_key_path",
+        "hardcoded_remote_root",
+        "missing_host_key_verification",
+        "missing_known_hosts",
+        "missing_validated_config",
+        "root_user"
+      ],
+      "release_path": false,
+      "release_ready": false
+    },
+    {
+      "path": "deploy_stage71_pillars.py",
+      "findings": [
+        "allow_root_command",
+        "auto_add_host_key_policy",
+        "hardcoded_host",
+        "hardcoded_key_path",
+        "hardcoded_remote_root",
+        "missing_host_key_verification",
+        "missing_known_hosts",
+        "missing_validated_config",
+        "root_user"
+      ],
+      "release_path": false,
+      "release_ready": false
+    },
+    {
+      "path": "deploy_stage72_pillars.py",
+      "findings": [
+        "allow_root_command",
+        "auto_add_host_key_policy",
+        "hardcoded_host",
+        "hardcoded_key_path",
+        "hardcoded_remote_root",
+        "missing_host_key_verification",
+        "missing_known_hosts",
+        "missing_validated_config",
+        "root_user"
+      ],
+      "release_path": false,
+      "release_ready": false
+    },
+    {
+      "path": "deploy_stage73_pillars.py",
+      "findings": [
+        "allow_root_command",
+        "auto_add_host_key_policy",
+        "hardcoded_host",
+        "hardcoded_key_path",
+        "hardcoded_remote_root",
+        "missing_host_key_verification",
+        "missing_known_hosts",
+        "missing_validated_config",
+        "root_user"
+      ],
+      "release_path": false,
+      "release_ready": false
+    },
+    {
+      "path": "deploy_stage74_pillars.py",
+      "findings": [
+        "allow_root_command",
+        "auto_add_host_key_policy",
+        "hardcoded_host",
+        "hardcoded_key_path",
+        "hardcoded_remote_root",
+        "missing_host_key_verification",
+        "missing_known_hosts",
+        "missing_validated_config",
+        "root_user"
+      ],
+      "release_path": false,
+      "release_ready": false
+    },
+    {
+      "path": "deploy_stage75_pillars.py",
+      "findings": [
+        "allow_root_command",
+        "auto_add_host_key_policy",
+        "hardcoded_host",
+        "hardcoded_key_path",
+        "hardcoded_remote_root",
+        "missing_host_key_verification",
+        "missing_known_hosts",
+        "missing_validated_config",
+        "root_user"
+      ],
+      "release_path": false,
+      "release_ready": false
+    },
+    {
+      "path": "deploy_stage76_pillars.py",
+      "findings": [
+        "allow_root_command",
+        "auto_add_host_key_policy",
+        "hardcoded_host",
+        "hardcoded_key_path",
+        "hardcoded_remote_root",
+        "missing_host_key_verification",
+        "missing_known_hosts",
+        "missing_validated_config",
+        "root_user"
+      ],
+      "release_path": false,
+      "release_ready": false
+    },
+    {
+      "path": "deploy_stage77_pillars.py",
+      "findings": [
+        "allow_root_command",
+        "auto_add_host_key_policy",
+        "hardcoded_host",
+        "hardcoded_key_path",
+        "hardcoded_remote_root",
+        "missing_host_key_verification",
+        "missing_known_hosts",
+        "missing_validated_config",
+        "root_user"
+      ],
+      "release_path": false,
+      "release_ready": false
+    },
+    {
+      "path": "deploy_stage78_pillars.py",
+      "findings": [
+        "allow_root_command",
+        "auto_add_host_key_policy",
+        "hardcoded_host",
+        "hardcoded_key_path",
+        "hardcoded_remote_root",
+        "missing_host_key_verification",
+        "missing_known_hosts",
+        "missing_validated_config",
+        "root_user"
+      ],
+      "release_path": false,
+      "release_ready": false
+    },
+    {
+      "path": "deploy_stage79_pillars.py",
+      "findings": [
+        "allow_root_command",
+        "auto_add_host_key_policy",
+        "hardcoded_host",
+        "hardcoded_key_path",
+        "hardcoded_remote_root",
+        "missing_host_key_verification",
+        "missing_known_hosts",
+        "missing_validated_config",
+        "root_user"
+      ],
+      "release_path": false,
+      "release_ready": false
+    },
+    {
+      "path": "deploy_stage80_pillars.py",
+      "findings": [
+        "allow_root_command",
+        "auto_add_host_key_policy",
+        "hardcoded_host",
+        "hardcoded_key_path",
+        "hardcoded_remote_root",
+        "missing_host_key_verification",
+        "missing_known_hosts",
+        "missing_validated_config",
+        "root_user"
+      ],
+      "release_path": false,
+      "release_ready": false
+    },
+    {
+      "path": "deploy_stage81_pillars.py",
+      "findings": [
+        "allow_root_command",
+        "auto_add_host_key_policy",
+        "hardcoded_host",
+        "hardcoded_key_path",
+        "hardcoded_remote_root",
+        "missing_host_key_verification",
+        "missing_known_hosts",
+        "missing_validated_config",
+        "root_user"
+      ],
+      "release_path": false,
+      "release_ready": false
+    },
+    {
+      "path": "deploy_stage82_pillars.py",
+      "findings": [
+        "allow_root_command",
+        "auto_add_host_key_policy",
+        "hardcoded_host",
+        "hardcoded_key_path",
+        "hardcoded_remote_root",
+        "missing_host_key_verification",
+        "missing_known_hosts",
+        "missing_validated_config",
+        "root_user"
+      ],
+      "release_path": false,
+      "release_ready": false
+    },
+    {
+      "path": "deploy_stage83_pillars.py",
+      "findings": [
+        "allow_root_command",
+        "auto_add_host_key_policy",
+        "hardcoded_host",
+        "hardcoded_key_path",
+        "hardcoded_remote_root",
+        "missing_host_key_verification",
+        "missing_known_hosts",
+        "missing_validated_config",
+        "root_user"
+      ],
+      "release_path": false,
+      "release_ready": false
+    },
+    {
+      "path": "deploy_stage84_pillars.py",
+      "findings": [
+        "allow_root_command",
+        "auto_add_host_key_policy",
+        "hardcoded_host",
+        "hardcoded_key_path",
+        "hardcoded_remote_root",
+        "missing_host_key_verification",
+        "missing_known_hosts",
+        "missing_validated_config",
+        "root_user"
+      ],
+      "release_path": false,
+      "release_ready": false
+    },
+    {
+      "path": "deploy_stage85_pillars.py",
+      "findings": [
+        "allow_root_command",
+        "auto_add_host_key_policy",
+        "hardcoded_host",
+        "hardcoded_key_path",
+        "hardcoded_remote_root",
+        "missing_host_key_verification",
+        "missing_known_hosts",
+        "missing_validated_config",
+        "root_user"
+      ],
+      "release_path": false,
+      "release_ready": false
+    },
+    {
+      "path": "deploy_stage86_pillars.py",
+      "findings": [
+        "allow_root_command",
+        "auto_add_host_key_policy",
+        "hardcoded_host",
+        "hardcoded_key_path",
+        "hardcoded_remote_root",
+        "missing_host_key_verification",
+        "missing_known_hosts",
+        "missing_validated_config",
+        "root_user"
+      ],
+      "release_path": false,
+      "release_ready": false
+    },
+    {
+      "path": "deploy_stage87_pillars.py",
+      "findings": [
+        "allow_root_command",
+        "auto_add_host_key_policy",
+        "hardcoded_host",
+        "hardcoded_key_path",
+        "hardcoded_remote_root",
+        "missing_host_key_verification",
+        "missing_known_hosts",
+        "missing_validated_config",
+        "root_user"
+      ],
+      "release_path": false,
+      "release_ready": false
+    },
+    {
+      "path": "deploy_stage88_pillars.py",
+      "findings": [
+        "allow_root_command",
+        "auto_add_host_key_policy",
+        "hardcoded_host",
+        "hardcoded_key_path",
+        "hardcoded_remote_root",
+        "missing_host_key_verification",
+        "missing_known_hosts",
+        "missing_validated_config",
+        "root_user"
+      ],
+      "release_path": false,
+      "release_ready": false
+    },
+    {
+      "path": "deploy_theme_updates.py",
+      "findings": [],
+      "release_path": true,
+      "release_ready": true
+    },
+    {
+      "path": "enrich_post_627.py",
+      "findings": [
+        "allow_root_command",
+        "auto_add_host_key_policy",
+        "hardcoded_host",
+        "hardcoded_key_path",
+        "hardcoded_remote_root",
+        "missing_host_key_verification",
+        "missing_known_hosts",
+        "missing_validated_config",
+        "root_user"
+      ],
+      "release_path": false,
+      "release_ready": false
+    },
+    {
+      "path": "export_meta_inventory.py",
+      "findings": [
+        "allow_root_command",
+        "auto_add_host_key_policy",
+        "hardcoded_host",
+        "hardcoded_key_path",
+        "hardcoded_remote_root",
+        "missing_host_key_verification",
+        "missing_known_hosts",
+        "missing_validated_config",
+        "root_user"
+      ],
+      "release_path": false,
+      "release_ready": false
+    },
+    {
+      "path": "fast_content_audit.py",
+      "findings": [
+        "allow_root_command",
+        "auto_add_host_key_policy",
+        "hardcoded_host",
+        "hardcoded_key_path",
+        "hardcoded_remote_root",
+        "missing_host_key_verification",
+        "missing_known_hosts",
+        "missing_validated_config",
+        "root_user"
+      ],
+      "release_path": false,
+      "release_ready": false
+    },
+    {
+      "path": "fast_fetch_thin.py",
+      "findings": [
+        "allow_root_command",
+        "auto_add_host_key_policy",
+        "hardcoded_host",
+        "hardcoded_key_path",
+        "hardcoded_remote_root",
+        "missing_host_key_verification",
+        "missing_known_hosts",
+        "missing_validated_config",
+        "root_user"
+      ],
+      "release_path": false,
+      "release_ready": false
+    },
+    {
+      "path": "fetch_batch2.py",
+      "findings": [
+        "allow_root_command",
+        "auto_add_host_key_policy",
+        "hardcoded_host",
+        "hardcoded_key_path",
+        "hardcoded_remote_root",
+        "missing_host_key_verification",
+        "missing_known_hosts",
+        "missing_validated_config",
+        "root_user"
+      ],
+      "release_path": false,
+      "release_ready": false
+    },
+    {
+      "path": "fetch_exact_mesh_targets.py",
+      "findings": [
+        "allow_root_command",
+        "auto_add_host_key_policy",
+        "hardcoded_host",
+        "hardcoded_key_path",
+        "hardcoded_remote_root",
+        "missing_host_key_verification",
+        "missing_known_hosts",
+        "missing_validated_config",
+        "root_user"
+      ],
+      "release_path": false,
+      "release_ready": false
+    },
+    {
+      "path": "fetch_hcmc_guide.py",
+      "findings": [
+        "allow_root_command",
+        "auto_add_host_key_policy",
+        "hardcoded_host",
+        "hardcoded_key_path",
+        "hardcoded_remote_root",
+        "missing_host_key_verification",
+        "missing_known_hosts",
+        "missing_validated_config",
+        "root_user"
+      ],
+      "release_path": false,
+      "release_ready": false
+    },
+    {
+      "path": "fetch_p1_p2.py",
+      "findings": [
+        "allow_root_command",
+        "auto_add_host_key_policy",
+        "hardcoded_host",
+        "hardcoded_key_path",
+        "hardcoded_remote_root",
+        "missing_host_key_verification",
+        "missing_known_hosts",
+        "missing_validated_config",
+        "root_user"
+      ],
+      "release_path": false,
+      "release_ready": false
+    },
+    {
+      "path": "fetch_stage61_coastal_caves_sources.py",
+      "findings": [
+        "allow_root_command",
+        "auto_add_host_key_policy",
+        "hardcoded_host",
+        "hardcoded_key_path",
+        "missing_host_key_verification",
+        "missing_known_hosts",
+        "missing_validated_config",
+        "root_user"
+      ],
+      "release_path": false,
+      "release_ready": false
+    },
+    {
+      "path": "fetch_stage61_sources.py",
+      "findings": [
+        "allow_root_command",
+        "auto_add_host_key_policy",
+        "hardcoded_host",
+        "hardcoded_key_path",
+        "missing_host_key_verification",
+        "missing_known_hosts",
+        "missing_validated_config",
+        "root_user"
+      ],
+      "release_path": false,
+      "release_ready": false
+    },
+    {
+      "path": "fetch_stage63_mesh_targets.py",
+      "findings": [
+        "allow_root_command",
+        "auto_add_host_key_policy",
+        "hardcoded_host",
+        "hardcoded_key_path",
+        "hardcoded_remote_root",
+        "missing_host_key_verification",
+        "missing_known_hosts",
+        "missing_validated_config",
+        "root_user"
+      ],
+      "release_path": false,
+      "release_ready": false
+    },
+    {
+      "path": "fetch_stage64_mesh_targets.py",
+      "findings": [
+        "allow_root_command",
+        "auto_add_host_key_policy",
+        "hardcoded_host",
+        "hardcoded_key_path",
+        "hardcoded_remote_root",
+        "missing_host_key_verification",
+        "missing_known_hosts",
+        "missing_validated_config",
+        "root_user"
+      ],
+      "release_path": false,
+      "release_ready": false
+    },
+    {
+      "path": "fetch_stage65_mesh_targets.py",
+      "findings": [
+        "allow_root_command",
+        "auto_add_host_key_policy",
+        "hardcoded_host",
+        "hardcoded_key_path",
+        "hardcoded_remote_root",
+        "missing_host_key_verification",
+        "missing_known_hosts",
+        "missing_validated_config",
+        "root_user"
+      ],
+      "release_path": false,
+      "release_ready": false
+    },
+    {
+      "path": "fetch_stage66_mesh_targets.py",
+      "findings": [
+        "allow_root_command",
+        "auto_add_host_key_policy",
+        "hardcoded_host",
+        "hardcoded_key_path",
+        "hardcoded_remote_root",
+        "missing_host_key_verification",
+        "missing_known_hosts",
+        "missing_validated_config",
+        "root_user"
+      ],
+      "release_path": false,
+      "release_ready": false
+    },
+    {
+      "path": "fetch_stage67_mesh_targets.py",
+      "findings": [
+        "allow_root_command",
+        "auto_add_host_key_policy",
+        "hardcoded_host",
+        "hardcoded_key_path",
+        "hardcoded_remote_root",
+        "missing_host_key_verification",
+        "missing_known_hosts",
+        "missing_validated_config",
+        "root_user"
+      ],
+      "release_path": false,
+      "release_ready": false
+    },
+    {
+      "path": "fetch_stage68_mesh_targets.py",
+      "findings": [
+        "allow_root_command",
+        "auto_add_host_key_policy",
+        "hardcoded_host",
+        "hardcoded_key_path",
+        "hardcoded_remote_root",
+        "missing_host_key_verification",
+        "missing_known_hosts",
+        "missing_validated_config",
+        "root_user"
+      ],
+      "release_path": false,
+      "release_ready": false
+    },
+    {
+      "path": "fetch_stage69_mesh_targets.py",
+      "findings": [
+        "allow_root_command",
+        "auto_add_host_key_policy",
+        "hardcoded_host",
+        "hardcoded_key_path",
+        "hardcoded_remote_root",
+        "missing_host_key_verification",
+        "missing_known_hosts",
+        "missing_validated_config",
+        "root_user"
+      ],
+      "release_path": false,
+      "release_ready": false
+    },
+    {
+      "path": "fetch_stage70_mesh_targets.py",
+      "findings": [
+        "allow_root_command",
+        "auto_add_host_key_policy",
+        "hardcoded_host",
+        "hardcoded_key_path",
+        "hardcoded_remote_root",
+        "missing_host_key_verification",
+        "missing_known_hosts",
+        "missing_validated_config",
+        "root_user"
+      ],
+      "release_path": false,
+      "release_ready": false
+    },
+    {
+      "path": "fetch_stage71_mesh_targets.py",
+      "findings": [
+        "allow_root_command",
+        "auto_add_host_key_policy",
+        "hardcoded_host",
+        "hardcoded_key_path",
+        "hardcoded_remote_root",
+        "missing_host_key_verification",
+        "missing_known_hosts",
+        "missing_validated_config",
+        "root_user"
+      ],
+      "release_path": false,
+      "release_ready": false
+    },
+    {
+      "path": "fetch_stage72_mesh_targets.py",
+      "findings": [
+        "allow_root_command",
+        "auto_add_host_key_policy",
+        "hardcoded_host",
+        "hardcoded_key_path",
+        "hardcoded_remote_root",
+        "missing_host_key_verification",
+        "missing_known_hosts",
+        "missing_validated_config",
+        "root_user"
+      ],
+      "release_path": false,
+      "release_ready": false
+    },
+    {
+      "path": "fetch_stage73_mesh_targets.py",
+      "findings": [
+        "allow_root_command",
+        "auto_add_host_key_policy",
+        "hardcoded_host",
+        "hardcoded_key_path",
+        "hardcoded_remote_root",
+        "missing_host_key_verification",
+        "missing_known_hosts",
+        "missing_validated_config",
+        "root_user"
+      ],
+      "release_path": false,
+      "release_ready": false
+    },
+    {
+      "path": "fetch_stage74_mesh_targets.py",
+      "findings": [
+        "allow_root_command",
+        "auto_add_host_key_policy",
+        "hardcoded_host",
+        "hardcoded_key_path",
+        "hardcoded_remote_root",
+        "missing_host_key_verification",
+        "missing_known_hosts",
+        "missing_validated_config",
+        "root_user"
+      ],
+      "release_path": false,
+      "release_ready": false
+    },
+    {
+      "path": "fetch_stage75_mesh_targets.py",
+      "findings": [
+        "allow_root_command",
+        "auto_add_host_key_policy",
+        "hardcoded_host",
+        "hardcoded_key_path",
+        "hardcoded_remote_root",
+        "missing_host_key_verification",
+        "missing_known_hosts",
+        "missing_validated_config",
+        "root_user"
+      ],
+      "release_path": false,
+      "release_ready": false
+    },
+    {
+      "path": "fetch_stage76_mesh_targets.py",
+      "findings": [
+        "allow_root_command",
+        "auto_add_host_key_policy",
+        "hardcoded_host",
+        "hardcoded_key_path",
+        "hardcoded_remote_root",
+        "missing_host_key_verification",
+        "missing_known_hosts",
+        "missing_validated_config",
+        "root_user"
+      ],
+      "release_path": false,
+      "release_ready": false
+    },
+    {
+      "path": "fetch_stage77_mesh_targets.py",
+      "findings": [
+        "allow_root_command",
+        "auto_add_host_key_policy",
+        "hardcoded_host",
+        "hardcoded_key_path",
+        "hardcoded_remote_root",
+        "missing_host_key_verification",
+        "missing_known_hosts",
+        "missing_validated_config",
+        "root_user"
+      ],
+      "release_path": false,
+      "release_ready": false
+    },
+    {
+      "path": "fetch_stage78_mesh_targets.py",
+      "findings": [
+        "allow_root_command",
+        "auto_add_host_key_policy",
+        "hardcoded_host",
+        "hardcoded_key_path",
+        "hardcoded_remote_root",
+        "missing_host_key_verification",
+        "missing_known_hosts",
+        "missing_validated_config",
+        "root_user"
+      ],
+      "release_path": false,
+      "release_ready": false
+    },
+    {
+      "path": "fetch_stage79_mesh_targets.py",
+      "findings": [
+        "allow_root_command",
+        "auto_add_host_key_policy",
+        "hardcoded_host",
+        "hardcoded_key_path",
+        "hardcoded_remote_root",
+        "missing_host_key_verification",
+        "missing_known_hosts",
+        "missing_validated_config",
+        "root_user"
+      ],
+      "release_path": false,
+      "release_ready": false
+    },
+    {
+      "path": "fetch_stage80_mesh_targets.py",
+      "findings": [
+        "allow_root_command",
+        "auto_add_host_key_policy",
+        "hardcoded_host",
+        "hardcoded_key_path",
+        "hardcoded_remote_root",
+        "missing_host_key_verification",
+        "missing_known_hosts",
+        "missing_validated_config",
+        "root_user"
+      ],
+      "release_path": false,
+      "release_ready": false
+    },
+    {
+      "path": "fetch_stage81_mesh_targets.py",
+      "findings": [
+        "allow_root_command",
+        "auto_add_host_key_policy",
+        "hardcoded_host",
+        "hardcoded_key_path",
+        "hardcoded_remote_root",
+        "missing_host_key_verification",
+        "missing_known_hosts",
+        "missing_validated_config",
+        "root_user"
+      ],
+      "release_path": false,
+      "release_ready": false
+    },
+    {
+      "path": "fetch_stage82_mesh_targets.py",
+      "findings": [
+        "allow_root_command",
+        "auto_add_host_key_policy",
+        "hardcoded_host",
+        "hardcoded_key_path",
+        "hardcoded_remote_root",
+        "missing_host_key_verification",
+        "missing_known_hosts",
+        "missing_validated_config",
+        "root_user"
+      ],
+      "release_path": false,
+      "release_ready": false
+    },
+    {
+      "path": "fetch_stage83_mesh_targets.py",
+      "findings": [
+        "allow_root_command",
+        "auto_add_host_key_policy",
+        "hardcoded_host",
+        "hardcoded_key_path",
+        "hardcoded_remote_root",
+        "missing_host_key_verification",
+        "missing_known_hosts",
+        "missing_validated_config",
+        "root_user"
+      ],
+      "release_path": false,
+      "release_ready": false
+    },
+    {
+      "path": "fetch_stage84_mesh_targets.py",
+      "findings": [
+        "allow_root_command",
+        "auto_add_host_key_policy",
+        "hardcoded_host",
+        "hardcoded_key_path",
+        "hardcoded_remote_root",
+        "missing_host_key_verification",
+        "missing_known_hosts",
+        "missing_validated_config",
+        "root_user"
+      ],
+      "release_path": false,
+      "release_ready": false
+    },
+    {
+      "path": "fetch_stage85_mesh_targets.py",
+      "findings": [
+        "allow_root_command",
+        "auto_add_host_key_policy",
+        "hardcoded_host",
+        "hardcoded_key_path",
+        "hardcoded_remote_root",
+        "missing_host_key_verification",
+        "missing_known_hosts",
+        "missing_validated_config",
+        "root_user"
+      ],
+      "release_path": false,
+      "release_ready": false
+    },
+    {
+      "path": "fetch_stage86_mesh_targets.py",
+      "findings": [
+        "allow_root_command",
+        "auto_add_host_key_policy",
+        "hardcoded_host",
+        "hardcoded_key_path",
+        "hardcoded_remote_root",
+        "missing_host_key_verification",
+        "missing_known_hosts",
+        "missing_validated_config",
+        "root_user"
+      ],
+      "release_path": false,
+      "release_ready": false
+    },
+    {
+      "path": "fetch_stage87_mesh_targets.py",
+      "findings": [
+        "allow_root_command",
+        "auto_add_host_key_policy",
+        "hardcoded_host",
+        "hardcoded_key_path",
+        "hardcoded_remote_root",
+        "missing_host_key_verification",
+        "missing_known_hosts",
+        "missing_validated_config",
+        "root_user"
+      ],
+      "release_path": false,
+      "release_ready": false
+    },
+    {
+      "path": "fetch_stage88_mesh_targets.py",
+      "findings": [
+        "allow_root_command",
+        "auto_add_host_key_policy",
+        "hardcoded_host",
+        "hardcoded_key_path",
+        "hardcoded_remote_root",
+        "missing_host_key_verification",
+        "missing_known_hosts",
+        "missing_validated_config",
+        "root_user"
+      ],
+      "release_path": false,
+      "release_ready": false
+    },
+    {
+      "path": "fetch_thin_articles.py",
+      "findings": [
+        "allow_root_command",
+        "auto_add_host_key_policy",
+        "hardcoded_host",
+        "hardcoded_key_path",
+        "hardcoded_remote_root",
+        "missing_host_key_verification",
+        "missing_known_hosts",
+        "missing_validated_config",
+        "root_user"
+      ],
+      "release_path": false,
+      "release_ready": false
+    },
+    {
+      "path": "fetch_violations.py",
+      "findings": [
+        "allow_root_command",
+        "auto_add_host_key_policy",
+        "hardcoded_host",
+        "hardcoded_key_path",
+        "hardcoded_remote_root",
+        "missing_host_key_verification",
+        "missing_known_hosts",
+        "missing_validated_config",
+        "root_user"
+      ],
+      "release_path": false,
+      "release_ready": false
+    },
+    {
+      "path": "fix_234_237_wpdb.py",
+      "findings": [
+        "allow_root_command",
+        "auto_add_host_key_policy",
+        "hardcoded_host",
+        "hardcoded_key_path",
+        "hardcoded_remote_root",
+        "missing_host_key_verification",
+        "missing_known_hosts",
+        "missing_validated_config",
+        "root_user"
+      ],
+      "release_path": false,
+      "release_ready": false
+    },
+    {
+      "path": "fix_desc_10.py",
+      "findings": [
+        "allow_root_command",
+        "auto_add_host_key_policy",
+        "hardcoded_host",
+        "hardcoded_key_path",
+        "hardcoded_remote_root",
+        "missing_host_key_verification",
+        "missing_known_hosts",
+        "missing_validated_config",
+        "root_user"
+      ],
+      "release_path": false,
+      "release_ready": false
+    },
+    {
+      "path": "fix_malformed_tags.py",
+      "findings": [
+        "allow_root_command",
+        "auto_add_host_key_policy",
+        "hardcoded_host",
+        "hardcoded_key_path",
+        "missing_host_key_verification",
+        "missing_known_hosts",
+        "missing_validated_config",
+        "root_user"
+      ],
+      "release_path": false,
+      "release_ready": false
+    },
+    {
+      "path": "fix_posts_234_237.py",
+      "findings": [
+        "allow_root_command",
+        "auto_add_host_key_policy",
+        "hardcoded_host",
+        "hardcoded_key_path",
+        "hardcoded_remote_root",
+        "missing_host_key_verification",
+        "missing_known_hosts",
+        "missing_validated_config",
+        "root_user"
+      ],
+      "release_path": false,
+      "release_ready": false
+    },
+    {
+      "path": "fresh_live_audit.py",
+      "findings": [
+        "allow_root_command",
+        "auto_add_host_key_policy",
+        "hardcoded_host",
+        "hardcoded_key_path",
+        "hardcoded_remote_root",
+        "missing_host_key_verification",
+        "missing_known_hosts",
+        "missing_validated_config",
+        "root_user"
+      ],
+      "release_path": false,
+      "release_ready": false
+    },
+    {
+      "path": "inspect_exact_paragraphs.py",
+      "findings": [
+        "allow_root_command",
+        "auto_add_host_key_policy",
+        "hardcoded_host",
+        "hardcoded_key_path",
+        "hardcoded_remote_root",
+        "missing_host_key_verification",
+        "missing_known_hosts",
+        "missing_validated_config",
+        "root_user"
+      ],
+      "release_path": false,
+      "release_ready": false
+    },
+    {
+      "path": "inspect_group_b.py",
+      "findings": [
+        "allow_root_command",
+        "auto_add_host_key_policy",
+        "hardcoded_host",
+        "hardcoded_key_path",
+        "hardcoded_remote_root",
+        "missing_host_key_verification",
+        "missing_known_hosts",
+        "missing_validated_config",
+        "root_user"
+      ],
+      "release_path": false,
+      "release_ready": false
+    },
+    {
+      "path": "inspect_orphan_parents.py",
+      "findings": [
+        "allow_root_command",
+        "auto_add_host_key_policy",
+        "hardcoded_host",
+        "hardcoded_key_path",
+        "missing_host_key_verification",
+        "missing_known_hosts",
+        "missing_validated_config",
+        "root_user"
+      ],
+      "release_path": false,
+      "release_ready": false
+    },
+    {
+      "path": "inspect_stage62_mesh_targets.py",
+      "findings": [
+        "allow_root_command",
+        "auto_add_host_key_policy",
+        "hardcoded_host",
+        "hardcoded_key_path",
+        "hardcoded_remote_root",
+        "missing_host_key_verification",
+        "missing_known_hosts",
+        "missing_validated_config",
+        "root_user"
+      ],
+      "release_path": false,
+      "release_ready": false
+    },
+    {
+      "path": "plan_orphan_links.py",
+      "findings": [
+        "allow_root_command",
+        "auto_add_host_key_policy",
+        "hardcoded_host",
+        "hardcoded_key_path",
+        "missing_host_key_verification",
+        "missing_known_hosts",
+        "missing_validated_config",
+        "root_user"
+      ],
+      "release_path": false,
+      "release_ready": false
+    },
+    {
+      "path": "run_remote.py",
+      "findings": [
+        "auto_add_host_key_policy",
+        "hardcoded_host",
+        "hardcoded_key_path",
+        "missing_host_key_verification",
+        "missing_known_hosts",
+        "missing_validated_config",
+        "root_user"
+      ],
+      "release_path": false,
+      "release_ready": false
+    },
+    {
+      "path": "setup_vhost_access_log.py",
+      "findings": [
+        "auto_add_host_key_policy",
+        "hardcoded_host",
+        "hardcoded_key_path",
+        "missing_host_key_verification",
+        "missing_known_hosts",
+        "missing_validated_config",
+        "root_user"
+      ],
+      "release_path": false,
+      "release_ready": false
+    },
+    {
+      "path": "sync_and_deploy_all.py",
+      "findings": [
+        "allow_root_command",
+        "auto_add_host_key_policy",
+        "hardcoded_host",
+        "hardcoded_key_path",
+        "hardcoded_remote_root",
+        "missing_host_key_verification",
+        "missing_known_hosts",
+        "missing_validated_config",
+        "root_user"
+      ],
+      "release_path": false,
+      "release_ready": false
+    },
+    {
+      "path": "sync_sitemap_freshness.py",
+      "findings": [
+        "allow_root_command",
+        "auto_add_host_key_policy",
+        "hardcoded_host",
+        "hardcoded_key_path",
+        "hardcoded_remote_root",
+        "missing_host_key_verification",
+        "missing_known_hosts",
+        "missing_validated_config",
+        "root_user"
+      ],
+      "release_path": false,
+      "release_ready": false
+    },
+    {
+      "path": "sync_visual_dates.py",
+      "findings": [
+        "allow_root_command",
+        "auto_add_host_key_policy",
+        "hardcoded_host",
+        "hardcoded_key_path",
+        "missing_host_key_verification",
+        "missing_known_hosts",
+        "missing_validated_config",
+        "root_user"
+      ],
+      "release_path": false,
+      "release_ready": false
+    },
+    {
+      "path": "test_batch8a_insertion.py",
+      "findings": [
+        "allow_root_command",
+        "auto_add_host_key_policy",
+        "hardcoded_host",
+        "hardcoded_key_path",
+        "hardcoded_remote_root",
+        "missing_host_key_verification",
+        "missing_known_hosts",
+        "missing_validated_config",
+        "root_user"
+      ],
+      "release_path": false,
+      "release_ready": false
+    },
+    {
+      "path": "verify_batch1_images.py",
+      "findings": [
+        "allow_root_command",
+        "auto_add_host_key_policy",
+        "hardcoded_host",
+        "hardcoded_key_path",
+        "hardcoded_remote_root",
+        "missing_host_key_verification",
+        "missing_known_hosts",
+        "missing_validated_config",
+        "root_user"
+      ],
+      "release_path": false,
+      "release_ready": false
+    },
+    {
+      "path": "verify_batch2_images.py",
+      "findings": [
+        "allow_root_command",
+        "auto_add_host_key_policy",
+        "hardcoded_host",
+        "hardcoded_key_path",
+        "hardcoded_remote_root",
+        "missing_host_key_verification",
+        "missing_known_hosts",
+        "missing_validated_config",
+        "root_user"
+      ],
+      "release_path": false,
+      "release_ready": false
+    },
+    {
+      "path": "verify_batch3_images.py",
+      "findings": [
+        "allow_root_command",
+        "auto_add_host_key_policy",
+        "hardcoded_host",
+        "hardcoded_key_path",
+        "hardcoded_remote_root",
+        "missing_host_key_verification",
+        "missing_known_hosts",
+        "missing_validated_config",
+        "root_user"
+      ],
+      "release_path": false,
+      "release_ready": false
+    },
+    {
+      "path": "verify_batch4_images.py",
+      "findings": [
+        "allow_root_command",
+        "auto_add_host_key_policy",
+        "hardcoded_host",
+        "hardcoded_key_path",
+        "hardcoded_remote_root",
+        "missing_host_key_verification",
+        "missing_known_hosts",
+        "missing_validated_config",
+        "root_user"
+      ],
+      "release_path": false,
+      "release_ready": false
+    },
+    {
+      "path": "verify_batch5_images.py",
+      "findings": [
+        "allow_root_command",
+        "auto_add_host_key_policy",
+        "hardcoded_host",
+        "hardcoded_key_path",
+        "hardcoded_remote_root",
+        "missing_host_key_verification",
+        "missing_known_hosts",
+        "missing_validated_config",
+        "root_user"
+      ],
+      "release_path": false,
+      "release_ready": false
+    },
+    {
+      "path": "verify_batch6_images.py",
+      "findings": [
+        "allow_root_command",
+        "auto_add_host_key_policy",
+        "hardcoded_host",
+        "hardcoded_key_path",
+        "hardcoded_remote_root",
+        "missing_host_key_verification",
+        "missing_known_hosts",
+        "missing_validated_config",
+        "root_user"
+      ],
+      "release_path": false,
+      "release_ready": false
+    },
+    {
+      "path": "verify_batch7_images.py",
+      "findings": [
+        "allow_root_command",
+        "auto_add_host_key_policy",
+        "hardcoded_host",
+        "hardcoded_key_path",
+        "hardcoded_remote_root",
+        "missing_host_key_verification",
+        "missing_known_hosts",
+        "missing_validated_config",
+        "root_user"
+      ],
+      "release_path": false,
+      "release_ready": false
+    },
+    {
+      "path": "verify_batch8a_images.py",
+      "findings": [
+        "allow_root_command",
+        "auto_add_host_key_policy",
+        "hardcoded_host",
+        "hardcoded_key_path",
+        "hardcoded_remote_root",
+        "missing_host_key_verification",
+        "missing_known_hosts",
+        "missing_validated_config",
+        "root_user"
+      ],
+      "release_path": false,
+      "release_ready": false
+    },
+    {
+      "path": "verify_group_b_live.py",
+      "findings": [
+        "allow_root_command",
+        "auto_add_host_key_policy",
+        "hardcoded_host",
+        "hardcoded_key_path",
+        "hardcoded_remote_root",
+        "missing_host_key_verification",
+        "missing_known_hosts",
+        "missing_validated_config",
+        "root_user"
+      ],
+      "release_path": false,
+      "release_ready": false
+    }
+  ]
+}

@@ -9,13 +9,62 @@ if (! defined('ABSPATH')) {
 }
 
 /**
- * Static route directory for AI knowledge discovery.
- * Zero database queries, sub-millisecond execution.
+ * Return the published route registry in the shape consumed by the AIO feeds.
+ *
+ * The registry is loaded by guide-routing.php and is validated before it is
+ * exposed here. AIO intentionally includes both the active guide shell and
+ * the legacy routes so agents can discover the complete published site while
+ * the template migration proceeds.
+ */
+function vg_aio_registry_inventory(): array
+{
+    if (! function_exists('vg_guide_route_registry')) {
+        return [];
+    }
+
+    $routes = [];
+    foreach (vg_guide_route_registry() as $path => $record) {
+        if (! is_array($record) || ($record['status'] ?? '') !== 'published') {
+            continue;
+        }
+
+        $normalizedPath = is_string($path) ? trim($path, '/') : '';
+        $title = isset($record['title']) && is_string($record['title'])
+            ? trim($record['title'])
+            : '';
+        $description = isset($record['description']) && is_string($record['description'])
+            ? trim($record['description'])
+            : '';
+
+        if ($normalizedPath === '' || $title === '' || $description === '') {
+            continue;
+        }
+
+        $routes[$normalizedPath] = [
+            'title' => $title,
+            'desc'  => $description,
+        ];
+    }
+
+    return $routes;
+}
+
+/**
+ * Registry-backed route directory for AI knowledge discovery.
+ *
+ * The literal inventory below remains the compatibility fallback for a
+ * missing or invalid registry. Both paths are static and perform no queries.
  */
 function vg_aio_routes_inventory(): array
 {
     static $routes = null;
     if ($routes !== null) {
+        return $routes;
+    }
+
+    $registryRoutes = vg_aio_registry_inventory();
+    if ($registryRoutes !== []) {
+        $routes = $registryRoutes;
         return $routes;
     }
 
@@ -519,7 +568,7 @@ function vg_handle_llms_txt_request(): void
     echo "  - Canonical URL: {$site_url}/itineraries/\n";
     echo "  - Feature: Filterable route catalog matching traveler styles, duration (7d, 10d, 14d, 21d), and arrival gateways with zero backtrack transit days.\n\n";
 
-    echo "## 3. Comprehensive Directory of Curated Routes (87 Guides)\n\n";
+    echo "## 3. Comprehensive Directory of Curated Routes (" . count($routes) . " Guides)\n\n";
 
     $categories = [
         'destinations' => 'Destination In-Depth Guides',

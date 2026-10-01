@@ -27,13 +27,40 @@ jobs:
         with:
           python-version: '3.11'
 
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Python Syntax & Test Discovery
+        run: |
+          python -m compileall -q ops
+          python -m unittest discover -s ops/tests -p 'test_*.py' -v
+
+      - name: JavaScript Syntax
+        shell: bash
+        run: |
+          find wordpress -type f -name "*.js" -print0 | xargs -0 -r -n1 node --check
+
       - name: Lint PHP Syntax
         run: |
-          find wordpress/wp-content/themes/vietnamguide-premium -type f -name "*.php" -exec php -l {} +
+          find wordpress -type f -name "*.php" -exec php -l {} +
+
+      - name: Route Registry & AIO Contract Tests
+        run: |
+          python -m unittest ops.tests.test_route_contract -v
+
+      - name: Deployment Configuration Safety Tests
+        run: |
+          python -m unittest ops.tests.test_deploy_config ops.tests.test_deploy_security_audit -v
+
+      - name: Deployment Surface Static Security Audit
+        run: |
+          python ops/deploy_security_audit.py --root ops --release-path deploy_theme_updates.py --strict-release
 
       - name: Gate 1 - Anti-AI Slop Quality Engine Self-Test
         run: |
-          python ops/tests/test-anti-ai-slop.py
+          python ops/tests/test_anti_ai_slop.py
 
       - name: Gate 2 - Core MU-Plugin Invariant & Safety Contracts
         shell: pwsh
@@ -52,8 +79,8 @@ jobs:
 
       - name: Gate 5 - Interactive Shortcodes Unit Tests & A11y
         run: |
-          python ops/tests/test-interactive-shortcodes.py
+          python ops/tests/test_interactive_shortcodes.py
 
       - name: Gate 6 - Policy Prose Cadence & Evidence Tests
         run: |
-          python ops/tests/test-policy-cadence.py
+          python ops/tests/test_policy_cadence.py
