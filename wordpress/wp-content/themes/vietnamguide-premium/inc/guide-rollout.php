@@ -2,57 +2,7 @@
 if (! defined('ABSPATH')) {
     exit;
 }
-// VietnamGuide Rollout: Batch 1 Canary (50 Routes: Comparisons + Central Vietnam Destinations)
-// Active Guides: 87 Pilot + 50 Batch 1 = 137 routes (48.6%)
-define('VG_GUIDE_REGISTRY_ROLLOUT', [
-    'compare/con-dao-vs-phu-quoc',
-    'compare/cu-chi-tunnels-ben-duoc-vs-ben-dinh',
-    'compare/ly-son-vs-cham-islands',
-    'compare/tam-coc-vs-trang-an-boat-tour',
-    'destinations/ba-be-lake-travel-guide',
-    'destinations/ba-na-hills-golden-bridge-guide',
-    'destinations/best-things-to-do-in-da-lat',
-    'destinations/best-things-to-do-in-da-nang',
-    'destinations/best-things-to-do-in-ha-long-bay',
-    'destinations/best-things-to-do-in-ho-chi-minh-city',
-    'destinations/best-things-to-do-in-mui-ne',
-    'destinations/best-things-to-do-in-nha-trang',
-    'destinations/best-things-to-do-in-ninh-binh',
-    'destinations/best-things-to-do-in-phu-quoc',
-    'destinations/best-things-to-do-in-quy-nhon',
-    'destinations/best-things-to-do-in-sapa',
-    'destinations/cao-bang-travel-guide',
-    'destinations/da-lat-coffee-farms-guide',
-    'destinations/da-lat-travel-guide',
-    'destinations/da-lat-waterfalls-guide',
-    'destinations/da-nang-street-food-guide',
-    'destinations/hang-mua-ninh-binh-guide',
-    'destinations/hanoi-street-food-guide',
-    'destinations/hanoi-train-street-guide',
-    'destinations/hoi-an-street-food-guide',
-    'destinations/hoi-an-tailoring-guide',
-    'destinations/hue-street-food-guide',
-    'destinations/mang-den-travel-guide',
-    'destinations/mekong-delta-floating-markets-guide',
-    'destinations/phu-quoc-beaches-guide',
-    'destinations/phu-yen-travel-guide',
-    'destinations/saigon-night-markets-guide',
-    'destinations/saigon-street-food-guide',
-    'destinations/vietnam-coffee-guide',
-    'destinations/where-to-stay-in-an-giang',
-    'destinations/where-to-stay-in-ba-be',
-    'destinations/where-to-stay-in-bac-ha',
-    'destinations/where-to-stay-in-bac-lieu',
-    'destinations/where-to-stay-in-bao-lac',
-    'destinations/where-to-stay-in-bao-loc',
-    'destinations/where-to-stay-in-ben-tre',
-    'destinations/where-to-stay-in-buon-ma-thuot',
-    'destinations/where-to-stay-in-ca-mau',
-    'destinations/where-to-stay-in-cam-ranh',
-    'destinations/where-to-stay-in-can-tho',
-    'destinations/where-to-stay-in-cao-bang',
-    'destinations/where-to-stay-in-cat-ba',
-    'destinations/where-to-stay-in-chau-doc',
-    'destinations/where-to-stay-in-con-dao',
-    'destinations/where-to-stay-in-da-lat',
-]);
+
+// VietnamGuide Rollout: 100% Sitewide Conversion (All 282 Routes)
+// Enables Guide Shell across all canonical destinations, itineraries, comparisons, and plan guides.
+define('VG_GUIDE_REGISTRY_ROLLOUT', true);
