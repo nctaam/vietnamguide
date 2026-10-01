@@ -32,32 +32,21 @@ jobs:
         with:
           node-version: '20'
 
-      - name: Python Syntax & Test Discovery
+      # Language Syntax & Linting Pre-flight
+      - name: Python Compilation
         run: |
           python -m compileall -q ops
-          python -m unittest discover -s ops/tests -p 'test_*.py' -v
 
-      - name: JavaScript Syntax
+      - name: JavaScript Syntax Check
         shell: bash
         run: |
           find wordpress -type f -name "*.js" -print0 | xargs -0 -r -n1 node --check
 
-      - name: Lint PHP Syntax
+      - name: PHP Syntax Linting
         run: |
           find wordpress -type f -name "*.php" -exec php -l {} +
 
-      - name: Route Registry & AIO Contract Tests
-        run: |
-          python -m unittest ops.tests.test_route_contract -v
-
-      - name: Deployment Configuration Safety Tests
-        run: |
-          python -m unittest ops.tests.test_deploy_config ops.tests.test_deploy_security_audit -v
-
-      - name: Deployment Surface Static Security Audit
-        run: |
-          python ops/deploy_security_audit.py --root ops --release-path deploy_theme_updates.py --strict-release
-
+      # 8 Master Quality Gates (1:1 alignment with ops/verify-all-gates.ps1)
       - name: Gate 1 - Anti-AI Slop Quality Engine Self-Test
         run: |
           python ops/tests/test_anti_ai_slop.py
@@ -81,6 +70,21 @@ jobs:
         run: |
           python ops/tests/test_interactive_shortcodes.py
 
-      - name: Gate 6 - Policy Prose Cadence & Evidence Tests
+      - name: Gate 6 - Canonical Route Registry, AIO & Fallback Contracts
         run: |
-          python ops/tests/test_policy_cadence.py
+          python -m unittest ops/tests/test_route_contract.py -v
+
+      - name: Gate 7 - Deployment Configuration & SSH Trust Contracts
+        run: |
+          python -m unittest ops/tests/test_deploy_config.py ops/tests/test_deploy_security_audit.py -v
+
+      - name: Gate 8 - Deployment Surface Static Security Audit
+        run: |
+          python ops/deploy_security_audit.py --root ops --release-path deploy_theme_updates.py --strict-release
+
+      # Comprehensive Unit Test Suite Auto-Discovery
+      - name: Full Unit Test Suite Auto-Discovery
+        env:
+          VG_SKIP_NETWORK_TESTS: '1'
+        run: |
+          python -m unittest discover -s ops/tests -p 'test_*.py' -v

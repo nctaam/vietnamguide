@@ -1046,6 +1046,19 @@ function Require-NoFatalText {
     }
 }
 
+$RegistryFile = Join-Path $PSScriptRoot '..\wordpress\wp-content\themes\vietnamguide-premium\inc\guide-route-registry.json'
+$RegistryLoaded = $false
+if (Test-Path -LiteralPath $RegistryFile) {
+    try {
+        $RegistryJson = Get-Content -LiteralPath $RegistryFile -Raw | ConvertFrom-Json
+        if ($null -ne $RegistryJson.routes -and $RegistryJson.routes.Count -gt 0) {
+            $PilotPaths = @($RegistryJson.routes | Where-Object { $_.status -eq 'published' -and $_.template -eq 'guide' } | ForEach-Object { $_.path })
+            $RegistryLoaded = $true
+        }
+    } catch {}
+}
+
+if (-not $RegistryLoaded) {
 $PilotPaths = @(
     'destinations/ho-chi-minh-city-travel-guide'
     'itineraries/10-days-in-vietnam'
@@ -1135,6 +1148,7 @@ $PilotPaths = @(
     'destinations/mu-cang-chai-travel-guide'
     'destinations/pu-luong-travel-guide'
 )
+}
 
 foreach ($PilotPath in $PilotPaths) {
     $Page = Get-PublicPage -Path $PilotPath -Label "pilot $PilotPath"

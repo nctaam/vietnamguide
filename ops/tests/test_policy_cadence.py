@@ -6,6 +6,8 @@ import os
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..')))
 from ops.anti_ai_slop_linter import analyze_text
 
+SKIP_NETWORK = os.environ.get('VG_SKIP_NETWORK_TESTS', '').strip().lower() in ('1', 'true', 'yes')
+
 
 class TestPolicyCadence(unittest.TestCase):
     def test_remediated_contact_cadence(self):
@@ -124,6 +126,8 @@ class TestPolicyCadence(unittest.TestCase):
 
     def test_calibrated_articles_achieve_perfect_hls(self):
         """Verify all 6 remediated articles achieve HLS 100 with zero cadence defects."""
+        if SKIP_NETWORK:
+            self.skipTest("Network tests skipped via VG_SKIP_NETWORK_TESTS")
         import urllib.request
         calibrated_urls = [
             "https://vietnamguide.net/itineraries/7-days-in-vietnam/",
@@ -153,6 +157,8 @@ class TestPolicyCadence(unittest.TestCase):
 
     def test_remediated_bigram_cadence_achieves_perfect_hls(self):
         """Verify that guides remediated in Stage 36 achieve HLS=100 with zero bigram opener monotony."""
+        if SKIP_NETWORK:
+            self.skipTest("Network tests skipped via VG_SKIP_NETWORK_TESTS")
         import urllib.request
         target_urls = [
             "https://vietnamguide.net/destinations/ha-long-bay-travel-guide/",
@@ -190,6 +196,8 @@ class TestPolicyCadence(unittest.TestCase):
 
     def test_remediated_v10_guides_achieve_zero_repetition(self):
         """Verify that guides remediated in Stage 37 achieve HLS=100 with zero repetitive single/bigram openers and zero Tier 1-10 slop."""
+        if SKIP_NETWORK:
+            self.skipTest("Network tests skipped via VG_SKIP_NETWORK_TESTS")
         import urllib.request
         v10_urls = [
             "https://vietnamguide.net/plan/vietnam-evisa/",
@@ -234,6 +242,8 @@ class TestPolicyCadence(unittest.TestCase):
 
     def test_v11_tier11_marketing_perfection_on_core_guides(self):
         """Verify that live production guides have zero Tier 11 slop and pass v11.0 quality gate."""
+        if SKIP_NETWORK:
+            self.skipTest("Network tests skipped via VG_SKIP_NETWORK_TESTS")
         import urllib.request
         sample_urls = [
             "https://vietnamguide.net/destinations/hanoi-travel-guide/",
@@ -270,6 +280,8 @@ class TestPolicyCadence(unittest.TestCase):
 
     def test_live_https_travel_schema_enrichment(self):
         """Verify live production endpoints serve valid enriched TouristDestination JSON-LD schema."""
+        if SKIP_NETWORK:
+            self.skipTest("Network tests skipped via VG_SKIP_NETWORK_TESTS")
         import urllib.request
         import json
         import re

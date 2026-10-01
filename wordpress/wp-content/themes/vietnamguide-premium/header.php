@@ -3,6 +3,22 @@
 <head>
     <meta charset="<?php bloginfo('charset'); ?>">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    (function() {
+        var consent = null;
+        try { consent = localStorage.getItem('vg_cookie_consent'); } catch(e) {}
+        var isGranted = (consent === 'accepted');
+        gtag('consent', 'default', {
+            'ad_storage': isGranted ? 'granted' : 'denied',
+            'ad_user_data': isGranted ? 'granted' : 'denied',
+            'ad_personalization': isGranted ? 'granted' : 'denied',
+            'analytics_storage': isGranted ? 'granted' : 'denied',
+            'wait_for_update': 500
+        });
+    })();
+    </script>
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9279498490263775"
      crossorigin="anonymous"></script>
     <?php wp_head(); ?>

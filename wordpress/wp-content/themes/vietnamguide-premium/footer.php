@@ -51,7 +51,10 @@
         </p>
         <div class="vg-cookie-banner__actions">
             <button id="vg-cookie-accept" type="button" class="vg-cookie-banner__btn vg-cookie-banner__btn--accept">
-                <?php esc_html_e('Accept', 'vietnamguide-premium'); ?>
+                <?php esc_html_e('Accept all', 'vietnamguide-premium'); ?>
+            </button>
+            <button id="vg-cookie-decline" type="button" class="vg-cookie-banner__btn vg-cookie-banner__btn--decline">
+                <?php esc_html_e('Essential only', 'vietnamguide-premium'); ?>
             </button>
         </div>
     </div>
@@ -59,19 +62,46 @@
 <script>
 (function() {
     try {
-        if (!localStorage.getItem('vg_cookie_consent')) {
-            var b = document.getElementById('vg-cookie-consent');
-            if (b) {
-                b.style.display = 'block';
-                var btn = document.getElementById('vg-cookie-accept');
-                if (btn) {
-                    btn.addEventListener('click', function() {
-                        localStorage.setItem('vg_cookie_consent', 'accepted');
-                        b.style.opacity = '0';
-                        b.style.transform = 'translateY(16px)';
-                        setTimeout(function() { b.style.display = 'none'; }, 300);
-                    });
-                }
+        var consent = localStorage.getItem('vg_cookie_consent');
+        var b = document.getElementById('vg-cookie-consent');
+        if (!consent && b) {
+            b.style.display = 'block';
+            var acceptBtn = document.getElementById('vg-cookie-accept');
+            var declineBtn = document.getElementById('vg-cookie-decline');
+            function closeBanner() {
+                b.style.opacity = '0';
+                b.style.transform = 'translateY(16px)';
+                setTimeout(function() { b.style.display = 'none'; }, 300);
+            }
+            if (acceptBtn) {
+                acceptBtn.addEventListener('click', function() {
+                    localStorage.setItem('vg_cookie_consent', 'accepted');
+                    if (typeof gtag === 'function') {
+                        gtag('consent', 'update', {
+                            'ad_storage': 'granted',
+                            'ad_user_data': 'granted',
+                            'ad_personalization': 'granted',
+                            'analytics_storage': 'granted'
+                        });
+                    }
+                    document.dispatchEvent(new CustomEvent('vg:consent', { detail: { status: 'accepted' } }));
+                    closeBanner();
+                });
+            }
+            if (declineBtn) {
+                declineBtn.addEventListener('click', function() {
+                    localStorage.setItem('vg_cookie_consent', 'declined');
+                    if (typeof gtag === 'function') {
+                        gtag('consent', 'update', {
+                            'ad_storage': 'denied',
+                            'ad_user_data': 'denied',
+                            'ad_personalization': 'denied',
+                            'analytics_storage': 'denied'
+                        });
+                    }
+                    document.dispatchEvent(new CustomEvent('vg:consent', { detail: { status: 'declined' } }));
+                    closeBanner();
+                });
             }
         }
     } catch(e) {}

@@ -7893,6 +7893,7 @@ nav[aria-label="Breadcrumbs"] a:hover {
 .vg-cookie-banner__actions {
   display: flex;
   justify-content: flex-end;
+  gap: 8px;
 }
 
 .vg-cookie-banner__btn--accept {
@@ -7911,6 +7912,24 @@ nav[aria-label="Breadcrumbs"] a:hover {
 .vg-cookie-banner__btn--accept:focus-visible {
   background: #dfaa43;
   transform: translateY(-1px);
+}
+
+.vg-cookie-banner__btn--decline {
+  background: transparent;
+  color: #94a3b8;
+  font-weight: 500;
+  font-size: 0.82rem;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 6px;
+  padding: 8px 14px;
+  cursor: pointer;
+  transition: color 0.15s ease, border-color 0.15s ease;
+}
+
+.vg-cookie-banner__btn--decline:hover,
+.vg-cookie-banner__btn--decline:focus-visible {
+  color: #ffffff;
+  border-color: rgba(255, 255, 255, 0.4);
 }
 
 @media (max-width: 640px) {
