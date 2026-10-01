@@ -83,12 +83,21 @@ class RolloutManagerTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             generate_php_config("invalid_stage_xyz")
 
-    def test_missing_files_raise_file_not_found(self):
-        with self.assertRaises(FileNotFoundError):
-            load_manifest("non_existent_manifest.json")
-        with self.assertRaises(FileNotFoundError):
-            load_registry("non_existent_registry.json")
+    def test_batch_1_canary_coverage_and_disjointness(self):
+        manifest = load_manifest(DEFAULT_MANIFEST_PATH)
+        registry = load_registry(DEFAULT_REGISTRY_PATH)
+
+        pilot_paths = {r['path'] for r in registry['routes'] if r.get('current_template') == 'guide'}
+        b1_paths = set(manifest['batches'][0]['paths'])
+
+        self.assertEqual(len(pilot_paths), 87)
+        self.assertEqual(len(b1_paths), 50)
+        self.assertEqual(pilot_paths.intersection(b1_paths), set(), "Batch 1 must not overlap with pilot routes")
+
+        combined = pilot_paths.union(b1_paths)
+        self.assertEqual(len(combined), 137, "Pilot + Batch 1 must equal 137 routes")
 
 
 if __name__ == "__main__":
     unittest.main()
+

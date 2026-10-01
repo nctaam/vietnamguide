@@ -115,18 +115,19 @@ def generate_php_config(
     stage: str,
     manifest_path: Path | str = DEFAULT_MANIFEST_PATH,
 ) -> str:
-    """Generate the PHP snippet for VG_GUIDE_REGISTRY_ROLLOUT in wp-config.php."""
+    """Generate the PHP snippet for VG_GUIDE_REGISTRY_ROLLOUT."""
     normalized_stage = stage.lower().strip()
+    php_header = "<?php\nif (! defined('ABSPATH')) {\n    exit;\n}\n\n"
 
     if normalized_stage == "rollback":
-        return (
+        return php_header + (
             "// VietnamGuide Rollout: Instant Rollback to Pilot\n"
             "// Only the initial 87 pilot routes will render via Guide Shell.\n"
             "define('VG_GUIDE_REGISTRY_ROLLOUT', []);\n"
         )
 
     if normalized_stage in ("all", "batch_3", "full"):
-        return (
+        return php_header + (
             "// VietnamGuide Rollout: 100% Sitewide Conversion (All 282 Routes)\n"
             "// Enables Guide Shell across all canonical destinations, itineraries, comparisons, and plan guides.\n"
             "define('VG_GUIDE_REGISTRY_ROLLOUT', true);\n"
@@ -157,6 +158,7 @@ def generate_php_config(
         raise ValueError(f"Unknown rollout stage: {stage}. Choose from: batch_1, batch_2, batch_3, all, rollback")
 
     lines = [
+        php_header.rstrip(),
         f"// VietnamGuide Rollout: {description}",
         "define('VG_GUIDE_REGISTRY_ROLLOUT', [",
     ]

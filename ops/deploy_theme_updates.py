@@ -74,6 +74,8 @@ DEPLOY_FILES = [
      'wp-content/themes/vietnamguide-premium/inc/guide-routing.php'),
     ('wordpress/wp-content/themes/vietnamguide-premium/inc/guide-route-registry.json',
      'wp-content/themes/vietnamguide-premium/inc/guide-route-registry.json'),
+    ('wordpress/wp-content/themes/vietnamguide-premium/inc/guide-rollout.php',
+     'wp-content/themes/vietnamguide-premium/inc/guide-rollout.php'),
     ('wordpress/wp-content/themes/vietnamguide-premium/inc/guide-analytics.php',
      'wp-content/themes/vietnamguide-premium/inc/guide-analytics.php'),
     ('wordpress/.htaccess',

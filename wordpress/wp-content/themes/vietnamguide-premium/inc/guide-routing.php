@@ -278,6 +278,15 @@ function vg_guide_registry_rollout_paths(): array
 
     $paths = [];
     if (! defined('VG_GUIDE_REGISTRY_ROLLOUT')) {
+        $rolloutConfigPath = function_exists('get_theme_file_path')
+            ? get_theme_file_path('/inc/guide-rollout.php')
+            : __DIR__ . '/guide-rollout.php';
+        if (is_readable($rolloutConfigPath)) {
+            require_once $rolloutConfigPath;
+        }
+    }
+
+    if (! defined('VG_GUIDE_REGISTRY_ROLLOUT')) {
         return $paths;
     }
 
