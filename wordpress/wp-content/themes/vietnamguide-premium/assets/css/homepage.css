@@ -1,17 +1,23 @@
 :root {
   --vg-ink: #101417;
   --vg-paper: #f7f4ed;
+  --vg-paper-tactile: #FAF8F5;
   --vg-limestone: #e5ded1;
   --vg-jade: #0e6f5c;
   --vg-blue: #173b56;
+  --vg-navy: #0F2537;
   --vg-gold: #b98739;
+  --vg-gold-saffron: #C99446;
   --vg-gold-text: #7e5802;
   --vg-gold-light: #f3d484;
   --vg-coral: #c95f4a;
   --vg-white: #ffffff;
+  --vg-border-hairline: #E5DFD6;
   --vg-line: rgba(16, 20, 23, .16);
-  --vg-display: 'Source Serif 4', Georgia, serif;
-  --vg-body: 'Hanken Grotesk', 'Segoe UI', sans-serif;
+  --vg-display: 'Playfair Display', 'Source Serif 4', Georgia, serif;
+  --vg-body: 'Be Vietnam Pro', 'Hanken Grotesk', 'Segoe UI', system-ui, sans-serif;
+  --vg-mono: 'JetBrains Mono', SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  --vg-ease-spring: cubic-bezier(0.16, 1, 0.3, 1);
   --vg-wide: 1280px;
   --vg-reading: 760px;
   --vg-header-height: 76px;
@@ -35,7 +41,9 @@ body {
   font-size: 18px;
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
+  font-optical-sizing: auto;
 }
 
 ::selection {
@@ -7840,8 +7848,18 @@ nav[aria-label="Breadcrumbs"] a:hover {
 
 @media (max-width: 640px) {
   .vg-floating-dock {
-    bottom: 16px;
+    bottom: max(16px, env(safe-area-inset-bottom, 16px));
     right: 16px;
+  }
+  .vg-dock-inner {
+    padding: 6px 10px;
+    gap: 6px;
+  }
+  .vg-dock-btn {
+    min-height: 44px;
+    min-width: 44px;
+    justify-content: center;
+    padding: 8px 10px;
   }
   .vg-dock-label {
     display: none;
