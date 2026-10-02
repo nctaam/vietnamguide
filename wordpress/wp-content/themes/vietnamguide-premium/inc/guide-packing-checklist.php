@@ -399,12 +399,12 @@ function vg_render_packing_checklist(array $attributes = []): string
 
         <style>
         .vg-checklist-widget {
-            background: #ffffff;
-            border: 1px solid #e2e8f0;
-            border-radius: 12px;
+            background: var(--vg-paper-tactile, #FAF8F5);
+            border: 1px solid var(--vg-border-hairline, #E5DFD6);
+            border-radius: 16px;
             padding: 24px;
             margin: 32px 0;
-            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
+            box-shadow: 0 4px 20px -2px rgba(15, 37, 55, 0.05);
             font-family: inherit;
         }
         .vg-checklist-header {
@@ -419,23 +419,26 @@ function vg_render_packing_checklist(array $attributes = []): string
         }
         .vg-checklist-badge {
             display: inline-block;
-            background: #f3d484;
-            color: #7e5802;
+            background: #fdf6e7;
+            color: var(--vg-gold-saffron, #7e5802);
             font-size: 0.75rem;
             font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 0.05em;
             padding: 4px 10px;
             border-radius: 9999px;
+            border: 1px solid rgba(201, 148, 70, 0.3);
         }
         .vg-checklist-title {
+            font-family: var(--vg-display, serif);
             font-size: 1.35rem;
             font-weight: 700;
-            color: #1a365d;
+            color: var(--vg-navy, #0F2537);
             margin: 0;
             display: flex;
             align-items: center;
             gap: 8px;
+            font-optical-sizing: auto;
         }
         .vg-checklist-icon {
             display: inline-flex;
@@ -443,7 +446,7 @@ function vg_render_packing_checklist(array $attributes = []): string
             justify-content: center;
             width: 26px;
             height: 26px;
-            background: #2e7d32;
+            background: var(--vg-forest, #1E6B52);
             color: #ffffff;
             border-radius: 50%;
             font-size: 0.9rem;
@@ -457,14 +460,14 @@ function vg_render_packing_checklist(array $attributes = []): string
         }
         .vg-checklist-progress-bar-wrap {
             height: 10px;
-            background: #edf2f7;
+            background: #ece7de;
             border-radius: 9999px;
             overflow: hidden;
             margin-bottom: 12px;
         }
         .vg-checklist-progress-bar {
             height: 100%;
-            background: linear-gradient(90deg, #2e7d32, #4caf50);
+            background: linear-gradient(90deg, var(--vg-gold-saffron, #C99446) 0%, var(--vg-forest, #1E6B52) 100%);
             border-radius: 9999px;
             transition: width 0.35s cubic-bezier(0.16, 1, 0.3, 1);
         }
@@ -477,8 +480,10 @@ function vg_render_packing_checklist(array $attributes = []): string
             font-size: 0.88rem;
         }
         .vg-checklist-counter {
+            font-family: var(--vg-mono, monospace);
+            font-variant-numeric: tabular-nums;
             font-weight: 700;
-            color: #2d3748;
+            color: var(--vg-navy, #0F2537);
         }
         .vg-checklist-actions {
             display: flex;
@@ -500,13 +505,13 @@ function vg_render_packing_checklist(array $attributes = []): string
             color: #c53030;
         }
         .vg-checklist-btn-print {
-            background: #f7fafc;
-            border: 1px solid #cbd5e0;
+            background: #ffffff;
+            border: 1px solid var(--vg-border-hairline, #E5DFD6);
             border-radius: 6px;
             padding: 6px 12px;
             font-size: 0.82rem;
             font-weight: 600;
-            color: #2d3748;
+            color: var(--vg-ink, #101417);
             cursor: pointer;
             display: inline-flex;
             align-items: center;
@@ -515,8 +520,8 @@ function vg_render_packing_checklist(array $attributes = []): string
         }
         .vg-checklist-btn-print:hover,
         .vg-checklist-btn-print:focus {
-            background: #edf2f7;
-            border-color: #a0aec0;
+            background: var(--vg-paper-tactile, #FAF8F5);
+            border-color: var(--vg-gold-saffron, #C99446);
             transform: translateY(-1px);
         }
         .vg-checklist-filters {
@@ -525,32 +530,33 @@ function vg_render_packing_checklist(array $attributes = []): string
             overflow-x: auto;
             padding-bottom: 8px;
             margin-bottom: 20px;
-            border-bottom: 1px solid #edf2f7;
+            border-bottom: 1px solid var(--vg-border-hairline, #E5DFD6);
             -webkit-overflow-scrolling: touch;
         }
         .vg-checklist-tab {
-            background: #f7fafc;
-            border: 1px solid #e2e8f0;
+            background: #ffffff;
+            border: 1px solid var(--vg-border-hairline, #E5DFD6);
             border-radius: 20px;
             padding: 6px 14px;
             font-size: 0.85rem;
             font-weight: 600;
-            color: #4a5568;
+            color: var(--vg-muted, #555e65);
             cursor: pointer;
             white-space: nowrap;
             transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
         }
         .vg-checklist-tab:hover,
         .vg-checklist-tab:focus {
-            background: #edf2f7;
-            color: #1a202c;
+            background: var(--vg-paper-tactile, #FAF8F5);
+            border-color: var(--vg-gold-saffron, #C99446);
+            color: var(--vg-navy, #0F2537);
             transform: translateY(-1px);
         }
         .vg-checklist-tab.is-active {
-            background: #1a365d;
-            border-color: #1a365d;
+            background: var(--vg-navy, #0F2537);
+            border-color: var(--vg-navy, #0F2537);
             color: #ffffff;
-            box-shadow: 0 2px 6px rgba(26, 54, 93, 0.2);
+            box-shadow: 0 2px 6px rgba(15, 37, 55, 0.25);
         }
         .vg-checklist-items {
             list-style: none;
@@ -560,14 +566,14 @@ function vg_render_packing_checklist(array $attributes = []): string
             gap: 10px;
         }
         .vg-checklist-item {
-            background: #f8fafc;
-            border: 1px solid #e2e8f0;
-            border-radius: 8px;
+            background: #ffffff;
+            border: 1px solid var(--vg-border-hairline, #E5DFD6);
+            border-radius: 10px;
             padding: 12px 16px;
             transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
         }
         .vg-checklist-item:hover {
-            border-color: #cbd5e0;
+            border-color: var(--vg-gold-saffron, #C99446);
             background: #ffffff;
         }
         .vg-checklist-item.is-packed {
@@ -594,10 +600,10 @@ function vg_render_packing_checklist(array $attributes = []): string
         }
         .vg-checklist-box-custom {
             flex-shrink: 0;
-            width: 20px;
-            height: 20px;
-            border: 2px solid #a0aec0;
-            border-radius: 4px;
+            width: 22px;
+            height: 22px;
+            border: 2px solid #cbd5e1;
+            border-radius: 6px;
             background: #ffffff;
             margin-top: 2px;
             display: inline-flex;
@@ -606,12 +612,12 @@ function vg_render_packing_checklist(array $attributes = []): string
             transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
         }
         .vg-checklist-checkbox:focus + .vg-checklist-box-custom {
-            outline: 2px solid #3182ce;
+            outline: 2px solid var(--vg-gold-saffron, #C99446);
             outline-offset: 2px;
         }
         .vg-checklist-checkbox:checked + .vg-checklist-box-custom {
-            background: #2e7d32;
-            border-color: #2e7d32;
+            background: var(--vg-forest, #1E6B52);
+            border-color: var(--vg-forest, #1E6B52);
         }
         .vg-checklist-checkbox:checked + .vg-checklist-box-custom::after {
             content: "\2713";
@@ -638,12 +644,12 @@ function vg_render_packing_checklist(array $attributes = []): string
         .vg-checklist-synergy-wrap {
             margin-top: 28px;
             padding-top: 20px;
-            border-top: 1px solid #e2e8f0;
+            border-top: 1px solid var(--vg-border-hairline, #E5DFD6);
         }
         .vg-checklist-synergy-title {
             font-size: 0.9rem;
             font-weight: 700;
-            color: #2d3748;
+            color: var(--vg-navy, #0F2537);
             margin-bottom: 12px;
             text-transform: uppercase;
             letter-spacing: 0.04em;
@@ -658,9 +664,9 @@ function vg_render_packing_checklist(array $attributes = []): string
             align-items: flex-start;
             gap: 10px;
             padding: 10px 12px;
-            background: #f8fafc;
-            border: 1px solid #e2e8f0;
-            border-radius: 8px;
+            background: var(--vg-paper-tactile, #FAF8F5);
+            border: 1px solid var(--vg-border-hairline, #E5DFD6);
+            border-radius: 10px;
             text-decoration: none;
             color: inherit;
             transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
@@ -668,9 +674,9 @@ function vg_render_packing_checklist(array $attributes = []): string
         .vg-checklist-synergy-card:hover,
         .vg-checklist-synergy-card:focus {
             background: #ffffff;
-            border-color: #3182ce;
+            border-color: var(--vg-gold-saffron, #C99446);
             transform: translateY(-2px);
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+            box-shadow: 0 4px 12px rgba(15, 37, 55, 0.08);
         }
         .vg-checklist-synergy-icon {
             font-size: 1.25rem;
@@ -680,7 +686,7 @@ function vg_render_packing_checklist(array $attributes = []): string
         .vg-checklist-synergy-card strong {
             display: block;
             font-size: 0.85rem;
-            color: #1a365d;
+            color: var(--vg-navy, #0F2537);
             line-height: 1.3;
         }
         .vg-checklist-synergy-card p {
