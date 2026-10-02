@@ -7,7 +7,7 @@
 
 'use strict';
 
-var CACHE_NAME = 'vg-travel-handbook-v1.4.0';
+var CACHE_NAME = 'vg-travel-handbook-v1.4.1';
 var OFFLINE_URL = '/offline.html';
 
 var PRECACHE_ASSETS = [
