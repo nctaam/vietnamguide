@@ -70,3 +70,100 @@ For reconstruction provenance, canonical LF normalization of the three replayed 
 - No credentials, secrets, `wp-config.php`, or local Codex configuration belong in Git.
 - Git history was not recoverable from the empty remote repository.
 - The Revision 3 comparison specification and plan remain hash-pinned and unchanged. Task 0 must be committed and reviewed as the recorded recovery base before comparison feature Task 2 begins.
+
+---
+
+## Modern Production Disaster Recovery & Rollout Runbook (2026 Canonical)
+
+### 1. Emergency Route Rollback (Guide Shell -> Legacy Shell Fallback)
+
+If an anomaly occurs on live routes, the Guide Experience rollout can be instantly reverted without modifying WordPress database records or affecting URL indexing:
+
+- **Immediate Revert to 87 Pilot Routes:**
+  In [`wordpress/wp-content/themes/vietnamguide-premium/inc/guide-rollout.php`](file:///M:/Projects/vietnamguide/wordpress/wp-content/themes/vietnamguide-premium/inc/guide-rollout.php), set:
+  ```php
+  define('VG_GUIDE_REGISTRY_ROLLOUT', []);
+  ```
+  Deploy `inc/guide-rollout.php` to VPS and purge LiteSpeed cache. All 195 migrated routes will instantly fallback to `template-parts/content-page.php` with HTTP 200, zero 404s, and zero fatal errors.
+
+- **Surgical Rollback of a Specific Route / Batch:**
+  Set `VG_GUIDE_REGISTRY_ROLLOUT` to a selective array of paths excluding the faulty route:
+  ```php
+  define('VG_GUIDE_REGISTRY_ROLLOUT', [
+      'compare/con-dao-vs-phu-quoc',
+      'destinations/best-things-to-do-in-da-nang',
+      // ... safe paths only
+  ]);
+  ```
+
+### 2. Server-Side Atomic Backup Rollback
+
+Every execution of [`ops/deploy_theme_updates.py`](file:///M:/Projects/vietnamguide/ops/deploy_theme_updates.py) automatically generates an immutable snapshot backup before any file is uploaded to the remote server:
+
+- **Remote Backup Location:**
+  `/usr/local/lsws/vietnamguide.net/html/wp-content/.vietnamguide-deployment-backups/<backup-id>/`
+- **Backup Manifest:**
+  `backup-manifest.tsv` records exact pre-deployment SHA-256 hashes and file states (`PRESENT` or `MISSING`).
+- **Complete Reversal Command (SSH onto VPS):**
+  ```bash
+  cd /usr/local/lsws/vietnamguide.net/html
+  # Identify the desired backup ID
+  ls -lt wp-content/.vietnamguide-deployment-backups/
+  
+  # Restore all files from snapshot
+  BACKUP_ID="<selected-timestamp-uuid>"
+  cp -rp "wp-content/.vietnamguide-deployment-backups/${BACKUP_ID}/"* .
+  
+  # Purge all edge caches
+  wp litespeed-purge all --allow-root
+  ```
+
+### 3. Emergency Edge Cache Purge Commands
+
+If stale CSS/JS or cached HTML pages must be cleared immediately:
+
+```bash
+# Standard LiteSpeed Cache Purge via WP-CLI
+wp litespeed-purge all --path=/usr/local/lsws/vietnamguide.net/html --allow-root
+
+# Hard purge directly on filesystem
+rm -rf /usr/local/lsws/vietnamguide.net/html/wp-content/litespeed/htmlc/*
+rm -rf /usr/local/lsws/vietnamguide.net/html/wp-content/litespeed/cssjs/*
+rm -rf /usr/local/lsws/vietnamguide.net/html/wp-content/cache/litespeed/*
+```
+
+### 4. Non-Root Deploy User Provisioning & Key Rotation Runbook
+
+To transition deployment away from the root user to a least-privilege service account:
+
+```bash
+# 1. Create dedicated system user
+useradd -m -s /bin/bash vietnamguide-deploy
+
+# 2. Grant ownership/group write permissions to webroot
+usermod -aG nobody vietnamguide-deploy
+chown -R vietnamguide-deploy:nobody /usr/local/lsws/vietnamguide.net/html/wp-content/themes/vietnamguide-premium
+chmod -R 775 /usr/local/lsws/vietnamguide.net/html/wp-content/themes/vietnamguide-premium
+
+# 3. Generate Ed25519 SSH keypair
+ssh-keygen -t ed25519 -C "deploy@vietnamguide.net" -f ~/.ssh/vg_deploy_ed25519
+
+# 4. Install public key to target user
+mkdir -p /home/vietnamguide-deploy/.ssh
+cat ~/.ssh/vg_deploy_ed25519.pub >> /home/vietnamguide-deploy/.ssh/authorized_keys
+chmod 700 /home/vietnamguide-deploy/.ssh
+chmod 600 /home/vietnamguide-deploy/.ssh/authorized_keys
+chown -R vietnamguide-deploy:vietnamguide-deploy /home/vietnamguide-deploy/.ssh
+
+# 5. Revoke historical deploy_bot_key from root
+sed -i '/deploy_bot_key/d' /root/.ssh/authorized_keys
+```
+
+### 5. Post-Incident Health Attestation Checklist
+
+- [ ] All 8 Quality Gates pass locally: `powershell -File ops/verify-all-gates.ps1`
+- [ ] Core unit tests pass: `python -m unittest discover -s ops/tests -p "test_*.py"`
+- [ ] Public verifier passes: `powershell -File ops/verify-guide-experience-public.ps1 -FixturesOnly`
+- [ ] Live HTTP status check returns 200 on sample routes across all 4 categories.
+- [ ] Google Consent Mode v2 default `denied` state present in `<head>`.
+

@@ -7,12 +7,14 @@
 
 'use strict';
 
-var CACHE_NAME = 'vg-travel-handbook-v1.3.0';
+var CACHE_NAME = 'vg-travel-handbook-v1.4.0';
 var OFFLINE_URL = '/offline.html';
 
 var PRECACHE_ASSETS = [
   OFFLINE_URL,
   '/wp-content/themes/vietnamguide-premium/assets/css/homepage.css',
+  '/wp-content/themes/vietnamguide-premium/assets/css/guide-experience.css',
+  '/wp-content/themes/vietnamguide-premium/assets/js/guide-experience.js',
   '/wp-content/themes/vietnamguide-premium/assets/images/vg-icon.svg',
   '/wp-content/themes/vietnamguide-premium/assets/images/vg-icon-192.png',
   '/wp-content/themes/vietnamguide-premium/site.webmanifest',
@@ -87,10 +89,13 @@ self.addEventListener('fetch', function (event) {
       fetch(request)
         .then(function (networkResponse) {
           if (networkResponse && networkResponse.status === 200) {
-            var responseClone = networkResponse.clone();
-            caches.open(CACHE_NAME).then(function (cache) {
-              cache.put(request, responseClone);
-            });
+            var cc = networkResponse.headers.get('cache-control') || '';
+            if (cc.indexOf('no-store') === -1 && cc.indexOf('private') === -1) {
+              var responseClone = networkResponse.clone();
+              caches.open(CACHE_NAME).then(function (cache) {
+                cache.put(request, responseClone);
+              });
+            }
           }
           return networkResponse;
         })
