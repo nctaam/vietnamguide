@@ -5,41 +5,44 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Offline Travel Assistance &mdash; VietnamGuide.net</title>
     <meta name="description" content="Offline travel resources, emergency contacts, and cached guide access for Vietnam.">
-    <meta name="theme-color" content="#0e6f5c">
+    <meta name="theme-color" content="#0F2537">
     <link rel="icon" href="/wp-content/themes/vietnamguide-premium/assets/images/vg-icon.svg" type="image/svg+xml">
     <style>
         :root {
-            --vg-forest: #0e6f5c;
-            --vg-forest-dark: #09473b;
-            --vg-paper: #faf8f5;
-            --vg-surface: #ffffff;
-            --vg-ink: #1b2e26;
-            --vg-muted: #53655f;
-            --vg-line: #d8dedb;
-            --vg-gold-bg: #fef3c7;
-            --vg-gold-text: #78350f;
+            --vg-navy: #0F2537;
+            --vg-navy-dark: #0A1A27;
+            --vg-gold-saffron: #C99446;
+            --vg-forest: #1E6B52;
+            --vg-forest-dark: #144938;
+            --vg-paper-tactile: #FAF8F5;
+            --vg-surface: #FFFFFF;
+            --vg-ink: #1A202C;
+            --vg-muted: #53655F;
+            --vg-border-hairline: #E5DFD6;
+            --vg-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
         }
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body {
-            family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-            background: var(--vg-paper);
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background: var(--vg-paper-tactile);
             color: var(--vg-ink);
             line-height: 1.6;
             padding: 0 16px 48px;
+            -webkit-font-smoothing: antialiased;
         }
         .vg-offline-header {
-            max-width: 760px;
+            max-width: 800px;
             margin: 32px auto 24px;
             display: flex;
             align-items: center;
-           -justify-content: space-between;
-            border-bottom: 1px solid var(--vg-line);
+            justify-content: space-between;
+            border-bottom: 1px solid var(--vg-border-hairline);
             padding-bottom: 16px;
         }
         .vg-brand {
-            font-size: 20px;
+            font-size: 22px;
             font-weight: 800;
-            color: var(--vg-forest);
+            color: var(--vg-navy);
             text-decoration: none;
             letter-spacing: -0.02em;
         }
@@ -51,29 +54,30 @@
             font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 0.05em;
-            background: var(--vg-gold-bg);
-            color: var(--vg-gold-text);
-            padding: 4px 10px;
-            border-radius: 4px;
-            border: 1px solid #fcd34d;
+            background: rgba(201, 148, 70, 0.15);
+            color: #8C6020;
+            padding: 5px 12px;
+            border-radius: 9999px;
+            border: 1px solid rgba(201, 148, 70, 0.35);
         }
         .vg-offline-card {
-            max-width: 760px;
+            max-width: 800px;
             margin: 0 auto 24px;
             background: var(--vg-surface);
-            border: 1px solid var(--vg-line);
-            border-radius: 8px;
-            padding: 32px 28px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+            border: 1px solid var(--vg-border-hairline);
+            border-radius: 14px;
+            padding: 36px 32px;
+            box-shadow: 0 4px 20px rgba(15, 37, 55, 0.05);
         }
         h1 {
-            font-size: 26px;
+            font-size: 28px;
             font-weight: 800;
-            color: var(--vg-forest-dark);
+            color: var(--vg-navy);
             line-height: 1.25;
             margin-bottom: 12px;
+            letter-spacing: -0.02em;
         }
-        p { margin-bottom: 16px; color: var(--vg-ink); font-size: 16px; }
+        p { margin-bottom: 16px; color: var(--vg-ink); font-size: 16px; line-height: 1.6; }
         .vg-offline-actions {
             display: flex;
             flex-wrap: wrap;
@@ -84,81 +88,216 @@
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            padding: 12px 20px;
+            padding: 12px 22px;
             font-size: 14px;
             font-weight: 700;
-            border-radius: 6px;
+            border-radius: 9999px;
             cursor: pointer;
             text-decoration: none;
-            transition: all 160ms ease;
+            transition: all 180ms cubic-bezier(0.16, 1, 0.3, 1);
             border: 1px solid transparent;
         }
-        .vg-btn--primary { background: var(--vg-forest); color: #ffffff; }
-        .vg-btn--primary;hover { background: var(--vg-forest-dark); }
-        .vg-btn--secondary { background: var(--vg-surface); color: var(--vg-ink); border-color: var(--vg-line); }
-        .vg-btn--secondary;hover { border-color: var(--vg-forest); color: var(--vg-forest); }
+        .vg-btn--primary {
+            background: var(--vg-navy);
+            color: #FFFFFF;
+            box-shadow: 0 2px 8px rgba(15, 37, 55, 0.15);
+        }
+        .vg-btn--primary:hover {
+            background: #193B56;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 14px rgba(15, 37, 55, 0.22);
+        }
+        .vg-btn--secondary {
+            background: var(--vg-surface);
+            color: var(--vg-navy);
+            border-color: var(--vg-border-hairline);
+        }
+        .vg-btn--secondary:hover {
+            border-color: var(--vg-gold-saffron);
+            color: var(--vg-navy);
+            transform: translateY(-1px);
+        }
+        
+        .vg-section-title {
+            font-size: 19px;
+            font-weight: 700;
+            color: var(--vg-navy);
+            margin: 32px 0 16px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid var(--vg-border-hairline);
+            letter-spacing: -0.01em;
+        }
+
+        /* Cached Guides Grid */
+        .vg-cached-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 12px;
+            margin-bottom: 28px;
+        }
+        .vg-cached-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: var(--vg-paper-tactile);
+            border: 1px solid var(--vg-border-hairline);
+            border-radius: 10px;
+            padding: 12px 16px;
+            text-decoration: none;
+            color: var(--vg-ink);
+            transition: all 180ms ease;
+        }
+        .vg-cached-item:hover {
+            background: #FFFFFF;
+            border-color: var(--vg-navy);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(15, 37, 55, 0.06);
+        }
+        .vg-cached-item__icon {
+            font-size: 20px;
+            flex-shrink: 0;
+        }
+        .vg-cached-item__text {
+            display: flex;
+            flex-direction: column;
+        }
+        .vg-cached-item__title {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--vg-navy);
+        }
+        .vg-cached-item__sub {
+            font-size: 12px;
+            color: var(--vg-muted);
+        }
+
+        /* Emergency Contacts */
         .vg-emergency-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
             gap: 12px;
-            margin: 20px 0 28px;
+            margin: 16px 0 28px;
         }
         .vg-emergency-item {
-            background: var(--vg-paper);
-            border: 1px solid var(--vg-line);
-            border-radius: 6px;
+            background: var(--vg-paper-tactile);
+            border: 1px solid var(--vg-border-hairline);
+            border-radius: 10px;
             padding: 14px 16px;
         }
-        .vg-emergency-item--police { border-left: 4px solid #dc2626; }
+        .vg-emergency-item--police { border-left: 4px solid #DC2626; }
         .vg-emergency-item--medical { border-left: 4px solid #059669; }
-        .vg-emergency-item--tourist { border-left: 4px solid var(--vg-forest); }
+        .vg-emergency-item--tourist { border-left: 4px solid var(--vg-navy); }
         .vg-emergency-item strong {
             display: block;
-            font-size: 18px;
-            color: var(--vg-forest-dark); margin-bottom: 4px;
+            font-size: 19px;
+            font-family: var(--vg-mono);
+            font-variant-numeric: tabular-nums;
+            color: var(--vg-navy);
+            margin-bottom: 4px;
+            letter-spacing: -0.01em;
         }
         .vg-emergency-item span { font-size: 13px; color: var(--vg-muted); display: block; }
-        .vgmtips-list { margin: 16px 0 0 20px; color: var(--vg-muted); font-size: 15px; }
-        .vgmtips-list li { margin-bottom: 10px; }
+        .vg-tips-list { margin: 16px 0 0 20px; color: var(--vg-muted); font-size: 15px; }
+        .vg-tips-list li { margin-bottom: 10px; }
         .vg-tips-list strong { color: var(--vg-ink); }
         .vg-footer-note {
-            max-width: 760px;
+            max-width: 800px;
             margin: 24px auto 0;
             text-align: center;
             font-size: 13px;
-            color: var(--vg-muted); }
+            color: var(--vg-muted);
+        }
     </style>
 </head>
 <body>
     <header class="vg-offline-header">
         <a href="/" class="vg-brand">VietnamGuide.net</a>
         <span class="vg-badge-offline">
-            <span aria-hidden="true">&#9888;</span> Offline Mode
+            <span aria-hidden="true">&#9888;</span> Offline Travel Mode
         </span>
     </header>
-
 
     <main class="vg-offline-card">
         <h1>You are currently exploring offline</h1>
         <p>
-            No internet signal.
-            You have reached a rural mountain pass, remote island, or dead zone without cellular reception.
-            Any VietnamGuide itineraries, regional route breakdowns, packing checklists, and transit schedules that you opened earlier remain fully accessible in your browser cache.
-            Use your device freely.
+            No internet connection detected. You may be traveling through a remote mountain pass in Ha Giang, trekking the northern border, or on a boat crossing in Lan Ha Bay without cellular coverage.
         </p>
-
+        <p>
+            Your device has cached your recent itineraries, route guides, arrival checklists, and transit fare tables. Use the shortcuts below to continue navigating without data.
+        </p>
 
         <div class="vg-offline-actions">
             <button type="button" class="vg-btn vg-btn--primary" onclick="window.location.reload()">
                 Try Reconnecting
             </button>
             <button type="button" class="vg-btn vg-btn--secondary" onclick="window.history.back()">
-                &rarr; Back to Previous Guide
+                &larr; Back to Previous Guide
             </button>
         </div>
 
+        <h2 class="vg-section-title">
+            Pre-Cached Offline Travel Guides &amp; Toolkits
+        </h2>
+        <div class="vg-cached-grid">
+            <a href="/plan/vietnam-travel-guide/" class="vg-cached-item">
+                <span class="vg-cached-item__icon">🗺️</span>
+                <span class="vg-cached-item__text">
+                    <span class="vg-cached-item__title">Master Travel Guide</span>
+                    <span class="vg-cached-item__sub">Core planning overview</span>
+                </span>
+            </a>
+            <a href="/plan/vietnam-evisa/" class="vg-cached-item">
+                <span class="vg-cached-item__icon">🛂</span>
+                <span class="vg-cached-item__text">
+                    <span class="vg-cached-item__title">Official E-Visa Guide</span>
+                    <span class="vg-cached-item__sub">Ports &amp; immigration rules</span>
+                </span>
+            </a>
+            <a href="/costs/vietnam-travel-cost/" class="vg-cached-item">
+                <span class="vg-cached-item__icon">💰</span>
+                <span class="vg-cached-item__text">
+                    <span class="vg-cached-item__title">Travel Cost Calculator</span>
+                    <span class="vg-cached-item__sub">Daily budget benchmarks</span>
+                </span>
+            </a>
+            <a href="/plan/best-time-to-visit-vietnam/" class="vg-cached-item">
+                <span class="vg-cached-item__icon">☀️</span>
+                <span class="vg-cached-item__text">
+                    <span class="vg-cached-item__title">Season &amp; Weather Matrix</span>
+                    <span class="vg-cached-item__sub">Regional climate breakdown</span>
+                </span>
+            </a>
+            <a href="/plan/vietnam-airport-arrival-checklist/" class="vg-cached-item">
+                <span class="vg-cached-item__icon">✈️</span>
+                <span class="vg-cached-item__text">
+                    <span class="vg-cached-item__title">Airport Transit &amp; Scams</span>
+                    <span class="vg-cached-item__sub">HAN, SGN, DAD taxi rates</span>
+                </span>
+            </a>
+            <a href="/plan/vietnam-first-trip-planning-checklist/" class="vg-cached-item">
+                <span class="vg-cached-item__icon">🎒</span>
+                <span class="vg-cached-item__text">
+                    <span class="vg-cached-item__title">Packing &amp; Gear Checklist</span>
+                    <span class="vg-cached-item__sub">Interactive route packing</span>
+                </span>
+            </a>
+            <a href="/itineraries/10-days-in-vietnam/" class="vg-cached-item">
+                <span class="vg-cached-item__icon">🚂</span>
+                <span class="vg-cached-item__text">
+                    <span class="vg-cached-item__title">10 Days in Vietnam</span>
+                    <span class="vg-cached-item__sub">Classic north-to-south route</span>
+                </span>
+            </a>
+            <a href="/itineraries/" class="vg-cached-item">
+                <span class="vg-cached-item__icon">🧭</span>
+                <span class="vg-cached-item__text">
+                    <span class="vg-cached-item__title">All Itineraries Hub</span>
+                    <span class="vg-cached-item__sub">Browse route blueprints</span>
+                </span>
+            </a>
+        </div>
 
-        <h2 style="font-size: 18px; font-weight: 800; color: var(--vg-forest-dark); margin-top: 24px;">
+        <h2 class="vg-section-title">
             Essential Vietnam Emergency Contacts
         </h2>
         <div class="vg-emergency-grid">
@@ -168,7 +307,7 @@
             </div>
             <div class="vg-emergency-item vg-emergency-item--medical">
                 <strong>115</strong>
-                <span>Ambulance & Medical Emergency</span>
+                <span>Ambulance &amp; Medical Emergency</span>
             </div>
             <div class="vg-emergency-item vg-emergency-item--tourist">
                 <strong>+84 24 3926 1565</strong>
@@ -184,30 +323,28 @@
             </div>
             <div class="vg-emergency-item">
                 <strong>114</strong>
-                <span>Fire & Search / Rescue</span>
+                <span>Fire &amp; Search / Rescue</span>
             </div>
         </div>
 
-
-        <h2 style="font-size: 18px; font-weight: 800; color: var(--vg-forest-dark); margin-top: 16px;">
+        <h2 class="vg-section-title">
             Practical Advice When Offline in Vietnam
         </h2>
         <ul class="vg-tips-list">
             <li>
-                <strong>Offline Navigation:</strong> GPS works without data. If you pre-downloaded offline maps in Google Maps or Maps.me, track your position along national highways QL1A or QL4D instead of unpaved trails.
+                <strong>Offline Navigation:</strong> GPS works without cellular data. If you pre-downloaded offline maps in Google Maps or Organic Maps, track your position along national highways (QL1A, QL4D) instead of unpaved trails.
             </li>
             <li>
-                <strong>Lodging Information:</strong> Show local taxi or xe om drivers your accommodation confirmation containing the full Vietnamese street name with accent marks.
+                <strong>Lodging Confirmation:</strong> When communicating with taxi or xe om drivers, show your accommodation confirmation containing the full Vietnamese street name and diacritical marks.
             </li>
             <li>
-                <strong>Data Recovery:</strong> Wi-Fi is common. Roadside cafes and homestays throughout rural provinces frequently offer free connection. Look for signs reading <em>&quot;Wi-Fi Mien Phi&quot;</em>.
+                <strong>Free Wi-Fi:</strong> Wi-Fi is ubiquitous in Vietnam. Roadside cafes and family homestays throughout rural provinces offer free connection. Look for signs reading <em>&quot;Wi-Fi Mi&#7877;n Ph&iacute;&quot;</em>.
             </li>
         </ul>
     </main>
 
-
     <footer class="vg-footer-note">
-        VietnamGuide.net &mdash; Essential, ground-truth travel intelligence for Vietnam.
+        VietnamGuide.net &mdash; Verified, ground-truth travel intelligence for Vietnam.
     </footer>
 </body>
 </html>

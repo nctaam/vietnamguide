@@ -209,19 +209,19 @@ if ($q_clean !== '') {
                             <?php esc_html_e('Interactive Travel Planning Engines', 'vietnamguide-premium'); ?>
                         </h2>
                         <div class="vg-search-toolkit-grid">
-                            <a href="<?php echo esc_url(home_url('/vietnam-visa-checker/')); ?>" class="vg-search-toolkit-card">
+                            <a href="<?php echo esc_url(home_url('/plan/vietnam-evisa/')); ?>" class="vg-search-toolkit-card">
                                 <span class="vg-search-toolkit-card__badge"><?php esc_html_e('Decision Tool', 'vietnamguide-premium'); ?></span>
                                 <h3 class="vg-search-toolkit-card__title"><?php esc_html_e('Visa Eligibility Checker', 'vietnamguide-premium'); ?></h3>
                                 <p class="vg-search-toolkit-card__desc"><?php esc_html_e('Verify visa exemption rules and 90-day e-visa entry requirements for your passport nationality in seconds.', 'vietnamguide-premium'); ?></p>
                                 <span class="vg-search-toolkit-card__cta"><?php esc_html_e('Check Visa Rules', 'vietnamguide-premium'); ?> &rarr;</span>
                             </a>
-                            <a href="<?php echo esc_url(home_url('/vietnam-travel-cost/')); ?>" class="vg-search-toolkit-card">
+                            <a href="<?php echo esc_url(home_url('/costs/vietnam-travel-cost/')); ?>" class="vg-search-toolkit-card">
                                 <span class="vg-search-toolkit-card__badge"><?php esc_html_e('Budget Tool', 'vietnamguide-premium'); ?></span>
                                 <h3 class="vg-search-toolkit-card__title"><?php esc_html_e('Travel Cost Calculator', 'vietnamguide-premium'); ?></h3>
                                 <p class="vg-search-toolkit-card__desc"><?php esc_html_e('Estimate realistic daily costs across budget, mid-range, and luxury tiers with itemized breakdowns.', 'vietnamguide-premium'); ?></p>
                                 <span class="vg-search-toolkit-card__cta"><?php esc_html_e('Calculate Budget', 'vietnamguide-premium'); ?> &rarr;</span>
                             </a>
-                            <a href="<?php echo esc_url(home_url('/vietnam-season-weather/')); ?>" class="vg-search-toolkit-card">
+                            <a href="<?php echo esc_url(home_url('/plan/best-time-to-visit-vietnam/')); ?>" class="vg-search-toolkit-card">
                                 <span class="vg-search-toolkit-card__badge"><?php esc_html_e('Seasonal Tool', 'vietnamguide-premium'); ?></span>
                                 <h3 class="vg-search-toolkit-card__title"><?php esc_html_e('Season & Weather Guide', 'vietnamguide-premium'); ?></h3>
                                 <p class="vg-search-toolkit-card__desc"><?php esc_html_e('Compare month-by-month temperature, rainfall, and typhoon patterns across North, Central, and South Vietnam.', 'vietnamguide-premium'); ?></p>
