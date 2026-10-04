@@ -550,6 +550,409 @@ html:not(.vg-js) body.home .vg-site-header {
   transform: translateY(0) scale(0.97);
 }
 
+/* ==========================================================================
+   Hero Telemetry, Search Barometer & Decision Engines Showcase (Stitch Sync)
+   ========================================================================== */
+
+/* 1. Hero Ground Telemetry Strip */
+.vg-hero__telemetry {
+  display: inline-flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px 12px;
+  background: rgba(15, 37, 55, 0.76);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(229, 223, 214, 0.28);
+  border-radius: 4px;
+  padding: 6px 14px;
+  margin-bottom: 24px;
+  font-family: var(--vg-mono);
+  font-size: 11px;
+  letter-spacing: 0.05em;
+  color: var(--vg-paper-tactile);
+  width: fit-content;
+  max-width: 100%;
+}
+
+.vg-hero__telemetry-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.vg-hero__telemetry-pulse {
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background-color: #10b981;
+  box-shadow: 0 0 8px rgba(16, 185, 129, 0.8);
+  animation: vg-pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes vg-pulse {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.4;
+    transform: scale(0.85);
+  }
+}
+
+.vg-hero__telemetry-label {
+  color: rgba(250, 248, 245, 0.65);
+  font-weight: 500;
+}
+
+.vg-hero__telemetry-val {
+  font-weight: 600;
+  color: var(--vg-paper-tactile);
+}
+
+.vg-hero__telemetry-val--gold {
+  color: var(--vg-gold-saffron);
+}
+
+.vg-hero__telemetry-sep {
+  color: rgba(229, 223, 214, 0.35);
+  font-weight: 400;
+  user-select: none;
+}
+
+/* 2. Hero Search Barometer */
+.vg-hero__search-barometer {
+  margin-top: 32px;
+  max-width: 640px;
+  width: 100%;
+}
+
+.vg-hero__search-wrap {
+  display: flex;
+  align-items: center;
+  background: var(--vg-white);
+  border: 1px solid var(--vg-border-hairline);
+  border-radius: 6px;
+  padding: 6px 8px 6px 14px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.16);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.vg-hero__search-wrap:focus-within {
+  border-color: var(--vg-gold-saffron);
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.22), 0 0 0 3px rgba(201, 148, 70, 0.2);
+}
+
+.vg-hero__search-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--vg-gold-saffron);
+  margin-right: 10px;
+  flex-shrink: 0;
+}
+
+.vg-hero__search-field {
+  flex: 1;
+  border: none;
+  background: transparent;
+  color: var(--vg-ink);
+  font-family: var(--vg-body);
+  font-size: 15px;
+  line-height: 1.4;
+  padding: 8px 0;
+  outline: none;
+  min-width: 0;
+}
+
+.vg-hero__search-field::placeholder {
+  color: #718096;
+}
+
+.vg-hero__search-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 18px;
+  background: var(--vg-navy);
+  color: var(--vg-paper-tactile);
+  border: 1px solid var(--vg-navy);
+  border-radius: 4px;
+  font-family: var(--vg-mono);
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  cursor: pointer;
+  transition: background-color 0.15s ease, transform 0.15s ease;
+  flex-shrink: 0;
+}
+
+.vg-hero__search-button:hover,
+.vg-hero__search-button:focus-visible {
+  background: #173b56;
+  border-color: #173b56;
+  transform: translateY(-1px);
+}
+
+.vg-hero__search-button:active {
+  transform: translateY(0);
+}
+
+.vg-hero__search-arrow {
+  display: inline-block;
+  transition: transform 0.15s ease;
+}
+
+.vg-hero__search-button:hover .vg-hero__search-arrow {
+  transform: translateX(3px);
+}
+
+/* 3. Hero Quick Chips */
+.vg-hero__quick-chips {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 14px;
+  max-width: 640px;
+}
+
+.vg-hero__quick-chips-title {
+  font-family: var(--vg-mono);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: rgba(250, 248, 245, 0.78);
+  font-weight: 500;
+}
+
+.vg-hero__chip {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 10px;
+  background: rgba(15, 37, 55, 0.65);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  border: 1px solid rgba(229, 223, 214, 0.24);
+  border-radius: 4px;
+  font-family: var(--vg-mono);
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--vg-paper-tactile);
+  text-decoration: none;
+  transition: border-color 0.15s ease, background-color 0.15s ease, color 0.15s ease, transform 0.15s ease;
+}
+
+.vg-hero__chip:hover,
+.vg-hero__chip:focus-visible {
+  border-color: var(--vg-gold-saffron);
+  background: rgba(15, 37, 55, 0.9);
+  color: #fff;
+  transform: translateY(-1px);
+}
+
+/* 4. Decision Engines Showcase Section */
+.vg-toolkits-showcase {
+  background: var(--vg-paper-tactile);
+  border-bottom: 1px solid var(--vg-border-hairline);
+  padding: clamp(56px, 7vw, 96px) 0;
+}
+
+.vg-toolkits-showcase__lead {
+  max-width: 720px;
+  margin: 14px 0 0;
+  font-size: clamp(16px, 1.35vw, 18px);
+  color: #4a5568;
+  line-height: 1.6;
+}
+
+.vg-toolkits-showcase-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 28px;
+  margin-top: clamp(40px, 5vw, 64px);
+}
+
+.vg-toolkit-card {
+  background: var(--vg-white);
+  border: 1px solid var(--vg-border-hairline);
+  border-radius: 6px;
+  padding: 28px 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-shadow: 0 2px 8px rgba(16, 20, 23, 0.04);
+  transition: border-color 0.2s ease, transform 0.2s var(--vg-ease-spring), box-shadow 0.2s ease;
+}
+
+.vg-toolkit-card:hover {
+  border-color: var(--vg-gold-saffron);
+  box-shadow: 0 12px 28px rgba(16, 20, 23, 0.08);
+  transform: translateY(-3px);
+}
+
+.vg-toolkit-card__top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 14px;
+  margin-bottom: 16px;
+  border-bottom: 1px solid var(--vg-border-hairline);
+}
+
+.vg-toolkit-card__index {
+  font-family: var(--vg-mono);
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  color: #718096;
+  text-transform: uppercase;
+  font-weight: 500;
+}
+
+.vg-toolkit-card__tag {
+  font-family: var(--vg-mono);
+  font-size: 11px;
+  font-weight: 600;
+  padding: 3px 8px;
+  border-radius: 3px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.vg-toolkit-card__tag--gold {
+  background: rgba(201, 148, 70, 0.12);
+  color: #8c6018;
+  border: 1px solid rgba(201, 148, 70, 0.3);
+}
+
+.vg-toolkit-card__tag--emerald {
+  background: rgba(16, 185, 129, 0.1);
+  color: #065f46;
+  border: 1px solid rgba(16, 185, 129, 0.25);
+}
+
+.vg-toolkit-card__tag--navy {
+  background: rgba(15, 37, 55, 0.08);
+  color: var(--vg-navy);
+  border: 1px solid rgba(15, 37, 55, 0.2);
+}
+
+.vg-toolkit-card__heading {
+  margin: 0 0 10px;
+  font-family: var(--vg-display);
+  font-size: 22px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: var(--vg-navy);
+  line-height: 1.25;
+}
+
+.vg-toolkit-card__text {
+  margin: 0 0 20px;
+  font-size: 14px;
+  line-height: 1.55;
+  color: #4a5568;
+  flex-grow: 1;
+}
+
+.vg-toolkit-card__stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  background: var(--vg-paper-tactile);
+  border: 1px solid var(--vg-border-hairline);
+  border-radius: 4px;
+  padding: 12px;
+  margin-bottom: 22px;
+}
+
+.vg-toolkit-card__stat {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.vg-toolkit-card__stat-label {
+  font-family: var(--vg-mono);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: #718096;
+}
+
+.vg-toolkit-card__stat-value {
+  font-family: var(--vg-mono);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--vg-navy);
+}
+
+.vg-toolkit-card__cta-wrap {
+  margin-top: auto;
+}
+
+.vg-toolkit-card__btn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 13px;
+  padding: 11px 18px;
+  border-radius: 4px;
+}
+
+.vg-toolkit-card__btn:hover {
+  background: var(--vg-navy);
+  border-color: var(--vg-navy);
+  color: var(--vg-paper-tactile);
+}
+
+/* Responsive adjustments */
+@media (max-width: 980px) {
+  .vg-toolkits-showcase-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+}
+
+@media (max-width: 640px) {
+  .vg-hero__telemetry {
+    font-size: 10px;
+    padding: 6px 10px;
+    gap: 6px 8px;
+  }
+  .vg-hero__search-wrap {
+    flex-direction: column;
+    align-items: stretch;
+    padding: 10px;
+    gap: 8px;
+  }
+  .vg-hero__search-icon {
+    display: none;
+  }
+  .vg-hero__search-button {
+    width: 100%;
+    justify-content: center;
+  }
+  .vg-toolkit-card {
+    padding: 20px 18px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .vg-hero__telemetry-pulse {
+    animation: none;
+  }
+  .vg-toolkit-card:hover {
+    transform: none;
+  }
+}
+
 .vg-planning-paths {
   background: var(--vg-white);
 }

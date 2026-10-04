@@ -61,12 +61,154 @@
         </picture>
         <div class="vg-hero__shade" aria-hidden="true"></div>
         <div class="vg-shell vg-hero__content" data-vg-reveal>
+            <div class="vg-hero__telemetry" aria-label="Vietnam Ground Telemetry">
+                <div class="vg-hero__telemetry-item">
+                    <span class="vg-hero__telemetry-pulse" aria-hidden="true"></span>
+                    <span class="vg-hero__telemetry-label">TELEMETRY:</span>
+                    <span class="vg-hero__telemetry-val">ACTIVE (ICT UTC+7)</span>
+                </div>
+                <span class="vg-hero__telemetry-sep" aria-hidden="true">•</span>
+                <div class="vg-hero__telemetry-item">
+                    <span class="vg-hero__telemetry-label">MONSOON:</span>
+                    <span class="vg-hero__telemetry-val vg-hero__telemetry-val--gold">Central dry transition</span>
+                </div>
+                <span class="vg-hero__telemetry-sep" aria-hidden="true">•</span>
+                <div class="vg-hero__telemetry-item">
+                    <span class="vg-hero__telemetry-label">FX:</span>
+                    <span class="vg-hero__telemetry-val">1 USD ≈ 25,420 VND</span>
+                </div>
+                <span class="vg-hero__telemetry-sep" aria-hidden="true">•</span>
+                <div class="vg-hero__telemetry-item">
+                    <span class="vg-hero__telemetry-label">VISA:</span>
+                    <span class="vg-hero__telemetry-val vg-hero__telemetry-val--gold">90-Day Operational</span>
+                </div>
+            </div>
+
             <p class="vg-hero__brand">VietnamGuide.net</p>
             <h1>Vietnam for travelers who choose well.</h1>
             <p class="vg-hero__copy">Curated routes, refined stays, and practical guidance for planning Vietnam with confidence.</p>
+
+            <form class="vg-hero__search-barometer" role="search" method="get" action="/">
+                <div class="vg-hero__search-wrap">
+                    <span class="vg-hero__search-icon" aria-hidden="true">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                    </span>
+                    <input
+                        type="search"
+                        name="s"
+                        class="vg-hero__search-field"
+                        placeholder="Filter corridor, province, or route (e.g. Ha Long, Hoi An, 10 Days)..."
+                        value=""
+                        aria-label="Search field dossiers and guides"
+                        autocomplete="off"
+                    />
+                    <button type="submit" class="vg-hero__search-button" data-vg-event="hero_search_submit">
+                        <span>Filter</span>
+                        <span class="vg-hero__search-arrow" aria-hidden="true">&rarr;</span>
+                    </button>
+                </div>
+            </form>
+
+            <div class="vg-hero__quick-chips" aria-label="Direct Access Topics">
+                <span class="vg-hero__quick-chips-title">Direct Access:</span>
+                <a href="/itineraries/10-days-in-vietnam/" class="vg-hero__chip" data-vg-event="hero_chip_click">10 Days Spine</a>
+                <a href="/compare/ha-long-bay-vs-lan-ha-bay/" class="vg-hero__chip" data-vg-event="hero_chip_click">Ha Long vs Lan Ha</a>
+                <a href="/destinations/best-things-to-do-in-hoi-an/" class="vg-hero__chip" data-vg-event="hero_chip_click">Hoi An Base</a>
+                <a href="/plan/vietnam-evisa/" class="vg-hero__chip" data-vg-event="hero_chip_click">E-Visa 90-Day Rules</a>
+            </div>
+
             <div class="vg-actions">
                 <a class="vg-button" href="/plan/" data-vg-event="hero_start_planning">Start planning</a>
                 <a class="vg-button vg-button--ghost" href="/itineraries/" data-vg-event="hero_see_itineraries">See itineraries</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="vg-section vg-toolkits-showcase" id="decision-engines" aria-labelledby="vg-decision-engines-title">
+        <div class="vg-shell">
+            <div class="vg-section-heading" data-vg-reveal>
+                <p class="vg-kicker">Logistics Before Departure</p>
+                <h2 id="vg-decision-engines-title">Decision Engines &amp; Field Toolkits</h2>
+                <p class="vg-toolkits-showcase__lead">Empirical tools built on street-verified tariffs, official regulatory protocols, and microclimate intelligence to eliminate planning friction.</p>
+            </div>
+            <div class="vg-toolkits-showcase-grid">
+                <!-- Card 1: Visa Eligibility Checker -->
+                <article class="vg-toolkit-card" data-vg-reveal>
+                    <div class="vg-toolkit-card__top">
+                        <span class="vg-toolkit-card__index">ENGINE 01 // IMMIGRATION</span>
+                        <span class="vg-toolkit-card__tag vg-toolkit-card__tag--gold">Official 90-Day</span>
+                    </div>
+                    <h3 class="vg-toolkit-card__heading">Visa Eligibility Checker</h3>
+                    <p class="vg-toolkit-card__text">Verify bilateral visa exemptions (up to 45 days), e-visa protocols, and official tariffs ($25–$50 USD) without commercial broker markups.</p>
+                    <div class="vg-toolkit-card__stats">
+                        <div class="vg-toolkit-card__stat">
+                            <span class="vg-toolkit-card__stat-label">Official Fee</span>
+                            <span class="vg-toolkit-card__stat-value">$25 / $50 USD</span>
+                        </div>
+                        <div class="vg-toolkit-card__stat">
+                            <span class="vg-toolkit-card__stat-label">Standard SLA</span>
+                            <span class="vg-toolkit-card__stat-value">3 Business Days</span>
+                        </div>
+                    </div>
+                    <div class="vg-toolkit-card__cta-wrap">
+                        <a href="/plan/vietnam-evisa/" class="vg-button vg-button--secondary vg-toolkit-card__btn" data-vg-event="toolkit_visa_click">
+                            <span>Launch Visa Guide</span>
+                            <span aria-hidden="true">&rarr;</span>
+                        </a>
+                    </div>
+                </article>
+
+                <!-- Card 2: Daily Travel Cost Calculator -->
+                <article class="vg-toolkit-card" data-vg-reveal>
+                    <div class="vg-toolkit-card__top">
+                        <span class="vg-toolkit-card__index">ENGINE 02 // TARIFF MATRIX</span>
+                        <span class="vg-toolkit-card__tag vg-toolkit-card__tag--emerald">Street-Verified</span>
+                    </div>
+                    <h3 class="vg-toolkit-card__heading">Daily Travel Cost Calculator</h3>
+                    <p class="vg-toolkit-card__text">Model accurate daily budgets across Backpack, Smart Comfort, and Boutique Heritage tiers based on actual street-tested tariffs and transit metrics.</p>
+                    <div class="vg-toolkit-card__stats">
+                        <div class="vg-toolkit-card__stat">
+                            <span class="vg-toolkit-card__stat-label">Comfort Benchmark</span>
+                            <span class="vg-toolkit-card__stat-value">~$65 – $95 / day</span>
+                        </div>
+                        <div class="vg-toolkit-card__stat">
+                            <span class="vg-toolkit-card__stat-label">Recon Accuracy</span>
+                            <span class="vg-toolkit-card__stat-value">94.8% Empirical</span>
+                        </div>
+                    </div>
+                    <div class="vg-toolkit-card__cta-wrap">
+                        <a href="/costs/vietnam-travel-cost/" class="vg-button vg-button--secondary vg-toolkit-card__btn" data-vg-event="toolkit_cost_click">
+                            <span>Open Cost Calculator</span>
+                            <span aria-hidden="true">&rarr;</span>
+                        </a>
+                    </div>
+                </article>
+
+                <!-- Card 3: Regional Weather & Climate Matrix -->
+                <article class="vg-toolkit-card" data-vg-reveal>
+                    <div class="vg-toolkit-card__top">
+                        <span class="vg-toolkit-card__index">ENGINE 03 // METEOROLOGY</span>
+                        <span class="vg-toolkit-card__tag vg-toolkit-card__tag--navy">3 Microclimates</span>
+                    </div>
+                    <h3 class="vg-toolkit-card__heading">Regional Weather &amp; Season Matrix</h3>
+                    <p class="vg-toolkit-card__text">Vietnam spans three distinct climate systems simultaneously. Calibrate your timing against rainfall curves, typhoon windows, and sea visibility.</p>
+                    <div class="vg-toolkit-card__stats">
+                        <div class="vg-toolkit-card__stat">
+                            <span class="vg-toolkit-card__stat-label">Optimal General</span>
+                            <span class="vg-toolkit-card__stat-value">Nov – Apr</span>
+                        </div>
+                        <div class="vg-toolkit-card__stat">
+                            <span class="vg-toolkit-card__stat-label">Spatial Corridors</span>
+                            <span class="vg-toolkit-card__stat-value">North / Center / South</span>
+                        </div>
+                    </div>
+                    <div class="vg-toolkit-card__cta-wrap">
+                        <a href="/plan/best-time-to-visit-vietnam/" class="vg-button vg-button--secondary vg-toolkit-card__btn" data-vg-event="toolkit_weather_click">
+                            <span>Explore Season Matrix</span>
+                            <span aria-hidden="true">&rarr;</span>
+                        </a>
+                    </div>
+                </article>
             </div>
         </div>
     </section>
