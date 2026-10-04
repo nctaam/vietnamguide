@@ -1,0 +1,53 @@
+{
+  "projectId": "projects/2641938659919405436",
+  "projectTitle": "VietnamGuide - Premier Travel Intelligence Platform",
+  "designSystem": {
+    "assetId": "assets/208a3d17c3ca4de6b2ec6a5b1f6cf72a",
+    "name": "Editorial Travel Intelligence",
+    "designMd": "docs/DESIGN.md"
+  },
+  "screens": [
+    {
+      "id": "7968c7f58ea842a1b833db4eb662028a",
+      "title": "VietnamGuide: Authoritative Editorial Intelligence & Travel Portal",
+      "deviceType": "DESKTOP",
+      "dimensions": "2560x12464",
+      "assets": {
+        "html": ".stitch/designs/homepage-portal-desktop.html",
+        "screenshot": ".stitch/designs/homepage-portal-desktop.png"
+      }
+    },
+    {
+      "id": "a8a6a14b5a8047dc94fd42f6d4b57470",
+      "title": "VietnamGuide: Curated Regional Travel Gazetteer & Route Index",
+      "deviceType": "DESKTOP",
+      "dimensions": "2560x7836",
+      "assets": {
+        "html": ".stitch/designs/hub-gazetteer-desktop.html",
+        "screenshot": ".stitch/designs/hub-gazetteer-desktop.png"
+      }
+    },
+    {
+      "id": "debebe73def5437aafd1f6b18e8348dd",
+      "title": "VietnamGuide: Mobile Travel Portal & On-the-Go Planner",
+      "deviceType": "MOBILE",
+      "dimensions": "780x6886",
+      "assets": {
+        "html": ".stitch/designs/homepage-portal-mobile.html",
+        "screenshot": ".stitch/designs/homepage-portal-mobile.png"
+      }
+    },
+    {
+      "id": "0e00d022594f4f21b3b9eefb8af42ff6",
+      "title": "Da Nang vs Hoi An: Definitive Field Guide & Decision Matrix",
+      "deviceType": "DESKTOP",
+      "dimensions": "2560x9400"
+    },
+    {
+      "id": "b96b3f926cec4efbb5518d7eef3b228c",
+      "title": "Da Nang vs Hoi An: Mobile Field Dispatch & On-the-Go Toolkit",
+      "deviceType": "MOBILE",
+      "dimensions": "390x7728"
+    }
+  ]
+}

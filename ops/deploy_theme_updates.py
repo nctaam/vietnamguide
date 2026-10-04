@@ -32,6 +32,8 @@ DEPLOY_FILES = [
      'wp-content/themes/vietnamguide-premium/inc/guide-seo.php'),
     ('wordpress/wp-content/themes/vietnamguide-premium/search.php',
      'wp-content/themes/vietnamguide-premium/search.php'),
+    ('wordpress/wp-content/themes/vietnamguide-premium/404.php',
+     'wp-content/themes/vietnamguide-premium/404.php'),
     ('wordpress/wp-content/themes/vietnamguide-premium/assets/css/homepage.css',
      'wp-content/themes/vietnamguide-premium/assets/css/homepage.css'),
     ('wordpress/wp-content/themes/vietnamguide-premium/site.webmanifest',

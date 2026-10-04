@@ -1,0 +1,750 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport"/>
+<title>VietnamGuide — Mobile Field Intelligence</title>
+<!-- Material Symbols Outlined -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Editorial Typography Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&amp;family=JetBrains+Mono:wght@400;500;600&amp;family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS v3 -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Tailwind Configuration verbatim from Design System -->
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "on-primary-container": "#788da3",
+            "background": "#fbf9f6",
+            "tertiary": "#040e1e",
+            "on-primary-fixed": "#061d2f",
+            "surface-tint": "#4c6075",
+            "surface-variant": "#e4e2df",
+            "secondary-container": "#ffc472",
+            "on-error": "#ffffff",
+            "on-secondary": "#ffffff",
+            "tertiary-container": "#192435",
+            "on-background": "#1b1c1a",
+            "error": "#ba1a1a",
+            "secondary-fixed-dim": "#f6bc6a",
+            "outline-variant": "#c3c7cd",
+            "on-primary-fixed-variant": "#34495c",
+            "surface-elevation-2": "#FDFCFB",
+            "surface": "#FFFFFF",
+            "primary": "#000f1d",
+            "surface-container-lowest": "#ffffff",
+            "primary-fixed": "#cfe5fd",
+            "deep-navy": "#0F2537",
+            "primary-container": "#0f2537",
+            "on-secondary-container": "#794f01",
+            "surface-dim": "#dbdad7",
+            "secondary": "#815608",
+            "rice-paper": "#FAF8F5",
+            "surface-container-highest": "#e4e2df",
+            "surface-container-low": "#f5f3f0",
+            "on-tertiary-fixed": "#111c2c",
+            "surface-container-high": "#eae8e5",
+            "primary-fixed-dim": "#b3c9e0",
+            "on-secondary-fixed-variant": "#633f00",
+            "saffron-gold": "#C99446",
+            "surface-container": "#efeeeb",
+            "surface-subtle": "#F4EFEB",
+            "on-primary": "#ffffff",
+            "border-hairline": "#E5DFD6",
+            "text-primary": "#1A202C",
+            "error-container": "#ffdad6",
+            "on-secondary-fixed": "#291800",
+            "tertiary-fixed": "#d8e3fa",
+            "surface-bright": "#fbf9f6",
+            "inverse-on-surface": "#f2f0ed",
+            "surface-elevation-1": "#FFFFFF",
+            "on-error-container": "#93000a",
+            "secondary-fixed": "#ffddb3",
+            "outline": "#74777d",
+            "on-tertiary-fixed-variant": "#3c475a",
+            "on-surface": "#1b1c1a",
+            "inverse-primary": "#b3c9e0",
+            "on-tertiary-container": "#808ba0",
+            "text-secondary": "#4A5568",
+            "inverse-surface": "#30312f",
+            "on-surface-variant": "#43474c",
+            "on-tertiary": "#ffffff",
+            "tertiary-fixed-dim": "#bcc7dd"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.125rem",
+            "lg": "0.25rem",
+            "xl": "0.5rem",
+            "full": "0.75rem"
+          },
+          "spacing": {
+            "margin-desktop": "4rem",
+            "gutter-desktop": "2.5rem",
+            "space-xs": "0.25rem",
+            "margin-tablet": "2.5rem",
+            "space-sm": "0.5rem",
+            "space-lg": "1.5rem",
+            "margin": "1.5rem",
+            "space-3xl": "6rem",
+            "space-md": "1rem",
+            "space-2xl": "4rem",
+            "gutter": "1.5rem",
+            "space-xl": "2.5rem",
+            "gutter-mobile": "1rem",
+            "margin-mobile": "1rem"
+          },
+          "fontFamily": {
+            "label-sm": ["JetBrains Mono"],
+            "display-md-mobile": ["Playfair Display"],
+            "display-lg-mobile": ["Playfair Display"],
+            "headline-sm": ["Playfair Display"],
+            "headline-md": ["Playfair Display"],
+            "headline-lg": ["Playfair Display"],
+            "body-sm": ["Be Vietnam Pro"],
+            "display-lg": ["Playfair Display"],
+            "body-lg": ["Be Vietnam Pro"],
+            "label-lg": ["JetBrains Mono"],
+            "body-md": ["Be Vietnam Pro"],
+            "label-md": ["JetBrains Mono"],
+            "display-md": ["Playfair Display"]
+          },
+          "fontSize": {
+            "label-sm": ["10px", { "lineHeight": "14px", "letterSpacing": "0.08em", "fontWeight": "400" }],
+            "display-md-mobile": ["28px", { "lineHeight": "36px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+            "display-lg-mobile": ["36px", { "lineHeight": "44px", "letterSpacing": "-0.01em", "fontWeight": "700" }],
+            "headline-sm": ["20px", { "lineHeight": "28px", "fontWeight": "500" }],
+            "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "500" }],
+            "headline-lg": ["32px", { "lineHeight": "40px", "fontWeight": "600" }],
+            "body-sm": ["13px", { "lineHeight": "20px", "fontWeight": "400" }],
+            "display-lg": ["56px", { "lineHeight": "64px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+            "body-lg": ["18px", { "lineHeight": "30px", "fontWeight": "400" }],
+            "label-lg": ["13px", { "lineHeight": "18px", "letterSpacing": "0.04em", "fontWeight": "500" }],
+            "body-md": ["15px", { "lineHeight": "24px", "fontWeight": "400" }],
+            "label-md": ["11px", { "lineHeight": "16px", "letterSpacing": "0.06em", "fontWeight": "500" }],
+            "display-md": ["40px", { "lineHeight": "48px", "letterSpacing": "-0.015em", "fontWeight": "600" }]
+          }
+        },
+      },
+    }
+  </script>
+<style>
+    /* Hide standard scrollbars for editorial horizontal carousels */
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+    /* Smooth paper touch feel */
+    body {
+      background-color: #FAF8F5;
+      color: #1A202C;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+    .paper-stamp {
+      transform: rotate(-1.5deg);
+    }
+  </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-rice-paper text-text-primary min-h-screen pb-24 flex justify-center">
+<!-- Mobile Max Width Enclosure (390px - 440px viewport lock) -->
+<main class="w-full max-w-[430px] bg-rice-paper min-h-screen relative flex flex-col shadow-2xl">
+<!-- 1. COMPACT STICKY MOBILE TOP APP BAR -->
+<header class="sticky top-0 z-40 bg-rice-paper/95 backdrop-blur-md px-margin-mobile py-3.5 flex items-center justify-between border-b border-border-hairline">
+<div class="flex items-center gap-2">
+<a class="font-headline-sm text-headline-sm font-semibold tracking-tight text-primary" href="#">VietnamGuide</a>
+<span class="bg-surface-subtle border border-border-hairline px-1.5 py-0.5 rounded text-text-secondary font-label-sm text-label-sm uppercase tracking-wider">
+          DISPATCH
+        </span>
+</div>
+<div class="flex items-center gap-2.5">
+<!-- Live Currency Toggle Button -->
+<button class="flex items-center gap-1 bg-surface border border-border-hairline px-2 py-1 rounded text-primary hover:bg-surface-subtle transition-colors" id="currency-toggle" onclick="toggleCurrency()">
+<span class="font-label-md text-label-md text-primary font-medium" id="currency-label">USD</span>
+<span class="material-symbols-outlined text-[14px] text-text-secondary">swap_horiz</span>
+</button>
+<!-- Bookmark Quick Icon -->
+<button class="w-8 h-8 rounded flex items-center justify-center text-deep-navy hover:bg-surface-subtle transition-colors" title="Bookmarks">
+<span class="material-symbols-outlined text-[19px]">bookmark</span>
+</button>
+<!-- Search Icon -->
+<button class="w-8 h-8 rounded flex items-center justify-center text-deep-navy hover:bg-surface-subtle transition-colors" title="Search">
+<span class="material-symbols-outlined text-[20px]">search</span>
+</button>
+</div>
+</header>
+<!-- LIVE TELEMETRY TICKER -->
+<div class="bg-deep-navy text-rice-paper px-margin-mobile py-2 flex items-center justify-between overflow-x-auto no-scrollbar whitespace-nowrap text-label-sm font-label-sm border-b border-tertiary">
+<div class="flex items-center gap-2">
+<span class="inline-block w-1.5 h-1.5 rounded-full bg-saffron-gold animate-pulse"></span>
+<span class="text-rice-paper tracking-wider uppercase font-medium">HANOI 15:40 ICT</span>
+</div>
+<span class="text-on-primary-container mx-1.5">•</span>
+<span class="text-secondary-fixed tracking-wider uppercase">CENTRAL COAST: 29°C CLEAR</span>
+<span class="text-on-primary-container mx-1.5">•</span>
+<span class="text-rice-paper/80 tracking-wider uppercase">90D E-VISA ACTIVE</span>
+<span class="text-on-primary-container mx-1.5">•</span>
+<span class="text-secondary-container tracking-wider uppercase">AIRPORT TAXI ADVISORY: ACTIVE</span>
+</div>
+<!-- 2. MOBILE FIELD HERO SECTION -->
+<section class="px-margin-mobile pt-6 pb-5">
+<div class="flex items-center gap-2 mb-2">
+<span class="text-saffron-gold font-label-sm text-label-sm uppercase tracking-widest font-medium">FIELD GAZETTE • VOL. 44</span>
+<span class="h-px bg-border-hairline flex-1"></span>
+<span class="text-text-secondary font-label-sm text-label-sm">COORD 15.88°N</span>
+</div>
+<h1 class="font-display-md-mobile text-display-md-mobile text-primary tracking-tight font-semibold mb-2">
+        Vietnam for travelers who choose well.
+      </h1>
+<p class="font-body-sm text-body-sm text-text-secondary mb-5 leading-relaxed">
+        Vetted itineraries, real-time logistics, and zero-commission field guides verified by correspondents on the ground.
+      </p>
+<!-- Search Input Field with Tactical Filter Chips -->
+<div class="relative mb-3">
+<div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-text-secondary">
+<span class="material-symbols-outlined text-[18px]">search</span>
+</div>
+<input class="w-full bg-surface border border-border-hairline pl-9 pr-16 py-2.5 rounded text-body-sm font-body-sm text-text-primary placeholder:text-text-secondary focus:outline-none focus:border-deep-navy focus:ring-1 focus:ring-saffron-gold transition-all" placeholder="Search corridors, passes, sleeper trains..." type="text"/>
+<span class="absolute right-2.5 top-1/2 -translate-y-1/2 font-label-sm text-label-sm text-text-secondary bg-surface-subtle px-1.5 py-0.5 rounded border border-border-hairline">⌘K</span>
+</div>
+<!-- Instant Filter Chips -->
+<div class="flex items-center gap-1.5 overflow-x-auto no-scrollbar pb-1 text-label-md font-label-md">
+<button class="bg-deep-navy text-rice-paper px-2.5 py-1 rounded whitespace-nowrap">10-Day Spine</button>
+<button class="bg-surface border border-border-hairline text-text-secondary hover:text-text-primary px-2.5 py-1 rounded whitespace-nowrap">E-Visa Rules</button>
+<button class="bg-surface border border-border-hairline text-text-secondary hover:text-text-primary px-2.5 py-1 rounded whitespace-nowrap">Da Nang vs Hoi An</button>
+<button class="bg-surface border border-border-hairline text-text-secondary hover:text-text-primary px-2.5 py-1 rounded whitespace-nowrap">Sleeper Train SE3</button>
+</div>
+</section>
+<div class="w-full border-b border-border-hairline"></div>
+<!-- 3. HORIZONTAL SWIPEABLE DECISION TOOLKITS RAIL -->
+<section class="py-6">
+<div class="px-margin-mobile flex items-center justify-between mb-3.5">
+<div class="flex items-baseline gap-2">
+<h2 class="font-label-sm text-label-sm uppercase tracking-widest text-text-secondary font-semibold">FIELD DECISION TOOLS</h2>
+<span class="font-label-sm text-label-sm text-saffron-gold font-medium">04 ENGINES</span>
+</div>
+<span class="text-text-secondary font-label-sm text-label-sm">SWIPE ➔</span>
+</div>
+<!-- Horizontal Snap Carousel -->
+<div class="flex gap-3 overflow-x-auto no-scrollbar snap-x snap-mandatory px-margin-mobile pb-2">
+<!-- CARD 1: Visa Exemption & E-Visa Checker -->
+<article class="min-w-[290px] max-w-[290px] snap-center bg-surface border border-border-hairline p-4 rounded-xl flex flex-col justify-between shadow-[0_4px_16px_-4px_rgba(15,37,55,0.05)]">
+<div>
+<div class="flex items-center justify-between mb-2">
+<span class="bg-surface-subtle text-deep-navy font-label-sm text-label-sm px-2 py-0.5 rounded border border-border-hairline flex items-center gap-1">
+<span class="material-symbols-outlined text-[13px] text-saffron-gold">verified_user</span>
+                ENTRY ENGINE
+              </span>
+<span class="font-label-sm text-label-sm text-text-secondary">2024 PROTOCOL</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-primary mb-1">E-Visa &amp; Exemption</h3>
+<p class="font-body-sm text-body-sm text-text-secondary mb-3">Instant legal clearance rules by passport issuance jurisdiction.</p>
+<div class="bg-surface-subtle p-2 rounded mb-3 border border-border-hairline">
+<div class="flex items-center justify-between mb-1.5">
+<span class="font-label-sm text-label-sm text-text-secondary">SELECTED PASSPORT:</span>
+<span class="font-label-sm text-label-sm text-deep-navy font-semibold">GERMANY (DE)</span>
+</div>
+<div class="flex items-center gap-1 text-label-sm font-label-sm">
+<span class="bg-surface px-1.5 py-0.5 rounded border border-border-hairline text-deep-navy">DE</span>
+<span class="bg-surface/50 px-1.5 py-0.5 rounded border border-border-hairline text-text-secondary">UK</span>
+<span class="bg-surface/50 px-1.5 py-0.5 rounded border border-border-hairline text-text-secondary">US</span>
+<span class="bg-surface/50 px-1.5 py-0.5 rounded border border-border-hairline text-text-secondary">AU</span>
+<span class="bg-surface/50 px-1.5 py-0.5 rounded border border-border-hairline text-text-secondary">FR</span>
+</div>
+</div>
+<div class="flex items-center gap-2 text-text-primary font-body-sm text-body-sm mb-1">
+<span class="material-symbols-outlined text-[16px] text-saffron-gold">check_circle</span>
+<span class="font-medium">45 Days Visa-Free Entry</span>
+</div>
+<p class="font-body-sm text-body-sm text-text-secondary text-xs pl-6">Or apply for 90-day multiple entry e-Visa via official national portal ($25 fee).</p>
+</div>
+<button class="mt-4 w-full py-1.5 bg-surface-subtle hover:bg-border-hairline text-deep-navy font-label-md text-label-md rounded border border-border-hairline flex items-center justify-center gap-1 transition-colors">
+<span>Check Nationality</span>
+<span class="material-symbols-outlined text-[14px]">arrow_forward</span>
+</button>
+</article>
+<!-- CARD 2: Daily Travel Cost Matrix Calculator -->
+<article class="min-w-[290px] max-w-[290px] snap-center bg-surface border border-border-hairline p-4 rounded-xl flex flex-col justify-between shadow-[0_4px_16px_-4px_rgba(15,37,55,0.05)]">
+<div>
+<div class="flex items-center justify-between mb-2">
+<span class="bg-secondary-container/20 text-secondary font-label-sm text-label-sm px-2 py-0.5 rounded border border-secondary/30 flex items-center gap-1">
+<span class="material-symbols-outlined text-[13px] text-secondary">calculate</span>
+                TARIFF MATRIX
+              </span>
+<span class="font-label-sm text-label-sm text-text-secondary">LIVE FOREX</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-primary mb-1">Daily Burn Rate</h3>
+<p class="font-body-sm text-body-sm text-text-secondary mb-3">Field-tested budgeting across real transport, stays, and banh mi.</p>
+<!-- Duration Selector -->
+<div class="flex items-center justify-between bg-surface-subtle p-1 rounded border border-border-hairline mb-2 text-label-sm font-label-sm">
+<button class="px-3 py-1 rounded bg-deep-navy text-rice-paper font-medium duration-btn" onclick="setCostDays(3, this)">3 Days</button>
+<button class="px-3 py-1 rounded text-text-secondary hover:text-text-primary duration-btn" onclick="setCostDays(7, this)">7 Days</button>
+<button class="px-3 py-1 rounded text-text-secondary hover:text-text-primary duration-btn" onclick="setCostDays(14, this)">14 Days</button>
+</div>
+<!-- Tier Selector -->
+<div class="grid grid-cols-3 gap-1 mb-3 text-center text-label-sm font-label-sm">
+<button class="border border-border-hairline p-1.5 rounded hover:bg-surface-subtle tier-btn text-text-secondary" onclick="setCostTier('back', 34, this)">Backpack</button>
+<button class="border border-saffron-gold bg-saffron-gold/10 p-1.5 rounded font-medium tier-btn text-primary" onclick="setCostTier('smart', 78, this)">Smart Mid</button>
+<button class="border border-border-hairline p-1.5 rounded hover:bg-surface-subtle tier-btn text-text-secondary" onclick="setCostTier('luxe', 195, this)">Boutique</button>
+</div>
+<div class="bg-rice-paper border border-border-hairline p-2.5 rounded text-center">
+<span class="font-label-sm text-label-sm text-text-secondary block">ESTIMATED EXPENDITURE</span>
+<div class="flex items-baseline justify-center gap-1 mt-0.5">
+<span class="font-display-md-mobile text-display-md-mobile text-deep-navy font-semibold" id="calculated-cost">$234</span>
+<span class="font-label-sm text-label-sm text-text-secondary">TOTAL</span>
+</div>
+<span class="font-label-sm text-label-sm text-saffron-gold font-medium block" id="calculated-vnd">~ 5,850,000 VND</span>
+</div>
+</div>
+<a class="mt-3 block text-center text-label-sm font-label-sm text-deep-navy underline underline-offset-2" href="#cost-matrix">View itemized expense breakdowns</a>
+</article>
+<!-- CARD 3: Season & Weather Barometer -->
+<article class="min-w-[290px] max-w-[290px] snap-center bg-surface border border-border-hairline p-4 rounded-xl flex flex-col justify-between shadow-[0_4px_16px_-4px_rgba(15,37,55,0.05)]">
+<div>
+<div class="flex items-center justify-between mb-2">
+<span class="bg-surface-subtle text-deep-navy font-label-sm text-label-sm px-2 py-0.5 rounded border border-border-hairline flex items-center gap-1">
+<span class="material-symbols-outlined text-[13px] text-saffron-gold">thermostat</span>
+                CLIMATE RADAR
+              </span>
+<span class="font-label-sm text-label-sm text-text-secondary">NOVEMBER</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-primary mb-1">Three Climate Zones</h3>
+<p class="font-body-sm text-body-sm text-text-secondary mb-3">Vietnam spans 1,650 km; weather is rarely uniform across regions.</p>
+<div class="space-y-2 mb-3">
+<!-- North -->
+<div class="flex items-center justify-between border-b border-border-hairline pb-1.5">
+<div>
+<span class="font-body-sm text-body-sm font-medium text-primary block">North (Hanoi / Sapa)</span>
+<span class="font-label-sm text-label-sm text-text-secondary">Crisp &amp; Dry • 21°C</span>
+</div>
+<span class="px-2 py-0.5 bg-surface-subtle text-deep-navy font-label-sm text-label-sm rounded border border-border-hairline">EXCELLENT</span>
+</div>
+<!-- Central -->
+<div class="flex items-center justify-between border-b border-border-hairline pb-1.5">
+<div>
+<span class="font-body-sm text-body-sm font-medium text-primary block">Central (Da Nang / Hoi An)</span>
+<span class="font-label-sm text-label-sm text-text-secondary">Coastal Clear • 28°C</span>
+</div>
+<span class="px-2 py-0.5 bg-saffron-gold/15 text-secondary font-label-sm text-label-sm rounded border border-saffron-gold/30">PRIME GOLD</span>
+</div>
+<!-- South -->
+<div class="flex items-center justify-between">
+<div>
+<span class="font-body-sm text-body-sm font-medium text-primary block">South (Saigon / Delta)</span>
+<span class="font-label-sm text-label-sm text-text-secondary">Tropical Warm • 31°C</span>
+</div>
+<span class="px-2 py-0.5 bg-surface-subtle text-deep-navy font-label-sm text-label-sm rounded border border-border-hairline">GOOD</span>
+</div>
+</div>
+</div>
+<button class="mt-2 w-full py-1.5 bg-surface-subtle hover:bg-border-hairline text-deep-navy font-label-md text-label-md rounded border border-border-hairline flex items-center justify-center gap-1">
+<span>Annual Monsoon Map</span>
+<span class="material-symbols-outlined text-[14px]">map</span>
+</button>
+</article>
+<!-- CARD 4: Airport Scam Shield & Grab Bay Finder -->
+<article class="min-w-[290px] max-w-[290px] snap-center bg-surface border border-border-hairline p-4 rounded-xl flex flex-col justify-between shadow-[0_4px_16px_-4px_rgba(15,37,55,0.05)]">
+<div>
+<div class="flex items-center justify-between mb-2">
+<span class="bg-error/10 text-error font-label-sm text-label-sm px-2 py-0.5 rounded border border-error/20 flex items-center gap-1">
+<span class="material-symbols-outlined text-[13px] text-error">shield</span>
+                TRANSIT SHIELD
+              </span>
+<span class="font-label-sm text-label-sm text-text-secondary">AIRPORT PROTOCOL</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-primary mb-1">Terminal Pickup Bays</h3>
+<p class="font-body-sm text-body-sm text-text-secondary mb-3">Avoid predatory unauthorized solicitations outside terminal halls.</p>
+<div class="space-y-2 mb-2">
+<div class="bg-surface-subtle p-2 rounded border border-border-hairline">
+<div class="flex justify-between items-center mb-0.5">
+<span class="font-label-sm text-label-sm font-semibold text-primary">DAD (Da Nang)</span>
+<span class="font-label-sm text-label-sm text-text-secondary">Exit Gate A2</span>
+</div>
+<p class="font-body-sm text-body-sm text-text-secondary text-xs">Cross first pedestrian crosswalk to island Bay 3 for rideshare app cars.</p>
+</div>
+<div class="bg-surface-subtle p-2 rounded border border-border-hairline">
+<div class="flex justify-between items-center mb-0.5">
+<span class="font-label-sm text-label-sm font-semibold text-primary">HAN (Noi Bai)</span>
+<span class="font-label-sm text-label-sm text-text-secondary">T2 Column 9-11</span>
+</div>
+<p class="font-body-sm text-body-sm text-text-secondary text-xs">Refuse "Are you Grab?" drivers; compare license plate inside official app.</p>
+</div>
+</div>
+</div>
+<div class="flex items-center justify-between pt-2 border-t border-border-hairline text-label-sm font-label-sm">
+<span class="text-text-secondary">Standard HAN-Old Qtr fare:</span>
+<span class="font-semibold text-primary">280k - 320k VND</span>
+</div>
+</article>
+</div>
+</section>
+<!-- SECTION DIVIDER -->
+<div class="px-margin-mobile">
+<div class="border-t border-border-hairline"></div>
+</div>
+<!-- 4. SIGNATURE ROUTES BY PACE (Tactile Stack) -->
+<section class="px-margin-mobile py-6">
+<div class="flex items-baseline justify-between mb-1">
+<h2 class="font-headline-sm text-headline-sm text-primary">Signature Routes by Pace</h2>
+<span class="font-label-sm text-label-sm text-saffron-gold font-medium">FIELD VERIFIED</span>
+</div>
+<p class="font-body-sm text-body-sm text-text-secondary mb-4">Paced by rest days and dawn light, not arbitrary box-checking.</p>
+<div class="space-y-4">
+<!-- Route 01 -->
+<div class="bg-surface border border-border-hairline rounded-xl p-4 shadow-[0_2px_8px_rgba(15,37,55,0.03)] hover:border-deep-navy/40 transition-colors">
+<div class="flex items-center justify-between text-label-sm font-label-sm mb-1.5">
+<span class="text-saffron-gold font-medium">CORRIDOR 01 • NORTHERN HIGHLANDS</span>
+<span class="text-text-secondary">7 DAYS</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-primary mb-1">Karst Labyrinths &amp; Mountain Fog</h3>
+<p class="font-body-sm text-body-sm text-text-secondary mb-3">Hanoi → Ninh Binh (Trang An) → Bai Tu Long Bay retreat.</p>
+<div class="flex flex-wrap items-center gap-1.5 mb-3 text-label-sm font-label-sm">
+<span class="bg-surface-subtle text-text-secondary px-2 py-0.5 rounded border border-border-hairline">Limousine Van</span>
+<span class="bg-surface-subtle text-text-secondary px-2 py-0.5 rounded border border-border-hairline">Wooden Junk</span>
+<span class="bg-surface-subtle text-primary font-medium px-2 py-0.5 rounded border border-border-hairline">$68 / day</span>
+</div>
+<div class="flex items-center justify-between pt-2 border-t border-border-hairline">
+<span class="font-label-sm text-label-sm text-text-secondary flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">eco</span>
+              Low physical strain
+            </span>
+<a class="text-deep-navy font-label-md text-label-md font-medium flex items-center gap-0.5 hover:text-saffron-gold" href="#">
+<span>Inspect Dossier</span>
+<span class="material-symbols-outlined text-[14px]">chevron_right</span>
+</a>
+</div>
+</div>
+<!-- Route 02: Classic Heritage Spine (Featured) -->
+<div class="bg-surface border-2 border-deep-navy rounded-xl p-4 shadow-[0_4px_16px_rgba(15,37,55,0.08)] relative">
+<div class="absolute -top-2.5 right-4 bg-deep-navy text-rice-paper font-label-sm text-label-sm px-2.5 py-0.5 rounded-full uppercase tracking-wider font-semibold">
+            RECOMMENDED FIRST TRIP
+          </div>
+<div class="flex items-center justify-between text-label-sm font-label-sm mb-1.5 pt-0.5">
+<span class="text-saffron-gold font-medium">CORRIDOR 02 • THE NATIONAL ARTERY</span>
+<span class="text-deep-navy font-semibold">10 DAYS</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-primary mb-1">The Classic Heritage Spine</h3>
+<p class="font-body-sm text-body-sm text-text-secondary mb-3">Hanoi Old Quarter → Hue Citadel → Hoi An Lantern Harbor → Saigon.</p>
+<div class="flex flex-wrap items-center gap-1.5 mb-3 text-label-sm font-label-sm">
+<span class="bg-surface-subtle text-text-secondary px-2 py-0.5 rounded border border-border-hairline">Reunification Express SE3</span>
+<span class="bg-surface-subtle text-text-secondary px-2 py-0.5 rounded border border-border-hairline">Coastal Car</span>
+<span class="bg-surface-subtle text-primary font-medium px-2 py-0.5 rounded border border-border-hairline">$85 / day</span>
+</div>
+<div class="flex items-center justify-between pt-2 border-t border-border-hairline">
+<span class="font-label-sm text-label-sm text-text-secondary flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">schedule</span>
+              Balanced tempo
+            </span>
+<a class="text-deep-navy font-label-md text-label-md font-medium flex items-center gap-0.5 hover:text-saffron-gold" href="#">
+<span>View Route Field Brief</span>
+<span class="material-symbols-outlined text-[14px]">chevron_right</span>
+</a>
+</div>
+</div>
+<!-- Route 03: Central Coast with Image Asset IMG_9 -->
+<div class="bg-surface border border-border-hairline rounded-xl overflow-hidden shadow-[0_2px_8px_rgba(15,37,55,0.03)] hover:border-deep-navy/40 transition-colors">
+<div class="relative h-36 w-full overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="An expansive panoramic aerial view of the curving coastline of Da Nang, Vietnam, bathed in the soft warm sunlight of late afternoon. Deep turquoise ocean waves break into white foam along an endless stretch of golden sand, with modern high-rise beachfront hotels and mist-covered green mountains framing the distant horizon. The overall aesthetic is calm, editorial, and tactile with natural warm tones." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDWDJ695N7Q4-gGDT-j7xK6JA7-gkP-1lyxHWK2u6JBRSexxFY3ZeR05D-E7WK_3Iup0iScFEBsg6lCDDs7_IUW6ark1xCdMH2Vp0ewbBCFNaY0wyosbEuIyqkbNbTKBft_-A2TNa6ZBqkfHhLl0o-NOjXYzJRj0GbJ4t2Zt6fta31rHl1Iyus5UueYVO_TmFRDUWgVEu9jhebdZ105reK4LZXYBEmgKLMnrZlaSF90Hv-7ffIY14-5DdTk_HswiwKfErDMyJnLyp0"/>
+<div class="absolute inset-0 bg-gradient-to-t from-deep-navy/70 via-transparent to-transparent"></div>
+<div class="absolute bottom-2.5 left-3 right-3 flex items-center justify-between text-rice-paper">
+<span class="font-label-sm text-label-sm uppercase tracking-wider bg-deep-navy/80 px-2 py-0.5 rounded backdrop-blur-sm border border-rice-paper/20">CENTRAL COAST &amp; PASS</span>
+<span class="font-label-sm text-label-sm bg-deep-navy/80 px-2 py-0.5 rounded backdrop-blur-sm">5 DAYS</span>
+</div>
+</div>
+<div class="p-4">
+<h3 class="font-headline-sm text-headline-sm text-primary mb-1">Central Coast &amp; Imperial Annam</h3>
+<p class="font-body-sm text-body-sm text-text-secondary mb-3">Da Nang coastline → Hai Van Pass winding summit → Hoi An canal lanes.</p>
+<div class="flex flex-wrap items-center gap-1.5 mb-3 text-label-sm font-label-sm">
+<span class="bg-surface-subtle text-text-secondary px-2 py-0.5 rounded border border-border-hairline">Motorbike or Open-top Van</span>
+<span class="bg-surface-subtle text-primary font-medium px-2 py-0.5 rounded border border-border-hairline">$95 / day</span>
+</div>
+<div class="flex items-center justify-between pt-2 border-t border-border-hairline">
+<span class="font-label-sm text-label-sm text-text-secondary flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">hiking</span>
+                Moderate exploration
+              </span>
+<a class="text-deep-navy font-label-md text-label-md font-medium flex items-center gap-0.5 hover:text-saffron-gold" href="#">
+<span>Central Coast Log</span>
+<span class="material-symbols-outlined text-[14px]">chevron_right</span>
+</a>
+</div>
+</div>
+</div>
+<!-- Route 04: Mekong Waterways -->
+<div class="bg-surface border border-border-hairline rounded-xl p-4 shadow-[0_2px_8px_rgba(15,37,55,0.03)] hover:border-deep-navy/40 transition-colors">
+<div class="flex items-center justify-between text-label-sm font-label-sm mb-1.5">
+<span class="text-saffron-gold font-medium">CORRIDOR 04 • SOUTHERN ARTERIES</span>
+<span class="text-text-secondary">4 DAYS</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-primary mb-1">Mekong Delta &amp; Remote Outposts</h3>
+<p class="font-body-sm text-body-sm text-text-secondary mb-3">Can Tho floating dawn → Chau Doc border canals → Con Dao archipelago flight.</p>
+<div class="flex flex-wrap items-center gap-1.5 mb-3 text-label-sm font-label-sm">
+<span class="bg-surface-subtle text-text-secondary px-2 py-0.5 rounded border border-border-hairline">River Sampan</span>
+<span class="bg-surface-subtle text-text-secondary px-2 py-0.5 rounded border border-border-hairline">Island Turboprop</span>
+<span class="bg-surface-subtle text-primary font-medium px-2 py-0.5 rounded border border-border-hairline">$110 / day</span>
+</div>
+<div class="flex items-center justify-between pt-2 border-t border-border-hairline">
+<span class="font-label-sm text-label-sm text-text-secondary flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">water</span>
+              Quiet water corridors
+            </span>
+<a class="text-deep-navy font-label-md text-label-md font-medium flex items-center gap-0.5 hover:text-saffron-gold" href="#">
+<span>Inspect Dossier</span>
+<span class="material-symbols-outlined text-[14px]">chevron_right</span>
+</a>
+</div>
+</div>
+</div>
+</section>
+<!-- SECTION DIVIDER -->
+<div class="px-margin-mobile">
+<div class="border-t border-border-hairline"></div>
+</div>
+<!-- 5. DESTINATION QUICK-PICKS (2-COLUMN GRID) -->
+<section class="px-margin-mobile py-6">
+<div class="flex items-baseline justify-between mb-1">
+<h2 class="font-headline-sm text-headline-sm text-primary">Regional Base Dossiers</h2>
+<span class="font-label-sm text-label-sm text-text-secondary">INDEXED</span>
+</div>
+<p class="font-body-sm text-body-sm text-text-secondary mb-4">Anchor hubs suited for multi-day remote stays.</p>
+<div class="grid grid-cols-2 gap-3">
+<!-- Grid 1: Hanoi -->
+<article class="bg-surface border border-border-hairline rounded-lg p-3 flex flex-col justify-between hover:border-saffron-gold transition-colors">
+<div>
+<div class="flex items-center justify-between text-label-sm font-label-sm text-text-secondary mb-1">
+<span>NORTH</span>
+<span>6 MIN</span>
+</div>
+<h4 class="font-headline-sm text-[17px] leading-snug text-primary mb-1">Hanoi Capital</h4>
+<p class="font-body-sm text-[12px] leading-relaxed text-text-secondary">French-Indochine architecture, quiet lake dawns, and Pho Gia Truyen craft.</p>
+</div>
+<div class="pt-2 mt-2 border-t border-border-hairline flex items-center justify-between font-label-sm text-label-sm">
+<span class="text-saffron-gold font-medium">OLD QUARTER</span>
+<span class="material-symbols-outlined text-[14px] text-primary">arrow_outward</span>
+</div>
+</article>
+<!-- Grid 2: Da Nang & Hoi An with thumbnail preview IMG_8 -->
+<article class="bg-surface border border-border-hairline rounded-lg overflow-hidden flex flex-col justify-between hover:border-saffron-gold transition-colors">
+<div class="h-24 w-full relative overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="A tranquil twilight view of the historic canal in Hoi An, Vietnam, with traditional yellow ochre merchant shopfronts illuminated by glowing colorful silk lanterns. Wooden sampan boats float peacefully on the still dark water reflecting orange, amber, and gold lights under an evening sky. The atmosphere is warm, romantic, and deeply rooted in classical Southeast Asian travel heritage." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAoT0ylHjclL_lNXhQ5r5wjrxJwmnj9UyT6CHI3_vY6_CgyxAyM6tbkIpgyTg6LQtgqc10z8ScYk-eKD1kiqKSnpt29ALTdEWJtf-G6o4SWeBzBqyoGLKRsqWHBASFDktzqBt0hzlADou23JNHzz-OCkYELeUKpOurnPL09YsHn_mo_wbidNjZXBTDSpskuRdOLqbe4-YJVydETUuNa0vjhMRu37cS9n7DqCsbkBMXyYZ4qX94CLOYTFCyY6VSJHyqZF9lUMCrJOGU"/>
+<div class="absolute bottom-1 right-1 bg-deep-navy/80 text-rice-paper px-1.5 py-0.5 rounded font-label-sm text-[9px] backdrop-blur-sm">
+              9 MIN READ
+            </div>
+</div>
+<div class="p-3">
+<div class="text-label-sm font-label-sm text-text-secondary mb-1">CENTRAL</div>
+<h4 class="font-headline-sm text-[17px] leading-snug text-primary mb-1">Da Nang &amp; Hoi An</h4>
+<p class="font-body-sm text-[12px] leading-relaxed text-text-secondary">Twin bases separated by 30 mins: surf beaches vs 16th-century lantern wharfs.</p>
+<div class="pt-2 mt-2 border-t border-border-hairline flex items-center justify-between font-label-sm text-label-sm">
+<span class="text-saffron-gold font-medium">COASTAL PAIR</span>
+<span class="material-symbols-outlined text-[14px] text-primary">arrow_outward</span>
+</div>
+</div>
+</article>
+<!-- Grid 3: Ninh Binh -->
+<article class="bg-surface border border-border-hairline rounded-lg p-3 flex flex-col justify-between hover:border-saffron-gold transition-colors">
+<div>
+<div class="flex items-center justify-between text-label-sm font-label-sm text-text-secondary mb-1">
+<span>NORTH DELTA</span>
+<span>5 MIN</span>
+</div>
+<h4 class="font-headline-sm text-[17px] leading-snug text-primary mb-1">Ninh Binh</h4>
+<p class="font-body-sm text-[12px] leading-relaxed text-text-secondary">Limestone pinnacles rising out of emerald rice fields. Avoid midday tour coaches.</p>
+</div>
+<div class="pt-2 mt-2 border-t border-border-hairline flex items-center justify-between font-label-sm text-label-sm">
+<span class="text-saffron-gold font-medium">TRANG AN</span>
+<span class="material-symbols-outlined text-[14px] text-primary">arrow_outward</span>
+</div>
+</article>
+<!-- Grid 4: Saigon / Mekong -->
+<article class="bg-surface border border-border-hairline rounded-lg p-3 flex flex-col justify-between hover:border-saffron-gold transition-colors">
+<div>
+<div class="flex items-center justify-between text-label-sm font-label-sm text-text-secondary mb-1">
+<span>SOUTH</span>
+<span>7 MIN</span>
+</div>
+<h4 class="font-headline-sm text-[17px] leading-snug text-primary mb-1">Saigon Hub</h4>
+<p class="font-body-sm text-[12px] leading-relaxed text-text-secondary">Modern commerce velocity, specialty coffee culture, and immediate waterway gateway.</p>
+</div>
+<div class="pt-2 mt-2 border-t border-border-hairline flex items-center justify-between font-label-sm text-label-sm">
+<span class="text-saffron-gold font-medium">DISTRICT 1 &amp; 3</span>
+<span class="material-symbols-outlined text-[14px] text-primary">arrow_outward</span>
+</div>
+</article>
+</div>
+</section>
+<!-- SECTION DIVIDER -->
+<div class="px-margin-mobile">
+<div class="border-t border-border-hairline"></div>
+</div>
+<!-- 6. HEAD-TO-HEAD DILEMMA CARD -->
+<section class="px-margin-mobile py-6">
+<div class="bg-surface-subtle border border-border-hairline rounded-xl p-4.5 relative overflow-hidden">
+<!-- Subtle background postal stamp watermark -->
+<div class="absolute -right-4 -bottom-4 border-2 border-saffron-gold/30 rounded-full w-28 h-28 flex items-center justify-center pointer-events-none paper-stamp">
+<span class="text-saffron-gold/40 font-label-sm text-[9px] uppercase tracking-widest text-center">FIELD VERIFIED<br/>DA NANG / HOI AN<br/>STATION 44</span>
+</div>
+<div class="flex items-center gap-1.5 mb-2">
+<span class="bg-secondary/10 text-secondary font-label-sm text-label-sm px-2 py-0.5 rounded border border-secondary/20 uppercase tracking-wider font-semibold">
+            FIELD DILEMMA SOLVER
+          </span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-primary mb-2">
+          Da Nang vs Hoi An: Where should you actually sleep?
+        </h3>
+<div class="space-y-2 mb-4 font-body-sm text-body-sm text-text-secondary">
+<div class="flex items-start gap-2 bg-surface p-2.5 rounded border border-border-hairline">
+<span class="font-label-sm text-label-sm font-semibold text-deep-navy bg-surface-subtle px-1.5 py-0.5 rounded mt-0.5">DA NANG</span>
+<p class="text-xs leading-relaxed text-text-primary">
+              Best for 500Mbps fiber workspaces, sprawling My Khe beach mornings, and modern craft breweries. Clean grid roads, near zero tourist hustling.
+            </p>
+</div>
+<div class="flex items-start gap-2 bg-surface p-2.5 rounded border border-border-hairline">
+<span class="font-label-sm text-label-sm font-semibold text-saffron-gold bg-saffron-gold/10 px-1.5 py-0.5 rounded mt-0.5">HOI AN</span>
+<p class="text-xs leading-relaxed text-text-primary">
+              Best for lantern-lit quiet dawns, heritage wooden shophouses, and bespoke linen tailoring. Crowded after 17:00; stay in An Bang beach or Cam Pho perimeter.
+            </p>
+</div>
+</div>
+<div class="bg-surface-elevation-1 p-2.5 rounded border border-border-hairline mb-3.5 flex items-center justify-between text-label-sm font-label-sm">
+<span class="text-text-secondary">Direct Taxi Between Cities:</span>
+<span class="font-semibold text-deep-navy">30 mins • ~350,000 VND ($14)</span>
+</div>
+<button class="w-full py-2.5 bg-deep-navy text-rice-paper font-label-md text-label-md rounded flex items-center justify-center gap-1.5 hover:bg-primary-container transition-colors">
+<span>Read Comprehensive Decision Matrix</span>
+<span class="material-symbols-outlined text-[15px]">arrow_forward</span>
+</button>
+</div>
+</section>
+<!-- 7. OFFLINE DISPATCH BRIEF & VERIFICATION FOOTNOTE -->
+<section class="px-margin-mobile pb-8 pt-2">
+<!-- Offline Download Box -->
+<div class="bg-surface border border-border-hairline rounded-lg p-3.5 flex items-center justify-between mb-6 shadow-sm">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded bg-deep-navy/5 flex items-center justify-center text-deep-navy">
+<span class="material-symbols-outlined text-[22px]">download_for_offline</span>
+</div>
+<div>
+<h4 class="font-body-sm text-body-sm font-semibold text-primary">Offline Mobile Field Pack</h4>
+<span class="font-label-sm text-label-sm text-text-secondary block">PDF Dossier • Maps &amp; Contacts • 14 MB</span>
+</div>
+</div>
+<button class="bg-surface-subtle border border-border-hairline hover:bg-border-hairline text-deep-navy px-3 py-1.5 rounded font-label-md text-label-md transition-colors">
+          Save
+        </button>
+</div>
+<!-- Trust & Verification Footer -->
+<div class="text-center space-y-2 pt-4 border-t border-border-hairline">
+<div class="flex items-center justify-center gap-1.5 text-label-sm font-label-sm text-saffron-gold">
+<span class="material-symbols-outlined text-[14px]">verified</span>
+<span class="tracking-widest uppercase">CORRESPONDENT VERIFIED • GAZETTE NO. 44</span>
+</div>
+<p class="font-body-sm text-[12px] text-text-secondary leading-normal max-w-xs mx-auto">
+          All routes, coordinates, and tariff estimates verified directly on-site in Hanoi, Da Nang, and Hoi An. Zero sponsored hospitality listings.
+        </p>
+<div class="text-label-sm font-label-sm text-on-primary-container pt-1">
+          © 2024 VietnamGuide Editorial Field Research.
+        </div>
+</div>
+</section>
+<!-- 8. FIXED ERGONOMIC THUMB DOCK (BOTTOM NAVIGATION SHELL) -->
+<!-- Prohibiting top/bottom border line as mandated in System Shell Guidelines; subtle top tonal shadow separation -->
+<nav class="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-[430px] z-50 bg-rice-paper/95 backdrop-blur-md px-3 py-2 flex items-center justify-around shadow-[0_-4px_20px_-2px_rgba(15,37,55,0.08)]">
+<!-- Tab 1: Routes (ACTIVE) -->
+<a class="flex flex-col items-center gap-0.5 text-primary py-1 px-3" href="#">
+<span class="material-symbols-outlined text-[22px]" style="font-variation-settings: 'FILL' 1;">explore</span>
+<span class="font-label-sm text-label-sm font-semibold tracking-wider uppercase text-primary border-b border-saffron-gold pb-0.5">Routes</span>
+</a>
+<!-- Tab 2: Toolkits -->
+<a class="flex flex-col items-center gap-0.5 text-text-secondary hover:text-primary transition-colors py-1 px-3" href="#">
+<span class="material-symbols-outlined text-[22px]">calculate</span>
+<span class="font-label-sm text-label-sm tracking-wider uppercase">Toolkits</span>
+</a>
+<!-- Tab 3: Search -->
+<a class="flex flex-col items-center gap-0.5 text-text-secondary hover:text-primary transition-colors py-1 px-3" href="#">
+<span class="material-symbols-outlined text-[22px]">search</span>
+<span class="font-label-sm text-label-sm tracking-wider uppercase">Search</span>
+</a>
+<!-- Tab 4: Saved / Field Notes -->
+<a class="flex flex-col items-center gap-0.5 text-text-secondary hover:text-primary transition-colors py-1 px-3 relative" href="#">
+<span class="material-symbols-outlined text-[22px]">bookmark</span>
+<span class="font-label-sm text-label-sm tracking-wider uppercase">Saved</span>
+<span class="absolute top-0.5 right-2 w-1.5 h-1.5 rounded-full bg-saffron-gold"></span>
+</a>
+<!-- Tab 5: Status / Offline -->
+<a class="flex flex-col items-center gap-0.5 text-text-secondary hover:text-primary transition-colors py-1 px-3" href="#">
+<span class="material-symbols-outlined text-[22px] text-green-700">cloud_done</span>
+<span class="font-label-sm text-label-sm tracking-wider uppercase text-green-700">Offline</span>
+</a>
+</nav>
+</main>
+<!-- Interactive Logic for Currency Toggle & Cost Calculator -->
+<script>
+    let currentCurrency = 'USD';
+    let currentDays = 3;
+    let currentDailyRate = 78; // Smart Mid
+    const fxRate = 25000; // 1 USD = 25,000 VND approx
+
+    function toggleCurrency() {
+      const label = document.getElementById('currency-label');
+      if (currentCurrency === 'USD') {
+        currentCurrency = 'VND';
+        label.textContent = 'VND';
+      } else {
+        currentCurrency = 'USD';
+        label.textContent = 'USD';
+      }
+      updateCalculatedCost();
+    }
+
+    function setCostDays(days, btn) {
+      currentDays = days;
+      // Update UI active buttons
+      const buttons = btn.parentElement.querySelectorAll('.duration-btn');
+      buttons.forEach(b => {
+        b.className = 'px-3 py-1 rounded text-text-secondary hover:text-text-primary duration-btn';
+      });
+      btn.className = 'px-3 py-1 rounded bg-deep-navy text-rice-paper font-medium duration-btn';
+      updateCalculatedCost();
+    }
+
+    function setCostTier(tier, rate, btn) {
+      currentDailyRate = rate;
+      const buttons = btn.parentElement.querySelectorAll('.tier-btn');
+      buttons.forEach(b => {
+        b.className = 'border border-border-hairline p-1.5 rounded hover:bg-surface-subtle tier-btn text-text-secondary';
+      });
+      btn.className = 'border border-saffron-gold bg-saffron-gold/10 p-1.5 rounded font-medium tier-btn text-primary';
+      updateCalculatedCost();
+    }
+
+    function updateCalculatedCost() {
+      const totalUSD = currentDays * currentDailyRate;
+      const totalVND = totalUSD * fxRate;
+
+      const costEl = document.getElementById('calculated-cost');
+      const vndEl = document.getElementById('calculated-vnd');
+
+      if (currentCurrency === 'USD') {
+        costEl.textContent = '$' + totalUSD.toLocaleString();
+        vndEl.textContent = '~ ' + totalVND.toLocaleString() + ' VND';
+      } else {
+        costEl.textContent = (totalVND / 1000).toLocaleString() + 'k';
+        vndEl.textContent = '~ $' + totalUSD.toLocaleString() + ' USD';
+      }
+    }
+  </script>
+</body></html>

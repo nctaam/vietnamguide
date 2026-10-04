@@ -1525,6 +1525,104 @@ html:not(.vg-js) body.home .vg-site-header {
   flex-wrap: wrap;
 }
 
+/* 404 Cartographic Recovery Experience */
+.vg-404-container {
+  max-width: 960px;
+  padding-block: 40px 64px;
+}
+
+.vg-404-lead {
+  font-size: 17.5px;
+  line-height: 1.65;
+  color: rgba(26, 32, 44, 0.78);
+  margin: 16px 0 28px;
+  max-width: 720px;
+}
+
+.vg-404-search-wrap {
+  max-width: 580px;
+  margin-bottom: 36px;
+}
+
+.vg-404-recovery-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 18px;
+  margin: 32px 0 36px;
+}
+
+@media (min-width: 640px) {
+  .vg-404-recovery-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+}
+
+.vg-404-card {
+  display: flex;
+  flex-direction: column;
+  padding: 22px;
+  border-radius: 12px;
+  border: 1px solid var(--vg-border-hairline, #E5DFD6);
+  background: #FFFFFF;
+  text-decoration: none;
+  box-shadow: 0 2px 10px rgba(15, 37, 55, 0.04);
+  transition: transform 200ms cubic-bezier(0.16, 1, 0.3, 1), border-color 200ms ease, box-shadow 200ms ease;
+}
+
+.vg-404-card:hover {
+  transform: translateY(-3px);
+  border-color: var(--vg-gold-saffron, #C99446);
+  box-shadow: 0 10px 28px rgba(15, 37, 55, 0.08);
+}
+
+.vg-404-card:active {
+  transform: scale(0.985);
+}
+
+.vg-404-card:focus-visible {
+  outline: 2px solid var(--vg-gold-saffron, #C99446);
+  outline-offset: 2px;
+}
+
+.vg-404-card__badge {
+  display: inline-block;
+  font-family: var(--vg-mono, "JetBrains Mono", monospace);
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #8C6020;
+  margin-bottom: 8px;
+}
+
+.vg-404-card__title {
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--vg-navy, #0F2537);
+  margin: 0 0 8px;
+  line-height: 1.35;
+}
+
+.vg-404-card__desc {
+  font-size: 13.5px;
+  line-height: 1.55;
+  color: rgba(26, 32, 44, 0.72);
+  margin: 0 0 16px;
+  flex: 1;
+}
+
+.vg-404-card__cta {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--vg-forest, #1E6B52);
+  transition: color 150ms ease;
+}
+
+.vg-404-card:hover .vg-404-card__cta {
+  color: var(--vg-gold-saffron, #C99446);
+}
+
 /* Hub Ecosystem Components */
 .vg-hub-hero {
   margin-bottom: 48px;

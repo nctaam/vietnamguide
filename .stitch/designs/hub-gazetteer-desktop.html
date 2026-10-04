@@ -1,0 +1,965 @@
+<!DOCTYPE html>
+
+<html class="scroll-smooth" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>VietnamGuide — Definitive Curated Regional Travel Gazetteer &amp; Route Index (Q1 2026)</title>
+<!-- Typography Preconnect -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&amp;family=JetBrains+Mono:wght@400;500;600&amp;family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,400;1,600&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols Outlined (Literal Requirement) -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS Engine CDN -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Tailwind Theme Configuration Verbatim from System Token Design -->
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "surface-container": "#efeeeb",
+            "surface-elevation-2": "#FDFCFB",
+            "on-primary": "#ffffff",
+            "secondary-fixed-dim": "#f6bc6a",
+            "outline-variant": "#c3c7cd",
+            "surface": "#FFFFFF",
+            "surface-elevation-1": "#FFFFFF",
+            "inverse-on-surface": "#f2f0ed",
+            "on-surface-variant": "#43474c",
+            "primary": "#000f1d",
+            "on-primary-container": "#788da3",
+            "tertiary-container": "#192435",
+            "surface-tint": "#4c6075",
+            "primary-fixed": "#cfe5fd",
+            "inverse-surface": "#30312f",
+            "on-primary-fixed-variant": "#34495c",
+            "secondary": "#815608",
+            "outline": "#74777d",
+            "surface-container-highest": "#e4e2df",
+            "surface-container-lowest": "#ffffff",
+            "surface-container-low": "#f5f3f0",
+            "primary-fixed-dim": "#b3c9e0",
+            "on-tertiary": "#ffffff",
+            "error-container": "#ffdad6",
+            "surface-dim": "#dbdad7",
+            "surface-container-high": "#eae8e5",
+            "background": "#fbf9f6",
+            "on-error-container": "#93000a",
+            "on-tertiary-fixed-variant": "#3c475a",
+            "border-hairline": "#E5DFD6",
+            "secondary-container": "#ffc472",
+            "primary-container": "#0f2537",
+            "on-secondary-container": "#794f01",
+            "on-error": "#ffffff",
+            "tertiary-fixed-dim": "#bcc7dd",
+            "secondary-fixed": "#ffddb3",
+            "on-secondary-fixed": "#291800",
+            "rice-paper": "#FAF8F5",
+            "deep-navy": "#0F2537",
+            "on-tertiary-fixed": "#111c2c",
+            "saffron-gold": "#C99446",
+            "inverse-primary": "#b3c9e0",
+            "surface-variant": "#e4e2df",
+            "text-primary": "#1A202C",
+            "on-tertiary-container": "#808ba0",
+            "on-secondary-fixed-variant": "#633f00",
+            "surface-bright": "#fbf9f6",
+            "error": "#ba1a1a",
+            "on-surface": "#1b1c1a",
+            "on-secondary": "#ffffff",
+            "tertiary": "#040e1e",
+            "on-background": "#1b1c1a",
+            "surface-subtle": "#F4EFEB",
+            "on-primary-fixed": "#061d2f",
+            "tertiary-fixed": "#d8e3fa",
+            "text-secondary": "#4A5568"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.125rem",
+            "lg": "0.25rem",
+            "xl": "0.5rem",
+            "full": "0.75rem"
+          },
+          "spacing": {
+            "margin-mobile": "1rem",
+            "space-2xl": "4rem",
+            "gutter": "1.5rem",
+            "space-3xl": "6rem",
+            "margin-tablet": "2.5rem",
+            "space-sm": "0.5rem",
+            "space-xl": "2.5rem",
+            "margin-desktop": "4rem",
+            "space-md": "1rem",
+            "space-lg": "1.5rem",
+            "space-xs": "0.25rem",
+            "gutter-mobile": "1rem",
+            "gutter-desktop": "2.5rem",
+            "margin": "1.5rem"
+          },
+          "fontFamily": {
+            "body-sm": ["Be Vietnam Pro"],
+            "body-lg": ["Be Vietnam Pro"],
+            "headline-lg": ["Playfair Display"],
+            "display-md": ["Playfair Display"],
+            "display-md-mobile": ["Playfair Display"],
+            "label-md": ["JetBrains Mono"],
+            "display-lg-mobile": ["Playfair Display"],
+            "label-lg": ["JetBrains Mono"],
+            "body-md": ["Be Vietnam Pro"],
+            "label-sm": ["JetBrains Mono"],
+            "headline-sm": ["Playfair Display"],
+            "headline-md": ["Playfair Display"],
+            "display-lg": ["Playfair Display"]
+          },
+          "fontSize": {
+            "body-sm": ["13px", {"lineHeight": "20px", "fontWeight": "400"}],
+            "body-lg": ["18px", {"lineHeight": "30px", "fontWeight": "400"}],
+            "headline-lg": ["32px", {"lineHeight": "40px", "fontWeight": "600"}],
+            "display-md": ["40px", {"lineHeight": "48px", "letterSpacing": "-0.015em", "fontWeight": "600"}],
+            "display-md-mobile": ["28px", {"lineHeight": "36px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+            "label-md": ["11px", {"lineHeight": "16px", "letterSpacing": "0.06em", "fontWeight": "500"}],
+            "display-lg-mobile": ["36px", {"lineHeight": "44px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+            "label-lg": ["13px", {"lineHeight": "18px", "letterSpacing": "0.04em", "fontWeight": "500"}],
+            "body-md": ["15px", {"lineHeight": "24px", "fontWeight": "400"}],
+            "label-sm": ["10px", {"lineHeight": "14px", "letterSpacing": "0.08em", "fontWeight": "400"}],
+            "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "500"}],
+            "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "500"}],
+            "display-lg": ["56px", {"lineHeight": "64px", "letterSpacing": "-0.02em", "fontWeight": "700"}]
+          }
+        },
+      },
+    }
+  </script>
+<style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 350, 'GRAD' 0, 'opsz' 20;
+      display: inline-block;
+      vertical-align: middle;
+      line-height: 1;
+    }
+    .paper-texture {
+      background-image: radial-gradient(rgba(15, 37, 55, 0.03) 1px, transparent 1px);
+      background-size: 24px 24px;
+    }
+    .custom-scroll::-webkit-scrollbar {
+      height: 4px;
+    }
+    .custom-scroll::-webkit-scrollbar-thumb {
+      background-color: #E5DFD6;
+      border-radius: 2px;
+    }
+  </style>
+</head>
+<body class="bg-background text-text-primary paper-texture font-body-md antialiased selection:bg-saffron-gold selection:text-surface">
+<!-- =========================================================================
+       1. TopNavBar (Shared Component Execution from JSON)
+       ========================================================================= -->
+<header class="bg-rice-paper text-primary docked full-width top-0 sticky z-40 border-b border-border-hairline shadow-sm">
+<div class="w-full px-gutter-mobile md:px-margin-tablet lg:px-margin-desktop py-4 flex items-center justify-between max-w-7xl mx-auto">
+<!-- Brand & Kicker Group -->
+<div class="flex items-center gap-6">
+<a class="flex flex-col group cursor-pointer" href="#top">
+<div class="flex items-baseline gap-2">
+<span class="font-headline-md text-headline-md tracking-tight font-semibold text-primary">VietnamGuide</span>
+<span class="w-1.5 h-1.5 rounded-full bg-saffron-gold inline-block"></span>
+</div>
+<span class="font-label-sm text-label-sm text-text-secondary tracking-widest uppercase">GAZETTEER NO. 45 // 282 ROUTES</span>
+</a>
+<!-- Desktop Navigation Array -->
+<nav class="hidden lg:flex items-center gap-6 ml-6 pl-6 border-l border-border-hairline">
+<a class="text-text-secondary font-label-md text-label-md uppercase tracking-wider hover:text-primary transition-colors duration-150" href="#dossiers">Field Dossiers</a>
+<a class="text-primary border-b border-saffron-gold pb-1 font-label-md text-label-md uppercase tracking-wider transition-all duration-200" href="#regional-guides">Regional Guides</a>
+<a class="text-text-secondary font-label-md text-label-md uppercase tracking-wider hover:text-primary transition-colors duration-150" href="#transit-log">Transit Log</a>
+<a class="text-text-secondary font-label-md text-label-md uppercase tracking-wider hover:text-primary transition-colors duration-150" href="#cost-matrix">Cost Matrix</a>
+<a class="text-text-secondary font-label-md text-label-md uppercase tracking-wider hover:text-primary transition-colors duration-150" href="#dispatch-archive">Dispatch Archive</a>
+</nav>
+</div>
+<!-- Right Utility Actions -->
+<div class="flex items-center gap-3">
+<!-- Quick Search Bar (Right Docked) -->
+<div class="relative hidden md:block w-48 xl:w-64">
+<input class="w-full bg-surface border border-border-hairline py-1.5 pl-3 pr-8 rounded font-body-sm text-body-sm text-text-primary focus:outline-none focus:border-deep-navy focus:ring-1 focus:ring-saffron-gold transition-all" placeholder="Search 282 routes, passes..." type="text"/>
+<span class="material-symbols-outlined absolute right-2.5 top-2 text-text-secondary text-sm pointer-events-none">search</span>
+</div>
+<!-- Trailing Currency Toggle -->
+<button class="border border-border-hairline bg-surface hover:bg-surface-subtle px-3 py-1.5 rounded font-label-md text-label-md text-text-primary transition-all duration-150 flex items-center gap-1.5" id="currency-toggle">
+<span class="material-symbols-outlined text-sm text-saffron-gold">payments</span>
+<span class="font-semibold text-deep-navy">USD</span> / <span class="text-text-secondary">VND</span>
+</button>
+<!-- Trailing Icon Action: Bookmark -->
+<button aria-label="Bookmarked routes dossier" class="p-1.5 border border-border-hairline rounded bg-surface hover:bg-surface-subtle text-text-secondary hover:text-primary transition-colors">
+<span class="material-symbols-outlined">bookmark</span>
+</button>
+<!-- Trailing Primary Action -->
+<a class="hidden sm:inline-flex items-center gap-2 bg-deep-navy text-rice-paper px-4 py-1.5 rounded font-label-md text-label-md hover:bg-[#16324A] transition-all duration-200" href="#matcher">
+<span class="material-symbols-outlined text-xs text-saffron-gold">explore</span>
+          Dispatch Brief
+        </a>
+</div>
+</div>
+</header>
+<!-- =========================================================================
+       2. Hero Gazetteer Header & Telemetry Band
+       ========================================================================= -->
+<section class="max-w-7xl mx-auto px-gutter-mobile md:px-margin-tablet lg:px-margin-desktop pt-10 pb-8 border-b border-border-hairline">
+<!-- Top Chapter Breadcrumb & Cartographic Stamp -->
+<div class="flex flex-wrap items-center justify-between gap-4 mb-4">
+<div class="inline-flex items-center gap-2">
+<span class="font-label-sm text-label-sm uppercase bg-surface-subtle text-secondary px-2.5 py-1 border border-border-hairline rounded font-semibold tracking-widest">
+          FIELD VERIFIED DOSSIER • Q1 2026
+        </span>
+<span class="text-border-hairline">/</span>
+<span class="font-label-sm text-label-sm text-text-secondary uppercase">LAT 8°30′N - 23°22′N</span>
+</div>
+<!-- Verification Seal -->
+<div class="flex items-center gap-2 text-text-secondary font-label-sm text-label-sm border border-border-hairline px-3 py-1 bg-surface rounded">
+<span class="material-symbols-outlined text-saffron-gold text-sm">verified_user</span>
+<span>ZERO-COMMISSION INDEPENDENT INTELLIGENCE</span>
+</div>
+</div>
+<!-- Main Editorial Headline & Intro -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-end mb-8">
+<div class="lg:col-span-8">
+<p class="font-label-md text-label-md uppercase tracking-wider text-saffron-gold mb-2 font-medium">THE DEFINITIVE GAZETTEER — 282 VETTED ROUTES</p>
+<h1 class="font-display-lg text-headline-lg lg:text-display-lg text-primary tracking-tight leading-tight">
+          Field-Tested Journeys Across North, Central &amp; South Vietnam
+        </h1>
+</div>
+<div class="lg:col-span-4 border-l border-border-hairline pl-0 lg:pl-6 pb-1">
+<p class="font-body-md text-body-md text-text-secondary">
+          Explore empirical itineraries, seasonal micro-climates, and verified transit matrices. Sourced exclusively through non-subsidized overland research by field dispatch correspondents.
+        </p>
+</div>
+</div>
+<!-- Editorial Telemetry Bar -->
+<div class="bg-surface border border-border-hairline p-4 rounded flex flex-wrap items-center justify-between gap-4 text-xs font-label-md text-text-secondary">
+<div class="flex items-center gap-6 divide-x divide-border-hairline">
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-emerald-600 animate-pulse"></span>
+<span class="font-semibold text-primary">282 Routes Cataloged</span>
+</div>
+<div class="pl-6 hidden sm:block">
+<span class="text-primary font-medium">63 Provinces</span> Audited
+        </div>
+<div class="pl-6 hidden md:block">
+<span class="text-saffron-gold font-medium">100% Zero-Commission Verification</span>
+</div>
+</div>
+<div class="flex items-center gap-2 text-text-secondary text-right">
+<span class="material-symbols-outlined text-sm">update</span>
+<span>Latest Field Calibration: <strong class="text-primary font-label-md">Thursday, 14:15 ICT</strong></span>
+</div>
+</div>
+</section>
+<!-- =========================================================================
+       3. Dynamic Filtering & Regional Segment Controls
+       ========================================================================= -->
+<section class="max-w-7xl mx-auto px-gutter-mobile md:px-margin-tablet lg:px-margin-desktop py-6 sticky top-[69px] z-30 bg-background/95 backdrop-blur-md border-b border-border-hairline">
+<!-- Primary Region Tabs -->
+<div class="flex items-center gap-2 overflow-x-auto pb-3 custom-scroll">
+<button class="px-4 py-2 bg-deep-navy text-rice-paper rounded font-label-md text-label-md whitespace-nowrap shadow-sm">
+        All Regions (282)
+      </button>
+<button class="px-4 py-2 bg-surface hover:bg-surface-subtle text-text-secondary border border-border-hairline rounded font-label-md text-label-md whitespace-nowrap transition-colors">
+        Northern Karsts &amp; Highlands (86)
+      </button>
+<button class="px-4 py-2 bg-surface hover:bg-surface-subtle text-text-secondary border border-border-hairline rounded font-label-md text-label-md whitespace-nowrap transition-colors">
+        Central Heritage &amp; Coast (94)
+      </button>
+<button class="px-4 py-2 bg-surface hover:bg-surface-subtle text-text-secondary border border-border-hairline rounded font-label-md text-label-md whitespace-nowrap transition-colors">
+        Southern Waterways &amp; Islands (78)
+      </button>
+<button class="px-4 py-2 bg-surface hover:bg-surface-subtle text-text-secondary border border-border-hairline rounded font-label-md text-label-md whitespace-nowrap transition-colors">
+        Cross-Country Spines (24)
+      </button>
+</div>
+<!-- Secondary Filter Bar & Multi-Select Criteria -->
+<div class="flex flex-wrap items-center justify-between gap-4 pt-3 mt-1 border-t border-border-hairline">
+<!-- Duration Pills & Quick Facets -->
+<div class="flex flex-wrap items-center gap-2">
+<span class="font-label-sm text-label-sm uppercase text-text-secondary mr-1">Duration:</span>
+<button class="bg-surface hover:bg-surface-subtle border border-border-hairline px-3 py-1 rounded text-xs font-label-sm text-text-primary">
+          Weekend / Express (1-3 Days)
+        </button>
+<button class="bg-saffron-gold/10 border border-saffron-gold text-secondary font-medium px-3 py-1 rounded text-xs font-label-sm">
+          Classic Highlights (7-10 Days)
+        </button>
+<button class="bg-surface hover:bg-surface-subtle border border-border-hairline px-3 py-1 rounded text-xs font-label-sm text-text-primary">
+          Deep Immersion (14-21 Days)
+        </button>
+<span class="text-border-hairline mx-1 hidden lg:inline">|</span>
+<!-- Travel Pace Selector -->
+<span class="font-label-sm text-label-sm uppercase text-text-secondary mr-1 hidden sm:inline">Pace:</span>
+<button class="bg-surface hover:bg-surface-subtle border border-border-hairline px-3 py-1 rounded text-xs font-label-sm text-text-primary hidden sm:inline-block">
+          Slow &amp; Mindful
+        </button>
+<button class="bg-surface hover:bg-surface-subtle border border-border-hairline px-3 py-1 rounded text-xs font-label-sm text-text-primary hidden md:inline-block">
+          Active Exploration
+        </button>
+</div>
+<!-- Sorting & Season Badge -->
+<div class="flex items-center gap-3 ml-auto">
+<span class="hidden xl:inline-flex items-center gap-1.5 px-2.5 py-1 rounded bg-surface-subtle border border-border-hairline text-text-secondary font-label-sm text-label-sm">
+<span class="material-symbols-outlined text-xs text-saffron-gold">wb_sunny</span> Current Season: Dry / Coastal Clear
+        </span>
+<div class="flex items-center gap-2">
+<label class="font-label-sm text-label-sm uppercase text-text-secondary" for="route-sort">Sort:</label>
+<select class="bg-surface border border-border-hairline rounded px-2.5 py-1 font-label-sm text-label-sm text-text-primary focus:ring-1 focus:ring-saffron-gold" id="route-sort">
+<option>Curated Editor's Choice</option>
+<option>Duration: Low to High</option>
+<option>Duration: High to Low</option>
+<option>Daily Budget: Low to High</option>
+<option>Pace Intensity: Gentle First</option>
+</select>
+</div>
+</div>
+</div>
+</section>
+<!-- =========================================================================
+       4. Curated Route Dossier Grid (6 Detailed Itinerary Modules)
+       ========================================================================= -->
+<main class="max-w-7xl mx-auto px-gutter-mobile md:px-margin-tablet lg:px-margin-desktop py-12">
+<div class="flex items-center justify-between mb-8">
+<div>
+<h2 class="font-headline-lg text-headline-lg text-primary">Priority Route Dossiers</h2>
+<p class="font-body-sm text-body-sm text-text-secondary mt-1">Cross-referenced against current high-speed rail updates and seasonal road pass advisories.</p>
+</div>
+<div class="text-right hidden sm:block">
+<span class="font-label-md text-label-md text-saffron-gold">SHOWING 6 OF 282 FIELD ITINERARIES</span>
+</div>
+</div>
+<!-- 3-Column Responsive Grid -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+<!-- ================= CARD 1: Classic Heritage Spine ================= -->
+<article class="bg-surface border border-border-hairline rounded-lg overflow-hidden flex flex-col group hover:border-text-secondary transition-all duration-200">
+<!-- Visual Banner with User Reference Image 7 -->
+<div class="relative h-56 w-full overflow-hidden border-b border-border-hairline bg-surface-subtle">
+<img alt="Evening view of Hoi An ancient town riverside canal lanterns" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out" src="https://lh3.googleusercontent.com/aida/AEtjO1XLzJUGN9CdWYeuudqD5b5wNEjxqtRhxz04pCdt8PG6vvmMPKCOj7RdMJBohSV6B5_yMVwvW2kEEh9u5li3_GVY93Zs5-meBEFgsORr7fJx5k-Zm96PDy9TS6Qd6XsgHzTv1flZcn45cDLQMxyA0Yksz93fz-TI-fbcyR_AG6Nn9A8N2AXbve95AD-NV2MVZOrQv0wooZnB5xsGkTxqiBEQI9sYxQOfJsE8S6VBOo5sLlSMQxAoOh4Sc7o"/>
+<div class="absolute top-3 left-3 flex gap-2">
+<span class="font-label-sm text-label-sm uppercase px-2 py-0.5 bg-deep-navy text-rice-paper rounded tracking-wider">
+              FLAGSHIP SPINE
+            </span>
+</div>
+<div class="absolute bottom-3 right-3 bg-rice-paper/95 backdrop-blur-sm border border-border-hairline px-2.5 py-1 rounded text-deep-navy font-label-sm text-label-sm font-semibold">
+            10 DAYS / 9 NIGHTS
+          </div>
+</div>
+<div class="p-6 flex-1 flex flex-col justify-between">
+<div>
+<!-- Monospace Coordinates & Telemetry -->
+<div class="flex items-center justify-between text-text-secondary font-label-sm text-label-sm mb-2">
+<span>ROUTE #VN-01</span>
+<span>HANOI → SAIGON</span>
+</div>
+<!-- Route Title -->
+<h3 class="font-headline-sm text-headline-sm text-primary group-hover:text-secondary transition-colors mb-2">
+              The Classic Heritage Spine
+            </h3>
+<!-- Transit Segment Path -->
+<div class="flex items-center gap-1 text-xs font-label-sm text-saffron-gold mb-3 flex-wrap">
+<span>Hanoi</span>
+<span class="material-symbols-outlined text-xs">arrow_forward</span>
+<span>Hue</span>
+<span class="material-symbols-outlined text-xs">arrow_forward</span>
+<span>Da Nang / Hoi An</span>
+<span class="material-symbols-outlined text-xs">arrow_forward</span>
+<span>Saigon</span>
+</div>
+<p class="font-body-sm text-body-sm text-text-secondary mb-4 line-clamp-3">
+              The quintessential cultural traverse connecting Hanoi's French Quarter, imperial Nguyen relics in Hue, coastal trading tranquility, and Saigon's energetic financial avenues via Reunification Express.
+            </p>
+<!-- Metrics Rail -->
+<div class="grid grid-cols-3 gap-2 py-3 border-y border-border-hairline mb-4 text-center">
+<div>
+<span class="block font-label-sm text-label-sm uppercase text-text-secondary">EST. BUDGET</span>
+<span class="font-label-md text-label-md font-semibold text-primary">$78 / Day</span>
+</div>
+<div class="border-x border-border-hairline">
+<span class="block font-label-sm text-label-sm uppercase text-text-secondary">PACE</span>
+<span class="font-label-md text-label-md font-semibold text-primary">Balanced</span>
+</div>
+<div>
+<span class="block font-label-sm text-label-sm uppercase text-text-secondary">ELEVATION</span>
+<span class="font-label-md text-label-md font-semibold text-primary">Sea - 496m</span>
+</div>
+</div>
+<!-- Curated Tag Pills -->
+<div class="flex flex-wrap gap-1.5 mb-6">
+<span class="px-2 py-0.5 bg-surface-subtle border border-border-hairline text-text-secondary font-label-sm text-label-sm rounded">UNESCO Citadel</span>
+<span class="px-2 py-0.5 bg-surface-subtle border border-border-hairline text-text-secondary font-label-sm text-label-sm rounded">Street Gastronomy</span>
+<span class="px-2 py-0.5 bg-surface-subtle border border-border-hairline text-text-secondary font-label-sm text-label-sm rounded">Lantern Quarter</span>
+</div>
+</div>
+<!-- Dossier Trigger -->
+<a class="inline-flex items-center justify-between w-full pt-3 border-t border-border-hairline text-deep-navy hover:text-saffron-gold font-label-md text-label-md tracking-wide uppercase transition-colors" href="#dossier-vn01">
+<span>View Complete Dossier &amp; Field Map</span>
+<span class="material-symbols-outlined text-sm">arrow_forward</span>
+</a>
+</div>
+</article>
+<!-- ================= CARD 2: Ha Giang Karst Loop ================= -->
+<article class="bg-surface border border-border-hairline rounded-lg overflow-hidden flex flex-col group hover:border-text-secondary transition-all duration-200">
+<!-- Visual Banner with Descriptive Placeholder -->
+<div class="relative h-56 w-full overflow-hidden border-b border-border-hairline bg-surface-subtle">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out" data-alt="An expansive panoramic landscape of the dramatic limestone karst passes of Ha Giang and Ma Pi Leng Pass in northern Vietnam. Misty emerald mountain valleys with winding serpentine canyon roads cut through sharp geological spires. Early morning light reveals small ethnic minority villages nestled among steep terrace slopes, rendered in high-definition editorial travel realism." src="https://lh3.googleusercontent.com/aida-public/AB6AXuB32RVyxfPp1B5oVqBjbsG82BR242cDxlxpnLFoUjEDzdDDYVJd_7s5e4oTbrguk_Tpcql8W3hSSpWkFyo4DuMTOLl1HFLgZTGc7m9VrNq7jA8OXao7ETebhVzNOozPHIFQGyLtmdaCfWBWFtUTvGfDGa6gIJhT6kq4wiBDysDy75FrdkOKC9LgKpG-CIybidBb96iDvabsZvhDVWhJD5UdPUepl07rUFGw8tNP1fQ7OBfoKWbmTh1_if1w-wFf3kLrjRlA3iOk_NE"/>
+<div class="absolute top-3 left-3 flex gap-2">
+<span class="font-label-sm text-label-sm uppercase px-2 py-0.5 bg-secondary text-rice-paper rounded tracking-wider">
+              HIGH HIGHLAND EXPEDITION
+            </span>
+</div>
+<div class="absolute bottom-3 right-3 bg-rice-paper/95 backdrop-blur-sm border border-border-hairline px-2.5 py-1 rounded text-deep-navy font-label-sm text-label-sm font-semibold">
+            4 DAYS / 3 NIGHTS
+          </div>
+</div>
+<div class="p-6 flex-1 flex flex-col justify-between">
+<div>
+<div class="flex items-center justify-between text-text-secondary font-label-sm text-label-sm mb-2">
+<span>ROUTE #HG-04</span>
+<span>HIGH KARST GEOPARK</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-primary group-hover:text-secondary transition-colors mb-2">
+              Ha Giang Loop: High Karst Passes
+            </h3>
+<div class="flex items-center gap-1 text-xs font-label-sm text-saffron-gold mb-3 flex-wrap">
+<span>Ha Giang City</span>
+<span class="material-symbols-outlined text-xs">arrow_forward</span>
+<span>Dong Van</span>
+<span class="material-symbols-outlined text-xs">arrow_forward</span>
+<span>Ma Pi Leng</span>
+<span class="material-symbols-outlined text-xs">arrow_forward</span>
+<span>Meo Vac</span>
+</div>
+<p class="font-body-sm text-body-sm text-text-secondary mb-4 line-clamp-3">
+              Vietnam’s northernmost frontier circuit. Navigate Ma Pi Leng canyon cliff roads, remote Hmong and Tay homestays, and high altitude UNESCO karst topography with dedicated easy-rider guides.
+            </p>
+<div class="grid grid-cols-3 gap-2 py-3 border-y border-border-hairline mb-4 text-center">
+<div>
+<span class="block font-label-sm text-label-sm uppercase text-text-secondary">EST. BUDGET</span>
+<span class="font-label-md text-label-md font-semibold text-primary">$62 / Day</span>
+</div>
+<div class="border-x border-border-hairline">
+<span class="block font-label-sm text-label-sm uppercase text-text-secondary">PACE</span>
+<span class="font-label-md text-label-md font-semibold text-primary">Adventure</span>
+</div>
+<div>
+<span class="block font-label-sm text-label-sm uppercase text-text-secondary">ELEVATION</span>
+<span class="font-label-md text-label-md font-semibold text-primary">1,150m - 1,500m</span>
+</div>
+</div>
+<div class="flex flex-wrap gap-1.5 mb-6">
+<span class="px-2 py-0.5 bg-surface-subtle border border-border-hairline text-text-secondary font-label-sm text-label-sm rounded">Karst Geopark</span>
+<span class="px-2 py-0.5 bg-surface-subtle border border-border-hairline text-text-secondary font-label-sm text-label-sm rounded">Motorbike Safety</span>
+<span class="px-2 py-0.5 bg-surface-subtle border border-border-hairline text-text-secondary font-label-sm text-label-sm rounded">Homestays</span>
+</div>
+</div>
+<a class="inline-flex items-center justify-between w-full pt-3 border-t border-border-hairline text-deep-navy hover:text-saffron-gold font-label-md text-label-md tracking-wide uppercase transition-colors" href="#dossier-hg04">
+<span>View Complete Dossier &amp; Field Map</span>
+<span class="material-symbols-outlined text-sm">arrow_forward</span>
+</a>
+</div>
+</article>
+<!-- ================= CARD 3: Da Nang vs Hoi An Base Matrix ================= -->
+<article class="bg-surface border border-border-hairline rounded-lg overflow-hidden flex flex-col group hover:border-text-secondary transition-all duration-200">
+<!-- Visual Banner with User Reference Image 8 -->
+<div class="relative h-56 w-full overflow-hidden border-b border-border-hairline bg-surface-subtle">
+<img alt="Aerial view of Da Nang My Khe Beach shoreline and modern city hotels under soft morning sky" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out" src="https://lh3.googleusercontent.com/aida/AEtjO1Wak6ZLpmMOmtfmDDrOwmrRQkQcynH1Ni-izSqVJujZQ0J-IX2wAaV_8GC4teNnK8lzp0AM-Np2PfU_pKrjbUBuivcZhqWVBqXrnU1VtIRH2od3dV95PgvxgETZ-oolDXzOc1fgdBnQKVnIsUi1q4LP73WP6vcunkrEkgRZBPY2-yE9xJj8js9siP1F1pyK7pnJNORYg7gJjeX-2QFjZcHW-43IDLq7QFysEEIadQ_9gIlyY8BVoLaG4w"/>
+<div class="absolute top-3 left-3 flex gap-2">
+<span class="font-label-sm text-label-sm uppercase px-2 py-0.5 bg-saffron-gold text-rice-paper rounded tracking-wider">
+              BASE COMPARISON DOSSIER
+            </span>
+</div>
+<div class="absolute bottom-3 right-3 bg-rice-paper/95 backdrop-blur-sm border border-border-hairline px-2.5 py-1 rounded text-deep-navy font-label-sm text-label-sm font-semibold">
+            5 DAYS / 4 NIGHTS
+          </div>
+</div>
+<div class="p-6 flex-1 flex flex-col justify-between">
+<div>
+<div class="flex items-center justify-between text-text-secondary font-label-sm text-label-sm mb-2">
+<span>ROUTE #DN-HA</span>
+<span>CENTRAL COAST</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-primary group-hover:text-secondary transition-colors mb-2">
+              Da Nang vs Hoi An: Central Coast Matrix
+            </h3>
+<div class="flex items-center gap-1 text-xs font-label-sm text-saffron-gold mb-3 flex-wrap">
+<span>My Khe Beach</span>
+<span class="material-symbols-outlined text-xs">sync_alt</span>
+<span>Marble Mountains</span>
+<span class="material-symbols-outlined text-xs">sync_alt</span>
+<span>Old Town An Bang</span>
+</div>
+<p class="font-body-sm text-body-sm text-text-secondary mb-4 line-clamp-3">
+              An empirical base analysis solving the traveler's perennial dilemma: cosmopolitan beach resort infrastructure versus living maritime heritage 28km to the south.
+            </p>
+<div class="grid grid-cols-3 gap-2 py-3 border-y border-border-hairline mb-4 text-center">
+<div>
+<span class="block font-label-sm text-label-sm uppercase text-text-secondary">EST. BUDGET</span>
+<span class="font-label-md text-label-md font-semibold text-primary">$95 / Day</span>
+</div>
+<div class="border-x border-border-hairline">
+<span class="block font-label-sm text-label-sm uppercase text-text-secondary">PACE</span>
+<span class="font-label-md text-label-md font-semibold text-primary">Coastal Ease</span>
+</div>
+<div>
+<span class="block font-label-sm text-label-sm uppercase text-text-secondary">TRANSIT</span>
+<span class="font-label-md text-label-md font-semibold text-primary">35m Taxi</span>
+</div>
+</div>
+<div class="flex flex-wrap gap-1.5 mb-6">
+<span class="px-2 py-0.5 bg-surface-subtle border border-border-hairline text-text-secondary font-label-sm text-label-sm rounded">Beach Resort Luxury</span>
+<span class="px-2 py-0.5 bg-surface-subtle border border-border-hairline text-text-secondary font-label-sm text-label-sm rounded">Ancient Quarter</span>
+<span class="px-2 py-0.5 bg-surface-subtle border border-border-hairline text-text-secondary font-label-sm text-label-sm rounded">Coworking Ready</span>
+</div>
+</div>
+<a class="inline-flex items-center justify-between w-full pt-3 border-t border-border-hairline text-deep-navy hover:text-saffron-gold font-label-md text-label-md tracking-wide uppercase transition-colors" href="#dossier-dnha">
+<span>View Complete Dossier &amp; Field Map</span>
+<span class="material-symbols-outlined text-sm">arrow_forward</span>
+</a>
+</div>
+</article>
+<!-- ================= CARD 4: Ninh Binh Karst Sanctuary ================= -->
+<article class="bg-surface border border-border-hairline rounded-lg overflow-hidden flex flex-col group hover:border-text-secondary transition-all duration-200">
+<div class="relative h-56 w-full overflow-hidden border-b border-border-hairline bg-surface-subtle">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out" data-alt="Scenic landscape of Ninh Binh limestone karsts rising dramatically from emerald green rice paddies and winding calm rivers. Traditional wooden sampan boats glide silently along the Ngo Dong river near Tam Coc, illuminated by soft golden afternoon haze in an editorial documentary style." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCcq5wDuCIuDCua3ZBA5rSrUfp8-BBd0eUKarLladJQl6Zo8yQALtxdB58odsUKKnuCPuazlpLK4pSqLIJUDdQwD8tgcgVQ7fKpJEPGQT5V5N4zlC0OKqqMO5ZZA04n3Y--aLh1wgMzZ3XEKcybp-1OVft4By7FRD7Wzq6p3jg4WgRrpfG8SBgSRbrcmzanp6hEPd8AixbmYeuf7f7ZAWBMeTTJ8bRkrvp3jwoyj2hQzE9P0FgaZcsx8KLPXCXG4inNYfrUdm8dIT4"/>
+<div class="absolute top-3 left-3 flex gap-2">
+<span class="font-label-sm text-label-sm uppercase px-2 py-0.5 bg-surface-container-high text-primary border border-border-hairline rounded tracking-wider">
+              SLOW WATERWAY TRAIL
+            </span>
+</div>
+<div class="absolute bottom-3 right-3 bg-rice-paper/95 backdrop-blur-sm border border-border-hairline px-2.5 py-1 rounded text-deep-navy font-label-sm text-label-sm font-semibold">
+            2 DAYS / 1 NIGHT
+          </div>
+</div>
+<div class="p-6 flex-1 flex flex-col justify-between">
+<div>
+<div class="flex items-center justify-between text-text-secondary font-label-sm text-label-sm mb-2">
+<span>ROUTE #NB-02</span>
+<span>RED RIVER DELTA RIM</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-primary group-hover:text-secondary transition-colors mb-2">
+              Ninh Binh Without Rushing
+            </h3>
+<div class="flex items-center gap-1 text-xs font-label-sm text-saffron-gold mb-3 flex-wrap">
+<span>Trang An</span>
+<span class="material-symbols-outlined text-xs">arrow_forward</span>
+<span>Hang Mua Peak</span>
+<span class="material-symbols-outlined text-xs">arrow_forward</span>
+<span>Hoa Lu Ancient Capital</span>
+</div>
+<p class="font-body-sm text-body-sm text-text-secondary mb-4 line-clamp-3">
+              How to avoid daytime tour bus influxes by staying overnight along the lotus wetlands. Comprehensive sampan route evaluation comparing Trang An Route 2 with quieter Tam Coc dawn departures.
+            </p>
+<div class="grid grid-cols-3 gap-2 py-3 border-y border-border-hairline mb-4 text-center">
+<div>
+<span class="block font-label-sm text-label-sm uppercase text-text-secondary">EST. BUDGET</span>
+<span class="font-label-md text-label-md font-semibold text-primary">$45 / Day</span>
+</div>
+<div class="border-x border-border-hairline">
+<span class="block font-label-sm text-label-sm uppercase text-text-secondary">PACE</span>
+<span class="font-label-md text-label-md font-semibold text-primary">Relaxed</span>
+</div>
+<div>
+<span class="block font-label-sm text-label-sm uppercase text-text-secondary">TRANSFER</span>
+<span class="font-label-md text-label-md font-semibold text-primary">90m Limousine</span>
+</div>
+</div>
+<div class="flex flex-wrap gap-1.5 mb-6">
+<span class="px-2 py-0.5 bg-surface-subtle border border-border-hairline text-text-secondary font-label-sm text-label-sm rounded">Limestone Peaks</span>
+<span class="px-2 py-0.5 bg-surface-subtle border border-border-hairline text-text-secondary font-label-sm text-label-sm rounded">Cycling Trails</span>
+<span class="px-2 py-0.5 bg-surface-subtle border border-border-hairline text-text-secondary font-label-sm text-label-sm rounded">Dawn Departure</span>
+</div>
+</div>
+<a class="inline-flex items-center justify-between w-full pt-3 border-t border-border-hairline text-deep-navy hover:text-saffron-gold font-label-md text-label-md tracking-wide uppercase transition-colors" href="#dossier-nb02">
+<span>View Complete Dossier &amp; Field Map</span>
+<span class="material-symbols-outlined text-sm">arrow_forward</span>
+</a>
+</div>
+</article>
+<!-- ================= CARD 5: Mekong Delta Waterways ================= -->
+<article class="bg-surface border border-border-hairline rounded-lg overflow-hidden flex flex-col group hover:border-text-secondary transition-all duration-200">
+<div class="relative h-56 w-full overflow-hidden border-b border-border-hairline bg-surface-subtle">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out" data-alt="The lush vibrant waterways of the Mekong Delta at sunrise, featuring small wooden canal boats carrying tropical fruits and coconuts through palm-fringed channels near Can Tho. Soft warm sunlight glints off the river surface with misty green mangroves and stilt wooden houses in the background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAWA_b1HVNWt-3-mWGT5KVUOSYjMumx1jkvPd8rbOSxX2PX4eq3Sc8V3v6_ZXt-eUj6iC7swYK4wLYKzthJfLzeagCjmRcIr5wdzaM3Tyx0i7ZymA9LugYzUm23UCITrr7Gu3wGOVQEZ_uRmqiTQ9dNcQoS7jrD_HjEHqJGpgK3tDUKG6dRhyaQ9JDqa3i2mOOrHkkYthoqBwuBmvlwWyUZMrYHNdNOs0wzULvo0PhpbBy-fQ6vej7UknnB5oMlhCpMwKw3UO-9Vls"/>
+<div class="absolute top-3 left-3 flex gap-2">
+<span class="font-label-sm text-label-sm uppercase px-2 py-0.5 bg-surface-container-high text-primary border border-border-hairline rounded tracking-wider">
+              RIVER ARCHIPELAGO
+            </span>
+</div>
+<div class="absolute bottom-3 right-3 bg-rice-paper/95 backdrop-blur-sm border border-border-hairline px-2.5 py-1 rounded text-deep-navy font-label-sm text-label-sm font-semibold">
+            3 DAYS / 2 NIGHTS
+          </div>
+</div>
+<div class="p-6 flex-1 flex flex-col justify-between">
+<div>
+<div class="flex items-center justify-between text-text-secondary font-label-sm text-label-sm mb-2">
+<span>ROUTE #MK-03</span>
+<span>NINE DRAGONS BASIN</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-primary group-hover:text-secondary transition-colors mb-2">
+              Mekong Delta Waterways
+            </h3>
+<div class="flex items-center gap-1 text-xs font-label-sm text-saffron-gold mb-3 flex-wrap">
+<span>Can Tho</span>
+<span class="material-symbols-outlined text-xs">arrow_forward</span>
+<span>Ben Tre</span>
+<span class="material-symbols-outlined text-xs">arrow_forward</span>
+<span>Chau Doc Sanctuary</span>
+</div>
+<p class="font-body-sm text-body-sm text-text-secondary mb-4 line-clamp-3">
+              Beyond commercial day tours: dawn navigation of Cai Rang floating produce exchanges, homestay cycling through Ben Tre coconut groves, and border canal sanctuaries in Chau Doc.
+            </p>
+<div class="grid grid-cols-3 gap-2 py-3 border-y border-border-hairline mb-4 text-center">
+<div>
+<span class="block font-label-sm text-label-sm uppercase text-text-secondary">EST. BUDGET</span>
+<span class="font-label-md text-label-md font-semibold text-primary">$55 / Day</span>
+</div>
+<div class="border-x border-border-hairline">
+<span class="block font-label-sm text-label-sm uppercase text-text-secondary">PACE</span>
+<span class="font-label-md text-label-md font-semibold text-primary">Cultural</span>
+</div>
+<div>
+<span class="block font-label-sm text-label-sm uppercase text-text-secondary">WATERCRAFT</span>
+<span class="font-label-md text-label-md font-semibold text-primary">Sampan / Ferry</span>
+</div>
+</div>
+<div class="flex flex-wrap gap-1.5 mb-6">
+<span class="px-2 py-0.5 bg-surface-subtle border border-border-hairline text-text-secondary font-label-sm text-label-sm rounded">Riverboat Dawn</span>
+<span class="px-2 py-0.5 bg-surface-subtle border border-border-hairline text-text-secondary font-label-sm text-label-sm rounded">Fruit Orchards</span>
+<span class="px-2 py-0.5 bg-surface-subtle border border-border-hairline text-text-secondary font-label-sm text-label-sm rounded">Khmer Pagodas</span>
+</div>
+</div>
+<a class="inline-flex items-center justify-between w-full pt-3 border-t border-border-hairline text-deep-navy hover:text-saffron-gold font-label-md text-label-md tracking-wide uppercase transition-colors" href="#dossier-mk03">
+<span>View Complete Dossier &amp; Field Map</span>
+<span class="material-symbols-outlined text-sm">arrow_forward</span>
+</a>
+</div>
+</article>
+<!-- ================= CARD 6: Con Dao Archipelago ================= -->
+<article class="bg-surface border border-border-hairline rounded-lg overflow-hidden flex flex-col group hover:border-text-secondary transition-all duration-200">
+<div class="relative h-56 w-full overflow-hidden border-b border-border-hairline bg-surface-subtle">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out" data-alt="Crystal clear turquoise ocean waters gently lapping against the pristine white sand curve of Dam Trau beach on Con Dao island in southern Vietnam. Rugged forested granite hills enclose the secluded tropical cove under a bright blue open sky with natural warm print tonality." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCWj2y7v5YXHcFMscBUYJMlBP6TekwO8ecNNoFWmYlgX2Bv44urMGdhj5EQej1wTgqysd9j9BtafXL-Wo5bPePKnDbqHoRyJu0IrEgwhGtiYH4IgmLGTT4MI1OD0lLCUFGo0erDehaWAQNfr70tsv8DHBz57_qPInEYsYGxZxsLjNvukcUYbp1AGiV5lvrA2fWFAIwHckxKnZzn82Wlz_HcwxzLStO5wDl3J8Q-iPUWqbKv3Asn8qFi1H1LSsGonXuo2N91dn4euSg"/>
+<div class="absolute top-3 left-3 flex gap-2">
+<span class="font-label-sm text-label-sm uppercase px-2 py-0.5 bg-surface-container-high text-primary border border-border-hairline rounded tracking-wider">
+              OFFSHORE MARINE RESERVE
+            </span>
+</div>
+<div class="absolute bottom-3 right-3 bg-rice-paper/95 backdrop-blur-sm border border-border-hairline px-2.5 py-1 rounded text-deep-navy font-label-sm text-label-sm font-semibold">
+            4 DAYS / 3 NIGHTS
+          </div>
+</div>
+<div class="p-6 flex-1 flex flex-col justify-between">
+<div>
+<div class="flex items-center justify-between text-text-secondary font-label-sm text-label-sm mb-2">
+<span>ROUTE #CD-06</span>
+<span>EAST SEA ISLETS</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-primary group-hover:text-secondary transition-colors mb-2">
+              Con Dao: Remote Sanctuaries
+            </h3>
+<div class="flex items-center gap-1 text-xs font-label-sm text-saffron-gold mb-3 flex-wrap">
+<span>Con Son Town</span>
+<span class="material-symbols-outlined text-xs">arrow_forward</span>
+<span>Dam Trau Cove</span>
+<span class="material-symbols-outlined text-xs">arrow_forward</span>
+<span>Bay Canh Marine Park</span>
+</div>
+<p class="font-body-sm text-body-sm text-text-secondary mb-4 line-clamp-3">
+              Vietnam’s quietest marine sanctuary. Unspoiled coral reefs, sea turtle nesting beaches, and solemn colonial prison memorials set against untamed forested sea cliffs.
+            </p>
+<div class="grid grid-cols-3 gap-2 py-3 border-y border-border-hairline mb-4 text-center">
+<div>
+<span class="block font-label-sm text-label-sm uppercase text-text-secondary">EST. BUDGET</span>
+<span class="font-label-md text-label-md font-semibold text-primary">$130 / Day</span>
+</div>
+<div class="border-x border-border-hairline">
+<span class="block font-label-sm text-label-sm uppercase text-text-secondary">PACE</span>
+<span class="font-label-md text-label-md font-semibold text-primary">Secluded Beach</span>
+</div>
+<div>
+<span class="block font-label-sm text-label-sm uppercase text-text-secondary">FLIGHT</span>
+<span class="font-label-md text-label-md font-semibold text-primary">45m from SGN</span>
+</div>
+</div>
+<div class="flex flex-wrap gap-1.5 mb-6">
+<span class="px-2 py-0.5 bg-surface-subtle border border-border-hairline text-text-secondary font-label-sm text-label-sm rounded">Turtle Sanctuaries</span>
+<span class="px-2 py-0.5 bg-surface-subtle border border-border-hairline text-text-secondary font-label-sm text-label-sm rounded">Dam Trau Cove</span>
+<span class="px-2 py-0.5 bg-surface-subtle border border-border-hairline text-text-secondary font-label-sm text-label-sm rounded">Heritage Prison</span>
+</div>
+</div>
+<a class="inline-flex items-center justify-between w-full pt-3 border-t border-border-hairline text-deep-navy hover:text-saffron-gold font-label-md text-label-md tracking-wide uppercase transition-colors" href="#dossier-cd06">
+<span>View Complete Dossier &amp; Field Map</span>
+<span class="material-symbols-outlined text-sm">arrow_forward</span>
+</a>
+</div>
+</article>
+</div>
+<!-- Pagination & Complete Archive Drawer Trigger -->
+<div class="mt-12 pt-6 border-t border-border-hairline flex flex-col sm:flex-row items-center justify-between gap-4">
+<span class="font-label-sm text-label-sm text-text-secondary uppercase">
+        SHOWING 1 - 6 OF 282 MONITORED FIELD ROUTES • INDEX VOL. 45
+      </span>
+<div class="flex items-center gap-2">
+<button class="px-3 py-1.5 border border-border-hairline bg-surface rounded text-text-secondary font-label-sm text-label-sm hover:text-primary">Previous</button>
+<button class="px-3 py-1.5 bg-deep-navy text-rice-paper rounded font-label-sm text-label-sm font-semibold">1</button>
+<button class="px-3 py-1.5 border border-border-hairline bg-surface rounded text-text-secondary font-label-sm text-label-sm hover:text-primary">2</button>
+<button class="px-3 py-1.5 border border-border-hairline bg-surface rounded text-text-secondary font-label-sm text-label-sm hover:text-primary">3</button>
+<span class="text-text-secondary font-label-sm text-label-sm px-1">... 47</span>
+<button class="px-3 py-1.5 border border-border-hairline bg-surface rounded text-text-secondary font-label-sm text-label-sm hover:text-primary">Next</button>
+</div>
+</div>
+</main>
+<!-- =========================================================================
+       5. Asymmetric Route Comparison & Dilemma Callout
+       ========================================================================= -->
+<section class="max-w-7xl mx-auto px-gutter-mobile md:px-margin-tablet lg:px-margin-desktop py-8">
+<div class="bg-surface-subtle border border-border-hairline rounded-lg p-8 lg:p-12 relative overflow-hidden">
+<!-- Subtle Ink Watermark -->
+<div class="absolute -right-10 -bottom-10 opacity-5 pointer-events-none text-primary font-headline-lg text-[180px] leading-none select-none font-bold">
+        VN
+      </div>
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center relative z-10">
+<div class="lg:col-span-8">
+<div class="inline-flex items-center gap-2 text-saffron-gold font-label-sm text-label-sm uppercase tracking-wider mb-2">
+<span class="material-symbols-outlined text-sm">balance</span>
+<span>DECISION ARCHITECTURE MATRIX</span>
+</div>
+<h2 class="font-headline-lg text-headline-lg text-primary mb-3">
+            Torn Between Adjacent Vietnamese Regions?
+          </h2>
+<p class="font-body-md text-body-md text-text-secondary max-w-2xl">
+            Compare head-to-head empirical parameters before reserving transport: <strong>Ha Long vs Lan Ha Bay</strong> crowd densities, <strong>Sapa vs Ha Giang</strong> elevation and trekking authenticity, or <strong>Ninh Binh as a day trip vs overnight</strong> stay.
+          </p>
+<div class="flex flex-wrap items-center gap-4 mt-6">
+<span class="font-label-sm text-label-sm text-text-secondary uppercase">Common Tradeoffs:</span>
+<span class="px-3 py-1 bg-surface border border-border-hairline rounded font-label-sm text-label-sm text-primary">Ha Long / Lan Ha</span>
+<span class="px-3 py-1 bg-surface border border-border-hairline rounded font-label-sm text-label-sm text-primary">Sapa / Ha Giang</span>
+<span class="px-3 py-1 bg-surface border border-border-hairline rounded font-label-sm text-label-sm text-primary">Hoi An / Hue Coast</span>
+</div>
+</div>
+<div class="lg:col-span-4 flex flex-col gap-3 justify-center">
+<a class="w-full text-center bg-deep-navy text-rice-paper hover:bg-[#16324A] px-6 py-3.5 rounded font-label-md text-label-md uppercase tracking-wider transition-all duration-150 shadow-sm flex items-center justify-center gap-2" href="#matrix-view">
+<span>Open Comparison Matrix</span>
+<span class="material-symbols-outlined text-sm text-saffron-gold">tune</span>
+</a>
+<p class="text-center font-label-sm text-label-sm text-text-secondary">
+            Empirical tariffs, weather windows, and travel friction indexed.
+          </p>
+</div>
+</div>
+</div>
+</section>
+<!-- =========================================================================
+       6. Interactive Route Matching Widget (Route Matcher in 3 Clicks)
+       ========================================================================= -->
+<section class="max-w-7xl mx-auto px-gutter-mobile md:px-margin-tablet lg:px-margin-desktop py-12" id="matcher">
+<div class="bg-surface border border-border-hairline rounded-lg p-6 lg:p-10 shadow-sm">
+<!-- Section Header -->
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8 pb-6 border-b border-border-hairline">
+<div>
+<span class="font-label-md text-label-md text-saffron-gold uppercase tracking-wider font-medium">REAL-TIME ITINERARY CALIBRATOR</span>
+<h2 class="font-headline-lg text-headline-lg text-primary mt-1">Route Matcher in 3 Clicks</h2>
+<p class="font-body-sm text-body-sm text-text-secondary mt-1">Select your window, primary focus, and departure calendar to reveal empirical pairings.</p>
+</div>
+<div class="text-xs font-label-sm text-text-secondary flex items-center gap-2">
+<span class="material-symbols-outlined text-saffron-gold text-base">auto_awesome</span>
+<span>CALIBRATED AGAINST 282 FIELD ARCHIVES</span>
+</div>
+</div>
+<!-- 3-Click Interactive Filter Controls -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+<!-- Step 1: Duration Window -->
+<div class="p-4 bg-surface-subtle/60 border border-border-hairline rounded">
+<label class="block font-label-sm text-label-sm uppercase text-text-secondary mb-3">1. Total Travel Duration</label>
+<div class="space-y-2" id="matcher-duration">
+<button class="w-full text-left px-3 py-2 bg-surface hover:bg-surface-elevation-2 border border-border-hairline rounded font-label-md text-label-md text-text-primary transition-all duration-150 flex items-center justify-between active-tab-matcher border-deep-navy">
+<span>3 to 5 Days (Focused Region)</span>
+<span class="material-symbols-outlined text-xs text-saffron-gold">check_circle</span>
+</button>
+<button class="w-full text-left px-3 py-2 bg-surface hover:bg-surface-elevation-2 border border-border-hairline rounded font-label-md text-label-md text-text-secondary transition-all duration-150 flex items-center justify-between">
+<span>7 to 10 Days (Bi-Regional)</span>
+<span class="material-symbols-outlined text-xs opacity-0">check_circle</span>
+</button>
+<button class="w-full text-left px-3 py-2 bg-surface hover:bg-surface-elevation-2 border border-border-hairline rounded font-label-md text-label-md text-text-secondary transition-all duration-150 flex items-center justify-between">
+<span>14+ Days (Grand Cross-Country)</span>
+<span class="material-symbols-outlined text-xs opacity-0">check_circle</span>
+</button>
+</div>
+</div>
+<!-- Step 2: Primary Focus / Terrain -->
+<div class="p-4 bg-surface-subtle/60 border border-border-hairline rounded">
+<label class="block font-label-sm text-label-sm uppercase text-text-secondary mb-3">2. Primary Landscape Interest</label>
+<div class="space-y-2" id="matcher-interest">
+<button class="w-full text-left px-3 py-2 bg-surface hover:bg-surface-elevation-2 border border-border-hairline rounded font-label-md text-label-md text-text-secondary transition-all duration-150 flex items-center justify-between">
+<span>High Karsts &amp; Deep Passes</span>
+<span class="material-symbols-outlined text-xs opacity-0">check_circle</span>
+</button>
+<button class="w-full text-left px-3 py-2 bg-surface hover:bg-surface-elevation-2 border border-border-hairline rounded font-label-md text-label-md text-text-primary transition-all duration-150 flex items-center justify-between border-deep-navy">
+<span>Living Maritime &amp; Coastal Heritage</span>
+<span class="material-symbols-outlined text-xs text-saffron-gold">check_circle</span>
+</button>
+<button class="w-full text-left px-3 py-2 bg-surface hover:bg-surface-elevation-2 border border-border-hairline rounded font-label-md text-label-md text-text-secondary transition-all duration-150 flex items-center justify-between">
+<span>Remote Archipelago &amp; Islands</span>
+<span class="material-symbols-outlined text-xs opacity-0">check_circle</span>
+</button>
+</div>
+</div>
+<!-- Step 3: Travel Month -->
+<div class="p-4 bg-surface-subtle/60 border border-border-hairline rounded">
+<label class="block font-label-sm text-label-sm uppercase text-text-secondary mb-3">3. Planned Departure Period</label>
+<div class="space-y-2" id="matcher-season">
+<button class="w-full text-left px-3 py-2 bg-surface hover:bg-surface-elevation-2 border border-border-hairline rounded font-label-md text-label-md text-text-primary transition-all duration-150 flex items-center justify-between border-deep-navy">
+<span>Jan - Apr (Dry Coast &amp; Mild North)</span>
+<span class="material-symbols-outlined text-xs text-saffron-gold">check_circle</span>
+</button>
+<button class="w-full text-left px-3 py-2 bg-surface hover:bg-surface-elevation-2 border border-border-hairline rounded font-label-md text-label-md text-text-secondary transition-all duration-150 flex items-center justify-between">
+<span>May - Aug (High Summer Sun &amp; Beach)</span>
+<span class="material-symbols-outlined text-xs opacity-0">check_circle</span>
+</button>
+<button class="w-full text-left px-3 py-2 bg-surface hover:bg-surface-elevation-2 border border-border-hairline rounded font-label-md text-label-md text-text-secondary transition-all duration-150 flex items-center justify-between">
+<span>Sep - Dec (Golden Terraces &amp; North Dry)</span>
+<span class="material-symbols-outlined text-xs opacity-0">check_circle</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Real-time Matching Output Banner -->
+<div class="bg-rice-paper border border-border-hairline p-5 rounded-lg flex flex-col md:flex-row items-center justify-between gap-4">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 rounded bg-deep-navy text-rice-paper flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-xl text-saffron-gold">recommend</span>
+</div>
+<div>
+<div class="flex items-center gap-2">
+<span class="font-label-sm text-label-sm uppercase text-saffron-gold font-semibold">OPTIMAL PAIRING IDENTIFIED</span>
+<span class="text-xs text-text-secondary font-label-sm">• 98% MATCH SCORE</span>
+</div>
+<h4 class="font-headline-sm text-headline-sm text-primary">Central Heritage Corridor (Hue + Hoi An + Da Nang)</h4>
+<p class="font-body-sm text-body-sm text-text-secondary">Low friction overland transfers via Hai Van Pass, peak dry sunshine, and UNESCO gastronomy.</p>
+</div>
+</div>
+<a class="whitespace-nowrap bg-deep-navy text-rice-paper hover:bg-[#16324A] px-5 py-2.5 rounded font-label-md text-label-md uppercase tracking-wider transition-colors shrink-0" href="#dossier-dnha">
+          Load Match Dossier →
+        </a>
+</div>
+</div>
+</section>
+<!-- =========================================================================
+       7. Cartographic Index & Field Verification Note
+       ========================================================================= -->
+<section class="max-w-7xl mx-auto px-gutter-mobile md:px-margin-tablet lg:px-margin-desktop py-8 mb-8">
+<div class="border-t border-b border-border-hairline py-8 grid grid-cols-1 md:grid-cols-4 gap-6 text-sm">
+<div class="space-y-1">
+<span class="font-label-sm text-label-sm uppercase text-text-secondary block">ANCHOR COORDINATE</span>
+<span class="font-label-md text-label-md text-primary font-semibold">15.8801° N, 108.3380° E</span>
+<p class="font-body-sm text-body-sm text-text-secondary">Field benchmark marker at Thu Bon confluence.</p>
+</div>
+<div class="space-y-1">
+<span class="font-label-sm text-label-sm uppercase text-text-secondary block">TARIFF INTEGRITY</span>
+<span class="font-label-md text-label-md text-primary font-semibold">Independent Field Audits</span>
+<p class="font-body-sm text-body-sm text-text-secondary">Zero comped hotel stays, affiliate kickbacks, or promotional sponsorships.</p>
+</div>
+<div class="space-y-1">
+<span class="font-label-sm text-label-sm uppercase text-text-secondary block">WEATHER ADVISORIES</span>
+<span class="font-label-md text-label-md text-primary font-semibold">Live Monsoonal Radar</span>
+<p class="font-body-sm text-body-sm text-text-secondary">Updated twice daily with national maritime weather bureau advisories.</p>
+</div>
+<div class="space-y-1">
+<span class="font-label-sm text-label-sm uppercase text-text-secondary block">MACHINE DISCOVERABILITY</span>
+<a class="font-label-md text-label-md text-saffron-gold hover:underline font-semibold block" href="/llms.txt">/llms.txt Endpoint Active</a>
+<p class="font-body-sm text-body-sm text-text-secondary">Structured semantic markdown feeds formatted for autonomous assistants.</p>
+</div>
+</div>
+</section>
+<!-- =========================================================================
+       8. Footer (Shared Component Execution from JSON)
+       ========================================================================= -->
+<footer class="bg-deep-navy text-rice-paper docked full-width bottom border-t border-border-hairline">
+<div class="w-full px-gutter-mobile md:px-margin-tablet lg:px-margin-desktop py-12 flex flex-col gap-8 max-w-7xl mx-auto">
+<!-- Top Tier: Masthead Logo & Primary Direct Links -->
+<div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-6 pb-6 border-b border-border-hairline/20">
+<div>
+<span class="font-headline-md text-headline-md font-semibold text-rice-paper">VietnamGuide</span>
+<p class="font-body-sm text-body-sm text-on-primary-container mt-1">Field-level editorial intelligence and overland transit cartography.</p>
+</div>
+<div class="flex flex-wrap items-center gap-4 text-xs">
+<span class="font-label-sm text-label-sm text-saffron-gold uppercase tracking-wider">REGIONAL GAZETTEER 2026</span>
+<span class="text-on-primary-container">•</span>
+<span class="font-label-sm text-label-sm text-rice-paper">COORD: 15.8801° N, 108.3380° E</span>
+</div>
+</div>
+<!-- Links Array Rendered from Component Authority Source -->
+<div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 text-xs font-label-sm text-label-sm">
+<a class="text-saffron-gold underline underline-offset-4 hover:text-rice-paper transition-colors duration-150" href="#methodology">
+          Editorial Methodology
+        </a>
+<a class="text-on-primary-container hover:text-rice-paper transition-colors duration-150" href="#verification">
+          Field Verification Standards
+        </a>
+<a class="text-on-primary-container hover:text-rice-paper transition-colors duration-150" href="#cartographic">
+          Cartographic Log
+        </a>
+<a class="text-on-primary-container hover:text-rice-paper transition-colors duration-150" href="#syndication">
+          Dispatch Syndication
+        </a>
+<a class="text-on-primary-container hover:text-rice-paper transition-colors duration-150" href="#privacy">
+          Privacy &amp; Data Integrity
+        </a>
+<a class="text-on-primary-container hover:text-rice-paper transition-colors duration-150" href="#contact">
+          Direct Researcher Contact
+        </a>
+</div>
+<!-- Bottom Tier: Copyright Statement -->
+<div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 pt-4 border-t border-border-hairline/10 text-xs font-body-sm text-on-primary-container">
+<p>© 2024 VietnamGuide Editorial Field Research. Gazette No. 44-DN/HA. All coordinates and tariff matrices verified on-site.</p>
+<div class="flex items-center gap-4 text-xs font-label-sm">
+<span>ISSN 2831-9041</span>
+<span>PRINT RUN ARCHIVE NO. 45</span>
+</div>
+</div>
+</div>
+</footer>
+<!-- =========================================================================
+       Lightweight Interactive Currency & Matcher Scripting
+       ========================================================================= -->
+<script>
+    // Currency Toggle Micro-interaction
+    const currencyToggle = document.getElementById('currency-toggle');
+    let isUsd = true;
+
+    if (currencyToggle) {
+      currencyToggle.addEventListener('click', () => {
+        isUsd = !isUsd;
+        if (isUsd) {
+          currencyToggle.innerHTML = `
+            <span class="material-symbols-outlined text-sm text-saffron-gold">payments</span>
+            <span class="font-semibold text-deep-navy">USD</span> / <span class="text-text-secondary">VND</span>
+          `;
+        } else {
+          currencyToggle.innerHTML = `
+            <span class="material-symbols-outlined text-sm text-saffron-gold">payments</span>
+            <span class="text-text-secondary">USD</span> / <span class="font-semibold text-deep-navy">VND</span>
+          `;
+        }
+      });
+    }
+
+    // Interactive 3-Click Matcher State Simulator
+    document.querySelectorAll('#matcher-duration button, #matcher-interest button, #matcher-season button').forEach(button => {
+      button.addEventListener('click', function() {
+        const parent = this.parentElement;
+        parent.querySelectorAll('button').forEach(btn => {
+          btn.classList.remove('border-deep-navy', 'text-text-primary');
+          btn.classList.add('text-text-secondary');
+          const icon = btn.querySelector('.material-symbols-outlined');
+          if (icon) icon.classList.add('opacity-0');
+        });
+        this.classList.add('border-deep-navy', 'text-text-primary');
+        this.classList.remove('text-text-secondary');
+        const icon = this.querySelector('.material-symbols-outlined');
+        if (icon) icon.classList.remove('opacity-0');
+      });
+    });
+  </script>
+</body></html>
