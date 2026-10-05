@@ -8,7 +8,7 @@ param(
 
 $ErrorActionPreference = 'Stop'
 $ScriptDir = Split-Path -Parent $MyInvocation.MyCommand.Path
-$LinterPy = Join-Path $ScriptDir 'anti-ai-slop-linter.py'
+$LinterPy = Join-Path $ScriptDir 'anti_ai_slop_linter.py'
 $TestPy = Join-Path $ScriptDir 'tests\test_anti_ai_slop.py'
 
 Write-Output "=== VietnamGuide Anti-AI Slop Quality Verifier ==="
