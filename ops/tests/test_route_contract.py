@@ -514,8 +514,16 @@ class RouteContractTests(unittest.TestCase):
         verifier_path = REPO_PATH / 'ops' / 'verify-guide-experience-public.ps1'
         self.assertTrue(verifier_path.is_file(), f"Verifier script not found: {verifier_path}")
 
+        # The HTML COM parser fixture requires Windows PowerShell 5.1 (powershell.exe)
+        if sys.platform != 'win32':
+            self.skipTest("HTML COM parser fixtures require Windows PowerShell (powershell.exe)")
+
+        ps_exe = shutil.which('powershell.exe') or shutil.which('powershell')
+        if not ps_exe:
+            self.skipTest("Windows PowerShell (powershell.exe) not found")
+
         result = subprocess.run(
-            ['powershell', '-NoProfile', '-ExecutionPolicy', 'Bypass', '-File', str(verifier_path), '-FixturesOnly'],
+            [ps_exe, '-NoProfile', '-ExecutionPolicy', 'Bypass', '-File', str(verifier_path), '-FixturesOnly'],
             capture_output=True,
             text=True,
             timeout=30,
@@ -544,6 +552,14 @@ class RouteContractTests(unittest.TestCase):
         self.assertIn('$NonPilotPaths = @(', content)
         self.assertIn('$PilotPaths = @(', content)
 
+        # Dynamic PowerShell verification requires Windows PowerShell (powershell.exe)
+        if sys.platform != 'win32':
+            return
+
+        ps_exe = shutil.which('powershell.exe') or shutil.which('powershell')
+        if not ps_exe:
+            return
+
         # Check dynamic route resolution via PowerShell test harness
         ps_test = textwrap.dedent("""
             . ./ops/verify-guide-experience-public.ps1 -FixturesOnly | Out-Null
@@ -556,7 +572,7 @@ class RouteContractTests(unittest.TestCase):
             "$p,$b1,$b2,$b3,$all,$max5"
         """)
         result = subprocess.run(
-            ['powershell', '-NoProfile', '-ExecutionPolicy', 'Bypass', '-Command', ps_test],
+            [ps_exe, '-NoProfile', '-ExecutionPolicy', 'Bypass', '-Command', ps_test],
             cwd=str(REPO_PATH),
             capture_output=True,
             text=True,
