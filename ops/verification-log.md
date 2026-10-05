@@ -2357,3 +2357,63 @@ Date: 2026-07-28 (Asia/Saigon)
      - Core MU-Plugin Invariants (`ops/verify-core-mu-plugin.ps1`): 16/16 mutations rejected, hash `71b49033114e8007e5c19fb8ebc1a89e0d0dad88d0fe92dd381a28700db096ce` 100% preserved.
      - CI/CD Quality Gates (`ops/verify-all-gates.ps1`): 5/5 GATES PASS.
      - Public HTTPS Production Verifier (`ops/verify-guide-experience-public.ps1`): 100% PASS across all live production endpoints.
+
+## Stage 67 - 282-Route Guide Shell Synchronization, Public Verifier Modernization, Schema/Performance Hardening & Master Quality Gate Preservation (October 05, 2026)
+
+- Date: 2026-10-05
+- Scope: Comprehensive completion of the VietnamGuide ecosystem across all four core pillars:
+  1. R1: Full 282-Route Guide Shell & Registry Synchronization (195 legacy routes partitioned and synchronized with 87 pilot routes, two-tier fail-closed fallback verified, sitewide rollout enabled, and AIO /llms.txt dynamic directory parity).
+  2. R2: Public Production Verifier Modernization & Contract Test Suite Expansion (`ops/verify-guide-experience-public.ps1` upgraded with dynamic batch and full-registry support while strictly preserving frozen AST invariants and mutation test uniqueness, plus 3 new contract test cases expanding the suite to 123 tests).
+  3. R3: Schema.org JSON-LD, Zero-CLS Natural Image Registry & Web Performance Hardening (recursive HTML entity decoding, native boolean type enforcement, Organization publisher logo, E-E-A-T reviewer node, circular containment resolution on national circuits, expansion of image natural dimension registry to 620 entries covering 100% of content images with 0 unmatched items, eager LCP hero loading, and consolidation of inline client-side scroll scripts).
+  4. R4: Master Quality Gate Preservation & Deployment Readiness (100% pass across all 8 Master Quality Gates in `ops/verify-all-gates.ps1`, 123/123 tests passing in `ops/tests/`, rollout manager verified with 195/195 legacy routes, static security audit clean with 0 findings and 0 blockers, and offline public verifier fixtures clean exit 0).
+
+- Key Accomplishments:
+  1. R1: 282-Route Guide Shell & Registry Synchronization:
+     - Canonical Route Catalog Parity: Maintained SHA-256 byte-for-byte parity (`ac48ef3efc95479955d1d5f6744304d2bd64ec601454481b117e74155d4fe16d`, 179,326 bytes) between `ops/route_registry.json` and `wordpress/wp-content/themes/vietnamguide-premium/inc/guide-route-registry.json`.
+     - Phased Rollout Partition: Validated `docs/baselines/2026-09-28-rollout-batches.json` (SHA-256 `acc511c93e368fec572ccea269de43bf740285efb1129e0611c952de1b6007fa`) with 195 legacy routes partitioned into Batch 1 (50 canary: 4 comparisons, 46 destinations), Batch 2 (50 follow-up: 46 destinations, 4 practical), and Batch 3 (95 final: 9 itineraries, 86 practical). Complete disjointness across batches and zero overlap with active pilot routes.
+     - Sitewide Guide Shell Activation: Activated `VG_GUIDE_REGISTRY_ROLLOUT = true` in `wordpress/wp-content/themes/vietnamguide-premium/inc/guide-rollout.php` (SHA-256 `2a926e2c720ea10900e113dc61e499cf9e314d145deb13fd2ff6acfc6d329a29`).
+     - Two-Tier Fail-Closed Fallback Architecture: Verified Tier 1 routing allowlist gate (`vg_is_guide_experience_page` in `inc/guide-routing.php`) and Tier 2 content contract gate (`vg_build_guide_context` & `vg_is_valid_guide_context` in `inc/guide-context.php`) routing invalid or non-guide contexts fail-closed to standard `template-parts/content-page.php`.
+     - Stitch Design System Component Conformity: Verified that all rendered Guide Shell pages strictly incorporate the 5 core elements from `template-parts/guide-page.php`: Sticky Reading Spine TOC, Tactical Dock (`#vg-floating-dock`), Fact-Checked Trust Badge (`aside.vg-guide-trust`), Concierge Quick Verdict (`.vg-concierge-verdict`), and E-E-A-T Author Card (`[vg_editorial_proof]`).
+     - AIO Engine Dynamic Indexing: Verified `inc/guide-aio.php` dynamically aggregates all 282 routes for `/llms.txt` and `/llms-full.txt` with robust fail-closed fallback to the 87 pilot baseline upon registry read failure or malformed JSON payload.
+
+  2. R2: Public Production Verifier Modernization & Contract Test Suite Expansion:
+     - CLI Parameter & Dynamic Registry Support: Upgraded `ops/verify-guide-experience-public.ps1` (SHA-256 `b76faa04582040a1d3e00822c541e1bb3fa0a9a4c6634de0ebe72614d90a2403`) to accept `-Batch` (`pilot`, `batch_1`, `batch_2`, `batch_3`, `all`, `1`, `2`, `3`), `-AllRoutes`, `-RegistryPath`, `-ManifestPath`, and `-MaxRoutes`.
+     - AST Invariant & Mutation Uniqueness Preservation: Retained literal top-level arrays `$PilotPaths = @(...)` (87 paths) and `$NonPilotPaths = @(...)` (4 hub paths), verbatim AST expression `foreach ($PilotPath in $PilotPaths) {`, and encapsulated verification logic inside `Assert-PublicGuidePage` to ensure all assertion search strings occur strictly once, preserving 100% passing status across the 112+ mutation tests in `ops/verify-guide-experience-mutations.ps1`.
+     - Offline Fixture Verification: `-FixturesOnly` mode executes offline assertions validating exact route counts for `pilot` (87), `batch_1` (50), `batch_2` (50), `batch_3` (95), `all` (282), and route truncation (`-MaxRoutes 7`), exiting cleanly with code 0.
+     - Contract Test Expansion (`ops/tests/test_route_contract.py`): Added 3 comprehensive test methods (`test_rollout_batches_partition_pending_routes_with_zero_overlap`, `test_public_verifier_executes_fixtures_only_cleanly`, `test_public_verifier_dynamic_batch_route_counts_and_ast_invariants`), expanding the test suite to 23 tests and the repository suite to 123 tests.
+
+  3. R3: Schema.org JSON-LD, Zero-CLS Natural Image Registry & Performance Hardening:
+     - HTML Entity Sanitization: Implemented `vg_schema_clean_data()` in `wordpress/wp-content/themes/vietnamguide-premium/inc/guide-seo.php` (SHA-256 `9ba71870c076c3ba1315fbd5ac1687a5672750591279d9bb8750c17e0dcedbcc`) and `rank_math/schema/json_ld/output` filter, recursively converting `&amp;` entities to literal UTF-8 characters across all Schema attributes (`TouristDestination.hasMap`, `name`, `instrument`, etc.).
+     - Schema Type Strictness: Enforced native boolean types for `publicAccess` (boolean `true`) and `isAccessibleForFree` (boolean `false`), and cast `position` and `numberOfItems` to integers in compliance with Google Rich Results requirements.
+     - E-E-A-T & Publisher Schema: Added `publisher.logo` (`ImageObject` for `vg-icon-512.png`, 512x512) to `Organization` and injected `reviewedBy` (`Person` node for "VietnamGuide editorial team" linking to `/editorial-policy/`) into `Article` graphs.
+     - Geographic Hierarchy Anomaly Elimination: Directed `containedInPlace` on `national_circuit` cluster to Southeast Asia (`https://www.wikidata.org/wiki/Q11708`), resolving self-containment circularity while preserving Country: Vietnam (`Q881`) on regional clusters.
+     - Zero-CLS Image Dimensions Coverage: Expanded `wordpress/wp-content/themes/vietnamguide-premium/inc/image-dimensions.php` (SHA-256 `a48409b72a00da36e04303cfb87f5967aec851f539f3e2921afdc70661c00395`) from 608 to 620 entries by registering natural dimensions for all 4 previously missing content images (`TuSan_Canyon.jpg`, `SE8_DANANG_TO_HA_NOI.jpg`, `NHA_TRANG_TO_DA_NANG.jpg`, and `Vietnam_Railways_D19E_-_936.jpg`). Audited all 189 HTML content files (593 images total, 404 missing raw width/height attributes): achieved 100% registry match rate with **0 unmatched images**.
+     - Largest Contentful Paint (LCP) Protection: Updated `vg_enhance_content_images()` to detect hero containers (`vg-guide-hero`, `vg-guide-hero-cover`, `data-vg-hero`, `wp-block-cover__image-background`) and enforce `loading="eager"` and `fetchpriority="high"` on hero imagery while applying `loading="lazy"` to body content images.
+     - Client-Side Script Consolidation: Stripped redundant inline `<script>` scroll handlers from `template-parts/guide-page.php` (SHA-256 `dc3d0ae6956d0c79cc92e29c04a0bc557902b223ebf83867a2cd58bf5f8915b9`) and consolidated reading progress bar, floating dock visibility, navigation controls, and mobile banner offset coordination into `assets/js/guide-experience.js` (SHA-256 `bf20c8b71b62634f17c6bac8332f88162676590bb4e2b8d7d8a6f8b9f6ffbd40`).
+
+  4. R4: Master Quality Gate Preservation & Deployment Readiness:
+     - Master Quality Gates Orchestrator (`ops/verify-all-gates.ps1`, SHA-256 `a1130aedcdf254f5c027d63b3b672047e9dfe65bfa6ea59ebc6c2095cb8c9d49`):
+       - Executed: `powershell -NoProfile -ExecutionPolicy Bypass -File ops/verify-all-gates.ps1`
+       - Status: **8/8 Quality Gates PASSED (100% Exit Code 0)**
+       - Gate 1: Anti-AI Slop Quality Engine v3.0 (34/34 unit tests PASS, HLS = 100)
+       - Gate 2: Core MU-Plugin Invariant & Safety Contracts (16/16 mutations rejected, 0 leaks)
+       - Gate 3: Gutenberg Core Block Patterns (100% PASS)
+       - Gate 4: Theme Structure & CSS Verification (100% PASS)
+       - Gate 5: Interactive Shortcodes & A11y / State Continuity (26/26 unit tests PASS)
+       - Gate 6: Route Registry, AIO & Runtime Fallback Contracts (23/23 unit tests PASS)
+       - Gate 7: Deployment Configuration & SSH Trust Contracts (19/19 unit tests PASS)
+       - Gate 8: Deployment Surface Static Security Audit (0 findings, 1 release-ready, 0 blockers)
+     - Full Python Unit Test Suite:
+       - Executed: `python -m unittest discover -s ops/tests -p "test_*.py" -v`
+       - Status: **123/123 Unit Tests PASSED in 27.595s (0 Failures, 0 Errors, Exit Code 0)**
+     - Rollout Manager CLI (`ops/rollout_manager.py`, SHA-256 `07426dd89605351d788bcc5cb1517af1ee940e8e3eb367266f5aebc4ef6648b3`):
+       - Executed: `python ops/rollout_manager.py --verify`
+       - Status: `[OK] Rollout manifest is 100% valid! 195/195 routes verified.`
+       - Executed: `python ops/rollout_manager.py --status`
+       - Status: Verified 282 total canonical routes (87 pilot, 195 pending legacy across Batches 1, 2, and 3).
+     - Static Security Audit Scanner (`ops/deploy_security_audit.py`, SHA-256 `5a39c4b7d3eabc3dcc22d734d6e03821970c0c13ee7ac7b69895f21699ad50d4`):
+       - Executed: `python ops/deploy_security_audit.py --root ops --release-path deploy_theme_updates.py --strict-release`
+       - Status: 0 candidate findings, 0 blocked releases, 0 missing release paths, `deploy_theme_updates.py` confirmed `release_ready: true`.
+     - Public Verifier Offline Fixtures:
+       - Executed: `powershell -NoProfile -ExecutionPolicy Bypass -File ops/verify-guide-experience-public.ps1 -FixturesOnly`
+       - Status: `VietnamGuide public verifier fixtures passed for https://vietnamguide.net:443.` (Exit Code 0).

@@ -88,6 +88,14 @@ DEPLOY_FILES = [
      'BingSiteAuth.xml'),
     ('wordpress/852ef594b29d4da5a639612da3430b0f.txt',
      '852ef594b29d4da5a639612da3430b0f.txt'),
+    ('wordpress/wp-content/themes/vietnamguide-premium/assets/js/guide-experience.js',
+     'wp-content/themes/vietnamguide-premium/assets/js/guide-experience.js'),
+    ('wordpress/wp-content/themes/vietnamguide-premium/assets/css/guide-experience.css',
+     'wp-content/themes/vietnamguide-premium/assets/css/guide-experience.css'),
+    ('wordpress/wp-content/themes/vietnamguide-premium/assets/css/guide-patterns.css',
+     'wp-content/themes/vietnamguide-premium/assets/css/guide-patterns.css'),
+    ('wordpress/wp-content/themes/vietnamguide-premium/inc/image-dimensions.php',
+     'wp-content/themes/vietnamguide-premium/inc/image-dimensions.php'),
 ]
 
 def get_sha256(filepath: Path) -> str:

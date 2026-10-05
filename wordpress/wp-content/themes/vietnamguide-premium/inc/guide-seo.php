@@ -826,6 +826,11 @@ function vg_get_travel_clusters_registry(): array
                     ['name' => 'Trang An Landscape Complex', 'wikidata' => 'https://www.wikidata.org/wiki/Q10828551'],
                     ['name' => 'Imperial City of Hue', 'wikidata' => 'https://www.wikidata.org/wiki/Q200257'],
                 ],
+                'containedInPlace' => [
+                    '@type'  => 'Place',
+                    'name'   => 'Southeast Asia',
+                    'sameAs' => 'https://www.wikidata.org/wiki/Q11708',
+                ],
             ],
             'trip_schema' => [
                 'name'         => 'Classic North-to-South Vietnam Grand Circuit',
@@ -1151,6 +1156,35 @@ add_filter('the_content', static function (string $content): string {
 }, 30);
 
 /**
+ * Recursively cleans Schema.org data: decodes HTML entities (&amp; -> &),
+ * enforces native booleans for publicAccess/isAccessibleForFree, and formats position/numberOfItems as integers.
+ */
+function vg_schema_clean_data(mixed $value): mixed
+{
+    if (is_string($value)) {
+        return html_entity_decode($value, ENT_QUOTES | ENT_HTML5, 'UTF-8');
+    }
+    if (is_array($value)) {
+        foreach ($value as $k => $v) {
+            if ($k === 'publicAccess') {
+                $value[$k] = ($v === true || $v === '1' || $v === 1 || $v === 'true');
+            } elseif ($k === 'isAccessibleForFree') {
+                $value[$k] = ($v === true || $v === '1' || $v === 1 || $v === 'true');
+            } elseif ($k === 'position' || $k === 'numberOfItems') {
+                if (is_numeric($v)) {
+                    $value[$k] = (int) $v;
+                } else {
+                    $value[$k] = vg_schema_clean_data($v);
+                }
+            } else {
+                $value[$k] = vg_schema_clean_data($v);
+            }
+        }
+    }
+    return $value;
+}
+
+/**
  * Rich Travel Schema Structured Data Filter for Rank Math JSON-LD Graph.
  * Enriches the graph with TouristDestination, TouristTrip, and TravelAction entities.
  */
@@ -1208,11 +1242,15 @@ function vg_rich_travel_schema_filter($data, $context = null): array
         'availableLanguage'   => ['en', 'vi'],
         'publicAccess'        => true,
         'isAccessibleForFree' => false,
-        'containedInPlace'   => [
+        'containedInPlace'   => ! empty($dest_schema['containedInPlace']) ? $dest_schema['containedInPlace'] : (($cluster['id'] === 'national_circuit' || ($dest_schema['name'] ?? '') === 'Vietnam') ? [
+            '@type'  => 'Place',
+            'name'   => 'Southeast Asia',
+            'sameAs' => 'https://www.wikidata.org/wiki/Q11708',
+        ] : [
             '@type'  => 'Country',
             'name'   => 'Vietnam',
             'sameAs' => 'https://www.wikidata.org/wiki/Q881',
-        ],
+        ]),
         'subjectOf'          => [
             '@id' => $webpage_id,
         ],
@@ -1274,7 +1312,7 @@ function vg_rich_travel_schema_filter($data, $context = null): array
             : $canonical_base . '/' . ltrim($stop['url'], '/');
         $trip_items[] = [
             '@type'    => 'ListItem',
-            'position' => (string) $pos++,
+            'position' => $pos++,
             'item'     => [
                 '@type' => 'TouristDestination',
                 'name'  => $stop['name'],
@@ -1358,6 +1396,7 @@ function vg_rich_travel_schema_filter($data, $context = null): array
         $nodes = &$data['@graph'];
     }
 
+    $found_org = false;
     foreach ($nodes as &$node) {
         if (! is_array($node)) {
             continue;
@@ -1388,8 +1427,28 @@ function vg_rich_travel_schema_filter($data, $context = null): array
             }
         }
 
+        if ($is_article) {
+            $node['reviewedBy'] = [
+                '@type' => 'Person',
+                'name'  => 'VietnamGuide editorial team',
+                'url'   => "{$canonical_base}/editorial-policy/",
+            ];
+            if (isset($node['publisher']) && is_array($node['publisher']) && ! isset($node['publisher']['logo'])) {
+                $node['publisher']['logo'] = [
+                    '@type'      => 'ImageObject',
+                    '@id'        => "{$canonical_base}/#logo",
+                    'url'        => "{$canonical_base}/wp-content/themes/vietnamguide-premium/assets/images/vg-icon-512.png",
+                    'caption'    => 'VietnamGuide.net',
+                    'inLanguage' => 'en-US',
+                    'width'      => 512,
+                    'height'     => 512,
+                ];
+            }
+        }
+
         $is_org = $node_type === 'Organization' || (is_array($node_type) && in_array('Organization', $node_type, true));
         if ($is_org) {
+            $found_org = true;
             $node['url'] = "{$canonical_base}/";
             $node['publishingPrinciples'] = "{$canonical_base}/editorial-policy/";
             $node['correctionsPolicy'] = "{$canonical_base}/source-update-policy/";
@@ -1399,6 +1458,15 @@ function vg_rich_travel_schema_filter($data, $context = null): array
                 'Vietnam Visa Regulations and Entry Policies',
                 'Southeast Asia Tourism Safety',
                 'Sustainable Travel in Vietnam',
+            ];
+            $node['logo'] = [
+                '@type'      => 'ImageObject',
+                '@id'        => "{$canonical_base}/#logo",
+                'url'        => "{$canonical_base}/wp-content/themes/vietnamguide-premium/assets/images/vg-icon-512.png",
+                'caption'    => 'VietnamGuide.net',
+                'inLanguage' => 'en-US',
+                'width'      => 512,
+                'height'     => 512,
             ];
         }
 
@@ -1417,6 +1485,33 @@ function vg_rich_travel_schema_filter($data, $context = null): array
         }
     }
     unset($node);
+
+    if (! $found_org && isset($data['@graph']) && is_array($data['@graph'])) {
+        $data['@graph'][] = [
+            '@type'                => 'Organization',
+            '@id'                  => "{$canonical_base}/#organization",
+            'name'                 => 'VietnamGuide.net',
+            'url'                  => "{$canonical_base}/",
+            'publishingPrinciples' => "{$canonical_base}/editorial-policy/",
+            'correctionsPolicy'    => "{$canonical_base}/source-update-policy/",
+            'knowsAbout'           => [
+                'Vietnam Travel Planning',
+                'Vietnam Transportation and Rail Logistics',
+                'Vietnam Visa Regulations and Entry Policies',
+                'Southeast Asia Tourism Safety',
+                'Sustainable Travel in Vietnam',
+            ],
+            'logo'                 => [
+                '@type'      => 'ImageObject',
+                '@id'        => "{$canonical_base}/#logo",
+                'url'        => "{$canonical_base}/wp-content/themes/vietnamguide-premium/assets/images/vg-icon-512.png",
+                'caption'    => 'VietnamGuide.net',
+                'inLanguage' => 'en-US',
+                'width'      => 512,
+                'height'     => 512,
+            ],
+        ];
+    }
 
     // 4. FAQPage Node (if authoritative Q&As exist for this URI)
     $faq_node = vg_get_page_faq_schema($uri_path, $current_url);
@@ -1455,6 +1550,8 @@ function vg_rich_travel_schema_filter($data, $context = null): array
             $data['web_application'] = $webapp_node;
         }
     }
+
+    $data = vg_schema_clean_data($data);
 
     return $data;
 }
@@ -1764,6 +1861,19 @@ function vg_get_page_webapplication_schema(string $uri_path, string $current_url
 
 add_filter('rank_math/json_ld', 'vg_rich_travel_schema_filter', 100, 2);
 
+add_filter('rank_math/schema/json_ld/output', static function ($output) {
+    if (! is_string($output)) {
+        return $output;
+    }
+    $output = str_replace('&amp;', '&', $output);
+    $output = preg_replace('/"publicAccess":\s*"1"/', '"publicAccess": true', $output);
+    $output = preg_replace('/"publicAccess":\s*""/', '"publicAccess": false', $output);
+    $output = preg_replace('/"isAccessibleForFree":\s*""/', '"isAccessibleForFree": false', $output);
+    $output = preg_replace('/"isAccessibleForFree":\s*"1"/', '"isAccessibleForFree": true', $output);
+    $output = preg_replace('/"numberOfItems":\s*"(\d+)"/', '"numberOfItems": $1', $output);
+    return $output;
+}, 99);
+
 /**
  * ==========================================================================
  * Stage 21: Semantic Tabular Data & Table Caption Optimization
@@ -1925,9 +2035,39 @@ function vg_enhance_content_images(string $content): string
     }
 
     $dimensions = function_exists('vg_get_known_image_dimensions') ? vg_get_known_image_dimensions() : [];
+    $isEntireHero = (stripos($content, 'vg-guide-hero') !== false && stripos($content, '<h1') !== false);
     $processor = new WP_HTML_Tag_Processor($content);
+    $inHero = false;
+    $heroDepth = 0;
 
-    while ($processor->next_tag(['tag_name' => 'img'])) {
+    while ($processor->next_tag()) {
+        $tag = $processor->get_tag();
+
+        if (! $processor->is_tag_closer()) {
+            if ($inHero) {
+                $heroDepth++;
+            } elseif (
+                $processor->has_class('vg-guide-hero')
+                || $processor->has_class('vg-guide-hero-cover')
+                || $processor->get_attribute('data-vg-hero') !== null
+            ) {
+                $inHero = true;
+                $heroDepth = 1;
+            }
+        } else {
+            if ($inHero) {
+                $heroDepth--;
+                if ($heroDepth <= 0) {
+                    $inHero = false;
+                    $heroDepth = 0;
+                }
+            }
+        }
+
+        if ($tag !== 'IMG') {
+            continue;
+        }
+
         $src = $processor->get_attribute('src');
         if (! is_string($src) || trim($src) === '') {
             continue;
@@ -1976,10 +2116,22 @@ function vg_enhance_content_images(string $content): string
             }
         }
 
-        // 2. Ensure loading attribute (lazy for body, preserve eager/high-priority for hero)
-        $loading = $processor->get_attribute('loading');
-        if ($loading === null) {
-            $processor->set_attribute('loading', 'lazy');
+        // 2. Ensure loading attribute (eager for hero to prevent LCP delay, lazy for body)
+        $isHeroImg = $inHero
+            || $processor->get_attribute('data-vg-hero') !== null
+            || $processor->has_class('vg-guide-hero')
+            || $processor->has_class('vg-guide-hero-cover')
+            || $processor->has_class('wp-block-cover__image-background')
+            || ($isEntireHero && $heroDepth === 0);
+
+        if ($isHeroImg) {
+            $processor->set_attribute('loading', 'eager');
+            $processor->set_attribute('fetchpriority', 'high');
+        } else {
+            $loading = $processor->get_attribute('loading');
+            if ($loading === null) {
+                $processor->set_attribute('loading', 'lazy');
+            }
         }
 
         // 3. Ensure decoding="async"

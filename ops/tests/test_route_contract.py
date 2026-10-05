@@ -469,6 +469,103 @@ class RouteContractTests(unittest.TestCase):
         self.assertEqual(result.returncode, 0, result.stderr)
         self.assertEqual(result.stdout.splitlines(), ['1', '282'])
 
+    def test_rollout_batches_partition_pending_routes_with_zero_overlap(self):
+        registry = load_registry(REPO_PATH / 'ops' / 'route_registry.json')
+        manifest = load_rollout_manifest(
+            REPO_PATH / 'docs' / 'baselines' / '2026-09-28-rollout-batches.json'
+        )
+
+        batches = manifest.get('batches', [])
+        self.assertEqual(len(batches), 3)
+
+        b1_paths = set(batches[0].get('paths', []))
+        b2_paths = set(batches[1].get('paths', []))
+        b3_paths = set(batches[2].get('paths', []))
+
+        self.assertEqual(len(b1_paths), 50)
+        self.assertEqual(len(b2_paths), 50)
+        self.assertEqual(len(b3_paths), 95)
+        self.assertEqual(len(b1_paths) + len(b2_paths) + len(b3_paths), 195)
+
+        # Zero pairwise overlap
+        self.assertEqual(b1_paths.intersection(b2_paths), set())
+        self.assertEqual(b1_paths.intersection(b3_paths), set())
+        self.assertEqual(b2_paths.intersection(b3_paths), set())
+
+        # Exact partition of pending routes
+        pending_routes = {
+            record['path']
+            for record in registry
+            if record.get('migration_status') == 'pending'
+        }
+        self.assertEqual(len(pending_routes), 195)
+        self.assertEqual(b1_paths | b2_paths | b3_paths, pending_routes)
+
+        # Zero overlap with active pilot routes
+        pilot_routes = {
+            record['path']
+            for record in registry
+            if record.get('current_template') == 'guide'
+        }
+        self.assertEqual(len(pilot_routes), 87)
+        self.assertEqual((b1_paths | b2_paths | b3_paths).intersection(pilot_routes), set())
+
+    def test_public_verifier_executes_fixtures_only_cleanly(self):
+        verifier_path = REPO_PATH / 'ops' / 'verify-guide-experience-public.ps1'
+        self.assertTrue(verifier_path.is_file(), f"Verifier script not found: {verifier_path}")
+
+        result = subprocess.run(
+            ['powershell', '-NoProfile', '-ExecutionPolicy', 'Bypass', '-File', str(verifier_path), '-FixturesOnly'],
+            capture_output=True,
+            text=True,
+            timeout=30,
+        )
+        self.assertEqual(result.returncode, 0, f"Public verifier fixtures failed: {result.stdout}\n{result.stderr}")
+        self.assertIn('fixtures passed', result.stdout.lower())
+
+    def test_public_verifier_dynamic_batch_route_counts_and_ast_invariants(self):
+        verifier_path = REPO_PATH / 'ops' / 'verify-guide-experience-public.ps1'
+        content = verifier_path.read_text(encoding='utf-8')
+
+        # Check parameter declarations
+        self.assertIn("ValidateSet('pilot', 'batch_1', 'batch_2', 'batch_3', 'all', '1', '2', '3')", content)
+        self.assertIn("[string]$Batch = 'all'", content)
+        self.assertIn('[switch]$AllRoutes', content)
+        self.assertIn('[string]$RegistryPath = \'\'', content)
+        self.assertIn('[string]$ManifestPath = \'\'', content)
+        self.assertIn('[int]$MaxRoutes = 0', content)
+
+        # Check AST invariants and critical search strings
+        self.assertIn('function Get-PublicVerificationRoutes', content)
+        self.assertIn('foreach ($PilotPath in $PilotPaths) {', content)
+        self.assertIn('if ($Page.Dom.H1Count -ne 1) {', content)
+        self.assertIn('if (-not $Page.Dom.HasGuideShell) {', content)
+        self.assertIn('if (-not $Page.Dom.HasGuideNavigation) {', content)
+        self.assertIn('$NonPilotPaths = @(', content)
+        self.assertIn('$PilotPaths = @(', content)
+
+        # Check dynamic route resolution via PowerShell test harness
+        ps_test = textwrap.dedent("""
+            . ./ops/verify-guide-experience-public.ps1 -FixturesOnly | Out-Null
+            $p = (Get-PublicVerificationRoutes -Batch 'pilot' -FallbackRoutes $PilotPaths).Count
+            $b1 = (Get-PublicVerificationRoutes -Batch 'batch_1').Count
+            $b2 = (Get-PublicVerificationRoutes -Batch 'batch_2').Count
+            $b3 = (Get-PublicVerificationRoutes -Batch 'batch_3').Count
+            $all = (Get-PublicVerificationRoutes -Batch 'all').Count
+            $max5 = (Get-PublicVerificationRoutes -Batch 'all' -MaxRoutes 5).Count
+            "$p,$b1,$b2,$b3,$all,$max5"
+        """)
+        result = subprocess.run(
+            ['powershell', '-NoProfile', '-ExecutionPolicy', 'Bypass', '-Command', ps_test],
+            cwd=str(REPO_PATH),
+            capture_output=True,
+            text=True,
+            timeout=30,
+        )
+        self.assertEqual(result.returncode, 0, f"PowerShell batch test failed: {result.stdout}\n{result.stderr}")
+        counts = result.stdout.strip().split(',')
+        self.assertEqual(counts, ['87', '50', '50', '95', '282', '5'])
+
 
 if __name__ == '__main__':
     unittest.main()

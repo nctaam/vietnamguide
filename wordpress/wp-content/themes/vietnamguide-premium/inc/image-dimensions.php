@@ -626,6 +626,19 @@ function vg_get_known_image_dimensions(): array
         'https://vietnamguide.net/wp-content/themes/vietnamguide-premium/assets/images/ha-long-bay-vietnam-hero.jpg' => [1920, 1080],
         'https://vietnamguide.net/wp-content/themes/vietnamguide-premium/assets/images/og-default.jpg' => [1200, 630],
         'og-default.jpg' => [1200, 630],
+        '1920px-TuSan_Canyon.jpg' => [1920, 1080],
+        'TuSan_Canyon.jpg' => [6000, 3375],
+        'https://upload.wikimedia.org/wikipedia/commons/thumb/3/3d/TuSan_Canyon.jpg/1920px-TuSan_Canyon.jpg' => [1920, 1080],
+        '1280px-VIETNAM_RAILWAYS_SE8_DANANG_TO_HA_NOI_NIGHT_SLEEPER_TRAIN_VIETNAM_JAN_2012_%287048874399%29.jpg' => [1280, 711],
+        '1280px-VIETNAM_RAILWAYS_SE8_DANANG_TO_HA_NOI_NIGHT_SLEEPER_TRAIN_VIETNAM_JAN_2012_(7048874399).jpg' => [1280, 711],
+        'https://upload.wikimedia.org/wikipedia/commons/thumb/4/43/VIETNAM_RAILWAYS_SE8_DANANG_TO_HA_NOI_NIGHT_SLEEPER_TRAIN_VIETNAM_JAN_2012_%287048874399%29.jpg/1280px-VIETNAM_RAILWAYS_SE8_DANANG_TO_HA_NOI_NIGHT_SLEEPER_TRAIN_VIETNAM_JAN_2012_%287048874399%29.jpg' => [1280, 711],
+        'https://upload.wikimedia.org/wikipedia/commons/thumb/4/43/VIETNAM_RAILWAYS_SE8_DANANG_TO_HA_NOI_NIGHT_SLEEPER_TRAIN_VIETNAM_JAN_2012_(7048874399).jpg/1280px-VIETNAM_RAILWAYS_SE8_DANANG_TO_HA_NOI_NIGHT_SLEEPER_TRAIN_VIETNAM_JAN_2012_(7048874399).jpg' => [1280, 711],
+        '1280px-NHA_TRANG_TO_DA_NANG_VIETNAM_RAILWAYS_SE8_TRAIN_JAN_2012_%286817983822%29.jpg' => [1280, 960],
+        '1280px-NHA_TRANG_TO_DA_NANG_VIETNAM_RAILWAYS_SE8_TRAIN_JAN_2012_(6817983822).jpg' => [1280, 960],
+        'https://upload.wikimedia.org/wikipedia/commons/thumb/f/f4/NHA_TRANG_TO_DA_NANG_VIETNAM_RAILWAYS_SE8_TRAIN_JAN_2012_%286817983822%29.jpg/1280px-NHA_TRANG_TO_DA_NANG_VIETNAM_RAILWAYS_SE8_TRAIN_JAN_2012_%286817983822%29.jpg' => [1280, 960],
+        'https://upload.wikimedia.org/wikipedia/commons/thumb/f/f4/NHA_TRANG_TO_DA_NANG_VIETNAM_RAILWAYS_SE8_TRAIN_JAN_2012_(6817983822).jpg/1280px-NHA_TRANG_TO_DA_NANG_VIETNAM_RAILWAYS_SE8_TRAIN_JAN_2012_(6817983822).jpg' => [1280, 960],
+        'Vietnam_Railways_D19E_-_936.jpg' => [1280, 960],
+        'https://upload.wikimedia.org/wikipedia/commons/4/42/Vietnam_Railways_D19E_-_936.jpg' => [1280, 960],
     ];
 
     return $dimensions;

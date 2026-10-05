@@ -1,6 +1,12 @@
 param(
     [string]$BaseUrl = 'https://vietnamguide.net',
-    [switch]$FixturesOnly
+    [switch]$FixturesOnly,
+    [ValidateSet('pilot', 'batch_1', 'batch_2', 'batch_3', 'all', '1', '2', '3')]
+    [string]$Batch = 'all',
+    [switch]$AllRoutes,
+    [string]$RegistryPath = '',
+    [string]$ManifestPath = '',
+    [int]$MaxRoutes = 0
 )
 
 $ErrorActionPreference = 'Stop'
@@ -1023,6 +1029,175 @@ if (-not $MissingAssetFixtureRejected) {
     $Failures.Add('local reviewed asset missing fixture did not fail closed')
 }
 
+function Resolve-VerificationFilePath {
+    param(
+        [string]$PathCandidate,
+        [string]$DefaultPath
+    )
+
+    if ([string]::IsNullOrWhiteSpace($PathCandidate)) {
+        return $DefaultPath
+    }
+    if ([System.IO.Path]::IsPathRooted($PathCandidate) -and (Test-Path -LiteralPath $PathCandidate -PathType Leaf)) {
+        return $PathCandidate
+    }
+    if (Test-Path -LiteralPath $PathCandidate -PathType Leaf) {
+        return (Resolve-Path -LiteralPath $PathCandidate).Path
+    }
+    $ScriptRelative = Join-Path $PSScriptRoot $PathCandidate
+    if (Test-Path -LiteralPath $ScriptRelative -PathType Leaf) {
+        return (Resolve-Path -LiteralPath $ScriptRelative).Path
+    }
+    $RepoRoot = Split-Path $PSScriptRoot -Parent
+    $RepoRelative = Join-Path $RepoRoot $PathCandidate
+    if (Test-Path -LiteralPath $RepoRelative -PathType Leaf) {
+        return (Resolve-Path -LiteralPath $RepoRelative).Path
+    }
+    return $PathCandidate
+}
+
+function Get-PublicVerificationRoutes {
+    param(
+        [string]$Batch = 'all',
+        [switch]$AllRoutes,
+        [string]$RegistryPath = '',
+        [string]$ManifestPath = '',
+        [int]$MaxRoutes = 0,
+        [string[]]$FallbackRoutes = @()
+    )
+
+    $SelectedRoutes = [System.Collections.Generic.List[string]]::new()
+
+    try {
+        $ResolvedRegistryPath = Resolve-VerificationFilePath `
+            -PathCandidate $RegistryPath `
+            -DefaultPath (Join-Path $PSScriptRoot 'route_registry.json')
+
+        $ResolvedManifestPath = Resolve-VerificationFilePath `
+            -PathCandidate $ManifestPath `
+            -DefaultPath (Join-Path (Split-Path $PSScriptRoot -Parent) 'docs\baselines\2026-09-28-rollout-batches.json')
+
+        $TargetBatch = if ($AllRoutes.IsPresent) {
+            'all'
+        } else {
+            switch ($Batch) {
+                '1' { 'batch_1' }
+                '2' { 'batch_2' }
+                '3' { 'batch_3' }
+                default { $Batch.ToLowerInvariant() }
+            }
+        }
+
+        if ($TargetBatch -eq 'pilot') {
+            if ($FallbackRoutes -and $FallbackRoutes.Count -gt 0) {
+                foreach ($Path in $FallbackRoutes) {
+                    $SelectedRoutes.Add($Path)
+                }
+            } elseif (Test-Path -LiteralPath $ResolvedRegistryPath -PathType Leaf) {
+                $RegistryJson = Get-Content -LiteralPath $ResolvedRegistryPath -Raw -Encoding utf8 | ConvertFrom-Json
+                foreach ($Route in $RegistryJson.routes) {
+                    if ($Route.current_template -eq 'guide') {
+                        $SelectedRoutes.Add($Route.path)
+                    }
+                }
+            }
+        } elseif ($TargetBatch -in @('batch_1', 'batch_2', 'batch_3')) {
+            if (-not (Test-Path -LiteralPath $ResolvedManifestPath -PathType Leaf)) {
+                throw "Manifest file not found: $ResolvedManifestPath"
+            }
+            $ManifestJson = Get-Content -LiteralPath $ResolvedManifestPath -Raw -Encoding utf8 | ConvertFrom-Json
+            $BatchOrder = switch ($TargetBatch) {
+                'batch_1' { 1 }
+                'batch_2' { 2 }
+                'batch_3' { 3 }
+            }
+            $TargetBatchObj = $null
+            foreach ($BatchObj in $ManifestJson.batches) {
+                if ($BatchObj.order -eq $BatchOrder -or $BatchObj.id -eq "legacy-$TargetBatch") {
+                    $TargetBatchObj = $BatchObj
+                    break
+                }
+            }
+            if ($null -eq $TargetBatchObj -or $null -eq $TargetBatchObj.paths) {
+                throw "Batch $TargetBatch not found in manifest"
+            }
+            foreach ($Path in $TargetBatchObj.paths) {
+                $SelectedRoutes.Add($Path)
+            }
+        } else {
+            if (-not (Test-Path -LiteralPath $ResolvedRegistryPath -PathType Leaf)) {
+                throw "Route registry file not found: $ResolvedRegistryPath"
+            }
+            $RegistryJson = Get-Content -LiteralPath $ResolvedRegistryPath -Raw -Encoding utf8 | ConvertFrom-Json
+            if ($null -ne $RegistryJson -and $null -ne $RegistryJson.routes) {
+                foreach ($Route in $RegistryJson.routes) {
+                    if ($Route.status -eq 'published') {
+                        $SelectedRoutes.Add($Route.path)
+                    }
+                }
+            }
+        }
+    }
+    catch {
+        if ($FallbackRoutes -and $FallbackRoutes.Count -gt 0) {
+            $SelectedRoutes.Clear()
+            foreach ($Path in $FallbackRoutes) {
+                $SelectedRoutes.Add($Path)
+            }
+        }
+    }
+
+    if ($SelectedRoutes.Count -eq 0 -and $FallbackRoutes -and $FallbackRoutes.Count -gt 0) {
+        foreach ($Path in $FallbackRoutes) {
+            $SelectedRoutes.Add($Path)
+        }
+    }
+
+    $Result = $SelectedRoutes.ToArray()
+    if ($MaxRoutes -gt 0 -and $MaxRoutes -lt $Result.Length) {
+        $Result = @($Result | Select-Object -First $MaxRoutes)
+    }
+
+    return ,$Result
+}
+
+# Dynamic route resolution fixtures
+$Batch1FixtureRoutes = Get-PublicVerificationRoutes -Batch 'batch_1'
+if (@($Batch1FixtureRoutes).Count -ne 50) {
+    $Failures.Add("batch_1 verification route fixture expected 50 routes, found $(@($Batch1FixtureRoutes).Count)")
+}
+
+$Batch2FixtureRoutes = Get-PublicVerificationRoutes -Batch 'batch_2'
+if (@($Batch2FixtureRoutes).Count -ne 50) {
+    $Failures.Add("batch_2 verification route fixture expected 50 routes, found $(@($Batch2FixtureRoutes).Count)")
+}
+
+$Batch3FixtureRoutes = Get-PublicVerificationRoutes -Batch 'batch_3'
+if (@($Batch3FixtureRoutes).Count -ne 95) {
+    $Failures.Add("batch_3 verification route fixture expected 95 routes, found $(@($Batch3FixtureRoutes).Count)")
+}
+
+$AllFixtureRoutes = Get-PublicVerificationRoutes -Batch 'all'
+if (@($AllFixtureRoutes).Count -ne 282) {
+    $Failures.Add("all verification route fixture expected 282 routes, found $(@($AllFixtureRoutes).Count)")
+}
+
+$PilotFixtureFallback = @('pilot/fallback-1', 'pilot/fallback-2')
+$PilotFixtureRoutes = Get-PublicVerificationRoutes -Batch 'pilot' -FallbackRoutes $PilotFixtureFallback
+if (@($PilotFixtureRoutes).Count -ne 2 -or $PilotFixtureRoutes[0] -ne 'pilot/fallback-1') {
+    $Failures.Add("pilot verification route fixture expected fallback routes, found $(@($PilotFixtureRoutes).Count)")
+}
+
+$MaxRoutesFixtureRoutes = Get-PublicVerificationRoutes -Batch 'all' -MaxRoutes 7
+if (@($MaxRoutesFixtureRoutes).Count -ne 7) {
+    $Failures.Add("max routes verification route fixture expected 7 routes, found $(@($MaxRoutesFixtureRoutes).Count)")
+}
+
+$MissingFileFallbackRoutes = Get-PublicVerificationRoutes -RegistryPath 'nonexistent-missing-file.json' -FallbackRoutes @('fallback/route-1', 'fallback/route-2')
+if (@($MissingFileFallbackRoutes).Count -ne 2 -or $MissingFileFallbackRoutes[0] -ne 'fallback/route-1') {
+    $Failures.Add("missing registry file did not fall back cleanly to fallback routes")
+}
+
 if ($FixturesOnly) {
     if ($Failures.Count -gt 0) {
         $Failures | ForEach-Object { Write-Output "FAIL: $_" }
@@ -1136,10 +1311,11 @@ $PilotPaths = @(
     'destinations/pu-luong-travel-guide'
 )
 
-foreach ($PilotPath in $PilotPaths) {
-    $Page = Get-PublicPage -Path $PilotPath -Label "pilot $PilotPath"
+function Assert-PublicGuidePage {
+    param([pscustomobject]$Page)
+
     if ($null -eq $Page) {
-        continue
+        return
     }
 
     if ($Page.StatusCode -ne 200) {
@@ -1147,7 +1323,7 @@ foreach ($PilotPath in $PilotPaths) {
     }
 
     if ($null -eq $Page.Dom) {
-        continue
+        return
     }
     if ($Page.Dom.H1Count -ne 1) {
         $Failures.Add("$($Page.Label): expected exactly one H1, found $($Page.Dom.H1Count) at $($Page.Url)")
@@ -1170,6 +1346,26 @@ foreach ($PilotPath in $PilotPaths) {
     }
     Require-GuideFragmentTargets $Page
     Require-NoFatalText $Page
+}
+
+$ActiveVerificationRoutes = Get-PublicVerificationRoutes `
+    -Batch $Batch `
+    -AllRoutes:$AllRoutes `
+    -RegistryPath $RegistryPath `
+    -ManifestPath $ManifestPath `
+    -MaxRoutes $MaxRoutes `
+    -FallbackRoutes $PilotPaths
+
+if ($Batch -eq 'pilot' -and -not $AllRoutes -and $MaxRoutes -eq 0) {
+    foreach ($PilotPath in $PilotPaths) {
+        $Page = Get-PublicPage -Path $PilotPath -Label "pilot $PilotPath"
+        Assert-PublicGuidePage -Page $Page
+    }
+} else {
+    foreach ($TargetRoute in $ActiveVerificationRoutes) {
+        $Page = Get-PublicPage -Path $TargetRoute -Label "route $TargetRoute"
+        Assert-PublicGuidePage -Page $Page
+    }
 }
 
 $Homepage = Get-PublicPage -Path '' -Label 'homepage footer'
