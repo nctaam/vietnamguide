@@ -15,16 +15,16 @@
 </picture>
 <!-- /wp:html --><!-- wp:group {"align":"wide","className":"vg-pattern-hero__content","layout":{"type":"constrained"}} -->
 <div class="wp-block-group alignwide vg-pattern-hero__content"><!-- wp:paragraph {"className":"vg-pattern-kicker"} -->
-<p class="vg-pattern-kicker">Vietnam field guide</p>
+<p class="vg-pattern-kicker">Vietnam Field Guide</p>
 <!-- /wp:paragraph --><!-- wp:heading {"level":2} -->
 <h2 class="wp-block-heading">Choose a route that leaves room to notice Vietnam.</h2>
 <!-- /wp:heading --><!-- wp:paragraph {"className":"vg-pattern-hero__lede"} -->
 <p class="vg-pattern-hero__lede">Clear itineraries, practical evidence, and considered recommendations for a trip that moves at the right pace.</p>
 <!-- /wp:paragraph --><!-- wp:buttons {"className":"vg-pattern-actions"} -->
 <div class="wp-block-buttons vg-pattern-actions"><!-- wp:button {"className":"vg-pattern-button"} -->
-<div class="wp-block-button vg-pattern-button"><a class="wp-block-button__link wp-element-button" href="/plan/">Plan your trip</a></div>
+<div class="wp-block-button vg-pattern-button"><a class="wp-block-button__link wp-element-button" href="/plan/">Plan Your Trip</a></div>
 <!-- /wp:button --><!-- wp:button {"className":"vg-pattern-button vg-pattern-button--ghost"} -->
-<div class="wp-block-button vg-pattern-button vg-pattern-button--ghost"><a class="wp-block-button__link wp-element-button" href="/itineraries/">Browse itineraries</a></div>
+<div class="wp-block-button vg-pattern-button vg-pattern-button--ghost"><a class="wp-block-button__link wp-element-button" href="/itineraries/">Browse Itineraries</a></div>
 <!-- /wp:button --></div>
 <!-- /wp:buttons --></div>
 <!-- /wp:group --></div>

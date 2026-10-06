@@ -941,6 +941,176 @@ def crawl_sitemap(sitemap_url):
         
     return list(set(urls))
 
+
+# ==============================================================================
+# CODEBASE & REGISTRY LINTERS
+# ==============================================================================
+
+def extract_clean_text_from_file(file_path):
+    """Read a PHP, HTML, or text file and extract clean plain text for analysis."""
+    with open(file_path, 'r', encoding='utf-8', errors='ignore') as f:
+        content = f.read()
+    if file_path.endswith('.php'):
+        # Strip PHP tags, extract gettext strings
+        no_php = re.sub(r'<\?php.*?\?>', ' ', content, flags=re.DOTALL)
+        gettext_strings = re.findall(r'''(?:__|esc_html__|esc_attr__|_e)\(\s*['"](.*?)['"]\s*,''', content)
+        combined = no_php + " " + " ".join(gettext_strings)
+        return strip_html(combined)
+    elif file_path.endswith('.html') or file_path.endswith('.htm'):
+        return strip_html(content)
+    else:
+        return content
+
+
+def scan_route_registry(registry_path=None):
+    """
+    Scans the Route Registry (282 routes in ops/route_registry.json).
+    Returns dict with summary statistics and per-route results.
+    """
+    if registry_path is None:
+        base_dir = os.path.dirname(os.path.abspath(__file__))
+        registry_path = os.path.join(base_dir, 'route_registry.json')
+
+    with open(registry_path, 'r', encoding='utf-8') as f:
+        data = json.load(f)
+    routes = data.get('routes', [])
+
+    results = []
+    total_tier1 = 0
+    scores = []
+    failed_routes = []
+
+    for r in routes:
+        path = r.get('path', '')
+        title = r.get('title', '')
+        desc = r.get('description', '')
+        text = f"{title}. {desc}"
+        res = analyze_text(text, source_name=path)
+        scores.append(res['hls_score'])
+        total_tier1 += res['tier1_count']
+        results.append(res)
+        if res['tier1_count'] > 0 or res['hls_score'] < 85:
+            failed_routes.append((path, res['tier1_count'], res['hls_score']))
+
+    mean_hls = round(sum(scores) / len(scores), 2) if scores else 0.0
+    passed = (total_tier1 == 0 and mean_hls >= 85.0 and len(failed_routes) == 0)
+
+    return {
+        'total_routes': len(routes),
+        'passed': passed,
+        'mean_hls_score': mean_hls,
+        'min_hls_score': min(scores) if scores else 0,
+        'max_hls_score': max(scores) if scores else 0,
+        'total_tier1_violations': total_tier1,
+        'failed_routes': failed_routes,
+        'results': results,
+    }
+
+
+def scan_ui_templates(theme_dir=None, root_dir=None):
+    """
+    Scans UI theme templates / microcopy catalogs:
+    - Homepage (front-page.php, header.php, footer.php, inc/homepage-data.php)
+    - 6 Toolkits (guide-visa-checker.php, guide-cost-calculator.php, guide-season-matrix.php,
+                 guide-airport-navigator.php, guide-packing-checklist.php, guide-itinerary-finder.php)
+    - Utility pages (search.php, 404.php, offline.html)
+    - 13 Gutenberg Block Patterns (patterns/*.php)
+    """
+    base_dir = os.path.dirname(os.path.abspath(__file__))
+    if root_dir is None:
+        root_dir = os.path.abspath(os.path.join(base_dir, '..'))
+    if theme_dir is None:
+        theme_dir = os.path.join(root_dir, 'wordpress', 'wp-content', 'themes', 'vietnamguide-premium')
+
+    template_files = []
+
+    # Homepage templates
+    for f in ['front-page.php', 'header.php', 'footer.php', os.path.join('inc', 'homepage-data.php')]:
+        p = os.path.join(theme_dir, f)
+        if os.path.isfile(p):
+            template_files.append(('homepage', p))
+
+    # 6 Interactive Toolkits
+    toolkit_files = [
+        'guide-visa-checker.php', 'guide-cost-calculator.php', 'guide-season-matrix.php',
+        'guide-airport-navigator.php', 'guide-packing-checklist.php', 'guide-itinerary-finder.php'
+    ]
+    for tk in toolkit_files:
+        p = os.path.join(theme_dir, 'inc', tk)
+        if os.path.isfile(p):
+            template_files.append(('toolkit', p))
+
+    # Utility pages
+    for ut in ['search.php', '404.php']:
+        p = os.path.join(theme_dir, ut)
+        if os.path.isfile(p):
+            template_files.append(('utility', p))
+    offline_p = os.path.join(root_dir, 'wordpress', 'offline.html')
+    if os.path.isfile(offline_p):
+        template_files.append(('utility', offline_p))
+
+    # Gutenberg patterns
+    patterns_dir = os.path.join(theme_dir, 'patterns')
+    if os.path.isdir(patterns_dir):
+        for pf in sorted(os.listdir(patterns_dir)):
+            if pf.endswith('.php'):
+                template_files.append(('pattern', os.path.join(patterns_dir, pf)))
+
+    results = []
+    total_tier1 = 0
+    scores = []
+    failed_files = []
+
+    for category, filepath in template_files:
+        filename = os.path.basename(filepath)
+        clean_text = extract_clean_text_from_file(filepath)
+        res = analyze_text(clean_text, source_name=filename)
+        scores.append(res['hls_score'])
+        total_tier1 += res['tier1_count']
+        results.append({
+            'category': category,
+            'file': filename,
+            'path': filepath,
+            'tier1_count': res['tier1_count'],
+            'hls_score': res['hls_score'],
+            'tier1_violations': res['tier1_violations']
+        })
+        if res['tier1_count'] > 0:
+            failed_files.append((filename, res['tier1_count'], res['tier1_violations']))
+
+    mean_hls = round(sum(scores) / len(scores), 2) if scores else 0.0
+    passed = (total_tier1 == 0 and len(failed_files) == 0)
+
+    return {
+        'total_templates': len(template_files),
+        'passed': passed,
+        'mean_hls_score': mean_hls,
+        'total_tier1_violations': total_tier1,
+        'failed_files': failed_files,
+        'results': results
+    }
+
+
+def audit_codebase(root_dir=None, registry_path=None, theme_dir=None):
+    """
+    Performs full automated linguistic & anti-slop audit on:
+    1. Route Registry (ops/route_registry.json)
+    2. UI theme templates & microcopy catalogs
+    """
+    reg_summary = scan_route_registry(registry_path=registry_path)
+    ui_summary = scan_ui_templates(theme_dir=theme_dir, root_dir=root_dir)
+
+    overall_passed = reg_summary['passed'] and ui_summary['passed']
+
+    return {
+        'passed': overall_passed,
+        'registry': reg_summary,
+        'ui_templates': ui_summary,
+        'overall_mean_hls': round((reg_summary['mean_hls_score'] + ui_summary['mean_hls_score']) / 2, 2),
+        'total_tier1_violations': reg_summary['total_tier1_violations'] + ui_summary['total_tier1_violations']
+    }
+
+
 # ==============================================================================
 # CLI HANDLER
 # ==============================================================================
@@ -952,6 +1122,9 @@ if __name__ == '__main__':
     parser.add_argument("--file", help="Path to local file to analyze")
     parser.add_argument("--url", help="URL of a page to analyze")
     parser.add_argument("--crawl-sitemap", help="URL of XML sitemap to crawl and analyze all URLs")
+    parser.add_argument("--codebase", "--scan-codebase", action="store_true", help="Audit route registry and UI templates")
+    parser.add_argument("--registry", action="store_true", help="Audit route registry only")
+    parser.add_argument("--ui", action="store_true", help="Audit UI templates only")
     parser.add_argument("--json", action="store_true", help="Output results in JSON format")
     parser.add_argument("--out", help="Save results to specified JSON file")
 
@@ -1033,6 +1206,66 @@ if __name__ == '__main__':
         print(f"Total: {len(urls)} | Passed: {passed_count} | Failed: {failed_count} | Pass Rate: {passed_count/len(urls)*100:.1f}%")
         sys.exit(0 if failed_count == 0 else 1)
 
+    elif args.registry:
+        summary = scan_route_registry()
+        if args.json:
+            print(json.dumps(summary, indent=2))
+        else:
+            status = "PASS [OK]" if summary['passed'] else "FAIL [VIOLATIONS]"
+            print(f"=== Anti-AI Slop Route Registry Audit ===")
+            print(f"Status: {status} | Total Routes: {summary['total_routes']} | Mean HLS: {summary['mean_hls_score']}/100")
+            print(f"Tier 1 Clichés: {summary['total_tier1_violations']} | Min HLS: {summary['min_hls_score']}")
+            if summary['failed_routes']:
+                print("\n[FAILED ROUTES]:")
+                for r in summary['failed_routes']:
+                    print(f"  - {r}")
+        if args.out:
+            os.makedirs(os.path.dirname(os.path.abspath(args.out)), exist_ok=True)
+            with open(args.out, 'w', encoding='utf-8') as f:
+                json.dump(summary, f, indent=2)
+        sys.exit(0 if summary['passed'] else 1)
+
+    elif args.ui:
+        summary = scan_ui_templates()
+        if args.json:
+            print(json.dumps(summary, indent=2))
+        else:
+            status = "PASS [OK]" if summary['passed'] else "FAIL [VIOLATIONS]"
+            print(f"=== Anti-AI Slop UI Templates Audit ===")
+            print(f"Status: {status} | Total Templates: {summary['total_templates']} | Mean HLS: {summary['mean_hls_score']}/100")
+            print(f"Tier 1 Clichés: {summary['total_tier1_violations']}")
+            if summary['failed_files']:
+                print("\n[FAILED FILES]:")
+                for f in summary['failed_files']:
+                    print(f"  - {f}")
+        if args.out:
+            os.makedirs(os.path.dirname(os.path.abspath(args.out)), exist_ok=True)
+            with open(args.out, 'w', encoding='utf-8') as f:
+                json.dump(summary, f, indent=2)
+        sys.exit(0 if summary['passed'] else 1)
 
     else:
-        parser.print_help()
+        # Default action: full codebase audit (Route Registry + UI Templates)
+        audit = audit_codebase()
+        reg = audit['registry']
+        ui = audit['ui_templates']
+        if args.json:
+            print(json.dumps(audit, indent=2))
+        else:
+            status = "PASS [OK]" if audit['passed'] else "FAIL [VIOLATIONS]"
+            print(f"============================================================")
+            print(f"   VietnamGuide Anti-AI Slop Quality Engine — Codebase Audit")
+            print(f"============================================================")
+            print(f"[1/2] Route Registry: {reg['total_routes']} routes scanned")
+            print(f"      Status: {'PASS' if reg['passed'] else 'FAIL'} | Mean HLS: {reg['mean_hls_score']}/100 | Tier 1 Clichés: {reg['total_tier1_violations']}")
+            print(f"[2/2] UI Theme Templates: {ui['total_templates']} templates scanned")
+            print(f"      Status: {'PASS' if ui['passed'] else 'FAIL'} | Mean HLS: {ui['mean_hls_score']}/100 | Tier 1 Clichés: {ui['total_tier1_violations']}")
+            print(f"------------------------------------------------------------")
+            print(f"OVERALL STATUS: {status} (0 Tier 1 Clichés, Mean HLS: {reg['mean_hls_score']} >= 85)")
+            print(f"============================================================")
+        if args.out:
+            os.makedirs(os.path.dirname(os.path.abspath(args.out)), exist_ok=True)
+            with open(args.out, 'w', encoding='utf-8') as f:
+                json.dump(audit, f, indent=2)
+        sys.exit(0 if audit['passed'] else 1)
+

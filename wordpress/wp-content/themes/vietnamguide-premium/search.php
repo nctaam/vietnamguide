@@ -15,9 +15,9 @@ if ($q_clean !== '') {
     if (str_contains($q_clean, 'visa') || str_contains($q_clean, 'evisa') || str_contains($q_clean, 'passport') || str_contains($q_clean, 'entry')) {
         $matched_toolkit = [
             'type'        => 'visa',
-            'badge'       => __('Interactive Decision Engine', 'vietnamguide-premium'),
+            'badge'       => __('Interactive Planning Tool', 'vietnamguide-premium'),
             'title'       => __('Vietnam Visa Eligibility Checker', 'vietnamguide-premium'),
-            'description' => __('Check your passport nationality for 45-day visa-free exemptions, official 90-day e-visa requirements, and entry checkpoints in 5 seconds.', 'vietnamguide-premium'),
+            'description' => __('Check your passport nationality for 45-day visa exemptions, official 90-day E-visa requirements, and official entry border gates instantly.', 'vietnamguide-premium'),
             'url'         => home_url('/plan/vietnam-evisa/'),
             'cta'         => __('Launch Visa Checker', 'vietnamguide-premium'),
         ];
@@ -107,11 +107,11 @@ if ($q_clean !== '') {
                     <div class="vg-search-chips__list">
                         <a href="<?php echo esc_url(add_query_arg('s', 'Hanoi', home_url('/'))); ?>" class="vg-search-chip">Hanoi</a>
                         <a href="<?php echo esc_url(add_query_arg('s', 'Da Nang', home_url('/'))); ?>" class="vg-search-chip">Da Nang</a>
-                        <a href="<?php echo esc_url(add_query_arg('s', 'Ha Long', home_url('/'))); ?>" class="vg-search-chip">Ha Long</a>
+                        <a href="<?php echo esc_url(add_query_arg('s', 'Ha Long Bay', home_url('/'))); ?>" class="vg-search-chip">Ha Long Bay</a>
                         <a href="<?php echo esc_url(add_query_arg('s', 'Hoi An', home_url('/'))); ?>" class="vg-search-chip">Hoi An</a>
                         <a href="<?php echo esc_url(add_query_arg('s', 'Sa Pa', home_url('/'))); ?>" class="vg-search-chip">Sa Pa</a>
                         <a href="<?php echo esc_url(add_query_arg('s', 'Ninh Binh', home_url('/'))); ?>" class="vg-search-chip">Ninh Binh</a>
-                        <a href="<?php echo esc_url(add_query_arg('s', 'Ho Chi Minh', home_url('/'))); ?>" class="vg-search-chip">Ho Chi Minh City</a>
+                        <a href="<?php echo esc_url(add_query_arg('s', 'Ho Chi Minh City', home_url('/'))); ?>" class="vg-search-chip">Ho Chi Minh City</a>
                         <a href="<?php echo esc_url(add_query_arg('s', 'Phu Quoc', home_url('/'))); ?>" class="vg-search-chip">Phu Quoc</a>
                         <a href="<?php echo esc_url(add_query_arg('s', 'Ha Giang Loop', home_url('/'))); ?>" class="vg-search-chip">Ha Giang Loop</a>
                         <a href="<?php echo esc_url(add_query_arg('s', 'Mekong Delta', home_url('/'))); ?>" class="vg-search-chip">Mekong Delta</a>
@@ -120,8 +120,8 @@ if ($q_clean !== '') {
                         <a href="<?php echo esc_url(add_query_arg('s', 'Weather', home_url('/'))); ?>" class="vg-search-chip">Weather</a>
                         <a href="<?php echo esc_url(add_query_arg('s', 'Packing', home_url('/'))); ?>" class="vg-search-chip">Packing Checklist</a>
                         <a href="<?php echo esc_url(add_query_arg('s', 'Airport', home_url('/'))); ?>" class="vg-search-chip">Airport Transit</a>
-                        <a href="<?php echo esc_url(add_query_arg('s', 'Itinerary', home_url('/'))); ?>" class="vg-search-chip">Itinerary Finder</a>
-                        <a href="<?php echo esc_url(add_query_arg('s', '10 Days', home_url('/'))); ?>" class="vg-search-chip">10-Day Itinerary</a>
+                        <a href="<?php echo esc_url(add_query_arg('s', 'Itinerary', home_url('/'))); ?>" class="vg-search-chip">Itineraries</a>
+                        <a href="<?php echo esc_url(add_query_arg('s', '10-Day Route', home_url('/'))); ?>" class="vg-search-chip">10-Day Route</a>
                     </div>
                 </div>
             </header>
@@ -201,18 +201,18 @@ if ($q_clean !== '') {
             <?php else : ?>
                 <div class="vg-empty-state vg-search-empty-state">
                     <p class="vg-search-empty-lead">
-                        <?php esc_html_e('No travel guides matched your search query. Try a different query above, explore our interactive travel planning engines, or choose a popular route below.', 'vietnamguide-premium'); ?>
+                        <?php esc_html_e('No guides matched your query. Refine your search terms above, consult our interactive planning tools, or select a route below.', 'vietnamguide-premium'); ?>
                     </p>
 
                     <div class="vg-search-empty-block">
                         <h2 class="vg-search-empty-block__title">
-                            <?php esc_html_e('Interactive Travel Planning Engines', 'vietnamguide-premium'); ?>
+                            <?php esc_html_e('Interactive Planning Tools', 'vietnamguide-premium'); ?>
                         </h2>
                         <div class="vg-search-toolkit-grid">
                             <a href="<?php echo esc_url(home_url('/plan/vietnam-evisa/')); ?>" class="vg-search-toolkit-card">
                                 <span class="vg-search-toolkit-card__badge"><?php esc_html_e('Decision Tool', 'vietnamguide-premium'); ?></span>
                                 <h3 class="vg-search-toolkit-card__title"><?php esc_html_e('Visa Eligibility Checker', 'vietnamguide-premium'); ?></h3>
-                                <p class="vg-search-toolkit-card__desc"><?php esc_html_e('Verify visa exemption rules and 90-day e-visa entry requirements for your passport nationality in seconds.', 'vietnamguide-premium'); ?></p>
+                                <p class="vg-search-toolkit-card__desc"><?php esc_html_e('Verify visa exemption rules and 90-day E-visa entry requirements for your passport nationality.', 'vietnamguide-premium'); ?></p>
                                 <span class="vg-search-toolkit-card__cta"><?php esc_html_e('Check Visa Rules', 'vietnamguide-premium'); ?> &rarr;</span>
                             </a>
                             <a href="<?php echo esc_url(home_url('/costs/vietnam-travel-cost/')); ?>" class="vg-search-toolkit-card">
@@ -252,7 +252,7 @@ if ($q_clean !== '') {
 
                     <div class="vg-empty-state__actions">
                         <a href="<?php echo esc_url(home_url('/')); ?>" class="vg-button">
-                            <?php esc_html_e('Return to Home', 'vietnamguide-premium'); ?>
+                            <?php esc_html_e('Back to Homepage', 'vietnamguide-premium'); ?>
                         </a>
                         <a href="<?php echo esc_url(home_url('/destinations/')); ?>" class="vg-button vg-button--secondary">
                             <?php esc_html_e('All Destinations', 'vietnamguide-premium'); ?>

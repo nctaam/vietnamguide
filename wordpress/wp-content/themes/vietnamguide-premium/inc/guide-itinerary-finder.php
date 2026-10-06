@@ -31,11 +31,11 @@ function vg_get_itinerary_finder_catalog(): array
             'gateway_label'   => 'Hanoi or HCMC',
             'gateway_value'   => 'both',
             'route_summary'   => 'Hanoi &rarr; Ha Long Bay &rarr; Hoi An &rarr; Ho Chi Minh City',
-            'description'     => 'The quintessential introductory route connecting northern karst wonders, lantern-lit heritage alleys, and southern energy with zero wasted transit days.',
+            'description'     => 'The signature introductory route connecting northern limestone karsts, lantern-lit heritage alleys in Hoi An, and southern commercial energy with efficient transit connections.',
             'highlights'      => [
                 'Overnight karst cruise on Ha Long or Lan Ha Bay',
                 'Walking food tour and tailor shops in ancient Hoi An',
-                'Vibrant cafe culture and historical landmarks in Saigon',
+                'Historic landmark quarters and distinctive cafe culture in Ho Chi Minh City',
             ],
             'url'             => '/itineraries/10-days-in-vietnam/',
             'season_url'      => '/plan/best-time-to-visit-vietnam/#month-nov',
@@ -51,7 +51,7 @@ function vg_get_itinerary_finder_catalog(): array
             'gateway_label'   => 'Hanoi',
             'gateway_value'   => 'hanoi',
             'route_summary'   => 'Hanoi &rarr; Ninh Binh &rarr; Ha Long &rarr; Hue &rarr; Hoi An &rarr; HCMC',
-            'description'     => 'The gold standard for travelers who want depth over checklists. Adds ancient capitals, emerald rice valleys, and imperial citadel architecture.',
+            'description'     => 'Designed for travelers who prioritize cultural depth over rushed itineraries. Adds ancient capitals, karst river valleys, and imperial citadel architecture.',
             'highlights'      => [
                 'Rowboat through towering river caves in Tam Coc & Trang An',
                 'Imperial tombs and royal palace pavilions in historic Hue',
@@ -131,9 +131,9 @@ function vg_get_itinerary_finder_catalog(): array
             'gateway_label'   => 'Hanoi',
             'gateway_value'   => 'hanoi',
             'route_summary'   => 'Hanoi &rarr; Ha Giang &rarr; Dong Van &rarr; Ma Pi Leng Pass &rarr; Du Gia',
-            'description'     => "Southeast Asia's most legendary mountain pass route. Towering limestone canyons, thrilling switchbacks, and remote mountain community homestays.",
+            'description'     => "Vietnam's northernmost mountain circuit. High-altitude limestone canyons, dramatic serpentine passes, and remote mountain community homestays.",
             'highlights'      => [
-                'Driving through the jaw-dropping Ma Pi Leng Pass above Nho Que river',
+                'Traversing the dramatic Ma Pi Leng Pass high above the turquoise Nho Que River',
                 'Exploring Dong Van UNESCO Global Karst Plateau Geopark',
                 'Cooling off at Du Gia mountain waterfall after mountain riding',
             ],
@@ -151,11 +151,11 @@ function vg_get_itinerary_finder_catalog(): array
             'gateway_label'   => 'Hanoi',
             'gateway_value'   => 'hanoi',
             'route_summary'   => 'Hanoi &rarr; Sa Pa Town &rarr; Muong Hoa Valley &rarr; Ta Van Village',
-            'description'     => "Tiered golden rice terraces carved into Mount Fansipan's foothills, authentic village homestays, and refreshing cool highland alpine air.",
+            'description'     => "Tiered rice terraces carved into Mount Fansipan's foothills, traditional village homestays, and crisp highland climate.",
             'highlights'      => [
                 'Guided trek through the terraced cascades of Muong Hoa Valley',
                 'Local herbal baths and welcoming homestays in Ta Van and Lao Chai',
-                'Ascending the rooftop of Indochina via Fansipan Legend cable car',
+                'Ascending to the summit of Mount Fansipan (3,143m) via Fansipan Legend cable car',
             ],
             'url'             => '/destinations/sapa-travel-guide/',
             'season_url'      => '/plan/best-time-to-visit-vietnam/#month-sep',
@@ -171,9 +171,9 @@ function vg_get_itinerary_finder_catalog(): array
             'gateway_label'   => 'Ho Chi Minh City',
             'gateway_value'   => 'hcmc',
             'route_summary'   => 'Ho Chi Minh City &rarr; Con Dao Island (or Phu Quoc)',
-            'description'     => 'The ultimate antidote to touring fatigue. Turquoise bays, sea turtle sanctuaries, historic French-era coastal avenues, and pristine empty beaches.',
+            'description'     => 'An unhurried coastal extension to conclude your journey. Sheltered bays, sea turtle conservation sanctuaries, historic tree-lined avenues, and quiet beaches.',
             'highlights'      => [
-                'Pristine secluded beaches at Dam Trau Bay and Bai Nhat',
+                'Secluded sandy coves at Dam Trau Bay and Bai Nhat',
                 'National park snorkeling on coral reefs and sea turtle conservation',
                 'Peaceful, unhurried island pace with coastal seafood dining',
             ],
@@ -340,7 +340,7 @@ function vg_render_itinerary_finder_html(): string
         </div>
 
         <div class="vg-finder-toolkit vg-tool-synergy-bar">
-            <div class="vg-finder-tk-title"><?php esc_html_e('Essential Trip Planning Toolkit', 'vietnamguide-premium'); ?></div>
+            <div class="vg-finder-tk-title"><?php esc_html_e('Connected Travel Planning Toolkits', 'vietnamguide-premium'); ?></div>
             <div class="vg-finder-tk-grid">
                 <a href="<?php echo esc_url(home_url('/costs/vietnam-travel-cost/')); ?>" class="vg-finder-tk-card vg-synergy-bridge">
                     <span class="vg-finder-tk-badge">💰 <?php esc_html_e('Budget', 'vietnamguide-premium'); ?></span>
@@ -350,12 +350,12 @@ function vg_render_itinerary_finder_html(): string
                 <a href="<?php echo esc_url(home_url('/plan/vietnam-evisa/')); ?>" class="vg-finder-tk-card vg-synergy-bridge">
                     <span class="vg-finder-tk-badge">🛂 <?php esc_html_e('Visa', 'vietnamguide-premium'); ?></span>
                     <strong><?php esc_html_e('Visa & E-Visa Checker', 'vietnamguide-premium'); ?></strong>
-                    <span><?php esc_html_e('Verify 45-day exemption vs $25 e-visa rules &rarr;', 'vietnamguide-premium'); ?></span>
+                    <span><?php esc_html_e('Verify 45-day exemption vs $25 E-Visa guidelines &rarr;', 'vietnamguide-premium'); ?></span>
                 </a>
                 <a href="<?php echo esc_url(home_url('/plan/vietnam-airport-arrival-checklist/')); ?>" class="vg-finder-tk-card vg-synergy-bridge">
                     <span class="vg-finder-tk-badge">✈️ <?php esc_html_e('Transit', 'vietnamguide-premium'); ?></span>
-                    <strong><?php esc_html_e('Airport Transit Navigator', 'vietnamguide-premium'); ?></strong>
-                    <span><?php esc_html_e('Grab bays & scam shields for HAN, SGN & DAD &rarr;', 'vietnamguide-premium'); ?></span>
+                    <strong><?php esc_html_e('Airport Transit & Arrival Guide', 'vietnamguide-premium'); ?></strong>
+                    <span><?php esc_html_e('Grab pick-up zones, taxi fares, and arrival procedures for HAN, SGN, and DAD &rarr;', 'vietnamguide-premium'); ?></span>
                 </a>
                 <a href="<?php echo esc_url(home_url('/plan/best-time-to-visit-vietnam/')); ?>" class="vg-finder-tk-card vg-synergy-bridge">
                     <span class="vg-finder-tk-badge">☀️ <?php esc_html_e('Climate', 'vietnamguide-premium'); ?></span>
@@ -365,7 +365,7 @@ function vg_render_itinerary_finder_html(): string
                 <a href="<?php echo esc_url(home_url('/plan/vietnam-first-trip-planning-checklist/')); ?>" class="vg-finder-tk-card vg-synergy-bridge">
                     <span class="vg-finder-tk-badge">🎒 <?php esc_html_e('Packing', 'vietnamguide-premium'); ?></span>
                     <strong><?php esc_html_e('Route Packing Checklist', 'vietnamguide-premium'); ?></strong>
-                    <span><?php esc_html_e('Interactive 24-item gear checklist with progress tracker &rarr;', 'vietnamguide-premium'); ?></span>
+                    <span><?php esc_html_e('Interactive 24-item packing checklist with browser progress saving &rarr;', 'vietnamguide-premium'); ?></span>
                 </a>
             </div>
         </div>

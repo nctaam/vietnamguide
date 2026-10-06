@@ -25,13 +25,13 @@
         <tbody>
             <tr>
                 <th scope="row">Lan Ha Bay</th>
-                <td>Quieter water and a calmer cruise rhythm</td>
-                <td>Fewer of the classic Ha Long viewpoints</td>
+                <td>Quieter waters and a calmer cruising rhythm</td>
+                <td>Fewer of the standard Ha Long viewpoints</td>
             </tr>
             <tr>
                 <th scope="row">Ha Long Bay</th>
-                <td>The iconic first-time Vietnam landscape</td>
-                <td>More visitors and wider variation in cruise quality</td>
+                <td>The classic limestone karst seascape</td>
+                <td>Higher vessel density and wider variation in cruise fleet standards</td>
             </tr>
         </tbody>
     </table>

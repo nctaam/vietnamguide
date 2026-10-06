@@ -41,7 +41,7 @@ function vg_get_airport_navigator_dataset(): array
                 'grab_pickup' => [
                     't2_international' => 'Exit T2 ground floor arrivals, cross pedestrian crosswalk to Outer Island Lane 2 / Lane 3 (between Columns 10 and 14).',
                     't1_domestic' => 'Exit T1 arrivals, cross to outer pickup lane (Lane 2) opposite Door A/B.',
-                    'warning' => 'DO NOT follow individuals inside the terminal shouting "Grab! Grab!" — genuine Grab drivers must wait at their cars in Lane 2/3.',
+                    'warning' => 'Ignore individuals inside the terminal soliciting rides; official Grab drivers wait at their vehicles in outer lanes (Lane 2/3).',
                 ],
                 'public_bus' => [
                     'name' => 'Express Bus 86 (Orange Bus)',
@@ -106,7 +106,7 @@ function vg_get_airport_navigator_dataset(): array
                 ],
                 'grab_pickup' => [
                     't2_international' => 'Exit T2 ground floor arrivals, cross to outdoor pickup lane (Lane B / Lane C, columns 8–12).',
-                    't1_domestic' => 'CRITICAL RULE: Grabcars CANNOT pick up curbside at T1 Domestic! You MUST walk across to the TCP Multi-Story Parking Garage (Floors 3, 4, or 5 via elevators).',
+                    't1_domestic' => 'Important note: Ride-hailing vehicles cannot pick up at T1 Domestic curbside. Proceed across to the TCP multi-story parking garage (Floors 3–5 via elevators).',
                     'warning' => 'Aggressive touts near T2 arrivals will offer "cheap Grab". They show counterfeit apps and overcharge $30–$50 USD. Only book on your own active Grab app.',
                 ],
                 'public_bus' => [
@@ -173,7 +173,7 @@ function vg_get_airport_navigator_dataset(): array
                 'grab_pickup' => [
                     't2_international' => 'Walk straight out of T2 arrivals across the inner road to the designated ride-hailing island (Zone C).',
                     't1_domestic' => 'Exit T1 arrivals, walk past curbside taxi rank to the outer parking lot ride-hailing shelter.',
-                    'warning' => 'Drivers in arrivals often offer "flat rate 500k to Hoi An". A genuine GrabCar is 320k–380k VND.',
+                    'warning' => 'Drivers in arrivals often offer a "flat rate 500,000 VND to Hoi An." An official GrabCar ride costs 320,000–380,000 VND.',
                 ],
                 'public_bus' => [
                     'name' => 'Public Bus & Hoi An Express Shuttle',
@@ -321,7 +321,7 @@ function vg_get_airport_navigator_dataset(): array
                         'grab_fare' => '350,000 – 430,000 VND ($14 – $17 USD)',
                         'taxi_fare' => '380,000 – 460,000 VND ($15 – $18 USD)',
                         'bus_fare' => 'VinBus Line 17 & 19 (100% Free)',
-                        'best_choice' => 'VinBus Electric Shuttle (Free!)',
+                        'best_choice' => 'VinBus Electric Shuttle (Complimentary)',
                     ],
                 ],
             ],
@@ -334,7 +334,7 @@ function vg_get_airport_navigator_dataset(): array
                 'severity' => 'Critical',
                 'icon' => '🚨',
                 'pattern' => 'A tout approaches you inside the arrivals hall or curbside holding a smartphone with an active Grab screen. They insist: "Your Grab ride was cancelled because of traffic" or "I am your Grab driver, come to my car". They then disable the app or quote 5x the real price upon arrival.',
-                'antidote' => 'Never follow anyone inside the terminal. Only board a vehicle whose LICENSE PLATE EXACTLY MATCHES the 6-digit plate displayed on your personal phone screen. If your Grab booking were cancelled, YOUR app would notify you directly.',
+                'antidote' => 'Never follow anyone inside the terminal. Only board a vehicle whose license plate matches the registration number shown in your Grab app. If your Grab booking were cancelled, your app would notify you directly.',
             ],
             [
                 'id' => 'fast_meter',
@@ -375,7 +375,7 @@ function vg_get_airport_navigator_dataset(): array
                 'title' => 'Airport Currency Exchange Reality',
                 'rule' => 'Change only $20 – $50 USD at airport booths for immediate bus or cash needs.',
                 'detail' => 'Airport bank kiosks (Vietcombank, BIDV, Eximbank) offer fair but slightly wider spreads (2–3% lower). Wait until city center jewelry shops (Phố Hà Trung in Hanoi Old Quarter, Chợ Bến Thành gold shops in HCMC) or official bank branches for the highest market rates.',
-                'atm_tip' => 'Airport arrival ATMs (VPBank, TPBank, Vietcombank) dispense maximum 2,000,000 – 5,000,000 VND per withdrawal with foreign card fees of 50,000 – 60,000 VND. Always choose "WITHOUT CONVERSION" on the ATM screen to avoid dynamic currency conversion (DCC) markups.',
+                'atm_tip' => 'Airport arrival ATMs (VPBank, TPBank, Vietcombank) dispense a maximum of 2,000,000–5,000,000 VND per withdrawal with foreign card fees of 50,000–60,000 VND. Always choose "WITHOUT CONVERSION" on the ATM screen to avoid dynamic currency conversion (DCC) markups.',
             ],
             'sim' => [
                 'title' => 'Airport SIM vs eSIM Strategy',
@@ -655,7 +655,7 @@ function vg_render_airport_navigator_html(): string
                     </div>
                     <p><?php echo esc_html($data['essentials']['sim']['detail']); ?></p>
                     <div class="vg-an-essential-tip">
-                        💡 <?php esc_html_e('Viettel has the strongest coverage across remote mountainous regions (Ha Giang, Pu Luong, Sapa). Vinaphone is optimal for major metropolitan cities and island resorts.', 'vietnamguide-premium'); ?>
+                        💡 <?php esc_html_e('Viettel has the strongest coverage across remote mountainous regions (Ha Giang, Pu Luong, Sa Pa). Vinaphone is optimal for major metropolitan cities and island resorts.', 'vietnamguide-premium'); ?>
                     </div>
                 </div>
             </div>

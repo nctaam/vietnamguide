@@ -172,11 +172,11 @@ function vg_render_visa_checker_html(): string
     <section class="vg-visa-checker" id="vg-visa-checker" aria-labelledby="vg-visa-checker-title">
         <div class="vg-vc-header">
             <div class="vg-vc-eyebrow">
-                <span class="vg-vc-badge-live">Live Immigration Engine</span>
+                <span class="vg-vc-badge-live"><?php esc_html_e('Official Visa & Entry Guide', 'vietnamguide-premium'); ?></span>
                 <span class="vg-vc-meta">Updated: 2026 Resolution 128/NQ-CP & 127/NQ-CP</span>
             </div>
             <div id="vg-visa-checker-title" class="vg-vc-title">Interactive Vietnam Visa &amp; E-Visa Requirements Checker</div>
-            <p class="vg-vc-subtitle">Select your nationality and planned stay duration to instantly calculate your official entry status, statutory fees, passport validity deadlines, and avoid third-party agency scams.</p>
+            <p class="vg-vc-subtitle"><?php esc_html_e('Select your nationality and planned stay duration to verify entry rules, statutory visa fees, passport expiration requirements, and official immigration checkpoints.', 'vietnamguide-premium'); ?></p>
         </div>
 
         <noscript>
@@ -273,7 +273,7 @@ function vg_render_visa_checker_html(): string
                         <span class="vg-vc-badge-dot"></span>
                         <span id="vg-vc-status-text">45-Day Visa Exemption Eligible</span>
                     </div>
-                    <div class="vg-vc-verdict-heading" id="vg-vc-verdict-title">No Visa Required for your 14-day trip!</div>
+                    <div class="vg-vc-verdict-heading" id="vg-vc-verdict-title">No Visa Required for Your 14-Day Stay</div>
                     <p class="vg-vc-verdict-summary" id="vg-vc-verdict-desc">
                         As a citizen of the United Kingdom, you are granted unilateral visa-free entry for up to 45 consecutive days under Resolution 128/NQ-CP. You do not need to apply for an E-visa or pay any visa fees.
                     </p>
@@ -282,14 +282,14 @@ function vg_render_visa_checker_html(): string
                     <div class="vg-vc-cost-card">
                         <div class="vg-vc-cost-label">Official Visa Fee</div>
                         <div class="vg-vc-cost-amount" id="vg-vc-cost-amount">$0 USD</div>
-                        <div class="vg-vc-cost-sub" id="vg-vc-cost-sub">Save $25–$50 USD compared to third-party agency sites</div>
+                        <div class="vg-vc-cost-sub" id="vg-vc-cost-sub">Statutory entry is fee-free. Commercial agencies charge $25–$80 USD for unnecessary processing.</div>
                     </div>
                 </div>
             </div>
 
             <!-- Viral Social & Deep-Link Sharing Bar -->
             <div class="vg-tool-share-bar">
-                <span class="vg-share-label"><?php esc_html_e('Share Visa Advice:', 'vietnamguide-premium'); ?></span>
+                <span class="vg-share-label"><?php esc_html_e('Share Visa Information:', 'vietnamguide-premium'); ?></span>
                 <button type="button" class="vg-btn-share" id="vg-vc-share-link">
                     <span>🔗 <?php esc_html_e('Copy Link', 'vietnamguide-premium'); ?></span>
                 </button>
@@ -324,7 +324,7 @@ function vg_render_visa_checker_html(): string
                             <span class="vg-vc-rule-icon">✓</span>
                             <div class="vg-vc-rule-content">
                                 <strong>2 Blank Visa Pages:</strong>
-                                <span>Required for full-page entry and exit immigration rubber stamps.</span>
+                                <span>Required for entry and exit immigration stamps.</span>
                             </div>
                         </li>
                         <li class="vg-vc-rule-item passed">
@@ -590,7 +590,7 @@ function vg_render_visa_checker_html(): string
                 // EXEMPT NATIONALITY BUT STAY EXCEEDS EXEMPTION LIMIT -> REQUIRES E-VISA
                 verdictCard.classList.add('status-warning');
                 statusText.textContent = `90-Day E-Visa Required (Stay Exceeds ${exemptionDays} Days)`;
-                verdictTitle.textContent = `Apply for a 90-Day E-Visa before departure!`;
+                verdictTitle.textContent = `Apply for a 90-Day E-Visa Before Departure`;
                 verdictDesc.textContent = `While ${countryInfo.name} citizens enjoy a ${exemptionDays}-day visa exemption, your planned stay of ${currentDuration} days exceeds this limit. You must apply for an official 90-day Vietnam E-visa online before your flight.`;
                 costAmount.textContent = currentEntry === 'multiple' ? '$50 USD' : '$25 USD';
                 costSub.textContent = `Statutory government fee on official portal (${currentEntry === 'multiple' ? 'Multiple Entry' : 'Single Entry'}).`;
@@ -600,7 +600,7 @@ function vg_render_visa_checker_html(): string
                 verdictCard.classList.add('status-warning');
                 statusText.textContent = `E-Visa Recommended for Multi-Border Travel`;
                 verdictTitle.textContent = `90-Day Multiple-Entry E-Visa Recommended`;
-                verdictDesc.textContent = `If you plan to exit Vietnam into Cambodia/Laos and re-enter, consecutive visa-free entries are permitted but require re-inspection and tickets at each crossing. A 90-day Multiple Entry E-visa ($50 USD) offers total peace of mind.`;
+                verdictDesc.textContent = `If you plan to exit Vietnam into Cambodia/Laos and re-enter, consecutive visa-free entries are permitted but require re-inspection and tickets at each crossing. A 90-day multiple-entry E-visa ($50 USD) eliminates re-entry paperwork and transit delays.`;
                 costAmount.textContent = '$50 USD';
                 costSub.textContent = 'Official 90-day Multiple Entry E-visa fee.';
                 if (maxDaysRule) maxDaysRule.textContent = '90';
@@ -620,7 +620,7 @@ function vg_render_visa_checker_html(): string
                 verdictTitle.textContent = `Apply for a 90-Day Vietnam E-Visa`;
                 verdictDesc.textContent = `Citizens of ${countryInfo.name} are eligible for Vietnam's universal 90-day E-visa under Resolution 127/NQ-CP. Processing takes 3–5 working days directly through the official Vietnam Immigration Department portal.`;
                 costAmount.textContent = currentEntry === 'multiple' ? '$50 USD' : '$25 USD';
-                costSub.textContent = `Official fee for ${currentEntry === 'multiple' ? 'Multiple Entry ($50)' : 'Single Entry ($25)'}. No agency markups!`;
+                costSub.textContent = `Official fee for ${currentEntry === 'multiple' ? 'Multiple Entry ($50)' : 'Single Entry ($25)'}. No intermediary agency surcharges.`;
                 if (maxDaysRule) maxDaysRule.textContent = '90';
             }
 
@@ -631,13 +631,13 @@ function vg_render_visa_checker_html(): string
             if (itinLink && itinTitle) {
                 if (currentDuration <= 8) {
                     itinLink.href = '<?php echo esc_url(home_url('/itineraries/7-days-in-vietnam/')); ?>';
-                    itinTitle.textContent = '7-Day Essential Highlights Route';
+                    itinTitle.textContent = '7-Day Northern Highlights Route';
                 } else if (currentDuration <= 12) {
                     itinLink.href = '<?php echo esc_url(home_url('/itineraries/10-days-in-vietnam/')); ?>';
                     itinTitle.textContent = '10-Day Classic North-to-South Route';
                 } else if (currentDuration <= 18) {
                     itinLink.href = '<?php echo esc_url(home_url('/itineraries/14-days-in-vietnam/')); ?>';
-                    itinTitle.textContent = '14-Day Complete Grand Tour';
+                    itinTitle.textContent = '14-Day Balanced Cross-Country Route';
                 } else {
                     itinLink.href = '<?php echo esc_url(home_url('/itineraries/21-days-in-vietnam/')); ?>';
                     itinTitle.textContent = '21-Day Deep Discovery Journey';
@@ -757,7 +757,7 @@ function vg_render_visa_checker_html(): string
         // Copy Summary Action
         if (copyBtn && copyLabel) {
             copyBtn.addEventListener('click', function () {
-                const countryInfo = dataset.countries[currentCountry] || { name: 'Traveller' };
+                const countryInfo = dataset.countries[currentCountry] || { name: 'Traveler' };
                 const summaryText = [
                     '=== VIETNAM TRAVEL ENTRY REQUIREMENTS ===',
                     `• Nationality: ${countryInfo.name}`,

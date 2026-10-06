@@ -34,7 +34,7 @@ function vg_get_packing_checklist_catalog(): array
             'id'       => 'doc-evisa',
             'category' => 'documents',
             'category_label' => __('Documents & Money', 'vietnamguide-premium'),
-            'item'     => __('Printed official Vietnam e-visa approval letter', 'vietnamguide-premium'),
+            'item'     => __('Printed official Vietnam E-Visa approval letter', 'vietnamguide-premium'),
             'context'  => __('Print 2 physical copies on standard A4 paper. Digital phone copies are not accepted at immigration counters.', 'vietnamguide-premium'),
             'tags'     => ['all', 'first-time', 'hagiang', 'islands', 'cities'],
         ],
@@ -51,7 +51,7 @@ function vg_get_packing_checklist_catalog(): array
             'category' => 'documents',
             'category_label' => __('Documents & Money', 'vietnamguide-premium'),
             'item'     => __('Crisp, uncreased USD or EUR cash ($200 - $300)', 'vietnamguide-premium'),
-            'context'  => __('Local exchange counters and gold shops in Hanoi and Saigon reject torn, stamped, or folded banknotes.', 'vietnamguide-premium'),
+            'context'  => __('Local exchange counters and gold shops in Hanoi and Ho Chi Minh City reject torn, stamped, or folded banknotes.', 'vietnamguide-premium'),
             'tags'     => ['all', 'first-time', 'hagiang', 'islands'],
         ],
         [
@@ -127,7 +127,7 @@ function vg_get_packing_checklist_catalog(): array
             'category' => 'clothing',
             'category_label' => __('Clothing & Modesty', 'vietnamguide-premium'),
             'item'     => __('Temple modesty scarf or trousers covering knees and shoulders', 'vietnamguide-premium'),
-            'context'  => __('Strictly required when entering Hanoi Temple of Literature, Tran Quoc Pagoda, and Hue Imperial Citadel.', 'vietnamguide-premium'),
+            'context'  => __('Strictly required when entering Hanoi Temple of Literature, Tran Quoc Pagoda (Chùa Trấn Quốc), and Hue Imperial Citadel.', 'vietnamguide-premium'),
             'tags'     => ['all', 'first-time', 'cities'],
         ],
         [
@@ -250,7 +250,7 @@ function vg_render_packing_checklist(array $attributes = []): string
     <section class="vg-checklist-widget" id="vg-packing-checklist" data-vg-checklist aria-label="<?php esc_attr_e('Interactive Vietnam Travel Packing Checklist', 'vietnamguide-premium'); ?>">
         <div class="vg-checklist-header">
             <div class="vg-checklist-title-row">
-                <span class="vg-checklist-badge"><?php esc_html_e('Interactive Field Tool', 'vietnamguide-premium'); ?></span>
+                <span class="vg-checklist-badge"><?php esc_html_e('Planning Toolkit', 'vietnamguide-premium'); ?></span>
                 <div class="vg-checklist-title" role="heading" aria-level="2">
                     <span class="vg-checklist-icon" aria-hidden="true">&#10003;</span>
                     <?php esc_html_e('Vietnam Travel Packing & Preparation Checklist', 'vietnamguide-premium'); ?>
@@ -290,7 +290,7 @@ function vg_render_packing_checklist(array $attributes = []): string
                     <?php esc_html_e('For full interactive progress saving, enable JavaScript. Key gear priorities across Vietnam:', 'vietnamguide-premium'); ?>
                 </p>
                 <ul style="margin-bottom:0;padding-left:20px;font-size:0.9rem;line-height:1.6;">
-                    <li><strong><?php esc_html_e('Documents:', 'vietnamguide-premium'); ?></strong> <?php esc_html_e('Valid passport (6+ months), printed physical e-visa copies, uncreased USD/EUR notes, travel medical insurance.', 'vietnamguide-premium'); ?></li>
+                    <li><strong><?php esc_html_e('Documents:', 'vietnamguide-premium'); ?></strong> <?php esc_html_e('Valid passport (6+ months), printed physical E-Visa copies, uncreased USD/EUR notes, travel medical insurance.', 'vietnamguide-premium'); ?></li>
                     <li><strong><?php esc_html_e('Electronics:', 'vietnamguide-premium'); ?></strong> <?php esc_html_e('Unlocked phone for eSIM/SIM, universal power adapter, 10,000+ mAh power bank, pre-downloaded offline maps.', 'vietnamguide-premium'); ?></li>
                     <li><strong><?php esc_html_e('Clothing & Modesty:', 'vietnamguide-premium'); ?></strong> <?php esc_html_e('Linen/breathable fabrics, temple shoulder/knee cover, slip-on footwear, packable monsoon rain layer.', 'vietnamguide-premium'); ?></li>
                     <li><strong><?php esc_html_e('Health & Medical:', 'vietnamguide-premium'); ?></strong> <?php esc_html_e('DEET mosquito repellent (dengue defense), oral hydration salts, digestive medication, SPF 50+ sunscreen.', 'vietnamguide-premium'); ?></li>
@@ -356,14 +356,14 @@ function vg_render_packing_checklist(array $attributes = []): string
 
         <div class="vg-checklist-synergy-wrap vg-tool-synergy-bar">
             <div class="vg-checklist-synergy-title">
-                <?php esc_html_e('Connected Vietnam Trip Planning Toolkits:', 'vietnamguide-premium'); ?>
+                <?php esc_html_e('Related Vietnam Planning Guides:', 'vietnamguide-premium'); ?>
             </div>
             <div class="vg-checklist-synergy-links">
                 <a href="<?php echo esc_url(home_url('/plan/vietnam-evisa/')); ?>" class="vg-checklist-synergy-card vg-synergy-bridge">
                     <span class="vg-checklist-synergy-icon" aria-hidden="true">&#128196;</span>
                     <div>
                         <strong><?php esc_html_e('Visa Exemption & E-Visa Checker', 'vietnamguide-premium'); ?></strong>
-                        <p><?php esc_html_e('45-day exemption rules, port checks & official e-visa requirements.', 'vietnamguide-premium'); ?></p>
+                        <p><?php esc_html_e('45-day exemption rules, port entry requirements, and official E-Visa guidelines.', 'vietnamguide-premium'); ?></p>
                     </div>
                 </a>
                 <a href="<?php echo esc_url(home_url('/costs/vietnam-travel-cost/')); ?>" class="vg-checklist-synergy-card vg-synergy-bridge">
@@ -377,21 +377,21 @@ function vg_render_packing_checklist(array $attributes = []): string
                     <span class="vg-checklist-synergy-icon" aria-hidden="true">&#9728;</span>
                     <div>
                         <strong><?php esc_html_e('Regional Season & Weather Matrix', 'vietnamguide-premium'); ?></strong>
-                        <p><?php esc_html_e('12-month climate guide & rainfall radar across North, Central & South.', 'vietnamguide-premium'); ?></p>
+                        <p><?php esc_html_e('12-month regional climate patterns and rainfall data across North, Central, and South.', 'vietnamguide-premium'); ?></p>
                     </div>
                 </a>
                 <a href="<?php echo esc_url(home_url('/plan/vietnam-airport-arrival-checklist/')); ?>" class="vg-checklist-synergy-card vg-synergy-bridge">
                     <span class="vg-checklist-synergy-icon" aria-hidden="true">&#9992;</span>
                     <div>
-                        <strong><?php esc_html_e('Airport Transit Navigator & Scam Shield', 'vietnamguide-premium'); ?></strong>
-                        <p><?php esc_html_e('Grab bays, metered taxi fares & arrival steps for HAN, SGN & DAD.', 'vietnamguide-premium'); ?></p>
+                        <strong><?php esc_html_e('Airport Transit & Arrival Guide', 'vietnamguide-premium'); ?></strong>
+                        <p><?php esc_html_e('Grab pick-up zones, metered taxi fares, and arrival procedures for HAN, SGN, and DAD.', 'vietnamguide-premium'); ?></p>
                     </div>
                 </a>
                 <a href="<?php echo esc_url(home_url('/itineraries/')); ?>" class="vg-checklist-synergy-card vg-synergy-bridge" data-flagship="<?php echo esc_url(home_url('/itineraries/10-days-in-vietnam/')); ?>">
                     <span class="vg-checklist-synergy-icon" aria-hidden="true">&#128506;</span>
                     <div>
                         <strong><?php esc_html_e('Interactive Itinerary Finder', 'vietnamguide-premium'); ?></strong>
-                        <p><?php esc_html_e('Match 7, 10, 14, 21-day routes or open the 10-day classic route (/itineraries/10-days-in-vietnam/).', 'vietnamguide-premium'); ?></p>
+                        <p><?php esc_html_e('Compare 7, 10, 14, and 21-day itineraries or review the signature 10-day classic route.', 'vietnamguide-premium'); ?></p>
                     </div>
                 </a>
             </div>

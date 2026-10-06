@@ -55,7 +55,7 @@
             ?>
         </nav>
         <a class="vg-header-action" href="<?php echo esc_url(vg_home_url('plan')); ?>">
-            <?php esc_html_e('Plan your trip', 'vietnamguide-premium'); ?>
+            <?php esc_html_e('Plan Your Trip', 'vietnamguide-premium'); ?>
         </a>
     </div>
 </header>

@@ -44,7 +44,7 @@ function vg_render_cost_calculator_html(): string
                 <p style="font-size:0.9rem;margin-bottom:12px;color:#475569;">Interactive calculator features require JavaScript. Here is the authoritative daily cost breakdown across travel tiers:</p>
                 <ul style="margin-bottom:0;padding-left:20px;font-size:0.9rem;line-height:1.6;">
                     <li><strong>Backpacker / Budget:</strong> $35 USD (~890,000 VND / €32 / £27 / A$53) / person / day (hostel dorm, street food, bus transit).</li>
-                    <li><strong>Flashpacker / Mid-Range:</strong> $80 USD (~2,040,000 VND / €74 / £62 / A$122) / person / day (3-star hotel, casual restaurants, Grab rides).</li>
+                    <li><strong>Mid-Range Comfort:</strong> $80 USD (~2,040,000 VND / €74 / £62 / A$122) / person / day (3-star hotel, casual restaurants, Grab rides).</li>
                     <li><strong>Comfort / Boutique:</strong> $160 USD (~4,080,000 VND / €147 / £125 / A$243) / person / day (4-star boutique hotel, guided tours, domestic flights).</li>
                     <li><strong>Luxury / Bespoke:</strong> $350+ USD (~8,900,000+ VND / €322+ / £273+ / A$532+) / person / day (5-star resorts, private vehicles, luxury cruises).</li>
                 </ul>
@@ -106,7 +106,7 @@ function vg_render_cost_calculator_html(): string
                             <input type="radio" name="vg_travel_style" value="midrange" class="vg-calc-radio" checked />
                             <div class="vg-calc-style-body">
                                 <div class="vg-calc-style-top">
-                                    <span class="vg-calc-style-name"><?php esc_html_e('Flashpacker / Mid-Range', 'vietnamguide-premium'); ?> <span class="vg-calc-tag-rec"><?php esc_html_e('Popular', 'vietnamguide-premium'); ?></span></span>
+                                    <span class="vg-calc-style-name"><?php esc_html_e('Mid-Range Comfort', 'vietnamguide-premium'); ?> <span class="vg-calc-tag-rec"><?php esc_html_e('Popular', 'vietnamguide-premium'); ?></span></span>
                                     <span class="vg-calc-style-rate">~$80 / day</span>
                                 </div>
                                 <span class="vg-calc-style-desc"><?php esc_html_e('3-4★ boutique hotels, mix of local bistros & street eats, Grab cars, curated small group day tours.', 'vietnamguide-premium'); ?></span>
@@ -117,7 +117,7 @@ function vg_render_cost_calculator_html(): string
                             <input type="radio" name="vg_travel_style" value="luxury" class="vg-calc-radio" />
                             <div class="vg-calc-style-body">
                                 <div class="vg-calc-style-top">
-                                    <span class="vg-calc-style-name"><?php esc_html_e('Luxury Boutique', 'vietnamguide-premium'); ?></span>
+                                    <span class="vg-calc-style-name"><?php esc_html_e('Boutique & Heritage', 'vietnamguide-premium'); ?></span>
                                     <span class="vg-calc-style-rate">~$195 / day</span>
                                 </div>
                                 <span class="vg-calc-style-desc"><?php esc_html_e('5★ heritage resorts, private cruise cabins, fine dining & rooftop lounges, private chauffeured AC cars.', 'vietnamguide-premium'); ?></span>
@@ -501,8 +501,8 @@ function vg_render_cost_calculator_html(): string
             }
             if (partyDisplay) {
                 var partyDesc = state.party === 1 ? '1 solo traveler' : state.party + ' travelers';
-                var roomDesc = state.party > 1 ? 'with shared accommodation' : 'private room';
-                partyDisplay.textContent = 'Total for ' + partyDesc + ' (' + state.days + ' days ' + roomDesc + ')';
+                var roomDesc = state.party > 1 ? 'double-occupancy room' : 'single room';
+                partyDisplay.textContent = 'Total for ' + partyDesc + ' (' + state.days + ' days, ' + roomDesc + ')';
             }
 
             var amtStay = document.getElementById('vg-amt-stay');

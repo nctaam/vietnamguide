@@ -22,32 +22,32 @@ $data = vg_homepage_data();
         </picture>
         <div class="vg-hero__shade" aria-hidden="true"></div>
         <div class="vg-shell vg-hero__content" data-vg-reveal>
-            <div class="vg-hero__telemetry" aria-label="<?php esc_attr_e('Vietnam Ground Telemetry', 'vietnamguide-premium'); ?>">
+            <div class="vg-hero__telemetry" aria-label="<?php esc_attr_e('Vietnam Field Intelligence', 'vietnamguide-premium'); ?>">
                 <div class="vg-hero__telemetry-item">
                     <span class="vg-hero__telemetry-pulse" aria-hidden="true"></span>
-                    <span class="vg-hero__telemetry-label"><?php esc_html_e('TELEMETRY:', 'vietnamguide-premium'); ?></span>
-                    <span class="vg-hero__telemetry-val"><?php esc_html_e('ACTIVE (ICT UTC+7)', 'vietnamguide-premium'); ?></span>
+                    <span class="vg-hero__telemetry-label"><?php esc_html_e('FIELD BRIEFING:', 'vietnamguide-premium'); ?></span>
+                    <span class="vg-hero__telemetry-val"><?php esc_html_e('HANOI 12:00 ICT', 'vietnamguide-premium'); ?></span>
                 </div>
                 <span class="vg-hero__telemetry-sep" aria-hidden="true">•</span>
                 <div class="vg-hero__telemetry-item">
-                    <span class="vg-hero__telemetry-label"><?php esc_html_e('MONSOON:', 'vietnamguide-premium'); ?></span>
-                    <span class="vg-hero__telemetry-val vg-hero__telemetry-val--gold"><?php esc_html_e('Central dry transition', 'vietnamguide-premium'); ?></span>
+                    <span class="vg-hero__telemetry-label"><?php esc_html_e('CLIMATE:', 'vietnamguide-premium'); ?></span>
+                    <span class="vg-hero__telemetry-val vg-hero__telemetry-val--gold"><?php esc_html_e('Central coast transition', 'vietnamguide-premium'); ?></span>
                 </div>
                 <span class="vg-hero__telemetry-sep" aria-hidden="true">•</span>
                 <div class="vg-hero__telemetry-item">
-                    <span class="vg-hero__telemetry-label"><?php esc_html_e('FX:', 'vietnamguide-premium'); ?></span>
-                    <span class="vg-hero__telemetry-val"><?php esc_html_e('1 USD ≈ 25,420 VND', 'vietnamguide-premium'); ?></span>
+                    <span class="vg-hero__telemetry-label"><?php esc_html_e('CURRENCY:', 'vietnamguide-premium'); ?></span>
+                    <span class="vg-hero__telemetry-val"><?php esc_html_e('1 USD ≈ 25,500 VND', 'vietnamguide-premium'); ?></span>
                 </div>
                 <span class="vg-hero__telemetry-sep" aria-hidden="true">•</span>
                 <div class="vg-hero__telemetry-item">
-                    <span class="vg-hero__telemetry-label"><?php esc_html_e('VISA:', 'vietnamguide-premium'); ?></span>
-                    <span class="vg-hero__telemetry-val vg-hero__telemetry-val--gold"><?php esc_html_e('90-Day Operational', 'vietnamguide-premium'); ?></span>
+                    <span class="vg-hero__telemetry-label"><?php esc_html_e('IMMIGRATION:', 'vietnamguide-premium'); ?></span>
+                    <span class="vg-hero__telemetry-val vg-hero__telemetry-val--gold"><?php esc_html_e('90-Day E-Visa active', 'vietnamguide-premium'); ?></span>
                 </div>
             </div>
 
             <p class="vg-hero__brand">VietnamGuide.net</p>
             <h1>Vietnam for travelers who choose well.</h1>
-            <p class="vg-hero__copy">Curated routes, refined stays, and practical guidance for planning Vietnam with confidence.</p>
+            <p class="vg-hero__copy">Paced itineraries, street-verified logistics, and decisive regional choices for independent travelers.</p>
 
             <form class="vg-hero__search-barometer" role="search" method="get" action="<?php echo esc_url(home_url('/')); ?>">
                 <div class="vg-hero__search-wrap">
@@ -58,13 +58,13 @@ $data = vg_homepage_data();
                         type="search"
                         name="s"
                         class="vg-hero__search-field"
-                        placeholder="<?php esc_attr_e('Filter corridor, province, or route (e.g. Ha Long, Hoi An, 10 Days)...', 'vietnamguide-premium'); ?>"
+                        placeholder="<?php esc_attr_e('Search destinations, routes, or corridors (e.g. Ha Long Bay, Hoi An, 10 Days)...', 'vietnamguide-premium'); ?>"
                         value="<?php echo esc_attr(get_search_query(false)); ?>"
                         aria-label="<?php esc_attr_e('Search field dossiers and guides', 'vietnamguide-premium'); ?>"
                         autocomplete="off"
                     />
                     <button type="submit" class="vg-hero__search-button" data-vg-event="hero_search_submit">
-                        <span><?php esc_html_e('Filter', 'vietnamguide-premium'); ?></span>
+                        <span><?php esc_html_e('Search', 'vietnamguide-premium'); ?></span>
                         <span class="vg-hero__search-arrow" aria-hidden="true">&rarr;</span>
                     </button>
                 </div>
@@ -72,15 +72,15 @@ $data = vg_homepage_data();
 
             <div class="vg-hero__quick-chips" aria-label="<?php esc_attr_e('Direct Access Topics', 'vietnamguide-premium'); ?>">
                 <span class="vg-hero__quick-chips-title"><?php esc_html_e('Direct Access:', 'vietnamguide-premium'); ?></span>
-                <a href="<?php echo esc_url(vg_home_url('itineraries/10-days-in-vietnam')); ?>" class="vg-hero__chip" data-vg-event="hero_chip_click"><?php esc_html_e('10 Days Spine', 'vietnamguide-premium'); ?></a>
+                <a href="<?php echo esc_url(vg_home_url('itineraries/10-days-in-vietnam')); ?>" class="vg-hero__chip" data-vg-event="hero_chip_click"><?php esc_html_e('10-Day Classic Route', 'vietnamguide-premium'); ?></a>
                 <a href="<?php echo esc_url(vg_home_url('compare/ha-long-bay-vs-lan-ha-bay')); ?>" class="vg-hero__chip" data-vg-event="hero_chip_click"><?php esc_html_e('Ha Long vs Lan Ha', 'vietnamguide-premium'); ?></a>
                 <a href="<?php echo esc_url(vg_home_url('destinations/best-things-to-do-in-hoi-an')); ?>" class="vg-hero__chip" data-vg-event="hero_chip_click"><?php esc_html_e('Hoi An Base', 'vietnamguide-premium'); ?></a>
                 <a href="<?php echo esc_url(vg_home_url('plan/vietnam-evisa')); ?>" class="vg-hero__chip" data-vg-event="hero_chip_click"><?php esc_html_e('E-Visa 90-Day Rules', 'vietnamguide-premium'); ?></a>
             </div>
 
             <div class="vg-actions">
-                <a class="vg-button" href="<?php echo esc_url(vg_home_url('plan')); ?>" data-vg-event="hero_start_planning">Start planning</a>
-                <a class="vg-button vg-button--ghost" href="<?php echo esc_url(vg_home_url('itineraries')); ?>" data-vg-event="hero_see_itineraries">See itineraries</a>
+                <a class="vg-button" href="<?php echo esc_url(vg_home_url('plan')); ?>" data-vg-event="hero_start_planning"><?php esc_html_e('Plan Your Trip', 'vietnamguide-premium'); ?></a>
+                <a class="vg-button vg-button--ghost" href="<?php echo esc_url(vg_home_url('itineraries')); ?>" data-vg-event="hero_see_itineraries"><?php esc_html_e('Browse Itineraries', 'vietnamguide-premium'); ?></a>
             </div>
         </div>
     </section>
@@ -88,15 +88,15 @@ $data = vg_homepage_data();
     <section class="vg-section vg-toolkits-showcase" id="decision-engines" aria-labelledby="vg-decision-engines-title">
         <div class="vg-shell">
             <div class="vg-section-heading" data-vg-reveal>
-                <p class="vg-kicker"><?php esc_html_e('Logistics Before Departure', 'vietnamguide-premium'); ?></p>
-                <h2 id="vg-decision-engines-title"><?php esc_html_e('Decision Engines & Field Toolkits', 'vietnamguide-premium'); ?></h2>
-                <p class="vg-toolkits-showcase__lead"><?php esc_html_e('Empirical tools built on street-verified tariffs, official regulatory protocols, and microclimate intelligence to eliminate planning friction.', 'vietnamguide-premium'); ?></p>
+                <p class="vg-kicker"><?php esc_html_e('Practical Intelligence', 'vietnamguide-premium'); ?></p>
+                <h2 id="vg-decision-engines-title"><?php esc_html_e('Interactive Planning Tools', 'vietnamguide-premium'); ?></h2>
+                <p class="vg-toolkits-showcase__lead"><?php esc_html_e('Ground-tested calculators, visa verification, and seasonal matrices calibrated to official decrees and verified street tariffs.', 'vietnamguide-premium'); ?></p>
             </div>
             <div class="vg-toolkits-showcase-grid">
                 <!-- Card 1: Visa Eligibility Checker -->
                 <article class="vg-toolkit-card" data-vg-reveal>
                     <div class="vg-toolkit-card__top">
-                        <span class="vg-toolkit-card__index">ENGINE 01 // IMMIGRATION</span>
+                        <span class="vg-toolkit-card__index"><?php esc_html_e('IMMIGRATION CHECKER', 'vietnamguide-premium'); ?></span>
                         <span class="vg-toolkit-card__tag vg-toolkit-card__tag--gold">Official 90-Day</span>
                     </div>
                     <h3 class="vg-toolkit-card__heading"><?php esc_html_e('Visa Eligibility Checker', 'vietnamguide-premium'); ?></h3>
@@ -122,7 +122,7 @@ $data = vg_homepage_data();
                 <!-- Card 2: Daily Travel Cost Calculator -->
                 <article class="vg-toolkit-card" data-vg-reveal>
                     <div class="vg-toolkit-card__top">
-                        <span class="vg-toolkit-card__index">ENGINE 02 // TARIFF MATRIX</span>
+                        <span class="vg-toolkit-card__index"><?php esc_html_e('BUDGET CALCULATOR', 'vietnamguide-premium'); ?></span>
                         <span class="vg-toolkit-card__tag vg-toolkit-card__tag--emerald">Street-Verified</span>
                     </div>
                     <h3 class="vg-toolkit-card__heading"><?php esc_html_e('Daily Travel Cost Calculator', 'vietnamguide-premium'); ?></h3>
@@ -133,8 +133,8 @@ $data = vg_homepage_data();
                             <span class="vg-toolkit-card__stat-value">~$65 – $95 / day</span>
                         </div>
                         <div class="vg-toolkit-card__stat">
-                            <span class="vg-toolkit-card__stat-label"><?php esc_html_e('Recon Accuracy', 'vietnamguide-premium'); ?></span>
-                            <span class="vg-toolkit-card__stat-value">94.8% Empirical</span>
+                            <span class="vg-toolkit-card__stat-label"><?php esc_html_e('Data Benchmark', 'vietnamguide-premium'); ?></span>
+                            <span class="vg-toolkit-card__stat-value"><?php esc_html_e('Street-Verified Rates', 'vietnamguide-premium'); ?></span>
                         </div>
                     </div>
                     <div class="vg-toolkit-card__cta-wrap">
@@ -148,7 +148,7 @@ $data = vg_homepage_data();
                 <!-- Card 3: Regional Weather & Climate Matrix -->
                 <article class="vg-toolkit-card" data-vg-reveal>
                     <div class="vg-toolkit-card__top">
-                        <span class="vg-toolkit-card__index">ENGINE 03 // METEOROLOGY</span>
+                        <span class="vg-toolkit-card__index"><?php esc_html_e('CLIMATE & SEASONS', 'vietnamguide-premium'); ?></span>
                         <span class="vg-toolkit-card__tag vg-toolkit-card__tag--navy">3 Microclimates</span>
                     </div>
                     <h3 class="vg-toolkit-card__heading"><?php esc_html_e('Regional Weather & Season Matrix', 'vietnamguide-premium'); ?></h3>
@@ -160,7 +160,7 @@ $data = vg_homepage_data();
                         </div>
                         <div class="vg-toolkit-card__stat">
                             <span class="vg-toolkit-card__stat-label"><?php esc_html_e('Spatial Corridors', 'vietnamguide-premium'); ?></span>
-                            <span class="vg-toolkit-card__stat-value">North / Center / South</span>
+                            <span class="vg-toolkit-card__stat-value">North / Central / South</span>
                         </div>
                     </div>
                     <div class="vg-toolkit-card__cta-wrap">
@@ -284,7 +284,7 @@ $data = vg_homepage_data();
         <div class="vg-shell vg-newsletter__inner" data-vg-reveal>
             <div><p class="vg-kicker">First-trip checklist</p><h2 id="vg-newsletter-title">Plan the trip once. Travel it with confidence.</h2></div>
             <p>Get a concise Vietnam planning checklist covering route, entry, transport, money, connectivity, and common mistakes.</p>
-            <a class="vg-button vg-button--light" href="<?php echo esc_url(vg_home_url('newsletter')); ?>" data-vg-event="newsletter_signup">Get the checklist</a>
+            <a class="vg-button vg-button--light" href="<?php echo esc_url(vg_home_url('newsletter')); ?>" data-vg-event="newsletter_signup"><?php esc_html_e('Get the Checklist', 'vietnamguide-premium'); ?></a>
         </div>
     </section>
 </main>

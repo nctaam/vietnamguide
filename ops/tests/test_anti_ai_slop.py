@@ -4,6 +4,9 @@ Unit tests for VietnamGuide Anti-AI Slop Linter & Metric Engine.
 """
 import os
 import sys
+import json
+import hashlib
+from pathlib import Path
 import unittest
 
 # Add ops directory to sys.path
@@ -462,6 +465,104 @@ class TestAntiAiSlopLinter(unittest.TestCase):
         self.assertEqual(report.get('tier12_count', 0), 0)
         self.assertEqual(report.get('syntactic_monotony_count', 0), 0)
         self.assertTrue(report['passed'])
+
+    def test_route_registry_282_routes_zero_tier1_and_mean_hls_threshold(self):
+        """Verify all 282 routes in ops/route_registry.json have 0 Tier 1 clichés and mean HLS >= 85."""
+        registry_path = os.path.join(ops_dir, 'route_registry.json')
+        self.assertTrue(os.path.isfile(registry_path), f"Missing {registry_path}")
+        with open(registry_path, 'r', encoding='utf-8') as f:
+            data = json.load(f)
+        routes = data.get('routes', [])
+        self.assertEqual(len(routes), 282, f"Expected 282 routes, got {len(routes)}")
+
+        scores = []
+        violations = []
+        for r in routes:
+            path = r.get('path', '')
+            text = f"{r.get('title', '')}. {r.get('description', '')}"
+            report = linter.analyze_text(text, source_name=path)
+            scores.append(report['hls_score'])
+            if report['tier1_count'] > 0:
+                violations.append((path, report['tier1_violations']))
+
+        self.assertEqual(len(violations), 0, f"Found Tier 1 clichés in routes: {violations[:3]}")
+        mean_hls = sum(scores) / len(scores) if scores else 0.0
+        self.assertGreaterEqual(mean_hls, 85.0, f"Mean HLS score must be >= 85.0, got {mean_hls}")
+        self.assertGreaterEqual(mean_hls, 95.0, f"Target HLS score must be >= 95.0, got {mean_hls}")
+
+    def test_ui_theme_templates_zero_tier1_cliches(self):
+        """Verify UI templates (Homepage, 6 Toolkits, search.php, 404.php, offline.html, patterns) contain 0 Tier 1 clichés."""
+        repo_root = os.path.abspath(os.path.join(ops_dir, '..'))
+        theme_dir = os.path.join(repo_root, 'wordpress', 'wp-content', 'themes', 'vietnamguide-premium')
+
+        # Collect all required UI template files
+        homepage_files = [
+            os.path.join(theme_dir, 'front-page.php'),
+            os.path.join(theme_dir, 'header.php'),
+            os.path.join(theme_dir, 'footer.php'),
+            os.path.join(theme_dir, 'inc', 'homepage-data.php'),
+        ]
+        toolkit_files = [
+            os.path.join(theme_dir, 'inc', 'guide-visa-checker.php'),
+            os.path.join(theme_dir, 'inc', 'guide-cost-calculator.php'),
+            os.path.join(theme_dir, 'inc', 'guide-season-matrix.php'),
+            os.path.join(theme_dir, 'inc', 'guide-airport-navigator.php'),
+            os.path.join(theme_dir, 'inc', 'guide-packing-checklist.php'),
+            os.path.join(theme_dir, 'inc', 'guide-itinerary-finder.php'),
+        ]
+        utility_files = [
+            os.path.join(theme_dir, 'search.php'),
+            os.path.join(theme_dir, '404.php'),
+            os.path.join(repo_root, 'wordpress', 'offline.html'),
+        ]
+        patterns_dir = os.path.join(theme_dir, 'patterns')
+        pattern_files = [os.path.join(patterns_dir, f) for f in os.listdir(patterns_dir) if f.endswith('.php')]
+        self.assertEqual(len(pattern_files), 13, f"Expected 13 block patterns, found {len(pattern_files)}")
+
+        all_target_files = homepage_files + toolkit_files + utility_files + pattern_files
+        violations = []
+        for fp in all_target_files:
+            self.assertTrue(os.path.isfile(fp), f"UI template missing: {fp}")
+            clean_text = linter.extract_clean_text_from_file(fp) if hasattr(linter, 'extract_clean_text_from_file') else linter.strip_html(open(fp, 'r', encoding='utf-8', errors='ignore').read())
+            report = linter.analyze_text(clean_text, source_name=os.path.basename(fp))
+            if report['tier1_count'] > 0:
+                violations.append((os.path.basename(fp), report['tier1_violations']))
+
+        self.assertEqual(len(violations), 0, f"Found Tier 1 clichés in UI templates: {violations}")
+
+    def test_route_registry_sha256_byte_parity_100_percent(self):
+        """Verify SHA-256 byte parity between ops/route_registry.json and inc/guide-route-registry.json is exactly 100%."""
+        repo_root = os.path.abspath(os.path.join(ops_dir, '..'))
+        ops_registry = os.path.join(ops_dir, 'route_registry.json')
+        inc_registry = os.path.join(
+            repo_root, 'wordpress', 'wp-content', 'themes', 'vietnamguide-premium', 'inc', 'guide-route-registry.json'
+        )
+        self.assertTrue(os.path.isfile(ops_registry), f"Missing {ops_registry}")
+        self.assertTrue(os.path.isfile(inc_registry), f"Missing {inc_registry}")
+
+        with open(ops_registry, 'rb') as f:
+            ops_bytes = f.read()
+        with open(inc_registry, 'rb') as f:
+            inc_bytes = f.read()
+
+        ops_hash = hashlib.sha256(ops_bytes).hexdigest()
+        inc_hash = hashlib.sha256(inc_bytes).hexdigest()
+
+        self.assertEqual(ops_bytes, inc_bytes, "Route registries are not byte-for-byte identical")
+        self.assertEqual(
+            ops_hash, inc_hash,
+            f"SHA-256 mismatch! ops: {ops_hash} != inc: {inc_hash}"
+        )
+
+    def test_linter_audit_codebase_function(self):
+        """Verify linter's scan_route_registry, scan_ui_templates, and audit_codebase functions return PASS."""
+        if hasattr(linter, 'audit_codebase'):
+            report = linter.audit_codebase()
+            self.assertTrue(report['passed'], "Codebase audit must pass")
+            self.assertEqual(report['total_tier1_violations'], 0)
+            self.assertGreaterEqual(report['registry']['mean_hls_score'], 85.0)
+            self.assertEqual(report['registry']['total_routes'], 282)
+            self.assertEqual(report['ui_templates']['total_tier1_violations'], 0)
 
 
 if __name__ == '__main__':

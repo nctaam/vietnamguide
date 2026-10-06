@@ -35,7 +35,7 @@ function vg_get_season_matrix_dataset(): array
                 'risk_label' => 'Low Risk',
                 'swimming' => 'Too cold for swimming (18–19°C)',
                 'elevation_offset' => 'Sa Pa & Ha Giang run 8–10°C colder (4–11°C / 39–52°F); night frosts possible.',
-                'highlights' => 'Clear dry days in Hanoi and Ninh Binh; misty romantic karsts in Halong Bay.',
+                'highlights' => 'Clear dry days in Hanoi and Ninh Binh; dramatic limestone karsts in Ha Long Bay.',
             ],
             'central' => [
                 'temp_c' => '19–24°C',
@@ -45,17 +45,17 @@ function vg_get_season_matrix_dataset(): array
                 'risk_label' => 'Moderate',
                 'swimming' => 'Cool water (21°C); rough swells early month',
                 'elevation_offset' => 'Hai Van Pass creates a weather wall: Hue can be misty while Da Nang is dry.',
-                'highlights' => 'Hoi An lantern alleys comfortable to walk without summer heat; Cham island boats suspended.',
+                'highlights' => 'Hoi An lantern alleys comfortable to walk without summer heat; Cham Islands ferry sailings suspended.',
             ],
             'south' => [
                 'temp_c' => '22–32°C',
                 'temp_f' => '72–90°F',
-                'status' => 'Golden Dry Season',
+                'status' => 'Peak Dry Season',
                 'risk' => 'low',
                 'risk_label' => 'Prime (Gold)',
                 'swimming' => 'Perfect calm turquoise water (27–28°C)',
                 'elevation_offset' => 'Da Lat in central highlands is 14–22°C (sweater weather) compared to sweltering Saigon.',
-                'highlights' => 'Phu Quoc west coast crystal clear; Mekong Delta orchards vibrant and accessible.',
+                'highlights' => 'Phu Quoc west coast crystal clear; Mekong Delta orchards entering peak fruit harvest.',
             ],
             'radar' => [
                 'event' => 'Tết Nguyên Đán (Lunar New Year) Season',
@@ -71,7 +71,7 @@ function vg_get_season_matrix_dataset(): array
                 ['name' => 'DEET insect repellent (20–30%)', 'category' => 'health', 'source' => 'bring', 'note' => 'Hard to find high-concentration DEET in rural pharmacies'],
                 ['name' => 'Reef-safe broad spectrum sunscreen', 'category' => 'health', 'source' => 'bring', 'note' => 'Essential for Phu Quoc; imported brands expensive in VN'],
                 ['name' => 'Electrolyte rehydration salts', 'category' => 'health', 'source' => 'buy', 'note' => 'Available at any pharmacy ("Oresol") for $0.20'],
-                ['name' => '10L waterproof dry bag', 'category' => 'gear', 'source' => 'buy', 'note' => 'For boat trips in Halong or Mekong Delta; cheap in Old Quarter'],
+                ['name' => '10L waterproof dry bag', 'category' => 'gear', 'source' => 'buy', 'note' => 'For boat excursions in Ha Long Bay or the Mekong Delta; cheap in Old Quarter'],
                 ['name' => 'Universal travel adapter (Type A/C/G)', 'category' => 'gear', 'source' => 'bring', 'note' => 'Most VN outlets take Type C flat/round two-pin plugs'],
             ],
             'routes' => [
@@ -104,7 +104,7 @@ function vg_get_season_matrix_dataset(): array
                 'risk_label' => 'Prime',
                 'swimming' => 'Comfortable (23–24°C); An Bang beach opens',
                 'elevation_offset' => 'Bana Hills & Hai Van Pass have clear vistas with zero typhoon threats.',
-                'highlights' => 'Hue imperial citadel dry and walkable; Hoi An ancient town lantern festival pristine.',
+                'highlights' => 'Hue imperial citadel dry and walkable; Hoi An ancient town lantern celebrations with clear night skies.',
             ],
             'south' => [
                 'temp_c' => '23–33°C',
@@ -119,7 +119,7 @@ function vg_get_season_matrix_dataset(): array
             'radar' => [
                 'event' => 'Spring Temple Festivals & Flower Seasons',
                 'type' => 'highlight',
-                'note' => 'Post-Tết pilgrimage festivals across northern temples (Perfume Pagoda, Bai Dinh). Vibrant cultural atmosphere without disruptive business closures.',
+                'note' => 'Post-Tết pilgrimage festivals across northern temples (Perfume Pagoda, Bai Dinh). Active cultural ceremonies across regional pagodas without disruptive business closures.',
             ],
             'checklist' => [
                 ['name' => 'Light windbreaker or denim jacket', 'category' => 'clothing', 'source' => 'bring', 'note' => 'Perfect for evening Hanoi scooter food tours'],
@@ -142,7 +142,7 @@ function vg_get_season_matrix_dataset(): array
             'name' => 'March',
             'season' => 'spring',
             'season_label' => 'Spring',
-            'verdict' => 'The unanimous gold medal month for grand cross-country journeys. Calm seas in Halong Bay, warm turquoise water in Da Nang/Hoi An, and dry sunny days across Saigon and the islands.',
+            'verdict' => 'The premier cross-country window for nationwide journeys. Calm seas in Ha Long Bay, warm turquoise water in Da Nang/Hoi An, and dry sunny days across Saigon and the islands.',
             'north' => [
                 'temp_c' => '18–25°C',
                 'temp_f' => '64–77°F',
@@ -151,7 +151,7 @@ function vg_get_season_matrix_dataset(): array
                 'risk_label' => 'Prime (Gold)',
                 'swimming' => 'Pleasant (22–24°C); kayaking ideal',
                 'elevation_offset' => 'Sa Pa trekking conditions at annual peak: dry trails, cool morning air.',
-                'highlights' => 'Superb visibility on Halong / Lan Ha Bay overnight cruises.',
+                'highlights' => 'Superb visibility on Ha Long / Lan Ha Bay overnight cruises.',
             ],
             'central' => [
                 'temp_c' => '23–29°C',
@@ -161,7 +161,7 @@ function vg_get_season_matrix_dataset(): array
                 'risk_label' => 'Prime (Gold)',
                 'swimming' => 'Warm & calm (25°C); great snorkeling',
                 'elevation_offset' => 'Phong Nha cave rivers low, clear, and safe for swimming/caving.',
-                'highlights' => 'An Bang and My Khe beaches boast glassy calm water; Hoi An cycling is sublime.',
+                'highlights' => 'An Bang and My Khe beaches boast glassy calm water; Hoi An countryside cycling offers clear skies and dry trails.',
             ],
             'south' => [
                 'temp_c' => '24–34°C',
@@ -467,7 +467,7 @@ function vg_get_season_matrix_dataset(): array
             'name' => 'September',
             'season' => 'autumn',
             'season_label' => 'Early Autumn',
-            'verdict' => 'Photographer paradise in Northern Vietnam as terraced rice fields turn brilliant gold for the harvest. Central Vietnam transitions into its rainy season; southern rains begin reducing.',
+            'verdict' => 'Optimal conditions for photography across Northern Vietnam as terraced rice fields turn brilliant gold for the harvest. Central Vietnam transitions into its rainy season; southern rains begin reducing.',
             'north' => [
                 'temp_c' => '24–31°C',
                 'temp_f' => '75–88°F',
@@ -521,16 +521,16 @@ function vg_get_season_matrix_dataset(): array
             'name' => 'October',
             'season' => 'autumn',
             'season_label' => 'Mid Autumn',
-            'verdict' => 'Sublime weather for Hanoi, Halong Bay, and Ha Giang. CRITICAL CAUTION for Central Vietnam: peak monsoon & flood risk in Hoi An and Hue. Pivot beach time to Phu Quoc.',
+            'verdict' => 'Crisp, clear weather in Hanoi, Ha Long Bay, and Ha Giang. Critical caution for Central Vietnam: peak monsoon & flood risk in Hoi An and Hue. Pivot beach time to Phu Quoc.',
             'north' => [
                 'temp_c' => '21–28°C',
                 'temp_f' => '70–82°F',
                 'status' => 'Dry, Sunny & Cool',
                 'risk' => 'low',
                 'risk_label' => 'Prime (Gold)',
-                'swimming' => 'Cool (23°C); Halong kayaking pristine',
+                'swimming' => 'Cool (23°C); Ha Long Bay kayaking with calm waters',
                 'elevation_offset' => 'Ha Giang buckwheat flowers bloom in pink and purple across mountain passes.',
-                'highlights' => 'Clear blue skies over Halong Bay with zero fog and minimal rainfall.',
+                'highlights' => 'Clear blue skies over Ha Long Bay with zero fog and minimal rainfall.',
             ],
             'central' => [
                 'temp_c' => '22–27°C',
@@ -575,7 +575,7 @@ function vg_get_season_matrix_dataset(): array
             'name' => 'November',
             'season' => 'autumn',
             'season_label' => 'Late Autumn / Early Winter',
-            'verdict' => 'Phenomenal month for Northern Vietnam and Southern Islands. Phu Quoc and Con Dao enter their dry gold season; Hanoi is dry and cool; Central coast rains begin subsiding late month.',
+            'verdict' => 'Exceptional travel conditions across Northern Vietnam and Southern Islands. Phu Quoc and Con Dao enter their peak dry season; Hanoi is dry and cool; Central coast rains begin subsiding late month.',
             'north' => [
                 'temp_c' => '18–25°C',
                 'temp_f' => '64–77°F',
@@ -722,7 +722,7 @@ function vg_render_season_matrix_html(): string
                 <p style="font-weight:700;margin-bottom:8px;color:#1a365d;">🌤️ 2026 Vietnam Regional Seasons &amp; Climate Guide (No-JavaScript Reference):</p>
                 <p style="font-size:0.9rem;margin-bottom:12px;color:#475569;">Interactive season matrix requires JavaScript. Authoritative regional weather windows:</p>
                 <ul style="margin-bottom:0;padding-left:20px;font-size:0.9rem;line-height:1.6;">
-                    <li><strong>Northern Vietnam (Hanoi, Sapa, Ha Long):</strong> Cool, dry autumn/winter (Oct–Apr); hot, humid summer with rains (May–Sep); winter cold dips to 10–14°C.</li>
+                    <li><strong>Northern Vietnam (Hanoi, Sa Pa, Ha Long Bay):</strong> Cool, dry autumn/winter (Oct–Apr); hot, humid summer with rains (May–Sep); winter cold dips to 10–14°C.</li>
                     <li><strong>Central Vietnam (Hue, Da Nang, Hoi An):</strong> Dry and sunny beach weather (Feb–Aug); monsoon rains and typhoon flood risk (Sep–Nov).</li>
                     <li><strong>Southern Vietnam (HCMC, Mekong, Phu Quoc):</strong> Warm tropical weather year-round (28–34°C); dry season (Nov–Apr); green rainy season (May–Oct).</li>
                 </ul>
@@ -768,7 +768,7 @@ function vg_render_season_matrix_html(): string
                         <div class="vg-sm-metric-item">
                             <span class="vg-sm-m-icon">🏊</span>
                             <div class="vg-sm-m-desc">
-                                <strong><?php esc_html_e('Halong Bay Swimming:', 'vietnamguide-premium'); ?></strong>
+                                <strong><?php esc_html_e('Ha Long Bay Swimming:', 'vietnamguide-premium'); ?></strong>
                                 <span id="vg-swim-north">Cool (21°C); swimming bracing</span>
                             </div>
                         </div>

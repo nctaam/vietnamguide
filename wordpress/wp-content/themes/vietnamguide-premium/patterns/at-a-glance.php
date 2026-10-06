@@ -15,13 +15,13 @@
 <!-- /wp:heading --></div>
 <!-- /wp:group --><!-- wp:list {"className":"vg-pattern-at-a-glance__list"} -->
 <ul class="wp-block-list vg-pattern-at-a-glance__list"><!-- wp:list-item -->
-<li><span>Best window</span><strong>March-April or October-November</strong></li>
+<li><span>Optimal season</span><strong>March–April or October–November</strong></li>
 <!-- /wp:list-item --><!-- wp:list-item -->
-<li><span>Useful pace</span><strong>10-14 days</strong></li>
+<li><span>Recommended duration</span><strong>10–14 days</strong></li>
 <!-- /wp:list-item --><!-- wp:list-item -->
-<li><span>Typical spend</span><strong>Mid-range to premium</strong></li>
+<li><span>Daily budget</span><strong>$55–$140 USD (Mid-range to boutique)</strong></li>
 <!-- /wp:list-item --><!-- wp:list-item -->
-<li><span>Easy gateways</span><strong>Hanoi or Ho Chi Minh City</strong></li>
+<li><span>Primary gateways</span><strong>Hanoi (HAN) or Ho Chi Minh City (SGN)</strong></li>
 <!-- /wp:list-item --></ul>
 <!-- /wp:list --></div>
 <!-- /wp:group -->
