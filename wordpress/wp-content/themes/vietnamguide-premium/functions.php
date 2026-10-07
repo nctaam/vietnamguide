@@ -13,6 +13,7 @@ require_once get_theme_file_path('/inc/guide-visa-checker.php');
 require_once get_theme_file_path('/inc/guide-airport-navigator.php');
 require_once get_theme_file_path('/inc/guide-packing-checklist.php');
 require_once get_theme_file_path('/inc/guide-interactive-map.php');
+require_once get_theme_file_path('/inc/guide-photo-dispatch.php');
 require_once get_theme_file_path('/inc/guide-analytics.php');
 
 function vg_theme_asset_version(string $relativePath): string

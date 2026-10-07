@@ -2,6 +2,17 @@
 
 Date: 2026-10-07 (Asia/Saigon)
 
+## Visual Dispatch & Photo Storytelling Component
+
+- Implemented `[vg_photo_dispatch slug="..."]` shortcode component (`inc/guide-photo-dispatch.php`) following FT Weekend & Monocle editorial photo essay standards.
+- Integrated EXIF telemetry strip (focal length, aperture, shutter speed, ISO, elevation ASL, local capture time) and field context notes.
+- Included accessible lightbox inspection modal with full keyboard navigation (`Tab`, `Enter`, `Escape`), scroll locking, and ARIA dialog properties.
+- Conformed strictly to Gate 5 zero-`<h2>` TOC protection rule and Anti-AI Slop constitution (0 Tier 1 clichés).
+- Added comprehensive unit test harness `ops/tests/test_photo_dispatch.py` (6 tests).
+- All 158 unit tests passed cleanly (`Ran 158 tests in 24.248s, OK`).
+- Anti-AI Slop Quality Engine: PASS (0 Tier 1 Clichés, Mean HLS 100.0 >= 85).
+- Master Quality Gates (`ops/verify-all-gates.ps1`): 8/8 PASS (100% Exit Code 0).
+
 ## Interactive Cartography & Editorial Megamenu Navigation
 
 - Added `[vg_interactive_map]` shortcode component (`inc/guide-interactive-map.php`) with 6 regional corridors (Northern Highlands, Red River Maritime, Central Heritage Coast, South-Central Coast & Highlands, Southern Metropolis, Maritime Archipelagos).
