@@ -12,6 +12,7 @@ require_once get_theme_file_path('/inc/guide-season-matrix.php');
 require_once get_theme_file_path('/inc/guide-visa-checker.php');
 require_once get_theme_file_path('/inc/guide-airport-navigator.php');
 require_once get_theme_file_path('/inc/guide-packing-checklist.php');
+require_once get_theme_file_path('/inc/guide-interactive-map.php');
 require_once get_theme_file_path('/inc/guide-analytics.php');
 
 function vg_theme_asset_version(string $relativePath): string
@@ -88,9 +89,77 @@ add_action('wp_enqueue_scripts', static function (): void {
 });
 function vg_primary_menu_fallback(): void
 {
+    $data = vg_homepage_data();
     echo '<ul class="vg-nav-list">';
-    foreach (vg_homepage_data()['navigation'] as $item) {
-        printf('<li><a href="%1$s">%2$s</a></li>', esc_url($item['url']), esc_html($item['label']));
+    foreach ($data['navigation'] as $item) {
+        $label = $item['label'];
+        if ($label === 'Destinations') {
+            echo '<li class="vg-nav-item vg-has-megamenu">';
+            printf('<a href="%1$s" class="vg-nav-link">%2$s <span class="vg-nav-caret" aria-hidden="true">&dtrif;</span></a>', esc_url($item['url']), esc_html($label));
+            echo '<div class="vg-megamenu-panel" role="region" aria-label="Destinations Directory">';
+            echo '<div class="vg-megamenu-grid">';
+            echo '<div class="vg-megamenu-col">';
+            echo '<span class="vg-megamenu-heading">Northern Region</span>';
+            echo '<ul class="vg-megamenu-links">';
+            echo '<li><a href="' . esc_url(vg_home_url('destinations/hanoi-travel-guide')) . '"><strong>Hanoi</strong> <span>Old Quarter & Street Food</span></a></li>';
+            echo '<li><a href="' . esc_url(vg_home_url('destinations/ha-long-bay-travel-guide')) . '"><strong>Ha Long Bay</strong> <span>Limestone Seascape</span></a></li>';
+            echo '<li><a href="' . esc_url(vg_home_url('destinations/ninh-binh-travel-guide')) . '"><strong>Ninh Binh</strong> <span>River Karsts & Cycling</span></a></li>';
+            echo '<li><a href="' . esc_url(vg_home_url('destinations/sapa-travel-guide')) . '"><strong>Sa Pa</strong> <span>Highland Terraces & Valleys</span></a></li>';
+            echo '</ul>';
+            echo '</div>';
+            echo '<div class="vg-megamenu-col">';
+            echo '<span class="vg-megamenu-heading">Central & Coast</span>';
+            echo '<ul class="vg-megamenu-links">';
+            echo '<li><a href="' . esc_url(vg_home_url('destinations/best-things-to-do-in-hoi-an')) . '"><strong>Hoi An</strong> <span>Ancient Town & Coastal Base</span></a></li>';
+            echo '<li><a href="' . esc_url(vg_home_url('compare/da-nang-vs-hoi-an')) . '"><strong>Da Nang</strong> <span>Coastal Hub & Flight Transit</span></a></li>';
+            echo '<li><a href="' . esc_url(vg_home_url('destinations/phong-nha-travel-guide')) . '"><strong>Phong Nha</strong> <span>Cave Systems & Karsts</span></a></li>';
+            echo '<li><a href="' . esc_url(vg_home_url('destinations/hue-travel-guide')) . '"><strong>Hue</strong> <span>Imperial Citadels & Cuisine</span></a></li>';
+            echo '</ul>';
+            echo '</div>';
+            echo '<div class="vg-megamenu-col">';
+            echo '<span class="vg-megamenu-heading">South & Islands</span>';
+            echo '<ul class="vg-megamenu-links">';
+            echo '<li><a href="' . esc_url(vg_home_url('destinations/ho-chi-minh-city-travel-guide')) . '"><strong>Ho Chi Minh City</strong> <span>Metropolis & History</span></a></li>';
+            echo '<li><a href="' . esc_url(vg_home_url('destinations/phu-quoc-travel-guide')) . '"><strong>Phu Quoc</strong> <span>Island Finish & Beaches</span></a></li>';
+            echo '<li><a href="' . esc_url(vg_home_url('destinations/con-dao-travel-guide')) . '"><strong>Con Dao</strong> <span>Secluded Coastal Retreat</span></a></li>';
+            echo '<li><a href="' . esc_url(vg_home_url('destinations/mekong-delta-travel-guide')) . '"><strong>Mekong Delta</strong> <span>Riverways & Distributaries</span></a></li>';
+            echo '</ul>';
+            echo '</div>';
+            echo '</div>';
+            echo '<div class="vg-megamenu-footer">';
+            echo '<span class="vg-megamenu-meta">GAZETTEER NO. 45 // 282 VETTED FIELD ROUTES</span>';
+            echo '<a href="' . esc_url(vg_home_url('destinations')) . '" class="vg-megamenu-action">View Complete Gazetteer &rarr;</a>';
+            echo '</div>';
+            echo '</div>';
+            echo '</li>';
+        } elseif ($label === 'Itineraries') {
+            echo '<li class="vg-nav-item vg-has-megamenu">';
+            printf('<a href="%1$s" class="vg-nav-link">%2$s <span class="vg-nav-caret" aria-hidden="true">&dtrif;</span></a>', esc_url($item['url']), esc_html($label));
+            echo '<div class="vg-megamenu-panel vg-megamenu-panel--compact" role="region" aria-label="Curated Itineraries">';
+            echo '<div class="vg-megamenu-grid vg-megamenu-grid--2col">';
+            echo '<div class="vg-megamenu-col">';
+            echo '<span class="vg-megamenu-heading">By Journey Duration</span>';
+            echo '<ul class="vg-megamenu-links">';
+            echo '<li><a href="' . esc_url(vg_home_url('itineraries/7-days-in-vietnam')) . '"><strong>7 Days</strong> <span>Sprint: North or Central Highlights</span></a></li>';
+            echo '<li><a href="' . esc_url(vg_home_url('itineraries/10-days-in-vietnam')) . '"><strong>10 Days</strong> <span>Classic: North, Central, and South</span></a></li>';
+            echo '<li><a href="' . esc_url(vg_home_url('itineraries/14-days-in-vietnam')) . '"><strong>14 Days</strong> <span>Measured: Regional Depth with Rest Buffers</span></a></li>';
+            echo '<li><a href="' . esc_url(vg_home_url('itineraries/21-days-in-vietnam')) . '"><strong>21 Days</strong> <span>Comprehensive: Mountain Pass to Island Finish</span></a></li>';
+            echo '</ul>';
+            echo '</div>';
+            echo '<div class="vg-megamenu-col">';
+            echo '<span class="vg-megamenu-heading">Route Intelligence</span>';
+            echo '<div class="vg-megamenu-card">';
+            echo '<strong>Route Matcher in 3 Clicks</strong>';
+            echo '<p>Calculate real transit hours and realistic VND budgets between regional corridors.</p>';
+            echo '<a href="' . esc_url(vg_home_url('itineraries')) . '" class="vg-megamenu-action">Open Itinerary Finder &rarr;</a>';
+            echo '</div>';
+            echo '</div>';
+            echo '</div>';
+            echo '</div>';
+            echo '</li>';
+        } else {
+            printf('<li class="vg-nav-item"><a href="%1$s" class="vg-nav-link">%2$s</a></li>', esc_url($item['url']), esc_html($label));
+        }
     }
     echo '</ul>';
 }
