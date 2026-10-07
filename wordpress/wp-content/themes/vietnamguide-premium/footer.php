@@ -1,4 +1,9 @@
-<?php $footer_data = vg_homepage_data(); ?>
+<?php
+if (! defined('ABSPATH')) {
+    exit;
+}
+$footer_data = vg_homepage_data();
+?>
 <footer class="vg-site-footer">
     <div class="vg-site-footer__inner">
         <div class="vg-site-footer__brand">

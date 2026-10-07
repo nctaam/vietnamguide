@@ -1,4 +1,7 @@
 <?php
+if (! defined('ABSPATH')) {
+    exit;
+}
 get_header();
 $data = vg_homepage_data();
 ?>
