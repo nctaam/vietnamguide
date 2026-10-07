@@ -945,6 +945,10 @@ html:not(.vg-js) body.home .vg-site-header {
 }
 
 @media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto !important;
+  }
+
   .vg-hero__telemetry-pulse {
     animation: none;
   }

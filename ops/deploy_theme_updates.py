@@ -244,6 +244,60 @@ def purge_cache(ssh, config: DeployConfig) -> None:
         raise RuntimeError(f'cache purge failed ({exit_status}): {error}')
 
 
+def stage_and_promote_file(
+    ssh,
+    sftp,
+    local_path: Path,
+    remote_path: str,
+    temp_path: str | None = None,
+) -> tuple[bool, str, str]:
+    """Upload a file to a remote temporary path, verify SHA-256, and promote atomically.
+
+    Returns:
+        (success, expected_hash, remote_hash)
+    """
+    local_bytes = local_path.read_bytes()
+    if len(local_bytes) == 0:
+        raise ValueError(f'pre-flight check failed: invalid or empty file {local_path}')
+    expected_hash = hashlib.sha256(local_bytes).hexdigest().lower()
+
+    if temp_path is None:
+        temp_path = f"{remote_path}.tmp.{uuid.uuid4().hex[:8]}"
+
+    promoted = False
+    try:
+        sftp.put(str(local_path), temp_path)
+
+        check_command = f"sha256sum -- {shlex.quote(temp_path)}"
+        _stdin, stdout, _stderr = ssh.exec_command(check_command)
+        raw = stdout.read() if hasattr(stdout, 'read') else b''
+        remote_out = raw.decode('utf-8', errors='replace').strip() if isinstance(raw, bytes) else str(raw).strip()
+        remote_hash = remote_out.split()[0].lower() if remote_out else ''
+
+        if remote_hash == expected_hash:
+            promote_command = f"mv -f -- {shlex.quote(temp_path)} {shlex.quote(remote_path)}"
+            _stdin, p_stdout, p_stderr = ssh.exec_command(promote_command)
+            exit_status = (
+                p_stdout.channel.recv_exit_status()
+                if hasattr(p_stdout, 'channel') and hasattr(p_stdout.channel, 'recv_exit_status')
+                else 0
+            )
+            if exit_status != 0:
+                raw_err = p_stderr.read() if hasattr(p_stderr, 'read') else b''
+                err = raw_err.decode('utf-8', errors='replace').strip() if isinstance(raw_err, bytes) else str(raw_err).strip()
+                raise RuntimeError(f"atomic promotion failed ({exit_status}) for {remote_path}: {err}")
+            promoted = True
+            return True, expected_hash, remote_hash
+        return False, expected_hash, remote_hash
+    finally:
+        if not promoted:
+            try:
+                cleanup_command = f"rm -f -- {shlex.quote(temp_path)}"
+                ssh.exec_command(cleanup_command)
+            except Exception:
+                pass
+
+
 def deploy(config: DeployConfig | None = None, *, dry_run: bool = False, purge: bool = False) -> None:
     local_files = validate_local_files()
     if dry_run:
@@ -271,19 +325,14 @@ def deploy(config: DeployConfig | None = None, *, dry_run: bool = False, purge: 
         try:
             for (local_relative, local_path), (_unused, remote_relative) in zip(local_files, DEPLOY_FILES):
                 remote_path = get_remote_path(config, remote_relative)
-                local_hash = get_sha256(local_path)
-                print(f'Uploading: {local_relative} -> {remote_path}')
-                sftp.put(str(local_path), remote_path)
-
-                command = f"sha256sum -- {shlex.quote(remote_path)}"
-                _stdin, stdout, _stderr = ssh.exec_command(command)
-                remote_out = stdout.read().decode('utf-8', errors='replace').strip()
-                remote_hash = remote_out.split()[0].lower() if remote_out else ''
-                if local_hash == remote_hash:
+                print(f'Uploading (atomic staging): {local_relative} -> {remote_path}')
+                success, local_hash, remote_hash = stage_and_promote_file(ssh, sftp, local_path, remote_path)
+                if success:
                     print(f'  [OK] SHA256 parity: {local_hash}')
                 else:
                     print(f'  [FAIL] SHA256 mismatch: local={local_hash}, remote={remote_hash}')
                     all_matched = False
+                    break
         finally:
             sftp.close()
 

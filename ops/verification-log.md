@@ -2,6 +2,48 @@
 
 Date: 2026-10-07 (Asia/Saigon)
 
+## Stage 70 / Stage 73: 282-Route Guide Shell Rollout, Schema.org JSON-LD Hardening & TOCTOU Deployment Defense (Milestones M1–M4)
+
+- **282-Route Guide Shell Rollout & Navigation Experience (M1)**:
+  - Verified and hardened modern Guide Shell rollout (`template-parts/guide-page.php`) across all 282 canonical routes in registry via `VG_GUIDE_REGISTRY_ROLLOUT = true`.
+  - Harmonized `@media (prefers-reduced-motion: reduce)` root smooth scrolling override (`html { scroll-behavior: auto !important; }`) in `wordpress/wp-content/themes/vietnamguide-premium/assets/css/homepage.css`, fully satisfying `ops/verify-guide-experience.ps1` and `ops/verify-homepage-theme.ps1`.
+  - Preserved strict Zero-`<h2>` TOC invariant across all 17 theme `inc/*.php` template components, ensuring unpolluted dynamic Reading Spine table of contents.
+  - Confirmed two-tier fail-closed routing resolution across `page.php` and `inc/guide-routing.php` for seamless fallback to legacy/standard content if route resolution fails.
+  - Verified full navigational component integration: Sticky Reading Spine TOC, Tactical Dock (`#vg-floating-dock`), Fact-Checked Trust Badge (`aside.vg-guide-trust`), and E-E-A-T Author Card (`[vg_editorial_proof]`).
+- **Core Web Vitals & Structured Data (Schema.org JSON-LD) Hardening (M2)**:
+  - Added dedicated test suite `ops/tests/test_guide_schema.py` (26 unit tests) covering all 4 guide classifications: Destination Guides (117 routes), Comparison Guides (19 routes), Itinerary Guides (14 routes), and Practical Essentials (132 routes).
+  - Verified Google Rich Results specification compliance across `TouristDestination`, `TouristTrip`, `TravelAction`, `FAQPage`, `HowTo`, and `WebApplication` schemas with zero validation errors.
+  - Hardened author sanitization: automatically strips non-editorial usernames (e.g., 'admin') to 'VietnamGuide editorial team'.
+  - Enforced zero layout shift (CLS = 0) with 622 natural image dimensions registered in `inc/image-dimensions.php` injecting explicit `width`, `height`, `loading="lazy"` (or `eager` with `fetchpriority="high"` for hero images), and `decoding="async"`.
+- **Deployment Automation Security Hardening & Zero-Drift TOCTOU Defense (M3)**:
+  - Hardened `ops/deploy_theme_updates.py` against live TOCTOU race conditions via `stage_and_promote_file`:
+    - Read source files into memory snapshot with strict pre-flight existence and non-zero byte size validation.
+    - Compute expected SHA-256 hash strictly from the in-memory byte snapshot.
+    - Upload to a remote staging temporary path (`.tmp.<uuid4>`).
+    - Verify SHA-256 checksum remotely on the staged temporary file.
+    - Perform POSIX atomic promotion via `mv -f` only after 100% checksum match, with automated `rm -f` temporary file cleanup on any failure or hash mismatch.
+  - Added 5 new unit tests in `ops/tests/test_deploy_config.py` (expanded from 14 to 19 tests) covering successful staging/promotion, hash mismatch cleanup, SFTP failure cleanup, promotion failure handling, and pre-flight empty file rejection.
+- **Master Quality Gates Verification (M4)**:
+  - Ran `powershell -ExecutionPolicy Bypass -File ops/verify-all-gates.ps1`: 8/8 Quality Gates PASSED (100% Exit Code 0):
+    - Gate 1: Anti-AI Slop Quality Engine v3.0 (PASS)
+    - Gate 2: Core MU-Plugin Invariant & Safety Contracts (PASS)
+    - Gate 3: Gutenberg Core Block Patterns (PASS)
+    - Gate 4: Theme Structure & CSS Verification (PASS)
+    - Gate 5: Interactive Shortcodes & A11y / State Continuity (30 tests PASS)
+    - Gate 6: Route Registry, AIO & Runtime Fallback Contracts (23 tests PASS)
+    - Gate 7: Deployment Configuration & SSH Trust Contracts (28 tests PASS)
+    - Gate 8: Deployment Surface Static Security Audit (0 findings, 0 release blockers PASS)
+- **Unit Test Suite (205 Tests)**:
+  - Ran `python -m unittest discover -s ops/tests -v`: Ran 205 tests in 29.392s, 205/205 tests PASSED (0 failures, 0 errors, 100% pass rate).
+- **Anti-AI Slop Quality Engine**:
+  - Ran `python ops/anti_ai_slop_linter.py`:
+    - Route Registry: 282 routes scanned | Tier 1 Clichés: 0 | Mean HLS: 100.0/100
+    - UI Theme Templates: 26 templates scanned | Tier 1 Clichés: 0 | Mean HLS: 94.81/100
+    - Status: PASS [OK] (0 Tier 1 Clichés, Mean HLS: 100.0 >= 85).
+- **Deployment Security Audit & Disk Parity**:
+  - Ran `python ops/deploy_security_audit.py --root ops --release-path deploy_theme_updates.py --strict-release`: 0 findings, 0 release blockers.
+  - Ran `python ops/deploy_theme_updates.py --dry-run`: 60/60 files match 100% SHA-256 disk parity.
+
 ## Stage 72: Theme Security Hardening (ARCH-SEC-01) & Remote CI Green Run
 
 - **Theme Direct Execution Guards**: Implemented direct access guards `if (! defined('ABSPATH')) { exit; }` across `front-page.php` and `footer.php` in `wordpress/wp-content/themes/vietnamguide-premium/`, remediating `ARCH-SEC-01` from the Whitepaper critique while strictly adhering to Gate 4 layout patterns and Gate 3 frozen pattern hashes.

@@ -1,5 +1,7 @@
+import hashlib
 import os
 import re
+import tempfile
 import unittest
 from pathlib import Path
 from unittest.mock import patch
@@ -10,6 +12,7 @@ from ops.deploy_theme_updates import (
     backup_remote_files,
     get_remote_path,
     purge_cache,
+    stage_and_promote_file,
     validate_local_files,
 )
 
@@ -215,7 +218,252 @@ class DeployConfigTests(unittest.TestCase):
                 if not local_path.is_file() or local_path.stat().st_size == 0:
                     raise ValueError(f'Pre-flight check failed: invalid or empty file {local_relative}')
 
+    def test_stage_and_promote_file_success(self):
+        """Atomic staging flow must upload to temp path, verify SHA-256, and atomically mv -f."""
+        class MockChannel:
+            def recv_exit_status(self):
+                return 0
+
+        class MockStream:
+            channel = MockChannel()
+
+            def __init__(self, data=b''):
+                self._data = data
+
+            def read(self):
+                return self._data
+
+        class MockSFTP:
+            def __init__(self):
+                self.puts = []
+
+            def put(self, local_path, remote_path):
+                self.puts.append((local_path, remote_path))
+
+        class MockSSH:
+            def __init__(self, sha256_output):
+                self.commands = []
+                self.sha256_output = sha256_output
+
+            def exec_command(self, command):
+                self.commands.append(command)
+                if command.startswith('sha256sum --'):
+                    return None, MockStream(self.sha256_output), MockStream(b'')
+                return None, MockStream(b''), MockStream(b'')
+
+        with tempfile.TemporaryDirectory() as tmpdir:
+            test_file = Path(tmpdir) / 'test_module.php'
+            content = b'<?php // staging test content ?>\n'
+            test_file.write_bytes(content)
+            expected_hash = hashlib.sha256(content).hexdigest().lower()
+
+            remote_dest = '/srv/vietnamguide/wp-content/themes/vietnamguide-premium/inc/test.php'
+            mock_sftp = MockSFTP()
+            mock_ssh = MockSSH(sha256_output=f'{expected_hash}  {remote_dest}.tmp.12345678\n'.encode())
+
+            success, local_hash, remote_hash = stage_and_promote_file(
+                mock_ssh,
+                mock_sftp,
+                test_file,
+                remote_dest,
+            )
+
+            self.assertTrue(success)
+            self.assertEqual(local_hash, expected_hash)
+            self.assertEqual(remote_hash, expected_hash)
+
+            # Assert upload targeted a temporary path ending in .tmp.<hex>
+            self.assertEqual(len(mock_sftp.puts), 1)
+            uploaded_src, uploaded_dst = mock_sftp.puts[0]
+            self.assertEqual(uploaded_src, str(test_file))
+            self.assertRegex(uploaded_dst, r'^/srv/vietnamguide/wp-content/themes/vietnamguide-premium/inc/test\.php\.tmp\.[0-9a-f]{8}$')
+            self.assertNotEqual(uploaded_dst, remote_dest)
+
+            # Assert SSH executed remote verification and atomic promotion
+            self.assertEqual(len(mock_ssh.commands), 2)
+            self.assertEqual(mock_ssh.commands[0], f'sha256sum -- {uploaded_dst}')
+            self.assertEqual(mock_ssh.commands[1], f'mv -f -- {uploaded_dst} {remote_dest}')
+            self.assertNotIn('rm -f', ''.join(mock_ssh.commands))
+
+    def test_stage_and_promote_file_hash_mismatch_cleans_up_without_promotion(self):
+        """On hash mismatch, temporary staged file must be removed with rm -f and never promoted."""
+        class MockChannel:
+            def recv_exit_status(self):
+                return 0
+
+        class MockStream:
+            channel = MockChannel()
+
+            def __init__(self, data=b''):
+                self._data = data
+
+            def read(self):
+                return self._data
+
+        class MockSFTP:
+            def __init__(self):
+                self.puts = []
+
+            def put(self, local_path, remote_path):
+                self.puts.append((local_path, remote_path))
+
+        class MockSSH:
+            def __init__(self):
+                self.commands = []
+
+            def exec_command(self, command):
+                self.commands.append(command)
+                if command.startswith('sha256sum --'):
+                    return None, MockStream(b'0000000000000000000000000000000000000000000000000000000000000000  bad.tmp\n'), MockStream(b'')
+                return None, MockStream(b''), MockStream(b'')
+
+        with tempfile.TemporaryDirectory() as tmpdir:
+            test_file = Path(tmpdir) / 'test_module.php'
+            test_file.write_bytes(b'good local content')
+            remote_dest = '/srv/vietnamguide/test.php'
+
+            mock_sftp = MockSFTP()
+            mock_ssh = MockSSH()
+
+            success, local_hash, remote_hash = stage_and_promote_file(
+                mock_ssh,
+                mock_sftp,
+                test_file,
+                remote_dest,
+            )
+
+            self.assertFalse(success)
+            self.assertNotEqual(local_hash, remote_hash)
+
+            # Assert staging uploaded to temp path
+            self.assertEqual(len(mock_sftp.puts), 1)
+            _, temp_dst = mock_sftp.puts[0]
+
+            # Assert sha256sum checked temp, mv -f was NEVER executed, and rm -f cleaned up temp
+            self.assertEqual(len(mock_ssh.commands), 2)
+            self.assertEqual(mock_ssh.commands[0], f'sha256sum -- {temp_dst}')
+            self.assertEqual(mock_ssh.commands[1], f'rm -f -- {temp_dst}')
+            self.assertNotIn('mv -f', ''.join(mock_ssh.commands))
+
+    def test_stage_and_promote_file_sftp_failure_cleans_up_temp_path(self):
+        """If SFTP upload fails, staging temp path must be cleaned up."""
+        class MockChannel:
+            def recv_exit_status(self):
+                return 0
+
+        class MockStream:
+            channel = MockChannel()
+
+            def read(self):
+                return b''
+
+        class MockSFTP:
+            def put(self, local_path, remote_path):
+                raise IOError('Simulated SFTP upload failure')
+
+        class MockSSH:
+            def __init__(self):
+                self.commands = []
+
+            def exec_command(self, command):
+                self.commands.append(command)
+                return None, MockStream(), MockStream()
+
+        with tempfile.TemporaryDirectory() as tmpdir:
+            test_file = Path(tmpdir) / 'test_module.php'
+            test_file.write_bytes(b'valid content')
+            remote_dest = '/srv/vietnamguide/test.php'
+
+            mock_sftp = MockSFTP()
+            mock_ssh = MockSSH()
+
+            with self.assertRaises(IOError):
+                stage_and_promote_file(
+                    mock_ssh,
+                    mock_sftp,
+                    test_file,
+                    remote_dest,
+                )
+
+            # Verify cleanup was triggered and no mv -f
+            self.assertTrue(any(cmd.startswith('rm -f --') for cmd in mock_ssh.commands))
+            self.assertFalse(any('mv -f' in cmd for cmd in mock_ssh.commands))
+
+    def test_stage_and_promote_file_promotion_failure_raises_and_cleans_up(self):
+        """If mv -f promotion fails with non-zero exit code, error is raised and temp file cleaned up."""
+        class MockChannel:
+            def __init__(self, exit_status=0):
+                self._exit_status = exit_status
+
+            def recv_exit_status(self):
+                return self._exit_status
+
+        class MockStream:
+            def __init__(self, data=b'', exit_status=0):
+                self._data = data
+                self.channel = MockChannel(exit_status)
+
+            def read(self):
+                return self._data
+
+        class MockSFTP:
+            def put(self, local_path, remote_path):
+                pass
+
+        class MockSSH:
+            def __init__(self, expected_hash):
+                self.commands = []
+                self.expected_hash = expected_hash
+
+            def exec_command(self, command):
+                self.commands.append(command)
+                if command.startswith('sha256sum --'):
+                    return None, MockStream(f'{self.expected_hash}  test.tmp\n'.encode()), MockStream(b'')
+                if command.startswith('mv -f --'):
+                    return None, MockStream(b'', exit_status=1), MockStream(b'Permission denied')
+                return None, MockStream(b''), MockStream(b'')
+
+        with tempfile.TemporaryDirectory() as tmpdir:
+            test_file = Path(tmpdir) / 'test_module.php'
+            content = b'valid content'
+            test_file.write_bytes(content)
+            expected_hash = hashlib.sha256(content).hexdigest().lower()
+            remote_dest = '/srv/vietnamguide/test.php'
+
+            mock_sftp = MockSFTP()
+            mock_ssh = MockSSH(expected_hash)
+
+            with self.assertRaisesRegex(RuntimeError, 'atomic promotion failed'):
+                stage_and_promote_file(
+                    mock_ssh,
+                    mock_sftp,
+                    test_file,
+                    remote_dest,
+                )
+
+            # mv -f attempted, failed, then rm -f cleaned up
+            self.assertTrue(any('mv -f' in cmd for cmd in mock_ssh.commands))
+            self.assertTrue(any(cmd.startswith('rm -f --') for cmd in mock_ssh.commands))
+
+    def test_stage_and_promote_file_rejects_empty_file_in_preflight(self):
+        """Pre-flight byte check in stage_and_promote_file rejects 0-byte files."""
+        with tempfile.TemporaryDirectory() as tmpdir:
+            empty_file = Path(tmpdir) / 'empty.php'
+            empty_file.write_bytes(b'')
+
+            class Dummy:
+                pass
+
+            with self.assertRaises(ValueError):
+                stage_and_promote_file(
+                    Dummy(),
+                    Dummy(),
+                    empty_file,
+                    '/srv/site/empty.php',
+                )
+
 
 if __name__ == '__main__':
     unittest.main()
+
 
