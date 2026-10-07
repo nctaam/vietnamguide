@@ -1,4 +1,5 @@
 import os
+import re
 import unittest
 from pathlib import Path
 from unittest.mock import patch
@@ -172,6 +173,41 @@ class DeployConfigTests(unittest.TestCase):
         self.assertIn('backup-manifest.tsv', ssh.command)
         self.assertIn('cp -p --', ssh.command)
         self.assertIn('sha256sum --', ssh.command)
+
+    def test_functions_php_required_includes_exist_in_deploy_files(self):
+        """All 15 include files required in functions.php must exist in DEPLOY_FILES to prevent fatal crash."""
+        functions_path = REPO_ROOT / 'wordpress' / 'wp-content' / 'themes' / 'vietnamguide-premium' / 'functions.php'
+        self.assertTrue(functions_path.is_file(), f"Missing functions.php: {functions_path}")
+        func_content = functions_path.read_text(encoding='utf-8')
+
+        required_includes = re.findall(r"require_once\s+get_theme_file_path\(\s*['\"]/inc/([^'\"]+\.php)['\"]\s*\);", func_content)
+        self.assertEqual(len(required_includes), 15, f"Expected 15 required includes in functions.php, found {len(required_includes)}")
+
+        deploy_local_files = {item[0].replace('\\', '/') for item in DEPLOY_FILES}
+        for inc_file in required_includes:
+            expected_path = f"wordpress/wp-content/themes/vietnamguide-premium/inc/{inc_file}"
+            self.assertIn(
+                expected_path,
+                deploy_local_files,
+                f"Include file required in functions.php is missing from DEPLOY_FILES: {expected_path}"
+            )
+
+    def test_all_deploy_files_exist_on_local_disk(self):
+        """Every local file referenced in DEPLOY_FILES must exist on disk."""
+        self.assertGreaterEqual(len(DEPLOY_FILES), 60, "DEPLOY_FILES must contain at least 60 reconciled files")
+        for local_rel, _ in DEPLOY_FILES:
+            local_path = REPO_ROOT / local_rel
+            self.assertTrue(local_path.is_file(), f"DEPLOY_FILES references non-existent file on disk: {local_path}")
+
+    def test_deploy_files_destinations_unique_and_normalized(self):
+        """All remote destination paths in DEPLOY_FILES must be unique, non-empty, and forward-slash normalized."""
+        seen_destinations = set()
+        for local_rel, remote_rel in DEPLOY_FILES:
+            self.assertTrue(bool(remote_rel), f"Empty remote path for {local_rel}")
+            self.assertFalse(remote_rel.startswith('/'), f"Remote path must be relative to remote root: {remote_rel}")
+            self.assertNotIn('\\', remote_rel, f"Remote path must use forward slashes: {remote_rel}")
+            self.assertNotIn(remote_rel, seen_destinations, f"Duplicate remote path in DEPLOY_FILES: {remote_rel}")
+            seen_destinations.add(remote_rel)
 
 
 if __name__ == '__main__':

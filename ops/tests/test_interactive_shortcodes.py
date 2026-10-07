@@ -4,6 +4,7 @@ Unit and Contract Tests for VietnamGuide Interactive Travel Toolkit Components.
 Verifies zero H2 heading pollution (TOC safety), unique DOM IDs, shortcode registrations,
 and target slug coverage across all 4 interactive components.
 """
+import glob
 import os
 import re
 import subprocess
@@ -436,6 +437,111 @@ class TestInteractiveShortcodes(unittest.TestCase):
         self.assertIn('vg-rb-mode-toggle', calc_code, "Widget must provide mode toggle.")
         self.assertIn('vg-rb-currency-toggle', calc_code, "Widget must provide currency toggle.")
         self.assertIn('vg-rb-btn-cta', calc_code, "Widget must provide CTA deep-linking to full calculator.")
+
+    def test_zero_h2_invariant_across_all_inc_files(self):
+        """Zero-H2 Invariant must hold across ALL 17 PHP files in inc/*.php to prevent TOC corruption."""
+        inc_files = glob.glob(os.path.join(THEME_INC, '*.php'))
+        self.assertEqual(len(inc_files), 17, f"Expected 17 PHP files in {THEME_INC}, found {len(inc_files)}")
+        for php_path in sorted(inc_files):
+            basename = os.path.basename(php_path)
+            with open(php_path, 'r', encoding='utf-8') as f:
+                code = f.read()
+            h2_matches = re.findall(r'<h2\b', code, re.IGNORECASE)
+            self.assertEqual(
+                len(h2_matches),
+                0,
+                f"Zero-H2 violation in {basename}: found {len(h2_matches)} <h2> tags: {h2_matches}"
+            )
+
+    def test_all_theme_shortcodes_registered_via_functions_php(self):
+        """All shortcodes defined across inc/*.php must be loaded via functions.php and prefixed with vg_."""
+        functions_file = os.path.join(THEME_DIR, 'functions.php')
+        self.assertTrue(os.path.isfile(functions_file), f"Missing {functions_file}")
+        with open(functions_file, 'r', encoding='utf-8') as f:
+            func_code = f.read()
+
+        inc_files = glob.glob(os.path.join(THEME_INC, '*.php'))
+        found_shortcodes = []
+        for path in inc_files:
+            rel_inc = '/inc/' + os.path.basename(path)
+            with open(path, 'r', encoding='utf-8') as f:
+                code = f.read()
+            shortcodes = re.findall(r"add_shortcode\(\s*['\"]([^'\"]+)['\"]", code)
+            if shortcodes:
+                self.assertIn(
+                    rel_inc,
+                    func_code,
+                    f"File {rel_inc} registers shortcode(s) {shortcodes} but is not required in functions.php"
+                )
+                found_shortcodes.extend(shortcodes)
+
+        self.assertGreaterEqual(len(found_shortcodes), 10, "Expected at least 10 registered shortcodes")
+        for sc in found_shortcodes:
+            self.assertTrue(
+                sc.startswith('vg_'),
+                f"Shortcode [{sc}] must adhere to vg_ prefix convention"
+            )
+
+        expected_core = [
+            'vg_interactive_map',
+            'vg_photo_dispatch',
+            'vg_visa_checker',
+            'vg_season_matrix',
+            'vg_cost_calculator',
+            'vg_route_budget',
+            'vg_itinerary_finder',
+            'vg_airport_navigator',
+            'vg_packing_checklist',
+        ]
+        for sc in expected_core:
+            self.assertIn(sc, found_shortcodes, f"Expected core shortcode [{sc}] not found")
+
+    def test_css_class_prefix_scoping(self):
+        """Interactive shortcode components must scope their CSS classes with the 'vg-' prefix."""
+        root_class_patterns = {
+            'visa_checker': r'<section\s+class="([^"]*vg-visa-checker[^"]*)"',
+            'season_matrix': r'<section\s+class="([^"]*vg-season-matrix[^"]*)"',
+            'cost_calculator': r'<section\s+class="([^"]*vg-cost-calculator[^"]*)"',
+            'itinerary_finder': r'<section\s+class="([^"]*vg-itinerary-finder[^"]*)"',
+            'airport_navigator': r'<section\s+class="([^"]*vg-airport-navigator[^"]*)"',
+            'packing_checklist': r'<section\s+class="([^"]*vg-checklist-widget[^"]*)"',
+        }
+        for key, pattern in root_class_patterns.items():
+            self.assertRegex(
+                self.contents[key],
+                pattern,
+                f"Component {key} must scope container with vg- prefixed class"
+            )
+
+        map_path = os.path.join(THEME_INC, 'guide-interactive-map.php')
+        photo_path = os.path.join(THEME_INC, 'guide-photo-dispatch.php')
+        with open(map_path, 'r', encoding='utf-8') as f:
+            map_code = f.read()
+        with open(photo_path, 'r', encoding='utf-8') as f:
+            photo_code = f.read()
+
+        self.assertIn('class="vg-interactive-map-desk"', map_code)
+        self.assertIn('class="vg-photo-dispatch', photo_code)
+
+    def test_front_page_hub_shortcodes_integration_and_headings(self):
+        """front-page.php must integrate [vg_interactive_map] and [vg_photo_dispatch] with zero-H2 TOC integrity."""
+        fp_path = os.path.join(THEME_DIR, 'front-page.php')
+        self.assertTrue(os.path.isfile(fp_path), f"Missing {fp_path}")
+        with open(fp_path, 'r', encoding='utf-8') as f:
+            fp_content = f.read()
+
+        self.assertIn('[vg_interactive_map]', fp_content, "front-page.php must embed [vg_interactive_map]")
+        self.assertIn('[vg_photo_dispatch', fp_content, "front-page.php must embed [vg_photo_dispatch]")
+
+        map_section = re.search(r'<section[^>]*vg-cartography-showcase[^>]*>(.*?)</section>', fp_content, re.DOTALL)
+        self.assertIsNotNone(map_section, "Cartography section not found in front-page.php")
+        self.assertIn('<h3', map_section.group(1), "Cartography section heading must use <h3>")
+        self.assertNotIn('<h2', map_section.group(1), "Cartography section heading must NOT use <h2>")
+
+        photo_section = re.search(r'<section[^>]*vg-photo-dispatch-showcase[^>]*>(.*?)</section>', fp_content, re.DOTALL)
+        self.assertIsNotNone(photo_section, "Photo dispatch section not found in front-page.php")
+        self.assertIn('<h3', photo_section.group(1), "Photo dispatch section heading must use <h3>")
+        self.assertNotIn('<h2', photo_section.group(1), "Photo dispatch section heading must NOT use <h2>")
 
 
 if __name__ == '__main__':

@@ -174,6 +174,17 @@ $data = vg_homepage_data();
         </div>
     </section>
 
+    <section class="vg-section vg-cartography-showcase" id="cartography-desk" aria-labelledby="vg-cartography-heading">
+        <div class="vg-shell">
+            <div class="vg-section-heading" data-vg-reveal>
+                <p class="vg-kicker"><?php esc_html_e('Spatial Corridors', 'vietnamguide-premium'); ?></p>
+                <h3 id="vg-cartography-heading" class="heading"><?php esc_html_e('Regional Transit Corridors & Cartography', 'vietnamguide-premium'); ?></h3>
+                <p class="vg-toolkits-showcase__lead"><?php esc_html_e('Explore distance telemetry, transit modalities, and seasonal timing across Vietnam\'s key travel corridors.', 'vietnamguide-premium'); ?></p>
+            </div>
+            <?php echo do_shortcode('[vg_interactive_map]'); ?>
+        </div>
+    </section>
+
     <section class="vg-section vg-planning-paths" aria-labelledby="vg-planning-title">
         <div class="vg-shell" data-vg-reveal>
             <p class="vg-kicker">Build the right trip</p>
@@ -217,6 +228,17 @@ $data = vg_homepage_data();
                     </li>
                 <?php endforeach; ?>
             </ol>
+        </div>
+    </section>
+
+    <section class="vg-section vg-photo-dispatch-showcase" id="visual-dispatches" aria-labelledby="vg-photo-dispatch-heading">
+        <div class="vg-shell">
+            <div class="vg-section-heading" data-vg-reveal>
+                <p class="vg-kicker"><?php esc_html_e('Field Photography', 'vietnamguide-premium'); ?></p>
+                <h3 id="vg-photo-dispatch-heading" class="heading"><?php esc_html_e('Visual Dispatches & Optical Telemetry', 'vietnamguide-premium'); ?></h3>
+                <p class="vg-toolkits-showcase__lead"><?php esc_html_e('Field-verified documentation with exact optical telemetry, GPS coordinates, elevation, and lighting notes.', 'vietnamguide-premium'); ?></p>
+            </div>
+            <?php echo do_shortcode('[vg_photo_dispatch layout="standard"]'); ?>
         </div>
     </section>
 

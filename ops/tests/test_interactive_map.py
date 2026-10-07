@@ -7,6 +7,7 @@ canonical route linking, ARIA accessibility, and Anti-AI Slop compliance.
 import json
 import os
 import re
+import subprocess
 import unittest
 
 REPO_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..'))
@@ -107,6 +108,61 @@ class TestInteractiveMap(unittest.TestCase):
         self.assertIn('role="tabpanel"', self.content)
         self.assertIn('aria-selected=', self.content)
         self.assertIn('aria-controls=', self.content)
+
+    def test_svg_coordinate_bounding_boxes(self):
+        """All waypoint pins must have SVG coordinates within viewBox bounds [0, 320] x [0, 540]."""
+        self.assertIn('viewBox="0 0 320 540"', self.content, "SVG viewBox must be defined as 0 0 320 540")
+        coord_matches = re.findall(
+            r"'coordinates'\s*=>\s*\[\s*'x'\s*=>\s*(\d+)\s*,\s*'y'\s*=>\s*(\d+)\s*\]",
+            self.content
+        )
+        self.assertEqual(len(coord_matches), 6, "Must define coordinates for all 6 corridors")
+        for x_str, y_str in coord_matches:
+            x, y = int(x_str), int(y_str)
+            self.assertGreaterEqual(x, 0, f"X coordinate {x} out of bounds (< 0)")
+            self.assertLessEqual(x, 320, f"X coordinate {x} out of bounds (> 320)")
+            self.assertGreaterEqual(y, 0, f"Y coordinate {y} out of bounds (< 0)")
+            self.assertLessEqual(y, 540, f"Y coordinate {y} out of bounds (> 540)")
+
+    def test_php_syntax_verification(self):
+        """guide-interactive-map.php must pass php -l linting without syntax errors."""
+        res = subprocess.run(['php', '-l', MAP_FILE], capture_output=True, text=True)
+        self.assertEqual(
+            res.returncode,
+            0,
+            f"PHP syntax error in {MAP_FILE}:\n{res.stdout}\n{res.stderr}"
+        )
+
+    def test_regional_transit_corridor_data_structure_completeness(self):
+        """All 6 corridors must have complete required telemetry and non-empty values."""
+        required_keys = [
+            'id', 'name', 'vietnamese', 'focal_nodes', 'distance_from_hanoi',
+            'transit_summary', 'transit_hours', 'typical_daily_spend', 'spend_usd',
+            'optimal_dry_window', 'microclimate_verdict', 'field_caution',
+            'primary_route_slug', 'primary_route_label', 'coordinates'
+        ]
+        corridors = [
+            'northern-highlands',
+            'red-river-maritime',
+            'central-heritage',
+            'south-central-highlands',
+            'southern-metropolis',
+            'maritime-archipelagos',
+        ]
+        for corridor in corridors:
+            corridor_block = re.search(rf"'{corridor}'\s*=>\s*\[(.*?)^\s*\],", self.content, re.DOTALL | re.MULTILINE)
+            self.assertIsNotNone(corridor_block, f"Corridor block '{corridor}' not found")
+            block_text = corridor_block.group(1)
+            for key in required_keys:
+                self.assertIn(f"'{key}'", block_text, f"Corridor '{corridor}' missing key '{key}'")
+
+    def test_svg_vector_markup_elements(self):
+        """Map canvas must render S-curve vector path, waypoint pins, and pulse indicators."""
+        self.assertIn('class="vg-map-svg"', self.content)
+        self.assertIn('class="vg-map-spine"', self.content)
+        self.assertIn('vg-map-pin', self.content)
+        self.assertIn('vg-map-pin-pulse', self.content)
+        self.assertIn('data-corridor-pin=', self.content)
 
 
 if __name__ == '__main__':
