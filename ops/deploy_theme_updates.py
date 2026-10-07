@@ -257,6 +257,11 @@ def deploy(config: DeployConfig | None = None, *, dry_run: bool = False, purge: 
         config = load_deploy_config()
 
     print(f'=== Deploying theme artifact to {config.user}@{config.host}:{config.port} ===')
+    # Pre-flight atomic verification: Ensure all files exist, are readable, and non-empty
+    for local_relative, local_path in local_files:
+        if not local_path.is_file() or local_path.stat().st_size == 0:
+            raise ValueError(f'Pre-flight check failed: invalid or empty file {local_relative}')
+
     ssh = connect_ssh(config)
     all_matched = True
     try:

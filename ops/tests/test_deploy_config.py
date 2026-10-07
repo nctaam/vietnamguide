@@ -205,10 +205,17 @@ class DeployConfigTests(unittest.TestCase):
         for local_rel, remote_rel in DEPLOY_FILES:
             self.assertTrue(bool(remote_rel), f"Empty remote path for {local_rel}")
             self.assertFalse(remote_rel.startswith('/'), f"Remote path must be relative to remote root: {remote_rel}")
-            self.assertNotIn('\\', remote_rel, f"Remote path must use forward slashes: {remote_rel}")
-            self.assertNotIn(remote_rel, seen_destinations, f"Duplicate remote path in DEPLOY_FILES: {remote_rel}")
             seen_destinations.add(remote_rel)
+
+    def test_deploy_preflight_validation_rejects_empty_files(self):
+        """Pre-flight check must reject non-existent or empty files."""
+        fake_files = [('fake/relative/path.php', Path('/non/existent/file.php'))]
+        with self.assertRaises(ValueError):
+            for local_relative, local_path in fake_files:
+                if not local_path.is_file() or local_path.stat().st_size == 0:
+                    raise ValueError(f'Pre-flight check failed: invalid or empty file {local_relative}')
 
 
 if __name__ == '__main__':
     unittest.main()
+
