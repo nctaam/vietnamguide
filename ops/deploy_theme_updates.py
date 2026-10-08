@@ -223,8 +223,10 @@ def backup_remote_files(ssh, config: DeployConfig) -> str:
 
     stdin, stdout, stderr = ssh.exec_command('; '.join(commands))
     exit_status = stdout.channel.recv_exit_status()
+    error = stderr.read().decode('utf-8', errors='replace').strip() if exit_status != 0 else ''
+    if hasattr(stdout, 'channel') and hasattr(stdout.channel, 'close'):
+        stdout.channel.close()
     if exit_status != 0:
-        error = stderr.read().decode('utf-8', errors='replace').strip()
         raise RuntimeError(f'remote backup failed ({exit_status}): {error}')
     return backup_dir
 
@@ -239,8 +241,10 @@ def purge_cache(ssh, config: DeployConfig) -> None:
     command = 'set -eu; rm -rf -- ' + ' '.join(quoted_paths)
     stdin, stdout, stderr = ssh.exec_command(command)
     exit_status = stdout.channel.recv_exit_status()
+    error = stderr.read().decode('utf-8', errors='replace').strip() if exit_status != 0 else ''
+    if hasattr(stdout, 'channel') and hasattr(stdout.channel, 'close'):
+        stdout.channel.close()
     if exit_status != 0:
-        error = stderr.read().decode('utf-8', errors='replace').strip()
         raise RuntimeError(f'cache purge failed ({exit_status}): {error}')
 
 
@@ -271,6 +275,10 @@ def stage_and_promote_file(
         check_command = f"sha256sum -- {shlex.quote(temp_path)}"
         _stdin, stdout, _stderr = ssh.exec_command(check_command)
         raw = stdout.read() if hasattr(stdout, 'read') else b''
+        if hasattr(stdout, 'channel') and hasattr(stdout.channel, 'recv_exit_status'):
+            stdout.channel.recv_exit_status()
+        if hasattr(stdout, 'channel') and hasattr(stdout.channel, 'close'):
+            stdout.channel.close()
         remote_out = raw.decode('utf-8', errors='replace').strip() if isinstance(raw, bytes) else str(raw).strip()
         remote_hash = remote_out.split()[0].lower() if remote_out else ''
 
@@ -282,8 +290,10 @@ def stage_and_promote_file(
                 if hasattr(p_stdout, 'channel') and hasattr(p_stdout.channel, 'recv_exit_status')
                 else 0
             )
+            raw_err = p_stderr.read() if hasattr(p_stderr, 'read') else b''
+            if hasattr(p_stdout, 'channel') and hasattr(p_stdout.channel, 'close'):
+                p_stdout.channel.close()
             if exit_status != 0:
-                raw_err = p_stderr.read() if hasattr(p_stderr, 'read') else b''
                 err = raw_err.decode('utf-8', errors='replace').strip() if isinstance(raw_err, bytes) else str(raw_err).strip()
                 raise RuntimeError(f"atomic promotion failed ({exit_status}) for {remote_path}: {err}")
             promoted = True
