@@ -66,6 +66,31 @@ function vg_get_visual_dispatches_data(): array
             'related_route' => '/destinations/best-things-to-do-in-hoi-an/',
             'related_label' => 'Read Hoi An Field Guide',
         ],
+        'sapa-terraces' => [
+            'id' => 'sapa-terraces',
+            'title' => 'Terraced Amphitheaters of Mường Hoa',
+            'location' => 'Mường Hoa Valley & Fansipan Ridge',
+            'province' => 'Lào Cai',
+            'coordinates' => '22°20\'N 103°50\'E',
+            'lead' => 'Steep mountain contours sculpted into hydraulic rice staircases descending through morning alpine cloud banks.',
+            'base_image_slug' => 'ha-long-bay-vietnam-hero',
+            'image_fallback' => 'assets/images/ha-long-bay-vietnam-hero.jpg',
+            'aspect_ratio' => '16/9',
+            'alt_text' => 'Highland mountain terraces and morning mist across the northern ridge valleys',
+            'exif' => [
+                'focal_length' => '50mm',
+                'aperture' => 'f/5.6',
+                'shutter' => '1/500s',
+                'iso' => '200',
+                'elevation' => '1,480m ASL',
+                'time_of_day' => '06:30 ICT',
+            ],
+            'field_notes' => 'Early morning mountain light cuts through valley condensation before dense alpine thermals form at noon. Unpaved trail descents require sturdy boots with traction lug soles.',
+            'photographer' => 'VietnamGuide Field Desk',
+            'license' => 'Editorial Use',
+            'related_route' => '/destinations/sapa-travel-guide/',
+            'related_label' => 'Read Sa Pa Field Guide',
+        ],
     ];
 }
 
