@@ -2,6 +2,31 @@
 
 Date: 2026-10-08 (Asia/Saigon)
 
+## Stage 75: Transit Corridor Telemetry Deepening, Asset Minification Pipeline & Architectural Separation Audit
+
+- **Field Telemetry & GPS Corridor Deepening (Track A)**:
+  - Deepened `vg_get_regional_corridors_data()` in `wordpress/wp-content/themes/vietnamguide-premium/inc/guide-interactive-map.php`:
+    - Northern Highlands: Mã Pí Lèng Pass (`GPS 23.2389, 105.4183`) and Đồng Văn Karst Plateau geopark nodes.
+    - South-Central Highlands: Added Măng Đen pine plateau node via QL24 (`GPS 14.6041, 108.2882`) and Kon Tum hub.
+    - Maritime Archipelagos: Added Phú Quý island node connected via Phan Thiết harbor catamaran terminal (`GPS 10.9234, 108.1062`).
+  - Added dedicated unit test in `ops/tests/test_interactive_map.py` (`test_enriched_field_telemetry_gps_and_transit_corridors`). Suite expanded to 12 tests (100% PASS).
+- **Theme Asset Minification Pipeline (Track B)**:
+  - Created automated build tool `ops/build-theme-assets.py` verifying AST-safe minification across theme CSS and JS assets:
+    - `homepage.css`: 190.3 KB -> 153.9 KB (-19.14%).
+    - `guide-experience.css`: 24.0 KB -> 20.6 KB (-14.02%).
+    - `guide-patterns.css`: 21.3 KB -> 17.9 KB (-15.80%).
+    - `homepage.js`: 6.6 KB -> 5.7 KB (-13.38%).
+    - `guide-experience.js`: 7.7 KB -> 6.7 KB (-12.33%).
+    - Total bundle reduction: 250 KB -> 205 KB (-18.0% / 45 KB saved).
+- **Theme vs MU-Plugin Architectural Audit (Track C)**:
+  - Audited calculation engines: `guide-visa-checker.php`, `guide-cost-calculator.php`, and `guide-season-matrix.php`.
+  - Confirmed Gate 2 immutable fingerprint invariant constraint (`71b49033114e8007e5c19fb8ebc1a89e0d0dad88d0fe92dd381a28700db096ce`) and Gate 7 contract dependencies.
+- **Verification Gates & Quality Assurance**:
+  - Full Unit Test Suite: 206/206 tests PASSED in 35.4s.
+  - Master Quality Gates: 8/8 Gates PASSED (100% Exit Code 0).
+  - Anti-AI Slop Quality Engine: UI Mean HLS: 94.81/100, 0 Tier 1 Clichés.
+  - Deploy Security Audit: 0 findings, 0 release blockers.
+
 ## Stage 74: Field Telemetry Expansion, GPS Cartography & WCAG AAA Contrast Hardening
 
 - **Regional Cartography & Route Telemetry Expansion**:

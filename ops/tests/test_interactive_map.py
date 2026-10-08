@@ -164,6 +164,17 @@ class TestInteractiveMap(unittest.TestCase):
         self.assertIn('vg-map-pin-pulse', self.content)
         self.assertIn('data-corridor-pin=', self.content)
 
+    def test_enriched_field_telemetry_gps_and_transit_corridors(self):
+        """Enriched corridors must feature verified GPS coordinates for mountain passes and island harbors."""
+        self.assertIn('GPS 23.2389, 105.4183', self.content, "Must include Ma Pi Leng Pass GPS telemetry")
+        self.assertIn('Mã Pí Lèng Pass', self.content)
+        self.assertIn('Măng Đen', self.content)
+        self.assertIn('Kon Tum', self.content)
+        self.assertIn('GPS 14.6041, 108.2882', self.content, "Must include Mang Den plateau GPS telemetry")
+        self.assertIn('Phú Quý', self.content)
+        self.assertIn('Phan Thiết harbor', self.content)
+        self.assertIn('GPS 10.9234, 108.1062', self.content, "Must include Phan Thiet harbor GPS telemetry")
+
 
 if __name__ == '__main__':
     unittest.main()
