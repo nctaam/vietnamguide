@@ -2,6 +2,20 @@
 
 Date: 2026-10-08 (Asia/Saigon)
 
+## Stage 77: Theme Asset Pipeline Test Hardening & Contract Invariant Verification
+
+- **Theme Asset Performance & Minification Test Suite (`ops/tests/test_theme_assets.py`)**:
+  - Implemented unit and contract tests verifying `ops/build-theme-assets.py`:
+    - `test_build_script_check_mode_runs_successfully`: Confirms automated AST-safe compression (-18.0% / 45 KB saved across all 5 assets).
+    - `test_css_minification_preserves_custom_properties_and_calc`: Asserts preservation of all `--vg-*` custom properties in `:root` and `calc()` expressions.
+    - `test_js_minification_syntax_validity`: Validates retention of `IntersectionObserver`, `addEventListener`, `requestAnimationFrame`, and DOM node identifiers.
+    - `test_theme_asset_version_contract_in_functions_php`: Guarantees cache-busting SHA-256 versioning contract for all 5 assets in `functions.php`.
+  - Expanded test suite: 4 new unit tests added, 100% PASS.
+- **Verification Gates & Quality Assurance**:
+  - Master Quality Gates: 8/8 Gates PASSED (100% Exit Code 0).
+  - Anti-AI Slop Quality Engine: UI Mean HLS: 94.81/100, 0 Tier 1 Clichés.
+  - Deploy Security Audit: 0 findings, 0 release blockers.
+
 ## Stage 76: Visual Dispatch Storytelling Deepening & Sa Pa Terraces Telemetry Integration
 
 - **Visual Dispatch & Optical Telemetry Integration (`[vg_photo_dispatch]`)**:
