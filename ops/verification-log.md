@@ -2,6 +2,27 @@
 
 Date: 2026-10-10 (Asia/Saigon)
 
+## Stage 82: Reading Experience Ergonomics, Tactical Dock & Reading Spine Refinement
+
+- **Tactical Dock & Bottom Sheet Drawer (`assets/css/homepage.css`, `assets/js/guide-experience.js`)**:
+  - Modernized `#vg-floating-dock` styling:
+    - Integrated design tokens (`var(--vg-jade)`, `var(--vg-paper)`, `var(--vg-white)`) with backdrop blur (16px) and subtle depth shadow.
+    - Added tactile micro-press animations (`transform: scale(0.96)`) on active touch/click.
+    - Optimized mobile layout (<640px): transformed the tools popover into an ergonomic bottom sheet drawer (`vgDrawerSlideUp` animation) with safe-area insets (`env(safe-area-inset-bottom)`).
+  - Enhanced accessibility and keyboard ergonomics in `assets/js/guide-experience.js`:
+    - Auto-focuses the first interactive toolkit link or close button upon opening the popover.
+    - Preserved `Escape` key dismissal returning focus to the trigger button.
+- **Reading Spine Sticky TOC Refinement (`assets/css/guide-experience.css`)**:
+  - Upgraded `.vg-guide-spine__toc` scrollspy active state:
+    - Added distinct bold step counter indicator (`.is-active::before` with `font-weight: 700`) and slight horizontal indentation (`translateX(4px)`).
+    - Preserved zero-`<h2>` TOC rule and clean semantic layout across all 282 guide routes.
+- **Verification Gates & Quality Assurance**:
+  - Full Unit Test Suite: 211 tests verified across all 12 test suites (100% PASS, 0 failures, 0 errors in 42.6s).
+  - Master Quality Gates: 8/8 Gates PASSED (100% Exit Code 0 via `ops/verify-all-gates.ps1`).
+  - Anti-AI Slop Quality Engine: UI Mean HLS: 94.81/100, 0 Tier 1 Clichés.
+  - Theme Asset Pipeline: 46.4 KB compression (-18.05% saved) verified via `ops/build-theme-assets.py`.
+  - Deploy Security Audit: 0 findings, 0 release blockers.
+
 ## Stage 81: Footer Structural Clarity & Accessibility Refinement
 
 - **Footer Information Architecture (`footer.php` & `assets/css/homepage.css`)**:

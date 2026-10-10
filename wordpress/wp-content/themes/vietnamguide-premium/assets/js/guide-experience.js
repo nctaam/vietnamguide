@@ -199,6 +199,12 @@
     var isOpen = forceState !== undefined ? forceState : toolsBtn.getAttribute('aria-expanded') !== 'true';
     toolsBtn.setAttribute('aria-expanded', String(isOpen));
     popover.style.display = isOpen ? 'block' : 'none';
+    if (isOpen) {
+      var firstLink = popover.querySelector('.vg-dock-tool-link, .vg-dock-close');
+      if (firstLink && typeof firstLink.focus === 'function') {
+        firstLink.focus();
+      }
+    }
   }
 
   if (toolsBtn) {
