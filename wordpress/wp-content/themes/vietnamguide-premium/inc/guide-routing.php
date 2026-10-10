@@ -96,6 +96,33 @@ function vg_guide_pilot_paths(): array
     ];
 }
 
+function vg_guide_pilot_paths_map(): array
+{
+    static $map = null;
+    if ($map === null) {
+        $map = array_fill_keys(vg_guide_pilot_paths(), true);
+    }
+    return $map;
+}
+
+/**
+ * Global telemetry storage for route fallbacks (observability without database drag).
+ */
+function vg_record_route_fallback(string $path, string $reason): void
+{
+    $GLOBALS['vg_route_fallback_telemetry'] = $GLOBALS['vg_route_fallback_telemetry'] ?? [];
+    $GLOBALS['vg_route_fallback_telemetry'][] = [
+        'path' => $path,
+        'reason' => $reason,
+        'timestamp' => microtime(true),
+    ];
+}
+
+function vg_get_route_fallback_telemetry(): array
+{
+    return $GLOBALS['vg_route_fallback_telemetry'] ?? [];
+}
+
 /**
  * Loads the shared route registry without changing the current pilot contract.
  *
@@ -122,17 +149,20 @@ function vg_guide_route_registry(): array
     }
 
     $payload = json_decode($raw, true);
-    $expectedRouteCount = 282;
     if (
         ! is_array($payload)
         || ($payload['schema_version'] ?? null) !== 1
-        || ($payload['route_count'] ?? null) !== $expectedRouteCount
+        || ! isset($payload['route_count'])
+        || ! is_int($payload['route_count'])
+        || $payload['route_count'] < 87
         || ! isset($payload['routes'])
         || ! is_array($payload['routes'])
-        || count($payload['routes']) !== $expectedRouteCount
+        || count($payload['routes']) !== $payload['route_count']
     ) {
         return $registry;
     }
+
+    $expectedRouteCount = $payload['route_count'];
 
     $allowedTypes = ['destination', 'itinerary', 'comparison', 'practical'];
     $routeTypesByPrefix = [
@@ -329,6 +359,15 @@ function vg_guide_registry_rollout_paths(): array
     return array_values(array_unique($paths));
 }
 
+function vg_guide_registry_rollout_paths_map(): array
+{
+    static $map = null;
+    if ($map === null) {
+        $map = array_fill_keys(vg_guide_registry_rollout_paths(), true);
+    }
+    return $map;
+}
+
 function vg_get_registry_rollout_type(?WP_Post $post, string $path): ?string
 {
     $type = vg_classify_guide_path($path);
@@ -391,11 +430,13 @@ function vg_is_guide_experience_page(?WP_Post $post = null): bool
     }
 
     $path = vg_get_guide_path($post);
-    if (in_array($path, vg_guide_registry_rollout_paths(), true)) {
+    $rolloutMap = vg_guide_registry_rollout_paths_map();
+    if (isset($rolloutMap[$path])) {
         return vg_get_registry_rollout_type($post, $path) !== null;
     }
 
-    if (! in_array($path, vg_guide_pilot_paths(), true)) {
+    $pilotMap = vg_guide_pilot_paths_map();
+    if (! isset($pilotMap[$path])) {
         return false;
     }
 

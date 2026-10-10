@@ -582,6 +582,88 @@ class RouteContractTests(unittest.TestCase):
         counts = result.stdout.strip().split(',')
         self.assertEqual(counts, ['87', '50', '50', '95', '282', '5'])
 
+    def test_routing_engine_o1_lookup_and_telemetry_contracts(self):
+        result = self._run_php_harness(
+            """
+            $pilotPaths = vg_guide_pilot_paths();
+            $pilotMap = vg_guide_pilot_paths_map();
+            echo count($pilotPaths), "\\n";
+            echo count($pilotMap), "\\n";
+            echo isset($pilotMap['destinations/hanoi-travel-guide']) ? "1\\n" : "0\\n";
+            echo isset($pilotMap['non-existent/path']) ? "1\\n" : "0\\n";
+
+            $rolloutPaths = vg_guide_registry_rollout_paths();
+            $rolloutMap = vg_guide_registry_rollout_paths_map();
+            echo count($rolloutPaths), "\\n";
+            echo count($rolloutMap), "\\n";
+            echo isset($rolloutMap['destinations/hanoi-travel-guide']) ? "1\\n" : "0\\n";
+
+            // Test fallback telemetry logging
+            vg_record_route_fallback('legacy-path/sample', 'non_guide_page');
+            $logs = vg_get_route_fallback_telemetry();
+            echo count($logs), "\\n";
+            echo $logs[0]['path'], "\\n";
+            echo $logs[0]['reason'], "\\n";
+            """
+        )
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertEqual(
+            result.stdout.splitlines(),
+            [
+                '87',
+                '87',
+                '1',
+                '0',
+                '282',
+                '282',
+                '1',
+                '1',
+                'legacy-path/sample',
+                'non_guide_page',
+            ],
+        )
+
+    def test_routing_engine_flexible_schema_count_validation(self):
+        flexible_root = Path(tempfile.mkdtemp(prefix='vietnamguide-flexible-registry-'))
+        (flexible_root / 'inc').mkdir()
+        payload = json.loads(
+            (
+                REPO_PATH
+                / 'wordpress'
+                / 'wp-content'
+                / 'themes'
+                / 'vietnamguide-premium'
+                / 'inc'
+                / 'guide-route-registry.json'
+            ).read_text(encoding='utf-8')
+        )
+        # Add an additional valid 283rd route dynamically
+        extra_route = dict(payload['routes'][0])
+        extra_route['path'] = 'destinations/test-expanded-destination-guide'
+        extra_route['type'] = 'destination'
+        extra_route['parent'] = 'destinations'
+        extra_route['title'] = 'Test Expanded Destination Guide'
+        extra_route['description'] = 'Expanded travel route for stress testing registry scalability without breaking.'
+        payload['routes'].append(extra_route)
+        payload['route_count'] = len(payload['routes'])
+
+        (flexible_root / 'inc' / 'guide-route-registry.json').write_text(
+            json.dumps(payload), encoding='utf-8'
+        )
+        try:
+            result = self._run_php_harness(
+                """
+                $registry = vg_guide_route_registry();
+                echo count($registry), "\\n";
+                echo isset($registry['destinations/test-expanded-destination-guide']) ? "1\\n" : "0\\n";
+                """,
+                theme_file_root=flexible_root,
+            )
+        finally:
+            shutil.rmtree(flexible_root)
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertEqual(result.stdout.splitlines(), ['283', '1'])
+
 
 if __name__ == '__main__':
     unittest.main()

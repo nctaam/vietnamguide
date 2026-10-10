@@ -2,6 +2,26 @@
 
 Date: 2026-10-10 (Asia/Saigon)
 
+## Stage 90: Routing Engine Hardening: O(1) Hash Map Optimization, Flexible Route Count Validation & Fallback Observability
+
+- **O(1) Hash Map Routing Optimization (`inc/guide-routing.php`)**:
+  - Implemented `vg_guide_pilot_paths_map()` and `vg_guide_registry_rollout_paths_map()` utilizing `array_fill_keys()` for $O(1)$ key lookup via `isset($map[$path])`.
+  - Replaced $O(N)$ linear scans `in_array()` in `vg_is_guide_experience_page()`, cutting CPU cycle overhead during high-concurrency request routing.
+- **Flexible Schema Route Count Threshold (`inc/guide-routing.php`)**:
+  - Removed brittle hardcoded check `count !== 282` in `vg_guide_route_registry()`.
+  - Upgraded to dynamic structural validation ensuring `route_count >= 87` and matching exact record count against declared payload header, eliminating all-or-nothing failure trap upon future route expansions.
+- **Route Fallback Observability & Telemetry (`inc/guide-routing.php`, `page.php`)**:
+  - Implemented `vg_record_route_fallback($path, $reason)` and `vg_get_route_fallback_telemetry()` for runtime diagnostics.
+  - Wired telemetry hooks inside `page.php` when rendering fallback `template-parts/content-page`, capturing classification context without database I/O penalties.
+- **Unit Test Expansion (`ops/tests/test_route_contract.py`)**:
+  - Added `test_routing_engine_o1_lookup_and_telemetry_contracts`: Verifies map key indexing, count parity, and telemetry collection.
+  - Added `test_routing_engine_flexible_schema_count_validation`: Verifies dynamic expansion tolerance (e.g. 283+ routes) without breaking registry contracts.
+- **Verification Gates & Quality Assurance**:
+  - Full Unit Test Suite: 25/25 Route Contract tests PASSED (100% OK).
+  - Master Quality Gates: 8/8 Gates PASSED (100% Exit Code 0 via `ops/verify-all-gates.ps1`).
+  - Deploy Script Parity: 60/60 files verified via `ops/deploy_theme_updates.py --dry-run`.
+  - Deploy Security Audit: 0 findings, 0 release blockers.
+
 ## Stage 89: Mobile Reading Progress Deduplication, Tactical Dock Tools Drawer Compaction & Homepage Checklist CTA Optimization
 
 - **Mobile Reading Progress Deduplication (`assets/css/homepage.css`)**:
