@@ -2,6 +2,24 @@
 
 Date: 2026-10-10 (Asia/Saigon)
 
+## Stage 85: Decluttering Back-to-Top Redundancy, Mobile E-E-A-T Strip & Homepage Pacing
+
+- **Back-to-Top Redundancy Elimination (`assets/css/homepage.css`, `inc/guide-routing.php`)**:
+  - Implemented `vg_guide_experience_body_class()` filter injecting `.vg-has-guide-shell` into `body_class` for all guide experience pages.
+  - Added CSS rule `body.vg-has-guide-shell .vg-back-to-top { display: none !important; }` to eliminate duplicate back-to-top button on guide pages, leaving Tactical Dock `#vg-dock-top` as the single ergonomic control.
+- **Mobile E-E-A-T Trust Panel Ergonomics (`template-parts/guide-page.php`, `assets/css/guide-experience.css`)**:
+  - Distinguished `.vg-guide-trust__item--guidance` (Best for, Skip if) and `.vg-guide-trust__item--policy` (Last reviewed, Sources checked, Zero Bias).
+  - Compacted policy items on mobile (<620px) with 10px padding, hairline borders, and subtle contrast background, preventing 1.5-screen scroll push before article content while keeping high E-E-A-T signals.
+- **Homepage Vertical Rhythm & Pacing Harmonization (`assets/css/homepage.css`)**:
+  - Harmonized section padding for `.vg-toolkits-showcase` and `.vg-field-desk-showcase` to `clamp(48px, 6vw, 80px) 0`.
+  - Smoothed transition between decision engines and cartography desk to prevent cognitive clutter and tooling overload.
+- **Verification Gates & Quality Assurance**:
+  - Full Unit Test Suite: 211 tests verified across all 12 test suites (100% PASS, 0 failures, 0 errors in 65.2s).
+  - Master Quality Gates: 8/8 Gates PASSED (100% Exit Code 0 via `ops/verify-all-gates.ps1`).
+  - Deploy Script Parity: 60/60 files verified via `ops/deploy_theme_updates.py --dry-run`.
+  - Theme Asset Pipeline: 46.5 KB compression (-18.03% saved) verified via `ops/build-theme-assets.py`.
+  - Deploy Security Audit: 0 findings, 0 release blockers.
+
 ## Stage 84: Regional Cartography Telemetry & Mountain Waypoint Precision
 
 - **Interactive Cartography Desk (`inc/guide-interactive-map.php`)**:

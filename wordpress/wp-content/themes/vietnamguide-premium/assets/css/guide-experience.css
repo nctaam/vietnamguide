@@ -964,7 +964,31 @@
     padding-inline: 16px;
   }
 
-  .vg-guide-trust,
+  .vg-guide-trust {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+
+  .vg-guide-trust .vg-guide-trust__item--guidance {
+    padding: 14px 16px;
+  }
+
+  .vg-guide-trust .vg-guide-trust__item--policy {
+    padding: 10px 14px;
+    background: color-mix(in srgb, var(--vg-paper) 60%, var(--vg-white));
+    border-top-width: 2px;
+    gap: 3px;
+  }
+
+  .vg-guide-trust .vg-guide-trust__item--policy strong {
+    font-size: 11px;
+    letter-spacing: .06em;
+  }
+
+  .vg-guide-trust .vg-guide-trust__item--policy span {
+    font-size: 13px;
+  }
+
   .vg-guide-article .vg-guide-photo-grid,
   .vg-guide-article .vg-related-cards,
   .vg-guide-article .vg-route-family-grid,

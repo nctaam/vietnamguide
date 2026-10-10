@@ -426,3 +426,16 @@ function vg_handle_toolkit_vanity_redirects(): void
     }
 }
 add_action('template_redirect', 'vg_handle_toolkit_vanity_redirects', 1);
+
+/**
+ * Adds semantic body class when page renders the full Guide Shell experience.
+ */
+function vg_guide_experience_body_class(array $classes): array
+{
+    if (vg_is_guide_experience_page()) {
+        $classes[] = 'vg-has-guide-shell';
+    }
+    return $classes;
+}
+add_filter('body_class', 'vg_guide_experience_body_class');
+
