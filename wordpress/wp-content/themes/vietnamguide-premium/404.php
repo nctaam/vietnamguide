@@ -52,11 +52,8 @@ get_header();
                     <a href="<?php echo esc_url(home_url('/')); ?>" class="vg-button">
                         <?php esc_html_e('Back to Homepage', 'vietnamguide-premium'); ?>
                     </a>
-                    <a href="<?php echo esc_url(home_url('/plan/vietnam-evisa/')); ?>" class="vg-button vg-button--secondary">
-                        <?php esc_html_e('Check Visa Rules', 'vietnamguide-premium'); ?>
-                    </a>
-                    <a href="<?php echo esc_url(home_url('/costs/vietnam-travel-cost/')); ?>" class="vg-button vg-button--secondary">
-                        <?php esc_html_e('Calculate Budget', 'vietnamguide-premium'); ?>
+                    <a href="<?php echo esc_url(home_url('/destinations/')); ?>" class="vg-button vg-button--secondary">
+                        <?php esc_html_e('Browse All Destinations', 'vietnamguide-premium'); ?>
                     </a>
                 </div>
             </div>

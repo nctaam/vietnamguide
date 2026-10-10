@@ -2,6 +2,21 @@
 
 Date: 2026-10-10 (Asia/Saigon)
 
+## Stage 87: 404 Error Recovery Ergonomics & Action Streamlining
+
+- **404 Recovery Action Streamlining (`404.php`)**:
+  - Replaced duplicate toolkit buttons (`Check Visa Rules` and `Calculate Budget`) in `.vg-empty-state__actions` with a focused dual navigation path:
+    1. Primary: `Back to Homepage` (`/`)
+    2. Secondary: `Browse All Destinations` (`/destinations/`)
+  - Resolved visual redundancy with Card 4 (`Planning & Toolkits`), which already links to `/plan/` and outlines visa and budget tools.
+  - Aligned 404 recovery ergonomics with the site's editorial-grade, uncluttered layout standard.
+- **Verification Gates & Quality Assurance**:
+  - Full Unit Test Suite: 211 tests verified across all 12 test suites (100% PASS, 0 failures, 0 errors in 96.7s).
+  - Master Quality Gates: 8/8 Gates PASSED (100% Exit Code 0 via `ops/verify-all-gates.ps1`).
+  - Deploy Script Parity: 60/60 files verified via `ops/deploy_theme_updates.py --dry-run`.
+  - PHP Linting: Clean syntax verified (`No syntax errors detected in 404.php`).
+  - Deploy Security Audit: 0 findings, 0 release blockers.
+
 ## Stage 86: Meta Deduplication, Mobile Jump Bar Declutter & Hero CTA Differentiation
 
 - **Guide Meta & Trust Deduplication (`template-parts/guide-page.php`)**:
