@@ -231,6 +231,37 @@ def backup_remote_files(ssh, config: DeployConfig) -> str:
     return backup_dir
 
 
+def restore_remote_backup(ssh, config: DeployConfig, backup_dir: str) -> None:
+    """Restore remote files from backup manifest in case of deployment failure."""
+    manifest_path = posixpath.join(backup_dir, 'backup-manifest.tsv')
+    commands = [
+        'set -eu',
+        f'test -f {shlex.quote(manifest_path)}',
+    ]
+
+    for _local_relative, remote_relative in DEPLOY_FILES:
+        target = get_remote_path(config, remote_relative)
+        backup_file = posixpath.join(backup_dir, remote_relative)
+        target_q = shlex.quote(target)
+        backup_q = shlex.quote(backup_file)
+        # If backup exists, restore it. If it was missing prior to deployment, delete newly created file.
+        commands.append(
+            f'if [ -f {backup_q} ]; then '
+            f'mkdir -p -- {shlex.quote(posixpath.dirname(target))}; '
+            f'cp -pf -- {backup_q} {target_q}; '
+            f'else rm -f -- {target_q}; fi'
+        )
+
+    commands.append('set +e')
+    stdin, stdout, stderr = ssh.exec_command('; '.join(commands))
+    exit_status = stdout.channel.recv_exit_status()
+    error = stderr.read().decode('utf-8', errors='replace').strip() if exit_status != 0 else ''
+    if hasattr(stdout, 'channel') and hasattr(stdout.channel, 'close'):
+        stdout.channel.close()
+    if exit_status != 0:
+        raise RuntimeError(f'rollback restoration failed ({exit_status}): {error}')
+
+
 def purge_cache(ssh, config: DeployConfig) -> None:
     cache_paths = [
         posixpath.join(config.remote_root, 'wp-content/litespeed/cssjs'),
@@ -327,10 +358,11 @@ def deploy(config: DeployConfig | None = None, *, dry_run: bool = False, purge: 
             raise ValueError(f'Pre-flight check failed: invalid or empty file {local_relative}')
 
     ssh = connect_ssh(config)
-    all_matched = True
+    backup_dir = None
     try:
         backup_dir = backup_remote_files(ssh, config)
         print(f'Created rollback backup: {backup_dir}')
+        all_matched = True
         sftp = ssh.open_sftp()
         try:
             for (local_relative, local_path), (_unused, remote_relative) in zip(local_files, DEPLOY_FILES):
@@ -354,6 +386,21 @@ def deploy(config: DeployConfig | None = None, *, dry_run: bool = False, purge: 
             purge_cache(ssh, config)
         else:
             print('Cache purge skipped; pass --purge-cache only after post-upload verification.')
+    except Exception as deploy_err:
+        if backup_dir is not None:
+            print(f'[ROLLBACK] Deployment encountered error: {deploy_err}', file=sys.stderr)
+            print(f'[ROLLBACK] Automatically restoring remote state from backup: {backup_dir}...', file=sys.stderr)
+            try:
+                restore_remote_backup(ssh, config, backup_dir)
+                print('[ROLLBACK] Remote files successfully restored to pre-deploy state.', file=sys.stderr)
+                try:
+                    purge_cache(ssh, config)
+                    print('[ROLLBACK] Cache purged to clear transient deployment state.', file=sys.stderr)
+                except Exception as purge_err:
+                    print(f'[ROLLBACK WARNING] Cache purge after rollback encountered error: {purge_err}', file=sys.stderr)
+            except Exception as rollback_err:
+                print(f'[ROLLBACK CRITICAL] Rollback restoration failed: {rollback_err}', file=sys.stderr)
+        raise
     finally:
         ssh.close()
 

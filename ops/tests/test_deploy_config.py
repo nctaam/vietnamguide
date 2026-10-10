@@ -12,6 +12,7 @@ from ops.deploy_theme_updates import (
     backup_remote_files,
     get_remote_path,
     purge_cache,
+    restore_remote_backup,
     stage_and_promote_file,
     validate_local_files,
 )
@@ -463,7 +464,126 @@ class DeployConfigTests(unittest.TestCase):
                 )
 
 
+    def test_restore_remote_backup_generates_correct_commands_and_restores_files(self):
+        """Automated rollback generates commands to restore present files and remove newly added ones."""
+        class FakeChannel:
+            def recv_exit_status(self):
+                return 0
+
+            def close(self):
+                pass
+
+        class FakeStream:
+            channel = FakeChannel()
+
+        class FakeSSH:
+            def __init__(self):
+                self.commands = []
+
+            def exec_command(self, command):
+                self.commands.append(command)
+                return None, FakeStream(), FakeStream()
+
+        config = DeployConfig(
+            host='staging.example.test',
+            port=2209,
+            user='vietnamguide-deploy',
+            key_path=r'C:\keys\deploy',
+            known_hosts=r'C:\keys\known_hosts',
+            remote_root='/srv/vietnamguide',
+            allow_root=False,
+        )
+        ssh = FakeSSH()
+        backup_dir = '/srv/vietnamguide/wp-content/.vietnamguide-deployment-backups/20261010T120000Z-abcdef123456'
+
+        restore_remote_backup(ssh, config, backup_dir)
+
+        self.assertEqual(len(ssh.commands), 1)
+        command = ssh.commands[0]
+        self.assertTrue(command.startswith('set -eu; test -f '))
+        self.assertIn('/srv/vietnamguide/wp-content/.vietnamguide-deployment-backups/20261010T120000Z-abcdef123456/backup-manifest.tsv', command)
+        self.assertTrue(command.endswith('; set +e'))
+        # Ensure every deployed file is accounted for in rollback
+        for _local, remote_rel in DEPLOY_FILES:
+            target_path = get_remote_path(config, remote_rel)
+            self.assertIn(f"cp -pf -- /srv/vietnamguide/wp-content/.vietnamguide-deployment-backups/20261010T120000Z-abcdef123456/{remote_rel} {target_path}", command)
+            self.assertIn(f"rm -f -- {target_path}", command)
+
+    def test_restore_remote_backup_raises_on_non_zero_exit_status(self):
+        """Rollback failure raises RuntimeError with remote error message."""
+        class FailChannel:
+            def recv_exit_status(self):
+                return 1
+
+            def close(self):
+                pass
+
+        class FailStream:
+            def __init__(self, err_text=b''):
+                self.err_text = err_text
+                self.channel = FailChannel()
+
+            def read(self):
+                return self.err_text
+
+        class FailSSH:
+            def exec_command(self, command):
+                return None, FailStream(), FailStream(b'disk read-only')
+
+        config = DeployConfig(
+            host='staging.example.test',
+            port=2209,
+            user='vietnamguide-deploy',
+            key_path=r'C:\keys\deploy',
+            known_hosts=r'C:\keys\known_hosts',
+            remote_root='/srv/vietnamguide',
+            allow_root=False,
+        )
+        ssh = FailSSH()
+
+        with self.assertRaisesRegex(RuntimeError, 'rollback restoration failed \\(1\\): disk read-only'):
+            restore_remote_backup(ssh, config, '/tmp/backup')
+
+    def test_posix_key_permission_mode_validation(self):
+        """On POSIX systems, SSH private key with open permissions (> 0600) is rejected."""
+        with tempfile.TemporaryDirectory() as tmpdir:
+            key_file = Path(tmpdir) / 'test_rsa'
+            key_file.write_text('dummy-key', encoding='utf-8')
+            known_hosts_file = Path(tmpdir) / 'known_hosts'
+            known_hosts_file.write_text('dummy-host', encoding='utf-8')
+
+            env = {
+                'VG_DEPLOY_HOST': 'staging.example.test',
+                'VG_DEPLOY_PORT': '2209',
+                'VG_DEPLOY_USER': 'vietnamguide-deploy',
+                'VG_DEPLOY_KEY': str(key_file),
+                'VG_DEPLOY_KNOWN_HOSTS': str(known_hosts_file),
+                'VG_DEPLOY_ROOT': '/srv/vietnamguide',
+            }
+
+            # Simulate POSIX with open 0644 permission
+            class FakeStat:
+                st_mode = 0o100644
+
+            with patch('os.name', 'posix'):
+                with patch('os.stat', return_value=FakeStat()):
+                    with patch.dict(os.environ, env, clear=True):
+                        with self.assertRaisesRegex(PermissionError, 'deploy key file permissions too open'):
+                            load_deploy_config()
+
+            # Simulate POSIX with secure 0600 permission
+            class SecureStat:
+                st_mode = 0o100600
+
+            with patch('os.name', 'posix'):
+                with patch('os.stat', return_value=SecureStat()):
+                    with patch.dict(os.environ, env, clear=True):
+                        config = load_deploy_config()
+                        self.assertEqual(config.user, 'vietnamguide-deploy')
+
+
 if __name__ == '__main__':
     unittest.main()
+
 
 

@@ -64,6 +64,11 @@ def load_deploy_config(environment: Mapping[str, str] | None = None) -> DeployCo
     if user == "root" and not allow_root:
         raise ValueError("VG_DEPLOY_ALLOW_ROOT=1 is required for root deployment")
 
+    if os.name == "posix" and os.path.exists(key_path):
+        key_mode = os.stat(key_path).st_mode & 0o777
+        if key_mode not in (0o600, 0o400):
+            raise PermissionError(f"deploy key file permissions too open ({oct(key_mode)}), expected 0600 or 0400: {key_path}")
+
     return DeployConfig(
         host=host,
         port=_parse_port(values),

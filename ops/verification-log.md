@@ -2,6 +2,24 @@
 
 Date: 2026-10-10 (Asia/Saigon)
 
+## Stage 91: Ops Hardening & Automated Remote Rollback Pipeline (Zero-Downtime Guarantee)
+
+- **Automated Remote Rollback Engine (`ops/deploy_theme_updates.py`)**:
+  - Implemented `restore_remote_backup(ssh, config, backup_dir)`: Atomically reverts remote server files from `backup-manifest.tsv` in the event of upload interruption, SSH socket drop, or SHA-256 parity mismatch.
+  - Automatically restores present files from their pre-deploy state and purges newly uploaded files if they did not exist previously (`rm -f`).
+  - Wrapped deployment execution loop in `try...except Exception as deploy_err` to guarantee automatic recovery and cache invalidation on failure, eliminating half-deployed states.
+- **POSIX Private Key Security Permissions Enforcement (`ops/deploy_config.py`)**:
+  - Implemented strict POSIX file mode validation on `key_path` in `load_deploy_config()` enforcing `0600` or `0400` permission limits, preventing deployment with insecurely exposed private keys.
+- **Comprehensive Unit Test Expansion (`ops/tests/test_deploy_config.py`)**:
+  - Added `test_restore_remote_backup_generates_correct_commands_and_restores_files`: Asserts complete coverage of all 60 deployed files, correct shell command generation, and manifest existence checks.
+  - Added `test_restore_remote_backup_raises_on_non_zero_exit_status`: Asserts exception propagation with detailed server stderr diagnostics.
+  - Added `test_posix_key_permission_mode_validation`: Tests rejection of overly permissive keys (`0644`) and acceptance of hardened keys (`0600`).
+- **Verification Gates & Quality Assurance**:
+  - Deployment & Security Test Suite: 31/31 tests PASSED (100% OK).
+  - Master Quality Gates: 8/8 Gates PASSED (100% Exit Code 0 via `ops/verify-all-gates.ps1`).
+  - Deploy Script Parity: 60/60 files verified via `ops/deploy_theme_updates.py --dry-run`.
+  - Deploy Security Audit: 0 findings, 0 release blockers.
+
 ## Stage 90: Routing Engine Hardening: O(1) Hash Map Optimization, Flexible Route Count Validation & Fallback Observability
 
 - **O(1) Hash Map Routing Optimization (`inc/guide-routing.php`)**:
