@@ -2,6 +2,25 @@
 
 Date: 2026-10-10 (Asia/Saigon)
 
+## Stage 83: Guide Article Utilities, Trust Panel & Share Bar Ergonomics
+
+- **Field Guide Share & Print Bar (`assets/css/homepage.css`)**:
+  - Refined `.vg-share-bar` layout:
+    - Added responsive flex-wrapping with balanced gap (`12px`) and subtle rounded corners (`border-radius: 12px`).
+    - Standardized typography and button tokens for `.vg-copy-link` and `.vg-print-guide` with tactile micro-press feedback (`transform: scale(0.97)`).
+    - Preserved zero-`<h2>` TOC rule and print media exclusions (`@media print`).
+- **E-E-A-T Guide Trust Aside Refinement (`assets/css/guide-experience.css`)**:
+  - Enhanced `.vg-guide-trust > div` cards:
+    - Added bottom-rounded corners (`border-radius: 0 0 10px 10px`) matching the gold top-border accent.
+    - Added hairline structural borders (`border-inline` and `border-bottom`) using theme lines for cleaner contrast against paper backgrounds.
+    - Polished elevation shadow and hover lifting effects.
+- **Verification Gates & Quality Assurance**:
+  - Full Unit Test Suite: 211 tests verified across all 12 test suites (100% PASS, 0 failures, 0 errors in 50.1s).
+  - Master Quality Gates: 8/8 Gates PASSED (100% Exit Code 0 via `ops/verify-all-gates.ps1`).
+  - Anti-AI Slop Quality Engine: UI Mean HLS: 94.81/100, 0 Tier 1 Clichés.
+  - Theme Asset Pipeline: 46.4 KB compression (-18.03% saved) verified via `ops/build-theme-assets.py`.
+  - Deploy Security Audit: 0 findings, 0 release blockers.
+
 ## Stage 82: Reading Experience Ergonomics, Tactical Dock & Reading Spine Refinement
 
 - **Tactical Dock & Bottom Sheet Drawer (`assets/css/homepage.css`, `assets/js/guide-experience.js`)**:

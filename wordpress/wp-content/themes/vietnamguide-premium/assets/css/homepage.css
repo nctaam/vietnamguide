@@ -2362,75 +2362,62 @@ html:not(.vg-js) body.home .vg-site-header {
 .vg-share-bar {
   display: flex;
   align-items: center;
-  gap: 14px;
-  margin: 28px 0 40px;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin: 32px 0 44px;
   padding: 16px 20px;
-  border: 1px solid var(--vg-line);
-  background: var(--vg-white);
+  border: 1px solid color-mix(in srgb, var(--vg-guide-forest, #012d1d) 12%, transparent);
+  border-radius: 12px;
+  background: color-mix(in srgb, var(--vg-white, #ffffff) 96%, transparent);
+  box-shadow: 0 4px 16px -2px rgba(1, 45, 29, 0.04);
 }
 
 .vg-share-label {
-  font-size: 13px;
+  font-size: 12px;
   font-weight: 800;
-  letter-spacing: 0.06em;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: rgba(16, 20, 23, 0.65);
+  color: var(--vg-guide-muted, #52635b);
 }
 
-.vg-copy-link {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  min-height: 44px;
-  padding: 8px 16px;
-  border: 1px solid var(--vg-line);
-  background: var(--vg-paper);
-  color: var(--vg-ink);
-  font-size: 13px;
-  font-weight: 700;
-  cursor: pointer;
-  transition: background-color 180ms ease, border-color 180ms ease, color 180ms ease, transform 180ms ease;
-}
-
-.vg-copy-link:hover {
-  border-color: var(--vg-gold);
-  background: var(--vg-white);
-  color: var(--vg-gold-text);
-}
-
-.vg-copy-link:active {
-  transform: scale(0.96);
-}
-
-.vg-copy-link.is-copied {
-  border-color: var(--vg-jade);
-  background: var(--vg-jade);
-  color: var(--vg-white);
-}
-
+.vg-copy-link,
 .vg-print-guide {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  min-height: 44px;
+  min-height: 42px;
   padding: 8px 16px;
-  border: 1px solid var(--vg-line);
-  background: var(--vg-paper);
-  color: var(--vg-ink);
+  border: 1px solid color-mix(in srgb, var(--vg-line, #e2e8f0) 90%, transparent);
+  border-radius: 8px;
+  background: var(--vg-paper, #fcfbf7);
+  color: var(--vg-ink, #101417);
   font-size: 13px;
-  font-weight: 700;
+  font-weight: 600;
   cursor: pointer;
-  transition: background-color 180ms ease, border-color 180ms ease, color 180ms ease, transform 180ms ease;
+  transition: background-color 180ms ease, border-color 180ms ease, color 180ms ease, transform 120ms cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.vg-copy-link:hover {
+  border-color: var(--vg-jade, #0e6f5c);
+  background: var(--vg-white, #ffffff);
+  color: var(--vg-jade, #0e6f5c);
 }
 
 .vg-print-guide:hover {
-  border-color: var(--vg-forest);
-  background: var(--vg-white);
-  color: var(--vg-forest);
+  border-color: var(--vg-guide-forest, #012d1d);
+  background: var(--vg-white, #ffffff);
+  color: var(--vg-guide-forest, #012d1d);
 }
 
+.vg-copy-link:active,
 .vg-print-guide:active {
-  transform: scale(0.96);
+  transform: scale(0.97);
+}
+
+.vg-copy-link.is-copied {
+  border-color: var(--vg-jade, #0e6f5c);
+  background: var(--vg-jade, #0e6f5c);
+  color: var(--vg-white, #ffffff);
 }
 
 /* Form and Search Elements */
