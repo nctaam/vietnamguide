@@ -2,6 +2,22 @@
 
 Date: 2026-10-10 (Asia/Saigon)
 
+## Stage 84: Regional Cartography Telemetry & Mountain Waypoint Precision
+
+- **Interactive Cartography Desk (`inc/guide-interactive-map.php`)**:
+  - Sharpened Northern Highlands regional corridor focal nodes to `['Sa Pa', 'Hà Giang', 'Đồng Văn', 'Cao Bằng', 'Ba Bể']`.
+    - Corrected vector map SVG pin label at coordinates (x=125, y=65) to render "Sa Pa" instead of duplicating "Hà Nội" (which is geographically anchored in Red River Delta at x=165, y=95).
+    - Updated distance telemetry from Hanoi to 295–320 km.
+  - Deepened transit telemetry to include GPS coordinates and altitude checkpoints for major mountain passes:
+    - Mã Pí Lèng Pass (GPS 23.2389, 105.4183, 1,500m ASL).
+    - Ô Quy Hồ Pass (GPS 22.3551, 103.7749, 2,000m ASL).
+  - Maintained zero-`<h2>` TOC protection rule and clean PHP syntax.
+- **Verification Gates & Quality Assurance**:
+  - Full Unit Test Suite: 211 tests verified across all 12 test suites (100% PASS, 0 failures, 0 errors in 27.4s).
+  - Master Quality Gates: 8/8 Gates PASSED (100% Exit Code 0 via `ops/verify-all-gates.ps1`).
+  - Deploy Script Parity: 60/60 files verified via `ops/deploy_theme_updates.py --dry-run`.
+  - Deploy Security Audit: 0 findings, 0 release blockers.
+
 ## Stage 83: Guide Article Utilities, Trust Panel & Share Bar Ergonomics
 
 - **Field Guide Share & Print Bar (`assets/css/homepage.css`)**:
