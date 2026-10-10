@@ -109,86 +109,120 @@ function vg_render_photo_dispatch(array $atts): string
         $slug = 'ha-long-dawn';
     }
 
-    $item = $dispatches[$slug];
-    $theme_uri = get_template_directory_uri();
-    $img_src = esc_url($theme_uri . '/' . $item['image_fallback']);
-    $related_url = function_exists('vg_home_url') ? esc_url(vg_home_url(ltrim($item['related_route'], '/'))) : esc_url(home_url($item['related_route']));
+    $active_slug = $slug;
 
     ob_start();
     ?>
-    <section class="vg-photo-dispatch vg-photo-dispatch--<?php echo esc_attr($atts['layout']); ?>" data-vg-dispatch-id="<?php echo esc_attr($item['id']); ?>" aria-label="Visual Dispatch: <?php echo esc_attr($item['title']); ?>">
-        <div class="vg-dispatch-container">
-            <header class="vg-dispatch-header">
-                <div class="vg-dispatch-kicker">
-                    <span class="vg-dispatch-badge">VISUAL DISPATCH</span>
-                    <span class="vg-dispatch-coords" aria-label="GPS Coordinates"><?php echo esc_html($item['coordinates']); ?> &bull; <?php echo esc_html($item['province']); ?></span>
-                </div>
-                <div class="vg-dispatch-title"><?php echo esc_html($item['title']); ?></div>
-                <p class="vg-dispatch-lead"><?php echo esc_html($item['lead']); ?></p>
-            </header>
-
-            <figure class="vg-dispatch-figure">
-                <div class="vg-dispatch-media-frame">
-                    <img src="<?php echo $img_src; ?>"
-                         alt="<?php echo esc_attr($item['alt_text']); ?>"
-                         class="vg-dispatch-img"
-                         loading="lazy"
-                         decoding="async"
-                         data-full-src="<?php echo $img_src; ?>"
-                         data-caption="<?php echo esc_attr($item['title'] . ' &mdash; ' . $item['location']); ?>"
-                         tabindex="0"
-                         role="button"
-                         aria-haspopup="dialog"
-                         aria-label="Enlarge photograph: <?php echo esc_attr($item['title']); ?>" />
-                    <button type="button" class="vg-dispatch-expand-btn" aria-label="Open fullscreen photo inspection">
-                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                            <polyline points="15 3 21 3 21 9"></polyline>
-                            <polyline points="9 21 3 21 3 15"></polyline>
-                            <line x1="21" y1="3" x2="14" y2="10"></line>
-                            <line x1="3" y1="21" x2="10" y2="14"></line>
-                        </svg>
-                        <span>Expand View</span>
-                    </button>
-                </div>
-
-                <figcaption class="vg-dispatch-meta-strip">
-                    <div class="vg-dispatch-exif-grid">
-                        <div class="vg-exif-pill">
-                            <span class="vg-exif-label">FOCAL</span>
-                            <span class="vg-exif-val"><?php echo esc_html($item['exif']['focal_length']); ?></span>
-                        </div>
-                        <div class="vg-exif-pill">
-                            <span class="vg-exif-label">APERTURE</span>
-                            <span class="vg-exif-val"><?php echo esc_html($item['exif']['aperture']); ?></span>
-                        </div>
-                        <div class="vg-exif-pill">
-                            <span class="vg-exif-label">SHUTTER</span>
-                            <span class="vg-exif-val"><?php echo esc_html($item['exif']['shutter']); ?></span>
-                        </div>
-                        <div class="vg-exif-pill">
-                            <span class="vg-exif-label">ISO</span>
-                            <span class="vg-exif-val"><?php echo esc_html($item['exif']['iso']); ?></span>
-                        </div>
-                        <div class="vg-exif-pill">
-                            <span class="vg-exif-label">ELEVATION</span>
-                            <span class="vg-exif-val"><?php echo esc_html($item['exif']['elevation']); ?></span>
-                        </div>
-                        <div class="vg-exif-pill">
-                            <span class="vg-exif-label">LOCAL TIME</span>
-                            <span class="vg-exif-val"><?php echo esc_html($item['exif']['time_of_day']); ?></span>
-                        </div>
-                    </div>
-
-                    <div class="vg-dispatch-field-context">
-                        <p class="vg-dispatch-field-notes"><strong>Field Context:</strong> <?php echo esc_html($item['field_notes']); ?></p>
-                        <div class="vg-dispatch-credits">
-                            <span class="vg-dispatch-attribution">Photo: <?php echo esc_html($item['photographer']); ?> (<?php echo esc_html($item['license']); ?>)</span>
-                            <a href="<?php echo $related_url; ?>" class="vg-dispatch-link"><?php echo esc_html($item['related_label']); ?> &rarr;</a>
-                        </div>
-                    </div>
-                </figcaption>
-            </figure>
+    <section class="vg-photo-dispatch vg-photo-dispatch--<?php echo esc_attr($atts['layout']); ?>" data-vg-photo-dispatch-suite aria-label="Visual Dispatches and Optical Telemetry">
+        <!-- Visual Dispatch Switcher Tabs -->
+        <div class="vg-dispatch-pill-selector" role="tablist" aria-label="<?php echo esc_attr('Visual dispatch locations'); ?>">
+            <?php foreach ($dispatches as $d_slug => $d_item):
+                $is_tab_active = ($d_slug === $active_slug);
+            ?>
+                <button
+                    type="button"
+                    class="vg-dispatch-pill-btn <?php echo $is_tab_active ? 'is-active' : ''; ?>"
+                    role="tab"
+                    aria-selected="<?php echo $is_tab_active ? 'true' : 'false'; ?>"
+                    aria-controls="vg-dispatch-panel-<?php echo esc_attr($d_slug); ?>"
+                    id="vg-dispatch-tab-<?php echo esc_attr($d_slug); ?>"
+                    data-dispatch-target="<?php echo esc_attr($d_slug); ?>"
+                >
+                    <span class="vg-pill-bullet" aria-hidden="true"></span>
+                    <?php echo esc_html($d_item['location']); ?>
+                </button>
+            <?php endforeach; ?>
         </div>
+
+        <?php foreach ($dispatches as $d_slug => $item):
+            $is_active = ($d_slug === $active_slug);
+            $theme_uri = get_template_directory_uri();
+            $img_src = esc_url($theme_uri . '/' . $item['image_fallback']);
+            $related_url = function_exists('vg_home_url') ? esc_url(vg_home_url(ltrim($item['related_route'], '/'))) : esc_url(home_url($item['related_route']));
+        ?>
+        <article
+            class="vg-dispatch-card <?php echo $is_active ? 'is-active' : ''; ?>"
+            id="vg-dispatch-panel-<?php echo esc_attr($d_slug); ?>"
+            role="tabpanel"
+            aria-labelledby="vg-dispatch-tab-<?php echo esc_attr($d_slug); ?>"
+            data-dispatch-panel="<?php echo esc_attr($d_slug); ?>"
+            data-vg-dispatch-id="<?php echo esc_attr($item['id']); ?>"
+            <?php echo $is_active ? '' : 'hidden'; ?>
+        >
+            <div class="vg-dispatch-container">
+                <header class="vg-dispatch-header">
+                    <div class="vg-dispatch-kicker">
+                        <span class="vg-dispatch-badge">VISUAL DISPATCH</span>
+                        <span class="vg-dispatch-coords" aria-label="GPS Coordinates"><?php echo esc_html($item['coordinates']); ?> &bull; <?php echo esc_html($item['province']); ?></span>
+                    </div>
+                    <div class="vg-dispatch-title"><?php echo esc_html($item['title']); ?></div>
+                    <p class="vg-dispatch-lead"><?php echo esc_html($item['lead']); ?></p>
+                </header>
+
+                <figure class="vg-dispatch-figure">
+                    <div class="vg-dispatch-media-frame">
+                        <img src="<?php echo $img_src; ?>"
+                             alt="<?php echo esc_attr($item['alt_text']); ?>"
+                             class="vg-dispatch-img"
+                             loading="lazy"
+                             decoding="async"
+                             data-full-src="<?php echo $img_src; ?>"
+                             data-caption="<?php echo esc_attr($item['title'] . ' &mdash; ' . $item['location']); ?>"
+                             tabindex="0"
+                             role="button"
+                             aria-haspopup="dialog"
+                             aria-label="Enlarge photograph: <?php echo esc_attr($item['title']); ?>" />
+                        <button type="button" class="vg-dispatch-expand-btn" aria-label="Open fullscreen photo inspection">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                <polyline points="15 3 21 3 21 9"></polyline>
+                                <polyline points="9 21 3 21 3 15"></polyline>
+                                <line x1="21" y1="3" x2="14" y2="10"></line>
+                                <line x1="3" y1="21" x2="10" y2="14"></line>
+                            </svg>
+                            <span>Expand View</span>
+                        </button>
+                    </div>
+
+                    <figcaption class="vg-dispatch-meta-strip">
+                        <div class="vg-dispatch-exif-grid">
+                            <div class="vg-exif-pill">
+                                <span class="vg-exif-label">FOCAL</span>
+                                <span class="vg-exif-val"><?php echo esc_html($item['exif']['focal_length']); ?></span>
+                            </div>
+                            <div class="vg-exif-pill">
+                                <span class="vg-exif-label">APERTURE</span>
+                                <span class="vg-exif-val"><?php echo esc_html($item['exif']['aperture']); ?></span>
+                            </div>
+                            <div class="vg-exif-pill">
+                                <span class="vg-exif-label">SHUTTER</span>
+                                <span class="vg-exif-val"><?php echo esc_html($item['exif']['shutter']); ?></span>
+                            </div>
+                            <div class="vg-exif-pill">
+                                <span class="vg-exif-label">ISO</span>
+                                <span class="vg-exif-val"><?php echo esc_html($item['exif']['iso']); ?></span>
+                            </div>
+                            <div class="vg-exif-pill">
+                                <span class="vg-exif-label">ELEVATION</span>
+                                <span class="vg-exif-val"><?php echo esc_html($item['exif']['elevation']); ?></span>
+                            </div>
+                            <div class="vg-exif-pill">
+                                <span class="vg-exif-label">LOCAL TIME</span>
+                                <span class="vg-exif-val"><?php echo esc_html($item['exif']['time_of_day']); ?></span>
+                            </div>
+                        </div>
+
+                        <div class="vg-dispatch-field-context">
+                            <p class="vg-dispatch-field-notes"><strong>Field Context:</strong> <?php echo esc_html($item['field_notes']); ?></p>
+                            <div class="vg-dispatch-credits">
+                                <span class="vg-dispatch-attribution">Photo: <?php echo esc_html($item['photographer']); ?> (<?php echo esc_html($item['license']); ?>)</span>
+                                <a href="<?php echo $related_url; ?>" class="vg-dispatch-link"><?php echo esc_html($item['related_label']); ?> &rarr;</a>
+                            </div>
+                        </div>
+                    </figcaption>
+                </figure>
+            </div>
+        </article>
+        <?php endforeach; ?>
     </section>
     <?php
     vg_enqueue_photo_dispatch_assets_once();
@@ -256,6 +290,37 @@ function vg_render_photo_dispatch_lightbox_template(): void
                     prevFocus.focus();
                 }
             }
+
+            // Dispatch tab switcher logic
+            var suiteContainers = document.querySelectorAll('[data-vg-photo-dispatch-suite]');
+            suiteContainers.forEach(function(suite) {
+                var tabBtns = suite.querySelectorAll('[data-dispatch-target]');
+                var panels = suite.querySelectorAll('[data-dispatch-panel]');
+
+                function switchDispatch(targetId) {
+                    tabBtns.forEach(function(btn) {
+                        var match = btn.getAttribute('data-dispatch-target') === targetId;
+                        btn.classList.toggle('is-active', match);
+                        btn.setAttribute('aria-selected', match ? 'true' : 'false');
+                    });
+                    panels.forEach(function(panel) {
+                        var match = panel.getAttribute('data-dispatch-panel') === targetId;
+                        panel.classList.toggle('is-active', match);
+                        if (match) {
+                            panel.removeAttribute('hidden');
+                        } else {
+                            panel.setAttribute('hidden', '');
+                        }
+                    });
+                }
+
+                tabBtns.forEach(function(btn) {
+                    btn.addEventListener('click', function() {
+                        var targetId = btn.getAttribute('data-dispatch-target');
+                        if (targetId) switchDispatch(targetId);
+                    });
+                });
+            });
 
             document.querySelectorAll('.vg-photo-dispatch').forEach(function(dispatch) {
                 var img = dispatch.querySelector('.vg-dispatch-img');

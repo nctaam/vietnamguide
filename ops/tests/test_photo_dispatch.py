@@ -152,6 +152,17 @@ class TestPhotoDispatchComponent(unittest.TestCase):
             self.assertRegex(coords, r"\d+.*N\s+\d+.*E", f"Invalid coordinates format: {coords}")
         self.assertIn("'ha-long-dawn'", self.content)
         self.assertIn("'hoi-an-dusk'", self.content)
+        self.assertIn("'sapa-terraces'", self.content)
+
+    def test_dispatch_tab_switcher_markup_and_accessibility(self):
+        """Dispatches suite must emit role='tablist', role='tab', and role='tabpanel' with data attributes."""
+        self.assertIn('class="vg-dispatch-pill-selector"', self.content)
+        self.assertIn('role="tablist"', self.content)
+        self.assertIn('role="tab"', self.content)
+        self.assertIn('role="tabpanel"', self.content)
+        self.assertIn('data-dispatch-target=', self.content)
+        self.assertIn('data-dispatch-panel=', self.content)
+        self.assertIn('data-vg-photo-dispatch-suite', self.content)
 
 
 if __name__ == '__main__':

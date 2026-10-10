@@ -9407,6 +9407,60 @@ nav[aria-label="Breadcrumbs"] a:hover {
   }
 }
 
+/* Visual Dispatch Switcher Tabs */
+.vg-dispatch-pill-selector {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 24px;
+  width: 100%;
+  justify-content: center;
+}
+
+.vg-dispatch-pill-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  background: #FFFFFF;
+  border: 1px solid var(--vg-border-hairline, rgba(15, 37, 55, 0.08));
+  border-radius: 9999px;
+  font-family: var(--vg-body, system-ui, sans-serif);
+  font-size: 12.5px;
+  font-weight: 500;
+  color: #4A5568;
+  cursor: pointer;
+  transition: all 0.18s ease;
+}
+
+.vg-dispatch-pill-btn:hover {
+  background: #F4EFEB;
+  border-color: #D3CBBE;
+  color: var(--vg-navy, #0F2537);
+}
+
+.vg-dispatch-pill-btn.is-active {
+  background: var(--vg-navy, #0F2537);
+  border-color: var(--vg-navy, #0F2537);
+  color: #FFFFFF;
+}
+
+.vg-dispatch-pill-btn .vg-pill-bullet {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #CBD5E1;
+  transition: background-color 0.18s ease;
+}
+
+.vg-dispatch-pill-btn.is-active .vg-pill-bullet {
+  background: var(--vg-gold-saffron, #C99446);
+}
+
+.vg-dispatch-card[hidden] {
+  display: none !important;
+}
+
 
 
 
