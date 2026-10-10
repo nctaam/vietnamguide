@@ -9601,3 +9601,22 @@ nav[aria-label="Breadcrumbs"] a:hover {
     font-size: 13px;
   }
 }
+
+/* Seamless shortcode embedding inside Field Desk */
+.vg-field-desk-panel .vg-interactive-map-desk {
+  margin-block: 0;
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  padding: 0;
+}
+
+.vg-field-desk-panel .vg-interactive-map-header {
+  display: none;
+}
+
+.vg-field-desk-panel .vg-photo-dispatch {
+  margin: 0 auto;
+  padding: 0;
+}
+
