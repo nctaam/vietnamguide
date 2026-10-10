@@ -533,15 +533,10 @@ class TestInteractiveShortcodes(unittest.TestCase):
         self.assertIn('[vg_interactive_map]', fp_content, "front-page.php must embed [vg_interactive_map]")
         self.assertIn('[vg_photo_dispatch', fp_content, "front-page.php must embed [vg_photo_dispatch]")
 
-        map_section = re.search(r'<section[^>]*vg-cartography-showcase[^>]*>(.*?)</section>', fp_content, re.DOTALL)
-        self.assertIsNotNone(map_section, "Cartography section not found in front-page.php")
-        self.assertIn('<h3', map_section.group(1), "Cartography section heading must use <h3>")
-        self.assertNotIn('<h2', map_section.group(1), "Cartography section heading must NOT use <h2>")
-
-        photo_section = re.search(r'<section[^>]*vg-photo-dispatch-showcase[^>]*>(.*?)</section>', fp_content, re.DOTALL)
-        self.assertIsNotNone(photo_section, "Photo dispatch section not found in front-page.php")
-        self.assertIn('<h3', photo_section.group(1), "Photo dispatch section heading must use <h3>")
-        self.assertNotIn('<h2', photo_section.group(1), "Photo dispatch section heading must NOT use <h2>")
+        field_desk_section = re.search(r'<section[^>]*vg-field-desk-showcase[^>]*>(.*?)</section>', fp_content, re.DOTALL)
+        self.assertIsNotNone(field_desk_section, "Field Desk section not found in front-page.php")
+        self.assertIn('<h3', field_desk_section.group(1), "Field Desk section heading must use <h3>")
+        self.assertNotIn('<h2', field_desk_section.group(1), "Field Desk section heading must NOT use <h2>")
 
 
 if __name__ == '__main__':

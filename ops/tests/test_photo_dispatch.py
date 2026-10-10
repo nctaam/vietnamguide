@@ -112,6 +112,8 @@ class TestPhotoDispatchComponent(unittest.TestCase):
         function esc_url($u) {{ return htmlspecialchars($u, ENT_QUOTES, 'UTF-8'); }}
         function esc_attr($a) {{ return htmlspecialchars($a, ENT_QUOTES, 'UTF-8'); }}
         function esc_html($h) {{ return htmlspecialchars($h, ENT_QUOTES, 'UTF-8'); }}
+        function esc_html__($h, $d = '') {{ return htmlspecialchars($h, ENT_QUOTES, 'UTF-8'); }}
+        function __($h, $d = '') {{ return $h; }}
         function home_url($p = '') {{ return 'https://vietnamguide.net' . $p; }}
         require_once '{PHOTO_DISPATCH_FILE.replace(chr(92), "/")}';
         foreach (['standard', 'fullwidth', 'compact'] as $layout) {{
@@ -122,7 +124,7 @@ class TestPhotoDispatchComponent(unittest.TestCase):
             }}
         }}
         """
-        res = subprocess.run(['php', '-r', php_code], capture_output=True, text=True)
+        res = subprocess.run(['php', '-r', php_code], capture_output=True, text=True, encoding='utf-8', errors='replace')
         self.assertEqual(
             res.returncode,
             0,

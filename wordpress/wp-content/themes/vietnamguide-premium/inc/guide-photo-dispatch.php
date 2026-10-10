@@ -184,33 +184,6 @@ function vg_render_photo_dispatch(array $atts): string
                     </div>
 
                     <figcaption class="vg-dispatch-meta-strip">
-                        <div class="vg-dispatch-exif-grid">
-                            <div class="vg-exif-pill">
-                                <span class="vg-exif-label">FOCAL</span>
-                                <span class="vg-exif-val"><?php echo esc_html($item['exif']['focal_length']); ?></span>
-                            </div>
-                            <div class="vg-exif-pill">
-                                <span class="vg-exif-label">APERTURE</span>
-                                <span class="vg-exif-val"><?php echo esc_html($item['exif']['aperture']); ?></span>
-                            </div>
-                            <div class="vg-exif-pill">
-                                <span class="vg-exif-label">SHUTTER</span>
-                                <span class="vg-exif-val"><?php echo esc_html($item['exif']['shutter']); ?></span>
-                            </div>
-                            <div class="vg-exif-pill">
-                                <span class="vg-exif-label">ISO</span>
-                                <span class="vg-exif-val"><?php echo esc_html($item['exif']['iso']); ?></span>
-                            </div>
-                            <div class="vg-exif-pill">
-                                <span class="vg-exif-label">ELEVATION</span>
-                                <span class="vg-exif-val"><?php echo esc_html($item['exif']['elevation']); ?></span>
-                            </div>
-                            <div class="vg-exif-pill">
-                                <span class="vg-exif-label">LOCAL TIME</span>
-                                <span class="vg-exif-val"><?php echo esc_html($item['exif']['time_of_day']); ?></span>
-                            </div>
-                        </div>
-
                         <div class="vg-dispatch-field-context">
                             <p class="vg-dispatch-field-notes"><strong>Field Context:</strong> <?php echo esc_html($item['field_notes']); ?></p>
                             <div class="vg-dispatch-credits">
@@ -218,6 +191,40 @@ function vg_render_photo_dispatch(array $atts): string
                                 <a href="<?php echo $related_url; ?>" class="vg-dispatch-link"><?php echo esc_html($item['related_label']); ?> &rarr;</a>
                             </div>
                         </div>
+
+                        <details class="vg-dispatch-telemetry-toggle">
+                            <summary class="vg-dispatch-telemetry-summary">
+                                <span class="vg-telemetry-toggle-icon" aria-hidden="true">&#9881;</span>
+                                <span><?php echo esc_html__('Technical Optical Telemetry (EXIF & Altitude)', 'vietnamguide-premium'); ?></span>
+                                <span class="vg-telemetry-toggle-hint" aria-hidden="true">&dtrif;</span>
+                            </summary>
+                            <div class="vg-dispatch-exif-grid">
+                                <div class="vg-exif-pill">
+                                    <span class="vg-exif-label">FOCAL</span>
+                                    <span class="vg-exif-val"><?php echo esc_html($item['exif']['focal_length']); ?></span>
+                                </div>
+                                <div class="vg-exif-pill">
+                                    <span class="vg-exif-label">APERTURE</span>
+                                    <span class="vg-exif-val"><?php echo esc_html($item['exif']['aperture']); ?></span>
+                                </div>
+                                <div class="vg-exif-pill">
+                                    <span class="vg-exif-label">SHUTTER</span>
+                                    <span class="vg-exif-val"><?php echo esc_html($item['exif']['shutter']); ?></span>
+                                </div>
+                                <div class="vg-exif-pill">
+                                    <span class="vg-exif-label">ISO</span>
+                                    <span class="vg-exif-val"><?php echo esc_html($item['exif']['iso']); ?></span>
+                                </div>
+                                <div class="vg-exif-pill">
+                                    <span class="vg-exif-label">ELEVATION</span>
+                                    <span class="vg-exif-val"><?php echo esc_html($item['exif']['elevation']); ?></span>
+                                </div>
+                                <div class="vg-exif-pill">
+                                    <span class="vg-exif-label">LOCAL TIME</span>
+                                    <span class="vg-exif-val"><?php echo esc_html($item['exif']['time_of_day']); ?></span>
+                                </div>
+                            </div>
+                        </details>
                     </figcaption>
                 </figure>
             </div>

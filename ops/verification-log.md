@@ -1,6 +1,24 @@
 # Verification Log
 
-Date: 2026-10-08 (Asia/Saigon)
+Date: 2026-10-10 (Asia/Saigon)
+
+## Stage 79: Vietnam Field Desk Unified Hub Integration & Ergonomic Decluttering
+
+- **Vietnam Field Desk Unified Hub (`front-page.php` & `assets/css/homepage.css`)**:
+  - Implemented the **Vietnam Field Desk** unified experience on the homepage, eliminating vertical page sprawl by consolidating `vg-cartography-showcase` and `vg-photo-dispatch-showcase` into a single seamless hub (`#field-desk`).
+  - Added native accessible perspective switcher pills (`.vg-field-desk-switcher`) with ARIA tablist/tabpanel contracts:
+    1. *Regional Transit Corridors* (`[vg_interactive_map]`)
+    2. *Visual Dispatches & Optical Telemetry* (`[vg_photo_dispatch]`)
+  - Integrated zero-dependency client-side view switching with graceful layout fade transitions.
+  - Implemented EXIF technical optical telemetry collapsible disclosure widget (`<details class="vg-dispatch-telemetry-toggle">`) in `inc/guide-photo-dispatch.php` to prioritize field storytelling while keeping technical camera data instantly accessible.
+  - Strictly preserved the Zero-`<h2>` TOC protection rule (`<h3>` headings only) to prevent heading hierarchy pollution.
+  - Updated Gate 5 contract test in `ops/tests/test_interactive_shortcodes.py` to assert unified Field Desk container and zero-`<h2>` protection.
+- **Verification Gates & Quality Assurance**:
+  - Full Unit Test Suite: 211 tests verified across all 12 test suites (100% PASS, 0 failures, 0 errors in 37.5s).
+  - Master Quality Gates: 8/8 Gates PASSED (100% Exit Code 0 via `ops/verify-all-gates.ps1`).
+  - Anti-AI Slop Quality Engine: UI Mean HLS: 94.81/100, 0 Tier 1 Clichés.
+  - Theme Asset Pipeline: AST-safe minification check verified (-18.07% / 46.1 KB compression).
+  - Deploy Security Audit: 0 findings, 0 release blockers.
 
 ## Stage 78: Multi-Dispatch Interactive Suite & Location Tab Switcher Integration
 

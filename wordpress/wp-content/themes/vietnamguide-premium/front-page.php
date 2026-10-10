@@ -177,14 +177,102 @@ $data = vg_homepage_data();
         </div>
     </section>
 
-    <section class="vg-section vg-cartography-showcase" id="cartography-desk" aria-labelledby="vg-cartography-heading">
+    <section class="vg-section vg-field-desk-showcase" id="field-desk" aria-labelledby="vg-field-desk-heading">
         <div class="vg-shell">
             <div class="vg-section-heading" data-vg-reveal>
-                <p class="vg-kicker"><?php esc_html_e('Spatial Corridors', 'vietnamguide-premium'); ?></p>
-                <h3 id="vg-cartography-heading" class="heading"><?php esc_html_e('Regional Transit Corridors & Cartography', 'vietnamguide-premium'); ?></h3>
-                <p class="vg-toolkits-showcase__lead"><?php esc_html_e('Explore distance telemetry, transit modalities, and seasonal timing across Vietnam\'s key travel corridors.', 'vietnamguide-premium'); ?></p>
+                <p class="vg-kicker"><?php esc_html_e('Spatial & Visual Intelligence', 'vietnamguide-premium'); ?></p>
+                <h3 id="vg-field-desk-heading" class="heading"><?php esc_html_e('Vietnam Field Desk: Corridors & Visual Dispatches', 'vietnamguide-premium'); ?></h3>
+                <p class="vg-toolkits-showcase__lead"><?php esc_html_e('Explore distance telemetry, transit modalities, and field-verified optical documentation across Vietnam\'s primary travel corridors.', 'vietnamguide-premium'); ?></p>
+
+                <!-- Field Desk View Switcher -->
+                <div class="vg-field-desk-switcher" role="tablist" aria-label="<?php echo esc_attr('Field desk perspective switcher'); ?>">
+                    <button
+                        type="button"
+                        class="vg-field-desk-switch-btn is-active"
+                        role="tab"
+                        aria-selected="true"
+                        aria-controls="vg-field-view-cartography"
+                        id="vg-field-tab-cartography"
+                        data-vg-field-switch="cartography"
+                    >
+                        <span class="vg-pill-bullet" aria-hidden="true"></span>
+                        <span><?php esc_html_e('Regional Transit Corridors', 'vietnamguide-premium'); ?></span>
+                    </button>
+                    <button
+                        type="button"
+                        class="vg-field-desk-switch-btn"
+                        role="tab"
+                        aria-selected="false"
+                        aria-controls="vg-field-view-dispatches"
+                        id="vg-field-tab-dispatches"
+                        data-vg-field-switch="dispatches"
+                    >
+                        <span class="vg-pill-bullet" aria-hidden="true"></span>
+                        <span><?php esc_html_e('Visual Dispatches (EXIF & Altitude)', 'vietnamguide-premium'); ?></span>
+                    </button>
+                </div>
             </div>
-            <?php echo do_shortcode('[vg_interactive_map]'); ?>
+
+            <!-- Panel 1: Regional Cartography & Transit Corridors -->
+            <div
+                class="vg-field-desk-panel is-active"
+                id="vg-field-view-cartography"
+                role="tabpanel"
+                aria-labelledby="vg-field-tab-cartography"
+                data-vg-field-panel="cartography"
+            >
+                <?php echo do_shortcode('[vg_interactive_map]'); ?>
+            </div>
+
+            <!-- Panel 2: Visual Dispatches & Optical Telemetry -->
+            <div
+                class="vg-field-desk-panel"
+                id="vg-field-view-dispatches"
+                role="tabpanel"
+                aria-labelledby="vg-field-tab-dispatches"
+                data-vg-field-panel="dispatches"
+                hidden
+            >
+                <?php echo do_shortcode('[vg_photo_dispatch layout="standard"]'); ?>
+            </div>
+            <script>
+            (function() {
+                'use strict';
+                function initFieldDesk() {
+                    var showcase = document.getElementById('field-desk');
+                    if (!showcase) return;
+                    var switchBtns = showcase.querySelectorAll('[data-vg-field-switch]');
+                    var panels = showcase.querySelectorAll('[data-vg-field-panel]');
+                    function switchView(target) {
+                        Array.prototype.forEach.call(switchBtns, function(btn) {
+                            var isActive = btn.getAttribute('data-vg-field-switch') === target;
+                            btn.classList.toggle('is-active', isActive);
+                            btn.setAttribute('aria-selected', isActive ? 'true' : 'false');
+                        });
+                        Array.prototype.forEach.call(panels, function(panel) {
+                            var isActive = panel.getAttribute('data-vg-field-panel') === target;
+                            panel.classList.toggle('is-active', isActive);
+                            if (isActive) {
+                                panel.removeAttribute('hidden');
+                            } else {
+                                panel.setAttribute('hidden', '');
+                            }
+                        });
+                    }
+                    Array.prototype.forEach.call(switchBtns, function(btn) {
+                        btn.addEventListener('click', function() {
+                            var target = this.getAttribute('data-vg-field-switch');
+                            if (target) switchView(target);
+                        });
+                    });
+                }
+                if (document.readyState === 'loading') {
+                    document.addEventListener('DOMContentLoaded', initFieldDesk);
+                } else {
+                    initFieldDesk();
+                }
+            })();
+            </script>
         </div>
     </section>
 
@@ -231,17 +319,6 @@ $data = vg_homepage_data();
                     </li>
                 <?php endforeach; ?>
             </ol>
-        </div>
-    </section>
-
-    <section class="vg-section vg-photo-dispatch-showcase" id="visual-dispatches" aria-labelledby="vg-photo-dispatch-heading">
-        <div class="vg-shell">
-            <div class="vg-section-heading" data-vg-reveal>
-                <p class="vg-kicker"><?php esc_html_e('Field Photography', 'vietnamguide-premium'); ?></p>
-                <h3 id="vg-photo-dispatch-heading" class="heading"><?php esc_html_e('Visual Dispatches & Optical Telemetry', 'vietnamguide-premium'); ?></h3>
-                <p class="vg-toolkits-showcase__lead"><?php esc_html_e('Field-verified documentation with exact optical telemetry, GPS coordinates, elevation, and lighting notes.', 'vietnamguide-premium'); ?></p>
-            </div>
-            <?php echo do_shortcode('[vg_photo_dispatch layout="standard"]'); ?>
         </div>
     </section>
 
