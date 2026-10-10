@@ -8484,6 +8484,9 @@ body.vg-has-guide-shell .vg-back-to-top {
 }
 
 @media (max-width: 640px) {
+  .vg-reading-progress {
+    display: none !important;
+  }
   .vg-floating-dock {
     bottom: max(16px, env(safe-area-inset-bottom, 16px));
     right: 16px;
@@ -8513,8 +8516,31 @@ body.vg-has-guide-shell .vg-back-to-top {
     border-left: none;
     border-right: none;
     box-shadow: 0 -12px 32px rgba(1, 45, 29, 0.18);
-    padding: 20px 20px max(24px, env(safe-area-inset-bottom, 24px));
+    padding: 18px 18px max(22px, env(safe-area-inset-bottom, 22px));
     animation: vgDrawerSlideUp 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .vg-dock-popover-header {
+    margin-bottom: 10px;
+    padding-bottom: 8px;
+  }
+  .vg-dock-tools-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+  }
+  .vg-dock-tool-link {
+    flex-direction: row;
+    align-items: center;
+    text-align: left;
+    gap: 10px;
+    padding: 10px 12px;
+  }
+  .vg-dock-tool-icon {
+    font-size: 1.15rem;
+    flex-shrink: 0;
+  }
+  .vg-dock-tool-name {
+    font-size: 0.8rem;
+    line-height: 1.25;
   }
 }
 

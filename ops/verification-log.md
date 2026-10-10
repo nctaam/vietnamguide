@@ -2,6 +2,24 @@
 
 Date: 2026-10-10 (Asia/Saigon)
 
+## Stage 89: Mobile Reading Progress Deduplication, Tactical Dock Tools Drawer Compaction & Homepage Checklist CTA Optimization
+
+- **Mobile Reading Progress Deduplication (`assets/css/homepage.css`)**:
+  - Hidden top viewport fixed bar `.vg-reading-progress` on mobile screens (`<= 640px`) using `display: none !important`.
+  - Retained the ergonomic percentage badge `#vg-dock-pct` in Tactical Dock, eliminating double visual progress bars on mobile viewports.
+- **Tactical Dock Tools Drawer Compact Layout (`assets/css/homepage.css`)**:
+  - Refactored `.vg-dock-popover` padding and converted `.vg-dock-tool-link` on mobile (`<= 640px`) into clean 2-column horizontal cards (`flex-direction: row`, `10px 12px` padding, `1.15rem` icon, `0.8rem` typography).
+  - Maintained responsive breathing room without pushing popovers offscreen on compact displays.
+- **Homepage Bottom CTA Action Refinement (`front-page.php`)**:
+  - Replaced ambiguous generic newsletter text with a direct, high-intent action linking straight to `plan/vietnam-first-trip-planning-checklist` (`Open 24-Item Checklist`).
+  - Added explicit event tracking attribute `data-event="checklist_cta_click"`.
+- **Verification Gates & Quality Assurance**:
+  - PHP Syntax: `front-page.php` linted clean (0 syntax errors).
+  - Theme Asset Pipeline: Verified compression and AST safety via `ops/build-theme-assets.py`.
+  - Master Quality Gates: 8/8 Gates PASSED (100% Exit Code 0 via `ops/verify-all-gates.ps1`).
+  - Deploy Script Parity: 60/60 files verified via `ops/deploy_theme_updates.py --dry-run`.
+  - Deploy Security Audit: 0 findings, 0 release blockers.
+
 ## Stage 88: Search Zero-Result Action Streamlining & Redundancy Elimination
 
 - **Search Empty State Navigation Streamlining (`search.php`)**:

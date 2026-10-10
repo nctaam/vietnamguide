@@ -385,8 +385,8 @@ $data = vg_homepage_data();
     <section class="vg-section vg-newsletter" aria-labelledby="vg-newsletter-title">
         <div class="vg-shell vg-newsletter__inner" data-vg-reveal>
             <div><p class="vg-kicker">First-trip checklist</p><h2 id="vg-newsletter-title">Plan the trip once. Travel it with confidence.</h2></div>
-            <p>Get a concise Vietnam planning checklist covering route, entry, transport, money, connectivity, and common mistakes.</p>
-            <a class="vg-button vg-button--light" href="<?php echo esc_url(vg_home_url('newsletter')); ?>" data-vg-event="newsletter_signup"><?php esc_html_e('Get the Checklist', 'vietnamguide-premium'); ?></a>
+            <p>Interactive 24-item travel preparation checklist covering entry documents, electronics, clothing, regional money, and transit rules.</p>
+            <a class="vg-button vg-button--light" href="<?php echo esc_url(vg_home_url('plan/vietnam-first-trip-planning-checklist')); ?>" data-vg-event="checklist_cta_click"><?php esc_html_e('Open 24-Item Checklist', 'vietnamguide-premium'); ?></a>
         </div>
     </section>
 </main>
