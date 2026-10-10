@@ -2,6 +2,23 @@
 
 Date: 2026-10-10 (Asia/Saigon)
 
+## Stage 86: Meta Deduplication, Mobile Jump Bar Declutter & Hero CTA Differentiation
+
+- **Guide Meta & Trust Deduplication (`template-parts/guide-page.php`)**:
+  - Removed duplicate `Reviewed [Date]` and `[X] sources` from `.vg-guide-meta`.
+  - Streamlined `.vg-guide-meta` to display only primary reading ergonomics (*Type* and *Reading Time*), leaving E-E-A-T auditing and source credentials exclusively inside the dedicated `.vg-guide-trust` panel.
+- **Mobile Reading Viewport Decluttering (`assets/css/guide-experience.css`)**:
+  - Converted `.vg-guide-jump` from sticky (`position: sticky; top: var(--vg-header-height)`) to relative in-flow placement (`position: relative; margin-top: 16px;`).
+  - Eliminated the double-sticky menu collision on smartphones (<960px) where both the horizontal jump bar and Tactical Dock (`#vg-dock-toc`) followed the user, reclaiming 50px of vertical reading space.
+- **Hero CTA Action Differentiation (`front-page.php`)**:
+  - Updated primary Hero action button text to `Explore Planning Guide` (`/plan`), eliminating exact verbatim duplication with the sticky site header's `Plan Your Trip` button.
+- **Verification Gates & Quality Assurance**:
+  - Full Unit Test Suite: 211 tests verified across all 12 test suites (100% PASS, 0 failures, 0 errors).
+  - Master Quality Gates: 8/8 Gates PASSED (100% Exit Code 0 via `ops/verify-all-gates.ps1`).
+  - Deploy Script Parity: 60/60 files verified via `ops/deploy_theme_updates.py --dry-run`.
+  - Theme Asset Pipeline: 46.5 KB compression (-18.03% saved) verified via `ops/build-theme-assets.py`.
+  - Deploy Security Audit: 0 findings, 0 release blockers.
+
 ## Stage 85: Decluttering Back-to-Top Redundancy, Mobile E-E-A-T Strip & Homepage Pacing
 
 - **Back-to-Top Redundancy Elimination (`assets/css/homepage.css`, `inc/guide-routing.php`)**:

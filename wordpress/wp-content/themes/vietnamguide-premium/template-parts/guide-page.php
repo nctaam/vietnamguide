@@ -32,12 +32,6 @@ $relatedRoutes = is_array($args['related_routes'] ?? null) ? $args['related_rout
         <?php if ($readingTime > 0) : ?>
             <span role="listitem"><?php echo esc_html(sprintf(_n('%d minute read', '%d minutes read', $readingTime, 'vietnamguide-premium'), $readingTime)); ?></span>
         <?php endif; ?>
-        <?php if ($reviewed !== '') : ?>
-            <span role="listitem"><?php echo esc_html(sprintf(__('Reviewed %s', 'vietnamguide-premium'), $reviewed)); ?></span>
-        <?php endif; ?>
-        <?php if ($sourceCount > 0) : ?>
-            <span role="listitem"><?php echo esc_html(sprintf(_n('%d source', '%d sources', $sourceCount, 'vietnamguide-premium'), $sourceCount)); ?></span>
-        <?php endif; ?>
     </div>
 
     <?php if (count($headings) >= 2) : ?>

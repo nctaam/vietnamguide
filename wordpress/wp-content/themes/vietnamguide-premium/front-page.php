@@ -82,7 +82,7 @@ $data = vg_homepage_data();
             </div>
 
             <div class="vg-actions">
-                <a class="vg-button" href="<?php echo esc_url(vg_home_url('plan')); ?>" data-vg-event="hero_start_planning"><?php esc_html_e('Plan Your Trip', 'vietnamguide-premium'); ?></a>
+                <a class="vg-button" href="<?php echo esc_url(vg_home_url('plan')); ?>" data-vg-event="hero_start_planning"><?php esc_html_e('Explore Planning Guide', 'vietnamguide-premium'); ?></a>
                 <a class="vg-button vg-button--ghost" href="<?php echo esc_url(vg_home_url('itineraries')); ?>" data-vg-event="hero_see_itineraries"><?php esc_html_e('Browse Itineraries', 'vietnamguide-premium'); ?></a>
             </div>
         </div>
