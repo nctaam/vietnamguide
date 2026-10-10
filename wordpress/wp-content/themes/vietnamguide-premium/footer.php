@@ -10,7 +10,8 @@ $footer_data = vg_homepage_data();
             <a class="vg-wordmark" href="<?php echo esc_url(home_url('/')); ?>">VietnamGuide.net</a>
             <p><?php esc_html_e('Independent travel intelligence for Vietnam.', 'vietnamguide-premium'); ?></p>
         </div>
-        <nav aria-label="<?php esc_attr_e('Footer navigation', 'vietnamguide-premium'); ?>">
+        <nav class="vg-site-footer__col" aria-label="<?php esc_attr_e('Footer navigation', 'vietnamguide-premium'); ?>">
+            <span class="vg-footer-heading"><?php esc_html_e('Quick Access', 'vietnamguide-premium'); ?></span>
             <?php
             wp_nav_menu([
                 'theme_location' => 'footer',
@@ -30,7 +31,8 @@ $footer_data = vg_homepage_data();
             ]);
             ?>
         </nav>
-        <nav aria-label="<?php esc_attr_e('Editorial standards and legal', 'vietnamguide-premium'); ?>">
+        <nav class="vg-site-footer__col" aria-label="<?php esc_attr_e('Editorial standards and legal', 'vietnamguide-premium'); ?>">
+            <span class="vg-footer-heading"><?php esc_html_e('Standards & Legal', 'vietnamguide-premium'); ?></span>
             <ul class="vg-footer-links vg-footer-links--legal">
                 <li><a href="<?php echo esc_url(vg_home_url('about')); ?>"><?php esc_html_e('About', 'vietnamguide-premium'); ?></a></li>
                 <li><a href="<?php echo esc_url(vg_home_url('contact')); ?>"><?php esc_html_e('Contact', 'vietnamguide-premium'); ?></a></li>

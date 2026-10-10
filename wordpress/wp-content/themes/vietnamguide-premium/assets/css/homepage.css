@@ -1318,6 +1318,24 @@ html:not(.vg-js) body.home .vg-site-header {
   font-size: 20px;
 }
 
+.vg-site-footer__col {
+  display: flex;
+  flex-direction: column;
+}
+
+.vg-footer-heading {
+  display: block;
+  font-family: var(--vg-mono, monospace);
+  font-size: 11.5px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--vg-gold, #C99446);
+  margin-bottom: 16px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+}
+
 .vg-footer-links,
 .vg-footer-links ul {
   display: flex;
