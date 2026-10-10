@@ -255,16 +255,7 @@ if ($q_clean !== '') {
                             <?php esc_html_e('Back to Homepage', 'vietnamguide-premium'); ?>
                         </a>
                         <a href="<?php echo esc_url(home_url('/destinations/')); ?>" class="vg-button vg-button--secondary">
-                            <?php esc_html_e('All Destinations', 'vietnamguide-premium'); ?>
-                        </a>
-                        <a href="<?php echo esc_url(home_url('/itineraries/')); ?>" class="vg-button vg-button--secondary">
-                            <?php esc_html_e('All Itineraries', 'vietnamguide-premium'); ?>
-                        </a>
-                        <a href="<?php echo esc_url(home_url('/compare/')); ?>" class="vg-button vg-button--secondary">
-                            <?php esc_html_e('Route Comparisons', 'vietnamguide-premium'); ?>
-                        </a>
-                        <a href="<?php echo esc_url(home_url('/plan/vietnam-travel-guide/')); ?>" class="vg-button vg-button--secondary">
-                            <?php esc_html_e('Planning Guide', 'vietnamguide-premium'); ?>
+                            <?php esc_html_e('Browse All Destinations', 'vietnamguide-premium'); ?>
                         </a>
                     </div>
                 </div>
