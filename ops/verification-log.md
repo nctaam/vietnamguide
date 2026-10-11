@@ -2,6 +2,23 @@
 
 Date: 2026-10-10 (Asia/Saigon)
 
+## Stage 92: Edge Optimization, mod_expires Caching Directives & Cross-Origin Isolation Hardening
+
+- **Browser Caching Directives & mod_expires Integration (`wordpress/.htaccess`)**:
+  - Implemented `mod_expires` module configuration with optimal caching lifecycle rules:
+    - 1-year immutable caching (`access plus 1 year`) for versioned static assets (CSS, JS, fonts: `woff2`, `woff`, images: `webp`, `avif`, `jpeg`, `png`, `svg`, `ico`).
+    - Immediate dynamic revalidation (`access plus 0 seconds`) for HTML documents, XML sitemaps, and JSON metadata, preserving real-time LiteSpeed cache invalidation.
+- **Cross-Origin Security & Resource Isolation Hardening (`wordpress/.htaccess`)**:
+  - Injected `Cross-Origin-Opener-Policy: same-origin` (COOP) and `Cross-Origin-Resource-Policy: same-origin` (CORP) headers across all responses.
+  - Hardens client runtime against Spectre/cross-origin leak vulnerabilities while isolating DOM context from malicious third-party embeds.
+- **Test Suite & Contract Verification (`ops/tests/test_theme_assets.py`)**:
+  - Added `test_htaccess_security_and_caching_directives` asserting all 7 security headers (HSTS, nosniff, SAMEORIGIN, Referrer-Policy, Permissions-Policy, COOP, CORP) and `mod_expires` directives.
+- **Verification Gates & Quality Assurance**:
+  - Full Unit Test Suite: 216 tests PASSED (100% OK in 42.1s).
+  - Master Quality Gates: 8/8 Gates PASSED (100% Exit Code 0 via `ops/verify-all-gates.ps1`).
+  - Deploy Script Parity: 60/60 files verified via `ops/deploy_theme_updates.py --dry-run`.
+  - Deploy Security Audit: 0 findings, 0 release blockers.
+
 ## Stage 91: Ops Hardening & Automated Remote Rollback Pipeline (Zero-Downtime Guarantee)
 
 - **Automated Remote Rollback Engine (`ops/deploy_theme_updates.py`)**:

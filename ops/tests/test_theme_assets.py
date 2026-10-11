@@ -95,6 +95,26 @@ class TestThemeAssetsPipeline(unittest.TestCase):
         self.assertIn('assets/js/homepage.js', func_content)
         self.assertIn('assets/js/guide-experience.js', func_content)
 
+    def test_htaccess_security_and_caching_directives(self):
+        """.htaccess must enforce strict security headers and long-lived asset caching."""
+        htaccess_path = REPO_ROOT / 'wordpress' / '.htaccess'
+        content = htaccess_path.read_text(encoding='utf-8')
+
+        # Security Headers
+        self.assertIn('Strict-Transport-Security', content)
+        self.assertIn('X-Content-Type-Options "nosniff"', content)
+        self.assertIn('X-Frame-Options "SAMEORIGIN"', content)
+        self.assertIn('Cross-Origin-Opener-Policy "same-origin"', content)
+        self.assertIn('Cross-Origin-Resource-Policy "same-origin"', content)
+
+        # High Performance Caching
+        self.assertIn('<IfModule mod_expires.c>', content)
+        self.assertIn('ExpiresByType text/css "access plus 1 year"', content)
+        self.assertIn('ExpiresByType application/javascript "access plus 1 year"', content)
+        self.assertIn('ExpiresByType font/woff2 "access plus 1 year"', content)
+        self.assertIn('ExpiresByType text/html "access plus 0 seconds"', content)
+
 
 if __name__ == '__main__':
     unittest.main()
+
