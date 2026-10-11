@@ -236,5 +236,13 @@
         if (toolsBtn && typeof toolsBtn.focus === 'function') toolsBtn.focus();
       }
     });
+
+    document.addEventListener('click', function (e) {
+      var target = e.target;
+      var printBtn = target && target.closest ? target.closest('[data-vg-print]') : null;
+      if (printBtn && typeof window.print === 'function') {
+        window.print();
+      }
+    });
   }
 }());

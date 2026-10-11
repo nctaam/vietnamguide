@@ -82,6 +82,8 @@ class TestThemeAssetsPipeline(unittest.TestCase):
         self.assertIn('vg-floating-dock', minified)
         self.assertIn('addEventListener', minified)
         self.assertIn('requestAnimationFrame', minified)
+        self.assertIn('data-vg-print', minified)
+        self.assertIn('window.print', minified)
 
     def test_theme_asset_version_contract_in_functions_php(self):
         """functions.php must declare vg_theme_asset_version supporting all 5 core assets."""

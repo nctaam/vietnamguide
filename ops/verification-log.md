@@ -2,6 +2,19 @@
 
 Date: 2026-10-11 (Asia/Saigon)
 
+## Stage 95: Guide Experience Print Action Handler Integration & Zero-Lag Offline PDF Export Flow
+
+- **Print & PDF Action Automation (`guide-experience.js`)**:
+  - Implemented delegated click event listener capturing all `[data-vg-print]` triggers within `.vg-share-bar`.
+  - Seamlessly invokes native browser `window.print()` engine, allowing instant 1-click invocation of PDF export or physical printing without navigating away from reading state.
+- **Contract & Asset Verification (`ops/tests/test_theme_assets.py`)**:
+  - Extended `test_js_minification_syntax_validity` to assert presence of `data-vg-print` and `window.print` in minified JS pipeline.
+- **Verification Gates & Quality Assurance**:
+  - Full Unit Test Suite: 219 tests PASSED (100% OK in 55.8s across all 12 test suites).
+  - Master Quality Gates: 8/8 Gates PASSED (100% Exit Code 0 via `ops/verify-all-gates.ps1`).
+  - Deploy Script Parity: 60/60 files verified via `ops/deploy_theme_updates.py --dry-run`.
+  - Deploy Security Audit: 0 findings, 0 release blockers.
+
 ## Stage 94: Field Guide Offline Printability & Media Query Architecture Hardening
 
 - **Offline Physical Field Guide Printability (`guide-experience.css`)**:
