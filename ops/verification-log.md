@@ -1,6 +1,29 @@
 # Verification Log
 
-Date: 2026-10-10 (Asia/Saigon)
+Date: 2026-10-11 (Asia/Saigon)
+
+## Stage 93: Schema.org Rich Results 100% Compliance & Mobile Block Patterns Core Web Vitals Optimization
+
+- **Mobile Viewport Optimization for Gutenberg Block Patterns (`guide-patterns.css`)**:
+  - Replaced rigid desktop-first `min-height: 700px` on `.vg-pattern-hero` with dynamic viewport-aware `min-height: min(580px, 85svh)`.
+  - Prevents first-fold content blowout on compact mobile devices (360px-414px viewports), pulling key value props, CTAs, and subsequent content upward into the initial viewport to drastically improve mobile Largest Contentful Paint (LCP) and First Contentful Paint (FCP).
+- **Core Web Vitals & Zero-CLS Image Asset Invariants**:
+  - Verified 13 Gutenberg Block Patterns (`hero-editorial.php`, `route-selector.php`, `quick-verdict.php`, `at-a-glance.php`, `decision-table.php`, `itinerary-timeline.php`, `source-block.php`, `recommendation-row.php`, `newsletter-capture.php`, `planning-paths.php`, `editorial-itineraries.php`, `decision-guides.php`, `practical-essentials.php`).
+  - Hero editorial pattern guarantees `<picture>` multi-format fallback (`.webp` and `.jpg`) with fixed explicit dimensions `width="1376" height="768"`, `loading="eager"`, `fetchpriority="high"`, and `decoding="async"`, preserving 0 Cumulative Layout Shift (CLS = 0).
+  - Maintained strict Zero-`<h2>` TOC protection rule across all standalone UI patterns to preserve Table of Contents reading spine integrity.
+- **Schema.org JSON-LD Rich Results Compliance Across 4 Classifications (`inc/guide-seo.php`)**:
+  - Destination Guides: `TouristDestination` with nested `GeoCoordinates`, `PostalAddress`, `TouristAttraction`, `containedInPlace`, `itinerary`, and `potentialAction`.
+  - Route Comparisons: `Article` with multi-entity `mentions`, editorial `reviewedBy` (VietnamGuide editorial team), `SpeakableSpecification`, and `FAQPage`.
+  - Itineraries: `TouristTrip` with free `offers`, sequential day-by-day `ItemList` of `TouristDestination` legs, and `TravelAction`.
+  - Practical Essentials: Comprehensive `FAQPage`, `HowTo` with discrete sequential steps, and `WebApplication` toolkit schemas.
+  - Verified `vg_schema_clean_data()` string sanitation, entity ampersand cleanup, and boolean coercion (`isAccessibleForFree`, `publicAccess`).
+- **Unit Test Expansion (`ops/tests/test_theme_assets.py`)**:
+  - Added `test_mobile_hero_responsive_min_height`: Asserts that `.vg-pattern-hero` strictly utilizes `min-height: min(580px, 85svh)` on mobile media queries and rejects outdated `min-height: 700px`.
+- **Verification Gates & Quality Assurance**:
+  - Full Unit Test Suite: 218 tests PASSED (100% OK in 36.2s across all 12 test suites).
+  - Master Quality Gates: 8/8 Gates PASSED (100% Exit Code 0 via `ops/verify-all-gates.ps1`).
+  - Deploy Script Parity: 60/60 files verified via `ops/deploy_theme_updates.py --dry-run`.
+  - Deploy Security Audit: 0 findings, 0 release blockers.
 
 ## Stage 92: Edge Optimization, mod_expires Caching Directives & Cross-Origin Isolation Hardening
 

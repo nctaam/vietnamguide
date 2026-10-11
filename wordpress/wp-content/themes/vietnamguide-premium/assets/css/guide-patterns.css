@@ -589,7 +589,7 @@
   }
 
   .vg-pattern-hero {
-    min-height: 700px;
+    min-height: min(580px, 85svh);
   }
 
   .vg-pattern-hero::after {

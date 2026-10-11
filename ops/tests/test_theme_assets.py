@@ -114,6 +114,15 @@ class TestThemeAssetsPipeline(unittest.TestCase):
         self.assertIn('ExpiresByType font/woff2 "access plus 1 year"', content)
         self.assertIn('ExpiresByType text/html "access plus 0 seconds"', content)
 
+    def test_mobile_hero_responsive_min_height(self):
+        """Block pattern hero must use viewport-aware responsive min-height on mobile (CWV LCP/FCP)."""
+        patterns_css_path = THEME_ASSETS / 'css' / 'guide-patterns.css'
+        content = patterns_css_path.read_text(encoding='utf-8')
+
+        # Check mobile media query block contains min(580px, 85svh)
+        self.assertIn('min-height: min(580px, 85svh);', content)
+        self.assertNotIn('min-height: 700px;', content)
+
 
 if __name__ == '__main__':
     unittest.main()
