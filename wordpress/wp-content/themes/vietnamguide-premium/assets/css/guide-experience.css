@@ -1053,7 +1053,8 @@
   .vg-guide-experience__dock,
   .vg-drawer,
   .vg-pattern-newsletter-capture,
-  .vg-related-cards {
+  .vg-related-cards,
+  .vg-share-bar {
     display: none !important;
   }
 

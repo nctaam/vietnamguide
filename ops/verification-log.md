@@ -2,6 +2,19 @@
 
 Date: 2026-10-11 (Asia/Saigon)
 
+## Stage 96: Print Suppression Hardening for In-Content Share Bar & Widget Architecture Parity
+
+- **In-Content Share Bar Print Suppression (`guide-experience.css`)**:
+  - Explicitly added `.vg-share-bar` to `@media print` suppression selector list alongside header, footer, floating docks, and newsletter blocks.
+  - Guarantees 100% paper hygiene: suppresses screen buttons ("Copy link", "Print Field Guide") from appearing on exported PDFs or printed paper itineraries.
+- **Contract & Asset Verification (`ops/tests/test_theme_assets.py`)**:
+  - Extended `test_print_stylesheet_contract` to assert `.vg-share-bar` suppression within `guide-experience.css`.
+- **Verification Gates & Quality Assurance**:
+  - Full Unit Test Suite: 219 tests PASSED (100% OK in 37.9s across all 12 test suites).
+  - Master Quality Gates: 8/8 Gates PASSED (100% Exit Code 0 via `ops/verify-all-gates.ps1`).
+  - Deploy Script Parity: 60/60 files verified via `ops/deploy_theme_updates.py --dry-run`.
+  - Deploy Security Audit: 0 findings, 0 release blockers.
+
 ## Stage 95: Guide Experience Print Action Handler Integration & Zero-Lag Offline PDF Export Flow
 
 - **Print & PDF Action Automation (`guide-experience.js`)**:

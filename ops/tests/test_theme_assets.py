@@ -134,6 +134,7 @@ class TestThemeAssetsPipeline(unittest.TestCase):
         self.assertIn('.vg-site-header', content)
         self.assertIn('.vg-floating-dock', content)
         self.assertIn('.vg-guide-dock', content)
+        self.assertIn('.vg-share-bar', content)
         self.assertIn('page-break-inside: avoid;', content)
 
 
