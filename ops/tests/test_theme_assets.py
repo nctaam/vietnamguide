@@ -123,6 +123,17 @@ class TestThemeAssetsPipeline(unittest.TestCase):
         self.assertIn('min-height: min(580px, 85svh);', content)
         self.assertNotIn('min-height: 700px;', content)
 
+    def test_print_stylesheet_contract(self):
+        """Guide experience stylesheet must include @media print rules suppressing screen-only UI."""
+        experience_css_path = THEME_ASSETS / 'css' / 'guide-experience.css'
+        content = experience_css_path.read_text(encoding='utf-8')
+
+        self.assertIn('@media print', content)
+        self.assertIn('.vg-site-header', content)
+        self.assertIn('.vg-floating-dock', content)
+        self.assertIn('.vg-guide-dock', content)
+        self.assertIn('page-break-inside: avoid;', content)
+
 
 if __name__ == '__main__':
     unittest.main()

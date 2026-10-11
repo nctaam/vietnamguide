@@ -1036,3 +1036,55 @@
     transform: none;
   }
 }
+
+@media print {
+  body {
+    background: #fff !important;
+    color: #111 !important;
+    font-size: 11pt !important;
+  }
+
+  .vg-site-header,
+  .vg-site-footer,
+  .vg-reading-progress,
+  .vg-floating-dock,
+  .vg-guide-dock,
+  .vg-guide-jump,
+  .vg-guide-experience__dock,
+  .vg-drawer,
+  .vg-pattern-newsletter-capture,
+  .vg-related-cards {
+    display: none !important;
+  }
+
+  .vg-guide-layout {
+    display: block !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  .vg-guide-article {
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+
+  .vg-guide-article a {
+    color: #111 !important;
+    text-decoration: underline !important;
+  }
+
+  .vg-guide-article h2,
+  .vg-guide-article h3 {
+    page-break-after: avoid;
+    break-after: avoid;
+    color: #0b3d2e !important;
+  }
+
+  .vg-decision-table,
+  .wp-block-table,
+  .vg-proof-panel {
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+}

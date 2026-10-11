@@ -2,6 +2,22 @@
 
 Date: 2026-10-11 (Asia/Saigon)
 
+## Stage 94: Field Guide Offline Printability & Media Query Architecture Hardening
+
+- **Offline Physical Field Guide Printability (`guide-experience.css`)**:
+  - Implemented `@media print` rules tailored for physical field documentation, paper itineraries, and PDF exports:
+    - Automatically suppresses purely interactive, floating, and promotional UI components: `.vg-site-header`, `.vg-site-footer`, `.vg-reading-progress`, `.vg-floating-dock`, `.vg-guide-dock`, `.vg-guide-jump`, `.vg-guide-experience__dock`, `.vg-drawer`, `.vg-pattern-newsletter-capture`, `.vg-related-cards`.
+    - Unwraps `.vg-guide-layout` and `.vg-guide-article` to 100% width, resetting background to pure white `#fff` and typography to `#111` 11pt high-legibility print scale.
+    - Prevents orphan headers (`page-break-after: avoid; break-after: avoid;`) on `<h2>` and `<h3>`.
+    - Prevents table and panel splits across pages (`page-break-inside: avoid; break-inside: avoid;`) for `.vg-decision-table`, `.wp-block-table`, and `.vg-proof-panel`.
+- **Test Suite Expansion & Contract Verification (`ops/tests/test_theme_assets.py`)**:
+  - Added `test_print_stylesheet_contract`: Validates presence of `@media print`, suppression of `.vg-site-header`, `.vg-floating-dock`, `.vg-guide-dock`, and page-break rules.
+- **Verification Gates & Quality Assurance**:
+  - Full Unit Test Suite: 219 tests PASSED (100% OK in 37.0s across all 12 test suites).
+  - Master Quality Gates: 8/8 Gates PASSED (100% Exit Code 0 via `ops/verify-all-gates.ps1`).
+  - Deploy Script Parity: 60/60 files verified via `ops/deploy_theme_updates.py --dry-run`.
+  - Deploy Security Audit: 0 findings, 0 release blockers.
+
 ## Stage 93: Schema.org Rich Results 100% Compliance & Mobile Block Patterns Core Web Vitals Optimization
 
 - **Mobile Viewport Optimization for Gutenberg Block Patterns (`guide-patterns.css`)**:
