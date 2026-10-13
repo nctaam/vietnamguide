@@ -882,6 +882,31 @@ class TestSchemaRobustnessAndNullContext(unittest.TestCase):
         count = json.loads(res.stdout)['dest_count']
         self.assertEqual(count, 1, 'TouristDestination node must not be duplicated on repeated calls')
 
+    def test_schema_filter_excludes_legal_and_trust_pages(self):
+        """Legal, policy, and utility pages must NOT receive TouristDestination or TouristTrip nodes."""
+        php_body = """
+        $legal_paths = ['about', 'editorial-policy', 'privacy-policy', 'terms-of-service', 'source-update-policy', 'affiliate-disclosure', 'contact', 'newsletter'];
+        $results = [];
+        foreach ($legal_paths as $lp) {
+            $_SERVER['REQUEST_URI'] = "/{$lp}/";
+            $GLOBALS['post'] = null;
+            $data = ['@graph' => [
+                ['@type' => 'Organization', 'name' => 'VietnamGuide'],
+                ['@type' => 'WebPage', 'name' => ucfirst($lp)],
+            ]];
+            $filtered = vg_rich_travel_schema_filter($data, null);
+            $types = array_column($filtered['@graph'], '@type');
+            $has_tourist = in_array('TouristDestination', $types, true) || in_array('TouristTrip', $types, true);
+            $results[$lp] = $has_tourist;
+        }
+        echo json_encode($results);
+        """
+        res = _run_php(php_body)
+        self.assertEqual(res.returncode, 0, res.stderr)
+        results = json.loads(res.stdout)
+        for path, has_tourist in results.items():
+            self.assertFalse(has_tourist, f"Legal path '{path}' must not have tourist schema nodes")
+
 
 class TestRouteRegistryClassificationsCoverage(unittest.TestCase):
     """Validates that all 4 guide classifications in ops/route_registry.json are covered."""

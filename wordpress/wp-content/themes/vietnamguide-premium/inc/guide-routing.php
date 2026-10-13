@@ -444,7 +444,99 @@ function vg_is_guide_experience_page(?WP_Post $post = null): bool
 }
 
 /**
- * Redirects legacy and vanity toolkit URLs to their canonical guide permalinks.
+ * Canonical alias and destination short-slug redirects map.
+ * Guarantees direct 301 redirection to flagship pillar guides, preventing 404 guess traps.
+ */
+function vg_get_canonical_alias_redirect_map(): array
+{
+    static $map = null;
+    if ($map !== null) {
+        return $map;
+    }
+
+    $map = [
+        // Vanity & toolkit aliases
+        'vietnam-travel-cost'          => '/costs/vietnam-travel-cost/',
+        'vietnam-visa-checker'         => '/plan/vietnam-evisa/',
+        'vietnam-season-weather'       => '/plan/best-time-to-visit-vietnam/',
+
+        // Northern Vietnam Pillar Destinations
+        'destinations/hanoi'           => '/destinations/hanoi-travel-guide/',
+        'destinations/ha-long-bay'     => '/destinations/ha-long-bay-travel-guide/',
+        'destinations/halong-bay'      => '/destinations/ha-long-bay-travel-guide/',
+        'destinations/halong'          => '/destinations/ha-long-bay-travel-guide/',
+        'destinations/bai-tu-long-bay' => '/destinations/bai-tu-long-bay-guide/',
+        'destinations/bai-tu-long'     => '/destinations/bai-tu-long-bay-guide/',
+        'destinations/cat-ba'          => '/destinations/cat-ba-travel-guide/',
+        'destinations/catba'           => '/destinations/cat-ba-travel-guide/',
+        'destinations/sapa'            => '/destinations/sapa-travel-guide/',
+        'destinations/sa-pa'           => '/destinations/sapa-travel-guide/',
+        'destinations/ninh-binh'       => '/destinations/ninh-binh-travel-guide/',
+        'destinations/ninhbinh'        => '/destinations/ninh-binh-travel-guide/',
+        'destinations/tam-coc'         => '/destinations/tam-coc-travel-guide/',
+        'destinations/ha-giang'        => '/destinations/ha-giang-loop-planning-guide/',
+        'destinations/hagiang'         => '/destinations/ha-giang-loop-planning-guide/',
+        'destinations/cao-bang'        => '/destinations/cao-bang-travel-guide/',
+        'destinations/caobang'         => '/destinations/cao-bang-travel-guide/',
+        'destinations/mu-cang-chai'    => '/destinations/mu-cang-chai-travel-guide/',
+        'destinations/mucangchai'      => '/destinations/mu-cang-chai-travel-guide/',
+        'destinations/pu-luong'        => '/destinations/pu-luong-travel-guide/',
+        'destinations/puluong'         => '/destinations/pu-luong-travel-guide/',
+        'destinations/ba-be-lake'      => '/destinations/ba-be-lake-travel-guide/',
+        'destinations/ba-be'           => '/destinations/ba-be-lake-travel-guide/',
+
+        // Central Vietnam Pillar Destinations
+        'destinations/da-nang'         => '/destinations/da-nang-travel-guide/',
+        'destinations/danang'          => '/destinations/da-nang-travel-guide/',
+        'destinations/hoi-an'          => '/destinations/hoi-an-ancient-town-guide/',
+        'destinations/hoian'           => '/destinations/hoi-an-ancient-town-guide/',
+        'destinations/hue'             => '/destinations/hue-imperial-city-guide/',
+        'destinations/phong-nha'       => '/destinations/phong-nha-travel-guide/',
+        'destinations/phongnha'        => '/destinations/phong-nha-travel-guide/',
+        'destinations/quy-nhon'        => '/destinations/quy-nhon-travel-guide/',
+        'destinations/quynhon'         => '/destinations/quy-nhon-travel-guide/',
+        'destinations/nha-trang'       => '/destinations/nha-trang-travel-guide/',
+        'destinations/nhatrang'        => '/destinations/nha-trang-travel-guide/',
+        'destinations/da-lat'          => '/destinations/da-lat-travel-guide/',
+        'destinations/dalat'           => '/destinations/da-lat-travel-guide/',
+        'destinations/mang-den'        => '/destinations/mang-den-travel-guide/',
+        'destinations/mangden'         => '/destinations/mang-den-travel-guide/',
+        'destinations/phu-yen'         => '/destinations/phu-yen-travel-guide/',
+        'destinations/phuyen'          => '/destinations/phu-yen-travel-guide/',
+        'destinations/cham-islands'    => '/destinations/cham-islands-travel-guide/',
+        'destinations/ly-son'          => '/destinations/ly-son-travel-guide/',
+        'destinations/lyson'           => '/destinations/ly-son-travel-guide/',
+
+        // Southern Vietnam Pillar Destinations
+        'destinations/ho-chi-minh-city' => '/destinations/ho-chi-minh-city-travel-guide/',
+        'destinations/saigon'           => '/destinations/ho-chi-minh-city-travel-guide/',
+        'destinations/hcmc'             => '/destinations/ho-chi-minh-city-travel-guide/',
+        'destinations/mekong-delta'     => '/destinations/mekong-delta-travel-guide/',
+        'destinations/mekong'           => '/destinations/mekong-delta-travel-guide/',
+        'destinations/phu-quoc'         => '/destinations/phu-quoc-travel-guide/',
+        'destinations/phuquoc'          => '/destinations/phu-quoc-travel-guide/',
+        'destinations/con-dao'          => '/destinations/con-dao-travel-guide/',
+        'destinations/condao'           => '/destinations/con-dao-travel-guide/',
+        'destinations/can-tho'          => '/destinations/where-to-stay-in-can-tho/',
+        'destinations/cantho'           => '/destinations/where-to-stay-in-can-tho/',
+        'destinations/mui-ne'           => '/destinations/best-things-to-do-in-mui-ne/',
+        'destinations/muine'            => '/destinations/best-things-to-do-in-mui-ne/',
+
+        // Common Navigation & Cross-Category Aliases
+        'itineraries/7-days'           => '/itineraries/7-days-in-vietnam/',
+        'itineraries/10-days'          => '/itineraries/10-days-in-vietnam/',
+        'itineraries/14-days'          => '/itineraries/14-days-in-vietnam/',
+        'itineraries/21-days'          => '/itineraries/21-days-in-vietnam/',
+        'plan/visa'                    => '/plan/vietnam-evisa/',
+        'plan/best-time'               => '/plan/best-time-to-visit-vietnam/',
+        'compare/hanoi-vs-saigon'      => '/compare/hanoi-vs-ho-chi-minh-city/',
+    ];
+
+    return $map;
+}
+
+/**
+ * Redirects legacy, vanity toolkit, and short destination slug URLs to their canonical guide permalinks.
  */
 function vg_handle_toolkit_vanity_redirects(): void
 {
@@ -453,20 +545,30 @@ function vg_handle_toolkit_vanity_redirects(): void
     }
 
     $req_uri = $_SERVER['REQUEST_URI'] ?? '';
-    $path = trim((string) (parse_url($req_uri, PHP_URL_PATH) ?? ''), '/');
+    $path = strtolower(trim((string) (parse_url($req_uri, PHP_URL_PATH) ?? ''), '/'));
 
-    $vanity_map = [
-        'vietnam-travel-cost'    => '/costs/vietnam-travel-cost/',
-        'vietnam-visa-checker'   => '/plan/vietnam-evisa/',
-        'vietnam-season-weather' => '/plan/best-time-to-visit-vietnam/',
-    ];
+    $redirect_map = vg_get_canonical_alias_redirect_map();
 
-    if (isset($vanity_map[$path])) {
-        wp_safe_redirect(home_url($vanity_map[$path]), 301);
+    if (isset($redirect_map[$path])) {
+        wp_safe_redirect(home_url($redirect_map[$path]), 301);
         exit;
     }
 }
 add_action('template_redirect', 'vg_handle_toolkit_vanity_redirects', 1);
+
+/**
+ * Suppress WordPress 404 permalink guessing on destination routes to prevent
+ * unintentional 301 redirects to unrelated sub-pages or transport guides.
+ */
+add_filter('do_redirect_guess_404_permalink', static function ($do_redirect) {
+    if (! empty($_SERVER['REQUEST_URI'])) {
+        $path = strtolower(trim((string) parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH), '/'));
+        if (str_starts_with($path, 'destinations/')) {
+            return false;
+        }
+    }
+    return $do_redirect;
+});
 
 /**
  * Adds semantic body class when page renders the full Guide Shell experience.

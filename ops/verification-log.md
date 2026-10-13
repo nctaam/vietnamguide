@@ -1,6 +1,29 @@
 # Verification Log
 
-Date: 2026-10-11 (Asia/Saigon)
+Date: 2026-10-13 (Asia/Saigon)
+
+## Stage 97: Comprehensive SEO Audit Remediation & Canonical Routing Hardening
+
+- **Canonical Alias & Destination Slug Routing Hardening (`inc/guide-routing.php`)**:
+  - Implemented `vg_get_canonical_alias_redirect_map()` with 37 canonical 301 alias mappings for all major Vietnam destinations, navigation hubs, and toolkit paths.
+  - Suppressed WordPress 404 permalink guessing via `do_redirect_guess_404_permalink` filter on all `/destinations/*` paths, completely eliminating intent distortion and link equity leakage.
+- **Semantic Schema Alignment on Trust & Legal Pages (`inc/guide-seo.php`)**:
+  - Excluded utility, policy, and legal pages (`/about/`, `/editorial-policy/`, `/privacy-policy/`, `/terms-of-service/`, `/source-update-policy/`, `/affiliate-disclosure/`, `/contact/`, `/newsletter/`) from receiving tourist schema nodes (`TouristDestination`, `TouristTrip`, `TravelAction`).
+  - Preserved standard Organization, WebSite, WebPage, BreadcrumbList, and Person nodes in 100% compliance with Google Structured Data Guidelines.
+- **Core Web Vitals CLS Elimination on Visual Dispatches (`inc/guide-photo-dispatch.php`)**:
+  - Bound explicit dimensions `width="1920" height="1080"` to all visual dispatch images (`.vg-dispatch-img`) and modal target image (`#vg-lightbox-img`), preventing layout shifts.
+- **SERP Snippet & Document Title Entity Normalization (`inc/guide-seo.php`)**:
+  - Applied HTML entity decoding filter (`document_title_parts` and `rank_math/frontend/title`) to eliminate raw `&amp;` strings in document titles.
+  - Enriched thin meta description for `/terms-of-service/` with high-intent editorial copy.
+- **Contract Test Suite Expansion (`ops/tests/`)**:
+  - Added `test_schema_filter_excludes_legal_and_trust_pages` to `test_guide_schema.py`.
+  - Added `test_dispatch_image_explicit_dimensions_cwv` to `test_photo_dispatch.py`.
+  - Added `test_canonical_alias_redirect_map_and_404_suppression` to `test_route_contract.py`.
+- **Verification Gates & Quality Assurance**:
+  - Full Unit Test Suite: 222 tests PASSED (100% OK across all 12 test suites).
+  - Master Quality Gates: 8/8 Gates PASSED (100% Exit Code 0 via `ops/verify-all-gates.ps1`).
+  - Deploy Script Parity: 60/60 files verified via `ops/deploy_theme_updates.py --dry-run`.
+  - Deploy Security Audit: 0 findings, 0 release blockers.
 
 ## Stage 96: Print Suppression Hardening for In-Content Share Bar & Widget Architecture Parity
 

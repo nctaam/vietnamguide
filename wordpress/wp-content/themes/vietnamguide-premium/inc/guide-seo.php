@@ -1212,6 +1212,21 @@ function vg_rich_travel_schema_filter($data, $context = null): array
         $uri_path = strtolower(trim((string) parse_url($uri, PHP_URL_PATH), '/'));
     }
 
+    // Exclude utility, legal, and trust pages from tourist travel graph entities
+    $non_travel_paths = [
+        'about',
+        'editorial-policy',
+        'privacy-policy',
+        'terms-of-service',
+        'source-update-policy',
+        'affiliate-disclosure',
+        'contact',
+        'newsletter',
+    ];
+    if (in_array($uri_path, $non_travel_paths, true)) {
+        return $data;
+    }
+
     $cluster = vg_find_travel_cluster_by_path($uri_path);
     $canonical_base = function_exists('home_url') ? untrailingslashit(home_url()) : 'https://vietnamguide.net';
     $current_url = ($uri_path !== '') ? "{$canonical_base}/{$uri_path}/" : "{$canonical_base}/";
@@ -1872,6 +1887,38 @@ add_filter('rank_math/schema/json_ld/output', static function ($output) {
     $output = preg_replace('/"isAccessibleForFree":\s*"1"/', '"isAccessibleForFree": true', $output);
     $output = preg_replace('/"numberOfItems":\s*"(\d+)"/', '"numberOfItems": $1', $output);
     return $output;
+}, 99);
+
+/**
+ * Decode raw HTML entities (&amp; -> &) in document title across all pages.
+ */
+add_filter('document_title_parts', static function ($parts) {
+    if (is_array($parts)) {
+        foreach ($parts as $key => $val) {
+            if (is_string($val)) {
+                $parts[$key] = html_entity_decode($val, ENT_QUOTES | ENT_HTML5, 'UTF-8');
+            }
+        }
+    }
+    return $parts;
+}, 99);
+
+add_filter('rank_math/frontend/title', static function ($title) {
+    return is_string($title) ? html_entity_decode($title, ENT_QUOTES | ENT_HTML5, 'UTF-8') : $title;
+}, 99);
+
+/**
+ * Enrich thin meta descriptions on legal and utility pages for optimal SERP snippets.
+ */
+add_filter('rank_math/frontend/description', static function ($desc) {
+    if (! is_string($desc) || trim($desc) === '' || trim($desc) === 'Terms of Service' || strlen(trim($desc)) < 30) {
+        $uri = isset($_SERVER['REQUEST_URI']) ? (string) $_SERVER['REQUEST_URI'] : '';
+        $path = strtolower(trim((string) parse_url($uri, PHP_URL_PATH), '/'));
+        if ($path === 'terms-of-service') {
+            return 'Official terms of service, editorial policies, and user agreements for VietnamGuide.net independent travel advisories, route guides, and planning tools.';
+        }
+    }
+    return $desc;
 }, 99);
 
 /**

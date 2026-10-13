@@ -164,6 +164,8 @@ function vg_render_photo_dispatch(array $atts): string
                         <img src="<?php echo $img_src; ?>"
                              alt="<?php echo esc_attr($item['alt_text']); ?>"
                              class="vg-dispatch-img"
+                             width="1920"
+                             height="1080"
                              loading="lazy"
                              decoding="async"
                              data-full-src="<?php echo $img_src; ?>"
@@ -257,7 +259,7 @@ function vg_render_photo_dispatch_lightbox_template(): void
         <div class="vg-lightbox-dialog">
             <button type="button" class="vg-lightbox-close" aria-label="Close dialog" data-vg-close-modal>&times;</button>
             <div class="vg-lightbox-body">
-                <img id="vg-lightbox-img" src="" alt="" class="vg-lightbox-target" />
+                <img id="vg-lightbox-img" src="" alt="" class="vg-lightbox-target" width="1920" height="1080" />
                 <div class="vg-lightbox-caption" id="vg-lightbox-caption"></div>
             </div>
         </div>

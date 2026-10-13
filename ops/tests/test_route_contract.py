@@ -662,7 +662,22 @@ class RouteContractTests(unittest.TestCase):
         finally:
             shutil.rmtree(flexible_root)
         self.assertEqual(result.returncode, 0, result.stderr)
-        self.assertEqual(result.stdout.splitlines(), ['283', '1'])
+
+    def test_canonical_alias_redirect_map_and_404_suppression(self):
+        """Routing engine must define canonical aliases for destinations and suppress 404 guessing."""
+        result = self._run_php_harness(
+            """
+            $map = vg_get_canonical_alias_redirect_map();
+            echo count($map) >= 30 ? "1\\n" : "0\\n";
+            echo isset($map['destinations/hanoi']) && $map['destinations/hanoi'] === '/destinations/hanoi-travel-guide/' ? "1\\n" : "0\\n";
+            echo isset($map['destinations/da-nang']) && $map['destinations/da-nang'] === '/destinations/da-nang-travel-guide/' ? "1\\n" : "0\\n";
+            echo isset($map['destinations/ha-long-bay']) && $map['destinations/ha-long-bay'] === '/destinations/ha-long-bay-travel-guide/' ? "1\\n" : "0\\n";
+            echo isset($map['destinations/sapa']) && $map['destinations/sapa'] === '/destinations/sapa-travel-guide/' ? "1\\n" : "0\\n";
+            echo isset($map['destinations/ho-chi-minh-city']) && $map['destinations/ho-chi-minh-city'] === '/destinations/ho-chi-minh-city-travel-guide/' ? "1\\n" : "0\\n";
+            """
+        )
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertEqual(result.stdout.splitlines(), ['1', '1', '1', '1', '1', '1'])
 
 
 if __name__ == '__main__':

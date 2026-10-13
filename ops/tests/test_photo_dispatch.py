@@ -165,6 +165,19 @@ class TestPhotoDispatchComponent(unittest.TestCase):
         self.assertIn('data-dispatch-target=', self.content)
         self.assertIn('data-dispatch-panel=', self.content)
         self.assertIn('data-vg-photo-dispatch-suite', self.content)
+    
+    def test_dispatch_image_explicit_dimensions_cwv(self):
+        """Visual dispatch <img> and lightbox <img> must declare width='1920' and height='1080' to prevent CLS."""
+        self.assertRegex(
+            self.content,
+            r'class="vg-dispatch-img"[^>]*width="1920"[^>]*height="1080"',
+            "vg-dispatch-img must declare explicit width and height"
+        )
+        self.assertRegex(
+            self.content,
+            r'id="vg-lightbox-img"[^>]*width="1920"[^>]*height="1080"',
+            "vg-lightbox-img must declare explicit width and height"
+        )
 
 
 if __name__ == '__main__':
