@@ -106,16 +106,42 @@ function vg_guide_pilot_paths_map(): array
 }
 
 /**
- * Global telemetry storage for route fallbacks (observability without database drag).
+ * Global telemetry storage and persistent warning log for route fallbacks.
  */
 function vg_record_route_fallback(string $path, string $reason): void
 {
-    $GLOBALS['vg_route_fallback_telemetry'] = $GLOBALS['vg_route_fallback_telemetry'] ?? [];
-    $GLOBALS['vg_route_fallback_telemetry'][] = [
+    $entry = [
         'path' => $path,
         'reason' => $reason,
         'timestamp' => microtime(true),
     ];
+    $GLOBALS['vg_route_fallback_telemetry'] = $GLOBALS['vg_route_fallback_telemetry'] ?? [];
+    $GLOBALS['vg_route_fallback_telemetry'][] = $entry;
+
+    $sanitizedPath = str_replace(["\r", "\n", '"'], [' ', ' ', "'"], $path);
+    $sanitizedReason = str_replace(["\r", "\n", '"'], [' ', ' ', "'"], $reason);
+    $formattedMessage = sprintf(
+        '[VietnamGuide Route Fallback] path="%s" reason="%s" ts=%.6f',
+        $sanitizedPath,
+        $sanitizedReason,
+        $entry['timestamp']
+    );
+    $GLOBALS['vg_route_fallback_last_log_message'] = $formattedMessage;
+
+    if (function_exists('do_action')) {
+        do_action('vg_route_fallback_recorded', $entry, $formattedMessage);
+    }
+
+    $customLogFile = defined('VG_ROUTE_FALLBACK_LOG_FILE') && is_string(VG_ROUTE_FALLBACK_LOG_FILE)
+        ? VG_ROUTE_FALLBACK_LOG_FILE
+        : '';
+    if ($customLogFile !== '') {
+        @error_log($formattedMessage . PHP_EOL, 3, $customLogFile);
+    } elseif (! defined('VG_SUPPRESS_FALLBACK_ERROR_LOG') || ! VG_SUPPRESS_FALLBACK_ERROR_LOG) {
+        if (PHP_SAPI !== 'cli' || (defined('WP_DEBUG_LOG') && WP_DEBUG_LOG)) {
+            @error_log($formattedMessage);
+        }
+    }
 }
 
 function vg_get_route_fallback_telemetry(): array

@@ -18,6 +18,66 @@ function vg_is_empty_freeform_block(array $block): bool
     return is_string($without_comments) && trim($without_comments) === '';
 }
 
+function vg_extract_balanced_hero_container(string $rawHtml): ?array
+{
+    if (! preg_match('/\A(?:\s|<!--[\s\S]*?-->)*<(?P<tag>section|div)\b[^>]*\bclass\s*=\s*["\'][^"\']*vg-guide-hero[^"\']*["\'][^>]*>/i', $rawHtml, $openMatch, PREG_OFFSET_CAPTURE)) {
+        return null;
+    }
+
+    $rootTag = strtolower((string) $openMatch['tag'][0]);
+    $openTagFull = (string) $openMatch[0][0];
+    $openTagEnd = (int) $openMatch[0][1] + strlen($openTagFull);
+
+    $depth = 1;
+    $heroEnd = null;
+    $tokenPattern = '/<!--[\s\S]*?-->|<(?P<closer>\/)?(?P<name>div|section)\b[^>]*>/i';
+    if (preg_match_all($tokenPattern, $rawHtml, $tokens, PREG_OFFSET_CAPTURE, $openTagEnd)) {
+        $tokenCount = count($tokens[0]);
+        for ($i = 0; $i < $tokenCount; $i++) {
+            $rawToken = (string) $tokens[0][$i][0];
+            $tokenOffset = (int) $tokens[0][$i][1];
+            if (str_starts_with($rawToken, '<!--')) {
+                continue;
+            }
+
+            $tagName = strtolower((string) $tokens['name'][$i][0]);
+            if ($tagName !== $rootTag) {
+                continue;
+            }
+
+            $isCloser = ((string) $tokens['closer'][$i][0]) === '/';
+            if (! $isCloser && str_ends_with(rtrim($rawToken), '/>')) {
+                continue;
+            }
+
+            if ($isCloser) {
+                $depth--;
+                if ($depth === 0) {
+                    $heroEnd = $tokenOffset + strlen($rawToken);
+                    break;
+                }
+            } else {
+                $depth++;
+            }
+        }
+    }
+
+    if ($heroEnd === null) {
+        return null;
+    }
+
+    $heroSource = trim(substr($rawHtml, 0, $heroEnd));
+    $bodySource = trim(substr($rawHtml, $heroEnd));
+    if ($bodySource === '' || preg_match_all('/<h1\b/i', $heroSource) !== 1 || preg_match('/<h1\b/i', $bodySource)) {
+        return null;
+    }
+
+    return [
+        'hero_source' => $heroSource,
+        'body_source' => $bodySource,
+    ];
+}
+
 function vg_split_guide_blocks(string $postContent): ?array
 {
     $blocks = parse_blocks($postContent);
@@ -33,34 +93,26 @@ function vg_split_guide_blocks(string $postContent): ?array
     if (count($blocks) > 1) {
         $heroBlock = $blocks[0];
         $heroSource = serialize_block($heroBlock);
-        if (strpos($heroSource, 'vg-guide-hero') !== false && preg_match_all('/<h1\b/i', $heroSource) === 1) {
-            array_shift($blocks);
-            $bodySource = serialize_blocks($blocks);
-            if (! preg_match('/<h1\b/i', $bodySource)) {
-                return [
-                    'hero_source' => $heroSource,
-                    'body_source' => $bodySource,
-                ];
-            }
+        if (strpos($heroSource, 'vg-guide-hero') === false || preg_match_all('/<h1\b/i', $heroSource) !== 1) {
+            return null;
         }
+
+        array_shift($blocks);
+        $bodySource = serialize_blocks($blocks);
+        if (preg_match('/<h1\b/i', $bodySource)) {
+            return null;
+        }
+
+        return [
+            'hero_source' => $heroSource,
+            'body_source' => $bodySource,
+        ];
     }
 
-    // Branch B: Raw HTML or single freeform block with vg-guide-hero container (legacy routes)
-    $rawHtml = $postContent;
-    if (preg_match('/(?:<!--[\s\S]*?-->\s*)?<(?:section|div)\b[^>]*class=["\'][^"\']*vg-guide-hero[^"\']*["\'][^>]*>[\s\S]*?<\/(?:section|div)>/i', $rawHtml, $m)) {
-        $heroSource = $m[0];
-        $pos = strpos($rawHtml, $heroSource);
-        $bodySource = substr($rawHtml, $pos + strlen($heroSource));
-        if (preg_match_all('/<h1\b/i', $heroSource) === 1 && ! preg_match('/<h1\b/i', $bodySource)) {
-            return [
-                'hero_source' => trim($heroSource),
-                'body_source' => trim($bodySource),
-            ];
-        }
-    }
-
-    return null;
+    // Branch B: Raw HTML or single freeform block with balanced vg-guide-hero container (legacy routes)
+    return vg_extract_balanced_hero_container($postContent);
 }
+
 
 function vg_inspect_guide_html(string $html): ?array
 {

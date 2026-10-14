@@ -679,6 +679,103 @@ class RouteContractTests(unittest.TestCase):
         self.assertEqual(result.returncode, 0, result.stderr)
         self.assertEqual(result.stdout.splitlines(), ['1', '1', '1', '1', '1', '1'])
 
+    def test_split_guide_blocks_handles_nested_divs_and_sections_in_legacy_hero(self):
+        """vg_split_guide_blocks must accurately track nested tag depth in legacy hero blocks and fail closed on malformed or secondary H1 markup."""
+        content_php = json.dumps(
+            str(
+                REPO_PATH
+                / 'wordpress'
+                / 'wp-content'
+                / 'themes'
+                / 'vietnamguide-premium'
+                / 'inc'
+                / 'guide-content.php'
+            ).replace('\\', '/')
+        )
+        result = self._run_php_harness(
+            f"""
+            function parse_blocks($content) {{
+                return [['blockName' => null, 'innerHTML' => $content, 'innerContent' => [$content]]];
+            }}
+            function serialize_block($block) {{ return (string) ($block['innerHTML'] ?? ''); }}
+            function serialize_blocks($blocks) {{
+                return implode('', array_map('serialize_block', $blocks));
+            }}
+            require_once {content_php};
+
+            // Case 1: Deeply nested <div> badges inside <div class="vg-guide-hero">
+            $case1 = '<div class="vg-guide-hero"><div class="vg-hero-badge">Verified Field Guide</div><div class="vg-hero-meta"><div class="vg-hero-tag">Updated</div></div><h1>Ba Be Lake Travel Guide</h1></div><div class="vg-guide-body"><h2>Getting There</h2><p>Bus details.</p><h2>Where to Stay</h2><p>Homestays.</p></div>';
+            $split1 = vg_split_guide_blocks($case1);
+            echo is_array($split1) && strpos($split1['hero_source'], '<h1>Ba Be Lake Travel Guide</h1>') !== false && strpos($split1['body_source'], '<div class="vg-guide-body"><h2>Getting There</h2>') === 0 ? "1\\n" : "0\\n";
+
+            // Case 2: <section class="vg-guide-hero"> containing internal <div> elements
+            $case2 = '<section id="hero" class="vg-HeroWrapper vg-guide-hero"><div class="meta">Published</div><h1>Ha Giang Loop Guide</h1></section><h2>Route Overview</h2><p>Details.</p>';
+            $split2 = vg_split_guide_blocks($case2);
+            echo is_array($split2) && str_ends_with($split2['hero_source'], '</section>') && strpos($split2['body_source'], '<h2>Route Overview</h2>') === 0 ? "1\\n" : "0\\n";
+
+            // Case 3: Custom attribute order and single-quoted class attribute
+            $case3 = "<!-- wp:html -->\\n<div id=\\"custom-hero\\" data-vg=\\"true\\" class='vg-custom vg-guide-hero'><div><span>Inner</span></div><h1>Custom Attribute Order</h1></div><h2>Section One</h2><p>Body</p>";
+            $split3 = vg_split_guide_blocks($case3);
+            echo is_array($split3) && strpos($split3['hero_source'], '<h1>Custom Attribute Order</h1>') !== false ? "1\\n" : "0\\n";
+
+            // Case 4: Unclosed outer hero container must fail closed (null)
+            $case4 = '<div class="vg-guide-hero"><div class="inner">Badge</div><h1>Unclosed Hero</h1><h2>Body</h2>';
+            echo vg_split_guide_blocks($case4) === null ? "1\\n" : "0\\n";
+
+            // Case 5: Meaningful HTML before hero must fail closed (null)
+            $case5 = '<p>Meaningful intro</p><div class="vg-guide-hero"><h1>Hero</h1></div><h2>Body</h2>';
+            echo vg_split_guide_blocks($case5) === null ? "1\\n" : "0\\n";
+            """
+        )
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertEqual(result.stdout.splitlines(), ['1', '1', '1', '1', '1'])
+
+    def test_route_fallback_telemetry_emits_persistent_log_and_action_hook(self):
+        """vg_record_route_fallback must persist sanitized single-line warnings to configured log sink and fire action hooks."""
+        with tempfile.TemporaryDirectory(prefix='vg-fallback-log-') as tmp_dir:
+            log_file = Path(tmp_dir) / 'route-fallback.log'
+            log_file_php = json.dumps(str(log_file).replace('\\', '/'))
+            result = self._run_php_harness(
+                f"""
+                define('VG_ROUTE_FALLBACK_LOG_FILE', {log_file_php});
+                $GLOBALS['vg_hook_calls'] = [];
+                function do_action($tag, ...$args) {{
+                    $GLOBALS['vg_hook_calls'][] = ['tag' => $tag, 'args' => $args];
+                }}
+                vg_record_route_fallback("destinations/ba-be-lake\\n-injected", "invalid_guide\\r\\n_context\\"quote");
+                echo count($GLOBALS['vg_hook_calls']), "\\n";
+                echo $GLOBALS['vg_hook_calls'][0]['tag'], "\\n";
+                """
+            )
+            self.assertEqual(result.returncode, 0, result.stderr)
+            self.assertEqual(result.stdout.splitlines(), ['1', 'vg_route_fallback_recorded'])
+            self.assertTrue(log_file.is_file(), 'Fallback log file was not created')
+            log_lines = log_file.read_text(encoding='utf-8').splitlines()
+            self.assertEqual(len(log_lines), 1)
+            self.assertIn('[VietnamGuide Route Fallback]', log_lines[0])
+            self.assertIn('path="destinations/ba-be-lake -injected"', log_lines[0])
+            self.assertIn('reason="invalid_guide  _context\'quote"', log_lines[0])
+
+    def test_archive_directory_and_git_index_contain_zero_pyc_bytecode_files(self):
+        """ops/archive-apply-scripts and git index must not contain compiled .pyc bytecode artifacts."""
+        archive_dir = REPO_PATH / 'ops' / 'archive-apply-scripts'
+        archive_pyc = list(archive_dir.rglob('*.pyc')) if archive_dir.is_dir() else []
+        self.assertEqual(
+            len(archive_pyc),
+            0,
+            f"Found {len(archive_pyc)} .pyc files in ops/archive-apply-scripts",
+        )
+        git_pyc = subprocess.run(
+            ['git', 'ls-files', '*.pyc'],
+            cwd=REPO_PATH,
+            capture_output=True,
+            text=True,
+            check=False,
+        )
+        tracked_pyc = [line for line in git_pyc.stdout.splitlines() if line.strip()]
+        self.assertEqual(tracked_pyc, [], f"Git index tracks .pyc files: {tracked_pyc}")
+
 
 if __name__ == '__main__':
     unittest.main()
+
