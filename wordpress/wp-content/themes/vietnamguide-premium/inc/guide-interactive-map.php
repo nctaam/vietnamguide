@@ -252,7 +252,14 @@ function vg_interactive_map_shortcode(array $atts = []): string
         (function() {
             'use strict';
             function initInteractiveMap() {
+                if (window.__vgInteractiveMapInit) {
+                    return;
+                }
                 var mapDesks = document.querySelectorAll('[data-vg-interactive-map]');
+                if (!mapDesks.length) {
+                    return;
+                }
+                window.__vgInteractiveMapInit = true;
                 Array.prototype.forEach.call(mapDesks, function(mapDesk) {
                     var tabBtns = mapDesk.querySelectorAll('[data-corridor-target]');
                     var panels = mapDesk.querySelectorAll('[data-corridor-panel]');
@@ -323,6 +330,9 @@ function vg_interactive_map_shortcode(array $atts = []): string
         </script>
     </section>
     <?php
+    if (function_exists('vg_enqueue_interactive_shortcode_assets')) {
+        vg_enqueue_interactive_shortcode_assets();
+    }
     return ob_get_clean();
 }
 add_shortcode('vg_interactive_map', 'vg_interactive_map_shortcode');

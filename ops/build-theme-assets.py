@@ -25,8 +25,10 @@ TARGET_FILES = [
     CSS_DIR / 'homepage.css',
     CSS_DIR / 'guide-experience.css',
     CSS_DIR / 'guide-patterns.css',
+    CSS_DIR / 'guide-interactive.css',
     JS_DIR / 'homepage.js',
     JS_DIR / 'guide-experience.js',
+    JS_DIR / 'guide-interactive.js',
 ]
 
 

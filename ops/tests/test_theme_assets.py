@@ -94,8 +94,101 @@ class TestThemeAssetsPipeline(unittest.TestCase):
         self.assertIn('assets/css/homepage.css', func_content)
         self.assertIn('assets/css/guide-experience.css', func_content)
         self.assertIn('assets/css/guide-patterns.css', func_content)
+        self.assertIn('assets/css/guide-interactive.css', func_content)
         self.assertIn('assets/js/homepage.js', func_content)
         self.assertIn('assets/js/guide-experience.js', func_content)
+        self.assertIn('assets/js/guide-interactive.js', func_content)
+
+    def test_interactive_css_extracted_from_homepage_css(self):
+        """Interactive map and photo dispatch CSS must be isolated in guide-interactive.css, not bloating homepage.css."""
+        homepage_css = (THEME_ASSETS / 'css' / 'homepage.css').read_text(encoding='utf-8')
+        interactive_css_path = THEME_ASSETS / 'css' / 'guide-interactive.css'
+        interactive_js_path = THEME_ASSETS / 'js' / 'guide-interactive.js'
+
+        self.assertTrue(interactive_css_path.is_file(), "guide-interactive.css must exist")
+        self.assertTrue(interactive_js_path.is_file(), "guide-interactive.js must exist")
+
+        interactive_css = interactive_css_path.read_text(encoding='utf-8')
+        self.assertNotIn('.vg-interactive-map-desk {', homepage_css)
+        self.assertNotIn('.vg-photo-dispatch {', homepage_css)
+        self.assertIn('.vg-interactive-map-desk {', interactive_css)
+        self.assertIn('.vg-photo-dispatch {', interactive_css)
+        self.assertIn('.vg-dispatch-lightbox {', interactive_css)
+        self.assertIn('.vg-field-desk-showcase {', interactive_css)
+
+    def test_conditional_interactive_asset_enqueue_runtime(self):
+        """vg_should_enqueue_interactive_assets must only return true on front-page or pages with interactive shortcodes."""
+        php_code = r"""
+        define('ABSPATH', 1);
+        class WP_Post {
+            public int $ID = 1;
+            public string $post_content = '';
+        }
+        $GLOBALS['vg_is_front'] = false;
+        $GLOBALS['vg_current_post'] = null;
+        $GLOBALS['vg_enqueued_styles'] = [];
+        $GLOBALS['vg_enqueued_scripts'] = [];
+
+        function is_front_page(): bool { return (bool) $GLOBALS['vg_is_front']; }
+        function get_post(): ?WP_Post { return $GLOBALS['vg_current_post']; }
+        function get_theme_file_path(string $rel = ''): string {
+            return getcwd() . '/wordpress/wp-content/themes/vietnamguide-premium/' . ltrim($rel, '/');
+        }
+        function get_theme_file_uri(string $rel = ''): string {
+            return 'https://vietnamguide.net/wp-content/themes/vietnamguide-premium/' . ltrim($rel, '/');
+        }
+        function wp_get_theme() {
+            return new class { public function get(string $k): string { return '2.0.0'; } };
+        }
+        function add_action(string $tag, callable $cb, int $p = 10, int $a = 1): void {}
+        function add_filter(string $tag, callable $cb, int $p = 10, int $a = 1): void {}
+        function add_shortcode(string $tag, callable $cb): void {}
+        function wp_enqueue_style(string $handle, string $src = '', array $deps = [], string $ver = ''): void {
+            $GLOBALS['vg_enqueued_styles'][$handle] = ['src' => $src, 'deps' => $deps, 'ver' => $ver];
+        }
+        function wp_enqueue_script(string $handle, string $src = '', array $deps = [], string $ver = '', bool $in_footer = false): void {
+            $GLOBALS['vg_enqueued_scripts'][$handle] = ['src' => $src, 'deps' => $deps, 'ver' => $ver, 'footer' => $in_footer];
+        }
+
+        require get_theme_file_path('/functions.php');
+
+        // 1. Plain guide page without interactive shortcodes -> false
+        $plainPost = new WP_Post();
+        $plainPost->post_content = '<p>Standard travel guide content without interactive map or photo dispatch.</p>';
+        $GLOBALS['vg_current_post'] = $plainPost;
+        echo vg_should_enqueue_interactive_assets($plainPost) ? "plain:1\n" : "plain:0\n";
+
+        // 2. Guide page with [vg_interactive_map] -> true
+        $mapPost = new WP_Post();
+        $mapPost->post_content = '<p>Intro</p>[vg_interactive_map]<p>Outro</p>';
+        echo vg_should_enqueue_interactive_assets($mapPost) ? "map:1\n" : "map:0\n";
+
+        // 3. Guide page with [vg_photo_dispatch] -> true
+        $photoPost = new WP_Post();
+        $photoPost->post_content = '<p>Intro</p>[vg_photo_dispatch slug="hoi-an-dusk"]';
+        echo vg_should_enqueue_interactive_assets($photoPost) ? "photo:1\n" : "photo:0\n";
+
+        // 4. Front page -> true + enqueue verification
+        $GLOBALS['vg_is_front'] = true;
+        $GLOBALS['vg_current_post'] = $plainPost;
+        echo vg_should_enqueue_interactive_assets($plainPost) ? "front:1\n" : "front:0\n";
+        vg_enqueue_interactive_shortcode_assets();
+        echo isset($GLOBALS['vg_enqueued_styles']['vietnamguide-guide-interactive']) ? "style:1\n" : "style:0\n";
+        echo isset($GLOBALS['vg_enqueued_scripts']['vietnamguide-guide-interactive']) ? "script:1\n" : "script:0\n";
+        echo strlen($GLOBALS['vg_enqueued_styles']['vietnamguide-guide-interactive']['ver']) === 64 ? "hash:1\n" : "hash:0\n";
+        """
+        res = subprocess.run(
+            ['php', '-r', php_code],
+            cwd=str(REPO_ROOT),
+            capture_output=True,
+            text=True,
+            encoding='utf-8',
+        )
+        self.assertEqual(res.returncode, 0, f"PHP runtime failed:\n{res.stdout}\n{res.stderr}")
+        self.assertEqual(
+            res.stdout.strip().splitlines(),
+            ['plain:0', 'map:1', 'photo:1', 'front:1', 'style:1', 'script:1', 'hash:1'],
+        )
 
     def test_htaccess_security_and_caching_directives(self):
         """.htaccess must enforce strict security headers and long-lived asset caching."""

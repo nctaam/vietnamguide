@@ -241,6 +241,10 @@ add_shortcode('vg_photo_dispatch', 'vg_render_photo_dispatch');
 
 function vg_enqueue_photo_dispatch_assets_once(): void
 {
+    if (function_exists('vg_enqueue_interactive_shortcode_assets')) {
+        vg_enqueue_interactive_shortcode_assets();
+    }
+
     static $rendered = false;
     if ($rendered) {
         return;
@@ -331,9 +335,9 @@ function vg_render_photo_dispatch_lightbox_template(): void
                 });
             });
 
-            document.querySelectorAll('.vg-photo-dispatch').forEach(function(dispatch) {
-                var img = dispatch.querySelector('.vg-dispatch-img');
-                var btn = dispatch.querySelector('.vg-dispatch-expand-btn');
+            document.querySelectorAll('.vg-photo-dispatch .vg-dispatch-card').forEach(function(card) {
+                var img = card.querySelector('.vg-dispatch-img');
+                var btn = card.querySelector('.vg-dispatch-expand-btn');
 
                 if (img) {
                     img.addEventListener('click', function() { openModal(img); });

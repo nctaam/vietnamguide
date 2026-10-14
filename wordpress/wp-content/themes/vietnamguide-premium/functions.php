@@ -28,6 +28,8 @@ function vg_theme_asset_version(string $relativePath): string
         'assets/js/homepage.js' => true,
         'assets/css/guide-experience.css' => true,
         'assets/js/guide-experience.js' => true,
+        'assets/css/guide-interactive.css' => true,
+        'assets/js/guide-interactive.js' => true,
     ];
 
     if ($fallbackVersion === null) {
@@ -52,6 +54,48 @@ function vg_theme_asset_version(string $relativePath): string
         : $fallbackVersion;
 
     return $versions[$normalizedPath];
+}
+
+function vg_should_enqueue_interactive_assets(?WP_Post $post = null): bool
+{
+    if (function_exists('is_front_page') && is_front_page()) {
+        return true;
+    }
+
+    $post = $post ?? (function_exists('get_post') ? get_post() : null);
+    if (! ($post instanceof WP_Post) || ! is_string($post->post_content) || $post->post_content === '') {
+        return false;
+    }
+
+    if (function_exists('has_shortcode')) {
+        if (has_shortcode($post->post_content, 'vg_interactive_map') || has_shortcode($post->post_content, 'vg_photo_dispatch')) {
+            return true;
+        }
+    }
+
+    return str_contains($post->post_content, '[vg_interactive_map')
+        || str_contains($post->post_content, '[vg_photo_dispatch');
+}
+
+function vg_enqueue_interactive_shortcode_assets(): void
+{
+    if (function_exists('wp_enqueue_style')) {
+        wp_enqueue_style(
+            'vietnamguide-guide-interactive',
+            get_theme_file_uri('/assets/css/guide-interactive.css'),
+            ['vietnamguide-homepage'],
+            vg_theme_asset_version('/assets/css/guide-interactive.css')
+        );
+    }
+    if (function_exists('wp_enqueue_script')) {
+        wp_enqueue_script(
+            'vietnamguide-guide-interactive',
+            get_theme_file_uri('/assets/js/guide-interactive.js'),
+            [],
+            vg_theme_asset_version('/assets/js/guide-interactive.js'),
+            true
+        );
+    }
 }
 
 add_action('after_setup_theme', static function (): void {
@@ -86,6 +130,9 @@ add_action('wp_enqueue_scripts', static function (): void {
             vg_theme_asset_version('/assets/js/guide-experience.js'),
             true
         );
+    }
+    if (vg_should_enqueue_interactive_assets()) {
+        vg_enqueue_interactive_shortcode_assets();
     }
 });
 function vg_primary_menu_fallback(): void
