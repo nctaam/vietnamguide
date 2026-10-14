@@ -29,26 +29,37 @@ function vg_split_guide_blocks(string $postContent): ?array
         return null;
     }
 
-    $heroBlock = $blocks[0];
-    $heroSource = serialize_block($heroBlock);
-    if (strpos($heroSource, 'vg-guide-hero') === false) {
-        return null;
+    // Branch A: Standard multi-block Gutenberg structure (pilot routes)
+    if (count($blocks) > 1) {
+        $heroBlock = $blocks[0];
+        $heroSource = serialize_block($heroBlock);
+        if (strpos($heroSource, 'vg-guide-hero') !== false && preg_match_all('/<h1\b/i', $heroSource) === 1) {
+            array_shift($blocks);
+            $bodySource = serialize_blocks($blocks);
+            if (! preg_match('/<h1\b/i', $bodySource)) {
+                return [
+                    'hero_source' => $heroSource,
+                    'body_source' => $bodySource,
+                ];
+            }
+        }
     }
 
-    if (preg_match_all('/<h1\b/i', $heroSource) !== 1) {
-        return null;
+    // Branch B: Raw HTML or single freeform block with vg-guide-hero container (legacy routes)
+    $rawHtml = $postContent;
+    if (preg_match('/(?:<!--[\s\S]*?-->\s*)?<(?:section|div)\b[^>]*class=["\'][^"\']*vg-guide-hero[^"\']*["\'][^>]*>[\s\S]*?<\/(?:section|div)>/i', $rawHtml, $m)) {
+        $heroSource = $m[0];
+        $pos = strpos($rawHtml, $heroSource);
+        $bodySource = substr($rawHtml, $pos + strlen($heroSource));
+        if (preg_match_all('/<h1\b/i', $heroSource) === 1 && ! preg_match('/<h1\b/i', $bodySource)) {
+            return [
+                'hero_source' => trim($heroSource),
+                'body_source' => trim($bodySource),
+            ];
+        }
     }
 
-    array_shift($blocks);
-    $bodySource = serialize_blocks($blocks);
-    if (preg_match('/<h1\b/i', $bodySource)) {
-        return null;
-    }
-
-    return [
-        'hero_source' => $heroSource,
-        'body_source' => $bodySource,
-    ];
+    return null;
 }
 
 function vg_inspect_guide_html(string $html): ?array

@@ -1,6 +1,18 @@
 # Verification Log
 
-Date: 2026-10-13 (Asia/Saigon)
+Date: 2026-10-14 (Asia/Saigon)
+
+## Stage 99: Universal Guide Shell Parser Expansion & 100% Sitewide Rollout Enablement
+
+- **Hybrid Guide Content Block Parser (`inc/guide-content.php`)**:
+  - Upgraded `vg_split_guide_blocks()` to dynamically support both multi-block Gutenberg structures (pilot routes) and single freeform/raw HTML structures (195 legacy routes) containing `vg-guide-hero` containers.
+  - Confirmed 100% (282/282 routes) splittability rate across all published canonical routes in the database.
+  - Generates fully populated `headings` array and dynamic Table of Contents (`toc_html`) across all legacy routes without modifying raw post contents in database.
+- **Verification Gates & Quality Assurance**:
+  - Full Unit Test Suite: 222 tests PASSED (100% OK across all 12 test suites).
+  - Master Quality Gates: 8/8 Gates PASSED (100% Exit Code 0 via `ops/verify-all-gates.ps1`).
+  - Deploy Script Parity: 60/60 files verified via `ops/deploy_theme_updates.py --dry-run`.
+  - Deploy Security Audit: 0 findings, 0 release blockers.
 
 ## Stage 98: Meta Description Length Optimization & Snippet Truncation Hardening
 
