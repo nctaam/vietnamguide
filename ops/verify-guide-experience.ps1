@@ -1659,7 +1659,7 @@ if ($null -ne $GuideTypeFunction) {
 Require-FunctionMatches $Routing 'vg_get_guide_type' 'if\s*\(!\s*\$post\s+instanceof\s+WP_Post\s+\|\|\s+\$post->post_type\s*!==\s*''page''\s*\)\s*\{\s*return\s+null;\s*\}' 'non-page guard returning null'
 Require-FunctionOrder $Routing 'vg_get_guide_type' "if (! `$post instanceof WP_Post || `$post->post_type !== 'page') {" "apply_filters('vg_guide_type'"
 Require-FunctionContains $Routing 'vg_is_guide_experience_page' 'is_page($post->ID)'
-Require-FunctionOrder $Routing 'vg_is_guide_experience_page' 'if (! in_array($path, vg_guide_pilot_paths(), true)) {' 'vg_get_guide_type($post)'
+Require-FunctionOrder $Routing 'vg_is_guide_experience_page' 'if (! isset($pilotMap[$path])) {' 'vg_get_guide_type($post)'
 
 Require-FunctionContains $ContentProvider 'vg_is_empty_freeform_block' "(`$block['blockName'] ?? null) !== null"
 Require-FunctionContains $ContentProvider 'vg_is_empty_freeform_block' "trim(`$html) === ''"

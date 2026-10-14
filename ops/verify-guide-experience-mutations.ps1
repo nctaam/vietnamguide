@@ -13,10 +13,14 @@ $RequiredContractPaths = @(
     'ops/verify-guide-experience-tokenizer.php'
     'ops/verify-guide-experience-public.ps1'
     'ops/verify-guide-experience-js-runtime.js'
+    'ops/route_registry.json'
+    'docs/baselines/2026-09-28-rollout-batches.json'
     'wordpress/wp-content/themes/vietnamguide-premium/functions.php'
     'wordpress/wp-content/themes/vietnamguide-premium/footer.php'
     'wordpress/wp-content/themes/vietnamguide-premium/page.php'
     'wordpress/wp-content/themes/vietnamguide-premium/inc/guide-routing.php'
+    'wordpress/wp-content/themes/vietnamguide-premium/inc/guide-rollout.php'
+    'wordpress/wp-content/themes/vietnamguide-premium/inc/guide-route-registry.json'
     'wordpress/wp-content/themes/vietnamguide-premium/inc/guide-content.php'
     'wordpress/wp-content/themes/vietnamguide-premium/inc/guide-context.php'
     'wordpress/wp-content/themes/vietnamguide-premium/template-parts/content-page.php'
@@ -504,7 +508,7 @@ $pilot_types = [
         Name = 'pilot allowlist bypass'
         File = 'wordpress/wp-content/themes/vietnamguide-premium/inc/guide-routing.php'
         Find = @'
-    if (! in_array($path, vg_guide_pilot_paths(), true)) {
+    if (! isset($pilotMap[$path])) {
         return false;
     }
 '@

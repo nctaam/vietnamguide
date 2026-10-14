@@ -114,6 +114,12 @@
             panel.setAttribute('hidden', '');
           }
         });
+        var statusEl = suite.querySelector('[role="status"]');
+        if (statusEl) {
+          var activeBtn = suite.querySelector('[data-dispatch-target="' + targetId + '"]');
+          var locName = activeBtn ? activeBtn.textContent.trim() : targetId;
+          statusEl.textContent = 'Active visual dispatch: ' + locName;
+        }
       }
 
       tabBtns.forEach(function (btn) {

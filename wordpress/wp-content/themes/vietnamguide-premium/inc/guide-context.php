@@ -386,6 +386,34 @@ function vg_build_guide_context(WP_Post $post): ?array
         return null;
     }
 
+    $cacheKey = '';
+    if (function_exists('wp_cache_get') && function_exists('wp_cache_set')) {
+        $eeatUpdated = function_exists('vg_eeat_get_field')
+            ? (string) vg_eeat_get_field($post->ID, 'last_meaningful_update')
+            : '';
+        $eeatSources = function_exists('vg_eeat_get_field')
+            ? (string) vg_eeat_get_field($post->ID, 'sources_checked')
+            : '';
+        $metaReviewed = (string) get_post_meta($post->ID, '_vg_reviewed_at', true);
+        $permalink = (string) get_permalink($post);
+        $fingerprint = implode('|', [
+            (string) $post->ID,
+            (string) ($post->post_title ?? ''),
+            (string) ($post->post_name ?? ''),
+            (string) ($post->post_modified_gmt ?? ''),
+            $permalink,
+            $eeatUpdated,
+            $eeatSources,
+            $metaReviewed,
+            (string) $post->post_content,
+        ]);
+        $cacheKey = 'vg_ctx_v1_' . $post->ID . '_' . md5($fingerprint);
+        $cached = wp_cache_get($cacheKey, 'vietnamguide_context');
+        if (is_array($cached) && vg_is_valid_guide_context($cached)) {
+            return $cached;
+        }
+    }
+
     $content = vg_prepare_guide_content($post);
     $type = vg_get_guide_type($post);
     if ($content === null || $type === null) {
@@ -414,7 +442,7 @@ function vg_build_guide_context(WP_Post $post): ?array
 
     $hasExistingRelated = vg_guide_body_has_related_routes($content['body_html']);
 
-    return [
+    $context = [
         'post_id' => $post->ID,
         'type' => $type,
         'title' => get_the_title($post),
@@ -431,4 +459,10 @@ function vg_build_guide_context(WP_Post $post): ?array
         'related_routes' => vg_get_related_routes($post, $hasExistingRelated),
         'has_existing_related_routes' => $hasExistingRelated,
     ];
+
+    if ($cacheKey !== '' && function_exists('wp_cache_set')) {
+        wp_cache_set($cacheKey, $context, 'vietnamguide_context', 86400);
+    }
+
+    return $context;
 }

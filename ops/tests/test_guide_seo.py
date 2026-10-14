@@ -33,9 +33,12 @@ GUIDE_SEO_PHP = THEME_INC / 'guide-seo.php'
 GUIDE_AIO_PHP = THEME_INC / 'guide-aio.php'
 IMAGE_DIMS_PHP = THEME_INC / 'image-dimensions.php'
 INTERACTIVE_MAP_PHP = THEME_INC / 'guide-interactive-map.php'
+PHOTO_DISPATCH_PHP = THEME_INC / 'guide-photo-dispatch.php'
+GUIDE_CONTEXT_PHP = THEME_INC / 'guide-context.php'
 VISA_CHECKER_PHP = THEME_INC / 'guide-visa-checker.php'
 COST_CALC_PHP = THEME_INC / 'guide-cost-calculator.php'
 GUIDE_PAGE_PHP = THEME_DIR / 'template-parts' / 'guide-page.php'
+GUIDE_EXP_CSS = THEME_DIR / 'assets' / 'css' / 'guide-experience.css'
 
 
 def _build_php_harness(php_body: str) -> str:
@@ -727,6 +730,7 @@ class TestGuideSEO(unittest.TestCase):
         # 1. Interactive map
         with open(INTERACTIVE_MAP_PHP, 'r', encoding='utf-8') as f:
             map_code = f.read()
+        self.assertIn('role="heading" aria-level="3"', map_code, "Interactive map title must use aria-level=3")
         self.assertIn('id="vg-map-aria-status"', map_code)
         self.assertIn('role="status"', map_code)
         self.assertIn('aria-live="polite"', map_code)
@@ -736,7 +740,15 @@ class TestGuideSEO(unittest.TestCase):
         svg_pin_matches = re.findall(r'<g[^>]+class="[^"]*vg-map-pin[^"]*"[^>]*tabindex=', map_code)
         self.assertEqual(len(svg_pin_matches), 0, "SVG pins must not have tabindex attributes when parent is aria-hidden")
 
-        # 2. Visa checker
+        # 2. Photo dispatch
+        with open(PHOTO_DISPATCH_PHP, 'r', encoding='utf-8') as f:
+            dispatch_code = f.read()
+        self.assertIn('role="heading" aria-level="3"', dispatch_code, "Photo dispatch title must use aria-level=3")
+        self.assertIn('id="vg-dispatch-aria-status"', dispatch_code)
+        self.assertIn('role="status"', dispatch_code)
+        self.assertIn('aria-live="polite"', dispatch_code)
+
+        # 3. Visa checker
         with open(VISA_CHECKER_PHP, 'r', encoding='utf-8') as f:
             visa_code = f.read()
         self.assertIn('role="heading" aria-level="3"', visa_code, "Visa checker title must use aria-level=3")
@@ -745,7 +757,7 @@ class TestGuideSEO(unittest.TestCase):
         self.assertIn('role="status"', visa_code)
         self.assertIn('aria-live="polite"', visa_code)
 
-        # 3. Cost calculator
+        # 4. Cost calculator
         with open(COST_CALC_PHP, 'r', encoding='utf-8') as f:
             calc_code = f.read()
         self.assertIn('role="heading" aria-level="3"', calc_code, "Cost calculator title must use aria-level=3")
@@ -753,24 +765,54 @@ class TestGuideSEO(unittest.TestCase):
         self.assertIn('id="vg-calc-aria-status"', calc_code)
         self.assertIn('aria-pressed=', calc_code, "Cost calculator buttons/pills must declare aria-pressed")
 
-        # Invariant: 0 <h2> tags across all 3 interactive components
-        for comp_name, src in [('map', map_code), ('visa', visa_code), ('calc', calc_code)]:
+        # Invariant: 0 <h2> tags across all interactive components
+        for comp_name, src in [('map', map_code), ('dispatch', dispatch_code), ('visa', visa_code), ('calc', calc_code)]:
             h2_matches = re.findall(r'<h2\b', src, re.IGNORECASE)
             self.assertEqual(len(h2_matches), 0, f"{comp_name} must have 0 <h2> tags")
 
     def test_template_parts_guide_page_semantics_and_cwv(self):
-        """guide-page.php must render semantic HTML breadcrumbs matching JSON-LD and fetchpriority=high on hero."""
+        """guide-page.php must render semantic HTML breadcrumbs matching JSON-LD, guard against duplicate breadcrumbs, and set fetchpriority=high on hero."""
         with open(GUIDE_PAGE_PHP, 'r', encoding='utf-8') as f:
             gp_code = f.read()
 
-        # Semantic breadcrumbs
+        # Semantic breadcrumbs + deduplication guard when $heroHtml already contains a Breadcrumb nav
+        self.assertIn('stripos($heroHtml, \'aria-label="Breadcrumb\') === false', gp_code)
         self.assertIn('class="vg-guide-breadcrumb"', gp_code)
         self.assertIn('aria-label="<?php esc_attr_e(\'Breadcrumbs\', \'vietnamguide-premium\'); ?>"', gp_code)
         self.assertIn('class="vg-breadcrumbs-list"', gp_code)
         self.assertIn('class="vg-breadcrumb-item"', gp_code)
 
+        # Horizontal flex list styling for .vg-breadcrumbs-list in guide-experience.css
+        with open(GUIDE_EXP_CSS, 'r', encoding='utf-8') as f:
+            css_code = f.read()
+        self.assertIn('.vg-breadcrumbs-list', css_code)
+        self.assertIn('list-style: none', css_code)
+
         # LCP Hero fetchpriority
         self.assertIn('fetchpriority="high"', gp_code, "Hero cover image must have fetchpriority='high' for CWV LCP optimization")
+
+    def test_serp_title_and_description_golden_window_100_percent(self):
+        """All 282 routes must have titles <= 60 chars and meta descriptions strictly within the 147-157 char Google SERP Golden Window."""
+        title_violations = []
+        desc_violations = []
+        for r in self.routes:
+            path = r.get('path', '')
+            title = r.get('title', '')
+            desc = r.get('description', '')
+            if not (1 <= len(title) <= 60):
+                title_violations.append((path, len(title), title))
+            if not (147 <= len(desc) <= 157):
+                desc_violations.append((path, len(desc), desc))
+
+        self.assertEqual(len(title_violations), 0, f"Found route titles exceeding 60 chars: {title_violations}")
+        self.assertEqual(len(desc_violations), 0, f"Found route descriptions outside 147-157 char Golden Window: {desc_violations}")
+
+    def test_guide_context_object_caching_contract(self):
+        """vg_build_guide_context must cache its derived route context via wp_cache_get / wp_cache_set in group vietnamguide_context."""
+        with open(GUIDE_CONTEXT_PHP, 'r', encoding='utf-8') as f:
+            ctx_code = f.read()
+        self.assertIn("wp_cache_get($cacheKey, 'vietnamguide_context'", ctx_code)
+        self.assertIn("wp_cache_set($cacheKey, $context, 'vietnamguide_context'", ctx_code)
 
 
 if __name__ == '__main__':

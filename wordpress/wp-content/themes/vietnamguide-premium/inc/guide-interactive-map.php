@@ -135,7 +135,7 @@ function vg_interactive_map_shortcode(array $atts = []): string
             <span class="vg-interactive-map-tag">
                 <?php esc_html_e('CARTOGRAPHIC INTELLIGENCE // 6 TRANSIT CORRIDORS', 'vietnamguide-premium'); ?>
             </span>
-            <h3 class="vg-interactive-map-title">
+            <h3 class="vg-interactive-map-title" role="heading" aria-level="3">
                 <?php esc_html_e('Vietnam Regional Exploration Desk', 'vietnamguide-premium'); ?>
             </h3>
             <p class="vg-interactive-map-lede">

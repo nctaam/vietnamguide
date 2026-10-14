@@ -11,6 +11,7 @@ from ops.deploy_theme_updates import (
     DEPLOY_FILES,
     backup_remote_files,
     get_remote_path,
+    prune_remote_backups,
     purge_cache,
     restore_remote_backup,
     stage_and_promote_file,
@@ -147,7 +148,45 @@ class DeployConfigTests(unittest.TestCase):
         purge_cache(ssh, config)
 
         self.assertIn("'/srv/site with spaces/wp-content/litespeed/cssjs'/*", ssh.command)
+        self.assertIn('/srv/luucache/*', ssh.command)
         self.assertIn('set -eu; rm -rf -- ', ssh.command)
+        self.assertIn("litespeed_purge_all", ssh.command)
+        self.assertIn("killall -9 lsphp", ssh.command)
+
+    def test_prune_remote_backups_retains_latest_snapshots(self):
+        class FakeChannel:
+            def recv_exit_status(self):
+                return 0
+
+        class FakeStream:
+            channel = FakeChannel()
+
+        class FakeSSH:
+            command = ''
+
+            def exec_command(self, command):
+                self.command = command
+                return None, FakeStream(), FakeStream()
+
+        config = DeployConfig(
+            host='staging.example.test',
+            port=2209,
+            user='vietnamguide-deploy',
+            key_path=r'C:\keys\deploy',
+            known_hosts=r'C:\keys\known_hosts',
+            remote_root='/srv/site with spaces',
+            allow_root=False,
+        )
+        ssh = FakeSSH()
+
+        prune_remote_backups(ssh, config, max_backups=10)
+
+        self.assertIn("'/srv/site with spaces/wp-content/.vietnamguide-deployment-backups'", ssh.command)
+        self.assertIn('tail -n +11', ssh.command)
+        self.assertIn('xargs -r rm -rf --', ssh.command)
+
+        with self.assertRaises(ValueError):
+            prune_remote_backups(ssh, config, max_backups=0)
 
     def test_remote_backup_is_created_before_upload_with_manifest(self):
         class FakeChannel:

@@ -40,6 +40,13 @@ $pageTitle = (string) ($args['title'] ?? get_the_title());
     data-vg-guide
     data-vg-guide-type="<?php echo esc_attr($type); ?>"
 >
+    <?php
+    $heroHtml = (string) ($args['hero_html'] ?? '');
+    if (stripos($heroHtml, '<img') !== false && stripos($heroHtml, 'fetchpriority') === false) {
+        $heroHtml = preg_replace('/<img\b(?![^>]*\bfetchpriority=)/i', '<img fetchpriority="high"', $heroHtml);
+    }
+    if (stripos($heroHtml, 'aria-label="Breadcrumb') === false) :
+    ?>
     <nav aria-label="<?php esc_attr_e('Breadcrumbs', 'vietnamguide-premium'); ?>" class="vg-guide-breadcrumb">
         <ol class="vg-breadcrumbs-list" itemscope itemtype="https://schema.org/BreadcrumbList">
             <li class="vg-breadcrumb-item" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
@@ -58,14 +65,9 @@ $pageTitle = (string) ($args['title'] ?? get_the_title());
             </li>
         </ol>
     </nav>
+    <?php endif; ?>
 
-    <?php
-    $heroHtml = (string) ($args['hero_html'] ?? '');
-    if (stripos($heroHtml, '<img') !== false && stripos($heroHtml, 'fetchpriority') === false) {
-        $heroHtml = preg_replace('/<img\b(?![^>]*\bfetchpriority=)/i', '<img fetchpriority="high"', $heroHtml);
-    }
-    echo $heroHtml;
-    ?>
+    <?php echo $heroHtml; ?>
 
     <div class="vg-guide-meta" role="list" aria-label="<?php esc_attr_e('Guide details', 'vietnamguide-premium'); ?>">
         <span role="listitem"><?php echo esc_html($typeLabel); ?></span>

@@ -267,13 +267,21 @@ def restore_remote_backup(ssh, config: DeployConfig, backup_dir: str) -> None:
 
 
 def purge_cache(ssh, config: DeployConfig) -> None:
+    vhost_root = posixpath.dirname(config.remote_root.rstrip('/'))
     cache_paths = [
         posixpath.join(config.remote_root, 'wp-content/litespeed/cssjs'),
         posixpath.join(config.remote_root, 'wp-content/litespeed/htmlc'),
         posixpath.join(config.remote_root, 'wp-content/cache/litespeed'),
+        posixpath.join(vhost_root, 'luucache'),
     ]
     quoted_paths = [shlex.quote(path) + '/*' for path in cache_paths]
-    command = 'set -eu; rm -rf -- ' + ' '.join(quoted_paths)
+    wp_load_q = shlex.quote(posixpath.join(config.remote_root, 'wp-load.php'))
+    command = (
+        'set -eu; rm -rf -- '
+        + ' '.join(quoted_paths)
+        + f'; php -r "if (file_exists({wp_load_q})) {{ define(\'WP_USE_THEMES\', false); require {wp_load_q}; do_action(\'litespeed_purge_all\'); }}" >/dev/null 2>&1 || true'
+        + '; killall -9 lsphp >/dev/null 2>&1 || true'
+    )
     stdin, stdout, stderr = ssh.exec_command(command)
     exit_status = stdout.channel.recv_exit_status()
     error = stderr.read().decode('utf-8', errors='replace').strip() if exit_status != 0 else ''
@@ -281,6 +289,25 @@ def purge_cache(ssh, config: DeployConfig) -> None:
         stdout.channel.close()
     if exit_status != 0:
         raise RuntimeError(f'cache purge failed ({exit_status}): {error}')
+
+
+def prune_remote_backups(ssh, config: DeployConfig, max_backups: int = 10) -> None:
+    if max_backups < 1:
+        raise ValueError('max_backups must be at least 1')
+    backup_root = posixpath.join(config.remote_root, 'wp-content/.vietnamguide-deployment-backups')
+    backup_root_q = shlex.quote(backup_root)
+    command = (
+        f'set -eu; if [ -d {backup_root_q} ]; then '
+        f'ls -1dt -- {backup_root_q}/20* 2>/dev/null | tail -n +{max_backups + 1} | xargs -r rm -rf --; '
+        f'fi'
+    )
+    stdin, stdout, stderr = ssh.exec_command(command)
+    exit_status = stdout.channel.recv_exit_status()
+    error = stderr.read().decode('utf-8', errors='replace').strip() if exit_status != 0 else ''
+    if hasattr(stdout, 'channel') and hasattr(stdout.channel, 'close'):
+        stdout.channel.close()
+    if exit_status != 0:
+        raise RuntimeError(f'backup pruning failed ({exit_status}): {error}')
 
 
 def stage_and_promote_file(
@@ -390,6 +417,9 @@ def deploy(config: DeployConfig | None = None, *, dry_run: bool = False, purge: 
             purge_cache(ssh, config)
         else:
             print('Cache purge skipped; pass --purge-cache only after post-upload verification.')
+
+        print('Pruning remote deployment backups (retaining latest 10 snapshots)...')
+        prune_remote_backups(ssh, config, max_backups=10)
     except Exception as deploy_err:
         if backup_dir is not None:
             print(f'[ROLLBACK] Deployment encountered error: {deploy_err}', file=sys.stderr)

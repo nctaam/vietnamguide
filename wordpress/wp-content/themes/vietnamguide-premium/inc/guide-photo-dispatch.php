@@ -114,6 +114,7 @@ function vg_render_photo_dispatch(array $atts): string
     ob_start();
     ?>
     <section class="vg-photo-dispatch vg-photo-dispatch--<?php echo esc_attr($atts['layout']); ?>" data-vg-photo-dispatch-suite aria-label="Visual Dispatches and Optical Telemetry">
+        <div id="vg-dispatch-aria-status" class="screen-reader-text" role="status" aria-live="polite"></div>
         <!-- Visual Dispatch Switcher Tabs -->
         <div class="vg-dispatch-pill-selector" role="tablist" aria-label="<?php echo esc_attr('Visual dispatch locations'); ?>">
             <?php foreach ($dispatches as $d_slug => $d_item):
@@ -155,7 +156,7 @@ function vg_render_photo_dispatch(array $atts): string
                         <span class="vg-dispatch-badge">VISUAL DISPATCH</span>
                         <span class="vg-dispatch-coords" aria-label="GPS Coordinates"><?php echo esc_html($item['coordinates']); ?> &bull; <?php echo esc_html($item['province']); ?></span>
                     </div>
-                    <div class="vg-dispatch-title"><?php echo esc_html($item['title']); ?></div>
+                    <div class="vg-dispatch-title" role="heading" aria-level="3"><?php echo esc_html($item['title']); ?></div>
                     <p class="vg-dispatch-lead"><?php echo esc_html($item['lead']); ?></p>
                 </header>
 
