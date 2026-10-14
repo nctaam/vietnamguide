@@ -175,7 +175,7 @@ function vg_render_visa_checker_html(): string
                 <span class="vg-vc-badge-live"><?php esc_html_e('Official Visa & Entry Guide', 'vietnamguide-premium'); ?></span>
                 <span class="vg-vc-meta">Updated: 2026 Resolution 128/NQ-CP & 127/NQ-CP</span>
             </div>
-            <div id="vg-visa-checker-title" class="vg-vc-title">Interactive Vietnam Visa &amp; E-Visa Requirements Checker</div>
+            <div id="vg-visa-checker-title" class="vg-vc-title" role="heading" aria-level="3">Interactive Vietnam Visa &amp; E-Visa Requirements Checker</div>
             <p class="vg-vc-subtitle"><?php esc_html_e('Select your nationality and planned stay duration to verify entry rules, statutory visa fees, passport expiration requirements, and official immigration checkpoints.', 'vietnamguide-premium'); ?></p>
         </div>
 
@@ -251,11 +251,11 @@ function vg_render_visa_checker_html(): string
                         <span>Border Entry Type:</span>
                     </label>
                     <div class="vg-vc-toggle-group" role="radiogroup" aria-label="Border Entry Type">
-                        <button type="button" class="vg-vc-toggle-btn active" data-entry="single" role="radio" aria-checked="true">
+                        <button type="button" class="vg-vc-toggle-btn active" data-entry="single" role="radio" aria-checked="true" aria-pressed="true">
                             <span class="vg-vc-tb-title">Single Entry</span>
                             <span class="vg-vc-tb-sub">One stay in Vietnam</span>
                         </button>
-                        <button type="button" class="vg-vc-toggle-btn" data-entry="multiple" role="radio" aria-checked="false">
+                        <button type="button" class="vg-vc-toggle-btn" data-entry="multiple" role="radio" aria-checked="false" aria-pressed="false">
                             <span class="vg-vc-tb-title">Multiple Entry</span>
                             <span class="vg-vc-tb-sub">Side trips to Cambodia/Laos</span>
                         </button>
@@ -265,7 +265,7 @@ function vg_render_visa_checker_html(): string
         </div>
 
         <!-- Dynamic Output Display Panel -->
-        <div class="vg-vc-results" id="vg-vc-results" aria-live="polite">
+        <div class="vg-vc-results" id="vg-vc-results" role="status" aria-live="polite">
             <!-- Verdict Hero Banner -->
             <div class="vg-vc-verdict-banner" id="vg-vc-verdict-card">
                 <div class="vg-vc-verdict-left">
@@ -730,9 +730,11 @@ function vg_render_visa_checker_html(): string
                 toggleButtons.forEach(b => {
                     b.classList.remove('active');
                     b.setAttribute('aria-checked', 'false');
+                    b.setAttribute('aria-pressed', 'false');
                 });
                 this.classList.add('active');
                 this.setAttribute('aria-checked', 'true');
+                this.setAttribute('aria-pressed', 'true');
                 currentEntry = this.getAttribute('data-entry');
                 updateVisaStatus();
             });

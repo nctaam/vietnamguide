@@ -83,6 +83,46 @@ add_action('template_redirect', static function (): void {
     exit;
 });
 
+// Enforce Google Search Central snippet directives and defensive indexing.
+add_filter('wp_robots', static function (array $robots): array {
+    if (is_404() || is_search()) {
+        return [
+            'noindex'  => true,
+            'nofollow' => is_404(),
+            'follow'   => is_search(),
+        ];
+    }
+
+    if (is_singular() || is_front_page() || is_home()) {
+        $robots['index']             = true;
+        $robots['follow']            = true;
+        $robots['max-snippet']       = -1;
+        $robots['max-image-preview'] = 'large';
+        $robots['max-video-preview'] = -1;
+    }
+
+    return $robots;
+}, 99);
+
+add_filter('rank_math/frontend/robots', static function ($robots) {
+    if (is_404() || is_search()) {
+        return [
+            'noindex'  => 'noindex',
+            'nofollow' => is_404() ? 'nofollow' : 'follow',
+        ];
+    }
+
+    if (is_array($robots)) {
+        $robots['index']             = 'index';
+        $robots['follow']            = 'follow';
+        $robots['max-snippet']       = 'max-snippet:-1';
+        $robots['max-image-preview'] = 'max-image-preview:large';
+        $robots['max-video-preview'] = 'max-video-preview:-1';
+    }
+
+    return $robots;
+}, 99);
+
 // Core Web Vitals & Resource Hints: Preconnect to media CDN, preload LCP hero image, verification, and PWA manifest
 add_action('wp_head', static function (): void {
     $themeUrl = get_stylesheet_directory_uri();
@@ -91,6 +131,12 @@ add_action('wp_head', static function (): void {
         : (string) get_option('vg_google_site_verification', 'G5wVuwqeUiubxqR-z_1BOA5opV1xwI4PKy-piHsN6Xc');
 
     $headTags = [];
+    if (is_404() || is_search()) {
+        $headTags[] = '<meta name="robots" content="' . (is_404() ? 'noindex, nofollow' : 'noindex, follow') . '">';
+    } elseif (is_singular() || is_front_page() || is_home()) {
+        $headTags[] = '<meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">';
+    }
+
     if ($googleVerification !== '') {
         $headTags[] = '<meta name="google-site-verification" content="' . esc_attr($googleVerification) . '">';
     }
@@ -1443,11 +1489,52 @@ function vg_rich_travel_schema_filter($data, $context = null): array
         }
 
         if ($is_article) {
+            $last_reviewed = '';
+            if (function_exists('vg_guide_registry_record')) {
+                $record = vg_guide_registry_record($uri_path);
+                if (is_array($record) && ! empty($record['last_reviewed'])) {
+                    $last_reviewed = (string) $record['last_reviewed'];
+                }
+            }
+            if ($last_reviewed !== '') {
+                $node['dateModified'] = date('Y-m-d\TH:i:sP', strtotime($last_reviewed . ' 12:00:00 +07:00'));
+            } elseif (isset($GLOBALS['post']) && ! empty($GLOBALS['post']->post_modified_gmt)) {
+                $node['dateModified'] = date('Y-m-d\TH:i:sP', strtotime($GLOBALS['post']->post_modified_gmt . ' +00:00'));
+            } else {
+                $node['dateModified'] = date('Y-m-d\TH:i:sP');
+            }
+
+            $heroImage = vg_get_default_og_image_url();
+            if (! empty($heroImage)) {
+                $node['image'] = [
+                    '@type'  => 'ImageObject',
+                    '@id'    => "{$current_url}#primaryimage",
+                    'url'    => $heroImage,
+                    'width'  => 1280,
+                    'height' => 853,
+                ];
+            }
+
             $node['reviewedBy'] = [
-                '@type' => 'Person',
-                'name'  => 'VietnamGuide editorial team',
-                'url'   => "{$canonical_base}/editorial-policy/",
+                '@type'    => 'Person',
+                'name'     => 'VietnamGuide editorial team',
+                'url'      => "{$canonical_base}/editorial-policy/",
+                'worksFor' => [
+                    '@id' => "{$canonical_base}/#organization",
+                ],
             ];
+            if (isset($node['author']) && is_array($node['author'])) {
+                if (! isset($node['author']['url'])) {
+                    $node['author']['url'] = "{$canonical_base}/editorial-policy/#team";
+                }
+                if (! isset($node['author']['worksFor'])) {
+                    $node['author']['worksFor'] = [
+                        '@type' => 'Organization',
+                        '@id'   => "{$canonical_base}/#organization",
+                        'name'  => 'VietnamGuide.net',
+                    ];
+                }
+            }
             if (isset($node['publisher']) && is_array($node['publisher']) && ! isset($node['publisher']['logo'])) {
                 $node['publisher']['logo'] = [
                     '@type'      => 'ImageObject',
@@ -1489,6 +1576,12 @@ function vg_rich_travel_schema_filter($data, $context = null): array
         if ($is_person) {
             $node['jobTitle'] = 'Editorial Desk and Field Research Team';
             $node['description'] = 'Independent travel editors and on-the-ground researchers producing verified route logistics, safety checks, and practical travel guides for Vietnam.';
+            $node['url'] = "{$canonical_base}/editorial-policy/#team";
+            $node['worksFor'] = [
+                '@type' => 'Organization',
+                '@id'   => "{$canonical_base}/#organization",
+                'name'  => 'VietnamGuide.net',
+            ];
             $node['publishingPrinciples'] = "{$canonical_base}/editorial-policy/";
             $node['knowsAbout'] = [
                 'Vietnam Travel Logistics',
@@ -2052,6 +2145,46 @@ function vg_enhance_table_markup(string $tableHtml): string
         $inner = $captionTag . "\n" . ltrim($inner);
     }
 
+    // 4. In <tbody><tr> (or body <tr> outside <thead>), convert leading <td> to <th scope="row">
+    $transformFirstCell = static function (string $trHtml): string {
+        return preg_replace_callback('/(<tr\b[^>]*>\s*)(<td\b([^>]*)>(.*?)<\/td>|<th\b([^>]*)>(.*?)<\/th>)/is', static function ($m) {
+            $trOpen = $m[1];
+            if (stripos($m[2], '<td') === 0) {
+                $attrs = $m[3] ?? '';
+                $content = $m[4] ?? '';
+                if (stripos($attrs, 'scope=') === false) {
+                    return $trOpen . '<th scope="row"' . $attrs . '>' . $content . '</th>';
+                }
+                return $trOpen . '<th' . $attrs . '>' . $content . '</th>';
+            }
+            $thAttrs = $m[5] ?? '';
+            $thContent = $m[6] ?? '';
+            if (stripos($thAttrs, 'scope=') === false) {
+                return $trOpen . '<th scope="row"' . $thAttrs . '>' . $thContent . '</th>';
+            }
+            return $trOpen . $m[2];
+        }, $trHtml);
+    };
+
+    if (stripos($inner, '<tbody') !== false) {
+        $inner = preg_replace_callback('/<tbody\b([^>]*)>(.*?)<\/tbody>/is', static function ($tbMatches) use ($transformFirstCell) {
+            $tbAttrs = $tbMatches[1];
+            $tbContent = $tbMatches[2];
+            $tbContent = preg_replace_callback('/<tr\b[^>]*>.*?<\/tr>/is', static function ($trMatches) use ($transformFirstCell) {
+                return $transformFirstCell($trMatches[0]);
+            }, $tbContent);
+            return '<tbody' . $tbAttrs . '>' . $tbContent . '</tbody>';
+        }, $inner);
+    } else {
+        if (preg_match('/^(.*<\/thead>)(.*)$/is', $inner, $split)) {
+            $head = $split[1];
+            $body = preg_replace_callback('/<tr\b[^>]*>.*?<\/tr>/is', static function ($trMatches) use ($transformFirstCell) {
+                return $transformFirstCell($trMatches[0]);
+            }, $split[2]);
+            $inner = $head . $body;
+        }
+    }
+
     return '<table' . $attrs . '>' . $inner . '</table>';
 }
 
@@ -2185,6 +2318,18 @@ function vg_enhance_content_images(string $content): string
         $decoding = $processor->get_attribute('decoding');
         if ($decoding === null) {
             $processor->set_attribute('decoding', 'async');
+        }
+
+        // 4. Ensure descriptive fallback alt text when missing or empty
+        $alt = $processor->get_attribute('alt');
+        if ($alt === null || trim($alt) === '') {
+            $path = parse_url($src, PHP_URL_PATH);
+            $basename = $path !== null && $path !== '' ? pathinfo($path, PATHINFO_FILENAME) : '';
+            $cleanAlt = trim(preg_replace('/[_-]+/', ' ', preg_replace('/^\d+px-/', '', $basename)));
+            $generatedAlt = $cleanAlt !== ''
+                ? ucwords($cleanAlt) . ' - Vietnam Travel Field Guide'
+                : 'Vietnam Travel Logistics & Advisory Overview';
+            $processor->set_attribute('alt', esc_attr($generatedAlt));
         }
     }
 

@@ -18,6 +18,21 @@ $sourceCount = (int) ($args['source_count'] ?? 0);
 $bestFor = (string) ($args['best_for'] ?? '');
 $skipIf = (string) ($args['skip_if'] ?? '');
 $relatedRoutes = is_array($args['related_routes'] ?? null) ? $args['related_routes'] : [];
+$hubUrls = [
+    'destination' => home_url('/destinations/'),
+    'itinerary'   => home_url('/itineraries/'),
+    'comparison'  => home_url('/compare/'),
+    'practical'   => home_url('/plan/'),
+];
+$hubNames = [
+    'destination' => __('Destinations', 'vietnamguide-premium'),
+    'itinerary'   => __('Itineraries', 'vietnamguide-premium'),
+    'comparison'  => __('Comparisons', 'vietnamguide-premium'),
+    'practical'   => __('Travel Planning', 'vietnamguide-premium'),
+];
+$hubUrl = $hubUrls[$type] ?? home_url('/');
+$hubName = $hubNames[$type] ?? $typeLabel;
+$pageTitle = (string) ($args['title'] ?? get_the_title());
 ?>
 <article
     id="post-<?php the_ID(); ?>"
@@ -25,7 +40,32 @@ $relatedRoutes = is_array($args['related_routes'] ?? null) ? $args['related_rout
     data-vg-guide
     data-vg-guide-type="<?php echo esc_attr($type); ?>"
 >
-    <?php echo $args['hero_html']; ?>
+    <nav aria-label="<?php esc_attr_e('Breadcrumbs', 'vietnamguide-premium'); ?>" class="vg-guide-breadcrumb">
+        <ol class="vg-breadcrumbs-list" itemscope itemtype="https://schema.org/BreadcrumbList">
+            <li class="vg-breadcrumb-item" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+                <a href="<?php echo esc_url(home_url('/')); ?>" itemprop="item"><span itemprop="name"><?php esc_html_e('Home', 'vietnamguide-premium'); ?></span></a>
+                <meta itemprop="position" content="1">
+            </li>
+            <li class="vg-breadcrumb-sep" aria-hidden="true">&rsaquo;</li>
+            <li class="vg-breadcrumb-item" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+                <a href="<?php echo esc_url($hubUrl); ?>" itemprop="item"><span itemprop="name"><?php echo esc_html($hubName); ?></span></a>
+                <meta itemprop="position" content="2">
+            </li>
+            <li class="vg-breadcrumb-sep" aria-hidden="true">&rsaquo;</li>
+            <li class="vg-breadcrumb-item is-active" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem" aria-current="page">
+                <span itemprop="name"><?php echo esc_html($pageTitle); ?></span>
+                <meta itemprop="position" content="3">
+            </li>
+        </ol>
+    </nav>
+
+    <?php
+    $heroHtml = (string) ($args['hero_html'] ?? '');
+    if (stripos($heroHtml, '<img') !== false && stripos($heroHtml, 'fetchpriority') === false) {
+        $heroHtml = preg_replace('/<img\b(?![^>]*\bfetchpriority=)/i', '<img fetchpriority="high"', $heroHtml);
+    }
+    echo $heroHtml;
+    ?>
 
     <div class="vg-guide-meta" role="list" aria-label="<?php esc_attr_e('Guide details', 'vietnamguide-premium'); ?>">
         <span role="listitem"><?php echo esc_html($typeLabel); ?></span>

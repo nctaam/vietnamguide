@@ -635,9 +635,7 @@ function vg_add_ai_crawler_directives(string $output, bool $public): string
     $ai_directives = "\n# Google AdSense Crawlers\n"
         . implode("\n\n", $adsense_lines) . "\n\n"
         . "# AI Agent & Answer Engine Discoverability\n"
-        . implode("\n\n", $bot_lines) . "\n\n"
-        . "LLMs-Txt: {$site_url}/llms.txt\n"
-        . "LLMs-Full-Txt: {$site_url}/llms-full.txt\n";
+        . implode("\n\n", $bot_lines) . "\n";
 
     return rtrim($output) . "\n" . $ai_directives;
 }

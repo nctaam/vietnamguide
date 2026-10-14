@@ -45,6 +45,12 @@
             circle.setAttribute('fill', isActive ? '#C99446' : '#0F2537');
           }
         });
+        var statusEl = mapDesk.querySelector('[role="status"]');
+        if (statusEl) {
+          var activeBtn = mapDesk.querySelector('[data-corridor-target="' + id + '"]');
+          var corridorName = activeBtn ? activeBtn.textContent.trim() : id;
+          statusEl.textContent = 'Active transit corridor: ' + corridorName;
+        }
       }
 
       Array.prototype.forEach.call(tabBtns, function (btn) {

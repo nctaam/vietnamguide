@@ -130,6 +130,7 @@ function vg_interactive_map_shortcode(array $atts = []): string
     ob_start();
     ?>
     <section class="vg-interactive-map-desk" data-vg-interactive-map aria-label="<?php esc_attr_e('Vietnam Interactive Cartography & Regional Corridors', 'vietnamguide-premium'); ?>">
+        <div id="vg-map-aria-status" class="screen-reader-text" role="status" aria-live="polite"></div>
         <div class="vg-interactive-map-header">
             <span class="vg-interactive-map-tag">
                 <?php esc_html_e('CARTOGRAPHIC INTELLIGENCE // 6 TRANSIT CORRIDORS', 'vietnamguide-premium'); ?>
@@ -141,6 +142,37 @@ function vg_interactive_map_shortcode(array $atts = []): string
                 <?php esc_html_e('Select any transit corridor to inspect distance telemetry, seasonal windows, verified daily spend, and transport connectivity across Vietnam.', 'vietnamguide-premium'); ?>
             </p>
         </div>
+
+        <noscript>
+            <div class="vg-map-noscript-fallback">
+                <h4 class="vg-map-fallback-title"><?php esc_html_e('Vietnam Regional Transit Corridors (Data Overview)', 'vietnamguide-premium'); ?></h4>
+                <table class="vg-guide-table">
+                    <caption class="vg-table-caption"><?php esc_html_e('Vietnam Regional Exploration Corridors and Telemetry', 'vietnamguide-premium'); ?></caption>
+                    <thead>
+                        <tr>
+                            <th scope="col"><?php esc_html_e('Transit Corridor', 'vietnamguide-premium'); ?></th>
+                            <th scope="col"><?php esc_html_e('Focal Destinations', 'vietnamguide-premium'); ?></th>
+                            <th scope="col"><?php esc_html_e('Distance from Hanoi', 'vietnamguide-premium'); ?></th>
+                            <th scope="col"><?php esc_html_e('Transit Duration', 'vietnamguide-premium'); ?></th>
+                            <th scope="col"><?php esc_html_e('Typical Daily Spend', 'vietnamguide-premium'); ?></th>
+                            <th scope="col"><?php esc_html_e('Optimal Season', 'vietnamguide-premium'); ?></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php foreach ($corridors as $corridor): ?>
+                            <tr>
+                                <th scope="row"><?php echo esc_html($corridor['name']); ?></th>
+                                <td><?php echo esc_html(implode(', ', $corridor['focal_nodes'])); ?></td>
+                                <td><?php echo esc_html($corridor['distance_from_hanoi']); ?></td>
+                                <td><?php echo esc_html($corridor['transit_hours']); ?></td>
+                                <td><?php echo esc_html($corridor['typical_daily_spend']); ?></td>
+                                <td><?php echo esc_html($corridor['optimal_dry_window']); ?></td>
+                            </tr>
+                        <?php endforeach; ?>
+                    </tbody>
+                </table>
+            </div>
+        </noscript>
 
         <div class="vg-interactive-map-layout">
             <!-- Left: Vector Cartography Column -->
@@ -288,6 +320,12 @@ function vg_interactive_map_shortcode(array $atts = []): string
                                 circle.setAttribute('fill', isActive ? '#C99446' : '#0F2537');
                             }
                         });
+                        var statusEl = mapDesk.querySelector('[role="status"]');
+                        if (statusEl) {
+                            var activeBtn = mapDesk.querySelector('[data-corridor-target="' + id + '"]');
+                            var corridorName = activeBtn ? activeBtn.textContent.trim() : id;
+                            statusEl.textContent = 'Active transit corridor: ' + corridorName;
+                        }
                     }
 
                     Array.prototype.forEach.call(tabBtns, function(btn) {
@@ -304,17 +342,6 @@ function vg_interactive_map_shortcode(array $atts = []): string
                             var targetId = this.getAttribute('data-corridor-pin');
                             if (targetId) {
                                 activate(targetId);
-                            }
-                        });
-                        pin.setAttribute('tabindex', '0');
-                        pin.setAttribute('role', 'button');
-                        pin.addEventListener('keydown', function(event) {
-                            if (event.key === 'Enter' || event.key === ' ') {
-                                event.preventDefault();
-                                var targetId = this.getAttribute('data-corridor-pin');
-                                if (targetId) {
-                                    activate(targetId);
-                                }
                             }
                         });
                     });

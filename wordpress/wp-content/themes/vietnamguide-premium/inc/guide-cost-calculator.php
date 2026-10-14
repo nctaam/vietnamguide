@@ -26,7 +26,7 @@ function vg_render_cost_calculator_html(): string
         <div class="vg-calc-header">
             <div class="vg-calc-heading-group">
                 <span class="vg-calc-badge"><?php esc_html_e('Interactive Planning Tool', 'vietnamguide-premium'); ?></span>
-                <div class="vg-calc-title" role="heading" aria-level="2"><?php esc_html_e('Vietnam Travel Cost Calculator', 'vietnamguide-premium'); ?></div>
+                <div class="vg-calc-title" role="heading" aria-level="3"><?php esc_html_e('Vietnam Travel Cost Calculator', 'vietnamguide-premium'); ?></div>
                 <p class="vg-calc-subtitle"><?php esc_html_e('Estimate realistic on-the-ground spending based on your trip length, travel style, party size, and domestic flight hops.', 'vietnamguide-premium'); ?></p>
             </div>
             <div class="vg-calc-currency-toggle" role="group" aria-label="<?php echo esc_attr__('Currency Selection', 'vietnamguide-premium'); ?>">
@@ -61,10 +61,10 @@ function vg_render_cost_calculator_html(): string
                         <span class="vg-calc-route-hint" id="vg-calc-route-active-hint"><?php esc_html_e('Click to load itinerary pacing', 'vietnamguide-premium'); ?></span>
                     </div>
                     <div class="vg-calc-route-chips" role="group" aria-label="<?php echo esc_attr__('Popular route presets', 'vietnamguide-premium'); ?>">
-                        <button type="button" class="vg-calc-route-chip" data-route="ha-giang" title="<?php echo esc_attr__('Ha Giang Loop 4 Days', 'vietnamguide-premium'); ?>">🏍️ Ha Giang Loop (4d)</button>
-                        <button type="button" class="vg-calc-route-chip" data-route="da-nang-hoi-an" title="<?php echo esc_attr__('Da Nang & Hoi An 5 Days', 'vietnamguide-premium'); ?>">🏮 Da Nang &amp; Hoi An (5d)</button>
-                        <button type="button" class="vg-calc-route-chip" data-route="hanoi-ninh-binh-halong" title="<?php echo esc_attr__('Hanoi, Ninh Binh & Ha Long 4 Days', 'vietnamguide-premium'); ?>">⛵ Hanoi - Bay (4d)</button>
-                        <button type="button" class="vg-calc-route-chip" data-route="classic-10d" title="<?php echo esc_attr__('Classic North-to-South 10 Days', 'vietnamguide-premium'); ?>">🚂 North-to-South (10d)</button>
+                        <button type="button" class="vg-calc-route-chip" data-route="ha-giang" title="<?php echo esc_attr__('Ha Giang Loop 4 Days', 'vietnamguide-premium'); ?>" aria-pressed="false">🏍️ Ha Giang Loop (4d)</button>
+                        <button type="button" class="vg-calc-route-chip" data-route="da-nang-hoi-an" title="<?php echo esc_attr__('Da Nang & Hoi An 5 Days', 'vietnamguide-premium'); ?>" aria-pressed="false">🏮 Da Nang &amp; Hoi An (5d)</button>
+                        <button type="button" class="vg-calc-route-chip" data-route="hanoi-ninh-binh-halong" title="<?php echo esc_attr__('Hanoi, Ninh Binh & Ha Long 4 Days', 'vietnamguide-premium'); ?>" aria-pressed="false">⛵ Hanoi - Bay (4d)</button>
+                        <button type="button" class="vg-calc-route-chip" data-route="classic-10d" title="<?php echo esc_attr__('Classic North-to-South 10 Days', 'vietnamguide-premium'); ?>" aria-pressed="false">🚂 North-to-South (10d)</button>
                     </div>
                 </div>
 
@@ -80,10 +80,10 @@ function vg_render_cost_calculator_html(): string
                         <input type="range" id="vg-calc-days-slider" class="vg-calc-slider" min="3" max="30" value="10" step="1" aria-valuemin="3" aria-valuemax="30" aria-valuenow="10" aria-describedby="vg-calc-presets-group" />
                     </div>
                     <div class="vg-calc-presets" id="vg-calc-presets-group" role="group" aria-label="<?php echo esc_attr__('Quick duration presets', 'vietnamguide-premium'); ?>">
-                        <button type="button" class="vg-calc-preset-chip" data-days="7">7d (Highlights)</button>
-                        <button type="button" class="vg-calc-preset-chip is-active" data-days="10">10d (Classic)</button>
-                        <button type="button" class="vg-calc-preset-chip" data-days="14">14d (Balanced)</button>
-                        <button type="button" class="vg-calc-preset-chip" data-days="21">21d (In-Depth)</button>
+                        <button type="button" class="vg-calc-preset-chip" data-days="7" aria-pressed="false">7d (Highlights)</button>
+                        <button type="button" class="vg-calc-preset-chip is-active" data-days="10" aria-pressed="true">10d (Classic)</button>
+                        <button type="button" class="vg-calc-preset-chip" data-days="14" aria-pressed="false">14d (Balanced)</button>
+                        <button type="button" class="vg-calc-preset-chip" data-days="21" aria-pressed="false">21d (In-Depth)</button>
                     </div>
                 </div>
 
@@ -132,10 +132,10 @@ function vg_render_cost_calculator_html(): string
                     <div class="vg-calc-field">
                         <span class="vg-calc-field-label"><strong><?php esc_html_e('Party Size:', 'vietnamguide-premium'); ?></strong></span>
                         <div class="vg-calc-pill-group" role="group" aria-label="<?php echo esc_attr__('Party size', 'vietnamguide-premium'); ?>">
-                            <button type="button" class="vg-calc-pill-btn" data-party="1">1 (Solo)</button>
-                            <button type="button" class="vg-calc-pill-btn is-active" data-party="2">2 (Couple)</button>
-                            <button type="button" class="vg-calc-pill-btn" data-party="3">3 (Group)</button>
-                            <button type="button" class="vg-calc-pill-btn" data-party="4">4 (Family)</button>
+                            <button type="button" class="vg-calc-pill-btn" data-party="1" aria-pressed="false">1 (Solo)</button>
+                            <button type="button" class="vg-calc-pill-btn is-active" data-party="2" aria-pressed="true">2 (Couple)</button>
+                            <button type="button" class="vg-calc-pill-btn" data-party="3" aria-pressed="false">3 (Group)</button>
+                            <button type="button" class="vg-calc-pill-btn" data-party="4" aria-pressed="false">4 (Family)</button>
                         </div>
                     </div>
 
@@ -143,17 +143,17 @@ function vg_render_cost_calculator_html(): string
                     <div class="vg-calc-field">
                         <span class="vg-calc-field-label"><strong><?php esc_html_e('Domestic Flights:', 'vietnamguide-premium'); ?></strong></span>
                         <div class="vg-calc-pill-group" role="group" aria-label="<?php echo esc_attr__('Domestic flights count', 'vietnamguide-premium'); ?>">
-                            <button type="button" class="vg-calc-pill-btn" data-flights="0">0 (Overland)</button>
-                            <button type="button" class="vg-calc-pill-btn" data-flights="1">1 Flight</button>
-                            <button type="button" class="vg-calc-pill-btn is-active" data-flights="2">2 Flights</button>
-                            <button type="button" class="vg-calc-pill-btn" data-flights="3">3 Flights</button>
+                            <button type="button" class="vg-calc-pill-btn" data-flights="0" aria-pressed="false">0 (Overland)</button>
+                            <button type="button" class="vg-calc-pill-btn" data-flights="1" aria-pressed="false">1 Flight</button>
+                            <button type="button" class="vg-calc-pill-btn is-active" data-flights="2" aria-pressed="true">2 Flights</button>
+                            <button type="button" class="vg-calc-pill-btn" data-flights="3" aria-pressed="false">3 Flights</button>
                         </div>
                     </div>
                 </div>
             </div>
 
             <!-- Right Column: Live Results & Visual Breakdown -->
-            <div class="vg-calc-results">
+            <div class="vg-calc-results" role="status" aria-live="polite">
                 <div class="vg-calc-summary-card">
                     <div class="vg-calc-summary-header">
                         <span class="vg-calc-summary-badge"><?php esc_html_e('Estimated Budget', 'vietnamguide-premium'); ?></span>
@@ -592,13 +592,16 @@ function vg_render_cost_calculator_html(): string
                     routeHint.textContent = 'Active preset: ' + ROUTE_PRESETS[state.route].name;
                 }
                 root.querySelectorAll('.vg-calc-route-chip').forEach(function(chip) {
-                    chip.classList.toggle('is-active', chip.getAttribute('data-route') === state.route);
+                    var isAct = chip.getAttribute('data-route') === state.route;
+                    chip.classList.toggle('is-active', isAct);
+                    chip.setAttribute('aria-pressed', isAct ? 'true' : 'false');
                 });
             } else {
                 if (routeProfile) routeProfile.style.display = 'none';
                 if (routeHint) routeHint.textContent = 'Click to load itinerary pacing';
                 root.querySelectorAll('.vg-calc-route-chip').forEach(function(chip) {
                     chip.classList.remove('is-active');
+                    chip.setAttribute('aria-pressed', 'false');
                 });
             }
 
@@ -712,7 +715,9 @@ function vg_render_cost_calculator_html(): string
                     var presetChips = root.querySelectorAll('.vg-calc-preset-chip');
                     presetChips.forEach(function (chip) {
                         var chipDays = parseInt(chip.getAttribute('data-days'), 10);
-                        chip.classList.toggle('is-active', chipDays === state.days);
+                        var isAct = (chipDays === state.days);
+                        chip.classList.toggle('is-active', isAct);
+                        chip.setAttribute('aria-pressed', isAct ? 'true' : 'false');
                     });
                     updateUI();
                 });
@@ -721,7 +726,9 @@ function vg_render_cost_calculator_html(): string
             var presetChips = root.querySelectorAll('.vg-calc-preset-chip');
             presetChips.forEach(function (chip, idx) {
                 var chipDays = parseInt(chip.getAttribute('data-days'), 10);
-                chip.classList.toggle('is-active', chipDays === state.days);
+                var isAct = (chipDays === state.days);
+                chip.classList.toggle('is-active', isAct);
+                chip.setAttribute('aria-pressed', isAct ? 'true' : 'false');
 
                 chip.addEventListener('click', function () {
                     var d = parseInt(chip.getAttribute('data-days'), 10);
@@ -729,8 +736,12 @@ function vg_render_cost_calculator_html(): string
                         slider.value = d;
                         state.days = d;
                         setSafeStorage('vg_user_duration', d);
-                        presetChips.forEach(function (c) { c.classList.remove('is-active'); });
+                        presetChips.forEach(function (c) {
+                            c.classList.remove('is-active');
+                            c.setAttribute('aria-pressed', 'false');
+                        });
                         chip.classList.add('is-active');
+                        chip.setAttribute('aria-pressed', 'true');
                         updateUI();
                     }
                 });
@@ -764,7 +775,9 @@ function vg_render_cost_calculator_html(): string
 
                         if (slider) slider.value = p.days;
                         presetChips.forEach(function (c) {
-                            c.classList.toggle('is-active', parseInt(c.getAttribute('data-days'), 10) === p.days);
+                            var isAct = parseInt(c.getAttribute('data-days'), 10) === p.days;
+                            c.classList.toggle('is-active', isAct);
+                            c.setAttribute('aria-pressed', isAct ? 'true' : 'false');
                         });
                         styleRadios.forEach(function (r) {
                             r.checked = (r.value === p.style);
@@ -772,10 +785,14 @@ function vg_render_cost_calculator_html(): string
                             if (card) card.classList.toggle('is-selected', r.value === p.style);
                         });
                         partyPills.forEach(function (btn) {
-                            btn.classList.toggle('is-active', parseInt(btn.getAttribute('data-party'), 10) === p.party);
+                            var isAct = parseInt(btn.getAttribute('data-party'), 10) === p.party;
+                            btn.classList.toggle('is-active', isAct);
+                            btn.setAttribute('aria-pressed', isAct ? 'true' : 'false');
                         });
                         flightPills.forEach(function (btn) {
-                            btn.classList.toggle('is-active', parseInt(btn.getAttribute('data-flights'), 10) === p.flights);
+                            var isAct = parseInt(btn.getAttribute('data-flights'), 10) === p.flights;
+                            btn.classList.toggle('is-active', isAct);
+                            btn.setAttribute('aria-pressed', isAct ? 'true' : 'false');
                         });
                         syncUrlParams({ days: state.days, currency: state.currency, tier: state.style, party: state.party, route: state.route });
                     }
@@ -815,8 +832,12 @@ function vg_render_cost_calculator_html(): string
                     var p = parseInt(pill.getAttribute('data-party'), 10);
                     if (p) {
                         state.party = p;
-                        partyPills.forEach(function (btn) { btn.classList.remove('is-active'); });
+                        partyPills.forEach(function (btn) {
+                            btn.classList.remove('is-active');
+                            btn.setAttribute('aria-pressed', 'false');
+                        });
                         pill.classList.add('is-active');
+                        pill.setAttribute('aria-pressed', 'true');
                         updateUI();
                     }
                 });
@@ -839,8 +860,12 @@ function vg_render_cost_calculator_html(): string
                     var f = parseInt(pill.getAttribute('data-flights'), 10);
                     if (typeof f === 'number' && !isNaN(f)) {
                         state.flights = f;
-                        flightPills.forEach(function (btn) { btn.classList.remove('is-active'); });
+                        flightPills.forEach(function (btn) {
+                            btn.classList.remove('is-active');
+                            btn.setAttribute('aria-pressed', 'false');
+                        });
                         pill.classList.add('is-active');
+                        pill.setAttribute('aria-pressed', 'true');
                         updateUI();
                     }
                 });
@@ -1010,7 +1035,9 @@ function vg_render_cost_calculator_html(): string
                     if (slider) slider.value = 10;
 
                     presetChips.forEach(function (c) {
-                        c.classList.toggle('is-active', c.getAttribute('data-days') === '10');
+                        var isAct = c.getAttribute('data-days') === '10';
+                        c.classList.toggle('is-active', isAct);
+                        c.setAttribute('aria-pressed', isAct ? 'true' : 'false');
                     });
 
                     styleRadios.forEach(function (r) {
@@ -1020,11 +1047,15 @@ function vg_render_cost_calculator_html(): string
                     });
 
                     partyPills.forEach(function (p) {
-                        p.classList.toggle('is-active', p.getAttribute('data-party') === '2');
+                        var isAct = p.getAttribute('data-party') === '2';
+                        p.classList.toggle('is-active', isAct);
+                        p.setAttribute('aria-pressed', isAct ? 'true' : 'false');
                     });
 
                     flightPills.forEach(function (f) {
-                        f.classList.toggle('is-active', f.getAttribute('data-flights') === '2');
+                        var isAct = f.getAttribute('data-flights') === '2';
+                        f.classList.toggle('is-active', isAct);
+                        f.setAttribute('aria-pressed', isAct ? 'true' : 'false');
                     });
 
                     curBtns.forEach(function (b) {
@@ -1036,6 +1067,7 @@ function vg_render_cost_calculator_html(): string
                     state.route = null;
                     routeChips.forEach(function (c) {
                         c.classList.remove('is-active');
+                        c.setAttribute('aria-pressed', 'false');
                     });
 
                     updateUI();
@@ -1228,7 +1260,7 @@ function vg_render_route_budget_widget(array $args = []): string
         <div class="vg-rb-header">
             <div class="vg-rb-title-wrap">
                 <span class="vg-rb-badge"><?php echo esc_html($cfg['badge']); ?></span>
-                <div class="vg-rb-title" role="heading" aria-level="2"><?php echo esc_html($cfg['name']); ?></div>
+                <div class="vg-rb-title" role="heading" aria-level="3"><?php echo esc_html($cfg['name']); ?></div>
             </div>
             <div class="vg-rb-currency-toggle" role="group" aria-label="<?php echo esc_attr__('Currency Selection', 'vietnamguide-premium'); ?>">
                 <button type="button" class="vg-rb-cur-btn is-active" data-cur="USD" aria-pressed="true">USD ($)</button>

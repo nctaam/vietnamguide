@@ -37,10 +37,10 @@ Write-Output "`n[GATE 5/8] Interactive Shortcodes & A11y / State Continuity..."
 python (Join-Path $ScriptDir 'tests\test_interactive_shortcodes.py')
 if ($LASTEXITCODE -ne 0) { throw "Gate 5 (Interactive Shortcodes) failed!" }
 
-# Gate 6: Canonical Route Registry, AIO Inventory & Runtime Fallback Contracts
-Write-Output "`n[GATE 6/8] Route Registry, AIO & Runtime Fallback Contracts..."
-python -m unittest (Join-Path $ScriptDir 'tests\test_route_contract.py') -v
-if ($LASTEXITCODE -ne 0) { throw "Gate 6 (Route Contract) failed!" }
+# Gate 6: Canonical Route Registry, AIO Inventory, SEO & Runtime Fallback Contracts
+Write-Output "`n[GATE 6/8] Route Registry, AIO, Google AI SEO & Runtime Fallback Contracts..."
+python -m unittest (Join-Path $ScriptDir 'tests\test_route_contract.py') (Join-Path $ScriptDir 'tests\test_guide_seo.py') -v
+if ($LASTEXITCODE -ne 0) { throw "Gate 6 (Route & SEO Contract) failed!" }
 
 # Gate 7: Deployment Configuration & SSH Trust Contracts
 Write-Output "`n[GATE 7/8] Deployment Configuration & SSH Trust Contracts..."
