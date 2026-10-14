@@ -87,13 +87,20 @@ class DeployConfigTests(unittest.TestCase):
         self.assertNotIn("SSH_USER = 'root'", source)
 
     def test_deploy_artifact_includes_the_route_registry(self):
-        expected = (
+        expected_json = (
             'wordpress/wp-content/themes/vietnamguide-premium/inc/guide-route-registry.json',
             'wp-content/themes/vietnamguide-premium/inc/guide-route-registry.json',
         )
+        expected_compiled = (
+            'wordpress/wp-content/themes/vietnamguide-premium/inc/guide-rollout.php',
+            'wp-content/themes/vietnamguide-premium/inc/guide-rollout.php',
+        )
 
-        self.assertIn(expected, DEPLOY_FILES)
-        self.assertIn((expected[0], REPO_ROOT / expected[0]), validate_local_files())
+        validated = validate_local_files()
+        self.assertIn(expected_json, DEPLOY_FILES)
+        self.assertIn(expected_compiled, DEPLOY_FILES)
+        self.assertIn((expected_json[0], REPO_ROOT / expected_json[0]), validated)
+        self.assertIn((expected_compiled[0], REPO_ROOT / expected_compiled[0]), validated)
 
     def test_remote_path_rejects_escape_attempts(self):
         config = DeployConfig(

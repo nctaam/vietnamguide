@@ -169,6 +169,37 @@ function vg_guide_route_registry(): array
         return $registry;
     }
 
+    $rolloutPath = __DIR__ . '/guide-rollout.php';
+    if (! function_exists('vg_get_compiled_route_registry_payload') && is_readable($rolloutPath)) {
+        require_once $rolloutPath;
+    }
+    if (
+        (! defined('VG_DISABLE_COMPILED_ROUTE_REGISTRY') || ! VG_DISABLE_COMPILED_ROUTE_REGISTRY)
+        && function_exists('vg_get_compiled_route_registry_payload')
+    ) {
+        $compiled = vg_get_compiled_route_registry_payload();
+        $isCanonicalRegistryPath = @realpath($registryPath) === @realpath(__DIR__ . '/guide-route-registry.json');
+        if (
+            is_array($compiled)
+            && ($compiled['schema_version'] ?? null) === 1
+            && isset($compiled['route_count'], $compiled['json_size'], $compiled['json_sha256'], $compiled['routes'])
+            && is_int($compiled['route_count'])
+            && $compiled['route_count'] >= 87
+            && is_int($compiled['json_size'])
+            && is_string($compiled['json_sha256'])
+            && is_array($compiled['routes'])
+            && count($compiled['routes']) === $compiled['route_count']
+            && @filesize($registryPath) === $compiled['json_size']
+            && (
+                ($isCanonicalRegistryPath && (! defined('VG_VERIFY_COMPILED_REGISTRY_HASH') || ! VG_VERIFY_COMPILED_REGISTRY_HASH))
+                || @hash_file('sha256', $registryPath) === $compiled['json_sha256']
+            )
+        ) {
+            $registry = $compiled['routes'];
+            return $registry;
+        }
+    }
+
     $raw = file_get_contents($registryPath);
     if (! is_string($raw) || trim($raw) === '') {
         return $registry;

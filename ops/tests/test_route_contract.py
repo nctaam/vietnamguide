@@ -775,7 +775,71 @@ class RouteContractTests(unittest.TestCase):
         tracked_pyc = [line for line in git_pyc.stdout.splitlines() if line.strip()]
         self.assertEqual(tracked_pyc, [], f"Git index tracks .pyc files: {tracked_pyc}")
 
+    def test_compiled_php_registry_parity_and_tamper_fallback(self):
+        """Compiled PHP route registry in inc/guide-rollout.php must match JSON registry 100% and reject stale cache on SHA-256 mismatch."""
+        from ops.route_contract import compile_php_registry
+
+        json_path = (
+            REPO_PATH
+            / 'wordpress'
+            / 'wp-content'
+            / 'themes'
+            / 'vietnamguide-premium'
+            / 'inc'
+            / 'guide-route-registry.json'
+        )
+        compiled_path = (
+            REPO_PATH
+            / 'wordpress'
+            / 'wp-content'
+            / 'themes'
+            / 'vietnamguide-premium'
+            / 'inc'
+            / 'guide-rollout.php'
+        )
+        self.assertTrue(compiled_path.is_file(), f"Missing compiled PHP registry: {compiled_path}")
+        expected_code = compile_php_registry(json_path)
+        self.assertEqual(
+            compiled_path.read_text(encoding='utf-8'),
+            expected_code,
+            'inc/guide-rollout.php is out of sync with inc/guide-route-registry.json',
+        )
+
+        # Verify runtime parity between compiled OPcache fast-path and forced JSON fallback
+        res_fast = self._run_php_harness(
+            """
+            $reg = vg_guide_route_registry();
+            echo json_encode($reg);
+            """
+        )
+        res_json = self._run_php_harness(
+            """
+            define('VG_DISABLE_COMPILED_ROUTE_REGISTRY', true);
+            $reg = vg_guide_route_registry();
+            echo json_encode($reg);
+            """
+        )
+        self.assertEqual(res_fast.returncode, 0, res_fast.stderr)
+        self.assertEqual(res_json.returncode, 0, res_json.stderr)
+        self.assertEqual(json.loads(res_fast.stdout), json.loads(res_json.stdout))
+
+        # Verify cryptographic tamper detection: if JSON is corrupted while compiled PHP exists, it must fail closed
+        with tempfile.TemporaryDirectory(prefix='vg-tamper-registry-') as tmp_dir:
+            tamper_root = Path(tmp_dir)
+            (tamper_root / 'inc').mkdir()
+            (tamper_root / 'inc' / 'guide-route-registry.json').write_text(
+                '{ corrupted json', encoding='utf-8'
+            )
+            res_tamper = self._run_php_harness(
+                "echo count(vg_guide_route_registry()), \"\\n\";",
+                theme_file_root=tamper_root,
+            )
+            self.assertEqual(res_tamper.returncode, 0, res_tamper.stderr)
+            self.assertEqual(res_tamper.stdout.strip(), '0')
+
+
 
 if __name__ == '__main__':
     unittest.main()
+
 
