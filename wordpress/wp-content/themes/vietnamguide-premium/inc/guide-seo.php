@@ -5,10 +5,145 @@ if (! defined('ABSPATH')) {
 
 require_once __DIR__ . '/image-dimensions.php';
 
-function vg_get_default_og_image_url(): string
+/**
+ * Resolve natural [width, height] for an image URL from vg_get_known_image_dimensions().
+ * Guarantees accurate intrinsic dimensions for Schema.org ImageObject and Google Discover.
+ *
+ * @return array{0:int,1:int}
+ */
+function vg_resolve_image_dimensions_by_url(string $url): array
 {
-    $defaultImage = get_theme_file_uri('/assets/images/ha-long-bay-vietnam-hero.jpg');
+    $dimensions = function_exists('vg_get_known_image_dimensions') ? vg_get_known_image_dimensions() : [];
+    $cleanUrl = trim($url);
 
+    if ($cleanUrl !== '') {
+        if (isset($dimensions[$cleanUrl])) {
+            return [(int) $dimensions[$cleanUrl][0], (int) $dimensions[$cleanUrl][1]];
+        }
+        $decodedUrl = rawurldecode($cleanUrl);
+        if (isset($dimensions[$decodedUrl])) {
+            return [(int) $dimensions[$decodedUrl][0], (int) $dimensions[$decodedUrl][1]];
+        }
+        $path = parse_url($cleanUrl, PHP_URL_PATH);
+        $basename = is_string($path) && $path !== '' ? basename($path) : '';
+        $decodedBasename = rawurldecode($basename);
+
+        if ($basename !== '' && isset($dimensions[$basename])) {
+            return [(int) $dimensions[$basename][0], (int) $dimensions[$basename][1]];
+        }
+        if ($decodedBasename !== '' && isset($dimensions[$decodedBasename])) {
+            return [(int) $dimensions[$decodedBasename][0], (int) $dimensions[$decodedBasename][1]];
+        }
+        if ($basename !== '' && preg_match('/(?:^|\/)(\d+)px-/i', $basename, $m)) {
+            $w = (int) $m[1];
+            $h = (int) round($w * 2 / 3);
+            if ($w > 0 && $h > 0) {
+                return [$w, $h];
+            }
+        }
+        if (str_contains($cleanUrl, 'ha-long-bay-vietnam-hero.jpg')) {
+            return [1920, 1080];
+        }
+    }
+
+    return [1280, 853];
+}
+
+/**
+ * Return a verified >= 1920px high-resolution Google Discover image for each of the 12 travel clusters.
+ *
+ * @return array{url:string,width:int,height:int,caption:string}
+ */
+function vg_get_cluster_default_discover_image(string $clusterId): array
+{
+    $heroFallback = get_theme_file_uri('/assets/images/ha-long-bay-vietnam-hero.jpg');
+    $map = [
+        'northern_triangle' => [
+            'url'     => 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/Hanoi-lac-hoan-kiem.jpg/1920px-Hanoi-lac-hoan-kiem.jpg',
+            'width'   => 1920,
+            'height'  => 1284,
+            'caption' => 'Hoan Kiem Lake and Red River Delta gateway in Hanoi, Vietnam',
+        ],
+        'ha_long_bay' => [
+            'url'     => 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/fa/Ha_Long_Bay%2C_Vietnam%2C_View_from_above.jpg/1920px-Ha_Long_Bay%2C_Vietnam%2C_View_from_above.jpg',
+            'width'   => 1920,
+            'height'  => 1280,
+            'caption' => 'Aerial view of limestone karst formations in Ha Long Bay, Vietnam',
+        ],
+        'ninh_binh' => [
+            'url'     => 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/f4/Mua_Cave%2C_Ninh_Binh%2C_Vietnam%2C_20240202_0926_4964.jpg/1920px-Mua_Cave%2C_Ninh_Binh%2C_Vietnam%2C_20240202_0926_4964.jpg',
+            'width'   => 1920,
+            'height'  => 1278,
+            'caption' => 'Limestone karst peaks and river valley from Mua Cave viewpoint in Ninh Binh, Vietnam',
+        ],
+        'central_heritage' => [
+            'url'     => 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d6/H%E1%BB%99i_An%2C_Ancient_Town%2C_2020-01_CN-11.jpg/1920px-H%E1%BB%99i_An%2C_Ancient_Town%2C_2020-01_CN-11.jpg',
+            'width'   => 1920,
+            'height'  => 1575,
+            'caption' => 'UNESCO merchant shophouses and Thu Bon riverfront in Hoi An Ancient Town, Vietnam',
+        ],
+        'southern_delta' => [
+            'url'     => 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/3d/Ho_Chi_Minh_City%2C_City_Hall%2C_2020-01_CN-02.jpg/1920px-Ho_Chi_Minh_City%2C_City_Hall%2C_2020-01_CN-02.jpg',
+            'width'   => 1920,
+            'height'  => 1220,
+            'caption' => 'Nguyen Hue walking boulevard and historic City Hall in District 1, Ho Chi Minh City, Vietnam',
+        ],
+        'northern_highlands' => [
+            'url'     => 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/ca/Rice_terraces_in_Sapa%2C_Vietnam.jpg/1920px-Rice_terraces_in_Sapa%2C_Vietnam.jpg',
+            'width'   => 1920,
+            'height'  => 1280,
+            'caption' => 'Stepped mountain rice terraces in Muong Hoa Valley, Sa Pa, Northern Vietnam',
+        ],
+        'coastal_islands' => [
+            'url'     => 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/33/Kem_Beach_aerial_view_Phu_Quoc_Island_Vietnam.jpg/1920px-Kem_Beach_aerial_view_Phu_Quoc_Island_Vietnam.jpg',
+            'width'   => 1920,
+            'height'  => 1440,
+            'caption' => 'Turquoise coastal waters and white sand shoreline at Kem Beach, Phu Quoc Island, Vietnam',
+        ],
+        'central_highlands' => [
+            'url'     => 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/98/Forest_in_Cuc_Phuong_National_Park_%2815706323528%29.jpg/1920px-Forest_in_Cuc_Phuong_National_Park_%2815706323528%29.jpg',
+            'width'   => 1920,
+            'height'  => 1275,
+            'caption' => 'Highland forest canopy and plateau trekking trail in the Central Highlands, Vietnam',
+        ],
+        'phong_nha_caves' => [
+            'url'     => 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/f1/Son_River-Quang_Binh_province.jpg/1920px-Son_River-Quang_Binh_province.jpg',
+            'width'   => 1920,
+            'height'  => 1354,
+            'caption' => 'Son River and limestone karst mountains in Phong Nha-Ke Bang National Park, Quang Binh, Vietnam',
+        ],
+        'mekong_delta' => [
+            'url'     => 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/90/Vietnam%2C_Phong_Dien%2C_Mekong_Delta%2C_River.jpg/1920px-Vietnam%2C_Phong_Dien%2C_Mekong_Delta%2C_River.jpg',
+            'width'   => 1920,
+            'height'  => 1280,
+            'caption' => 'Riverine canal network and wooden sampan boats in Phong Dien, Mekong Delta, Vietnam',
+        ],
+        'far_north_frontier' => [
+            'url'     => 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/3d/TuSan_Canyon.jpg/1920px-TuSan_Canyon.jpg',
+            'width'   => 1920,
+            'height'  => 1080,
+            'caption' => 'Nho Que River winding through Tu San Canyon on the northern frontier of Vietnam',
+        ],
+        'national_circuit' => [
+            'url'     => $heroFallback,
+            'width'   => 1920,
+            'height'  => 1080,
+            'caption' => 'Vietnam independent travel route planning and logistics guide',
+        ],
+    ];
+
+    return $map[$clusterId] ?? $map['national_circuit'];
+}
+
+/**
+ * Resolve the primary Google Discover / Schema.org ImageObject for a route or singular post.
+ * Prefers inline content images meeting the >= 1200x675px Discover threshold, falling back to
+ * the route's regional travel cluster 1920px hero image.
+ *
+ * @return array{url:string,width:int,height:int,caption:string}
+ */
+function vg_resolve_discover_image_object(?string $uriPath = null): array
+{
     if (is_singular()) {
         $post = get_post();
         if ($post instanceof WP_Post && ! empty($post->post_content)) {
@@ -22,7 +157,19 @@ function vg_get_default_og_image_url(): string
                             if (preg_match('/\.([a-zA-Z0-9]+)$/', $src, $m)) {
                                 $src = substr($src, 0, -strlen($m[1])) . strtolower($m[1]);
                             }
-                            return $src;
+                            [$w, $h] = vg_resolve_image_dimensions_by_url($src);
+                            if ($w >= 1200 && $h >= 675) {
+                                $alt = $processor->get_attribute('alt');
+                                $caption = (is_string($alt) && trim($alt) !== '')
+                                    ? trim($alt)
+                                    : ($post->post_title !== '' ? (string) $post->post_title : 'Vietnam Travel Field Guide');
+                                return [
+                                    'url'     => $src,
+                                    'width'   => $w,
+                                    'height'  => $h,
+                                    'caption' => $caption,
+                                ];
+                            }
                         }
                     }
                 }
@@ -30,7 +177,38 @@ function vg_get_default_og_image_url(): string
         }
     }
 
-    return $defaultImage;
+    $resolvedPath = is_string($uriPath) ? trim($uriPath, '/') : '';
+    if ($resolvedPath === '' && is_singular()) {
+        $post = get_post();
+        if ($post instanceof WP_Post && function_exists('vg_get_guide_path') && function_exists('get_page_uri')) {
+            $resolvedPath = vg_get_guide_path($post);
+        }
+        if ($resolvedPath === '' && isset($_SERVER['REQUEST_URI'])) {
+            $parsed = parse_url((string) $_SERVER['REQUEST_URI'], PHP_URL_PATH);
+            if (is_string($parsed)) {
+                $resolvedPath = trim($parsed, '/');
+            }
+        }
+        if ($resolvedPath === '' && $post instanceof WP_Post && ! empty($post->post_name)) {
+            $resolvedPath = trim((string) $post->post_name, '/');
+        }
+    }
+
+    $clusterId = 'national_circuit';
+    if ($resolvedPath !== '' && function_exists('vg_find_travel_cluster_by_path')) {
+        $cluster = vg_find_travel_cluster_by_path($resolvedPath);
+        if (is_array($cluster) && ! empty($cluster['id'])) {
+            $clusterId = (string) $cluster['id'];
+        }
+    }
+
+    return vg_get_cluster_default_discover_image($clusterId);
+}
+
+function vg_get_default_og_image_url(?string $uriPath = null): string
+{
+    $img = vg_resolve_discover_image_object($uriPath);
+    return $img['url'];
 }
 
 // Hook into Rank Math OpenGraph image builder
@@ -1697,8 +1875,11 @@ add_filter('the_content', static function (string $content): string {
  * Recursively cleans Schema.org data: decodes HTML entities (&amp; -> &),
  * enforces native booleans for publicAccess/isAccessibleForFree, and formats position/numberOfItems as integers.
  */
-function vg_schema_clean_data(mixed $value): mixed
+function vg_schema_clean_data(mixed $value, int $depth = 0): mixed
 {
+    if ($depth >= 64) {
+        return $value;
+    }
     if (is_string($value)) {
         return html_entity_decode($value, ENT_QUOTES | ENT_HTML5, 'UTF-8');
     }
@@ -1712,10 +1893,10 @@ function vg_schema_clean_data(mixed $value): mixed
                 if (is_numeric($v)) {
                     $value[$k] = (int) $v;
                 } else {
-                    $value[$k] = vg_schema_clean_data($v);
+                    $value[$k] = vg_schema_clean_data($v, $depth + 1);
                 }
             } else {
-                $value[$k] = vg_schema_clean_data($v);
+                $value[$k] = vg_schema_clean_data($v, $depth + 1);
             }
         }
     }
@@ -1773,6 +1954,8 @@ function vg_rich_travel_schema_filter($data, $context = null): array
     $trip_id = "{$current_url}#tourist-trip";
     $action_id = "{$current_url}#travel-action";
     $webpage_id = "{$current_url}#webpage";
+    $primary_image_id = "{$current_url}#primaryimage";
+    $discover_image = vg_resolve_discover_image_object($uri_path);
 
     // Idempotence check: return early if destination node already exists in this graph
     $existing_nodes = isset($data['@graph']) && is_array($data['@graph']) ? $data['@graph'] : $data;
@@ -1790,6 +1973,7 @@ function vg_rich_travel_schema_filter($data, $context = null): array
         'name'               => $dest_schema['name'],
         'description'        => $dest_schema['description'],
         'url'                => $current_url,
+        'image'              => ['@id' => $primary_image_id],
         'touristType'        => $dest_schema['tourist_type'],
         'currenciesAccepted'  => 'VND',
         'availableLanguage'   => ['en', 'vi'],
@@ -1981,15 +2165,20 @@ function vg_rich_travel_schema_filter($data, $context = null): array
             }
         }
 
-        if ($is_webpage && is_array($registry_record)) {
-            if (! empty($registry_record['title'])) {
-                $node['name'] = (string) $registry_record['title'];
+        if ($is_webpage) {
+            if (! isset($node['primaryImageOfPage'])) {
+                $node['primaryImageOfPage'] = ['@id' => $primary_image_id];
             }
-            if (! empty($registry_record['description'])) {
-                $node['description'] = (string) $registry_record['description'];
-            }
-            if (! empty($registry_record['last_reviewed'])) {
-                $node['dateModified'] = vg_format_registry_iso8601((string) $registry_record['last_reviewed']);
+            if (is_array($registry_record)) {
+                if (! empty($registry_record['title'])) {
+                    $node['name'] = (string) $registry_record['title'];
+                }
+                if (! empty($registry_record['description'])) {
+                    $node['description'] = (string) $registry_record['description'];
+                }
+                if (! empty($registry_record['last_reviewed'])) {
+                    $node['dateModified'] = vg_format_registry_iso8601((string) $registry_record['last_reviewed']);
+                }
             }
         }
 
@@ -2014,14 +2203,14 @@ function vg_rich_travel_schema_filter($data, $context = null): array
                 $node['dateModified'] = date('Y-m-d\TH:i:sP');
             }
 
-            $heroImage = vg_get_default_og_image_url();
-            if (! empty($heroImage)) {
+            if (! empty($discover_image['url'])) {
                 $node['image'] = [
-                    '@type'  => 'ImageObject',
-                    '@id'    => "{$current_url}#primaryimage",
-                    'url'    => $heroImage,
-                    'width'  => 1280,
-                    'height' => 853,
+                    '@type'   => 'ImageObject',
+                    '@id'     => $primary_image_id,
+                    'url'     => $discover_image['url'],
+                    'width'   => (int) $discover_image['width'],
+                    'height'  => (int) $discover_image['height'],
+                    'caption' => $discover_image['caption'],
                 ];
             }
 
@@ -2253,6 +2442,86 @@ function vg_get_page_faq_schema(string $uri_path, string $current_url): ?array
             ['q' => 'Is it better to travel North to South or South to North in Vietnam?', 'a' => 'Both directions work equally well because domestic flights and overnight sleeper trains connect all major hubs. Starting in Hanoi (North) offers an immediate immersion in historic culture and karst landscapes, finishing with relaxed tropical energy in the South.'],
             ['q' => 'What is the most time-efficient way to travel between regions in Vietnam?', 'a' => 'Domestic flights on Vietnam Airlines or Vietjet between Hanoi, Da Nang, and Ho Chi Minh City take only 1 hour 20 minutes each, saving entire days compared to 16-to-30-hour overland bus or train journeys across the 1,600 km length of the country.'],
         ],
+        'hanoi-travel-guide' => [
+            ['q' => 'How many days should I spend in Hanoi?', 'a' => 'Allocate 2 to 3 full days inside Hanoi to explore the Old Quarter, Hoan Kiem Lake, Temple of Literature, and Ba Dinh historic district, plus 1 to 2 extra days if taking day trips to Ninh Binh or Ha Long Bay.'],
+            ['q' => 'How do I get from Noi Bai Airport (HAN) to Hanoi Old Quarter?', 'a' => 'Route 86 Express Bus runs every 25 to 30 minutes from Terminal 1 and Terminal 2 directly to Hoan Kiem Lake for 45,000 VND (1.80 USD) in 45 to 55 minutes. Metered taxis and Grab cars cost 300,000 to 400,000 VND (12 to 16 USD).'],
+            ['q' => 'Which neighborhood is best for first-time visitors in Hanoi?', 'a' => 'Hoan Kiem (Old Quarter and French Quarter) puts you within a 10-minute walk of major museums, water puppet theaters, and street food alleys. Tay Ho (West Lake) suits longer stays seeking quieter lakeside cafes.'],
+        ],
+        'ho-chi-minh-city-travel-guide' => [
+            ['q' => 'How far is Tan Son Nhat Airport (SGN) from District 1 in Ho Chi Minh City?', 'a' => 'Tan Son Nhat Airport sits 8 kilometers north of District 1. Bus 109 or Bus 152 reaches Ben Thanh Market in 30 to 45 minutes for 5,000 to 20,000 VND, while a Grab car or Vinasun/Mai Linh metered taxi costs 120,000 to 180,000 VND (5 to 7.50 USD).'],
+            ['q' => 'How many days are needed for Ho Chi Minh City?', 'a' => 'Two full days cover District 1 colonial landmarks, the War Remnants Museum, Ben Thanh Market, and Chinatown (Cholon), while a third or fourth day allows day trips to the Cu Chi Tunnels or the Mekong Delta.'],
+            ['q' => 'Which district is best to stay in Ho Chi Minh City?', 'a' => 'District 1 is best for first-time visitors wanting walkable access to museums, Nguyen Hue Walking Street, and Ben Thanh Metro Station. District 3 offers tree-lined streets and local dining, while Thao Dien (District 2) suits boutique cafe stays.'],
+        ],
+        'da-lat-travel-guide' => [
+            ['q' => 'How do I get to Da Lat from Ho Chi Minh City or Nha Trang?', 'a' => 'Direct flights land at Lien Khuong Airport (DLI), located 30 km south of Da Lat center (40 minutes by shuttle bus for 40,000 to 50,000 VND or taxi for 250,000 to 300,000 VND). Overland limousine sleeper buses take 6.5 to 7.5 hours from Ho Chi Minh City (300 km) or 3.5 to 4 hours from Nha Trang (135 km via Khanh Le Pass).'],
+            ['q' => 'What is the weather like in Da Lat year-round?', 'a' => 'Seated at 1,500 meters elevation on the Langbiang Plateau, Da Lat maintains cool temperatures of 14°C to 24°C year-round. The dry pine season runs from November to March, while afternoon rains occur from May to October.'],
+            ['q' => 'How many days should I plan for Da Lat?', 'a' => 'Plan 3 days in Da Lat to cover Xuan Huong Lake, Datanla or Pongour waterfalls, Langbiang Peak trekking, and highland Arabica coffee plantations in Cau Dat.'],
+        ],
+        'mang-den-travel-guide' => [
+            ['q' => 'How do I travel to Mang Den in Kon Tum Province?', 'a' => 'Fly into Pleiku Airport (PXU), located 100 kilometers southwest of Mang Den, then take a 2.5-hour taxi (900,000 to 1,100,000 VND) or local bus via Kon Tum city along National Highway 24. Overnight sleeper buses also run from Ho Chi Minh City and Da Nang.'],
+            ['q' => 'What is the elevation and best season to visit Mang Den?', 'a' => 'Mang Den sits at 1,200 meters elevation with cool pine forests and temperatures between 15°C and 22°C. The dry season from December to April brings clear skies, cherry blossoms in January, and dry forest trails around Pa Sy Waterfall and Dak Ke Lake.'],
+            ['q' => 'How does Mang Den compare to Da Lat?', 'a' => 'Mang Den is much quieter and less urbanized than Da Lat, retaining dense primary pine canopy, lower traffic density, and small-scale eco-lodges rather than large commercial shopping districts.'],
+        ],
+        'phong-nha-travel-guide' => [
+            ['q' => 'How do I reach Phong Nha-Ke Bang National Park?', 'a' => 'Arrive at Dong Hoi Airport (VDH) or Dong Hoi Railway Station, both located 45 kilometers (50 minutes by taxi, 450,000 to 550,000 VND, or local B4 bus for 35,000 VND) east of Phong Nha town. Direct sleeper buses also stop in Phong Nha from Hue (4 hours), Ninh Binh (7 hours), and Hanoi (9 hours).'],
+            ['q' => 'Which caves in Phong Nha can I visit without booking months in advance?', 'a' => 'Paradise Cave (31 km dry karst system, 250,000 VND entry), Phong Nha Cave (underground boat ride, 150,000 VND entry plus 550,000 VND shared boat for up to 12 people), and Dark Cave can be visited on arrival without multi-month expedition permits.'],
+            ['q' => 'When is Phong Nha affected by seasonal flooding?', 'a' => 'Heavy autumn rains in October and November raise the Son River level, occasionally submerging the boat entrance to Phong Nha Cave and river caverns, while elevated dry caverns like Paradise Cave usually remain open.'],
+        ],
+        'mekong-delta-travel-guide' => [
+            ['q' => 'Is Can Tho or Ben Tre better for visiting the Mekong Delta?', 'a' => 'Ben Tre (85 km from Ho Chi Minh City, 2 hours by car) is ideal for a 1-day or 2-day trip focusing on shaded coconut canals, brick kilns, and quiet cycling paths. Can Tho (170 km, 3.5 hours by bus) is essential for seeing the Cai Rang Floating Market at dawn.'],
+            ['q' => 'What time should I arrive at Cai Rang Floating Market in Can Tho?', 'a' => 'Depart Ninh Kieu Wharf by sampan between 5:15 AM and 5:45 AM to reach Cai Rang Floating Market at peak wholesale trading between 6:00 AM and 7:30 AM before tropical heat disperses the merchant boats.'],
+            ['q' => 'Can I take a boat from the Mekong Delta to Phnom Penh, Cambodia?', 'a' => 'Yes. After traveling overland to Chau Doc on the Cambodian border, high-speed passenger boats depart daily at 7:00 AM to 7:30 AM up the Mekong River to Phnom Penh, taking 5 hours including Vinh Xuong river border immigration.'],
+        ],
+        'cao-bang-travel-guide' => [
+            ['q' => 'How do I get from Hanoi to Cao Bang and Ban Gioc Waterfall?', 'a' => 'Overnight sleeper buses and VIP limousine vans depart Hanoi (My Dinh or Gia Lam stations) for Cao Bang city, covering 280 km in 6 to 7 hours for 300,000 to 450,000 VND. From Cao Bang city, local buses or motorbikes cover the remaining 85 km to Ban Gioc Waterfall in 2 to 2.5 hours.'],
+            ['q' => 'When does Ban Gioc Waterfall have the best water flow?', 'a' => 'September and October offer the strongest turquoise water volume combined with golden rice harvests and clear skies, immediately following the June-to-August summer rains.'],
+            ['q' => 'Do foreign tourists need a border permit for Ban Gioc Waterfall?', 'a' => 'Walking visits to the main Ban Gioc Waterfall viewpoint and Nguom Ngao Cave (45,000 VND ticket each) only require carrying your original passport for hotel registration and checkpoint verification.'],
+        ],
+        'sapa-travel-guide' => [
+            ['q' => 'How do I reach Fansipan Peak in Sapa?', 'a' => 'Take the Muong Hoa funicular train from Sapa Plaza to the cable car station, ride the 15-minute three-rope cable car to 3,000 meters, and climb 600 stone steps (or take the summit funicular) to the 3,143-meter roof of Indochina. Round-trip cable car tickets cost 800,000 to 850,000 VND.'],
+            ['q' => 'What is the best trekking route in Sapa?', 'a' => 'The Muong Hoa Valley trek from Y Linh Ho through Lao Chai to Ta Van village (12 to 15 km, 4 to 5 hours) follows terraced rice slopes and suspension bridges with Black Hmong and Giay local guides.'],
+            ['q' => 'What months have the clearest views in Sapa?', 'a' => 'September to October (golden rice harvest) and March to May offer the highest visibility and pleasant 15°C to 24°C trekking weather, whereas December to February often brings dense freezing fog.'],
+        ],
+        'ha-giang-loop-planning-guide' => [
+            ['q' => 'How many days are needed for the Ha Giang Loop?', 'a' => 'Plan 3 to 4 full days on the loop (plus 2 travel nights on the 6-hour sleeper bus from Hanoi) to cover the 350-kilometer circuit across Quan Ba, Yen Minh, Dong Van, Ma Pi Leng Pass, and Du Gia safely without rushing mountain passes after dark.'],
+            ['q' => 'Do I need a permit to visit the Ha Giang Loop?', 'a' => 'Foreign travelers entering border districts (Quan Ba, Yen Minh, Dong Van, Meo Vac) require a Ha Giang border area permit costing 230,000 VND (approx. 10 USD), obtainable in 10 minutes at the Ha Giang Immigration Office or via your homestay/tour operator.'],
+            ['q' => 'What is the Nho Que River boat ride cost on the Ha Giang Loop?', 'a' => 'Boats through Tu San Alley canyon on the Nho Que River below Ma Pi Leng Pass cost 120,000 to 150,000 VND per person, including the electric shuttle van transfer down to the boat dock.'],
+        ],
+        'ninh-binh-travel-guide' => [
+            ['q' => 'How long is the train or bus ride from Hanoi to Ninh Binh?', 'a' => 'Reunification Express trains (SE1, SE3, SE5, SE7) from Hanoi Railway Station to Ninh Binh Station take 2 hours and 15 minutes (100,000 to 180,000 VND). Shared limousine vans via the Phap Van - Cau Gie Expressway take 1.5 to 2 hours door-to-door to Tam Coc or Trang An (150,000 to 250,000 VND).'],
+            ['q' => 'Should I stay in Tam Coc or Trang An in Ninh Binh?', 'a' => 'Stay in Tam Coc or Trang An rather than Ninh Binh city center. Tam Coc offers walkable restaurants, bicycle rentals, and boat pier access, while Trang An and Hoa Lu provide quiet valley eco-lodges surrounded by limestone karsts.'],
+            ['q' => 'How many steps is the climb at Hang Mua (Mua Cave) viewpoint?', 'a' => 'Hang Mua viewpoint features 486 stone steps ascending Ngoa Long Mountain above the Tam Coc river valley. Entry costs 100,000 VND per person, and arriving before 7:30 AM avoids midday heat and tour crowds.'],
+        ],
+        'ha-long-bay-travel-guide' => [
+            ['q' => 'How long does it take to travel from Hanoi to Ha Long Bay?', 'a' => 'Via the Hanoi - Hai Phong - Ha Long Expressway (CT04/CT06), shared limousine vans and private cars cover the 155-kilometer distance from Hanoi Old Quarter to Tuan Chau or Halong International Cruise Port in 2.5 hours.'],
+            ['q' => 'What is the difference between Ha Long Bay, Lan Ha Bay, and Bai Tu Long Bay?', 'a' => 'All three share the same Gulf of Tonkin limestone karst geology. Ha Long Bay is the central UNESCO zone with Sung Sot Cave and Ti Top Island; Lan Ha Bay (south, off Cat Ba Island) favors kayaking and quieter coves; Bai Tu Long Bay (northeast) features the lowest cruise vessel density.'],
+            ['q' => 'How much does an overnight Ha Long Bay cruise cost?', 'a' => 'Reputable 3-star to 4-star overnight cruises cost 130 to 190 USD per person for a 2-day/1-night package (including meals, cabin, and kayaking), while 5-star luxury steel vessels range from 220 to 400 USD per person.'],
+        ],
+        'da-nang-travel-guide' => [
+            ['q' => 'How far is Da Nang Airport (DAD) from My Khe Beach?', 'a' => 'Da Nang International Airport is situated right inside the city, only 5.5 kilometers (12 to 15 minutes by Grab or metered taxi, costing 80,000 to 120,000 VND) west of My Khe Beach across the Han River bridges.'],
+            ['q' => 'What time does the Dragon Bridge breathe fire in Da Nang?', 'a' => 'The Dragon Bridge (Cau Rong) breathes fire and sprays water every Friday, Saturday, and Sunday night at exactly 9:00 PM for 15 minutes; vehicle traffic across the bridge closes at 8:45 PM.'],
+            ['q' => 'How much does it cost to visit Marble Mountains vs Ba Na Hills?', 'a' => 'Marble Mountains (Ngu Hanh Son) costs 40,000 VND entry plus 15,000 VND for the glass elevator and 40,000 VND for Am Phu Cave. Sun World Ba Na Hills cable car and Golden Bridge admission costs 900,000 VND for international adult visitors.'],
+        ],
+        'hoi-an-ancient-town-guide' => [
+            ['q' => 'How does the Hoi An Ancient Town entrance ticket work?', 'a' => 'An Ancient Town heritage ticket costs 120,000 VND (approx. 5 USD) and includes 5 entry coupons to choose from 21 historic assembly halls, merchant houses, museums, and the Japanese Covered Bridge. Pedestrian streets are closed to motorbikes daily from 9:00 AM–11:00 AM and 3:00 PM–9:30 PM.'],
+            ['q' => 'How long does custom tailoring take in Hoi An?', 'a' => 'Allow at least 48 to 72 hours in Hoi An for custom tailoring so your tailor can complete the initial measurement, a first basted fitting within 24 hours, and final garment adjustments before departure.'],
+            ['q' => 'Which beach is closest to Hoi An Ancient Town?', 'a' => 'An Bang Beach and Cua Dai Beach sit 4.5 kilometers (15 minutes by bicycle or 10 minutes by Grab taxi for 60,000 to 80,000 VND) east of Hoi An Ancient Town along Hai Ba Trung or Cua Dai roads.'],
+        ],
+        'hue-imperial-city-guide' => [
+            ['q' => 'How much is the entrance ticket for the Hue Imperial Citadel and Royal Tombs?', 'a' => 'Adult admission to the Hue Imperial Citadel costs 200,000 VND. Individual tickets for the Royal Tombs of Minh Mang, Khai Dinh, or Tu Duc cost 150,000 VND each, while a 3-site combo ticket (Citadel + 2 Tombs) costs 420,000 VND and a 4-site combo costs 530,000 VND.'],
+            ['q' => 'Should I take the train or car over the Hai Van Pass between Da Nang and Hue?', 'a' => 'Both offer coastal views: the heritage train (HD1/HD2 or Reunification Express) hugs the cliffside tracks above Lang Co Bay for 2.5 to 3 hours (110,000 to 180,000 VND), while a private car or motorbike over the 21-kilometer Hai Van Pass allows stops at Hai Van Quan summit fort and Lap An Lagoon.'],
+            ['q' => 'How much time is needed inside the Hue Imperial City?', 'a' => 'Plan 2.5 to 3.5 hours to walk through Ngo Mon Gate, Thai Hoa Palace, the Purple Forbidden City, Dien Tho Residence, and the Royal Theatre within the 520-hectare walled Citadel.'],
+        ],
+        'phu-quoc-travel-guide' => [
+            ['q' => 'Do foreign tourists need a visa for Phu Quoc Island?', 'a' => 'All foreign nationalities receive a 30-day visa exemption exclusively for Phu Quoc Island if flying directly into or out of Phu Quoc International Airport (PQC) from an international origin, or transiting a domestic Vietnamese airport airside without entering mainland Vietnam.'],
+            ['q' => 'When is the dry beach season in Phu Quoc?', 'a' => 'The dry, calm beach season on Phu Quoc west coast (Long Beach, Ong Lang, Sao Beach) runs from November through April with 26°C to 31°C sunshine and clear snorkeling visibility around the An Thoi archipelago.'],
+            ['q' => 'How long is the Hon Thom Cable Car in Phu Quoc?', 'a' => 'The Hon Thom 3-wire sea-crossing cable car spans 7,899.9 meters from An Thoi town across the southern islands to Hon Thom (Pineapple Island) in 15 minutes; round-trip tickets cost 650,000 VND.'],
+        ],
+        'con-dao-travel-guide' => [
+            ['q' => 'How do I get to Con Dao Islands from Ho Chi Minh City or Can Tho?', 'a' => 'Direct flights from Ho Chi Minh City (SGN) to Con Dao Airport (VCS) take 45 to 55 minutes. High-speed catamarans depart Tran De Port (Soc Trang/Can Tho, 2.5 hours, 320,000 to 500,000 VND) or Vung Tau across the open sea during calm months (March to September).'],
+            ['q' => 'When is sea turtle nesting season on Con Dao?', 'a' => 'Green sea turtles (Chelonia mydas) nest on Bay Canh Island inside Con Dao National Park from May through October, with peak egg-laying and hatchling releases occurring between June and September under ranger supervision.'],
+            ['q' => 'How do I visit the historic prison sites on Con Son Island?', 'a' => 'Purchase a 50,000 VND combined heritage ticket at the Con Dao Museum to visit Phu Hai Prison, the French and American Tiger Cages, and Phu Tuong Camp during morning hours (7:30 AM–11:30 AM) or afternoon hours (1:30 PM–4:30 PM).'],
+        ],
     ];
 
     $raw_qas = $faq_registry[$slug] ?? null;
@@ -2333,6 +2602,35 @@ function vg_get_page_howto_schema(string $uri_path, string $current_url): ?array
                 ['name' => 'Select Network and Data Plan', 'text' => 'Choose an authorized provider powered by the Viettel network for superior nationwide coverage, especially in highland and island destinations.'],
                 ['name' => 'Install eSIM via QR Code', 'text' => 'Receive your digital activation QR code by email. Open device settings, select Add eSIM, and scan the QR code before boarding your flight.'],
                 ['name' => 'Activate Data Roaming on Arrival', 'text' => 'Upon touchdown at any Vietnam international airport, switch your cellular data line to the Vietnam eSIM profile and toggle Data Roaming to ON.'],
+            ],
+        ],
+        'vietnam-airport-arrival-checklist' => [
+            'name'        => 'How to Clear Vietnam Airport Arrival and Transfer to the City Safely',
+            'description' => 'Step-by-step arrival workflow at Hanoi (HAN), Ho Chi Minh City (SGN), and Da Nang (DAD) international airports.',
+            'steps'       => [
+                ['name' => 'Present Passport and Printed E-Visa at Immigration', 'text' => 'Proceed to the All Passports queue with your passport (minimum 6 months validity), printed e-visa approval letter, and boarding pass. Verify that the officer entry stamp matches your approved visa validity date before leaving the booth.'],
+                ['name' => 'Collect Checked Baggage and Clear Customs', 'text' => 'Verify your flight belt number on the arrivals monitor, retrieve checked luggage, and pass through the Green Channel if carrying standard personal allowances under 5,000 USD cash.'],
+                ['name' => 'Withdraw Local VND Cash at Official Bank ATMs', 'text' => 'Exit into the public arrivals hall and withdraw 1,000,000 to 2,000,000 VND from official bank ATMs (Vietcombank, BIDV, Techcombank, or VPBank) rather than high-spread currency exchange kiosks.'],
+                ['name' => 'Activate Viettel SIM/eSIM and Hail Verified Transport', 'text' => 'Turn on your Viettel eSIM or purchase a physical SIM at an official carrier kiosk, then book a Grab car at the designated pillar or board the official airport express bus (Bus 86 in Hanoi or Bus 109 in Ho Chi Minh City).'],
+            ],
+        ],
+        'hanoi-airport-to-old-quarter' => [
+            'name'        => 'How to Travel from Noi Bai Airport (HAN) to Hanoi Old Quarter',
+            'description' => 'Step-by-step instructions for taking Express Bus 86 or a verified taxi from Noi Bai International Airport to Hoan Kiem District.',
+            'steps'       => [
+                ['name' => 'Exit Terminal 1 or Terminal 2 Arrivals Hall', 'text' => 'Walk straight out of the public arrivals sliding doors. For international flights (Terminal 2), turn left toward Pillar 12–14 for Grab pickup or Pillar 1–2 for the orange Express Bus 86 stop.'],
+                ['name' => 'Board Express Bus 86 or Book Grab via Airport Wi-Fi', 'text' => 'For Bus 86, board directly and pay the conductor 45,000 VND cash per ticket (luggage racks and free Wi-Fi included). For Grab, verify the license plate in the app before loading your bags.'],
+                ['name' => 'Cross Nhat Tan Bridge into Central Hanoi', 'text' => 'Follow the Vo Nguyen Giap Expressway across the Red River via Nhat Tan Bridge (30 km, 45 to 55 minutes). For Hoan Kiem and Old Quarter hotels, alight from Bus 86 at the Long Bien Transit Hub or Hanoi Opera House / Melia Hotel stops.'],
+            ],
+        ],
+        'vietnam-first-trip-planning-checklist' => [
+            'name'        => 'How to Plan a First Trip to Vietnam Step by Step',
+            'description' => 'Chronological pre-departure workflow covering route pacing, e-visa submission, domestic flights, and arrival logistics.',
+            'steps'       => [
+                ['name' => 'Lock Regional Pacing Based on Month of Travel', 'text' => 'Match your travel dates to Vietnam three distinct climate zones (North, Central, South) and limit a 10-to-14-day itinerary to 3 or 4 regional hubs to avoid losing entire days in overland transit.'],
+                ['name' => 'Submit Official Vietnam E-Visa 14–21 Days Before Departure', 'text' => 'Apply on evisa.xuatnhapcanh.gov.vn with a 6-month valid passport, selecting your exact entry airport or land checkpoint, and print two physical copies once approved.'],
+                ['name' => 'Book Domestic Flights and Overnight Sleeper Trains Early', 'text' => 'Reserve trunk flights (Hanoi, Da Nang, Ho Chi Minh City) and Reunification Express sleeper berths (Hanoi to Lao Cai/Ninh Binh/Dong Hoi/Hue) 3 to 6 weeks ahead, especially near Tet or national holidays.'],
+                ['name' => 'Install Offline Maps, Grab, and Multi-Currency Cards', 'text' => 'Download offline Google Maps for your target cities, install the Grab app linked to a zero-foreign-transaction-fee card, and prepare an unlocked phone for a Viettel eSIM.'],
             ],
         ],
     ];

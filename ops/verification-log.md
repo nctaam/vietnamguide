@@ -1,6 +1,26 @@
 # Verification Log
 
-Date: 2026-10-14 (Asia/Saigon)
+Date: 2026-10-15 (Asia/Saigon)
+
+## Stage 100: Google Search Central V2 Deep SEO Optimization & Phase 3 Discover / FAQPage / HowTo / Adversarial Hardening
+
+- **Cluster-Aware High-Resolution Google Discover `ImageObject` & Intrinsic Dimensions (`inc/guide-seo.php`)**:
+  - Implemented `vg_resolve_image_dimensions_by_url()`, `vg_get_cluster_default_discover_image()`, and `vg_resolve_discover_image_object()` linked to `vg_get_known_image_dimensions()` (`inc/image-dimensions.php`).
+  - Wired `vg_resolve_discover_image_object()` into `vg_rich_travel_schema_filter()` so `Article.image` (`#primaryimage`) emits exact natural dimensions ($\ge 1200\text{px} \times 675\text{px}$, up to `1920px` cluster heroes) and contextual `caption`, linked from `WebPage.primaryImageOfPage` and `TouristDestination.image`.
+- **Expanded `FAQPage` & `HowTo` Structured Data Across 12 Regional Clusters (`inc/guide-seo.php`)**:
+  - Expanded `$faq_registry` in `vg_get_page_faq_schema()` to 30 curated high-intent slugs covering all 12 regional cluster hubs (`hanoi-travel-guide`, `ho-chi-minh-city-travel-guide`, `da-lat-travel-guide`, `mang-den-travel-guide`, `phong-nha-travel-guide`, `mekong-delta-travel-guide`, `cao-bang-travel-guide`, `sapa-travel-guide`, `ha-giang-loop-planning-guide`, `ninh-binh-travel-guide`, `ha-long-bay-travel-guide`, `da-nang-travel-guide`, `hoi-an-ancient-town-guide`, `hue-imperial-city-guide`, `phu-quoc-travel-guide`, `con-dao-travel-guide`) with empirical tariffs, distances, and schedules.
+  - Expanded `$howto_registry` in `vg_get_page_howto_schema()` to 5 process guides (`vietnam-evisa`, `sim-esim-vietnam`, `vietnam-airport-arrival-checklist`, `hanoi-airport-to-old-quarter`, `vietnam-first-trip-planning-checklist`).
+- **Adversarial Schema & MU-Plugin Hardening (`inc/guide-seo.php`, `mu-plugins/vietnamguide-core.php`)**:
+  - Added recursion depth guard (`$depth >= 64`) to `vg_schema_clean_data()` and `vg_rewrite_schema_author_value()` to eliminate circular-reference memory exhaustion.
+  - Hardened `vg_filter_rank_math_json_ld(mixed $data): array` against non-array/null filter inputs and expanded `$entity_map` with 14 additional regional destinations (`mang-den`, `buon-ma-thuot`, `pleiku`, `kon-tum`, `dong-hoi`, `chau-doc`, `ha-tien`, `ca-mau`, `cao-bang`, `mai-chau`, `bac-ha`, `dien-bien`, `vung-tau`, `ho-tram`).
+- **12-Cluster Synchronization in `/llms.txt` & `/llms-full.txt` (`inc/guide-aio.php`)**:
+  - Added `## Regional Travel Clusters (12 Geographic Corridors)` to `/llms.txt` and expanded `### 1.8 Regional Geographic Profiles (12 Canonical Travel Clusters)` in `/llms-full.txt`.
+- **Verification Gates & Quality Assurance**:
+  - Full Unit & E2E Test Suite: 266 tests ran (`264 passed`, `2 skipped`, `0 failures`, `0 errors`).
+  - Master Quality Gates: 8/8 Gates PASSED (`Exit Code 0` via `ops/verify-all-gates.ps1`).
+  - Ground-Truth Tariff & Freshness Sentinel: PASS (`282/282` routes, `100.0%` empirical coverage, `12/12` clusters, `100%` SHA-256 parity `facc26c97f53d3d8...`).
+  - Anti-AI Slop Quality Engine: PASS (`0` Tier 1 clichés, Registry Mean HLS `100.0/100`, UI Mean HLS `94.81/100`).
+  - Live Production Verification: Deployed via `--batch --purge-cache` and verified live on `https://vietnamguide.net`.
 
 ## Stage 99: Universal Guide Shell Parser Expansion & 100% Sitewide Rollout Enablement
 

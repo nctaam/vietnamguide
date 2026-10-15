@@ -798,8 +798,12 @@ function vg_is_forbidden_public_author_name(string $name): bool
     return $normalized === '' || $normalized === 'administrator' || $normalized === 'admin';
 }
 
-function vg_rewrite_schema_author_value(mixed $value): mixed
+function vg_rewrite_schema_author_value(mixed $value, int $depth = 0): mixed
 {
+    if ($depth >= 64) {
+        return $value;
+    }
+
     if (is_string($value)) {
         return vg_is_forbidden_public_author_name($value)
             ? vg_public_editorial_author_name()
@@ -811,7 +815,11 @@ function vg_rewrite_schema_author_value(mixed $value): mixed
     }
 
     if (array_is_list($value)) {
-        return array_map('vg_rewrite_schema_author_value', $value);
+        $next_depth = $depth + 1;
+        return array_map(
+            static fn (mixed $item): mixed => vg_rewrite_schema_author_value($item, $next_depth),
+            $value
+        );
     }
 
     $type = $value['@type'] ?? null;
@@ -821,17 +829,21 @@ function vg_rewrite_schema_author_value(mixed $value): mixed
     }
 
     if (array_key_exists('author', $value)) {
-        $value['author'] = vg_rewrite_schema_author_value($value['author']);
+        $value['author'] = vg_rewrite_schema_author_value($value['author'], $depth + 1);
     }
     if (array_key_exists('@graph', $value) && is_array($value['@graph'])) {
-        $value['@graph'] = vg_rewrite_schema_author_value($value['@graph']);
+        $value['@graph'] = vg_rewrite_schema_author_value($value['@graph'], $depth + 1);
     }
 
     return $value;
 }
 
-function vg_filter_rank_math_json_ld(array $data): array
+function vg_filter_rank_math_json_ld(mixed $data): array
 {
+    if (! is_array($data)) {
+        return [];
+    }
+
     $rewritten = vg_rewrite_schema_author_value($data);
     if (! is_array($rewritten)) {
         return $data;
@@ -853,45 +865,59 @@ function vg_filter_rank_math_json_ld(array $data): array
     }
 
     $entity_map = [
-        'hanoi'         => ['@type' => 'City', 'name' => 'Hanoi', 'sameAs' => 'https://www.wikidata.org/wiki/Q1858'],
-        'ho-chi-minh'   => ['@type' => 'City', 'name' => 'Ho Chi Minh City', 'sameAs' => 'https://www.wikidata.org/wiki/Q1854'],
-        'ha-long'       => ['@type' => 'TouristAttraction', 'name' => 'Ha Long Bay', 'sameAs' => 'https://www.wikidata.org/wiki/Q190128'],
-        'lan-ha'        => ['@type' => 'TouristAttraction', 'name' => 'Lan Ha Bay', 'sameAs' => 'https://www.wikidata.org/wiki/Q3216853'],
-        'hoi-an'        => ['@type' => 'City', 'name' => 'Hoi An', 'sameAs' => 'https://www.wikidata.org/wiki/Q36167'],
-        'da-nang'       => ['@type' => 'City', 'name' => 'Da Nang', 'sameAs' => 'https://www.wikidata.org/wiki/Q25282'],
-        'hue'           => ['@type' => 'City', 'name' => 'Hue', 'sameAs' => 'https://www.wikidata.org/wiki/Q200257'],
-        'sapa'          => ['@type' => 'City', 'name' => 'Sa Pa', 'sameAs' => 'https://www.wikidata.org/wiki/Q36384'],
-        'ha-giang'      => ['@type' => 'AdministrativeArea', 'name' => 'Ha Giang', 'sameAs' => 'https://www.wikidata.org/wiki/Q36352'],
-        'ninh-binh'     => ['@type' => 'AdministrativeArea', 'name' => 'Ninh Binh', 'sameAs' => 'https://www.wikidata.org/wiki/Q36359'],
-        'phu-quoc'      => ['@type' => 'Place', 'name' => 'Phu Quoc', 'sameAs' => 'https://www.wikidata.org/wiki/Q223145'],
-        'con-dao'       => ['@type' => 'Place', 'name' => 'Con Dao', 'sameAs' => 'https://www.wikidata.org/wiki/Q1118128'],
-        'nha-trang'     => ['@type' => 'City', 'name' => 'Nha Trang', 'sameAs' => 'https://www.wikidata.org/wiki/Q19491'],
-        'quy-nhon'      => ['@type' => 'City', 'name' => 'Quy Nhon', 'sameAs' => 'https://www.wikidata.org/wiki/Q26577'],
-        'mui-ne'        => ['@type' => 'Place', 'name' => 'Mui Ne', 'sameAs' => 'https://www.wikidata.org/wiki/Q1333765'],
-        'cat-ba'        => ['@type' => 'Place', 'name' => 'Cat Ba Island', 'sameAs' => 'https://www.wikidata.org/wiki/Q1936306'],
-        'mekong'        => ['@type' => 'AdministrativeArea', 'name' => 'Mekong Delta', 'sameAs' => 'https://www.wikidata.org/wiki/Q1052867'],
-        'phong-nha'     => ['@type' => 'NationalPark', 'name' => 'Phong Nha-Ke Bang', 'sameAs' => 'https://www.wikidata.org/wiki/Q11162'],
-        'mu-cang-chai'  => ['@type' => 'AdministrativeArea', 'name' => 'Mu Cang Chai', 'sameAs' => 'https://www.wikidata.org/wiki/Q6930267'],
-        'pu-luong'      => ['@type' => 'Place', 'name' => 'Pu Luong', 'sameAs' => 'https://www.wikidata.org/wiki/Q10808383'],
-        'cu-chi'        => ['@type' => 'TouristAttraction', 'name' => 'Cu Chi Tunnels', 'sameAs' => 'https://www.wikidata.org/wiki/Q192935'],
-        'trang-an'      => ['@type' => 'TouristAttraction', 'name' => 'Trang An', 'sameAs' => 'https://www.wikidata.org/wiki/Q10828551'],
-        'tam-coc'       => ['@type' => 'TouristAttraction', 'name' => 'Tam Coc', 'sameAs' => 'https://www.wikidata.org/wiki/Q7680468'],
-        'bai-tu-long'   => ['@type' => 'TouristAttraction', 'name' => 'Bai Tu Long Bay', 'sameAs' => 'https://www.wikidata.org/wiki/Q804153'],
-        'cham-islands'  => ['@type' => 'Place', 'name' => 'Cham Islands', 'sameAs' => 'https://www.wikidata.org/wiki/Q10752538'],
-        'ly-son'        => ['@type' => 'Place', 'name' => 'Ly Son Island', 'sameAs' => 'https://www.wikidata.org/wiki/Q10788329'],
-        'old-quarter'   => ['@type' => 'TouristAttraction', 'name' => 'Old Quarter, Hanoi', 'sameAs' => 'https://www.wikidata.org/wiki/Q10808390'],
-        'west-lake'     => ['@type' => 'TouristAttraction', 'name' => 'West Lake (Hanoi)', 'sameAs' => 'https://www.wikidata.org/wiki/Q3275095'],
-        'french-quarter'=> ['@type' => 'TouristAttraction', 'name' => 'French Quarter, Hanoi', 'sameAs' => 'https://www.wikidata.org/wiki/Q10808390'],
-        'north'         => ['@type' => 'AdministrativeArea', 'name' => 'Northern Vietnam', 'sameAs' => 'https://www.wikidata.org/wiki/Q10787579'],
-        'central'       => ['@type' => 'AdministrativeArea', 'name' => 'Central Vietnam', 'sameAs' => 'https://www.wikidata.org/wiki/Q10787582'],
-        'south'         => ['@type' => 'AdministrativeArea', 'name' => 'Southern Vietnam', 'sameAs' => 'https://www.wikidata.org/wiki/Q10787585'],
-        'unesco'        => ['@type' => 'TouristAttraction', 'name' => 'World Heritage Sites in Vietnam', 'sameAs' => 'https://www.wikidata.org/wiki/Q1919934'],
-        'ba-be'         => ['@type' => 'NationalPark', 'name' => 'Ba Be National Park', 'sameAs' => 'https://www.wikidata.org/wiki/Q1005391'],
-        'ban-gioc'      => ['@type' => 'TouristAttraction', 'name' => 'Ban Gioc–Detian Falls', 'sameAs' => 'https://www.wikidata.org/wiki/Q1371758'],
-        'can-tho'       => ['@type' => 'City', 'name' => 'Can Tho', 'sameAs' => 'https://www.wikidata.org/wiki/Q216075'],
-        'ben-tre'       => ['@type' => 'AdministrativeArea', 'name' => 'Ben Tre Province', 'sameAs' => 'https://www.wikidata.org/wiki/Q36382'],
-        'da-lat'        => ['@type' => 'City', 'name' => 'Da Lat', 'sameAs' => 'https://www.wikidata.org/wiki/Q25262'],
-        'son-doong'     => ['@type' => 'TouristAttraction', 'name' => 'Hang Son Doong', 'sameAs' => 'https://www.wikidata.org/wiki/Q324021'],
+        'hanoi'          => ['@type' => 'City', 'name' => 'Hanoi', 'sameAs' => 'https://www.wikidata.org/wiki/Q1858'],
+        'ho-chi-minh'    => ['@type' => 'City', 'name' => 'Ho Chi Minh City', 'sameAs' => 'https://www.wikidata.org/wiki/Q1854'],
+        'ha-long'        => ['@type' => 'TouristAttraction', 'name' => 'Ha Long Bay', 'sameAs' => 'https://www.wikidata.org/wiki/Q190128'],
+        'lan-ha'         => ['@type' => 'TouristAttraction', 'name' => 'Lan Ha Bay', 'sameAs' => 'https://www.wikidata.org/wiki/Q3216853'],
+        'hoi-an'         => ['@type' => 'City', 'name' => 'Hoi An', 'sameAs' => 'https://www.wikidata.org/wiki/Q36167'],
+        'da-nang'        => ['@type' => 'City', 'name' => 'Da Nang', 'sameAs' => 'https://www.wikidata.org/wiki/Q25282'],
+        'hue'            => ['@type' => 'City', 'name' => 'Hue', 'sameAs' => 'https://www.wikidata.org/wiki/Q200257'],
+        'sapa'           => ['@type' => 'City', 'name' => 'Sa Pa', 'sameAs' => 'https://www.wikidata.org/wiki/Q36384'],
+        'ha-giang'       => ['@type' => 'AdministrativeArea', 'name' => 'Ha Giang', 'sameAs' => 'https://www.wikidata.org/wiki/Q36352'],
+        'ninh-binh'      => ['@type' => 'AdministrativeArea', 'name' => 'Ninh Binh', 'sameAs' => 'https://www.wikidata.org/wiki/Q36359'],
+        'phu-quoc'       => ['@type' => 'Place', 'name' => 'Phu Quoc', 'sameAs' => 'https://www.wikidata.org/wiki/Q223145'],
+        'con-dao'        => ['@type' => 'Place', 'name' => 'Con Dao', 'sameAs' => 'https://www.wikidata.org/wiki/Q1118128'],
+        'nha-trang'      => ['@type' => 'City', 'name' => 'Nha Trang', 'sameAs' => 'https://www.wikidata.org/wiki/Q19491'],
+        'quy-nhon'       => ['@type' => 'City', 'name' => 'Quy Nhon', 'sameAs' => 'https://www.wikidata.org/wiki/Q26577'],
+        'mui-ne'         => ['@type' => 'Place', 'name' => 'Mui Ne', 'sameAs' => 'https://www.wikidata.org/wiki/Q1333765'],
+        'cat-ba'         => ['@type' => 'Place', 'name' => 'Cat Ba Island', 'sameAs' => 'https://www.wikidata.org/wiki/Q1936306'],
+        'mekong'         => ['@type' => 'AdministrativeArea', 'name' => 'Mekong Delta', 'sameAs' => 'https://www.wikidata.org/wiki/Q1052867'],
+        'phong-nha'      => ['@type' => 'NationalPark', 'name' => 'Phong Nha-Ke Bang', 'sameAs' => 'https://www.wikidata.org/wiki/Q11162'],
+        'mu-cang-chai'   => ['@type' => 'AdministrativeArea', 'name' => 'Mu Cang Chai', 'sameAs' => 'https://www.wikidata.org/wiki/Q6930267'],
+        'pu-luong'       => ['@type' => 'Place', 'name' => 'Pu Luong', 'sameAs' => 'https://www.wikidata.org/wiki/Q10808383'],
+        'cu-chi'         => ['@type' => 'TouristAttraction', 'name' => 'Cu Chi Tunnels', 'sameAs' => 'https://www.wikidata.org/wiki/Q192935'],
+        'trang-an'       => ['@type' => 'TouristAttraction', 'name' => 'Trang An', 'sameAs' => 'https://www.wikidata.org/wiki/Q10828551'],
+        'tam-coc'        => ['@type' => 'TouristAttraction', 'name' => 'Tam Coc', 'sameAs' => 'https://www.wikidata.org/wiki/Q7680468'],
+        'bai-tu-long'    => ['@type' => 'TouristAttraction', 'name' => 'Bai Tu Long Bay', 'sameAs' => 'https://www.wikidata.org/wiki/Q804153'],
+        'cham-islands'   => ['@type' => 'Place', 'name' => 'Cham Islands', 'sameAs' => 'https://www.wikidata.org/wiki/Q10752538'],
+        'ly-son'         => ['@type' => 'Place', 'name' => 'Ly Son Island', 'sameAs' => 'https://www.wikidata.org/wiki/Q10788329'],
+        'old-quarter'    => ['@type' => 'TouristAttraction', 'name' => 'Old Quarter, Hanoi', 'sameAs' => 'https://www.wikidata.org/wiki/Q10808390'],
+        'west-lake'      => ['@type' => 'TouristAttraction', 'name' => 'West Lake (Hanoi)', 'sameAs' => 'https://www.wikidata.org/wiki/Q3275095'],
+        'french-quarter' => ['@type' => 'TouristAttraction', 'name' => 'French Quarter, Hanoi', 'sameAs' => 'https://www.wikidata.org/wiki/Q10808390'],
+        'north'          => ['@type' => 'AdministrativeArea', 'name' => 'Northern Vietnam', 'sameAs' => 'https://www.wikidata.org/wiki/Q10787579'],
+        'central'        => ['@type' => 'AdministrativeArea', 'name' => 'Central Vietnam', 'sameAs' => 'https://www.wikidata.org/wiki/Q10787582'],
+        'south'          => ['@type' => 'AdministrativeArea', 'name' => 'Southern Vietnam', 'sameAs' => 'https://www.wikidata.org/wiki/Q10787585'],
+        'unesco'         => ['@type' => 'TouristAttraction', 'name' => 'World Heritage Sites in Vietnam', 'sameAs' => 'https://www.wikidata.org/wiki/Q1919934'],
+        'ba-be'          => ['@type' => 'NationalPark', 'name' => 'Ba Be National Park', 'sameAs' => 'https://www.wikidata.org/wiki/Q1005391'],
+        'ban-gioc'       => ['@type' => 'TouristAttraction', 'name' => 'Ban Gioc–Detian Falls', 'sameAs' => 'https://www.wikidata.org/wiki/Q1371758'],
+        'can-tho'        => ['@type' => 'City', 'name' => 'Can Tho', 'sameAs' => 'https://www.wikidata.org/wiki/Q216075'],
+        'ben-tre'        => ['@type' => 'AdministrativeArea', 'name' => 'Ben Tre Province', 'sameAs' => 'https://www.wikidata.org/wiki/Q36382'],
+        'da-lat'         => ['@type' => 'City', 'name' => 'Da Lat', 'sameAs' => 'https://www.wikidata.org/wiki/Q25262'],
+        'son-doong'      => ['@type' => 'TouristAttraction', 'name' => 'Hang Son Doong', 'sameAs' => 'https://www.wikidata.org/wiki/Q324021'],
+        'mang-den'       => ['@type' => 'Place', 'name' => 'Mang Den', 'sameAs' => 'https://www.wikidata.org/wiki/Q10796281'],
+        'buon-ma-thuot'  => ['@type' => 'City', 'name' => 'Buon Ma Thuot', 'sameAs' => 'https://www.wikidata.org/wiki/Q33469'],
+        'pleiku'         => ['@type' => 'City', 'name' => 'Pleiku', 'sameAs' => 'https://www.wikidata.org/wiki/Q36373'],
+        'kon-tum'        => ['@type' => 'City', 'name' => 'Kon Tum', 'sameAs' => 'https://www.wikidata.org/wiki/Q36409'],
+        'dong-hoi'       => ['@type' => 'City', 'name' => 'Dong Hoi', 'sameAs' => 'https://www.wikidata.org/wiki/Q1877'],
+        'chau-doc'       => ['@type' => 'City', 'name' => 'Chau Doc', 'sameAs' => 'https://www.wikidata.org/wiki/Q737664'],
+        'ha-tien'        => ['@type' => 'City', 'name' => 'Ha Tien', 'sameAs' => 'https://www.wikidata.org/wiki/Q1014494'],
+        'ca-mau'         => ['@type' => 'City', 'name' => 'Ca Mau', 'sameAs' => 'https://www.wikidata.org/wiki/Q26569'],
+        'cao-bang'       => ['@type' => 'AdministrativeArea', 'name' => 'Cao Bang Province', 'sameAs' => 'https://www.wikidata.org/wiki/Q36355'],
+        'mai-chau'       => ['@type' => 'AdministrativeArea', 'name' => 'Mai Chau District', 'sameAs' => 'https://www.wikidata.org/wiki/Q1935243'],
+        'bac-ha'         => ['@type' => 'AdministrativeArea', 'name' => 'Bac Ha District', 'sameAs' => 'https://www.wikidata.org/wiki/Q2227060'],
+        'dien-bien'      => ['@type' => 'City', 'name' => 'Dien Bien Phu', 'sameAs' => 'https://www.wikidata.org/wiki/Q207139'],
+        'vung-tau'       => ['@type' => 'City', 'name' => 'Vung Tau', 'sameAs' => 'https://www.wikidata.org/wiki/Q21194'],
+        'ho-tram'        => ['@type' => 'Place', 'name' => 'Ho Tram', 'sameAs' => 'https://www.wikidata.org/wiki/Q10771856'],
     ];
 
     $matched_entities = [];

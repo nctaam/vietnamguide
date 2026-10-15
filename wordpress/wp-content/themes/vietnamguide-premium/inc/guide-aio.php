@@ -459,6 +459,20 @@ function vg_handle_llms_txt_request(): void
         echo "- [Vietnam Comparison Guides Hub]({$site_url}/compare/): Head-to-head route, destination, and base trade-off analyses.\n";
         echo "- [Vietnam Logistics & Planning Hub]({$site_url}/plan/): Practical toolkits for visas, money, transport, safety, SIMs, and packing.\n\n";
 
+        echo "## Regional Travel Clusters (12 Geographic Corridors)\n\n";
+        echo "- [Hanoi & Red River Delta]({$site_url}/destinations/hanoi-travel-guide/): Noi Bai Airport (HAN) gateway, Hoan Kiem Old Quarter, Express Bus 86 (45,000 VND, 45 min), and northern rail/expressway departures.\n";
+        echo "- [Ha Long Bay, Lan Ha Bay & Cat Ba Seascape]({$site_url}/destinations/ha-long-bay-travel-guide/): Gulf of Tonkin UNESCO limestone archipelago (155 km east of Hanoi via CT04/CT06 expressway, 2.5h).\n";
+        echo "- [Ninh Binh Karst Valley]({$site_url}/destinations/ninh-binh-travel-guide/): Trang An UNESCO water caves, Tam Coc sampan routes, and Hang Mua peak (95 km south of Hanoi, 1.5–2h).\n";
+        echo "- [Sapa & Northwest Terraced Highlands]({$site_url}/destinations/sapa-travel-guide/): Fansipan 3,143m summit, Muong Hoa Valley, Mu Cang Chai, Pu Luong, and Mai Chau (315 km from Hanoi, 5.5–6h sleeper bus or overnight train to Lao Cai).\n";
+        echo "- [Ha Giang Loop & Dong Van Karst Plateau]({$site_url}/destinations/ha-giang-loop-planning-guide/): 350 km northern border circuit across Quan Ba, Dong Van, Ma Pi Leng Pass, and Nho Que River (230,000 VND border permit).\n";
+        echo "- [Cao Bang, Ba Be & Northeast Frontier]({$site_url}/destinations/cao-bang-travel-guide/): Ban Gioc Waterfall, Nguom Ngao Cave, and Ba Be National Park (280 km northeast of Hanoi, 6.5h sleeper bus).\n";
+        echo "- [Phong Nha & Quang Binh Cave Kingdom]({$site_url}/destinations/phong-nha-travel-guide/): Son Doong, Paradise Cave (250,000 VND), Phong Nha Cave, and Tu Lan system via Dong Hoi Airport/Station (VDH, 45 km).\n";
+        echo "- [Central Heritage Coast — Hue, Da Nang & Hoi An]({$site_url}/destinations/hoi-an-ancient-town-guide/): Da Nang Airport (DAD) hub linking Hoi An Ancient Town (30 km south, 45 min) and Hue Imperial Citadel (100 km north via Hai Van Pass).\n";
+        echo "- [South-Central Coast — Nha Trang, Quy Nhon & Mui Ne]({$site_url}/destinations/nha-trang-travel-guide/): Cam Ranh (CXR) and Phu Cat (UIH) coastal gateways, Cham towers, coral bays, and Phan Thiet sand dunes.\n";
+        echo "- [Central Highlands — Da Lat, Mang Den & Buon Ma Thuot]({$site_url}/destinations/da-lat-travel-guide/): Langbiang Plateau (1,500m via DLI) and Kon Plong pine highlands in Mang Den (1,200m via PXU, 100 km).\n";
+        echo "- [Ho Chi Minh City & Mekong Delta Riverine Network]({$site_url}/destinations/ho-chi-minh-city-travel-guide/): Tan Son Nhat (SGN) southern hub, Cu Chi Tunnels (70 km), Ben Tre coconut canals (85 km), Can Tho Cai Rang Floating Market (170 km), and Chau Doc Mekong border boats.\n";
+        echo "- [Southern Offshore Islands — Phu Quoc & Con Dao]({$site_url}/destinations/phu-quoc-travel-guide/): Phu Quoc (PQC, 30-day direct island visa exemption) and Con Dao National Park marine archipelago (VCS, 45-min flight from SGN).\n\n";
+
         $categories = [
             'destinations' => 'Core Destination Guides',
             'itineraries'  => 'Curated Route Itineraries',
@@ -543,10 +557,19 @@ function vg_handle_llms_txt_request(): void
     echo "- Temple & Pagoda Etiquette: Remove shoes before entering sacred temple halls. Modest clothing covering shoulders and knees is mandatory. Avoid pointing feet towards Buddha statues or sacred altars when seated.\n";
     echo "- Photography: Always request polite permission before photographing local residents and ethnic minority artisans in rural communities.\n\n";
 
-    echo "### 1.8 Regional Geographic Profiles\n";
-    echo "- Northern Vietnam: Towering karst mountains, terraced rice valleys, distinct 4-season climate, and the historic cultural capital of Hanoi.\n";
-    echo "- Central Vietnam: Coastal strip framed by the Truong Son mountain range, royal palaces of Hue, lantern-lit riverfront of Hoi An, modern coastal city Da Nang, and world-class limestone cave systems in Phong Nha-Ke Bang.\n";
-    echo "- Southern Vietnam: Dynamic economic hub Ho Chi Minh City, vast riverways and floating trade of the Mekong Delta, and tropical paradise islands Phu Quoc and Con Dao.\n\n";
+    echo "### 1.8 Regional Geographic Profiles (12 Canonical Travel Clusters)\n";
+    echo "- Cluster 1 — Hanoi & Red River Delta (`hanoi_capital`): Northern gateway via Noi Bai Airport (HAN, 30 km north, Bus 86 at 45,000 VND), Hoan Kiem Old Quarter, Ba Dinh monuments, and rail/highway hub.\n";
+    echo "- Cluster 2 — Ha Long Bay, Lan Ha Bay & Cat Ba (`halong_seascape`): Gulf of Tonkin karst archipelago, 155 km east of Hanoi (2.5h via CT04/CT06 expressway) with Tuan Chau, Halong International, and Ben Beo cruise piers.\n";
+    echo "- Cluster 3 — Ninh Binh Karst Valley (`ninh_binh_karst`): Trang An UNESCO river caves (250,000 VND boat ticket), Tam Coc sampans, and Hang Mua 486-step viewpoint, 95 km south of Hanoi (2h15m by SE train or 1.5h by limousine).\n";
+    echo "- Cluster 4 — Sapa & Northwest Highlands (`northwest_highlands`): Hoang Lien Son range, Fansipan 3,143m peak, Muong Hoa terraced valley, Mu Cang Chai, Pu Luong, and Mai Chau.\n";
+    echo "- Cluster 5 — Ha Giang Loop & Dong Van Geopark (`ha_giang_frontier`): 350 km border mountain circuit via Quan Ba, Yen Minh, Dong Van, Ma Pi Leng Pass, and Nho Que River canyon (requires 230,000 VND border permit and 1968 IDP or Easy Rider).\n";
+    echo "- Cluster 6 — Cao Bang, Ba Be & Northeast Frontier (`northeast_frontier`): Ban Gioc Waterfall on the Quay Son border river, Nguom Ngao Cave, and Ba Be freshwater karst lake (280 km northeast of Hanoi).\n";
+    echo "- Cluster 7 — Phong Nha & Quang Binh Cave Kingdom (`quang_binh_caves`): UNESCO Phong Nha-Ke Bang National Park, Son Doong, Paradise Cave, Phong Nha Cave, and Tu Lan caving expeditions accessed via Dong Hoi (VDH, 45 km).\n";
+    echo "- Cluster 8 — Central Heritage Coast (`central_heritage`): Hue Imperial Citadel (200,000 VND), Hai Van Pass, Da Nang Airport (DAD) & My Khe Beach, and Hoi An Ancient Town (120,000 VND heritage ticket) within a 130 km coastal corridor.\n";
+    echo "- Cluster 9 — South-Central Coast (`south_central_coast`): Quy Nhon (UIH), Nha Trang (CXR), and Mui Ne/Phan Thiet (CT01 expressway from HCMC in 2.5–3h) offering dry summer beaches from January to August.\n";
+    echo "- Cluster 10 — Central Highlands (`central_highlands`): Da Lat on the 1,500m Langbiang Plateau (via Lien Khuong DLI), Mang Den pine plateau at 1,200m in Kon Tum (100 km northeast of Pleiku PXU), and Buon Ma Thuot coffee heartland (BMV).\n";
+    echo "- Cluster 11 — Ho Chi Minh City & Southern Hub (`saigon_southern`): Tan Son Nhat Airport (SGN, 8 km from District 1), Ben Thanh Metro Line 1, Cu Chi Tunnels (70 km northwest), and Vung Tau coastal hydrofoils.\n";
+    echo "- Cluster 12 — Mekong Delta & Southern Islands (`mekong_delta` / `southern_islands`): Ben Tre coconut canals (85 km from HCMC), Can Tho Cai Rang Floating Market (170 km), Chau Doc river border boats to Phnom Penh, plus Phu Quoc (PQC, 30-day visa-free island rule) and Con Dao National Park (VCS).\n\n";
 
     echo "## 2. Interactive Travel Toolkits & Decision Engines\n\n";
     echo "- **Vietnam Travel Cost Calculator**\n";

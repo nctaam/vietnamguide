@@ -394,45 +394,48 @@ class TestAdversarialEntityGraph(unittest.TestCase):
         self.assertTrue(out['leaf_cleaned_pos'], "position numeric string '42' must be converted to int 42")
 
     def test_06_adversarial_vulnerability_reproduction(self):
-        """Empirically document vulnerabilities: circular structures and upstream hook strict type hinting."""
-        # Vulnerability 1: Circular structure causing memory exhaustion in vg_schema_clean_data()
+        """Verify remediation of circular-structure recursion and upstream hook non-array input handling."""
+        # Guard 1: Circular structure must terminate cleanly at recursion depth guard (64) without memory exhaustion
         php_circ = """
-        $circ = ['name' => 'Test'];
+        $circ = ['name' => 'Test &amp; Guard'];
         $circ['child'] = &$circ;
         try {
-            vg_schema_clean_data($circ);
+            $cleaned = vg_schema_clean_data($circ);
             $crashed = false;
+            $top_name = $cleaned['name'] ?? '';
         } catch (Throwable $e) {
             $crashed = true;
+            $top_name = '';
         }
-        echo json_encode(['crashed' => $crashed]);
+        echo json_encode(['crashed' => $crashed, 'top_name' => $top_name]);
         """
         res_circ = _run_php(php_circ)
-        # Memory exhaustion causes non-zero exit code (255)
-        self.assertNotEqual(
+        self.assertEqual(
             res_circ.returncode,
             0,
-            "Empirical verification: circular reference must trigger PHP memory exhaustion / recursion failure",
+            f"Circular reference must be safely bounded by depth guard without memory exhaustion:\n{res_circ.stderr}",
         )
-        self.assertIn("Allowed memory size", res_circ.stdout + res_circ.stderr)
+        out_circ = json.loads(res_circ.stdout)
+        self.assertFalse(out_circ.get('crashed', True), "vg_schema_clean_data must not throw on circular reference")
+        self.assertEqual(out_circ.get('top_name'), 'Test & Guard')
 
-        # Vulnerability 2: Upstream mu-plugin vg_filter_rank_math_json_ld() type hint trap
+        # Guard 2: Upstream mu-plugin vg_filter_rank_math_json_ld() must handle non-array (null) without TypeError
         php_type_trap = """
         try {
-            apply_filters('rank_math/json_ld', null);
+            $res = apply_filters('rank_math/json_ld', null);
             $type_error = false;
+            $is_array = is_array($res);
         } catch (TypeError $e) {
             $type_error = true;
+            $is_array = false;
         }
-        echo json_encode(['type_error' => $type_error]);
+        echo json_encode(['type_error' => $type_error, 'is_array' => $is_array]);
         """
         res_type = _run_php(php_type_trap)
-        # In PHP 8+, Uncaught TypeError causes exit code 255 if not caught or caught
-        out_type = json.loads(res_type.stdout) if res_type.returncode == 0 else {}
-        if res_type.returncode != 0:
-            self.assertIn("TypeError", res_type.stdout + res_type.stderr)
-        else:
-            self.assertTrue(out_type.get('type_error', False))
+        self.assertEqual(res_type.returncode, 0, f"rank_math/json_ld null filter input must not fail:\n{res_type.stderr}")
+        out_type = json.loads(res_type.stdout)
+        self.assertFalse(out_type.get('type_error', True), "vg_filter_rank_math_json_ld must not throw TypeError on null")
+        self.assertTrue(out_type.get('is_array', False), "rank_math/json_ld filter chain must return an array on null input")
 
 
 if __name__ == '__main__':

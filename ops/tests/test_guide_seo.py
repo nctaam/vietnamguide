@@ -1186,6 +1186,120 @@ echo json_encode([
         self.assertEqual(len(rep['title_violations']), 0, "No title violations allowed")
         self.assertEqual(len(rep['description_violations']), 0, "No description violations allowed")
 
+    def test_cluster_aware_discover_image_object_and_exact_dimensions(self):
+        """Discover ImageObject must resolve cluster-specific 1920px assets with exact natural dimensions."""
+        expected_cases = [
+            ('destinations/da-lat-travel-guide', '1920px-Forest_in_Cuc_Phuong_National_Park_%2815706323528%29.jpg', 1920, 1275),
+            ('destinations/phong-nha-travel-guide', '1920px-Son_River-Quang_Binh_province.jpg', 1920, 1354),
+            ('destinations/mekong-delta-travel-guide', '1920px-Vietnam%2C_Phong_Dien%2C_Mekong_Delta%2C_River.jpg', 1920, 1280),
+            ('destinations/cao-bang-travel-guide', '1920px-TuSan_Canyon.jpg', 1920, 1080),
+            ('destinations/phu-quoc-travel-guide', '1920px-Kem_Beach_aerial_view_Phu_Quoc_Island_Vietnam.jpg', 1920, 1440),
+        ]
+        for uri_path, expected_file, exp_w, exp_h in expected_cases:
+            with self.subTest(uri_path=uri_path):
+                php_code = f"""
+                require_once '{(REPO_ROOT / "wordpress/wp-content/themes/vietnamguide-premium/inc/image-dimensions.php").as_posix()}';
+                $slug = basename('{uri_path}');
+                $post = new WP_Post();
+                $post->ID = 700;
+                $post->post_name = $slug;
+                $GLOBALS['post'] = $post;
+                $GLOBALS['vg_queried_id'] = 700;
+                $GLOBALS['vg_permalinks'][700] = 'https://vietnamguide.net/{uri_path}/';
+                $_SERVER['REQUEST_URI'] = '/{uri_path}/';
+
+                $initial_data = [
+                    '@context' => 'https://schema.org',
+                    '@graph'   => [
+                        [
+                            '@type' => 'Article',
+                            '@id'   => 'https://vietnamguide.net/{uri_path}/#article',
+                            'headline' => 'Sample Article',
+                        ],
+                        [
+                            '@type' => 'WebPage',
+                            '@id'   => 'https://vietnamguide.net/{uri_path}/#webpage',
+                            'name'  => 'Sample Page',
+                        ],
+                    ],
+                ];
+                $enriched = apply_filters('rank_math/json_ld', $initial_data, null);
+                echo json_encode($enriched);
+                """
+                res = _run_php(php_code)
+                self.assertEqual(res.returncode, 0, f"PHP error:\n{res.stderr}")
+                data = json.loads(res.stdout)
+                graph = data.get('@graph', [])
+                article = next(n for n in graph if n.get('@type') == 'Article')
+                webpage = next(n for n in graph if n.get('@type') == 'WebPage')
+                dest = next(n for n in graph if n.get('@type') == 'TouristDestination')
+
+                img = article.get('image', {})
+                self.assertTrue(img.get('url', '').endswith(expected_file), f"Expected {expected_file}, got {img.get('url')}")
+                self.assertEqual(img.get('width'), exp_w)
+                self.assertEqual(img.get('height'), exp_h)
+                self.assertTrue(len(img.get('caption', '')) > 10)
+                self.assertEqual(webpage.get('primaryImageOfPage', {}).get('@id'), img.get('@id'))
+                self.assertEqual(dest.get('image', {}).get('@id'), img.get('@id'))
+
+    def test_expanded_faq_and_howto_schema_coverage_across_regional_hubs(self):
+        """Regional cluster hubs and arrival checklists must emit valid FAQPage and HowTo nodes."""
+        faq_slugs = [
+            'destinations/hanoi-travel-guide',
+            'destinations/ho-chi-minh-city-travel-guide',
+            'destinations/da-lat-travel-guide',
+            'destinations/mang-den-travel-guide',
+            'destinations/phong-nha-travel-guide',
+            'destinations/mekong-delta-travel-guide',
+            'destinations/cao-bang-travel-guide',
+            'destinations/sapa-travel-guide',
+            'destinations/ha-giang-loop-planning-guide',
+            'destinations/ninh-binh-travel-guide',
+            'destinations/ha-long-bay-travel-guide',
+            'destinations/da-nang-travel-guide',
+            'destinations/hoi-an-ancient-town-guide',
+            'destinations/hue-imperial-city-guide',
+            'destinations/phu-quoc-travel-guide',
+            'destinations/con-dao-travel-guide',
+        ]
+        howto_slugs = [
+            'plan/vietnam-evisa',
+            'plan/sim-esim-vietnam',
+            'plan/vietnam-airport-arrival-checklist',
+            'plan/hanoi-airport-to-old-quarter',
+            'plan/vietnam-first-trip-planning-checklist',
+        ]
+        php_code = f"""
+        $faq_paths = {json.dumps(faq_slugs)};
+        $howto_paths = {json.dumps(howto_slugs)};
+        $faq_results = [];
+        foreach ($faq_paths as $p) {{
+            $node = vg_get_page_faq_schema($p, "https://vietnamguide.net/{{$p}}/");
+            $faq_results[$p] = is_array($node) ? count($node['mainEntity'] ?? []) : 0;
+        }}
+        $howto_results = [];
+        foreach ($howto_paths as $p) {{
+            $node = vg_get_page_howto_schema($p, "https://vietnamguide.net/{{$p}}/");
+            $howto_results[$p] = is_array($node) ? count($node['step'] ?? []) : 0;
+        }}
+        echo json_encode(['faq' => $faq_results, 'howto' => $howto_results]);
+        """
+        res = _run_php(php_code)
+        self.assertEqual(res.returncode, 0, f"PHP error:\n{res.stderr}")
+        out = json.loads(res.stdout)
+        for p, count in out['faq'].items():
+            self.assertGreaterEqual(count, 3, f"FAQPage for {p} must have >= 3 Q&As, got {count}")
+        for p, count in out['howto'].items():
+            self.assertGreaterEqual(count, 3, f"HowTo for {p} must have >= 3 steps, got {count}")
+
+    def test_aio_llms_txt_documents_all_12_regional_travel_clusters(self):
+        """inc/guide-aio.php must document all 12 regional travel clusters in /llms.txt and /llms-full.txt."""
+        aio_php = (REPO_ROOT / 'wordpress/wp-content/themes/vietnamguide-premium/inc/guide-aio.php').read_text(encoding='utf-8')
+        self.assertIn('## Regional Travel Clusters (12 Geographic Corridors)', aio_php)
+        self.assertIn('### 1.8 Regional Geographic Profiles (12 Canonical Travel Clusters)', aio_php)
+        for cluster_marker in ['Cluster 1 —', 'Cluster 6 —', 'Cluster 7 —', 'Cluster 10 —', 'Cluster 12 —']:
+            self.assertIn(cluster_marker, aio_php)
+
 
 if __name__ == '__main__':
     unittest.main()

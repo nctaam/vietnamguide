@@ -212,6 +212,8 @@ def audit_travel_clusters(theme_inc_dir: Path = DEFAULT_THEME_INC_DIR) -> dict[s
         }
 
     content = guide_seo_path.read_text(encoding='utf-8')
+    reg_start = content.find('function vg_get_travel_clusters_registry')
+    registry_content = content[reg_start:] if reg_start != -1 else content
     verified_clusters: list[str] = []
     missing_clusters: list[str] = []
     geo_errors: list[str] = []
@@ -219,7 +221,7 @@ def audit_travel_clusters(theme_inc_dir: Path = DEFAULT_THEME_INC_DIR) -> dict[s
 
     for cid in EXPECTED_TRAVEL_CLUSTERS:
         pattern = rf"'{cid}'\s*=>\s*\[(.*?)(?=\n\s*'(?:{'|'.join(EXPECTED_TRAVEL_CLUSTERS)})'\s*=>|\n\s*\];\s*\n\s*return\s+\$registry;)"
-        match = re.search(pattern, content, re.DOTALL)
+        match = re.search(pattern, registry_content, re.DOTALL)
         if not match:
             missing_clusters.append(cid)
             continue
