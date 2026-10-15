@@ -143,6 +143,7 @@ class TestThemeAssetsPipeline(unittest.TestCase):
         function add_action(string $tag, callable $cb, int $p = 10, int $a = 1): void {}
         function add_filter(string $tag, callable $cb, int $p = 10, int $a = 1): void {}
         function add_shortcode(string $tag, callable $cb): void {}
+        function __return_false(): bool { return false; }
         function wp_enqueue_style(string $handle, string $src = '', array $deps = [], string $ver = ''): void {
             $GLOBALS['vg_enqueued_styles'][$handle] = ['src' => $src, 'deps' => $deps, 'ver' => $ver];
         }

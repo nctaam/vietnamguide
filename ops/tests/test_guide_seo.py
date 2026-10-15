@@ -17,18 +17,26 @@ Validates the full SEO implementation:
 import hashlib
 import json
 import os
+from pathlib import Path
 import re
 import subprocess
+import sys
 import tempfile
 import unittest
-from pathlib import Path
 
 REPO_ROOT = Path(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..')))
+if str(REPO_ROOT) not in sys.path:
+    sys.path.insert(0, str(REPO_ROOT))
+
+from ops.compile_route_registry import compile_route_registry
+from ops.tariff_sentinel import audit_route_registry, audit_registry_parity, audit_travel_clusters
+
 THEME_INC = REPO_ROOT / 'wordpress' / 'wp-content' / 'themes' / 'vietnamguide-premium' / 'inc'
 THEME_DIR = REPO_ROOT / 'wordpress' / 'wp-content' / 'themes' / 'vietnamguide-premium'
 MU_PLUGIN = REPO_ROOT / 'wordpress' / 'wp-content' / 'mu-plugins' / 'vietnamguide-core.php'
 ROUTE_REGISTRY_JSON = REPO_ROOT / 'ops' / 'route_registry.json'
 THEME_REGISTRY_JSON = THEME_INC / 'guide-route-registry.json'
+THEME_ROLLOUT_PHP = THEME_INC / 'guide-rollout.php'
 GUIDE_SEO_PHP = THEME_INC / 'guide-seo.php'
 GUIDE_AIO_PHP = THEME_INC / 'guide-aio.php'
 IMAGE_DIMS_PHP = THEME_INC / 'image-dimensions.php'
@@ -55,6 +63,10 @@ error_reporting(E_ALL & ~E_DEPRECATED);
 ini_set('display_errors', '1');
 
 define('ABSPATH', 1);
+
+if (! function_exists('__return_false')) {{
+    function __return_false(): bool {{ return false; }}
+}}
 
 if (! class_exists('WP_Post')) {{
     class WP_Post {{
@@ -910,6 +922,269 @@ echo json_encode([
         out = json.loads(res.stdout)
         self.assertEqual(out['rm_mod'], '2026-09-28T12:00:00+07:00')
         self.assertEqual(out['wp_lastmod'], '2026-09-28T12:00:00+07:00')
+
+    def test_travel_clusters_registry_all_12_clusters(self):
+        """All 12 travel clusters in vg_get_travel_clusters_registry() must be defined with valid schemas, geo coordinates, and journey links."""
+        php_code = """
+        $clusters = vg_get_travel_clusters_registry();
+        echo json_encode([
+            'keys'     => array_keys($clusters),
+            'clusters' => $clusters,
+        ]);
+        """
+        res = _run_php(php_code)
+        self.assertEqual(res.returncode, 0, f"PHP error:\n{res.stderr}")
+        data = json.loads(res.stdout)
+        keys = data['keys']
+        clusters = data['clusters']
+
+        expected_12 = [
+            'northern_triangle',
+            'ha_long_bay',
+            'ninh_binh',
+            'central_heritage',
+            'southern_delta',
+            'northern_highlands',
+            'coastal_islands',
+            'central_highlands',
+            'phong_nha_caves',
+            'mekong_delta',
+            'far_north_frontier',
+            'national_circuit',
+        ]
+        self.assertEqual(len(keys), 12, "vg_get_travel_clusters_registry must contain exactly 12 clusters")
+        self.assertEqual(keys, expected_12, "Cluster keys must match canonical 12 travel clusters list")
+
+        # Validate 4 new clusters
+        new_4 = ['central_highlands', 'phong_nha_caves', 'mekong_delta', 'far_north_frontier']
+        for cid in new_4:
+            self.assertIn(cid, clusters, f"Cluster {cid} must exist in registry")
+            c = clusters[cid]
+            self.assertEqual(c['id'], cid)
+            self.assertIn('destination_schema', c)
+            self.assertIn('trip_schema', c)
+            self.assertIn('action_schema', c)
+            self.assertIn('journey_links', c)
+
+            # Check geo coordinates in Vietnam bounding box
+            geo = c['destination_schema']['geo']
+            lat = float(geo['latitude'])
+            lon = float(geo['longitude'])
+            self.assertTrue(8.0 <= lat <= 24.0, f"{cid} latitude {lat} outside Vietnam bounds [8.0, 24.0]")
+            self.assertTrue(102.0 <= lon <= 110.0, f"{cid} longitude {lon} outside Vietnam bounds [102.0, 110.0]")
+
+            # Check journey links
+            self.assertGreaterEqual(len(c['journey_links']), 3, f"{cid} must define at least 3 journey links")
+            for jl in c['journey_links']:
+                self.assertIn('name', jl)
+                self.assertIn('url', jl)
+                self.assertIn('transit', jl)
+                self.assertIn('badge', jl)
+                self.assertIn('desc', jl)
+
+        # Validate all 12 clusters
+        for cid, c in clusters.items():
+            with self.subTest(cluster=cid):
+                dest = c['destination_schema']
+                self.assertTrue(len(dest.get('name', '')) > 0)
+                self.assertTrue(len(dest.get('description', '')) > 0)
+                self.assertTrue(dest.get('wikidata', '').startswith('https://www.wikidata.org/wiki/'))
+                self.assertTrue(dest.get('wikipedia', '').startswith('https://en.wikipedia.org/wiki/'))
+                self.assertGreaterEqual(len(dest.get('attractions', [])), 3)
+
+                trip = c['trip_schema']
+                self.assertTrue(len(trip.get('name', '')) > 0)
+                self.assertGreaterEqual(len(trip.get('stops', [])), 3)
+
+                action = c['action_schema']
+                self.assertTrue(len(action.get('name', '')) > 0)
+                self.assertTrue(len(action.get('method', '')) > 0)
+
+    def test_travel_cluster_path_resolution_regional_mapping(self):
+        """vg_find_travel_cluster_by_path() must accurately resolve regional routes to their regional clusters rather than national fallback."""
+        test_routes = [
+            # 4 New clusters
+            ('destinations/da-lat-travel-guide', 'central_highlands'),
+            ('destinations/mang-den-travel-guide', 'central_highlands'),
+            ('destinations/where-to-stay-in-buon-ma-thuot', 'central_highlands'),
+            ('destinations/where-to-stay-in-pleiku', 'central_highlands'),
+            ('destinations/where-to-stay-in-kon-tum', 'central_highlands'),
+            ('destinations/where-to-stay-in-bao-loc', 'central_highlands'),
+            ('destinations/phong-nha-travel-guide', 'phong_nha_caves'),
+            ('destinations/where-to-stay-in-dong-hoi', 'phong_nha_caves'),
+            ('plan/phong-nha-cave-treks', 'phong_nha_caves'),
+            ('destinations/mekong-delta-travel-guide', 'mekong_delta'),
+            ('destinations/where-to-stay-in-can-tho', 'mekong_delta'),
+            ('destinations/where-to-stay-in-chau-doc', 'mekong_delta'),
+            ('destinations/where-to-stay-in-ben-tre', 'mekong_delta'),
+            ('destinations/where-to-stay-in-ca-mau', 'mekong_delta'),
+            ('destinations/where-to-stay-in-ha-tien', 'mekong_delta'),
+            ('plan/vietnam-to-cambodia-boat-guide', 'mekong_delta'),
+            ('destinations/cao-bang-travel-guide', 'far_north_frontier'),
+            ('destinations/ba-be-lake-travel-guide', 'far_north_frontier'),
+            ('destinations/where-to-stay-in-mai-chau', 'far_north_frontier'),
+            ('destinations/where-to-stay-in-bac-ha', 'far_north_frontier'),
+            ('destinations/where-to-stay-in-dien-bien-phu', 'far_north_frontier'),
+            ('itineraries/northeast-vietnam-itinerary', 'far_north_frontier'),
+            # Existing regional clusters
+            ('destinations/hanoi-travel-guide', 'northern_triangle'),
+            ('destinations/hanoi-old-quarter-walking-tour', 'northern_triangle'),
+            ('destinations/ha-long-bay-travel-guide', 'ha_long_bay'),
+            ('destinations/cat-ba-island-guide', 'ha_long_bay'),
+            ('destinations/ninh-binh-travel-guide', 'ninh_binh'),
+            ('destinations/trang-an-boat-tour-guide', 'ninh_binh'),
+            ('destinations/da-nang-travel-guide', 'central_heritage'),
+            ('destinations/hoi-an-ancient-town-guide', 'central_heritage'),
+            ('destinations/hue-imperial-city-guide', 'central_heritage'),
+            ('destinations/ho-chi-minh-city-travel-guide', 'southern_delta'),
+            ('destinations/saigon-street-food-guide', 'southern_delta'),
+            ('destinations/cu-chi-tunnels-guide', 'southern_delta'),
+            ('destinations/sapa-travel-guide', 'northern_highlands'),
+            ('destinations/ha-giang-loop-planning-guide', 'northern_highlands'),
+            ('destinations/mu-cang-chai-travel-guide', 'northern_highlands'),
+            ('destinations/pu-luong-travel-guide', 'northern_highlands'),
+            ('destinations/phu-quoc-travel-guide', 'coastal_islands'),
+            ('destinations/con-dao-travel-guide', 'coastal_islands'),
+            ('destinations/nha-trang-travel-guide', 'coastal_islands'),
+            ('destinations/quy-nhon-travel-guide', 'coastal_islands'),
+            ('destinations/mui-ne-travel-guide', 'coastal_islands'),
+            # Valid national circuit fallbacks
+            ('plan/vietnam-travel-guide', 'national_circuit'),
+            ('plan/vietnam-evisa-guide', 'national_circuit'),
+            ('plan/sim-esim-vietnam', 'national_circuit'),
+            ('itineraries/10-days-in-vietnam', 'national_circuit'),
+        ]
+
+        php_code = """
+        $tests = """ + json.dumps([r[0] for r in test_routes]) + """;
+        $results = [];
+        foreach ($tests as $t) {
+            $cl = vg_find_travel_cluster_by_path($t);
+            $results[$t] = $cl['id'] ?? 'unknown';
+        }
+        echo json_encode($results);
+        """
+        res = _run_php(php_code)
+        self.assertEqual(res.returncode, 0, f"PHP error:\n{res.stderr}")
+        mapped = json.loads(res.stdout)
+
+        for path, expected_cluster in test_routes:
+            with self.subTest(route=path):
+                self.assertEqual(
+                    mapped.get(path),
+                    expected_cluster,
+                    f"Route {path} should map to {expected_cluster}, got {mapped.get(path)}",
+                )
+
+    def test_schema_org_json_ld_tourist_destination_and_trip_entities(self):
+        """Schema.org JSON-LD output must include TouristDestination, TouristTrip, TravelAction, containedInPlace, geo, includesAttraction, and ImageObject with width >= 1200px."""
+        sample_routes = [
+            'destinations/da-lat-travel-guide',
+            'destinations/phong-nha-travel-guide',
+            'destinations/mekong-delta-travel-guide',
+            'destinations/cao-bang-travel-guide',
+            'destinations/hanoi-travel-guide',
+        ]
+        for route_path in sample_routes:
+            with self.subTest(route=route_path):
+                php_code = f"""
+                $route = '/{route_path}/';
+                $post = new WP_Post();
+                $post->post_name = '{route_path}';
+                $post->post_title = 'Travel Guide';
+                $GLOBALS['post'] = $post;
+                $_SERVER['REQUEST_URI'] = $route;
+
+                $initial_data = [
+                    '@context' => 'https://schema.org',
+                    '@graph'   => [
+                        [
+                            '@type' => 'Article',
+                            '@id'   => 'https://vietnamguide.net' . $route . '#article',
+                            'headline' => 'Sample Article',
+                        ],
+                        [
+                            '@type' => 'WebPage',
+                            '@id'   => 'https://vietnamguide.net' . $route . '#webpage',
+                            'name'  => 'Sample Page',
+                        ],
+                    ],
+                ];
+
+                $enriched = apply_filters('rank_math/json_ld', $initial_data, null);
+                echo json_encode($enriched);
+                """
+                res = _run_php(php_code)
+                self.assertEqual(res.returncode, 0, f"PHP error:\n{res.stderr}")
+                data = json.loads(res.stdout)
+                graph = data.get('@graph', [])
+
+                # 1. TouristDestination
+                dest_nodes = [n for n in graph if n.get('@type') == 'TouristDestination']
+                self.assertTrue(len(dest_nodes) >= 1, "Must contain TouristDestination node")
+                dest = dest_nodes[0]
+                self.assertIn('containedInPlace', dest)
+                self.assertIn('geo', dest)
+                self.assertEqual(dest['geo'].get('@type'), 'GeoCoordinates')
+                lat = float(dest['geo']['latitude'])
+                lon = float(dest['geo']['longitude'])
+                self.assertTrue(8.0 <= lat <= 24.0, f"Latitude {lat} out of bounds")
+                self.assertTrue(102.0 <= lon <= 110.0, f"Longitude {lon} out of bounds")
+
+                self.assertIn('includesAttraction', dest)
+                self.assertGreaterEqual(len(dest['includesAttraction']), 1)
+                for attr in dest['includesAttraction']:
+                    self.assertEqual(attr.get('@type'), 'TouristAttraction')
+                    self.assertIsNotNone(attr.get('name'))
+
+                # 2. TouristTrip
+                trip_nodes = [n for n in graph if n.get('@type') == 'TouristTrip']
+                self.assertTrue(len(trip_nodes) >= 1, "Must contain TouristTrip node")
+                trip = trip_nodes[0]
+                self.assertIn('itinerary', trip)
+
+                # 3. TravelAction
+                action_nodes = [n for n in graph if n.get('@type') == 'TravelAction']
+                self.assertTrue(len(action_nodes) >= 1, "Must contain TravelAction node")
+                action = action_nodes[0]
+                self.assertIn('fromLocation', action)
+                self.assertIn('toLocation', action)
+
+                # 4. Article ImageObject >= 1200px
+                art_nodes = [n for n in graph if n.get('@type') == 'Article']
+                self.assertTrue(len(art_nodes) >= 1)
+                article = art_nodes[0]
+                img = article.get('image')
+                self.assertIsNotNone(img)
+                img_obj = img if isinstance(img, dict) else img[0]
+                self.assertEqual(img_obj.get('@type'), 'ImageObject')
+                self.assertGreaterEqual(int(img_obj.get('width', 0)), 1200)
+
+                # 5. Linkage via about property
+                self.assertIn('about', article)
+                about_list = article['about'] if isinstance(article['about'], list) else [article['about']]
+                about_ids = [a.get('@id') for a in about_list if isinstance(a, dict)]
+                self.assertIn(dest['@id'], about_ids)
+
+    def test_tri_file_registry_synchronization_and_sha256_parity(self):
+        """Registry tri-file parity check across ops/route_registry.json, inc/guide-route-registry.json, and inc/guide-rollout.php."""
+        parity_ok = compile_route_registry(ROUTE_REGISTRY_JSON, THEME_REGISTRY_JSON, THEME_ROLLOUT_PHP, check_only=True)
+        self.assertTrue(parity_ok, "Tri-file registry must have 100% SHA-256 byte parity")
+
+        audit_res = audit_registry_parity(REPO_ROOT)
+        self.assertTrue(audit_res['passed'], f"Parity audit failed: {audit_res.get('errors')}")
+
+    def test_route_registry_empirical_signal_density_threshold(self):
+        """Route registry must maintain empirical signal density >= 98% (current 100% verified across 282/282 routes)."""
+        rep = audit_route_registry(ROUTE_REGISTRY_JSON)
+        self.assertEqual(rep['route_count'], 282, "Must audit exactly 282 routes")
+        self.assertGreaterEqual(rep['empirical_coverage_pct'], 98.0, "Empirical density must be >= 98.0%")
+        self.assertEqual(rep['empirical_coverage_pct'], 100.0, "Empirical density must be 100.0%")
+        self.assertEqual(rep['empirical_counts']['any_empirical_signal'], 282, "All 282 routes must have empirical signals")
+        self.assertEqual(len(rep['invalid_date_routes']), 0, "No invalid dates allowed")
+        self.assertEqual(len(rep['stale_routes']), 0, "No stale routes allowed")
+        self.assertEqual(len(rep['title_violations']), 0, "No title violations allowed")
+        self.assertEqual(len(rep['description_violations']), 0, "No description violations allowed")
 
 
 if __name__ == '__main__':

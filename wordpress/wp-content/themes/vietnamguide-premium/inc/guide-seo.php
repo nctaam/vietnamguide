@@ -970,6 +970,305 @@ function vg_get_travel_clusters_registry(): array
             ],
         ],
 
+        'central_highlands' => [
+            'id'                 => 'central_highlands',
+            'name'               => 'Central Highlands & Pine Plateaus',
+            'hub'                => 'Da Lat & Buon Ma Thuot',
+            'hub_url'            => '/destinations/da-lat-travel-guide/',
+            'destination_schema' => [
+                'addressRegion' => 'Lam Dong, Dak Lak, Gia Lai & Kon Tum',
+                'geo'          => ['latitude' => 11.9404, 'longitude' => 108.4583],
+                'name'         => 'Da Lat & Central Highlands',
+                'description'  => 'Vietnam\'s cool-climate coffee country, linking French alpine villas in Da Lat with Buon Ma Thuot\'s volcanic basalt plantations, Kon Tum\'s indigenous communal houses, and the pine forests of Mang Den.',
+                'wikidata'     => 'https://www.wikidata.org/wiki/Q1140648',
+                'wikipedia'    => 'https://en.wikipedia.org/wiki/Central_Highlands_(Vietnam)',
+                'tourist_type' => ['Highland agriculture & coffee tourism', 'Cool-climate alpine retreats', 'Indigenous ethnic culture & longhouses', 'Waterfalls & adventure trekking'],
+                'attractions'  => [
+                    ['name' => 'Da Lat French Villas & Tuyen Lam Lake', 'wikidata' => 'https://www.wikidata.org/wiki/Q25281'],
+                    ['name' => 'Mang Den Pine Plateau & Pa Sy Waterfall', 'wikidata' => 'https://www.wikidata.org/wiki/Q10795764'],
+                    ['name' => 'Buon Ma Thuot Coffee Plantations & Dray Nur Falls', 'wikidata' => 'https://www.wikidata.org/wiki/Q25302'],
+                    ['name' => 'Kon Tum Wooden Church & Bahnar Communal Rong Houses', 'wikidata' => 'https://www.wikidata.org/wiki/Q10784269'],
+                    ['name' => 'Bao Loc Tea & Coffee Hills', 'wikidata' => 'https://www.wikidata.org/wiki/Q25301'],
+                    ['name' => 'Pleiku Sea Lake (Bien Ho)', 'wikidata' => 'https://www.wikidata.org/wiki/Q4904576'],
+                ],
+            ],
+            'trip_schema' => [
+                'name'         => 'Da Lat to Buon Ma Thuot & Mang Den Central Highlands Overland Journey',
+                'description'  => 'An overland traverse through Vietnam\'s cool-climate coffee country, linking French alpine villas in Da Lat with Buon Ma Thuot\'s volcanic basalt plantations, Kon Tum\'s communal houses, and the pine forests of Mang Den.',
+                'tourist_type' => ['Independent road trippers', 'Coffee enthusiasts', 'Nature & ecotourism travelers'],
+                'stops'        => [
+                    ['name' => 'Da Lat Alpine Retreat', 'url' => '/destinations/da-lat-travel-guide/'],
+                    ['name' => 'Buon Ma Thuot Coffee Heart', 'url' => '/destinations/where-to-stay-in-buon-ma-thuot/'],
+                    ['name' => 'Pleiku & Bien Ho Crater Lake', 'url' => '/destinations/where-to-stay-in-pleiku/'],
+                    ['name' => 'Kon Tum & Mang Den Pine Plateau', 'url' => '/destinations/mang-den-travel-guide/'],
+                ],
+            ],
+            'action_schema' => [
+                'name'   => 'Explore Central Highlands Overland Route (Da Lat -> Buon Ma Thuot -> Kon Tum -> Mang Den)',
+                'method' => 'Highland Highway QL20/QL27/QL14 & Scenic Mountain Passes',
+            ],
+            'journey_links' => [
+                [
+                    'name'    => 'Mang Den Pine Plateau',
+                    'url'     => '/destinations/mang-den-travel-guide/',
+                    'transit' => '4 hrs north of Pleiku via QL24',
+                    'badge'   => 'Pristine Eco Plateau',
+                    'desc'    => 'Misty pine forests, cool year-round climate, untouched waterfalls, and serene mountain homestays.',
+                ],
+                [
+                    'name'    => 'Buon Ma Thuot Coffee Capital',
+                    'url'     => '/destinations/where-to-stay-in-buon-ma-thuot/',
+                    'transit' => '5 hrs via QL27 mountain road',
+                    'badge'   => 'Coffee Capital',
+                    'desc'    => 'Volcanic basalt soil, shade-grown robusta plantations, world coffee museum, and Dray Nur waterfalls.',
+                ],
+                [
+                    'name'    => 'Kon Tum & Wooden Church',
+                    'url'     => '/destinations/where-to-stay-in-kon-tum/',
+                    'transit' => '1 hr north of Pleiku via QL14',
+                    'badge'   => 'Indigenous Heritage',
+                    'desc'    => 'Century-old wooden Romanesque cathedral, Bahnar communal Rong houses, and peaceful Dak Bla river.',
+                ],
+                [
+                    'name'    => 'Nha Trang Coastal Descent',
+                    'url'     => '/destinations/where-to-stay-in-da-lat/',
+                    'transit' => '3.5 hrs via Khanh Le Pass',
+                    'badge'   => 'Mountain-to-Sea',
+                    'desc'    => 'Descend scenic mountain hairpins from 1,500m pine forests to turquoise coastal beaches in Nha Trang.',
+                ],
+                [
+                    'name'    => 'Ho Chi Minh City Gateway',
+                    'url'     => '/destinations/ho-chi-minh-city-travel-guide/',
+                    'transit' => '6 hrs via expressway & QL20 / 50 min flight',
+                    'badge'   => 'Metropolis Hub',
+                    'desc'    => 'Overland bus or quick domestic flight back to Saigon for urban dining and international connections.',
+                ],
+            ],
+        ],
+
+        'phong_nha_caves' => [
+            'id'                 => 'phong_nha_caves',
+            'name'               => 'Phong Nha & Quang Binh Cave Kingdom',
+            'hub'                => 'Phong Nha (Son Trach) & Dong Hoi',
+            'hub_url'            => '/destinations/phong-nha-travel-guide/',
+            'destination_schema' => [
+                'addressRegion' => 'Quang Binh Province',
+                'geo'          => ['latitude' => 17.5906, 'longitude' => 106.2831],
+                'name'         => 'Phong Nha-Ke Bang & Quang Binh',
+                'description'  => 'An expedition circuit exploring karst formations, subterranean river grottos, primary tropical rainforests, and spelunking in UNESCO-listed Phong Nha-Ke Bang.',
+                'wikidata'     => 'https://www.wikidata.org/wiki/Q192135',
+                'wikipedia'    => 'https://en.wikipedia.org/wiki/Phong_Nha-K%E1%BA%BB_B%C3%A0ng_National_Park',
+                'tourist_type' => ['Spelunking & cave exploration', 'Subterranean river kayaking', 'UNESCO World Heritage nature', 'Jungle trekking & expedition travel'],
+                'attractions'  => [
+                    ['name' => 'Hang Son Doong (World\'s Largest Cave)', 'wikidata' => 'https://www.wikidata.org/wiki/Q212668'],
+                    ['name' => 'Paradise Cave (Thien Duong)', 'wikidata' => 'https://www.wikidata.org/wiki/Q43224'],
+                    ['name' => 'Phong Nha Wet Cave & Underground River', 'wikidata' => 'https://www.wikidata.org/wiki/Q192135'],
+                    ['name' => 'Dark Cave (Hang Toi) & Chay River', 'wikidata' => 'https://www.wikidata.org/wiki/Q192135'],
+                    ['name' => 'Hang En Cave', 'wikidata' => 'https://www.wikidata.org/wiki/Q192135'],
+                    ['name' => 'Dong Hoi Coastal Gateway & Nhat Le Beach', 'wikidata' => 'https://www.wikidata.org/wiki/Q1879'],
+                ],
+            ],
+            'trip_schema' => [
+                'name'         => 'Quang Binh Subterranean Cave Kingdom & Annamite Jungle Circuit',
+                'description'  => 'An expedition circuit exploring karst formations, subterranean river grottos, primary tropical rainforests, and spelunking in UNESCO-listed Phong Nha-Ke Bang.',
+                'tourist_type' => ['Active adventurers', 'Spelunkers & trekkers', 'Ecotourists & photographers'],
+                'stops'        => [
+                    ['name' => 'Dong Hoi Rail & Airport Gateway', 'url' => '/destinations/where-to-stay-in-dong-hoi/'],
+                    ['name' => 'Phong Nha Village & Wet Cave', 'url' => '/destinations/phong-nha-travel-guide/'],
+                    ['name' => 'Paradise Cave Karst Plateau', 'url' => '/destinations/phong-nha-travel-guide/'],
+                    ['name' => 'Tu Lan & Jungle Expedition Base', 'url' => '/plan/phong-nha-cave-treks/'],
+                ],
+            ],
+            'action_schema' => [
+                'name'   => 'Explore Phong Nha & Quang Binh Cave Expeditions',
+                'method' => 'Subterranean Boat, Jungle Trekking & Local Transfer Shuttle',
+            ],
+            'journey_links' => [
+                [
+                    'name'    => 'Paradise Cave & Dark Cave',
+                    'url'     => '/destinations/phong-nha-travel-guide/',
+                    'transit' => '30 mins via National Park Loop Road',
+                    'badge'   => 'Karst Wonder',
+                    'desc'    => 'Walk through 1km of soaring cathedral stalactites in Paradise Cave, then zipline and kayak at Dark Cave.',
+                ],
+                [
+                    'name'    => 'Dong Hoi Coastal Gateway',
+                    'url'     => '/destinations/where-to-stay-in-dong-hoi/',
+                    'transit' => '45 mins via transfer van / taxi',
+                    'badge'   => 'Coastal Rail Base',
+                    'desc'    => 'Comfortable beachside hotels on Nhat Le beach, local seafood, domestic airport flights, and railway connections.',
+                ],
+                [
+                    'name'    => 'Hue Imperial Citadel (Southward)',
+                    'url'     => '/destinations/hue-imperial-city-guide/',
+                    'transit' => '3.5 hrs via Reunification Express Train',
+                    'badge'   => 'Imperial Heritage',
+                    'desc'    => 'Ride the railway south through the DMZ to the royal Nguyen dynasty palaces and tombs in Hue.',
+                ],
+                [
+                    'name'    => 'Ninh Binh Terrestrial Karsts (Northward)',
+                    'url'     => '/destinations/ninh-binh-travel-guide/',
+                    'transit' => '7 hrs via Overnight Sleeper Train',
+                    'badge'   => 'Terrestrial Karsts',
+                    'desc'    => 'Board the night train north toward the peaceful paddleboat limestone valleys and rice fields of Tam Coc.',
+                ],
+            ],
+        ],
+
+        'mekong_delta' => [
+            'id'                 => 'mekong_delta',
+            'name'               => 'Mekong Delta Riverine Network',
+            'hub'                => 'Can Tho & Chau Doc',
+            'hub_url'            => '/destinations/mekong-delta-travel-guide/',
+            'destination_schema' => [
+                'addressRegion' => 'Can Tho, Ben Tre, An Giang, Kien Giang & Ca Mau',
+                'geo'          => ['latitude' => 10.0452, 'longitude' => 105.7469],
+                'name'         => 'Mekong Delta Riverways',
+                'description'  => 'A waterway route across the delta, navigating morning wholesale markets, mangrove boat passages, traditional fruit orchards, and cross-border river routes into Cambodia.',
+                'wikidata'     => 'https://www.wikidata.org/wiki/Q1052867',
+                'wikipedia'    => 'https://en.wikipedia.org/wiki/Mekong_Delta',
+                'tourist_type' => ['Riverine ecotourism', 'Floating market culture', 'Fruit orchard homestays', 'Mangrove biosphere exploration', 'Cross-border river transit'],
+                'attractions'  => [
+                    ['name' => 'Cai Rang Floating Market', 'wikidata' => 'https://www.wikidata.org/wiki/Q5017482'],
+                    ['name' => 'Tra Su Cajuput Melaleuca Forest', 'wikidata' => 'https://www.wikidata.org/wiki/Q10828236'],
+                    ['name' => 'Ben Tre Coconut Waterways', 'wikidata' => 'https://www.wikidata.org/wiki/Q25298'],
+                    ['name' => 'Sam Mountain & Chau Doc Border Temples', 'wikidata' => 'https://www.wikidata.org/wiki/Q36384'],
+                    ['name' => 'Mui Ca Mau Biosphere (Southernmost Tip)', 'wikidata' => 'https://www.wikidata.org/wiki/Q33932'],
+                    ['name' => 'Ha Tien Coastal Frontier', 'wikidata' => 'https://www.wikidata.org/wiki/Q36384'],
+                ],
+            ],
+            'trip_schema' => [
+                'name'         => 'Can Tho to Chau Doc, Ben Tre & Ca Mau Mekong Riverine Circuit',
+                'description'  => 'A waterway route across the delta, navigating morning wholesale markets, mangrove boat passages, traditional fruit orchards, and cross-border river routes into Cambodia.',
+                'tourist_type' => ['Cultural explorers', 'Slow travelers', 'Culinary & riverine adventurers'],
+                'stops'        => [
+                    ['name' => 'Can Tho & Cai Rang Floating Market', 'url' => '/destinations/where-to-stay-in-can-tho/'],
+                    ['name' => 'Ben Tre Coconut Country', 'url' => '/destinations/where-to-stay-in-ben-tre/'],
+                    ['name' => 'Chau Doc & Tra Su Melaleuca Forest', 'url' => '/destinations/where-to-stay-in-chau-doc/'],
+                    ['name' => 'Ha Tien & Rach Gia Coastal Ports', 'url' => '/destinations/where-to-stay-in-ha-tien/'],
+                    ['name' => 'Ca Mau Southernmost Mangrove Tip', 'url' => '/destinations/where-to-stay-in-ca-mau/'],
+                ],
+            ],
+            'action_schema' => [
+                'name'   => 'Navigate Mekong Delta Waterway & Cross-Border Network',
+                'method' => 'Wooden Sampan, River Speedboat & Delta Highway Van',
+            ],
+            'journey_links' => [
+                [
+                    'name'    => 'Cai Rang Floating Market (Can Tho)',
+                    'url'     => '/destinations/mekong-delta-floating-markets-guide/',
+                    'transit' => '30 min dawn sampan from Ninh Kieu wharf',
+                    'badge'   => 'Floating Market',
+                    'desc'    => 'Experience authentic morning trading from wooden riverboats with fresh noodle soup and iced coffee on the water.',
+                ],
+                [
+                    'name'    => 'Chau Doc & Tra Su Forest',
+                    'url'     => '/destinations/where-to-stay-in-chau-doc/',
+                    'transit' => '3 hrs northwest of Can Tho via QL91',
+                    'badge'   => 'Border Waterways',
+                    'desc'    => 'Glide along canal passages under emerald melaleuca canopies, visit stilt-house Cham villages.',
+                ],
+                [
+                    'name'    => 'Phu Quoc Island Speed Ferry Connection',
+                    'url'     => '/destinations/phu-quoc-travel-guide/',
+                    'transit' => '1 hr 15 min speedboat from Ha Tien / 2 hrs 15 min from Rach Gia',
+                    'badge'   => 'Island Ferry Link',
+                    'desc'    => 'Transition directly from delta riverways to the beaches and seaside resorts of Phu Quoc.',
+                ],
+                [
+                    'name'    => 'Phnom Penh International Riverboat (Cambodia)',
+                    'url'     => '/plan/vietnam-to-cambodia-boat-guide/',
+                    'transit' => '4.5 hrs daily express boat from Chau Doc',
+                    'badge'   => 'International River Crossing',
+                    'desc'    => 'River journey up the Mekong River from Chau Doc to Phnom Penh with streamlined river border clearance.',
+                ],
+                [
+                    'name'    => 'Ho Chi Minh City Urban Hub',
+                    'url'     => '/destinations/ho-chi-minh-city-travel-guide/',
+                    'transit' => '2.5 hrs via Trung Luong - My Thuan Expressway',
+                    'badge'   => 'Southern Metropolis',
+                    'desc'    => 'Expressway return to Saigon for rooftop dining, heritage museums, and flight departures.',
+                ],
+            ],
+        ],
+
+        'far_north_frontier' => [
+            'id'                 => 'far_north_frontier',
+            'name'               => 'North-Central & Far North Frontier',
+            'hub'                => 'Cao Bang & Ba Be',
+            'hub_url'            => '/destinations/cao-bang-travel-guide/',
+            'destination_schema' => [
+                'addressRegion' => 'Cao Bang, Bac Kan, Dien Bien, Lao Cai & Thanh Hoa',
+                'geo'          => ['latitude' => 22.6667, 'longitude' => 106.2500],
+                'name'         => 'Cao Bang & Far North Frontier',
+                'description'  => 'An overland frontier circuit spanning the freshwater lakes of Ba Be, the tiered cascades of Ban Gioc Waterfall on the northern border, and the mountain valleys of Mai Chau and Dien Bien Phu.',
+                'wikidata'     => 'https://www.wikidata.org/wiki/Q36384',
+                'wikipedia'    => 'https://en.wikipedia.org/wiki/Cao_B%E1%BA%B1ng_province',
+                'tourist_type' => ['Geopark geological exploration', 'Waterfall & freshwater lake ecotourism', 'Frontier motorcycle route touring', 'Ethnic minority homestay immersion', 'Historical battleground tourism'],
+                'attractions'  => [
+                    ['name' => 'Ban Gioc Waterfall (UNESCO Global Geopark)', 'wikidata' => 'https://www.wikidata.org/wiki/Q806148'],
+                    ['name' => 'Ba Be National Park & Freshwater Lake', 'wikidata' => 'https://www.wikidata.org/wiki/Q10828551'],
+                    ['name' => 'Nguom Ngao Tiger Cave', 'wikidata' => 'https://www.wikidata.org/wiki/Q10798734'],
+                    ['name' => 'Bac Ha Sunday Ethnic Market', 'wikidata' => 'https://www.wikidata.org/wiki/Q36384'],
+                    ['name' => 'Dien Bien Phu Historic Valley', 'wikidata' => 'https://www.wikidata.org/wiki/Q25298'],
+                    ['name' => 'Mai Chau Valley & Stilt Villages', 'wikidata' => 'https://www.wikidata.org/wiki/Q10788220'],
+                ],
+            ],
+            'trip_schema' => [
+                'name'         => 'Northeast to Northwest Frontier Expedition (Ba Be, Ban Gioc & Dien Bien Phu)',
+                'description'  => 'An overland frontier circuit spanning the freshwater lakes of Ba Be, the tiered cascades of Ban Gioc Waterfall on the northern border, and the mountain valleys of Mai Chau and Dien Bien Phu.',
+                'tourist_type' => ['Adventure motorcycle riders', 'Off-the-beaten-track travelers', 'Landscape photographers'],
+                'stops'        => [
+                    ['name' => 'Ba Be National Park', 'url' => '/destinations/ba-be-lake-travel-guide/'],
+                    ['name' => 'Cao Bang Geopark & Ban Gioc', 'url' => '/destinations/cao-bang-travel-guide/'],
+                    ['name' => 'Bac Ha Highland Market', 'url' => '/destinations/where-to-stay-in-bac-ha/'],
+                    ['name' => 'Mai Chau Valley', 'url' => '/destinations/where-to-stay-in-mai-chau/'],
+                    ['name' => 'Dien Bien Phu Historical Basin', 'url' => '/destinations/where-to-stay-in-dien-bien-phu/'],
+                ],
+            ],
+            'action_schema' => [
+                'name'   => 'Explore Northeast & Far North Frontier Circuit',
+                'method' => 'Mountain Ridge Highways QL3/QL4A/QL6 & Local Boat Ferries',
+            ],
+            'journey_links' => [
+                [
+                    'name'    => 'Ban Gioc Waterfall & Nguom Ngao Cave',
+                    'url'     => '/destinations/cao-bang-travel-guide/',
+                    'transit' => '2 hrs northeast of Cao Bang city via QL3',
+                    'badge'   => 'UNESCO Geopark',
+                    'desc'    => 'Southeast Asia\'s largest border waterfall, boat on the Quay Son river, and explore stalactite caverns.',
+                ],
+                [
+                    'name'    => 'Ba Be Lake Pristine Waters',
+                    'url'     => '/destinations/ba-be-lake-travel-guide/',
+                    'transit' => '3.5 hrs southwest of Cao Bang via scenic mountain pass',
+                    'badge'   => 'Alpine Lake Sanctuary',
+                    'desc'    => 'Kayak through limestone gorges, stay with Tay families in Pac Ngoi stilt houses, and swim in clear freshwater.',
+                ],
+                [
+                    'name'    => 'Ha Giang Karst Plateau Connection',
+                    'url'     => '/destinations/ha-giang-loop-planning-guide/',
+                    'transit' => '6 hrs west via Bao Lac & Meo Vac (QL34)',
+                    'badge'   => 'Frontier Loop Link',
+                    'desc'    => 'Connect the Northeast waterfall loop directly to the dramatic passes of Ma Pi Leng and Dong Van.',
+                ],
+                [
+                    'name'    => 'Mai Chau & Pu Luong Terraces',
+                    'url'     => '/destinations/where-to-stay-in-mai-chau/',
+                    'transit' => '3.5 hrs southwest of Hanoi via QL6',
+                    'badge'   => 'Valley Sanctuary',
+                    'desc'    => 'Cycle through White Thai villages, emerald rice paddies, and connect south into Pu Luong Nature Reserve.',
+                ],
+                [
+                    'name'    => 'Hanoi Capital Gateway',
+                    'url'     => '/destinations/hanoi-travel-guide/',
+                    'transit' => '4.5 hrs via Thai Nguyen Expressway',
+                    'badge'   => 'Northern Hub',
+                    'desc'    => 'Return overland to Hanoi for recovery, street-food comforts, and international flight onward connections.',
+                ],
+            ],
+        ],
+
         'national_circuit' => [
             'id'                 => 'national_circuit',
             'name'               => 'Classic Vietnam Grand Route',
@@ -1049,6 +1348,64 @@ function vg_find_travel_cluster_by_path(string $path): array
     $clusters = vg_get_travel_clusters_registry();
     $normalized = strtolower(trim($path, '/'));
 
+    // 1. Central Highlands / Mang Den / Da Lat
+    if (
+        str_contains($normalized, 'da-lat')
+        || str_contains($normalized, 'mang-den')
+        || str_contains($normalized, 'kon-tum')
+        || str_contains($normalized, 'pleiku')
+        || str_contains($normalized, 'buon-ma-thuot')
+        || str_contains($normalized, 'bao-loc')
+        || str_contains($normalized, 'central-highlands')
+    ) {
+        return $clusters['central_highlands'] ?? $clusters['national_circuit'];
+    }
+
+    // 2. Phong Nha & Quang Binh Cave Kingdom
+    if (
+        str_contains($normalized, 'phong-nha')
+        || str_contains($normalized, 'dong-hoi')
+        || str_contains($normalized, 'quang-binh')
+    ) {
+        return $clusters['phong_nha_caves'] ?? $clusters['central_heritage'];
+    }
+
+    // 3. Mekong Delta Riverine Network
+    if (
+        str_contains($normalized, 'mekong')
+        || str_contains($normalized, 'can-tho')
+        || str_contains($normalized, 'ben-tre')
+        || str_contains($normalized, 'chau-doc')
+        || str_contains($normalized, 'an-giang')
+        || str_contains($normalized, 'ca-mau')
+        || str_contains($normalized, 'bac-lieu')
+        || str_contains($normalized, 'soc-trang')
+        || str_contains($normalized, 'ha-tien')
+        || str_contains($normalized, 'rach-gia')
+        || str_contains($normalized, 'cambodia-boat')
+        || str_contains($normalized, 'border-crossings')
+    ) {
+        return $clusters['mekong_delta'] ?? $clusters['southern_delta'];
+    }
+
+    // 4. North-Central & Far North Frontier
+    if (
+        str_contains($normalized, 'cao-bang')
+        || str_contains($normalized, 'ba-be')
+        || str_contains($normalized, 'bac-ha')
+        || str_contains($normalized, 'bao-lac')
+        || str_contains($normalized, 'dien-bien')
+        || str_contains($normalized, 'mai-chau')
+        || str_contains($normalized, 'tam-dao')
+        || str_contains($normalized, 'northeast-vietnam')
+        || str_contains($normalized, 'northwest-vietnam')
+        || str_contains($normalized, 'lang-co')
+        || str_contains($normalized, 'quang-ngai')
+    ) {
+        return $clusters['far_north_frontier'] ?? $clusters['national_circuit'];
+    }
+
+    // 5. Northern Golden Triangle (Hanoi)
     if (
         str_contains($normalized, 'hanoi')
         || str_contains($normalized, 'old-quarter')
@@ -1059,15 +1416,18 @@ function vg_find_travel_cluster_by_path(string $path): array
         return $clusters['northern_triangle'];
     }
 
+    // 6. Gulf of Tonkin Karst Archipelago (Ha Long Bay)
     if (
         str_contains($normalized, 'ha-long')
         || str_contains($normalized, 'lan-ha')
         || str_contains($normalized, 'cat-ba')
         || str_contains($normalized, 'bai-tu-long')
+        || str_contains($normalized, 'hai-phong')
     ) {
         return $clusters['ha_long_bay'];
     }
 
+    // 7. Ninh Binh Karst Countryside
     if (
         str_contains($normalized, 'ninh-binh')
         || str_contains($normalized, 'tam-coc')
@@ -1076,34 +1436,45 @@ function vg_find_travel_cluster_by_path(string $path): array
         return $clusters['ninh_binh'];
     }
 
+    // 8. Northern Highlands (Sa Pa, Ha Giang, Mu Cang Chai, Pu Luong)
     if (
         str_contains($normalized, 'sapa')
         || str_contains($normalized, 'ha-giang')
         || str_contains($normalized, 'mu-cang-chai')
         || str_contains($normalized, 'pu-luong')
         || str_contains($normalized, 'rice-terraces')
+        || str_contains($normalized, 'dong-van')
+        || str_contains($normalized, 'meo-vac')
+        || str_contains($normalized, 'du-gia')
+        || str_contains($normalized, 'yen-minh')
     ) {
         return $clusters['northern_highlands'];
     }
 
+    // 9. Central Heritage Corridor (Da Nang, Hoi An, Hue)
     if (
         str_contains($normalized, 'da-nang')
         || str_contains($normalized, 'hoi-an')
         || str_contains($normalized, 'hue')
         || str_contains($normalized, 'cham-islands')
-        || str_contains($normalized, 'phong-nha')
+        || str_contains($normalized, 'ba-na')
+        || str_contains($normalized, 'central-vietnam')
     ) {
         return $clusters['central_heritage'];
     }
 
+    // 10. Southern Delta / Saigon Urban Hub
     if (
         str_contains($normalized, 'ho-chi-minh')
-        || str_contains($normalized, 'mekong')
         || str_contains($normalized, 'cu-chi')
+        || str_contains($normalized, 'saigon')
+        || str_contains($normalized, 'vung-tau')
+        || str_contains($normalized, 'southern-vietnam')
     ) {
         return $clusters['southern_delta'];
     }
 
+    // 11. Coastal & Island Sanctuaries
     if (
         str_contains($normalized, 'phu-quoc')
         || str_contains($normalized, 'con-dao')
@@ -1111,6 +1482,10 @@ function vg_find_travel_cluster_by_path(string $path): array
         || str_contains($normalized, 'quy-nhon')
         || str_contains($normalized, 'mui-ne')
         || str_contains($normalized, 'ly-son')
+        || str_contains($normalized, 'phu-yen')
+        || str_contains($normalized, 'cam-ranh')
+        || str_contains($normalized, 'phan-rang')
+        || str_contains($normalized, 'vinh-hy')
         || str_contains($normalized, 'beach')
         || str_contains($normalized, 'island')
     ) {

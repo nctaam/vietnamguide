@@ -381,7 +381,7 @@ class TestDestinationGuideSchema(unittest.TestCase):
             self.assertTrue(attr.get('sameAs', '').startswith('https://www.wikidata.org/wiki/'))
 
     def test_destination_cluster_resolution_all_clusters(self):
-        """All 8 travel clusters in registry must resolve accurately with complete schemas."""
+        """All 12 travel clusters in registry must resolve accurately with complete schemas."""
         cluster_samples = {
             'northern_triangle': 'destinations/hanoi-travel-guide',
             'ha_long_bay': 'destinations/ha-long-bay-luxury-cruises',
@@ -390,6 +390,10 @@ class TestDestinationGuideSchema(unittest.TestCase):
             'central_heritage': 'destinations/da-nang-travel-guide',
             'southern_delta': 'destinations/ho-chi-minh-city-travel-guide',
             'coastal_islands': 'destinations/phu-quoc-travel-guide',
+            'central_highlands': 'destinations/da-lat-travel-guide',
+            'phong_nha_caves': 'destinations/phong-nha-travel-guide',
+            'mekong_delta': 'destinations/mekong-delta-travel-guide',
+            'far_north_frontier': 'destinations/cao-bang-travel-guide',
             'national_circuit': 'destinations/vietnam-highlights',
         }
 
