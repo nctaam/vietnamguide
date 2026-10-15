@@ -300,11 +300,22 @@ add_filter('rank_math/frontend/robots', static function ($robots) {
     }
 
     if (is_array($robots)) {
-        $robots['index']             = 'index';
-        $robots['follow']            = 'follow';
-        $robots['max-snippet']       = 'max-snippet:-1';
-        $robots['max-image-preview'] = 'max-image-preview:large';
-        $robots['max-video-preview'] = 'max-video-preview:-1';
+        unset(
+            $robots['index'],
+            $robots['follow'],
+            $robots['noindex'],
+            $robots['nofollow'],
+            $robots['max-snippet'],
+            $robots['max-image-preview'],
+            $robots['max-video-preview']
+        );
+        $robots = array_merge([
+            'index'             => 'index',
+            'follow'            => 'follow',
+            'max-snippet'       => 'max-snippet:-1',
+            'max-image-preview' => 'max-image-preview:large',
+            'max-video-preview' => 'max-video-preview:-1',
+        ], $robots);
     }
 
     return $robots;
@@ -429,11 +440,11 @@ add_action('wp_head', static function (): void {
         : (string) get_option('vg_google_site_verification', 'G5wVuwqeUiubxqR-z_1BOA5opV1xwI4PKy-piHsN6Xc');
 
     $headTags = [];
-    if (is_404() || is_search()) {
-        $headTags[] = '<meta name="robots" content="' . (is_404() ? 'noindex, nofollow' : 'noindex, follow') . '">';
-    } elseif (is_singular() || is_front_page() || is_home()) {
-        $headTags[] = '<meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">';
-        if (! defined('RANK_MATH_VERSION') && ! class_exists('RankMath')) {
+    if (! defined('RANK_MATH_VERSION') && ! class_exists('RankMath')) {
+        if (is_404() || is_search()) {
+            $headTags[] = '<meta name="robots" content="' . (is_404() ? 'noindex, nofollow' : 'noindex, follow') . '">';
+        } elseif (is_singular() || is_front_page() || is_home()) {
+            $headTags[] = '<meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">';
             $seoRecord = vg_get_current_registry_seo_record();
             if (is_array($seoRecord) && ! empty($seoRecord['description'])) {
                 $headTags[] = '<meta name="description" content="' . esc_attr((string) $seoRecord['description']) . '">';
@@ -1927,25 +1938,38 @@ function vg_rich_travel_schema_filter($data, $context = null): array
         return (array) $data;
     }
 
+    $is_search_or_404 = (function_exists('is_search') && is_search()) || (function_exists('is_404') && is_404());
     $uri_path = '';
-    if (function_exists('get_queried_object_id')) {
+    $resolved_path = false;
+    if ($is_search_or_404) {
+        $uri_path = '';
+        $resolved_path = true;
+    } elseif (function_exists('is_front_page') && is_front_page()) {
+        $uri_path = '';
+        $resolved_path = true;
+    } elseif (function_exists('get_queried_object_id')) {
         $qid = (int) get_queried_object_id();
         if ($qid > 0) {
             $permalink = get_permalink($qid);
             if (is_string($permalink) && $permalink !== '') {
                 $uri_path = strtolower(trim((string) parse_url($permalink, PHP_URL_PATH), '/'));
+                $resolved_path = true;
             }
         }
     }
-    if ($uri_path === '' && isset($GLOBALS['post']) && is_object($GLOBALS['post'])) {
-        $uri_path = strtolower((string) ($GLOBALS['post']->post_name ?? ''));
+    if (! $resolved_path && $uri_path === '' && isset($GLOBALS['post']) && is_object($GLOBALS['post'])) {
+        $slug = strtolower((string) ($GLOBALS['post']->post_name ?? ''));
+        $uri_path = ($slug === 'home') ? '' : $slug;
+        if ($slug !== '') {
+            $resolved_path = true;
+        }
     }
-    if ($uri_path === '') {
+    if (! $resolved_path && $uri_path === '') {
         $uri = isset($_SERVER['REQUEST_URI']) ? (string) $_SERVER['REQUEST_URI'] : '';
         $uri_path = strtolower(trim((string) parse_url($uri, PHP_URL_PATH), '/'));
     }
 
-    // Exclude utility, legal, and trust pages from tourist travel graph entities
+    // Exclude utility, legal, trust, search, and 404 pages from tourist travel graph entities while retaining E-E-A-T enrichment
     $non_travel_paths = [
         'about',
         'editorial-policy',
@@ -1956,9 +1980,7 @@ function vg_rich_travel_schema_filter($data, $context = null): array
         'contact',
         'newsletter',
     ];
-    if (in_array($uri_path, $non_travel_paths, true)) {
-        return vg_schema_clean_data($data);
-    }
+    $is_non_travel_page = $is_search_or_404 || in_array($uri_path, $non_travel_paths, true);
 
     $cluster = vg_find_travel_cluster_by_path($uri_path);
     $canonical_base = function_exists('home_url') ? untrailingslashit(home_url()) : 'https://vietnamguide.net';
@@ -2148,6 +2170,7 @@ function vg_rich_travel_schema_filter($data, $context = null): array
     }
 
     $found_org = false;
+    $found_primary_image = false;
     $registry_record = vg_get_current_registry_seo_record($uri_path) ?? vg_get_current_registry_seo_record();
     foreach ($nodes as &$node) {
         if (! is_array($node)) {
@@ -2156,7 +2179,31 @@ function vg_rich_travel_schema_filter($data, $context = null): array
         $node_type = $node['@type'] ?? '';
         $is_article = $node_type === 'Article' || (is_array($node_type) && in_array('Article', $node_type, true));
         $is_webpage = $node_type === 'WebPage' || (is_array($node_type) && in_array('WebPage', $node_type, true));
-        if ($is_article || $is_webpage) {
+        $is_image_obj = $node_type === 'ImageObject' || (is_array($node_type) && in_array('ImageObject', $node_type, true));
+        $is_breadcrumb = $node_type === 'BreadcrumbList' || (is_array($node_type) && in_array('BreadcrumbList', $node_type, true));
+
+        if ($is_image_obj && ! empty($discover_image['url'])) {
+            $img_id = isset($node['@id']) && is_string($node['@id']) ? $node['@id'] : '';
+            if (! str_ends_with($img_id, '#logo') && ! str_contains($img_id, 'gravatar.com')) {
+                $found_primary_image = true;
+                $node['@id'] = $primary_image_id;
+                $node['url'] = $discover_image['url'];
+                $node['width'] = (int) $discover_image['width'];
+                $node['height'] = (int) $discover_image['height'];
+                if (! empty($discover_image['caption'])) {
+                    $node['caption'] = $discover_image['caption'];
+                }
+            }
+        }
+
+        if ($is_breadcrumb && is_array($registry_record) && ! empty($registry_record['title']) && isset($node['itemListElement']) && is_array($node['itemListElement']) && $node['itemListElement'] !== []) {
+            $last_idx = array_key_last($node['itemListElement']);
+            if ($last_idx !== null && isset($node['itemListElement'][$last_idx]['item']) && is_array($node['itemListElement'][$last_idx]['item'])) {
+                $node['itemListElement'][$last_idx]['item']['name'] = (string) $registry_record['title'];
+            }
+        }
+
+        if (! $is_non_travel_page && ($is_article || $is_webpage)) {
             // CreativeWork.about -> TouristDestination is standard Schema.org
             if (! isset($node['about'])) {
                 $node['about'] = ['@id' => $dest_id];
@@ -2180,9 +2227,7 @@ function vg_rich_travel_schema_filter($data, $context = null): array
         }
 
         if ($is_webpage) {
-            if (! isset($node['primaryImageOfPage'])) {
-                $node['primaryImageOfPage'] = ['@id' => $primary_image_id];
-            }
+            $node['primaryImageOfPage'] = ['@id' => $primary_image_id];
             if (is_array($registry_record)) {
                 if (! empty($registry_record['title'])) {
                     $node['name'] = (string) $registry_record['title'];
@@ -2201,6 +2246,7 @@ function vg_rich_travel_schema_filter($data, $context = null): array
             if (is_array($registry_record)) {
                 if (! empty($registry_record['title'])) {
                     $node['headline'] = (string) $registry_record['title'];
+                    $node['name'] = (string) $registry_record['title'];
                 }
                 if (! empty($registry_record['description'])) {
                     $node['description'] = (string) $registry_record['description'];
@@ -2213,7 +2259,7 @@ function vg_rich_travel_schema_filter($data, $context = null): array
                 $node['dateModified'] = vg_format_registry_iso8601($last_reviewed);
             } elseif (isset($GLOBALS['post']) && ! empty($GLOBALS['post']->post_modified_gmt)) {
                 $node['dateModified'] = date('Y-m-d\TH:i:sP', strtotime($GLOBALS['post']->post_modified_gmt . ' +00:00'));
-            } else {
+            } elseif (empty($node['dateModified'])) {
                 $node['dateModified'] = date('Y-m-d\TH:i:sP');
             }
 
@@ -2237,6 +2283,11 @@ function vg_rich_travel_schema_filter($data, $context = null): array
                 ],
             ];
             if (isset($node['author']) && is_array($node['author'])) {
+                if (empty($node['author']['name'])) {
+                    $node['author']['name'] = function_exists('vg_public_editorial_author_name')
+                        ? vg_public_editorial_author_name()
+                        : 'VietnamGuide editorial team';
+                }
                 if (! isset($node['author']['url'])) {
                     $node['author']['url'] = "{$canonical_base}/editorial-policy/#team";
                 }
@@ -2287,6 +2338,11 @@ function vg_rich_travel_schema_filter($data, $context = null): array
 
         $is_person = $node_type === 'Person' || (is_array($node_type) && in_array('Person', $node_type, true));
         if ($is_person) {
+            if (empty($node['name'])) {
+                $node['name'] = function_exists('vg_public_editorial_author_name')
+                    ? vg_public_editorial_author_name()
+                    : 'VietnamGuide editorial team';
+            }
             $node['jobTitle'] = 'Editorial Desk and Field Research Team';
             $node['description'] = 'Independent travel editors and on-the-ground researchers producing verified route logistics, safety checks, and practical travel guides for Vietnam.';
             $node['url'] = "{$canonical_base}/editorial-policy/#team";
@@ -2307,8 +2363,25 @@ function vg_rich_travel_schema_filter($data, $context = null): array
     }
     unset($node);
 
-    if (! $found_org && isset($data['@graph']) && is_array($data['@graph'])) {
-        $data['@graph'][] = [
+    if (! $is_search_or_404 && ! $found_primary_image && ! empty($discover_image['url'])) {
+        $primary_image_node = [
+            '@type'      => 'ImageObject',
+            '@id'        => $primary_image_id,
+            'url'        => $discover_image['url'],
+            'width'      => (int) $discover_image['width'],
+            'height'     => (int) $discover_image['height'],
+            'caption'    => $discover_image['caption'],
+            'inLanguage' => 'en-US',
+        ];
+        if (isset($data['@graph']) && is_array($data['@graph'])) {
+            $data['@graph'][] = $primary_image_node;
+        } else {
+            $data['primary_image'] = $primary_image_node;
+        }
+    }
+
+    if (! $found_org) {
+        $org_node = [
             '@type'                => 'Organization',
             '@id'                  => "{$canonical_base}/#organization",
             'name'                 => 'VietnamGuide.net',
@@ -2332,6 +2405,15 @@ function vg_rich_travel_schema_filter($data, $context = null): array
                 'height'     => 512,
             ],
         ];
+        if (isset($data['@graph']) && is_array($data['@graph'])) {
+            $data['@graph'][] = $org_node;
+        } else {
+            $data['organization'] = $org_node;
+        }
+    }
+
+    if ($is_non_travel_page) {
+        return vg_schema_clean_data($data);
     }
 
     // 4. FAQPage Node (if authoritative Q&As exist for this URI)

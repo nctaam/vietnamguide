@@ -1390,6 +1390,110 @@ echo json_encode([
         self.assertEqual(trip['itinerary']['itemListElement'][0]['position'], 1)
         self.assertEqual(trip['itinerary']['itemListElement'][0]['item']['name'], 'Da Lat & Pine Plateau')
 
+    def test_robots_deduplication_when_rank_math_active_and_canonical_ordering(self):
+        """When Rank Math is active, wp_head must not emit a duplicate fallback meta robots tag, and rank_math/frontend/robots must enforce canonical directive order."""
+        php_code = r"""
+        define('RANK_MATH_VERSION', '1.0.230');
+        $GLOBALS['vg_is_singular'] = true;
+        $GLOBALS['vg_is_404'] = false;
+        $GLOBALS['vg_is_search'] = false;
+
+        $rm_robots = apply_filters('rank_math/frontend/robots', [
+            'follow' => 'follow',
+            'index'  => 'index',
+        ]);
+
+        ob_start();
+        do_action('wp_head');
+        $head_output = ob_get_clean();
+
+        echo json_encode([
+            'rm_keys'     => array_keys($rm_robots),
+            'rm_values'   => array_values($rm_robots),
+            'head_output' => $head_output,
+        ]);
+        """
+        res = _run_php(php_code)
+        self.assertEqual(res.returncode, 0, f"PHP error:\n{res.stderr}")
+        out = json.loads(res.stdout)
+
+        self.assertEqual(
+            out['rm_keys'][:5],
+            ['index', 'follow', 'max-snippet', 'max-image-preview', 'max-video-preview'],
+            "rank_math/frontend/robots must normalize directive order starting with index, follow",
+        )
+        self.assertNotIn(
+            'name="robots"',
+            out['head_output'],
+            "wp_head must not emit a duplicate fallback <meta name=\"robots\"> tag when Rank Math is active",
+        )
+
+    def test_non_travel_trust_pages_receive_eeat_person_name_and_organization_enrichment(self):
+        """Trust and policy pages (/editorial-policy/) must receive full Organization/Person/Article E-E-A-T enrichment and Person.name fallback while omitting TouristDestination/Trip/Action."""
+        php_code = r"""
+        $_SERVER['REQUEST_URI'] = '/editorial-policy/';
+        $post = new WP_Post();
+        $post->ID = 901;
+        $post->post_name = 'editorial-policy';
+        $post->post_title = 'VietnamGuide Editorial Policy & Independent Standards';
+        $GLOBALS['post'] = $post;
+
+        $initial_data = [
+            '@context' => 'https://schema.org',
+            '@graph'   => [
+                [
+                    '@type' => 'Organization',
+                    '@id'   => 'https://vietnamguide.net/#organization',
+                    'name'  => 'VietnamGuide.net',
+                ],
+                [
+                    '@type' => 'WebPage',
+                    '@id'   => 'https://vietnamguide.net/editorial-policy/#webpage',
+                    'url'   => 'https://vietnamguide.net/editorial-policy/',
+                ],
+                [
+                    '@type' => 'Person',
+                    '@id'   => 'https://vietnamguide.net/editorial-policy/#author',
+                ],
+                [
+                    '@type'  => 'Article',
+                    '@id'    => 'https://vietnamguide.net/editorial-policy/#richSnippet',
+                    'author' => [
+                        '@id' => 'https://vietnamguide.net/editorial-policy/#author',
+                    ],
+                ],
+            ],
+        ];
+
+        $enriched = apply_filters('rank_math/json_ld', $initial_data, null);
+        echo json_encode($enriched);
+        """
+        res = _run_php(php_code)
+        self.assertEqual(res.returncode, 0, f"PHP error:\n{res.stderr}")
+        data = json.loads(res.stdout)
+        graph = data['@graph']
+        types = [n.get('@type') for n in graph]
+
+        self.assertNotIn('TouristDestination', types)
+        self.assertNotIn('TouristTrip', types)
+        self.assertNotIn('TravelAction', types)
+
+        org = next(n for n in graph if n.get('@type') == 'Organization')
+        self.assertEqual(org.get('publishingPrinciples'), 'https://vietnamguide.net/editorial-policy/')
+        self.assertEqual(org.get('correctionsPolicy'), 'https://vietnamguide.net/source-update-policy/')
+        self.assertIn('knowsAbout', org)
+
+        person = next(n for n in graph if n.get('@type') == 'Person')
+        self.assertEqual(person.get('name'), 'VietnamGuide editorial team')
+        self.assertEqual(person.get('url'), 'https://vietnamguide.net/editorial-policy/#team')
+        self.assertIn('worksFor', person)
+
+        article = next(n for n in graph if n.get('@type') == 'Article')
+        self.assertEqual(article['author'].get('name'), 'VietnamGuide editorial team')
+        self.assertIn('reviewedBy', article)
+        self.assertIn('image', article)
+        self.assertGreaterEqual(article['image'].get('width', 0), 1200)
+
 
 if __name__ == '__main__':
     unittest.main()

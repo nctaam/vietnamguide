@@ -148,6 +148,8 @@ DEPLOY_FILES = [
      'wp-content/themes/vietnamguide-premium/assets/images/ha-long-bay-vietnam-hero.jpg'),
     ('wordpress/wp-content/themes/vietnamguide-premium/assets/images/home-editorial.jpg',
      'wp-content/themes/vietnamguide-premium/assets/images/home-editorial.jpg'),
+    ('wordpress/wp-content/mu-plugins/vietnamguide-core.php',
+     'wp-content/mu-plugins/vietnamguide-core.php'),
 ]
 
 def get_sha256(filepath: Path) -> str:

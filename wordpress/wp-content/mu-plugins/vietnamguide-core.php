@@ -824,8 +824,11 @@ function vg_rewrite_schema_author_value(mixed $value, int $depth = 0): mixed
 
     $type = $value['@type'] ?? null;
     $is_person = $type === 'Person' || (is_array($type) && in_array('Person', $type, true));
-    if ($is_person && array_key_exists('name', $value) && is_string($value['name']) && vg_is_forbidden_public_author_name($value['name'])) {
-        $value['name'] = vg_public_editorial_author_name();
+    if ($is_person) {
+        $current_name = isset($value['name']) && is_string($value['name']) ? trim($value['name']) : '';
+        if ($current_name === '' || vg_is_forbidden_public_author_name($current_name)) {
+            $value['name'] = vg_public_editorial_author_name();
+        }
     }
 
     if (array_key_exists('author', $value)) {

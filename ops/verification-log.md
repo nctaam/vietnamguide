@@ -2,6 +2,24 @@
 
 Date: 2026-10-15 (Asia/Saigon)
 
+## Stage 102: Robots Meta Deduplication, E-E-A-T `Person.name` Guarantee Across Trust/Policy Pages & JSON-LD `@id` Unification
+
+- **Robots Meta Deduplication & Canonical Directive Ordering (`inc/guide-seo.php`)**:
+  - Guarded the `wp_head` priority `1` fallback `<meta name="robots">` output with `if (! defined('RANK_MATH_VERSION') && ! class_exists('RankMath'))` so Rank Math and the theme never emit duplicate `<meta name="robots">` tags on live pages.
+  - Normalized `rank_math/frontend/robots` array key order to `['index' => 'index', 'follow' => 'follow', 'max-snippet' => 'max-snippet:-1', 'max-image-preview' => 'max-image-preview:large', 'max-video-preview' => 'max-video-preview:-1']` for public pages and `['noindex' => 'noindex', 'follow' => 'follow']` for internal search pages (`/?s=`).
+- **E-E-A-T `Person.name` Guarantee & Trust/Policy Page Schema Enrichment (`mu-plugins/vietnamguide-core.php`, `inc/guide-seo.php`)**:
+  - Updated `vg_rewrite_schema_author_value()` in `wordpress/wp-content/mu-plugins/vietnamguide-core.php` and `vg_rich_travel_schema_filter()` in `inc/guide-seo.php` to guarantee `Person.name` and `Article.author.name` are always populated with `'VietnamGuide editorial team'` even when Rank Math emits a `Person` (`#author`) node without a `name` key.
+  - Replaced early exit on `$non_travel_paths` (`/about/`, `/editorial-policy/`, `/privacy-policy/`, `/terms-of-service/`, `/source-update-policy/`, `/affiliate-disclosure/`, `/contact/`, `/newsletter/`) in `vg_rich_travel_schema_filter()` with `$is_non_travel_page` so trust/policy pages receive full `Organization`, `Person`, `WebPage.primaryImageOfPage`, `Article.image`, and `Article.reviewedBy` E-E-A-T enrichment while skipping `TouristDestination`, `TouristTrip`, and `TravelAction`.
+  - Guarded `is_search()` and `is_404()` in `vg_rich_travel_schema_filter()` so search result loops never leak the first loop post's slug or inject `TouristDestination`/`PrimaryImage` nodes into `SearchResultsPage`.
+- **Top-Level `ImageObject` (`#primaryimage`) & `BreadcrumbList` Title Synchronization (`inc/guide-seo.php`, `ops/deploy_theme_updates.py`)**:
+  - Unified standalone `ImageObject` nodes in `@graph`, `WebPage.primaryImageOfPage`, `Article.image`, and `TouristDestination.image` to share `@id: "{$current_url}#primaryimage"` with exact dimensions (`>= 1200px` width) and fallback injection when Rank Math omits a standalone `ImageObject`.
+  - Synchronized the final `BreadcrumbList` item `item.name` and `Article.name` with `$registry_record['title']`.
+  - Added `('wordpress/wp-content/mu-plugins/vietnamguide-core.php', 'wp-content/mu-plugins/vietnamguide-core.php')` to `DEPLOY_FILES` (`63/63` deploy artifacts).
+- **Verification Gates & Live Production Assurance**:
+  - Full Unit & E2E Test Suite: 269 tests ran (`267 passed`, `2 skipped`, `0 failures`, `0 errors`).
+  - Master Quality Gates: 8/8 Gates PASSED (`Exit Code 0` via `ops/verify-all-gates.ps1`).
+  - Live Production Verification (`https://vietnamguide.net/`, `/destinations/mang-den-travel-guide/`, `/editorial-policy/`, `/plan/best-time-for-northern-vietnam/`, `/?s=hanoi`): Confirmed `robots count: 1`, `Person.name: 'VietnamGuide editorial team'`, unified `#primaryimage` `@id`, synchronized `BreadcrumbList` final item title, and clean `SearchResultsPage` schema on `/?s=hanoi`.
+
 ## Stage 101: Rank Math Post-Filter JSON-LD Normalization, Local Upload Dimension Resolution & Live Production Verification
 
 - **Rank Math Post-Filter JSON-LD Output Buffer Normalization (`inc/guide-seo.php`)**:
