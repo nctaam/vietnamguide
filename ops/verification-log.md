@@ -2,6 +2,19 @@
 
 Date: 2026-10-15 (Asia/Saigon)
 
+## Stage 101: Rank Math Post-Filter JSON-LD Normalization, Local Upload Dimension Resolution & Live Production Verification
+
+- **Rank Math Post-Filter JSON-LD Output Buffer Normalization (`inc/guide-seo.php`)**:
+  - Identified that Rank Math's `JsonLD::json_ld()` runs `Helper::sanitize_schema_values()` at `rank_math/head` priority `90` *after* `apply_filters('rank_math/json_ld', $data)`, escaping `&` to `&amp;` and casting native booleans, integers, and floats into strings (`"publicAccess": "1"`, `"isAccessibleForFree": ""`, `"numberOfItems": "4"`, `"position": "1"`, `"width": "1280"`, `"height": "853"`, `"latitude": "11.9404"`).
+  - Implemented `vg_normalize_serialized_json_ld_html(string $html): string` and hooked output buffering around `rank_math/head` at priority `89` (`ob_start()`) and priority `91` (`ob_get_clean()`) to decode, clean via `vg_schema_clean_data()`, and re-serialize `<script type="application/ld+json" class="rank-math-schema">` with `JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE`.
+  - Enhanced `vg_schema_clean_data()` to enforce native `bool` for `publicAccess`/`isAccessibleForFree`, native `int` for `position`/`numberOfItems`/`width`/`height`, native `float` for `latitude`/`longitude`, and full HTML entity decoding (`&amp;` $\rightarrow$ `&`) across all strings.
+- **Exact Local `/wp-content/` Image Dimension Resolution (`inc/guide-seo.php`)**:
+  - Updated `vg_resolve_image_dimensions_by_url()` to inspect local `/wp-content/` files on disk via `@getimagesize()` when `ABSPATH` is a valid directory path.
+- **Verification Gates & Live Production Assurance**:
+  - Full Unit & E2E Test Suite: 267 tests ran (`0 failures`, `0 errors`).
+  - Master Quality Gates: 8/8 Gates PASSED (`Exit Code 0` via `ops/verify-all-gates.ps1`).
+  - Live Production Verification (`https://vietnamguide.net/destinations/mang-den-travel-guide/`): Confirmed `Contains &amp;: False`, `ImageObject` (`int 1280`, `int 853`), `TouristDestination` (`"Da Lat & Central Highlands"`, `publicAccess: bool True`, `isAccessibleForFree: bool False`, `geo: float 11.9404, 108.4583`), `TouristTrip` (`numberOfItems: int 4`, `position: int 1`), and `FAQPage` (`3 Q&As`).
+
 ## Stage 100: Google Search Central V2 Deep SEO Optimization & Phase 3 Discover / FAQPage / HowTo / Adversarial Hardening
 
 - **Cluster-Aware High-Resolution Google Discover `ImageObject` & Intrinsic Dimensions (`inc/guide-seo.php`)**:

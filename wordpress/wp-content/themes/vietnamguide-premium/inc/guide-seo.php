@@ -44,6 +44,15 @@ function vg_resolve_image_dimensions_by_url(string $url): array
         if (str_contains($cleanUrl, 'ha-long-bay-vietnam-hero.jpg')) {
             return [1920, 1080];
         }
+        if (is_string($path) && str_starts_with($path, '/wp-content/') && defined('ABSPATH') && is_string(ABSPATH) && ABSPATH !== '') {
+            $localCandidate = rtrim(ABSPATH, '/\\') . '/' . ltrim(rawurldecode($path), '/');
+            if (is_file($localCandidate)) {
+                $size = @getimagesize($localCandidate);
+                if (is_array($size) && isset($size[0], $size[1]) && (int) $size[0] > 0 && (int) $size[1] > 0) {
+                    return [(int) $size[0], (int) $size[1]];
+                }
+            }
+        }
     }
 
     return [1280, 853];
@@ -1873,7 +1882,8 @@ add_filter('the_content', static function (string $content): string {
 
 /**
  * Recursively cleans Schema.org data: decodes HTML entities (&amp; -> &),
- * enforces native booleans for publicAccess/isAccessibleForFree, and formats position/numberOfItems as integers.
+ * enforces native booleans for publicAccess/isAccessibleForFree, formats position/numberOfItems/width/height as integers,
+ * and formats latitude/longitude as floats.
  */
 function vg_schema_clean_data(mixed $value, int $depth = 0): mixed
 {
@@ -1885,13 +1895,17 @@ function vg_schema_clean_data(mixed $value, int $depth = 0): mixed
     }
     if (is_array($value)) {
         foreach ($value as $k => $v) {
-            if ($k === 'publicAccess') {
+            if ($k === 'publicAccess' || $k === 'isAccessibleForFree') {
                 $value[$k] = ($v === true || $v === '1' || $v === 1 || $v === 'true');
-            } elseif ($k === 'isAccessibleForFree') {
-                $value[$k] = ($v === true || $v === '1' || $v === 1 || $v === 'true');
-            } elseif ($k === 'position' || $k === 'numberOfItems') {
+            } elseif ($k === 'position' || $k === 'numberOfItems' || $k === 'width' || $k === 'height') {
                 if (is_numeric($v)) {
                     $value[$k] = (int) $v;
+                } else {
+                    $value[$k] = vg_schema_clean_data($v, $depth + 1);
+                }
+            } elseif ($k === 'latitude' || $k === 'longitude') {
+                if (is_numeric($v)) {
+                    $value[$k] = (float) $v;
                 } else {
                     $value[$k] = vg_schema_clean_data($v, $depth + 1);
                 }
@@ -1943,7 +1957,7 @@ function vg_rich_travel_schema_filter($data, $context = null): array
         'newsletter',
     ];
     if (in_array($uri_path, $non_travel_paths, true)) {
-        return $data;
+        return vg_schema_clean_data($data);
     }
 
     $cluster = vg_find_travel_cluster_by_path($uri_path);
@@ -2777,17 +2791,83 @@ function vg_get_page_webapplication_schema(string $uri_path, string $current_url
 
 add_filter('rank_math/json_ld', 'vg_rich_travel_schema_filter', 100, 2);
 
+/**
+ * Normalize serialized Rank Math JSON-LD <script> blocks (or raw JSON strings) after Rank Math's
+ * internal Helper::sanitize_schema_values() runs at rank_math/head priority 90, restoring unescaped
+ * '&' entities and native JSON booleans, integers, and floats.
+ */
+function vg_normalize_serialized_json_ld_html(string $html): string
+{
+    $trimmed = trim($html);
+    if ($trimmed === '') {
+        return $html;
+    }
+
+    if (str_contains($html, 'application/ld+json')) {
+        $normalized = preg_replace_callback(
+            '/(<script\b[^>]*type=["\']application\/ld\+json["\'][^>]*>)(.*?)(<\/script>)/is',
+            static function (array $m): string {
+                $rawJson = trim($m[2]);
+                if ($rawJson === '') {
+                    return $m[0];
+                }
+                $decoded = json_decode($rawJson, true);
+                if (! is_array($decoded) || json_last_error() !== JSON_ERROR_NONE) {
+                    return $m[0];
+                }
+                $cleaned = vg_schema_clean_data($decoded);
+                $encoded = function_exists('wp_json_encode')
+                    ? wp_json_encode($cleaned, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE)
+                    : json_encode($cleaned, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
+                if (! is_string($encoded) || $encoded === '') {
+                    return $m[0];
+                }
+                return $m[1] . $encoded . $m[3];
+            },
+            $html
+        );
+        return is_string($normalized) ? $normalized : $html;
+    }
+
+    if (str_starts_with($trimmed, '{') || str_starts_with($trimmed, '[')) {
+        $decoded = json_decode($trimmed, true);
+        if (is_array($decoded) && json_last_error() === JSON_ERROR_NONE) {
+            $cleaned = vg_schema_clean_data($decoded);
+            $encoded = function_exists('wp_json_encode')
+                ? wp_json_encode($cleaned, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE)
+                : json_encode($cleaned, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
+            if (is_string($encoded) && $encoded !== '') {
+                return $encoded;
+            }
+        }
+    }
+
+    return $html;
+}
+
+$GLOBALS['vg_rm_json_ld_ob_level'] = null;
+
+add_action('rank_math/head', static function (): void {
+    ob_start();
+    $GLOBALS['vg_rm_json_ld_ob_level'] = ob_get_level();
+}, 89);
+
+add_action('rank_math/head', static function (): void {
+    $expectedLevel = $GLOBALS['vg_rm_json_ld_ob_level'] ?? null;
+    if ($expectedLevel !== null && ob_get_level() === $expectedLevel) {
+        $GLOBALS['vg_rm_json_ld_ob_level'] = null;
+        $buffered = ob_get_clean();
+        if (is_string($buffered) && $buffered !== '') {
+            echo vg_normalize_serialized_json_ld_html($buffered);
+        }
+    }
+}, 91);
+
 add_filter('rank_math/schema/json_ld/output', static function ($output) {
     if (! is_string($output)) {
         return $output;
     }
-    $output = str_replace('&amp;', '&', $output);
-    $output = preg_replace('/"publicAccess":\s*"1"/', '"publicAccess": true', $output);
-    $output = preg_replace('/"publicAccess":\s*""/', '"publicAccess": false', $output);
-    $output = preg_replace('/"isAccessibleForFree":\s*""/', '"isAccessibleForFree": false', $output);
-    $output = preg_replace('/"isAccessibleForFree":\s*"1"/', '"isAccessibleForFree": true', $output);
-    $output = preg_replace('/"numberOfItems":\s*"(\d+)"/', '"numberOfItems": $1', $output);
-    return $output;
+    return vg_normalize_serialized_json_ld_html($output);
 }, 99);
 
 /**

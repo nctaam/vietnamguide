@@ -1300,6 +1300,96 @@ echo json_encode([
         for cluster_marker in ['Cluster 1 —', 'Cluster 6 —', 'Cluster 7 —', 'Cluster 10 —', 'Cluster 12 —']:
             self.assertIn(cluster_marker, aio_php)
 
+    def test_rank_math_head_json_ld_buffer_restores_native_types_and_unescaped_entities(self):
+        """rank_math/head priority 89/91 output buffering must undo Rank Math's post-filter HTML entity escaping and string coercion."""
+        php_code = r"""
+        add_action('rank_math/head', static function (): void {
+            $polluted_payload = [
+                '@context' => 'https://schema.org',
+                '@graph'   => [
+                    [
+                        '@type' => 'ImageObject',
+                        '@id'   => 'https://vietnamguide.net/destinations/mang-den-travel-guide/#primaryimage',
+                        'url'   => 'https://vietnamguide.net/wp-content/uploads/2026/03/mang-den-pine-forest-kon-tum-vietnam.jpg',
+                        'width' => '1280',
+                        'height' => '853',
+                        'caption' => 'Mang Den Travel Guide 2026: Pine Plateau &amp; Waterfalls',
+                    ],
+                    [
+                        '@type' => 'TouristDestination',
+                        '@id'   => 'https://vietnamguide.net/destinations/mang-den-travel-guide/#tourist-destination',
+                        'name'  => 'Da Lat &amp; Central Highlands',
+                        'publicAccess' => '1',
+                        'isAccessibleForFree' => '',
+                        'geo'   => [
+                            '@type'     => 'GeoCoordinates',
+                            'latitude'  => '11.9404',
+                            'longitude' => '108.4583',
+                        ],
+                    ],
+                    [
+                        '@type' => 'TouristTrip',
+                        '@id'   => 'https://vietnamguide.net/destinations/mang-den-travel-guide/#tourist-trip',
+                        'itinerary' => [
+                            '@type'           => 'ItemList',
+                            'numberOfItems'   => '4',
+                            'itemListElement' => [
+                                [
+                                    '@type'    => 'ListItem',
+                                    'position' => '1',
+                                    'item'     => [
+                                        '@type' => 'TouristDestination',
+                                        'name'  => 'Da Lat &amp; Pine Plateau',
+                                    ],
+                                ],
+                            ],
+                        ],
+                    ],
+                ],
+            ];
+            echo '<script type="application/ld+json" class="rank-math-schema">' . wp_json_encode($polluted_payload) . '</script>';
+        }, 90);
+
+        ob_start();
+        do_action('rank_math/head');
+        $rendered_html = ob_get_clean();
+
+        echo json_encode(['html' => $rendered_html]);
+        """
+        res = _run_php(php_code)
+        self.assertEqual(res.returncode, 0, f"PHP error:\n{res.stderr}")
+        rendered_html = json.loads(res.stdout)['html']
+
+        self.assertNotIn('&amp;', rendered_html, "JSON-LD script block must not contain raw &amp; HTML entities")
+        match = re.search(r'<script[^>]*type="application/ld\+json"[^>]*>(.*?)</script>', rendered_html, re.DOTALL)
+        self.assertIsNotNone(match, "Rendered rank_math/head output must contain JSON-LD script tag")
+
+        parsed = json.loads(match.group(1))
+        graph = parsed['@graph']
+        img = graph[0]
+        dest = graph[1]
+        trip = graph[2]
+
+        self.assertIs(type(img['width']), int)
+        self.assertEqual(img['width'], 1280)
+        self.assertIs(type(img['height']), int)
+        self.assertEqual(img['height'], 853)
+        self.assertEqual(img['caption'], 'Mang Den Travel Guide 2026: Pine Plateau & Waterfalls')
+
+        self.assertEqual(dest['name'], 'Da Lat & Central Highlands')
+        self.assertIs(dest['publicAccess'], True)
+        self.assertIs(dest['isAccessibleForFree'], False)
+        self.assertIs(type(dest['geo']['latitude']), float)
+        self.assertAlmostEqual(dest['geo']['latitude'], 11.9404)
+        self.assertIs(type(dest['geo']['longitude']), float)
+        self.assertAlmostEqual(dest['geo']['longitude'], 108.4583)
+
+        self.assertIs(type(trip['itinerary']['numberOfItems']), int)
+        self.assertEqual(trip['itinerary']['numberOfItems'], 4)
+        self.assertIs(type(trip['itinerary']['itemListElement'][0]['position']), int)
+        self.assertEqual(trip['itinerary']['itemListElement'][0]['position'], 1)
+        self.assertEqual(trip['itinerary']['itemListElement'][0]['item']['name'], 'Da Lat & Pine Plateau')
+
 
 if __name__ == '__main__':
     unittest.main()
