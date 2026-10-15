@@ -814,6 +814,104 @@ class TestGuideSEO(unittest.TestCase):
         self.assertIn("wp_cache_get($cacheKey, 'vietnamguide_context'", ctx_code)
         self.assertIn("wp_cache_set($cacheKey, $context, 'vietnamguide_context'", ctx_code)
 
+    def test_canonical_registry_title_description_and_schema_headline_sync(self):
+        """Canonical registry title (<=60 chars) and Golden Window description (147-157 chars) must override stale Rank Math DB values across document title, meta description, OpenGraph, and JSON-LD schema."""
+        php_code = r"""
+$_SERVER['REQUEST_URI'] = '/destinations/mang-den-travel-guide/';
+$p = new WP_Post();
+$p->ID = 777;
+$p->post_type = 'page';
+$p->post_name = 'mang-den-travel-guide';
+$p->post_title = 'Mang Den Travel Guide 2026: Cool Highland Pines, Waterfalls & Kon Tum';
+$GLOBALS['post'] = $p;
+
+$filtered_doc_title = apply_filters('pre_get_document_title', 'Stale Long Title From Database Exceeding Sixty Characters');
+$filtered_rm_title  = apply_filters('rank_math/frontend/title', 'Stale Rank Math Title');
+$filtered_og_title  = apply_filters('rank_math/opengraph/facebook/title', 'Stale OG Title');
+$filtered_rm_desc   = apply_filters('rank_math/frontend/description', 'Stale short description.');
+$filtered_tw_desc   = apply_filters('rank_math/opengraph/twitter/description', 'Stale twitter description.');
+
+$mock_json_ld = [
+    'WebPage' => [
+        '@type'        => 'WebPage',
+        'name'         => 'Stale WebPage Name',
+        'description'  => 'Stale WebPage Desc',
+        'dateModified' => '2024-01-01T00:00:00+07:00',
+    ],
+    'richSnippet' => [
+        '@type'        => 'Article',
+        'headline'     => 'Stale Article Headline',
+        'description'  => 'Stale Article Description',
+        'dateModified' => '2024-01-01T00:00:00+07:00',
+    ],
+];
+$filtered_schema = apply_filters('rank_math/json_ld', $mock_json_ld, null);
+
+echo json_encode([
+    'doc_title' => $filtered_doc_title,
+    'rm_title'  => $filtered_rm_title,
+    'og_title'  => $filtered_og_title,
+    'rm_desc'   => $filtered_rm_desc,
+    'tw_desc'   => $filtered_tw_desc,
+    'schema'    => $filtered_schema,
+]);
+"""
+        res = _run_php(php_code)
+        self.assertEqual(res.returncode, 0, f"PHP error:\n{res.stderr}")
+        out = json.loads(res.stdout)
+
+        mang_den_record = next(
+            r for r in self.routes if r.get('path') == 'destinations/mang-den-travel-guide'
+        )
+        expected_title = mang_den_record['title']
+        expected_desc = mang_den_record['description']
+
+        self.assertEqual(out['doc_title'], expected_title)
+        self.assertEqual(out['rm_title'], expected_title)
+        self.assertEqual(out['og_title'], expected_title)
+        self.assertLessEqual(len(out['rm_title']), 60)
+
+        self.assertEqual(out['rm_desc'], expected_desc)
+        self.assertEqual(out['tw_desc'], expected_desc)
+        self.assertTrue(147 <= len(out['rm_desc']) <= 157)
+
+        self.assertEqual(out['schema']['richSnippet']['headline'], expected_title)
+        self.assertEqual(out['schema']['richSnippet']['description'], expected_desc)
+        self.assertEqual(out['schema']['WebPage']['name'], expected_title)
+        self.assertEqual(out['schema']['WebPage']['description'], expected_desc)
+        self.assertEqual(out['schema']['WebPage']['dateModified'], '2026-09-28T12:00:00+07:00')
+
+    def test_sitemap_lastmod_sync_with_registry(self):
+        """XML Sitemap entries (Rank Math and WP Core) must synchronize lastmod with canonical registry last_reviewed."""
+        php_code = r"""
+$rm_entry = [
+    'loc' => 'https://vietnamguide.net/destinations/mang-den-travel-guide/',
+    'mod' => '2025-01-01T00:00:00+00:00',
+];
+$filtered_rm = apply_filters('rank_math/sitemap/entry', $rm_entry, 'post', null);
+
+$p = new WP_Post();
+$p->ID = 777;
+$p->post_name = 'destinations/mang-den-travel-guide';
+$GLOBALS['post'] = $p;
+$wp_entry = [
+    'loc'     => 'https://vietnamguide.net/destinations/mang-den-travel-guide/',
+    'lastmod' => '2025-01-01T00:00:00+00:00',
+];
+$filtered_wp = apply_filters('wp_sitemaps_posts_entry', $wp_entry, $p, 'page');
+
+echo json_encode([
+    'rm_mod'     => $filtered_rm['mod'],
+    'wp_lastmod' => $filtered_wp['lastmod'],
+]);
+"""
+        res = _run_php(php_code)
+        self.assertEqual(res.returncode, 0, f"PHP error:\n{res.stderr}")
+        out = json.loads(res.stdout)
+        self.assertEqual(out['rm_mod'], '2026-09-28T12:00:00+07:00')
+        self.assertEqual(out['wp_lastmod'], '2026-09-28T12:00:00+07:00')
+
 
 if __name__ == '__main__':
     unittest.main()
+

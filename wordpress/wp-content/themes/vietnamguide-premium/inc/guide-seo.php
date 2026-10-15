@@ -123,6 +123,117 @@ add_filter('rank_math/frontend/robots', static function ($robots) {
     return $robots;
 }, 99);
 
+/**
+ * Resolve the canonical route registry record for the current singular request or an explicit path.
+ */
+function vg_get_current_registry_seo_record(?string $overridePath = null): ?array
+{
+    if (! function_exists('vg_guide_registry_record')) {
+        return null;
+    }
+
+    $candidates = [];
+    if (is_string($overridePath) && trim($overridePath) !== '') {
+        $parsed = parse_url($overridePath, PHP_URL_PATH);
+        $candidates[] = trim(is_string($parsed) && $parsed !== '' ? $parsed : $overridePath, '/');
+    } elseif (is_singular()) {
+        $post = get_post();
+        if ($post instanceof WP_Post && function_exists('vg_get_guide_path') && function_exists('get_page_uri')) {
+            $candidates[] = vg_get_guide_path($post);
+        }
+        if (isset($_SERVER['REQUEST_URI'])) {
+            $parsed = parse_url((string) $_SERVER['REQUEST_URI'], PHP_URL_PATH);
+            if (is_string($parsed)) {
+                $candidates[] = trim($parsed, '/');
+            }
+        }
+        if (function_exists('get_permalink')) {
+            $permalink = get_permalink();
+            if (is_string($permalink) && $permalink !== '') {
+                $parsed = parse_url($permalink, PHP_URL_PATH);
+                if (is_string($parsed)) {
+                    $candidates[] = trim($parsed, '/');
+                }
+            }
+        }
+    }
+
+    foreach ($candidates as $path) {
+        if (! is_string($path) || $path === '') {
+            continue;
+        }
+        $record = vg_guide_registry_record($path);
+        if (is_array($record)) {
+            return $record;
+        }
+    }
+
+    return null;
+}
+
+// Synchronize frontend SERP <title>, <meta name="description">, and social cards with the 282-route canonical registry.
+function vg_filter_canonical_registry_title(string $title): string
+{
+    $record = vg_get_current_registry_seo_record();
+    if (is_array($record) && ! empty($record['title']) && is_string($record['title'])) {
+        return $record['title'];
+    }
+    return $title;
+}
+add_filter('pre_get_document_title', 'vg_filter_canonical_registry_title', 99);
+add_filter('rank_math/frontend/title', 'vg_filter_canonical_registry_title', 99);
+add_filter('rank_math/opengraph/facebook/title', 'vg_filter_canonical_registry_title', 99);
+add_filter('rank_math/opengraph/twitter/title', 'vg_filter_canonical_registry_title', 99);
+
+function vg_filter_canonical_registry_description(string $description): string
+{
+    $record = vg_get_current_registry_seo_record();
+    if (is_array($record) && ! empty($record['description']) && is_string($record['description'])) {
+        return $record['description'];
+    }
+    return $description;
+}
+add_filter('rank_math/frontend/description', 'vg_filter_canonical_registry_description', 99);
+add_filter('rank_math/opengraph/facebook/description', 'vg_filter_canonical_registry_description', 99);
+add_filter('rank_math/opengraph/twitter/description', 'vg_filter_canonical_registry_description', 99);
+
+// Synchronize XML Sitemap <lastmod> with the canonical route registry last_reviewed timestamp.
+function vg_format_registry_iso8601(string $dateStr): string
+{
+    $trimmed = trim($dateStr);
+    if (preg_match('/^\d{4}-\d{2}-\d{2}$/', $trimmed)) {
+        return $trimmed . 'T12:00:00+07:00';
+    }
+    return date('Y-m-d\TH:i:sP', strtotime($trimmed . ' 12:00:00 +07:00'));
+}
+
+function vg_sync_sitemap_entry_lastmod($url, string $type = '', $object = null)
+{
+    if (! is_array($url) || empty($url['loc']) || ! is_string($url['loc'])) {
+        return $url;
+    }
+    $record = vg_get_current_registry_seo_record($url['loc']);
+    if (is_array($record) && ! empty($record['last_reviewed']) && is_string($record['last_reviewed'])) {
+        $url['mod'] = vg_format_registry_iso8601($record['last_reviewed']);
+    }
+    return $url;
+}
+add_filter('rank_math/sitemap/entry', 'vg_sync_sitemap_entry_lastmod', 20, 3);
+add_filter('rank_math/sitemap/enable_caching', '__return_false');
+
+function vg_sync_wp_sitemap_entry_lastmod(array $entry, $post = null): array
+{
+    if (empty($entry['loc']) || ! is_string($entry['loc'])) {
+        return $entry;
+    }
+    $record = vg_get_current_registry_seo_record($entry['loc']);
+    if (is_array($record) && ! empty($record['last_reviewed']) && is_string($record['last_reviewed'])) {
+        $entry['lastmod'] = vg_format_registry_iso8601($record['last_reviewed']);
+    }
+    return $entry;
+}
+add_filter('wp_sitemaps_posts_entry', 'vg_sync_wp_sitemap_entry_lastmod', 20, 2);
+
 // Core Web Vitals & Resource Hints: Preconnect to media CDN, preload LCP hero image, verification, and PWA manifest
 add_action('wp_head', static function (): void {
     $themeUrl = get_stylesheet_directory_uri();
@@ -135,6 +246,12 @@ add_action('wp_head', static function (): void {
         $headTags[] = '<meta name="robots" content="' . (is_404() ? 'noindex, nofollow' : 'noindex, follow') . '">';
     } elseif (is_singular() || is_front_page() || is_home()) {
         $headTags[] = '<meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">';
+        if (! defined('RANK_MATH_VERSION') && ! class_exists('RankMath')) {
+            $seoRecord = vg_get_current_registry_seo_record();
+            if (is_array($seoRecord) && ! empty($seoRecord['description'])) {
+                $headTags[] = '<meta name="description" content="' . esc_attr((string) $seoRecord['description']) . '">';
+            }
+        }
     }
 
     if ($googleVerification !== '') {
@@ -1458,6 +1575,7 @@ function vg_rich_travel_schema_filter($data, $context = null): array
     }
 
     $found_org = false;
+    $registry_record = vg_get_current_registry_seo_record($uri_path) ?? vg_get_current_registry_seo_record();
     foreach ($nodes as &$node) {
         if (! is_array($node)) {
             continue;
@@ -1488,16 +1606,33 @@ function vg_rich_travel_schema_filter($data, $context = null): array
             }
         }
 
+        if ($is_webpage && is_array($registry_record)) {
+            if (! empty($registry_record['title'])) {
+                $node['name'] = (string) $registry_record['title'];
+            }
+            if (! empty($registry_record['description'])) {
+                $node['description'] = (string) $registry_record['description'];
+            }
+            if (! empty($registry_record['last_reviewed'])) {
+                $node['dateModified'] = vg_format_registry_iso8601((string) $registry_record['last_reviewed']);
+            }
+        }
+
         if ($is_article) {
             $last_reviewed = '';
-            if (function_exists('vg_guide_registry_record')) {
-                $record = vg_guide_registry_record($uri_path);
-                if (is_array($record) && ! empty($record['last_reviewed'])) {
-                    $last_reviewed = (string) $record['last_reviewed'];
+            if (is_array($registry_record)) {
+                if (! empty($registry_record['title'])) {
+                    $node['headline'] = (string) $registry_record['title'];
+                }
+                if (! empty($registry_record['description'])) {
+                    $node['description'] = (string) $registry_record['description'];
+                }
+                if (! empty($registry_record['last_reviewed'])) {
+                    $last_reviewed = (string) $registry_record['last_reviewed'];
                 }
             }
             if ($last_reviewed !== '') {
-                $node['dateModified'] = date('Y-m-d\TH:i:sP', strtotime($last_reviewed . ' 12:00:00 +07:00'));
+                $node['dateModified'] = vg_format_registry_iso8601($last_reviewed);
             } elseif (isset($GLOBALS['post']) && ! empty($GLOBALS['post']->post_modified_gmt)) {
                 $node['dateModified'] = date('Y-m-d\TH:i:sP', strtotime($GLOBALS['post']->post_modified_gmt . ' +00:00'));
             } else {

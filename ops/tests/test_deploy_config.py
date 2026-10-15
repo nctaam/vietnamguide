@@ -10,6 +10,7 @@ from ops.deploy_config import DeployConfig, load_deploy_config
 from ops.deploy_theme_updates import (
     DEPLOY_FILES,
     backup_remote_files,
+    deploy_tarball_batch,
     get_remote_path,
     prune_remote_backups,
     purge_cache,
@@ -627,9 +628,137 @@ class DeployConfigTests(unittest.TestCase):
                         config = load_deploy_config()
                         self.assertEqual(config.user, 'vietnamguide-deploy')
 
+    def test_deploy_tarball_batch_bundles_verifies_and_promotes_all_files(self):
+        """Tarball batch deployment must upload 1 .tar.gz via sftp.put, verify SHA-256 hashes, and atomically mv -f all files."""
+        class MockChannel:
+            def __init__(self, exit_status=0):
+                self._exit_status = exit_status
+
+            def recv_exit_status(self):
+                return self._exit_status
+
+            def close(self):
+                pass
+
+        class MockStream:
+            def __init__(self, data=b'', exit_status=0):
+                self._data = data
+                self.channel = MockChannel(exit_status)
+
+            def read(self):
+                return self._data
+
+        class MockSFTP:
+            def __init__(self):
+                self.puts = []
+
+            def put(self, local_path, remote_path):
+                size = Path(local_path).stat().st_size
+                self.puts.append((local_path, remote_path, size))
+
+        config = DeployConfig(
+            host='staging.example.test',
+            port=2209,
+            user='vietnamguide-deploy',
+            key_path=r'C:\keys\deploy',
+            known_hosts=r'C:\keys\known_hosts',
+            remote_root='/srv/vietnamguide',
+            allow_root=False,
+        )
+
+        with tempfile.TemporaryDirectory() as tmpdir:
+            f1 = Path(tmpdir) / 'a.php'
+            f2 = Path(tmpdir) / 'b.css'
+            f1.write_bytes(b'<?php echo 1; ?>\n')
+            f2.write_bytes(b'body { margin: 0; }\n')
+
+            local_files = [
+                (DEPLOY_FILES[0][0], f1),
+                (DEPLOY_FILES[1][0], f2),
+            ]
+
+            class MockSSH:
+                def __init__(self):
+                    self.commands = []
+
+                def exec_command(self, command):
+                    self.commands.append(command)
+                    return None, MockStream(b'', 0), MockStream(b'', 0)
+
+            mock_sftp = MockSFTP()
+            mock_ssh = MockSSH()
+
+            success = deploy_tarball_batch(mock_ssh, mock_sftp, config, local_files)
+            self.assertTrue(success)
+            self.assertEqual(len(mock_sftp.puts), 1)
+            _local_tar, remote_tar_path, byte_len = mock_sftp.puts[0]
+            self.assertTrue(remote_tar_path.endswith('.tar.gz'))
+            self.assertGreater(byte_len, 0)
+            self.assertTrue(any('tar -xzf' in cmd and 'sha256sum --' in cmd and 'mv -f --' in cmd for cmd in mock_ssh.commands))
+            self.assertTrue(any(cmd.startswith('rm -rf --') for cmd in mock_ssh.commands))
+
+    def test_deploy_tarball_batch_hash_mismatch_aborts_and_cleans_up_staging(self):
+        """If remote SHA-256 verification fails during tarball batch deploy, it returns False and cleans up staging."""
+        class MockChannel:
+            def __init__(self, exit_status=10):
+                self._exit_status = exit_status
+
+            def recv_exit_status(self):
+                return self._exit_status
+
+            def close(self):
+                pass
+
+        class MockStream:
+            def __init__(self, data=b'', exit_status=10):
+                self._data = data
+                self.channel = MockChannel(exit_status)
+
+            def read(self):
+                return self._data
+
+        class MockSFTP:
+            def put(self, local_path, remote_path):
+                pass
+
+        config = DeployConfig(
+            host='staging.example.test',
+            port=2209,
+            user='vietnamguide-deploy',
+            key_path=r'C:\keys\deploy',
+            known_hosts=r'C:\keys\known_hosts',
+            remote_root='/srv/vietnamguide',
+            allow_root=False,
+        )
+
+        with tempfile.TemporaryDirectory() as tmpdir:
+            f1 = Path(tmpdir) / 'a.php'
+            f1.write_bytes(b'<?php echo 1; ?>\n')
+            local_files = [
+                (DEPLOY_FILES[0][0], f1),
+            ]
+
+            class MockSSH:
+                def __init__(self):
+                    self.commands = []
+
+                def exec_command(self, command):
+                    self.commands.append(command)
+                    if 'tar -xzf' in command:
+                        return None, MockStream(b'', 10), MockStream(b'TARBALL_HASH_MISMATCH:deadbeef', 10)
+                    return None, MockStream(b'', 0), MockStream(b'', 0)
+
+            mock_sftp = MockSFTP()
+            mock_ssh = MockSSH()
+
+            success = deploy_tarball_batch(mock_ssh, mock_sftp, config, local_files)
+            self.assertFalse(success)
+            self.assertTrue(any(cmd.startswith('rm -rf --') for cmd in mock_ssh.commands))
+
 
 if __name__ == '__main__':
     unittest.main()
+
 
 
 

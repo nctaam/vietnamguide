@@ -7,11 +7,13 @@ Deploys updated theme widgets and CSS to VPS with SHA-256 parity verification an
 import argparse
 from datetime import datetime, timezone
 import hashlib
+import io
 import os
 from pathlib import Path
 import posixpath
 import shlex
 import sys
+import tarfile
 import uuid
 
 try:
@@ -272,6 +274,7 @@ def purge_cache(ssh, config: DeployConfig) -> None:
         posixpath.join(config.remote_root, 'wp-content/litespeed/cssjs'),
         posixpath.join(config.remote_root, 'wp-content/litespeed/htmlc'),
         posixpath.join(config.remote_root, 'wp-content/cache/litespeed'),
+        posixpath.join(config.remote_root, 'wp-content/uploads/rank-math'),
         posixpath.join(vhost_root, 'luucache'),
     ]
     quoted_paths = [shlex.quote(path) + '/*' for path in cache_paths]
@@ -370,7 +373,98 @@ def stage_and_promote_file(
                 pass
 
 
-def deploy(config: DeployConfig | None = None, *, dry_run: bool = False, purge: bool = False) -> None:
+def deploy_tarball_batch(
+    ssh,
+    sftp,
+    config: DeployConfig,
+    local_files: list[tuple[str, Path]],
+) -> bool:
+    """Bundle all deploy files into an atomic Gzip tarball, verify SHA-256, and promote in one remote pass."""
+    import tempfile
+
+    batch_id = uuid.uuid4().hex[:12]
+    staging_root = posixpath.join(config.remote_root, 'wp-content', '.vietnamguide-deployment-backups')
+    remote_tar_path = posixpath.join(staging_root, f'staging-{batch_id}.tar.gz')
+    remote_extract_dir = posixpath.join(staging_root, f'staging-{batch_id}')
+
+    tar_buffer = io.BytesIO()
+    manifest_entries: list[tuple[str, str, str]] = []
+    with tarfile.open(fileobj=tar_buffer, mode='w:gz') as tar:
+        for (local_relative, local_path), (_unused, remote_relative) in zip(local_files, DEPLOY_FILES):
+            local_bytes = local_path.read_bytes()
+            if len(local_bytes) == 0:
+                raise ValueError(f'pre-flight check failed: invalid or empty file {local_path}')
+            file_hash = hashlib.sha256(local_bytes).hexdigest().lower()
+            norm_rel = remote_relative.replace('\\', '/').lstrip('/')
+            info = tarfile.TarInfo(name=norm_rel)
+            info.size = len(local_bytes)
+            info.mode = 0o644
+            tar.addfile(info, io.BytesIO(local_bytes))
+            manifest_entries.append((local_relative, norm_rel, file_hash))
+
+    tar_bytes = tar_buffer.getvalue()
+    expected_tar_hash = hashlib.sha256(tar_bytes).hexdigest().lower()
+
+    with tempfile.NamedTemporaryFile(suffix='.tar.gz', delete=False) as tmp_tar:
+        tmp_tar.write(tar_bytes)
+        local_tar_path = Path(tmp_tar.name)
+
+    try:
+        sftp.put(str(local_tar_path), remote_tar_path)
+
+        commands = [
+            'set -eu',
+            f'mkdir -p -- {shlex.quote(remote_extract_dir)}',
+            f'actual_tar_hash=$(sha256sum -- {shlex.quote(remote_tar_path)} | awk \'{{print tolower($1)}}\')',
+            f'if [ "$actual_tar_hash" != {shlex.quote(expected_tar_hash)} ]; then '
+            f'echo "TARBALL_HASH_MISMATCH:$actual_tar_hash" >&2; exit 10; fi',
+            f'tar -xzf {shlex.quote(remote_tar_path)} -C {shlex.quote(remote_extract_dir)}',
+        ]
+        for _local_rel, norm_rel, expected_file_hash in manifest_entries:
+            staged_file = posixpath.join(remote_extract_dir, norm_rel)
+            target_file = get_remote_path(config, norm_rel)
+            target_parent = posixpath.dirname(target_file)
+            commands.extend([
+                f'actual_hash=$(sha256sum -- {shlex.quote(staged_file)} | awk \'{{print tolower($1)}}\')',
+                f'if [ "$actual_hash" != {shlex.quote(expected_file_hash)} ]; then '
+                f'echo "FILE_HASH_MISMATCH:{norm_rel}:$actual_hash" >&2; exit 11; fi',
+                f'mkdir -p -- {shlex.quote(target_parent)}',
+                f'mv -f -- {shlex.quote(staged_file)} {shlex.quote(target_file)}',
+            ])
+
+        _stdin, stdout, stderr = ssh.exec_command('; '.join(commands))
+        exit_status = (
+            stdout.channel.recv_exit_status()
+            if hasattr(stdout, 'channel') and hasattr(stdout.channel, 'recv_exit_status')
+            else 0
+        )
+        raw_err = stderr.read() if hasattr(stderr, 'read') else b''
+        if hasattr(stdout, 'channel') and hasattr(stdout.channel, 'close'):
+            stdout.channel.close()
+        if exit_status != 0:
+            err_msg = raw_err.decode('utf-8', errors='replace').strip() if isinstance(raw_err, bytes) else str(raw_err).strip()
+            print(f'  [FAIL] Batch tarball promotion failed ({exit_status}): {err_msg}')
+            return False
+
+        for local_rel, norm_rel, expected_file_hash in manifest_entries:
+            print(f'  [OK] Promoted (batch): {local_rel} -> {get_remote_path(config, norm_rel)} ({expected_file_hash})')
+        return True
+    finally:
+        local_tar_path.unlink(missing_ok=True)
+        try:
+            cleanup_cmd = f"rm -rf -- {shlex.quote(remote_tar_path)} {shlex.quote(remote_extract_dir)}"
+            ssh.exec_command(cleanup_cmd)
+        except Exception:
+            pass
+
+
+def deploy(
+    config: DeployConfig | None = None,
+    *,
+    dry_run: bool = False,
+    purge: bool = False,
+    batch: bool = False,
+) -> None:
     local_files = validate_local_files()
     if dry_run:
         print('=== Dry-run: validating deploy artifact and hashes ===')
@@ -396,16 +490,20 @@ def deploy(config: DeployConfig | None = None, *, dry_run: bool = False, purge: 
         all_matched = True
         sftp = ssh.open_sftp()
         try:
-            for (local_relative, local_path), (_unused, remote_relative) in zip(local_files, DEPLOY_FILES):
-                remote_path = get_remote_path(config, remote_relative)
-                print(f'Uploading (atomic staging): {local_relative} -> {remote_path}')
-                success, local_hash, remote_hash = stage_and_promote_file(ssh, sftp, local_path, remote_path)
-                if success:
-                    print(f'  [OK] SHA256 parity: {local_hash}')
-                else:
-                    print(f'  [FAIL] SHA256 mismatch: local={local_hash}, remote={remote_hash}')
-                    all_matched = False
-                    break
+            if batch:
+                print(f'Uploading & promoting {len(local_files)} files via atomic tarball batch...')
+                all_matched = deploy_tarball_batch(ssh, sftp, config, local_files)
+            else:
+                for (local_relative, local_path), (_unused, remote_relative) in zip(local_files, DEPLOY_FILES):
+                    remote_path = get_remote_path(config, remote_relative)
+                    print(f'Uploading (atomic staging): {local_relative} -> {remote_path}')
+                    success, local_hash, remote_hash = stage_and_promote_file(ssh, sftp, local_path, remote_path)
+                    if success:
+                        print(f'  [OK] SHA256 parity: {local_hash}')
+                    else:
+                        print(f'  [FAIL] SHA256 mismatch: local={local_hash}, remote={remote_hash}')
+                        all_matched = False
+                        break
         finally:
             sftp.close()
 
@@ -445,10 +543,11 @@ def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--dry-run', action='store_true', help='validate local files without SSH')
     parser.add_argument('--purge-cache', action='store_true', help='purge configured public cache paths after parity checks')
+    parser.add_argument('--batch', action='store_true', help='bundle files into a single atomic Gzip tarball for fast promotion')
     args = parser.parse_args(argv)
 
     try:
-        deploy(dry_run=args.dry_run, purge=args.purge_cache)
+        deploy(dry_run=args.dry_run, purge=args.purge_cache, batch=args.batch)
     except (FileNotFoundError, RuntimeError, ValueError, OSError) as exc:
         print(f'Deploy aborted: {exc}', file=sys.stderr)
         return 2
