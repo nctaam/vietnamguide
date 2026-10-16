@@ -516,6 +516,7 @@ function vg_get_canonical_alias_redirect_map(): array
         'vietnam-travel-cost'          => '/costs/vietnam-travel-cost/',
         'vietnam-visa-checker'         => '/plan/vietnam-evisa/',
         'vietnam-season-weather'       => '/plan/best-time-to-visit-vietnam/',
+        'affiliate-review-policy'      => '/affiliate-disclosure/',
 
         // Northern Vietnam Pillar Destinations
         'destinations/hanoi'           => '/destinations/hanoi-travel-guide/',

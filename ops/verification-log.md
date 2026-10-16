@@ -3143,3 +3143,23 @@ Date: 2026-07-28 (Asia/Saigon)
      - Public Verifier Offline Fixtures:
        - Executed: `powershell -File ops/verify-guide-experience-public.ps1 -FixturesOnly`
        - Status: `VietnamGuide public verifier fixtures passed for https://vietnamguide.net:443.` (Exit Code 0).
+
+## Stage 105 - Broken Legal Link Remediation, Canonical Redirect Map Hardening & Full 275-Test Verification (October 16, 2026)
+- Date: 2026-10-16
+- Scope: High-integrity link integrity audit and technical routing fix across theme templates and runtime routing layer. Remediated the broken `/affiliate-review-policy/` link discovered in `template-parts/guide-page.php`, registered defensive 301 alias redirect in `inc/guide-routing.php`, and verified all 275 tests and 8/8 Master Quality Gates.
+- Key Accomplishments:
+  1. Remediation of Broken Trust Badge Link:
+     - Discovered in `template-parts/guide-page.php:115` an outdated reference to `/affiliate-review-policy/` in the "Standards: Zero Sponsored Bias" badge.
+     - Updated line 115 to canonical legal route: `<a href="<?php echo esc_url(home_url('/affiliate-disclosure/')); ?>">Zero Sponsored Bias</a>`.
+     - Harmonized with `footer.php:41` and `inc/guide-seo.php:1992`.
+  2. Routing Layer Hardening (Fail-Safe 301 Redirect):
+     - Added `'affiliate-review-policy' => '/affiliate-disclosure/'` into `vg_get_canonical_alias_redirect_map()` in `inc/guide-routing.php:519`.
+     - Guarantees any historical backlink, cached browser query, or external reference to `/affiliate-review-policy/` is immediately 301 redirected to `/affiliate-disclosure/`, preventing 404 error cascades.
+  3. Architectural Invariants Preserved:
+     - Exactly 17 PHP files in `inc/*.php` (verified 17/17).
+     - Zero raw `<h2>` elements in `inc/*.php` (verified 0 violations, protecting Sticky TOC).
+     - 100% SHA-256 parity maintained across all route registry artifacts.
+  4. Objective Verification:
+     - Full Python Test Suite: `275/275` tests passed in 78.3s (273 passed, 2 skipped, 0 failures, 0 errors).
+     - Master Quality Gates: `8/8` Gates passed (100% Exit Code 0 via `ops/verify-all-gates.ps1`).
+     - Deploy Dry-Run: 63/63 deploy files verified with 100% disk parity.
