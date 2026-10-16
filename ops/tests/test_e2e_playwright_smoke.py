@@ -48,6 +48,11 @@ def _render_php_component(php_snippet: str) -> str:
     function __($h, $d = '') { return (string)$h; }
     function home_url($p = '') { return 'https://vietnamguide.net/' . ltrim((string)$p, '/'); }
     function vg_home_url($p = '') { return 'https://vietnamguide.net/' . ltrim((string)$p, '/'); }
+    function esc_attr__($a, $d = '') { return htmlspecialchars((string)$a, ENT_QUOTES, 'UTF-8'); }
+    function wp_kses($s, $allowed = []) { return (string)$s; }
+    function wp_kses_post($s) { return (string)$s; }
+    function wp_strip_all_tags($s) { return strip_tags((string)$s); }
+    function wp_json_encode($data, $flags = 0, $depth = 512) { return json_encode($data, $flags, $depth); }
     """
     res = subprocess.run(
         ['php', '-r', bootstrap + "\n" + php_snippet],
@@ -358,6 +363,225 @@ class TestPlaywrightE2ESmoke(unittest.TestCase):
             self.assertIn('status-warning', verdict_card.get_attribute('class') or '')
             self.assertEqual(cost_amount.inner_text().strip(), '$25 USD')
             self.assertIn('EXCEEDS 45 DAYS', page.locator('#vg-vc-status-text').inner_text().upper())
+
+            self.assertEqual(console_errors, [])
+            self.assertEqual(page_errors, [])
+        finally:
+            page.close()
+
+    def test_e2e_cost_calculator_interactive_calculations(self):
+        """Playwright E2E: [vg_cost_calculator] recalculates budget on duration and travel style change."""
+        calc_html = _render_php_component(
+            "require 'wordpress/wp-content/themes/vietnamguide-premium/inc/guide-cost-calculator.php';\n"
+            "echo vg_render_cost_calculator_html();\n"
+        )
+        full_doc = f"""<!doctype html>
+        <html lang="en">
+        <head>
+            <meta charset="utf-8">
+            <style>{self.homepage_css}</style>
+            <style>{self.interactive_css}</style>
+        </head>
+        <body>
+            {calc_html}
+        </body>
+        </html>"""
+
+        page = self._browser.new_page()
+        console_errors = []
+        page_errors = []
+        page.on("console", lambda msg: console_errors.append(msg.text) if msg.type == "error" else None)
+        page.on("pageerror", lambda err: page_errors.append(str(err)))
+
+        try:
+            page.set_content(full_doc, wait_until="domcontentloaded")
+
+            total_el = page.locator('#vg-calc-total-display')
+            days_el = page.locator('#vg-calc-days-display')
+            self.assertIn('$1,563', total_el.inner_text())
+            self.assertIn('10', days_el.inner_text().upper())
+
+            # Change to 7 days preset chip
+            page.locator('.vg-calc-preset-chip[data-days="7"]').click()
+            self.assertIn('7', days_el.inner_text().upper())
+            self.assertNotEqual(total_el.inner_text().strip(), '$1,563')
+
+            # Switch to Backpacker style by clicking the visible card label
+            page.locator('.vg-calc-style-card:has(input[value="backpacker"])').click()
+            daily_el = page.locator('#vg-calc-daily-display')
+            self.assertIn('$48', daily_el.inner_text())
+
+            self.assertEqual(console_errors, [])
+            self.assertEqual(page_errors, [])
+        finally:
+            page.close()
+
+    def test_e2e_season_matrix_interactive_navigation(self):
+        """Playwright E2E: [vg_season_matrix] switches months and updates regional climate briefs with 0 errors."""
+        sm_html = _render_php_component(
+            "require 'wordpress/wp-content/themes/vietnamguide-premium/inc/guide-season-matrix.php';\n"
+            "echo vg_render_season_matrix_html();\n"
+        )
+        full_doc = f"""<!doctype html>
+        <html lang="en">
+        <head>
+            <meta charset="utf-8">
+            <style>{self.homepage_css}</style>
+            <style>{self.interactive_css}</style>
+        </head>
+        <body>
+            {sm_html}
+        </body>
+        </html>"""
+
+        page = self._browser.new_page()
+        console_errors = []
+        page_errors = []
+        page.on("console", lambda msg: console_errors.append(msg.text) if msg.type == "error" else None)
+        page.on("pageerror", lambda err: page_errors.append(str(err)))
+
+        try:
+            page.set_content(full_doc, wait_until="domcontentloaded")
+
+            verdict_title = page.locator('#vg-sm-verdict-title')
+            self.assertIn('November', verdict_title.inner_text())
+
+            # Click February pill
+            page.locator('.vg-sm-month-pill[data-month="feb"]').click()
+            self.assertIn('February', verdict_title.inner_text())
+
+            # Click °F unit toggle
+            page.locator('.vg-sm-unit-btn[data-unit="f"]').click()
+            north_temp = page.locator('#vg-temp-north')
+            self.assertIn('°F', north_temp.inner_text())
+
+            self.assertEqual(console_errors, [])
+            self.assertEqual(page_errors, [])
+        finally:
+            page.close()
+
+    def test_e2e_airport_navigator_interactive_tabs(self):
+        """Playwright E2E: [vg_airport_navigator] switches airports (HAN/SGN/DAD) and information tabs."""
+        an_html = _render_php_component(
+            "require 'wordpress/wp-content/themes/vietnamguide-premium/inc/guide-airport-navigator.php';\n"
+            "echo vg_render_airport_navigator_html();\n"
+        )
+        full_doc = f"""<!doctype html>
+        <html lang="en">
+        <head>
+            <meta charset="utf-8">
+            <style>{self.homepage_css}</style>
+            <style>{self.interactive_css}</style>
+        </head>
+        <body>
+            {an_html}
+        </body>
+        </html>"""
+
+        page = self._browser.new_page()
+        console_errors = []
+        page_errors = []
+        page.on("console", lambda msg: console_errors.append(msg.text) if msg.type == "error" else None)
+        page.on("pageerror", lambda err: page_errors.append(str(err)))
+
+        try:
+            page.set_content(full_doc, wait_until="domcontentloaded")
+
+            code_el = page.locator('#vg-an-b-code')
+            self.assertEqual(code_el.inner_text().strip(), 'HAN')
+
+            # Switch to Tan Son Nhat (SGN)
+            page.locator('.vg-an-chip[data-airport="SGN"]').click()
+            self.assertEqual(code_el.inner_text().strip(), 'SGN')
+            name_el = page.locator('#vg-an-b-name')
+            self.assertIn('Tan Son Nhat', name_el.inner_text())
+
+            # Switch to Scam Shield tab
+            page.locator('.vg-an-tab[data-tab="scam-shield"]').click()
+            scam_panel = page.locator('#vg-panel-scam-shield')
+            self.assertIn('active', scam_panel.get_attribute('class') or '')
+
+            self.assertEqual(console_errors, [])
+            self.assertEqual(page_errors, [])
+        finally:
+            page.close()
+
+    def test_e2e_packing_checklist_interactive_toggles(self):
+        """Playwright E2E: [vg_packing_checklist] tracks checked items and updates progress percentage."""
+        pc_html = _render_php_component(
+            "require 'wordpress/wp-content/themes/vietnamguide-premium/inc/guide-packing-checklist.php';\n"
+            "echo vg_render_packing_checklist();\n"
+        )
+        full_doc = f"""<!doctype html>
+        <html lang="en">
+        <head>
+            <meta charset="utf-8">
+            <style>{self.homepage_css}</style>
+            <style>{self.interactive_css}</style>
+        </head>
+        <body>
+            {pc_html}
+        </body>
+        </html>"""
+
+        page = self._browser.new_page()
+        console_errors = []
+        page_errors = []
+        page.on("console", lambda msg: console_errors.append(msg.text) if msg.type == "error" else None)
+        page.on("pageerror", lambda err: page_errors.append(str(err)))
+
+        try:
+            page.set_content(full_doc, wait_until="domcontentloaded")
+
+            counter_el = page.locator('[data-vg-checklist-counter]')
+            initial_text = counter_el.inner_text()
+            self.assertIn('0 of', initial_text)
+
+            # Check the first item by clicking its custom visual checkbox
+            page.locator('.vg-checklist-box-custom').first.click()
+
+            updated_text = counter_el.inner_text()
+            self.assertIn('1 of', updated_text)
+
+            self.assertEqual(console_errors, [])
+            self.assertEqual(page_errors, [])
+        finally:
+            page.close()
+
+    def test_e2e_itinerary_finder_interactive_filtering(self):
+        """Playwright E2E: [vg_itinerary_finder] filters curated itineraries by duration and style."""
+        it_html = _render_php_component(
+            "require 'wordpress/wp-content/themes/vietnamguide-premium/inc/guide-itinerary-finder.php';\n"
+            "echo vg_render_itinerary_finder_html();\n"
+        )
+        full_doc = f"""<!doctype html>
+        <html lang="en">
+        <head>
+            <meta charset="utf-8">
+            <style>{self.homepage_css}</style>
+            <style>{self.interactive_css}</style>
+        </head>
+        <body>
+            {it_html}
+        </body>
+        </html>"""
+
+        page = self._browser.new_page()
+        console_errors = []
+        page_errors = []
+        page.on("console", lambda msg: console_errors.append(msg.text) if msg.type == "error" else None)
+        page.on("pageerror", lambda err: page_errors.append(str(err)))
+
+        try:
+            page.set_content(full_doc, wait_until="domcontentloaded")
+
+            count_el = page.locator('.vg-finder-count')
+            self.assertTrue(count_el.is_visible())
+
+            # Filter by 7 Days
+            page.locator('.vg-finder-pill[data-group="duration"][data-value="7d"]').click()
+            visible_cards = page.locator('.vg-finder-card:not([style*="display: none"])')
+            self.assertGreater(visible_cards.count(), 0)
 
             self.assertEqual(console_errors, [])
             self.assertEqual(page_errors, [])

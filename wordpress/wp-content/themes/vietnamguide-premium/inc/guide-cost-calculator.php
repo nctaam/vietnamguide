@@ -479,6 +479,7 @@ function vg_render_cost_calculator_html(): string
         function updateUI() {
             var calc = calculate();
             var cur = state.currency;
+            var root = document.getElementById('vg-cost-calculator');
 
             var daysDisplay = document.getElementById('vg-calc-days-display');
             if (daysDisplay) {
@@ -591,18 +592,22 @@ function vg_render_cost_calculator_html(): string
                 if (routeHint) {
                     routeHint.textContent = 'Active preset: ' + ROUTE_PRESETS[state.route].name;
                 }
-                root.querySelectorAll('.vg-calc-route-chip').forEach(function(chip) {
-                    var isAct = chip.getAttribute('data-route') === state.route;
-                    chip.classList.toggle('is-active', isAct);
-                    chip.setAttribute('aria-pressed', isAct ? 'true' : 'false');
-                });
+                if (root) {
+                    root.querySelectorAll('.vg-calc-route-chip').forEach(function(chip) {
+                        var isAct = chip.getAttribute('data-route') === state.route;
+                        chip.classList.toggle('is-active', isAct);
+                        chip.setAttribute('aria-pressed', isAct ? 'true' : 'false');
+                    });
+                }
             } else {
                 if (routeProfile) routeProfile.style.display = 'none';
                 if (routeHint) routeHint.textContent = 'Click to load itinerary pacing';
-                root.querySelectorAll('.vg-calc-route-chip').forEach(function(chip) {
-                    chip.classList.remove('is-active');
-                    chip.setAttribute('aria-pressed', 'false');
-                });
+                if (root) {
+                    root.querySelectorAll('.vg-calc-route-chip').forEach(function(chip) {
+                        chip.classList.remove('is-active');
+                        chip.setAttribute('aria-pressed', 'false');
+                    });
+                }
             }
 
             // Save state to safe storage and sync URL params

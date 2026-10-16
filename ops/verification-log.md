@@ -2,6 +2,26 @@
 
 Date: 2026-10-16 (Asia/Saigon)
 
+## Stage 104: Full E2E Playwright Automation Across 6 Interactive Travel Toolkits & Cost Calculator DOM Reference Bug Fix
+
+- **Full E2E Playwright Automation Across All 6 Interactive Travel Toolkits (`ops/tests/test_e2e_playwright_smoke.py`)**:
+  - Implemented real Headless Chromium interactive end-to-end test cases covering all 6 travel toolkits:
+    1. `test_e2e_visa_checker_interactive_calculations`: Nationality switching (UK exempt vs US e-visa) and stay duration warning (> 45 days).
+    2. `test_e2e_cost_calculator_interactive_calculations`: Duration presets change (10d to 7d), travel comfort tier switching (Midrange to Backpacker), and daily rate recalculation.
+    3. `test_e2e_season_matrix_interactive_navigation`: Travel month switching (November to February), temperature unit conversion (°C to °F), and regional verdict rendering.
+    4. `test_e2e_airport_navigator_interactive_tabs`: Hub airport switching (HAN to SGN), transportation breakdown tabs, and Scam Shield panel activation (`#vg-panel-scam-shield`).
+    5. `test_e2e_packing_checklist_interactive_toggles`: Item checkbox toggling via visible `.vg-checklist-box-custom` elements and live progress percentage update.
+    6. `test_e2e_itinerary_finder_interactive_filtering`: Itinerary duration filtering (`data-group="duration"`, `data-value="7d"`) and card count update.
+- **Fixed In-Scope DOM Reference Bug in Cost Calculator (`inc/guide-cost-calculator.php`)**:
+  - Discovered and fixed `ReferenceError: root is not defined` inside `updateUI()` by defining `var root = document.getElementById('vg-cost-calculator');` and guarding `querySelectorAll` calls on route chips.
+- **Bootstrap Mock Extensions (`ops/tests/test_e2e_playwright_smoke.py`)**:
+  - Added missing WordPress core stubs: `esc_attr__`, `wp_kses`, `wp_kses_post`, `wp_strip_all_tags`, `wp_json_encode`.
+- **Verification Gates & Quality Assurance**:
+  - 9/9 Playwright E2E interactive scenarios passed with 0 console errors and 0 page exceptions.
+  - Full Unit & E2E Test Suite: 275 tests ran (`273 passed`, `2 skipped`, `0 failures`, `0 errors`).
+  - Master Quality Gates: 8/8 Gates PASSED (`Exit Code 0` via `ops/verify-all-gates.ps1`).
+  - Deploy dry-run: 63/63 deploy files validated with 100% SHA-256 disk parity.
+
 ## Stage 103: Interactive Shortcode Asset Fallback Enqueue, Schema Path Resolution Hardening & Playwright E2E Visa Calculator Test
 
 - **Interactive Asset Enqueue Fallbacks (`inc/guide-interactive-map.php`, `inc/guide-photo-dispatch.php`)**:
