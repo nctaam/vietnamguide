@@ -109,6 +109,10 @@ function vg_render_photo_dispatch(array $atts): string
         $slug = 'ha-long-dawn';
     }
 
+    if (function_exists('vg_enqueue_interactive_shortcode_assets')) {
+        vg_enqueue_interactive_shortcode_assets();
+    }
+
     $active_slug = $slug;
 
     ob_start();

@@ -28,6 +28,8 @@ def _render_php_component(php_snippet: str) -> str:
     define('ABSPATH', 1);
     function add_shortcode($tag, $cb) {}
     function add_action($tag, $cb, $p = 10) {}
+    function add_filter($tag, $cb, $p = 10, $accepted_args = 1) {}
+    function selected($selected, $current = true, $echo = true) { if ($selected === $current) { if ($echo) { echo ' selected="selected"'; } return ' selected="selected"'; } return ''; }
     function sanitize_key($k) { return preg_replace('/[^a-z0-9_-]/', '', strtolower((string)$k)); }
     function shortcode_atts($pairs, $atts, $shortcode = '') {
         $out = [];
@@ -306,6 +308,63 @@ class TestPlaywrightE2ESmoke(unittest.TestCase):
         finally:
             page.close()
 
+    def test_e2e_visa_checker_interactive_calculations(self):
+        """Playwright E2E: [vg_visa_checker] computes exemption vs e-visa fees on nationality & slider change."""
+        vc_html = _render_php_component(
+            "require 'wordpress/wp-content/themes/vietnamguide-premium/inc/guide-visa-checker.php';\n"
+            "echo vg_render_visa_checker_html();\n"
+        )
+
+        full_doc = f"""<!doctype html>
+        <html lang="en">
+        <head>
+            <meta charset="utf-8">
+            <style>{self.homepage_css}</style>
+            <style>{self.interactive_css}</style>
+        </head>
+        <body>
+            {vc_html}
+        </body>
+        </html>"""
+
+        page = self._browser.new_page()
+        console_errors = []
+        page_errors = []
+        page.on("console", lambda msg: console_errors.append(msg.text) if msg.type == "error" else None)
+        page.on("pageerror", lambda err: page_errors.append(str(err)))
+
+        try:
+            page.set_content(full_doc, wait_until="domcontentloaded")
+
+            # Default nationality is UK (GB) for 14 days -> 45-day exemption eligible ($0 USD)
+            verdict_card = page.locator('#vg-vc-verdict-card')
+            cost_amount = page.locator('#vg-vc-cost-amount')
+            self.assertIn('status-exempt', verdict_card.get_attribute('class') or '')
+            self.assertEqual(cost_amount.inner_text().strip(), '$0 USD')
+
+            # Select US via quick chip -> requires 90-day E-Visa ($25 USD)
+            page.locator('.vg-vc-chip[data-country="US"]').click()
+            self.assertIn('status-evisa', verdict_card.get_attribute('class') or '')
+            self.assertEqual(cost_amount.inner_text().strip(), '$25 USD')
+
+            # Select UK again and change stay duration to 60 days (> 45 days exemption cap)
+            page.locator('.vg-vc-chip[data-country="GB"]').click()
+            slider = page.locator('#vg-vc-duration-slider')
+            slider.fill('60')
+            slider.dispatch_event('input')
+            slider.dispatch_event('change')
+
+            # Should transition to status-warning / E-Visa required because stay exceeds 45 days
+            self.assertIn('status-warning', verdict_card.get_attribute('class') or '')
+            self.assertEqual(cost_amount.inner_text().strip(), '$25 USD')
+            self.assertIn('EXCEEDS 45 DAYS', page.locator('#vg-vc-status-text').inner_text().upper())
+
+            self.assertEqual(console_errors, [])
+            self.assertEqual(page_errors, [])
+        finally:
+            page.close()
+
 
 if __name__ == '__main__':
     unittest.main()
+

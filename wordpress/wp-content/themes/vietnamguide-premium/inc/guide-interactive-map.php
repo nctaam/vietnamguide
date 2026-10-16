@@ -123,6 +123,10 @@ function vg_get_regional_corridors_data(): array
 
 function vg_interactive_map_shortcode(array $atts = []): string
 {
+    if (function_exists('vg_enqueue_interactive_shortcode_assets')) {
+        vg_enqueue_interactive_shortcode_assets();
+    }
+
     $corridors = vg_get_regional_corridors_data();
     $default_id = 'central-heritage';
     $active_corridor = $corridors[$default_id] ?? reset($corridors);

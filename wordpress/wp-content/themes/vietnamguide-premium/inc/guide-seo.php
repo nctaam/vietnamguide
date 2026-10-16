@@ -1944,16 +1944,29 @@ function vg_rich_travel_schema_filter($data, $context = null): array
     if ($is_search_or_404) {
         $uri_path = '';
         $resolved_path = true;
-    } elseif (function_exists('is_front_page') && is_front_page()) {
-        $uri_path = '';
-        $resolved_path = true;
-    } elseif (function_exists('get_queried_object_id')) {
-        $qid = (int) get_queried_object_id();
-        if ($qid > 0) {
-            $permalink = get_permalink($qid);
-            if (is_string($permalink) && $permalink !== '') {
-                $uri_path = strtolower(trim((string) parse_url($permalink, PHP_URL_PATH), '/'));
-                $resolved_path = true;
+    } elseif (isset($_SERVER['REQUEST_URI'])) {
+        $req_path = strtolower(trim((string) parse_url((string) $_SERVER['REQUEST_URI'], PHP_URL_PATH), '/'));
+        if ($req_path !== '') {
+            $uri_path = $req_path;
+            $resolved_path = true;
+        }
+    }
+
+    if (! $resolved_path) {
+        if (function_exists('is_front_page') && is_front_page()) {
+            $uri_path = '';
+            $resolved_path = true;
+        } elseif (function_exists('get_queried_object_id')) {
+            $qid = (int) get_queried_object_id();
+            if ($qid > 0) {
+                $permalink = get_permalink($qid);
+                if (is_string($permalink) && $permalink !== '') {
+                    $parsed_perm = strtolower(trim((string) parse_url($permalink, PHP_URL_PATH), '/'));
+                    if ($parsed_perm !== '') {
+                        $uri_path = $parsed_perm;
+                        $resolved_path = true;
+                    }
+                }
             }
         }
     }

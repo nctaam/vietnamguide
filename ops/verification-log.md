@@ -1,6 +1,23 @@
 # Verification Log
 
-Date: 2026-10-15 (Asia/Saigon)
+Date: 2026-10-16 (Asia/Saigon)
+
+## Stage 103: Interactive Shortcode Asset Fallback Enqueue, Schema Path Resolution Hardening & Playwright E2E Visa Calculator Test
+
+- **Interactive Asset Enqueue Fallbacks (`inc/guide-interactive-map.php`, `inc/guide-photo-dispatch.php`)**:
+  - Added defensive asset enqueue fallback `if (function_exists('vg_enqueue_interactive_shortcode_assets')) { vg_enqueue_interactive_shortcode_assets(); }` into `vg_interactive_map_shortcode()` and `vg_render_photo_dispatch()`, guaranteeing that interactive CSS (`guide-interactive.css`) and JS (`guide-interactive.js`) are enqueued even when shortcodes are rendered dynamically in freeform blocks or custom templates without prior hook execution.
+- **Request URI Priority in Rich Travel Schema Filter (`inc/guide-seo.php`)**:
+  - Hardened `$uri_path` resolution in `vg_rich_travel_schema_filter()` to evaluate non-empty `$_SERVER['REQUEST_URI']` before front-page and queried-object permalink fallbacks.
+  - Eliminated test harness & utility page masking where stub permalinks caused legal and trust routes (`/about/`, `/editorial-policy/`, `/privacy-policy/`, `/terms-of-service/`, `/source-update-policy/`, `/affiliate-disclosure/`, `/contact/`, `/newsletter/`) to be treated as destination pages with `TouristDestination` or `TouristTrip` nodes.
+- **Playwright Chromium E2E Interactive Calculation Test (`ops/tests/test_e2e_playwright_smoke.py`)**:
+  - Implemented `test_e2e_visa_checker_interactive_calculations` testing the Visa Checker toolkit in a real headless browser:
+    - Verifies default UK 14-day exemption status (`status-exempt`, `$0 USD`).
+    - Verifies dynamic interactive chip selection for US (`status-evisa`, `$25 USD`).
+    - Verifies stay duration slider change to 60 days triggering the `status-warning` state ("EXCEEDS 45 DAYS") with 0 console errors and 0 page exceptions.
+- **Verification Gates & Quality Assurance**:
+  - Full Unit & E2E Test Suite: 270 tests ran (`268 passed`, `2 skipped`, `0 failures`, `0 errors`).
+  - Master Quality Gates: 8/8 Gates PASSED (`Exit Code 0` via `ops/verify-all-gates.ps1`).
+  - Deploy dry-run: 63/63 deploy files validated with 100% SHA-256 disk parity.
 
 ## Stage 102: Robots Meta Deduplication, E-E-A-T `Person.name` Guarantee Across Trust/Policy Pages & JSON-LD `@id` Unification
 
