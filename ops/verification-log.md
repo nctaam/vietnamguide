@@ -3163,3 +3163,21 @@ Date: 2026-07-28 (Asia/Saigon)
      - Full Python Test Suite: `275/275` tests passed in 78.3s (273 passed, 2 skipped, 0 failures, 0 errors).
      - Master Quality Gates: `8/8` Gates passed (100% Exit Code 0 via `ops/verify-all-gates.ps1`).
      - Deploy Dry-Run: 63/63 deploy files verified with 100% disk parity.
+
+## Stage 106 - Front-Page LCP Hero WebP Preloading, Core Web Vitals Contract Test & 276-Test Verification (October 16, 2026)
+- Date: 2026-10-16
+- Scope: Frontend performance and Core Web Vitals optimization. Hardened LCP (Largest Contentful Paint) image preloading in `inc/guide-seo.php` to include high-priority WebP hero preloading on the homepage (`/assets/images/home-hero.webp`), added dedicated contract test `test_lcp_hero_image_preloading_contract` in `ops/tests/test_guide_seo.py`, and verified full 276-test suite and 8/8 Master Quality Gates.
+- Key Accomplishments:
+  1. Front-Page LCP Hero WebP Preloading:
+     - Updated `wp_head` action in `inc/guide-seo.php` to emit `<link rel="preload" as="image" type="image/webp" href="..." fetchpriority="high">` when `is_front_page() || is_home()`.
+     - Directly accelerates LCP rendering on mobile and desktop viewports, eliminating resource fetch waterfalls.
+  2. Automated Test Suite Expansion:
+     - Added `test_lcp_hero_image_preloading_contract` in `ops/tests/test_guide_seo.py`.
+     - Total unit test count elevated from 275 to **276 tests**.
+  3. Master Quality Gates & Architectural Invariants:
+     - 17 PHP files preserved in `inc/*.php` (17/17).
+     - Zero raw `<h2>` elements in `inc/*.php` (0 violations, TOC protection preserved).
+     - 100% SHA-256 byte parity maintained across route registry artifacts.
+     - Full Python Test Suite: `276/276` tests passed in 35.9s (274 passed, 2 skipped, 0 failures, 0 errors).
+     - Master Quality Gates: `8/8` Gates passed (100% Exit Code 0 via `ops/verify-all-gates.ps1`).
+     - Deploy Dry-Run: 63/63 deploy files verified with 100% disk parity.

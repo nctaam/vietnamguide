@@ -1494,6 +1494,17 @@ echo json_encode([
         self.assertIn('image', article)
         self.assertGreaterEqual(article['image'].get('width', 0), 1200)
 
+    def test_lcp_hero_image_preloading_contract(self):
+        """wp_head must output <link rel='preload' as='image'> for singular routes and front page LCP hero."""
+        with open(GUIDE_SEO_PHP, 'r', encoding='utf-8') as f:
+            seo_src = f.read()
+
+        # Check that front-page preloads home-hero.webp
+        self.assertIn("home-hero.webp", seo_src, "guide-seo.php must preload home-hero.webp on front page for CWV LCP optimization")
+        self.assertIn('<link rel="preload" as="image" type="image/webp"', seo_src)
+        self.assertIn('<link rel="preload" as="image" href="', seo_src)
+        self.assertIn('fetchpriority="high"', seo_src)
+
 
 if __name__ == '__main__':
     unittest.main()

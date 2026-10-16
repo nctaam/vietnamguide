@@ -481,6 +481,9 @@ add_action('wp_head', static function (): void {
         if ($heroImage !== '') {
             $headTags[] = '<link rel="preload" as="image" href="' . esc_url($heroImage) . '" fetchpriority="high">';
         }
+    } elseif (is_front_page() || is_home()) {
+        $homeHeroWebp = $themeUrl . '/assets/images/home-hero.webp';
+        $headTags[] = '<link rel="preload" as="image" type="image/webp" href="' . esc_url($homeHeroWebp) . '" fetchpriority="high">';
     }
 
     echo implode("\n", $headTags) . "\n";
