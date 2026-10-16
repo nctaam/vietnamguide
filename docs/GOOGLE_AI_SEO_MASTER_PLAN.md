@@ -782,7 +782,7 @@ VietnamGuide's transition into an authoritative, publication-grade travel platfo
 | [GATE 8/8] Deployment Static Security Audit | ops/deploy_security_aud| PASS (0 release blockers)  |
 | ------------------------------------------- | ---------------------- | -------------------------- |
 | Ground-Truth Tariff & Freshness Sentinel V2 | ops/tariff_sentinel.py | PASS (282/282 routes, 100%)|
-| Full Automated Unit & E2E Test Suite        | ops/tests/test_*.py    | PASS (252+ tests, 0 errors)|
+| Full Automated Unit & E2E Test Suite        | ops/tests/test_*.py    | PASS (275 tests, 0 errors, 9 Playwright E2E)|
 +=============================================+========================+============================+
 ```
 
