@@ -3181,3 +3181,20 @@ Date: 2026-07-28 (Asia/Saigon)
      - Full Python Test Suite: `276/276` tests passed in 35.9s (274 passed, 2 skipped, 0 failures, 0 errors).
      - Master Quality Gates: `8/8` Gates passed (100% Exit Code 0 via `ops/verify-all-gates.ps1`).
      - Deploy Dry-Run: 63/63 deploy files verified with 100% disk parity.
+
+## Stage 107 - Visual Dispatch Storytelling DOM Ready Execution Hardening & Playwright E2E Validation (October 17, 2026)
+- Date: 2026-10-17
+- Scope: High-reliability frontend execution and headless hydration safety. Hardened `[vg_photo_dispatch]` inline script in `inc/guide-photo-dispatch.php` with defensive readyState check (`document.readyState === 'loading' ? addEventListener : initDirectly`), mirroring `[vg_interactive_map]`.
+- Key Accomplishments:
+  1. Hydration & Execution Safety:
+     - Discovered in `inc/guide-photo-dispatch.php` that the script strictly waited on `DOMContentLoaded`. In dynamic client navigation, PJAX, or late-inserted shortcode contexts, `DOMContentLoaded` could have already fired, leaving the lightbox modal and suite switcher listeners unbound.
+     - Implemented `initPhotoDispatch()` with `document.readyState` branching, ensuring instant activation regardless of document loading state.
+  2. Master Quality Gates & Invariants Preservation:
+     - Exactly 17 PHP files in `inc/*.php` (17/17).
+     - Zero raw `<h2>` elements in `inc/*.php` (0 violations).
+     - 100% SHA-256 byte parity maintained across route registry artifacts.
+  3. Objective Verification:
+     - Playwright Chromium Headless Suite (`ops/tests/test_e2e_playwright_smoke.py`): 9/9 scenarios passed in 22.75s.
+     - Master Quality Gates (`ops/verify-all-gates.ps1`): 8/8 gates passed (100% Exit Code 0).
+     - Full Python Test Suite: 276/276 tests passed.
+     - Deploy Dry-Run: 63/63 deploy files verified with 100% disk parity.

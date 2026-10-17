@@ -278,7 +278,7 @@ function vg_render_photo_dispatch_lightbox_template(): void
         if (window.__vgDispatchInit) return;
         window.__vgDispatchInit = true;
 
-        document.addEventListener('DOMContentLoaded', function() {
+        function initPhotoDispatch() {
             var modal = document.getElementById('vg-dispatch-modal');
             if (!modal) return;
 
@@ -367,7 +367,13 @@ function vg_render_photo_dispatch_lightbox_template(): void
                     closeModal();
                 }
             });
-        });
+        }
+
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initPhotoDispatch);
+        } else {
+            initPhotoDispatch();
+        }
     })();
     </script>
     <?php
