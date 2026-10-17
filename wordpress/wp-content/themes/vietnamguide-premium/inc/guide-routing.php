@@ -564,11 +564,15 @@ function vg_get_canonical_alias_redirect_map(): array
         'destinations/cham-islands'    => '/destinations/cham-islands-travel-guide/',
         'destinations/ly-son'          => '/destinations/ly-son-travel-guide/',
         'destinations/lyson'           => '/destinations/ly-son-travel-guide/',
+        'destinations/ba-na-hills'     => '/destinations/ba-na-hills-golden-bridge-guide/',
+        'destinations/bana-hills'      => '/destinations/ba-na-hills-golden-bridge-guide/',
 
         // Southern Vietnam Pillar Destinations
         'destinations/ho-chi-minh-city' => '/destinations/ho-chi-minh-city-travel-guide/',
         'destinations/saigon'           => '/destinations/ho-chi-minh-city-travel-guide/',
         'destinations/hcmc'             => '/destinations/ho-chi-minh-city-travel-guide/',
+        'destinations/cu-chi'           => '/compare/cu-chi-tunnels-ben-duoc-vs-ben-dinh/',
+        'destinations/cuchi'            => '/compare/cu-chi-tunnels-ben-duoc-vs-ben-dinh/',
         'destinations/mekong-delta'     => '/destinations/mekong-delta-travel-guide/',
         'destinations/mekong'           => '/destinations/mekong-delta-travel-guide/',
         'destinations/phu-quoc'         => '/destinations/phu-quoc-travel-guide/',

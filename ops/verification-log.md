@@ -3198,3 +3198,20 @@ Date: 2026-07-28 (Asia/Saigon)
      - Master Quality Gates (`ops/verify-all-gates.ps1`): 8/8 gates passed (100% Exit Code 0).
      - Full Python Test Suite: 276/276 tests passed.
      - Deploy Dry-Run: 63/63 deploy files verified with 100% disk parity.
+
+## Stage 108 - High-Frequency Excursion Alias Hardening (Ba Na Hills & Cu Chi Tunnels) (October 17, 2026)
+- Date: 2026-10-17
+- Scope: Zero-guess redirection and user navigation integrity. Registered high-frequency destination aliases for world-famous attractions (Ba Na Hills Golden Bridge, Cu Chi Tunnels) in `inc/guide-routing.php` to prevent 404 search bounces or incorrect guessing traps.
+- Key Accomplishments:
+  1. High-Frequency Attraction Alias Mapping:
+     - Added `'destinations/ba-na-hills'` & `'destinations/bana-hills'` -> `'/destinations/ba-na-hills-golden-bridge-guide/'`.
+     - Added `'destinations/cu-chi'` & `'destinations/cuchi'` -> `'/compare/cu-chi-tunnels-ben-duoc-vs-ben-dinh/'`.
+     - Ensures clean 301 direct redirection into authoritative comparison/pillar guides.
+  2. Master Quality Gates & Architectural Invariants:
+     - 17 PHP files preserved in `inc/*.php` (17/17).
+     - Zero raw `<h2>` elements in `inc/*.php` (0 violations).
+     - 100% SHA-256 byte parity maintained across route registry artifacts.
+  3. Objective Verification:
+     - Full Python Test Suite: 276/276 tests passed.
+     - Master Quality Gates: 8/8 gates passed (100% Exit Code 0 via `ops/verify-all-gates.ps1`).
+     - Deploy Dry-Run: 63/63 deploy files verified with 100% disk parity.
