@@ -1487,19 +1487,47 @@ function vg_inject_cost_calculator_on_page(string $content): string
         return $content;
     }
 
+    if (strpos($content, 'vg-guide-hero') !== false && strpos($content, 'vg-concierge-verdict') === false) {
+        return $content;
+    }
+
     global $post;
     $currentPost = $post instanceof WP_Post ? $post : get_post();
     $postSlug = $currentPost ? (string) $currentPost->post_name : '';
     $pageUri = $currentPost ? trim((string) get_page_uri($currentPost), '/') : '';
 
-    $isCostGuide = in_array($postSlug, ['vietnam-travel-cost', 'costs', 'where-to-stay-in-vietnam-base-decisions'], true)
-        || in_array($pageUri, ['costs/vietnam-travel-cost', 'costs', 'plan/where-to-stay-in-vietnam-base-decisions'], true)
+    $costSlugs = [
+        'vietnam-travel-cost',
+        'costs',
+        'where-to-stay-in-vietnam-base-decisions',
+        'money-cash-cards-atms',
+        'tipping-in-vietnam-etiquette',
+        'vietnam-budget-travel-guide',
+        'how-much-does-vietnam-cost',
+    ];
+
+    $routeBudgetPresetMap = [
+        'ha-giang-loop-planning-guide'       => 'ha-giang',
+        'da-nang-vs-hoi-an'                  => 'da-nang-hoi-an',
+        'da-nang-travel-guide'               => 'da-nang-hoi-an',
+        'hoi-an-ancient-town-guide'          => 'da-nang-hoi-an',
+        'ninh-binh-travel-guide'             => 'hanoi-ninh-binh-halong',
+        'ha-long-bay-travel-guide'           => 'hanoi-ninh-binh-halong',
+        'ninh-binh-to-ha-long-bay-transfer'  => 'hanoi-ninh-binh-halong',
+        '10-days-in-vietnam'                 => 'classic-10d',
+        '14-days-in-vietnam'                 => 'classic-10d',
+    ];
+
+    $isCostGuide = in_array($postSlug, $costSlugs, true)
+        || in_array($pageUri, ['costs/vietnam-travel-cost', 'costs', 'plan/where-to-stay-in-vietnam-base-decisions', 'plan/money-cash-cards-atms'], true)
         || is_page('costs/vietnam-travel-cost')
         || is_page('vietnam-travel-cost')
         || is_page('costs')
         || (is_singular('page') && $postSlug === 'vietnam-travel-cost');
 
-    if (! $isCostGuide) {
+    $matchedRoutePreset = $routeBudgetPresetMap[$postSlug] ?? null;
+
+    if (! $isCostGuide && $matchedRoutePreset === null) {
         return $content;
     }
 
@@ -1514,6 +1542,11 @@ function vg_inject_cost_calculator_on_page(string $content): string
     }
     if ($postId) {
         $injectedPosts[$postId] = true;
+    }
+
+    if (! $isCostGuide && $matchedRoutePreset !== null && function_exists('vg_render_route_budget_widget')) {
+        $routeWidgetHtml = vg_render_route_budget_widget(['route' => $matchedRoutePreset]);
+        return $content . "\n\n" . $routeWidgetHtml;
     }
 
     $calculatorHtml = vg_render_cost_calculator_html();

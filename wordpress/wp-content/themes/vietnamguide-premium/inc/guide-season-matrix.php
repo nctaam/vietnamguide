@@ -1642,7 +1642,32 @@ function vg_inject_season_matrix_on_page(string $content): string
         return $content;
     }
 
-    $isTargetPage = is_page('best-time-to-visit-vietnam')
+    $currentSlug = (string) get_post_field('post_name');
+    $seasonSlugs = [
+        'best-time-to-visit-vietnam',
+        'what-to-pack-for-vietnam-region-season',
+        'what-to-pack-vietnam',
+        'best-time-for-northern-vietnam',
+        'best-time-for-central-vietnam',
+        'best-time-for-southern-vietnam',
+        'vietnam-rainy-season-flexible-route',
+        'tet-in-vietnam-travel-guide',
+        'vietnam-in-january',
+        'vietnam-in-february',
+        'vietnam-in-march',
+        'vietnam-in-april',
+        'vietnam-in-may',
+        'vietnam-in-june',
+        'vietnam-in-july',
+        'vietnam-in-august',
+        'vietnam-in-september',
+        'vietnam-in-october',
+        'vietnam-in-november',
+        'vietnam-in-december',
+    ];
+
+    $isTargetPage = in_array($currentSlug, $seasonSlugs, true)
+        || is_page('best-time-to-visit-vietnam')
         || (is_singular('page') && get_post_field('post_name') === 'best-time-to-visit-vietnam')
         || is_page('what-to-pack-for-vietnam-region-season')
         || (is_singular('page') && get_post_field('post_name') === 'what-to-pack-for-vietnam-region-season')

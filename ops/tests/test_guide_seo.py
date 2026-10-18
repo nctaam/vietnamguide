@@ -1505,6 +1505,47 @@ echo json_encode([
         self.assertIn('<link rel="preload" as="image" href="', seo_src)
         self.assertIn('fetchpriority="high"', seo_src)
 
+    def test_curated_faq_schema_has_100_percent_visible_accordion_parity(self):
+        """Every route with curated FAQPage JSON-LD schema must render matching visible <details>/<summary> Q&As with zero <h2> tags."""
+        php_code = r"""
+        $routes_to_check = [
+            '/plan/vietnam-evisa/',
+            '/destinations/hanoi-travel-guide/',
+            '/destinations/ha-long-bay-travel-guide/',
+            '/compare/da-nang-vs-hoi-an/',
+            '/costs/vietnam-travel-cost/',
+        ];
+        $results = [];
+        foreach ($routes_to_check as $uri) {
+            $schema = vg_get_page_faq_schema($uri, 'https://vietnamguide.net' . $uri);
+            $html   = vg_render_curated_faq_accordion($uri, '<p>Existing guide body paragraph.</p>');
+            $dedup  = vg_render_curated_faq_accordion($uri, $html);
+            $questions = [];
+            foreach (($schema['mainEntity'] ?? []) as $q_node) {
+                $questions[] = $q_node['name'] ?? '';
+            }
+            $results[$uri] = [
+                'question_count' => count($questions),
+                'all_visible'    => array_reduce($questions, function($carry, $q) use ($html) {
+                    return $carry && (strpos($html, htmlspecialchars($q, ENT_QUOTES, 'UTF-8')) !== false || strpos($html, $q) !== false);
+                }, true),
+                'has_h2'         => stripos($html, '<h2') !== false,
+                'has_details'    => strpos($html, '<details class="vg-faq-item"') !== false,
+                'dedup_empty'    => $dedup === '',
+            ];
+        }
+        echo json_encode($results);
+        """
+        res = _run_php(php_code)
+        self.assertEqual(res.returncode, 0, f"PHP error:\n{res.stderr}")
+        out = json.loads(res.stdout)
+        for uri, info in out.items():
+            self.assertGreaterEqual(info['question_count'], 3, f"Expected >= 3 FAQ items on {uri}")
+            self.assertTrue(info['all_visible'], f"All FAQPage schema questions must be visibly rendered on {uri}")
+            self.assertFalse(info['has_h2'], f"Visible FAQ accordion on {uri} must not emit <h2> tags")
+            self.assertTrue(info['has_details'], f"Visible FAQ accordion on {uri} must use semantic <details>")
+            self.assertTrue(info['dedup_empty'], f"Visible FAQ accordion on {uri} must be idempotent when already present")
+
 
 if __name__ == '__main__':
     unittest.main()

@@ -378,3 +378,75 @@ function vg_render_photo_dispatch_lightbox_template(): void
     </script>
     <?php
 }
+
+/**
+ * Automatically injects the contextual Photo Dispatch visual gallery on matching
+ * pillar destination guides (Ha Long/Lan Ha, Hoi An, Sapa/Ha Giang Highlands) and the Destinations hub.
+ */
+function vg_inject_photo_dispatch_on_pillar_destinations(string $content): string
+{
+    if (function_exists('is_admin') && is_admin()) {
+        return $content;
+    }
+
+    if (strpos($content, 'vg-guide-hero') !== false) {
+        return $content;
+    }
+
+    static $injectedPosts = [];
+    $postId = function_exists('get_the_ID') ? (int) get_the_ID() : 0;
+    if ($postId && isset($injectedPosts[$postId])) {
+        return $content;
+    }
+
+    $slug = '';
+    if (function_exists('get_post')) {
+        $post = get_post();
+        if ($post instanceof WP_Post) {
+            $slug = (string) ($post->post_name ?? '');
+        }
+    }
+    if ($slug === '' && function_exists('get_post_field')) {
+        $slug = (string) get_post_field('post_name');
+    }
+
+    $seriesMap = [
+        'destinations'                  => 'all',
+        'ha-long-bay-travel-guide'      => 'halong',
+        'lan-ha-bay-guide'              => 'halong',
+        'bai-tu-long-bay-guide'         => 'halong',
+        'cat-ba-travel-guide'           => 'halong',
+        'ha-long-bay-vs-lan-ha-bay'     => 'halong',
+        'hoi-an-ancient-town-guide'     => 'hoian',
+        'best-things-to-do-in-hoi-an'   => 'hoian',
+        'da-nang-vs-hoi-an'             => 'hoian',
+        'hoi-an-vs-hue'                 => 'hoian',
+        'sapa-travel-guide'             => 'highlands',
+        'ha-giang-loop-planning-guide'  => 'highlands',
+        'mu-cang-chai-travel-guide'     => 'highlands',
+        'pu-luong-travel-guide'         => 'highlands',
+        'cao-bang-travel-guide'         => 'highlands',
+        'vietnam-rice-terraces-guide'   => 'highlands',
+        'sapa-vs-ha-giang'              => 'highlands',
+    ];
+
+    if (! isset($seriesMap[$slug])) {
+        return $content;
+    }
+
+    if ((function_exists('has_shortcode') && has_shortcode($content, 'vg_photo_dispatch')) || strpos($content, 'vg-photo-dispatch') !== false) {
+        return $content;
+    }
+
+    if ($postId) {
+        $injectedPosts[$postId] = true;
+    }
+
+    $dispatchHtml = vg_photo_dispatch_shortcode(['series' => $seriesMap[$slug]]);
+
+    return $content . "\n\n" . $dispatchHtml;
+}
+if (function_exists('add_filter')) {
+    add_filter('the_content', 'vg_inject_photo_dispatch_on_pillar_destinations', 24);
+}
+

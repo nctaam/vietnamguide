@@ -994,7 +994,20 @@ function vg_inject_packing_checklist_on_page(string $content): string
         return $content;
     }
 
-    $isTarget = is_page('vietnam-first-trip-planning-checklist')
+    $currentSlug = (string) get_post_field('post_name');
+    $packingSlugs = [
+        'vietnam-first-trip-planning-checklist',
+        'vietnam-airport-arrival-checklist',
+        'what-to-pack-for-vietnam-region-season',
+        'what-to-pack-vietnam',
+        'sim-esim-vietnam',
+        'health-travel-insurance-vietnam',
+        'ha-giang-safety-guide',
+        'sapa-trekking-guided-vs-self-guided',
+    ];
+
+    $isTarget = in_array($currentSlug, $packingSlugs, true)
+        || is_page('vietnam-first-trip-planning-checklist')
         || (is_singular('page') && get_post_field('post_name') === 'vietnam-first-trip-planning-checklist')
         || is_page('vietnam-airport-arrival-checklist')
         || (is_singular('page') && get_post_field('post_name') === 'vietnam-airport-arrival-checklist');

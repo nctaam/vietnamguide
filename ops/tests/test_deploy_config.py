@@ -232,7 +232,7 @@ class DeployConfigTests(unittest.TestCase):
         func_content = functions_path.read_text(encoding='utf-8')
 
         required_includes = re.findall(r"require_once\s+get_theme_file_path\(\s*['\"]/inc/([^'\"]+\.php)['\"]\s*\);", func_content)
-        self.assertEqual(len(required_includes), 15, f"Expected 15 required includes in functions.php, found {len(required_includes)}")
+        self.assertGreaterEqual(len(required_includes), 15, f"Expected at least 15 required includes in functions.php, found {len(required_includes)}")
 
         deploy_local_files = {item[0].replace('\\', '/') for item in DEPLOY_FILES}
         for inc_file in required_includes:

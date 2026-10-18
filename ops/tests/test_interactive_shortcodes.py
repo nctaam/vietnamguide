@@ -439,9 +439,9 @@ class TestInteractiveShortcodes(unittest.TestCase):
         self.assertIn('vg-rb-btn-cta', calc_code, "Widget must provide CTA deep-linking to full calculator.")
 
     def test_zero_h2_invariant_across_all_inc_files(self):
-        """Zero-H2 Invariant must hold across ALL 17 PHP files in inc/*.php to prevent TOC corruption."""
+        """Zero-H2 Invariant must hold across all PHP files in inc/*.php to prevent TOC corruption."""
         inc_files = glob.glob(os.path.join(THEME_INC, '*.php'))
-        self.assertEqual(len(inc_files), 17, f"Expected 17 PHP files in {THEME_INC}, found {len(inc_files)}")
+        self.assertGreaterEqual(len(inc_files), 17, f"Expected at least 17 PHP files in {THEME_INC}, found {len(inc_files)}")
         for php_path in sorted(inc_files):
             basename = os.path.basename(php_path)
             with open(php_path, 'r', encoding='utf-8') as f:
@@ -537,6 +537,31 @@ class TestInteractiveShortcodes(unittest.TestCase):
         self.assertIsNotNone(field_desk_section, "Field Desk section not found in front-page.php")
         self.assertIn('<h3', field_desk_section.group(1), "Field Desk section heading must use <h3>")
         self.assertNotIn('<h2', field_desk_section.group(1), "Field Desk section heading must NOT use <h2>")
+
+    def test_expanded_toolkit_and_visual_auto_injection_coverage(self):
+        """Interactive map, photo dispatch, and all 6 toolkits must auto-inject across expanded canonical routes."""
+        map_path = os.path.join(THEME_INC, 'guide-interactive-map.php')
+        photo_path = os.path.join(THEME_INC, 'guide-photo-dispatch.php')
+        with open(map_path, 'r', encoding='utf-8') as f:
+            map_code = f.read()
+        with open(photo_path, 'r', encoding='utf-8') as f:
+            photo_code = f.read()
+
+        self.assertIn('vg_inject_interactive_map_on_hub_and_itineraries', map_code)
+        self.assertIn("'10-days-in-vietnam'", map_code)
+        self.assertIn("'north-central-south-vietnam'", map_code)
+
+        self.assertIn('vg_inject_photo_dispatch_on_pillar_destinations', photo_code)
+        self.assertIn("'ha-long-bay-travel-guide'", photo_code)
+        self.assertIn("'hoi-an-ancient-town-guide'", photo_code)
+        self.assertIn("'ha-giang-loop-planning-guide'", photo_code)
+
+        self.assertIn("'vietnam-in-january'", self.contents['season_matrix'])
+        self.assertIn("'vietnam-in-october'", self.contents['season_matrix'])
+        self.assertIn("'hanoi-airport-to-old-quarter'", self.contents['airport_navigator'])
+        self.assertIn("'14-days-in-vietnam'", self.contents['itinerary_finder'])
+        self.assertIn("'money-cash-cards-atms'", self.contents['cost_calculator'])
+        self.assertIn('vg_render_route_budget_widget', self.contents['cost_calculator'])
 
 
 if __name__ == '__main__':

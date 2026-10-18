@@ -644,3 +644,492 @@ function vg_guide_experience_body_class(array $classes): array
 }
 add_filter('body_class', 'vg_guide_experience_body_class');
 
+/**
+ * Ensures public site-wide search queries include 'page' (where all 282 canonical guides live)
+ * alongside 'post'.
+ *
+ * @param object $query WP_Query instance.
+ */
+function vg_include_pages_in_search_results($query): void
+{
+    if (function_exists('is_admin') && is_admin()) {
+        return;
+    }
+
+    if (is_object($query) && method_exists($query, 'is_main_query') && method_exists($query, 'is_search') && method_exists($query, 'set')) {
+        if ($query->is_main_query() && $query->is_search()) {
+            $current_types = method_exists($query, 'get') ? $query->get('post_type') : '';
+            if (empty($current_types) || $current_types === 'post' || $current_types === 'any') {
+                $query->set('post_type', ['page', 'post']);
+            }
+        }
+    }
+}
+add_action('pre_get_posts', 'vg_include_pages_in_search_results', 10);
+
+/**
+ * Searches the 282-route canonical registry for matching travel guides by title, path, and description.
+ * Provides deterministic search results even before full MySQL fulltext indexing or in standalone environments.
+ *
+ * @param string $search_query Raw user search query.
+ * @param int    $limit        Maximum number of matched routes to return.
+ * @return array<int, array<string, string>>
+ */
+function vg_search_canonical_registry(string $search_query, int $limit = 12): array
+{
+    $q_clean = strtolower(trim($search_query));
+    if ($q_clean === '' || $limit <= 0) {
+        return [];
+    }
+
+    $registry = vg_guide_route_registry();
+    if ($registry === []) {
+        return [];
+    }
+
+    $raw_tokens = preg_split('/[\s\-_\/,.;:?!]+/', $q_clean) ?: [];
+    $stop_words = ['in' => true, 'to' => true, 'the' => true, 'of' => true, 'and' => true, 'for' => true, 'or' => true, 'vs' => true, 'a' => true, 'an' => true];
+    $tokens = [];
+    foreach ($raw_tokens as $tok) {
+        if (strlen($tok) >= 2 && ! isset($stop_words[$tok])) {
+            $tokens[] = $tok;
+        }
+    }
+    if ($tokens === [] && strlen($q_clean) >= 2) {
+        $tokens[] = $q_clean;
+    }
+    if ($tokens === []) {
+        return [];
+    }
+
+    $scored = [];
+    foreach ($registry as $path => $record) {
+        if (($record['status'] ?? '') !== 'published') {
+            continue;
+        }
+
+        $title_lower = strtolower((string) ($record['title'] ?? ''));
+        $desc_lower  = strtolower((string) ($record['description'] ?? ''));
+        $path_lower  = strtolower((string) $path);
+        $slug_lower  = strtolower(basename($path_lower));
+
+        $score = 0;
+        if (str_contains($title_lower, $q_clean)) {
+            $score += 20;
+        }
+        if (str_contains($slug_lower, str_replace(' ', '-', $q_clean))) {
+            $score += 18;
+        }
+        if (str_contains($desc_lower, $q_clean)) {
+            $score += 8;
+        }
+
+        $matched_tokens = 0;
+        foreach ($tokens as $tok) {
+            $tok_matched = false;
+            if (str_contains($title_lower, $tok)) {
+                $score += 6;
+                $tok_matched = true;
+            }
+            if (str_contains($path_lower, $tok)) {
+                $score += 5;
+                $tok_matched = true;
+            }
+            if (str_contains($desc_lower, $tok)) {
+                $score += 2;
+                $tok_matched = true;
+            }
+            if ($tok_matched) {
+                $matched_tokens++;
+            }
+        }
+
+        if ($score > 0 && $matched_tokens > 0) {
+            if ($matched_tokens === count($tokens)) {
+                $score += 10;
+            }
+            $scored[] = [
+                'score'         => $score,
+                'path'          => (string) $path,
+                'url'           => function_exists('home_url') ? home_url('/' . trim((string) $path, '/') . '/') : '/' . trim((string) $path, '/') . '/',
+                'title'         => (string) ($record['title'] ?? ''),
+                'description'   => (string) ($record['description'] ?? ''),
+                'type'          => (string) ($record['type'] ?? 'destination'),
+                'last_reviewed' => (string) ($record['last_reviewed'] ?? '2026-10-18'),
+            ];
+        }
+    }
+
+    usort($scored, static function (array $a, array $b): int {
+        if ($b['score'] !== $a['score']) {
+            return $b['score'] <=> $a['score'];
+        }
+        return strcmp($a['path'], $b['path']);
+    });
+
+    $results = array_slice($scored, 0, $limit);
+    foreach ($results as &$item) {
+        unset($item['score']);
+    }
+    unset($item);
+
+    return $results;
+}
+
+/**
+ * Processes and stores newsletter subscriptions submitted via admin-post.php or REST API.
+ *
+ * @param string $email       Raw email input.
+ * @param string $honeypot    Honeypot field value (must be empty).
+ * @param string $source_path Page path where subscription originated.
+ * @return array{ok: bool, status: string, email?: string}
+ */
+function vg_process_newsletter_subscription_payload(string $email, string $honeypot = '', string $source_path = 'newsletter'): array
+{
+    if (trim($honeypot) !== '') {
+        return ['ok' => true, 'status' => 'honeypot_discarded'];
+    }
+
+    $clean_email = function_exists('sanitize_email') ? sanitize_email(trim($email)) : filter_var(trim($email), FILTER_SANITIZE_EMAIL);
+    $is_valid = function_exists('is_email') ? (bool) is_email($clean_email) : (bool) filter_var($clean_email, FILTER_VALIDATE_EMAIL);
+
+    if (! $is_valid || $clean_email === '') {
+        return ['ok' => false, 'status' => 'invalid_email'];
+    }
+
+    $normalized_email = strtolower((string) $clean_email);
+    $email_hash = hash('sha256', $normalized_email);
+    $subscribers = function_exists('get_option') ? get_option('vg_newsletter_subscribers', []) : [];
+    if (! is_array($subscribers)) {
+        $subscribers = [];
+    }
+
+    $subscribers[$email_hash] = [
+        'email_hash'    => $email_hash,
+        'email_masked'  => substr($normalized_email, 0, 2) . '***@' . substr((string) strrchr($normalized_email, '@'), 1),
+        'subscribed_at' => gmdate('c'),
+        'source_path'   => preg_replace('/[^a-z0-9\/_-]/i', '', strtolower(trim($source_path, '/'))) ?: 'newsletter',
+    ];
+
+    if (count($subscribers) > 500) {
+        $subscribers = array_slice($subscribers, -500, null, true);
+    }
+
+    if (function_exists('update_option')) {
+        update_option('vg_newsletter_subscribers', $subscribers, false);
+    }
+
+    return [
+        'ok'     => true,
+        'status' => 'subscribed',
+        'email'  => $normalized_email,
+    ];
+}
+
+/**
+ * Handles POST /wp-admin/admin-post.php?action=vg_newsletter_subscribe
+ */
+function vg_handle_newsletter_subscription(): void
+{
+    $nonce = isset($_POST['vg_newsletter_nonce']) ? (string) $_POST['vg_newsletter_nonce'] : '';
+    if (function_exists('wp_verify_nonce') && ! wp_verify_nonce($nonce, 'vg_newsletter_subscribe_action')) {
+        $redirect_err = function_exists('home_url') ? home_url('/newsletter/?vg_subscribed=invalid_nonce') : '/newsletter/?vg_subscribed=invalid_nonce';
+        if (function_exists('wp_safe_redirect')) {
+            wp_safe_redirect($redirect_err, 303);
+            exit;
+        }
+        return;
+    }
+
+    $email = isset($_POST['vg_subscriber_email']) ? (string) $_POST['vg_subscriber_email'] : '';
+    $honeypot = isset($_POST['vg_hp_website']) ? (string) $_POST['vg_hp_website'] : '';
+    $source = isset($_POST['vg_source_path']) ? (string) $_POST['vg_source_path'] : 'newsletter';
+
+    $result = vg_process_newsletter_subscription_payload($email, $honeypot, $source);
+    $status_param = $result['ok'] ? '1' : 'error';
+    $redirect_url = function_exists('home_url') ? home_url('/newsletter/?vg_subscribed=' . $status_param) : '/newsletter/?vg_subscribed=' . $status_param;
+
+    if (function_exists('wp_safe_redirect')) {
+        wp_safe_redirect($redirect_url, 303);
+        exit;
+    }
+}
+add_action('admin_post_nopriv_vg_newsletter_subscribe', 'vg_handle_newsletter_subscription');
+add_action('admin_post_vg_newsletter_subscribe', 'vg_handle_newsletter_subscription');
+
+/**
+ * Processes and stores reader contact or route correction dispatches.
+ *
+ * @param string $name     Sender name.
+ * @param string $email    Sender email.
+ * @param string $topic    Dispatch topic.
+ * @param string $message  Message body.
+ * @param string $honeypot Honeypot field value.
+ * @return array{ok: bool, status: string}
+ */
+function vg_process_contact_submission_payload(string $name, string $email, string $topic, string $message, string $honeypot = ''): array
+{
+    if (trim($honeypot) !== '') {
+        return ['ok' => true, 'status' => 'honeypot_discarded'];
+    }
+
+    $clean_email = function_exists('sanitize_email') ? sanitize_email(trim($email)) : filter_var(trim($email), FILTER_SANITIZE_EMAIL);
+    $is_valid_email = function_exists('is_email') ? (bool) is_email($clean_email) : (bool) filter_var($clean_email, FILTER_VALIDATE_EMAIL);
+    $clean_message = trim(strip_tags($message));
+
+    if (! $is_valid_email || $clean_email === '' || strlen($clean_message) < 10) {
+        return ['ok' => false, 'status' => 'validation_failed'];
+    }
+
+    $clean_name = trim(strip_tags($name)) ?: 'Reader';
+    $clean_topic = preg_replace('/[^a-z0-9_-]/i', '', $topic) ?: 'route_correction';
+
+    $submissions = function_exists('get_option') ? get_option('vg_contact_submissions', []) : [];
+    if (! is_array($submissions)) {
+        $submissions = [];
+    }
+
+    $submissions[] = [
+        'name'         => substr($clean_name, 0, 120),
+        'email_hash'   => hash('sha256', strtolower((string) $clean_email)),
+        'topic'        => substr($clean_topic, 0, 60),
+        'message'      => substr($clean_message, 0, 2000),
+        'submitted_at' => gmdate('c'),
+    ];
+
+    if (count($submissions) > 200) {
+        $submissions = array_slice($submissions, -200);
+    }
+
+    if (function_exists('update_option')) {
+        update_option('vg_contact_submissions', $submissions, false);
+    }
+
+    return ['ok' => true, 'status' => 'received'];
+}
+
+/**
+ * Handles POST /wp-admin/admin-post.php?action=vg_contact_submit
+ */
+function vg_handle_contact_submission(): void
+{
+    $nonce = isset($_POST['vg_contact_nonce']) ? (string) $_POST['vg_contact_nonce'] : '';
+    if (function_exists('wp_verify_nonce') && ! wp_verify_nonce($nonce, 'vg_contact_submit_action')) {
+        $redirect_err = function_exists('home_url') ? home_url('/contact/?vg_contact_sent=invalid_nonce') : '/contact/?vg_contact_sent=invalid_nonce';
+        if (function_exists('wp_safe_redirect')) {
+            wp_safe_redirect($redirect_err, 303);
+            exit;
+        }
+        return;
+    }
+
+    $name     = isset($_POST['vg_contact_name']) ? (string) $_POST['vg_contact_name'] : '';
+    $email    = isset($_POST['vg_contact_email']) ? (string) $_POST['vg_contact_email'] : '';
+    $topic    = isset($_POST['vg_contact_topic']) ? (string) $_POST['vg_contact_topic'] : 'route_correction';
+    $message  = isset($_POST['vg_contact_message']) ? (string) $_POST['vg_contact_message'] : '';
+    $honeypot = isset($_POST['vg_hp_company']) ? (string) $_POST['vg_hp_company'] : '';
+
+    $result = vg_process_contact_submission_payload($name, $email, $topic, $message, $honeypot);
+    $status_param = $result['ok'] ? '1' : 'error';
+    $redirect_url = function_exists('home_url') ? home_url('/contact/?vg_contact_sent=' . $status_param) : '/contact/?vg_contact_sent=' . $status_param;
+
+    if (function_exists('wp_safe_redirect')) {
+        wp_safe_redirect($redirect_url, 303);
+        exit;
+    }
+}
+add_action('admin_post_nopriv_vg_contact_submit', 'vg_handle_contact_submission');
+add_action('admin_post_vg_contact_submit', 'vg_handle_contact_submission');
+
+/**
+ * Registers REST API endpoints for headless/AJAX newsletter and contact submissions.
+ */
+function vg_register_conversion_rest_routes(): void
+{
+    if (! function_exists('register_rest_route')) {
+        return;
+    }
+
+    register_rest_route('vietnamguide/v1', '/subscribe', [
+        'methods'             => 'POST',
+        'permission_callback' => '__return_true',
+        'callback'            => static function ($request) {
+            $email    = is_object($request) && method_exists($request, 'get_param') ? (string) $request->get_param('email') : '';
+            $honeypot = is_object($request) && method_exists($request, 'get_param') ? (string) $request->get_param('website') : '';
+            $source   = is_object($request) && method_exists($request, 'get_param') ? (string) $request->get_param('source') : 'rest_api';
+            return vg_process_newsletter_subscription_payload($email, $honeypot, $source);
+        },
+    ]);
+
+    register_rest_route('vietnamguide/v1', '/contact', [
+        'methods'             => 'POST',
+        'permission_callback' => '__return_true',
+        'callback'            => static function ($request) {
+            $name     = is_object($request) && method_exists($request, 'get_param') ? (string) $request->get_param('name') : '';
+            $email    = is_object($request) && method_exists($request, 'get_param') ? (string) $request->get_param('email') : '';
+            $topic    = is_object($request) && method_exists($request, 'get_param') ? (string) $request->get_param('topic') : 'route_correction';
+            $message  = is_object($request) && method_exists($request, 'get_param') ? (string) $request->get_param('message') : '';
+            $honeypot = is_object($request) && method_exists($request, 'get_param') ? (string) $request->get_param('company') : '';
+            return vg_process_contact_submission_payload($name, $email, $topic, $message, $honeypot);
+        },
+    ]);
+}
+add_action('rest_api_init', 'vg_register_conversion_rest_routes');
+
+/**
+ * Renders the functional Field Notes newsletter subscription form (Zero-H2 compliant).
+ */
+function vg_render_newsletter_subscription_form(string $source_path = 'newsletter'): string
+{
+    $action_url = function_exists('admin_url') ? admin_url('admin-post.php') : '/wp-admin/admin-post.php';
+    $nonce_val  = function_exists('wp_create_nonce') ? wp_create_nonce('vg_newsletter_subscribe_action') : 'vg_static_nonce';
+    $status     = isset($_GET['vg_subscribed']) ? (string) $_GET['vg_subscribed'] : '';
+
+    ob_start();
+    ?>
+    <section class="vg-conversion-desk vg-newsletter-desk" aria-label="VietnamGuide Field Notes Subscription">
+        <div class="vg-conversion-desk__inner">
+            <span class="vg-conversion-desk__kicker">QUARTERLY DISPATCH // ZERO SPONSORED PLACEMENTS</span>
+            <h3 class="vg-conversion-desk__title">Subscribe to VietnamGuide Field Notes</h3>
+            <p class="vg-conversion-desk__lede">Receive verified updates when Vietnam e-visa checkpoints change, Reunification Express rail timetables shift, or seasonal typhoon warnings affect central and northern transit corridors.</p>
+
+            <?php if ($status === '1') : ?>
+                <div class="vg-conversion-alert vg-conversion-alert--success" role="status" aria-live="polite">
+                    <strong>Subscription confirmed.</strong> Your email is registered for the next quarterly VietnamGuide Field Notes dispatch.
+                </div>
+            <?php elseif ($status !== '') : ?>
+                <div class="vg-conversion-alert vg-conversion-alert--error" role="alert">
+                    <strong>Unable to complete subscription.</strong> Please enter a valid email address and submit the form again.
+                </div>
+            <?php endif; ?>
+
+            <form method="post" action="<?php echo esc_url($action_url); ?>" class="vg-newsletter-form" data-vg-newsletter-form>
+                <input type="hidden" name="action" value="vg_newsletter_subscribe">
+                <input type="hidden" name="vg_newsletter_nonce" value="<?php echo esc_attr($nonce_val); ?>">
+                <input type="hidden" name="vg_source_path" value="<?php echo esc_attr($source_path); ?>">
+                <div class="vg-hp-field" aria-hidden="true" style="position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden;">
+                    <label for="vg-hp-website">Leave this field empty</label>
+                    <input type="text" id="vg-hp-website" name="vg_hp_website" value="" tabindex="-1" autocomplete="off">
+                </div>
+                <div class="vg-newsletter-form__row">
+                    <label for="vg-subscriber-email" class="screen-reader-text">Email address</label>
+                    <input
+                        type="email"
+                        id="vg-subscriber-email"
+                        name="vg_subscriber_email"
+                        class="vg-newsletter-form__input"
+                        placeholder="you@example.com"
+                        required
+                        autocomplete="email"
+                    >
+                    <button type="submit" class="vg-button vg-newsletter-form__submit">Subscribe to Field Notes</button>
+                </div>
+                <p class="vg-newsletter-form__privacy">Sent at most once per month. Unsubscribe in one click. Read our <a href="<?php echo esc_url(home_url('/privacy-policy/')); ?>">Privacy Policy</a>.</p>
+            </form>
+        </div>
+    </section>
+    <?php
+    return (string) ob_get_clean();
+}
+
+/**
+ * Renders the functional Editorial & Route Correction Contact form (Zero-H2 compliant).
+ */
+function vg_render_contact_dispatch_form(): string
+{
+    $action_url = function_exists('admin_url') ? admin_url('admin-post.php') : '/wp-admin/admin-post.php';
+    $nonce_val  = function_exists('wp_create_nonce') ? wp_create_nonce('vg_contact_submit_action') : 'vg_static_nonce';
+    $status     = isset($_GET['vg_contact_sent']) ? (string) $_GET['vg_contact_sent'] : '';
+
+    ob_start();
+    ?>
+    <section class="vg-conversion-desk vg-contact-desk" aria-label="Editorial Desk and Route Correction Form">
+        <div class="vg-conversion-desk__inner">
+            <span class="vg-conversion-desk__kicker">EDITORIAL DESK // FIELD CORRECTIONS &amp; INQUIRIES</span>
+            <h3 class="vg-conversion-desk__title">Send a Field Update or Editorial Inquiry</h3>
+            <p class="vg-conversion-desk__lede">Report an updated station fare, border checkpoint change, or factual correction directly to our research desk. Every verified submission is logged against the route registry.</p>
+
+            <?php if ($status === '1') : ?>
+                <div class="vg-conversion-alert vg-conversion-alert--success" role="status" aria-live="polite">
+                    <strong>Dispatch received.</strong> Thank you—our editorial team has logged your note for verification.
+                </div>
+            <?php elseif ($status !== '') : ?>
+                <div class="vg-conversion-alert vg-conversion-alert--error" role="alert">
+                    <strong>Submission incomplete.</strong> Please provide a valid email address and a message of at least 10 characters.
+                </div>
+            <?php endif; ?>
+
+            <form method="post" action="<?php echo esc_url($action_url); ?>" class="vg-contact-form" data-vg-contact-form>
+                <input type="hidden" name="action" value="vg_contact_submit">
+                <input type="hidden" name="vg_contact_nonce" value="<?php echo esc_attr($nonce_val); ?>">
+                <div class="vg-hp-field" aria-hidden="true" style="position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden;">
+                    <label for="vg-hp-company">Leave this field empty</label>
+                    <input type="text" id="vg-hp-company" name="vg_hp_company" value="" tabindex="-1" autocomplete="off">
+                </div>
+                <div class="vg-contact-form__grid">
+                    <div class="vg-contact-form__field">
+                        <label for="vg-contact-name">Your Name</label>
+                        <input type="text" id="vg-contact-name" name="vg_contact_name" required autocomplete="name" placeholder="Alex Nguyen">
+                    </div>
+                    <div class="vg-contact-form__field">
+                        <label for="vg-contact-email">Email Address</label>
+                        <input type="email" id="vg-contact-email" name="vg_contact_email" required autocomplete="email" placeholder="alex@example.com">
+                    </div>
+                </div>
+                <div class="vg-contact-form__field">
+                    <label for="vg-contact-topic">Inquiry Topic</label>
+                    <select id="vg-contact-topic" name="vg_contact_topic">
+                        <option value="route_correction">Route Fare / Timetable Correction</option>
+                        <option value="visa_update">Visa or Border Entry Checkpoint Update</option>
+                        <option value="editorial_question">General Travel Planning Question</option>
+                        <option value="press_media">Press &amp; Editorial Licensing</option>
+                    </select>
+                </div>
+                <div class="vg-contact-form__field">
+                    <label for="vg-contact-message">Field Details &amp; Route URL</label>
+                    <textarea id="vg-contact-message" name="vg_contact_message" rows="4" required placeholder="Include the route URL, date observed, and updated VND fare or transit schedule..."></textarea>
+                </div>
+                <button type="submit" class="vg-button vg-contact-form__submit">Submit to Editorial Desk</button>
+            </form>
+        </div>
+    </section>
+    <?php
+    return (string) ob_get_clean();
+}
+
+/**
+ * Replaces dead-end placeholder text on /newsletter/ and /contact/ pages with live functional forms.
+ */
+function vg_inject_utility_conversion_forms(string $content): string
+{
+    if (function_exists('is_admin') && is_admin()) {
+        return $content;
+    }
+    if (strpos($content, 'vg-guide-hero') !== false) {
+        return $content;
+    }
+
+    $post = function_exists('get_post') ? get_post() : null;
+    $slug = ($post instanceof WP_Post && isset($post->post_name)) ? strtolower((string) $post->post_name) : '';
+    if ($slug === '' && ! empty($_SERVER['REQUEST_URI'])) {
+        $slug = strtolower(trim((string) parse_url((string) $_SERVER['REQUEST_URI'], PHP_URL_PATH), '/'));
+    }
+
+    if ($slug === 'newsletter' || (function_exists('is_page') && is_page('newsletter'))) {
+        if (strpos($content, 'data-vg-newsletter-form') === false) {
+            $cleaned = preg_replace('/<p[^>]*>[^<]*email capture will be connected[^<]*<\/p>/i', '', $content);
+            return ($cleaned ?? $content) . "\n\n" . vg_render_newsletter_subscription_form('newsletter');
+        }
+    }
+
+    if ($slug === 'contact' || (function_exists('is_page') && is_page('contact'))) {
+        if (strpos($content, 'data-vg-contact-form') === false) {
+            return $content . "\n\n" . vg_render_contact_dispatch_form();
+        }
+    }
+
+    return $content;
+}
+add_filter('the_content', 'vg_inject_utility_conversion_forms', 25);
+
+

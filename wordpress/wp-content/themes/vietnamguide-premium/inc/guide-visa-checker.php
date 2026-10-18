@@ -971,7 +971,19 @@ function vg_inject_visa_checker_on_page(string $content): string
         return $content;
     }
 
-    $isTargetPage = is_page('vietnam-evisa')
+    $currentSlug = (string) get_post_field('post_name');
+    $visaSlugs = [
+        'vietnam-evisa',
+        'vietnam-visa-guide',
+        'vietnam-airport-arrival-checklist',
+        'vietnam-first-trip-planning-checklist',
+        'phu-quoc-visa-exemption-guide',
+        'vietnam-visa-extension-overstay-rules',
+        'vietnam-land-border-crossings-guide',
+    ];
+
+    $isTargetPage = in_array($currentSlug, $visaSlugs, true)
+        || is_page('vietnam-evisa')
         || is_page('plan/vietnam-evisa')
         || (is_singular('page') && get_post_field('post_name') === 'vietnam-evisa')
         || is_page('vietnam-visa-guide')

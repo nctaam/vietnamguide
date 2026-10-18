@@ -731,7 +731,20 @@ function vg_inject_itinerary_finder_on_hub(string $content): string
         return $content;
     }
 
-    $isTargetPage = is_page('itineraries')
+    $currentSlug = (string) get_post_field('post_name');
+    $itinerarySlugs = [
+        'itineraries',
+        'best-vietnam-routes-first-time-visitors',
+        'best-vietnam-cities-for-first-time-visitors',
+        '7-days-in-vietnam',
+        '10-days-in-vietnam',
+        '14-days-in-vietnam',
+        '21-days-in-vietnam',
+        '3-weeks-in-vietnam-route',
+    ];
+
+    $isTargetPage = in_array($currentSlug, $itinerarySlugs, true)
+        || is_page('itineraries')
         || (is_singular('page') && get_post_field('post_name') === 'itineraries')
         || is_page('best-vietnam-routes-first-time-visitors')
         || (is_singular('page') && get_post_field('post_name') === 'best-vietnam-routes-first-time-visitors');

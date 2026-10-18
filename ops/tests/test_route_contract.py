@@ -837,6 +837,99 @@ class RouteContractTests(unittest.TestCase):
             self.assertEqual(res_tamper.returncode, 0, res_tamper.stderr)
             self.assertEqual(res_tamper.stdout.strip(), '0')
 
+    def test_search_includes_pages_and_canonical_registry_matcher(self):
+        """Site-wide search must include 'page' post_type via pre_get_posts and match canonical 282-route registry items."""
+        res = self._run_php_harness(
+            """
+            class DummySearchQuery {
+                public $post_types = [];
+                public function is_main_query() { return true; }
+                public function is_search() { return true; }
+                public function get($key) { return null; }
+                public function set($key, $val) { $this->post_types[$key] = $val; }
+            }
+            function is_admin() { return false; }
+            $q = new DummySearchQuery();
+            vg_include_pages_in_search_results($q);
+
+            $matches_hanoi = vg_search_canonical_registry('Hanoi Old Quarter', 5);
+            $matches_visa = vg_search_canonical_registry('Vietnam e-visa', 5);
+
+            echo json_encode([
+                'post_type'    => $q->post_types['post_type'] ?? [],
+                'hanoi_count'  => count($matches_hanoi),
+                'hanoi_top'    => $matches_hanoi[0]['path'] ?? '',
+                'visa_count'   => count($matches_visa),
+                'visa_top'     => $matches_visa[0]['path'] ?? '',
+            ]);
+            """
+        )
+        self.assertEqual(res.returncode, 0, res.stderr)
+        data = json.loads(res.stdout)
+        self.assertEqual(data['post_type'], ['page', 'post'])
+        self.assertGreaterEqual(data['hanoi_count'], 1)
+        self.assertIn('hanoi', data['hanoi_top'])
+        self.assertGreaterEqual(data['visa_count'], 1)
+        self.assertEqual(data['visa_top'], 'plan/vietnam-evisa')
+
+    def test_newsletter_and_contact_conversion_handlers_and_forms(self):
+        """Newsletter and contact backend handlers must validate inputs, reject honeypots, persist entries, and render live forms."""
+        res = self._run_php_harness(
+            """
+            $GLOBALS['vg_options'] = [];
+            function get_option($k, $default = []) { return $GLOBALS['vg_options'][$k] ?? $default; }
+            function update_option($k, $v, $autoload = false) { $GLOBALS['vg_options'][$k] = $v; return true; }
+            function esc_attr($s) { return htmlspecialchars((string) $s, ENT_QUOTES, 'UTF-8'); }
+            function esc_html($s) { return htmlspecialchars((string) $s, ENT_QUOTES, 'UTF-8'); }
+            function esc_url($s) { return htmlspecialchars((string) $s, ENT_QUOTES, 'UTF-8'); }
+            function admin_url($p = '') { return 'https://vietnamguide.net/wp-admin/' . ltrim($p, '/'); }
+
+            $sub_ok = vg_process_newsletter_subscription_payload('Reader@Example.com', '', 'newsletter');
+            $sub_invalid = vg_process_newsletter_subscription_payload('not-an-email', '', 'newsletter');
+            $sub_honeypot = vg_process_newsletter_subscription_payload('bot@example.com', 'https://spam.invalid', 'newsletter');
+
+            $contact_ok = vg_process_contact_submission_payload(
+                'Alex Mercer',
+                'alex@example.com',
+                'route_correction',
+                'Express Bus 86 fare is 45,000 VND as verified this morning at Terminal 2.',
+                ''
+            );
+            $contact_short = vg_process_contact_submission_payload(
+                'Alex',
+                'alex@example.com',
+                'route_correction',
+                'Too short',
+                ''
+            );
+
+            $nl_form = vg_render_newsletter_subscription_form();
+            $ct_form = vg_render_contact_dispatch_form();
+
+            echo json_encode([
+                'sub_ok'          => $sub_ok['ok'],
+                'sub_invalid'     => $sub_invalid['ok'],
+                'sub_hp_status'   => $sub_honeypot['status'],
+                'stored_subs'     => count($GLOBALS['vg_options']['vg_newsletter_subscribers'] ?? []),
+                'contact_ok'      => $contact_ok['ok'],
+                'contact_short'   => $contact_short['ok'],
+                'stored_contacts' => count($GLOBALS['vg_options']['vg_contact_submissions'] ?? []),
+                'has_nl_form'     => strpos($nl_form, 'name="vg_subscriber_email"') !== false,
+                'has_ct_form'     => strpos($ct_form, 'name="vg_contact_message"') !== false,
+            ]);
+            """
+        )
+        self.assertEqual(res.returncode, 0, res.stderr)
+        data = json.loads(res.stdout)
+        self.assertTrue(data['sub_ok'])
+        self.assertFalse(data['sub_invalid'])
+        self.assertEqual(data['sub_hp_status'], 'honeypot_discarded')
+        self.assertEqual(data['stored_subs'], 1)
+        self.assertTrue(data['contact_ok'])
+        self.assertFalse(data['contact_short'])
+        self.assertEqual(data['stored_contacts'], 1)
+        self.assertTrue(data['has_nl_form'])
+        self.assertTrue(data['has_ct_form'])
 
 
 if __name__ == '__main__':

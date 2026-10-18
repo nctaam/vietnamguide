@@ -8,6 +8,12 @@ get_header();
 global $wp_query;
 $search_query = get_search_query(false);
 $found_count  = (int) $wp_query->found_posts;
+$registry_matches = function_exists('vg_search_canonical_registry')
+    ? vg_search_canonical_registry((string) $search_query, 12)
+    : [];
+if ($found_count === 0 && ! empty($registry_matches)) {
+    $found_count = count($registry_matches);
+}
 
 $matched_toolkit = null;
 $q_clean = strtolower(trim((string) $search_query));
@@ -147,24 +153,30 @@ if ($q_clean !== '') {
                 </aside>
             <?php endif; ?>
 
-            <?php if (have_posts()) : ?>
+            <?php if (have_posts() || ! empty($registry_matches)) : ?>
                 <div class="vg-post-list vg-search-results">
+                    <?php
+                    $rendered_paths = [];
+                    $type_labels = [
+                        'destination' => __('Destination Guide', 'vietnamguide-premium'),
+                        'itinerary'   => __('Itinerary', 'vietnamguide-premium'),
+                        'comparison'  => __('Route Comparison', 'vietnamguide-premium'),
+                        'practical'   => __('Planning Guide', 'vietnamguide-premium'),
+                    ];
+                    ?>
                     <?php while (have_posts()) : ?>
                         <?php the_post(); ?>
                         <?php
                         $post_obj = get_post();
+                        $uri = $post_obj instanceof WP_Post ? trim((string) get_page_uri($post_obj), '/') : '';
+                        if ($uri !== '') {
+                            $rendered_paths[strtolower($uri)] = true;
+                        }
                         $guide_type = function_exists('vg_get_guide_type') ? vg_get_guide_type($post_obj) : null;
                         if (! $guide_type && function_exists('vg_classify_guide_path')) {
-                            $uri = $post_obj instanceof WP_Post ? trim((string) get_page_uri($post_obj), '/') : '';
                             $guide_type = vg_classify_guide_path($uri);
                         }
 
-                        $type_labels = [
-                            'destination' => __('Destination Guide', 'vietnamguide-premium'),
-                            'itinerary'   => __('Itinerary', 'vietnamguide-premium'),
-                            'comparison'  => __('Route Comparison', 'vietnamguide-premium'),
-                            'practical'   => __('Planning Guide', 'vietnamguide-premium'),
-                        ];
                         $badge_label = $type_labels[$guide_type] ?? __('Travel Guide', 'vietnamguide-premium');
                         $badge_class = 'vg-search-badge--' . ($guide_type ?: 'general');
                         ?>
@@ -189,6 +201,36 @@ if ($q_clean !== '') {
                             </div>
                         </article>
                     <?php endwhile; ?>
+
+                    <?php foreach ($registry_matches as $reg_idx => $reg_match) : ?>
+                        <?php
+                        $reg_path = strtolower(trim((string) ($reg_match['path'] ?? ''), '/'));
+                        if ($reg_path === '' || isset($rendered_paths[$reg_path])) {
+                            continue;
+                        }
+                        $rendered_paths[$reg_path] = true;
+                        $reg_type = (string) ($reg_match['type'] ?? 'practical');
+                        $reg_badge_label = $type_labels[$reg_type] ?? __('Travel Guide', 'vietnamguide-premium');
+                        $reg_badge_class = 'vg-search-badge--' . ($reg_type ?: 'general');
+                        ?>
+                        <article id="registry-match-<?php echo (int) $reg_idx; ?>" class="vg-search-item vg-search-item--registry">
+                            <header class="vg-search-item__header">
+                                <div class="vg-search-item__meta">
+                                    <span class="vg-search-badge <?php echo esc_attr($reg_badge_class); ?>">
+                                        <?php echo esc_html($reg_badge_label); ?>
+                                    </span>
+                                </div>
+                                <h2>
+                                    <a href="<?php echo esc_url((string) $reg_match['url']); ?>">
+                                        <?php echo esc_html((string) $reg_match['title']); ?>
+                                    </a>
+                                </h2>
+                            </header>
+                            <div class="vg-entry-summary">
+                                <p><?php echo esc_html((string) $reg_match['description']); ?></p>
+                            </div>
+                        </article>
+                    <?php endforeach; ?>
                 </div>
 
                 <?php

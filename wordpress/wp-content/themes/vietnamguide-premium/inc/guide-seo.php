@@ -2476,9 +2476,9 @@ function vg_rich_travel_schema_filter($data, $context = null): array
 }
 
 /**
- * Authoritative FAQ Schema.org generator for high-intent travel planning queries.
+ * Returns curated route-specific FAQ Q&A pairs for both visible page rendering and FAQPage JSON-LD schema.
  */
-function vg_get_page_faq_schema(string $uri_path, string $current_url): ?array
+function vg_get_curated_faq_items(string $uri_path): array
 {
     $slug = trim(basename($uri_path), '/');
     $faq_registry = [
@@ -2636,7 +2636,115 @@ function vg_get_page_faq_schema(string $uri_path, string $current_url): ?array
         ],
     ];
 
-    $raw_qas = $faq_registry[$slug] ?? null;
+    return $faq_registry[$slug] ?? [];
+}
+
+/**
+ * Renders visible HTML5 <details>/<summary> FAQ accordion matching FAQPage JSON-LD schema.
+ * Strictly uses level-3 heading to preserve the Zero-H2 TOC invariant across inc/*.php.
+ */
+function vg_render_curated_faq_accordion(string $uri_path, string $existing_html = ''): string
+{
+    $items = vg_get_curated_faq_items($uri_path);
+    if (empty($items)) {
+        return '';
+    }
+
+    if ($existing_html !== '' && stripos($existing_html, 'vg-curated-faq') !== false) {
+        return '';
+    }
+
+    $visible_items = [];
+    foreach ($items as $item) {
+        $question = trim((string) ($item['q'] ?? ''));
+        $answer   = trim((string) ($item['a'] ?? ''));
+        if ($question === '' || $answer === '') {
+            continue;
+        }
+        if ($existing_html !== '' && stripos($existing_html, $question) !== false) {
+            continue;
+        }
+        $visible_items[] = [
+            'q' => $question,
+            'a' => $answer,
+        ];
+    }
+
+    if (empty($visible_items)) {
+        return '';
+    }
+
+    $rows_html = '';
+    foreach ($visible_items as $idx => $qa) {
+        $open_attr = $idx === 0 ? ' open' : '';
+        $rows_html .= sprintf(
+            '<details class="vg-faq-item"%1$s><summary class="vg-faq-question">%2$s</summary><div class="vg-faq-answer"><p>%3$s</p></div></details>',
+            $open_attr,
+            esc_html($qa['q']),
+            esc_html($qa['a'])
+        );
+    }
+
+    return sprintf(
+        '<section class="vg-faq-section vg-curated-faq" id="vg-curated-faq" aria-label="Frequently Asked Questions">'
+        . '<div class="vg-faq-header">'
+        . '<span class="vg-faq-kicker">Verified Field Answers</span>'
+        . '<h3 class="vg-faq-heading">Frequently Asked Questions</h3>'
+        . '</div>'
+        . '<div class="vg-faq-list">%s</div>'
+        . '</section>',
+        $rows_html
+    );
+}
+
+/**
+ * Appends the visible curated FAQ accordion on non-Guide-Shell pages (e.g. /costs/vietnam-travel-cost/, /itineraries/)
+ * so every page emitting FAQPage JSON-LD schema displays matching visible Q&A markup.
+ */
+function vg_inject_curated_faq_on_non_guide_pages(string $content): string
+{
+    if (function_exists('is_admin') && is_admin()) {
+        return $content;
+    }
+
+    if (strpos($content, 'vg-guide-hero') !== false) {
+        return $content;
+    }
+
+    if (function_exists('vg_is_guide_experience_page') && vg_is_guide_experience_page()) {
+        return $content;
+    }
+
+    $uri_path = function_exists('vg_get_current_uri_path') ? vg_get_current_uri_path() : '';
+    if ($uri_path === '' && function_exists('get_post')) {
+        $post = get_post();
+        if ($post instanceof WP_Post && function_exists('get_page_uri')) {
+            $uri_path = trim((string) get_page_uri($post), '/');
+        }
+    }
+
+    if ($uri_path === '') {
+        return $content;
+    }
+
+    $faq_html = vg_render_curated_faq_accordion($uri_path, $content);
+    if ($faq_html === '') {
+        return $content;
+    }
+
+    return $content . "\n\n" . $faq_html;
+}
+if (function_exists('add_filter')) {
+    add_filter('the_content', 'vg_inject_curated_faq_on_non_guide_pages', 30);
+}
+
+/**
+ * Authoritative FAQ Schema.org generator for high-intent travel planning queries.
+ */
+function vg_get_page_faq_schema(string $uri_path, string $current_url): ?array
+{
+    $curated_qas = vg_get_curated_faq_items($uri_path);
+    $raw_qas = ! empty($curated_qas) ? $curated_qas : null;
 
     // Dynamic fallback: extract structured Q&As from authored details/summary markup if not in curated registry
     if ($raw_qas === null && function_exists('get_queried_object')) {

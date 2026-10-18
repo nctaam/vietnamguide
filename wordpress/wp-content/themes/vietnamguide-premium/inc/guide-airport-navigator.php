@@ -1117,7 +1117,21 @@ function vg_inject_airport_navigator_on_page(string $content): string
         return $content;
     }
 
-    $isTargetPage = is_page('vietnam-airport-arrival-checklist')
+    $currentSlug = (string) get_post_field('post_name');
+    $airportSlugs = [
+        'vietnam-airport-arrival-checklist',
+        'transport-within-vietnam',
+        'safety-and-scams-in-vietnam',
+        'safety-scams-vietnam',
+        'vietnam-first-trip-planning-checklist',
+        'hanoi-airport-to-old-quarter',
+        'ho-chi-minh-city-airport-to-district-1',
+        'da-nang-airport-to-hoi-an-transfer',
+        'domestic-flights-in-vietnam-guide',
+    ];
+
+    $isTargetPage = in_array($currentSlug, $airportSlugs, true)
+        || is_page('vietnam-airport-arrival-checklist')
         || is_page('plan/vietnam-airport-arrival-checklist')
         || (is_singular('page') && get_post_field('post_name') === 'vietnam-airport-arrival-checklist')
         || is_page('transport-within-vietnam')

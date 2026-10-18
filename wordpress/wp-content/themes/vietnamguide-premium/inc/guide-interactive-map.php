@@ -367,3 +367,80 @@ function vg_interactive_map_shortcode(array $atts = []): string
     return ob_get_clean();
 }
 add_shortcode('vg_interactive_map', 'vg_interactive_map_shortcode');
+
+/**
+ * Automatically injects the Interactive Corridor Map on hub pages, itinerary routes,
+ * and inter-regional transit/comparison guides.
+ */
+function vg_inject_interactive_map_on_hub_and_itineraries(string $content): string
+{
+    if (function_exists('is_admin') && is_admin()) {
+        return $content;
+    }
+
+    if (strpos($content, 'vg-guide-hero') !== false) {
+        return $content;
+    }
+
+    static $injectedPosts = [];
+    $postId = function_exists('get_the_ID') ? (int) get_the_ID() : 0;
+    if ($postId && isset($injectedPosts[$postId])) {
+        return $content;
+    }
+
+    $slug = '';
+    $pageUri = '';
+    if (function_exists('get_post')) {
+        $post = get_post();
+        if ($post instanceof WP_Post) {
+            $slug = (string) ($post->post_name ?? '');
+            if (function_exists('get_page_uri')) {
+                $pageUri = trim((string) get_page_uri($post), '/');
+            }
+        }
+    }
+    if ($slug === '' && function_exists('get_post_field')) {
+        $slug = (string) get_post_field('post_name');
+    }
+
+    $mapTargetSlugs = [
+        'destinations',
+        'itineraries',
+        '7-days-in-vietnam',
+        '10-days-in-vietnam',
+        '14-days-in-vietnam',
+        '21-days-in-vietnam',
+        '3-weeks-in-vietnam-route',
+        'northern-vietnam-7-day-itinerary',
+        'central-vietnam-5-day-itinerary',
+        'southern-vietnam-7-day-itinerary',
+        'north-central-south-vietnam',
+        'hanoi-vs-ho-chi-minh-city',
+        'best-vietnam-routes-first-time-visitors',
+        'transport-within-vietnam',
+    ];
+
+    $isTarget = in_array($slug, $mapTargetSlugs, true)
+        || str_starts_with($pageUri, 'itineraries/')
+        || (function_exists('is_page') && (is_page('destinations') || is_page('itineraries')));
+
+    if (! $isTarget) {
+        return $content;
+    }
+
+    if ((function_exists('has_shortcode') && has_shortcode($content, 'vg_interactive_map')) || strpos($content, 'vg-interactive-map') !== false) {
+        return $content;
+    }
+
+    if ($postId) {
+        $injectedPosts[$postId] = true;
+    }
+
+    $mapHtml = vg_interactive_map_shortcode();
+
+    return $content . "\n\n" . $mapHtml;
+}
+if (function_exists('add_filter')) {
+    add_filter('the_content', 'vg_inject_interactive_map_on_hub_and_itineraries', 22);
+}
+

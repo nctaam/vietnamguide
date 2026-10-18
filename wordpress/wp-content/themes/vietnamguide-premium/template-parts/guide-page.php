@@ -88,6 +88,15 @@ $pageTitle = (string) ($args['title'] ?? get_the_title());
         <div class="vg-guide-article">
             <?php echo $args['body_html']; ?>
             <?php
+            if (function_exists('vg_render_curated_faq_accordion')) {
+                $guideFaqUri = (string) wp_parse_url((string) ($args['permalink'] ?? ''), PHP_URL_PATH);
+                if ($guideFaqUri === '' && function_exists('vg_get_guide_path')) {
+                    $guideFaqUri = vg_get_guide_path(get_post((int) ($args['post_id'] ?? 0)));
+                }
+                echo vg_render_curated_faq_accordion($guideFaqUri, (string) $args['body_html']);
+            }
+            ?>
+            <?php
             wp_link_pages([
                 'before' => '<nav class="vg-page-links" aria-label="' . esc_attr__('Page navigation', 'vietnamguide-premium') . '">',
                 'after' => '</nav>',
