@@ -42,4 +42,10 @@ No embedded text, logo, or third-party trademark.
 - `da-lat-xuan-huong-hero.jpg` (1,920 x 1,080, 678,050 bytes): Derived from `https://commons.wikimedia.org/wiki/File:Da_Lat_-_Xuan_Huong_Lake.jpg` (Creator: Vyacheslav Argenberg, License: CC BY 4.0).
 - `ninh-binh-mua-cave-hero.jpg` (1,920 x 1,080, 577,878 bytes): Derived from `https://commons.wikimedia.org/wiki/File:Mua_Cave,_Ninh_Binh,_Vietnam,_20240202_0926_4964.jpg` (Creator: Jakub Hałun, License: CC BY 4.0).
 - `mekong-delta-phong-dien-hero.jpg` (1,920 x 1,080, 536,288 bytes): Derived from `https://commons.wikimedia.org/wiki/File:Vietnam,_Phong_Dien,_Mekong_Delta,_River.jpg` (Creator: Vyacheslav Argenberg, License: CC BY 4.0).
+- `phong-nha-son-river-hero.jpg` (1,920 x 1,080, 562,380 bytes): Derived from `https://commons.wikimedia.org/wiki/File:Son_River-Quang_Binh_province.jpg` (Creator: BacLuong, License: CC BY-SA 4.0).
+- `cao-bang-tu-san-canyon-hero.jpg` (1,920 x 1,080, 372,341 bytes): Derived from `https://commons.wikimedia.org/wiki/File:TuSan_Canyon.jpg` (Creator: NKSTTSSHNVN, License: CC BY-SA 4.0).
+- `phu-quoc-kem-beach-hero.jpg` (1,920 x 1,080, 606,490 bytes): Derived from `https://commons.wikimedia.org/wiki/File:Kem_Beach_aerial_view_Phu_Quoc_Island_Vietnam.jpg` (Creator: Vivu Vietnam, License: CC BY-SA 4.0).
+- `hanoi-hoan-kiem-hero.jpg` (1,920 x 1,080, 916,131 bytes): Derived from `https://commons.wikimedia.org/wiki/File:Hanoi-lac-hoan-kiem.jpg` (Creator: Alex 69200 vx, License: CC BY-SA 4.0).
+- `hue-imperial-citadel-hero.jpg` (1,920 x 1,080, 389,186 bytes): Derived from `https://commons.wikimedia.org/wiki/File:Hue_Vietnam_Citadel-of-Hu%C3%AA-13.jpg` (Creator: CEphoto, Uwe Aranas, License: CC BY-SA 3.0).
+- `saigon-city-hall-hero.jpg` (1,920 x 1,080, 633,068 bytes): Derived from `https://commons.wikimedia.org/wiki/File:Ho_Chi_Minh_City,_City_Hall,_2020-01_CN-02.jpg` (Creator: Steffen Schmitz, License: CC BY-SA 4.0).
 

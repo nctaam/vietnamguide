@@ -132,10 +132,10 @@ class TestPhotoDispatchComponent(unittest.TestCase):
         )
 
     def test_fallback_image_files_exist_on_disk(self):
-        """All 6 regional fallback image files referenced in dispatches must exist on disk and be distinct per region."""
+        """All 12 regional fallback image files referenced in dispatches must exist on disk and be distinct per region."""
         theme_root = os.path.dirname(THEME_INC)
         image_fallbacks = re.findall(r"'image_fallback'\s*=>\s*'([^']+)'", self.content)
-        self.assertGreaterEqual(len(image_fallbacks), 6, "Dispatches must reference 6 regional fallback images")
+        self.assertGreaterEqual(len(image_fallbacks), 12, "Dispatches must reference 12 regional fallback images")
         self.assertEqual(len(set(image_fallbacks)), len(image_fallbacks), "Each regional dispatch must use a distinct authentic image_fallback")
         for img_rel in image_fallbacks:
             img_path = os.path.join(theme_root, img_rel)
@@ -150,13 +150,19 @@ class TestPhotoDispatchComponent(unittest.TestCase):
             'ninh-binh-mua-cave-hero.jpg',
             'da-lat-xuan-huong-hero.jpg',
             'mekong-delta-phong-dien-hero.jpg',
+            'phong-nha-son-river-hero.jpg',
+            'cao-bang-tu-san-canyon-hero.jpg',
+            'phu-quoc-kem-beach-hero.jpg',
+            'hanoi-hoan-kiem-hero.jpg',
+            'hue-imperial-citadel-hero.jpg',
+            'saigon-city-hall-hero.jpg',
         ]:
             self.assertTrue(os.path.isfile(os.path.join(theme_root, 'assets', 'images', expected_img)))
 
     def test_optical_telemetry_and_coordinates_format(self):
-        """Dispatches must declare valid geographic coordinates and optical telemetry across all 6 regions."""
+        """Dispatches must declare valid geographic coordinates and optical telemetry across all 12 regions."""
         coord_matches = re.findall(r"'coordinates'\s*=>\s*'((?:\\'|[^'])+)'", self.content)
-        self.assertGreaterEqual(len(coord_matches), 6, "Must define coordinates for all 6 regional dispatches")
+        self.assertGreaterEqual(len(coord_matches), 12, "Must define coordinates for all 12 regional dispatches")
         for coords in coord_matches:
             self.assertTrue('N' in coords and 'E' in coords, f"Coordinates must have North and East markers: {coords}")
             self.assertRegex(coords, r"\d+.*N\s+\d+.*E", f"Invalid coordinates format: {coords}")
@@ -167,6 +173,12 @@ class TestPhotoDispatchComponent(unittest.TestCase):
             'ninh-binh-karst',
             'da-lat-highlands',
             'mekong-riverine',
+            'phong-nha-caves',
+            'cao-bang-frontier',
+            'phu-quoc-archipelago',
+            'hanoi-old-quarter',
+            'hue-imperial-citadel',
+            'saigon-metropolis',
         ]:
             self.assertIn(f"'{slug}'", self.content)
         self.assertIn('function vg_photo_dispatch_shortcode', self.content)

@@ -58,7 +58,7 @@ def verify_wikimedia_thumb_url(url: str) -> tuple[bool, str]:
     from urllib.parse import unquote
 
     match = re.search(
-        r"https://upload\.wikimedia\.org/wikipedia/commons/thumb/([0-9a-f])/([0-9a-f]{2})/([^/'\"\s]+)/",
+        r"https://upload\.wikimedia\.org/wikipedia/commons/thumb/([0-9a-f])/([0-9a-f]{2})/([^/\"\s]+)/",
         url,
     )
     if not match:

@@ -265,6 +265,82 @@ function vg_render_cost_calculator_html(): string
                         </button>
                     </div>
 
+                    <details class="vg-calc-official-tariffs">
+                        <summary class="vg-calc-tariffs-summary">
+                            <span><?php esc_html_e('2025–2026 Official Monument, UNESCO, Ferry & Cable Car Tariff Ledger', 'vietnamguide-premium'); ?></span>
+                            <span class="vg-calc-tariffs-badge"><?php esc_html_e('Verified Statutory Rates', 'vietnamguide-premium'); ?></span>
+                        </summary>
+                        <div class="vg-calc-tariffs-table-wrap">
+                            <table class="vg-calc-tariffs-table">
+                                <caption><?php esc_html_e('Official 2025–2026 entrance fees, boat charters, cable cars, and island ferry tariffs across Vietnam (in VND)', 'vietnamguide-premium'); ?></caption>
+                                <thead>
+                                    <tr>
+                                        <th scope="col"><?php esc_html_e('Region / Cluster', 'vietnamguide-premium'); ?></th>
+                                        <th scope="col"><?php esc_html_e('Monument / Transport Service', 'vietnamguide-premium'); ?></th>
+                                        <th scope="col"><?php esc_html_e('Adult Tariff (VND)', 'vietnamguide-premium'); ?></th>
+                                        <th scope="col"><?php esc_html_e('Official Ticket Conditions', 'vietnamguide-premium'); ?></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <th scope="row"><?php esc_html_e('Hue Imperial Capital', 'vietnamguide-premium'); ?></th>
+                                        <td><?php esc_html_e('Imperial Citadel / Royal Tombs (Minh Mang, Tu Duc, Khai Dinh)', 'vietnamguide-premium'); ?></td>
+                                        <td>200,000 / 150,000 VND</td>
+                                        <td><?php esc_html_e('3-Site Combo (Citadel + 2 Tombs): 420,000 VND; 4-Site Combo: 530,000 VND (valid 2 days)', 'vietnamguide-premium'); ?></td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row"><?php esc_html_e('Hoi An & My Son', 'vietnamguide-premium'); ?></th>
+                                        <td><?php esc_html_e('Hoi An Ancient Town Coupon / My Son Cham Sanctuary', 'vietnamguide-premium'); ?></td>
+                                        <td>120,000 / 150,000 VND</td>
+                                        <td><?php esc_html_e('Hoi An coupon covers 3 heritage sites + pedestrian zone; My Son includes electric buggy shuttle', 'vietnamguide-premium'); ?></td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row"><?php esc_html_e('Ninh Binh Karst', 'vietnamguide-premium'); ?></th>
+                                        <td><?php esc_html_e('Trang An Boat Circuit / Tam Coc Sampan / Mua Cave Peak', 'vietnamguide-premium'); ?></td>
+                                        <td>250,000 / 250,000 / 100,000 VND</td>
+                                        <td><?php esc_html_e('Rowing boat seat included (4 adults per sampan); 2.5–3 hr cave circuit at Trang An', 'vietnamguide-premium'); ?></td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row"><?php esc_html_e('Ha Long Bay', 'vietnamguide-premium'); ?></th>
+                                        <td><?php esc_html_e('Day Sightseeing Routes 1 & 2 / Overnight Conservation Pass', 'vietnamguide-premium'); ?></td>
+                                        <td>310,000 / 550,000–750,000 VND</td>
+                                        <td><?php esc_html_e('Includes 250,000 VND bay sightseeing fee + 60,000 VND Tuan Chau / Halong port passenger fee', 'vietnamguide-premium'); ?></td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row"><?php esc_html_e('Phong Nha-Ke Bang', 'vietnamguide-premium'); ?></th>
+                                        <td><?php esc_html_e('Phong Nha Cave / Paradise Cave / Dark Cave Zipline', 'vietnamguide-premium'); ?></td>
+                                        <td>150,000 / 250,000 / 450,000 VND</td>
+                                        <td><?php esc_html_e('Phong Nha requires 700,000 VND dragon boat charter along Son River (shared up to 12 passengers)', 'vietnamguide-premium'); ?></td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row"><?php esc_html_e('Hanoi Capital', 'vietnamguide-premium'); ?></th>
+                                        <td><?php esc_html_e('Temple of Literature / Thang Long Citadel / Hoa Lo Prison', 'vietnamguide-premium'); ?></td>
+                                        <td>70,000 / 100,000 / 50,000 VND</td>
+                                        <td><?php esc_html_e('50% concession discount for students and seniors aged 60+ with valid identification', 'vietnamguide-premium'); ?></td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row"><?php esc_html_e('Alpine Cable Cars', 'vietnamguide-premium'); ?></th>
+                                        <td><?php esc_html_e('Fansipan Legend (Sa Pa) / Ba Na Hills / Hon Thom (Phu Quoc)', 'vietnamguide-premium'); ?></td>
+                                        <td>850,000 / 950,000 / 650,000 VND</td>
+                                        <td><?php esc_html_e('Round-trip cabin pass; Fansipan summit funicular billed separately (150,000 VND upward)', 'vietnamguide-premium'); ?></td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row"><?php esc_html_e('Island Catamarans', 'vietnamguide-premium'); ?></th>
+                                        <td><?php esc_html_e('Rach Gia–Phu Quoc / Tran De–Con Dao High-Speed Ferry', 'vietnamguide-premium'); ?></td>
+                                        <td>340,000 / 390,000 VND</td>
+                                        <td><?php esc_html_e('One-way Economy seat on Phu Quoc Express catamaran (2.5 hrs transit; VIP cabin 500,000–590,000 VND)', 'vietnamguide-premium'); ?></td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row"><?php esc_html_e('Far North Frontier', 'vietnamguide-premium'); ?></th>
+                                        <td><?php esc_html_e('Ban Gioc Waterfall (Cao Bang) / Nho Que River Boat (Tu San)', 'vietnamguide-premium'); ?></td>
+                                        <td>45,000 / 120,000 VND</td>
+                                        <td><?php esc_html_e('Quay Son bamboo raft optional (50,000 VND); Nho Que ticket includes electric shuttle to dock', 'vietnamguide-premium'); ?></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </details>
+
                     <div class="vg-calc-next-steps vg-tool-synergy-bar">
                         <div class="vg-calc-ns-title"><?php esc_html_e('Next Steps for Your Vietnam Journey', 'vietnamguide-premium'); ?></div>
                         <div class="vg-calc-ns-grid">

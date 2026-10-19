@@ -86,6 +86,64 @@ class TestAgSearchClient(unittest.TestCase):
         ok3, msg3 = verify_wikimedia_thumb_url(valid_dalat)
         self.assertTrue(ok3, msg3)
 
+    def test_all_theme_wikimedia_urls_have_valid_md5_hash_paths(self):
+        """Every Wikimedia Commons thumbnail URL in theme inc/ and patterns/ must have a valid MD5 path."""
+        import os
+        from pathlib import Path
+        import re
+
+        repo_root = Path(os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..")))
+        theme_dir = repo_root / "wordpress" / "wp-content" / "themes" / "vietnamguide-premium"
+        url_re = re.compile(r"https://upload\.wikimedia\.org/wikipedia/commons/thumb/(?:\\'|[^\s'\"<>])+")
+
+        checked_count = 0
+        broken_urls = []
+        for subdir in ("inc", "patterns"):
+            for php_file in (theme_dir / subdir).glob("*.php"):
+                text = php_file.read_text(encoding="utf-8", errors="ignore")
+                for raw_url in url_re.findall(text):
+                    url = raw_url.replace("\\'", "'")
+                    checked_count += 1
+                    ok, msg = verify_wikimedia_thumb_url(url)
+                    if not ok:
+                        broken_urls.append(f"{php_file.name}: {url} ({msg})")
+
+        self.assertGreater(checked_count, 100)
+        self.assertEqual(broken_urls, [], f"Found broken Wikimedia MD5 URLs: {broken_urls}")
+
+    def test_cost_calculator_official_tariffs_ledger(self):
+        """Cost calculator must include the 2025-2026 Official Monument & Transport Tariff Ledger with zero <h2> tags."""
+        import os
+        from pathlib import Path
+        import re
+
+        repo_root = Path(os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..")))
+        calc_path = (
+            repo_root
+            / "wordpress"
+            / "wp-content"
+            / "themes"
+            / "vietnamguide-premium"
+            / "inc"
+            / "guide-cost-calculator.php"
+        )
+        content = calc_path.read_text(encoding="utf-8")
+        self.assertIn('class="vg-calc-official-tariffs"', content)
+        for expected_tariff in (
+            "200,000 / 150,000 VND",
+            "120,000 / 150,000 VND",
+            "250,000 / 250,000 / 100,000 VND",
+            "310,000 / 550,000",
+            "150,000 / 250,000 / 450,000 VND",
+            "70,000 / 100,000 / 50,000 VND",
+            "850,000 / 950,000 / 650,000 VND",
+            "340,000 / 390,000 VND",
+            "45,000 / 120,000 VND",
+        ):
+            self.assertIn(expected_tariff, content)
+        self.assertEqual(len(re.findall(r"<h2\b", content, re.IGNORECASE)), 0)
+
 
 if __name__ == "__main__":
     unittest.main()
+
