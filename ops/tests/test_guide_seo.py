@@ -1189,7 +1189,8 @@ echo json_encode([
     def test_cluster_aware_discover_image_object_and_exact_dimensions(self):
         """Discover ImageObject must resolve cluster-specific 1920px assets with exact natural dimensions."""
         expected_cases = [
-            ('destinations/da-lat-travel-guide', '1920px-Forest_in_Cuc_Phuong_National_Park_%2815706323528%29.jpg', 1920, 1275),
+            ('destinations/sapa-travel-guide', '1920px-Rice_terraces_in_Sapa%2C_Vietnam.jpg', 1920, 1280),
+            ('destinations/da-lat-travel-guide', '1920px-Da_Lat_-_Xuan_Huong_Lake.jpg', 1920, 1275),
             ('destinations/phong-nha-travel-guide', '1920px-Son_River-Quang_Binh_province.jpg', 1920, 1354),
             ('destinations/mekong-delta-travel-guide', '1920px-Vietnam%2C_Phong_Dien%2C_Mekong_Delta%2C_River.jpg', 1920, 1280),
             ('destinations/cao-bang-travel-guide', '1920px-TuSan_Canyon.jpg', 1920, 1080),
@@ -1546,7 +1547,24 @@ echo json_encode([
             self.assertTrue(info['has_details'], f"Visible FAQ accordion on {uri} must use semantic <details>")
             self.assertTrue(info['dedup_empty'], f"Visible FAQ accordion on {uri} must be idempotent when already present")
 
+    def test_wikimedia_discover_images_cryptographic_md5_path_integrity(self):
+        """Every Wikimedia Commons URL in guide-seo.php must have a cryptographically valid MD5 directory prefix /<h[0]>/<h[0:2]>/."""
+        import hashlib
+        from urllib.parse import unquote
+        with open(GUIDE_SEO_PHP, 'r', encoding='utf-8') as f:
+            seo_src = f.read()
+        pattern = r'https://upload\.wikimedia\.org/wikipedia/commons/thumb/([0-9a-f])/([0-9a-f]{2})/([^/\'"\s]+)/'
+        matches = re.findall(pattern, seo_src)
+        self.assertGreaterEqual(len(matches), 11, "Must find all regional Wikimedia Commons Discover image URLs")
+        for d1, d2, encoded_filename in matches:
+            decoded_filename = unquote(encoded_filename).replace(' ', '_')
+            md5_hex = hashlib.md5(decoded_filename.encode('utf-8')).hexdigest()
+            self.assertEqual(
+                (d1, d2),
+                (md5_hex[0], md5_hex[:2]),
+                f"Broken Wikimedia Commons MD5 directory prefix for {decoded_filename}: found /{d1}/{d2}/, expected /{md5_hex[0]}/{md5_hex[:2]}/"
+            )
+
 
 if __name__ == '__main__':
     unittest.main()
-

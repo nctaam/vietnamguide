@@ -132,29 +132,44 @@ class TestPhotoDispatchComponent(unittest.TestCase):
         )
 
     def test_fallback_image_files_exist_on_disk(self):
-        """Fallback image files referenced in dispatches (ha-long-bay-vietnam-hero.jpg, home-editorial.jpg) must exist on disk."""
+        """All 6 regional fallback image files referenced in dispatches must exist on disk and be distinct per region."""
         theme_root = os.path.dirname(THEME_INC)
         image_fallbacks = re.findall(r"'image_fallback'\s*=>\s*'([^']+)'", self.content)
-        self.assertGreater(len(image_fallbacks), 0, "Dispatches must reference fallback images")
+        self.assertGreaterEqual(len(image_fallbacks), 6, "Dispatches must reference 6 regional fallback images")
+        self.assertEqual(len(set(image_fallbacks)), len(image_fallbacks), "Each regional dispatch must use a distinct authentic image_fallback")
         for img_rel in image_fallbacks:
             img_path = os.path.join(theme_root, img_rel)
             self.assertTrue(
                 os.path.isfile(img_path),
                 f"Referenced fallback image not found on disk: {img_path}"
             )
-        self.assertTrue(os.path.isfile(os.path.join(theme_root, 'assets', 'images', 'ha-long-bay-vietnam-hero.jpg')))
-        self.assertTrue(os.path.isfile(os.path.join(theme_root, 'assets', 'images', 'home-editorial.jpg')))
+        for expected_img in [
+            'ha-long-bay-vietnam-hero.jpg',
+            'home-editorial.jpg',
+            'sapa-rice-terraces-hero.jpg',
+            'ninh-binh-mua-cave-hero.jpg',
+            'da-lat-xuan-huong-hero.jpg',
+            'mekong-delta-phong-dien-hero.jpg',
+        ]:
+            self.assertTrue(os.path.isfile(os.path.join(theme_root, 'assets', 'images', expected_img)))
 
     def test_optical_telemetry_and_coordinates_format(self):
-        """Dispatches must declare valid geographic coordinates and optical telemetry."""
+        """Dispatches must declare valid geographic coordinates and optical telemetry across all 6 regions."""
         coord_matches = re.findall(r"'coordinates'\s*=>\s*'((?:\\'|[^'])+)'", self.content)
-        self.assertGreaterEqual(len(coord_matches), 2, "Must define coordinates for at least 2 dispatches")
+        self.assertGreaterEqual(len(coord_matches), 6, "Must define coordinates for all 6 regional dispatches")
         for coords in coord_matches:
             self.assertTrue('N' in coords and 'E' in coords, f"Coordinates must have North and East markers: {coords}")
             self.assertRegex(coords, r"\d+.*N\s+\d+.*E", f"Invalid coordinates format: {coords}")
-        self.assertIn("'ha-long-dawn'", self.content)
-        self.assertIn("'hoi-an-dusk'", self.content)
-        self.assertIn("'sapa-terraces'", self.content)
+        for slug in [
+            'ha-long-dawn',
+            'hoi-an-dusk',
+            'sapa-terraces',
+            'ninh-binh-karst',
+            'da-lat-highlands',
+            'mekong-riverine',
+        ]:
+            self.assertIn(f"'{slug}'", self.content)
+        self.assertIn('function vg_photo_dispatch_shortcode', self.content)
 
     def test_dispatch_tab_switcher_markup_and_accessibility(self):
         """Dispatches suite must emit role='tablist', role='tab', and role='tabpanel' with data attributes."""

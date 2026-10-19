@@ -639,6 +639,20 @@ function vg_get_known_image_dimensions(): array
         'https://upload.wikimedia.org/wikipedia/commons/thumb/f/f4/NHA_TRANG_TO_DA_NANG_VIETNAM_RAILWAYS_SE8_TRAIN_JAN_2012_(6817983822).jpg/1280px-NHA_TRANG_TO_DA_NANG_VIETNAM_RAILWAYS_SE8_TRAIN_JAN_2012_(6817983822).jpg' => [1280, 960],
         'Vietnam_Railways_D19E_-_936.jpg' => [1280, 960],
         'https://upload.wikimedia.org/wikipedia/commons/4/42/Vietnam_Railways_D19E_-_936.jpg' => [1280, 960],
+        '1920px-Da_Lat_-_Xuan_Huong_Lake.jpg' => [1920, 1275],
+        'Da_Lat_-_Xuan_Huong_Lake.jpg' => [4288, 2848],
+        'https://upload.wikimedia.org/wikipedia/commons/thumb/a/aa/Da_Lat_-_Xuan_Huong_Lake.jpg/1920px-Da_Lat_-_Xuan_Huong_Lake.jpg' => [1920, 1275],
+        'https://upload.wikimedia.org/wikipedia/commons/thumb/f/ff/Rice_terraces_in_Sapa%2C_Vietnam.jpg/1920px-Rice_terraces_in_Sapa%2C_Vietnam.jpg' => [1920, 1280],
+        'https://upload.wikimedia.org/wikipedia/commons/thumb/f/ff/Rice_terraces_in_Sapa,_Vietnam.jpg/1920px-Rice_terraces_in_Sapa,_Vietnam.jpg' => [1920, 1280],
+        'https://upload.wikimedia.org/wikipedia/commons/thumb/a/af/My_Khe_Beach_seen_from_the_Son_Tra_Mountain.jpg/1280px-My_Khe_Beach_seen_from_the_Son_Tra_Mountain.jpg' => [1280, 960],
+        'sapa-rice-terraces-hero.jpg' => [1920, 1080],
+        'https://vietnamguide.net/wp-content/themes/vietnamguide-premium/assets/images/sapa-rice-terraces-hero.jpg' => [1920, 1080],
+        'da-lat-xuan-huong-hero.jpg' => [1920, 1080],
+        'https://vietnamguide.net/wp-content/themes/vietnamguide-premium/assets/images/da-lat-xuan-huong-hero.jpg' => [1920, 1080],
+        'ninh-binh-mua-cave-hero.jpg' => [1920, 1080],
+        'https://vietnamguide.net/wp-content/themes/vietnamguide-premium/assets/images/ninh-binh-mua-cave-hero.jpg' => [1920, 1080],
+        'mekong-delta-phong-dien-hero.jpg' => [1920, 1080],
+        'https://vietnamguide.net/wp-content/themes/vietnamguide-premium/assets/images/mekong-delta-phong-dien-hero.jpg' => [1920, 1080],
     ];
 
     return $dimensions;

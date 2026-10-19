@@ -73,10 +73,10 @@ function vg_get_visual_dispatches_data(): array
             'province' => 'Lào Cai',
             'coordinates' => '22°20\'N 103°50\'E',
             'lead' => 'Steep mountain contours sculpted into hydraulic rice staircases descending through morning alpine cloud banks.',
-            'base_image_slug' => 'ha-long-bay-vietnam-hero',
-            'image_fallback' => 'assets/images/ha-long-bay-vietnam-hero.jpg',
+            'base_image_slug' => 'sapa-rice-terraces-hero',
+            'image_fallback' => 'assets/images/sapa-rice-terraces-hero.jpg',
             'aspect_ratio' => '16/9',
-            'alt_text' => 'Highland mountain terraces and morning mist across the northern ridge valleys',
+            'alt_text' => 'Stepped mountain rice terraces in Muong Hoa Valley, Sa Pa, Northern Vietnam',
             'exif' => [
                 'focal_length' => '50mm',
                 'aperture' => 'f/5.6',
@@ -86,10 +86,85 @@ function vg_get_visual_dispatches_data(): array
                 'time_of_day' => '06:30 ICT',
             ],
             'field_notes' => 'Early morning mountain light cuts through valley condensation before dense alpine thermals form at noon. Unpaved trail descents require sturdy boots with traction lug soles.',
-            'photographer' => 'VietnamGuide Field Desk',
-            'license' => 'Editorial Use',
+            'photographer' => 'Wikimedia Commons Archive',
+            'license' => 'CC0 1.0 Public Domain',
             'related_route' => '/destinations/sapa-travel-guide/',
             'related_label' => 'Read Sa Pa Field Guide',
+        ],
+        'ninh-binh-karst' => [
+            'id' => 'ninh-binh-karst',
+            'title' => 'Karst Pinnacles Above Tam Cốc',
+            'location' => 'Hang Múa & Tràng An Valley',
+            'province' => 'Ninh Bình',
+            'coordinates' => '20°14\'N 105°50\'E',
+            'lead' => 'Vertical limestone towers rise directly from flooded alluvial paddies along the Ngô Đồng river corridor.',
+            'base_image_slug' => 'ninh-binh-mua-cave-hero',
+            'image_fallback' => 'assets/images/ninh-binh-mua-cave-hero.jpg',
+            'aspect_ratio' => '16/9',
+            'alt_text' => 'Limestone karst peaks and river valley from Mua Cave viewpoint in Ninh Binh, Vietnam',
+            'exif' => [
+                'focal_length' => '28mm',
+                'aperture' => 'f/7.1',
+                'shutter' => '1/320s',
+                'iso' => '125',
+                'elevation' => '145m ASL',
+                'time_of_day' => '09:26 ICT',
+            ],
+            'field_notes' => 'Climbing the 486 stone steps to the Lying Dragon ridge before 08:30 avoids midday tour coach arrivals. Official Tràng An sampan boat tickets cost 300,000 VND per adult.',
+            'photographer' => 'Wikimedia Commons Contributor',
+            'license' => 'CC BY 4.0',
+            'related_route' => '/destinations/ninh-binh-travel-guide/',
+            'related_label' => 'Read Ninh Bình Field Guide',
+        ],
+        'da-lat-highlands' => [
+            'id' => 'da-lat-highlands',
+            'title' => 'Pine-Framed Waters of Xuân Hương',
+            'location' => 'Xuân Hương Basin & Langbiang Plateau',
+            'province' => 'Lâm Đồng',
+            'coordinates' => '11°56\'N 108°26\'E',
+            'lead' => 'Temperate highland air and Khasi pine ridges ring the 5-kilometer crescent lake at the center of Đà Lạt.',
+            'base_image_slug' => 'da-lat-xuan-huong-hero',
+            'image_fallback' => 'assets/images/da-lat-xuan-huong-hero.jpg',
+            'aspect_ratio' => '16/9',
+            'alt_text' => 'Crescent waters of Xuan Huong Lake and pine-forested hills on the Langbiang Plateau in Da Lat, Vietnam',
+            'exif' => [
+                'focal_length' => '35mm',
+                'aperture' => 'f/8.0',
+                'shutter' => '1/400s',
+                'iso' => '100',
+                'elevation' => '1,500m ASL',
+                'time_of_day' => '07:10 ICT',
+            ],
+            'field_notes' => 'At 1,500 meters elevation, night temperatures drop to 14°C–16°C while coastal plains remain tropical. Morning mist clears across Xuân Hương Lake between 06:30 and 08:00.',
+            'photographer' => 'Wikimedia Commons Contributor',
+            'license' => 'CC BY 4.0',
+            'related_route' => '/destinations/da-lat-travel-guide/',
+            'related_label' => 'Read Đà Lạt Field Guide',
+        ],
+        'mekong-riverine' => [
+            'id' => 'mekong-riverine',
+            'title' => 'Tidal Commerce on the Phong Điền Reach',
+            'location' => 'Phong Điền & Cái Răng Waterways',
+            'province' => 'Cần Thơ',
+            'coordinates' => '10°00\'N 105°40\'E',
+            'lead' => 'Timber sampans and orchard barges navigate distributor canals off the Hậu River shortly after dawn.',
+            'base_image_slug' => 'mekong-delta-phong-dien-hero',
+            'image_fallback' => 'assets/images/mekong-delta-phong-dien-hero.jpg',
+            'aspect_ratio' => '16/9',
+            'alt_text' => 'Riverine canal network and wooden sampan boats in Phong Dien, Mekong Delta, Vietnam',
+            'exif' => [
+                'focal_length' => '40mm',
+                'aperture' => 'f/5.6',
+                'shutter' => '1/500s',
+                'iso' => '200',
+                'elevation' => '3m ASL',
+                'time_of_day' => '06:15 ICT',
+            ],
+            'field_notes' => 'Wholesale fruit barges at Cái Răng and Phong Điền peak between 05:30 and 07:00 ICT according to tidal flow. Private wooden sampan charters from Ninh Kiều Pier average 350,000–500,000 VND.',
+            'photographer' => 'Wikimedia Commons Contributor',
+            'license' => 'CC BY 4.0',
+            'related_route' => '/destinations/mekong-delta-travel-guide/',
+            'related_label' => 'Read Mekong Delta Field Guide',
         ],
     ];
 }
@@ -379,9 +454,27 @@ function vg_render_photo_dispatch_lightbox_template(): void
     <?php
 }
 
+function vg_photo_dispatch_shortcode(array $atts = []): string
+{
+    $seriesAlias = [
+        'all'               => 'ha-long-dawn',
+        'halong'            => 'ha-long-dawn',
+        'hoian'             => 'hoi-an-dusk',
+        'highlands'         => 'sapa-terraces',
+        'ninhbinh'          => 'ninh-binh-karst',
+        'central-highlands' => 'da-lat-highlands',
+        'mekong'            => 'mekong-riverine',
+    ];
+    if (isset($atts['series']) && ! isset($atts['slug'])) {
+        $seriesKey = sanitize_key((string) $atts['series']);
+        $atts['slug'] = $seriesAlias[$seriesKey] ?? $seriesKey;
+    }
+    return vg_render_photo_dispatch($atts);
+}
+
 /**
  * Automatically injects the contextual Photo Dispatch visual gallery on matching
- * pillar destination guides (Ha Long/Lan Ha, Hoi An, Sapa/Ha Giang Highlands) and the Destinations hub.
+ * pillar destination guides (Ha Long/Lan Ha, Hoi An, Sapa/Ha Giang, Ninh Binh, Da Lat, Mekong) and the Destinations hub.
  */
 function vg_inject_photo_dispatch_on_pillar_destinations(string $content): string
 {
@@ -428,6 +521,12 @@ function vg_inject_photo_dispatch_on_pillar_destinations(string $content): strin
         'cao-bang-travel-guide'         => 'highlands',
         'vietnam-rice-terraces-guide'   => 'highlands',
         'sapa-vs-ha-giang'              => 'highlands',
+        'ninh-binh-travel-guide'        => 'ninhbinh',
+        'tam-coc-vs-trang-an'           => 'ninhbinh',
+        'da-lat-travel-guide'           => 'central-highlands',
+        'mang-den-travel-guide'         => 'central-highlands',
+        'mekong-delta-travel-guide'     => 'mekong',
+        'can-tho-travel-guide'          => 'mekong',
     ];
 
     if (! isset($seriesMap[$slug])) {
@@ -449,4 +548,5 @@ function vg_inject_photo_dispatch_on_pillar_destinations(string $content): strin
 if (function_exists('add_filter')) {
     add_filter('the_content', 'vg_inject_photo_dispatch_on_pillar_destinations', 24);
 }
+
 

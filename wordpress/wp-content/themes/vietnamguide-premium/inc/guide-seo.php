@@ -98,7 +98,7 @@ function vg_get_cluster_default_discover_image(string $clusterId): array
             'caption' => 'Nguyen Hue walking boulevard and historic City Hall in District 1, Ho Chi Minh City, Vietnam',
         ],
         'northern_highlands' => [
-            'url'     => 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/ca/Rice_terraces_in_Sapa%2C_Vietnam.jpg/1920px-Rice_terraces_in_Sapa%2C_Vietnam.jpg',
+            'url'     => 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/ff/Rice_terraces_in_Sapa%2C_Vietnam.jpg/1920px-Rice_terraces_in_Sapa%2C_Vietnam.jpg',
             'width'   => 1920,
             'height'  => 1280,
             'caption' => 'Stepped mountain rice terraces in Muong Hoa Valley, Sa Pa, Northern Vietnam',
@@ -110,10 +110,10 @@ function vg_get_cluster_default_discover_image(string $clusterId): array
             'caption' => 'Turquoise coastal waters and white sand shoreline at Kem Beach, Phu Quoc Island, Vietnam',
         ],
         'central_highlands' => [
-            'url'     => 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/98/Forest_in_Cuc_Phuong_National_Park_%2815706323528%29.jpg/1920px-Forest_in_Cuc_Phuong_National_Park_%2815706323528%29.jpg',
+            'url'     => 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/aa/Da_Lat_-_Xuan_Huong_Lake.jpg/1920px-Da_Lat_-_Xuan_Huong_Lake.jpg',
             'width'   => 1920,
             'height'  => 1275,
-            'caption' => 'Highland forest canopy and plateau trekking trail in the Central Highlands, Vietnam',
+            'caption' => 'Crescent waters of Xuan Huong Lake and pine-forested hills on the Langbiang Plateau in Da Lat, Central Highlands, Vietnam',
         ],
         'phong_nha_caves' => [
             'url'     => 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/f1/Son_River-Quang_Binh_province.jpg/1920px-Son_River-Quang_Binh_province.jpg',

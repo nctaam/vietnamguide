@@ -101,6 +101,11 @@ function vg_get_visa_checker_dataset(): array
                 'Cat Bi International Airport (HPH - Hai Phong)',
                 'Can Tho International Airport (VCA - Can Tho)',
                 'Van Don International Airport (VDO - Quang Ninh)',
+                'Phu Bai International Airport (HUI - Hue)',
+                'Vinh International Airport (VII - Nghe An)',
+                'Chu Lai Airport (VCL - Quang Nam)',
+                'Dong Hoi Airport (VDH - Quang Binh)',
+                'Tuy Hoa Airport (TBB - Phu Yen)',
             ],
             'land' => [
                 'Huu Nghi (Lang Son - China border)',
@@ -129,6 +134,7 @@ function vg_get_visa_checker_dataset(): array
                 'Chan May Seaport (Thua Thien Hue)',
                 'Da Nang Seaport (Da Nang)',
                 'Nha Trang Seaport (Khanh Hoa)',
+                'Cam Ranh Seaport (Khanh Hoa)',
                 'Quy Nhon Seaport (Binh Dinh)',
                 'Dung Quat Seaport (Quang Ngai)',
                 'Vung Tau Seaport (Ba Ria - Vung Tau)',
@@ -140,17 +146,18 @@ function vg_get_visa_checker_dataset(): array
             'passport_validity' => 'Passport must be valid for at least 6 months beyond your scheduled date of entry into Vietnam.',
             'blank_pages' => 'At least 2 blank visa endorsement pages are required for entry and exit immigration stamps.',
             'onward_ticket' => 'A confirmed outbound flight or train ticket leaving Vietnam within your allowed duration is legally required for visa-free entry and strictly checked by airlines before boarding.',
-            'port_declaration' => 'When entering on an E-visa, your actual arrival port must match one of the 33 international checkpoints approved by the Vietnam Immigration Department.',
-            'no_gap_rule' => 'The former 30-day waiting period between consecutive visa-free entries has been completely abolished. You may re-enter under exemption anytime, provided you meet entry criteria.',
+            'port_declaration' => 'When entering on an E-visa, your arrival port must match one of the 42 international checkpoints (expanded from 33 ports under Resolution 127/NQ-CP) approved by the Vietnam Immigration Department.',
+            'no_gap_rule' => 'Under Resolution 128/NQ-CP and Resolution 44/NQ-CP (2025–2028), the former 30-day waiting period between consecutive visa-free entries is abolished. Eligible travelers may re-enter under 45-day exemption anytime.',
             'phu_quoc_rule' => 'Phu Quoc Island offers a special 30-day visa exemption for ALL nationalities arriving directly by international flight or transit via Hanoi/HCMC domestic transfer without leaving the transit lounge.',
         ],
 
         'official_links' => [
             'portal_url' => 'https://evisa.xuatnhapcanh.gov.vn/',
+            'alt_portal_url' => 'https://evisa.gov.vn/',
             'single_fee_usd' => 25,
             'multi_fee_usd' => 50,
             'processing_days' => '3–5 working days (excluding weekends & Vietnamese public holidays)',
-            'recommended_buffer' => 'Apply at least 10–14 days before flight departure',
+            'recommended_buffer' => 'Apply at least 10–14 days before flight departure via evisa.gov.vn or evisa.xuatnhapcanh.gov.vn',
         ],
     ];
 }

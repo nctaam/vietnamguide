@@ -35,3 +35,11 @@ The approved homepage image outputs below are Stitch-provided assets, not image 
 All derived files are built deterministically with Pillow by running `python ops/build-homepage-images.py`. The converter preserves aspect ratio, uses RGB output, and does not upscale source assets.
 
 No embedded text, logo, or third-party trademark.
+
+## Regional Visual Dispatch Hero Assets (1,920 x 1,080 RGB JPEG)
+
+- `sapa-rice-terraces-hero.jpg` (1,920 x 1,080, 921,578 bytes): Derived from `https://commons.wikimedia.org/wiki/File:Rice_terraces_in_Sapa,_Vietnam.jpg` (Creator: Pixabay / Pexels, License: CC0 1.0 Public Domain Dedication).
+- `da-lat-xuan-huong-hero.jpg` (1,920 x 1,080, 678,050 bytes): Derived from `https://commons.wikimedia.org/wiki/File:Da_Lat_-_Xuan_Huong_Lake.jpg` (Creator: Vyacheslav Argenberg, License: CC BY 4.0).
+- `ninh-binh-mua-cave-hero.jpg` (1,920 x 1,080, 577,878 bytes): Derived from `https://commons.wikimedia.org/wiki/File:Mua_Cave,_Ninh_Binh,_Vietnam,_20240202_0926_4964.jpg` (Creator: Jakub Hałun, License: CC BY 4.0).
+- `mekong-delta-phong-dien-hero.jpg` (1,920 x 1,080, 536,288 bytes): Derived from `https://commons.wikimedia.org/wiki/File:Vietnam,_Phong_Dien,_Mekong_Delta,_River.jpg` (Creator: Vyacheslav Argenberg, License: CC BY 4.0).
+
