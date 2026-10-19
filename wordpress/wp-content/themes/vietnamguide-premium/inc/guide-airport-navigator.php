@@ -325,6 +325,216 @@ function vg_get_airport_navigator_dataset(): array
                     ],
                 ],
             ],
+
+            'HUI' => [
+                'code' => 'HUI',
+                'name' => 'Phu Bai International Airport (Terminal T2)',
+                'city' => 'Hue Imperial City',
+                'badge' => 'Imperial Heritage Gateway',
+                'terminals' => 'Terminal T2 (opened June 2023, Imperial architecture design) handles both domestic and international flights under one modern two-level structure.',
+                'distance_city' => '14–15 km south of Hue Imperial Citadel & Perfume River hotel quarter',
+                'travel_time' => '20–30 mins via National Highway 1A (Nguyen Tat Thanh — Ha Noi Boulevard)',
+                'toll_fee' => '10,000 VND (~$0.40 USD) statutory airport gate exit toll',
+                'official_taxi' => [
+                    'brand' => 'Mai Linh Taxi, Thanh Cong Taxi & Xanh SM Electric',
+                    'phones' => 'Mai Linh: 0234.38.38.38.38 | Thanh Cong: 0234.3.57.57.57',
+                    'location' => 'Ground level curbside taxi rank directly outside Terminal T2 Arrival Gate A.',
+                    'meter_rate' => '~13,500 – 15,500 VND / km (or 220,000 – 250,000 VND flat airport contract to Hue center)',
+                ],
+                'grab_pickup' => [
+                    't2_international' => 'Exit Terminal T2 ground floor arrivals, cross the inner taxi lane to the outer curbside ride-hailing zone (Pillar 4–6).',
+                    't1_domestic' => 'Same Terminal T2 ground floor outer island pickup bay.',
+                    'warning' => 'Unlicensed drivers at the arrival doors quote 350,000–400,000 VND to Hue center. Official GrabCar or Xanh SM rides cost 200,000–250,000 VND.',
+                ],
+                'public_bus' => [
+                    'name' => 'Phu Bai Airport Minibus Shuttle & Public Bus #02 / #11',
+                    'fare' => 'Airport Shuttle: 50,000 – 60,000 VND ($2.00 – $2.40 USD) | Public Bus #02/#11: 7,000 – 10,000 VND ($0.40 USD)',
+                    'route' => 'Phu Bai T2 → Highway 1A → Southern Bus Station → Hue Railway Station / Ly Thuong Kiet Center.',
+                    'frequency' => 'Shuttle departs after each flight arrival; Public Bus #02 runs every 30–45 mins from 05:30 to 21:00 along Highway 1A.',
+                ],
+                'zones' => [
+                    [
+                        'name' => 'Hue Center / Pham Ngu Lao / Perfume River South Bank',
+                        'dist' => '14.5 km',
+                        'time' => '20–25 min',
+                        'grab_fare' => '200,000 – 250,000 VND ($8 – $10 USD)',
+                        'taxi_fare' => '220,000 – 260,000 VND ($9 – $10.50 USD)',
+                        'bus_fare' => 'Airport Shuttle: 50,000 – 60,000 VND',
+                        'best_choice' => 'GrabCar or Xanh SM Taxi',
+                    ],
+                    [
+                        'name' => 'Hue Imperial Citadel (North Bank / Kim Long)',
+                        'dist' => '16.5 km',
+                        'time' => '25–30 min',
+                        'grab_fare' => '230,000 – 280,000 VND ($9 – $11 USD)',
+                        'taxi_fare' => '250,000 – 300,000 VND ($10 – $12 USD)',
+                        'bus_fare' => 'Shuttle + short taxi across Phu Xuan Bridge',
+                        'best_choice' => 'GrabCar or Thanh Cong Taxi',
+                    ],
+                    [
+                        'name' => 'Lang Co Bay & Lagoon Resorts',
+                        'dist' => '52 km',
+                        'time' => '55–65 min',
+                        'grab_fare' => '600,000 – 750,000 VND ($24 – $30 USD)',
+                        'taxi_fare' => '650,000 – 800,000 VND ($26 – $32 USD)',
+                        'bus_fare' => 'Pre-booked Resort Transfer',
+                        'best_choice' => 'Pre-booked Private Car',
+                    ],
+                ],
+            ],
+
+            'DLI' => [
+                'code' => 'DLI',
+                'name' => 'Lien Khuong International Airport',
+                'city' => 'Da Lat Highlands',
+                'badge' => 'Central Highlands Hub',
+                'terminals' => 'Unified two-story terminal serving domestic and regional international flights in Duc Trong District.',
+                'distance_city' => '28–30 km south of Da Lat Market & Xuan Huong Lake (1,500m elevation)',
+                'travel_time' => '35–45 mins via Lien Khuong – Prenn Expressway and newly widened Prenn Pass',
+                'toll_fee' => '10,000 VND (~$0.40 USD) airport gate toll + 14,000 VND Lien Khuong Expressway toll',
+                'official_taxi' => [
+                    'brand' => 'Lado Taxi, Mai Linh Taxi & Xanh SM',
+                    'phones' => 'Lado Taxi: 0263.3.666.777 | Mai Linh: 0263.38.38.38.38',
+                    'location' => 'Curbside taxi rank directly outside the ground floor baggage claim exit.',
+                    'meter_rate' => 'Fixed airport contract fare: 250,000 – 300,000 VND (4-seater) or 320,000 – 380,000 VND (7-seater) to Da Lat center.',
+                ],
+                'grab_pickup' => [
+                    't2_international' => 'Walk 40m past the curbside taxi line to the front parking zone.',
+                    't1_domestic' => 'Same front parking lot pickup bay outside ground floor arrivals.',
+                    'warning' => 'Always verify whether the driver includes the 14,000 VND Lien Khuong Expressway toll. Lado Taxi fixed airport tickets sold at the official counter include highway tolls.',
+                ],
+                'public_bus' => [
+                    'name' => 'Lien Khuong Airport Shuttle Bus (Blue/White Airport Coach)',
+                    'fare' => '40,000 – 50,000 VND (~$1.60 – $2.00 USD) per passenger',
+                    'route' => 'Lien Khuong Airport → Prenn Pass → Da Lat Interprovincial Bus Station → Le Thi Hong Gam / Ngoc Phat Hotel (near Da Lat Market).',
+                    'frequency' => 'Departs 20–25 mins after every flight lands from 06:00 to 21:00.',
+                ],
+                'zones' => [
+                    [
+                        'name' => 'Da Lat Market / Xuan Huong Lake / Hoa Binh Area',
+                        'dist' => '30 km',
+                        'time' => '35–45 min',
+                        'grab_fare' => '260,000 – 320,000 VND ($10.50 – $13 USD)',
+                        'taxi_fare' => '250,000 – 300,000 VND ($10 – $12 USD Lado fixed)',
+                        'bus_fare' => 'Airport Shuttle: 40,000 – 50,000 VND ($1.60 – $2 USD)',
+                        'best_choice' => 'Lado Fixed-Rate Taxi or Airport Shuttle Bus',
+                    ],
+                    [
+                        'name' => 'Tuyen Lam Lake Resort Zone (Terracotta / Edensee)',
+                        'dist' => '24 km',
+                        'time' => '30–35 min',
+                        'grab_fare' => '220,000 – 270,000 VND ($9 – $11 USD)',
+                        'taxi_fare' => '230,000 – 280,000 VND ($9 – $11 USD)',
+                        'bus_fare' => 'Taxi or Resort Transfer (Shuttle bypasses lake loop)',
+                        'best_choice' => 'Lado Taxi or GrabCar',
+                    ],
+                ],
+            ],
+
+            'VDH' => [
+                'code' => 'VDH',
+                'name' => 'Dong Hoi Airport',
+                'city' => 'Quang Binh & Phong Nha',
+                'badge' => 'Cave Kingdom Gateway',
+                'terminals' => 'Compact single-terminal domestic facility in Loc Ninh commune, 6 km north of Dong Hoi center.',
+                'distance_city' => '6 km to Dong Hoi city & Nhat Le Beach; 43–45 km to Phong Nha-Ke Bang National Park town (Son Trach)',
+                'travel_time' => '12 mins to Dong Hoi / Nhat Le Beach; 45–55 mins to Phong Nha town',
+                'toll_fee' => '10,000 VND (~$0.40 USD) statutory airport gate exit toll',
+                'official_taxi' => [
+                    'brand' => 'Mai Linh Taxi, Xanh SM & Sun Taxi Quang Binh',
+                    'phones' => 'Mai Linh: 0232.38.38.38.38 | Sun Taxi: 0232.3.68.68.68',
+                    'location' => 'Curbside rank immediately outside the arrival hall sliding doors.',
+                    'meter_rate' => '~13,500 – 15,000 VND / km; negotiated private transfer to Phong Nha town is 450,000 – 550,000 VND.',
+                ],
+                'grab_pickup' => [
+                    't2_international' => 'Outside main terminal curb.',
+                    't1_domestic' => 'Walk 20m straight from arrival gate to the main parking apron.',
+                    'warning' => 'For Phong Nha transfers (45 km), pre-booking a private car through your Phong Nha homestay/lodge (450,000–500,000 VND) is cheaper than running a raw street taxi meter.',
+                ],
+                'public_bus' => [
+                    'name' => 'Quang Binh Public Bus B4 (Dong Hoi – Phong Nha)',
+                    'fare' => '35,000 – 50,000 VND (~$1.40 – $2.00 USD) per passenger',
+                    'route' => 'Dong Hoi City Center (Tran Hung Dao / Nam Ly) → Hoan Lao → Phong Nha Central Boat Station.',
+                    'frequency' => 'Take a 90,000 VND taxi (6 km) from VDH Airport to Dong Hoi center/Highway 1A to catch Bus B4 (runs every 45–60 mins from 05:30 to 17:30).',
+                ],
+                'zones' => [
+                    [
+                        'name' => 'Phong Nha Town / Son River Boat Station',
+                        'dist' => '44 km',
+                        'time' => '45–55 min',
+                        'grab_fare' => '450,000 – 550,000 VND ($18 – $22 USD)',
+                        'taxi_fare' => '480,000 – 580,000 VND ($19 – $23 USD)',
+                        'bus_fare' => 'Taxi to Highway 1A + Bus B4: ~125,000 VND total',
+                        'best_choice' => 'Pre-booked Lodge Car (450k–500k VND) or Xanh SM',
+                    ],
+                    [
+                        'name' => 'Dong Hoi City Center & Nhat Le Beach',
+                        'dist' => '6.5 km',
+                        'time' => '12–15 min',
+                        'grab_fare' => '90,000 – 130,000 VND ($3.50 – $5 USD)',
+                        'taxi_fare' => '100,000 – 140,000 VND ($4 – $5.50 USD)',
+                        'bus_fare' => 'Direct Metered Taxi',
+                        'best_choice' => 'Xanh SM or Mai Linh Taxi',
+                    ],
+                ],
+            ],
+
+            'HPH' => [
+                'code' => 'HPH',
+                'name' => 'Cat Bi International Airport',
+                'city' => 'Hai Phong & Cat Ba Island',
+                'badge' => 'Lan Ha Bay Gateway',
+                'terminals' => 'Modern unified passenger terminal in Hai An District serving domestic routes and regional Asian flights.',
+                'distance_city' => '8 km to Hai Phong center; 28–30 km to Dong Bai Ferry Terminal (Cat Ba Gateway); 45 km to Ha Long (Tuan Chau)',
+                'travel_time' => '15 mins to Hai Phong center; 35–40 mins via Tan Vu – Lach Huyen Sea Bridge to Dong Bai Ferry Terminal',
+                'toll_fee' => '10,000 VND (~$0.40 USD) statutory airport gate exit toll',
+                'official_taxi' => [
+                    'brand' => 'Mai Linh Taxi, Xanh SM & Hoang Anh Taxi (Pink)',
+                    'phones' => 'Mai Linh: 0225.38.38.38.38 | Hoang Anh: 0225.3.222.222',
+                    'location' => 'Ground floor arrival curbside rank outside Gate 1 & Gate 2.',
+                    'meter_rate' => '~13,500 – 15,000 VND / km; flat airport car to Dong Bai Ferry Terminal is 320,000 – 400,000 VND.',
+                ],
+                'grab_pickup' => [
+                    't2_international' => 'Exit arrival doors, cross the inner taxi lane to the outdoor parking lot pickup bay.',
+                    't1_domestic' => 'Same outdoor parking lot ride-hailing zone opposite Gate 1.',
+                    'warning' => 'CRITICAL 2024–2026 UPDATE: The old Got Ferry Pier (Bến phà Gót) permanently closed in March 2024. All ferries and the Sun World Cat Hai Cable Car operate adjacent to the new Dong Bai Ferry Terminal (Bến phà Đồng Bài).',
+                ],
+                'public_bus' => [
+                    'name' => 'Cat Ba Express / Good Morning Cat Ba Combined Bus + Speedboat',
+                    'fare' => 'Ferry Foot Passenger: 12,000 VND | Speedboat: 150,000–200,000 VND | Cable Car: 100,000–150,000 VND',
+                    'route' => 'Cat Bi Airport (HPH) → Tan Vu Sea Bridge → Dong Bai Ferry Terminal → Cai Vieng Pier → Cat Ba Town.',
+                    'frequency' => 'Dong Bai ferries run every 30 mins from 05:30 to 18:30 (25–30 min crossing to Cai Vieng, then 35 min island bus to Cat Ba Town).',
+                ],
+                'zones' => [
+                    [
+                        'name' => 'Dong Bai Ferry Terminal & Cat Hai Cable Car (Cat Ba Gateway)',
+                        'dist' => '29 km',
+                        'time' => '35–40 min',
+                        'grab_fare' => '320,000 – 400,000 VND ($13 – $16 USD)',
+                        'taxi_fare' => '350,000 – 430,000 VND ($14 – $17 USD)',
+                        'bus_fare' => '12,000 VND Dong Bai Ferry ticket after taxi drop-off',
+                        'best_choice' => 'GrabCar to Dong Bai Terminal + Ferry/Speedboat',
+                    ],
+                    [
+                        'name' => 'Hai Phong City Center / Opera House / Lach Tray',
+                        'dist' => '8 km',
+                        'time' => '15–20 min',
+                        'grab_fare' => '100,000 – 140,000 VND ($4 – $5.50 USD)',
+                        'taxi_fare' => '110,000 – 150,000 VND ($4.50 – $6 USD)',
+                        'bus_fare' => 'Bus 18 or GrabCar',
+                        'best_choice' => 'GrabCar or Xanh SM',
+                    ],
+                    [
+                        'name' => 'Tuan Chau Marina / Ha Long Bay Cruise Port (via Expressway)',
+                        'dist' => '45 km',
+                        'time' => '45–55 min',
+                        'grab_fare' => '480,000 – 580,000 VND ($19 – $23 USD)',
+                        'taxi_fare' => '520,000 – 620,000 VND ($21 – $25 USD)',
+                        'bus_fare' => 'Private Transfer via Hai Phong–Ha Long Expressway',
+                        'best_choice' => 'GrabCar or Private Cruise Transfer',
+                    ],
+                ],
+            ],
         ],
 
         'scams' => [
@@ -428,6 +638,10 @@ function vg_render_airport_navigator_html(): string
                     <li><strong>HCMC Tan Son Nhat (SGN):</strong> Yellow Bus 109 costs 20,000 VND to Ben Thanh; GrabCar pickup from Pillar 4 (International) costs 140,000–180,000 VND (25 mins).</li>
                     <li><strong>Da Nang International (DAD):</strong> 4 km to downtown; GrabCar to city center costs 45,000–65,000 VND; to Hoi An costs 320,000–380,000 VND (45 mins).</li>
                     <li><strong>Cam Ranh / Nha Trang (CXR):</strong> Dat Moi Bus 18 costs 60,000 VND; GrabCar to Nha Trang costs 320,000–380,000 VND (45 mins).</li>
+                    <li><strong>Hue Phu Bai T2 (HUI):</strong> 14.5 km to Hue center; Airport Shuttle costs 50,000–60,000 VND; GrabCar/Xanh SM costs 200,000–250,000 VND (25 mins).</li>
+                    <li><strong>Da Lat Lien Khuong (DLI):</strong> 30 km to Da Lat Market via Prenn Pass; Airport Shuttle costs 40,000–50,000 VND; Lado Fixed Taxi costs 250,000–300,000 VND (40 mins).</li>
+                    <li><strong>Dong Hoi (VDH):</strong> 44 km to Phong Nha town; private car costs 450,000–550,000 VND (50 mins); Public Bus B4 from Dong Hoi center costs 35,000–50,000 VND.</li>
+                    <li><strong>Hai Phong Cat Bi (HPH):</strong> 29 km to Dong Bai Ferry Terminal (replaced old Got Pier in March 2024); GrabCar costs 320,000–400,000 VND + 12,000 VND ferry ticket to Cat Ba Island.</li>
                 </ul>
             </div>
         </noscript>
@@ -1128,6 +1342,12 @@ function vg_inject_airport_navigator_on_page(string $content): string
         'ho-chi-minh-city-airport-to-district-1',
         'da-nang-airport-to-hoi-an-transfer',
         'domestic-flights-in-vietnam-guide',
+        'getting-around-vietnam',
+        'hanoi-to-ha-long-bay-transport-guide',
+        'da-nang-to-hoi-an-transport-guide',
+        'hue-to-hoi-an-transport-guide',
+        'hanoi-to-ninh-binh-transport-guide',
+        'hanoi-to-sapa-transport-guide',
     ];
 
     $isTargetPage = in_array($currentSlug, $airportSlugs, true)

@@ -694,7 +694,48 @@ function vg_inject_photo_dispatch_on_pillar_destinations(string $content): strin
         'ho-chi-minh-city-travel-guide' => 'saigon',
     ];
 
-    if (! isset($seriesMap[$slug])) {
+    $resolvedSeries = $seriesMap[$slug] ?? '';
+
+    if ($resolvedSeries === '' && $slug !== '') {
+        $guidePath = '';
+        if (isset($post) && $post instanceof WP_Post && function_exists('vg_get_guide_path') && function_exists('get_page_uri')) {
+            $guidePath = trim((string) vg_get_guide_path($post), '/');
+        }
+        if ($guidePath === '' && isset($_SERVER['REQUEST_URI'])) {
+            $parsedPath = parse_url((string) $_SERVER['REQUEST_URI'], PHP_URL_PATH);
+            if (is_string($parsedPath)) {
+                $guidePath = trim($parsedPath, '/');
+            }
+        }
+
+        $isDestinationOrCompare = str_starts_with($guidePath, 'destinations/')
+            || str_starts_with($guidePath, 'compare/')
+            || str_ends_with($slug, '-travel-guide')
+            || str_contains($slug, '-vs-');
+
+        if ($isDestinationOrCompare && function_exists('vg_find_travel_cluster_by_path')) {
+            $lookupPath = $guidePath !== '' ? $guidePath : ('destinations/' . $slug);
+            $cluster = vg_find_travel_cluster_by_path($lookupPath);
+            $clusterId = is_array($cluster) && ! empty($cluster['id']) ? (string) $cluster['id'] : 'national_circuit';
+            $clusterToSeriesMap = [
+                'northern_triangle'  => 'hanoi',
+                'ha_long_bay'        => 'halong',
+                'ninh_binh'          => 'ninhbinh',
+                'central_heritage'   => 'hoian',
+                'southern_delta'     => 'saigon',
+                'northern_highlands' => 'highlands',
+                'coastal_islands'    => 'phuquoc',
+                'central_highlands'  => 'central-highlands',
+                'phong_nha_caves'    => 'phongnha',
+                'mekong_delta'       => 'mekong',
+                'far_north_frontier' => 'caobang',
+                'national_circuit'   => 'all',
+            ];
+            $resolvedSeries = $clusterToSeriesMap[$clusterId] ?? 'all';
+        }
+    }
+
+    if ($resolvedSeries === '') {
         return $content;
     }
 
@@ -706,7 +747,7 @@ function vg_inject_photo_dispatch_on_pillar_destinations(string $content): strin
         $injectedPosts[$postId] = true;
     }
 
-    $dispatchHtml = vg_photo_dispatch_shortcode(['series' => $seriesMap[$slug]]);
+    $dispatchHtml = vg_photo_dispatch_shortcode(['series' => $resolvedSeries]);
 
     return $content . "\n\n" . $dispatchHtml;
 }

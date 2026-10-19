@@ -73,6 +73,11 @@ def verify_wikimedia_thumb_url(url: str) -> tuple[bool, str]:
 
 
 def main() -> int:
+    if hasattr(sys.stdout, "reconfigure"):
+        sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+    if hasattr(sys.stderr, "reconfigure"):
+        sys.stderr.reconfigure(encoding="utf-8", errors="replace")
+
     parser = argparse.ArgumentParser(description="Query Antigravity Local Search API (localhost:20128/v1/search)")
     parser.add_argument("--query", "-q", required=True, help="Search query string")
     parser.add_argument(
@@ -93,7 +98,7 @@ def main() -> int:
         return 1
 
     if args.json:
-        print(json.dumps(res, indent=2, ensure_ascii=True))
+        print(json.dumps(res, indent=2, ensure_ascii=False))
         return 0
 
     print(f"Query: {res.get('query', args.query)} (Provider: {res.get('provider', 'unknown')})")
@@ -103,12 +108,11 @@ def main() -> int:
         title = item.get("title") or "untitled"
         url = item.get("url") or ""
         snippet = (item.get("snippet") or item.get("content") or "").replace("\n", " ").strip()
-        safe_snip = snippet.encode("ascii", "replace").decode("ascii")
         print(f"  [{idx}] {title}")
         if url:
             print(f"      URL: {url}")
-        if safe_snip:
-            print(f"      Snippet: {safe_snip[:400]}")
+        if snippet:
+            print(f"      Snippet: {snippet[:400]}")
     return 0
 
 

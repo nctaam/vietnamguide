@@ -322,6 +322,36 @@ function vg_render_itinerary_finder_html(): string
             </div>
         </div>
 
+        <!-- 2025–2026 Verified Vietnam Railways (dsvn.vn) & Domestic Aviation Reference Ledger -->
+        <details class="vg-finder-rail-air-ledger" id="vg-finder-rail-air-ledger" style="margin:24px 0;padding:18px 20px;background:#f8fafc;border:1px solid #cbd5e1;border-radius:12px;">
+            <summary style="cursor:pointer;font-weight:700;color:#0f172a;font-size:0.96rem;display:flex;align-items:center;justify-content:space-between;gap:12px;">
+                <span>🚆✈️ <?php esc_html_e('2025–2026 Verified Intercity Rail (dsvn.vn) & Domestic Flight Logistics Reference', 'vietnamguide-premium'); ?></span>
+                <span style="font-size:0.78rem;font-weight:600;color:#0e6f5c;background:#ecfdf5;padding:3px 10px;border-radius:999px;border:1px solid #a7f3d0;"><?php esc_html_e('Field-Audited Schedules & Tariffs', 'vietnamguide-premium'); ?></span>
+            </summary>
+            <div class="vg-finder-ledger-body" style="margin-top:16px;display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px;font-size:0.86rem;line-height:1.55;color:#334155;">
+                <div class="vg-finder-ledger-card" style="background:#ffffff;border:1px solid #e2e8f0;border-radius:8px;padding:14px;">
+                    <div role="heading" aria-level="3" style="font-weight:700;color:#0f172a;margin-bottom:6px;font-size:0.92rem;">🏔️ <?php esc_html_e('Central Heritage Train (HĐ1/HĐ2/HĐ3/HĐ4: Hue ↔ Da Nang)', 'vietnamguide-premium'); ?></div>
+                    <p style="margin:0 0 8px;"><strong><?php esc_html_e('Official DSVN Schedule:', 'vietnamguide-premium'); ?></strong> <?php esc_html_e('From Hue: HĐ1 departs 07:45 (arrives Da Nang 10:35) & HĐ3 departs 14:25 (arrives 17:40). From Da Nang: HĐ2 departs 07:50 (arrives Hue 11:05) & HĐ4 departs 15:00 (arrives 17:45).', 'vietnamguide-premium'); ?></p>
+                    <p style="margin:0;"><strong><?php esc_html_e('Fare & Stopover:', 'vietnamguide-premium'); ?></strong> <?php esc_html_e('Includes a 10-minute scenic stop at Lang Co Station (09:12 / 16:22) and a live Ca Hue music carriage over Hai Van Pass. Official dsvn.vn ticket: 180,000–207,000 VND ($7.20–$8.30 USD) Mon–Fri; 210,000–231,000 VND ($8.40–$9.25 USD) Sat–Sun.', 'vietnamguide-premium'); ?></p>
+                </div>
+                <div class="vg-finder-ledger-card" style="background:#ffffff;border:1px solid #e2e8f0;border-radius:8px;padding:14px;">
+                    <div role="heading" aria-level="3" style="font-weight:700;color:#0f172a;margin-bottom:6px;font-size:0.92rem;">🌙 <?php esc_html_e('Reunification Express Overnight (SE1/SE2 & SE3/SE4)', 'vietnamguide-premium'); ?></div>
+                    <p style="margin:0 0 8px;"><strong><?php esc_html_e('Hanoi ↔ Hue / Da Nang:', 'vietnamguide-premium'); ?></strong> <?php esc_html_e('SE3 departs Hanoi 19:20 (arrives Hue 08:48, Da Nang 11:36); SE1 departs Hanoi 20:55; SE19 departs Hanoi 19:40. 4-berth AC soft sleeper (Khoang 4 điều hòa): 950,000–1,350,000 VND ($38–$54 USD); private VIP 2-berth/Lotus cabin: 1,650,000–2,450,000 VND ($65–$96 USD).', 'vietnamguide-premium'); ?></p>
+                    <p style="margin:0;"><strong><?php esc_html_e('Full Hanoi ↔ Saigon (1,726 km):', 'vietnamguide-premium'); ?></strong> <?php esc_html_e('SE2 departs Saigon 20:35 / SE4 departs 19:25 (32–34 hours total). 4-berth AC soft sleeper: 2,300,000–2,800,000 VND ($92–$112 USD). Book directly at dsvn.vn.', 'vietnamguide-premium'); ?></p>
+                </div>
+                <div class="vg-finder-ledger-card" style="background:#ffffff;border:1px solid #e2e8f0;border-radius:8px;padding:14px;">
+                    <div role="heading" aria-level="3" style="font-weight:700;color:#0f172a;margin-bottom:6px;font-size:0.92rem;">🌾 <?php esc_html_e('Northern Highlands Sleeper (SP3/SP4: Hanoi ↔ Lao Cai / Sa Pa)', 'vietnamguide-premium'); ?></div>
+                    <p style="margin:0 0 8px;"><strong><?php esc_html_e('Overnight Rail Schedule:', 'vietnamguide-premium'); ?></strong> <?php esc_html_e('SP3 departs Hanoi Station (Tran Quy Cap Gate B) at 22:00 → arrives Lao Cai Station at 05:55 (7h 55m). Return SP4 departs Lao Cai at 21:30 → arrives Hanoi at 05:25.', 'vietnamguide-premium'); ?></p>
+                    <p style="margin:0;"><strong><?php esc_html_e('Cabin Fares & Mountain Transfer:', 'vietnamguide-premium'); ?></strong> <?php esc_html_e('DSVN 4-berth sleeper: 450,000–750,000 VND ($18–$30 USD); private wood-paneled tourist cabin (Chapa / Victoria / Sapaly): 1,450,000–1,950,000 VND ($58–$78 USD). From Lao Cai Station to Sa Pa (35 km, 50 mins): Public Bus #01 costs 50,000 VND ($2 USD) or shared minivan costs 350,000 VND ($14 USD).', 'vietnamguide-premium'); ?></p>
+                </div>
+                <div class="vg-finder-ledger-card" style="background:#ffffff;border:1px solid #e2e8f0;border-radius:8px;padding:14px;">
+                    <div role="heading" aria-level="3" style="font-weight:700;color:#0f172a;margin-bottom:6px;font-size:0.92rem;">✈️ <?php esc_html_e('Domestic Aviation Baggage & Check-in Rules (VN vs VJ)', 'vietnamguide-premium'); ?></div>
+                    <p style="margin:0 0 8px;"><strong><?php esc_html_e('Vietnam Airlines (VN):', 'vietnamguide-premium'); ?></strong> <?php esc_html_e('Carry-on allows 10kg main bag + 2kg personal item (12kg total Economy / 18kg Business). Economy Classic & Flex include 1 × 23kg checked bag (<= 158 cm); Economy Lite promotional fares exclude free checked baggage on domestic routes.', 'vietnamguide-premium'); ?></p>
+                    <p style="margin:0;"><strong><?php esc_html_e('Vietjet Air (VJ) & Check-in Cutoff:', 'vietnamguide-premium'); ?></strong> <?php esc_html_e('Strict 7kg total carry-on limit; pre-book 15–30kg checked baggage online >= 3 hours before departure (160,000–350,000 VND) to avoid 450,000–700,000 VND gate penalties. Domestic check-in counters close strictly 40–50 minutes before scheduled departure; lithium power banks (<= 100Wh) must stay in carry-on.', 'vietnamguide-premium'); ?></p>
+                </div>
+            </div>
+        </details>
+
         <!-- Viral Social & Deep-Link Sharing Bar -->
         <div class="vg-tool-share-bar">
             <span class="vg-share-label"><?php esc_html_e('Share Route:', 'vietnamguide-premium'); ?></span>
@@ -736,11 +766,21 @@ function vg_inject_itinerary_finder_on_hub(string $content): string
         'itineraries',
         'best-vietnam-routes-first-time-visitors',
         'best-vietnam-cities-for-first-time-visitors',
+        '5-days-in-vietnam',
         '7-days-in-vietnam',
         '10-days-in-vietnam',
         '14-days-in-vietnam',
         '21-days-in-vietnam',
         '3-weeks-in-vietnam-route',
+        'north-to-south-vietnam-itinerary',
+        'south-to-north-vietnam-itinerary',
+        'northern-vietnam-itinerary',
+        'central-vietnam-itinerary',
+        'southern-vietnam-itinerary',
+        'vietnam-train-travel-guide',
+        'reunification-express-train-guide',
+        'hanoi-to-hue-night-train-guide',
+        'hue-to-da-nang-train-guide',
     ];
 
     $isTargetPage = in_array($currentSlug, $itinerarySlugs, true)

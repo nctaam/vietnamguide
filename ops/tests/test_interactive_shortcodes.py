@@ -563,9 +563,58 @@ class TestInteractiveShortcodes(unittest.TestCase):
         self.assertIn("'money-cash-cards-atms'", self.contents['cost_calculator'])
         self.assertIn('vg_render_route_budget_widget', self.contents['cost_calculator'])
 
+    def test_expanded_9_gateway_airport_navigator_ground_truth(self):
+        """Airport navigator must cover all 9 major and regional gateways (HAN, SGN, DAD, CXR, PQC, HUI, DLI, VDH, HPH) with verified ground-truth transfers."""
+        an_code = self.contents['airport_navigator']
+        for code in ['HAN', 'SGN', 'DAD', 'CXR', 'PQC', 'HUI', 'DLI', 'VDH', 'HPH']:
+            self.assertIn(f"'{code}' => [", an_code, f"Airport navigator must define gateway dataset for {code}")
+        self.assertIn('Phu Bai International Airport (Terminal T2)', an_code)
+        self.assertIn('Lien Khuong International Airport', an_code)
+        self.assertIn('Lado Taxi', an_code)
+        self.assertIn('Dong Hoi Airport', an_code)
+        self.assertIn('Bus B4', an_code)
+        self.assertIn('Cat Bi International Airport', an_code)
+        self.assertIn('Dong Bai Ferry Terminal', an_code)
+
+    def test_itinerary_finder_rail_and_aviation_reference_ledger(self):
+        """Itinerary finder must include the 2025-2026 Verified Vietnam Railways (dsvn.vn) & Domestic Aviation Reference Ledger."""
+        if_code = self.contents['itinerary_finder']
+        self.assertIn('vg-finder-rail-air-ledger', if_code)
+        self.assertIn('HĐ1', if_code)
+        self.assertIn('HĐ2', if_code)
+        self.assertIn('Lang Co Station', if_code)
+        self.assertIn('SE3 departs Hanoi 19:20', if_code)
+        self.assertIn('SP3 departs Hanoi Station', if_code)
+        self.assertIn('Vietnam Airlines (VN)', if_code)
+        self.assertIn('Vietjet Air (VJ)', if_code)
+
+    def test_cluster_aware_photo_dispatch_auto_injection(self):
+        """guide-photo-dispatch.php must resolve regional photo dispatches across all 12 travel clusters dynamically."""
+        photo_path = os.path.join(THEME_INC, 'guide-photo-dispatch.php')
+        with open(photo_path, 'r', encoding='utf-8') as f:
+            photo_code = f.read()
+        self.assertIn('vg_find_travel_cluster_by_path', photo_code)
+        self.assertIn('$clusterToSeriesMap', photo_code)
+        for cluster_id in [
+            'northern_triangle',
+            'ha_long_bay',
+            'ninh_binh',
+            'central_heritage',
+            'southern_delta',
+            'northern_highlands',
+            'coastal_islands',
+            'central_highlands',
+            'phong_nha_caves',
+            'mekong_delta',
+            'far_north_frontier',
+            'national_circuit',
+        ]:
+            self.assertIn(f"'{cluster_id}'", photo_code)
+
 
 if __name__ == '__main__':
     unittest.main()
+
 
 
 
