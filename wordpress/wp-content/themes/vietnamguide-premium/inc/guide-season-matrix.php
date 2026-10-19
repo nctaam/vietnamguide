@@ -58,9 +58,9 @@ function vg_get_season_matrix_dataset(): array
                 'highlights' => 'Phu Quoc west coast crystal clear; Mekong Delta orchards entering peak fruit harvest.',
             ],
             'radar' => [
-                'event' => 'Tết Nguyên Đán (Lunar New Year) Season',
+                'event' => 'Tết Nguyên Đán (Lunar New Year) Pre-Holiday Surge',
                 'type' => 'advisory',
-                'note' => 'If Tết falls in late January, book intercity trains and domestic flights 2–3 months ahead. Many local family shops close for 3 days, while major tourist sites remain open.',
+                'note' => 'Tết Đinh Mùi 2027 begins Feb 4–10, 2027 (Mùng 1 Tết on Feb 6, 2027), causing peak domestic rail and flight demand from late January. Reserve SE trains and domestic flights 60–90 days ahead.',
             ],
             'checklist' => [
                 ['name' => 'Merino wool or fleece thermal base layer', 'category' => 'clothing', 'source' => 'bring', 'note' => 'Crucial for Sa Pa & Ha Giang high passes'],
@@ -117,9 +117,9 @@ function vg_get_season_matrix_dataset(): array
                 'highlights' => 'Peak dry season across Phu Quoc, Con Dao, and the Mekong Delta waterways.',
             ],
             'radar' => [
-                'event' => 'Spring Temple Festivals & Flower Seasons',
-                'type' => 'highlight',
-                'note' => 'Post-Tết pilgrimage festivals across northern temples (Perfume Pagoda, Bai Dinh). Active cultural ceremonies across regional pagodas without disruptive business closures.',
+                'event' => 'Tết Nguyên Đán (Feb 14–22, 2026 & Feb 4–10, 2027) & Spring Pagoda Festivals',
+                'type' => 'advisory',
+                'note' => 'Tết Bính Ngọ 2026 runs Feb 14–22, 2026 (Mùng 1 on Feb 17, 2026); Tết Đinh Mùi 2027 runs Feb 4–10, 2027 (Mùng 1 on Feb 6, 2027). Post-Tết pilgrimage festivals animate Perfume Pagoda and Bai Dinh without business closures.',
             ],
             'checklist' => [
                 ['name' => 'Light windbreaker or denim jacket', 'category' => 'clothing', 'source' => 'bring', 'note' => 'Perfect for evening Hanoi scooter food tours'],
@@ -928,6 +928,62 @@ function vg_render_season_matrix_html(): string
                     <!-- Populated via JavaScript dynamically -->
                 </div>
             </div>
+
+            <!-- 2026-2027 Statutory Public Holidays, Lunar Festival Calendar & Maritime Port Suspension Ledger -->
+            <details class="vg-sm-holiday-ledger" id="vg-sm-holiday-ledger" style="margin-top:1.25rem;background:#f8fafc;border:1px solid #cbd5e1;border-radius:10px;padding:0.95rem 1.15rem;">
+                <summary class="vg-sm-holiday-summary" style="cursor:pointer;font-weight:700;color:#0f2537;font-size:0.95rem;">
+                    <?php esc_html_e('📅 2026–2027 Statutory Public Holidays, Lunar Festival Dates & Maritime Port Suspension Rules', 'vietnamguide-premium'); ?>
+                </summary>
+                <div class="vg-sm-holiday-body" style="margin-top:0.85rem;">
+                    <p style="margin:0 0 0.75rem;font-size:0.86rem;color:#334155;line-height:1.55;">
+                        <?php esc_html_e('Verified against the Vietnam Labor Code (Article 112), Ministry of Home Affairs (MOHA) holiday schedules, and Maritime Administration port clearance protocols:', 'vietnamguide-premium'); ?>
+                    </p>
+                    <div class="vg-sm-holiday-table-wrap" style="overflow-x:auto;">
+                        <table class="vg-sm-holiday-table" style="width:100%;border-collapse:collapse;font-size:0.84rem;text-align:left;">
+                            <caption class="screen-reader-text"><?php esc_html_e('2026–2027 Vietnam Public Holidays and Maritime Weather Thresholds', 'vietnamguide-premium'); ?></caption>
+                            <thead>
+                                <tr style="border-bottom:2px solid #cbd5e1;color:#0f2537;">
+                                    <th scope="col" style="padding:0.5rem 0.6rem;"><?php esc_html_e('Holiday / Weather Rule', 'vietnamguide-premium'); ?></th>
+                                    <th scope="col" style="padding:0.5rem 0.6rem;"><?php esc_html_e('Verified 2026–2027 Window', 'vietnamguide-premium'); ?></th>
+                                    <th scope="col" style="padding:0.5rem 0.6rem;"><?php esc_html_e('Transit, Pricing & Operational Impact', 'vietnamguide-premium'); ?></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr style="border-bottom:1px solid #e2e8f0;">
+                                    <th scope="row" style="padding:0.5rem 0.6rem;"><strong>Tết Nguyên Đán Bính Ngọ 2026 (Year of the Horse)</strong></th>
+                                    <td style="padding:0.5rem 0.6rem;"><strong>Feb 14–22, 2026</strong> (9-day statutory holiday; Mùng 1 Tết on <strong>Feb 17, 2026</strong>)</td>
+                                    <td style="padding:0.5rem 0.6rem;">Northbound rail (SE1–SE8) &amp; domestic flights sell out 30–45 days ahead; 20–30% holiday service surcharge on Feb 16–20; family shops close 3–4 days.</td>
+                                </tr>
+                                <tr style="border-bottom:1px solid #e2e8f0;">
+                                    <th scope="row" style="padding:0.5rem 0.6rem;"><strong>Tết Nguyên Đán Đinh Mùi 2027 (Year of the Goat)</strong></th>
+                                    <td style="padding:0.5rem 0.6rem;"><strong>Feb 4–10, 2027</strong> (7-day statutory holiday; Mùng 1 Tết on <strong>Feb 6, 2027</strong>)</td>
+                                    <td style="padding:0.5rem 0.6rem;">Peak domestic migration window; pre-book sleeper trains, airport transfers, and island resorts at least 4–6 weeks in advance.</td>
+                                </tr>
+                                <tr style="border-bottom:1px solid #e2e8f0;">
+                                    <th scope="row" style="padding:0.5rem 0.6rem;"><strong>Giỗ Tổ Hùng Vương (Hung Kings Commemoration)</strong></th>
+                                    <td style="padding:0.5rem 0.6rem;">10th Day of 3rd Lunar Month (<strong>Apr 26, 2026</strong> / <strong>Apr 16, 2027</strong>)</td>
+                                    <td style="padding:0.5rem 0.6rem;">1–3 day weekend break; high domestic pilgrimage traffic in Phú Thọ and elevated weekend hotel occupancy in Sa Pa, Ninh Bình &amp; Hạ Long.</td>
+                                </tr>
+                                <tr style="border-bottom:1px solid #e2e8f0;">
+                                    <th scope="row" style="padding:0.5rem 0.6rem;"><strong>Reunification &amp; Labor Day (30/04 – 01/05)</strong></th>
+                                    <td style="padding:0.5rem 0.6rem;"><strong>Apr 30 – May 3, 2026</strong> (4-day holiday window)</td>
+                                    <td style="padding:0.5rem 0.6rem;">Highest domestic beach demand of the year across Đà Nẵng, Nha Trang, Phú Quốc, Vũng Tàu &amp; Đà Lạt; airfares reach annual ceiling tiers.</td>
+                                </tr>
+                                <tr style="border-bottom:1px solid #e2e8f0;">
+                                    <th scope="row" style="padding:0.5rem 0.6rem;"><strong>National Day (Quốc Khánh 02/09)</strong></th>
+                                    <td style="padding:0.5rem 0.6rem;"><strong>Aug 30 – Sep 2, 2026</strong> (4-day statutory holiday)</td>
+                                    <td style="padding:0.5rem 0.6rem;">State ceremonies around Ba Đình Square (Hanoi) with temporary street closures; heavy domestic demand for autumn rice-terrace routes in Sa Pa &amp; Mù Cang Chải.</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" style="padding:0.5rem 0.6rem;"><strong>Maritime Port Suspension Protocol (Beaufort 6+)</strong></th>
+                                    <td style="padding:0.5rem 0.6rem;">Wind Force <strong>Beaufort Scale ≥ 6</strong> (<strong>≥ 39 km/h</strong> / 22 knots) or tropical depression alert</td>
+                                    <td style="padding:0.5rem 0.6rem;">Port authorities at Tuần Châu / Hạ Long / Bến Bèo (Cát Bà), Rạch Giá / Hà Tiên (Phú Quốc), Trần Đề / Vũng Tàu (Côn Đảo) &amp; Phan Thiết (Phú Quý) suspend overnight cruise and fast-ferry departures with full statutory refund or date rebooking.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </details>
         </div>
 
         <!-- Mode B: Route Heatmap Panel -->
@@ -1664,6 +1720,11 @@ function vg_inject_season_matrix_on_page(string $content): string
         'vietnam-in-october',
         'vietnam-in-november',
         'vietnam-in-december',
+        'best-beaches-in-vietnam',
+        'best-islands-in-vietnam',
+        'vietnam-rice-terraces-guide',
+        'ha-long-bay-cruise-questions-before-booking',
+        'cham-islands-day-trip-guide',
     ];
 
     $isTargetPage = in_array($currentSlug, $seasonSlugs, true)

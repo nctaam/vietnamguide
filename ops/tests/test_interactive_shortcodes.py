@@ -656,6 +656,62 @@ class TestInteractiveShortcodes(unittest.TestCase):
         ]:
             self.assertIn(f"'{slug}'", pc_code)
 
+    def test_season_matrix_2026_2027_holiday_and_maritime_ledger(self):
+        """Season matrix must include the 2026-2027 Statutory Public Holidays, Lunar Festival Dates & Maritime Port Suspension Ledger."""
+        sm_code = self.contents['season_matrix']
+        self.assertIn('vg-sm-holiday-ledger', sm_code)
+        self.assertIn('Feb 14–22, 2026', sm_code)
+        self.assertIn('Feb 17, 2026', sm_code)
+        self.assertIn('Feb 4–10, 2027', sm_code)
+        self.assertIn('Feb 6, 2027', sm_code)
+        self.assertIn('Beaufort Scale ≥ 6', sm_code)
+        for slug in [
+            'best-beaches-in-vietnam',
+            'best-islands-in-vietnam',
+            'vietnam-rice-terraces-guide',
+            'ha-long-bay-cruise-questions-before-booking',
+            'cham-islands-day-trip-guide',
+        ]:
+            self.assertIn(f"'{slug}'", sm_code)
+
+    def test_interactive_map_metro_and_expressway_ledger(self):
+        """Interactive map must include the 2025-2026 Urban Metro (HCMC Line 1 & Hanoi Lines 2A/3) & National Expressway Telemetry Ledger."""
+        map_path = os.path.join(THEME_INC, 'guide-interactive-map.php')
+        with open(map_path, 'r', encoding='utf-8') as f:
+            map_code = f.read()
+        self.assertIn('vg-map-metro-expressway-ledger', map_code)
+        self.assertIn('HCMC Metro Line 1 (Bến Thành – Suối Tiên)', map_code)
+        self.assertIn('6,000–19,000 VND', map_code)
+        self.assertIn('90,000 VND', map_code)
+        self.assertIn('Hanoi Metro Line 2A (Cát Linh – Hà Đông)', map_code)
+        self.assertIn('160,000 VND', map_code)
+        self.assertIn('CT01 South-Central Expressway', map_code)
+        for slug in [
+            'central-vietnam-itinerary',
+            'northeast-vietnam-itinerary',
+            'northwest-vietnam-itinerary',
+            'southern-vietnam-itinerary',
+            'central-highlands-vietnam-itinerary',
+            'vietnam-train-travel',
+            'vietnam-domestic-flights-guide',
+        ]:
+            self.assertIn(f"'{slug}'", map_code)
+
+    def test_aio_llms_txt_and_llms_full_txt_2026_ground_truth_sync(self):
+        """guide-aio.php (/llms.txt and /llms-full.txt) must synchronize 9 gateway airports, Resolutions 44/NQ-CP & 229/NQ-CP, and Metro/Rail ground truth."""
+        aio_path = os.path.join(THEME_INC, 'guide-aio.php')
+        with open(aio_path, 'r', encoding='utf-8') as f:
+            aio_code = f.read()
+        for airport in ['HAN', 'SGN', 'DAD', 'CXR', 'PQC', 'HUI', 'DLI', 'VDH', 'HPH']:
+            self.assertIn(airport, aio_code)
+        self.assertIn('Resolution 44/NQ-CP', aio_code)
+        self.assertIn('Resolution 229/NQ-CP', aio_code)
+        self.assertIn('Resolution 127/NQ-CP', aio_code)
+        self.assertIn('https://thithucdientu.gov.vn/', aio_code)
+        self.assertIn('HCMC Metro Line 1', aio_code)
+        self.assertIn('Hanoi Metro Line 2A', aio_code)
+        self.assertIn('HD1/HD2', aio_code)
+
 
 if __name__ == '__main__':
     unittest.main()

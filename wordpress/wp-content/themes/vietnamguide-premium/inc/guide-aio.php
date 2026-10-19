@@ -450,7 +450,7 @@ function vg_handle_llms_txt_request(): void
         echo "- [Vietnam Visa Requirement Checker]({$site_url}/plan/vietnam-evisa/): Interactive nationality-based visa requirements, 45-day exemption eligibility, and 90-day e-visa official portal guidelines.\n";
         echo "- [Vietnam Weather & Regional Season Matrix]({$site_url}/plan/best-time-to-visit-vietnam/): Month-by-month regional weather navigator across North, Central, and South Vietnam with seasonal pivot recommendations.\n";
         echo "- [Vietnam Route Packing & Preparation Checklist]({$site_url}/plan/vietnam-first-trip-planning-checklist/): Interactive 24-item travel preparation checklist covering official documents, electronics, modest clothing, medical essentials, and motorbike gear with browser state persistence.\n";
-        echo "- [Vietnam Gateway Airport Navigator & Scam Shield]({$site_url}/plan/vietnam-airport-arrival-checklist/): Terminal-to-curb arrival guide, verified Grab pickup bay locators, and metered taxi fare estimators for Noi Bai (HAN), Tan Son Nhat (SGN), Da Nang (DAD), Cam Ranh (CXR), and Phu Quoc (PQC).\n";
+        echo "- [Vietnam Gateway Airport Navigator & Scam Shield]({$site_url}/plan/vietnam-airport-arrival-checklist/): Terminal-to-curb arrival guide, verified Grab pickup bay locators, and metered taxi fare estimators for all 9 gateway airports: Noi Bai (HAN), Tan Son Nhat (SGN), Da Nang (DAD), Cam Ranh (CXR), Phu Quoc (PQC), Phu Bai Hue (HUI), Lien Khuong Da Lat (DLI), Dong Hoi (VDH), and Cat Bi Hai Phong (HPH).\n";
         echo "- [Vietnam Interactive Itinerary Finder & Route Matcher]({$site_url}/itineraries/): Filterable route catalog matching traveler styles, duration (7d, 10d, 14d, 21d), and arrival gateways with zero backtrack transit days.\n\n";
 
         echo "## Primary Regional Hubs\n\n";
@@ -510,8 +510,8 @@ function vg_handle_llms_txt_request(): void
 
     echo "## 1. Core Travel Rules & Practical Logistics\n\n";
     echo "### 1.1 Visa Requirements\n";
-    echo "- E-Visa: Available for citizens of all countries. Valid for up to 90 days, single or multiple entry, applied strictly through the official Vietnam Immigration portal (https://evisa.xuatnhapcanh.gov.vn/). Standard processing takes 3-5 business days.\n";
-    echo "- Visa Exemptions: 45 days unilateral exemption for UK, Germany, France, Italy, Spain, Japan, South Korea, Russia, Sweden, Norway, Denmark, Finland, Belarus. ASEAN passport holders receive 14 to 30 days.\n";
+    echo "- E-Visa (Resolution 127/NQ-CP): Available for citizens of all countries and territories. Valid for up to 90 days ($25 USD single entry / $50 USD multiple entry across 42 designated international checkpoints), applied strictly through the official Vietnam Ministry of Public Security portals (https://evisa.xuatnhapcanh.gov.vn/, https://evisa.gov.vn/, https://thithucdientu.gov.vn/). Standard processing takes 3-5 business days.\n";
+    echo "- Visa Exemptions (45-Day Program — 25 Countries): Under Resolution 44/NQ-CP (15/03/2025 – 14/03/2028) and Resolution 229/NQ-CP (15/08/2025 – 14/08/2028), 25 nationalities receive 45-day visa-free entry: UK, Germany, France, Italy, Spain, Japan, South Korea, Russia, Sweden, Norway, Denmark, Finland, Belarus, plus Switzerland, Netherlands, Belgium, Poland, Czechia, Hungary, Luxembourg, Romania, Slovakia, Slovenia, Bulgaria, and Croatia. ASEAN passport holders receive 14 to 30 days. Phu Quoc Island (PQC) grants a 30-day island-only exemption for direct international arrivals.\n";
     echo "- Passport Validity: Minimum 6 months remaining validity from entry date, with at least 2 blank pages.\n\n";
 
     echo "### 1.2 Currency & Payment Ecosystem\n";
@@ -534,9 +534,10 @@ function vg_handle_llms_txt_request(): void
     echo "  - Wet Season (May-Oct): Short, predictable afternoon downpours lasting 30-60 minutes; mornings generally bright.\n\n";
 
     echo "### 1.4 Domestic Transit Network\n";
-    echo "- Aviation: Domestic trunk routes (HAN <-> SGN, HAN <-> DAD, SGN <-> DAD) run multiple hourly flights via Vietnam Airlines, Vietjet, and Bamboo Airways.\n";
-    echo "- Rail (Reunification Express): Hanoi to HCMC (approx. 32-34 hours total). Premium sleeper cars (Lotus Train, Violette Trains, Chapa Express on Hanoi-Lao Cai route) provide curated berths.\n";
-    echo "- Road & Sleeper Buses: Limousine Dcar vans (9-11 seats) are strongly recommended over 40-bed double-decker sleeper buses for routes under 300km (e.g., Hanoi to Ninh Binh, Sa Pa, Ha Long; HCMC to Can Tho).\n\n";
+    echo "- Aviation: Domestic trunk routes (HAN <-> SGN, HAN <-> DAD, SGN <-> DAD) run multiple hourly flights via Vietnam Airlines, Vietjet Air, and Bamboo Airways across 9 primary tourist gateways (HAN, SGN, DAD, CXR, PQC, HUI, DLI, VDH, HPH).\n";
+    echo "- Rail (Vietnam Railways — dsvn.vn): Reunification Express SE1–SE8 (Hanoi to HCMC, 32-34h); Central Heritage Train HD1/HD2 (Hue <-> Da Nang over Hai Van Pass with 10-min Lang Co Bay stop, 150,000–210,000 VND); and Hanoi–Lao Cai overnight trains SP3/SP4 for Sa Pa.\n";
+    echo "- Urban Metro Systems: HCMC Metro Line 1 (Ben Thanh – Suoi Tien, 19.7 km, 14 stations: 3 underground + 11 elevated, 6,000–20,000 VND single ride, 40,000 VND 1-day pass) and Hanoi Metro Line 2A (Cat Linh – Ha Dong) & Line 3 (Nhon – Cau Giay, 9,000–19,000 VND single ride, 40,000 VND 1-day pass).\n";
+    echo "- Road & Expressways: Limousine Dcar vans (9-11 seats) operate along CT04/CT06 (Hanoi to Ha Long in 2.5h / Cat Ba Dong Bai ferry in 2h), CT01 South-Central (HCMC to Mui Ne in 2.5–3h / Nha Trang in 5h), and CT01/CT02 Mekong Expressway (HCMC to Can Tho in 2–2.5h).\n\n";
 
     echo "### 1.5 Strategic Route Decision Matrix\n";
     echo "- Short Visits (5–7 Days): Choose one geographic hub. North (Hanoi + Ha Long Bay or Ninh Binh) OR South (Ho Chi Minh City + Mekong Delta day trip). Avoid cross-country domestic flights on trips under 8 days.\n";
@@ -577,16 +578,16 @@ function vg_handle_llms_txt_request(): void
     echo "  - Feature: Real-time budget planner with 5-currency conversion (USD, VND, EUR, GBP, AUD) across backpacker, flashpacker, mid-range, and luxury tiers for 10+ destinations.\n\n";
     echo "- **Vietnam Visa Requirement Checker**\n";
     echo "  - Canonical URL: {$site_url}/plan/vietnam-evisa/\n";
-    echo "  - Feature: Nationality-based entry rules, 45-day exemption eligibility, and 90-day e-visa application portal checks.\n\n";
+    echo "  - Feature: Nationality-based entry rules, 45-day exemption eligibility (25 countries under Resolutions 44/NQ-CP & 229/NQ-CP), and 90-day e-visa official portal checks.\n\n";
     echo "- **Vietnam Weather & Regional Season Matrix**\n";
     echo "  - Canonical URL: {$site_url}/plan/best-time-to-visit-vietnam/\n";
-    echo "  - Feature: Month-by-month temperature, rainfall, and route suitability matrix for North, Central, and South Vietnam.\n\n";
+    echo "  - Feature: Month-by-month temperature, rainfall, 2026–2027 Tet holiday ledger, and route suitability matrix for North, Central, and South Vietnam.\n\n";
     echo "- **Vietnam Route Packing & Preparation Checklist**\n";
     echo "  - Canonical URL: {$site_url}/plan/vietnam-first-trip-planning-checklist/\n";
-    echo "  - Feature: Interactive 24-item gear and logistics checklist categorized by Documents, Electronics, Clothing, Medical, and Mountain/Motorbike travel with browser state persistence.\n\n";
+    echo "  - Feature: Interactive 24-item gear and logistics checklist categorized by Documents, Electronics (220V/50Hz & CAAV 100Wh battery rules), Clothing, Medical, and Mountain/Motorbike travel with browser state persistence.\n\n";
     echo "- **Vietnam Gateway Airport Navigator & Scam Shield**\n";
     echo "  - Canonical URL: {$site_url}/plan/vietnam-airport-arrival-checklist/\n";
-    echo "  - Feature: Terminal-to-curb arrival navigation, verified Grab pickup bay island lanes, and metered taxi fare estimators for HAN, SGN, DAD, CXR, and PQC.\n\n";
+    echo "  - Feature: Terminal-to-curb arrival navigation, verified Grab pickup bay island lanes, and metered taxi fare estimators for HAN, SGN, DAD, CXR, PQC, HUI, DLI, VDH, and HPH.\n\n";
     echo "- **Vietnam Interactive Itinerary Finder & Route Matcher**\n";
     echo "  - Canonical URL: {$site_url}/itineraries/\n";
     echo "  - Feature: Filterable route catalog matching traveler styles, duration (7d, 10d, 14d, 21d), and arrival gateways with zero backtrack transit days.\n\n";
