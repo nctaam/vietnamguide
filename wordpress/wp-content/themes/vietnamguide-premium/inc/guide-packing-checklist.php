@@ -354,6 +354,47 @@ function vg_render_packing_checklist(array $attributes = []): string
             </button>
         </div>
 
+        <details class="vg-checklist-field-specs" id="vg-checklist-field-specs">
+            <summary class="vg-checklist-specs-summary">
+                <span><?php esc_html_e('2025–2026 Vietnam Electrical Grid (220V/50Hz), Aviation Battery & Pharmacy Reference', 'vietnamguide-premium'); ?></span>
+                <span class="vg-checklist-specs-badge"><?php esc_html_e('Verified Technical Specs', 'vietnamguide-premium'); ?></span>
+            </summary>
+            <div class="vg-checklist-specs-table-wrap">
+                <table class="vg-checklist-specs-table">
+                    <caption><?php esc_html_e('Verified electrical socket standards, CAAV cabin battery limits, drone customs rules, and emergency pharmacy contacts in Vietnam', 'vietnamguide-premium'); ?></caption>
+                    <thead>
+                        <tr>
+                            <th scope="col"><?php esc_html_e('Category', 'vietnamguide-premium'); ?></th>
+                            <th scope="col"><?php esc_html_e('Standard / Regulation', 'vietnamguide-premium'); ?></th>
+                            <th scope="col"><?php esc_html_e('Field Specification & Actionable Rule', 'vietnamguide-premium'); ?></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th scope="row"><?php esc_html_e('Electrical Grid & Outlets', 'vietnamguide-premium'); ?></th>
+                            <td>220V / 50Hz (Type A, C &amp; F)</td>
+                            <td><?php esc_html_e('Hybrid wall sockets accept 2 flat pins (Type A) and 2 round Europlug pins (Type C/F). UK/Singapore 3-pin Type G and Australian Type I plugs require an adapter; check for 100V–240V on hair straighteners.', 'vietnamguide-premium'); ?></td>
+                        </tr>
+                        <tr>
+                            <th scope="row"><?php esc_html_e('Cabin Power Banks (CAAV)', 'vietnamguide-premium'); ?></th>
+                            <td>&le; 100Wh (~27,000mAh at 3.7V)</td>
+                            <td><?php esc_html_e('Strictly carry-on cabin baggage only (zero power banks permitted in checked hold bags on Vietnam Airlines, Vietjet Air, and Bamboo Airways). Capacity markings in Wh or mAh must be legible.', 'vietnamguide-premium'); ?></td>
+                        </tr>
+                        <tr>
+                            <th scope="row"><?php esc_html_e('Drones / UAV Customs', 'vietnamguide-premium'); ?></th>
+                            <td><?php esc_html_e('Circular 35/2017/TT-BQP', 'vietnamguide-premium'); ?></td>
+                            <td><?php esc_html_e('Every UAV flight requires a prior Ministry of National Defence Operations Bureau license submitted 7–14 working days ahead. Unlicensed drones are routinely held at Da Nang (DAD) and Phu Quoc (PQC) customs X-ray.', 'vietnamguide-premium'); ?></td>
+                        </tr>
+                        <tr>
+                            <th scope="row"><?php esc_html_e('Pharmacies & Emergency', 'vietnamguide-premium'); ?></th>
+                            <td>FPT Long Châu / Pharmacity / 113–115</td>
+                            <td><?php esc_html_e('Regulated chains stock Oresol packets (3,000 VND), Loperamide, Paracetamol, and 15%–30% DEET spray over the counter. National Emergency Numbers: 113 (Police), 114 (Fire), 115 (Ambulance).', 'vietnamguide-premium'); ?></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </details>
+
         <div class="vg-checklist-synergy-wrap vg-tool-synergy-bar">
             <div class="vg-checklist-synergy-title">
                 <?php esc_html_e('Related Vietnam Planning Guides:', 'vietnamguide-premium'); ?>
@@ -695,6 +736,77 @@ function vg_render_packing_checklist(array $attributes = []): string
             color: #718096;
             line-height: 1.3;
         }
+        .vg-checklist-field-specs {
+            margin-top: 20px;
+            background: #ffffff;
+            border: 1px solid var(--vg-border-hairline, #E5DFD6);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        .vg-checklist-specs-summary {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            padding: 12px 16px;
+            cursor: pointer;
+            font-size: 0.88rem;
+            font-weight: 700;
+            color: var(--vg-navy, #0F2537);
+            background: #f8fafc;
+            list-style: none;
+        }
+        .vg-checklist-specs-summary::-webkit-details-marker {
+            display: none;
+        }
+        .vg-checklist-specs-badge {
+            font-size: 0.72rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            background: #ecfdf5;
+            color: #065f46;
+            padding: 3px 8px;
+            border-radius: 999px;
+            border: 1px solid #a7f3d0;
+            white-space: nowrap;
+        }
+        .vg-checklist-specs-table-wrap {
+            overflow-x: auto;
+            padding: 12px 16px;
+            border-top: 1px solid var(--vg-border-hairline, #E5DFD6);
+        }
+        .vg-checklist-specs-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.82rem;
+            text-align: left;
+        }
+        .vg-checklist-specs-table caption {
+            text-align: left;
+            font-size: 0.78rem;
+            color: #64748b;
+            margin-bottom: 8px;
+        }
+        .vg-checklist-specs-table th,
+        .vg-checklist-specs-table td {
+            padding: 8px 10px;
+            border-bottom: 1px solid #f1f5f9;
+            vertical-align: top;
+            line-height: 1.45;
+        }
+        .vg-checklist-specs-table thead th {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            color: #475569;
+            background: #f8fafc;
+        }
+        .vg-checklist-specs-table tbody th {
+            font-weight: 700;
+            color: var(--vg-navy, #0F2537);
+            white-space: nowrap;
+        }
         @media print {
             .vg-checklist-actions,
             .vg-checklist-filters,
@@ -1001,9 +1113,16 @@ function vg_inject_packing_checklist_on_page(string $content): string
         'what-to-pack-for-vietnam-region-season',
         'what-to-pack-vietnam',
         'sim-esim-vietnam',
+        'vietnam-sim-card-airport-vs-city',
+        'vietnam-plug-adapter-electricity-guide',
         'health-travel-insurance-vietnam',
         'ha-giang-safety-guide',
+        'vietnam-motorbike-license-laws',
+        'vietnam-scooter-rental-checklist',
         'sapa-trekking-guided-vs-self-guided',
+        'sapa-trekking-routes-guide',
+        'pu-luong-trekking-routes-guide',
+        'phong-nha-cave-treks',
     ];
 
     $isTarget = in_array($currentSlug, $packingSlugs, true)

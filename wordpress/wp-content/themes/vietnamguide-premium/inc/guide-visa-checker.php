@@ -23,7 +23,7 @@ function vg_get_visa_checker_dataset(): array
 {
     return [
         'countries' => [
-            // 45-day Unilateral Exemption (Resolution 128/NQ-CP)
+            // 45-day Unilateral Exemption (Resolution 44/NQ-CP: 15/03/2025 – 14/03/2028 & Resolution 128/NQ-CP)
             'GB' => ['name' => 'United Kingdom', 'flag' => '🇬🇧', 'cat' => 'exemption_45', 'days' => 45],
             'DE' => ['name' => 'Germany', 'flag' => '🇩🇪', 'cat' => 'exemption_45', 'days' => 45],
             'FR' => ['name' => 'France', 'flag' => '🇫🇷', 'cat' => 'exemption_45', 'days' => 45],
@@ -37,6 +37,20 @@ function vg_get_visa_checker_dataset(): array
             'SE' => ['name' => 'Sweden', 'flag' => '🇸🇪', 'cat' => 'exemption_45', 'days' => 45],
             'NO' => ['name' => 'Norway', 'flag' => '🇳🇴', 'cat' => 'exemption_45', 'days' => 45],
             'FI' => ['name' => 'Finland', 'flag' => '🇫🇮', 'cat' => 'exemption_45', 'days' => 45],
+
+            // 45-day Tourism Exemption for 12 European States (Resolution 229/NQ-CP: 15/08/2025 – 14/08/2028 & Resolution 11/NQ-CP)
+            'CH' => ['name' => 'Switzerland', 'flag' => '🇨🇭', 'cat' => 'exemption_45', 'days' => 45],
+            'NL' => ['name' => 'Netherlands', 'flag' => '🇳🇱', 'cat' => 'exemption_45', 'days' => 45],
+            'BE' => ['name' => 'Belgium', 'flag' => '🇧🇪', 'cat' => 'exemption_45', 'days' => 45],
+            'PL' => ['name' => 'Poland', 'flag' => '🇵🇱', 'cat' => 'exemption_45', 'days' => 45],
+            'CZ' => ['name' => 'Czech Republic', 'flag' => '🇨🇿', 'cat' => 'exemption_45', 'days' => 45],
+            'HU' => ['name' => 'Hungary', 'flag' => '🇭🇺', 'cat' => 'exemption_45', 'days' => 45],
+            'LU' => ['name' => 'Luxembourg', 'flag' => '🇱🇺', 'cat' => 'exemption_45', 'days' => 45],
+            'RO' => ['name' => 'Romania', 'flag' => '🇷🇴', 'cat' => 'exemption_45', 'days' => 45],
+            'SK' => ['name' => 'Slovakia', 'flag' => '🇸🇰', 'cat' => 'exemption_45', 'days' => 45],
+            'SI' => ['name' => 'Slovenia', 'flag' => '🇸🇮', 'cat' => 'exemption_45', 'days' => 45],
+            'BG' => ['name' => 'Bulgaria', 'flag' => '🇧🇬', 'cat' => 'exemption_45', 'days' => 45],
+            'HR' => ['name' => 'Croatia', 'flag' => '🇭🇷', 'cat' => 'exemption_45', 'days' => 45],
 
             // Bilateral Exemption (ASEAN & Partners)
             'TH' => ['name' => 'Thailand', 'flag' => '🇹🇭', 'cat' => 'exemption_30', 'days' => 30],
@@ -56,19 +70,9 @@ function vg_get_visa_checker_dataset(): array
             'NZ' => ['name' => 'New Zealand', 'flag' => '🇳🇿', 'cat' => 'evisa_90', 'days' => 90],
             'IN' => ['name' => 'India', 'flag' => '🇮🇳', 'cat' => 'evisa_90', 'days' => 90],
             'IE' => ['name' => 'Ireland', 'flag' => '🇮🇪', 'cat' => 'evisa_90', 'days' => 90],
-            'CH' => ['name' => 'Switzerland', 'flag' => '🇨🇭', 'cat' => 'evisa_90', 'days' => 90],
-            'NL' => ['name' => 'Netherlands', 'flag' => '🇳🇱', 'cat' => 'evisa_90', 'days' => 90],
-            'BE' => ['name' => 'Belgium', 'flag' => '🇧🇪', 'cat' => 'evisa_90', 'days' => 90],
             'AT' => ['name' => 'Austria', 'flag' => '🇦🇹', 'cat' => 'evisa_90', 'days' => 90],
-            'PL' => ['name' => 'Poland', 'flag' => '🇵🇱', 'cat' => 'evisa_90', 'days' => 90],
-            'CZ' => ['name' => 'Czech Republic', 'flag' => '🇨🇿', 'cat' => 'evisa_90', 'days' => 90],
             'PT' => ['name' => 'Portugal', 'flag' => '🇵🇹', 'cat' => 'evisa_90', 'days' => 90],
             'GR' => ['name' => 'Greece', 'flag' => '🇬🇷', 'cat' => 'evisa_90', 'days' => 90],
-            'HU' => ['name' => 'Hungary', 'flag' => '🇭🇺', 'cat' => 'evisa_90', 'days' => 90],
-            'RO' => ['name' => 'Romania', 'flag' => '🇷🇴', 'cat' => 'evisa_90', 'days' => 90],
-            'SK' => ['name' => 'Slovakia', 'flag' => '🇸🇰', 'cat' => 'evisa_90', 'days' => 90],
-            'BG' => ['name' => 'Bulgaria', 'flag' => '🇧🇬', 'cat' => 'evisa_90', 'days' => 90],
-            'HR' => ['name' => 'Croatia', 'flag' => '🇭🇷', 'cat' => 'evisa_90', 'days' => 90],
             'IL' => ['name' => 'Israel', 'flag' => '🇮🇱', 'cat' => 'evisa_90', 'days' => 90],
             'ZA' => ['name' => 'South Africa', 'flag' => '🇿🇦', 'cat' => 'evisa_90', 'days' => 90],
             'BR' => ['name' => 'Brazil', 'flag' => '🇧🇷', 'cat' => 'evisa_90', 'days' => 90],
@@ -147,17 +151,18 @@ function vg_get_visa_checker_dataset(): array
             'blank_pages' => 'At least 2 blank visa endorsement pages are required for entry and exit immigration stamps.',
             'onward_ticket' => 'A confirmed outbound flight or train ticket leaving Vietnam within your allowed duration is legally required for visa-free entry and strictly checked by airlines before boarding.',
             'port_declaration' => 'When entering on an E-visa, your arrival port must match one of the 42 international checkpoints (expanded from 33 ports under Resolution 127/NQ-CP) approved by the Vietnam Immigration Department.',
-            'no_gap_rule' => 'Under Resolution 128/NQ-CP and Resolution 44/NQ-CP (2025–2028), the former 30-day waiting period between consecutive visa-free entries is abolished. Eligible travelers may re-enter under 45-day exemption anytime.',
+            'no_gap_rule' => 'Under Resolution 44/NQ-CP (15/03/2025 – 14/03/2028) and Resolution 229/NQ-CP (15/08/2025 – 14/08/2028), the former 30-day waiting period between consecutive visa-free entries is abolished. Citizens of all 25 eligible countries may enter for 45 days visa-free.',
             'phu_quoc_rule' => 'Phu Quoc Island offers a special 30-day visa exemption for ALL nationalities arriving directly by international flight or transit via Hanoi/HCMC domestic transfer without leaving the transit lounge.',
         ],
 
         'official_links' => [
             'portal_url' => 'https://evisa.xuatnhapcanh.gov.vn/',
             'alt_portal_url' => 'https://evisa.gov.vn/',
+            'mps_portal_url' => 'https://thithucdientu.gov.vn/',
             'single_fee_usd' => 25,
             'multi_fee_usd' => 50,
             'processing_days' => '3–5 working days (excluding weekends & Vietnamese public holidays)',
-            'recommended_buffer' => 'Apply at least 10–14 days before flight departure via evisa.gov.vn or evisa.xuatnhapcanh.gov.vn',
+            'recommended_buffer' => 'Apply at least 10–14 days before flight departure via evisa.gov.vn, thithucdientu.gov.vn, or evisa.xuatnhapcanh.gov.vn',
         ],
     ];
 }
@@ -180,7 +185,7 @@ function vg_render_visa_checker_html(): string
         <div class="vg-vc-header">
             <div class="vg-vc-eyebrow">
                 <span class="vg-vc-badge-live"><?php esc_html_e('Official Visa & Entry Guide', 'vietnamguide-premium'); ?></span>
-                <span class="vg-vc-meta">Updated: 2026 Resolution 128/NQ-CP & 127/NQ-CP</span>
+                <span class="vg-vc-meta">Updated: 2025–2028 Resolutions 44/NQ-CP, 229/NQ-CP &amp; 127/NQ-CP</span>
             </div>
             <div id="vg-visa-checker-title" class="vg-vc-title" role="heading" aria-level="3">Interactive Vietnam Visa &amp; E-Visa Requirements Checker</div>
             <p class="vg-vc-subtitle"><?php esc_html_e('Select your nationality and planned stay duration to verify entry rules, statutory visa fees, passport expiration requirements, and official immigration checkpoints.', 'vietnamguide-premium'); ?></p>
@@ -188,12 +193,13 @@ function vg_render_visa_checker_html(): string
 
         <noscript>
             <div class="vg-visa-noscript-card" style="background:#f8f9fa;border:1px solid #cbd5e1;border-radius:8px;padding:20px;margin-bottom:24px;">
-                <p style="font-weight:700;margin-bottom:8px;color:#1a365d;">🛂 2026 Vietnam Visa Policy Summary (No-JavaScript Reference):</p>
-                <p style="font-size:0.9rem;margin-bottom:12px;color:#475569;">Interactive checker requires JavaScript. Authoritative statutory visa rules under Resolution 128/NQ-CP &amp; Decree 127:</p>
+                <p style="font-weight:700;margin-bottom:8px;color:#1a365d;">🛂 2025–2028 Vietnam Visa Policy Summary (No-JavaScript Reference):</p>
+                <p style="font-size:0.9rem;margin-bottom:12px;color:#475569;">Interactive checker requires JavaScript. Authoritative statutory visa rules under Resolutions 44/NQ-CP, 229/NQ-CP &amp; 127/NQ-CP:</p>
                 <ul style="margin-bottom:0;padding-left:20px;font-size:0.9rem;line-height:1.6;">
-                    <li><strong>45-Day Visa Exemption:</strong> UK, Germany, France, Italy, Spain, Japan, South Korea, Russia, Sweden, Norway, Denmark, Finland, Belarus.</li>
-                    <li><strong>30-Day Visa Exemption (ASEAN):</strong> Singapore, Thailand, Malaysia, Indonesia, Philippines (21 days), Cambodia, Laos.</li>
-                    <li><strong>90-Day E-Visa:</strong> Available to all countries and territories via the official portal <code>xuatnhapcanh.gov.vn</code> ($25 USD single entry / $50 USD multiple entry).</li>
+                    <li><strong>45-Day Visa Exemption (Res 44/NQ-CP, 2025–2028):</strong> UK, Germany, France, Italy, Spain, Japan, South Korea, Russia, Sweden, Norway, Denmark, Finland (+ Belarus).</li>
+                    <li><strong>45-Day Tourism Visa Exemption (Res 229/NQ-CP, Aug 2025–Aug 2028):</strong> Switzerland, Netherlands, Belgium, Poland, Czech Republic, Hungary, Luxembourg, Romania, Slovakia, Slovenia, Bulgaria, Croatia.</li>
+                    <li><strong>30-Day Visa Exemption (ASEAN &amp; Bilateral):</strong> Singapore, Thailand, Malaysia, Indonesia, Cambodia, Laos, Kazakhstan, Mongolia, Panama, Philippines (21 days), Chile (90 days).</li>
+                    <li><strong>90-Day E-Visa:</strong> Available to all countries and territories via the official Ministry of Public Security portals <code>evisa.gov.vn</code> / <code>thithucdientu.gov.vn</code> / <code>evisa.xuatnhapcanh.gov.vn</code> ($25 USD single entry / $50 USD multiple entry).</li>
                     <li><strong>Phu Quoc 30-Day Island Exemption:</strong> Applicable for direct international air arrivals at PQC airport.</li>
                 </ul>
             </div>
@@ -987,6 +993,9 @@ function vg_inject_visa_checker_on_page(string $content): string
         'phu-quoc-visa-exemption-guide',
         'vietnam-visa-extension-overstay-rules',
         'vietnam-land-border-crossings-guide',
+        'vietnam-to-cambodia-border-crossings',
+        'vietnam-to-cambodia-boat-guide',
+        'vietnam-travel-guide',
     ];
 
     $isTargetPage = in_array($currentSlug, $visaSlugs, true)

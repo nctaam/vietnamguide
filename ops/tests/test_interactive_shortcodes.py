@@ -611,10 +611,51 @@ class TestInteractiveShortcodes(unittest.TestCase):
         ]:
             self.assertIn(f"'{cluster_id}'", photo_code)
 
+    def test_visa_checker_resolution_44_and_229_nq_cp_ground_truth(self):
+        """Visa checker must reflect Government Resolutions 44/NQ-CP and 229/NQ-CP (2025-2028) and official MPS portals."""
+        vc_code = self.contents['visa_checker']
+        self.assertIn('Resolution 44/NQ-CP', vc_code)
+        self.assertIn('Resolution 229/NQ-CP', vc_code)
+        self.assertIn('https://thithucdientu.gov.vn/', vc_code)
+        self.assertIn("'vietnam-to-cambodia-border-crossings'", vc_code)
+        for iso_code in ['CH', 'NL', 'BE', 'PL', 'CZ', 'HU', 'LU', 'RO', 'SK', 'SI', 'BG', 'HR']:
+            pattern = rf"'{iso_code}'\s*=>\s*\[[^\]]*'cat'\s*=>\s*'exemption_45'"
+            self.assertRegex(
+                vc_code,
+                pattern,
+                f"Country {iso_code} must be configured with exemption_45 under Resolution 229/NQ-CP"
+            )
+
+    def test_cost_calculator_monument_tariffs_and_route_budget_expansion(self):
+        """Cost calculator must include HCMC & Trang An 2026 tariffs and expanded route budget auto-injection."""
+        cc_code = self.contents['cost_calculator']
+        self.assertIn('War Remnants Museum / Independence Palace / Cu Chi Tunnels (Ben Dinh)', cc_code)
+        self.assertIn('40,000 / 40,000–65,000 / 125,000 VND', cc_code)
+        self.assertIn('Trang An 250,000–300,000 VND', cc_code)
+        for slug in [
+            'tipping-in-vietnam',
+            'ha-giang-easy-rider-vs-self-drive',
+            'central-vietnam-itinerary',
+            'ha-long-bay-day-trip-vs-overnight-cruise',
+            '7-days-in-vietnam',
+        ]:
+            self.assertIn(f"'{slug}'", cc_code)
+
+    def test_packing_checklist_electrical_battery_pharmacy_ledger(self):
+        """Packing checklist must include the 2025-2026 Electrical Grid (220V/50Hz), CAAV Battery & Pharmacy Reference Ledger."""
+        pc_code = self.contents['packing_checklist']
+        self.assertIn('vg-checklist-field-specs', pc_code)
+        self.assertIn('220V / 50Hz (Type A, C &amp; F)', pc_code)
+        self.assertIn('100Wh (~27,000mAh at 3.7V)', pc_code)
+        self.assertIn('Circular 35/2017/TT-BQP', pc_code)
+        self.assertIn('FPT Long Châu / Pharmacity / 113–115', pc_code)
+        for slug in [
+            'vietnam-plug-adapter-electricity-guide',
+            'vietnam-sim-card-airport-vs-city',
+            'vietnam-scooter-rental-checklist',
+        ]:
+            self.assertIn(f"'{slug}'", pc_code)
+
 
 if __name__ == '__main__':
     unittest.main()
-
-
-
-

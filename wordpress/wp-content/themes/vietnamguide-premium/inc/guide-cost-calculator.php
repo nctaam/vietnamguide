@@ -298,7 +298,7 @@ function vg_render_cost_calculator_html(): string
                                         <th scope="row"><?php esc_html_e('Ninh Binh Karst', 'vietnamguide-premium'); ?></th>
                                         <td><?php esc_html_e('Trang An Boat Circuit / Tam Coc Sampan / Mua Cave Peak', 'vietnamguide-premium'); ?></td>
                                         <td>250,000 / 250,000 / 100,000 VND</td>
-                                        <td><?php esc_html_e('Rowing boat seat included (4 adults per sampan); 2.5–3 hr cave circuit at Trang An', 'vietnamguide-premium'); ?></td>
+                                        <td><?php esc_html_e('Rowing boat seat included (4 adults per sampan); Trang An 250,000–300,000 VND for 2.5–3 hr cave circuit', 'vietnamguide-premium'); ?></td>
                                     </tr>
                                     <tr>
                                         <th scope="row"><?php esc_html_e('Ha Long Bay', 'vietnamguide-premium'); ?></th>
@@ -317,6 +317,12 @@ function vg_render_cost_calculator_html(): string
                                         <td><?php esc_html_e('Temple of Literature / Thang Long Citadel / Hoa Lo Prison', 'vietnamguide-premium'); ?></td>
                                         <td>70,000 / 100,000 / 50,000 VND</td>
                                         <td><?php esc_html_e('50% concession discount for students and seniors aged 60+ with valid identification', 'vietnamguide-premium'); ?></td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row"><?php esc_html_e('Ho Chi Minh City', 'vietnamguide-premium'); ?></th>
+                                        <td><?php esc_html_e('War Remnants Museum / Independence Palace / Cu Chi Tunnels (Ben Dinh)', 'vietnamguide-premium'); ?></td>
+                                        <td>40,000 / 40,000–65,000 / 125,000 VND</td>
+                                        <td><?php esc_html_e('Independence Palace 65,000 VND includes Exhibit Building; Cu Chi Ben Duoc sector is 90,000–110,000 VND', 'vietnamguide-premium'); ?></td>
                                     </tr>
                                     <tr>
                                         <th scope="row"><?php esc_html_e('Alpine Cable Cars', 'vietnamguide-premium'); ?></th>
@@ -1577,25 +1583,45 @@ function vg_inject_cost_calculator_on_page(string $content): string
         'costs',
         'where-to-stay-in-vietnam-base-decisions',
         'money-cash-cards-atms',
+        'tipping-in-vietnam',
         'tipping-in-vietnam-etiquette',
         'vietnam-budget-travel-guide',
         'how-much-does-vietnam-cost',
+        'vietnam-train-vs-flight',
+        'ha-long-bay-cruise-questions-before-booking',
     ];
 
     $routeBudgetPresetMap = [
-        'ha-giang-loop-planning-guide'       => 'ha-giang',
-        'da-nang-vs-hoi-an'                  => 'da-nang-hoi-an',
-        'da-nang-travel-guide'               => 'da-nang-hoi-an',
-        'hoi-an-ancient-town-guide'          => 'da-nang-hoi-an',
-        'ninh-binh-travel-guide'             => 'hanoi-ninh-binh-halong',
-        'ha-long-bay-travel-guide'           => 'hanoi-ninh-binh-halong',
-        'ninh-binh-to-ha-long-bay-transfer'  => 'hanoi-ninh-binh-halong',
-        '10-days-in-vietnam'                 => 'classic-10d',
-        '14-days-in-vietnam'                 => 'classic-10d',
+        'ha-giang-loop-planning-guide'          => 'ha-giang',
+        'ha-giang-easy-rider-vs-self-drive'     => 'ha-giang',
+        'where-to-stay-in-ha-giang'             => 'ha-giang',
+        'hanoi-to-ha-giang-transport'           => 'ha-giang',
+        'ha-giang-to-dong-van-transport'        => 'ha-giang',
+        'sapa-vs-ha-giang'                      => 'ha-giang',
+        'da-nang-vs-hoi-an'                     => 'da-nang-hoi-an',
+        'da-nang-travel-guide'                  => 'da-nang-hoi-an',
+        'hoi-an-ancient-town-guide'             => 'da-nang-hoi-an',
+        'where-to-stay-in-da-nang'              => 'da-nang-hoi-an',
+        'where-to-stay-in-hoi-an'               => 'da-nang-hoi-an',
+        'best-things-to-do-in-da-nang'          => 'da-nang-hoi-an',
+        'best-things-to-do-in-hoi-an'           => 'da-nang-hoi-an',
+        'central-vietnam-itinerary'             => 'da-nang-hoi-an',
+        'ninh-binh-travel-guide'                => 'hanoi-ninh-binh-halong',
+        'ha-long-bay-travel-guide'              => 'hanoi-ninh-binh-halong',
+        'ninh-binh-to-ha-long-bay-transfer'     => 'hanoi-ninh-binh-halong',
+        'ha-long-to-ninh-binh-transport'        => 'hanoi-ninh-binh-halong',
+        'ha-long-bay-day-trip-vs-overnight-cruise' => 'hanoi-ninh-binh-halong',
+        'ha-long-bay-vs-lan-ha-bay'             => 'hanoi-ninh-binh-halong',
+        'ninh-binh-day-trip-vs-overnight'       => 'hanoi-ninh-binh-halong',
+        'where-to-stay-in-ninh-binh'            => 'hanoi-ninh-binh-halong',
+        'where-to-stay-in-ha-long-bay'          => 'hanoi-ninh-binh-halong',
+        '7-days-in-vietnam'                     => 'hanoi-ninh-binh-halong',
+        '10-days-in-vietnam'                    => 'classic-10d',
+        '14-days-in-vietnam'                    => 'classic-10d',
     ];
 
     $isCostGuide = in_array($postSlug, $costSlugs, true)
-        || in_array($pageUri, ['costs/vietnam-travel-cost', 'costs', 'plan/where-to-stay-in-vietnam-base-decisions', 'plan/money-cash-cards-atms'], true)
+        || in_array($pageUri, ['costs/vietnam-travel-cost', 'costs', 'plan/where-to-stay-in-vietnam-base-decisions', 'plan/money-cash-cards-atms', 'plan/tipping-in-vietnam'], true)
         || is_page('costs/vietnam-travel-cost')
         || is_page('vietnam-travel-cost')
         || is_page('costs')

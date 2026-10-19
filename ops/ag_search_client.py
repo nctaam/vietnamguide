@@ -28,27 +28,40 @@ def search_ag(
     url: str = DEFAULT_SEARCH_URL,
     api_key: str = DEFAULT_API_KEY,
     model: str = DEFAULT_MODEL,
-    timeout: int = 25,
+    timeout: int = 45,
+    retries: int = 2,
 ) -> dict[str, Any]:
-    """Execute a search request against the local Antigravity Search endpoint."""
+    """Execute a search request against the local Antigravity Search endpoint with automatic retry."""
+    import time
+
     payload = {
         "model": model,
         "query": query,
         "search_type": search_type,
         "max_results": max_results,
     }
-    req = urllib.request.Request(
-        url,
-        data=json.dumps(payload).encode("utf-8"),
-        headers={
-            "Content-Type": "application/json",
-            "Authorization": f"Bearer {api_key}",
-        },
-        method="POST",
-    )
-    with urllib.request.urlopen(req, timeout=timeout) as resp:
-        raw = resp.read().decode("utf-8", errors="replace")
-        return json.loads(raw)
+    last_exc: Exception | None = None
+    for attempt in range(max(1, retries)):
+        req = urllib.request.Request(
+            url,
+            data=json.dumps(payload).encode("utf-8"),
+            headers={
+                "Content-Type": "application/json",
+                "Authorization": f"Bearer {api_key}",
+            },
+            method="POST",
+        )
+        try:
+            with urllib.request.urlopen(req, timeout=timeout) as resp:
+                raw = resp.read().decode("utf-8", errors="replace")
+                return json.loads(raw)
+        except (urllib.error.URLError, TimeoutError) as exc:
+            last_exc = exc
+            if attempt + 1 < max(1, retries):
+                time.sleep(1.5 * (attempt + 1))
+    if last_exc is not None:
+        raise last_exc
+    return {}
 
 
 def verify_wikimedia_thumb_url(url: str) -> tuple[bool, str]:
@@ -88,12 +101,13 @@ def main() -> int:
         help="Search type (default: web)",
     )
     parser.add_argument("--max-results", "-n", type=int, default=5, help="Max results (0 for default)")
+    parser.add_argument("--timeout", type=int, default=45, help="Request timeout in seconds (default: 45)")
     parser.add_argument("--json", action="store_true", help="Output raw JSON")
     args = parser.parse_args()
 
     try:
-        res = search_ag(query=args.query, search_type=args.type, max_results=args.max_results)
-    except urllib.error.URLError as exc:
+        res = search_ag(query=args.query, search_type=args.type, max_results=args.max_results, timeout=args.timeout)
+    except (urllib.error.URLError, TimeoutError) as exc:
         print(f"[ERROR] Search request failed: {exc}", file=sys.stderr)
         return 1
 
