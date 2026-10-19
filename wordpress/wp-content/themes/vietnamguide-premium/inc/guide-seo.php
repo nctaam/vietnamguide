@@ -2483,8 +2483,8 @@ function vg_get_curated_faq_items(string $uri_path): array
     $slug = trim(basename($uri_path), '/');
     $faq_registry = [
         'vietnam-evisa' => [
-            ['q' => 'How much does a Vietnam e-visa cost?', 'a' => 'A single-entry Vietnam e-visa costs 25 USD, and a multiple-entry e-visa costs 50 USD. Fees are paid online by credit card and are non-refundable regardless of the application outcome.'],
-            ['q' => 'What is the official Vietnam e-visa website?', 'a' => 'The only official government portal for Vietnam e-visas is evisa.xuatnhapcanh.gov.vn (operated by the Vietnam Immigration Department). Avoid commercial third-party websites charging excessive processing markups.'],
+            ['q' => 'How much does a Vietnam e-visa cost?', 'a' => 'A single-entry 90-day Vietnam e-visa costs 25 USD, and a multiple-entry 90-day e-visa costs 50 USD. Citizens of 25 countries qualify for 45-day visa-free entry under Resolutions 44/NQ-CP and 229/NQ-CP (valid through August 2028).'],
+            ['q' => 'What is the official Vietnam e-visa website?', 'a' => 'The official Ministry of Public Security e-visa portals are evisa.gov.vn, thithucdientu.gov.vn, and evisa.xuatnhapcanh.gov.vn, valid across 42 designated international checkpoints under Resolution 127/NQ-CP. Avoid commercial third-party websites charging processing markups.'],
             ['q' => 'How far in advance should I apply for a Vietnam e-visa?', 'a' => 'Apply at least 2 weeks before your planned flight. Standard processing takes 3 to 5 business days, but processing stops during Vietnamese national holidays and technical maintenance windows.'],
             ['q' => 'Can I change my port of entry after my Vietnam e-visa is approved?', 'a' => 'No. Your entry checkpoint must match the airport, land border, or seaport approved on your official e-visa document. Changing entry ports requires submitting a new visa application.'],
             ['q' => 'Do I need to print a paper copy of my Vietnam e-visa?', 'a' => 'Yes. Airlines require a physical paper copy at departure check-in, and immigration officers stamp the paper letter upon arrival at the border checkpoint.'],
@@ -2527,7 +2527,7 @@ function vg_get_curated_faq_items(string $uri_path): array
         'ha-long-bay-vs-lan-ha-bay' => [
             ['q' => 'Is Ha Long Bay or Lan Ha Bay better?', 'a' => 'Lan Ha Bay offers quieter waters, fewer tourist boats, secluded sandy swimming coves, and unhurried kayaking around Cat Ba Island. Ha Long Bay provides iconic grand limestone cave formations (Sung Sot Cave) and panoramic viewpoint peaks (Ti Top Island), but with higher vessel traffic.'],
             ['q' => 'Can I visit both Ha Long Bay and Lan Ha Bay on the same cruise?', 'a' => 'Most 2-day/1-night cruises operate in either Ha Long Bay or Lan Ha Bay due to port jurisdiction boundaries. Longer 3-day/2-night itineraries frequently navigate through connecting border waters into quieter coves.'],
-            ['q' => 'Which departure port is used for Lan Ha Bay cruises?', 'a' => 'Lan Ha Bay cruises depart primarily from Ben Beo harbor or Got and Tuan Chau ferry terminals connecting to Cat Ba Island, whereas Ha Long Bay cruises depart from Tuan Chau International Marina or Halong International Cruise Port.'],
+            ['q' => 'Which departure port is used for Lan Ha Bay cruises?', 'a' => 'Lan Ha Bay cruises depart from Ben Beo harbor on Cat Ba Island, Tuan Chau International Marina, or via the Dong Bai – Cai Vieng ferry terminal (which replaced Got Pier in March 2024, costing 12,000 VND for foot passengers).'],
         ],
         'da-nang-vs-hoi-an' => [
             ['q' => 'Should I stay in Da Nang or Hoi An?', 'a' => 'Stay in Da Nang for expansive ocean beaches (My Khe), luxury high-rise resorts, modern seafood dining, and evening riverside entertainment. Stay in Hoi An for historic pedestrian streets, lantern-lit riverside evenings, cooking schools, and tailor shops. The two destinations are only 45 minutes apart by taxi.'],
@@ -2560,7 +2560,7 @@ function vg_get_curated_faq_items(string $uri_path): array
             ['q' => 'Which neighborhood is best for first-time visitors in Hanoi?', 'a' => 'Hoan Kiem (Old Quarter and French Quarter) puts you within a 10-minute walk of major museums, water puppet theaters, and street food alleys. Tay Ho (West Lake) suits longer stays seeking quieter lakeside cafes.'],
         ],
         'ho-chi-minh-city-travel-guide' => [
-            ['q' => 'How far is Tan Son Nhat Airport (SGN) from District 1 in Ho Chi Minh City?', 'a' => 'Tan Son Nhat Airport sits 8 kilometers north of District 1. Bus 109 or Bus 152 reaches Ben Thanh Market in 30 to 45 minutes for 5,000 to 20,000 VND, while a Grab car or Vinasun/Mai Linh metered taxi costs 120,000 to 180,000 VND (5 to 7.50 USD).'],
+            ['q' => 'How far is Tan Son Nhat Airport (SGN) from District 1 in Ho Chi Minh City?', 'a' => 'Tan Son Nhat Airport sits 8 kilometers north of District 1, with International Terminal T2 and Domestic Terminals T1 and T3. Bus 109 or Bus 152 reaches Ben Thanh Market (and HCMC Metro Line 1) in 30 to 45 minutes for 5,000 to 20,000 VND, while Grab or Vinasun/Mai Linh metered taxis cost 120,000 to 200,000 VND.'],
             ['q' => 'How many days are needed for Ho Chi Minh City?', 'a' => 'Two full days cover District 1 colonial landmarks, the War Remnants Museum, Ben Thanh Market, and Chinatown (Cholon), while a third or fourth day allows day trips to the Cu Chi Tunnels or the Mekong Delta.'],
             ['q' => 'Which district is best to stay in Ho Chi Minh City?', 'a' => 'District 1 is best for first-time visitors wanting walkable access to museums, Nguyen Hue Walking Street, and Ben Thanh Metro Station. District 3 offers tree-lined streets and local dining, while Thao Dien (District 2) suits boutique cafe stays.'],
         ],
@@ -2633,6 +2633,41 @@ function vg_get_curated_faq_items(string $uri_path): array
             ['q' => 'How do I get to Con Dao Islands from Ho Chi Minh City or Can Tho?', 'a' => 'Direct flights from Ho Chi Minh City (SGN) to Con Dao Airport (VCS) take 45 to 55 minutes. High-speed catamarans depart Tran De Port (Soc Trang/Can Tho, 2.5 hours, 320,000 to 500,000 VND) or Vung Tau across the open sea during calm months (March to September).'],
             ['q' => 'When is sea turtle nesting season on Con Dao?', 'a' => 'Green sea turtles (Chelonia mydas) nest on Bay Canh Island inside Con Dao National Park from May through October, with peak egg-laying and hatchling releases occurring between June and September under ranger supervision.'],
             ['q' => 'How do I visit the historic prison sites on Con Son Island?', 'a' => 'Purchase a 50,000 VND combined heritage ticket at the Con Dao Museum to visit Phu Hai Prison, the French and American Tiger Cages, and Phu Tuong Camp during morning hours (7:30 AM–11:30 AM) or afternoon hours (1:30 PM–4:30 PM).'],
+        ],
+        'cat-ba-travel-guide' => [
+            ['q' => 'How do I get from Hanoi or Hai Phong to Cat Ba Island in 2026?', 'a' => 'Take a joint bus-ferry package from Hanoi Old Quarter via the CT04 expressway (3.5 hours, 320,000 to 380,000 VND), cross via the Dong Bai – Cai Vieng public ferry (12,000 VND foot passenger, 45,000 VND motorbike), or ride the Sun World Cat Hai – Phu Long sea cable car (50,000 to 100,000 VND each way).'],
+            ['q' => 'How much does the Cat Ba National Park ticket and Ngu Lam Peak hike cost?', 'a' => 'Cat Ba National Park admission costs 80,000 VND per adult (40,000 VND for students and children), covering the 2.5-hour round-trip hike to Ngu Lam Peak and Trung Trang Cave. The extended 12-kilometer trek through the park to Viet Hai Village carries a 160,000 VND route fee.'],
+            ['q' => 'How much does a Lan Ha Bay boat and kayak day tour from Cat Ba cost?', 'a' => 'Full-day boat and kayaking tours departing Ben Beo Pier at 8:00 AM cost 650,000 to 950,000 VND per person, including Cai Beo floating fishing village, Dark and Bright Cave kayaking, and lunch on board.'],
+        ],
+        'nha-trang-travel-guide' => [
+            ['q' => 'How do I travel from Cam Ranh Airport (CXR) to Nha Trang city center?', 'a' => 'Cam Ranh International Airport lies 35 kilometers south of Nha Trang along the Nguyen Tat Thanh coastal road. Dat Moi Airport Bus Route 18 costs 50,000 to 65,000 VND (45 minutes), while Grab cars and metered taxis cost 300,000 to 400,000 VND.'],
+            ['q' => 'What are the 2026 ticket prices for Po Nagar Cham Towers and Hon Chong?', 'a' => 'Po Nagar Cham Towers (8th-to-12th-century Hindu brick sanctuary) and Hon Chong Promontory each charge 30,000 VND per adult. Island boat excursions into the Nha Trang Bay Marine Protected Area range from 220,000 to 650,000 VND.'],
+            ['q' => 'When is the dry beach season in Nha Trang?', 'a' => 'Nha Trang has an extended 8-month dry and sunny season from January through August with calm sea visibility of 15 to 25 meters, whereas peak northeast monsoon rains fall between October and mid-December.'],
+        ],
+        'quy-nhon-travel-guide' => [
+            ['q' => 'How do I get from Phu Cat Airport (UIH) or Dieu Tri Station to Quy Nhon?', 'a' => 'Phu Cat Airport (UIH) sits 35 kilometers northwest of Quy Nhon: the official airport shuttle bus to Nguyen Tat Thanh Square costs 50,000 VND (45 minutes), or a Grab/taxi costs 280,000 to 350,000 VND. Dieu Tri Railway Station is 12 kilometers west of the city (150,000 to 180,000 VND by taxi).'],
+            ['q' => 'What are the entrance fees for Ky Co Beach, Eo Gio, and Thap Doi Cham Towers?', 'a' => 'Eo Gio coastal cliff walkway costs 25,000 VND, Ky Co Beach costs 100,000 VND entry plus 40,000 VND for the headland electric shuttle, and Thap Doi (Twin Cham Towers) and Banh It Cham Towers each cost 20,000 VND per adult.'],
+            ['q' => 'When is the calmest sea season for Ky Co and Hon Kho in Quy Nhon?', 'a' => 'March through August offers flat turquoise water for speedboat and snorkeling excursions from Nhon Ly fishing village (250,000 to 400,000 VND round-trip), whereas rough northeast swells from October to January restrict boat departures to overland road access.'],
+        ],
+        'mui-ne-travel-guide' => [
+            ['q' => 'How long does it take to travel from Ho Chi Minh City to Mui Ne via the expressway?', 'a' => 'Via the CT01 Dau Giay – Phan Thiet Expressway, VIP limousine vans and private cars travel from District 1 in Ho Chi Minh City to Ham Tien and Mui Ne in 2.5 to 3 hours (250,000 to 420,000 VND). Morning train SPT2 from Saigon Station to Phan Thiet Station takes 3 hours 45 minutes (180,000 to 265,000 VND).'],
+            ['q' => 'How much do the White Sand Dunes, Red Sand Dunes, and Fairy Stream cost in Mui Ne?', 'a' => 'Fairy Stream (Suoi Tien) and the White Sand Dunes (Bau Trang) each charge a 15,000 VND entrance ticket. Optional ATV or Land Cruiser rides up the White Sand Dunes cost 300,000 to 600,000 VND, while a private 4-stop sunrise or sunset Jeep charter costs 550,000 to 650,000 VND per vehicle.'],
+            ['q' => 'When is the best wind season for kitesurfing in Mui Ne?', 'a' => 'November through March delivers steady 18-to-25-knot thermal northeast trade winds and dry sunshine along Ham Tien Bay.'],
+        ],
+        'hue-travel-guide' => [
+            ['q' => 'How much are Hue Imperial Citadel and Royal Tomb tickets in 2026?', 'a' => 'Hue Monuments Conservation Centre charges 200,000 VND for the Imperial Citadel and 150,000 VND each for Minh Mang, Tu Duc, and Khai Dinh Royal Tombs. The 2-day 3-site combo pass (Citadel + 2 Tombs) costs 420,000 VND and the 4-site pass costs 530,000 VND.'],
+            ['q' => 'How do I book the Central Heritage Train (HD1/HD2) between Hue and Da Nang?', 'a' => 'Book scenic trains HD1/HD2 or HD3/HD4 directly on dsvn.vn for 150,000 to 180,000 VND. The 3-hour coastal rail journey crosses Hai Van Pass, stops for 10 minutes at Lang Co Bay, and includes a cultural music carriage.'],
+            ['q' => 'How do I get from Phu Bai Airport (HUI) to Hue city center?', 'a' => 'Phu Bai International Airport (Terminal T2) is 15 kilometers south of the Perfume River. Airport Bus Route 2 costs 50,000 VND (30 to 35 minutes), while Grab or Mai Linh metered taxis cost 200,000 to 250,000 VND.'],
+        ],
+        'can-tho-travel-guide' => [
+            ['q' => 'What time should I take a boat to Cai Rang Floating Market in Can Tho?', 'a' => 'Depart Ninh Kieu Pier between 5:00 AM and 5:30 AM to reach Cai Rang Floating Market during peak wholesale fruit trading from 5:30 AM to 7:00 AM. Private wooden sampan charters cost 350,000 to 500,000 VND per boat for 1 to 4 passengers.'],
+            ['q' => 'How do I get from Ho Chi Minh City to Can Tho?', 'a' => 'Futa Bus Lines (Phuong Trang) and Vu Linh sleeper and limousine coaches depart Mien Tay Bus Station every 30 minutes via the Trung Luong – My Thuan – Can Tho Expressway (CT01), taking 3 to 3.5 hours for 165,000 to 250,000 VND.'],
+            ['q' => 'How much is admission to Binh Thuy Ancient House and Con Son Islet?', 'a' => 'Binh Thuy Ancient House (built in 1870) charges 20,000 to 30,000 VND entry. Con Son community islet is reached via a 20,000 to 30,000 VND ferry from Co Bac Pier, with orchard and local culinary stops costing 50,000 to 150,000 VND.'],
+        ],
+        'vietnam-train-travel' => [
+            ['q' => 'What is the official website to buy Vietnam train tickets?', 'a' => 'Book directly on Vietnam Railways official portals at dsvn.vn or vetau.com.vn using an international Visa or Mastercard with zero agency markup. Regular tickets open 60 to 90 days before departure.'],
+            ['q' => 'Which Reunification Express train is best: SE1/SE2, SE3/SE4, or SE19/SE20?', 'a' => 'SE1/SE2 and SE3/SE4 are the fastest flagship North-South express trains with air-conditioned 4-berth soft sleepers (AnN). SE19/SE20 is the dedicated overnight Hanoi – Hue – Da Nang express (1,050,000 to 1,450,000 VND), and HD1/HD2 (150,000 to 180,000 VND) is the daytime Hai Van Pass scenic train.'],
+            ['q' => 'What is the baggage allowance on Vietnam Railways trains?', 'a' => 'Adult passengers receive a 20-kilogram carry-on baggage allowance (up to 0.8m x 0.5m x 0.4m) stored under the lower berths or on overhead racks in 4-berth sleeper compartments.'],
         ],
     ];
 
@@ -2808,8 +2843,8 @@ function vg_get_page_howto_schema(string $uri_path, string $current_url): ?array
             'description' => 'Step-by-step instructions for submitting a valid Vietnam electronic visa application through the official government immigration portal.',
             'steps'       => [
                 ['name' => 'Prepare Required Documents', 'text' => 'Ensure your passport has at least 6 months validity. Prepare a sharp JPEG digital scan of your passport bio page and a passport-style portrait photo on a plain white background without glasses.'],
-                ['name' => 'Access the Official Immigration Portal', 'text' => 'Visit the official government website at evisa.xuatnhapcanh.gov.vn. Avoid third-party commercial agency portals that charge marked-up intermediary fees.'],
-                ['name' => 'Complete the Application Form', 'text' => 'Fill in your full legal name, date of birth, passport details, temporary address in Vietnam, and select your specific entry and exit international border checkpoints.'],
+                ['name' => 'Access the Official Immigration Portal', 'text' => 'Visit the official Ministry of Public Security portals at evisa.gov.vn, thithucdientu.gov.vn, or evisa.xuatnhapcanh.gov.vn. Avoid third-party commercial agency portals that charge marked-up intermediary fees.'],
+                ['name' => 'Complete the Application Form', 'text' => 'Fill in your full legal name, date of birth, passport details, temporary address in Vietnam, and select your specific entry and exit checkpoint from the 42 designated international gates under Resolution 127/NQ-CP.'],
                 ['name' => 'Pay the Visa Processing Fee', 'text' => 'Pay the official non-refundable fee (25 USD for single-entry up to 90 days, or 50 USD for multiple-entry) using an international debit or credit card.'],
                 ['name' => 'Track Status and Print Approval Letter', 'text' => 'Record your registration code. Check application status after 3 to 5 working days. Once approved, download and print two physical copies of the e-visa letter for departure check-in and border inspection.'],
             ],
@@ -2904,25 +2939,25 @@ function vg_get_page_webapplication_schema(string $uri_path, string $current_url
         ],
         'vietnam-evisa' => [
             'name'                => 'Vietnam Visa Requirement & Exemption Checker',
-            'description'         => 'Interactive nationality-based visa requirements, 45-day unilateral exemption rules, and official 90-day e-visa validation engine for international travelers.',
+            'description'         => 'Interactive nationality-based visa requirements, 45-day unilateral exemption rules (25 countries under Resolutions 44/NQ-CP & 229/NQ-CP), and official 90-day e-visa validation engine across 42 international checkpoints.',
             'applicationCategory' => 'TravelApplication',
             'featureList'         => [
                 'Instant nationality lookup across 80+ countries',
-                '45-day unilateral exemption vs 30-day bilateral exemption status indicator',
+                '45-day unilateral exemption (25 countries under Resolutions 44/NQ-CP & 229/NQ-CP) vs 30-day bilateral exemption status indicator',
                 '6-month passport validity expiration calculator',
-                '33 official international entry port gate inspector',
-                'Official government immigration portal link shield',
+                '42 official international checkpoint gate inspector under Resolution 127/NQ-CP',
+                'Official government immigration portal link shield (evisa.gov.vn & thithucdientu.gov.vn)',
             ],
         ],
         'best-time-to-visit-vietnam' => [
             'name'                => 'Vietnam Weather & Regional Season Matrix',
-            'description'         => 'Interactive month-by-month regional climate matrix across North, Central, and South Vietnam with monsoon and route-fit indicators.',
+            'description'         => 'Interactive month-by-month regional climate matrix across North, Central, and South Vietnam with monsoon, Beaufort Force 6 maritime suspension, and 2026–2027 Tet holiday indicators.',
             'applicationCategory' => 'TravelApplication',
             'featureList'         => [
                 '12-month climate navigator across Northern, Central, and Southern Vietnam',
                 'Regional rainfall, temperature, and sea swimming conditions',
                 'Mountain elevation temperature drop calculator',
-                'Seasonal weather risk radar and route pivot alternatives',
+                'Seasonal weather risk radar, Beaufort Force 6 maritime cruise rules, and 2026–2027 Tet holiday ledger',
             ],
         ],
         'vietnam-first-trip-planning-checklist' => [
@@ -2939,10 +2974,10 @@ function vg_get_page_webapplication_schema(string $uri_path, string $current_url
         ],
         'vietnam-airport-arrival-checklist' => [
             'name'                => 'Vietnam Gateway Airport Navigator & Scam Shield',
-            'description'         => 'Interactive terminal transit guide, verified Grab pickup bay locators, and metered taxi fare estimators for HAN, SGN, DAD, CXR, and PQC.',
+            'description'         => 'Interactive terminal transit guide, verified Grab pickup bay locators, and metered taxi/bus/metro fare estimators across 9 gateway airports (HAN, SGN, DAD, CXR, PQC, HUI, DLI, VDH, HPH).',
             'applicationCategory' => 'TravelApplication',
             'featureList'         => [
-                'Terminal-to-curb arrival navigation for 5 international airports (HAN, SGN, DAD, CXR, PQC)',
+                'Terminal-to-curb arrival navigation for 9 gateway airports (HAN, SGN including Terminal T3, DAD, CXR, PQC, HUI, DLI, VDH, HPH)',
                 'Verified Grab pickup island lanes and driver verification protocols',
                 'Official metered taxi fleet brands and dispatch queue locations',
                 'Zone-based transit cost and duration estimator to central city districts',

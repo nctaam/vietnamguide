@@ -712,6 +712,30 @@ class TestInteractiveShortcodes(unittest.TestCase):
         self.assertIn('Hanoi Metro Line 2A', aio_code)
         self.assertIn('HD1/HD2', aio_code)
 
+    def test_photo_dispatch_monument_tariff_ledger_and_wikimedia_urls(self):
+        """Photo dispatch must include the 2025-2026 UNESCO Heritage, National Park & Island Ferry Reference Ledger and MD5-verified Wikimedia Commons URLs."""
+        photo_path = os.path.join(THEME_INC, 'guide-photo-dispatch.php')
+        with open(photo_path, 'r', encoding='utf-8') as f:
+            photo_code = f.read()
+        self.assertIn('vg-dispatch-monument-ledger', photo_code)
+        self.assertIn('wikimedia_commons_url', photo_code)
+        self.assertIn('150,000 VND (Mỹ Sơn)', photo_code)
+        self.assertIn('80,000 VND (Park) / 12,000 VND (Ferry)', photo_code)
+        self.assertIn('30,000 VND (Po Nagar)', photo_code)
+        self.assertIn('20,000 VND (Pa Sỹ)', photo_code)
+        for slug in [
+            'nha-trang-travel-guide',
+            'quy-nhon-travel-guide',
+            'mui-ne-travel-guide',
+            'ba-be-lake-travel-guide',
+            'mai-chau-travel-guide',
+            'ninh-binh-vs-ha-long-bay',
+            'phu-quoc-vs-con-dao',
+            'da-lat-vs-sapa',
+        ]:
+            self.assertIn(f"'{slug}'", photo_code)
+
 
 if __name__ == '__main__':
     unittest.main()
+

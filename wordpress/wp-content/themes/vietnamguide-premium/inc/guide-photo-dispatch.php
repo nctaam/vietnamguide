@@ -25,6 +25,7 @@ function vg_get_visual_dispatches_data(): array
             'lead' => 'First light cuts through maritime mist, outlining limestone pillars formed over 500 million years of tropical karst evolution.',
             'base_image_slug' => 'ha-long-bay-vietnam-hero',
             'image_fallback' => 'assets/images/ha-long-bay-vietnam-hero.jpg',
+            'wikimedia_commons_url' => 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/fa/Ha_Long_Bay%2C_Vietnam%2C_View_from_above.jpg/1920px-Ha_Long_Bay%2C_Vietnam%2C_View_from_above.jpg',
             'aspect_ratio' => '16/9',
             'alt_text' => 'Misty limestone karsts rising from calm waters in Ha Long Bay at dawn',
             'exif' => [
@@ -35,7 +36,7 @@ function vg_get_visual_dispatches_data(): array
                 'elevation' => '142m ASL',
                 'time_of_day' => '05:48 ICT',
             ],
-            'field_notes' => 'Dawn maritime conditions offer maximum atmospheric clarity before thermal convection brings afternoon haze. Sailing permits require calm conditions below Beaufort Force 4.',
+            'field_notes' => 'Day-trip Route 1/2 entry costs 310,000 VND (250,000 VND bay fee + 60,000 VND port fee); overnight cruises include 550,000–750,000 VND permits. Adjacent Cát Bà Island connects via the Đồng Bài – Cái Viềng ferry (12,000 VND foot passenger) and Cát Bà National Park (80,000 VND entry).',
             'photographer' => 'Vyacheslav Argenberg',
             'license' => 'CC BY 4.0',
             'related_route' => '/destinations/ha-long-bay-travel-guide/',
@@ -50,6 +51,7 @@ function vg_get_visual_dispatches_data(): array
             'lead' => 'Silk lanterns illuminate timber shophouses preserved since the 16th-century international trading port era.',
             'base_image_slug' => 'home-editorial',
             'image_fallback' => 'assets/images/home-editorial.jpg',
+            'wikimedia_commons_url' => 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/68/2024-12-20_Hoi_An_Old_Town_at_night_3.jpg/1920px-2024-12-20_Hoi_An_Old_Town_at_night_3.jpg',
             'aspect_ratio' => '16/9',
             'alt_text' => 'Lantern reflections dancing across the calm surface of the Hoai River in Hoi An at night',
             'exif' => [
@@ -60,7 +62,7 @@ function vg_get_visual_dispatches_data(): array
                 'elevation' => '4m ASL',
                 'time_of_day' => '19:15 ICT',
             ],
-            'field_notes' => 'Motorized traffic is prohibited in the central old quarter after 17:30. River wooden sampans charge standard regulated rates of 150,000 VND for a 20-minute water circuit.',
+            'field_notes' => 'Old Town heritage tickets cost 120,000 VND (5 sight coupons) and Hoài River wooden sampans charge 150,000–200,000 VND per 20-minute loop. Nearby Mỹ Sơn UNESCO Sanctuary costs 150,000 VND (including electric buggy), and Cù Lao Chàm Biosphere Reserve costs 70,000 VND + 100,000 VND marine fee.',
             'photographer' => 'VietnamGuide Field Desk',
             'license' => 'Editorial Use',
             'related_route' => '/destinations/best-things-to-do-in-hoi-an/',
@@ -75,6 +77,7 @@ function vg_get_visual_dispatches_data(): array
             'lead' => 'Steep mountain contours sculpted into hydraulic rice staircases descending through morning alpine cloud banks.',
             'base_image_slug' => 'sapa-rice-terraces-hero',
             'image_fallback' => 'assets/images/sapa-rice-terraces-hero.jpg',
+            'wikimedia_commons_url' => 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/ff/Rice_terraces_in_Sapa%2C_Vietnam.jpg/1920px-Rice_terraces_in_Sapa%2C_Vietnam.jpg',
             'aspect_ratio' => '16/9',
             'alt_text' => 'Stepped mountain rice terraces in Muong Hoa Valley, Sa Pa, Northern Vietnam',
             'exif' => [
@@ -85,7 +88,7 @@ function vg_get_visual_dispatches_data(): array
                 'elevation' => '1,480m ASL',
                 'time_of_day' => '06:30 ICT',
             ],
-            'field_notes' => 'Early morning mountain light cuts through valley condensation before dense alpine thermals form at noon. Unpaved trail descents require sturdy boots with traction lug soles.',
+            'field_notes' => 'Sun World Fansipan Legend cable car costs 850,000 VND round-trip (950,000 VND Saturdays/holidays) plus 150,000 VND Mường Hoa monorail and 150,000–170,000 VND peak funicular. Cát Cát Village entry is 150,000 VND and Tả Van – Lao Chải valley tickets cost 75,000 VND.',
             'photographer' => 'Wikimedia Commons Archive',
             'license' => 'CC0 1.0 Public Domain',
             'related_route' => '/destinations/sapa-travel-guide/',
@@ -100,6 +103,7 @@ function vg_get_visual_dispatches_data(): array
             'lead' => 'Vertical limestone towers rise directly from flooded alluvial paddies along the Ngô Đồng river corridor.',
             'base_image_slug' => 'ninh-binh-mua-cave-hero',
             'image_fallback' => 'assets/images/ninh-binh-mua-cave-hero.jpg',
+            'wikimedia_commons_url' => 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/f4/Mua_Cave%2C_Ninh_Binh%2C_Vietnam%2C_20240202_0926_4964.jpg/1920px-Mua_Cave%2C_Ninh_Binh%2C_Vietnam%2C_20240202_0926_4964.jpg',
             'aspect_ratio' => '16/9',
             'alt_text' => 'Limestone karst peaks and river valley from Mua Cave viewpoint in Ninh Binh, Vietnam',
             'exif' => [
@@ -110,7 +114,7 @@ function vg_get_visual_dispatches_data(): array
                 'elevation' => '145m ASL',
                 'time_of_day' => '09:26 ICT',
             ],
-            'field_notes' => 'Climbing the 486 stone steps to the Lying Dragon ridge before 08:30 avoids midday tour coach arrivals. Official Tràng An sampan boat tickets cost 300,000 VND per adult.',
+            'field_notes' => 'Climbing the 486 stone steps to Hang Múa Lying Dragon ridge (100,000 VND entry) before 08:30 avoids midday tour coaches. Official Tràng An sampan boat tickets cost 250,000–300,000 VND per adult, and Tam Cốc combined sightseeing plus boat tickets cost 250,000 VND.',
             'photographer' => 'Wikimedia Commons Contributor',
             'license' => 'CC BY 4.0',
             'related_route' => '/destinations/ninh-binh-travel-guide/',
@@ -125,6 +129,7 @@ function vg_get_visual_dispatches_data(): array
             'lead' => 'Temperate highland air and Khasi pine ridges ring the 5-kilometer crescent lake at the center of Đà Lạt.',
             'base_image_slug' => 'da-lat-xuan-huong-hero',
             'image_fallback' => 'assets/images/da-lat-xuan-huong-hero.jpg',
+            'wikimedia_commons_url' => 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/aa/Da_Lat_-_Xuan_Huong_Lake.jpg/1920px-Da_Lat_-_Xuan_Huong_Lake.jpg',
             'aspect_ratio' => '16/9',
             'alt_text' => 'Crescent waters of Xuan Huong Lake and pine-forested hills on the Langbiang Plateau in Da Lat, Vietnam',
             'exif' => [
@@ -135,7 +140,7 @@ function vg_get_visual_dispatches_data(): array
                 'elevation' => '1,500m ASL',
                 'time_of_day' => '07:10 ICT',
             ],
-            'field_notes' => 'At 1,500 meters elevation, night temperatures drop to 14°C–16°C while coastal plains remain tropical. Morning mist clears across Xuân Hương Lake between 06:30 and 08:00.',
+            'field_notes' => 'At 1,500m elevation, night temperatures drop to 14°C–16°C. Datanla Waterfall costs 50,000 VND entry (250,000 VND round-trip New Alpine Coaster), Langbiang Mountain costs 50,000 VND + 120,000 VND Jeep to Radar Peak, and northern Măng Đen Pa Sỹ Waterfall costs 20,000 VND.',
             'photographer' => 'Wikimedia Commons Contributor',
             'license' => 'CC BY 4.0',
             'related_route' => '/destinations/da-lat-travel-guide/',
@@ -150,6 +155,7 @@ function vg_get_visual_dispatches_data(): array
             'lead' => 'Timber sampans and orchard barges navigate distributor canals off the Hậu River shortly after dawn.',
             'base_image_slug' => 'mekong-delta-phong-dien-hero',
             'image_fallback' => 'assets/images/mekong-delta-phong-dien-hero.jpg',
+            'wikimedia_commons_url' => 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/90/Vietnam%2C_Phong_Dien%2C_Mekong_Delta%2C_River.jpg/1920px-Vietnam%2C_Phong_Dien%2C_Mekong_Delta%2C_River.jpg',
             'aspect_ratio' => '16/9',
             'alt_text' => 'Riverine canal network and wooden sampan boats in Phong Dien, Mekong Delta, Vietnam',
             'exif' => [
@@ -160,7 +166,7 @@ function vg_get_visual_dispatches_data(): array
                 'elevation' => '3m ASL',
                 'time_of_day' => '06:15 ICT',
             ],
-            'field_notes' => 'Wholesale fruit barges at Cái Răng and Phong Điền peak between 05:30 and 07:00 ICT according to tidal flow. Private wooden sampan charters from Ninh Kiều Pier average 350,000–500,000 VND.',
+            'field_notes' => 'Wholesale fruit barges at Cái Răng and Phong Điền peak between 05:30 and 07:00 ICT. Private wooden sampan charters from Ninh Kiều Pier average 350,000–500,000 VND (1–4 passengers), and FUTA sleeper coaches from HCMC take 3–3.5 hours via the CT01 expressway (165,000–250,000 VND).',
             'photographer' => 'Vyacheslav Argenberg',
             'license' => 'CC BY 4.0',
             'related_route' => '/destinations/mekong-delta-travel-guide/',
@@ -175,6 +181,7 @@ function vg_get_visual_dispatches_data(): array
             'lead' => 'Emerald waters of the Son River flow directly into Paleozoic limestone cave mouths carved over 400 million years.',
             'base_image_slug' => 'phong-nha-son-river-hero',
             'image_fallback' => 'assets/images/phong-nha-son-river-hero.jpg',
+            'wikimedia_commons_url' => 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/f1/Son_River-Quang_Binh_province.jpg/1920px-Son_River-Quang_Binh_province.jpg',
             'aspect_ratio' => '16/9',
             'alt_text' => 'Boats on the emerald Son River framed by limestone karst mountains in Phong Nha, Quang Binh, Vietnam',
             'exif' => [
@@ -185,7 +192,7 @@ function vg_get_visual_dispatches_data(): array
                 'elevation' => '25m ASL',
                 'time_of_day' => '08:15 ICT',
             ],
-            'field_notes' => 'Phong Nha Cave entrance tickets cost 150,000 VND per adult plus 700,000 VND per round-trip dragon boat shared across up to 12 passengers. Paradise Cave admission is 250,000 VND per adult.',
+            'field_notes' => 'Phong Nha Cave entrance tickets cost 150,000 VND per adult plus 550,000–700,000 VND per round-trip dragon boat shared across up to 12 passengers. Paradise Cave admission is 250,000 VND per adult, and Dark Cave zip-line/kayak/mud-bath packages cost 450,000 VND.',
             'photographer' => 'BacLuong',
             'license' => 'CC BY-SA 4.0',
             'related_route' => '/destinations/phong-nha-travel-guide/',
@@ -200,6 +207,7 @@ function vg_get_visual_dispatches_data(): array
             'lead' => 'Vertical limestone walls rise 700 to 800 meters above the jade Nho Quế River channel along the northern frontier.',
             'base_image_slug' => 'cao-bang-tu-san-canyon-hero',
             'image_fallback' => 'assets/images/cao-bang-tu-san-canyon-hero.jpg',
+            'wikimedia_commons_url' => 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/3d/TuSan_Canyon.jpg/1920px-TuSan_Canyon.jpg',
             'aspect_ratio' => '16/9',
             'alt_text' => 'Steep limestone cliffs of Tu San Canyon rising above the emerald Nho Que River in northern Vietnam',
             'exif' => [
@@ -210,7 +218,7 @@ function vg_get_visual_dispatches_data(): array
                 'elevation' => '1,180m ASL',
                 'time_of_day' => '09:40 ICT',
             ],
-            'field_notes' => 'Motorboat and kayak passages through Tu Sản Canyon from Ta Lang or Xín Cái pier cost 120,000–150,000 VND per person. Further east in Cao Bằng, Bản Giốc Waterfall entrance is 45,000 VND per adult.',
+            'field_notes' => 'Motorboat and kayak passages through Tu Sản Canyon from Ta Lang or Xín Cái pier cost 120,000–150,000 VND per person. Further east in Cao Bằng, Bản Giốc Waterfall entrance is 45,000 VND (50,000 VND bamboo raft) and Ngườm Ngao Cave costs 45,000 VND.',
             'photographer' => 'NKSTTSSHNVN',
             'license' => 'CC BY-SA 4.0',
             'related_route' => '/destinations/cao-bang-travel-guide/',
@@ -219,12 +227,13 @@ function vg_get_visual_dispatches_data(): array
         'phu-quoc-archipelago' => [
             'id' => 'phu-quoc-archipelago',
             'title' => 'Crescent Bays of the Southern Gulf',
-            'location' => 'Bãi Khem & An Thới Archipelago',
-            'province' => 'Kiên Giang',
+            'location' => 'Bãi Khem & South-Central Coast',
+            'province' => 'Kiên Giang & Khánh Hòa',
             'coordinates' => '10°02\'N 104°01\'E',
-            'lead' => 'Sheltered white-sand arcs and granite headlands face calm Gulf of Thailand waters during the November-to-April dry season.',
+            'lead' => 'Sheltered white-sand arcs and granite headlands face calm turquoise waters during the dry coastal window.',
             'base_image_slug' => 'phu-quoc-kem-beach-hero',
             'image_fallback' => 'assets/images/phu-quoc-kem-beach-hero.jpg',
+            'wikimedia_commons_url' => 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/33/Kem_Beach_aerial_view_Phu_Quoc_Island_Vietnam.jpg/1920px-Kem_Beach_aerial_view_Phu_Quoc_Island_Vietnam.jpg',
             'aspect_ratio' => '16/9',
             'alt_text' => 'Aerial view of white sand and turquoise water at Kem Beach on Phu Quoc Island, Vietnam',
             'exif' => [
@@ -235,7 +244,7 @@ function vg_get_visual_dispatches_data(): array
                 'elevation' => '120m ASL',
                 'time_of_day' => '10:20 ICT',
             ],
-            'field_notes' => 'High-speed catamarans from Rạch Giá to Phú Quốc cost 315,000–340,000 VND in economy class. The 7.9-kilometer Hòn Thơm three-wire sea cable car operates at 650,000–700,000 VND per adult.',
+            'field_notes' => 'Rạch Giá – Phú Quốc high-speed ferries cost 315,000–340,000 VND and the 7.9km Hòn Thơm sea cable car costs 650,000–700,000 VND. Along the South-Central coast, Nha Trang Po Nagar Cham Towers cost 30,000 VND, Quy Nhơn Eo Gió costs 25,000 VND, and Kỳ Co Beach costs 100,000 VND.',
             'photographer' => 'Vivu Vietnam',
             'license' => 'CC BY-SA 4.0',
             'related_route' => '/destinations/phu-quoc-travel-guide/',
@@ -250,6 +259,7 @@ function vg_get_visual_dispatches_data(): array
             'lead' => 'Banyan canopies frame the 19th-century Turtle Tower at the historic civic core of Vietnam\'s capital.',
             'base_image_slug' => 'hanoi-hoan-kiem-hero',
             'image_fallback' => 'assets/images/hanoi-hoan-kiem-hero.jpg',
+            'wikimedia_commons_url' => 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/Hanoi-lac-hoan-kiem.jpg/1920px-Hanoi-lac-hoan-kiem.jpg',
             'aspect_ratio' => '16/9',
             'alt_text' => 'Turtle Tower on Hoan Kiem Lake surrounded by morning mist and green trees in Hanoi, Vietnam',
             'exif' => [
@@ -260,7 +270,7 @@ function vg_get_visual_dispatches_data(): array
                 'elevation' => '12m ASL',
                 'time_of_day' => '06:45 ICT',
             ],
-            'field_notes' => 'Đinh Tiên Hoàng Boulevard closes to motor traffic from Friday 19:00 through Sunday 24:00. Verified monument admissions: Temple of Literature 70,000 VND, Thăng Long Imperial Citadel 100,000 VND, Hỏa Lò Prison 50,000 VND.',
+            'field_notes' => 'Đinh Tiên Hoàng Boulevard closes to motor traffic from Friday 19:00 through Sunday 24:00. Verified monument admissions: Temple of Literature 70,000 VND, Thăng Long Imperial Citadel 100,000 VND, Hỏa Lò Prison 50,000 VND, and Ngọc Sơn Temple 50,000 VND.',
             'photographer' => 'Alex 69200 vx',
             'license' => 'CC BY-SA 4.0',
             'related_route' => '/destinations/hanoi-travel-guide/',
@@ -275,6 +285,7 @@ function vg_get_visual_dispatches_data(): array
             'lead' => 'Five-phoenix watchtowers crown the stone ramparts of Ngọ Môn Gate inside the 1804 UNESCO Imperial Enclosure.',
             'base_image_slug' => 'hue-imperial-citadel-hero',
             'image_fallback' => 'assets/images/hue-imperial-citadel-hero.jpg',
+            'wikimedia_commons_url' => 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b9/Hue_Vietnam_Citadel-of-Hu%E1%BA%BF-13.jpg/1920px-Hue_Vietnam_Citadel-of-Hu%E1%BA%BF-13.jpg',
             'aspect_ratio' => '16/9',
             'alt_text' => 'Ngo Mon Meridian Gate and lotus moat at the UNESCO Imperial Citadel in Hue, Vietnam',
             'exif' => [
@@ -285,7 +296,7 @@ function vg_get_visual_dispatches_data(): array
                 'elevation' => '8m ASL',
                 'time_of_day' => '08:30 ICT',
             ],
-            'field_notes' => 'Hue Monuments Conservation Centre tickets cost 200,000 VND for the Imperial City and 150,000 VND per Royal Tomb (Minh Mạng, Tự Đức, Khải Định), or 420,000 VND for the 2-day 3-site combo pass.',
+            'field_notes' => 'Hue Monuments Conservation Centre tickets cost 200,000 VND for the Imperial City and 150,000 VND per Royal Tomb (Minh Mạng, Tự Đức, Khải Định), or 420,000 VND for the 2-day 3-site combo pass. Scenic Heritage Trains HĐ1/HĐ2 link Huế to Đà Nẵng over Hải Vân Pass for 150,000–180,000 VND.',
             'photographer' => 'CEphoto, Uwe Aranas',
             'license' => 'CC BY-SA 3.0',
             'related_route' => '/destinations/hue-travel-guide/',
@@ -300,6 +311,7 @@ function vg_get_visual_dispatches_data(): array
             'lead' => '1898 French Third Republic façades anchor the pedestrian promenade linking City Hall to the Saigon River.',
             'base_image_slug' => 'saigon-city-hall-hero',
             'image_fallback' => 'assets/images/saigon-city-hall-hero.jpg',
+            'wikimedia_commons_url' => 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/3d/Ho_Chi_Minh_City%2C_City_Hall%2C_2020-01_CN-02.jpg/1920px-Ho_Chi_Minh_City%2C_City_Hall%2C_2020-01_CN-02.jpg',
             'aspect_ratio' => '16/9',
             'alt_text' => 'Historic City Hall facade and Nguyen Hue pedestrian plaza in District 1, Ho Chi Minh City, Vietnam',
             'exif' => [
@@ -310,7 +322,7 @@ function vg_get_visual_dispatches_data(): array
                 'elevation' => '9m ASL',
                 'time_of_day' => '09:05 ICT',
             ],
-            'field_notes' => 'HCMC Metro Line 1 connects Bến Thành Market to Suối Tiên for 6,000–20,000 VND per single ride. Domestic flights at Tan Son Nhat (SGN) now share operations across the new Terminal T3 and Terminal T1.',
+            'field_notes' => 'HCMC Metro Line 1 connects Bến Thành Market to Suối Tiên for 6,000–20,000 VND per single ride. Domestic flights at Tan Son Nhat (SGN) operate across Terminal T3 and Terminal T1, and District 1 civic monuments (War Remnants Museum, Independence Palace) charge 40,000–65,000 VND.',
             'photographer' => 'Steffen Schmitz',
             'license' => 'CC BY-SA 4.0',
             'related_route' => '/destinations/ho-chi-minh-city-travel-guide/',
@@ -462,6 +474,54 @@ function vg_render_photo_dispatch(array $atts): string
             </div>
         </article>
         <?php endforeach; ?>
+
+        <details class="vg-dispatch-monument-ledger" id="vg-dispatch-monument-ledger">
+            <summary class="vg-dispatch-monument-summary">
+                <span class="vg-dispatch-monument-badge">VERIFIED MONUMENT &amp; BIOSPHERE TARIFFS</span>
+                <span class="vg-dispatch-monument-title">2025–2026 UNESCO Heritage, National Park &amp; Island Ferry Reference Ledger</span>
+            </summary>
+            <div class="vg-dispatch-monument-body">
+                <div class="vg-table-scroll-wrapper" role="region" aria-label="2025-2026 Verified Monument, Biosphere and Island Ferry Tariff Reference Ledger" tabindex="0">
+                    <table class="vg-dispatch-monument-table">
+                        <caption>Verified 2025–2026 UNESCO monument admissions, biosphere conservation fees, and island ferry tariffs across Vietnam</caption>
+                        <thead>
+                            <tr>
+                                <th scope="col">Heritage Site / Island Corridor</th>
+                                <th scope="col">Province / Cluster</th>
+                                <th scope="col">Official 2026 Tariff (VND)</th>
+                                <th scope="col">Field Operational Notes</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th scope="row">Mỹ Sơn UNESCO Sanctuary &amp; Cù Lao Chàm Biosphere</th>
+                                <td>Quảng Nam (Hội An Hub)</td>
+                                <td>150,000 VND (Mỹ Sơn) / 170,000 VND (Cù Lao Chàm)</td>
+                                <td>Mỹ Sơn ticket includes electric buggy shuttle and Cham dance performance; Cù Lao Chàm combines 70,000 VND island entry + 100,000 VND marine fee (20-min Cửa Đại speedboat 400,000–650,000 VND round-trip).</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Cát Bà National Park &amp; Đồng Bài – Cái Viềng Ferry</th>
+                                <td>Hải Phòng (Lan Hạ Bay)</td>
+                                <td>80,000 VND (Park) / 12,000 VND (Ferry)</td>
+                                <td>80,000 VND adult park ticket covers Ngự Lâm Peak trail and Trung Trang Cave (160,000 VND Việt Hải trek); Đồng Bài – Cái Viềng public ferry is 12,000 VND walk-on (45,000 VND motorbike), or Sun World Phù Long cable car 50,000–100,000 VND.</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Po Nagar Cham Towers, Kỳ Co Beach &amp; Eo Gió</th>
+                                <td>Khánh Hòa &amp; Bình Định</td>
+                                <td>30,000 VND (Po Nagar) / 25,000–140,000 VND (Quy Nhơn)</td>
+                                <td>Nha Trang Po Nagar Cham Towers and Hòn Chồng each cost 30,000 VND; Quy Nhơn Eo Gió cliff walk costs 25,000 VND, Tháp Đôi costs 20,000 VND, and Kỳ Co Beach costs 100,000 VND + 40,000 VND headland shuttle.</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Măng Đen Pa Sỹ Waterfall &amp; Đà Lạt Highland Sites</th>
+                                <td>Kon Tum &amp; Lâm Đồng</td>
+                                <td>20,000 VND (Pa Sỹ) / 50,000–250,000 VND (Đà Lạt)</td>
+                                <td>Pa Sỹ Waterfall Eco-Park (1,200m ASL Kon Plông plateau, 100 km from Pleiku Airport PXU via QL24) costs 20,000 VND; Đà Lạt Datanla Waterfall costs 50,000 VND entry (250,000 VND New Alpine Coaster) and Langbiang costs 50,000 VND + 120,000 VND Jeep.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </details>
     </section>
     <?php
     vg_enqueue_photo_dispatch_assets_once();
@@ -666,6 +726,7 @@ function vg_inject_photo_dispatch_on_pillar_destinations(string $content): strin
         'bai-tu-long-bay-guide'         => 'halong',
         'cat-ba-travel-guide'           => 'halong',
         'ha-long-bay-vs-lan-ha-bay'     => 'halong',
+        'ninh-binh-vs-ha-long-bay'      => 'ninhbinh',
         'hoi-an-ancient-town-guide'     => 'hoian',
         'best-things-to-do-in-hoi-an'   => 'hoian',
         'da-nang-vs-hoi-an'             => 'hoian',
@@ -676,19 +737,26 @@ function vg_inject_photo_dispatch_on_pillar_destinations(string $content): strin
         'ha-giang-loop-planning-guide'  => 'caobang',
         'mu-cang-chai-travel-guide'     => 'highlands',
         'pu-luong-travel-guide'         => 'highlands',
+        'mai-chau-travel-guide'         => 'highlands',
         'cao-bang-travel-guide'         => 'caobang',
+        'ba-be-lake-travel-guide'       => 'caobang',
         'vietnam-rice-terraces-guide'   => 'highlands',
         'sapa-vs-ha-giang'              => 'highlands',
         'ninh-binh-travel-guide'        => 'ninhbinh',
         'tam-coc-vs-trang-an'           => 'ninhbinh',
         'da-lat-travel-guide'           => 'central-highlands',
         'mang-den-travel-guide'         => 'central-highlands',
+        'da-lat-vs-sapa'                => 'central-highlands',
         'mekong-delta-travel-guide'     => 'mekong',
         'can-tho-travel-guide'          => 'mekong',
         'phong-nha-travel-guide'        => 'phongnha',
         'quang-binh-travel-guide'       => 'phongnha',
         'phu-quoc-travel-guide'         => 'phuquoc',
         'con-dao-travel-guide'          => 'phuquoc',
+        'phu-quoc-vs-con-dao'           => 'phuquoc',
+        'nha-trang-travel-guide'        => 'phuquoc',
+        'quy-nhon-travel-guide'         => 'phuquoc',
+        'mui-ne-travel-guide'           => 'phuquoc',
         'best-beaches-in-vietnam'       => 'phuquoc',
         'hanoi-travel-guide'            => 'hanoi',
         'ho-chi-minh-city-travel-guide' => 'saigon',

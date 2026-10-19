@@ -1565,6 +1565,42 @@ echo json_encode([
                 f"Broken Wikimedia Commons MD5 directory prefix for {decoded_filename}: found /{d1}/{d2}/, expected /{md5_hex[0]}/{md5_hex[:2]}/"
             )
 
+    def test_expanded_curated_faqs_and_9_gateway_webapplication_schema(self):
+        """Expanded curated FAQs (Cat Ba, Nha Trang, Quy Nhon, Mui Ne, Hue, Can Tho, Train Travel) and 9-gateway WebApplication schema must emit verified 2026 ground truth."""
+        new_faq_routes = [
+            'destinations/cat-ba-travel-guide',
+            'destinations/nha-trang-travel-guide',
+            'destinations/quy-nhon-travel-guide',
+            'destinations/mui-ne-travel-guide',
+            'destinations/hue-travel-guide',
+            'destinations/can-tho-travel-guide',
+            'plan/vietnam-train-travel',
+        ]
+        php_code = f"""
+        $routes = {json.dumps(new_faq_routes)};
+        $faq_counts = [];
+        foreach ($routes as $r) {{
+            $items = vg_get_curated_faq_items($r);
+            $faq_counts[$r] = count($items);
+        }}
+        $evisa_app = vg_get_page_webapplication_schema('plan/vietnam-evisa', 'https://vietnamguide.net/plan/vietnam-evisa/');
+        $airport_app = vg_get_page_webapplication_schema('plan/vietnam-airport-arrival-checklist', 'https://vietnamguide.net/plan/vietnam-airport-arrival-checklist/');
+        echo json_encode([
+            'faq_counts'  => $faq_counts,
+            'evisa_app'   => $evisa_app,
+            'airport_app' => $airport_app,
+        ]);
+        """
+        res = _run_php(php_code)
+        self.assertEqual(res.returncode, 0, f"PHP error:\n{res.stderr}")
+        out = json.loads(res.stdout)
+        for route, count in out['faq_counts'].items():
+            self.assertGreaterEqual(count, 3, f"Route {route} must have >= 3 curated FAQ items, got {count}")
+        self.assertIn('42 international checkpoints', out['evisa_app']['description'])
+        self.assertIn('25 countries under Resolutions 44/NQ-CP & 229/NQ-CP', out['evisa_app']['description'])
+        self.assertIn('9 gateway airports (HAN, SGN, DAD, CXR, PQC, HUI, DLI, VDH, HPH)', out['airport_app']['description'])
+
 
 if __name__ == '__main__':
     unittest.main()
+
