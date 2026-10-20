@@ -383,12 +383,22 @@ flowchart TD
 - [x] **Task 17.4**: Chạy `ops/content_depth_auditor.py` kiểm định toàn bộ 19 bài viết trong `content/` (Tổng số từ: **25.711 từ**, 100% PASS, Mean HLS 98.9/100, 1.076 empirical signals, 0 Tier 1 clichés).
 - [x] **Task 17.5**: Xác minh 8 Quality Gates (8/8 PASS, Exit Code 0, 315 tests passed), commit và push lên `origin/master`.
 
-### Giai Đoạn 18: Cao Nguyên Trung Phần & Cung Đèo Biển (Stage 137) [TIẾP THEO]
-- [ ] **Task 18.1**: Dùng `ag-search` xác minh thực tế và biên soạn bài viết chuyên sâu:
-  - `content/destinations/da-lat-coffee-and-highlands-guide.md`: Cẩm nang cao nguyên sương mù Đà Lạt, nông trại cà phê Arabica Cầu Đất, đồi chè, thác Datanla máng trượt alpine coaster, Crazy House, ga xe lửa Đà Lạt 1932.
-- [ ] **Task 18.2**: Dùng `ag-search` xác minh thực tế và biên soạn bài so sánh trực diện:
-  - `content/compare/da-lat-vs-buon-ma-thuot.md`: So sánh toàn diện giữa Đà Lạt (nghỉ dưỡng khí hậu ôn đới 15°C–24°C, cà phê arabica, du lịch lãng mạn) vs Buôn Ma Thuột (thủ phủ cà phê robusta, văn hóa cồng chiêng Ê Đê, thác nước hùng vĩ Dray Nur / Dray Sap, du lịch voi thân thiện Yok Don).
-- [ ] **Task 18.3**: Dùng `ag-search` xác minh thực tế và biên soạn bài viết cẩm nang di chuyển:
-  - `content/plan/da-lat-to-nha-trang-transport.md`: Tuyến đèo Khánh Lê nối núi và biển (135 km, hạ độ cao từ 1.500m xuống biển, xe limousine 160k–220k VND, xe buýt Phương Trang, lưu ý sương mù và sạt lở đèo mùa mưa).
-- [ ] **Task 18.4**: Chạy `ops/content_depth_auditor.py` kiểm định toàn bộ các bài viết mới (bảo đảm >= 1,200 từ, HLS >= 85, 0 Tier 1 clichés, mật độ dữ liệu cao).
-- [ ] **Task 18.5**: Xác minh 8 Quality Gates (8/8 PASS, Exit Code 0), commit và push lên `origin/master`.
+### Giai Đoạn 18: Cao Nguyên Trung Phần & Cung Đèo Biển (Stage 137) [HOÀN THÀNH]
+- [x] **Task 18.1**: Dùng `ag-search` xác minh thực tế và biên soạn bài viết chuyên sâu:
+  - `content/destinations/da-lat-coffee-and-highlands-guide.md`: Cẩm nang cao nguyên sương mù Đà Lạt, nông trại cà phê Arabica Cầu Đất (1.500m–1.650m), đồi chè, thác Datanla máng trượt alpine coaster 3 (2.400m, 250k VND), Crazy House (80k VND), ga xe lửa Đà Lạt 1932 và tuyến tàu cổ Trại Mát (150k VND) (2,112 substantive words, HLS 100.0/100, 95 empirical signals).
+- [x] **Task 18.2**: Dùng `ag-search` xác minh thực tế và biên soạn bài so sánh trực diện:
+  - `content/compare/da-lat-vs-buon-ma-thuot.md`: So sánh toàn diện giữa Đà Lạt (nghỉ dưỡng khí hậu ôn đới 15°C–24°C, cà phê Arabica Cầu Đất, biệt thự Pháp) vs Buôn Ma Thuột (thủ phủ cà phê Robusta, đất đỏ bazan, nhà dài mẫu hệ Ê Đê, thác nước hùng vĩ Dray Nur / Dray Sap 40k VND, du lịch voi thân thiện Yok Don không cưỡi 800k–850k VND) (2,103 substantive words, HLS 100.0/100, 87 empirical signals).
+- [x] **Task 18.3**: Dùng `ag-search` xác minh thực tế và biên soạn bài viết cẩm nang di chuyển:
+  - `content/plan/da-lat-to-nha-trang-transport.md`: Tuyến đèo Khánh Lê nối núi và biển (QL27C 135 km, hạ độ cao từ 1.500m xuống biển qua 29 km đèo Omega, xe limousine 9 chỗ DCar 230k–300k VND, xe buýt Phương Trang 160k–190k VND, cảnh báo sương mù chiều và sạt lở đèo mùa mưa) (1,858 substantive words, HLS 100.0/100, 87 empirical signals).
+- [x] **Task 18.4**: Chạy `ops/content_depth_auditor.py` kiểm định toàn bộ 22 bài viết trong `content/` (Tổng số từ: **31.784 từ**, 100% PASS, Mean HLS 99.1/100, 1.345 empirical signals, 0 Tier 1 clichés).
+- [x] **Task 18.5**: Xác minh 8 Quality Gates (8/8 PASS, Exit Code 0, 315 tests passed), commit và push lên `origin/master`.
+
+### Giai Đoạn 19: Vương Quốc Hang Động Phong Nha & Cửa Ngõ Đồng Hới (Stage 138) [TIẾP THEO]
+- [ ] **Task 19.1**: Dùng `ag-search` xác minh thực tế và biên soạn bài viết chuyên sâu:
+  - `content/destinations/phong-nha-caves-exploration-guide.md`: Cẩm nang khám phá Vườn quốc gia Phong Nha - Kẻ Bàng, Động Thiên Đường (vé 250k VND + xe điện 100k–200k VND), Động Phong Nha (thuyền sông Son 550k/thuyền + vé 150k VND), Hang Tối Sông Chày (vé trọn gói đu zipline tắm bùn 450k VND), hệ thống tour thám hiểm chuyên sâu Oxalis (Hang Én, Tú Làn, Sơn Đoòng).
+- [ ] **Task 19.2**: Dùng `ag-search` xác minh thực tế và biên soạn bài so sánh trực diện:
+  - `content/compare/paradise-cave-vs-phong-nha-cave.md`: So sánh toàn diện giữa Động Thiên Đường (hang khô khổng lồ trên núi đá vôi, cầu gỗ 1 km, thạch nhũ kỳ vĩ) vs Động Phong Nha (hang ướt chèo thuyền ngầm trên sông Son, động Tiên Sơn khô bên trên, trải nghiệm sông nước).
+- [ ] **Task 19.3**: Dùng `ag-search` xác minh thực tế và biên soạn bài viết cẩm nang di chuyển:
+  - `content/plan/dong-hoi-to-phong-nha-transport.md`: Cung đường kết nối 45 km từ ga xe lửa và sân bay Đồng Hới (VDH) vào Phong Nha (thị trấn Phong Nha / Sơn Trạch): xe buýt địa phương số B4 35k–45k VND, taxi Grab 400k–500k VND, xe limousine đưa đón khách sạn, thuê xe máy tự lái.
+- [ ] **Task 19.4**: Chạy `ops/content_depth_auditor.py` kiểm định toàn bộ các bài viết mới (bảo đảm >= 1,200 từ, HLS >= 85, 0 Tier 1 clichés, mật độ dữ liệu cao).
+- [ ] **Task 19.5**: Xác minh 8 Quality Gates (8/8 PASS, Exit Code 0), commit và push lên `origin/master`.

@@ -1,7 +1,7 @@
 {
   "passed": true,
-  "total_articles": 19,
-  "passed_articles": 19,
+  "total_articles": 22,
+  "passed_articles": 22,
   "min_words_threshold": 1200,
   "min_hls_threshold": 85.0,
   "articles": [
@@ -54,6 +54,63 @@
           "5.5 hours",
           "7.0 hours",
           "4.5 hours"
+        ]
+      },
+      "slop_report": {
+        "passed": true,
+        "hls_score": 100,
+        "tier1_count": 0,
+        "tier1_violations": []
+      },
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "path": "M:/Projects/vietnamguide/content/compare/da-lat-vs-buon-ma-thuot.md",
+      "relative_path": "content/compare/da-lat-vs-buon-ma-thuot.md",
+      "passed": true,
+      "word_count": 2103,
+      "frontmatter": {
+        "title": "Da Lat vs Buon Ma Thuot: Pine Highlands vs Central Highlands Frontier",
+        "slug": "da-lat-vs-buon-ma-thuot",
+        "route_path": "compare/da-lat-vs-buon-ma-thuot",
+        "travel_cluster": "central_highlands",
+        "last_verified": "2026-10-20",
+        "author": "Antigravity Travel Intelligence",
+        "reading_time_minutes": 12,
+        "word_count": 2200
+      },
+      "elements": {
+        "h2_count": 9,
+        "h3_count": 15,
+        "table_count": 9,
+        "blockquote_count": 2,
+        "callout_count": 1,
+        "has_faq": true,
+        "has_steps": false
+      },
+      "empirical_signals": {
+        "currency_mentions": 63,
+        "distance_mentions": 22,
+        "transit_time_mentions": 2,
+        "total_empirical_signals": 87,
+        "sample_currencies": [
+          "1,600,000 VND",
+          "1,100,000 VND",
+          "95,000 VND",
+          "$2.20",
+          "$3.80"
+        ],
+        "sample_distances": [
+          "210 km",
+          "500 meters",
+          "500 meters",
+          "500 m",
+          "500 m"
+        ],
+        "sample_transit_times": [
+          "6.5 hours",
+          "8 hours"
         ]
       },
       "slop_report": {
@@ -486,6 +543,66 @@
       "warnings": []
     },
     {
+      "path": "M:/Projects/vietnamguide/content/destinations/da-lat-coffee-and-highlands-guide.md",
+      "relative_path": "content/destinations/da-lat-coffee-and-highlands-guide.md",
+      "passed": true,
+      "word_count": 2112,
+      "frontmatter": {
+        "title": "Da Lat Travel Guide: Arabica Coffee, Alpine Waterfalls, and Highland Heritage",
+        "slug": "da-lat-coffee-and-highlands-guide",
+        "route_path": "destinations/da-lat-travel-guide",
+        "travel_cluster": "central_highlands",
+        "last_verified": "2026-10-20",
+        "author": "Antigravity Travel Intelligence",
+        "reading_time_minutes": 12,
+        "word_count": 2200
+      },
+      "elements": {
+        "h2_count": 6,
+        "h3_count": 16,
+        "table_count": 6,
+        "blockquote_count": 2,
+        "callout_count": 1,
+        "has_faq": true,
+        "has_steps": true
+      },
+      "empirical_signals": {
+        "currency_mentions": 60,
+        "distance_mentions": 30,
+        "transit_time_mentions": 5,
+        "total_empirical_signals": 95,
+        "sample_currencies": [
+          "90,000 VND",
+          "$3.60",
+          "150,000 VND",
+          "$6.00",
+          "260,000 VND"
+        ],
+        "sample_distances": [
+          "500 meters",
+          "25 km",
+          "650 meters",
+          "500 m",
+          "650 m"
+        ],
+        "sample_transit_times": [
+          "45 minutes",
+          "20 minutes",
+          "50 minutes",
+          "35 minutes",
+          "24 hours"
+        ]
+      },
+      "slop_report": {
+        "passed": false,
+        "hls_score": 100,
+        "tier1_count": 0,
+        "tier1_violations": []
+      },
+      "errors": [],
+      "warnings": []
+    },
+    {
       "path": "M:/Projects/vietnamguide/content/destinations/ha-giang-loop-guide.md",
       "relative_path": "content/destinations/ha-giang-loop-guide.md",
       "passed": true,
@@ -772,6 +889,66 @@
           "6.5 hours",
           "5.0 hours",
           "6 hours"
+        ]
+      },
+      "slop_report": {
+        "passed": true,
+        "hls_score": 100,
+        "tier1_count": 0,
+        "tier1_violations": []
+      },
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "path": "M:/Projects/vietnamguide/content/plan/da-lat-to-nha-trang-transport.md",
+      "relative_path": "content/plan/da-lat-to-nha-trang-transport.md",
+      "passed": true,
+      "word_count": 1858,
+      "frontmatter": {
+        "title": "Da Lat to Nha Trang Transport: Scenic Mountain Pass, Limousine, and Bus Route",
+        "slug": "da-lat-to-nha-trang-transport",
+        "route_path": "plan/da-lat-to-nha-trang-transport",
+        "travel_cluster": "central_highlands",
+        "last_verified": "2026-10-20",
+        "author": "Antigravity Travel Intelligence",
+        "reading_time_minutes": 12,
+        "word_count": 2200
+      },
+      "elements": {
+        "h2_count": 6,
+        "h3_count": 16,
+        "table_count": 6,
+        "blockquote_count": 2,
+        "callout_count": 1,
+        "has_faq": true,
+        "has_steps": true
+      },
+      "empirical_signals": {
+        "currency_mentions": 43,
+        "distance_mentions": 24,
+        "transit_time_mentions": 20,
+        "total_empirical_signals": 87,
+        "sample_currencies": [
+          "300,000 VND",
+          "$9.00",
+          "$12.00",
+          "190,000 VND",
+          "$6.40"
+        ],
+        "sample_distances": [
+          "135 km",
+          "29 km",
+          "135 km",
+          "29 km",
+          "500 m"
+        ],
+        "sample_transit_times": [
+          "3.5 hours",
+          "4.2 hours",
+          "3.5 hours",
+          "4.0 hours",
+          "3.2 hours"
         ]
       },
       "slop_report": {
