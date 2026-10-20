@@ -1,0 +1,68 @@
+{
+  "passed": true,
+  "total_articles": 1,
+  "passed_articles": 1,
+  "min_words_threshold": 1200,
+  "min_hls_threshold": 85.0,
+  "articles": [
+    {
+      "path": "M:/Projects/vietnamguide/content/destinations/hanoi-train-street-guide.md",
+      "relative_path": "content/destinations/hanoi-train-street-guide.md",
+      "passed": true,
+      "word_count": 1283,
+      "frontmatter": {
+        "title": "Hanoi Train Street Guide: Timetable, Checkpoints, and Safety Protocols",
+        "slug": "hanoi-train-street-guide",
+        "route_path": "destinations/hanoi-train-street-guide",
+        "travel_cluster": "hanoi-red-river-delta",
+        "last_verified": "2026-10-20",
+        "author": "Antigravity Travel Intelligence",
+        "reading_time_minutes": 8,
+        "word_count": 1480
+      },
+      "elements": {
+        "h2_count": 7,
+        "h3_count": 11,
+        "table_count": 11,
+        "blockquote_count": 4,
+        "callout_count": 2,
+        "has_faq": true,
+        "has_steps": true
+      },
+      "empirical_signals": {
+        "currency_mentions": 31,
+        "distance_mentions": 4,
+        "transit_time_mentions": 5,
+        "total_empirical_signals": 40,
+        "sample_currencies": [
+          "8D",
+          "55,000 VND",
+          "$1.40",
+          "$2.20",
+          "40,000 VND"
+        ],
+        "sample_distances": [
+          "15 km",
+          "2.80 meters",
+          "0.90m",
+          "0.90m"
+        ],
+        "sample_transit_times": [
+          "45 minutes",
+          "30 minutes",
+          "7 minutes",
+          "30 minutes",
+          "45 minutes"
+        ]
+      },
+      "slop_report": {
+        "passed": false,
+        "hls_score": 100,
+        "tier1_count": 0,
+        "tier1_violations": []
+      },
+      "errors": [],
+      "warnings": []
+    }
+  ]
+}
