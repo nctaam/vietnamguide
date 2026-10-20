@@ -117,18 +117,18 @@ flowchart TD
 
 ## 5. Danh Sách Hành Động Cụ Thể (Actionable Checklist)
 
-### Giai Đoạn 1: Tuyến Tây Nguyên & Đồng Bằng Sông Cửu Long (Stage 120)
-- [ ] **Task 1.1**: Dùng `ag-search` xác minh giá vé & phương tiện: Buôn Ma Thuột (Thác Dray Nur/Dray Sáp, Làng cà phê Trung Nguyên), Pleiku (Biển Hồ, Núi lửa Chư Đăng Ya), Châu Đốc (Rừng tràm Trà Sư, Miếu Bà Chúa Xứ), Hà Tiên (Thạch Động, Mũi Nai).
-- [ ] **Task 1.2**: Bổ sung 6 bộ curated FAQ mới vào `inc/guide-seo.php`:
+### Giai Đoạn 1: Tuyến Tây Nguyên & Đồng Bằng Sông Cửu Long (Stage 120) [HOÀN THÀNH]
+- [x] **Task 1.1**: Dùng `ag-search` xác minh giá vé & phương tiện: Buôn Ma Thuột (Thác Dray Nur/Dray Sáp 30k–40k VND, Làng cà phê Trung Nguyên, QL26/QL27), Pleiku (Biển Hồ miễn phí vé/10k VND gửi xe, Núi lửa Chư Đăng Ya hoa dã quỳ, QL14 đi Kon Tum 50km/1h), Châu Đốc (Rừng tràm Trà Sư vé trọn gói 270k VND, tàu cao tốc đi Campuchia 35–45 USD), Hà Tiên (Thạch Động 20k VND, Mũi Nai, tàu cao tốc Phú Quốc 216k–230k VND).
+- [x] **Task 1.2**: Bổ sung 6 bộ curated FAQ mới vào `inc/guide-seo.php`:
   - `destinations/where-to-stay-in-buon-ma-thuot`
   - `destinations/where-to-stay-in-pleiku`
   - `destinations/where-to-stay-in-chau-doc`
   - `destinations/where-to-stay-in-ha-tien`
   - `plan/can-tho-to-chau-doc-transport`
   - `plan/can-tho-to-ha-tien-transport`
-- [ ] **Task 1.3**: Bổ sung HowTo: "How to Travel from Can Tho to Chau Doc and Tra Su Forest".
-- [ ] **Task 1.4**: Bổ sung unit tests kiểm tra hợp đồng dữ liệu trong `ops/tests/test_guide_seo.py`.
-- [ ] **Task 1.5**: Xác minh 8 Quality Gates, commit và push lên `origin/master`.
+- [x] **Task 1.3**: Bổ sung HowTo: "How to Travel from Can Tho to Chau Doc and Visit Tra Su Cajuput Forest" (4 bước chuẩn JSON-LD).
+- [x] **Task 1.4**: Bổ sung unit tests kiểm tra hợp đồng dữ liệu trong `ops/tests/test_guide_seo.py` (`test_stage120_central_highlands_and_mekong_faqs_and_howtos`).
+- [x] **Task 1.5**: Xác minh 8 Quality Gates (8/8 PASS, Exit Code 0, 300 tests passed), commit `95abf37` và push lên `origin/master`.
 
 ### Giai Đoạn 2: Tuyến Duyên Hải Nam Trung Bộ & Hang Động (Stage 121)
 - [ ] **Task 2.1**: Dùng `ag-search` xác minh giá vé & phương tiện: Quy Nhơn (Eo Gió, Kỳ Co, Tháp Bánh Ít), Phú Yên (Gành Đá Đĩa, Mũi Điện), Đồng Hới & Phong Nha (Động Thiên Đường, Suối Nước Moọc, Sông Chày Hang Tối).
