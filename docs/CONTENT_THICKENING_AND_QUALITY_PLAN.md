@@ -288,16 +288,16 @@ flowchart TD
 - [x] **Task 9.4**: Bổ sung unit tests kiểm tra hợp đồng dữ liệu trong `ops/tests/test_guide_seo.py` (`test_stage128_train_street_hang_mua_tailoring_transport_faqs_and_howtos`).
 - [x] **Task 9.5**: Xác minh 8 Quality Gates (8/8 PASS, Exit Code 0, 308 tests passed), commit `718558e` và push lên `origin/master`.
 
-### Giai Đoạn 10: Chùm Bài Viết Trọng Điểm "Best Things to Do" & Cán Mốc 120 Curated FAQ Routes (Stage 129) [TIẾP THEO]
-- [ ] **Task 10.1**: Dùng `ag-search` xác minh trải nghiệm tinh hoa, giá vé và giờ mở cửa tại 7 trung tâm du lịch lớn nhất:
-  - Hà Nội (`destinations/best-things-to-do-in-hanoi`): Văn Miếu - Quốc Tử Giám (70.000 VND), Nhà tù Hỏa Lò (50.000 VND, tour đêm 399.000–499.000 VND), Hồ Hoàn Kiếm & Đền Ngọc Sơn (50.000 VND), Nhà hát Lớn Hà Nội, Múa rối nước Thăng Long (100k–200k VND).
-  - TP. Hồ Chí Minh (`destinations/best-things-to-do-in-ho-chi-minh-city`): Bảo tàng Chứng tích Chiến tranh (40.000 VND), Dinh Độc Lập (40k–65k VND), Bưu điện Trung tâm Sài Gòn, Thuyền buýt Saigon Waterbus bến Bạch Đằng (15.000 VND), Phố đi bộ Nguyễn Huệ & Chợ Bến Thành.
-  - Hội An (`destinations/best-things-to-do-in-hoi-an`): Vé tham quan Phố cổ 150.000 VND (chọn 5 điểm di tích: Chùa Cầu, Nhà cổ Tấn Ký/Phùng Hưng, Hội quán Phúc Kiến/Triều Châu), Đi thuyền hoa đăng sông Hoài (150k–200k VND/thuyền), Đạp xe làng rau Trà Quế, Show Ký ức Hội An (600k–1.000k VND).
-  - Cố đô Huế (`destinations/best-things-to-do-in-hue`): Đại Nội Hoàng Thành (200.000 VND, mở cửa 07:00–17:30), Lăng Tự Đức (150.000 VND), Lăng Khải Định kiến trúc pha lê/xi măng (150.000 VND), Lăng Minh Mạng (150.000 VND), Chùa Thiên Mụ 7 tầng (miễn phí), Ca Huế trên sông Hương (100k–150k VND).
-  - Đà Lạt (`destinations/best-things-to-do-in-da-lat`): Dinh III Bảo Đại (50.000 VND), Biệt thự Hằng Nga Crazy House (80.000 VND), Chợ đêm Đà Lạt ẩm thực bánh tráng nướng & sữa đậu nành, Chùa Linh Phước Ve Chai (miễn phí), Quảng trường Lâm Viên & Hồ Xuân Hương.
+### Giai Đoạn 10: Chùm Bài Viết Trọng Điểm "Best Things to Do" & Cán Mốc 120 Curated FAQ Routes (Stage 129) [HOÀN THÀNH 100%]
+- [x] **Task 10.1**: Dùng `ag-search` xác minh trải nghiệm tinh hoa, giá vé và giờ mở cửa tại 7 trung tâm du lịch lớn nhất:
+  - Hà Nội (`destinations/best-things-to-do-in-hanoi`): Văn Miếu - Quốc Tử Giám (70.000 VND), Nhà tù Hỏa Lò (50.000 VND), Hồ Hoàn Kiếm & Đền Ngọc Sơn (50.000 VND qua Cầu Thê Húc), Múa rối nước Thăng Long 57B Đinh Tiên Hoàng (100k–200k VND / suất 50 phút).
+  - TP. Hồ Chí Minh (`destinations/best-things-to-do-in-ho-chi-minh-city`): Bảo tàng Chứng tích Chiến tranh (40.000 VND), Dinh Độc Lập (40k–65k VND), Bưu điện Trung tâm Sài Gòn, Thuyền buýt Saigon Waterbus bến Bạch Đằng (15.000 VND / 45 phút ngắm Landmark 81).
+  - Hội An (`destinations/best-things-to-do-in-hoi-an`): Vé tham quan Phố cổ 150.000 VND (chọn 5 điểm di tích: Chùa Cầu, Nhà cổ Tấn Ký/Phùng Hưng, Hội quán Phúc Kiến/Triều Châu), Đi thuyền hoa đăng sông Hoài (150k–200k VND/thuyền 1–4 khách / 20 phút), Show Ký ức Hội An (600k–1.000k VND).
+  - Cố đô Huế (`destinations/best-things-to-do-in-hue`): Đại Nội Hoàng Thành (200.000 VND / 500 ha), Lăng Tự Đức (150.000 VND), Lăng Khải Định kiến trúc pha lê/xi măng (150.000 VND), Lăng Minh Mạng (150.000 VND), vé combo 4 điểm 530.000 VND (tiết kiệm 120k, hạn 2 ngày), Chùa Thiên Mụ 7 tầng (miễn phí vé).
+  - Đà Lạt (`destinations/best-things-to-do-in-da-lat`): Biệt thự Hằng Nga Crazy House (80.000 VND), Dinh III Bảo Đại (50.000 VND bọc giày bảo vệ), Chợ đêm Đà Lạt ẩm thực bánh tráng nướng & sữa đậu nành, cà phê ca nhạc acoustic đồi thông (Lululola, Mây Lang Thang).
   - Đà Nẵng (`destinations/best-things-to-do-in-da-nang`): Cầu Rồng phun lửa và nước (21:00 tối thứ 7 & Chủ nhật), Ngũ Hành Sơn Thủy Sơn (40.000 VND + Động Huyền Không + thang máy 15.000 VND), Bán đảo Sơn Trà & Chùa Linh Ứng tượng Phật 67m (miễn phí), Bãi biển Mỹ Khê.
-  - Ninh Bình (`destinations/best-things-to-do-in-ninh-binh`): Quần thể danh thắng Tràng An (250.000 VND), Tam Cốc Bích Động (250.000 VND), Hang Múa (100k–150k VND), Cố đô Hoa Lư đền Đinh - Lê (20.000 VND), Chùa Bái Đính (xe điện 60.000 VND khứ hồi).
-- [ ] **Task 10.2**: Bổ sung 7 bộ curated FAQ mới vào `inc/guide-seo.php`:
+  - Ninh Bình (`destinations/best-things-to-do-in-ninh-binh`): Quần thể danh thắng Tràng An (250.000–300.000 VND thuyền 4 người), Tam Cốc Bích Động (250.000 VND thuyền chèo chân 2 khách), Hang Múa 486 bậc đá (100k–150k VND), Chùa Bái Đính (xe điện 60.000 VND khứ hồi).
+- [x] **Task 10.2**: Bổ sung 7 bộ curated FAQ mới vào `inc/guide-seo.php`:
   - `destinations/best-things-to-do-in-hanoi`
   - `destinations/best-things-to-do-in-ho-chi-minh-city`
   - `destinations/best-things-to-do-in-hoi-an`
@@ -305,5 +305,20 @@ flowchart TD
   - `destinations/best-things-to-do-in-da-lat`
   - `destinations/best-things-to-do-in-da-nang`
   - `destinations/best-things-to-do-in-ninh-binh`
-- [ ] **Task 10.3**: Bổ sung unit tests kiểm tra hợp đồng dữ liệu trong `ops/tests/test_guide_seo.py` (`test_stage129_best_things_to_do_hub_guides_faqs`).
-- [ ] **Task 10.4**: Xác minh 8 Quality Gates (8/8 PASS, Exit Code 0), commit và push lên `origin/master`. Cán mốc mục tiêu **120 Curated FAQ Routes**!
+- [x] **Task 10.3**: Bổ sung unit tests kiểm tra hợp đồng dữ liệu trong `ops/tests/test_guide_seo.py` (`test_stage129_best_things_to_do_hub_guides_faqs`).
+- [x] **Task 10.4**: Xác minh 8 Quality Gates (8/8 PASS, Exit Code 0, 309 tests passed), commit `896fffe` và push lên `origin/master`. **Chính thức cán mốc và vượt mục tiêu: 123 Curated FAQ Routes & 27 HowTo Schemas!**
+
+### Giai Đoạn 11: Khởi Tạo Kiến Trúc Content-as-Code & Tự Động Hóa Kiểm Soát Chiều Sâu (Stage 130) [TIẾP THEO]
+- [ ] **Task 11.1**: Thiết lập cấu trúc thư mục `content/` phân cấp theo 4 nhánh chuẩn:
+  - `content/destinations/`
+  - `content/itineraries/`
+  - `content/compare/`
+  - `content/plan/`
+- [ ] **Task 11.2**: Xây dựng công cụ kiểm toán chiều sâu nội dung tự động `ops/content_depth_auditor.py`:
+  - Quét kiểm tra độ dài bài viết (ngưỡng tối thiểu >= 1,200 từ hữu ích).
+  - Kiểm tra cấu trúc phân đoạn Markdown chuẩn (H2 anchor-ready, tables, blockquotes, reading spine compatibility).
+  - Tích hợp quét Anti-AI Slop (0 Tier 1 clichés, HLS >= 85).
+  - Thẩm định mật độ tín hiệu thực chứng (Empirical Signal Density: cước phí VND/USD, cự ly km, thời gian h/m, mã số nhà ga/bến xe).
+- [ ] **Task 11.3**: Thử nghiệm biên soạn bài viết chuẩn Content-as-Code đầu tiên theo tiêu chuẩn báo chí quốc tế (100% Editorial English) tại `content/destinations/hanoi-train-street-guide.md`.
+- [ ] **Task 11.4**: Bổ sung bộ kiểm thử unit test tự động `ops/tests/test_content_depth.py`.
+- [ ] **Task 11.5**: Xác minh 8 Quality Gates (8/8 PASS, Exit Code 0), commit và push lên `origin/master`.
