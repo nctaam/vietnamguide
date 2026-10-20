@@ -1,7 +1,7 @@
 {
   "passed": true,
-  "total_articles": 28,
-  "passed_articles": 28,
+  "total_articles": 31,
+  "passed_articles": 31,
   "min_words_threshold": 1200,
   "min_hls_threshold": 85.0,
   "articles": [
@@ -295,6 +295,66 @@
       },
       "slop_report": {
         "passed": false,
+        "hls_score": 100,
+        "tier1_count": 0,
+        "tier1_violations": []
+      },
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "path": "M:/Projects/vietnamguide/content/compare/mui-ne-vs-nha-trang.md",
+      "relative_path": "content/compare/mui-ne-vs-nha-trang.md",
+      "passed": true,
+      "word_count": 1491,
+      "frontmatter": {
+        "title": "Mui Ne vs Nha Trang: Sand Dunes & Surf vs Urban Island Beachfront",
+        "slug": "mui-ne-vs-nha-trang",
+        "route_path": "compare/mui-ne-vs-nha-trang",
+        "travel_cluster": "coastal_islands",
+        "last_verified": "2026-10-20",
+        "author": "Antigravity Travel Intelligence",
+        "reading_time_minutes": 12,
+        "word_count": 2200
+      },
+      "elements": {
+        "h2_count": 8,
+        "h3_count": 13,
+        "table_count": 8,
+        "blockquote_count": 2,
+        "callout_count": 1,
+        "has_faq": true,
+        "has_steps": false
+      },
+      "empirical_signals": {
+        "currency_mentions": 57,
+        "distance_mentions": 16,
+        "transit_time_mentions": 15,
+        "total_empirical_signals": 88,
+        "sample_currencies": [
+          "1,400,000 VND",
+          "1,600,000 VND",
+          "$26",
+          "$56",
+          "$30"
+        ],
+        "sample_distances": [
+          "215 km",
+          "220 km",
+          "435 km",
+          "50m",
+          "1.5 meter"
+        ],
+        "sample_transit_times": [
+          "3 hours",
+          "45 mins",
+          "10 mins",
+          "10 mins",
+          "12 mins"
+        ]
+      },
+      "slop_report": {
+        "passed": true,
         "hls_score": 100,
         "tier1_count": 0,
         "tier1_violations": []
@@ -1019,6 +1079,66 @@
       "warnings": []
     },
     {
+      "path": "M:/Projects/vietnamguide/content/destinations/nha-trang-coastal-guide.md",
+      "relative_path": "content/destinations/nha-trang-coastal-guide.md",
+      "passed": true,
+      "word_count": 1774,
+      "frontmatter": {
+        "title": "Nha Trang Travel Guide: Coastal City, Islands, Diving, and Cultural Heritage",
+        "slug": "nha-trang-coastal-guide",
+        "route_path": "destinations/nha-trang-travel-guide",
+        "travel_cluster": "coastal_islands",
+        "last_verified": "2026-10-20",
+        "author": "Antigravity Travel Intelligence",
+        "reading_time_minutes": 13,
+        "word_count": 2200
+      },
+      "elements": {
+        "h2_count": 7,
+        "h3_count": 12,
+        "table_count": 7,
+        "blockquote_count": 2,
+        "callout_count": 1,
+        "has_faq": true,
+        "has_steps": false
+      },
+      "empirical_signals": {
+        "currency_mentions": 63,
+        "distance_mentions": 11,
+        "transit_time_mentions": 13,
+        "total_empirical_signals": 87,
+        "sample_currencies": [
+          "2,800,000 VND",
+          "$30",
+          "$112",
+          "1,400,000 VND",
+          "$18"
+        ],
+        "sample_distances": [
+          "6 km",
+          "35 km",
+          "15 meters",
+          "20 meters",
+          "54 meters"
+        ],
+        "sample_transit_times": [
+          "40 mins",
+          "20 mins",
+          "20 mins",
+          "10 mins",
+          "12 mins"
+        ]
+      },
+      "slop_report": {
+        "passed": false,
+        "hls_score": 100,
+        "tier1_count": 0,
+        "tier1_violations": []
+      },
+      "errors": [],
+      "warnings": []
+    },
+    {
       "path": "M:/Projects/vietnamguide/content/destinations/phong-nha-caves-exploration-guide.md",
       "relative_path": "content/destinations/phong-nha-caves-exploration-guide.md",
       "passed": true,
@@ -1605,6 +1725,66 @@
           "3.5 hours",
           "3.8 hours",
           "3.3 hours"
+        ]
+      },
+      "slop_report": {
+        "passed": true,
+        "hls_score": 100,
+        "tier1_count": 0,
+        "tier1_violations": []
+      },
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "path": "M:/Projects/vietnamguide/content/plan/nha-trang-to-quy-nhon-transport.md",
+      "relative_path": "content/plan/nha-trang-to-quy-nhon-transport.md",
+      "passed": true,
+      "word_count": 1565,
+      "frontmatter": {
+        "title": "Nha Trang to Quy Nhon Transport: Coastal Railway, Bus & Private Car",
+        "slug": "nha-trang-to-quy-nhon-transport",
+        "route_path": "plan/nha-trang-to-quy-nhon-transport",
+        "travel_cluster": "coastal_islands",
+        "last_verified": "2026-10-20",
+        "author": "Antigravity Travel Intelligence",
+        "reading_time_minutes": 13,
+        "word_count": 2200
+      },
+      "elements": {
+        "h2_count": 8,
+        "h3_count": 12,
+        "table_count": 8,
+        "blockquote_count": 2,
+        "callout_count": 1,
+        "has_faq": true,
+        "has_steps": true
+      },
+      "empirical_signals": {
+        "currency_mentions": 58,
+        "distance_mentions": 25,
+        "transit_time_mentions": 10,
+        "total_empirical_signals": 93,
+        "sample_currencies": [
+          "1D",
+          "1D",
+          "$6.00",
+          "$9.20",
+          "$7.20"
+        ],
+        "sample_distances": [
+          "85 km",
+          "110 km",
+          "135 km",
+          "185 km",
+          "215 km"
+        ],
+        "sample_transit_times": [
+          "30 minutes",
+          "45 minutes",
+          "20 minutes",
+          "4.5 hours",
+          "7.5 hours"
         ]
       },
       "slop_report": {

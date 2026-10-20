@@ -413,12 +413,22 @@ flowchart TD
 - [x] **Task 20.4**: Chạy `ops/content_depth_auditor.py` kiểm định toàn bộ 28 bài viết trong `content/` (Tổng số từ: **41.580 từ**, 100% PASS, Mean HLS 99.2/100, 1.749 empirical signals, 0 Tier 1 clichés).
 - [x] **Task 20.5**: Xác minh 8 Quality Gates (8/8 PASS, Exit Code 0, 315 tests passed), commit và push lên `origin/master`.
 
-### Giai Đoạn 21: Duyên Hải Nam Trung Bộ: Nha Trang & Mũi Né (Stage 140) [ĐANG THỰC HIỆN]
-- [ ] **Task 21.1**: Dùng `ag-search` xác minh thực tế và biên soạn bài viết chuyên sâu:
-  - `content/destinations/nha-trang-coastal-guide.md`: Cẩm nang toàn diện Nha Trang (Vịnh Nha Trang, khu bảo tồn biển Hòn Mun lặn ngắm san hô 250k–450k VND, cáp treo VinWonders Hòn Tre vượt biển 3.320m 950k–1.050k VND, Tháp Bà Ponagar thế kỷ VIII–XIII 30k VND, Viện Hải dương học 40k VND, đại lộ ven biển Trần Phú).
-- [ ] **Task 21.2**: Dùng `ag-search` xác minh thực tế và biên soạn bài so sánh trực diện:
-  - `content/compare/mui-ne-vs-nha-trang.md`: So sánh toàn diện giữa Mũi Né (thiên đường lướt ván diều mùa gió bấc tháng 11–tháng 3, Đồi Cát Trắng & Đồi Cát Đỏ 50k–100k VND, Suối Tiên 15k VND, dải resort thấp tầng dọc đường Nguyễn Đình Chiểu) vs Nha Trang (thành phố biển sôi động nhiều cao ốc, chuỗi đảo lặn biển san hô vịnh ngọc, công viên giải trí đảo quốc tế, chợ đêm & ẩm thực nem nướng Đặng Văn Quyên).
-- [ ] **Task 21.3**: Dùng `ag-search` xác minh thực tế và biên soạn bài viết cẩm nang di chuyển:
-  - `content/plan/nha-trang-to-quy-nhon-transport.md`: Tuyến kết nối duyên hải 215 km từ Nha Trang đi Quy Nhơn (Tàu hỏa Thống Nhất SE22/SE10/SE4 ga Nha Trang đến Ga Diêu Trì 150k–230k VND ghế mềm điều hòa thời gian 4–4.5h + xe buýt T22 hoặc taxi 30 phút về trung tâm Quy Nhơn; xe khách limousine Phúc Thuận Thảo, Sơn Tùng 160k–220k VND thời gian 4–4.5h qua bờ biển Nam Phú Yên).
-- [ ] **Task 21.4**: Chạy `ops/content_depth_auditor.py` kiểm định toàn bộ các bài viết mới (bảo đảm >= 1,200 từ, HLS >= 85, 0 Tier 1 clichés, mật độ dữ liệu cao).
-- [ ] **Task 21.5**: Xác minh 8 Quality Gates (8/8 PASS, Exit Code 0), commit và push lên `origin/master`.
+### Giai Đoạn 21: Duyên Hải Nam Trung Bộ: Nha Trang & Mũi Né (Stage 140) [HOÀN THÀNH 100%]
+- [x] **Task 21.1**: Dùng `ag-search` xác minh thực tế và biên soạn bài viết chuyên sâu:
+  - `content/destinations/nha-trang-coastal-guide.md`: Cẩm nang toàn diện Nha Trang (Vịnh Nha Trang, khu bảo tồn biển Hòn Mun lặn ngắm san hô 22k VND phí bảo tồn, cáp treo VinWonders Hòn Tre vượt biển 3.320m 950k–1.050k VND, Tháp Bà Ponagar thế kỷ VIII–XIII 30k VND, Viện Hải dương học 40k VND, tắm bùn khoáng Tháp Bà / I-Resort 220k–450k VND, đại lộ Trần Phú) (1,774 substantive words, HLS 100.0/100, 87 empirical signals).
+- [x] **Task 21.2**: Dùng `ag-search` xác minh thực tế và biên soạn bài so sánh trực diện:
+  - `content/compare/mui-ne-vs-nha-trang.md`: So sánh toàn diện giữa Mũi Né (thiên đường lướt ván diều mùa gió bấc tháng 11–tháng 3 gió 15–25 knots, Đồi Cát Trắng Bàu Trắng 20k VND + thuê xe ATV 600k–800k VND, Suối Tiên 15k VND, dải resort thấp tầng dọc đường Nguyễn Đình Chiểu) vs Nha Trang (thành phố biển sôi động nhiều cao ốc, chuỗi đảo lặn biển san hô vịnh ngọc, công viên giải trí đảo quốc tế, chợ đêm & ẩm thực nem nướng Đặng Văn Quyên 65k–80k VND) (1,491 substantive words, HLS 100.0/100, 88 empirical signals).
+- [x] **Task 21.3**: Dùng `ag-search` xác minh thực tế và biên soạn bài viết cẩm nang di chuyển:
+  - `content/plan/nha-trang-to-quy-nhon-transport.md`: Tuyến kết nối duyên hải 215 km từ Nha Trang đi Quy Nhơn (Tàu hỏa Thống Nhất SE22/SE10/SE4 ga Nha Trang đến Ga Diêu Trì 150k–230k VND ghế mềm điều hòa thời gian 3h50m–4h25m + xe buýt T22 20k VND hoặc taxi 150k–200k VND về trung tâm Quy Nhơn; xe khách limousine Phúc Thuận Thảo, Sơn Tùng 180k–250k VND thời gian 4–4.5h qua hầm Đèo Cả; lộ trình phượt xe máy Đèo Cả ngắm Vịnh Vũng Rô, Mũi Điện hải đăng Đại Lãnh 20k VND, Gành Đá Đĩa 40k VND) (1,565 substantive words, HLS 100.0/100, 93 empirical signals).
+- [x] **Task 21.4**: Chạy `ops/content_depth_auditor.py` kiểm định toàn bộ 31 bài viết trong `content/` (Tổng số từ: **46.410 từ**, 100% PASS, Mean HLS 99.35/100, 2.017 empirical signals, 0 Tier 1 clichés).
+- [x] **Task 21.5**: Xác minh 8 Quality Gates (8/8 PASS, Exit Code 0, 315 tests passed), commit và push lên `origin/master`.
+
+### Giai Đoạn 22: Tuyến Duyên Hải Bình Định & Xứ Nẫu Phú Yên (Stage 141) [TIẾP THEO]
+- [ ] **Task 22.1**: Dùng `ag-search` xác minh thực tế và biên soạn bài viết chuyên sâu:
+  - `content/destinations/quy-nhon-coastal-guide.md`: Cẩm nang toàn diện Quy Nhơn (Eo Gió 25k VND đường ven biển đá hùng vĩ, bãi biển Kỳ Co 100k VND vé vào cổng + 90k VND xe điện hoặc tour cano lặn ngắm san hô Bãi Dứa 350k–400k VND, Tháp Bánh Ít 20k VND, Tháp Đôi 20k VND, Ghềnh Ráng Tiên Sa & bãi tắm Hoàng Hậu Bãi Trứng, làng chài Bãi Xép, ẩm thực bánh xèo tôm nhảy Gia Vỹ 35k–50k VND).
+- [ ] **Task 22.2**: Dùng `ag-search` xác minh thực tế và biên soạn bài viết chuyên sâu:
+  - `content/destinations/phu-yen-travel-guide.md`: Cẩm nang toàn diện Phú Yên xứ sở hoa vàng trên cỏ xanh (Gành Đá Đĩa 40k VND 35.000 cột đá bazan núi lửa lục lăng, Mũi Điện hải đăng Đại Lãnh 20k VND đón bình minh cực Đông, Tháp Nghinh Phong biểu tượng gió biển, Bãi Xép bối cảnh phim, Đầm Ô Loan sò huyết nướng 150k–250k VND, mắt cá ngừ đại dương hầm thuốc bắc 45k–60k VND).
+- [ ] **Task 22.3**: Dùng `ag-search` xác minh thực tế và biên soạn bài viết cẩm nang di chuyển:
+  - `content/plan/da-nang-to-quy-nhon-transport.md`: Tuyến kết nối 300 km từ Đà Nẵng đi Quy Nhơn (Tàu hỏa Thống Nhất SE21/SE1/SE3/SE5 ga Đà Nẵng đến Ga Diêu Trì 5.5–6.0h vé ghế mềm 190k–280k VND, giường nằm 350k–480k VND; toa tàu du lịch siêu sang The Vietage Anantara ~400 USD kèm ẩm thực 3 món và spa; xe khách limousine Sơn Tùng / Phúc Thuận Thảo 240k–320k VND qua QL1A).
+- [ ] **Task 22.4**: Chạy `ops/content_depth_auditor.py` kiểm định toàn bộ các bài viết mới (bảo đảm >= 1,200 từ, HLS >= 85, 0 Tier 1 clichés, mật độ dữ liệu cao).
+- [ ] **Task 22.5**: Xác minh 8 Quality Gates (8/8 PASS, Exit Code 0), commit và push lên `origin/master`.
