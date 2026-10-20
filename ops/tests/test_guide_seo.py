@@ -2106,6 +2106,114 @@ echo json_encode([
         self.assertIn('Bang Phan', steps_text)
         self.assertIn('Ha Giang City', steps_text)
 
+    def test_stage123_central_heritage_cuchi_islands_faqs_and_howtos(self):
+        """Stage 123: 7 new Central Heritage, Cu Chi, and Island comparison FAQ routes, 2 new HowTo routes with verified ground-truth data."""
+        stage123_faqs = [
+            'compare/cu-chi-tunnels-ben-duoc-vs-ben-dinh',
+            'compare/con-dao-vs-phu-quoc',
+            'compare/hoi-an-vs-hue',
+            'destinations/ba-na-hills-golden-bridge-guide',
+            'plan/da-nang-airport-to-hoi-an',
+            'itineraries/da-nang-to-hue-train-vs-car',
+            'compare/cu-chi-tunnels-vs-mekong-delta-day-trip',
+        ]
+        stage123_howtos = [
+            'plan/da-nang-airport-to-hoi-an',
+            'itineraries/da-nang-to-hue-train-vs-car',
+        ]
+        php_code = f"""
+        $faq_paths = {json.dumps(stage123_faqs)};
+        $faq_results = [];
+        foreach ($faq_paths as $p) {{
+            $items = vg_get_curated_faq_items($p);
+            $html  = vg_render_curated_faq_accordion($p, '<p>Lead text.</p>');
+            $faq_results[$p] = [
+                'count'   => count($items),
+                'has_h2'  => stripos($html, '<h2') !== false,
+                'visible' => strpos($html, '<details class="vg-faq-item"') !== false,
+                'items'   => $items,
+            ];
+        }}
+        $howto_paths = {json.dumps(stage123_howtos)};
+        $howto_data = [];
+        foreach ($howto_paths as $p) {{
+            $node = vg_get_page_howto_schema($p, "https://vietnamguide.net/{{$p}}/");
+            $howto_data[$p] = [
+                'step_count' => is_array($node) ? count($node['step'] ?? []) : 0,
+                'name'       => $node['name'] ?? '',
+                'steps'      => $node['step'] ?? [],
+            ];
+        }}
+        echo json_encode([
+            'faq_results' => $faq_results,
+            'howto_data'  => $howto_data,
+        ]);
+        """
+        res = _run_php(php_code)
+        self.assertEqual(res.returncode, 0, f"PHP error:\n{res.stderr}")
+        out = json.loads(res.stdout)
+
+        for route, info in out['faq_results'].items():
+            self.assertGreaterEqual(info['count'], 3, f"Route {route} must have >= 3 curated FAQ items")
+            self.assertFalse(info['has_h2'], f"Route {route} FAQ accordion must have 0 <h2> tags")
+            self.assertTrue(info['visible'], f"Route {route} FAQ accordion must render visible <details>")
+
+        # Verify ground-truth empirical metrics in FAQs
+        cuchi_bd_faqs = str(out['faq_results']['compare/cu-chi-tunnels-ben-duoc-vs-ben-dinh']['items'])
+        self.assertIn('125,000 VND', cuchi_bd_faqs)
+        self.assertIn('Bus No. 13', cuchi_bd_faqs)
+        self.assertIn('Bus No. 79', cuchi_bd_faqs)
+        self.assertIn('14,000 VND', cuchi_bd_faqs)
+
+        condao_pq_faqs = str(out['faq_results']['compare/con-dao-vs-phu-quoc']['items'])
+        self.assertIn('574-square-kilometer', condao_pq_faqs)
+        self.assertIn('30-day visa', condao_pq_faqs)
+        self.assertIn('76-square-kilometer', condao_pq_faqs)
+        self.assertIn('Con Dao National Park', condao_pq_faqs)
+
+        hoian_hue_faqs = str(out['faq_results']['compare/hoi-an-vs-hue']['items'])
+        self.assertIn('130 kilometers', hoian_hue_faqs)
+        self.assertIn('HD1/HD3', hoian_hue_faqs)
+        self.assertIn('Khai Dinh', hoian_hue_faqs)
+        self.assertIn('Cao Lau', hoian_hue_faqs)
+
+        bana_faqs = str(out['faq_results']['destinations/ba-na-hills-golden-bridge-guide']['items'])
+        self.assertIn('1,000,000 VND', bana_faqs)
+        self.assertIn('800,000 VND', bana_faqs)
+        self.assertIn('Golden Bridge', bana_faqs)
+        self.assertIn('Cau Vang', bana_faqs)
+
+        dna_ha_faqs = str(out['faq_results']['plan/da-nang-airport-to-hoi-an']['items'])
+        self.assertIn('300,000 to 350,000 VND', dna_ha_faqs)
+        self.assertIn('100,000 to 120,000 VND', dna_ha_faqs)
+        self.assertIn('Vo Nguyen Giap', dna_ha_faqs)
+
+        dnh_hue_faqs = str(out['faq_results']['itineraries/da-nang-to-hue-train-vs-car']['items'])
+        self.assertIn('HD1/HD2/HD3/HD4', dnh_hue_faqs)
+        self.assertIn('Hai Van Pass', dnh_hue_faqs)
+        self.assertIn('Lang Co Bay', dnh_hue_faqs)
+        self.assertIn('110,000 to 180,000 VND', dnh_hue_faqs)
+
+        cuchi_mekong_faqs = str(out['faq_results']['compare/cu-chi-tunnels-vs-mekong-delta-day-trip']['items'])
+        self.assertIn('125,000 VND', cuchi_mekong_faqs)
+        self.assertIn('My Tho', cuchi_mekong_faqs)
+        self.assertIn('Ben Tre', cuchi_mekong_faqs)
+
+        # Verify HowTo schemas
+        howto_airport = out['howto_data']['plan/da-nang-airport-to-hoi-an']
+        self.assertGreaterEqual(howto_airport['step_count'], 4)
+        self.assertIn('Da Nang Airport to Hoi An', howto_airport['name'])
+        steps_text_airport = ' '.join(s.get('text', '') for s in howto_airport['steps'])
+        self.assertIn('Terminal T1', steps_text_airport)
+        self.assertIn('Vo Nguyen Giap', steps_text_airport)
+
+        howto_train = out['howto_data']['itineraries/da-nang-to-hue-train-vs-car']
+        self.assertGreaterEqual(howto_train['step_count'], 4)
+        self.assertIn('Hai Van Pass between Da Nang and Hue', howto_train['name'])
+        steps_text_train = ' '.join(s.get('text', '') for s in howto_train['steps'])
+        self.assertIn('HD1/HD3', steps_text_train)
+        self.assertIn('Lang Co', steps_text_train)
+
 
 if __name__ == '__main__':
     unittest.main()
