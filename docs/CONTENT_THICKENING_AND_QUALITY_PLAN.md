@@ -173,20 +173,30 @@ flowchart TD
 - [x] **Task 4.4**: Bổ sung unit tests kiểm tra hợp đồng dữ liệu trong `ops/tests/test_guide_seo.py` (`test_stage123_central_heritage_cuchi_islands_faqs_and_howtos`).
 - [x] **Task 4.5**: Xác minh 8 Quality Gates (8/8 PASS, Exit Code 0, 303 tests passed), commit `5210609` và push lên `origin/master`.
 
-### Giai Đoạn 5: Tuyến Đô Thị Lớn & Chuyến Đi Trong Ngày (Stage 124) [ĐANG TRIỂN KHAI]
-- [ ] **Task 5.1**: Dùng `ag-search` xác minh giá vé, khoảng cách & phương tiện:
-  - Hà Nội: Phố Cổ vs Khu Phố Pháp vs Hồ Tây (`compare/old-quarter-vs-french-quarter-vs-west-lake`)
-  - Chuyến đi trong ngày từ Hà Nội: Bát Tràng, Đường Lâm, Tam Chúc, Ninh Bình (`destinations/best-day-trips-from-hanoi`)
-  - Ninh Bình: Đi về trong ngày vs Ở lại qua đêm từ Hà Nội (`compare/ninh-binh-day-trip-vs-overnight`)
-  - Chuyến đi trong ngày từ TP.HCM: Củ Chi, Cần Giờ, Mỹ Tho/Bến Tre, Vũng Tàu (`destinations/best-day-trips-from-ho-chi-minh-city`)
-  - Đồng bằng Sông Cửu Long: Đi tour trong ngày vs Ở lại qua đêm (`compare/mekong-delta-overnight-vs-day-trip`)
-  - Mũi Né vs Nha Trang: So sánh bãi biển, thể thao biển, hải sản, thời tiết (`compare/mui-ne-vs-nha-trang`)
-- [ ] **Task 5.2**: Bổ sung 6 bộ curated FAQ mới vào `inc/guide-seo.php`.
-- [ ] **Task 5.3**: Bổ sung HowTo schemas chuyên sâu cho chuyến đi trong ngày hoặc phương tiện đô thị.
-- [ ] **Task 5.4**: Bổ sung unit test hợp đồng dữ liệu trong `ops/tests/test_guide_seo.py`.
-- [ ] **Task 5.5**: Xác minh 8 Quality Gates, commit và push lên `origin/master`.
+### Giai Đoạn 5: Tuyến Đô Thị Lớn & Chuyến Đi Trong Ngày (Stage 124) [HOÀN THÀNH]
+- [x] **Task 5.1**: Dùng `ag-search` xác minh giá vé, khoảng cách & phương tiện:
+  - Hà Nội: Phố Cổ vs Khu Phố Pháp vs Hồ Tây (`compare/old-quarter-vs-french-quarter-vs-west-lake`: Phố Cổ phòng 500k–1.5M VND, ồn ào, gần hồ Hoàn Kiếm; Khu Phố Pháp đường rợp bóng cây, Metropole 2.5M–8M VND, yên tĩnh về đêm; Tây Hồ cách trung tâm 5–8 km, Grab car 80k–120k VND / 15–25 phút, không gian thoáng đãng bên hồ).
+  - Chuyến đi trong ngày từ Hà Nội (`destinations/best-day-trips-from-hanoi`: Ninh Bình Tràng An 250k VND, Hang Múa 100k VND cách 95–100 km / 1.5–2h cao tốc CT01; Làng gốm Bát Tràng cách 15 km xe buýt 47A vé 7k–9k VND, làm gốm 50k–70k VND; Làng cổ Đường Lâm cách 45 km xe buýt 71 vé 20k VND, vé cổng 20k VND; Vịnh Hạ Long đi về trong ngày qua cao tốc CT04 2.5h mỗi chiều, tour 12h giá 45–75 USD).
+  - Ninh Bình: Đi về trong ngày vs Ở lại qua đêm (`compare/ninh-binh-day-trip-vs-overnight`: Tour đi về trong ngày 850k–1.3M VND ngồi xe 4–5h, gặp đoàn đông 10:30–14:00; Ở lại homestay Tam Cốc 400k–800k VND/đêm, đi thuyền Tràng An lúc mở cửa 07:00 sáng, leo Hang Mua ngắm hoàng hôn, đạp xe thung lũng không bóng người).
+  - Đồng bằng Sông Cửu Long: Đi tour trong ngày vs Ở lại qua đêm (`compare/mekong-delta-overnight-vs-day-trip`: Tour trong ngày Mỹ Tho - Bến Tre 70–85 km / 1.5–2h cao tốc CT01, giá 20–35 USD; Ở lại Cần Thơ cách 170 km / 3.5–4h đi chợ nổi Cái Răng lúc bình minh 05:30–07:00 sáng với cây bẹo treo hàng hóa).
+  - Mũi Né vs Nha Trang (`compare/mui-ne-vs-nha-trang`: Mũi Né đồi cát Bàu Trắng, lướt ván diều tháng 11–3, resort nhiệt đới ven đường Nguyễn Đình Chiểu; Nha Trang thành phố biển cao tầng đường Trần Phú 6 km, lặn biển đảo Hòn Mun, cáp treo VinWonders, tháp Bà Ponagar).
+  - Hà Nội $\rightarrow$ Ninh Bình (`plan/hanoi-to-ninh-binh-train-vs-limousine`: Xe limousine VIP 9 chỗ đón tận nơi Phố Cổ trả tận homestay Tam Cốc 150k–220k VND / 90–105 phút; Tàu hỏa SE5/SE7/SE9 từ Ga Hà Nội đến Ga Ninh Bình 2h10m vé 75k–130k VND + taxi 6 km ra Tam Cốc 80k–100k VND).
+  - TP.HCM $\rightarrow$ Mũi Né (`plan/ho-chi-minh-city-to-mui-ne-transport`: Cao tốc Dầu Giây - Phan Thiết CT01 rút ngắn thời gian còn 2.5–3h, limousine đón trả resort 250k–350k VND; Tàu hỏa du lịch SPT2 Ga Sài Gòn 06:45 sáng đến Ga Phan Thiết 10:30 sáng, vé ghế mềm 180k–260k VND + taxi 18 km ra Mũi Né 200k–250k VND).
+- [x] **Task 5.2**: Bổ sung 7 bộ curated FAQ mới vào `inc/guide-seo.php`:
+  - `compare/old-quarter-vs-french-quarter-vs-west-lake`
+  - `destinations/best-day-trips-from-hanoi`
+  - `compare/ninh-binh-day-trip-vs-overnight`
+  - `compare/mekong-delta-overnight-vs-day-trip`
+  - `compare/mui-ne-vs-nha-trang`
+  - `plan/hanoi-to-ninh-binh-train-vs-limousine`
+  - `plan/ho-chi-minh-city-to-mui-ne-transport`
+- [x] **Task 5.3**: Bổ sung 2 HowTo schemas chuẩn JSON-LD:
+  - "How to Travel from Hanoi to Ninh Binh by Limousine Van or Train" (4 bước).
+  - "How to Travel from Ho Chi Minh City to Mui Ne by Expressway Limousine or Train SPT2" (4 bước).
+- [x] **Task 5.4**: Bổ sung unit tests kiểm tra hợp đồng dữ liệu trong `ops/tests/test_guide_seo.py` (`test_stage124_urban_megacities_and_day_trips_faqs_and_howtos`).
+- [x] **Task 5.5**: Xác minh 8 Quality Gates (8/8 PASS, Exit Code 0, 304 tests passed), commit `5166c00` và push lên `origin/master`.
 
-### Giai Đoạn 6: Xây Dựng Kho Content-as-Code & Tối Ưu Hóa Trải Nghiệm (Stage 125)
+### Giai Đoạn 6: Xây Dựng Kho Content-as-Code & Tối Ưu Hóa Trải Nghiệm (Stage 125) [TIẾP THEO]
 - [ ] **Task 6.1**: Thiết lập cấu trúc thư mục `content/` phân loại theo 4 nhánh (`destinations/`, `itineraries/`, `compare/`, `plan/`).
 - [ ] **Task 6.2**: Xây dựng kịch bản kiểm tra độ dài và mật độ từ vựng (`ops/content_depth_auditor.py`) kiểm soát độ sâu bài viết.
 - [ ] **Task 6.3**: Mở rộng auto-injection của các interactive shortcodes (`[vg_interactive_map]`, `[vg_photo_dispatch]`, `[vg_route_budget]`) trên các bài viết mới được làm dày.
