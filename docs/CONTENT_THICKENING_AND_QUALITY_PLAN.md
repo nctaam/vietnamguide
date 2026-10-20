@@ -265,16 +265,16 @@ flowchart TD
 - [x] **Task 8.4**: Bổ sung unit tests kiểm tra hợp đồng dữ liệu trong `ops/tests/test_guide_seo.py` (`test_stage127_street_food_halong_catba_ninhbinh_faqs_and_howtos`).
 - [x] **Task 8.5**: Xác minh 8 Quality Gates (8/8 PASS, Exit Code 0, 307 tests passed), commit `4896550` và push lên `origin/master`.
 
-### Giai Đoạn 9: Trải Nghiệm Văn Hóa Độc Đáo, Chợ Nổi, Đỉnh Núi Rồng & Vận Tải Miền Núi (Stage 128) [TIẾP THEO]
-- [ ] **Task 9.1**: Dùng `ag-search` xác minh thông tin thực tế, lịch trình & giá vé:
-  - Phố đường tàu Hà Nội (`destinations/hanoi-train-street-guide`): Lịch tàu hỏa qua đoạn Trần Phú / Phùng Hưng / Lê Duẩn ngày thường vs cuối tuần; quy định an toàn của lực lượng chức năng, lối vào cafe đường tàu có người đón; giá đồ uống 30k–50k VND; khoảng cách an toàn khi tàu chạy qua.
-  - Hang Múa Ninh Bình (`destinations/hang-mua-ninh-binh-guide`): 486–500 bậc thang đá trắng lên Đỉnh Ngọa Long ngắm toàn cảnh Tam Cốc sông Ngô Đồng; vé tham quan 100.000 VND; khung giờ vàng bình minh 06:00–07:30 và hoàng hôn 16:30–18:00; lưu ý trang phục và giày leo núi.
-  - Phố ẩm thực Đà Nẵng (`destinations/da-nang-street-food-guide`): Mì Quảng Bà Mua / 1A Hải Phòng (35k–50k VND), Bánh tráng cuốn thịt heo Trần / Đại Lộc (80k–120k VND), Hải sản Năm Đảnh hẻm K139/H59/38 Trần Quang Khải (đồng giá 70k–110k VND), Bún chả cá Bà Phiến 63 Lê Hồng Phong.
-  - Chợ nổi ĐBSCL (`destinations/mekong-delta-floating-markets-guide`): Chợ nổi Cái Răng Cần Thơ (hoạt động nhộn nhịp nhất 05:30–07:30 sáng, cây bẹo treo hàng hóa, thuê thuyền bến Ninh Kiều 350k–500k VND/thuyền riêng) vs Chợ nổi Cái Bè Tiền Giang; lưu ý mùa nước và thời điểm ghé thăm.
-  - May đo Phố cổ Hội An (`destinations/hoi-an-tailoring-guide`): Thời gian may đo lấy nhanh (24h–48h), quy trình thử đồ fitting 2–3 lần; bảng giá suit 2 mảnh nam 100–250 USD, đầm lụa nữ 30–80 USD; các nhà may uy tín lâu năm (Yaly Couture, Bebe Tailor, Kimmy Tailor, A Dong Silk).
-  - Hà Nội $\rightarrow$ Cao Bằng (`plan/hanoi-to-cao-bang-transport`): Khoảng cách 280 km qua cao tốc Hà Nội - Thái Nguyên - Bắc Kạn - Cao Bằng CT07; xe limousine VIP 9 chỗ (280k–350k VND / 5.5–6h đón trả phố cổ); xe giường nằm bến Mỹ Đình (200k–250k VND / 6.5–7h).
-  - Hà Nội $\rightarrow$ Mai Châu (`plan/hanoi-to-mai-chau-transport`): Khoảng cách 140 km qua QL6 vượt Đèo Thung Khe (Đèo Đá Trắng); xe limousine đón trả tận bản Lác / Poom Coọng (220k–260k VND / 3.5–4h); xe buýt thường bến Yên Nghĩa / Mỹ Đình (100k–130k VND / 4–4.5h).
-- [ ] **Task 9.2**: Bổ sung 7 bộ curated FAQ mới vào `inc/guide-seo.php`:
+### Giai Đoạn 9: Trải Nghiệm Văn Hóa Độc Đáo, Chợ Nổi, Đỉnh Núi Rồng & Vận Tải Miền Núi (Stage 128) [HOÀN THÀNH 100%]
+- [x] **Task 9.1**: Dùng `ag-search` xác minh thông tin thực tế, lịch trình & giá vé:
+  - Phố đường tàu Hà Nội (`destinations/hanoi-train-street-guide`): Lịch tàu hỏa qua đoạn Trần Phú / Phùng Hưng / Lê Duẩn (ngày thường ~15:15–15:30, 19:00–19:45, 21:15–22:00; cuối tuần thêm các chuyến sáng 06:00, 07:15, 09:30, 11:50 và chiều); mô hình cafe đón khách qua rào chắn an ninh của lực lượng chức năng; giá đồ uống 30k–55k VND; quy tắc an toàn lùi sau vạch vàng khi có chuông báo.
+  - Hang Múa Ninh Bình (`destinations/hang-mua-ninh-binh-guide`): 486 bậc thang đá dốc đứng lên Đỉnh Ngọa Long ngắm toàn cảnh Tam Cốc sông Ngô Đồng; vé tham quan 100.000–150.000 VND; khung giờ vàng bình minh 06:00–07:30 và hoàng hôn 16:30–18:00; lưu ý gửi xe bên trong cổng resort (miễn phí/10k) tránh bẫy gửi xe ngoài cổng 30k–50k.
+  - Phố ẩm thực Đà Nẵng (`destinations/da-nang-street-food-guide`): Mì Quảng Bà Mua (19 Trần Bình Trọng, 95A Nguyễn Tri Phương, 35k–50k VND) / 1A Hải Phòng; Bánh tráng cuốn thịt heo Quán Trần (4 Lê Duẩn) / Quán Mậu (35 Đỗ Thúc Tịnh, 80k–130k VND); Hải sản Năm Đảnh hẻm K139/H59/38 Trần Quang Khải (đồng giá 70k–110k VND); Bún chả cá Bà Phiến 63 Lê Hồng Phong.
+  - Chợ nổi ĐBSCL (`destinations/mekong-delta-floating-markets-guide`): Chợ nổi Cái Răng Cần Thơ (nhộn nhịp nhất 05:30–07:30 sáng, cây bẹo treo hàng mẫu nông sản, thuyền xuất bến Ninh Kiều 05:00–05:30); thuê thuyền riêng sampan 350k–500k VND/thuyền 2–4 người; ăn sáng hủ tiếu 35k–45k và cà phê sữa đá 15k–20k trên ghe.
+  - May đo Phố cổ Hội An (`destinations/hoi-an-tailoring-guide`): Thời gian may đo chuẩn 3 ngày 2 đêm với 2–3 lần fitting thử đồ; bảng giá suit 2 mảnh nam 100–250 USD (vải wool-blend) đến 300–500+ USD (cashmere cao cấp); đầm/jumpsuit 35–80 USD; sơ mi 25–50 USD; nhà may uy tín Yaly Couture (47 Nguyễn Thái Học), Bebe Tailor (05–07 Hoàng Diệu), Kimmy Tailor (70 Trần Hưng Đạo), Á Đông Silk (62 Trần Hưng Đạo).
+  - Hà Nội $\rightarrow$ Cao Bằng (`plan/hanoi-to-cao-bang-transport`): Khoảng cách 280 km qua cao tốc Hà Nội - Thái Nguyên CT07 và QL3; xe limousine VIP DCar 9 chỗ (350k–420k VND / 5–6h đón trả phố cổ/Nội Bài, nhà xe Duy Quang, Khánh Hoàn); xe giường nằm bến Mỹ Đình (220k–280k VND / 6.5–7.5h); xe buýt số 03 từ TP Cao Bằng đi Thác Bản Giốc (85 km / 2–2.5h vé 80k–90k VND).
+  - Hà Nội $\rightarrow$ Mai Châu (`plan/hanoi-to-mai-chau-transport`): Khoảng cách 135–140 km qua QL6 vượt Đèo Thung Khe (Đèo Đá Trắng); xe limousine VIP đón trả tận bản Lác / Poom Coọng (220k–260k VND / 3–3.5h, Mai Chau Hideaway, Sapa Express); dừng chân 15 phút ngắm cảnh đỉnh đèo Thung Khe cao 1.000m thưởng thức ngô nướng, cơm lam; so sánh với xe buýt thường bến Yên Nghĩa 100k–130k VND trả ở ngã ba Tòng Đậu.
+- [x] **Task 9.2**: Bổ sung 7 bộ curated FAQ mới vào `inc/guide-seo.php`:
   - `destinations/hanoi-train-street-guide`
   - `destinations/hang-mua-ninh-binh-guide`
   - `destinations/da-nang-street-food-guide`
@@ -282,8 +282,28 @@ flowchart TD
   - `destinations/hoi-an-tailoring-guide`
   - `plan/hanoi-to-cao-bang-transport`
   - `plan/hanoi-to-mai-chau-transport`
-- [ ] **Task 9.3**: Bổ sung 2 HowTo schemas chuẩn JSON-LD:
-  - "How to Travel from Hanoi to Cao Bang by Direct VIP Limousine" (4 bước).
-  - "How to Travel from Hanoi to Mai Chau Valley by Express Limousine or Bus" (4 bước).
-- [ ] **Task 9.4**: Bổ sung unit tests kiểm tra hợp đồng dữ liệu trong `ops/tests/test_guide_seo.py` (`test_stage128_train_street_hang_mua_tailoring_transport_faqs_and_howtos`).
-- [ ] **Task 9.5**: Xác minh 8 Quality Gates (8/8 PASS, Exit Code 0), commit và push lên `origin/master`.
+- [x] **Task 9.3**: Bổ sung 2 HowTo schemas chuẩn JSON-LD:
+  - "How to Travel from Hanoi to Cao Bang by Direct VIP Limousine Van" (4 bước).
+  - "How to Travel from Hanoi to Mai Chau Valley by Tourist Limousine Van" (4 bước).
+- [x] **Task 9.4**: Bổ sung unit tests kiểm tra hợp đồng dữ liệu trong `ops/tests/test_guide_seo.py` (`test_stage128_train_street_hang_mua_tailoring_transport_faqs_and_howtos`).
+- [x] **Task 9.5**: Xác minh 8 Quality Gates (8/8 PASS, Exit Code 0, 308 tests passed), commit `718558e` và push lên `origin/master`.
+
+### Giai Đoạn 10: Chùm Bài Viết Trọng Điểm "Best Things to Do" & Cán Mốc 120 Curated FAQ Routes (Stage 129) [TIẾP THEO]
+- [ ] **Task 10.1**: Dùng `ag-search` xác minh trải nghiệm tinh hoa, giá vé và giờ mở cửa tại 7 trung tâm du lịch lớn nhất:
+  - Hà Nội (`destinations/best-things-to-do-in-hanoi`): Văn Miếu - Quốc Tử Giám (70.000 VND), Nhà tù Hỏa Lò (50.000 VND, tour đêm 399.000–499.000 VND), Hồ Hoàn Kiếm & Đền Ngọc Sơn (50.000 VND), Nhà hát Lớn Hà Nội, Múa rối nước Thăng Long (100k–200k VND).
+  - TP. Hồ Chí Minh (`destinations/best-things-to-do-in-ho-chi-minh-city`): Bảo tàng Chứng tích Chiến tranh (40.000 VND), Dinh Độc Lập (40k–65k VND), Bưu điện Trung tâm Sài Gòn, Thuyền buýt Saigon Waterbus bến Bạch Đằng (15.000 VND), Phố đi bộ Nguyễn Huệ & Chợ Bến Thành.
+  - Hội An (`destinations/best-things-to-do-in-hoi-an`): Vé tham quan Phố cổ 150.000 VND (chọn 5 điểm di tích: Chùa Cầu, Nhà cổ Tấn Ký/Phùng Hưng, Hội quán Phúc Kiến/Triều Châu), Đi thuyền hoa đăng sông Hoài (150k–200k VND/thuyền), Đạp xe làng rau Trà Quế, Show Ký ức Hội An (600k–1.000k VND).
+  - Cố đô Huế (`destinations/best-things-to-do-in-hue`): Đại Nội Hoàng Thành (200.000 VND, mở cửa 07:00–17:30), Lăng Tự Đức (150.000 VND), Lăng Khải Định kiến trúc pha lê/xi măng (150.000 VND), Lăng Minh Mạng (150.000 VND), Chùa Thiên Mụ 7 tầng (miễn phí), Ca Huế trên sông Hương (100k–150k VND).
+  - Đà Lạt (`destinations/best-things-to-do-in-da-lat`): Dinh III Bảo Đại (50.000 VND), Biệt thự Hằng Nga Crazy House (80.000 VND), Chợ đêm Đà Lạt ẩm thực bánh tráng nướng & sữa đậu nành, Chùa Linh Phước Ve Chai (miễn phí), Quảng trường Lâm Viên & Hồ Xuân Hương.
+  - Đà Nẵng (`destinations/best-things-to-do-in-da-nang`): Cầu Rồng phun lửa và nước (21:00 tối thứ 7 & Chủ nhật), Ngũ Hành Sơn Thủy Sơn (40.000 VND + Động Huyền Không + thang máy 15.000 VND), Bán đảo Sơn Trà & Chùa Linh Ứng tượng Phật 67m (miễn phí), Bãi biển Mỹ Khê.
+  - Ninh Bình (`destinations/best-things-to-do-in-ninh-binh`): Quần thể danh thắng Tràng An (250.000 VND), Tam Cốc Bích Động (250.000 VND), Hang Múa (100k–150k VND), Cố đô Hoa Lư đền Đinh - Lê (20.000 VND), Chùa Bái Đính (xe điện 60.000 VND khứ hồi).
+- [ ] **Task 10.2**: Bổ sung 7 bộ curated FAQ mới vào `inc/guide-seo.php`:
+  - `destinations/best-things-to-do-in-hanoi`
+  - `destinations/best-things-to-do-in-ho-chi-minh-city`
+  - `destinations/best-things-to-do-in-hoi-an`
+  - `destinations/best-things-to-do-in-hue`
+  - `destinations/best-things-to-do-in-da-lat`
+  - `destinations/best-things-to-do-in-da-nang`
+  - `destinations/best-things-to-do-in-ninh-binh`
+- [ ] **Task 10.3**: Bổ sung unit tests kiểm tra hợp đồng dữ liệu trong `ops/tests/test_guide_seo.py` (`test_stage129_best_things_to_do_hub_guides_faqs`).
+- [ ] **Task 10.4**: Xác minh 8 Quality Gates (8/8 PASS, Exit Code 0), commit và push lên `origin/master`. Cán mốc mục tiêu **120 Curated FAQ Routes**!
