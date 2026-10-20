@@ -1,10 +1,70 @@
 {
   "passed": true,
-  "total_articles": 25,
-  "passed_articles": 25,
+  "total_articles": 28,
+  "passed_articles": 28,
   "min_words_threshold": 1200,
   "min_hls_threshold": 85.0,
   "articles": [
+    {
+      "path": "M:/Projects/vietnamguide/content/compare/can-tho-vs-ben-tre.md",
+      "relative_path": "content/compare/can-tho-vs-ben-tre.md",
+      "passed": true,
+      "word_count": 1478,
+      "frontmatter": {
+        "title": "Can Tho vs Ben Tre: Urban River Hub vs Coconut Countryside",
+        "slug": "can-tho-vs-ben-tre",
+        "route_path": "compare/can-tho-vs-ben-tre",
+        "travel_cluster": "mekong_delta",
+        "last_verified": "2026-10-20",
+        "author": "Antigravity Travel Intelligence",
+        "reading_time_minutes": 12,
+        "word_count": 2200
+      },
+      "elements": {
+        "h2_count": 7,
+        "h3_count": 15,
+        "table_count": 7,
+        "blockquote_count": 2,
+        "callout_count": 1,
+        "has_faq": true,
+        "has_steps": false
+      },
+      "empirical_signals": {
+        "currency_mentions": 24,
+        "distance_mentions": 12,
+        "transit_time_mentions": 9,
+        "total_empirical_signals": 45,
+        "sample_currencies": [
+          "1,800,000 VND",
+          "1,100,000 VND",
+          "350,000 VND",
+          "400,000 VND",
+          "1,100,000 VND"
+        ],
+        "sample_distances": [
+          "170 km",
+          "85 km",
+          "170 km",
+          "85 km",
+          "1.5 km"
+        ],
+        "sample_transit_times": [
+          "3.5 hours",
+          "2.0 hours",
+          "2.0 hours",
+          "3.5 hours",
+          "4 hours"
+        ]
+      },
+      "slop_report": {
+        "passed": true,
+        "hls_score": 100,
+        "tier1_count": 0,
+        "tier1_violations": []
+      },
+      "errors": [],
+      "warnings": []
+    },
     {
       "path": "M:/Projects/vietnamguide/content/compare/cao-bang-vs-ba-be-lake.md",
       "relative_path": "content/compare/cao-bang-vs-ba-be-lake.md",
@@ -531,6 +591,63 @@
           "75 minutes",
           "3.0 hours",
           "60 minutes"
+        ]
+      },
+      "slop_report": {
+        "passed": true,
+        "hls_score": 100,
+        "tier1_count": 0,
+        "tier1_violations": []
+      },
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "path": "M:/Projects/vietnamguide/content/destinations/can-tho-cai-rang-floating-market-guide.md",
+      "relative_path": "content/destinations/can-tho-cai-rang-floating-market-guide.md",
+      "passed": true,
+      "word_count": 1558,
+      "frontmatter": {
+        "title": "Can Tho Travel Guide: Cai Rang Floating Market, River Culture, and Delta Islets",
+        "slug": "can-tho-cai-rang-floating-market-guide",
+        "route_path": "destinations/mekong-delta-floating-markets-guide",
+        "travel_cluster": "mekong_delta",
+        "last_verified": "2026-10-20",
+        "author": "Antigravity Travel Intelligence",
+        "reading_time_minutes": 12,
+        "word_count": 2200
+      },
+      "elements": {
+        "h2_count": 5,
+        "h3_count": 13,
+        "table_count": 5,
+        "blockquote_count": 2,
+        "callout_count": 1,
+        "has_faq": true,
+        "has_steps": true
+      },
+      "empirical_signals": {
+        "currency_mentions": 39,
+        "distance_mentions": 11,
+        "transit_time_mentions": 2,
+        "total_empirical_signals": 52,
+        "sample_currencies": [
+          "500,000 VND",
+          "$14.00",
+          "$20.00",
+          "850,000 VND",
+          "$24.00"
+        ],
+        "sample_distances": [
+          "170 km",
+          "6 km",
+          "6 km",
+          "6 km",
+          "8 km"
+        ],
+        "sample_transit_times": [
+          "4.5 hours",
+          "20 minutes"
         ]
       },
       "slop_report": {
@@ -1432,6 +1549,66 @@
       },
       "slop_report": {
         "passed": false,
+        "hls_score": 100,
+        "tier1_count": 0,
+        "tier1_violations": []
+      },
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "path": "M:/Projects/vietnamguide/content/plan/ho-chi-minh-city-to-can-tho-transport.md",
+      "relative_path": "content/plan/ho-chi-minh-city-to-can-tho-transport.md",
+      "passed": true,
+      "word_count": 1643,
+      "frontmatter": {
+        "title": "Ho Chi Minh City to Can Tho Transport: Expressway Bus, Limousine & Car",
+        "slug": "ho-chi-minh-city-to-can-tho-transport",
+        "route_path": "plan/ho-chi-minh-city-to-can-tho-transport",
+        "travel_cluster": "mekong_delta",
+        "last_verified": "2026-10-20",
+        "author": "Antigravity Travel Intelligence",
+        "reading_time_minutes": 12,
+        "word_count": 2200
+      },
+      "elements": {
+        "h2_count": 6,
+        "h3_count": 12,
+        "table_count": 6,
+        "blockquote_count": 2,
+        "callout_count": 1,
+        "has_faq": true,
+        "has_steps": true
+      },
+      "empirical_signals": {
+        "currency_mentions": 42,
+        "distance_mentions": 10,
+        "transit_time_mentions": 20,
+        "total_empirical_signals": 72,
+        "sample_currencies": [
+          "195,000 VND",
+          "$6.60",
+          "$7.80",
+          "320,000 VND",
+          "$10.40"
+        ],
+        "sample_distances": [
+          "170 km",
+          "165 km",
+          "170 km",
+          "100 km",
+          "10 km"
+        ],
+        "sample_transit_times": [
+          "3.5 hours",
+          "3.5 hours",
+          "3.5 hours",
+          "3.8 hours",
+          "3.3 hours"
+        ]
+      },
+      "slop_report": {
+        "passed": true,
         "hls_score": 100,
         "tier1_count": 0,
         "tier1_violations": []

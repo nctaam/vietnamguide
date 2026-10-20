@@ -403,12 +403,22 @@ flowchart TD
 - [x] **Task 19.4**: Chạy `ops/content_depth_auditor.py` kiểm định toàn bộ 25 bài viết trong `content/` (Tổng số từ: **36.901 từ**, 100% PASS, Mean HLS 99.2/100, 1.580 empirical signals, 0 Tier 1 clichés).
 - [x] **Task 19.5**: Xác minh 8 Quality Gates (8/8 PASS, Exit Code 0, 315 tests passed), commit và push lên `origin/master`.
 
-### Giai Đoạn 20: Đồng Bằng Sông Cửu Long & Chợ Nổi Miền Tây (Stage 139) [TIẾP THEO]
-- [ ] **Task 20.1**: Dùng `ag-search` xác minh thực tế và biên soạn bài viết chuyên sâu:
-  - `content/destinations/can-tho-cai-rang-floating-market-guide.md`: Cẩm nang Chợ nổi Cái Răng lúc bình minh (05:30–07:30 sáng, cây bẹo treo nông sản, thuê thuyền bến Ninh Kiều 350k–500k VND/thuyền), hủ tiếu nổi & cà phê bồng bềnh, cồn Sơn sinh thái cá lóc bay, lò hủ tiếu truyền thống Chín Của.
-- [ ] **Task 20.2**: Dùng `ag-search` xác minh thực tế và biên soạn bài so sánh trực diện:
-  - `content/compare/can-tho-vs-ben-tre.md`: So sánh toàn diện giữa Cần Thơ (thủ phủ Tây Đô đô thị hóa cao, chợ nổi sầm uất, khách sạn cao cấp, đời sống sông nước quy mô lớn) vs Bến Tre (xứ dừa thanh bình, homestay miệt vườn, chèo xuồng ba lá len lỏi rạch dừa nước, đạp xe đường làng không tiếng còi xe).
-- [ ] **Task 20.3**: Dùng `ag-search` xác minh thực tế và biên soạn bài viết cẩm nang di chuyển:
-  - `content/plan/ho-chi-minh-city-to-can-tho-transport.md`: Tuyến kết nối 170 km từ TP.HCM đi Cần Thơ qua cao tốc TP.HCM - Trung Lương - Mỹ Thuận (thời gian 3.0–3.5h, xe khách Phương Trang 165k–190k VND xuất bến Miền Tây, xe limousine 9 chỗ đón tận nhà quận 1 giá 250k–320k VND, xe riêng 1.8M–2.2M VND).
-- [ ] **Task 20.4**: Chạy `ops/content_depth_auditor.py` kiểm định toàn bộ các bài viết mới (bảo đảm >= 1,200 từ, HLS >= 85, 0 Tier 1 clichés, mật độ dữ liệu cao).
-- [ ] **Task 20.5**: Xác minh 8 Quality Gates (8/8 PASS, Exit Code 0), commit và push lên `origin/master`.
+### Giai Đoạn 20: Đồng Bằng Sông Cửu Long & Chợ Nổi Miền Tây (Stage 139) [HOÀN THÀNH 100%]
+- [x] **Task 20.1**: Dùng `ag-search` xác minh thực tế và biên soạn bài viết chuyên sâu:
+  - `content/destinations/can-tho-cai-rang-floating-market-guide.md`: Cẩm nang Chợ nổi Cái Răng lúc bình minh (05:30–07:30 sáng, cây bẹo treo nông sản, thuê thuyền bến Ninh Kiều 350k–500k VND/thuyền), hủ tiếu nổi & cà phê bồng bềnh, cồn Sơn sinh thái cá lóc bay, lò hủ tiếu truyền thống Chín Của (1,558 substantive words, HLS 100.0/100, 52 empirical signals).
+- [x] **Task 20.2**: Dùng `ag-search` xác minh thực tế và biên soạn bài so sánh trực diện:
+  - `content/compare/can-tho-vs-ben-tre.md`: So sánh toàn diện giữa Cần Thơ (thủ phủ Tây Đô đô thị hóa cao, chợ nổi sầm uất, khách sạn cao cấp, đời sống sông nước quy mô lớn) vs Bến Tre (xứ dừa thanh bình, homestay miệt vườn, chèo xuồng ba lá len lỏi rạch dừa nước, đạp xe đường làng không tiếng còi xe) (1,478 substantive words, HLS 100.0/100, 45 empirical signals).
+- [x] **Task 20.3**: Dùng `ag-search` xác minh thực tế và biên soạn bài viết cẩm nang di chuyển:
+  - `content/plan/ho-chi-minh-city-to-can-tho-transport.md`: Tuyến kết nối 170 km từ TP.HCM đi Cần Thơ qua cao tốc TP.HCM - Trung Lương - Mỹ Thuận (thời gian 3.0–3.5h, xe khách Phương Trang 165k–195k VND xuất bến Miền Tây, xe limousine 9 chỗ đón tận nhà quận 1 giá 260k–320k VND, xe riêng 1.8M–2.2M VND) (1,643 substantive words, HLS 100.0/100, 72 empirical signals).
+- [x] **Task 20.4**: Chạy `ops/content_depth_auditor.py` kiểm định toàn bộ 28 bài viết trong `content/` (Tổng số từ: **41.580 từ**, 100% PASS, Mean HLS 99.2/100, 1.749 empirical signals, 0 Tier 1 clichés).
+- [x] **Task 20.5**: Xác minh 8 Quality Gates (8/8 PASS, Exit Code 0, 315 tests passed), commit và push lên `origin/master`.
+
+### Giai Đoạn 21: Duyên Hải Nam Trung Bộ: Nha Trang & Mũi Né (Stage 140) [ĐANG THỰC HIỆN]
+- [ ] **Task 21.1**: Dùng `ag-search` xác minh thực tế và biên soạn bài viết chuyên sâu:
+  - `content/destinations/nha-trang-coastal-guide.md`: Cẩm nang toàn diện Nha Trang (Vịnh Nha Trang, khu bảo tồn biển Hòn Mun lặn ngắm san hô 250k–450k VND, cáp treo VinWonders Hòn Tre vượt biển 3.320m 950k–1.050k VND, Tháp Bà Ponagar thế kỷ VIII–XIII 30k VND, Viện Hải dương học 40k VND, đại lộ ven biển Trần Phú).
+- [ ] **Task 21.2**: Dùng `ag-search` xác minh thực tế và biên soạn bài so sánh trực diện:
+  - `content/compare/mui-ne-vs-nha-trang.md`: So sánh toàn diện giữa Mũi Né (thiên đường lướt ván diều mùa gió bấc tháng 11–tháng 3, Đồi Cát Trắng & Đồi Cát Đỏ 50k–100k VND, Suối Tiên 15k VND, dải resort thấp tầng dọc đường Nguyễn Đình Chiểu) vs Nha Trang (thành phố biển sôi động nhiều cao ốc, chuỗi đảo lặn biển san hô vịnh ngọc, công viên giải trí đảo quốc tế, chợ đêm & ẩm thực nem nướng Đặng Văn Quyên).
+- [ ] **Task 21.3**: Dùng `ag-search` xác minh thực tế và biên soạn bài viết cẩm nang di chuyển:
+  - `content/plan/nha-trang-to-quy-nhon-transport.md`: Tuyến kết nối duyên hải 215 km từ Nha Trang đi Quy Nhơn (Tàu hỏa Thống Nhất SE22/SE10/SE4 ga Nha Trang đến Ga Diêu Trì 150k–230k VND ghế mềm điều hòa thời gian 4–4.5h + xe buýt T22 hoặc taxi 30 phút về trung tâm Quy Nhơn; xe khách limousine Phúc Thuận Thảo, Sơn Tùng 160k–220k VND thời gian 4–4.5h qua bờ biển Nam Phú Yên).
+- [ ] **Task 21.4**: Chạy `ops/content_depth_auditor.py` kiểm định toàn bộ các bài viết mới (bảo đảm >= 1,200 từ, HLS >= 85, 0 Tier 1 clichés, mật độ dữ liệu cao).
+- [ ] **Task 21.5**: Xác minh 8 Quality Gates (8/8 PASS, Exit Code 0), commit và push lên `origin/master`.
