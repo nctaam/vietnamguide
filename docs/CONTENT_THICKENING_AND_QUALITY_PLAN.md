@@ -157,8 +157,37 @@ flowchart TD
 - [x] **Task 3.4**: Bổ sung unit tests kiểm tra hợp đồng dữ liệu trong `ops/tests/test_guide_seo.py` (`test_stage122_northern_mountains_faqs_and_howtos`).
 - [x] **Task 3.5**: Xác minh 8 Quality Gates (8/8 PASS, Exit Code 0, 302 tests passed), commit `46ed4b4` và push lên `origin/master`.
 
-### Giai Đoạn 4: Xây Dựng Kho Content-as-Code & Tối Ưu Hóa Trải Nghiệm (Stage 123)
-- [ ] **Task 4.1**: Thiết lập cấu trúc thư mục `content/` phân loại theo 4 nhánh (`destinations/`, `itineraries/`, `compare/`, `plan/`).
-- [ ] **Task 4.2**: Xây dựng kịch bản kiểm tra độ dài và mật độ từ vựng (`ops/content_depth_auditor.py`) kiểm soát độ sâu bài viết.
-- [ ] **Task 4.3**: Mở rộng auto-injection của các interactive shortcodes (`[vg_interactive_map]`, `[vg_photo_dispatch]`, `[vg_route_budget]`) trên các bài viết mới được làm dày.
-- [ ] **Task 4.4**: Xác minh 8 Quality Gates, commit và push lên `origin/master`.
+### Giai Đoạn 4: Tuyến Di Sản Miền Trung, Địa Đạo Củ Chi & So Sánh Đảo (Stage 123) [HOÀN THÀNH]
+- [x] **Task 4.1**: Dùng `ag-search` xác minh giá vé & phương tiện: Địa đạo Củ Chi (Bến Dược vs Bến Đình 125.000 VND / vé người lớn nước ngoài, xe buýt số 13 từ Bến Thành đi Củ Chi 7k–10k VND + số 79 đi Bến Dược 6k–7k VND, xe limousine 350k–450k VND, cano cao tốc Les Rives 1.900k–2.200k VND), Bà Nà Hills & Cầu Vàng (vé cáp treo ngoại tỉnh 1.000.000 VND người lớn / 800.000 VND trẻ em, buffet 350.000 VND, mở cửa 07:00–22:00, thời điểm vắng nhất 07:00–08:30 sáng hoặc sau 16:30 chiều), Sân bay Đà Nẵng đi Hội An (30km, taxi Grab 300k–350k VND / 45 phút, xe đưa đón shuttle bus 100k–120k VND / người), Tàu hỏa Di sản Huế – Đà Nẵng (Đoàn tàu "Kết nối di sản miền Trung" HD1/HD2/HD3/HD4, giá vé 110.000–180.000 VND / ghế mềm điều hòa, 3 giờ ngắm đèo Hải Vân và vịnh Lăng Cô).
+- [x] **Task 4.2**: Bổ sung 7 bộ curated FAQ mới vào `inc/guide-seo.php`:
+  - `compare/cu-chi-tunnels-ben-duoc-vs-ben-dinh`
+  - `compare/con-dao-vs-phu-quoc`
+  - `compare/hoi-an-vs-hue`
+  - `destinations/ba-na-hills-golden-bridge-guide`
+  - `plan/da-nang-airport-to-hoi-an`
+  - `itineraries/da-nang-to-hue-train-vs-car`
+  - `compare/cu-chi-tunnels-vs-mekong-delta-day-trip`
+- [x] **Task 4.3**: Bổ sung 2 HowTo schemas:
+  - "How to Travel from Da Nang International Airport to Hoi An Ancient Town" (4 bước chuẩn JSON-LD).
+  - "How to Take the Heritage Train Between Da Nang and Hue Over Hai Van Pass" (4 bước chuẩn JSON-LD).
+- [x] **Task 4.4**: Bổ sung unit tests kiểm tra hợp đồng dữ liệu trong `ops/tests/test_guide_seo.py` (`test_stage123_central_heritage_cuchi_islands_faqs_and_howtos`).
+- [x] **Task 4.5**: Xác minh 8 Quality Gates (8/8 PASS, Exit Code 0, 303 tests passed), commit `5210609` và push lên `origin/master`.
+
+### Giai Đoạn 5: Tuyến Đô Thị Lớn & Chuyến Đi Trong Ngày (Stage 124) [ĐANG TRIỂN KHAI]
+- [ ] **Task 5.1**: Dùng `ag-search` xác minh giá vé, khoảng cách & phương tiện:
+  - Hà Nội: Phố Cổ vs Khu Phố Pháp vs Hồ Tây (`compare/old-quarter-vs-french-quarter-vs-west-lake`)
+  - Chuyến đi trong ngày từ Hà Nội: Bát Tràng, Đường Lâm, Tam Chúc, Ninh Bình (`destinations/best-day-trips-from-hanoi`)
+  - Ninh Bình: Đi về trong ngày vs Ở lại qua đêm từ Hà Nội (`compare/ninh-binh-day-trip-vs-overnight`)
+  - Chuyến đi trong ngày từ TP.HCM: Củ Chi, Cần Giờ, Mỹ Tho/Bến Tre, Vũng Tàu (`destinations/best-day-trips-from-ho-chi-minh-city`)
+  - Đồng bằng Sông Cửu Long: Đi tour trong ngày vs Ở lại qua đêm (`compare/mekong-delta-overnight-vs-day-trip`)
+  - Mũi Né vs Nha Trang: So sánh bãi biển, thể thao biển, hải sản, thời tiết (`compare/mui-ne-vs-nha-trang`)
+- [ ] **Task 5.2**: Bổ sung 6 bộ curated FAQ mới vào `inc/guide-seo.php`.
+- [ ] **Task 5.3**: Bổ sung HowTo schemas chuyên sâu cho chuyến đi trong ngày hoặc phương tiện đô thị.
+- [ ] **Task 5.4**: Bổ sung unit test hợp đồng dữ liệu trong `ops/tests/test_guide_seo.py`.
+- [ ] **Task 5.5**: Xác minh 8 Quality Gates, commit và push lên `origin/master`.
+
+### Giai Đoạn 6: Xây Dựng Kho Content-as-Code & Tối Ưu Hóa Trải Nghiệm (Stage 125)
+- [ ] **Task 6.1**: Thiết lập cấu trúc thư mục `content/` phân loại theo 4 nhánh (`destinations/`, `itineraries/`, `compare/`, `plan/`).
+- [ ] **Task 6.2**: Xây dựng kịch bản kiểm tra độ dài và mật độ từ vựng (`ops/content_depth_auditor.py`) kiểm soát độ sâu bài viết.
+- [ ] **Task 6.3**: Mở rộng auto-injection của các interactive shortcodes (`[vg_interactive_map]`, `[vg_photo_dispatch]`, `[vg_route_budget]`) trên các bài viết mới được làm dày.
+- [ ] **Task 6.4**: Xác minh 8 Quality Gates, commit và push lên `origin/master`.
