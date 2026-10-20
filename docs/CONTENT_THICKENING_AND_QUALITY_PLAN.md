@@ -130,18 +130,19 @@ flowchart TD
 - [x] **Task 1.4**: Bổ sung unit tests kiểm tra hợp đồng dữ liệu trong `ops/tests/test_guide_seo.py` (`test_stage120_central_highlands_and_mekong_faqs_and_howtos`).
 - [x] **Task 1.5**: Xác minh 8 Quality Gates (8/8 PASS, Exit Code 0, 300 tests passed), commit `95abf37` và push lên `origin/master`.
 
-### Giai Đoạn 2: Tuyến Duyên Hải Nam Trung Bộ & Hang Động (Stage 121)
-- [ ] **Task 2.1**: Dùng `ag-search` xác minh giá vé & phương tiện: Quy Nhơn (Eo Gió, Kỳ Co, Tháp Bánh Ít), Phú Yên (Gành Đá Đĩa, Mũi Điện), Đồng Hới & Phong Nha (Động Thiên Đường, Suối Nước Moọc, Sông Chày Hang Tối).
-- [ ] **Task 2.2**: Bổ sung 6 bộ curated FAQ mới vào `inc/guide-seo.php`:
+### Giai Đoạn 2: Tuyến Duyên Hải Nam Trung Bộ & Hang Động (Stage 121) [HOÀN THÀNH]
+- [x] **Task 2.1**: Dùng `ag-search` xác minh giá vé & phương tiện: Quy Nhơn (Eo Gió 25k VND, Kỳ Co vé cổng 100k + xe điện 90k / cano lặn ngắm san hô 350k–400k VND, Tháp Bánh Ít 15k–20k VND, xe buýt sân bay Phù Cát 50k VND), Nha Trang (VinWonders 950k–1.050k VND, Tháp Bà Ponagar 30k VND, Viện Hải dương học 40k VND, xe buýt Đất Mới số 18 sân bay Cam Ranh 60k–65k VND), Mũi Né (Bàu Trắng 15k–20k VND / thuê xe jeep-ATV 600k–800k VND, Suối Tiên 15k VND, tàu hỏa SPT2 Sài Gòn–Phan Thiết 170k–230k VND), Đồng Hới & Phong Nha (Động Phong Nha vé 150k + thuyền sông Son 700k/thuyền ghép 60k/người, Động Thiên Đường 270k VND gồm xe điện, xe buýt B4 Đồng Hới–Phong Nha 40k–50k VND).
+- [x] **Task 2.2**: Bổ sung 7 bộ curated FAQ mới vào `inc/guide-seo.php`:
   - `destinations/where-to-stay-in-quy-nhon`
   - `destinations/where-to-stay-in-nha-trang`
   - `destinations/where-to-stay-in-mui-ne`
   - `destinations/where-to-stay-in-dong-hoi`
   - `plan/buon-ma-thuot-to-nha-trang-transport`
   - `plan/pleiku-to-quy-nhon-transport`
-- [ ] **Task 2.3**: Bổ sung HowTo: "How to Travel from Nha Trang to Quy Nhon by Coastal Train or Bus".
-- [ ] **Task 2.4**: Bổ sung unit tests kiểm tra hợp đồng dữ liệu trong `ops/tests/test_guide_seo.py`.
-- [ ] **Task 2.5**: Xác minh 8 Quality Gates, commit và push lên `origin/master`.
+  - `plan/nha-trang-to-quy-nhon-transport`
+- [x] **Task 2.3**: Bổ sung HowTo: "How to Travel from Nha Trang to Quy Nhon by Coastal Train or Limousine Bus" (4 bước chuẩn JSON-LD).
+- [x] **Task 2.4**: Bổ sung unit tests kiểm tra hợp đồng dữ liệu trong `ops/tests/test_guide_seo.py` (`test_stage121_central_coast_and_caves_faqs_and_howtos`).
+- [x] **Task 2.5**: Xác minh 8 Quality Gates (8/8 PASS, Exit Code 0, 301 tests passed), commit `8aa796a` và push lên `origin/master`.
 
 ### Giai Đoạn 3: Tuyến Vùng Núi Phía Bắc & Tây Bắc (Stage 122)
 - [ ] **Task 3.1**: Dùng `ag-search` xác minh giá vé & phương tiện: Ba Bể (Thác Đầu Đẳng, Động Puông), Pù Luông (Bè tre Suối Chàm, Thác Hiêu), Mù Cang Chải (Mâm Xôi, Móng Ngựa, Đèo Khau Phạ), Mai Châu (Bản Lác, Hang Chiều).
