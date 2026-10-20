@@ -196,8 +196,32 @@ flowchart TD
 - [x] **Task 5.4**: Bổ sung unit tests kiểm tra hợp đồng dữ liệu trong `ops/tests/test_guide_seo.py` (`test_stage124_urban_megacities_and_day_trips_faqs_and_howtos`).
 - [x] **Task 5.5**: Xác minh 8 Quality Gates (8/8 PASS, Exit Code 0, 304 tests passed), commit `5166c00` và push lên `origin/master`.
 
-### Giai Đoạn 6: Xây Dựng Kho Content-as-Code & Tối Ưu Hóa Trải Nghiệm (Stage 125) [TIẾP THEO]
-- [ ] **Task 6.1**: Thiết lập cấu trúc thư mục `content/` phân loại theo 4 nhánh (`destinations/`, `itineraries/`, `compare/`, `plan/`).
-- [ ] **Task 6.2**: Xây dựng kịch bản kiểm tra độ dài và mật độ từ vựng (`ops/content_depth_auditor.py`) kiểm soát độ sâu bài viết.
-- [ ] **Task 6.3**: Mở rộng auto-injection của các interactive shortcodes (`[vg_interactive_map]`, `[vg_photo_dispatch]`, `[vg_route_budget]`) trên các bài viết mới được làm dày.
-- [ ] **Task 6.4**: Xác minh 8 Quality Gates, commit và push lên `origin/master`.
+### Giai Đoạn 6: Tuyến Sông Nước Ninh Bình, So Sánh Đảo, Thiên Nhiên Đà Lạt & Vận Tải Núi Sa Pa (Stage 125) [HOÀN THÀNH]
+- [x] **Task 6.1**: Dùng `ag-search` xác minh giá vé, khoảng cách & phương tiện:
+  - Tam Cốc vs Tràng An (`compare/tam-coc-vs-trang-an-boat-tour`): Tam Cốc thuyền nan sông Ngô Đồng qua 3 hang (Hang Cả, Hang Hai, Hang Ba), người chèo bằng chân, lúa chín cuối tháng 5 đến đầu tháng 6, vé trọn gói 250k VND (120k vé thắng cảnh + 150k thuyền 2 khách); Tràng An di sản UNESCO 3 tuyến thuyền (Tuyến 1: 9 hang 3 đền 3h; Tuyến 2: 4 hang phim trường Kong/Hành cung Vũ Lâm 2.5h; Tuyến 3: 3 hang dài có Hang Đột 1.000m 2.5h), vé 250k VND/khách (thuyền 4 người), cảnh quan hoành tráng quanh năm.
+  - Lý Sơn vs Cù Lao Chàm (`compare/ly-son-vs-cham-islands`): Cù Lao Chàm cách cảng Cửa Đại 15–20 km, cano cao tốc 20 phút (vé khứ hồi 450k–550k VND đã gồm 70k phí bảo tồn biển + 20k phí bến), thích hợp tour ngày 6–8h từ Hội An/Đà Nẵng; Đảo Lý Sơn cách cảng Sa Kỳ (Quảng Ngãi) 24 km, tàu cao tốc 35–45 phút (vé 178k–213k VND/lượt), cảnh quan núi lửa Thới Lới, cổng Tò Vò, Hang Câu, đảo Bé, cần tối thiểu 2 ngày 1 đêm. Cả 2 đảo đều cấm cano vào mùa gió bấc tháng 10–tháng 2.
+  - Phú Quốc vs Nha Trang (`compare/phu-quoc-vs-nha-trang`): Nha Trang trên đất liền có đường sắt và quốc lộ, giá ăn uống hải sản rẻ hơn 30–40% (ngân sách 35–40 USD/ngày), bãi biển công cộng đường Trần Phú 6 km; Phú Quốc là hải đảo xa, chi phí vận chuyển đẩy ngân sách lên 55+ USD/ngày, resort bãi biển riêng tư bãi Khem, bãi Sao, bãi Dài, miễn visa 30 ngày cho khách quốc tế bay thẳng.
+  - Nông trại cà phê Đà Lạt (`destinations/da-lat-coffee-farms-guide`): Cầu Đất Farm cách trung tâm 25–30 km độ cao 1.650m lập từ 1927, trồng Arabica (Typica, Bourbon, Catimor) vé 50k–90k VND; Mê Linh Coffee Garden đèo Tà Nung ngắm thung lũng Robusta (70k–120k VND); K’Ho Coffee Lạc Dương hợp tác xã cà phê hữu cơ của người K'Ho chân núi Lang Biang; Mùa thu hoạch cà phê chín rộ tháng 10 đến tháng 1.
+  - Thác nước Đà Lạt (`destinations/da-lat-waterfalls-guide`): Thác Datanla đèo Prenn cách 6 km vé 50k–80k VND, máng trượt alpine coaster 2.400m vé khứ hồi 200k–250k VND, tour vượt thác canyoning mạo hiểm đu dây 25m giá 1.6M–1.9M VND; Thác Voi (Thác Liêng Rơwoa) Nam Ban cách 28 km vé 40k VND cạnh chùa Linh Ẩn tượng Phật Bà 71m; Thác Pongour 7 tầng Đức Trọng cách 50 km vé 30k VND đẹp nhất mùa mưa tháng 7–12.
+  - Cù Lao Chàm trong ngày (`plan/cham-islands-day-trip-guide`): Cano cao tốc xuất bến Cửa Đại 08:30–09:30 sáng, 20 phút ra Bãi Làng; tour trọn gói ăn trưa hải sản Bãi Chồng lặn ngắm san hô Bãi Xếp 550k–750k VND (22–30 USD); mùa biển êm tháng 3 đến tháng 9, mùa biển động tháng 10 đến tháng 2.
+  - Hà Nội $\rightarrow$ Sa Pa (`plan/hanoi-to-sapa-train-vs-sleeper-bus`): Xe cabin giường nằm VIP đi cao tốc Nội Bài - Lào Cai CT05 5.5–6h trả tận trung tâm Sa Pa giá 350k–450k VND cabin đơn / 600k–700k cabin đôi; Tàu hỏa đêm SP1/SP3 Ga Hà Nội đến Ga Lào Cai 8h (vé 350k–900k VND) giường nằm phẳng êm không say xe + xe trung chuyển 35 km đèo lên Sa Pa 50k–60k VND / 50–60 phút.
+- [x] **Task 6.2**: Bổ sung 7 bộ curated FAQ mới vào `inc/guide-seo.php`:
+  - `compare/tam-coc-vs-trang-an-boat-tour`
+  - `compare/ly-son-vs-cham-islands`
+  - `compare/phu-quoc-vs-nha-trang`
+  - `destinations/da-lat-coffee-farms-guide`
+  - `destinations/da-lat-waterfalls-guide`
+  - `plan/cham-islands-day-trip-guide`
+  - `plan/hanoi-to-sapa-train-vs-sleeper-bus`
+- [x] **Task 6.3**: Bổ sung 2 HowTo schemas chuẩn JSON-LD:
+  - "How to Take a Day Trip to the Cham Islands from Hoi An" (4 bước).
+  - "How to Travel from Hanoi to Sapa by Express Sleeper Bus or Overnight Train" (4 bước).
+- [x] **Task 6.4**: Bổ sung unit tests kiểm tra hợp đồng dữ liệu trong `ops/tests/test_guide_seo.py` (`test_stage125_waterways_islands_dalat_sapa_faqs_and_howtos`).
+- [x] **Task 6.5**: Xác minh 8 Quality Gates (8/8 PASS, Exit Code 0, 305 tests passed), commit `5ac2711` và push lên `origin/master`.
+
+### Giai Đoạn 7: Xây Dựng Kho Content-as-Code & Tối Ưu Hóa Trải Nghiệm (Stage 126) [TIẾP THEO]
+- [ ] **Task 7.1**: Thiết lập cấu trúc thư mục `content/` phân loại theo 4 nhánh (`destinations/`, `itineraries/`, `compare/`, `plan/`).
+- [ ] **Task 7.2**: Xây dựng kịch bản kiểm tra độ dài và mật độ từ vựng (`ops/content_depth_auditor.py`) kiểm soát độ sâu bài viết.
+- [ ] **Task 7.3**: Mở rộng auto-injection của các interactive shortcodes (`[vg_interactive_map]`, `[vg_photo_dispatch]`, `[vg_route_budget]`) trên các bài viết mới được làm dày.
+- [ ] **Task 7.4**: Mở rộng các route FAQ curated tiếp theo (hướng tới cột mốc 120+ routes).
+- [ ] **Task 7.5**: Xác minh 8 Quality Gates, commit và push lên `origin/master`.
