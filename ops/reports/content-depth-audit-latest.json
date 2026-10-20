@@ -1,7 +1,7 @@
 {
   "passed": true,
-  "total_articles": 31,
-  "passed_articles": 31,
+  "total_articles": 34,
+  "passed_articles": 34,
   "min_words_threshold": 1200,
   "min_hls_threshold": 85.0,
   "articles": [
@@ -1198,6 +1198,125 @@
       "warnings": []
     },
     {
+      "path": "M:/Projects/vietnamguide/content/destinations/phu-yen-travel-guide.md",
+      "relative_path": "content/destinations/phu-yen-travel-guide.md",
+      "passed": true,
+      "word_count": 1742,
+      "frontmatter": {
+        "title": "Phu Yen Travel Guide: Basalt Cliffs, Easternmost Sunrise, and Coastal Drives",
+        "slug": "phu-yen-travel-guide",
+        "route_path": "destinations/phu-yen-travel-guide",
+        "travel_cluster": "coastal_islands",
+        "last_verified": "2026-10-20",
+        "author": "Antigravity Travel Intelligence",
+        "reading_time_minutes": 13,
+        "word_count": 2200
+      },
+      "elements": {
+        "h2_count": 9,
+        "h3_count": 16,
+        "table_count": 9,
+        "blockquote_count": 2,
+        "callout_count": 1,
+        "has_faq": true,
+        "has_steps": false
+      },
+      "empirical_signals": {
+        "currency_mentions": 41,
+        "distance_mentions": 21,
+        "transit_time_mentions": 7,
+        "total_empirical_signals": 69,
+        "sample_currencies": [
+          "1D",
+          "1,500,000 VND",
+          "$16",
+          "$60",
+          "2,200,000 VND"
+        ],
+        "sample_distances": [
+          "35 km",
+          "6 km",
+          "189 kilometers",
+          "35 kilometers",
+          "1 meter"
+        ],
+        "sample_transit_times": [
+          "25 minutes",
+          "24 Hours",
+          "15 minutes",
+          "15 minutes",
+          "15 minutes"
+        ]
+      },
+      "slop_report": {
+        "passed": true,
+        "hls_score": 100,
+        "tier1_count": 0,
+        "tier1_violations": []
+      },
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "path": "M:/Projects/vietnamguide/content/destinations/quy-nhon-coastal-guide.md",
+      "relative_path": "content/destinations/quy-nhon-coastal-guide.md",
+      "passed": true,
+      "word_count": 1732,
+      "frontmatter": {
+        "title": "Quy Nhon Travel Guide: Coastal Cliffs, Ky Co Beach, and Cham Antiquities",
+        "slug": "quy-nhon-coastal-guide",
+        "route_path": "destinations/quy-nhon-travel-guide",
+        "travel_cluster": "coastal_islands",
+        "last_verified": "2026-10-20",
+        "author": "Antigravity Travel Intelligence",
+        "reading_time_minutes": 13,
+        "word_count": 2200
+      },
+      "elements": {
+        "h2_count": 8,
+        "h3_count": 15,
+        "table_count": 8,
+        "blockquote_count": 2,
+        "callout_count": 1,
+        "has_faq": true,
+        "has_steps": false
+      },
+      "empirical_signals": {
+        "currency_mentions": 61,
+        "distance_mentions": 15,
+        "transit_time_mentions": 4,
+        "total_empirical_signals": 80,
+        "sample_currencies": [
+          "1D",
+          "1,600,000 VND",
+          "$18",
+          "$64",
+          "3,500,000 VND"
+        ],
+        "sample_distances": [
+          "35 km",
+          "2.5 km",
+          "22 km",
+          "16 km",
+          "3 km"
+        ],
+        "sample_transit_times": [
+          "55 minutes",
+          "40 minutes",
+          "40 minutes",
+          "50 minutes"
+        ]
+      },
+      "slop_report": {
+        "passed": true,
+        "hls_score": 100,
+        "tier1_count": 0,
+        "tier1_violations": []
+      },
+      "errors": [],
+      "warnings": []
+    },
+    {
       "path": "M:/Projects/vietnamguide/content/destinations/sa-pa-trekking-guide.md",
       "relative_path": "content/destinations/sa-pa-trekking-guide.md",
       "passed": true,
@@ -1365,6 +1484,66 @@
           "40 mins",
           "45 mins",
           "45 mins"
+        ]
+      },
+      "slop_report": {
+        "passed": true,
+        "hls_score": 100,
+        "tier1_count": 0,
+        "tier1_violations": []
+      },
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "path": "M:/Projects/vietnamguide/content/plan/da-nang-to-quy-nhon-transport.md",
+      "relative_path": "content/plan/da-nang-to-quy-nhon-transport.md",
+      "passed": true,
+      "word_count": 1632,
+      "frontmatter": {
+        "title": "Da Nang to Quy Nhon Transport: Coastal Railway, Luxury Rail & Limousine",
+        "slug": "da-nang-to-quy-nhon-transport",
+        "route_path": "plan/da-nang-to-quy-nhon-transport",
+        "travel_cluster": "coastal_islands",
+        "last_verified": "2026-10-20",
+        "author": "Antigravity Travel Intelligence",
+        "reading_time_minutes": 13,
+        "word_count": 2200
+      },
+      "elements": {
+        "h2_count": 10,
+        "h3_count": 14,
+        "table_count": 10,
+        "blockquote_count": 2,
+        "callout_count": 1,
+        "has_faq": true,
+        "has_steps": true
+      },
+      "empirical_signals": {
+        "currency_mentions": 67,
+        "distance_mentions": 30,
+        "transit_time_mentions": 9,
+        "total_empirical_signals": 106,
+        "sample_currencies": [
+          "$7.60",
+          "$19.20",
+          "11,000,000 VND",
+          "$400",
+          "$440"
+        ],
+        "sample_distances": [
+          "30 km",
+          "70 km",
+          "135 km",
+          "190 km",
+          "265 km"
+        ],
+        "sample_transit_times": [
+          "30 minutes",
+          "6 hours",
+          "45 minutes",
+          "6.0 hours",
+          "8.5 hours"
         ]
       },
       "slop_report": {
