@@ -219,9 +219,48 @@ flowchart TD
 - [x] **Task 6.4**: Bổ sung unit tests kiểm tra hợp đồng dữ liệu trong `ops/tests/test_guide_seo.py` (`test_stage125_waterways_islands_dalat_sapa_faqs_and_howtos`).
 - [x] **Task 6.5**: Xác minh 8 Quality Gates (8/8 PASS, Exit Code 0, 305 tests passed), commit `5ac2711` và push lên `origin/master`.
 
-### Giai Đoạn 7: Xây Dựng Kho Content-as-Code & Tối Ưu Hóa Trải Nghiệm (Stage 126) [TIẾP THEO]
-- [ ] **Task 7.1**: Thiết lập cấu trúc thư mục `content/` phân loại theo 4 nhánh (`destinations/`, `itineraries/`, `compare/`, `plan/`).
-- [ ] **Task 7.2**: Xây dựng kịch bản kiểm tra độ dài và mật độ từ vựng (`ops/content_depth_auditor.py`) kiểm soát độ sâu bài viết.
-- [ ] **Task 7.3**: Mở rộng auto-injection của các interactive shortcodes (`[vg_interactive_map]`, `[vg_photo_dispatch]`, `[vg_route_budget]`) trên các bài viết mới được làm dày.
-- [ ] **Task 7.4**: Mở rộng các route FAQ curated tiếp theo (hướng tới cột mốc 120+ routes).
-- [ ] **Task 7.5**: Xác minh 8 Quality Gates, commit và push lên `origin/master`.
+### Giai Đoạn 7: Chùm Hướng Dẫn Bãi Biển, Tuyến Phố Ẩm Thực & Vịnh Đảo Hạ Long – Cát Bà (Stage 126) [HOÀN THÀNH]
+- [x] **Task 7.1**: Dùng `ag-search` xác minh giá vé, khoảng cách & phương tiện:
+  - Bãi biển Việt Nam (`destinations/best-beaches-in-vietnam`): Phân mùa sóng và gió theo 3 miền (Miền Trung tháng 2–8 biển phẳng, Miền Nam/Phú Quốc tháng 11–4, Miền Bắc/Hạ Long tháng 6–8); điều kiện bơi an toàn và đặc tính từng vùng biển.
+  - Bãi biển Đà Nẵng (`destinations/da-nang-beaches-guide`): Bãi biển Mỹ Khê (cứu hộ trực 05:00–19:00), Non Nước chân núi Ngũ Hành Sơn, bán đảo Sơn Trà (Bãi Bụt, Bãi Rạng lặn san hô), An Bàng Hội An 25 km xe máy/taxi.
+  - Phố ẩm thực Hà Nội (`destinations/hanoi-street-food-guide`): Phở Bát Đàn (49 Bát Đàn, 50k–65k VND), Bún chả Hương Liên Obama (24 Lê Văn Hưu, 50k–70k VND), Cà phê trứng Giảng (39 Nguyễn Hữu Huân, 35k–40k VND); khung giờ vàng 07:00–10:00 và 18:30–21:30.
+  - Phố ẩm thực Sài Gòn (`destinations/saigon-street-food-guide`): Cơm tấm Ba Ghiền (84 Đặng Văn Ngữ, Phú Nhuận, sườn nướng than khổng lồ 85k–135k VND), Bánh mì Huỳnh Hoa (26 Lê Thị Riêng, Quận 1, 68k–75k VND), Phố ốc Vĩnh Khánh Quận 4; vệ sinh an toàn thực phẩm.
+  - Bãi biển Phú Quốc (`destinations/phu-quoc-beaches-guide`): Bãi Khem cát trắng mịn, Bãi Sao, Ông Lang ngắm hoàng hôn bờ tây, Rạch Vẹm làng chài sao biển (bảo vệ sinh thái không nhấc sao biển khỏi mặt nước); mùa khô tháng 11–4, mùa mưa tháng 5–10 sóng đục bờ tây.
+  - Hà Nội $\rightarrow$ Cát Bà (`plan/hanoi-to-cat-ba-island-transport`): Xe khách combo phố cổ Hà Nội qua cao tốc Hà Nội - Hải Phòng CT04 $\rightarrow$ bến Đồng Bài $\rightarrow$ cano cao tốc bến Cái Viềng $\rightarrow$ xe trung chuyển thị trấn Cát Bà: trọn gói 300.000–350.000 VND (~12–14 USD), 3.5 giờ (nhà xe Daiichi, Cat Ba Express, Good Morning Cat Ba).
+  - Hà Nội $\rightarrow$ Vịnh Hạ Long (`plan/hanoi-to-ha-long-bay-transport`): Xe limousine VIP 9–11 chỗ đưa đón tận nơi phố cổ qua cao tốc CT04 đến Cảng tàu quốc tế Tuần Châu hoặc Hạ Long: 220.000–300.000 VND (~9–12 USD), 2–2.5 giờ.
+- [x] **Task 7.2**: Bổ sung 7 bộ curated FAQ mới vào `inc/guide-seo.php`:
+  - `destinations/best-beaches-in-vietnam`
+  - `destinations/da-nang-beaches-guide`
+  - `destinations/hanoi-street-food-guide`
+  - `destinations/saigon-street-food-guide`
+  - `destinations/phu-quoc-beaches-guide`
+  - `plan/hanoi-to-cat-ba-island-transport`
+  - `plan/hanoi-to-ha-long-bay-transport`
+- [x] **Task 7.3**: Bổ sung 2 HowTo schemas chuẩn JSON-LD:
+  - "How to Travel from Hanoi to Cat Ba Island by Combo Bus and Ferry" (4 bước).
+  - "How to Travel from Hanoi to Ha Long Bay via Expressway Limousine" (4 bước).
+- [x] **Task 7.4**: Bổ sung unit tests kiểm tra hợp đồng dữ liệu trong `ops/tests/test_guide_seo.py` (`test_stage126_beaches_street_food_halong_catba_faqs_and_howtos`).
+- [x] **Task 7.5**: Xác minh 8 Quality Gates (8/8 PASS, Exit Code 0, 306 tests passed), commit `7adcdb9` và push lên `origin/master`.
+
+### Giai Đoạn 8: Tuyến Ẩm Thực Miền Trung, Lưu Trú & Hoạt Động Vịnh Hạ Long – Cát Bà, Kết Nối Ninh Bình (Stage 127) [TIẾP THEO]
+- [ ] **Task 8.1**: Dùng `ag-search` xác minh giá vé, địa chỉ ẩm thực, khách sạn & phương tiện:
+  - Ẩm thực Hội An (`destinations/hoi-an-street-food-guide`): Cao lầu Thanh (26 Thái Phiên), Bánh mì Madam Khánh/Phượng (20k–35k VND), Cơm gà Bà Buội (22 Phan Chu Trinh, 45k–60k VND), Nước Mót (150 Trần Phú, 15k VND).
+  - Ẩm thực Cố đô Huế (`destinations/hue-street-food-guide`): Bún bò Huế Mụ Rơi/Bà Tuyết (47 Nguyễn Công Trứ, 40k–60k VND), Bánh bèo nậm lọc Bà Đỏ (8 Nguyễn Bỉnh Khiêm), Cơm hến Đập Đá/Hoa Đông cồn Hến (15k–25k VND), Chè hẻm 29 Hùng Vương (15k–20k VND).
+  - Hoạt động Vịnh Hạ Long (`destinations/best-things-to-do-in-ha-long-bay`): Hang Sửng Sốt, Đảo Ti Tốp (leo 400 bậc đá ngắm toàn cảnh 360 độ), Hang Luồn chèo thuyền kayak, làng chài Cửa Vạn; vé tuyến 2 tham quan 250k VND + vé bến 40k VND; du thuyền 2 ngày 1 đêm vs trong ngày 4–6h.
+  - Lưu trú Vịnh Hạ Long (`destinations/where-to-stay-in-ha-long-bay`): Bãi Cháy (khu nghỉ dưỡng bờ biển, Vinpearl, Sun World), Hòn Gai (khu phố bản địa yên tĩnh, gần chợ hải sản), Tuần Châu (gần bến tàu du thuyền); giá phòng từ 500k đến 4M+ VND/đêm.
+  - Lưu trú Đảo Cát Bà (`destinations/where-to-stay-in-cat-ba`): Thị trấn Cát Bà (khách sạn ven vịnh, Cát Cò 1, 2, 3), Làng chài Việt Hải (homestay sinh thái giữa Vườn quốc gia Cát Bà), Bến Bèo; mức giá homestay 300k–600k VND vs resort Flamingo Cát Bà 2.5M–5M VND.
+  - Cát Bà $\rightarrow$ Ninh Bình (`plan/cat-ba-to-ninh-binh-transport`): Xe khách du lịch trọn gói từ khách sạn thị trấn Cát Bà $\rightarrow$ phà Đồng Bài $\rightarrow$ cao tốc Hải Phòng - Ninh Bình $\rightarrow$ Tam Cốc / Tràng An (4.5–5h, 300k–350k VND, các hãng The Long, Cat Ba Discovery, Daiichi).
+  - Hạ Long $\rightarrow$ Ninh Bình (`plan/ha-long-to-ninh-binh-transport`): Xe limousine VIP từ Bãi Cháy/Tuần Châu đi Ninh Bình qua QL10 hoặc cao tốc CT04 - CT01 (3–3.5h, 250k–320k VND đón trả tận nơi); so sánh với xe buýt thường bến Bãi Cháy.
+- [ ] **Task 8.2**: Bổ sung 7 bộ curated FAQ mới vào `inc/guide-seo.php`:
+  - `destinations/hoi-an-street-food-guide`
+  - `destinations/hue-street-food-guide`
+  - `destinations/best-things-to-do-in-ha-long-bay`
+  - `destinations/where-to-stay-in-ha-long-bay`
+  - `destinations/where-to-stay-in-cat-ba`
+  - `plan/cat-ba-to-ninh-binh-transport`
+  - `plan/ha-long-to-ninh-binh-transport`
+- [ ] **Task 8.3**: Bổ sung 2 HowTo schemas chuẩn JSON-LD:
+  - "How to Travel from Cat Ba Island to Ninh Binh by Tourist Bus Combo" (4 bước).
+  - "How to Travel from Ha Long Bay to Ninh Binh by Direct Tourist Limousine" (4 bước).
+- [ ] **Task 8.4**: Bổ sung unit tests kiểm tra hợp đồng dữ liệu trong `ops/tests/test_guide_seo.py` (`test_stage127_street_food_halong_catba_ninhbinh_faqs_and_howtos`).
+- [ ] **Task 8.5**: Xác minh 8 Quality Gates (8/8 PASS, Exit Code 0), commit và push lên `origin/master`.
