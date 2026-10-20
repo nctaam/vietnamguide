@@ -23,7 +23,7 @@ if ($q_clean !== '') {
             'type'        => 'visa',
             'badge'       => __('Interactive Planning Tool', 'vietnamguide-premium'),
             'title'       => __('Vietnam Visa Eligibility Checker', 'vietnamguide-premium'),
-            'description' => __('Check your passport nationality for 45-day visa exemptions, official 90-day E-visa requirements, and official entry border gates instantly.', 'vietnamguide-premium'),
+            'description' => __('Check your passport nationality for 45-day visa exemptions (25 countries under Resolutions 44/NQ-CP & 229/NQ-CP), official 90-day E-visa requirements ($25/$50), and 42 official entry border gates instantly.', 'vietnamguide-premium'),
             'url'         => home_url('/plan/vietnam-evisa/'),
             'cta'         => __('Launch Visa Checker', 'vietnamguide-premium'),
         ];
@@ -59,7 +59,7 @@ if ($q_clean !== '') {
             'type'        => 'transit',
             'badge'       => __('Interactive Transit & Scam Shield', 'vietnamguide-premium'),
             'title'       => __('Vietnam Gateway Airport Navigator & Scam Shield', 'vietnamguide-premium'),
-            'description' => __('Terminal-to-curb arrival navigation, verified Grab pickup bay island lanes, and metered taxi fare estimators for HAN, SGN, DAD, CXR, and PQC.', 'vietnamguide-premium'),
+            'description' => __('Terminal-to-curb arrival navigation, verified Grab pickup bay island lanes, and metered taxi/bus/metro fare estimators across 9 gateway airports (HAN, SGN, DAD, CXR, PQC, HUI, DLI, VDH, and HPH).', 'vietnamguide-premium'),
             'url'         => home_url('/plan/vietnam-airport-arrival-checklist/'),
             'cta'         => __('Open Airport Navigator', 'vietnamguide-premium'),
         ];

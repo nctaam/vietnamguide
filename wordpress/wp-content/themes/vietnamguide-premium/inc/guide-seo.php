@@ -145,9 +145,98 @@ function vg_get_cluster_default_discover_image(string $clusterId): array
 }
 
 /**
+ * Resolve destination-specific >= 1920px Google Discover / Schema.org ImageObject for sub-destinations
+ * within multi-hub clusters (e.g. Hue, Da Nang, My Son, Cat Ba/Lan Ha, Bai Tu Long, Con Dao, Nha Trang, Quy Nhon, Mui Ne).
+ *
+ * @return array{url:string,width:int,height:int,caption:string}|null
+ */
+function vg_get_subdestination_discover_image(string $resolvedPath): ?array
+{
+    $p = strtolower(trim($resolvedPath, '/'));
+    if ($p === '' || str_contains($p, '-vs-')) {
+        return null;
+    }
+
+    if (str_contains($p, 'hue')) {
+        return [
+            'url'     => 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b9/Hue_Vietnam_Citadel-of-Hu%E1%BA%BF-13.jpg/1920px-Hue_Vietnam_Citadel-of-Hu%E1%BA%BF-13.jpg',
+            'width'   => 1920,
+            'height'  => 1280,
+            'caption' => 'Ngo Mon Gate and Imperial Citadel walls in Hue, Thua Thien Hue, Vietnam',
+        ];
+    }
+    if (str_contains($p, 'da-nang')) {
+        return [
+            'url'     => 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/af/My_Khe_Beach_seen_from_the_Son_Tra_Mountain.jpg/1920px-My_Khe_Beach_seen_from_the_Son_Tra_Mountain.jpg',
+            'width'   => 1920,
+            'height'  => 1440,
+            'caption' => 'My Khe Beach coastline seen from Son Tra Peninsula in Da Nang, Vietnam',
+        ];
+    }
+    if (str_contains($p, 'my-son')) {
+        return [
+            'url'     => 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/7d/My_Son_Sanctuary_Vietnam_06.jpg/1920px-My_Son_Sanctuary_Vietnam_06.jpg',
+            'width'   => 1920,
+            'height'  => 1440,
+            'caption' => 'Ancient Hindu brick temple towers at My Son Sanctuary UNESCO World Heritage Site, Quang Nam, Vietnam',
+        ];
+    }
+    if (str_contains($p, 'cat-ba') || str_contains($p, 'lan-ha')) {
+        return [
+            'url'     => 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/ca/Lan_Ha_Bay-Cat_Ba_Vietnam-Andres_Larin.jpg/1920px-Lan_Ha_Bay-Cat_Ba_Vietnam-Andres_Larin.jpg',
+            'width'   => 1920,
+            'height'  => 1435,
+            'caption' => 'Limestone karst islands and emerald waters in Lan Ha Bay off Cat Ba Island, Hai Phong, Vietnam',
+        ];
+    }
+    if (str_contains($p, 'bai-tu-long')) {
+        return [
+            'url'     => 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/46/B%C3%A1i_T%E1%BB%AD_Long_Bay_-_01.jpg/1920px-B%C3%A1i_T%E1%BB%AD_Long_Bay_-_01.jpg',
+            'width'   => 1920,
+            'height'  => 1282,
+            'caption' => 'Limestone karst archipelago and calm channels in Bai Tu Long Bay, Quang Ninh, Vietnam',
+        ];
+    }
+    if (str_contains($p, 'con-dao')) {
+        return [
+            'url'     => 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/6e/Beach_view_from_Six_Senses_Resort_in_C%C3%B4n_%C4%90%E1%BA%A3o_%28April_2022%29.jpg/1920px-Beach_view_from_Six_Senses_Resort_in_C%C3%B4n_%C4%90%E1%BA%A3o_%28April_2022%29.jpg',
+            'width'   => 1920,
+            'height'  => 1440,
+            'caption' => 'Dat Doc Beach and coastal headlands in the Con Dao Archipelago, Ba Ria - Vung Tau, Vietnam',
+        ];
+    }
+    if (str_contains($p, 'nha-trang') || str_contains($p, 'cam-ranh')) {
+        return [
+            'url'     => 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/6f/Nha_Trang_Beach_3.jpg/1920px-Nha_Trang_Beach_3.jpg',
+            'width'   => 1920,
+            'height'  => 1440,
+            'caption' => 'Crescent sandy shoreline and turquoise bay along Tran Phu Beach in Nha Trang, Khanh Hoa, Vietnam',
+        ];
+    }
+    if (str_contains($p, 'quy-nhon')) {
+        return [
+            'url'     => 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/6d/Ky_Co_beach%2C_Quy_Nhon_city%2C_Binh_Dinh_province%2C_Vietnam.jpg/1920px-Ky_Co_beach%2C_Quy_Nhon_city%2C_Binh_Dinh_province%2C_Vietnam.jpg',
+            'width'   => 1920,
+            'height'  => 1280,
+            'caption' => 'Granite headlands and turquoise cove at Ky Co Beach, Quy Nhon, Binh Dinh, Vietnam',
+        ];
+    }
+    if (str_contains($p, 'mui-ne') || str_contains($p, 'phan-thiet')) {
+        return [
+            'url'     => 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/2d/Vietnam%2C_Mui_Ne_beach%2C_Kitesurfing_on_the_beach.jpg/1920px-Vietnam%2C_Mui_Ne_beach%2C_Kitesurfing_on_the_beach.jpg',
+            'width'   => 1920,
+            'height'  => 1280,
+            'caption' => 'Kitesurfers catching trade winds along Ham Tien Beach in Mui Ne, Binh Thuan, Vietnam',
+        ];
+    }
+
+    return null;
+}
+
+/**
  * Resolve the primary Google Discover / Schema.org ImageObject for a route or singular post.
- * Prefers inline content images meeting the >= 1200x675px Discover threshold, falling back to
- * the route's regional travel cluster 1920px hero image.
+ * Prefers inline content images meeting the >= 1200x675px Discover threshold, then sub-destination
+ * 1920px photography, falling back to the route's regional travel cluster 1920px hero image.
  *
  * @return array{url:string,width:int,height:int,caption:string}
  */
@@ -200,6 +289,13 @@ function vg_resolve_discover_image_object(?string $uriPath = null): array
         }
         if ($resolvedPath === '' && $post instanceof WP_Post && ! empty($post->post_name)) {
             $resolvedPath = trim((string) $post->post_name, '/');
+        }
+    }
+
+    if ($resolvedPath !== '') {
+        $subDestImg = vg_get_subdestination_discover_image($resolvedPath);
+        if (is_array($subDestImg)) {
+            return $subDestImg;
         }
     }
 
@@ -1041,7 +1137,7 @@ function vg_get_travel_clusters_registry(): array
                     ['name' => 'Fansipan Summit', 'wikidata' => 'https://www.wikidata.org/wiki/Q1005391'],
                     ['name' => 'Ma Pi Leng Pass', 'wikidata' => 'https://www.wikidata.org/wiki/Q36352'],
                     ['name' => 'Mu Cang Chai Terraces', 'wikidata' => 'https://www.wikidata.org/wiki/Q6930267'],
-                    ['name' => 'Dong Van Karst Plateau', 'wikidata' => 'https://www.wikidata.org/wiki/Q36352'],
+                    ['name' => 'Dong Van Karst Plateau', 'wikidata' => 'https://www.wikidata.org/wiki/Q10744325'],
                     ['name' => 'Pu Luong Nature Reserve', 'wikidata' => 'https://www.wikidata.org/wiki/Q7257418'],
                 ],
             ],
@@ -2669,6 +2765,46 @@ function vg_get_curated_faq_items(string $uri_path): array
             ['q' => 'Which Reunification Express train is best: SE1/SE2, SE3/SE4, or SE19/SE20?', 'a' => 'SE1/SE2 and SE3/SE4 are the fastest flagship North-South express trains with air-conditioned 4-berth soft sleepers (AnN). SE19/SE20 is the dedicated overnight Hanoi – Hue – Da Nang express (1,050,000 to 1,450,000 VND), and HD1/HD2 (150,000 to 180,000 VND) is the daytime Hai Van Pass scenic train.'],
             ['q' => 'What is the baggage allowance on Vietnam Railways trains?', 'a' => 'Adult passengers receive a 20-kilogram carry-on baggage allowance (up to 0.8m x 0.5m x 0.4m) stored under the lower berths or on overhead racks in 4-berth sleeper compartments.'],
         ],
+        'ba-be-lake-travel-guide' => [
+            ['q' => 'How much is the Ba Be National Park entrance ticket and boat rental in 2026?', 'a' => 'Ba Be National Park standard admission costs 70,000 VND per adult (45,000 VND lake-only sector rate). Private wooden motorboat charters on Ba Be Lake cost 300,000 to 800,000 VND per boat depending on route length (covering An Ma Temple, Widow Island, Tien Pond, Puong Cave, and Dau Dang Waterfall).'],
+            ['q' => 'How do I travel from Hanoi to Ba Be Lake?', 'a' => 'Direct limousine vans and coaches depart My Dinh Bus Station in Hanoi via the Hanoi – Thai Nguyen Expressway (CT07) and National Highway 3, covering the 230-kilometer route to Pac Ngoi and Bo Lu lakeside villages in 4.5 to 5.5 hours for 250,000 to 350,000 VND.'],
+            ['q' => 'Where should I stay at Ba Be Lake?', 'a' => 'Stay in traditional Tay ethnic wooden stilt-house homestays in Pac Ngoi or Bo Lu village right on the southern shore of Ba Be Lake (150,000 to 400,000 VND per night), offering direct boat pier access and home-cooked lakeside dinners.'],
+        ],
+        'pu-luong-travel-guide' => [
+            ['q' => 'How do I get from Hanoi to Pu Luong Nature Reserve?', 'a' => 'Daily 9-to-15-seat VIP limousine shuttle vans depart Hanoi Old Quarter at 7:00 AM–7:30 AM via Highway 6 and QL15C directly to Don Village and Hieu Village in Pu Luong, taking 4 to 4.5 hours for 420,000 to 440,000 VND one-way (800,000 to 850,000 VND round-trip).'],
+            ['q' => 'What are the entrance fees for Cham Stream bamboo rafting, Kho Muong Cave, and Hieu Waterfall?', 'a' => 'Pu Luong Nature Reserve has no main gate fee. Local community tickets cost 10,000 VND at Kho Muong Bat Cave, 15,000 to 20,000 VND at Hieu Waterfall, and 50,000 to 100,000 VND per person for bamboo rafting and viewing the giant bamboo waterwheels on Cham Stream (Suoi Cham).'],
+            ['q' => 'When is the golden rice harvest season in Pu Luong?', 'a' => 'Unlike high-altitude northern terraces that have only one harvest, Pu Luong enjoys two annual rice harvest windows: late May to early June and late September to mid-October.'],
+        ],
+        'mu-cang-chai-travel-guide' => [
+            ['q' => 'How much does it cost to visit Mam Xoi (Raspberry Hill) in Mu Cang Chai?', 'a' => 'Admission to the Mam Xoi terrace viewpoint in La Pan Tan commune costs 20,000 to 30,000 VND per adult. Because the paved lane up from the valley bridge is extremely steep, local Hmong riders operate regulated round-trip motorbike taxis (xe om) to the viewpoint for 40,000 to 50,000 VND.'],
+            ['q' => 'When is the golden rice season in Mu Cang Chai?', 'a' => 'The golden ripe rice harvest peaks from mid-September through the first week of October across La Pan Tan, Che Cu Nha, and De Xu Phinh, whereas the mirror-like watering season (mua nuoc do) runs from May to June.'],
+            ['q' => 'How do I travel from Hanoi or Sapa to Mu Cang Chai?', 'a' => 'From Hanoi My Dinh Bus Station, sleeper and limousine buses travel 300 kilometers via National Highway 32 over Khau Pha Pass (1,200m–1,500m) to Mu Cang Chai in 6.5 to 7.5 hours (300,000 to 400,000 VND). From Sapa, buses cross O Quy Ho Pass via Than Uyen in 3.5 to 4.5 hours.'],
+        ],
+        'ly-son-travel-guide' => [
+            ['q' => 'How do I take the ferry to Ly Son Island from Sa Ky Port in 2026?', 'a' => 'High-speed catamarans (Super Bien Dong, Phu Quoc Express, An Vinh Express, Chinh Nghia) depart Sa Ky Port (20 km east of Quang Ngai city) for Ben Dinh Port on Ly Son Island in 30 to 35 minutes. One-way tickets cost 178,000 to 185,000 VND for Standard/Eco class (including the 22,000 VND port fee) and 238,000 VND for VIP class.'],
+            ['q' => 'How do I get from Chu Lai Airport (VCL) or Da Nang to Sa Ky Port?', 'a' => 'Chu Lai Airport (VCL) sits 48 kilometers north of Sa Ky Port (50 minutes by taxi for 450,000 to 550,000 VND, or free/subsidized Quang Ngai airport shuttle bus plus local connection). From Da Nang, take a 2.5-hour expressway van or train to Quang Ngai Station, then a 30-minute taxi or Bus Route 03 to Sa Ky Port.'],
+            ['q' => 'How do I visit Be Island (Dao Be / An Binh) from Ly Son?', 'a' => 'Speedboats depart Ly Son main harbor every morning between 7:30 AM and 8:30 AM for the 10-minute crossing to An Binh (Be Island), costing 120,000 to 140,000 VND round-trip, returning between 11:30 AM and 2:00 PM.'],
+        ],
+        'mai-chau-travel-guide' => [
+            ['q' => 'How long does it take to travel from Hanoi to Mai Chau Valley?', 'a' => 'Via the CT02 Hanoi – Hoa Binh Expressway and National Highway 6 over Thung Khe White Rock Pass, VIP limousine vans cover the 140-kilometer route from Hanoi Old Quarter to Lac Village and Pom Coong Village in 3 to 3.5 hours for 220,000 to 300,000 VND.'],
+            ['q' => 'What are the ticket fees for Chieu Cave, Mo Luong Cave, and cycling in Mai Chau?', 'a' => 'Climbing the 1,200 stone steps to Chieu Cave costs 10,000 VND, Mo Luong Cave costs 20,000 to 30,000 VND, and flat valley bicycle rentals in Lac Village and Pom Coong Village cost 30,000 to 50,000 VND per day.'],
+            ['q' => 'Can I combine Mai Chau and Pu Luong in one trip?', 'a' => 'Yes. Mai Chau sits only 45 kilometers (1.5 hours via QL15C) north of Pu Luong Nature Reserve, making a 3-to-4-day combined loop from Hanoi through Mai Chau and Pu Luong the cleanest rural valley itinerary in northern Vietnam.'],
+        ],
+        'ninh-binh-vs-ha-long-bay' => [
+            ['q' => 'Should I visit Ninh Binh or Ha Long Bay if I only have time for one?', 'a' => 'Choose Ninh Binh if you prefer independent cycling through rice valleys, 2.5-hour rowboat caves (Trang An or Tam Coc, 250,000 VND), and lower costs (1.5 hours from Hanoi by train/van). Choose Ha Long Bay or Lan Ha Bay if you want an overnight steel vessel cruise surrounded by open-sea limestone karsts (2.5 hours from Hanoi via CT04).'],
+            ['q' => 'Can I travel directly between Ninh Binh and Ha Long Bay without returning to Hanoi?', 'a' => 'Yes. Direct limousine shuttle buses run daily at 7:00 AM–7:30 AM between Tam Coc/Trang An and Tuan Chau/Halong Cruise Port via National Highway 10 in 3.5 to 4 hours for 300,000 to 450,000 VND.'],
+            ['q' => 'Which destination is less affected by typhoon cruise cancellations?', 'a' => 'Ninh Binh is an inland river valley and remains open when Gulf of Tonkin maritime port authorities suspend overnight Ha Long Bay cruises under Beaufort Force 6 wind warnings or tropical storms.'],
+        ],
+        'sapa-vs-ha-giang' => [
+            ['q' => 'Is Sapa or the Ha Giang Loop better for first-time visitors?', 'a' => 'Sapa is better for guided village trekking in Muong Hoa Valley, riding the 3,143-meter Fansipan cable car (800,000 to 850,000 VND), and comfortable boutique hotels reached in 5.5 hours by expressway bus or overnight train. The Ha Giang Loop is a rugged 3-to-4-day, 350-kilometer motorcycle or Easy Rider circuit across Ma Pi Leng Pass and Dong Van Geopark.'],
+            ['q' => 'Can I travel directly from Sapa to Ha Giang without returning to Hanoi?', 'a' => 'Yes. Direct daily sleeper and cabin buses connect Sapa and Ha Giang city via National Highway 279 in 6 to 7 hours (300,000 to 380,000 VND), saving a 12-hour detour through Hanoi.'],
+            ['q' => 'Which destination requires a special border permit or motorcycle license?', 'a' => 'Ha Giang requires a 230,000 VND border area permit for foreign visitors entering Dong Van and Meo Vac, and self-riders legally require a 1968 IDP with a motorcycle endorsement; Sapa trekking requires neither.'],
+        ],
+        'phu-quoc-vs-con-dao' => [
+            ['q' => 'Should I choose Phu Quoc or Con Dao for a beach trip in Vietnam?', 'a' => 'Choose Phu Quoc for direct international flights (30-day visa-free entry), family beach resorts on Long Beach and Kem Beach, and the 7,899.9-meter Hon Thom sea cable car (650,000 VND). Choose Con Dao for quiet protected marine national park bays, historic prison heritage sites (50,000 VND), and green sea turtle nesting (May–October).'],
+            ['q' => 'How do flight and ferry connections compare between Phu Quoc and Con Dao?', 'a' => 'Phu Quoc (PQC) has high-frequency daily jet flights from Ho Chi Minh City, Hanoi, and international hubs, plus 1.25-to-2.5-hour speed ferries from Ha Tien and Rach Gia. Con Dao (VCS) has limited regional flights from Ho Chi Minh City (45 minutes) and seasonal catamarans from Tran De (Soc Trang) and Vung Tau.'],
+            ['q' => 'Do Phu Quoc and Con Dao have the same best weather months?', 'a' => 'Phu Quoc has its calmest, sunniest west-coast beach weather from November through April, whereas Con Dao experiences calmer seas for diving and boat trips from March through September (when northeast monsoon winds subside).'],
+        ],
     ];
 
     return $faq_registry[$slug] ?? [];
@@ -2886,6 +3022,36 @@ function vg_get_page_howto_schema(string $uri_path, string $current_url): ?array
                 ['name' => 'Submit Official Vietnam E-Visa 14–21 Days Before Departure', 'text' => 'Apply on evisa.xuatnhapcanh.gov.vn with a 6-month valid passport, selecting your exact entry airport or land checkpoint, and print two physical copies once approved.'],
                 ['name' => 'Book Domestic Flights and Overnight Sleeper Trains Early', 'text' => 'Reserve trunk flights (Hanoi, Da Nang, Ho Chi Minh City) and Reunification Express sleeper berths (Hanoi to Lao Cai/Ninh Binh/Dong Hoi/Hue) 3 to 6 weeks ahead, especially near Tet or national holidays.'],
                 ['name' => 'Install Offline Maps, Grab, and Multi-Currency Cards', 'text' => 'Download offline Google Maps for your target cities, install the Grab app linked to a zero-foreign-transaction-fee card, and prepare an unlocked phone for a Viettel eSIM.'],
+            ],
+        ],
+        'vietnam-train-travel' => [
+            'name'        => 'How to Book Vietnam Railways Train Tickets Online Without Agency Markup',
+            'description' => 'Step-by-step instructions for booking Reunification Express (SE1/SE2, SE3/SE4, SE19/SE20) and Central Heritage (HD1/HD2) tickets directly on Vietnam Railways portals.',
+            'steps'       => [
+                ['name' => 'Open the Official Vietnam Railways Portal', 'text' => 'Navigate directly to dsvn.vn or vetau.com.vn 30 to 60 days before your planned departure date to access official inventory at face value in VND.'],
+                ['name' => 'Select Station Pair and Train Number', 'text' => 'Enter exact Vietnamese railway station names (Ha Noi, Ninh Binh, Dong Hoi, Hue, Da Nang, Nha Trang, or Sai Gon) and prioritize SE1/SE2 or SE3/SE4 for long-haul sleepers, SE19/SE20 for Hanoi–Da Nang, or HD1/HD2 for the daytime Hai Van Pass route.'],
+                ['name' => 'Choose 4-Berth Soft Sleeper (AnN) or Air-Conditioned Soft Seat (NML)', 'text' => 'Select a 4-berth air-conditioned soft sleeper (Khoang 4 Dieu Hoa) for overnight journeys, choosing lower berths (T1) for stability and luggage storage, or soft seats for daytime trips under 4 hours.'],
+                ['name' => 'Enter Passport Details and Complete Payment', 'text' => 'Input each passenger full legal name and passport number exactly as printed on your travel document, pay via international Visa or Mastercard, and save the QR electronic boarding pass to your phone.'],
+            ],
+        ],
+        'vietnam-to-cambodia-boat-guide' => [
+            'name'        => 'How to Take the Mekong River Speedboat from Chau Doc (Vietnam) to Phnom Penh (Cambodia)',
+            'description' => 'Step-by-step river border crossing workflow from Chau Doc Pier through Vinh Xuong (Vietnam) and Kaam Samnor (Cambodia) immigration to Sisowath Quay.',
+            'steps'       => [
+                ['name' => 'Check In at Chau Doc Boat Pier by 7:00 AM', 'text' => 'Arrive at the Victoria Chau Doc or Hang Chau Tourist speedboat pier by 7:00 AM with your original passport (minimum 6 months validity), one physical passport-sized photo, and crisp USD cash for Cambodian border fees.'],
+                ['name' => 'Clear Vietnamese Exit Immigration at Vinh Xuong', 'text' => 'Cruise 1 hour upriver along the Tien (Mekong) River to the Vinh Xuong International River Border Gate, where the boat crew coordinates passport exit stamping with Vietnamese border officers.'],
+                ['name' => 'Complete Cambodian Entry Visa at Kaam Samnor', 'text' => 'Cross the river boundary to the Kaam Samnor checkpoint in Kandal Province to present your Cambodia e-Visa (30 USD online via evisa.gov.kh) or complete a Cambodia Visa on Arrival (30 USD cash) and fingerprint scan.'],
+                ['name' => 'Disembark at Phnom Penh Autonomous Port / Sisowath Quay', 'text' => 'Continue 3 hours upriver along the Mekong River and dock in central Phnom Penh around 12:30 PM to 1:00 PM.'],
+            ],
+        ],
+        'ha-giang-loop-planning-guide' => [
+            'name'        => 'How to Plan and Ride the 3-to-4-Day Ha Giang Loop Safely',
+            'description' => 'Step-by-step logistics for sleeper bus transit from Hanoi, Ha Giang border area permits, 1968 IDP legal compliance, and daily karst plateau stages.',
+            'steps'       => [
+                ['name' => 'Take the Overnight VIP Cabin Bus from Hanoi to Ha Giang City', 'text' => 'Board an evening VIP single-cabin sleeper bus (350,000 to 450,000 VND) or daytime limousine from Hanoi Old Quarter / My Dinh to Ha Giang City (300 km, 6 hours), arriving at a base hostel with complimentary early-morning rest beds.'],
+                ['name' => 'Verify 1968 IDP Motorcycle Endorsement or Book an Easy Rider', 'text' => 'Confirm you hold both a valid domestic motorcycle license and a 1968 Vienna Convention International Driving Permit (IDP) for self-riding, or hire an experienced local Easy Rider driver so your travel medical insurance remains valid.'],
+                ['name' => 'Obtain the Ha Giang Border Area Permit (230,000 VND)', 'text' => 'Register your passport at the Ha Giang Immigration Office (296A Tran Phu) or through your tour operator/homestay to receive the mandatory 230,000 VND border permit required for overnight stays in Quan Ba, Yen Minh, Dong Van, and Meo Vac.'],
+                ['name' => 'Ride the 350 km Circuit Across Dong Van, Ma Pi Leng Pass, and Du Gia', 'text' => 'Complete the loop over 3 to 4 daylight days: Day 1 Ha Giang to Yen Minh via Quan Ba Heaven Gate; Day 2 Yen Minh to Dong Van via Lung Cu Flag Tower; Day 3 Ma Pi Leng Pass and Nho Que River boat ride (120,000–150,000 VND) to Du Gia; Day 4 Du Gia waterfall back to Ha Giang City.'],
             ],
         ],
     ];

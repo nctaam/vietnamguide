@@ -1600,6 +1600,78 @@ echo json_encode([
         self.assertIn('25 countries under Resolutions 44/NQ-CP & 229/NQ-CP', out['evisa_app']['description'])
         self.assertIn('9 gateway airports (HAN, SGN, DAD, CXR, PQC, HUI, DLI, VDH, HPH)', out['airport_app']['description'])
 
+    def test_subdestination_discover_image_resolution_and_stage117_faqs_howtos(self):
+        """Sub-destinations must resolve their own 1920px Wikimedia Commons Discover images, and Stage 117 FAQ/HowTo/Wikidata ground truth must be verified."""
+        subdest_cases = [
+            ('destinations/hue-travel-guide', '1920px-Hue_Vietnam_Citadel-of-Hu%E1%BA%BF-13.jpg', 1920, 1280),
+            ('destinations/da-nang-travel-guide', '1920px-My_Khe_Beach_seen_from_the_Son_Tra_Mountain.jpg', 1920, 1440),
+            ('destinations/my-son-sanctuary-guide', '1920px-My_Son_Sanctuary_Vietnam_06.jpg', 1920, 1440),
+            ('destinations/cat-ba-travel-guide', '1920px-Lan_Ha_Bay-Cat_Ba_Vietnam-Andres_Larin.jpg', 1920, 1435),
+            ('destinations/bai-tu-long-bay-guide', '1920px-B%C3%A1i_T%E1%BB%AD_Long_Bay_-_01.jpg', 1920, 1282),
+            ('destinations/con-dao-travel-guide', '1920px-Beach_view_from_Six_Senses_Resort_in_C%C3%B4n_%C4%90%E1%BA%A3o_%28April_2022%29.jpg', 1920, 1440),
+            ('destinations/nha-trang-travel-guide', '1920px-Nha_Trang_Beach_3.jpg', 1920, 1440),
+            ('destinations/quy-nhon-travel-guide', '1920px-Ky_Co_beach%2C_Quy_Nhon_city%2C_Binh_Dinh_province%2C_Vietnam.jpg', 1920, 1280),
+            ('destinations/mui-ne-travel-guide', '1920px-Vietnam%2C_Mui_Ne_beach%2C_Kitesurfing_on_the_beach.jpg', 1920, 1280),
+        ]
+        stage117_faqs = [
+            'destinations/ba-be-lake-travel-guide',
+            'destinations/pu-luong-travel-guide',
+            'destinations/mu-cang-chai-travel-guide',
+            'destinations/ly-son-travel-guide',
+            'destinations/mai-chau-travel-guide',
+            'compare/ninh-binh-vs-ha-long-bay',
+            'compare/sapa-vs-ha-giang',
+            'compare/phu-quoc-vs-con-dao',
+        ]
+        stage117_howtos = [
+            'plan/vietnam-train-travel',
+            'plan/vietnam-to-cambodia-boat-guide',
+            'destinations/ha-giang-loop-planning-guide',
+        ]
+        php_code = f"""
+        $subdest_paths = {json.dumps([c[0] for c in subdest_cases])};
+        $subdest_imgs = [];
+        foreach ($subdest_paths as $p) {{
+            $subdest_imgs[$p] = vg_resolve_discover_image_object($p);
+        }}
+        $faq_paths = {json.dumps(stage117_faqs)};
+        $faq_counts = [];
+        foreach ($faq_paths as $p) {{
+            $faq_counts[$p] = count(vg_get_curated_faq_items($p));
+        }}
+        $howto_paths = {json.dumps(stage117_howtos)};
+        $howto_counts = [];
+        foreach ($howto_paths as $p) {{
+            $node = vg_get_page_howto_schema($p, "https://vietnamguide.net/{{$p}}/");
+            $howto_counts[$p] = is_array($node) ? count($node['step'] ?? []) : 0;
+        }}
+        $clusters = vg_get_travel_clusters_registry();
+        echo json_encode([
+            'subdest_imgs' => $subdest_imgs,
+            'faq_counts'   => $faq_counts,
+            'howto_counts' => $howto_counts,
+            'nh_attr'      => $clusters['northern_highlands']['destination_schema']['attractions'] ?? [],
+        ]);
+        """
+        res = _run_php(php_code)
+        self.assertEqual(res.returncode, 0, f"PHP error:\n{res.stderr}")
+        out = json.loads(res.stdout)
+
+        for uri_path, expected_file, exp_w, exp_h in subdest_cases:
+            img = out['subdest_imgs'][uri_path]
+            self.assertTrue(img['url'].endswith(expected_file), f"Expected {expected_file} for {uri_path}, got {img['url']}")
+            self.assertEqual(img['width'], exp_w)
+            self.assertEqual(img['height'], exp_h)
+
+        for route, count in out['faq_counts'].items():
+            self.assertGreaterEqual(count, 3, f"Route {route} must have >= 3 curated FAQ items, got {count}")
+
+        for route, count in out['howto_counts'].items():
+            self.assertGreaterEqual(count, 4, f"Route {route} must have >= 4 HowTo steps, got {count}")
+
+        dong_van = next((a for a in out['nh_attr'] if a.get('name') == 'Dong Van Karst Plateau'), {})
+        self.assertEqual(dong_van.get('wikidata'), 'https://www.wikidata.org/wiki/Q10744325')
+
 
 if __name__ == '__main__':
     unittest.main()
