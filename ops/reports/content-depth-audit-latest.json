@@ -1,7 +1,7 @@
 {
   "passed": true,
-  "total_articles": 22,
-  "passed_articles": 22,
+  "total_articles": 25,
+  "passed_articles": 25,
   "min_words_threshold": 1200,
   "min_hls_threshold": 85.0,
   "articles": [
@@ -235,6 +235,66 @@
       },
       "slop_report": {
         "passed": false,
+        "hls_score": 100,
+        "tier1_count": 0,
+        "tier1_violations": []
+      },
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "path": "M:/Projects/vietnamguide/content/compare/paradise-cave-vs-phong-nha-cave.md",
+      "relative_path": "content/compare/paradise-cave-vs-phong-nha-cave.md",
+      "passed": true,
+      "word_count": 1677,
+      "frontmatter": {
+        "title": "Paradise Cave vs Phong Nha Cave: Dry Boardwalk vs Subterranean River",
+        "slug": "paradise-cave-vs-phong-nha-cave",
+        "route_path": "compare/paradise-cave-vs-phong-nha-cave",
+        "travel_cluster": "phong_nha_caves",
+        "last_verified": "2026-10-20",
+        "author": "Antigravity Travel Intelligence",
+        "reading_time_minutes": 12,
+        "word_count": 2200
+      },
+      "elements": {
+        "h2_count": 8,
+        "h3_count": 16,
+        "table_count": 8,
+        "blockquote_count": 2,
+        "callout_count": 1,
+        "has_faq": true,
+        "has_steps": false
+      },
+      "empirical_signals": {
+        "currency_mentions": 42,
+        "distance_mentions": 32,
+        "transit_time_mentions": 6,
+        "total_empirical_signals": 80,
+        "sample_currencies": [
+          "250,000 VND",
+          "$10.00",
+          "150,000 VND",
+          "$6.00",
+          "550,000 VND"
+        ],
+        "sample_distances": [
+          "200 meters",
+          "31.4 km",
+          "72 meters",
+          "1.0 km",
+          "31.4 km"
+        ],
+        "sample_transit_times": [
+          "3.0 hours",
+          "2.5 hours",
+          "20 minutes",
+          "20 minutes",
+          "2.5 hours"
+        ]
+      },
+      "slop_report": {
+        "passed": true,
         "hls_score": 100,
         "tier1_count": 0,
         "tier1_violations": []
@@ -842,6 +902,65 @@
       "warnings": []
     },
     {
+      "path": "M:/Projects/vietnamguide/content/destinations/phong-nha-caves-exploration-guide.md",
+      "relative_path": "content/destinations/phong-nha-caves-exploration-guide.md",
+      "passed": true,
+      "word_count": 1914,
+      "frontmatter": {
+        "title": "Phong Nha Caves Guide: Cavern Systems, Trekking, and Route Fit",
+        "slug": "phong-nha-caves-exploration-guide",
+        "route_path": "destinations/phong-nha-travel-guide",
+        "travel_cluster": "phong_nha_caves",
+        "last_verified": "2026-10-20",
+        "author": "Antigravity Travel Intelligence",
+        "reading_time_minutes": 12,
+        "word_count": 2200
+      },
+      "elements": {
+        "h2_count": 5,
+        "h3_count": 14,
+        "table_count": 5,
+        "blockquote_count": 2,
+        "callout_count": 1,
+        "has_faq": true,
+        "has_steps": true
+      },
+      "empirical_signals": {
+        "currency_mentions": 46,
+        "distance_mentions": 34,
+        "transit_time_mentions": 4,
+        "total_empirical_signals": 84,
+        "sample_currencies": [
+          "250,000 VND",
+          "$10.00",
+          "150,000 VND",
+          "550,000 VND",
+          "450,000 VND"
+        ],
+        "sample_distances": [
+          "1.0 km",
+          "72m",
+          "1.6 km",
+          "1.2 km",
+          "300m"
+        ],
+        "sample_transit_times": [
+          "20 minutes",
+          "30 minutes",
+          "8 hours",
+          "45 minutes"
+        ]
+      },
+      "slop_report": {
+        "passed": true,
+        "hls_score": 100,
+        "tier1_count": 0,
+        "tier1_violations": []
+      },
+      "errors": [],
+      "warnings": []
+    },
+    {
       "path": "M:/Projects/vietnamguide/content/destinations/sa-pa-trekking-guide.md",
       "relative_path": "content/destinations/sa-pa-trekking-guide.md",
       "passed": true,
@@ -1009,6 +1128,66 @@
           "40 mins",
           "45 mins",
           "45 mins"
+        ]
+      },
+      "slop_report": {
+        "passed": true,
+        "hls_score": 100,
+        "tier1_count": 0,
+        "tier1_violations": []
+      },
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "path": "M:/Projects/vietnamguide/content/plan/dong-hoi-to-phong-nha-transport.md",
+      "relative_path": "content/plan/dong-hoi-to-phong-nha-transport.md",
+      "passed": true,
+      "word_count": 1526,
+      "frontmatter": {
+        "title": "Dong Hoi to Phong Nha Transport: Bus, Taxi, and Motorbike Route",
+        "slug": "dong-hoi-to-phong-nha-transport",
+        "route_path": "plan/dong-hoi-to-phong-nha-transport",
+        "travel_cluster": "phong_nha_caves",
+        "last_verified": "2026-10-20",
+        "author": "Antigravity Travel Intelligence",
+        "reading_time_minutes": 12,
+        "word_count": 2200
+      },
+      "elements": {
+        "h2_count": 6,
+        "h3_count": 10,
+        "table_count": 6,
+        "blockquote_count": 2,
+        "callout_count": 1,
+        "has_faq": true,
+        "has_steps": true
+      },
+      "empirical_signals": {
+        "currency_mentions": 46,
+        "distance_mentions": 11,
+        "transit_time_mentions": 14,
+        "total_empirical_signals": 71,
+        "sample_currencies": [
+          "45,000 VND",
+          "$1.40",
+          "$1.80",
+          "500,000 VND",
+          "$16.00"
+        ],
+        "sample_distances": [
+          "45 km",
+          "45 km",
+          "6 km",
+          "15 km",
+          "45 km"
+        ],
+        "sample_transit_times": [
+          "50 minutes",
+          "90 minutes",
+          "90 minutes",
+          "60 mins",
+          "50 minutes"
         ]
       },
       "slop_report": {

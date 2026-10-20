@@ -486,15 +486,16 @@ class TestPlaywrightE2ESmoke(unittest.TestCase):
 
         try:
             page.set_content(full_doc, wait_until="domcontentloaded")
+            page.wait_for_selector('#vg-an-b-code')
 
             code_el = page.locator('#vg-an-b-code')
-            self.assertEqual(code_el.inner_text().strip(), 'HAN')
+            self.assertEqual(code_el.text_content().strip(), 'HAN')
 
             # Switch to Tan Son Nhat (SGN)
             page.locator('.vg-an-chip[data-airport="SGN"]').click()
-            self.assertEqual(code_el.inner_text().strip(), 'SGN')
+            self.assertEqual(code_el.text_content().strip(), 'SGN')
             name_el = page.locator('#vg-an-b-name')
-            self.assertIn('Tan Son Nhat', name_el.inner_text())
+            self.assertIn('Tan Son Nhat', name_el.text_content())
 
             # Switch to Scam Shield tab
             page.locator('.vg-an-tab[data-tab="scam-shield"]').click()

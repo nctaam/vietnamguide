@@ -393,12 +393,22 @@ flowchart TD
 - [x] **Task 18.4**: Chạy `ops/content_depth_auditor.py` kiểm định toàn bộ 22 bài viết trong `content/` (Tổng số từ: **31.784 từ**, 100% PASS, Mean HLS 99.1/100, 1.345 empirical signals, 0 Tier 1 clichés).
 - [x] **Task 18.5**: Xác minh 8 Quality Gates (8/8 PASS, Exit Code 0, 315 tests passed), commit và push lên `origin/master`.
 
-### Giai Đoạn 19: Vương Quốc Hang Động Phong Nha & Cửa Ngõ Đồng Hới (Stage 138) [TIẾP THEO]
-- [ ] **Task 19.1**: Dùng `ag-search` xác minh thực tế và biên soạn bài viết chuyên sâu:
-  - `content/destinations/phong-nha-caves-exploration-guide.md`: Cẩm nang khám phá Vườn quốc gia Phong Nha - Kẻ Bàng, Động Thiên Đường (vé 250k VND + xe điện 100k–200k VND), Động Phong Nha (thuyền sông Son 550k/thuyền + vé 150k VND), Hang Tối Sông Chày (vé trọn gói đu zipline tắm bùn 450k VND), hệ thống tour thám hiểm chuyên sâu Oxalis (Hang Én, Tú Làn, Sơn Đoòng).
-- [ ] **Task 19.2**: Dùng `ag-search` xác minh thực tế và biên soạn bài so sánh trực diện:
-  - `content/compare/paradise-cave-vs-phong-nha-cave.md`: So sánh toàn diện giữa Động Thiên Đường (hang khô khổng lồ trên núi đá vôi, cầu gỗ 1 km, thạch nhũ kỳ vĩ) vs Động Phong Nha (hang ướt chèo thuyền ngầm trên sông Son, động Tiên Sơn khô bên trên, trải nghiệm sông nước).
-- [ ] **Task 19.3**: Dùng `ag-search` xác minh thực tế và biên soạn bài viết cẩm nang di chuyển:
-  - `content/plan/dong-hoi-to-phong-nha-transport.md`: Cung đường kết nối 45 km từ ga xe lửa và sân bay Đồng Hới (VDH) vào Phong Nha (thị trấn Phong Nha / Sơn Trạch): xe buýt địa phương số B4 35k–45k VND, taxi Grab 400k–500k VND, xe limousine đưa đón khách sạn, thuê xe máy tự lái.
-- [ ] **Task 19.4**: Chạy `ops/content_depth_auditor.py` kiểm định toàn bộ các bài viết mới (bảo đảm >= 1,200 từ, HLS >= 85, 0 Tier 1 clichés, mật độ dữ liệu cao).
-- [ ] **Task 19.5**: Xác minh 8 Quality Gates (8/8 PASS, Exit Code 0), commit và push lên `origin/master`.
+### Giai Đoạn 19: Vương Quốc Hang Động Phong Nha & Cửa Ngõ Đồng Hới (Stage 138) [HOÀN THÀNH 100%]
+- [x] **Task 19.1**: Dùng `ag-search` xác minh thực tế và biên soạn bài viết chuyên sâu:
+  - `content/destinations/phong-nha-caves-exploration-guide.md`: Cẩm nang khám phá Vườn quốc gia Phong Nha - Kẻ Bàng, Động Thiên Đường (vé 250k VND + xe điện 100k–150k VND), Động Phong Nha (thuyền sông Son 550k/thuyền + vé 150k VND), Hang Tối Sông Chày (vé trọn gói đu zipline tắm bùn 450k VND), hệ thống tour thám hiểm chuyên sâu Oxalis (Hang Én 9.5M VND, Tú Làn 2.0M–6.5M VND, Sơn Đoòng 80M VND) (1,914 substantive words, HLS 100.0/100, 84 empirical signals).
+- [x] **Task 19.2**: Dùng `ag-search` xác minh thực tế và biên soạn bài so sánh trực diện:
+  - `content/compare/paradise-cave-vs-phong-nha-cave.md`: So sánh toàn diện giữa Động Thiên Đường (hang khô khổng lồ vòm cao 72m trên núi đá vôi, cầu gỗ 1 km, leo 524 bậc đá, mở cửa 365 ngày) vs Động Phong Nha (hang ướt chèo thuyền ngầm trên sông Son, động Tiên Sơn 80k VND khô bên trên, thuyền rồng 550k/chuyến tối đa 12 khách, tạm dừng mùa lũ) (1,677 substantive words, HLS 100.0/100, 80 empirical signals).
+- [x] **Task 19.3**: Dùng `ag-search` xác minh thực tế và biên soạn bài viết cẩm nang di chuyển:
+  - `content/plan/dong-hoi-to-phong-nha-transport.md`: Cung đường kết nối 45 km từ ga xe lửa và sân bay Đồng Hới (VDH) vào Phong Nha (thị trấn Phong Nha / Sơn Trạch): xe buýt địa phương số B4 35k–45k VND, taxi Grab 400k–500k VND, xe limousine đưa đón khách sạn 100k–150k VND, thuê xe máy tự lái 120k–180k VND/ngày, quy trình đón khách tàu đêm lúc 05:00 sáng (1,526 substantive words, HLS 100.0/100, 71 empirical signals).
+- [x] **Task 19.4**: Chạy `ops/content_depth_auditor.py` kiểm định toàn bộ 25 bài viết trong `content/` (Tổng số từ: **36.901 từ**, 100% PASS, Mean HLS 99.2/100, 1.580 empirical signals, 0 Tier 1 clichés).
+- [x] **Task 19.5**: Xác minh 8 Quality Gates (8/8 PASS, Exit Code 0, 315 tests passed), commit và push lên `origin/master`.
+
+### Giai Đoạn 20: Đồng Bằng Sông Cửu Long & Chợ Nổi Miền Tây (Stage 139) [TIẾP THEO]
+- [ ] **Task 20.1**: Dùng `ag-search` xác minh thực tế và biên soạn bài viết chuyên sâu:
+  - `content/destinations/can-tho-cai-rang-floating-market-guide.md`: Cẩm nang Chợ nổi Cái Răng lúc bình minh (05:30–07:30 sáng, cây bẹo treo nông sản, thuê thuyền bến Ninh Kiều 350k–500k VND/thuyền), hủ tiếu nổi & cà phê bồng bềnh, cồn Sơn sinh thái cá lóc bay, lò hủ tiếu truyền thống Chín Của.
+- [ ] **Task 20.2**: Dùng `ag-search` xác minh thực tế và biên soạn bài so sánh trực diện:
+  - `content/compare/can-tho-vs-ben-tre.md`: So sánh toàn diện giữa Cần Thơ (thủ phủ Tây Đô đô thị hóa cao, chợ nổi sầm uất, khách sạn cao cấp, đời sống sông nước quy mô lớn) vs Bến Tre (xứ dừa thanh bình, homestay miệt vườn, chèo xuồng ba lá len lỏi rạch dừa nước, đạp xe đường làng không tiếng còi xe).
+- [ ] **Task 20.3**: Dùng `ag-search` xác minh thực tế và biên soạn bài viết cẩm nang di chuyển:
+  - `content/plan/ho-chi-minh-city-to-can-tho-transport.md`: Tuyến kết nối 170 km từ TP.HCM đi Cần Thơ qua cao tốc TP.HCM - Trung Lương - Mỹ Thuận (thời gian 3.0–3.5h, xe khách Phương Trang 165k–190k VND xuất bến Miền Tây, xe limousine 9 chỗ đón tận nhà quận 1 giá 250k–320k VND, xe riêng 1.8M–2.2M VND).
+- [ ] **Task 20.4**: Chạy `ops/content_depth_auditor.py` kiểm định toàn bộ các bài viết mới (bảo đảm >= 1,200 từ, HLS >= 85, 0 Tier 1 clichés, mật độ dữ liệu cao).
+- [ ] **Task 20.5**: Xác minh 8 Quality Gates (8/8 PASS, Exit Code 0), commit và push lên `origin/master`.
