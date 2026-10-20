@@ -433,12 +433,22 @@ flowchart TD
 - [x] **Task 22.4**: Chạy `ops/content_depth_auditor.py` kiểm định toàn bộ 34 bài viết trong `content/` (Tổng số từ: **51.516 từ**, 100% PASS, Mean HLS 99.41/100, 2.272 empirical signals, 0 Tier 1 clichés).
 - [x] **Task 22.5**: Xác minh 8 Quality Gates (8/8 PASS, Exit Code 0, 315 tests passed), commit và push lên `origin/master`.
 
-### Giai Đoạn 23: Di Sản Bà Nà Hills, Thuyền Nan Tam Cốc & Địa Đạo Củ Chi (Stage 142) [TIẾP THEO]
-- [ ] **Task 23.1**: Dùng `ag-search` xác minh thực tế và biên soạn bài viết chuyên sâu:
-  - `content/destinations/ba-na-hills-golden-bridge-guide.md`: Cẩm nang toàn diện Sun World Bà Nà Hills & Cầu Vàng (cáp treo đạt kỷ lục thế giới vé 900k–1.000.000 VND người lớn / 750k–800k VND trẻ em, buffet trưa 350k VND, Làng Pháp, Fantasy Park, hầm rượu Debay 1923, lịch trình né đám đông 07:00–08:30 sáng hoặc sau 16:30 chiều, xe đưa đón từ Đà Nẵng 120k–150k VND hoặc taxi 300k–350k VND 30 km).
-- [ ] **Task 23.2**: Dùng `ag-search` xác minh thực tế và biên soạn bài so sánh trực diện:
-  - `content/compare/tam-coc-vs-trang-an-boat-tour.md`: So sánh toàn diện tour thuyền Tam Cốc (thuyền nan chèo bằng chân trên sông Ngô Đồng, 3 hang luồn ngập nước Hang Cả/Hai/Ba, mùa lúa chín vàng cuối tháng 5 đầu tháng 6, vé 250k VND/2 khách) vs Tràng An (quần thể di sản thế giới UNESCO, 3 tuyến thuyền chuyên biệt Tuyến 1 9 hang / Tuyến 2 phim trường Kong / Tuyến 3 hang Đột 1.000m, vé 250k VND/khách thuyền 4 người, nước trong nhìn thấy rong rêu quanh năm).
-- [ ] **Task 23.3**: Dùng `ag-search` xác minh thực tế và biên soạn bài so sánh trực diện:
-  - `content/compare/cu-chi-tunnels-ben-duoc-vs-ben-dinh.md`: So sánh toàn diện giữa Địa đạo Bến Dược (cách TP.HCM 70 km, di tích lịch sử nguyên bản hệ thống hầm ngầm 3 tầng không mở rộng, Đền tưởng niệm Bến Dược, ít khách tour đoàn xe bus lớn, xe buýt công cộng 13 + 79 giá 15k VND) vs Bến Đình (cách 50 km gần hơn, hầm đã được mở rộng cho khổ người phương Tây, mật độ tour đoàn cao, quầy hàng lưu niệm dày đặc), vé vào cổng 125.000 VND khách quốc tế, trường bắn thể thao đạn AK-47 / M16 giá 60.000 VND/viên.
-- [ ] **Task 23.4**: Chạy `ops/content_depth_auditor.py` kiểm định toàn bộ các bài viết mới (bảo đảm >= 1,200 từ, HLS >= 85, 0 Tier 1 clichés, mật độ dữ liệu cao).
-- [ ] **Task 23.5**: Xác minh 8 Quality Gates (8/8 PASS, Exit Code 0), commit và push lên `origin/master`.
+### Giai Đoạn 23: Di Sản Bà Nà Hills, Thuyền Nan Tam Cốc & Địa Đạo Củ Chi (Stage 142) [HOÀN THÀNH 100%]
+- [x] **Task 23.1**: Dùng `ag-search` xác minh thực tế và biên soạn bài viết chuyên sâu:
+  - `content/destinations/ba-na-hills-golden-bridge-guide.md`: Cẩm nang toàn diện Sun World Bà Nà Hills & Cầu Vàng (cáp treo đạt kỷ lục thế giới vé 900k–1.000.000 VND người lớn / 750k–800k VND trẻ em, buffet trưa 350k VND, Làng Pháp, Fantasy Park, hầm rượu Debay 1923, lịch trình né đám đông 07:00–08:30 sáng hoặc sau 16:30 chiều, xe đưa đón từ Đà Nẵng 120k–150k VND hoặc taxi 300k–350k VND 30 km) (1,262 substantive words, HLS 100.0/100, 62 empirical signals).
+- [x] **Task 23.2**: Dùng `ag-search` xác minh thực tế và biên soạn bài so sánh trực diện:
+  - `content/compare/tam-coc-vs-trang-an-boat-tour.md`: So sánh toàn diện tour thuyền Tam Cốc (thuyền nan chèo bằng chân trên sông Ngô Đồng, 3 hang luồn ngập nước Hang Cả/Hai/Ba, mùa lúa chín vàng cuối tháng 5 đầu tháng 6, vé 250k VND/2 khách) vs Tràng An (quần thể di sản thế giới UNESCO, 3 tuyến thuyền chuyên biệt Tuyến 1 9 hang / Tuyến 2 phim trường Kong / Tuyến 3 hang Đột 1.000m, vé 300k VND/khách thuyền 4-5 người, nước trong nhìn thấy rong rêu quanh năm) (1,845 substantive words, HLS 100.0/100, 52 empirical signals).
+- [x] **Task 23.3**: Dùng `ag-search` xác minh thực tế và biên soạn bài so sánh trực diện:
+  - `content/compare/cu-chi-tunnels-ben-duoc-vs-ben-dinh.md`: So sánh toàn diện giữa Địa đạo Bến Dược (cách TP.HCM 70 km, di tích lịch sử nguyên bản hệ thống hầm ngầm 3 tầng không mở rộng, Đền tưởng niệm Bến Dược 44.520 liệt sĩ, ít khách tour đoàn xe bus lớn, xe buýt công cộng 13 + 79 giá 17.000 VND) vs Bến Đình (cách 50 km gần hơn, hầm đã được mở rộng 20-30% cho khổ người phương Tây, mật độ tour đoàn cao, quầy hàng lưu niệm dày đặc), vé vào cổng 125.000–135.000 VND khách quốc tế, trường bắn thể thao đạn AK-47 / M16 giá 60.000 VND/viên (1,608 substantive words, HLS 100.0/100, 73 empirical signals).
+- [x] **Task 23.4**: Chạy `ops/content_depth_auditor.py` kiểm định toàn bộ 37 bài viết trong `content/` (Tổng số từ: **56.231 từ**, trung bình 1.520 từ/bài, 100% PASS, Mean HLS 99.46/100, 2.459 empirical signals, 0 Tier 1 clichés).
+- [x] **Task 23.5**: Xác minh 8 Quality Gates (8/8 PASS, Exit Code 0, 315 tests passed), commit và push lên `origin/master`.
+
+### Giai Đoạn 24: Tuyến Đảo Miền Trung & Vòng Cung Đông Bắc (Stage 143) [TIẾP THEO]
+- [ ] **Task 24.1**: Dùng `ag-search` xác minh thực tế và biên soạn bài so sánh trực diện:
+  - `content/compare/ly-son-vs-cham-islands.md`: So sánh toàn diện giữa Đảo Lý Sơn xứ sở tỏi núi lửa Quảng Ngãi (cổng Tò Vò, đỉnh Thới Lới, Hang Câu, Chùa Hang, tàu cao tốc Sa Kỳ 178k–210k VND) vs Cù Lao Chàm Hội An (Khu dự trữ sinh quyển thế giới, lặn san hô Bãi Chồng, tàu cao tốc Cửa Đại 350k–450k VND, làng chài Bãi Hương homestay).
+- [ ] **Task 24.2**: Dùng `ag-search` xác minh thực tế và biên soạn bài viết chuyên sâu:
+  - `content/destinations/ba-be-lake-travel-guide.md`: Cẩm nang toàn diện Vườn quốc gia Hồ Ba Bể (hồ nước ngọt tự nhiên lớn nhất Việt Nam trên núi đá vôi, bản người Tày Pác Ngòi, tour thuyền máy 800k VND, thác Đầu Đẳng, động Puông, chèo kayak).
+- [ ] **Task 24.3**: Dùng `ag-search` xác minh thực tế và biên soạn bài viết chuyên sâu:
+  - `content/destinations/cao-bang-travel-guide.md`: Cẩm nang toàn diện Cao Bằng Công viên địa chất toàn cầu UNESCO Non Nước Cao Bằng (khu di tích Pác Bó suối Lê-nin, đèo Mã Phục 7 tầng, núi Mắt Thần Thủng Phia Oac, ẩm thực phở chua vịt quay).
+- [ ] **Task 24.4**: Chạy `ops/content_depth_auditor.py` kiểm định toàn bộ các bài viết mới (bảo đảm >= 1,200 từ, HLS >= 85, 0 Tier 1 clichés, mật độ dữ liệu cao).
+- [ ] **Task 24.5**: Xác minh 8 Quality Gates (8/8 PASS, Exit Code 0), commit và push lên `origin/master`.

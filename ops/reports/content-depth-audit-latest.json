@@ -1,7 +1,7 @@
 {
   "passed": true,
-  "total_articles": 34,
-  "passed_articles": 34,
+  "total_articles": 37,
+  "passed_articles": 37,
   "min_words_threshold": 1200,
   "min_hls_threshold": 85.0,
   "articles": [
@@ -114,6 +114,66 @@
           "5.5 hours",
           "7.0 hours",
           "4.5 hours"
+        ]
+      },
+      "slop_report": {
+        "passed": true,
+        "hls_score": 100,
+        "tier1_count": 0,
+        "tier1_violations": []
+      },
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "path": "M:/Projects/vietnamguide/content/compare/cu-chi-tunnels-ben-duoc-vs-ben-dinh.md",
+      "relative_path": "content/compare/cu-chi-tunnels-ben-duoc-vs-ben-dinh.md",
+      "passed": true,
+      "word_count": 1608,
+      "frontmatter": {
+        "title": "Ben Duoc vs Ben Dinh: Which Cu Chi Tunnels Site to Visit?",
+        "slug": "cu-chi-tunnels-ben-duoc-vs-ben-dinh",
+        "route_path": "compare/cu-chi-tunnels-ben-duoc-vs-ben-dinh",
+        "travel_cluster": "southern_delta",
+        "last_verified": "2026-10-20",
+        "author": "Antigravity Travel Intelligence",
+        "reading_time_minutes": 11,
+        "word_count": 1900
+      },
+      "elements": {
+        "h2_count": 8,
+        "h3_count": 5,
+        "table_count": 9,
+        "blockquote_count": 2,
+        "callout_count": 1,
+        "has_faq": true,
+        "has_steps": false
+      },
+      "empirical_signals": {
+        "currency_mentions": 37,
+        "distance_mentions": 22,
+        "transit_time_mentions": 14,
+        "total_empirical_signals": 73,
+        "sample_currencies": [
+          "135,000 VND",
+          "$5.30",
+          "135,000 VND",
+          "$5.30",
+          "35,000 VND"
+        ],
+        "sample_distances": [
+          "250 kilometers",
+          "20 kilometers",
+          "50 km",
+          "70 km",
+          "10m"
+        ],
+        "sample_transit_times": [
+          "1.5 hours",
+          "2.5 hours",
+          "90 minutes",
+          "140 minutes",
+          "15 minutes"
         ]
       },
       "slop_report": {
@@ -591,6 +651,126 @@
           "8 hours",
           "8 hours",
           "50 minutes"
+        ]
+      },
+      "slop_report": {
+        "passed": true,
+        "hls_score": 100,
+        "tier1_count": 0,
+        "tier1_violations": []
+      },
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "path": "M:/Projects/vietnamguide/content/compare/tam-coc-vs-trang-an-boat-tour.md",
+      "relative_path": "content/compare/tam-coc-vs-trang-an-boat-tour.md",
+      "passed": true,
+      "word_count": 1845,
+      "frontmatter": {
+        "title": "Tam Coc vs Trang An Boat Tour: Which is Better in 2026?",
+        "slug": "tam-coc-vs-trang-an-boat-tour",
+        "route_path": "compare/tam-coc-vs-trang-an-boat-tour",
+        "travel_cluster": "ninh_binh",
+        "last_verified": "2026-10-20",
+        "author": "Antigravity Travel Intelligence",
+        "reading_time_minutes": 10,
+        "word_count": 1845
+      },
+      "elements": {
+        "h2_count": 8,
+        "h3_count": 5,
+        "table_count": 9,
+        "blockquote_count": 2,
+        "callout_count": 1,
+        "has_faq": true,
+        "has_steps": false
+      },
+      "empirical_signals": {
+        "currency_mentions": 21,
+        "distance_mentions": 20,
+        "transit_time_mentions": 11,
+        "total_empirical_signals": 52,
+        "sample_currencies": [
+          "250,000 VND",
+          "$9.80",
+          "300,000 VND",
+          "$11.80",
+          "120,000 VND"
+        ],
+        "sample_distances": [
+          "95 kilometers",
+          "000m",
+          "1.0m",
+          "1.3m",
+          "1.0m"
+        ],
+        "sample_transit_times": [
+          "110 minutes",
+          "210 minutes",
+          "3.5 hours",
+          "3 hours",
+          "20 minutes"
+        ]
+      },
+      "slop_report": {
+        "passed": true,
+        "hls_score": 100,
+        "tier1_count": 0,
+        "tier1_violations": []
+      },
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "path": "M:/Projects/vietnamguide/content/destinations/ba-na-hills-golden-bridge-guide.md",
+      "relative_path": "content/destinations/ba-na-hills-golden-bridge-guide.md",
+      "passed": true,
+      "word_count": 1262,
+      "frontmatter": {
+        "title": "Ba Na Hills Golden Bridge Guide: Cable Cars, Crowd Strategy, and Map",
+        "slug": "ba-na-hills-golden-bridge-guide",
+        "route_path": "destinations/ba-na-hills-golden-bridge-guide",
+        "travel_cluster": "central_heritage",
+        "last_verified": "2026-10-20",
+        "author": "Antigravity Travel Intelligence",
+        "reading_time_minutes": 13,
+        "word_count": 2200
+      },
+      "elements": {
+        "h2_count": 7,
+        "h3_count": 10,
+        "table_count": 7,
+        "blockquote_count": 2,
+        "callout_count": 1,
+        "has_faq": true,
+        "has_steps": false
+      },
+      "empirical_signals": {
+        "currency_mentions": 22,
+        "distance_mentions": 30,
+        "transit_time_mentions": 10,
+        "total_empirical_signals": 62,
+        "sample_currencies": [
+          "1,000,000 VND",
+          "$40",
+          "800,000 VND",
+          "$32",
+          "100,000 VND"
+        ],
+        "sample_distances": [
+          "487 meters",
+          "30 kilometers",
+          "487m",
+          "950m",
+          "5.8 km"
+        ],
+        "sample_transit_times": [
+          "45 minutes",
+          "17 minutes",
+          "5 minutes",
+          "18 minutes",
+          "15 minutes"
         ]
       },
       "slop_report": {
