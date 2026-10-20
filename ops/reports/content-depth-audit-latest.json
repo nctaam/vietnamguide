@@ -1,7 +1,7 @@
 {
   "passed": true,
-  "total_articles": 4,
-  "passed_articles": 4,
+  "total_articles": 7,
+  "passed_articles": 7,
   "min_words_threshold": 1200,
   "min_hls_threshold": 85.0,
   "articles": [
@@ -59,6 +59,66 @@
       "slop_report": {
         "passed": false,
         "hls_score": 90,
+        "tier1_count": 0,
+        "tier1_violations": []
+      },
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "path": "M:/Projects/vietnamguide/content/compare/hoi-an-vs-hue.md",
+      "relative_path": "content/compare/hoi-an-vs-hue.md",
+      "passed": true,
+      "word_count": 1282,
+      "frontmatter": {
+        "title": "Hoi An vs Hue: Architecture, Cuisine, Atmosphere, and Itinerary Allocation",
+        "slug": "hoi-an-vs-hue",
+        "route_path": "compare/hoi-an-vs-hue",
+        "travel_cluster": "central_heritage",
+        "last_verified": "2026-10-20",
+        "author": "Antigravity Travel Intelligence",
+        "reading_time_minutes": 9,
+        "word_count": 1480
+      },
+      "elements": {
+        "h2_count": 8,
+        "h3_count": 7,
+        "table_count": 10,
+        "blockquote_count": 2,
+        "callout_count": 1,
+        "has_faq": true,
+        "has_steps": false
+      },
+      "empirical_signals": {
+        "currency_mentions": 18,
+        "distance_mentions": 6,
+        "transit_time_mentions": 5,
+        "total_empirical_signals": 29,
+        "sample_currencies": [
+          "150,000 VND",
+          "200,000 VND",
+          "150,000 VND",
+          "45,000 VND",
+          "40,000 VND"
+        ],
+        "sample_distances": [
+          "130 kilometers",
+          "4 km",
+          "14 km",
+          "130 km",
+          "30 km"
+        ],
+        "sample_transit_times": [
+          "45 mins",
+          "3.0 hours",
+          "3.0 hours",
+          "10 minutes",
+          "10 minutes"
+        ]
+      },
+      "slop_report": {
+        "passed": false,
+        "hls_score": 100,
         "tier1_count": 0,
         "tier1_violations": []
       },
@@ -126,6 +186,66 @@
       "warnings": []
     },
     {
+      "path": "M:/Projects/vietnamguide/content/destinations/hanoi-street-food-guide.md",
+      "relative_path": "content/destinations/hanoi-street-food-guide.md",
+      "passed": true,
+      "word_count": 1342,
+      "frontmatter": {
+        "title": "Hanoi Street Food Guide: Iconic Dishes, Provenance, and Sidewalk Etiquette",
+        "slug": "hanoi-street-food-guide",
+        "route_path": "destinations/hanoi-street-food-guide",
+        "travel_cluster": "northern_triangle",
+        "last_verified": "2026-10-20",
+        "author": "Antigravity Travel Intelligence",
+        "reading_time_minutes": 9,
+        "word_count": 1540
+      },
+      "elements": {
+        "h2_count": 6,
+        "h3_count": 9,
+        "table_count": 7,
+        "blockquote_count": 2,
+        "callout_count": 1,
+        "has_faq": true,
+        "has_steps": false
+      },
+      "empirical_signals": {
+        "currency_mentions": 36,
+        "distance_mentions": 7,
+        "transit_time_mentions": 5,
+        "total_empirical_signals": 48,
+        "sample_currencies": [
+          "60,000 VND",
+          "$2.00",
+          "$2.40",
+          "100,000 VND",
+          "$2.80"
+        ],
+        "sample_distances": [
+          "550 meters",
+          "400 meters",
+          "850 meters",
+          "700 meters",
+          "550 meters"
+        ],
+        "sample_transit_times": [
+          "3.0 hours",
+          "7 minutes",
+          "5 minutes",
+          "11 minutes",
+          "9 minutes"
+        ]
+      },
+      "slop_report": {
+        "passed": false,
+        "hls_score": 100,
+        "tier1_count": 0,
+        "tier1_violations": []
+      },
+      "errors": [],
+      "warnings": []
+    },
+    {
       "path": "M:/Projects/vietnamguide/content/destinations/hanoi-train-street-guide.md",
       "relative_path": "content/destinations/hanoi-train-street-guide.md",
       "passed": true,
@@ -177,6 +297,66 @@
       },
       "slop_report": {
         "passed": false,
+        "hls_score": 100,
+        "tier1_count": 0,
+        "tier1_violations": []
+      },
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "path": "M:/Projects/vietnamguide/content/plan/da-nang-to-hoi-an-transport.md",
+      "relative_path": "content/plan/da-nang-to-hoi-an-transport.md",
+      "passed": true,
+      "word_count": 1279,
+      "frontmatter": {
+        "title": "Da Nang to Hoi An Transport: Grab, Private Car, Shuttle Bus, and Motorbike",
+        "slug": "da-nang-to-hoi-an-transport",
+        "route_path": "plan/da-nang-to-hoi-an-transport",
+        "travel_cluster": "central_heritage",
+        "last_verified": "2026-10-20",
+        "author": "Antigravity Travel Intelligence",
+        "reading_time_minutes": 8,
+        "word_count": 1420
+      },
+      "elements": {
+        "h2_count": 8,
+        "h3_count": 7,
+        "table_count": 9,
+        "blockquote_count": 2,
+        "callout_count": 1,
+        "has_faq": true,
+        "has_steps": true
+      },
+      "empirical_signals": {
+        "currency_mentions": 41,
+        "distance_mentions": 6,
+        "transit_time_mentions": 22,
+        "total_empirical_signals": 69,
+        "sample_currencies": [
+          "350,000 VND",
+          "$10.00",
+          "$14.00",
+          "420,000 VND",
+          "$13.00"
+        ],
+        "sample_distances": [
+          "30 kilometers",
+          "30 km",
+          "30 km",
+          "1.5 km",
+          "10 km"
+        ],
+        "sample_transit_times": [
+          "50 minutes",
+          "45 mins",
+          "40 mins",
+          "45 mins",
+          "45 mins"
+        ]
+      },
+      "slop_report": {
+        "passed": true,
         "hls_score": 100,
         "tier1_count": 0,
         "tier1_violations": []

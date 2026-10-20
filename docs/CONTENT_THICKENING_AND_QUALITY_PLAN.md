@@ -333,12 +333,22 @@ flowchart TD
 - [x] **Task 12.4**: Chạy `ops/content_depth_auditor.py` kiểm định toàn bộ 4 bài viết mới trong `content/` (Tổng số từ: **5.445 từ**, 100% PASS, Mean HLS 97.5/100, 185 empirical signals).
 - [x] **Task 12.5**: Xác minh 8 Quality Gates (8/8 PASS, Exit Code 0, 315 tests passed), commit và push lên `origin/master`.
 
-### Giai Đoạn 13: Mở Rộng Tuyến Trải Nghiệm Ẩm Thực & Di Sản Miền Trung (Stage 132) [TIẾP THEO]
-- [ ] **Task 13.1**: Dùng `ag-search` xác minh thực tế và biên soạn bài viết chuyên sâu:
-  - `content/destinations/hanoi-street-food-guide.md`: Cẩm nang ẩm thực đường phố Hà Nội (Phở Bát Đàn 49 Bát Đàn, Bún chả Đắc Kim 1 Hàng Mành / Hương Liên 24 Lê Văn Hưu, Chả cá Thăng Long 6B Đường Thành, Cà phê trứng Giảng 39 Nguyễn Hữu Huân, giá từng món, văn hóa ghế nhựa vỉa hè).
-- [ ] **Task 13.2**: Dùng `ag-search` xác minh thực tế và biên soạn bài viết cẩm nang di chuyển:
-  - `content/plan/da-nang-to-hoi-an-transport.md`: Tuyến kết nối Đà Nẵng - Hội An (30 km; taxi Grab 300k–350k VND; xe buýt công cộng số 01 mới; xe limousine đưa đón Hội An Express 100k–120k VND; thuê xe máy qua đường biển Võ Nguyên Giáp - Lạc Long Quân).
-- [ ] **Task 13.3**: Dùng `ag-search` xác minh thực tế và biên soạn bài so sánh trực diện:
-  - `content/compare/hoi-an-vs-hue.md`: So sánh toàn diện giữa Đô thị cổ Hội An (thương cảng thế kỷ 16–18, quy mô nhỏ, đạp xe, ẩm thực bình dân) vs Cố đô Huế (kinh thành triều Nguyễn, lăng tẩm hoàng gia, ẩm thực cung đình, sông Hương).
-- [ ] **Task 13.4**: Chạy `ops/content_depth_auditor.py` kiểm định toàn bộ các bài viết mới (bảo đảm >= 1,200 từ, HLS >= 85, 0 Tier 1 clichés, mật độ dữ liệu cao).
-- [ ] **Task 13.5**: Xác minh 8 Quality Gates (8/8 PASS, Exit Code 0), commit và push lên `origin/master`.
+### Giai Đoạn 13: Mở Rộng Tuyến Trải Nghiệm Ẩm Thực & Di Sản Miền Trung (Stage 132) [HOÀN THÀNH 100%]
+- [x] **Task 13.1**: Dùng `ag-search` xác minh thực tế và biên soạn bài viết chuyên sâu:
+  - `content/destinations/hanoi-street-food-guide.md`: Cẩm nang ẩm thực đường phố Hà Nội (Phở Bát Đàn 49 Bát Đàn, Bún chả Đắc Kim 1 Hàng Mành / Hương Liên 24 Lê Văn Hưu, Chả cá Thăng Long 6B Đường Thành, Cà phê trứng Giảng 39 Nguyễn Hữu Huân, giá từng món, văn hóa ghế nhựa vỉa hè, lộ trình đi bộ 2.5 km) (1,342 substantive words, HLS 100.0/100, 48 empirical signals).
+- [x] **Task 13.2**: Dùng `ag-search` xác minh thực tế và biên soạn bài viết cẩm nang di chuyển:
+  - `content/plan/da-nang-to-hoi-an-transport.md`: Tuyến kết nối Đà Nẵng - Hội An (30 km; taxi Grab 250k–350k VND; điểm dừng Ngũ Hành Sơn 40k VND; xe limousine đưa đón Hội An Express 120k–150k VND; xe buýt số 01; quy chuẩn hành lý và chặng về sân bay DAD) (1,279 substantive words, HLS 100.0/100, 69 empirical signals).
+- [x] **Task 13.3**: Dùng `ag-search` xác minh thực tế và biên soạn bài so sánh trực diện:
+  - `content/compare/hoi-an-vs-hue.md`: So sánh toàn diện giữa Đô thị cổ Hội An (thương cảng thế kỷ 16–18, quy mô nhỏ, đạp xe, ẩm thực bình dân) vs Cố đô Huế (kinh thành triều Nguyễn, lăng tẩm hoàng gia, ẩm thực cung đình, sông Hương, vé combo 4 điểm 530k VND, sự phân hóa vi khí hậu Đèo Hải Vân) (1,282 substantive words, HLS 100.0/100, 29 empirical signals).
+- [x] **Task 13.4**: Chạy `ops/content_depth_auditor.py` kiểm định toàn bộ 7 bài viết trong `content/` (Tổng số từ: **9.348 từ**, 100% PASS, Mean HLS 98.6/100, 331 empirical signals, 0 Tier 1 clichés).
+- [x] **Task 13.5**: Xác minh 8 Quality Gates (8/8 PASS, Exit Code 0, 315 tests passed), commit và push lên `origin/master`.
+
+### Giai Đoạn 14: Tuyến Đường Miền Núi & Cung Đường Đèo Phía Bắc (Stage 133) [TIẾP THEO]
+- [ ] **Task 14.1**: Dùng `ag-search` xác minh thực tế và biên soạn bài viết chuyên sâu:
+  - `content/destinations/sa-pa-trekking-guide.md`: Cẩm nang trekking Sa Pa (bản Cát Cát 150k VND, Tả Van 75k VND, Ý Linh Hồ, Lao Chải, dịch vụ homestay người H'Mông / Dao Đỏ, thời tiết sương mù và đồ dùng trekking).
+- [ ] **Task 14.2**: Dùng `ag-search` xác minh thực tế và biên soạn bài viết cẩm nang di chuyển:
+  - `content/plan/hanoi-to-sa-pa-train-vs-bus.md`: So sánh toàn diện Tàu hỏa du lịch đêm Chapa / Vic Sapa / ĐSVN đến Ga Lào Cai + xe trung chuyển vs Xe cabin đôi cao tốc CT05 Nội Bài - Lào Cai trả tận thị xã Sa Pa (thời gian, cước phí, sự thoải mái và an toàn).
+- [ ] **Task 14.3**: Dùng `ag-search` xác minh thực tế và biên soạn bài so sánh trực diện:
+  - `content/compare/sa-pa-vs-ha-giang.md`: So sánh toàn diện giữa Sa Pa (nghỉ dưỡng, cáp treo Fansipan, ruộng bậc thang Mường Hoa, dịch vụ tiện nghi) vs Hà Giang (phượt xe máy mạo hiểm, Đèo Mã Pí Lèng, Hẻm Tu Sản, cao nguyên đá Đồng Văn).
+- [ ] **Task 14.4**: Chạy `ops/content_depth_auditor.py` kiểm định toàn bộ các bài viết mới (bảo đảm >= 1,200 từ, HLS >= 85, 0 Tier 1 clichés, mật độ dữ liệu cao).
+- [ ] **Task 14.5**: Xác minh 8 Quality Gates (8/8 PASS, Exit Code 0), commit và push lên `origin/master`.
