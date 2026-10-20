@@ -1,10 +1,70 @@
 {
   "passed": true,
-  "total_articles": 16,
-  "passed_articles": 16,
+  "total_articles": 19,
+  "passed_articles": 19,
   "min_words_threshold": 1200,
   "min_hls_threshold": 85.0,
   "articles": [
+    {
+      "path": "M:/Projects/vietnamguide/content/compare/cao-bang-vs-ba-be-lake.md",
+      "relative_path": "content/compare/cao-bang-vs-ba-be-lake.md",
+      "passed": true,
+      "word_count": 1292,
+      "frontmatter": {
+        "title": "Cao Bang vs Ba Be Lake: Waterfalls, Karst Waters, and Northern Loops",
+        "slug": "cao-bang-vs-ba-be-lake",
+        "route_path": "compare/cao-bang-vs-ba-be-lake",
+        "travel_cluster": "far_north_frontier",
+        "last_verified": "2026-10-20",
+        "author": "Antigravity Travel Intelligence",
+        "reading_time_minutes": 12,
+        "word_count": 2200
+      },
+      "elements": {
+        "h2_count": 10,
+        "h3_count": 11,
+        "table_count": 13,
+        "blockquote_count": 6,
+        "callout_count": 3,
+        "has_faq": true,
+        "has_steps": false
+      },
+      "empirical_signals": {
+        "currency_mentions": 51,
+        "distance_mentions": 20,
+        "transit_time_mentions": 9,
+        "total_empirical_signals": 80,
+        "sample_currencies": [
+          "45k VND",
+          "50k VND",
+          "45k VND",
+          "60k VND",
+          "800k VND"
+        ],
+        "sample_distances": [
+          "280 km",
+          "220 km",
+          "90 km",
+          "150 meters",
+          "000 meters"
+        ],
+        "sample_transit_times": [
+          "7.0 hours",
+          "5.5 hours",
+          "5.5 hours",
+          "7.0 hours",
+          "4.5 hours"
+        ]
+      },
+      "slop_report": {
+        "passed": true,
+        "hls_score": 100,
+        "tier1_count": 0,
+        "tier1_violations": []
+      },
+      "errors": [],
+      "warnings": []
+    },
     {
       "path": "M:/Projects/vietnamguide/content/compare/ha-long-bay-vs-lan-ha-bay.md",
       "relative_path": "content/compare/ha-long-bay-vs-lan-ha-bay.md",
@@ -294,6 +354,66 @@
           "8 hours",
           "8 hours",
           "50 minutes"
+        ]
+      },
+      "slop_report": {
+        "passed": true,
+        "hls_score": 100,
+        "tier1_count": 0,
+        "tier1_violations": []
+      },
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "path": "M:/Projects/vietnamguide/content/destinations/ban-gioc-waterfall-guide.md",
+      "relative_path": "content/destinations/ban-gioc-waterfall-guide.md",
+      "passed": true,
+      "word_count": 1372,
+      "frontmatter": {
+        "title": "Ban Gioc Waterfall Travel Guide: Quay Son River Rafts, Nguom Ngao Cave, and Border Logistics",
+        "slug": "ban-gioc-waterfall-guide",
+        "route_path": "destinations/cao-bang-travel-guide",
+        "travel_cluster": "far_north_frontier",
+        "last_verified": "2026-10-20",
+        "author": "Antigravity Travel Intelligence",
+        "reading_time_minutes": 11,
+        "word_count": 1980
+      },
+      "elements": {
+        "h2_count": 8,
+        "h3_count": 10,
+        "table_count": 9,
+        "blockquote_count": 6,
+        "callout_count": 3,
+        "has_faq": true,
+        "has_steps": false
+      },
+      "empirical_signals": {
+        "currency_mentions": 25,
+        "distance_mentions": 26,
+        "transit_time_mentions": 9,
+        "total_empirical_signals": 60,
+        "sample_currencies": [
+          "45,000 VND",
+          "$1.80",
+          "50,000 VND",
+          "$2.00",
+          "45,000 VND"
+        ],
+        "sample_distances": [
+          "85 kilometers",
+          "300m",
+          "30m",
+          "3.5 km",
+          "1.0 km"
+        ],
+        "sample_transit_times": [
+          "2.0 hours",
+          "20 minutes",
+          "75 minutes",
+          "3.0 hours",
+          "60 minutes"
         ]
       },
       "slop_report": {
@@ -717,6 +837,66 @@
       "slop_report": {
         "passed": true,
         "hls_score": 100,
+        "tier1_count": 0,
+        "tier1_violations": []
+      },
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "path": "M:/Projects/vietnamguide/content/plan/ha-giang-to-cao-bang-transport.md",
+      "relative_path": "content/plan/ha-giang-to-cao-bang-transport.md",
+      "passed": true,
+      "word_count": 1315,
+      "frontmatter": {
+        "title": "Ha Giang to Cao Bang Transport: Mountain Buses, Motorbike Routes, and Pass Logistics",
+        "slug": "ha-giang-to-cao-bang-transport",
+        "route_path": "plan/ha-giang-to-cao-bang-transport",
+        "travel_cluster": "far_north_frontier",
+        "last_verified": "2026-10-20",
+        "author": "Antigravity Travel Intelligence",
+        "reading_time_minutes": 12,
+        "word_count": 2420
+      },
+      "elements": {
+        "h2_count": 9,
+        "h3_count": 9,
+        "table_count": 11,
+        "blockquote_count": 6,
+        "callout_count": 3,
+        "has_faq": true,
+        "has_steps": false
+      },
+      "empirical_signals": {
+        "currency_mentions": 28,
+        "distance_mentions": 34,
+        "transit_time_mentions": 11,
+        "total_empirical_signals": 73,
+        "sample_currencies": [
+          "250,000 VND",
+          "$7.20",
+          "$10.00",
+          "180,000 VND",
+          "$4.80"
+        ],
+        "sample_distances": [
+          "260 kilometers",
+          "55 km",
+          "50 km",
+          "45 km",
+          "50 km"
+        ],
+        "sample_transit_times": [
+          "9.0 hours",
+          "10.0 hours",
+          "7.5 hours",
+          "2.5 hours",
+          "45 minutes"
+        ]
+      },
+      "slop_report": {
+        "passed": false,
+        "hls_score": 90,
         "tier1_count": 0,
         "tier1_violations": []
       },

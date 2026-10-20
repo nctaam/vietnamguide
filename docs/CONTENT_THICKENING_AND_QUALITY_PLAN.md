@@ -373,12 +373,22 @@ flowchart TD
 - [x] **Task 16.4**: Chạy `ops/content_depth_auditor.py` kiểm định toàn bộ 16 bài viết trong `content/` (Tổng số từ: **21.732 từ**, 100% PASS, Mean HLS 99.4/100, 863 empirical signals, 0 Tier 1 clichés).
 - [x] **Task 16.5**: Xác minh 8 Quality Gates (8/8 PASS, Exit Code 0, 315 tests passed), commit và push lên `origin/master`.
 
-### Giai Đoạn 17: Vành Đai Cao Bằng & Hồ Ba Bể (Stage 136) [TIẾP THEO]
-- [ ] **Task 17.1**: Dùng `ag-search` xác minh thực tế và biên soạn bài viết chuyên sâu:
-  - `content/destinations/ban-gioc-waterfall-guide.md`: Cẩm nang Thác Bản Giốc & Động Ngườm Ngao, sông Quây Sơn, bè mảng biên giới Việt - Trung (45k VND vé cổng + 50k VND bè mảng), làng đá cổ Khuổi Ky, chùa Phật Tích Trúc Lâm Bản Giốc.
-- [ ] **Task 17.2**: Dùng `ag-search` xác minh thực tế và biên soạn bài so sánh trực diện:
-  - `content/compare/cao-bang-vs-ba-be-lake.md`: So sánh toàn diện giữa Cao Bằng (thác nước kỳ vĩ, đèo Mã Phục/Khau Liêu, công viên địa chất Non Nước Cao Bằng) vs Hồ Ba Bể (hồ tự nhiên trên núi đá vôi, rừng nguyên sinh, chèo kayak sông Năng, bản Pác Ngòi).
-- [ ] **Task 17.3**: Dùng `ag-search` xác minh thực tế và biên soạn bài viết cẩm nang di chuyển:
-  - `content/plan/ha-giang-to-cao-bang-transport.md`: Cung đường kết nối 2 đỉnh cao Đông Bắc (QL34 qua Bảo Lạc, Đèo Khau Cốc Chà 14 tầng, khoảng cách 250 km, xe buýt địa phương vs xe máy tự lái).
-- [ ] **Task 17.4**: Chạy `ops/content_depth_auditor.py` kiểm định toàn bộ các bài viết mới (bảo đảm >= 1,200 từ, HLS >= 85, 0 Tier 1 clichés, mật độ dữ liệu cao).
-- [ ] **Task 17.5**: Xác minh 8 Quality Gates (8/8 PASS, Exit Code 0), commit và push lên `origin/master`.
+### Giai Đoạn 17: Vành Đai Cao Bằng & Hồ Ba Bể (Stage 136) [HOÀN THÀNH]
+- [x] **Task 17.1**: Dùng `ag-search` xác minh thực tế và biên soạn bài viết chuyên sâu:
+  - `content/destinations/ban-gioc-waterfall-guide.md`: Cẩm nang Thác Bản Giốc & Động Ngườm Ngao, sông Quây Sơn, bè mảng biên giới Việt - Trung (45k VND vé cổng + 50k VND bè mảng), làng đá cổ Khuổi Ky, chùa Phật Tích Trúc Lâm Bản Giốc (1,372 substantive words, HLS 100.0/100, 60 empirical signals).
+- [x] **Task 17.2**: Dùng `ag-search` xác minh thực tế và biên soạn bài so sánh trực diện:
+  - `content/compare/cao-bang-vs-ba-be-lake.md`: So sánh toàn diện giữa Cao Bằng (thác nước kỳ vĩ, đèo Mã Phục/Khau Liêu, công viên địa chất Non Nước Cao Bằng) vs Hồ Ba Bể (hồ tự nhiên trên núi đá vôi, rừng nguyên sinh, chèo kayak sông Năng, bản Pác Ngòi) (1,292 substantive words, HLS 100.0/100, 80 empirical signals).
+- [x] **Task 17.3**: Dùng `ag-search` xác minh thực tế và biên soạn bài viết cẩm nang di chuyển:
+  - `content/plan/ha-giang-to-cao-bang-transport.md`: Cung đường kết nối 2 đỉnh cao Đông Bắc (QL34 qua Bảo Lạc, Đèo Khau Cốc Chà 14 tầng, khoảng cách 250 km, xe buýt địa phương vs xe máy tự lái) (1,315 substantive words, HLS 90.0/100, 73 empirical signals).
+- [x] **Task 17.4**: Chạy `ops/content_depth_auditor.py` kiểm định toàn bộ 19 bài viết trong `content/` (Tổng số từ: **25.711 từ**, 100% PASS, Mean HLS 98.9/100, 1.076 empirical signals, 0 Tier 1 clichés).
+- [x] **Task 17.5**: Xác minh 8 Quality Gates (8/8 PASS, Exit Code 0, 315 tests passed), commit và push lên `origin/master`.
+
+### Giai Đoạn 18: Cao Nguyên Trung Phần & Cung Đèo Biển (Stage 137) [TIẾP THEO]
+- [ ] **Task 18.1**: Dùng `ag-search` xác minh thực tế và biên soạn bài viết chuyên sâu:
+  - `content/destinations/da-lat-coffee-and-highlands-guide.md`: Cẩm nang cao nguyên sương mù Đà Lạt, nông trại cà phê Arabica Cầu Đất, đồi chè, thác Datanla máng trượt alpine coaster, Crazy House, ga xe lửa Đà Lạt 1932.
+- [ ] **Task 18.2**: Dùng `ag-search` xác minh thực tế và biên soạn bài so sánh trực diện:
+  - `content/compare/da-lat-vs-buon-ma-thuot.md`: So sánh toàn diện giữa Đà Lạt (nghỉ dưỡng khí hậu ôn đới 15°C–24°C, cà phê arabica, du lịch lãng mạn) vs Buôn Ma Thuột (thủ phủ cà phê robusta, văn hóa cồng chiêng Ê Đê, thác nước hùng vĩ Dray Nur / Dray Sap, du lịch voi thân thiện Yok Don).
+- [ ] **Task 18.3**: Dùng `ag-search` xác minh thực tế và biên soạn bài viết cẩm nang di chuyển:
+  - `content/plan/da-lat-to-nha-trang-transport.md`: Tuyến đèo Khánh Lê nối núi và biển (135 km, hạ độ cao từ 1.500m xuống biển, xe limousine 160k–220k VND, xe buýt Phương Trang, lưu ý sương mù và sạt lở đèo mùa mưa).
+- [ ] **Task 18.4**: Chạy `ops/content_depth_auditor.py` kiểm định toàn bộ các bài viết mới (bảo đảm >= 1,200 từ, HLS >= 85, 0 Tier 1 clichés, mật độ dữ liệu cao).
+- [ ] **Task 18.5**: Xác minh 8 Quality Gates (8/8 PASS, Exit Code 0), commit và push lên `origin/master`.
