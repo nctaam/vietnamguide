@@ -2792,6 +2792,93 @@ echo json_encode([
         self.assertIn('Thung Khe Pass', steps_mc)
         self.assertIn('Ban Lac', steps_mc)
 
+    def test_stage129_best_things_to_do_hub_guides_faqs(self):
+        """Stage 129 must provide verified curated FAQs for top 7 destination hub guides ('Best Things to Do'), achieving the landmark milestone of 120 Curated FAQ Routes."""
+        stage129_routes = [
+            'destinations/best-things-to-do-in-hanoi',
+            'destinations/best-things-to-do-in-ho-chi-minh-city',
+            'destinations/best-things-to-do-in-hoi-an',
+            'destinations/best-things-to-do-in-hue',
+            'destinations/best-things-to-do-in-da-lat',
+            'destinations/best-things-to-do-in-da-nang',
+            'destinations/best-things-to-do-in-ninh-binh',
+        ]
+
+        php_code = f"""
+        $routes = {json.dumps(stage129_routes)};
+        $faq_results = [];
+
+        foreach ($routes as $r) {{
+            $items = vg_get_curated_faq_items($r);
+            $accordion = vg_render_curated_faq_accordion($r);
+            $faq_results[$r] = [
+                'count' => count($items),
+                'items' => $items,
+                'has_h2' => strpos($accordion, '<h2') !== false,
+                'visible' => strpos($accordion, '<details') !== false,
+            ];
+        }}
+
+        echo json_encode([
+            'faq_results' => $faq_results,
+        ]);
+        """
+        res = _run_php(php_code)
+        self.assertEqual(res.returncode, 0, f"PHP error:\n{res.stderr}")
+        out = json.loads(res.stdout)
+
+        for route, info in out['faq_results'].items():
+            self.assertGreaterEqual(info['count'], 3, f"Route {route} must have >= 3 curated FAQ items")
+            self.assertFalse(info['has_h2'], f"Route {route} FAQ accordion must have 0 <h2> tags")
+            self.assertTrue(info['visible'], f"Route {route} FAQ accordion must render visible <details>")
+
+        # Verify ground-truth empirical metrics across the 7 hub destination guides
+        hn_faqs = str(out['faq_results']['destinations/best-things-to-do-in-hanoi']['items'])
+        self.assertIn('Temple of Literature', hn_faqs)
+        self.assertIn('70,000 VND', hn_faqs)
+        self.assertIn('Hoa Lo Prison', hn_faqs)
+        self.assertIn('Thang Long Theatre', hn_faqs)
+
+        hcm_faqs = str(out['faq_results']['destinations/best-things-to-do-in-ho-chi-minh-city']['items'])
+        self.assertIn('War Remnants Museum', hcm_faqs)
+        self.assertIn('Independence Palace', hcm_faqs)
+        self.assertIn('Saigon Waterbus', hcm_faqs)
+        self.assertIn('15,000 VND', hcm_faqs)
+
+        ha_faqs = str(out['faq_results']['destinations/best-things-to-do-in-hoi-an']['items'])
+        self.assertIn('150,000 VND', ha_faqs)
+        self.assertIn('Japanese Covered Bridge', ha_faqs)
+        self.assertIn('Hoai River', ha_faqs)
+        self.assertIn('Hoi An Memories Show', ha_faqs)
+
+        hue_faqs = str(out['faq_results']['destinations/best-things-to-do-in-hue']['items'])
+        self.assertIn('Imperial City', hue_faqs)
+        self.assertIn('200,000 VND', hue_faqs)
+        self.assertIn('Emperor Tu Duc', hue_faqs)
+        self.assertIn('Emperor Khai Dinh', hue_faqs)
+        self.assertIn('Thien Mu Pagoda', hue_faqs)
+
+        dl_faqs = str(out['faq_results']['destinations/best-things-to-do-in-da-lat']['items'])
+        self.assertIn('Crazy House', dl_faqs)
+        self.assertIn('80,000 VND', dl_faqs)
+        self.assertIn('Bao Dai Palace III', dl_faqs)
+        self.assertIn('Da Lat Night Market', dl_faqs)
+
+        dn_faqs = str(out['faq_results']['destinations/best-things-to-do-in-da-nang']['items'])
+        self.assertIn('Dragon Bridge', dn_faqs)
+        self.assertIn('21:00 PM', dn_faqs)
+        self.assertIn('Marble Mountains', dn_faqs)
+        self.assertIn('Son Tra Peninsula', dn_faqs)
+        self.assertIn('Lady Buddha', dn_faqs)
+
+        nb_faqs = str(out['faq_results']['destinations/best-things-to-do-in-ninh-binh']['items'])
+        self.assertIn('Trang An', nb_faqs)
+        self.assertIn('Tam Coc', nb_faqs)
+        self.assertIn('Hang Mua', nb_faqs)
+        self.assertIn('486 stone steps', nb_faqs)
+        self.assertIn('Bai Dinh Pagoda', nb_faqs)
+
+
 
 
 
