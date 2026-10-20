@@ -1894,6 +1894,116 @@ echo json_encode([
         self.assertIn('Tra Su Cajuput Forest', steps_text)
         self.assertIn('120,000 VND', steps_text)
 
+    def test_stage121_central_coast_and_caves_faqs_and_howtos(self):
+        """Stage 121: 7 new South Central Coast & Cave Kingdom FAQ routes, 1 new HowTo route with verified ground-truth data."""
+        stage121_faqs = [
+            'destinations/where-to-stay-in-quy-nhon',
+            'destinations/where-to-stay-in-nha-trang',
+            'destinations/where-to-stay-in-mui-ne',
+            'destinations/where-to-stay-in-dong-hoi',
+            'plan/buon-ma-thuot-to-nha-trang-transport',
+            'plan/pleiku-to-quy-nhon-transport',
+            'plan/nha-trang-to-quy-nhon-transport',
+        ]
+        stage121_howtos = [
+            'plan/nha-trang-to-quy-nhon-transport',
+        ]
+        php_code = f"""
+        $faq_paths = {json.dumps(stage121_faqs)};
+        $faq_results = [];
+        foreach ($faq_paths as $p) {{
+            $items = vg_get_curated_faq_items($p);
+            $html  = vg_render_curated_faq_accordion($p, '<p>Lead text.</p>');
+            $faq_results[$p] = [
+                'count'   => count($items),
+                'has_h2'  => stripos($html, '<h2') !== false,
+                'visible' => strpos($html, '<details class="vg-faq-item"') !== false,
+                'items'   => $items,
+            ];
+        }}
+        $howto_paths = {json.dumps(stage121_howtos)};
+        $howto_data = [];
+        foreach ($howto_paths as $p) {{
+            $node = vg_get_page_howto_schema($p, "https://vietnamguide.net/{{$p}}/");
+            $howto_data[$p] = [
+                'step_count' => is_array($node) ? count($node['step'] ?? []) : 0,
+                'name'       => $node['name'] ?? '',
+                'steps'      => $node['step'] ?? [],
+            ];
+        }}
+        echo json_encode([
+            'faq_results' => $faq_results,
+            'howto_data'  => $howto_data,
+        ]);
+        """
+        res = _run_php(php_code)
+        self.assertEqual(res.returncode, 0, f"PHP error:\n{res.stderr}")
+        out = json.loads(res.stdout)
+
+        for route, info in out['faq_results'].items():
+            self.assertGreaterEqual(info['count'], 3, f"Route {route} must have >= 3 curated FAQ items")
+            self.assertFalse(info['has_h2'], f"Route {route} FAQ accordion must have 0 <h2> tags")
+            self.assertTrue(info['visible'], f"Route {route} FAQ accordion must render visible <details>")
+
+        # Verify ground-truth empirical metrics in FAQs
+        quynhon_faqs = str(out['faq_results']['destinations/where-to-stay-in-quy-nhon']['items'])
+        self.assertIn('Eo Gio', quynhon_faqs)
+        self.assertIn('25,000 VND', quynhon_faqs)
+        self.assertIn('Ky Co Beach', quynhon_faqs)
+        self.assertIn('Phu Cat Airport', quynhon_faqs)
+        self.assertIn('50,000 VND', quynhon_faqs)
+
+        nhatrang_faqs = str(out['faq_results']['destinations/where-to-stay-in-nha-trang']['items'])
+        self.assertIn('VinWonders Nha Trang', nhatrang_faqs)
+        self.assertIn('950,000 to 1,050,000 VND', nhatrang_faqs)
+        self.assertIn('Ponagar Cham Towers', nhatrang_faqs)
+        self.assertIn('30,000 VND', nhatrang_faqs)
+        self.assertIn('Bus No. 18', nhatrang_faqs)
+
+        muine_faqs = str(out['faq_results']['destinations/where-to-stay-in-mui-ne']['items'])
+        self.assertIn('White Sand Dunes', muine_faqs)
+        self.assertIn('Fairy Stream', muine_faqs)
+        self.assertIn('15,000 VND', muine_faqs)
+        self.assertIn('SPT2', muine_faqs)
+        self.assertIn('170,000 to 230,000 VND', muine_faqs)
+
+        donghoi_faqs = str(out['faq_results']['destinations/where-to-stay-in-dong-hoi']['items'])
+        self.assertIn('Phong Nha Cave', donghoi_faqs)
+        self.assertIn('150,000 VND', donghoi_faqs)
+        self.assertIn('700,000 VND', donghoi_faqs)
+        self.assertIn('Paradise Cave', donghoi_faqs)
+        self.assertIn('270,000 VND', donghoi_faqs)
+        self.assertIn('Bus B4', donghoi_faqs)
+
+        bmt_nt_faqs = str(out['faq_results']['plan/buon-ma-thuot-to-nha-trang-transport']['items'])
+        self.assertIn('QL26', bmt_nt_faqs)
+        self.assertIn('185-kilometer', bmt_nt_faqs)
+        self.assertIn('Phuong Hoang Mountain Pass', bmt_nt_faqs)
+        self.assertIn('180,000 to 250,000 VND', bmt_nt_faqs)
+
+        pleiku_qn_faqs = str(out['faq_results']['plan/pleiku-to-quy-nhon-transport']['items'])
+        self.assertIn('QL19', pleiku_qn_faqs)
+        self.assertIn('165-kilometer', pleiku_qn_faqs)
+        self.assertIn('Mang Yang Pass', pleiku_qn_faqs)
+        self.assertIn('An Khe Pass', pleiku_qn_faqs)
+        self.assertIn('140,000 to 180,000 VND', pleiku_qn_faqs)
+
+        nt_qn_faqs = str(out['faq_results']['plan/nha-trang-to-quy-nhon-transport']['items'])
+        self.assertIn('SE22', nt_qn_faqs)
+        self.assertIn('Dieu Tri Station', nt_qn_faqs)
+        self.assertIn('215-kilometer', nt_qn_faqs)
+        self.assertIn('150,000 to 230,000 VND', nt_qn_faqs)
+
+        # Verify HowTo schema
+        howto = out['howto_data']['plan/nha-trang-to-quy-nhon-transport']
+        self.assertGreaterEqual(howto['step_count'], 4)
+        self.assertIn('Nha Trang to Quy Nhon', howto['name'])
+        steps_text = ' '.join(s.get('text', '') for s in howto['steps'])
+        self.assertIn('SE22', steps_text)
+        self.assertIn('Nha Trang Station', steps_text)
+        self.assertIn('215 kilometers', steps_text.lower())
+        self.assertIn('Dieu Tri', steps_text)
+
 
 if __name__ == '__main__':
     unittest.main()
