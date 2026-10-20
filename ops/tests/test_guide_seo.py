@@ -2327,6 +2327,120 @@ echo json_encode([
         self.assertIn('CT01', steps_text_mn)
         self.assertIn('Phan Thiet', steps_text_mn)
 
+    def test_stage125_waterways_islands_dalat_sapa_faqs_and_howtos(self):
+        """Stage 125: Verify curated FAQs and HowTo schemas for Tam Coc/Trang An, Ly Son/Cham Islands, Phu Quoc/Nha Trang, Da Lat, and Sapa."""
+        stage125_routes = [
+            'compare/tam-coc-vs-trang-an-boat-tour',
+            'compare/ly-son-vs-cham-islands',
+            'compare/phu-quoc-vs-nha-trang',
+            'destinations/da-lat-coffee-farms-guide',
+            'destinations/da-lat-waterfalls-guide',
+            'plan/cham-islands-day-trip-guide',
+            'plan/hanoi-to-sapa-train-vs-sleeper-bus',
+        ]
+        howto_routes = [
+            'plan/cham-islands-day-trip-guide',
+            'plan/hanoi-to-sapa-train-vs-sleeper-bus',
+        ]
+
+        php_code = f"""
+        $routes = {json.dumps(stage125_routes)};
+        $howto_routes = {json.dumps(howto_routes)};
+        $faq_results = [];
+        $howto_results = [];
+
+        foreach ($routes as $r) {{
+            $items = vg_get_curated_faq_items($r);
+            $accordion = vg_render_curated_faq_accordion($r);
+            $faq_results[$r] = [
+                'count' => count($items),
+                'items' => $items,
+                'has_h2' => strpos($accordion, '<h2') !== false,
+                'visible' => strpos($accordion, '<details') !== false,
+            ];
+        }}
+
+        foreach ($howto_routes as $hr) {{
+            $schema = vg_get_page_howto_schema($hr, 'https://vietnamguide.net/' . $hr . '/');
+            $howto_results[$hr] = [
+                'has_schema' => !empty($schema),
+                'type' => $schema['@type'] ?? null,
+                'name' => $schema['name'] ?? null,
+                'step_count' => count($schema['step'] ?? []),
+                'steps' => $schema['step'] ?? [],
+            ];
+        }}
+
+        echo json_encode([
+            'faq_results' => $faq_results,
+            'howto_data' => $howto_results,
+        ]);
+        """
+        res = _run_php(php_code)
+        self.assertEqual(res.returncode, 0, f"PHP error:\n{res.stderr}")
+        out = json.loads(res.stdout)
+
+        for route, info in out['faq_results'].items():
+            self.assertGreaterEqual(info['count'], 3, f"Route {route} must have >= 3 curated FAQ items")
+            self.assertFalse(info['has_h2'], f"Route {route} FAQ accordion must have 0 <h2> tags")
+            self.assertTrue(info['visible'], f"Route {route} FAQ accordion must render visible <details>")
+
+        # Verify ground-truth empirical metrics in FAQs
+        tc_ta_faqs = str(out['faq_results']['compare/tam-coc-vs-trang-an-boat-tour']['items'])
+        self.assertIn('250,000 VND', tc_ta_faqs)
+        self.assertIn('Ngo Dong River', tc_ta_faqs)
+        self.assertIn('Route 1', tc_ta_faqs)
+        self.assertIn('Route 2', tc_ta_faqs)
+
+        ls_ci_faqs = str(out['faq_results']['compare/ly-son-vs-cham-islands']['items'])
+        self.assertIn('450,000 to 550,000 VND', ls_ci_faqs)
+        self.assertIn('Sa Ky Port', ls_ci_faqs)
+        self.assertIn('Thoi Loi Mountain', ls_ci_faqs)
+        self.assertIn('Bai Chong', ls_ci_faqs)
+
+        pq_nt_faqs = str(out['faq_results']['compare/phu-quoc-vs-nha-trang']['items'])
+        self.assertIn('30 to 40 percent lower', pq_nt_faqs)
+        self.assertIn('30-day visa exemption', pq_nt_faqs)
+        self.assertIn('Bai Khem', pq_nt_faqs)
+        self.assertIn('Tran Phu Boulevard', pq_nt_faqs)
+
+        dl_coffee_faqs = str(out['faq_results']['destinations/da-lat-coffee-farms-guide']['items'])
+        self.assertIn('Cau Dat Farm', dl_coffee_faqs)
+        self.assertIn('Me Linh Coffee Garden', dl_coffee_faqs)
+        self.assertIn('K\'Ho Coffee', dl_coffee_faqs)
+        self.assertIn('October through January', dl_coffee_faqs)
+
+        dl_wf_faqs = str(out['faq_results']['destinations/da-lat-waterfalls-guide']['items'])
+        self.assertIn('Datanla Waterfall', dl_wf_faqs)
+        self.assertIn('Pongour Waterfall', dl_wf_faqs)
+        self.assertIn('Elephant Waterfall', dl_wf_faqs)
+        self.assertIn('2,400-meter alpine coaster', dl_wf_faqs)
+
+        ci_dt_faqs = str(out['faq_results']['plan/cham-islands-day-trip-guide']['items'])
+        self.assertIn('Cua Dai Pier', ci_dt_faqs)
+        self.assertIn('Hon Lao', ci_dt_faqs)
+        self.assertIn('70,000 VND marine conservation fee', ci_dt_faqs)
+
+        hn_sp_faqs = str(out['faq_results']['plan/hanoi-to-sapa-train-vs-sleeper-bus']['items'])
+        self.assertIn('CT05', hn_sp_faqs)
+        self.assertIn('SP1/SP3', hn_sp_faqs)
+        self.assertIn('Lao Cai Railway Station', hn_sp_faqs)
+
+        # Verify HowTo schemas
+        howto_ci = out['howto_data']['plan/cham-islands-day-trip-guide']
+        self.assertGreaterEqual(howto_ci['step_count'], 4)
+        self.assertIn('Cham Islands from Hoi An', howto_ci['name'])
+        steps_text_ci = ' '.join(s.get('text', '') for s in howto_ci['steps'])
+        self.assertIn('Cua Dai Pier', steps_text_ci)
+        self.assertIn('Hon Lao', steps_text_ci)
+
+        howto_sp = out['howto_data']['plan/hanoi-to-sapa-train-vs-sleeper-bus']
+        self.assertGreaterEqual(howto_sp['step_count'], 4)
+        self.assertIn('Hanoi to Sapa', howto_sp['name'])
+        steps_text_sp = ' '.join(s.get('text', '') for s in howto_sp['steps'])
+        self.assertIn('CT05 expressway', steps_text_sp)
+        self.assertIn('Lao Cai Station', steps_text_sp)
+
 
 if __name__ == '__main__':
     unittest.main()
