@@ -2004,6 +2004,108 @@ echo json_encode([
         self.assertIn('215 kilometers', steps_text.lower())
         self.assertIn('Dieu Tri', steps_text)
 
+    def test_stage122_northern_mountains_faqs_and_howtos(self):
+        """Stage 122: 6 new Northern Mountains & Far North Frontier FAQ routes, 1 new HowTo route with verified ground-truth data."""
+        stage122_faqs = [
+            'destinations/where-to-stay-in-sapa',
+            'destinations/where-to-stay-in-ha-giang',
+            'destinations/where-to-stay-in-cao-bang',
+            'plan/hanoi-to-ha-giang-transport',
+            'plan/ha-giang-to-dong-van-transport',
+            'compare/sapa-vs-ha-giang',
+        ]
+        stage122_howtos = [
+            'plan/hanoi-to-ha-giang-transport',
+        ]
+        php_code = f"""
+        $faq_paths = {json.dumps(stage122_faqs)};
+        $faq_results = [];
+        foreach ($faq_paths as $p) {{
+            $items = vg_get_curated_faq_items($p);
+            $html  = vg_render_curated_faq_accordion($p, '<p>Lead text.</p>');
+            $faq_results[$p] = [
+                'count'   => count($items),
+                'has_h2'  => stripos($html, '<h2') !== false,
+                'visible' => strpos($html, '<details class="vg-faq-item"') !== false,
+                'items'   => $items,
+            ];
+        }}
+        $howto_paths = {json.dumps(stage122_howtos)};
+        $howto_data = [];
+        foreach ($howto_paths as $p) {{
+            $node = vg_get_page_howto_schema($p, "https://vietnamguide.net/{{$p}}/");
+            $howto_data[$p] = [
+                'step_count' => is_array($node) ? count($node['step'] ?? []) : 0,
+                'name'       => $node['name'] ?? '',
+                'steps'      => $node['step'] ?? [],
+            ];
+        }}
+        echo json_encode([
+            'faq_results' => $faq_results,
+            'howto_data'  => $howto_data,
+        ]);
+        """
+        res = _run_php(php_code)
+        self.assertEqual(res.returncode, 0, f"PHP error:\n{res.stderr}")
+        out = json.loads(res.stdout)
+
+        for route, info in out['faq_results'].items():
+            self.assertGreaterEqual(info['count'], 3, f"Route {route} must have >= 3 curated FAQ items")
+            self.assertFalse(info['has_h2'], f"Route {route} FAQ accordion must have 0 <h2> tags")
+            self.assertTrue(info['visible'], f"Route {route} FAQ accordion must render visible <details>")
+
+        # Verify ground-truth empirical metrics in FAQs
+        sapa_faqs = str(out['faq_results']['destinations/where-to-stay-in-sapa']['items'])
+        self.assertIn('Sun World Fansipan Legend', sapa_faqs)
+        self.assertIn('850,000 VND', sapa_faqs)
+        self.assertIn('Cat Cat Village', sapa_faqs)
+        self.assertIn('150,000 VND', sapa_faqs)
+        self.assertIn('Muong Hoa', sapa_faqs)
+
+        hagiang_faqs = str(out['faq_results']['destinations/where-to-stay-in-ha-giang']['items'])
+        self.assertIn('Border Area Entry Permit', hagiang_faqs)
+        self.assertIn('230,000 VND', hagiang_faqs)
+        self.assertIn('Lung Cu Flag Tower', hagiang_faqs)
+        self.assertIn('Nho Que River', hagiang_faqs)
+        self.assertIn('120,000 to 150,000 VND', hagiang_faqs)
+
+        caobang_faqs = str(out['faq_results']['destinations/where-to-stay-in-cao-bang']['items'])
+        self.assertIn('Ban Gioc Waterfall', caobang_faqs)
+        self.assertIn('45,000 VND', caobang_faqs)
+        self.assertIn('Quay Son River', caobang_faqs)
+        self.assertIn('50,000 VND', caobang_faqs)
+        self.assertIn('Nguom Ngao Cave', caobang_faqs)
+
+        hn_hg_faqs = str(out['faq_results']['plan/hanoi-to-ha-giang-transport']['items'])
+        self.assertIn('Bang Phan', hn_hg_faqs)
+        self.assertIn('CT05', hn_hg_faqs)
+        self.assertIn('300,000 to 350,000 VND', hn_hg_faqs)
+        self.assertIn('My Dinh Bus Station', hn_hg_faqs)
+        self.assertIn('Noi Bai International Airport', hn_hg_faqs)
+
+        hg_dv_faqs = str(out['faq_results']['plan/ha-giang-to-dong-van-transport']['items'])
+        self.assertIn('QL4C', hg_dv_faqs)
+        self.assertIn('135 to 145 kilometers', hg_dv_faqs)
+        self.assertIn('Bac Sum', hg_dv_faqs)
+        self.assertIn('Tham Ma', hg_dv_faqs)
+        self.assertIn('100,000 to 120,000 VND', hg_dv_faqs)
+
+        sapa_hg_faqs = str(out['faq_results']['compare/sapa-vs-ha-giang']['items'])
+        self.assertIn('240-kilometer', sapa_hg_faqs)
+        self.assertIn('QL279', sapa_hg_faqs)
+        self.assertIn('250,000 to 300,000 VND', sapa_hg_faqs)
+        self.assertIn('Dong Van Karst Plateau', sapa_hg_faqs)
+
+        # Verify HowTo schema
+        howto = out['howto_data']['plan/hanoi-to-ha-giang-transport']
+        self.assertGreaterEqual(howto['step_count'], 4)
+        self.assertIn('Sleeper Bus from Hanoi to Ha Giang', howto['name'])
+        steps_text = ' '.join(s.get('text', '') for s in howto['steps'])
+        self.assertIn('My Dinh Bus Station', steps_text)
+        self.assertIn('280 kilometers', steps_text.lower())
+        self.assertIn('Bang Phan', steps_text)
+        self.assertIn('Ha Giang City', steps_text)
+
 
 if __name__ == '__main__':
     unittest.main()
