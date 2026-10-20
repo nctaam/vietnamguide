@@ -1,7 +1,7 @@
 {
   "passed": true,
-  "total_articles": 13,
-  "passed_articles": 13,
+  "total_articles": 16,
+  "passed_articles": 16,
   "min_words_threshold": 1200,
   "min_hls_threshold": 85.0,
   "articles": [
@@ -186,6 +186,66 @@
       "warnings": []
     },
     {
+      "path": "M:/Projects/vietnamguide/content/compare/phu-quoc-vs-con-dao.md",
+      "relative_path": "content/compare/phu-quoc-vs-con-dao.md",
+      "passed": true,
+      "word_count": 1381,
+      "frontmatter": {
+        "title": "Phu Quoc vs Con Dao: Island Scale, Beaches, Diving, and Travel Style",
+        "slug": "phu-quoc-vs-con-dao",
+        "route_path": "compare/con-dao-vs-phu-quoc",
+        "travel_cluster": "coastal_islands",
+        "last_verified": "2026-10-20",
+        "author": "Antigravity Travel Intelligence",
+        "reading_time_minutes": 12,
+        "word_count": 2020
+      },
+      "elements": {
+        "h2_count": 11,
+        "h3_count": 11,
+        "table_count": 13,
+        "blockquote_count": 4,
+        "callout_count": 2,
+        "has_faq": true,
+        "has_steps": false
+      },
+      "empirical_signals": {
+        "currency_mentions": 54,
+        "distance_mentions": 10,
+        "transit_time_mentions": 11,
+        "total_empirical_signals": 75,
+        "sample_currencies": [
+          "1,800,000 VND",
+          "$36",
+          "$72",
+          "2,800,000 VND",
+          "$56"
+        ],
+        "sample_distances": [
+          "185 kilometers",
+          "30m",
+          "8 meters",
+          "30 meters",
+          "120 km"
+        ],
+        "sample_transit_times": [
+          "2.5 hours",
+          "1.25 hours",
+          "2.5 hours",
+          "3.5 hours",
+          "30 minutes"
+        ]
+      },
+      "slop_report": {
+        "passed": true,
+        "hls_score": 100,
+        "tier1_count": 0,
+        "tier1_violations": []
+      },
+      "errors": [],
+      "warnings": []
+    },
+    {
       "path": "M:/Projects/vietnamguide/content/compare/sa-pa-vs-ha-giang.md",
       "relative_path": "content/compare/sa-pa-vs-ha-giang.md",
       "passed": true,
@@ -234,6 +294,66 @@
           "8 hours",
           "8 hours",
           "50 minutes"
+        ]
+      },
+      "slop_report": {
+        "passed": true,
+        "hls_score": 100,
+        "tier1_count": 0,
+        "tier1_violations": []
+      },
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "path": "M:/Projects/vietnamguide/content/destinations/cat-ba-island-guide.md",
+      "relative_path": "content/destinations/cat-ba-island-guide.md",
+      "passed": true,
+      "word_count": 1502,
+      "frontmatter": {
+        "title": "Cat Ba Island Travel Guide: Lan Ha Bay Cruises, National Park Hikes, and Island Logistics",
+        "slug": "cat-ba-island-guide",
+        "route_path": "destinations/cat-ba-travel-guide",
+        "travel_cluster": "ha_long_northeast",
+        "last_verified": "2026-10-20",
+        "author": "Antigravity Travel Intelligence",
+        "reading_time_minutes": 11,
+        "word_count": 1880
+      },
+      "elements": {
+        "h2_count": 9,
+        "h3_count": 8,
+        "table_count": 10,
+        "blockquote_count": 6,
+        "callout_count": 3,
+        "has_faq": true,
+        "has_steps": false
+      },
+      "empirical_signals": {
+        "currency_mentions": 23,
+        "distance_mentions": 18,
+        "transit_time_mentions": 15,
+        "total_empirical_signals": 56,
+        "sample_currencies": [
+          "850,000 VND",
+          "120,000 VND",
+          "80,000 VND",
+          "30,000 VND",
+          "50,000 VND"
+        ],
+        "sample_distances": [
+          "1.5 km",
+          "13 km",
+          "1.2 km",
+          "12 km",
+          "177m"
+        ],
+        "sample_transit_times": [
+          "7.5 hours",
+          "3.5 hours",
+          "60 minutes",
+          "5.0 hours",
+          "2.0 hours"
         ]
       },
       "slop_report": {
@@ -776,6 +896,66 @@
       },
       "slop_report": {
         "passed": false,
+        "hls_score": 100,
+        "tier1_count": 0,
+        "tier1_violations": []
+      },
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "path": "M:/Projects/vietnamguide/content/plan/rach-gia-to-phu-quoc-ferry.md",
+      "relative_path": "content/plan/rach-gia-to-phu-quoc-ferry.md",
+      "passed": true,
+      "word_count": 1524,
+      "frontmatter": {
+        "title": "Rach Gia to Phu Quoc Ferry: Speedboat Schedules, Fares, and Sea Port Logistics",
+        "slug": "rach-gia-to-phu-quoc-ferry",
+        "route_path": "plan/rach-gia-to-phu-quoc-ferry",
+        "travel_cluster": "mekong_delta",
+        "last_verified": "2026-10-20",
+        "author": "Antigravity Travel Intelligence",
+        "reading_time_minutes": 11,
+        "word_count": 2040
+      },
+      "elements": {
+        "h2_count": 10,
+        "h3_count": 7,
+        "table_count": 12,
+        "blockquote_count": 4,
+        "callout_count": 2,
+        "has_faq": true,
+        "has_steps": true
+      },
+      "empirical_signals": {
+        "currency_mentions": 33,
+        "distance_mentions": 18,
+        "transit_time_mentions": 25,
+        "total_empirical_signals": 76,
+        "sample_currencies": [
+          "340,000 VND",
+          "$13.60",
+          "540,000 VND",
+          "$21.60",
+          "270,000 VND"
+        ],
+        "sample_distances": [
+          "120 kilometers",
+          "15m",
+          "25m",
+          "25m",
+          "35m"
+        ],
+        "sample_transit_times": [
+          "2 hours",
+          "15 minutes",
+          "2 hours",
+          "30 minutes",
+          "24 hours"
+        ]
+      },
+      "slop_report": {
+        "passed": true,
         "hls_score": 100,
         "tier1_count": 0,
         "tier1_violations": []
