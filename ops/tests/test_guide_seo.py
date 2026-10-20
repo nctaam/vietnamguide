@@ -2441,6 +2441,118 @@ echo json_encode([
         self.assertIn('CT05 expressway', steps_text_sp)
         self.assertIn('Lao Cai Station', steps_text_sp)
 
+    def test_stage126_beaches_street_food_halong_catba_faqs_and_howtos(self):
+        """Stage 126: Verify curated FAQs and HowTo schemas for Beaches, Street Food (Hanoi & Saigon), Cat Ba, and Ha Long Bay."""
+        stage126_routes = [
+            'destinations/best-beaches-in-vietnam',
+            'destinations/da-nang-beaches-guide',
+            'destinations/hanoi-street-food-guide',
+            'destinations/saigon-street-food-guide',
+            'destinations/phu-quoc-beaches-guide',
+            'plan/hanoi-to-cat-ba-island-transport',
+            'plan/hanoi-to-ha-long-bay-transport',
+        ]
+        howto_routes = [
+            'plan/hanoi-to-cat-ba-island-transport',
+            'plan/hanoi-to-ha-long-bay-transport',
+        ]
+
+        php_code = f"""
+        $routes = {json.dumps(stage126_routes)};
+        $howto_routes = {json.dumps(howto_routes)};
+        $faq_results = [];
+        $howto_results = [];
+
+        foreach ($routes as $r) {{
+            $items = vg_get_curated_faq_items($r);
+            $accordion = vg_render_curated_faq_accordion($r);
+            $faq_results[$r] = [
+                'count' => count($items),
+                'items' => $items,
+                'has_h2' => strpos($accordion, '<h2') !== false,
+                'visible' => strpos($accordion, '<details') !== false,
+            ];
+        }}
+
+        foreach ($howto_routes as $hr) {{
+            $schema = vg_get_page_howto_schema($hr, 'https://vietnamguide.net/' . $hr . '/');
+            $howto_results[$hr] = [
+                'has_schema' => !empty($schema),
+                'type' => $schema['@type'] ?? null,
+                'name' => $schema['name'] ?? null,
+                'step_count' => count($schema['step'] ?? []),
+                'steps' => $schema['step'] ?? [],
+            ];
+        }}
+
+        echo json_encode([
+            'faq_results' => $faq_results,
+            'howto_data' => $howto_results,
+        ]);
+        """
+        res = _run_php(php_code)
+        self.assertEqual(res.returncode, 0, f"PHP error:\n{res.stderr}")
+        out = json.loads(res.stdout)
+
+        for route, info in out['faq_results'].items():
+            self.assertGreaterEqual(info['count'], 3, f"Route {route} must have >= 3 curated FAQ items")
+            self.assertFalse(info['has_h2'], f"Route {route} FAQ accordion must have 0 <h2> tags")
+            self.assertTrue(info['visible'], f"Route {route} FAQ accordion must render visible <details>")
+
+        # Verify ground-truth empirical metrics in FAQs
+        vn_beach_faqs = str(out['faq_results']['destinations/best-beaches-in-vietnam']['items'])
+        self.assertIn('November to April', vn_beach_faqs)
+        self.assertIn('February to August', vn_beach_faqs)
+        self.assertIn('Dam Trau Beach', vn_beach_faqs)
+
+        dn_beach_faqs = str(out['faq_results']['destinations/da-nang-beaches-guide']['items'])
+        self.assertIn('Vo Nguyen Giap Boulevard', dn_beach_faqs)
+        self.assertIn('Non Nuoc Beach', dn_beach_faqs)
+        self.assertIn('An Bang Beach', dn_beach_faqs)
+
+        hn_food_faqs = str(out['faq_results']['destinations/hanoi-street-food-guide']['items'])
+        self.assertIn('49 Bat Dan Street', hn_food_faqs)
+        self.assertIn('Bun Cha Huong Lien', hn_food_faqs)
+        self.assertIn('Cafe Giang', hn_food_faqs)
+        self.assertIn('39 Nguyen Huu Huan', hn_food_faqs)
+
+        sg_food_faqs = str(out['faq_results']['destinations/saigon-street-food-guide']['items'])
+        self.assertIn('Com Tam Ba Ghien', sg_food_faqs)
+        self.assertIn('Banh Mi Huynh Hoa', sg_food_faqs)
+        self.assertIn('68,000 VND', sg_food_faqs)
+        self.assertIn('Vinh Khanh Street', sg_food_faqs)
+
+        pq_beach_faqs = str(out['faq_results']['destinations/phu-quoc-beaches-guide']['items'])
+        self.assertIn('Bai Khem', pq_beach_faqs)
+        self.assertIn('Bai Sao', pq_beach_faqs)
+        self.assertIn('Ong Lang Beach', pq_beach_faqs)
+        self.assertIn('Rach Vem', pq_beach_faqs)
+
+        cb_trans_faqs = str(out['faq_results']['plan/hanoi-to-cat-ba-island-transport']['items'])
+        self.assertIn('Daiichi Travel', cb_trans_faqs)
+        self.assertIn('Dong Bai Pier', cb_trans_faqs)
+        self.assertIn('300,000 to 350,000 VND', cb_trans_faqs)
+
+        hl_trans_faqs = str(out['faq_results']['plan/hanoi-to-ha-long-bay-transport']['items'])
+        self.assertIn('CT04', hl_trans_faqs)
+        self.assertIn('Tuan Chau International Port', hl_trans_faqs)
+        self.assertIn('220,000 to 300,000 VND', hl_trans_faqs)
+
+        # Verify HowTo schemas
+        howto_cb = out['howto_data']['plan/hanoi-to-cat-ba-island-transport']
+        self.assertGreaterEqual(howto_cb['step_count'], 4)
+        self.assertIn('Hanoi to Cat Ba Island', howto_cb['name'])
+        steps_text_cb = ' '.join(s.get('text', '') for s in howto_cb['steps'])
+        self.assertIn('CT04 expressway', steps_text_cb)
+        self.assertIn('Dong Bai Pier', steps_text_cb)
+
+        howto_hl = out['howto_data']['plan/hanoi-to-ha-long-bay-transport']
+        self.assertGreaterEqual(howto_hl['step_count'], 4)
+        self.assertIn('Hanoi to Ha Long Bay', howto_hl['name'])
+        steps_text_hl = ' '.join(s.get('text', '') for s in howto_hl['steps'])
+        self.assertIn('CT04 expressway', steps_text_hl)
+        self.assertIn('Tuan Chau International Marina', steps_text_hl)
+
 
 if __name__ == '__main__':
     unittest.main()
