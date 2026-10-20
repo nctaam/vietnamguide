@@ -1,10 +1,130 @@
 {
   "passed": true,
-  "total_articles": 1,
-  "passed_articles": 1,
+  "total_articles": 4,
+  "passed_articles": 4,
   "min_words_threshold": 1200,
   "min_hls_threshold": 85.0,
   "articles": [
+    {
+      "path": "M:/Projects/vietnamguide/content/compare/ha-long-bay-vs-lan-ha-bay.md",
+      "relative_path": "content/compare/ha-long-bay-vs-lan-ha-bay.md",
+      "passed": true,
+      "word_count": 1303,
+      "frontmatter": {
+        "title": "Ha Long Bay vs Lan Ha Bay: Cruise Routes, Costs, and Port Selection",
+        "slug": "ha-long-bay-vs-lan-ha-bay",
+        "route_path": "compare/ha-long-bay-vs-lan-ha-bay",
+        "travel_cluster": "ha-long-bay",
+        "last_verified": "2026-10-20",
+        "author": "Antigravity Travel Intelligence",
+        "reading_time_minutes": 9,
+        "word_count": 1520
+      },
+      "elements": {
+        "h2_count": 11,
+        "h3_count": 7,
+        "table_count": 13,
+        "blockquote_count": 2,
+        "callout_count": 1,
+        "has_faq": true,
+        "has_steps": false
+      },
+      "empirical_signals": {
+        "currency_mentions": 17,
+        "distance_mentions": 7,
+        "transit_time_mentions": 6,
+        "total_empirical_signals": 30,
+        "sample_currencies": [
+          "250,000 VND",
+          "40,000 VND",
+          "80,000 VND",
+          "260,000 VND",
+          "1,500,000 VND"
+        ],
+        "sample_distances": [
+          "120 km",
+          "2.8M",
+          "4.0M",
+          "4.3M",
+          "6.5M"
+        ],
+        "sample_transit_times": [
+          "2.5 hours",
+          "4.0 hours",
+          "2.5 hours",
+          "2.5 hours",
+          "6 Hour"
+        ]
+      },
+      "slop_report": {
+        "passed": false,
+        "hls_score": 90,
+        "tier1_count": 0,
+        "tier1_violations": []
+      },
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "path": "M:/Projects/vietnamguide/content/destinations/hang-mua-ninh-binh-guide.md",
+      "relative_path": "content/destinations/hang-mua-ninh-binh-guide.md",
+      "passed": true,
+      "word_count": 1502,
+      "frontmatter": {
+        "title": "Hang Mua Ninh Binh Guide: 486 Stone Steps, Ngoa Long Peak, and Timing",
+        "slug": "hang-mua-ninh-binh-guide",
+        "route_path": "destinations/hang-mua-ninh-binh-guide",
+        "travel_cluster": "ninh-binh",
+        "last_verified": "2026-10-20",
+        "author": "Antigravity Travel Intelligence",
+        "reading_time_minutes": 8,
+        "word_count": 1420
+      },
+      "elements": {
+        "h2_count": 8,
+        "h3_count": 9,
+        "table_count": 9,
+        "blockquote_count": 2,
+        "callout_count": 1,
+        "has_faq": true,
+        "has_steps": false
+      },
+      "empirical_signals": {
+        "currency_mentions": 28,
+        "distance_mentions": 13,
+        "transit_time_mentions": 6,
+        "total_empirical_signals": 47,
+        "sample_currencies": [
+          "150,000 VND",
+          "150,000 VND",
+          "$6.00",
+          "10,000 VND",
+          "50,000 VND"
+        ],
+        "sample_distances": [
+          "1.0m",
+          "142 meters",
+          "4.5 km",
+          "4.0 km",
+          "142m"
+        ],
+        "sample_transit_times": [
+          "35 minutes",
+          "20 minutes",
+          "12 minutes",
+          "10 minutes",
+          "25 minutes"
+        ]
+      },
+      "slop_report": {
+        "passed": false,
+        "hls_score": 100,
+        "tier1_count": 0,
+        "tier1_violations": []
+      },
+      "errors": [],
+      "warnings": []
+    },
     {
       "path": "M:/Projects/vietnamguide/content/destinations/hanoi-train-street-guide.md",
       "relative_path": "content/destinations/hanoi-train-street-guide.md",
@@ -53,6 +173,66 @@
           "7 minutes",
           "30 minutes",
           "45 minutes"
+        ]
+      },
+      "slop_report": {
+        "passed": false,
+        "hls_score": 100,
+        "tier1_count": 0,
+        "tier1_violations": []
+      },
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "path": "M:/Projects/vietnamguide/content/plan/hanoi-to-cat-ba-island-transport.md",
+      "relative_path": "content/plan/hanoi-to-cat-ba-island-transport.md",
+      "passed": true,
+      "word_count": 1357,
+      "frontmatter": {
+        "title": "Hanoi to Cat Ba Island Transport: Tourist Combo Bus, Dong Bai Ferry, and Cable Car",
+        "slug": "hanoi-to-cat-ba-island-transport",
+        "route_path": "plan/hanoi-to-cat-ba-island-transport",
+        "travel_cluster": "ha-long-bay",
+        "last_verified": "2026-10-20",
+        "author": "Antigravity Travel Intelligence",
+        "reading_time_minutes": 8,
+        "word_count": 1450
+      },
+      "elements": {
+        "h2_count": 9,
+        "h3_count": 6,
+        "table_count": 11,
+        "blockquote_count": 2,
+        "callout_count": 1,
+        "has_faq": true,
+        "has_steps": false
+      },
+      "empirical_signals": {
+        "currency_mentions": 34,
+        "distance_mentions": 12,
+        "transit_time_mentions": 22,
+        "total_empirical_signals": 68,
+        "sample_currencies": [
+          "350,000 VND",
+          "$12.00",
+          "$14.00",
+          "320,000 VND",
+          "$9.50"
+        ],
+        "sample_distances": [
+          "160 kilometers",
+          "120 km",
+          "28 km",
+          "120 km",
+          "25 kilometers"
+        ],
+        "sample_transit_times": [
+          "2.0 hours",
+          "15 mins",
+          "15 mins",
+          "35 mins",
+          "45 mins"
         ]
       },
       "slop_report": {

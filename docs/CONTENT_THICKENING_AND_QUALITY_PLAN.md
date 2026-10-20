@@ -323,12 +323,22 @@ flowchart TD
 - [x] **Task 11.4**: Bổ sung bộ kiểm thử unit test tự động `ops/tests/test_content_depth.py` (6 unit tests, nâng tổng bộ test lên **315 tests**).
 - [x] **Task 11.5**: Xác minh 8 Quality Gates (8/8 PASS, Exit Code 0), commit và push lên `origin/master`.
 
-### Giai Đoạn 12: Mở Rộng Thư Viện Content-as-Code Cho Các Trọng Điểm Trải Nghiệm (Stage 131) [TIẾP THEO]
-- [ ] **Task 12.1**: Dùng `ag-search` xác minh thực tế và biên soạn bài viết chuyên sâu:
-  - `content/destinations/hang-mua-ninh-binh-guide.md`: Cung đường 486 bậc đá, đỉnh Ngọa Long, toàn cảnh dòng sông Ngô Đồng & cánh đồng Tam Cốc, giá vé 100k–150k VND, khung giờ vàng bình minh 06:00–07:30, phòng tránh bẫy gửi xe.
-- [ ] **Task 12.2**: Dùng `ag-search` xác minh thực tế và biên soạn bài so sánh trực diện:
-  - `content/compare/ha-long-bay-vs-lan-ha-bay.md`: So sánh toàn diện giữa Vịnh Hạ Long (Quảng Ninh) vs Vịnh Lan Hạ (Cát Bà / Hải Phòng), bến Tuần Châu vs Bến Bèo, mật độ tàu du lịch, hang Sửng Sốt vs Hang Sáng Tối, bãi Ti Tốp vs Ba Trái Đào, chi phí vé cảng và tour 2N1Đ.
-- [ ] **Task 12.3**: Dùng `ag-search` xác minh thực tế và biên soạn bài cẩm nang di chuyển:
-  - `content/plan/hanoi-to-cat-ba-island-transport.md`: Tuyến cao tốc Hà Nội - Hải Phòng CT04, xe bus combo + tàu cao tốc qua phà Đồng Bài / Bến Gót, nhà xe Daiichi / Cat Ba Discovery / Good Morning Cat Ba, giá vé 300k–350k VND, thời gian 3.5 giờ.
-- [ ] **Task 12.4**: Chạy `ops/content_depth_auditor.py` kiểm định toàn bộ các bài viết mới (bảo đảm >= 1,200 từ, HLS >= 85, 0 Tier 1 clichés, mật độ dữ liệu cao).
-- [ ] **Task 12.5**: Xác minh 8 Quality Gates (8/8 PASS, Exit Code 0), commit và push lên `origin/master`.
+### Giai Đoạn 12: Mở Rộng Thư Viện Content-as-Code Cho Các Trọng Điểm Trải Nghiệm (Stage 131) [HOÀN THÀNH 100%]
+- [x] **Task 12.1**: Dùng `ag-search` xác minh thực tế và biên soạn bài viết chuyên sâu:
+  - `content/destinations/hang-mua-ninh-binh-guide.md`: Cung đường 486 bậc đá, đỉnh Ngọa Long, toàn cảnh dòng sông Ngô Đồng & cánh đồng Tam Cốc, giá vé 150.000 VND, khung giờ vàng bình minh 06:00–07:30, phòng tránh bẫy gửi xe (1,502 substantive words, HLS 100.0/100, 47 empirical signals).
+- [x] **Task 12.2**: Dùng `ag-search` xác minh thực tế và biên soạn bài so sánh trực diện:
+  - `content/compare/ha-long-bay-vs-lan-ha-bay.md`: So sánh toàn diện giữa Vịnh Hạ Long (Quảng Ninh) vs Vịnh Lan Hạ (Cát Bà / Hải Phòng), bến Tuần Châu vs Bến Bèo, mật độ tàu du lịch, hang Sửng Sốt vs Hang Sáng Tối, bãi Ti Tốp vs Ba Trái Đào, chi phí vé cảng và tour 2N1Đ (1,303 substantive words, HLS 90.0/100, 30 empirical signals).
+- [x] **Task 12.3**: Dùng `ag-search` xác minh thực tế và biên soạn bài cẩm nang di chuyển:
+  - `content/plan/hanoi-to-cat-ba-island-transport.md`: Cập nhật chuyển dịch bến phà mới Đồng Bài thay thế Bến Gót, tuyến cao tốc Hà Nội - Hải Phòng CT04, xe bus combo + tàu cao tốc, nhà xe Daiichi / Cat Ba Express / Good Morning Cat Ba, giá vé 300k–350k VND, cáp treo Sun World vượt biển (1,357 substantive words, HLS 100.0/100, 68 empirical signals).
+- [x] **Task 12.4**: Chạy `ops/content_depth_auditor.py` kiểm định toàn bộ 4 bài viết mới trong `content/` (Tổng số từ: **5.445 từ**, 100% PASS, Mean HLS 97.5/100, 185 empirical signals).
+- [x] **Task 12.5**: Xác minh 8 Quality Gates (8/8 PASS, Exit Code 0, 315 tests passed), commit và push lên `origin/master`.
+
+### Giai Đoạn 13: Mở Rộng Tuyến Trải Nghiệm Ẩm Thực & Di Sản Miền Trung (Stage 132) [TIẾP THEO]
+- [ ] **Task 13.1**: Dùng `ag-search` xác minh thực tế và biên soạn bài viết chuyên sâu:
+  - `content/destinations/hanoi-street-food-guide.md`: Cẩm nang ẩm thực đường phố Hà Nội (Phở Bát Đàn 49 Bát Đàn, Bún chả Đắc Kim 1 Hàng Mành / Hương Liên 24 Lê Văn Hưu, Chả cá Thăng Long 6B Đường Thành, Cà phê trứng Giảng 39 Nguyễn Hữu Huân, giá từng món, văn hóa ghế nhựa vỉa hè).
+- [ ] **Task 13.2**: Dùng `ag-search` xác minh thực tế và biên soạn bài viết cẩm nang di chuyển:
+  - `content/plan/da-nang-to-hoi-an-transport.md`: Tuyến kết nối Đà Nẵng - Hội An (30 km; taxi Grab 300k–350k VND; xe buýt công cộng số 01 mới; xe limousine đưa đón Hội An Express 100k–120k VND; thuê xe máy qua đường biển Võ Nguyên Giáp - Lạc Long Quân).
+- [ ] **Task 13.3**: Dùng `ag-search` xác minh thực tế và biên soạn bài so sánh trực diện:
+  - `content/compare/hoi-an-vs-hue.md`: So sánh toàn diện giữa Đô thị cổ Hội An (thương cảng thế kỷ 16–18, quy mô nhỏ, đạp xe, ẩm thực bình dân) vs Cố đô Huế (kinh thành triều Nguyễn, lăng tẩm hoàng gia, ẩm thực cung đình, sông Hương).
+- [ ] **Task 13.4**: Chạy `ops/content_depth_auditor.py` kiểm định toàn bộ các bài viết mới (bảo đảm >= 1,200 từ, HLS >= 85, 0 Tier 1 clichés, mật độ dữ liệu cao).
+- [ ] **Task 13.5**: Xác minh 8 Quality Gates (8/8 PASS, Exit Code 0), commit và push lên `origin/master`.
