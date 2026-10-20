@@ -1739,6 +1739,65 @@ echo json_encode([
         self.assertIn('Decree 49/2017 &amp; 163/2024', pc_src)
         self.assertIn('9 gateway airports (HAN, SGN, DAD, CXR, PQC, HUI, DLI, VDH, HPH)', pc_src)
 
+    def test_stage119_expanded_faqs_howtos_and_cost_calculator_specs(self):
+        """Stage 119: 8 new curated FAQ routes, 2 new HowTo routes, and enriched Cost Calculator 2026 ground truth."""
+        stage119_faqs = [
+            'plan/money-cash-cards-atms',
+            'plan/vietnam-scooter-rental-checklist',
+            'plan/safety-scams-vietnam',
+            'plan/vietnam-food-safety-street-food-etiquette',
+            'plan/tipping-in-vietnam',
+            'plan/ha-tien-to-phu-quoc-ferry',
+            'plan/ho-chi-minh-city-to-chau-doc-transport',
+            'itineraries/ha-long-bay-day-trip-vs-overnight-cruise',
+        ]
+        stage119_howtos = [
+            'plan/vietnam-scooter-rental-checklist',
+            'plan/ha-tien-to-phu-quoc-ferry',
+        ]
+        php_code = f"""
+        $faq_paths = {json.dumps(stage119_faqs)};
+        $faq_results = [];
+        foreach ($faq_paths as $p) {{
+            $items = vg_get_curated_faq_items($p);
+            $html  = vg_render_curated_faq_accordion($p, '<p>Lead text.</p>');
+            $faq_results[$p] = [
+                'count'   => count($items),
+                'has_h2'  => stripos($html, '<h2') !== false,
+                'visible' => strpos($html, '<details class="vg-faq-item"') !== false,
+            ];
+        }}
+        $howto_paths = {json.dumps(stage119_howtos)};
+        $howto_counts = [];
+        foreach ($howto_paths as $p) {{
+            $node = vg_get_page_howto_schema($p, "https://vietnamguide.net/{{$p}}/");
+            $howto_counts[$p] = is_array($node) ? count($node['step'] ?? []) : 0;
+        }}
+        echo json_encode([
+            'faq_results'  => $faq_results,
+            'howto_counts' => $howto_counts,
+        ]);
+        """
+        res = _run_php(php_code)
+        self.assertEqual(res.returncode, 0, f"PHP error:\n{res.stderr}")
+        out = json.loads(res.stdout)
+
+        for route, info in out['faq_results'].items():
+            self.assertGreaterEqual(info['count'], 3, f"Route {route} must have >= 3 curated FAQ items")
+            self.assertFalse(info['has_h2'], f"Route {route} FAQ accordion must have 0 <h2> tags")
+            self.assertTrue(info['visible'], f"Route {route} FAQ accordion must render visible <details>")
+
+        for route, count in out['howto_counts'].items():
+            self.assertGreaterEqual(count, 4, f"Route {route} must have >= 4 HowTo steps, got {count}")
+
+        cost_calc_php = os.path.join(THEME_DIR, 'inc', 'guide-cost-calculator.php')
+        with open(cost_calc_php, 'r', encoding='utf-8') as f:
+            cc_src = f.read()
+
+        self.assertIn('VPBank charges 0 VND ATM fee', cc_src)
+        self.assertIn('Ha Tien–Phu Quoc / Rach Gia–Phu Quoc', cc_src)
+        self.assertIn('Grab bays & fares for 9 airports (HAN, SGN, DAD...)', cc_src)
+
 
 if __name__ == '__main__':
     unittest.main()

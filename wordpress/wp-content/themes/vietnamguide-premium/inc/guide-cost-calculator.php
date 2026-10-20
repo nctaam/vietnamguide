@@ -332,9 +332,15 @@ function vg_render_cost_calculator_html(): string
                                     </tr>
                                     <tr>
                                         <th scope="row"><?php esc_html_e('Island Catamarans', 'vietnamguide-premium'); ?></th>
-                                        <td><?php esc_html_e('Rach Gia–Phu Quoc / Tran De–Con Dao High-Speed Ferry', 'vietnamguide-premium'); ?></td>
-                                        <td>340,000 / 390,000 VND</td>
-                                        <td><?php esc_html_e('One-way Economy seat on Phu Quoc Express catamaran (2.5 hrs transit; VIP cabin 500,000–590,000 VND)', 'vietnamguide-premium'); ?></td>
+                                        <td><?php esc_html_e('Ha Tien–Phu Quoc / Rach Gia–Phu Quoc / Tran De–Con Dao Ferry', 'vietnamguide-premium'); ?></td>
+                                        <td>230,000 / 340,000 / 390,000 VND</td>
+                                        <td><?php esc_html_e('One-way Economy seat on Superdong or Phu Quoc Express catamaran (1.25–2.5 hrs transit; VIP cabin 350,000–590,000 VND)', 'vietnamguide-premium'); ?></td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row"><?php esc_html_e('ATM & Cash Exchange', 'vietnamguide-premium'); ?></th>
+                                        <td><?php esc_html_e('VPBank vs Vietcombank / BIDV Foreign Card Access Fees', 'vietnamguide-premium'); ?></td>
+                                        <td>0 VND vs 50,000–66,000 VND</td>
+                                        <td><?php esc_html_e('VPBank charges 0 VND ATM fee with up to 10M VND limit; Vietcombank charges 50,000–66,000 VND fee; Ha Trung gold shops exchange crisp 100 USD bills', 'vietnamguide-premium'); ?></td>
                                     </tr>
                                     <tr>
                                         <th scope="row"><?php esc_html_e('Far North Frontier', 'vietnamguide-premium'); ?></th>
@@ -358,12 +364,12 @@ function vg_render_cost_calculator_html(): string
                             <a href="<?php echo esc_url(home_url('/plan/vietnam-evisa/')); ?>" class="vg-calc-ns-card vg-synergy-bridge">
                                 <span class="vg-calc-ns-badge"><?php esc_html_e('Entry & Visa', 'vietnamguide-premium'); ?></span>
                                 <strong><?php esc_html_e('Check Visa Exemption Rules', 'vietnamguide-premium'); ?></strong>
-                                <span class="vg-calc-ns-sub"><?php esc_html_e('Add $25 e-visa fee to pre-trip budget', 'vietnamguide-premium'); ?> &rarr;</span>
+                                <span class="vg-calc-ns-sub"><?php esc_html_e('45-day exemption (25 countries) vs $25/$50 e-visa', 'vietnamguide-premium'); ?> &rarr;</span>
                             </a>
                             <a href="<?php echo esc_url(home_url('/plan/vietnam-airport-arrival-checklist/')); ?>" class="vg-calc-ns-card vg-synergy-bridge">
                                 <span class="vg-calc-ns-badge"><?php esc_html_e('Airport Transit', 'vietnamguide-premium'); ?></span>
                                 <strong><?php esc_html_e('Airport Navigator & Fares', 'vietnamguide-premium'); ?></strong>
-                                <span class="vg-calc-ns-sub"><?php esc_html_e('Grab bays & metered taxi fares for HAN/SGN/DAD', 'vietnamguide-premium'); ?> &rarr;</span>
+                                <span class="vg-calc-ns-sub"><?php esc_html_e('Grab bays & fares for 9 airports (HAN, SGN, DAD...)', 'vietnamguide-premium'); ?> &rarr;</span>
                             </a>
                             <a href="<?php echo esc_url(home_url('/plan/best-time-to-visit-vietnam/')); ?>" class="vg-calc-ns-card vg-synergy-bridge">
                                 <span class="vg-calc-ns-badge"><?php esc_html_e('Weather & Seasons', 'vietnamguide-premium'); ?></span>
