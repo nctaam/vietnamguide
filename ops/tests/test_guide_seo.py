@@ -2214,6 +2214,119 @@ echo json_encode([
         self.assertIn('HD1/HD3', steps_text_train)
         self.assertIn('Lang Co', steps_text_train)
 
+    def test_stage124_urban_megacities_and_day_trips_faqs_and_howtos(self):
+        """Stage 124: Verify curated FAQs and HowTo schemas for Hanoi, Ninh Binh, Mekong, Mui Ne, and Nha Trang."""
+        stage124_routes = [
+            'compare/old-quarter-vs-french-quarter-vs-west-lake',
+            'destinations/best-day-trips-from-hanoi',
+            'compare/ninh-binh-day-trip-vs-overnight',
+            'compare/mekong-delta-overnight-vs-day-trip',
+            'compare/mui-ne-vs-nha-trang',
+            'plan/hanoi-to-ninh-binh-train-vs-limousine',
+            'plan/ho-chi-minh-city-to-mui-ne-transport',
+        ]
+        howto_routes = [
+            'plan/hanoi-to-ninh-binh-train-vs-limousine',
+            'plan/ho-chi-minh-city-to-mui-ne-transport',
+        ]
+
+        php_code = f"""
+        $routes = {json.dumps(stage124_routes)};
+        $howto_routes = {json.dumps(howto_routes)};
+        $faq_results = [];
+        $howto_results = [];
+
+        foreach ($routes as $r) {{
+            $items = vg_get_curated_faq_items($r);
+            $accordion = vg_render_curated_faq_accordion($r);
+            $faq_results[$r] = [
+                'count' => count($items),
+                'items' => $items,
+                'has_h2' => strpos($accordion, '<h2') !== false,
+                'visible' => strpos($accordion, '<details') !== false,
+            ];
+        }}
+
+        foreach ($howto_routes as $hr) {{
+            $schema = vg_get_page_howto_schema($hr, 'https://vietnamguide.net/' . $hr . '/');
+            $howto_results[$hr] = [
+                'has_schema' => !empty($schema),
+                'type' => $schema['@type'] ?? null,
+                'name' => $schema['name'] ?? null,
+                'step_count' => count($schema['step'] ?? []),
+                'steps' => $schema['step'] ?? [],
+            ];
+        }}
+
+        echo json_encode([
+            'faq_results' => $faq_results,
+            'howto_data' => $howto_results,
+        ]);
+        """
+        res = _run_php(php_code)
+        self.assertEqual(res.returncode, 0, f"PHP error:\n{res.stderr}")
+        out = json.loads(res.stdout)
+
+        for route, info in out['faq_results'].items():
+            self.assertGreaterEqual(info['count'], 3, f"Route {route} must have >= 3 curated FAQ items")
+            self.assertFalse(info['has_h2'], f"Route {route} FAQ accordion must have 0 <h2> tags")
+            self.assertTrue(info['visible'], f"Route {route} FAQ accordion must render visible <details>")
+
+        # Verify ground-truth empirical metrics in FAQs
+        hanoi_nh_faqs = str(out['faq_results']['compare/old-quarter-vs-french-quarter-vs-west-lake']['items'])
+        self.assertIn('500,000 to 1,500,000 VND', hanoi_nh_faqs)
+        self.assertIn('Sofitel Legend Metropole', hanoi_nh_faqs)
+        self.assertIn('80,000 to 120,000 VND', hanoi_nh_faqs)
+        self.assertIn('Tay Ho', hanoi_nh_faqs)
+
+        hanoi_dt_faqs = str(out['faq_results']['destinations/best-day-trips-from-hanoi']['items'])
+        self.assertIn('95 to 100 kilometers', hanoi_dt_faqs)
+        self.assertIn('Trang An', hanoi_dt_faqs)
+        self.assertIn('Bat Trang', hanoi_dt_faqs)
+        self.assertIn('Duong Lam', hanoi_dt_faqs)
+        self.assertIn('CT04', hanoi_dt_faqs)
+
+        nb_faqs = str(out['faq_results']['compare/ninh-binh-day-trip-vs-overnight']['items'])
+        self.assertIn('400,000 to 800,000 VND', nb_faqs)
+        self.assertIn('Hang Mua', nb_faqs)
+        self.assertIn('07:00 and 08:30 AM', nb_faqs)
+
+        mk_faqs = str(out['faq_results']['compare/mekong-delta-overnight-vs-day-trip']['items'])
+        self.assertIn('My Tho', mk_faqs)
+        self.assertIn('Can Tho', mk_faqs)
+        self.assertIn('Cai Rang Floating Market', mk_faqs)
+        self.assertIn('cay beo', mk_faqs)
+
+        mn_nt_faqs = str(out['faq_results']['compare/mui-ne-vs-nha-trang']['items'])
+        self.assertIn('Bau Trang White Dunes', mn_nt_faqs)
+        self.assertIn('Hon Mun Marine Reserve', mn_nt_faqs)
+        self.assertIn('Tran Phu', mn_nt_faqs)
+
+        hn_nb_faqs = str(out['faq_results']['plan/hanoi-to-ninh-binh-train-vs-limousine']['items'])
+        self.assertIn('150,000 to 220,000 VND', hn_nb_faqs)
+        self.assertIn('SE5/SE7/SE9', hn_nb_faqs)
+        self.assertIn('75,000 to 130,000 VND', hn_nb_faqs)
+
+        hcmc_mn_faqs = str(out['faq_results']['plan/ho-chi-minh-city-to-mui-ne-transport']['items'])
+        self.assertIn('Dau Giay - Phan Thiet Expressway', hcmc_mn_faqs)
+        self.assertIn('SPT2', hcmc_mn_faqs)
+        self.assertIn('250,000 to 350,000 VND', hcmc_mn_faqs)
+
+        # Verify HowTo schemas
+        howto_nb = out['howto_data']['plan/hanoi-to-ninh-binh-train-vs-limousine']
+        self.assertGreaterEqual(howto_nb['step_count'], 4)
+        self.assertIn('Hanoi to Ninh Binh', howto_nb['name'])
+        steps_text_nb = ' '.join(s.get('text', '') for s in howto_nb['steps'])
+        self.assertIn('CT01', steps_text_nb)
+        self.assertIn('Tam Coc', steps_text_nb)
+
+        howto_mn = out['howto_data']['plan/ho-chi-minh-city-to-mui-ne-transport']
+        self.assertGreaterEqual(howto_mn['step_count'], 4)
+        self.assertIn('Ho Chi Minh City to Mui Ne', howto_mn['name'])
+        steps_text_mn = ' '.join(s.get('text', '') for s in howto_mn['steps'])
+        self.assertIn('CT01', steps_text_mn)
+        self.assertIn('Phan Thiet', steps_text_mn)
+
 
 if __name__ == '__main__':
     unittest.main()
