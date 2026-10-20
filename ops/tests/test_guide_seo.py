@@ -1672,6 +1672,73 @@ echo json_encode([
         dong_van = next((a for a in out['nh_attr'] if a.get('name') == 'Dong Van Karst Plateau'), {})
         self.assertEqual(dong_van.get('wikidata'), 'https://www.wikidata.org/wiki/Q10744325')
 
+    def test_stage118_expanded_faqs_howtos_and_toolkit_ground_truth(self):
+        """Stage 118: 10 new curated FAQ routes, 3 new HowTo routes, and enriched Itinerary Finder / Packing Checklist 2026 ground truth."""
+        stage118_faqs = [
+            'itineraries/7-days-in-vietnam',
+            'itineraries/10-days-in-vietnam',
+            'itineraries/14-days-in-vietnam',
+            'itineraries/21-days-in-vietnam',
+            'compare/hanoi-vs-ho-chi-minh-city',
+            'plan/transport-within-vietnam',
+            'plan/vietnam-domestic-flights-guide',
+            'destinations/my-son-sanctuary-guide',
+            'destinations/cham-islands-travel-guide',
+            'destinations/bai-tu-long-bay-guide',
+        ]
+        stage118_howtos = [
+            'plan/ninh-binh-to-ha-long-bay-transfer',
+            'plan/hanoi-to-sapa-transport',
+            'destinations/hoi-an-ancient-town-guide',
+        ]
+        php_code = f"""
+        $faq_paths = {json.dumps(stage118_faqs)};
+        $faq_results = [];
+        foreach ($faq_paths as $p) {{
+            $items = vg_get_curated_faq_items($p);
+            $html  = vg_render_curated_faq_accordion($p, '<p>Lead content.</p>');
+            $faq_results[$p] = [
+                'count'   => count($items),
+                'has_h2'  => stripos($html, '<h2') !== false,
+                'visible' => strpos($html, '<details class="vg-faq-item"') !== false,
+            ];
+        }}
+        $howto_paths = {json.dumps(stage118_howtos)};
+        $howto_counts = [];
+        foreach ($howto_paths as $p) {{
+            $node = vg_get_page_howto_schema($p, "https://vietnamguide.net/{{$p}}/");
+            $howto_counts[$p] = is_array($node) ? count($node['step'] ?? []) : 0;
+        }}
+        echo json_encode([
+            'faq_results'  => $faq_results,
+            'howto_counts' => $howto_counts,
+        ]);
+        """
+        res = _run_php(php_code)
+        self.assertEqual(res.returncode, 0, f"PHP error:\n{res.stderr}")
+        out = json.loads(res.stdout)
+
+        for route, info in out['faq_results'].items():
+            self.assertGreaterEqual(info['count'], 3, f"Route {route} must have >= 3 curated FAQ items")
+            self.assertFalse(info['has_h2'], f"Route {route} FAQ accordion must have 0 <h2> tags")
+            self.assertTrue(info['visible'], f"Route {route} FAQ accordion must render visible <details>")
+
+        for route, count in out['howto_counts'].items():
+            self.assertGreaterEqual(count, 4, f"Route {route} must have >= 4 HowTo steps, got {count}")
+
+        itinerary_finder_php = os.path.join(THEME_DIR, 'inc', 'guide-itinerary-finder.php')
+        packing_checklist_php = os.path.join(THEME_DIR, 'inc', 'guide-packing-checklist.php')
+        with open(itinerary_finder_php, 'r', encoding='utf-8') as f:
+            if_src = f.read()
+        with open(packing_checklist_php, 'r', encoding='utf-8') as f:
+            pc_src = f.read()
+
+        self.assertIn('120,000 VND heritage ticket', if_src)
+        self.assertIn('420,000 VND 3-site combo pass', if_src)
+        self.assertIn('9 gateway airports (HAN, SGN, DAD, CXR, PQC, HUI, DLI, VDH, HPH)', if_src)
+        self.assertIn('Decree 49/2017 &amp; 163/2024', pc_src)
+        self.assertIn('9 gateway airports (HAN, SGN, DAD, CXR, PQC, HUI, DLI, VDH, HPH)', pc_src)
+
 
 if __name__ == '__main__':
     unittest.main()

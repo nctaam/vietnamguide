@@ -27,7 +27,7 @@ function vg_get_packing_checklist_catalog(): array
             'category' => 'documents',
             'category_label' => __('Documents & Money', 'vietnamguide-premium'),
             'item'     => __('Passport with at least 6 months validity', 'vietnamguide-premium'),
-            'context'  => __('Vietnamese immigration strictly enforces 6 months validity from your arrival date.', 'vietnamguide-premium'),
+            'context'  => __('Vietnamese immigration strictly enforces 6 months remaining validity from your entry date plus at least 2 blank visa pages.', 'vietnamguide-premium'),
             'tags'     => ['all', 'first-time', 'hagiang', 'islands', 'cities'],
         ],
         [
@@ -35,7 +35,7 @@ function vg_get_packing_checklist_catalog(): array
             'category' => 'documents',
             'category_label' => __('Documents & Money', 'vietnamguide-premium'),
             'item'     => __('Printed official Vietnam E-Visa approval letter', 'vietnamguide-premium'),
-            'context'  => __('Print 2 physical copies on standard A4 paper. Digital phone copies are not accepted at immigration counters.', 'vietnamguide-premium'),
+            'context'  => __('Print 2 physical A4 copies from evisa.gov.vn or thithucdientu.gov.vn ($25 single / $50 multiple-entry, 90 days across 42 gates under Resolution 127/NQ-CP; 25 countries enjoy 45-day exemption under Resolutions 44/NQ-CP & 229/NQ-CP).', 'vietnamguide-premium'),
             'tags'     => ['all', 'first-time', 'hagiang', 'islands', 'cities'],
         ],
         [
@@ -43,7 +43,7 @@ function vg_get_packing_checklist_catalog(): array
             'category' => 'documents',
             'category_label' => __('Documents & Money', 'vietnamguide-premium'),
             'item'     => __('Two passport-size photos (4x6 cm, white background)', 'vietnamguide-premium'),
-            'context'  => __('Useful backup for border verification, visa on arrival counters, and regional permits.', 'vietnamguide-premium'),
+            'context'  => __('Required for the 230,000 VND Ha Giang border area permit, Cambodia river border crossings (Vinh Xuong / Chau Doc), and backup visa paperwork.', 'vietnamguide-premium'),
             'tags'     => ['all', 'first-time', 'hagiang'],
         ],
         [
@@ -51,7 +51,7 @@ function vg_get_packing_checklist_catalog(): array
             'category' => 'documents',
             'category_label' => __('Documents & Money', 'vietnamguide-premium'),
             'item'     => __('Crisp, uncreased USD or EUR cash ($200 - $300)', 'vietnamguide-premium'),
-            'context'  => __('Local exchange counters and gold shops in Hanoi and Ho Chi Minh City reject torn, stamped, or folded banknotes.', 'vietnamguide-premium'),
+            'context'  => __('Gold shops (Ha Trung Street in Hanoi, Ben Thanh in HCMC) and bank counters reject torn, stamped, or creased $100 bills.', 'vietnamguide-premium'),
             'tags'     => ['all', 'first-time', 'hagiang', 'islands'],
         ],
         [
@@ -59,7 +59,7 @@ function vg_get_packing_checklist_catalog(): array
             'category' => 'documents',
             'category_label' => __('Documents & Money', 'vietnamguide-premium'),
             'item'     => __('Two bank cards (Visa / Mastercard) with travel notice set', 'vietnamguide-premium'),
-            'context'  => __('Notify your issuing bank of Vietnam travel dates to avoid automated fraud freezes on arrival.', 'vietnamguide-premium'),
+            'context'  => __('Use VPBank, TPBank, or ACB ATMs for low/zero local withdrawal fees and link one card to the Grab and Xanh SM ride-hailing apps.', 'vietnamguide-premium'),
             'tags'     => ['all', 'first-time', 'cities'],
         ],
         [
@@ -67,7 +67,7 @@ function vg_get_packing_checklist_catalog(): array
             'category' => 'documents',
             'category_label' => __('Documents & Money', 'vietnamguide-premium'),
             'item'     => __('Travel medical insurance policy with emergency evacuation', 'vietnamguide-premium'),
-            'context'  => __('Ensure coverage reaches at least $50,000 and explicitly includes emergency medical transport from remote provinces.', 'vietnamguide-premium'),
+            'context'  => __('Ensure coverage reaches at least $50,000 USD and includes medical evacuation to international hospitals (FV Hospital HCMC, Vinmec, or Franco-Vietnamese clinics).', 'vietnamguide-premium'),
             'tags'     => ['all', 'first-time', 'hagiang', 'islands'],
         ],
 
@@ -77,7 +77,7 @@ function vg_get_packing_checklist_catalog(): array
             'category' => 'electronics',
             'category_label' => __('Electronics & Navigation', 'vietnamguide-premium'),
             'item'     => __('Unlocked smartphone supporting Vietnamese 4G/5G bands', 'vietnamguide-premium'),
-            'context'  => __('Required to install local Viettel or Vinaphone eSIM profiles or physical tourist SIM cards.', 'vietnamguide-premium'),
+            'context'  => __('Required for Viettel or Vinaphone eSIM/SIM activation; physical SIM registration at carrier stores requires scanning your original passport.', 'vietnamguide-premium'),
             'tags'     => ['all', 'first-time', 'hagiang', 'islands', 'cities'],
         ],
         [
@@ -85,7 +85,7 @@ function vg_get_packing_checklist_catalog(): array
             'category' => 'electronics',
             'category_label' => __('Electronics & Navigation', 'vietnamguide-premium'),
             'item'     => __('Universal plug adapter (Type A, C, and G compatible)', 'vietnamguide-premium'),
-            'context'  => __('Vietnamese wall sockets accept Type C rounded plugs and Type A flat pins interchangeably, but fit can be loose.', 'vietnamguide-premium'),
+            'context'  => __('Vietnam runs on 220V/50Hz; hybrid wall sockets accept Type A flat pins and Type C/F round Europlug pins, while UK Type G 3-pin plugs need an adapter.', 'vietnamguide-premium'),
             'tags'     => ['all', 'first-time', 'cities'],
         ],
         [
@@ -93,7 +93,7 @@ function vg_get_packing_checklist_catalog(): array
             'category' => 'electronics',
             'category_label' => __('Electronics & Navigation', 'vietnamguide-premium'),
             'item'     => __('10,000 - 20,000 mAh power bank (carry-on compliant)', 'vietnamguide-premium'),
-            'context'  => __('GPS tracking and navigation drain phone batteries quickly during long day trips and rural transit days.', 'vietnamguide-premium'),
+            'context'  => __('CAAV regulations allow lithium power banks up to 100Wh (~27,000mAh) strictly in cabin carry-on bags only—never in checked luggage.', 'vietnamguide-premium'),
             'tags'     => ['all', 'first-time', 'hagiang', 'islands'],
         ],
         [
@@ -127,7 +127,7 @@ function vg_get_packing_checklist_catalog(): array
             'category' => 'clothing',
             'category_label' => __('Clothing & Modesty', 'vietnamguide-premium'),
             'item'     => __('Temple modesty scarf or trousers covering knees and shoulders', 'vietnamguide-premium'),
-            'context'  => __('Strictly required when entering Hanoi Temple of Literature, Tran Quoc Pagoda (Chùa Trấn Quốc), and Hue Imperial Citadel.', 'vietnamguide-premium'),
+            'context'  => __('Strictly enforced at Hanoi Temple of Literature (70,000 VND), Tran Quoc Pagoda (Chùa Trấn Quốc), Ho Chi Minh Mausoleum, and Hue Imperial Citadel (200,000 VND).', 'vietnamguide-premium'),
             'tags'     => ['all', 'first-time', 'cities'],
         ],
         [
@@ -390,6 +390,11 @@ function vg_render_packing_checklist(array $attributes = []): string
                             <td>FPT Long Châu / Pharmacity / 113–115</td>
                             <td><?php esc_html_e('Regulated chains stock Oresol packets (3,000 VND), Loperamide, Paracetamol, and 15%–30% DEET spray over the counter. National Emergency Numbers: 113 (Police), 114 (Fire), 115 (Ambulance).', 'vietnamguide-premium'); ?></td>
                         </tr>
+                        <tr>
+                            <th scope="row"><?php esc_html_e('SIM & eSIM Registration', 'vietnamguide-premium'); ?></th>
+                            <td><?php esc_html_e('Decree 49/2017 &amp; 163/2024', 'vietnamguide-premium'); ?></td>
+                            <td><?php esc_html_e('All local SIMs/eSIMs at Viettel, Vinaphone, and Mobifone stores require scanning your original physical passport plus a live portrait photo. Street-side Viettel tourist data plans start at 60,000–200,000 VND.', 'vietnamguide-premium'); ?></td>
+                        </tr>
                     </tbody>
                 </table>
             </div>
@@ -404,7 +409,7 @@ function vg_render_packing_checklist(array $attributes = []): string
                     <span class="vg-checklist-synergy-icon" aria-hidden="true">&#128196;</span>
                     <div>
                         <strong><?php esc_html_e('Visa Exemption & E-Visa Checker', 'vietnamguide-premium'); ?></strong>
-                        <p><?php esc_html_e('45-day exemption rules, port entry requirements, and official E-Visa guidelines.', 'vietnamguide-premium'); ?></p>
+                        <p><?php esc_html_e('45-day exemption rules (25 countries), 42 port entry gates, and official $25/$50 90-day E-Visa guidelines.', 'vietnamguide-premium'); ?></p>
                     </div>
                 </a>
                 <a href="<?php echo esc_url(home_url('/costs/vietnam-travel-cost/')); ?>" class="vg-checklist-synergy-card vg-synergy-bridge">
@@ -425,7 +430,7 @@ function vg_render_packing_checklist(array $attributes = []): string
                     <span class="vg-checklist-synergy-icon" aria-hidden="true">&#9992;</span>
                     <div>
                         <strong><?php esc_html_e('Airport Transit & Arrival Guide', 'vietnamguide-premium'); ?></strong>
-                        <p><?php esc_html_e('Grab pick-up zones, metered taxi fares, and arrival procedures for HAN, SGN, and DAD.', 'vietnamguide-premium'); ?></p>
+                        <p><?php esc_html_e('Grab pick-up zones, metered taxi fares, and arrival procedures across 9 gateway airports (HAN, SGN, DAD, CXR, PQC, HUI, DLI, VDH, HPH).', 'vietnamguide-premium'); ?></p>
                     </div>
                 </a>
                 <a href="<?php echo esc_url(home_url('/itineraries/')); ?>" class="vg-checklist-synergy-card vg-synergy-bridge" data-flagship="<?php echo esc_url(home_url('/itineraries/10-days-in-vietnam/')); ?>">

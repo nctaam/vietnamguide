@@ -31,11 +31,11 @@ function vg_get_itinerary_finder_catalog(): array
             'gateway_label'   => 'Hanoi or HCMC',
             'gateway_value'   => 'both',
             'route_summary'   => 'Hanoi &rarr; Ha Long Bay &rarr; Hoi An &rarr; Ho Chi Minh City',
-            'description'     => 'The signature introductory route connecting northern limestone karsts, lantern-lit heritage alleys in Hoi An, and southern commercial energy with efficient transit connections.',
+            'description'     => 'The signature 3-hub introductory route connecting northern limestone karsts (2.5h via CT04 expressway), lantern-lit heritage alleys in Hoi An, and southern commercial energy via two 80-minute domestic flights (HAN–DAD and DAD–SGN).',
             'highlights'      => [
-                'Overnight karst cruise on Ha Long or Lan Ha Bay',
-                'Walking food tour and tailor shops in ancient Hoi An',
-                'Historic landmark quarters and distinctive cafe culture in Ho Chi Minh City',
+                'Overnight 2D1N karst cruise on Ha Long or Lan Ha Bay ($135–$185 USD)',
+                'Walking tour and 48-hour custom tailoring in Hoi An Ancient Town (120,000 VND heritage ticket)',
+                'District 1 historic landmarks, Metro Line 1, and Ben Tre Mekong canals from Ho Chi Minh City',
             ],
             'url'             => '/itineraries/10-days-in-vietnam/',
             'season_url'      => '/plan/best-time-to-visit-vietnam/#month-nov',
@@ -51,11 +51,11 @@ function vg_get_itinerary_finder_catalog(): array
             'gateway_label'   => 'Hanoi',
             'gateway_value'   => 'hanoi',
             'route_summary'   => 'Hanoi &rarr; Ninh Binh &rarr; Ha Long &rarr; Hue &rarr; Hoi An &rarr; HCMC',
-            'description'     => 'Designed for travelers who prioritize cultural depth over rushed itineraries. Adds ancient capitals, karst river valleys, and imperial citadel architecture.',
+            'description'     => 'Designed for travelers who prioritize cultural depth over rushed transits. Adds Ninh Binh karst river valleys (2h from Hanoi), direct 3.5h transfers to Ha Long Bay, and the scenic HĐ1/HĐ2 Hai Van Pass train between Hue and Da Nang.',
             'highlights'      => [
-                'Rowboat through towering river caves in Tam Coc & Trang An',
-                'Imperial tombs and royal palace pavilions in historic Hue',
-                'Cycling through Hoi An rice fields to An Bang Beach',
+                '2.5-hour sampan paddle through limestone caves in Trang An or Tam Coc (250,000 VND)',
+                'Hue Imperial Citadel and Royal Tombs (420,000 VND 3-site combo pass)',
+                'Cycling through Tra Que vegetable village and Hoi An paddies to An Bang Beach (4.5 km)',
             ],
             'url'             => '/itineraries/14-days-in-vietnam/',
             'season_url'      => '/plan/best-time-to-visit-vietnam/#month-feb',
@@ -71,11 +71,11 @@ function vg_get_itinerary_finder_catalog(): array
             'gateway_label'   => 'Hanoi',
             'gateway_value'   => 'hanoi',
             'route_summary'   => 'Hanoi &rarr; Ninh Binh &rarr; Ha Long Bay &rarr; Hanoi',
-            'description'     => 'A compact, high-impact northern circuit designed for limited vacation windows. Delivers maximum scenic beauty with minimal transit fatigue.',
+            'description'     => 'A compact, zero-domestic-flight Northern Triangle circuit linking Hanoi (Noi Bai Express Bus 86, 45,000 VND), Ninh Binh (95 km south), and Ha Long / Lan Ha Bay via 2-to-3.5-hour expressway limousine hops.',
             'highlights'      => [
-                'Street food exploration in the historic 36 Guilds Quarter',
-                'Dramatic limestone peaks of Ninh Binh on a traditional sampan',
-                'Sunrise tai chi and sea kayaking among Lan Ha limestone karsts',
+                'Old Quarter 36 Guilds street food walk and Temple of Literature (70,000 VND) in Hanoi',
+                '486-step Hang Mua viewpoint (100,000 VND) and Trang An cave sampan (250,000 VND) in Ninh Binh',
+                'Sunrise kayaking and cave excursions across Ha Long or Lan Ha Bay',
             ],
             'url'             => '/itineraries/7-days-in-vietnam/',
             'season_url'      => '/plan/best-time-to-visit-vietnam/#month-oct',
@@ -91,11 +91,11 @@ function vg_get_itinerary_finder_catalog(): array
             'gateway_label'   => 'Hanoi',
             'gateway_value'   => 'hanoi',
             'route_summary'   => 'Hanoi &rarr; Sa Pa &rarr; Ha Long &rarr; Central Coast &rarr; Highlands &rarr; Mekong',
-            'description'     => 'The complete expedition spanning mist-shrouded northern mountains, imperial dynasties, high-altitude coffee valleys, and southern floating waterways.',
+            'description'     => 'The comprehensive 3-week expedition spanning 1,726 km from northern highland terraces (Sapa SP3/SP4 sleeper or Ha Giang Loop) and Phong Nha caves down to Central Heritage cities and Mekong Delta floating waterways.',
             'highlights'      => [
-                'Trekking through Muong Hoa valley and ethnic minority homestays',
-                'Hai Van Pass coastal drive between Hue and Da Nang',
-                'Floating markets and orchard homestays in the Mekong Delta',
+                'Trekking 12–15 km through Muong Hoa Valley and ethnic homestays in Sapa',
+                'Hai Van Pass coastal railway (HĐ1/HĐ2, 150,000–180,000 VND) between Hue and Da Nang',
+                '5:30 AM Cai Rang Floating Market sampan (350,000–500,000 VND) in Can Tho, Mekong Delta',
             ],
             'url'             => '/itineraries/21-days-in-vietnam/',
             'season_url'      => '/plan/best-time-to-visit-vietnam/#month-mar',
@@ -111,11 +111,11 @@ function vg_get_itinerary_finder_catalog(): array
             'gateway_label'   => 'Hanoi',
             'gateway_value'   => 'hanoi',
             'route_summary'   => 'Hanoi Old Quarter &rarr; French Quarter &rarr; West Lake &rarr; Street Food',
-            'description'     => 'A sensory urban weekend route curating egg coffee hideaways, colonial tree-lined boulevards, Temple of Literature, and world-class street cuisine.',
+            'description'     => 'A focused 48-to-72-hour urban route covering Hoan Kiem Lake, Ba Dinh imperial landmarks, French Quarter tree-lined boulevards, and Old Quarter culinary alleys (30 km from HAN via Bus 86).',
             'highlights'      => [
-                'Hidden rooftop egg coffee overlooking Hoan Kiem Lake',
-                'Early morning stroll through the French Quarter and Opera House',
-                'Curated evening pho and bun cha trail in Hoan Kiem',
+                'Traditional egg coffee (ca phe trung, 35,000–45,000 VND) overlooking Hoan Kiem Lake',
+                'Morning walk through the Temple of Literature (70,000 VND), Hoa Lo Prison (50,000 VND), and Opera House',
+                'Evening pho bo and charcoal bun cha trail (50,000–70,000 VND) in Hoan Kiem District',
             ],
             'url'             => '/itineraries/hanoi-in-2-days/',
             'season_url'      => '/plan/best-time-to-visit-vietnam/#month-oct',
@@ -131,11 +131,11 @@ function vg_get_itinerary_finder_catalog(): array
             'gateway_label'   => 'Hanoi',
             'gateway_value'   => 'hanoi',
             'route_summary'   => 'Hanoi &rarr; Ha Giang &rarr; Dong Van &rarr; Ma Pi Leng Pass &rarr; Du Gia',
-            'description'     => "Vietnam's northernmost mountain circuit. High-altitude limestone canyons, dramatic serpentine passes, and remote mountain community homestays.",
+            'description'     => "Vietnam's 350 km northernmost karst circuit across Quan Ba, Yen Minh, Dong Van, and Meo Vac (reached by 6-hour VIP cabin bus from Hanoi; requires the 230,000 VND border permit and 1968 IDP or local Easy Rider).",
             'highlights'      => [
-                'Traversing the dramatic Ma Pi Leng Pass high above the turquoise Nho Que River',
-                'Exploring Dong Van UNESCO Global Karst Plateau Geopark',
-                'Cooling off at Du Gia mountain waterfall after mountain riding',
+                'Riding Ma Pi Leng Pass (1,500m) and boating Tu San Canyon on the Nho Que River (120,000–150,000 VND)',
+                'Exploring Dong Van UNESCO Global Karst Plateau Geopark and Hmong King Palace (30,000 VND)',
+                'Overnight Tay and Dao stilt-house homestays and Du Gia mountain waterfall swim',
             ],
             'url'             => '/destinations/ha-giang-loop-planning-guide/',
             'season_url'      => '/plan/best-time-to-visit-vietnam/#month-oct',
@@ -151,11 +151,11 @@ function vg_get_itinerary_finder_catalog(): array
             'gateway_label'   => 'Hanoi',
             'gateway_value'   => 'hanoi',
             'route_summary'   => 'Hanoi &rarr; Sa Pa Town &rarr; Muong Hoa Valley &rarr; Ta Van Village',
-            'description'     => "Tiered rice terraces carved into Mount Fansipan's foothills, traditional village homestays, and crisp highland climate.",
+            'description'     => "Tiered rice terraces carved into Mount Fansipan's foothills at 1,500m–3,143m elevation, reached in 5.5 hours by CT05 Noi Bai – Lao Cai expressway cabin bus or overnight sleeper train SP3/SP4.",
             'highlights'      => [
-                'Guided trek through the terraced cascades of Muong Hoa Valley',
-                'Local herbal baths and welcoming homestays in Ta Van and Lao Chai',
-                'Ascending to the summit of Mount Fansipan (3,143m) via Fansipan Legend cable car',
+                'Guided 12–15 km valley trek through Y Linh Ho, Lao Chai, and Ta Van villages',
+                'Red Dao herbal bath and Black Hmong / Giay homestays overlooking Muong Hoa stream',
+                'Ascending Mount Fansipan (3,143m) via the 3-wire cable car (800,000–850,000 VND round-trip)',
             ],
             'url'             => '/destinations/sapa-travel-guide/',
             'season_url'      => '/plan/best-time-to-visit-vietnam/#month-sep',
@@ -171,11 +171,11 @@ function vg_get_itinerary_finder_catalog(): array
             'gateway_label'   => 'Ho Chi Minh City',
             'gateway_value'   => 'hcmc',
             'route_summary'   => 'Ho Chi Minh City &rarr; Con Dao Island (or Phu Quoc)',
-            'description'     => 'An unhurried coastal extension to conclude your journey. Sheltered bays, sea turtle conservation sanctuaries, historic tree-lined avenues, and quiet beaches.',
+            'description'     => 'An unhurried southern island extension reached via a 45-minute flight from Ho Chi Minh City (SGN to VCS/PQC) or 2.5-hour high-speed catamaran (320,000–500,000 VND), featuring marine national parks and quiet bays.',
             'highlights'      => [
-                'Secluded sandy coves at Dam Trau Bay and Bai Nhat',
-                'National park snorkeling on coral reefs and sea turtle conservation',
-                'Peaceful, unhurried island pace with coastal seafood dining',
+                'Secluded golden-sand coves at Dam Trau Beach and sunset views along Bai Nhat',
+                'Con Dao National Park coral reef snorkeling and Bay Canh sea turtle nesting (May–Oct)',
+                'Historic Con Son heritage sites and Tiger Cages (50,000 VND combined museum ticket)',
             ],
             'url'             => '/destinations/con-dao-travel-guide/',
             'season_url'      => '/plan/best-time-to-visit-vietnam/#month-dec',
@@ -380,12 +380,12 @@ function vg_render_itinerary_finder_html(): string
                 <a href="<?php echo esc_url(home_url('/plan/vietnam-evisa/')); ?>" class="vg-finder-tk-card vg-synergy-bridge">
                     <span class="vg-finder-tk-badge">🛂 <?php esc_html_e('Visa', 'vietnamguide-premium'); ?></span>
                     <strong><?php esc_html_e('Visa & E-Visa Checker', 'vietnamguide-premium'); ?></strong>
-                    <span><?php esc_html_e('Verify 45-day exemption vs $25 E-Visa guidelines &rarr;', 'vietnamguide-premium'); ?></span>
+                    <span><?php esc_html_e('Verify 45-day exemption (25 countries) vs $25/$50 90-day E-Visa across 42 checkpoints &rarr;', 'vietnamguide-premium'); ?></span>
                 </a>
                 <a href="<?php echo esc_url(home_url('/plan/vietnam-airport-arrival-checklist/')); ?>" class="vg-finder-tk-card vg-synergy-bridge">
                     <span class="vg-finder-tk-badge">✈️ <?php esc_html_e('Transit', 'vietnamguide-premium'); ?></span>
                     <strong><?php esc_html_e('Airport Transit & Arrival Guide', 'vietnamguide-premium'); ?></strong>
-                    <span><?php esc_html_e('Grab pick-up zones, taxi fares, and arrival procedures for HAN, SGN, and DAD &rarr;', 'vietnamguide-premium'); ?></span>
+                    <span><?php esc_html_e('Grab pick-up zones, bus routes, and taxi fares across 9 gateway airports (HAN, SGN, DAD, CXR, PQC, HUI, DLI, VDH, HPH) &rarr;', 'vietnamguide-premium'); ?></span>
                 </a>
                 <a href="<?php echo esc_url(home_url('/plan/best-time-to-visit-vietnam/')); ?>" class="vg-finder-tk-card vg-synergy-bridge">
                     <span class="vg-finder-tk-badge">☀️ <?php esc_html_e('Climate', 'vietnamguide-premium'); ?></span>
