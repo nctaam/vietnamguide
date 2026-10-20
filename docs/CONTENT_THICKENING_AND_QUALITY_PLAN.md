@@ -144,18 +144,18 @@ flowchart TD
 - [x] **Task 2.4**: Bổ sung unit tests kiểm tra hợp đồng dữ liệu trong `ops/tests/test_guide_seo.py` (`test_stage121_central_coast_and_caves_faqs_and_howtos`).
 - [x] **Task 2.5**: Xác minh 8 Quality Gates (8/8 PASS, Exit Code 0, 301 tests passed), commit `8aa796a` và push lên `origin/master`.
 
-### Giai Đoạn 3: Tuyến Vùng Núi Phía Bắc & Tây Bắc (Stage 122)
-- [ ] **Task 3.1**: Dùng `ag-search` xác minh giá vé & phương tiện: Ba Bể (Thác Đầu Đẳng, Động Puông), Pù Luông (Bè tre Suối Chàm, Thác Hiêu), Mù Cang Chải (Mâm Xôi, Móng Ngựa, Đèo Khau Phạ), Mai Châu (Bản Lác, Hang Chiều).
-- [ ] **Task 3.2**: Bổ sung 6 bộ curated FAQ mới vào `inc/guide-seo.php`:
+### Giai Đoạn 3: Tuyến Vùng Núi Phía Bắc & Tây Bắc (Stage 122) [HOÀN THÀNH]
+- [x] **Task 3.1**: Dùng `ag-search` xác minh giá vé & phương tiện: Hà Giang & Đồng Văn (Cột cờ Lũng Cú 25k–40k VND + xe điện 15k–30k VND, Dinh họ Vương 20k–30k VND, Thuyền hẻm Tu Sản sông Nho Quế 120k–150k VND, Giấy phép biên giới cho người nước ngoài 230k VND / 10 USD), Sa Pa (Cáp treo Fansipan 850k VND người lớn / 550k trẻ em, Tàu hỏa Mường Hoa 150k–200k VND, Bản Cát Cát 150k VND, Thác Bạc 20k VND, Thác Tình Yêu 70k VND), Cao Bằng (Thác Bản Giốc 45k VND + bè Quây Sơn 50k VND, Động Ngườm Ngao 45k VND, Làng đá Khuổi Ky & Núi Mắt Thần miễn phí).
+- [x] **Task 3.2**: Bổ sung 6 bộ curated FAQ mới vào `inc/guide-seo.php`:
   - `destinations/where-to-stay-in-sapa`
   - `destinations/where-to-stay-in-ha-giang`
   - `destinations/where-to-stay-in-cao-bang`
   - `plan/hanoi-to-ha-giang-transport`
   - `plan/ha-giang-to-dong-van-transport`
-  - `compare/da-lat-vs-sapa`
-- [ ] **Task 3.3**: Bổ sung HowTo: "How to Take the Direct Sleeper Bus from Hanoi to Ha Giang".
-- [ ] **Task 3.4**: Bổ sung unit tests kiểm tra hợp đồng dữ liệu trong `ops/tests/test_guide_seo.py`.
-- [ ] **Task 3.5**: Xác minh 8 Quality Gates, commit và push lên `origin/master`.
+  - `compare/sapa-vs-ha-giang`
+- [x] **Task 3.3**: Bổ sung HowTo: "How to Take the Direct Sleeper Bus from Hanoi to Ha Giang" (4 bước chuẩn JSON-LD).
+- [x] **Task 3.4**: Bổ sung unit tests kiểm tra hợp đồng dữ liệu trong `ops/tests/test_guide_seo.py` (`test_stage122_northern_mountains_faqs_and_howtos`).
+- [x] **Task 3.5**: Xác minh 8 Quality Gates (8/8 PASS, Exit Code 0, 302 tests passed), commit `46ed4b4` và push lên `origin/master`.
 
 ### Giai Đoạn 4: Xây Dựng Kho Content-as-Code & Tối Ưu Hóa Trải Nghiệm (Stage 123)
 - [ ] **Task 4.1**: Thiết lập cấu trúc thư mục `content/` phân loại theo 4 nhánh (`destinations/`, `itineraries/`, `compare/`, `plan/`).
