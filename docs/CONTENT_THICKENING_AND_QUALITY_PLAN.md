@@ -353,12 +353,22 @@ flowchart TD
 - [x] **Task 14.4**: Chạy `ops/content_depth_auditor.py` kiểm định toàn bộ 10 bài viết trong `content/` (Tổng số từ: **13.237 từ**, 100% PASS, Mean HLS 99.0/100, 488 empirical signals, 0 Tier 1 clichés).
 - [x] **Task 14.5**: Xác minh 8 Quality Gates (8/8 PASS, Exit Code 0, 315 tests passed), commit và push lên `origin/master`.
 
-### Giai Đoạn 15: Tuyến Viễn Chinh Phượt Xe Máy & Thám Hiểm Hang Động (Stage 134) [TIẾP THEO]
-- [ ] **Task 15.1**: Dùng `ag-search` xác minh thực tế và biên soạn bài viết chuyên sâu:
-  - `content/destinations/ha-giang-loop-guide.md`: Cẩm nang phượt xe máy Ha Giang Loop 4 ngày 3 đêm (lộ trình 350–400 km, đèo Bắc Sum, Dốc Thẩm Mã, Đèo Mã Pí Lèng, thuyền hẻm Tu Sản sông Nho Quế 120k–150k VND, giấy phép công an 230k VND, Easy Rider 800k–1.2M VND/ngày).
-- [ ] **Task 15.2**: Dùng `ag-search` xác minh thực tế và biên soạn bài viết cẩm nang di chuyển:
-  - `content/plan/hanoi-to-ha-giang-transport.md`: Tuyến xe khách Hà Nội - Hà Giang (280–300 km qua cao tốc CT05 & Tuyên Quang, xe cabin đơn 300k–350k VND, cabin đôi 550k–600k VND, limousine đón sân bay Nội Bài, thời gian 5.5–6.5h).
-- [ ] **Task 15.3**: Dùng `ag-search` xác minh thực tế và biên soạn bài so sánh trực diện:
-  - `content/compare/phong-nha-vs-ninh-binh.md`: So sánh toàn diện giữa Vương quốc hang động Phong Nha - Kẻ Bàng (hang động nguyên sinh thám hiểm ngầm, sông Son, hang Én/Sơn Đoòng) vs Ninh Bình (karst ngập nước văn hóa đồng bằng, thuyền nan Tràng An/Tam Cốc, đền đài lịch sử).
-- [ ] **Task 15.4**: Chạy `ops/content_depth_auditor.py` kiểm định toàn bộ các bài viết mới (bảo đảm >= 1,200 từ, HLS >= 85, 0 Tier 1 clichés, mật độ dữ liệu cao).
-- [ ] **Task 15.5**: Xác minh 8 Quality Gates (8/8 PASS, Exit Code 0), commit và push lên `origin/master`.
+### Giai Đoạn 15: Tuyến Viễn Chinh Phượt Xe Máy & Thám Hiểm Hang Động (Stage 134) [HOÀN THÀNH]
+- [x] **Task 15.1**: Dùng `ag-search` xác minh thực tế và biên soạn bài viết chuyên sâu:
+  - `content/destinations/ha-giang-loop-guide.md`: Cẩm nang phượt xe máy Ha Giang Loop 4 ngày 3 đêm (lộ trình 350–400 km, đèo Bắc Sum, Dốc Thẩm Mã, Đèo Mã Pí Lèng, thuyền hẻm Tu Sản sông Nho Quế 120k–150k VND, giấy phép công an 230k VND, Easy Rider 800k–1.2M VND/ngày) (1,239 substantive words, HLS 100.0/100, 37 empirical signals).
+- [x] **Task 15.2**: Dùng `ag-search` xác minh thực tế và biên soạn bài viết cẩm nang di chuyển:
+  - `content/plan/hanoi-to-ha-giang-transport.md`: Tuyến xe khách Hà Nội - Hà Giang (280–300 km qua cao tốc CT05 & Tuyên Quang, xe cabin đơn 350k–450k VND, cabin đôi 550k–650k VND, limousine đón sân bay Nội Bài, thời gian 5.5–6.5h) (1,399 substantive words, HLS 100.0/100, 44 empirical signals).
+- [x] **Task 15.3**: Dùng `ag-search` xác minh thực tế và biên soạn bài so sánh trực diện:
+  - `content/compare/phong-nha-vs-ninh-binh.md`: So sánh toàn diện giữa Vương quốc hang động Phong Nha - Kẻ Bàng (hang động nguyên sinh thám hiểm ngầm, sông Son, hang Én/Sơn Đoòng) vs Ninh Bình (karst ngập nước văn hóa đồng bằng, thuyền nan Tràng An/Tam Cốc, đền đài lịch sử) (1,450 substantive words, HLS 100.0/100, 87 empirical signals).
+- [x] **Task 15.4**: Chạy `ops/content_depth_auditor.py` kiểm định toàn bộ 13 bài viết trong `content/` (Tổng số từ: **17.325 từ**, 100% PASS, Mean HLS 99.2/100, 656 empirical signals, 0 Tier 1 clichés).
+- [x] **Task 15.5**: Xác minh 8 Quality Gates (8/8 PASS, Exit Code 0, 315 tests passed), commit và push lên `origin/master`.
+
+### Giai Đoạn 16: Vịnh Đảo Đông Bắc & Biển Đảo Tây Nam (Stage 135) [TIẾP THEO]
+- [ ] **Task 16.1**: Dùng `ag-search` xác minh thực tế và biên soạn bài viết chuyên sâu:
+  - `content/destinations/cat-ba-island-guide.md`: Cẩm nang toàn diện Vườn Quốc gia Cát Bà, pháo đài Thần Công, vịnh Lan Hạ, bãi tắm Cát Cò 1/2/3, làng chài Việt Hải, trekking rừng kim giao - đỉnh Ngự Lâm.
+- [ ] **Task 16.2**: Dùng `ag-search` xác minh thực tế và biên soạn bài so sánh trực diện:
+  - `content/compare/phu-quoc-vs-con-dao.md`: So sánh toàn diện giữa Đảo Ngọc Phú Quốc (nghỉ dưỡng quy mô lớn, cáp treo Hòn Thơm, chợ đêm, bãi Sao/bãi Khem) vs Côn Đảo (bảo tồn thiên nhiên biển rùa đẻ trứng, di tích lịch sử nhà tù Côn Đảo, nghỉ dưỡng tĩnh lặng cao cấp).
+- [ ] **Task 16.3**: Dùng `ag-search` xác minh thực tế và biên soạn bài viết cẩm nang di chuyển:
+  - `content/plan/rach-gia-to-phu-quoc-ferry.md`: Cẩm nang tàu cao tốc Superdong / Phu Quoc Express từ Rạch Giá & Hà Tiên đi Phú Quốc (giá vé 230k–340k VND, thời gian 1h15m–2h30m, bến Bãi Vòng, xử lý say sóng mùa gió chướng).
+- [ ] **Task 16.4**: Chạy `ops/content_depth_auditor.py` kiểm định toàn bộ các bài viết mới (bảo đảm >= 1,200 từ, HLS >= 85, 0 Tier 1 clichés, mật độ dữ liệu cao).
+- [ ] **Task 16.5**: Xác minh 8 Quality Gates (8/8 PASS, Exit Code 0), commit và push lên `origin/master`.

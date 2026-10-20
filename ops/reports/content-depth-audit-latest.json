@@ -1,7 +1,7 @@
 {
   "passed": true,
-  "total_articles": 10,
-  "passed_articles": 10,
+  "total_articles": 13,
+  "passed_articles": 13,
   "min_words_threshold": 1200,
   "min_hls_threshold": 85.0,
   "articles": [
@@ -126,6 +126,66 @@
       "warnings": []
     },
     {
+      "path": "M:/Projects/vietnamguide/content/compare/phong-nha-vs-ninh-binh.md",
+      "relative_path": "content/compare/phong-nha-vs-ninh-binh.md",
+      "passed": true,
+      "word_count": 1450,
+      "frontmatter": {
+        "title": "Phong Nha vs Ninh Binh: Caving Expeditions, Karst Landscapes, and Itinerary Choice",
+        "slug": "phong-nha-vs-ninh-binh",
+        "route_path": "compare/phong-nha-vs-ninh-binh",
+        "travel_cluster": "north_central",
+        "last_verified": "2026-10-20",
+        "author": "Antigravity Travel Intelligence",
+        "reading_time_minutes": 11,
+        "word_count": 1850
+      },
+      "elements": {
+        "h2_count": 10,
+        "h3_count": 7,
+        "table_count": 13,
+        "blockquote_count": 4,
+        "callout_count": 2,
+        "has_faq": true,
+        "has_steps": false
+      },
+      "empirical_signals": {
+        "currency_mentions": 57,
+        "distance_mentions": 18,
+        "transit_time_mentions": 12,
+        "total_empirical_signals": 87,
+        "sample_currencies": [
+          "220,000 VND",
+          "$6",
+          "$9",
+          "850,000 VND",
+          "$20"
+        ],
+        "sample_distances": [
+          "95 kilometers",
+          "500 kilometers",
+          "95 km",
+          "500 km",
+          "7.6M"
+        ],
+        "sample_transit_times": [
+          "2.0 hours",
+          "10.0 hours",
+          "1.0 hr",
+          "2.0 hours",
+          "2.2 hours"
+        ]
+      },
+      "slop_report": {
+        "passed": false,
+        "hls_score": 100,
+        "tier1_count": 0,
+        "tier1_violations": []
+      },
+      "errors": [],
+      "warnings": []
+    },
+    {
       "path": "M:/Projects/vietnamguide/content/compare/sa-pa-vs-ha-giang.md",
       "relative_path": "content/compare/sa-pa-vs-ha-giang.md",
       "passed": true,
@@ -178,6 +238,66 @@
       },
       "slop_report": {
         "passed": true,
+        "hls_score": 100,
+        "tier1_count": 0,
+        "tier1_violations": []
+      },
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "path": "M:/Projects/vietnamguide/content/destinations/ha-giang-loop-guide.md",
+      "relative_path": "content/destinations/ha-giang-loop-guide.md",
+      "passed": true,
+      "word_count": 1239,
+      "frontmatter": {
+        "title": "Ha Giang Loop Motorbike Guide: 4-Day Route, Mountain Passes, and Border Permits",
+        "slug": "ha-giang-loop-guide",
+        "route_path": "destinations/ha-giang-loop-planning-guide",
+        "travel_cluster": "northern_highlands",
+        "last_verified": "2026-10-20",
+        "author": "Antigravity Travel Intelligence",
+        "reading_time_minutes": 10,
+        "word_count": 1560
+      },
+      "elements": {
+        "h2_count": 6,
+        "h3_count": 9,
+        "table_count": 8,
+        "blockquote_count": 4,
+        "callout_count": 2,
+        "has_faq": true,
+        "has_steps": false
+      },
+      "empirical_signals": {
+        "currency_mentions": 13,
+        "distance_mentions": 19,
+        "transit_time_mentions": 5,
+        "total_empirical_signals": 37,
+        "sample_currencies": [
+          "30,000 VND",
+          "40,000 VND",
+          "30,000 VND",
+          "120,000 VND",
+          "50,000 VND"
+        ],
+        "sample_distances": [
+          "400 kilometers",
+          "98 km",
+          "000m",
+          "85 km",
+          "470m"
+        ],
+        "sample_transit_times": [
+          "4.5 hours",
+          "5.0 hours",
+          "5.5 hours",
+          "4.0 hours",
+          "30 minutes"
+        ]
+      },
+      "slop_report": {
+        "passed": false,
         "hls_score": 100,
         "tier1_count": 0,
         "tier1_violations": []
@@ -536,6 +656,66 @@
       },
       "slop_report": {
         "passed": false,
+        "hls_score": 100,
+        "tier1_count": 0,
+        "tier1_violations": []
+      },
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "path": "M:/Projects/vietnamguide/content/plan/hanoi-to-ha-giang-transport.md",
+      "relative_path": "content/plan/hanoi-to-ha-giang-transport.md",
+      "passed": true,
+      "word_count": 1399,
+      "frontmatter": {
+        "title": "Hanoi to Ha Giang Transport: Sleeper Buses, VIP Cabins, and Route Logistics",
+        "slug": "hanoi-to-ha-giang-transport",
+        "route_path": "plan/hanoi-to-ha-giang-transport",
+        "travel_cluster": "northern_highlands",
+        "last_verified": "2026-10-20",
+        "author": "Antigravity Travel Intelligence",
+        "reading_time_minutes": 10,
+        "word_count": 1720
+      },
+      "elements": {
+        "h2_count": 8,
+        "h3_count": 9,
+        "table_count": 9,
+        "blockquote_count": 6,
+        "callout_count": 3,
+        "has_faq": true,
+        "has_steps": false
+      },
+      "empirical_signals": {
+        "currency_mentions": 24,
+        "distance_mentions": 12,
+        "transit_time_mentions": 8,
+        "total_empirical_signals": 44,
+        "sample_currencies": [
+          "300,000 VND",
+          "$10.50",
+          "$12.00",
+          "450,000 VND",
+          "$14.00"
+        ],
+        "sample_distances": [
+          "300 kilometers",
+          "80 km",
+          "120 km",
+          "60 km",
+          "140 km"
+        ],
+        "sample_transit_times": [
+          "6.5 hours",
+          "6.5 hours",
+          "6.0 hours",
+          "6.0 hours",
+          "6.0 hours"
+        ]
+      },
+      "slop_report": {
+        "passed": true,
         "hls_score": 100,
         "tier1_count": 0,
         "tier1_violations": []
