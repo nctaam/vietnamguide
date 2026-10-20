@@ -242,16 +242,16 @@ flowchart TD
 - [x] **Task 7.4**: Bổ sung unit tests kiểm tra hợp đồng dữ liệu trong `ops/tests/test_guide_seo.py` (`test_stage126_beaches_street_food_halong_catba_faqs_and_howtos`).
 - [x] **Task 7.5**: Xác minh 8 Quality Gates (8/8 PASS, Exit Code 0, 306 tests passed), commit `7adcdb9` và push lên `origin/master`.
 
-### Giai Đoạn 8: Tuyến Ẩm Thực Miền Trung, Lưu Trú & Hoạt Động Vịnh Hạ Long – Cát Bà, Kết Nối Ninh Bình (Stage 127) [TIẾP THEO]
-- [ ] **Task 8.1**: Dùng `ag-search` xác minh giá vé, địa chỉ ẩm thực, khách sạn & phương tiện:
-  - Ẩm thực Hội An (`destinations/hoi-an-street-food-guide`): Cao lầu Thanh (26 Thái Phiên), Bánh mì Madam Khánh/Phượng (20k–35k VND), Cơm gà Bà Buội (22 Phan Chu Trinh, 45k–60k VND), Nước Mót (150 Trần Phú, 15k VND).
-  - Ẩm thực Cố đô Huế (`destinations/hue-street-food-guide`): Bún bò Huế Mụ Rơi/Bà Tuyết (47 Nguyễn Công Trứ, 40k–60k VND), Bánh bèo nậm lọc Bà Đỏ (8 Nguyễn Bỉnh Khiêm), Cơm hến Đập Đá/Hoa Đông cồn Hến (15k–25k VND), Chè hẻm 29 Hùng Vương (15k–20k VND).
-  - Hoạt động Vịnh Hạ Long (`destinations/best-things-to-do-in-ha-long-bay`): Hang Sửng Sốt, Đảo Ti Tốp (leo 400 bậc đá ngắm toàn cảnh 360 độ), Hang Luồn chèo thuyền kayak, làng chài Cửa Vạn; vé tuyến 2 tham quan 250k VND + vé bến 40k VND; du thuyền 2 ngày 1 đêm vs trong ngày 4–6h.
-  - Lưu trú Vịnh Hạ Long (`destinations/where-to-stay-in-ha-long-bay`): Bãi Cháy (khu nghỉ dưỡng bờ biển, Vinpearl, Sun World), Hòn Gai (khu phố bản địa yên tĩnh, gần chợ hải sản), Tuần Châu (gần bến tàu du thuyền); giá phòng từ 500k đến 4M+ VND/đêm.
-  - Lưu trú Đảo Cát Bà (`destinations/where-to-stay-in-cat-ba`): Thị trấn Cát Bà (khách sạn ven vịnh, Cát Cò 1, 2, 3), Làng chài Việt Hải (homestay sinh thái giữa Vườn quốc gia Cát Bà), Bến Bèo; mức giá homestay 300k–600k VND vs resort Flamingo Cát Bà 2.5M–5M VND.
-  - Cát Bà $\rightarrow$ Ninh Bình (`plan/cat-ba-to-ninh-binh-transport`): Xe khách du lịch trọn gói từ khách sạn thị trấn Cát Bà $\rightarrow$ phà Đồng Bài $\rightarrow$ cao tốc Hải Phòng - Ninh Bình $\rightarrow$ Tam Cốc / Tràng An (4.5–5h, 300k–350k VND, các hãng The Long, Cat Ba Discovery, Daiichi).
-  - Hạ Long $\rightarrow$ Ninh Bình (`plan/ha-long-to-ninh-binh-transport`): Xe limousine VIP từ Bãi Cháy/Tuần Châu đi Ninh Bình qua QL10 hoặc cao tốc CT04 - CT01 (3–3.5h, 250k–320k VND đón trả tận nơi); so sánh với xe buýt thường bến Bãi Cháy.
-- [ ] **Task 8.2**: Bổ sung 7 bộ curated FAQ mới vào `inc/guide-seo.php`:
+### Giai Đoạn 8: Tuyến Ẩm Thực Miền Trung, Lưu Trú & Hoạt Động Vịnh Hạ Long – Cát Bà, Kết Nối Ninh Bình (Stage 127) [HOÀN THÀNH 100%]
+- [x] **Task 8.1**: Dùng `ag-search` xác minh giá vé, địa chỉ ẩm thực, khách sạn & phương tiện:
+  - Ẩm thực Hội An (`destinations/hoi-an-street-food-guide`): Cao lầu Thanh (26 Thái Phiên, 35k–45k VND), Bánh mì Madam Khánh "The Banh Mi Queen" (115 Trần Cao Vân, 30k–35k VND) vs Bánh Mì Phượng (2B Phan Chu Trinh, 30k–40k VND), Cơm gà Bà Buội (22 Phan Chu Trinh, 45k–65k VND), Nước Mót (150 Trần Phú, 15k VND).
+  - Ẩm thực Cố đô Huế (`destinations/hue-street-food-guide`): Bún bò Huế Bà Tuyết (47 Nguyễn Công Trứ, 40k–65k VND) / Mụ Rơi, Bánh bèo nậm lọc ram ít Quán Bà Đỏ (8 Nguyễn Bỉnh Khiêm, 40k–80k VND), Cơm hến Quán Hoa Đông Cồn Hến (64 Kiệt 7 Ưng Bình, 15k–25k VND), Chè hẻm 29 Hùng Vương.
+  - Hoạt động Vịnh Hạ Long (`destinations/best-things-to-do-in-ha-long-bay`): Tuyến 2 (Hang Sửng Sốt, Đảo Ti Tốp leo 400 bậc đá, Hang Luồn chèo kayak); vé tham quan 250k VND + phí bến 40k VND; du thuyền trong ngày 4–6h vs du thuyền 2N1Đ 120–280+ USD.
+  - Lưu trú Vịnh Hạ Long (`destinations/where-to-stay-in-ha-long-bay`): Bãi Cháy (phố du lịch, khách sạn 400k–2.5M VND), Hòn Gai (khu phố bản địa yên tĩnh, chợ hải sản Bến Đoan / Cột 5, 350k–800k VND), Đảo Tuần Châu (resort nghỉ dưỡng, cảng tàu du thuyền).
+  - Lưu trú Đảo Cát Bà (`destinations/where-to-stay-in-cat-ba`): Thị trấn Cát Bà (đường 1/4, gần bãi Cát Cò 1, 2, 3, 300k–800k VND), Làng chài Việt Hải (homestay sinh thái VQG Cát Bà 500k–1.4M VND), Flamingo Cát Bà Beach Resort (2.2M–5M VND).
+  - Cát Bà $\rightarrow$ Ninh Bình (`plan/cat-ba-to-ninh-binh-transport`): Xe khách du lịch trọn gói từ khách sạn thị trấn Cát Bà $\rightarrow$ phà/cano Đồng Bài $\rightarrow$ QL10 Hải Phòng $\rightarrow$ Tam Cốc / Tràng An (4.5–5h, 300k–350k VND, các hãng The Long Travel, Cat Ba Discovery, Daiichi, Cat Ba Express).
+  - Hạ Long $\rightarrow$ Ninh Bình (`plan/ha-long-to-ninh-binh-transport`): Xe limousine VIP 9 chỗ đón trả tận nơi từ Bãi Cháy/Tuần Châu đi Tam Cốc/Ninh Bình qua cao tốc CT04 - QL10 (3–3.5h, 250k–320k VND, nhà xe The Long, Duy Khang); so sánh với xe buýt thường 4–4.5h giá 140k–180k VND.
+- [x] **Task 8.2**: Bổ sung 7 bộ curated FAQ mới vào `inc/guide-seo.php`:
   - `destinations/hoi-an-street-food-guide`
   - `destinations/hue-street-food-guide`
   - `destinations/best-things-to-do-in-ha-long-bay`
@@ -259,8 +259,31 @@ flowchart TD
   - `destinations/where-to-stay-in-cat-ba`
   - `plan/cat-ba-to-ninh-binh-transport`
   - `plan/ha-long-to-ninh-binh-transport`
-- [ ] **Task 8.3**: Bổ sung 2 HowTo schemas chuẩn JSON-LD:
-  - "How to Travel from Cat Ba Island to Ninh Binh by Tourist Bus Combo" (4 bước).
+- [x] **Task 8.3**: Bổ sung 2 HowTo schemas chuẩn JSON-LD:
+  - "How to Travel from Cat Ba Island to Ninh Binh by Tourist Combo Bus" (4 bước).
   - "How to Travel from Ha Long Bay to Ninh Binh by Direct Tourist Limousine" (4 bước).
-- [ ] **Task 8.4**: Bổ sung unit tests kiểm tra hợp đồng dữ liệu trong `ops/tests/test_guide_seo.py` (`test_stage127_street_food_halong_catba_ninhbinh_faqs_and_howtos`).
-- [ ] **Task 8.5**: Xác minh 8 Quality Gates (8/8 PASS, Exit Code 0), commit và push lên `origin/master`.
+- [x] **Task 8.4**: Bổ sung unit tests kiểm tra hợp đồng dữ liệu trong `ops/tests/test_guide_seo.py` (`test_stage127_street_food_halong_catba_ninhbinh_faqs_and_howtos`).
+- [x] **Task 8.5**: Xác minh 8 Quality Gates (8/8 PASS, Exit Code 0, 307 tests passed), commit `4896550` và push lên `origin/master`.
+
+### Giai Đoạn 9: Trải Nghiệm Văn Hóa Độc Đáo, Chợ Nổi, Đỉnh Núi Rồng & Vận Tải Miền Núi (Stage 128) [TIẾP THEO]
+- [ ] **Task 9.1**: Dùng `ag-search` xác minh thông tin thực tế, lịch trình & giá vé:
+  - Phố đường tàu Hà Nội (`destinations/hanoi-train-street-guide`): Lịch tàu hỏa qua đoạn Trần Phú / Phùng Hưng / Lê Duẩn ngày thường vs cuối tuần; quy định an toàn của lực lượng chức năng, lối vào cafe đường tàu có người đón; giá đồ uống 30k–50k VND; khoảng cách an toàn khi tàu chạy qua.
+  - Hang Múa Ninh Bình (`destinations/hang-mua-ninh-binh-guide`): 486–500 bậc thang đá trắng lên Đỉnh Ngọa Long ngắm toàn cảnh Tam Cốc sông Ngô Đồng; vé tham quan 100.000 VND; khung giờ vàng bình minh 06:00–07:30 và hoàng hôn 16:30–18:00; lưu ý trang phục và giày leo núi.
+  - Phố ẩm thực Đà Nẵng (`destinations/da-nang-street-food-guide`): Mì Quảng Bà Mua / 1A Hải Phòng (35k–50k VND), Bánh tráng cuốn thịt heo Trần / Đại Lộc (80k–120k VND), Hải sản Năm Đảnh hẻm K139/H59/38 Trần Quang Khải (đồng giá 70k–110k VND), Bún chả cá Bà Phiến 63 Lê Hồng Phong.
+  - Chợ nổi ĐBSCL (`destinations/mekong-delta-floating-markets-guide`): Chợ nổi Cái Răng Cần Thơ (hoạt động nhộn nhịp nhất 05:30–07:30 sáng, cây bẹo treo hàng hóa, thuê thuyền bến Ninh Kiều 350k–500k VND/thuyền riêng) vs Chợ nổi Cái Bè Tiền Giang; lưu ý mùa nước và thời điểm ghé thăm.
+  - May đo Phố cổ Hội An (`destinations/hoi-an-tailoring-guide`): Thời gian may đo lấy nhanh (24h–48h), quy trình thử đồ fitting 2–3 lần; bảng giá suit 2 mảnh nam 100–250 USD, đầm lụa nữ 30–80 USD; các nhà may uy tín lâu năm (Yaly Couture, Bebe Tailor, Kimmy Tailor, A Dong Silk).
+  - Hà Nội $\rightarrow$ Cao Bằng (`plan/hanoi-to-cao-bang-transport`): Khoảng cách 280 km qua cao tốc Hà Nội - Thái Nguyên - Bắc Kạn - Cao Bằng CT07; xe limousine VIP 9 chỗ (280k–350k VND / 5.5–6h đón trả phố cổ); xe giường nằm bến Mỹ Đình (200k–250k VND / 6.5–7h).
+  - Hà Nội $\rightarrow$ Mai Châu (`plan/hanoi-to-mai-chau-transport`): Khoảng cách 140 km qua QL6 vượt Đèo Thung Khe (Đèo Đá Trắng); xe limousine đón trả tận bản Lác / Poom Coọng (220k–260k VND / 3.5–4h); xe buýt thường bến Yên Nghĩa / Mỹ Đình (100k–130k VND / 4–4.5h).
+- [ ] **Task 9.2**: Bổ sung 7 bộ curated FAQ mới vào `inc/guide-seo.php`:
+  - `destinations/hanoi-train-street-guide`
+  - `destinations/hang-mua-ninh-binh-guide`
+  - `destinations/da-nang-street-food-guide`
+  - `destinations/mekong-delta-floating-markets-guide`
+  - `destinations/hoi-an-tailoring-guide`
+  - `plan/hanoi-to-cao-bang-transport`
+  - `plan/hanoi-to-mai-chau-transport`
+- [ ] **Task 9.3**: Bổ sung 2 HowTo schemas chuẩn JSON-LD:
+  - "How to Travel from Hanoi to Cao Bang by Direct VIP Limousine" (4 bước).
+  - "How to Travel from Hanoi to Mai Chau Valley by Express Limousine or Bus" (4 bước).
+- [ ] **Task 9.4**: Bổ sung unit tests kiểm tra hợp đồng dữ liệu trong `ops/tests/test_guide_seo.py` (`test_stage128_train_street_hang_mua_tailoring_transport_faqs_and_howtos`).
+- [ ] **Task 9.5**: Xác minh 8 Quality Gates (8/8 PASS, Exit Code 0), commit và push lên `origin/master`.
