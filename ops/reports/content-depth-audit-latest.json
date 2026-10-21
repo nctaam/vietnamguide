@@ -1,7 +1,7 @@
 {
   "passed": true,
-  "total_articles": 49,
-  "passed_articles": 49,
+  "total_articles": 52,
+  "passed_articles": 52,
   "min_words_threshold": 1200,
   "min_hls_threshold": 85.0,
   "articles": [
@@ -1720,6 +1720,126 @@
       "warnings": []
     },
     {
+      "path": "M:/Projects/vietnamguide/content/destinations/hanoi-travel-guide.md",
+      "relative_path": "content/destinations/hanoi-travel-guide.md",
+      "passed": true,
+      "word_count": 1646,
+      "frontmatter": {
+        "title": "Hanoi Travel Guide: Where to Stay, What to Do & Route Fit (2026)",
+        "slug": "hanoi-travel-guide",
+        "route_path": "destinations/hanoi-travel-guide",
+        "travel_cluster": "northern_triangle",
+        "last_verified": "2026-10-21",
+        "author": "Antigravity Travel Intelligence",
+        "reading_time_minutes": 14,
+        "word_count": 1900
+      },
+      "elements": {
+        "h2_count": 7,
+        "h3_count": 15,
+        "table_count": 8,
+        "blockquote_count": 4,
+        "callout_count": 2,
+        "has_faq": true,
+        "has_steps": false
+      },
+      "empirical_signals": {
+        "currency_mentions": 45,
+        "distance_mentions": 5,
+        "transit_time_mentions": 11,
+        "total_empirical_signals": 61,
+        "sample_currencies": [
+          "45,000 VND",
+          "280,000 VND",
+          "15,000 VND",
+          "70,000 VND",
+          "70,000 VND"
+        ],
+        "sample_distances": [
+          "30 km",
+          "160 km",
+          "315 km",
+          "30 km",
+          "7 kilometers"
+        ],
+        "sample_transit_times": [
+          "50 minutes",
+          "14 hours",
+          "45 minutes",
+          "60 minutes",
+          "2.5 hours"
+        ]
+      },
+      "slop_report": {
+        "passed": true,
+        "hls_score": 100,
+        "tier1_count": 0,
+        "tier1_violations": []
+      },
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "path": "M:/Projects/vietnamguide/content/destinations/ho-chi-minh-city-travel-guide.md",
+      "relative_path": "content/destinations/ho-chi-minh-city-travel-guide.md",
+      "passed": true,
+      "word_count": 1666,
+      "frontmatter": {
+        "title": "Ho Chi Minh City Travel Guide: Districts, Food & Routes (2026)",
+        "slug": "ho-chi-minh-city-travel-guide",
+        "route_path": "destinations/ho-chi-minh-city-travel-guide",
+        "travel_cluster": "southern_delta",
+        "last_verified": "2026-10-21",
+        "author": "Antigravity Travel Intelligence",
+        "reading_time_minutes": 14,
+        "word_count": 1900
+      },
+      "elements": {
+        "h2_count": 8,
+        "h3_count": 15,
+        "table_count": 9,
+        "blockquote_count": 2,
+        "callout_count": 1,
+        "has_faq": true,
+        "has_steps": false
+      },
+      "empirical_signals": {
+        "currency_mentions": 41,
+        "distance_mentions": 9,
+        "transit_time_mentions": 11,
+        "total_empirical_signals": 61,
+        "sample_currencies": [
+          "150,000 VND",
+          "15,000 VND",
+          "40,000 VND",
+          "60,000 VND",
+          "1,500,000 VND"
+        ],
+        "sample_distances": [
+          "7 km",
+          "70 km",
+          "170 km",
+          "7 km",
+          "2.5 kilometers"
+        ],
+        "sample_transit_times": [
+          "50 minutes",
+          "45 minutes",
+          "30 minutes",
+          "50 minutes",
+          "1.5 hours"
+        ]
+      },
+      "slop_report": {
+        "passed": false,
+        "hls_score": 100,
+        "tier1_count": 0,
+        "tier1_violations": []
+      },
+      "errors": [],
+      "warnings": []
+    },
+    {
       "path": "M:/Projects/vietnamguide/content/destinations/hoi-an-street-food-guide.md",
       "relative_path": "content/destinations/hoi-an-street-food-guide.md",
       "passed": true,
@@ -1997,6 +2117,64 @@
           "30 minutes",
           "8 hours",
           "45 minutes"
+        ]
+      },
+      "slop_report": {
+        "passed": true,
+        "hls_score": 100,
+        "tier1_count": 0,
+        "tier1_violations": []
+      },
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "path": "M:/Projects/vietnamguide/content/destinations/phu-quoc-travel-guide.md",
+      "relative_path": "content/destinations/phu-quoc-travel-guide.md",
+      "passed": true,
+      "word_count": 1475,
+      "frontmatter": {
+        "title": "Phu Quoc Travel Guide: Beaches, Where to Stay & Costs (2026)",
+        "slug": "phu-quoc-travel-guide",
+        "route_path": "destinations/phu-quoc-travel-guide",
+        "travel_cluster": "coastal_islands",
+        "last_verified": "2026-10-21",
+        "author": "Antigravity Travel Intelligence",
+        "reading_time_minutes": 14,
+        "word_count": 1900
+      },
+      "elements": {
+        "h2_count": 7,
+        "h3_count": 16,
+        "table_count": 9,
+        "blockquote_count": 4,
+        "callout_count": 2,
+        "has_faq": true,
+        "has_steps": false
+      },
+      "empirical_signals": {
+        "currency_mentions": 38,
+        "distance_mentions": 21,
+        "transit_time_mentions": 3,
+        "total_empirical_signals": 62,
+        "sample_currencies": [
+          "700,000 VND",
+          "$26",
+          "$28",
+          "2,200,000 VND",
+          "$44"
+        ],
+        "sample_distances": [
+          "30 km",
+          "40 km",
+          "20 km",
+          "10 km",
+          "25 km"
+        ],
+        "sample_transit_times": [
+          "20 minutes",
+          "15 minutes",
+          "55 minutes"
         ]
       },
       "slop_report": {
