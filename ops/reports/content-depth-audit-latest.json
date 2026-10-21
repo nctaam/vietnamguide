@@ -1,7 +1,7 @@
 {
   "passed": true,
-  "total_articles": 43,
-  "passed_articles": 43,
+  "total_articles": 46,
+  "passed_articles": 46,
   "min_words_threshold": 1200,
   "min_hls_threshold": 85.0,
   "articles": [
@@ -963,6 +963,65 @@
       "warnings": []
     },
     {
+      "path": "M:/Projects/vietnamguide/content/destinations/best-things-to-do-in-da-lat.md",
+      "relative_path": "content/destinations/best-things-to-do-in-da-lat.md",
+      "passed": true,
+      "word_count": 1763,
+      "frontmatter": {
+        "title": "Best Things to Do in Da Lat: Highlands & Waterfalls (2026)",
+        "slug": "best-things-to-do-in-da-lat",
+        "route_path": "destinations/best-things-to-do-in-da-lat",
+        "travel_cluster": "central_highlands",
+        "last_verified": "2026-10-21",
+        "author": "Antigravity Travel Intelligence",
+        "reading_time_minutes": 13,
+        "word_count": 1850
+      },
+      "elements": {
+        "h2_count": 10,
+        "h3_count": 9,
+        "table_count": 13,
+        "blockquote_count": 4,
+        "callout_count": 2,
+        "has_faq": true,
+        "has_steps": false
+      },
+      "empirical_signals": {
+        "currency_mentions": 40,
+        "distance_mentions": 29,
+        "transit_time_mentions": 4,
+        "total_empirical_signals": 73,
+        "sample_currencies": [
+          "50,000 VND",
+          "120,000 VND",
+          "120,000 VND",
+          "100,000 VND",
+          "500,000 VND"
+        ],
+        "sample_distances": [
+          "500 meters",
+          "12 km",
+          "15 km",
+          "167m",
+          "950m"
+        ],
+        "sample_transit_times": [
+          "15 minutes",
+          "4.5 hours",
+          "72 hours",
+          "45 minutes"
+        ]
+      },
+      "slop_report": {
+        "passed": true,
+        "hls_score": 100,
+        "tier1_count": 0,
+        "tier1_violations": []
+      },
+      "errors": [],
+      "warnings": []
+    },
+    {
       "path": "M:/Projects/vietnamguide/content/destinations/can-tho-cai-rang-floating-market-guide.md",
       "relative_path": "content/destinations/can-tho-cai-rang-floating-market-guide.md",
       "passed": true,
@@ -1189,6 +1248,65 @@
       },
       "slop_report": {
         "passed": false,
+        "hls_score": 100,
+        "tier1_count": 0,
+        "tier1_violations": []
+      },
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "path": "M:/Projects/vietnamguide/content/destinations/da-lat-coffee-farms-guide.md",
+      "relative_path": "content/destinations/da-lat-coffee-farms-guide.md",
+      "passed": true,
+      "word_count": 1578,
+      "frontmatter": {
+        "title": "Da Lat Coffee Farms: Arabica Tour & Cupping Guide (2026)",
+        "slug": "da-lat-coffee-farms-guide",
+        "route_path": "destinations/da-lat-coffee-farms-guide",
+        "travel_cluster": "central_highlands",
+        "last_verified": "2026-10-21",
+        "author": "Antigravity Travel Intelligence",
+        "reading_time_minutes": 12,
+        "word_count": 1750
+      },
+      "elements": {
+        "h2_count": 7,
+        "h3_count": 13,
+        "table_count": 8,
+        "blockquote_count": 4,
+        "callout_count": 2,
+        "has_faq": true,
+        "has_steps": true
+      },
+      "empirical_signals": {
+        "currency_mentions": 23,
+        "distance_mentions": 22,
+        "transit_time_mentions": 4,
+        "total_empirical_signals": 49,
+        "sample_currencies": [
+          "90,000 VND",
+          "150,000 VND",
+          "500,000 VND",
+          "450,000 VND",
+          "120,000 VND"
+        ],
+        "sample_distances": [
+          "650 meters",
+          "500m",
+          "700m",
+          "200m",
+          "400m"
+        ],
+        "sample_transit_times": [
+          "45 minutes",
+          "25 minutes",
+          "36 hours",
+          "48 hours"
+        ]
+      },
+      "slop_report": {
+        "passed": true,
         "hls_score": 100,
         "tier1_count": 0,
         "tier1_violations": []
@@ -1586,6 +1704,60 @@
         ],
         "sample_transit_times": [
           "45 minutes"
+        ]
+      },
+      "slop_report": {
+        "passed": true,
+        "hls_score": 100,
+        "tier1_count": 0,
+        "tier1_violations": []
+      },
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "path": "M:/Projects/vietnamguide/content/destinations/hue-street-food-guide.md",
+      "relative_path": "content/destinations/hue-street-food-guide.md",
+      "passed": true,
+      "word_count": 1595,
+      "frontmatter": {
+        "title": "Hue Street Food Guide: 9 Essential Dishes & Stalls (2026)",
+        "slug": "hue-street-food-guide",
+        "route_path": "destinations/hue-street-food-guide",
+        "travel_cluster": "central_heritage",
+        "last_verified": "2026-10-21",
+        "author": "Antigravity Travel Intelligence",
+        "reading_time_minutes": 12,
+        "word_count": 1850
+      },
+      "elements": {
+        "h2_count": 7,
+        "h3_count": 10,
+        "table_count": 8,
+        "blockquote_count": 2,
+        "callout_count": 1,
+        "has_faq": true,
+        "has_steps": false
+      },
+      "empirical_signals": {
+        "currency_mentions": 32,
+        "distance_mentions": 2,
+        "transit_time_mentions": 2,
+        "total_empirical_signals": 36,
+        "sample_currencies": [
+          "60,000 VND",
+          "$1.40",
+          "$2.40",
+          "50,000 VND",
+          "6,000 VND"
+        ],
+        "sample_distances": [
+          "2.5 km",
+          "2.5 kilometers"
+        ],
+        "sample_transit_times": [
+          "12 hours",
+          "35 minutes"
         ]
       },
       "slop_report": {
