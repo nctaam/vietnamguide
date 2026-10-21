@@ -1,7 +1,7 @@
 {
   "passed": true,
-  "total_articles": 52,
-  "passed_articles": 52,
+  "total_articles": 55,
+  "passed_articles": 55,
   "min_words_threshold": 1200,
   "min_hls_threshold": 85.0,
   "articles": [
@@ -1196,6 +1196,66 @@
       "warnings": []
     },
     {
+      "path": "M:/Projects/vietnamguide/content/destinations/con-dao-travel-guide.md",
+      "relative_path": "content/destinations/con-dao-travel-guide.md",
+      "passed": true,
+      "word_count": 1648,
+      "frontmatter": {
+        "title": "Con Dao Travel Guide: Best Time, Where to Stay & Costs (2026)",
+        "slug": "con-dao-travel-guide",
+        "route_path": "destinations/con-dao-travel-guide",
+        "travel_cluster": "coastal_islands",
+        "last_verified": "2026-10-21",
+        "author": "Antigravity Travel Intelligence",
+        "reading_time_minutes": 14,
+        "word_count": 1950
+      },
+      "elements": {
+        "h2_count": 9,
+        "h3_count": 13,
+        "table_count": 11,
+        "blockquote_count": 4,
+        "callout_count": 2,
+        "has_faq": true,
+        "has_steps": false
+      },
+      "empirical_signals": {
+        "currency_mentions": 38,
+        "distance_mentions": 20,
+        "transit_time_mentions": 5,
+        "total_empirical_signals": 63,
+        "sample_currencies": [
+          "50,000 VND",
+          "$2.00",
+          "2,400,000 VND",
+          "$48",
+          "$96"
+        ],
+        "sample_distances": [
+          "185 kilometers",
+          "14 km",
+          "12 km",
+          "185 km",
+          "85 km"
+        ],
+        "sample_transit_times": [
+          "20 minutes",
+          "50 minutes",
+          "2.5 hours",
+          "4.0 hours",
+          "72 hours"
+        ]
+      },
+      "slop_report": {
+        "passed": false,
+        "hls_score": 100,
+        "tier1_count": 0,
+        "tier1_violations": []
+      },
+      "errors": [],
+      "warnings": []
+    },
+    {
       "path": "M:/Projects/vietnamguide/content/destinations/da-lat-coffee-and-highlands-guide.md",
       "relative_path": "content/destinations/da-lat-coffee-and-highlands-guide.md",
       "passed": true,
@@ -1541,6 +1601,66 @@
       "warnings": []
     },
     {
+      "path": "M:/Projects/vietnamguide/content/destinations/ha-long-bay-travel-guide.md",
+      "relative_path": "content/destinations/ha-long-bay-travel-guide.md",
+      "passed": true,
+      "word_count": 1350,
+      "frontmatter": {
+        "title": "Ha Long Bay Travel Guide: Cruise, Timing, and Route Fit (2026)",
+        "slug": "ha-long-bay-travel-guide",
+        "route_path": "destinations/ha-long-bay-travel-guide",
+        "travel_cluster": "ha_long_bay",
+        "last_verified": "2026-10-21",
+        "author": "Antigravity Travel Intelligence",
+        "reading_time_minutes": 14,
+        "word_count": 1950
+      },
+      "elements": {
+        "h2_count": 7,
+        "h3_count": 13,
+        "table_count": 9,
+        "blockquote_count": 4,
+        "callout_count": 2,
+        "has_faq": true,
+        "has_steps": false
+      },
+      "empirical_signals": {
+        "currency_mentions": 25,
+        "distance_mentions": 6,
+        "transit_time_mentions": 8,
+        "total_empirical_signals": 39,
+        "sample_currencies": [
+          "350k VND",
+          "310,000 VND",
+          "$11.60",
+          "$12.40",
+          "250,000 VND"
+        ],
+        "sample_distances": [
+          "160 km",
+          "160 km",
+          "65 km",
+          "45 km",
+          "12 kilometers"
+        ],
+        "sample_transit_times": [
+          "2.5 hours",
+          "2.5 hours",
+          "4.0 Hours",
+          "6.0 Hours",
+          "4 Hours"
+        ]
+      },
+      "slop_report": {
+        "passed": true,
+        "hls_score": 100,
+        "tier1_count": 0,
+        "tier1_violations": []
+      },
+      "errors": [],
+      "warnings": []
+    },
+    {
       "path": "M:/Projects/vietnamguide/content/destinations/hang-mua-ninh-binh-guide.md",
       "relative_path": "content/destinations/hang-mua-ninh-binh-guide.md",
       "passed": true,
@@ -1832,6 +1952,65 @@
       },
       "slop_report": {
         "passed": false,
+        "hls_score": 100,
+        "tier1_count": 0,
+        "tier1_violations": []
+      },
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "path": "M:/Projects/vietnamguide/content/destinations/hoi-an-ancient-town-guide.md",
+      "relative_path": "content/destinations/hoi-an-ancient-town-guide.md",
+      "passed": true,
+      "word_count": 1491,
+      "frontmatter": {
+        "title": "Hoi An Ancient Town Guide: When to Stay, Visit or Skip (2026)",
+        "slug": "hoi-an-ancient-town-guide",
+        "route_path": "destinations/hoi-an-ancient-town-guide",
+        "travel_cluster": "central_heritage",
+        "last_verified": "2026-10-21",
+        "author": "Antigravity Travel Intelligence",
+        "reading_time_minutes": 14,
+        "word_count": 1950
+      },
+      "elements": {
+        "h2_count": 7,
+        "h3_count": 11,
+        "table_count": 8,
+        "blockquote_count": 2,
+        "callout_count": 1,
+        "has_faq": true,
+        "has_steps": false
+      },
+      "empirical_signals": {
+        "currency_mentions": 34,
+        "distance_mentions": 7,
+        "transit_time_mentions": 4,
+        "total_empirical_signals": 45,
+        "sample_currencies": [
+          "120,000 VND",
+          "$4.80",
+          "350k VND",
+          "150k VND",
+          "150,000 VND"
+        ],
+        "sample_distances": [
+          "200 meters",
+          "30 km",
+          "130 km",
+          "2.5 meters",
+          "30 kilometers"
+        ],
+        "sample_transit_times": [
+          "50 minutes",
+          "24 hours",
+          "48 hours",
+          "50 minutes"
+        ]
+      },
+      "slop_report": {
+        "passed": true,
         "hls_score": 100,
         "tier1_count": 0,
         "tier1_violations": []
