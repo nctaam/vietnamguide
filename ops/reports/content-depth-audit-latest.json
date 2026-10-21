@@ -1,7 +1,7 @@
 {
   "passed": true,
-  "total_articles": 61,
-  "passed_articles": 61,
+  "total_articles": 64,
+  "passed_articles": 64,
   "min_words_threshold": 1200,
   "min_hls_threshold": 85.0,
   "articles": [
@@ -1063,6 +1063,117 @@
         "sample_transit_times": [
           "25 minutes",
           "15 mins"
+        ]
+      },
+      "slop_report": {
+        "passed": true,
+        "hls_score": 100,
+        "tier1_count": 0,
+        "tier1_violations": []
+      },
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "path": "M:/Projects/vietnamguide/content/destinations/best-things-to-do-in-hanoi.md",
+      "relative_path": "content/destinations/best-things-to-do-in-hanoi.md",
+      "passed": true,
+      "word_count": 1663,
+      "frontmatter": {
+        "title": "Best Things to Do in Hanoi: What Is Actually Worth Your Time",
+        "slug": "best-things-to-do-in-hanoi",
+        "route_path": "destinations/best-things-to-do-in-hanoi",
+        "travel_cluster": "northern_triangle",
+        "last_verified": "2026-10-21",
+        "author": "Antigravity Travel Intelligence",
+        "reading_time_minutes": 13,
+        "word_count": 1850
+      },
+      "elements": {
+        "h2_count": 9,
+        "h3_count": 8,
+        "table_count": 1,
+        "blockquote_count": 2,
+        "callout_count": 1,
+        "has_faq": true,
+        "has_steps": false
+      },
+      "empirical_signals": {
+        "currency_mentions": 17,
+        "distance_mentions": 0,
+        "transit_time_mentions": 7,
+        "total_empirical_signals": 24,
+        "sample_currencies": [
+          "10,000 VND",
+          "70,000 VND",
+          "35,000 VND",
+          "50,000 VND",
+          "50,000 VND"
+        ],
+        "sample_distances": [],
+        "sample_transit_times": [
+          "2 hours",
+          "1.5 hours",
+          "2.0 hours",
+          "50 minutes",
+          "2.5 hours"
+        ]
+      },
+      "slop_report": {
+        "passed": true,
+        "hls_score": 100,
+        "tier1_count": 0,
+        "tier1_violations": []
+      },
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "path": "M:/Projects/vietnamguide/content/destinations/best-things-to-do-in-ho-chi-minh-city.md",
+      "relative_path": "content/destinations/best-things-to-do-in-ho-chi-minh-city.md",
+      "passed": true,
+      "word_count": 1500,
+      "frontmatter": {
+        "title": "Best Things to Do in Ho Chi Minh City (2026 Guide)",
+        "slug": "best-things-to-do-in-ho-chi-minh-city",
+        "route_path": "destinations/best-things-to-do-in-ho-chi-minh-city",
+        "travel_cluster": "southern_delta",
+        "last_verified": "2026-10-21",
+        "author": "Antigravity Travel Intelligence",
+        "reading_time_minutes": 14,
+        "word_count": 1950
+      },
+      "elements": {
+        "h2_count": 9,
+        "h3_count": 9,
+        "table_count": 2,
+        "blockquote_count": 2,
+        "callout_count": 1,
+        "has_faq": true,
+        "has_steps": false
+      },
+      "empirical_signals": {
+        "currency_mentions": 14,
+        "distance_mentions": 2,
+        "transit_time_mentions": 7,
+        "total_empirical_signals": 23,
+        "sample_currencies": [
+          "60,000 VND",
+          "30,000 VND",
+          "40,000 VND",
+          "80,000 VND",
+          "1,400,000 VND"
+        ],
+        "sample_distances": [
+          "461 meters",
+          "262 meters"
+        ],
+        "sample_transit_times": [
+          "2.5 hours",
+          "1.5 hours",
+          "45 minutes",
+          "2.5 hours",
+          "1.5 hours"
         ]
       },
       "slop_report": {
@@ -2457,6 +2568,65 @@
       },
       "slop_report": {
         "passed": false,
+        "hls_score": 100,
+        "tier1_count": 0,
+        "tier1_violations": []
+      },
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "path": "M:/Projects/vietnamguide/content/destinations/nha-trang-travel-guide.md",
+      "relative_path": "content/destinations/nha-trang-travel-guide.md",
+      "passed": true,
+      "word_count": 1650,
+      "frontmatter": {
+        "title": "Nha Trang Travel Guide: Beach, Food, Cam Ranh and Islands",
+        "slug": "nha-trang-travel-guide",
+        "route_path": "destinations/nha-trang-travel-guide",
+        "travel_cluster": "coastal_islands",
+        "last_verified": "2026-10-21",
+        "author": "Antigravity Travel Intelligence",
+        "reading_time_minutes": 13,
+        "word_count": 1850
+      },
+      "elements": {
+        "h2_count": 7,
+        "h3_count": 14,
+        "table_count": 2,
+        "blockquote_count": 2,
+        "callout_count": 1,
+        "has_faq": true,
+        "has_steps": false
+      },
+      "empirical_signals": {
+        "currency_mentions": 33,
+        "distance_mentions": 5,
+        "transit_time_mentions": 4,
+        "total_empirical_signals": 42,
+        "sample_currencies": [
+          "200,000 VND",
+          "350,000 VND",
+          "2,200,000 VND",
+          "$25",
+          "$90"
+        ],
+        "sample_distances": [
+          "35 km",
+          "8 km",
+          "42 km",
+          "25m",
+          "5m"
+        ],
+        "sample_transit_times": [
+          "50 mins",
+          "15 mins",
+          "60 mins",
+          "15 min"
+        ]
+      },
+      "slop_report": {
+        "passed": true,
         "hls_score": 100,
         "tier1_count": 0,
         "tier1_violations": []
