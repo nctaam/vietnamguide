@@ -1,7 +1,7 @@
 {
   "passed": true,
-  "total_articles": 55,
-  "passed_articles": 55,
+  "total_articles": 58,
+  "passed_articles": 58,
   "min_words_threshold": 1200,
   "min_hls_threshold": 85.0,
   "articles": [
@@ -1010,6 +1010,112 @@
           "4.5 hours",
           "72 hours",
           "45 minutes"
+        ]
+      },
+      "slop_report": {
+        "passed": true,
+        "hls_score": 100,
+        "tier1_count": 0,
+        "tier1_violations": []
+      },
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "path": "M:/Projects/vietnamguide/content/destinations/best-things-to-do-in-ha-long-bay.md",
+      "relative_path": "content/destinations/best-things-to-do-in-ha-long-bay.md",
+      "passed": true,
+      "word_count": 1302,
+      "frontmatter": {
+        "title": "Best Things to Do in Ha Long Bay: Caves & Cruises",
+        "slug": "best-things-to-do-in-ha-long-bay",
+        "route_path": "destinations/best-things-to-do-in-ha-long-bay",
+        "travel_cluster": "ha_long_bay",
+        "last_verified": "2026-10-21",
+        "author": "Antigravity Travel Intelligence",
+        "reading_time_minutes": 12,
+        "word_count": 1750
+      },
+      "elements": {
+        "h2_count": 8,
+        "h3_count": 8,
+        "table_count": 2,
+        "blockquote_count": 2,
+        "callout_count": 1,
+        "has_faq": true,
+        "has_steps": true
+      },
+      "empirical_signals": {
+        "currency_mentions": 9,
+        "distance_mentions": 1,
+        "transit_time_mentions": 2,
+        "total_empirical_signals": 12,
+        "sample_currencies": [
+          "50,000 VND",
+          "30,000 VND",
+          "20,000 VND",
+          "$110",
+          "$140"
+        ],
+        "sample_distances": [
+          "300m"
+        ],
+        "sample_transit_times": [
+          "25 minutes",
+          "15 mins"
+        ]
+      },
+      "slop_report": {
+        "passed": true,
+        "hls_score": 100,
+        "tier1_count": 0,
+        "tier1_violations": []
+      },
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "path": "M:/Projects/vietnamguide/content/destinations/best-things-to-do-in-hoi-an.md",
+      "relative_path": "content/destinations/best-things-to-do-in-hoi-an.md",
+      "passed": true,
+      "word_count": 1436,
+      "frontmatter": {
+        "title": "Best Things to Do in Hoi An: What Is Actually Worth It",
+        "slug": "best-things-to-do-in-hoi-an",
+        "route_path": "destinations/best-things-to-do-in-hoi-an",
+        "travel_cluster": "central_heritage",
+        "last_verified": "2026-10-21",
+        "author": "Antigravity Travel Intelligence",
+        "reading_time_minutes": 13,
+        "word_count": 1850
+      },
+      "elements": {
+        "h2_count": 8,
+        "h3_count": 9,
+        "table_count": 3,
+        "blockquote_count": 2,
+        "callout_count": 1,
+        "has_faq": true,
+        "has_steps": false
+      },
+      "empirical_signals": {
+        "currency_mentions": 31,
+        "distance_mentions": 2,
+        "transit_time_mentions": 1,
+        "total_empirical_signals": 34,
+        "sample_currencies": [
+          "120,000 VND",
+          "50,000 VND",
+          "10,000 VND",
+          "35,000 VND",
+          "35,000 VND"
+        ],
+        "sample_distances": [
+          "1.0m",
+          "1.4m"
+        ],
+        "sample_transit_times": [
+          "20 mins"
         ]
       },
       "slop_report": {
@@ -2067,6 +2173,56 @@
       },
       "slop_report": {
         "passed": true,
+        "hls_score": 100,
+        "tier1_count": 0,
+        "tier1_violations": []
+      },
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "path": "M:/Projects/vietnamguide/content/destinations/hue-imperial-city-guide.md",
+      "relative_path": "content/destinations/hue-imperial-city-guide.md",
+      "passed": true,
+      "word_count": 1845,
+      "frontmatter": {
+        "title": "Hue Imperial City Guide: How to Visit Without Rushing",
+        "slug": "hue-imperial-city-guide",
+        "route_path": "destinations/hue-imperial-city-guide",
+        "travel_cluster": "central_heritage",
+        "last_verified": "2026-10-21",
+        "author": "Antigravity Travel Intelligence",
+        "reading_time_minutes": 11,
+        "word_count": 1850
+      },
+      "elements": {
+        "h2_count": 7,
+        "h3_count": 17,
+        "table_count": 1,
+        "blockquote_count": 2,
+        "callout_count": 1,
+        "has_faq": true,
+        "has_steps": true
+      },
+      "empirical_signals": {
+        "currency_mentions": 14,
+        "distance_mentions": 0,
+        "transit_time_mentions": 1,
+        "total_empirical_signals": 15,
+        "sample_currencies": [
+          "200,000 VND",
+          "40,000 VND",
+          "150,000 VND",
+          "30,000 VND",
+          "420,000 VND"
+        ],
+        "sample_distances": [],
+        "sample_transit_times": [
+          "60 minutes"
+        ]
+      },
+      "slop_report": {
+        "passed": false,
         "hls_score": 100,
         "tier1_count": 0,
         "tier1_violations": []
