@@ -1,7 +1,7 @@
 {
   "passed": true,
-  "total_articles": 64,
-  "passed_articles": 64,
+  "total_articles": 67,
+  "passed_articles": 67,
   "min_words_threshold": 1200,
   "min_hls_threshold": 85.0,
   "articles": [
@@ -186,6 +186,66 @@
       "warnings": []
     },
     {
+      "path": "M:/Projects/vietnamguide/content/compare/cu-chi-tunnels-vs-mekong-delta-day-trip.md",
+      "relative_path": "content/compare/cu-chi-tunnels-vs-mekong-delta-day-trip.md",
+      "passed": true,
+      "word_count": 1595,
+      "frontmatter": {
+        "title": "Cu Chi Tunnels vs Mekong Delta Day Trip: Which Is Better?",
+        "slug": "cu-chi-tunnels-vs-mekong-delta-day-trip",
+        "route_path": "compare/cu-chi-tunnels-vs-mekong-delta-day-trip",
+        "travel_cluster": "southern_delta",
+        "last_verified": "2026-10-21",
+        "author": "Antigravity Travel Intelligence",
+        "reading_time_minutes": 10,
+        "word_count": 1680
+      },
+      "elements": {
+        "h2_count": 6,
+        "h3_count": 9,
+        "table_count": 9,
+        "blockquote_count": 4,
+        "callout_count": 1,
+        "has_faq": true,
+        "has_steps": false
+      },
+      "empirical_signals": {
+        "currency_mentions": 22,
+        "distance_mentions": 13,
+        "transit_time_mentions": 16,
+        "total_empirical_signals": 51,
+        "sample_currencies": [
+          "125,000 VND",
+          "110,000 VND",
+          "250,000 VND",
+          "60,000 VND",
+          "60,000 VND"
+        ],
+        "sample_distances": [
+          "50 km",
+          "70 km",
+          "90 km",
+          "70 km",
+          "90 km"
+        ],
+        "sample_transit_times": [
+          "2 hours",
+          "75 mins",
+          "2.5 hours",
+          "6 hours",
+          "9 hours"
+        ]
+      },
+      "slop_report": {
+        "passed": true,
+        "hls_score": 100,
+        "tier1_count": 0,
+        "tier1_violations": []
+      },
+      "errors": [],
+      "warnings": []
+    },
+    {
       "path": "M:/Projects/vietnamguide/content/compare/da-lat-vs-buon-ma-thuot.md",
       "relative_path": "content/compare/da-lat-vs-buon-ma-thuot.md",
       "passed": true,
@@ -231,6 +291,66 @@
         "sample_transit_times": [
           "6.5 hours",
           "8 hours"
+        ]
+      },
+      "slop_report": {
+        "passed": true,
+        "hls_score": 100,
+        "tier1_count": 0,
+        "tier1_violations": []
+      },
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "path": "M:/Projects/vietnamguide/content/compare/da-nang-vs-hoi-an.md",
+      "relative_path": "content/compare/da-nang-vs-hoi-an.md",
+      "passed": true,
+      "word_count": 1545,
+      "frontmatter": {
+        "title": "Da Nang vs Hoi An: Which Central Vietnam Base Is Better?",
+        "slug": "da-nang-vs-hoi-an",
+        "route_path": "compare/da-nang-vs-hoi-an",
+        "travel_cluster": "central_heritage",
+        "last_verified": "2026-10-21",
+        "author": "Antigravity Travel Intelligence",
+        "reading_time_minutes": 10,
+        "word_count": 1650
+      },
+      "elements": {
+        "h2_count": 8,
+        "h3_count": 10,
+        "table_count": 12,
+        "blockquote_count": 5,
+        "callout_count": 1,
+        "has_faq": true,
+        "has_steps": false
+      },
+      "empirical_signals": {
+        "currency_mentions": 24,
+        "distance_mentions": 29,
+        "transit_time_mentions": 22,
+        "total_empirical_signals": 75,
+        "sample_currencies": [
+          "350,000 VND",
+          "$10.00",
+          "$14.00",
+          "30,000 VND",
+          "$1.20"
+        ],
+        "sample_distances": [
+          "30 kilometers",
+          "3 km",
+          "30 km",
+          "35 km",
+          "12 km"
+        ],
+        "sample_transit_times": [
+          "45 minutes",
+          "15 mins",
+          "55 mins",
+          "10 mins",
+          "10 mins"
         ]
       },
       "slop_report": {
@@ -296,6 +416,66 @@
       "slop_report": {
         "passed": false,
         "hls_score": 90,
+        "tier1_count": 0,
+        "tier1_violations": []
+      },
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "path": "M:/Projects/vietnamguide/content/compare/hanoi-vs-ho-chi-minh-city.md",
+      "relative_path": "content/compare/hanoi-vs-ho-chi-minh-city.md",
+      "passed": true,
+      "word_count": 1916,
+      "frontmatter": {
+        "title": "Hanoi vs Ho Chi Minh City: Which Should You Visit First?",
+        "slug": "hanoi-vs-ho-chi-minh-city",
+        "route_path": "compare/hanoi-vs-ho-chi-minh-city",
+        "travel_cluster": "northern_triangle",
+        "last_verified": "2026-10-21",
+        "author": "Antigravity Travel Intelligence",
+        "reading_time_minutes": 10,
+        "word_count": 1620
+      },
+      "elements": {
+        "h2_count": 8,
+        "h3_count": 13,
+        "table_count": 13,
+        "blockquote_count": 4,
+        "callout_count": 1,
+        "has_faq": true,
+        "has_steps": true
+      },
+      "empirical_signals": {
+        "currency_mentions": 17,
+        "distance_mentions": 19,
+        "transit_time_mentions": 14,
+        "total_empirical_signals": 50,
+        "sample_currencies": [
+          "350k VND",
+          "180k VND",
+          "350,000 VND",
+          "$11.20",
+          "$14.00"
+        ],
+        "sample_distances": [
+          "28 km",
+          "7 km",
+          "150 km",
+          "95 km",
+          "315 km"
+        ],
+        "sample_transit_times": [
+          "60 mins",
+          "45 mins",
+          "75 mins",
+          "2.5 hours",
+          "2 hours"
+        ]
+      },
+      "slop_report": {
+        "passed": true,
+        "hls_score": 100,
         "tier1_count": 0,
         "tier1_violations": []
       },
