@@ -1,7 +1,7 @@
 {
   "passed": true,
-  "total_articles": 58,
-  "passed_articles": 58,
+  "total_articles": 61,
+  "passed_articles": 61,
   "min_words_threshold": 1200,
   "min_hls_threshold": 85.0,
   "articles": [
@@ -1647,6 +1647,66 @@
       "warnings": []
     },
     {
+      "path": "M:/Projects/vietnamguide/content/destinations/da-nang-travel-guide.md",
+      "relative_path": "content/destinations/da-nang-travel-guide.md",
+      "passed": true,
+      "word_count": 1866,
+      "frontmatter": {
+        "title": "Da Nang Travel Guide: Beaches, City Base & Day Trips",
+        "slug": "da-nang-travel-guide",
+        "route_path": "destinations/da-nang-travel-guide",
+        "travel_cluster": "central_heritage",
+        "last_verified": "2026-10-21",
+        "author": "Antigravity Travel Intelligence",
+        "reading_time_minutes": 13,
+        "word_count": 1800
+      },
+      "elements": {
+        "h2_count": 7,
+        "h3_count": 14,
+        "table_count": 2,
+        "blockquote_count": 2,
+        "callout_count": 1,
+        "has_faq": true,
+        "has_steps": false
+      },
+      "empirical_signals": {
+        "currency_mentions": 26,
+        "distance_mentions": 9,
+        "transit_time_mentions": 6,
+        "total_empirical_signals": 41,
+        "sample_currencies": [
+          "1,800,000 VND",
+          "$25",
+          "$75",
+          "1,200,000 VND",
+          "$18"
+        ],
+        "sample_distances": [
+          "100 km",
+          "30 km",
+          "693 meters",
+          "67 meters",
+          "496 meters"
+        ],
+        "sample_transit_times": [
+          "5 minute",
+          "10 minute",
+          "10 minutes",
+          "20 minutes",
+          "3 hours"
+        ]
+      },
+      "slop_report": {
+        "passed": false,
+        "hls_score": 100,
+        "tier1_count": 0,
+        "tier1_violations": []
+      },
+      "errors": [],
+      "warnings": []
+    },
+    {
       "path": "M:/Projects/vietnamguide/content/destinations/ha-giang-loop-guide.md",
       "relative_path": "content/destinations/ha-giang-loop-guide.md",
       "passed": true,
@@ -2405,6 +2465,64 @@
       "warnings": []
     },
     {
+      "path": "M:/Projects/vietnamguide/content/destinations/ninh-binh-travel-guide.md",
+      "relative_path": "content/destinations/ninh-binh-travel-guide.md",
+      "passed": true,
+      "word_count": 1624,
+      "frontmatter": {
+        "title": "Ninh Binh Travel Guide: Day Trip, Overnight, or Skip?",
+        "slug": "ninh-binh-travel-guide",
+        "route_path": "destinations/ninh-binh-travel-guide",
+        "travel_cluster": "ninh_binh",
+        "last_verified": "2026-10-21",
+        "author": "Antigravity Travel Intelligence",
+        "reading_time_minutes": 13,
+        "word_count": 1850
+      },
+      "elements": {
+        "h2_count": 7,
+        "h3_count": 10,
+        "table_count": 2,
+        "blockquote_count": 2,
+        "callout_count": 1,
+        "has_faq": true,
+        "has_steps": false
+      },
+      "empirical_signals": {
+        "currency_mentions": 18,
+        "distance_mentions": 3,
+        "transit_time_mentions": 8,
+        "total_empirical_signals": 29,
+        "sample_currencies": [
+          "220,000 VND",
+          "140,000 VND",
+          "300,000 VND",
+          "250,000 VND",
+          "100,000 VND"
+        ],
+        "sample_distances": [
+          "10 km",
+          "15 km",
+          "22 km"
+        ],
+        "sample_transit_times": [
+          "4 hours",
+          "4 hours",
+          "3.5 hours",
+          "2.0 hours",
+          "2.0 hours"
+        ]
+      },
+      "slop_report": {
+        "passed": true,
+        "hls_score": 100,
+        "tier1_count": 0,
+        "tier1_violations": []
+      },
+      "errors": [],
+      "warnings": []
+    },
+    {
       "path": "M:/Projects/vietnamguide/content/destinations/phong-nha-caves-exploration-guide.md",
       "relative_path": "content/destinations/phong-nha-caves-exploration-guide.md",
       "passed": true,
@@ -2456,6 +2574,60 @@
       },
       "slop_report": {
         "passed": true,
+        "hls_score": 100,
+        "tier1_count": 0,
+        "tier1_violations": []
+      },
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "path": "M:/Projects/vietnamguide/content/destinations/phong-nha-travel-guide.md",
+      "relative_path": "content/destinations/phong-nha-travel-guide.md",
+      "passed": true,
+      "word_count": 1729,
+      "frontmatter": {
+        "title": "Phong Nha Travel Guide: Caves, Seasons and Route Fit",
+        "slug": "phong-nha-travel-guide",
+        "route_path": "destinations/phong-nha-travel-guide",
+        "travel_cluster": "phong_nha_caves",
+        "last_verified": "2026-10-21",
+        "author": "Antigravity Travel Intelligence",
+        "reading_time_minutes": 14,
+        "word_count": 1950
+      },
+      "elements": {
+        "h2_count": 7,
+        "h3_count": 14,
+        "table_count": 2,
+        "blockquote_count": 2,
+        "callout_count": 1,
+        "has_faq": true,
+        "has_steps": false
+      },
+      "empirical_signals": {
+        "currency_mentions": 22,
+        "distance_mentions": 7,
+        "transit_time_mentions": 0,
+        "total_empirical_signals": 29,
+        "sample_currencies": [
+          "270,000 VND",
+          "145,000 VND",
+          "200,000 VND",
+          "700,000 VND",
+          "150,000 VND"
+        ],
+        "sample_distances": [
+          "45 kilometers",
+          "1.1m",
+          "1.3m",
+          "1.1m",
+          "1.6 kilometers"
+        ],
+        "sample_transit_times": []
+      },
+      "slop_report": {
+        "passed": false,
         "hls_score": 100,
         "tier1_count": 0,
         "tier1_violations": []
