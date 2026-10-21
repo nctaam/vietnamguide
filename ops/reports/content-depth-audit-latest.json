@@ -1,7 +1,7 @@
 {
   "passed": true,
-  "total_articles": 46,
-  "passed_articles": 46,
+  "total_articles": 49,
+  "passed_articles": 49,
   "min_words_threshold": 1200,
   "min_hls_threshold": 85.0,
   "articles": [
@@ -1315,6 +1315,66 @@
       "warnings": []
     },
     {
+      "path": "M:/Projects/vietnamguide/content/destinations/da-lat-travel-guide.md",
+      "relative_path": "content/destinations/da-lat-travel-guide.md",
+      "passed": true,
+      "word_count": 1389,
+      "frontmatter": {
+        "title": "Da Lat Travel Guide: Highlands, Coffee & Route Planning (2026)",
+        "slug": "da-lat-travel-guide",
+        "route_path": "destinations/da-lat-travel-guide",
+        "travel_cluster": "central_highlands",
+        "last_verified": "2026-10-21",
+        "author": "Antigravity Travel Intelligence",
+        "reading_time_minutes": 13,
+        "word_count": 1850
+      },
+      "elements": {
+        "h2_count": 7,
+        "h3_count": 12,
+        "table_count": 9,
+        "blockquote_count": 4,
+        "callout_count": 2,
+        "has_faq": true,
+        "has_steps": false
+      },
+      "empirical_signals": {
+        "currency_mentions": 36,
+        "distance_mentions": 26,
+        "transit_time_mentions": 7,
+        "total_empirical_signals": 69,
+        "sample_currencies": [
+          "50,000 VND",
+          "280,000 VND",
+          "1,400,000 VND",
+          "$34",
+          "$56"
+        ],
+        "sample_distances": [
+          "500 meters",
+          "12 km",
+          "15 km",
+          "167m",
+          "950m"
+        ],
+        "sample_transit_times": [
+          "45 minutes",
+          "45 minutes",
+          "7.5 hours",
+          "3.5 hours",
+          "6.5 hours"
+        ]
+      },
+      "slop_report": {
+        "passed": true,
+        "hls_score": 100,
+        "tier1_count": 0,
+        "tier1_violations": []
+      },
+      "errors": [],
+      "warnings": []
+    },
+    {
       "path": "M:/Projects/vietnamguide/content/destinations/da-lat-waterfalls-guide.md",
       "relative_path": "content/destinations/da-lat-waterfalls-guide.md",
       "passed": true,
@@ -1770,6 +1830,66 @@
       "warnings": []
     },
     {
+      "path": "M:/Projects/vietnamguide/content/destinations/mang-den-travel-guide.md",
+      "relative_path": "content/destinations/mang-den-travel-guide.md",
+      "passed": true,
+      "word_count": 1572,
+      "frontmatter": {
+        "title": "Mang Den Travel Guide: Pine Plateau at 1,200m (2026)",
+        "slug": "mang-den-travel-guide",
+        "route_path": "destinations/mang-den-travel-guide",
+        "travel_cluster": "central_highlands",
+        "last_verified": "2026-10-21",
+        "author": "Antigravity Travel Intelligence",
+        "reading_time_minutes": 13,
+        "word_count": 1800
+      },
+      "elements": {
+        "h2_count": 7,
+        "h3_count": 12,
+        "table_count": 8,
+        "blockquote_count": 2,
+        "callout_count": 1,
+        "has_faq": true,
+        "has_steps": true
+      },
+      "empirical_signals": {
+        "currency_mentions": 27,
+        "distance_mentions": 20,
+        "transit_time_mentions": 7,
+        "total_empirical_signals": 54,
+        "sample_currencies": [
+          "20,000 VND",
+          "$0.80",
+          "250k VND",
+          "1,100,000 VND",
+          "$24"
+        ],
+        "sample_distances": [
+          "200m",
+          "200 meters",
+          "3 km",
+          "8 km",
+          "5 km"
+        ],
+        "sample_transit_times": [
+          "2.5 hours",
+          "30 minutes",
+          "2.5 hours",
+          "45 minutes",
+          "1.2 hours"
+        ]
+      },
+      "slop_report": {
+        "passed": false,
+        "hls_score": 100,
+        "tier1_count": 0,
+        "tier1_violations": []
+      },
+      "errors": [],
+      "warnings": []
+    },
+    {
       "path": "M:/Projects/vietnamguide/content/destinations/nha-trang-coastal-guide.md",
       "relative_path": "content/destinations/nha-trang-coastal-guide.md",
       "passed": true,
@@ -2059,6 +2179,66 @@
       },
       "slop_report": {
         "passed": true,
+        "hls_score": 100,
+        "tier1_count": 0,
+        "tier1_violations": []
+      },
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "path": "M:/Projects/vietnamguide/content/plan/da-lat-to-buon-ma-thuot-transport.md",
+      "relative_path": "content/plan/da-lat-to-buon-ma-thuot-transport.md",
+      "passed": true,
+      "word_count": 1443,
+      "frontmatter": {
+        "title": "Da Lat to Buon Ma Thuot Transport: Bus, Car & Route QL27 (2026)",
+        "slug": "da-lat-to-buon-ma-thuot-transport",
+        "route_path": "plan/da-lat-to-buon-ma-thuot-transport",
+        "travel_cluster": "central_highlands",
+        "last_verified": "2026-10-21",
+        "author": "Antigravity Travel Intelligence",
+        "reading_time_minutes": 13,
+        "word_count": 1800
+      },
+      "elements": {
+        "h2_count": 7,
+        "h3_count": 12,
+        "table_count": 8,
+        "blockquote_count": 4,
+        "callout_count": 2,
+        "has_faq": true,
+        "has_steps": false
+      },
+      "empirical_signals": {
+        "currency_mentions": 32,
+        "distance_mentions": 24,
+        "transit_time_mentions": 12,
+        "total_empirical_signals": 68,
+        "sample_currencies": [
+          "220,000 VND",
+          "$6.40",
+          "$8.80",
+          "250,000 VND",
+          "$8.00"
+        ],
+        "sample_distances": [
+          "210 kilometers",
+          "500m",
+          "0 km",
+          "30 km",
+          "75 km"
+        ],
+        "sample_transit_times": [
+          "6.5 hours",
+          "6.5 hours",
+          "5.5 hours",
+          "6.0 hours",
+          "8.5 hours"
+        ]
+      },
+      "slop_report": {
+        "passed": false,
         "hls_score": 100,
         "tier1_count": 0,
         "tier1_violations": []
