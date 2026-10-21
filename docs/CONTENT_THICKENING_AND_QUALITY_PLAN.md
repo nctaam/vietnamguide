@@ -443,12 +443,22 @@ flowchart TD
 - [x] **Task 23.4**: Chạy `ops/content_depth_auditor.py` kiểm định toàn bộ 37 bài viết trong `content/` (Tổng số từ: **56.231 từ**, trung bình 1.520 từ/bài, 100% PASS, Mean HLS 99.46/100, 2.459 empirical signals, 0 Tier 1 clichés).
 - [x] **Task 23.5**: Xác minh 8 Quality Gates (8/8 PASS, Exit Code 0, 315 tests passed), commit và push lên `origin/master`.
 
-### Giai Đoạn 24: Tuyến Đảo Miền Trung & Vòng Cung Đông Bắc (Stage 143) [TIẾP THEO]
-- [ ] **Task 24.1**: Dùng `ag-search` xác minh thực tế và biên soạn bài so sánh trực diện:
-  - `content/compare/ly-son-vs-cham-islands.md`: So sánh toàn diện giữa Đảo Lý Sơn xứ sở tỏi núi lửa Quảng Ngãi (cổng Tò Vò, đỉnh Thới Lới, Hang Câu, Chùa Hang, tàu cao tốc Sa Kỳ 178k–210k VND) vs Cù Lao Chàm Hội An (Khu dự trữ sinh quyển thế giới, lặn san hô Bãi Chồng, tàu cao tốc Cửa Đại 350k–450k VND, làng chài Bãi Hương homestay).
-- [ ] **Task 24.2**: Dùng `ag-search` xác minh thực tế và biên soạn bài viết chuyên sâu:
-  - `content/destinations/ba-be-lake-travel-guide.md`: Cẩm nang toàn diện Vườn quốc gia Hồ Ba Bể (hồ nước ngọt tự nhiên lớn nhất Việt Nam trên núi đá vôi, bản người Tày Pác Ngòi, tour thuyền máy 800k VND, thác Đầu Đẳng, động Puông, chèo kayak).
-- [ ] **Task 24.3**: Dùng `ag-search` xác minh thực tế và biên soạn bài viết chuyên sâu:
-  - `content/destinations/cao-bang-travel-guide.md`: Cẩm nang toàn diện Cao Bằng Công viên địa chất toàn cầu UNESCO Non Nước Cao Bằng (khu di tích Pác Bó suối Lê-nin, đèo Mã Phục 7 tầng, núi Mắt Thần Thủng Phia Oac, ẩm thực phở chua vịt quay).
-- [ ] **Task 24.4**: Chạy `ops/content_depth_auditor.py` kiểm định toàn bộ các bài viết mới (bảo đảm >= 1,200 từ, HLS >= 85, 0 Tier 1 clichés, mật độ dữ liệu cao).
-- [ ] **Task 24.5**: Xác minh 8 Quality Gates (8/8 PASS, Exit Code 0), commit và push lên `origin/master`.
+### Giai Đoạn 24: Tuyến Đảo Miền Trung & Vòng Cung Đông Bắc (Stage 143) [HOÀN THÀNH 100%]
+- [x] **Task 24.1**: Dùng `ag-search` xác minh thực tế và biên soạn bài so sánh trực diện:
+  - `content/compare/ly-son-vs-cham-islands.md`: So sánh toàn diện giữa Đảo Lý Sơn xứ sở tỏi núi lửa Quảng Ngãi (cổng Tò Vò, đỉnh Thới Lới, Hang Câu, Chùa Hang, tàu cao tốc Sa Kỳ 180k–215k VND, Đảo Bé An Bình) vs Cù Lao Chàm Hội An (Khu dự trữ sinh quyển thế giới UNESCO, lặn san hô Bãi Xếp, cấm túi ni-lông tuyệt đối, tàu cao tốc Cửa Đại 350k–500k VND khứ hồi, làng chài Bãi Hương homestay) (1,724 substantive words, HLS 100.0/100, 51 empirical signals).
+- [x] **Task 24.2**: Dùng `ag-search` xác minh thực tế và biên soạn bài viết chuyên sâu:
+  - `content/destinations/ba-be-lake-travel-guide.md`: Cẩm nang toàn diện Vườn quốc gia Hồ Ba Bể (hồ nước ngọt tự nhiên lớn nhất Việt Nam trên núi đá vôi, vé cổng 70k VND, bản người Tày Pác Ngòi & Bó Lù, tour thuyền máy 750k–1.000.000 VND, thác Đầu Đẳng, động Puông xuyên núi 300m, động Hua Mạ 45k VND, chèo kayak) (1,605 substantive words, HLS 100.0/100, 56 empirical signals).
+- [x] **Task 24.3**: Dùng `ag-search` xác minh thực tế và biên soạn bài viết chuyên sâu:
+  - `content/destinations/cao-bang-travel-guide.md`: Cẩm nang toàn diện Cao Bằng Công viên địa chất toàn cầu UNESCO Non Nước Cao Bằng (Thác Bản Giốc 45k VND vé cổng + 50k VND bè mảng sông Quây Sơn, động Ngườm Ngao 45k VND thạch nhũ búp sen ngược, khu di tích Pác Bó suối Lê-nin 45k VND, đèo Mã Phục 7 tầng, núi Mắt Thần Thủng Phia Oac, ẩm thực phở chua vịt quay 7 vị) (1,544 substantive words, HLS 100.0/100, 55 empirical signals).
+- [x] **Task 24.4**: Chạy `ops/content_depth_auditor.py` kiểm định toàn bộ 40 bài viết trong `content/` (Tổng số từ: **61.104 từ**, trung bình 1.528 từ/bài, 100% PASS, Mean HLS 99.50/100, 2.621 empirical signals, 0 Tier 1 clichés).
+- [x] **Task 24.5**: Xác minh 8 Quality Gates (8/8 PASS, Exit Code 0, 315 tests passed), commit và push lên `origin/master`.
+
+### Giai Đoạn 25: Tuyến Ẩm Thực Miền Trung & Thác Nước Tây Nguyên (Stage 144) [TIẾP THEO]
+- [ ] **Task 25.1**: Dùng `ag-search` xác minh thực tế và biên soạn bài viết chuyên sâu:
+  - `content/destinations/da-nang-street-food-guide.md`: Cẩm nang ẩm thực đường phố Đà Nẵng (Mì Quảng 1A Hải Phòng / Bà Mua 30k–45k VND, Bánh xèo nem lụi Bà Dưỡng kiệt Hoàng Diệu 60k–90k VND, Bún chả cá 109 Nguyễn Chí Thanh 35k–45k VND, Chợ Cồn thiên đường ăn vặt, Chợ Hàn đặc sản, bánh tráng cuốn thịt heo Đại Lộc).
+- [ ] **Task 25.2**: Dùng `ag-search` xác minh thực tế và biên soạn bài viết chuyên sâu:
+  - `content/destinations/hoi-an-street-food-guide.md`: Cẩm nang ẩm thực Phố cổ Hội An (Cao lầu Thanh / Bà Bé 35k–45k VND nước giếng Bá Lễ, Bánh mì Phượng / Madam Khánh Queen 30k–40k VND, Cơm gà Bà Buội / Xí 40k–55k VND, Bánh bao bánh vạc Hoa Hồng Trắng 70k–100k VND, chè mè đen ông Thiều).
+- [ ] **Task 25.3**: Dùng `ag-search` xác minh thực tế và biên soạn bài viết chuyên sâu:
+  - `content/destinations/da-lat-waterfalls-guide.md`: Cẩm nang hệ thống thác nước Đà Lạt & Lâm Đồng (Thác Datanla máng trượt alpine coaster 2.400m vé 200k–250k VND + canyoning vượt thác đu dây 1.8M–2.2M VND, Thác Pongour 7 tầng kỳ vĩ 40k VND, Thác Voi Elephant Falls 30k VND, Thác Dambri Bảo Lộc 200k VND trọn gói).
+- [ ] **Task 25.4**: Chạy `ops/content_depth_auditor.py` kiểm định toàn bộ các bài viết mới (bảo đảm >= 1,200 từ, HLS >= 85, 0 Tier 1 clichés, mật độ dữ liệu cao).
+- [ ] **Task 25.5**: Xác minh 8 Quality Gates (8/8 PASS, Exit Code 0), commit và push lên `origin/master`.

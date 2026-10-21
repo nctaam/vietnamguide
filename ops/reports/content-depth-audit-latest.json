@@ -1,7 +1,7 @@
 {
   "passed": true,
-  "total_articles": 37,
-  "passed_articles": 37,
+  "total_articles": 40,
+  "passed_articles": 40,
   "min_words_threshold": 1200,
   "min_hls_threshold": 85.0,
   "articles": [
@@ -355,6 +355,66 @@
       },
       "slop_report": {
         "passed": false,
+        "hls_score": 100,
+        "tier1_count": 0,
+        "tier1_violations": []
+      },
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "path": "M:/Projects/vietnamguide/content/compare/ly-son-vs-cham-islands.md",
+      "relative_path": "content/compare/ly-son-vs-cham-islands.md",
+      "passed": true,
+      "word_count": 1724,
+      "frontmatter": {
+        "title": "Ly Son vs Cham Islands: Which Central Island to Pick? (2026)",
+        "slug": "ly-son-vs-cham-islands",
+        "route_path": "compare/ly-son-vs-cham-islands",
+        "travel_cluster": "central_heritage",
+        "last_verified": "2026-10-21",
+        "author": "Antigravity Travel Intelligence",
+        "reading_time_minutes": 11,
+        "word_count": 1850
+      },
+      "elements": {
+        "h2_count": 7,
+        "h3_count": 5,
+        "table_count": 8,
+        "blockquote_count": 2,
+        "callout_count": 1,
+        "has_faq": true,
+        "has_steps": false
+      },
+      "empirical_signals": {
+        "currency_mentions": 18,
+        "distance_mentions": 19,
+        "transit_time_mentions": 14,
+        "total_empirical_signals": 51,
+        "sample_currencies": [
+          "215,000 VND",
+          "$7.20",
+          "$8.50",
+          "500,000 VND",
+          "$14"
+        ],
+        "sample_distances": [
+          "20 km",
+          "28 km",
+          "5 km",
+          "18 km",
+          "28 km"
+        ],
+        "sample_transit_times": [
+          "45 mins",
+          "20 mins",
+          "75 mins",
+          "45 minutes",
+          "22 minutes"
+        ]
+      },
+      "slop_report": {
+        "passed": true,
         "hls_score": 100,
         "tier1_count": 0,
         "tier1_violations": []
@@ -723,6 +783,66 @@
       "warnings": []
     },
     {
+      "path": "M:/Projects/vietnamguide/content/destinations/ba-be-lake-travel-guide.md",
+      "relative_path": "content/destinations/ba-be-lake-travel-guide.md",
+      "passed": true,
+      "word_count": 1605,
+      "frontmatter": {
+        "title": "Ba Be Lake Travel Guide (2026): Boat Tours & Homestays",
+        "slug": "ba-be-lake-travel-guide",
+        "route_path": "destinations/ba-be-lake-travel-guide",
+        "travel_cluster": "far_north_frontier",
+        "last_verified": "2026-10-21",
+        "author": "Antigravity Travel Intelligence",
+        "reading_time_minutes": 12,
+        "word_count": 1850
+      },
+      "elements": {
+        "h2_count": 7,
+        "h3_count": 8,
+        "table_count": 8,
+        "blockquote_count": 2,
+        "callout_count": 1,
+        "has_faq": true,
+        "has_steps": true
+      },
+      "empirical_signals": {
+        "currency_mentions": 30,
+        "distance_mentions": 15,
+        "transit_time_mentions": 11,
+        "total_empirical_signals": 56,
+        "sample_currencies": [
+          "70,000 VND",
+          "$2.80",
+          "35,000 VND",
+          "20,000 VND",
+          "450,000 VND"
+        ],
+        "sample_distances": [
+          "220 kilometers",
+          "150 meters",
+          "500 meters",
+          "300m",
+          "000m"
+        ],
+        "sample_transit_times": [
+          "2 hours",
+          "4 hours",
+          "7 hours",
+          "3 hours",
+          "5 hours"
+        ]
+      },
+      "slop_report": {
+        "passed": true,
+        "hls_score": 100,
+        "tier1_count": 0,
+        "tier1_violations": []
+      },
+      "errors": [],
+      "warnings": []
+    },
+    {
       "path": "M:/Projects/vietnamguide/content/destinations/ba-na-hills-golden-bridge-guide.md",
       "relative_path": "content/destinations/ba-na-hills-golden-bridge-guide.md",
       "passed": true,
@@ -892,6 +1012,63 @@
       },
       "slop_report": {
         "passed": true,
+        "hls_score": 100,
+        "tier1_count": 0,
+        "tier1_violations": []
+      },
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "path": "M:/Projects/vietnamguide/content/destinations/cao-bang-travel-guide.md",
+      "relative_path": "content/destinations/cao-bang-travel-guide.md",
+      "passed": true,
+      "word_count": 1544,
+      "frontmatter": {
+        "title": "Cao Bang Travel Guide: Ban Gioc Waterfall & Loop Routes",
+        "slug": "cao-bang-travel-guide",
+        "route_path": "destinations/cao-bang-travel-guide",
+        "travel_cluster": "far_north_frontier",
+        "last_verified": "2026-10-21",
+        "author": "Antigravity Travel Intelligence",
+        "reading_time_minutes": 13,
+        "word_count": 1950
+      },
+      "elements": {
+        "h2_count": 8,
+        "h3_count": 9,
+        "table_count": 9,
+        "blockquote_count": 2,
+        "callout_count": 1,
+        "has_faq": true,
+        "has_steps": false
+      },
+      "empirical_signals": {
+        "currency_mentions": 25,
+        "distance_mentions": 28,
+        "transit_time_mentions": 2,
+        "total_empirical_signals": 55,
+        "sample_currencies": [
+          "45,000 VND",
+          "50,000 VND",
+          "45,000 VND",
+          "$1.80",
+          "10k VND"
+        ],
+        "sample_distances": [
+          "52 km",
+          "85 km",
+          "110 km",
+          "85 km",
+          "89 km"
+        ],
+        "sample_transit_times": [
+          "7 hours",
+          "5.5 hours"
+        ]
+      },
+      "slop_report": {
+        "passed": false,
         "hls_score": 100,
         "tier1_count": 0,
         "tier1_violations": []
