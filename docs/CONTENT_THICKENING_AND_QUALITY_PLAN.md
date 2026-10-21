@@ -453,12 +453,22 @@ flowchart TD
 - [x] **Task 24.4**: Chạy `ops/content_depth_auditor.py` kiểm định toàn bộ 40 bài viết trong `content/` (Tổng số từ: **61.104 từ**, trung bình 1.528 từ/bài, 100% PASS, Mean HLS 99.50/100, 2.621 empirical signals, 0 Tier 1 clichés).
 - [x] **Task 24.5**: Xác minh 8 Quality Gates (8/8 PASS, Exit Code 0, 315 tests passed), commit và push lên `origin/master`.
 
-### Giai Đoạn 25: Tuyến Ẩm Thực Miền Trung & Thác Nước Tây Nguyên (Stage 144) [TIẾP THEO]
-- [ ] **Task 25.1**: Dùng `ag-search` xác minh thực tế và biên soạn bài viết chuyên sâu:
-  - `content/destinations/da-nang-street-food-guide.md`: Cẩm nang ẩm thực đường phố Đà Nẵng (Mì Quảng 1A Hải Phòng / Bà Mua 30k–45k VND, Bánh xèo nem lụi Bà Dưỡng kiệt Hoàng Diệu 60k–90k VND, Bún chả cá 109 Nguyễn Chí Thanh 35k–45k VND, Chợ Cồn thiên đường ăn vặt, Chợ Hàn đặc sản, bánh tráng cuốn thịt heo Đại Lộc).
-- [ ] **Task 25.2**: Dùng `ag-search` xác minh thực tế và biên soạn bài viết chuyên sâu:
-  - `content/destinations/hoi-an-street-food-guide.md`: Cẩm nang ẩm thực Phố cổ Hội An (Cao lầu Thanh / Bà Bé 35k–45k VND nước giếng Bá Lễ, Bánh mì Phượng / Madam Khánh Queen 30k–40k VND, Cơm gà Bà Buội / Xí 40k–55k VND, Bánh bao bánh vạc Hoa Hồng Trắng 70k–100k VND, chè mè đen ông Thiều).
-- [ ] **Task 25.3**: Dùng `ag-search` xác minh thực tế và biên soạn bài viết chuyên sâu:
-  - `content/destinations/da-lat-waterfalls-guide.md`: Cẩm nang hệ thống thác nước Đà Lạt & Lâm Đồng (Thác Datanla máng trượt alpine coaster 2.400m vé 200k–250k VND + canyoning vượt thác đu dây 1.8M–2.2M VND, Thác Pongour 7 tầng kỳ vĩ 40k VND, Thác Voi Elephant Falls 30k VND, Thác Dambri Bảo Lộc 200k VND trọn gói).
-- [ ] **Task 25.4**: Chạy `ops/content_depth_auditor.py` kiểm định toàn bộ các bài viết mới (bảo đảm >= 1,200 từ, HLS >= 85, 0 Tier 1 clichés, mật độ dữ liệu cao).
-- [ ] **Task 25.5**: Xác minh 8 Quality Gates (8/8 PASS, Exit Code 0), commit và push lên `origin/master`.
+### Giai Đoạn 25: Tuyến Ẩm Thực Miền Trung & Thác Nước Tây Nguyên (Stage 144) [HOÀN THÀNH 100%]
+- [x] **Task 25.1**: Dùng `ag-search` xác minh thực tế và biên soạn bài viết chuyên sâu:
+  - `content/destinations/da-nang-street-food-guide.md`: Cẩm nang ẩm thực đường phố Đà Nẵng (Mì Quảng 1A Hải Phòng / Bà Mua 35k–50k VND, Bánh xèo nem lụi Bà Dưỡng kiệt Hoàng Diệu 65k–80k VND với nước tương gan heo đậu phộng đặc trưng, Bún chả cá 109 Nguyễn Chí Thanh 35k–45k VND, Gỏi cá Nam Ô 80k–120k VND, Chợ Cồn thiên đường ăn vặt cách sân bay 3 km, Chợ Hàn đặc sản, bánh tráng cuốn thịt heo Đại Lộc / Quán Trần) (1,517 substantive words, HLS 100.0/100, 38 empirical signals).
+- [x] **Task 25.2**: Dùng `ag-search` xác minh thực tế và biên soạn bài viết chuyên sâu:
+  - `content/destinations/hoi-an-street-food-guide.md`: Cẩm nang ẩm thực Phố cổ Hội An (Cao lầu Thanh / Bà Bé 35k–45k VND với 3 bí mật: nước giếng Bá Lễ Chăm-pa, nước tro lye củi Cù Lao Chàm và rau thơm Trà Quế; Bánh mì Phượng / Madam Khánh Queen 30k–45k VND, Cơm gà Bà Buội / Xí 40k–55k VND, Bánh bao bánh vạc Hoa Hồng Trắng 70k–100k VND độc quyền gia tộc họ Trần, hến xào bánh đập đảo Cẩm Nam, chè mè đen ông Thiều) (1,455 substantive words, HLS 100.0/100, 53 empirical signals).
+- [x] **Task 25.3**: Dùng `ag-search` xác minh thực tế và biên soạn bài viết chuyên sâu:
+  - `content/destinations/da-lat-waterfalls-guide.md`: Cẩm nang hệ thống thác nước Đà Lạt & Lâm Đồng (Thác Datanla vé 80k VND + máng trượt alpine coaster 2.400m vé 250k VND + tour canyoning đu dây vượt thác chuyên nghiệp 1.8M–2.2M VND, Thác Pongour 7 tầng kỳ vĩ 40k VND trên nền bazan núi lửa, Thác Voi Elephant Falls 30k VND kèm Hang Gió và chùa Linh Ẩn tượng Phật Bà 71m, Thác Prenn 50k VND dạo bước sau màn nước, Thác Dambri Bảo Lộc 60m vé trọn gói 200k VND) (1,561 substantive words, HLS 100.0/100, 62 empirical signals).
+- [x] **Task 25.4**: Chạy `ops/content_depth_auditor.py` kiểm định toàn bộ 43 bài viết trong `content/` (Tổng số từ: **65.637 từ**, trung bình 1.526 từ/bài, 100% PASS, Mean HLS 99.53/100, 2.774 empirical signals, 0 Tier 1 clichés).
+- [x] **Task 25.5**: Xác minh 8 Quality Gates (8/8 PASS, Exit Code 0, 315 tests passed), commit và push lên `origin/master`.
+
+### Giai Đoạn 26: Tuyến Đảo Nghỉ Dưỡng Miền Nam & Cao Nguyên Cà Phê (Stage 145) [TIẾP THEO]
+- [ ] **Task 26.1**: Dùng `ag-search` xác minh thực tế và biên soạn bài so sánh trực diện:
+  - `content/compare/con-dao-vs-phu-quoc.md`: So sánh toàn diện giữa Côn Đảo (vườn quốc gia bảo tồn nghiêm ngặt, rùa biển đẻ trứng Hòn Bảy Cạnh tháng 5–10, lặn san hô hoang sơ, di tích lịch sử nhà tù Côn Đảo 50k VND, vé máy bay / tàu cao tốc từ Vũng Tàu - Sóc Trăng - Cần Thơ) vs Phú Quốc (đảo ngọc quy mô lớn, resort bãi biển cao cấp, Bãi Sao, Bãi Khem, cáp treo vượt biển Hòn Thơm 650k VND, miễn thị thực 30 ngày cho khách quốc tế).
+- [ ] **Task 26.2**: Dùng `ag-search` xác minh thực tế và biên soạn bài viết chuyên sâu:
+  - `content/destinations/da-lat-coffee-farms-guide.md`: Cẩm nang khám phá các nông trại cà phê Đà Lạt (vành đai Arabica Cầu Đất độ cao 1.500m–1.650m đồi chè 1927, nông trại cà phê người K'Ho chân núi Lang Biang, quy trình chế biến ướt/honey/natural, tasting specialty coffee tại The Married Beans).
+- [ ] **Task 26.3**: Dùng `ag-search` xác minh thực tế và biên soạn bài viết chuyên sâu:
+  - `content/destinations/da-lat-travel-guide.md`: Cẩm nang toàn diện thành phố sương mù Đà Lạt (Dinh Bảo Đại I & III 50k–90k VND, Biệt thự Hằng Nga Crazy House 80k VND, Hồ Tuyền Lâm & Thiền viện Trúc Lâm cáp treo 120k VND, đỉnh Lang Biang 2.167m vé cổng 50k VND + xe jeep 120k VND, chợ đêm Đà Lạt & ẩm thực bánh tráng nướng sữa đậu nành nóng).
+- [ ] **Task 26.4**: Chạy `ops/content_depth_auditor.py` kiểm định toàn bộ các bài viết mới (bảo đảm >= 1,200 từ, HLS >= 85, 0 Tier 1 clichés, mật độ dữ liệu cao).
+- [ ] **Task 26.5**: Xác minh 8 Quality Gates (8/8 PASS, Exit Code 0), commit và push lên `origin/master`.

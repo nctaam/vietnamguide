@@ -1,7 +1,7 @@
 {
   "passed": true,
-  "total_articles": 40,
-  "passed_articles": 40,
+  "total_articles": 43,
+  "passed_articles": 43,
   "min_words_threshold": 1200,
   "min_hls_threshold": 85.0,
   "articles": [
@@ -1197,6 +1197,112 @@
       "warnings": []
     },
     {
+      "path": "M:/Projects/vietnamguide/content/destinations/da-lat-waterfalls-guide.md",
+      "relative_path": "content/destinations/da-lat-waterfalls-guide.md",
+      "passed": true,
+      "word_count": 1561,
+      "frontmatter": {
+        "title": "Da Lat Waterfalls Guide: Top 5 Falls, Routes & Map (2026)",
+        "slug": "da-lat-waterfalls-guide",
+        "route_path": "destinations/da-lat-waterfalls-guide",
+        "travel_cluster": "central_highlands",
+        "last_verified": "2026-10-21",
+        "author": "Antigravity Travel Intelligence",
+        "reading_time_minutes": 13,
+        "word_count": 1900
+      },
+      "elements": {
+        "h2_count": 8,
+        "h3_count": 8,
+        "table_count": 9,
+        "blockquote_count": 2,
+        "callout_count": 1,
+        "has_faq": true,
+        "has_steps": false
+      },
+      "empirical_signals": {
+        "currency_mentions": 28,
+        "distance_mentions": 34,
+        "transit_time_mentions": 0,
+        "total_empirical_signals": 62,
+        "sample_currencies": [
+          "80,000 VND",
+          "$3.20",
+          "250,000 VND",
+          "40,000 VND",
+          "$1.60"
+        ],
+        "sample_distances": [
+          "500 meters",
+          "500m",
+          "5 km",
+          "10 km",
+          "50 km"
+        ],
+        "sample_transit_times": []
+      },
+      "slop_report": {
+        "passed": true,
+        "hls_score": 100,
+        "tier1_count": 0,
+        "tier1_violations": []
+      },
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "path": "M:/Projects/vietnamguide/content/destinations/da-nang-street-food-guide.md",
+      "relative_path": "content/destinations/da-nang-street-food-guide.md",
+      "passed": true,
+      "word_count": 1517,
+      "frontmatter": {
+        "title": "Da Nang Street Food Guide: Seafood, Mi Quang & Gems (2026)",
+        "slug": "da-nang-street-food-guide",
+        "route_path": "destinations/da-nang-street-food-guide",
+        "travel_cluster": "central_heritage",
+        "last_verified": "2026-10-21",
+        "author": "Antigravity Travel Intelligence",
+        "reading_time_minutes": 12,
+        "word_count": 1850
+      },
+      "elements": {
+        "h2_count": 7,
+        "h3_count": 8,
+        "table_count": 8,
+        "blockquote_count": 2,
+        "callout_count": 1,
+        "has_faq": true,
+        "has_steps": false
+      },
+      "empirical_signals": {
+        "currency_mentions": 35,
+        "distance_mentions": 3,
+        "transit_time_mentions": 0,
+        "total_empirical_signals": 38,
+        "sample_currencies": [
+          "50,000 VND",
+          "$1.40",
+          "$2.00",
+          "80,000 VND",
+          "45,000 VND"
+        ],
+        "sample_distances": [
+          "15 km",
+          "3 km",
+          "1.5 km"
+        ],
+        "sample_transit_times": []
+      },
+      "slop_report": {
+        "passed": true,
+        "hls_score": 100,
+        "tier1_count": 0,
+        "tier1_violations": []
+      },
+      "errors": [],
+      "warnings": []
+    },
+    {
       "path": "M:/Projects/vietnamguide/content/destinations/ha-giang-loop-guide.md",
       "relative_path": "content/destinations/ha-giang-loop-guide.md",
       "passed": true,
@@ -1428,6 +1534,62 @@
       },
       "slop_report": {
         "passed": false,
+        "hls_score": 100,
+        "tier1_count": 0,
+        "tier1_violations": []
+      },
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "path": "M:/Projects/vietnamguide/content/destinations/hoi-an-street-food-guide.md",
+      "relative_path": "content/destinations/hoi-an-street-food-guide.md",
+      "passed": true,
+      "word_count": 1455,
+      "frontmatter": {
+        "title": "Hoi An Street Food Guide: 9 Essential Dishes & Stalls (2026)",
+        "slug": "hoi-an-street-food-guide",
+        "route_path": "destinations/hoi-an-street-food-guide",
+        "travel_cluster": "central_heritage",
+        "last_verified": "2026-10-21",
+        "author": "Antigravity Travel Intelligence",
+        "reading_time_minutes": 12,
+        "word_count": 1850
+      },
+      "elements": {
+        "h2_count": 7,
+        "h3_count": 8,
+        "table_count": 8,
+        "blockquote_count": 2,
+        "callout_count": 1,
+        "has_faq": true,
+        "has_steps": false
+      },
+      "empirical_signals": {
+        "currency_mentions": 43,
+        "distance_mentions": 9,
+        "transit_time_mentions": 1,
+        "total_empirical_signals": 53,
+        "sample_currencies": [
+          "50,000 VND",
+          "$1.40",
+          "$2.00",
+          "45,000 VND",
+          "$1.20"
+        ],
+        "sample_distances": [
+          "30 kilometers",
+          "1 km",
+          "18 kilometers",
+          "2.5 kilometers",
+          "800 meters"
+        ],
+        "sample_transit_times": [
+          "45 minutes"
+        ]
+      },
+      "slop_report": {
+        "passed": true,
         "hls_score": 100,
         "tier1_count": 0,
         "tier1_violations": []
