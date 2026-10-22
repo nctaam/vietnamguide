@@ -1,7 +1,7 @@
 {
   "passed": true,
-  "total_articles": 94,
-  "passed_articles": 94,
+  "total_articles": 97,
+  "passed_articles": 97,
   "min_words_threshold": 1200,
   "min_hls_threshold": 85.0,
   "articles": [
@@ -5430,6 +5430,63 @@
       "warnings": []
     },
     {
+      "path": "M:/Projects/vietnamguide/content/plan/money-cash-cards-atms.md",
+      "relative_path": "content/plan/money-cash-cards-atms.md",
+      "passed": true,
+      "word_count": 1561,
+      "frontmatter": {
+        "title": "Money in Vietnam (2026): Zero-Fee ATMs, Polymer Notes & Cash vs Card Guide",
+        "slug": "money-cash-cards-atms",
+        "route_path": "plan/money-cash-cards-atms",
+        "travel_cluster": "national_circuit",
+        "last_verified": "2026-10-22",
+        "author": "Minh Pham — Lead Travel Technologist",
+        "reading_time_minutes": 8,
+        "word_count": 1565
+      },
+      "elements": {
+        "h2_count": 7,
+        "h3_count": 10,
+        "table_count": 9,
+        "blockquote_count": 4,
+        "callout_count": 2,
+        "has_faq": true,
+        "has_steps": true
+      },
+      "empirical_signals": {
+        "currency_mentions": 151,
+        "distance_mentions": 3,
+        "transit_time_mentions": 4,
+        "total_empirical_signals": 158,
+        "sample_currencies": [
+          "55,000 VND",
+          "$2.00",
+          "$2.20",
+          "0 VND",
+          "10,000,000 VND"
+        ],
+        "sample_distances": [
+          "3M",
+          "10M",
+          "20M"
+        ],
+        "sample_transit_times": [
+          "2 minutes",
+          "30 min",
+          "3 minutes",
+          "60 Minutes"
+        ]
+      },
+      "slop_report": {
+        "passed": true,
+        "hls_score": 100,
+        "tier1_count": 0,
+        "tier1_violations": []
+      },
+      "errors": [],
+      "warnings": []
+    },
+    {
       "path": "M:/Projects/vietnamguide/content/plan/nha-trang-to-quy-nhon-transport.md",
       "relative_path": "content/plan/nha-trang-to-quy-nhon-transport.md",
       "passed": true,
@@ -5537,6 +5594,114 @@
           "15 minutes",
           "2 hours",
           "30 minutes",
+          "24 hours"
+        ]
+      },
+      "slop_report": {
+        "passed": true,
+        "hls_score": 100,
+        "tier1_count": 0,
+        "tier1_violations": []
+      },
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "path": "M:/Projects/vietnamguide/content/plan/sim-esim-vietnam.md",
+      "relative_path": "content/plan/sim-esim-vietnam.md",
+      "passed": true,
+      "word_count": 1336,
+      "frontmatter": {
+        "title": "SIM & eSIM in Vietnam (2026): Viettel vs Airalo, Passport Rules & Airport Traps",
+        "slug": "sim-esim-vietnam",
+        "route_path": "plan/sim-esim-vietnam",
+        "travel_cluster": "national_circuit",
+        "last_verified": "2026-10-22",
+        "author": "Minh Pham — Lead Travel Technologist",
+        "reading_time_minutes": 7,
+        "word_count": 1336
+      },
+      "elements": {
+        "h2_count": 7,
+        "h3_count": 10,
+        "table_count": 9,
+        "blockquote_count": 4,
+        "callout_count": 2,
+        "has_faq": true,
+        "has_steps": true
+      },
+      "empirical_signals": {
+        "currency_mentions": 53,
+        "distance_mentions": 1,
+        "transit_time_mentions": 8,
+        "total_empirical_signals": 62,
+        "sample_currencies": [
+          "400,000 VND",
+          "$4.50",
+          "$16.00",
+          "260,000 VND",
+          "$6.40"
+        ],
+        "sample_distances": [
+          "10M"
+        ],
+        "sample_transit_times": [
+          "72 hours",
+          "10 minutes",
+          "48 Hours",
+          "15 minutes",
+          "15 minutes"
+        ]
+      },
+      "slop_report": {
+        "passed": true,
+        "hls_score": 100,
+        "tier1_count": 0,
+        "tier1_violations": []
+      },
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "path": "M:/Projects/vietnamguide/content/plan/vietnam-evisa.md",
+      "relative_path": "content/plan/vietnam-evisa.md",
+      "passed": true,
+      "word_count": 1402,
+      "frontmatter": {
+        "title": "Vietnam E-Visa Guide (2026): Official evisa.gov.vn Portal, Fees & Photo Rules",
+        "slug": "vietnam-evisa",
+        "route_path": "plan/vietnam-evisa",
+        "travel_cluster": "national_circuit",
+        "last_verified": "2026-10-22",
+        "author": "Minh Pham — Lead Travel Technologist",
+        "reading_time_minutes": 7,
+        "word_count": 1402
+      },
+      "elements": {
+        "h2_count": 7,
+        "h3_count": 9,
+        "table_count": 9,
+        "blockquote_count": 4,
+        "callout_count": 2,
+        "has_faq": true,
+        "has_steps": true
+      },
+      "empirical_signals": {
+        "currency_mentions": 41,
+        "distance_mentions": 1,
+        "transit_time_mentions": 1,
+        "total_empirical_signals": 43,
+        "sample_currencies": [
+          "$25.00",
+          "$50.00",
+          "$85",
+          "$160",
+          "$25"
+        ],
+        "sample_distances": [
+          "10M"
+        ],
+        "sample_transit_times": [
           "24 hours"
         ]
       },
