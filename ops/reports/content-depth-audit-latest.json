@@ -1,7 +1,7 @@
 {
   "passed": true,
-  "total_articles": 91,
-  "passed_articles": 91,
+  "total_articles": 94,
+  "passed_articles": 94,
   "min_words_threshold": 1200,
   "min_hls_threshold": 85.0,
   "articles": [
@@ -4590,6 +4590,66 @@
       "warnings": []
     },
     {
+      "path": "M:/Projects/vietnamguide/content/plan/best-vietnam-cities-for-first-time-visitors.md",
+      "relative_path": "content/plan/best-vietnam-cities-for-first-time-visitors.md",
+      "passed": true,
+      "word_count": 1407,
+      "frontmatter": {
+        "title": "Best Vietnam Cities for First-Time Visitors (2026): Ranking, Roles & Nights Needed",
+        "slug": "best-vietnam-cities-for-first-time-visitors",
+        "route_path": "plan/best-vietnam-cities-for-first-time-visitors",
+        "travel_cluster": "national_circuit",
+        "last_verified": "2026-10-22",
+        "author": "Minh Pham — Lead Travel Technologist",
+        "reading_time_minutes": 7,
+        "word_count": 1407
+      },
+      "elements": {
+        "h2_count": 5,
+        "h3_count": 11,
+        "table_count": 6,
+        "blockquote_count": 2,
+        "callout_count": 1,
+        "has_faq": true,
+        "has_steps": true
+      },
+      "empirical_signals": {
+        "currency_mentions": 42,
+        "distance_mentions": 22,
+        "transit_time_mentions": 14,
+        "total_empirical_signals": 78,
+        "sample_currencies": [
+          "380,000 VND",
+          "35k VND",
+          "350k VND",
+          "80,000 VND",
+          "35,000 VND"
+        ],
+        "sample_distances": [
+          "90m",
+          "500m",
+          "28 kilometers",
+          "45m",
+          "95 km"
+        ],
+        "sample_transit_times": [
+          "40 minutes",
+          "1.5 hours",
+          "2.5 hours",
+          "5.5 hours",
+          "48 hours"
+        ]
+      },
+      "slop_report": {
+        "passed": true,
+        "hls_score": 100,
+        "tier1_count": 0,
+        "tier1_violations": []
+      },
+      "errors": [],
+      "warnings": []
+    },
+    {
       "path": "M:/Projects/vietnamguide/content/plan/best-vietnam-routes-first-time-visitors.md",
       "relative_path": "content/plan/best-vietnam-routes-first-time-visitors.md",
       "passed": true,
@@ -4938,6 +4998,126 @@
           "90 minutes",
           "60 mins",
           "50 minutes"
+        ]
+      },
+      "slop_report": {
+        "passed": true,
+        "hls_score": 100,
+        "tier1_count": 0,
+        "tier1_violations": []
+      },
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "path": "M:/Projects/vietnamguide/content/plan/grab-in-vietnam-guide.md",
+      "relative_path": "content/plan/grab-in-vietnam-guide.md",
+      "passed": true,
+      "word_count": 1737,
+      "frontmatter": {
+        "title": "Using Grab in Vietnam (2026): Airport Pickups, Foreign Card Fees & Xanh SM",
+        "slug": "grab-in-vietnam-guide",
+        "route_path": "plan/grab-in-vietnam-guide",
+        "travel_cluster": "national_circuit",
+        "last_verified": "2026-10-22",
+        "author": "Minh Pham — Lead Travel Technologist",
+        "reading_time_minutes": 9,
+        "word_count": 1730
+      },
+      "elements": {
+        "h2_count": 7,
+        "h3_count": 10,
+        "table_count": 9,
+        "blockquote_count": 4,
+        "callout_count": 2,
+        "has_faq": true,
+        "has_steps": true
+      },
+      "empirical_signals": {
+        "currency_mentions": 84,
+        "distance_mentions": 8,
+        "transit_time_mentions": 15,
+        "total_empirical_signals": 107,
+        "sample_currencies": [
+          "15,000 VND",
+          "900,000 VND",
+          "$20",
+          "$36",
+          "50,000 VND"
+        ],
+        "sample_distances": [
+          "2 km",
+          "80 km",
+          "28 km",
+          "8 km",
+          "120 meters"
+        ],
+        "sample_transit_times": [
+          "38 minutes",
+          "13 minutes",
+          "4 min",
+          "2 min",
+          "5 min"
+        ]
+      },
+      "slop_report": {
+        "passed": true,
+        "hls_score": 100,
+        "tier1_count": 0,
+        "tier1_violations": []
+      },
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "path": "M:/Projects/vietnamguide/content/plan/ha-giang-safety-guide.md",
+      "relative_path": "content/plan/ha-giang-safety-guide.md",
+      "passed": true,
+      "word_count": 1710,
+      "frontmatter": {
+        "title": "Ha Giang Loop Safety Guide (2026): Decree 168 Fines, 1968 IDP Rules & Easy Riders",
+        "slug": "ha-giang-safety-guide",
+        "route_path": "plan/ha-giang-safety-guide",
+        "travel_cluster": "far_north_frontier",
+        "last_verified": "2026-10-22",
+        "author": "Minh Pham — Lead Travel Technologist",
+        "reading_time_minutes": 9,
+        "word_count": 1710
+      },
+      "elements": {
+        "h2_count": 7,
+        "h3_count": 13,
+        "table_count": 9,
+        "blockquote_count": 2,
+        "callout_count": 1,
+        "has_faq": true,
+        "has_steps": true
+      },
+      "empirical_signals": {
+        "currency_mentions": 62,
+        "distance_mentions": 26,
+        "transit_time_mentions": 5,
+        "total_empirical_signals": 93,
+        "sample_currencies": [
+          "4,000,000 VND",
+          "$80",
+          "$160",
+          "8,000,000 VND",
+          "$240"
+        ],
+        "sample_distances": [
+          "350 km",
+          "2M",
+          "8M",
+          "1.4M",
+          "1.8M"
+        ],
+        "sample_transit_times": [
+          "10 minutes",
+          "6 hours",
+          "15 minutes",
+          "4 hours",
+          "6.5 Hours"
         ]
       },
       "slop_report": {
