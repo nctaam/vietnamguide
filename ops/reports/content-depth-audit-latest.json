@@ -1,7 +1,7 @@
 {
   "passed": true,
-  "total_articles": 121,
-  "passed_articles": 121,
+  "total_articles": 124,
+  "passed_articles": 124,
   "min_words_threshold": 1200,
   "min_hls_threshold": 85.0,
   "articles": [
@@ -1677,6 +1677,66 @@
       "warnings": []
     },
     {
+      "path": "M:/Projects/vietnamguide/content/destinations/bai-tu-long-bay-guide.md",
+      "relative_path": "content/destinations/bai-tu-long-bay-guide.md",
+      "passed": true,
+      "word_count": 1251,
+      "frontmatter": {
+        "title": "Bai Tu Long Bay Travel Guide (2026): Uncrowded Cruise Routes, Ao Tien Port, Vung Vieng & Kayaking",
+        "slug": "bai-tu-long-bay-guide",
+        "route_path": "destinations/bai-tu-long-bay-guide",
+        "travel_cluster": "halong_catba",
+        "last_verified": "2026-10-22",
+        "author": "Minh Tran — Senior Northern Gulf & Maritime Heritage Correspondent",
+        "reading_time_minutes": 10,
+        "word_count": 1251
+      },
+      "elements": {
+        "h2_count": 5,
+        "h3_count": 11,
+        "table_count": 6,
+        "blockquote_count": 2,
+        "callout_count": 1,
+        "has_faq": true,
+        "has_steps": true
+      },
+      "empirical_signals": {
+        "currency_mentions": 29,
+        "distance_mentions": 14,
+        "transit_time_mentions": 12,
+        "total_empirical_signals": 55,
+        "sample_currencies": [
+          "$155",
+          "$260",
+          "$295",
+          "$480",
+          "$135"
+        ],
+        "sample_distances": [
+          "3.9M",
+          "6.5M",
+          "7.4M",
+          "12.0M",
+          "3.4M"
+        ],
+        "sample_transit_times": [
+          "2.5 hrs",
+          "3.0 hrs",
+          "2.5 hours",
+          "2.5 hrs",
+          "2.0 hrs"
+        ]
+      },
+      "slop_report": {
+        "passed": true,
+        "hls_score": 100,
+        "tier1_count": 0,
+        "tier1_violations": []
+      },
+      "errors": [],
+      "warnings": []
+    },
+    {
       "path": "M:/Projects/vietnamguide/content/destinations/ban-gioc-waterfall-guide.md",
       "relative_path": "content/destinations/ban-gioc-waterfall-guide.md",
       "passed": true,
@@ -2360,6 +2420,126 @@
           "25 minutes",
           "60 minutes",
           "30 minutes"
+        ]
+      },
+      "slop_report": {
+        "passed": true,
+        "hls_score": 100,
+        "tier1_count": 0,
+        "tier1_violations": []
+      },
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "path": "M:/Projects/vietnamguide/content/destinations/best-things-to-do-in-quy-nhon.md",
+      "relative_path": "content/destinations/best-things-to-do-in-quy-nhon.md",
+      "passed": true,
+      "word_count": 1240,
+      "frontmatter": {
+        "title": "Best Things to Do in Quy Nhon (2026): Ky Co Beach, Eo Gio Cliffs, Cham Towers & Bai Xep Cove",
+        "slug": "best-things-to-do-in-quy-nhon",
+        "route_path": "destinations/best-things-to-do-in-quy-nhon",
+        "travel_cluster": "south_central_coast",
+        "last_verified": "2026-10-22",
+        "author": "Minh Tran — Senior South-Central Coast & Cham Heritage Correspondent",
+        "reading_time_minutes": 10,
+        "word_count": 1240
+      },
+      "elements": {
+        "h2_count": 5,
+        "h3_count": 10,
+        "table_count": 6,
+        "blockquote_count": 2,
+        "callout_count": 1,
+        "has_faq": true,
+        "has_steps": true
+      },
+      "empirical_signals": {
+        "currency_mentions": 49,
+        "distance_mentions": 25,
+        "transit_time_mentions": 11,
+        "total_empirical_signals": 85,
+        "sample_currencies": [
+          "20,000 VND",
+          "25,000 VND",
+          "$1.00",
+          "170,000 VND",
+          "850,000 VND"
+        ],
+        "sample_distances": [
+          "300 km",
+          "215 km",
+          "22 km",
+          "1.2m",
+          "25 km"
+        ],
+        "sample_transit_times": [
+          "2026 Hours",
+          "24 hours",
+          "30 minutes",
+          "45 minutes",
+          "15 minutes"
+        ]
+      },
+      "slop_report": {
+        "passed": true,
+        "hls_score": 100,
+        "tier1_count": 0,
+        "tier1_violations": []
+      },
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "path": "M:/Projects/vietnamguide/content/destinations/best-things-to-do-in-sapa.md",
+      "relative_path": "content/destinations/best-things-to-do-in-sapa.md",
+      "passed": true,
+      "word_count": 1359,
+      "frontmatter": {
+        "title": "Best Things to Do in Sapa (2026): Muong Hoa Valley Treks, Fansipan Cable Car, O Quy Ho Pass & Villages",
+        "slug": "best-things-to-do-in-sapa",
+        "route_path": "destinations/best-things-to-do-in-sapa",
+        "travel_cluster": "northern_highlands",
+        "last_verified": "2026-10-22",
+        "author": "Minh Tran — Senior Northern Highlands & Alpine Trekking Correspondent",
+        "reading_time_minutes": 11,
+        "word_count": 1359
+      },
+      "elements": {
+        "h2_count": 5,
+        "h3_count": 13,
+        "table_count": 6,
+        "blockquote_count": 2,
+        "callout_count": 1,
+        "has_faq": true,
+        "has_steps": true
+      },
+      "empirical_signals": {
+        "currency_mentions": 66,
+        "distance_mentions": 46,
+        "transit_time_mentions": 8,
+        "total_empirical_signals": 120,
+        "sample_currencies": [
+          "850,000 VND",
+          "$34",
+          "900,000 VND",
+          "$36",
+          "550,000 VND"
+        ],
+        "sample_distances": [
+          "650 meters",
+          "3 kilometers",
+          "143m",
+          "1.0m",
+          "1.4m"
+        ],
+        "sample_transit_times": [
+          "24 hours",
+          "5 hours",
+          "15 minutes",
+          "9 hours",
+          "4 hours"
         ]
       },
       "slop_report": {
