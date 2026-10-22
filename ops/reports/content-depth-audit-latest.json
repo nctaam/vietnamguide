@@ -1,7 +1,7 @@
 {
   "passed": true,
-  "total_articles": 103,
-  "passed_articles": 103,
+  "total_articles": 106,
+  "passed_articles": 106,
   "min_words_threshold": 1200,
   "min_hls_threshold": 85.0,
   "articles": [
@@ -114,6 +114,66 @@
           "5.5 hours",
           "7.0 hours",
           "4.5 hours"
+        ]
+      },
+      "slop_report": {
+        "passed": true,
+        "hls_score": 100,
+        "tier1_count": 0,
+        "tier1_violations": []
+      },
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "path": "M:/Projects/vietnamguide/content/compare/con-dao-vs-phu-quoc.md",
+      "relative_path": "content/compare/con-dao-vs-phu-quoc.md",
+      "passed": true,
+      "word_count": 1358,
+      "frontmatter": {
+        "title": "Con Dao vs Phu Quoc (2026): Remote Marine Sanctuary vs Mega-Resort Island",
+        "slug": "con-dao-vs-phu-quoc",
+        "route_path": "compare/con-dao-vs-phu-quoc",
+        "travel_cluster": "southern_vietnam",
+        "last_verified": "2026-10-22",
+        "author": "Minh Tran — Senior Coastal & Island Correspondent",
+        "reading_time_minutes": 10,
+        "word_count": 1560
+      },
+      "elements": {
+        "h2_count": 7,
+        "h3_count": 13,
+        "table_count": 8,
+        "blockquote_count": 2,
+        "callout_count": 1,
+        "has_faq": true,
+        "has_steps": true
+      },
+      "empirical_signals": {
+        "currency_mentions": 59,
+        "distance_mentions": 19,
+        "transit_time_mentions": 25,
+        "total_empirical_signals": 103,
+        "sample_currencies": [
+          "390k VND",
+          "$25",
+          "950k VND",
+          "50,000 VND",
+          "$25"
+        ],
+        "sample_distances": [
+          "45 km",
+          "899.9 meters",
+          "185 kilometers",
+          "1.6M",
+          "2.4M"
+        ],
+        "sample_transit_times": [
+          "50 min",
+          "2.5 hrs",
+          "3.75 hrs",
+          "55 min",
+          "2 hrs"
         ]
       },
       "slop_report": {
@@ -1257,6 +1317,66 @@
       "warnings": []
     },
     {
+      "path": "M:/Projects/vietnamguide/content/compare/sapa-vs-ha-giang.md",
+      "relative_path": "content/compare/sapa-vs-ha-giang.md",
+      "passed": true,
+      "word_count": 1405,
+      "frontmatter": {
+        "title": "Sa Pa vs Ha Giang (2026): Terraced Trekking & Fansipan vs Karst Motorbike Loop",
+        "slug": "sapa-vs-ha-giang",
+        "route_path": "compare/sapa-vs-ha-giang",
+        "travel_cluster": "northern_vietnam",
+        "last_verified": "2026-10-22",
+        "author": "Minh Tran — Senior Northern Highlands & Adventure Correspondent",
+        "reading_time_minutes": 10,
+        "word_count": 1580
+      },
+      "elements": {
+        "h2_count": 8,
+        "h3_count": 11,
+        "table_count": 10,
+        "blockquote_count": 2,
+        "callout_count": 1,
+        "has_faq": true,
+        "has_steps": true
+      },
+      "empirical_signals": {
+        "currency_mentions": 51,
+        "distance_mentions": 25,
+        "transit_time_mentions": 11,
+        "total_empirical_signals": 87,
+        "sample_currencies": [
+          "850,000 VND",
+          "1,800,000 VND",
+          "450k VND",
+          "450k VND",
+          "$12"
+        ],
+        "sample_distances": [
+          "500 meters",
+          "143m",
+          "500m",
+          "1.55M",
+          "350 km"
+        ],
+        "sample_transit_times": [
+          "5.5 hours",
+          "6 hours",
+          "6 hours",
+          "7 hours",
+          "6 hours"
+        ]
+      },
+      "slop_report": {
+        "passed": true,
+        "hls_score": 100,
+        "tier1_count": 0,
+        "tier1_violations": []
+      },
+      "errors": [],
+      "warnings": []
+    },
+    {
       "path": "M:/Projects/vietnamguide/content/compare/tam-coc-vs-trang-an-boat-tour.md",
       "relative_path": "content/compare/tam-coc-vs-trang-an-boat-tour.md",
       "passed": true,
@@ -1305,6 +1425,66 @@
           "3.5 hours",
           "3 hours",
           "20 minutes"
+        ]
+      },
+      "slop_report": {
+        "passed": true,
+        "hls_score": 100,
+        "tier1_count": 0,
+        "tier1_violations": []
+      },
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "path": "M:/Projects/vietnamguide/content/compare/trang-an-vs-tam-coc.md",
+      "relative_path": "content/compare/trang-an-vs-tam-coc.md",
+      "passed": true,
+      "word_count": 1318,
+      "frontmatter": {
+        "title": "Trang An vs Tam Coc Boat Tour Guide (2026): Routes 1–3, Ticket Prices & Rice Harvest Season",
+        "slug": "trang-an-vs-tam-coc",
+        "route_path": "compare/trang-an-vs-tam-coc",
+        "travel_cluster": "red_river_delta",
+        "last_verified": "2026-10-22",
+        "author": "Minh Tran — Senior Northern Heritage & River Correspondent",
+        "reading_time_minutes": 10,
+        "word_count": 1570
+      },
+      "elements": {
+        "h2_count": 6,
+        "h3_count": 12,
+        "table_count": 7,
+        "blockquote_count": 2,
+        "callout_count": 1,
+        "has_faq": true,
+        "has_steps": true
+      },
+      "empirical_signals": {
+        "currency_mentions": 46,
+        "distance_mentions": 24,
+        "transit_time_mentions": 15,
+        "total_empirical_signals": 85,
+        "sample_currencies": [
+          "300,000 VND",
+          "$10.00",
+          "$12.00",
+          "250,000 VND",
+          "$10.00"
+        ],
+        "sample_distances": [
+          "95 kilometers",
+          "7 kilometers",
+          "1.0m",
+          "1.3m",
+          "1.0m"
+        ],
+        "sample_transit_times": [
+          "3.0 Hours",
+          "2.0 Hours",
+          "1 hour",
+          "3.0 hours",
+          "2.5 hours"
         ]
       },
       "slop_report": {
