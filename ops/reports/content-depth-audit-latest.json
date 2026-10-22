@@ -1,7 +1,7 @@
 {
   "passed": true,
-  "total_articles": 85,
-  "passed_articles": 85,
+  "total_articles": 88,
+  "passed_articles": 88,
   "min_words_threshold": 1200,
   "min_hls_threshold": 85.0,
   "articles": [
@@ -1305,6 +1305,66 @@
           "3.5 hours",
           "3 hours",
           "20 minutes"
+        ]
+      },
+      "slop_report": {
+        "passed": true,
+        "hls_score": 100,
+        "tier1_count": 0,
+        "tier1_violations": []
+      },
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "path": "M:/Projects/vietnamguide/content/compare/vietnam-rice-terraces-guide.md",
+      "relative_path": "content/compare/vietnam-rice-terraces-guide.md",
+      "passed": true,
+      "word_count": 1538,
+      "frontmatter": {
+        "title": "Vietnam Rice Terraces Guide (2026): Sapa vs Mu Cang Chai vs Hoang Su Phi vs Pu Luong",
+        "slug": "vietnam-rice-terraces-guide",
+        "route_path": "compare/vietnam-rice-terraces-guide",
+        "travel_cluster": "northern_highlands",
+        "last_verified": "2026-10-22",
+        "author": "Minh Pham — Lead Travel Technologist",
+        "reading_time_minutes": 10,
+        "word_count": 1940
+      },
+      "elements": {
+        "h2_count": 7,
+        "h3_count": 7,
+        "table_count": 8,
+        "blockquote_count": 7,
+        "callout_count": 2,
+        "has_faq": true,
+        "has_steps": true
+      },
+      "empirical_signals": {
+        "currency_mentions": 34,
+        "distance_mentions": 43,
+        "transit_time_mentions": 13,
+        "total_empirical_signals": 90,
+        "sample_currencies": [
+          "350,000 VND",
+          "3,200,000 VND",
+          "100,000 VND",
+          "30,000 VND",
+          "120,000 VND"
+        ],
+        "sample_distances": [
+          "800 meters",
+          "300m",
+          "000m",
+          "000m",
+          "500m"
+        ],
+        "sample_transit_times": [
+          "7.0 hrs",
+          "7.5 hrs",
+          "5.5 hrs",
+          "4.0 hrs",
+          "6.5 hours"
         ]
       },
       "slop_report": {
@@ -3924,6 +3984,126 @@
           "2.5 hours",
           "50 mins",
           "65 mins"
+        ]
+      },
+      "slop_report": {
+        "passed": true,
+        "hls_score": 100,
+        "tier1_count": 0,
+        "tier1_violations": []
+      },
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "path": "M:/Projects/vietnamguide/content/itineraries/da-nang-to-hue-train-vs-car.md",
+      "relative_path": "content/itineraries/da-nang-to-hue-train-vs-car.md",
+      "passed": true,
+      "word_count": 1356,
+      "frontmatter": {
+        "title": "Da Nang to Hue Train vs Car (2026): Hai Van Pass Route & Cost Comparison",
+        "slug": "da-nang-to-hue-train-vs-car",
+        "route_path": "itineraries/da-nang-to-hue-train-vs-car",
+        "travel_cluster": "central_heritage",
+        "last_verified": "2026-10-22",
+        "author": "Minh Pham — Lead Travel Technologist",
+        "reading_time_minutes": 10,
+        "word_count": 1920
+      },
+      "elements": {
+        "h2_count": 5,
+        "h3_count": 8,
+        "table_count": 7,
+        "blockquote_count": 7,
+        "callout_count": 2,
+        "has_faq": true,
+        "has_steps": true
+      },
+      "empirical_signals": {
+        "currency_mentions": 43,
+        "distance_mentions": 28,
+        "transit_time_mentions": 32,
+        "total_empirical_signals": 103,
+        "sample_currencies": [
+          "180,000 VND",
+          "160,000 VND",
+          "1,600,000 VND",
+          "250,000 VND",
+          "180,000 VND"
+        ],
+        "sample_distances": [
+          "100 KM",
+          "21 km",
+          "496m",
+          "200m",
+          "45m"
+        ],
+        "sample_transit_times": [
+          "5.0 hrs",
+          "3 hrs",
+          "00 mins",
+          "3 hrs",
+          "15 mins"
+        ]
+      },
+      "slop_report": {
+        "passed": true,
+        "hls_score": 100,
+        "tier1_count": 0,
+        "tier1_violations": []
+      },
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "path": "M:/Projects/vietnamguide/content/itineraries/ha-long-bay-day-trip-vs-overnight-cruise.md",
+      "relative_path": "content/itineraries/ha-long-bay-day-trip-vs-overnight-cruise.md",
+      "passed": true,
+      "word_count": 1410,
+      "frontmatter": {
+        "title": "Ha Long Bay Day Trip vs Overnight Cruise (2026): Real Water Time & Cost Breakdown",
+        "slug": "ha-long-bay-day-trip-vs-overnight-cruise",
+        "route_path": "itineraries/ha-long-bay-day-trip-vs-overnight-cruise",
+        "travel_cluster": "ha_long_bay",
+        "last_verified": "2026-10-22",
+        "author": "Minh Pham — Lead Travel Technologist",
+        "reading_time_minutes": 10,
+        "word_count": 1950
+      },
+      "elements": {
+        "h2_count": 5,
+        "h3_count": 6,
+        "table_count": 6,
+        "blockquote_count": 6,
+        "callout_count": 2,
+        "has_faq": true,
+        "has_steps": true
+      },
+      "empirical_signals": {
+        "currency_mentions": 39,
+        "distance_mentions": 10,
+        "transit_time_mentions": 25,
+        "total_empirical_signals": 74,
+        "sample_currencies": [
+          "310,000 VND",
+          "590,000 VND",
+          "310,000 VND",
+          "590,000 VND",
+          "310,000 VND"
+        ],
+        "sample_distances": [
+          "155 km",
+          "30 meters",
+          "4 meters",
+          "4 kilometers",
+          "150 km"
+        ],
+        "sample_transit_times": [
+          "2 hours",
+          "15 minutes",
+          "7.5 hours",
+          "48 hours",
+          "22.5 hours"
         ]
       },
       "slop_report": {
