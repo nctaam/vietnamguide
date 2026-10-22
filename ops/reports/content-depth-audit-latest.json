@@ -1,7 +1,7 @@
 {
   "passed": true,
-  "total_articles": 97,
-  "passed_articles": 97,
+  "total_articles": 100,
+  "passed_articles": 100,
   "min_words_threshold": 1200,
   "min_hls_threshold": 85.0,
   "articles": [
@@ -5607,6 +5607,66 @@
       "warnings": []
     },
     {
+      "path": "M:/Projects/vietnamguide/content/plan/safety-scams-vietnam.md",
+      "relative_path": "content/plan/safety-scams-vietnam.md",
+      "passed": true,
+      "word_count": 1514,
+      "frontmatter": {
+        "title": "Vietnam Safety & Scams Guide (2026): Taxi Clones, Street Hustles & Emergency Numbers",
+        "slug": "safety-scams-vietnam",
+        "route_path": "plan/safety-scams-vietnam",
+        "travel_cluster": "national_circuit",
+        "last_verified": "2026-10-22",
+        "author": "Minh Pham — Lead Travel Technologist",
+        "reading_time_minutes": 8,
+        "word_count": 1514
+      },
+      "elements": {
+        "h2_count": 7,
+        "h3_count": 7,
+        "table_count": 9,
+        "blockquote_count": 2,
+        "callout_count": 1,
+        "has_faq": true,
+        "has_steps": true
+      },
+      "empirical_signals": {
+        "currency_mentions": 50,
+        "distance_mentions": 5,
+        "transit_time_mentions": 6,
+        "total_empirical_signals": 61,
+        "sample_currencies": [
+          "500,000 VND",
+          "20,000 VND",
+          "500,000 VND",
+          "1,200,000 VND",
+          "$12"
+        ],
+        "sample_distances": [
+          "2 meters",
+          "35 km",
+          "1.5 meters",
+          "2M",
+          "8M"
+        ],
+        "sample_transit_times": [
+          "1 hour",
+          "10 minutes",
+          "45 minutes",
+          "30 minutes",
+          "40 minutes"
+        ]
+      },
+      "slop_report": {
+        "passed": true,
+        "hls_score": 100,
+        "tier1_count": 0,
+        "tier1_violations": []
+      },
+      "errors": [],
+      "warnings": []
+    },
+    {
       "path": "M:/Projects/vietnamguide/content/plan/sim-esim-vietnam.md",
       "relative_path": "content/plan/sim-esim-vietnam.md",
       "passed": true,
@@ -5663,6 +5723,66 @@
       "warnings": []
     },
     {
+      "path": "M:/Projects/vietnamguide/content/plan/transport-within-vietnam.md",
+      "relative_path": "content/plan/transport-within-vietnam.md",
+      "passed": true,
+      "word_count": 1567,
+      "frontmatter": {
+        "title": "Transport Within Vietnam (2026): Domestic Flights, Trains, VIP Buses & Cars",
+        "slug": "transport-within-vietnam",
+        "route_path": "plan/transport-within-vietnam",
+        "travel_cluster": "national_circuit",
+        "last_verified": "2026-10-22",
+        "author": "Minh Pham — Lead Travel Technologist",
+        "reading_time_minutes": 8,
+        "word_count": 1568
+      },
+      "elements": {
+        "h2_count": 7,
+        "h3_count": 10,
+        "table_count": 9,
+        "blockquote_count": 2,
+        "callout_count": 1,
+        "has_faq": true,
+        "has_steps": true
+      },
+      "empirical_signals": {
+        "currency_mentions": 79,
+        "distance_mentions": 22,
+        "transit_time_mentions": 15,
+        "total_empirical_signals": 116,
+        "sample_currencies": [
+          "350,000 VND",
+          "1,800,000 VND",
+          "550,000 VND",
+          "2,600,000 VND",
+          "900,000 VND"
+        ],
+        "sample_distances": [
+          "650 km",
+          "220 km",
+          "800 km",
+          "750 km",
+          "220 km"
+        ],
+        "sample_transit_times": [
+          "3.5 hours",
+          "3 hours",
+          "4 hours",
+          "3 hours",
+          "10 minutes"
+        ]
+      },
+      "slop_report": {
+        "passed": true,
+        "hls_score": 100,
+        "tier1_count": 0,
+        "tier1_violations": []
+      },
+      "errors": [],
+      "warnings": []
+    },
+    {
       "path": "M:/Projects/vietnamguide/content/plan/vietnam-evisa.md",
       "relative_path": "content/plan/vietnam-evisa.md",
       "passed": true,
@@ -5703,6 +5823,64 @@
         ],
         "sample_transit_times": [
           "24 hours"
+        ]
+      },
+      "slop_report": {
+        "passed": true,
+        "hls_score": 100,
+        "tier1_count": 0,
+        "tier1_violations": []
+      },
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "path": "M:/Projects/vietnamguide/content/plan/what-to-pack-for-vietnam-region-season.md",
+      "relative_path": "content/plan/what-to-pack-for-vietnam-region-season.md",
+      "passed": true,
+      "word_count": 1380,
+      "frontmatter": {
+        "title": "What to Pack for Vietnam by Region & Season (2026): Clothing, Plugs & Dress Codes",
+        "slug": "what-to-pack-for-vietnam-region-season",
+        "route_path": "plan/what-to-pack-for-vietnam-region-season",
+        "travel_cluster": "national_circuit",
+        "last_verified": "2026-10-22",
+        "author": "Minh Pham — Lead Travel Technologist",
+        "reading_time_minutes": 7,
+        "word_count": 1380
+      },
+      "elements": {
+        "h2_count": 7,
+        "h3_count": 10,
+        "table_count": 9,
+        "blockquote_count": 4,
+        "callout_count": 2,
+        "has_faq": true,
+        "has_steps": false
+      },
+      "empirical_signals": {
+        "currency_mentions": 26,
+        "distance_mentions": 5,
+        "transit_time_mentions": 3,
+        "total_empirical_signals": 34,
+        "sample_currencies": [
+          "50,000 VND",
+          "$1.20",
+          "$2.00",
+          "$3",
+          "$18"
+        ],
+        "sample_distances": [
+          "143 meters",
+          "500m",
+          "200m",
+          "500m",
+          "50 meters"
+        ],
+        "sample_transit_times": [
+          "48 hours",
+          "10 minutes",
+          "48 hours"
         ]
       },
       "slop_report": {
