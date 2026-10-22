@@ -1,7 +1,7 @@
 {
   "passed": true,
-  "total_articles": 70,
-  "passed_articles": 70,
+  "total_articles": 73,
+  "passed_articles": 73,
   "min_words_threshold": 1200,
   "min_hls_threshold": 85.0,
   "articles": [
@@ -837,6 +837,126 @@
       "warnings": []
     },
     {
+      "path": "M:/Projects/vietnamguide/content/compare/north-central-south-vietnam.md",
+      "relative_path": "content/compare/north-central-south-vietnam.md",
+      "passed": true,
+      "word_count": 1550,
+      "frontmatter": {
+        "title": "North vs Central vs South Vietnam: Where to Go First",
+        "slug": "north-central-south-vietnam",
+        "route_path": "compare/north-central-south-vietnam",
+        "travel_cluster": "national_circuit",
+        "last_verified": "2026-10-22",
+        "author": "Antigravity Travel Intelligence",
+        "reading_time_minutes": 11,
+        "word_count": 1780
+      },
+      "elements": {
+        "h2_count": 7,
+        "h3_count": 12,
+        "table_count": 14,
+        "blockquote_count": 3,
+        "callout_count": 1,
+        "has_faq": true,
+        "has_steps": true
+      },
+      "empirical_signals": {
+        "currency_mentions": 6,
+        "distance_mentions": 5,
+        "transit_time_mentions": 7,
+        "total_empirical_signals": 18,
+        "sample_currencies": [
+          "1,800,000 VND",
+          "$32.00",
+          "$72.00",
+          "15,000 VND",
+          "$45"
+        ],
+        "sample_distances": [
+          "650 kilometers",
+          "143m",
+          "496m",
+          "143 meters",
+          "20m"
+        ],
+        "sample_transit_times": [
+          "1 hour",
+          "20 minutes",
+          "1 hour",
+          "25 minutes",
+          "30 hours"
+        ]
+      },
+      "slop_report": {
+        "passed": true,
+        "hls_score": 100,
+        "tier1_count": 0,
+        "tier1_violations": []
+      },
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "path": "M:/Projects/vietnamguide/content/compare/old-quarter-vs-french-quarter-vs-west-lake.md",
+      "relative_path": "content/compare/old-quarter-vs-french-quarter-vs-west-lake.md",
+      "passed": true,
+      "word_count": 1232,
+      "frontmatter": {
+        "title": "Old Quarter vs French Quarter vs West Lake: Best Hanoi Base",
+        "slug": "old-quarter-vs-french-quarter-vs-west-lake",
+        "route_path": "compare/old-quarter-vs-french-quarter-vs-west-lake",
+        "travel_cluster": "northern_triangle",
+        "last_verified": "2026-10-22",
+        "author": "Antigravity Travel Intelligence",
+        "reading_time_minutes": 10,
+        "word_count": 1720
+      },
+      "elements": {
+        "h2_count": 7,
+        "h3_count": 9,
+        "table_count": 10,
+        "blockquote_count": 5,
+        "callout_count": 1,
+        "has_faq": true,
+        "has_steps": false
+      },
+      "empirical_signals": {
+        "currency_mentions": 18,
+        "distance_mentions": 9,
+        "transit_time_mentions": 13,
+        "total_empirical_signals": 40,
+        "sample_currencies": [
+          "$35",
+          "$90",
+          "$150",
+          "$450",
+          "$50"
+        ],
+        "sample_distances": [
+          "28 km",
+          "30 km",
+          "20 km",
+          "20 km",
+          "7 km"
+        ],
+        "sample_transit_times": [
+          "15 min",
+          "25 min",
+          "60 mins",
+          "60 mins",
+          "35 mins"
+        ]
+      },
+      "slop_report": {
+        "passed": true,
+        "hls_score": 100,
+        "tier1_count": 0,
+        "tier1_violations": []
+      },
+      "errors": [],
+      "warnings": []
+    },
+    {
       "path": "M:/Projects/vietnamguide/content/compare/paradise-cave-vs-phong-nha-cave.md",
       "relative_path": "content/compare/paradise-cave-vs-phong-nha-cave.md",
       "passed": true,
@@ -1004,6 +1124,66 @@
           "1.25 hours",
           "2.5 hours",
           "3.5 hours",
+          "30 minutes"
+        ]
+      },
+      "slop_report": {
+        "passed": true,
+        "hls_score": 100,
+        "tier1_count": 0,
+        "tier1_violations": []
+      },
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "path": "M:/Projects/vietnamguide/content/compare/phu-quoc-vs-nha-trang.md",
+      "relative_path": "content/compare/phu-quoc-vs-nha-trang.md",
+      "passed": true,
+      "word_count": 1347,
+      "frontmatter": {
+        "title": "Phu Quoc vs Nha Trang: Which Beach Is Better?",
+        "slug": "phu-quoc-vs-nha-trang",
+        "route_path": "compare/phu-quoc-vs-nha-trang",
+        "travel_cluster": "coastal_islands",
+        "last_verified": "2026-10-22",
+        "author": "Antigravity Travel Intelligence",
+        "reading_time_minutes": 10,
+        "word_count": 1710
+      },
+      "elements": {
+        "h2_count": 7,
+        "h3_count": 7,
+        "table_count": 12,
+        "blockquote_count": 4,
+        "callout_count": 1,
+        "has_faq": true,
+        "has_steps": true
+      },
+      "empirical_signals": {
+        "currency_mentions": 25,
+        "distance_mentions": 7,
+        "transit_time_mentions": 5,
+        "total_empirical_signals": 37,
+        "sample_currencies": [
+          "200,000 VND",
+          "$6.00",
+          "$8.00",
+          "750,000 VND",
+          "$18.00"
+        ],
+        "sample_distances": [
+          "6 km",
+          "35 km",
+          "6 KM",
+          "899m",
+          "899 meters"
+        ],
+        "sample_transit_times": [
+          "15 mins",
+          "40 mins",
+          "15 minutes",
+          "40 minutes",
           "30 minutes"
         ]
       },
