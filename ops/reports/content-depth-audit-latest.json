@@ -1,7 +1,7 @@
 {
   "passed": true,
-  "total_articles": 73,
-  "passed_articles": 73,
+  "total_articles": 76,
+  "passed_articles": 76,
   "min_words_threshold": 1200,
   "min_hls_threshold": 85.0,
   "articles": [
@@ -3564,6 +3564,186 @@
           "6.5 hours",
           "5.0 hours",
           "6 hours"
+        ]
+      },
+      "slop_report": {
+        "passed": true,
+        "hls_score": 100,
+        "tier1_count": 0,
+        "tier1_violations": []
+      },
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "path": "M:/Projects/vietnamguide/content/itineraries/10-days-in-vietnam.md",
+      "relative_path": "content/itineraries/10-days-in-vietnam.md",
+      "passed": true,
+      "word_count": 2273,
+      "frontmatter": {
+        "title": "10 Days in Vietnam: Best Route for First-Time Visitors",
+        "slug": "10-days-in-vietnam",
+        "route_path": "itineraries/10-days-in-vietnam",
+        "travel_cluster": "national_circuit",
+        "last_verified": "2026-10-22",
+        "author": "Antigravity Travel Intelligence",
+        "reading_time_minutes": 13,
+        "word_count": 2350
+      },
+      "elements": {
+        "h2_count": 5,
+        "h3_count": 13,
+        "table_count": 7,
+        "blockquote_count": 2,
+        "callout_count": 1,
+        "has_faq": true,
+        "has_steps": false
+      },
+      "empirical_signals": {
+        "currency_mentions": 73,
+        "distance_mentions": 9,
+        "transit_time_mentions": 16,
+        "total_empirical_signals": 98,
+        "sample_currencies": [
+          "$150",
+          "$300",
+          "350,000 VND",
+          "30,000 VND",
+          "70,000 VND"
+        ],
+        "sample_distances": [
+          "150 km",
+          "150 km",
+          "630 km",
+          "610 km",
+          "85 km"
+        ],
+        "sample_transit_times": [
+          "2.5 hours",
+          "2.5 hours",
+          "5.0 hours",
+          "80 min",
+          "5.0 hours"
+        ]
+      },
+      "slop_report": {
+        "passed": true,
+        "hls_score": 100,
+        "tier1_count": 0,
+        "tier1_violations": []
+      },
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "path": "M:/Projects/vietnamguide/content/itineraries/14-days-in-vietnam.md",
+      "relative_path": "content/itineraries/14-days-in-vietnam.md",
+      "passed": true,
+      "word_count": 2534,
+      "frontmatter": {
+        "title": "14 Days in Vietnam Itinerary: Best Two-Week Route",
+        "slug": "14-days-in-vietnam",
+        "route_path": "itineraries/14-days-in-vietnam",
+        "travel_cluster": "national_circuit",
+        "last_verified": "2026-10-22",
+        "author": "Antigravity Travel Intelligence",
+        "reading_time_minutes": 15,
+        "word_count": 2450
+      },
+      "elements": {
+        "h2_count": 6,
+        "h3_count": 17,
+        "table_count": 8,
+        "blockquote_count": 4,
+        "callout_count": 2,
+        "has_faq": true,
+        "has_steps": false
+      },
+      "empirical_signals": {
+        "currency_mentions": 90,
+        "distance_mentions": 13,
+        "transit_time_mentions": 19,
+        "total_empirical_signals": 122,
+        "sample_currencies": [
+          "350,000 VND",
+          "30,000 VND",
+          "60,000 VND",
+          "35,000 VND",
+          "70,000 VND"
+        ],
+        "sample_distances": [
+          "95 km",
+          "145 km",
+          "150 km",
+          "670 km",
+          "130 km"
+        ],
+        "sample_transit_times": [
+          "45 min",
+          "90 min",
+          "2.5 hr",
+          "100 mins",
+          "3.0 hours"
+        ]
+      },
+      "slop_report": {
+        "passed": true,
+        "hls_score": 100,
+        "tier1_count": 0,
+        "tier1_violations": []
+      },
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "path": "M:/Projects/vietnamguide/content/itineraries/7-days-in-vietnam.md",
+      "relative_path": "content/itineraries/7-days-in-vietnam.md",
+      "passed": true,
+      "word_count": 2186,
+      "frontmatter": {
+        "title": "7 Days in Vietnam: Best One-Week Itinerary",
+        "slug": "7-days-in-vietnam",
+        "route_path": "itineraries/7-days-in-vietnam",
+        "travel_cluster": "northern_triangle",
+        "last_verified": "2026-10-22",
+        "author": "Antigravity Travel Intelligence",
+        "reading_time_minutes": 12,
+        "word_count": 2186
+      },
+      "elements": {
+        "h2_count": 6,
+        "h3_count": 11,
+        "table_count": 7,
+        "blockquote_count": 4,
+        "callout_count": 2,
+        "has_faq": true,
+        "has_steps": true
+      },
+      "empirical_signals": {
+        "currency_mentions": 67,
+        "distance_mentions": 5,
+        "transit_time_mentions": 16,
+        "total_empirical_signals": 88,
+        "sample_currencies": [
+          "350,000 VND",
+          "350,000 VND",
+          "30,000 VND",
+          "65,000 VND",
+          "35,000 VND"
+        ],
+        "sample_distances": [
+          "650 kilometers",
+          "28 km",
+          "95 km",
+          "145 km",
+          "150 km"
+        ],
+        "sample_transit_times": [
+          "120 minutes",
+          "125 minutes",
+          "55 minutes",
+          "55 mins",
+          "105 mins"
         ]
       },
       "slop_report": {
