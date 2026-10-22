@@ -1,7 +1,7 @@
 {
   "passed": true,
-  "total_articles": 67,
-  "passed_articles": 67,
+  "total_articles": 70,
+  "passed_articles": 70,
   "min_words_threshold": 1200,
   "min_hls_threshold": 85.0,
   "articles": [
@@ -363,6 +363,62 @@
       "warnings": []
     },
     {
+      "path": "M:/Projects/vietnamguide/content/compare/ha-giang-easy-rider-vs-self-drive.md",
+      "relative_path": "content/compare/ha-giang-easy-rider-vs-self-drive.md",
+      "passed": true,
+      "word_count": 1486,
+      "frontmatter": {
+        "title": "Ha Giang Easy Rider vs Self-Drive: Motorbike Route Guide",
+        "slug": "ha-giang-easy-rider-vs-self-drive",
+        "route_path": "compare/ha-giang-easy-rider-vs-self-drive",
+        "travel_cluster": "northern_highlands",
+        "last_verified": "2026-10-22",
+        "author": "Antigravity Travel Intelligence",
+        "reading_time_minutes": 10,
+        "word_count": 1720
+      },
+      "elements": {
+        "h2_count": 6,
+        "h3_count": 9,
+        "table_count": 9,
+        "blockquote_count": 6,
+        "callout_count": 2,
+        "has_faq": true,
+        "has_steps": true
+      },
+      "empirical_signals": {
+        "currency_mentions": 66,
+        "distance_mentions": 7,
+        "transit_time_mentions": 1,
+        "total_empirical_signals": 74,
+        "sample_currencies": [
+          "5,500,000 VND",
+          "$180",
+          "$220",
+          "1,800,000 VND",
+          "$48"
+        ],
+        "sample_distances": [
+          "500m",
+          "490m",
+          "000m",
+          "000m",
+          "500m"
+        ],
+        "sample_transit_times": [
+          "60 minutes"
+        ]
+      },
+      "slop_report": {
+        "passed": true,
+        "hls_score": 100,
+        "tier1_count": 0,
+        "tier1_violations": []
+      },
+      "errors": [],
+      "warnings": []
+    },
+    {
       "path": "M:/Projects/vietnamguide/content/compare/ha-long-bay-vs-lan-ha-bay.md",
       "relative_path": "content/compare/ha-long-bay-vs-lan-ha-bay.md",
       "passed": true,
@@ -603,6 +659,65 @@
       "warnings": []
     },
     {
+      "path": "M:/Projects/vietnamguide/content/compare/mekong-delta-overnight-vs-day-trip.md",
+      "relative_path": "content/compare/mekong-delta-overnight-vs-day-trip.md",
+      "passed": true,
+      "word_count": 1374,
+      "frontmatter": {
+        "title": "Mekong Delta Overnight vs Day Trip: Which Is Worth It?",
+        "slug": "mekong-delta-overnight-vs-day-trip",
+        "route_path": "compare/mekong-delta-overnight-vs-day-trip",
+        "travel_cluster": "mekong_delta",
+        "last_verified": "2026-10-22",
+        "author": "Antigravity Travel Intelligence",
+        "reading_time_minutes": 10,
+        "word_count": 1710
+      },
+      "elements": {
+        "h2_count": 6,
+        "h3_count": 9,
+        "table_count": 10,
+        "blockquote_count": 3,
+        "callout_count": 1,
+        "has_faq": true,
+        "has_steps": true
+      },
+      "empirical_signals": {
+        "currency_mentions": 18,
+        "distance_mentions": 4,
+        "transit_time_mentions": 13,
+        "total_empirical_signals": 35,
+        "sample_currencies": [
+          "$25",
+          "$55",
+          "$75",
+          "$140",
+          "50,000 VND"
+        ],
+        "sample_distances": [
+          "90 km",
+          "170 km",
+          "170 kilometers",
+          "8 kilometers"
+        ],
+        "sample_transit_times": [
+          "2.5 hours",
+          "4.0 hours",
+          "5 hours",
+          "7 hours",
+          "72 hours"
+        ]
+      },
+      "slop_report": {
+        "passed": true,
+        "hls_score": 100,
+        "tier1_count": 0,
+        "tier1_violations": []
+      },
+      "errors": [],
+      "warnings": []
+    },
+    {
       "path": "M:/Projects/vietnamguide/content/compare/mui-ne-vs-nha-trang.md",
       "relative_path": "content/compare/mui-ne-vs-nha-trang.md",
       "passed": true,
@@ -651,6 +766,65 @@
           "10 mins",
           "10 mins",
           "12 mins"
+        ]
+      },
+      "slop_report": {
+        "passed": true,
+        "hls_score": 100,
+        "tier1_count": 0,
+        "tier1_violations": []
+      },
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "path": "M:/Projects/vietnamguide/content/compare/ninh-binh-day-trip-vs-overnight.md",
+      "relative_path": "content/compare/ninh-binh-day-trip-vs-overnight.md",
+      "passed": true,
+      "word_count": 1341,
+      "frontmatter": {
+        "title": "Ninh Binh Day Trip vs Overnight: Which Is Better?",
+        "slug": "ninh-binh-day-trip-vs-overnight",
+        "route_path": "compare/ninh-binh-day-trip-vs-overnight",
+        "travel_cluster": "ninh_binh",
+        "last_verified": "2026-10-22",
+        "author": "Antigravity Travel Intelligence",
+        "reading_time_minutes": 10,
+        "word_count": 1680
+      },
+      "elements": {
+        "h2_count": 6,
+        "h3_count": 9,
+        "table_count": 10,
+        "blockquote_count": 3,
+        "callout_count": 1,
+        "has_faq": true,
+        "has_steps": false
+      },
+      "empirical_signals": {
+        "currency_mentions": 14,
+        "distance_mentions": 4,
+        "transit_time_mentions": 8,
+        "total_empirical_signals": 26,
+        "sample_currencies": [
+          "220k VND",
+          "$35",
+          "$60",
+          "1,500,000 VND",
+          "$60"
+        ],
+        "sample_distances": [
+          "95 kilometers",
+          "15m",
+          "1.1M",
+          "1.5M"
+        ],
+        "sample_transit_times": [
+          "90 minutes",
+          "4.5 hours",
+          "3.0 hours",
+          "60 mins",
+          "2 hours"
         ]
       },
       "slop_report": {
