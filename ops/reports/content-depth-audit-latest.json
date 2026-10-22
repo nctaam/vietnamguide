@@ -1,7 +1,7 @@
 {
   "passed": true,
-  "total_articles": 115,
-  "passed_articles": 115,
+  "total_articles": 118,
+  "passed_articles": 118,
   "min_words_threshold": 1200,
   "min_hls_threshold": 85.0,
   "articles": [
@@ -2013,6 +2013,185 @@
       "warnings": []
     },
     {
+      "path": "M:/Projects/vietnamguide/content/destinations/best-things-to-do-in-hue.md",
+      "relative_path": "content/destinations/best-things-to-do-in-hue.md",
+      "passed": true,
+      "word_count": 1261,
+      "frontmatter": {
+        "title": "Best Things to Do in Hue (2026): Imperial Citadel, Royal Tombs Combo Tickets, Perfume River & Food",
+        "slug": "best-things-to-do-in-hue",
+        "route_path": "destinations/best-things-to-do-in-hue",
+        "travel_cluster": "central_heritage",
+        "last_verified": "2026-10-22",
+        "author": "Minh Tran — Senior Central Heritage & Architecture Correspondent",
+        "reading_time_minutes": 10,
+        "word_count": 1450
+      },
+      "elements": {
+        "h2_count": 5,
+        "h3_count": 13,
+        "table_count": 6,
+        "blockquote_count": 2,
+        "callout_count": 1,
+        "has_faq": true,
+        "has_steps": true
+      },
+      "empirical_signals": {
+        "currency_mentions": 52,
+        "distance_mentions": 12,
+        "transit_time_mentions": 4,
+        "total_empirical_signals": 68,
+        "sample_currencies": [
+          "530,000 VND",
+          "200,000 VND",
+          "$8.00",
+          "40,000 VND",
+          "150,000 VND"
+        ],
+        "sample_distances": [
+          "100 kilometers",
+          "18 km",
+          "14 kilometers",
+          "12 km",
+          "10 km"
+        ],
+        "sample_transit_times": [
+          "3 hours",
+          "48 hours",
+          "3 hours",
+          "2 minutes"
+        ]
+      },
+      "slop_report": {
+        "passed": true,
+        "hls_score": 100,
+        "tier1_count": 0,
+        "tier1_violations": []
+      },
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "path": "M:/Projects/vietnamguide/content/destinations/best-things-to-do-in-mui-ne.md",
+      "relative_path": "content/destinations/best-things-to-do-in-mui-ne.md",
+      "passed": true,
+      "word_count": 1208,
+      "frontmatter": {
+        "title": "Best Things to Do in Mui Ne (2026): White Sand Dunes Sunrise Jeep, Fairy Stream, Kitesurfing & Seafood",
+        "slug": "best-things-to-do-in-mui-ne",
+        "route_path": "destinations/best-things-to-do-in-mui-ne",
+        "travel_cluster": "south_central_coast",
+        "last_verified": "2026-10-22",
+        "author": "Minh Tran — Senior South-Central Coast & Adventure Correspondent",
+        "reading_time_minutes": 10,
+        "word_count": 1450
+      },
+      "elements": {
+        "h2_count": 5,
+        "h3_count": 13,
+        "table_count": 6,
+        "blockquote_count": 2,
+        "callout_count": 1,
+        "has_faq": true,
+        "has_steps": true
+      },
+      "empirical_signals": {
+        "currency_mentions": 59,
+        "distance_mentions": 16,
+        "transit_time_mentions": 12,
+        "total_empirical_signals": 87,
+        "sample_currencies": [
+          "650,000 VND",
+          "$22",
+          "$26",
+          "150,000 VND",
+          "20,000 VND"
+        ],
+        "sample_distances": [
+          "195 km",
+          "38 km",
+          "1.8 km",
+          "3 km",
+          "7 km"
+        ],
+        "sample_transit_times": [
+          "45 minutes",
+          "30 mins",
+          "3.0 hours",
+          "25 minutes",
+          "20 minutes"
+        ]
+      },
+      "slop_report": {
+        "passed": true,
+        "hls_score": 100,
+        "tier1_count": 0,
+        "tier1_violations": []
+      },
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "path": "M:/Projects/vietnamguide/content/destinations/best-things-to-do-in-ninh-binh.md",
+      "relative_path": "content/destinations/best-things-to-do-in-ninh-binh.md",
+      "passed": true,
+      "word_count": 1514,
+      "frontmatter": {
+        "title": "Best Things to Do in Ninh Binh (2026): Trang An, Hang Mua, Tam Coc, Cuc Phuong & Cycling Routes",
+        "slug": "best-things-to-do-in-ninh-binh",
+        "route_path": "destinations/best-things-to-do-in-ninh-binh",
+        "travel_cluster": "red_river_delta",
+        "last_verified": "2026-10-22",
+        "author": "Minh Tran — Senior Northern Karst & Eco-Heritage Correspondent",
+        "reading_time_minutes": 11,
+        "word_count": 1500
+      },
+      "elements": {
+        "h2_count": 6,
+        "h3_count": 14,
+        "table_count": 7,
+        "blockquote_count": 2,
+        "callout_count": 1,
+        "has_faq": true,
+        "has_steps": true
+      },
+      "empirical_signals": {
+        "currency_mentions": 62,
+        "distance_mentions": 18,
+        "transit_time_mentions": 14,
+        "total_empirical_signals": 94,
+        "sample_currencies": [
+          "250,000 VND",
+          "$10.00",
+          "1,000,000 VND",
+          "120,000 VND",
+          "250,000 VND"
+        ],
+        "sample_distances": [
+          "95 kilometers",
+          "1.0m",
+          "1.3m",
+          "1.0m",
+          "000m"
+        ],
+        "sample_transit_times": [
+          "1.5 hours",
+          "2 hours",
+          "3 hr",
+          "2 hours",
+          "3 hours"
+        ]
+      },
+      "slop_report": {
+        "passed": true,
+        "hls_score": 100,
+        "tier1_count": 0,
+        "tier1_violations": []
+      },
+      "errors": [],
+      "warnings": []
+    },
+    {
       "path": "M:/Projects/vietnamguide/content/destinations/can-tho-cai-rang-floating-market-guide.md",
       "relative_path": "content/destinations/can-tho-cai-rang-floating-market-guide.md",
       "passed": true,
@@ -3301,8 +3480,8 @@
         "travel_cluster": "central_coast",
         "last_verified": "2026-10-22",
         "author": "Minh Tran — Senior Central Coast & Marine Geology Correspondent",
-        "reading_time_minutes": 11,
-        "word_count": 1850
+        "reading_time_minutes": 10,
+        "word_count": 1364
       },
       "elements": {
         "h2_count": 8,
@@ -3421,8 +3600,8 @@
         "travel_cluster": "northwest_highlands",
         "last_verified": "2026-10-22",
         "author": "Minh Tran — Senior Northwest Highlands & Photography Correspondent",
-        "reading_time_minutes": 11,
-        "word_count": 1850
+        "reading_time_minutes": 10,
+        "word_count": 1400
       },
       "elements": {
         "h2_count": 7,
@@ -3889,8 +4068,8 @@
         "travel_cluster": "northern_vietnam",
         "last_verified": "2026-10-22",
         "author": "Minh Tran — Senior Northern Highlands & Eco-Trekking Correspondent",
-        "reading_time_minutes": 11,
-        "word_count": 1860
+        "reading_time_minutes": 10,
+        "word_count": 1360
       },
       "elements": {
         "h2_count": 7,
