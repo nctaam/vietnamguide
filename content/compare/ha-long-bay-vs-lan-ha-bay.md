@@ -60,10 +60,10 @@ Cruises licensed by Quang Ninh Province cannot anchor in Lan Ha Bay waters witho
 
 ## Vessel Density and Anchorage Solitude
 
-The most noticeable difference between the two bays is the density of marine traffic on the water.
+The most noticeable difference between the two bays is the density of marine traffic on the water. Fleet numbers tell the whole story.
 
-### Ha Long Bay: Iconic Splendor with High Fleet Congestion
-Ha Long Bay is the historic center of Vietnamese maritime tourism. On any given afternoon during the high season (October through April), hundreds of cruise ships follow standardized navigation corridors. At landmark attractions such as Sung Sot Cave or Ti Top Island, dozens of tenders queue at the concrete arrival jetties simultaneously, creating bottlenecks along narrow hiking stairs. At night, popular overnight anchorages like Coconut Tree Island or Luon Cave host 30 to 50 vessels, illuminating the surrounding karst cliffs with ship spotlights.
+### Core Ha Long Bay: Iconic Splendor with High Fleet Congestion
+Quang Ninh's core bay is the historic center of Vietnamese maritime tourism, drawing the lion's share of first-time international visitors. On any given afternoon during the high season (October through April), hundreds of cruise ships follow standardized navigation corridors. At landmark attractions such as Sung Sot Cave or Ti Top Island, dozens of tenders queue at the concrete arrival jetties simultaneously, creating bottlenecks along narrow hiking stairs. At night, popular overnight anchorages like Coconut Tree Island or Luon Cave host 30 to 50 vessels, illuminating the surrounding karst cliffs with ship spotlights.
 
 ### Lan Ha Bay: Quieter Waters and Intimate Formations
 Lan Ha Bay accommodates roughly one-quarter the vessel volume of Ha Long Bay. Because the limestone spires here are spaced more densely across a smaller surface area, the landscape feels more intimate and secluded. Kayakers can paddle into quiet coves where vertical limestone walls block engine hum entirely. Overnight anchorages typically host only four to eight vessels, preserving the natural silence of the karst wilderness.
@@ -88,7 +88,7 @@ The excursions scheduled on 2-day-1-night (2D1N) and 3-day-2-night (3D2N) itiner
   +-------------------------------+     +-------------------------------+
 ```
 
-### 1. Ha Long Bay Excursions: Grandeur and Monumental Scale
+### 1. Quang Ninh Core Excursions: Grandeur and Monumental Scale
 - **Sung Sot (Surprise) Cave**: Located on Bo Hon Island, this is the largest grotto in Ha Long Bay, encompassing two cavernous chambers adorned with stalactites illuminated by colored lighting. Smooth concrete paths make it accessible to most travelers.
 - **Ti Top Island**: Named after Soviet cosmonaut Gherman Titov, this island features a crescent-shaped sand beach and a steep stone staircase of 400 steps ascending to an octagonal viewing gazebo with sweeping 360-degree vistas.
 - **Luon Cave**: A low, 60-meter water-level archway that opens into a calm, enclosed marine lagoon encircled by vertical cliffs and inhabited by wild golden rhesus macaques.
@@ -160,17 +160,17 @@ Choosing how much time to dedicate to the bay depends on your overall Vietnam tr
   * 2-Day-1-Night (2D1N) Classic:                                         |
     Embarks ~12:15 PM, disembarks ~11:30 AM the next day (roughly 23h on  |
     board). Includes 4 meals, afternoon excursions, sunset party, squid   |
-    fishing, and morning tai chi. Cost: $110–$250 USD per person.         |
+    fishing, and morning tai chi. Tariff: $110–$250 USD per person.       |
   * 3-Day-2-Night (3D2N) Deep Explorer:                                   |
     Full second day on a smaller day-boat navigating remote outer lagoons,|
     cycling to Viet Hai Village, or exploring secluded Lan Ha beaches.    |
-    Optimal for active travelers. Cost: $220–$480+ USD per person.        |
+    Optimal for active travelers. Rates: $220–$480+ USD per person.       |
 +-------------------------------------------------------------------------+
 ```
 
 ---
 
-## Cost Structure and Cruise Tiers
+## Pricing Structure and Cruise Tiers
 
 Cruise pricing across both bays breaks down into three distinct quality tiers:
 

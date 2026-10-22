@@ -1,7 +1,7 @@
 {
   "passed": true,
-  "total_articles": 112,
-  "passed_articles": 112,
+  "total_articles": 115,
+  "passed_articles": 115,
   "min_words_threshold": 1200,
   "min_hls_threshold": 85.0,
   "articles": [
@@ -482,7 +482,7 @@
       "path": "M:/Projects/vietnamguide/content/compare/ha-long-bay-vs-lan-ha-bay.md",
       "relative_path": "content/compare/ha-long-bay-vs-lan-ha-bay.md",
       "passed": true,
-      "word_count": 1303,
+      "word_count": 1318,
       "frontmatter": {
         "title": "Ha Long Bay vs Lan Ha Bay: Cruise Routes, Costs, and Port Selection",
         "slug": "ha-long-bay-vs-lan-ha-bay",
@@ -530,8 +530,8 @@
         ]
       },
       "slop_report": {
-        "passed": false,
-        "hls_score": 90,
+        "passed": true,
+        "hls_score": 100,
         "tier1_count": 0,
         "tier1_violations": []
       },
@@ -3290,6 +3290,66 @@
       "warnings": []
     },
     {
+      "path": "M:/Projects/vietnamguide/content/destinations/ly-son-travel-guide.md",
+      "relative_path": "content/destinations/ly-son-travel-guide.md",
+      "passed": true,
+      "word_count": 1364,
+      "frontmatter": {
+        "title": "Ly Son Island Travel Guide (2026): Volcanic Cliffs, Sa Ky Speedboat, Dao Be & Garlic Kingdom",
+        "slug": "ly-son-travel-guide",
+        "route_path": "destinations/ly-son-travel-guide",
+        "travel_cluster": "central_coast",
+        "last_verified": "2026-10-22",
+        "author": "Minh Tran — Senior Central Coast & Marine Geology Correspondent",
+        "reading_time_minutes": 11,
+        "word_count": 1850
+      },
+      "elements": {
+        "h2_count": 8,
+        "h3_count": 12,
+        "table_count": 9,
+        "blockquote_count": 2,
+        "callout_count": 1,
+        "has_faq": true,
+        "has_steps": true
+      },
+      "empirical_signals": {
+        "currency_mentions": 63,
+        "distance_mentions": 11,
+        "transit_time_mentions": 18,
+        "total_empirical_signals": 92,
+        "sample_currencies": [
+          "205,000 VND",
+          "$7.10",
+          "$8.20",
+          "245,000 VND",
+          "22k VND"
+        ],
+        "sample_distances": [
+          "28 kilometers",
+          "45 km",
+          "23 km",
+          "130 km",
+          "25 km"
+        ],
+        "sample_transit_times": [
+          "12 minutes",
+          "40 minutes",
+          "12 minutes",
+          "20 mins",
+          "60 minutes"
+        ]
+      },
+      "slop_report": {
+        "passed": true,
+        "hls_score": 100,
+        "tier1_count": 0,
+        "tier1_violations": []
+      },
+      "errors": [],
+      "warnings": []
+    },
+    {
       "path": "M:/Projects/vietnamguide/content/destinations/mang-den-travel-guide.md",
       "relative_path": "content/destinations/mang-den-travel-guide.md",
       "passed": true,
@@ -3342,6 +3402,66 @@
       },
       "slop_report": {
         "passed": false,
+        "hls_score": 100,
+        "tier1_count": 0,
+        "tier1_violations": []
+      },
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "path": "M:/Projects/vietnamguide/content/destinations/mu-cang-chai-travel-guide.md",
+      "relative_path": "content/destinations/mu-cang-chai-travel-guide.md",
+      "passed": true,
+      "word_count": 1400,
+      "frontmatter": {
+        "title": "Mu Cang Chai Travel Guide (2026): Golden Rice Terraces, Khau Pha Pass, Mam Xoi Hill & Hanoi Routes",
+        "slug": "mu-cang-chai-travel-guide",
+        "route_path": "destinations/mu-cang-chai-travel-guide",
+        "travel_cluster": "northwest_highlands",
+        "last_verified": "2026-10-22",
+        "author": "Minh Tran — Senior Northwest Highlands & Photography Correspondent",
+        "reading_time_minutes": 11,
+        "word_count": 1850
+      },
+      "elements": {
+        "h2_count": 7,
+        "h3_count": 13,
+        "table_count": 8,
+        "blockquote_count": 2,
+        "callout_count": 1,
+        "has_faq": true,
+        "has_steps": true
+      },
+      "empirical_signals": {
+        "currency_mentions": 58,
+        "distance_mentions": 24,
+        "transit_time_mentions": 10,
+        "total_empirical_signals": 92,
+        "sample_currencies": [
+          "40,000 VND",
+          "$0.80",
+          "$1.60",
+          "30k VND",
+          "350,000 VND"
+        ],
+        "sample_distances": [
+          "600 meters",
+          "300 kilometers",
+          "200m",
+          "160 km",
+          "295 km"
+        ],
+        "sample_transit_times": [
+          "7 hours",
+          "7.0 hours",
+          "20 min",
+          "10 minutes",
+          "6.5 hours"
+        ]
+      },
+      "slop_report": {
+        "passed": true,
         "hls_score": 100,
         "tier1_count": 0,
         "tier1_violations": []
@@ -3746,6 +3866,66 @@
           "15 minutes",
           "15 minutes",
           "15 minutes"
+        ]
+      },
+      "slop_report": {
+        "passed": true,
+        "hls_score": 100,
+        "tier1_count": 0,
+        "tier1_violations": []
+      },
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "path": "M:/Projects/vietnamguide/content/destinations/pu-luong-travel-guide.md",
+      "relative_path": "content/destinations/pu-luong-travel-guide.md",
+      "passed": true,
+      "word_count": 1360,
+      "frontmatter": {
+        "title": "Pu Luong Nature Reserve Travel Guide (2026): Rice Terraces, Bamboo Water Wheels, Treks & Hanoi Limousines",
+        "slug": "pu-luong-travel-guide",
+        "route_path": "destinations/pu-luong-travel-guide",
+        "travel_cluster": "northern_vietnam",
+        "last_verified": "2026-10-22",
+        "author": "Minh Tran — Senior Northern Highlands & Eco-Trekking Correspondent",
+        "reading_time_minutes": 11,
+        "word_count": 1860
+      },
+      "elements": {
+        "h2_count": 7,
+        "h3_count": 13,
+        "table_count": 8,
+        "blockquote_count": 2,
+        "callout_count": 1,
+        "has_faq": true,
+        "has_steps": true
+      },
+      "empirical_signals": {
+        "currency_mentions": 51,
+        "distance_mentions": 16,
+        "transit_time_mentions": 9,
+        "total_empirical_signals": 76,
+        "sample_currencies": [
+          "450,000 VND",
+          "$14",
+          "$18",
+          "800,000 VND",
+          "450,000 VND"
+        ],
+        "sample_distances": [
+          "170 kilometers",
+          "300m",
+          "800m",
+          "160 km",
+          "135 km"
+        ],
+        "sample_transit_times": [
+          "4.5 hours",
+          "4 hours",
+          "1.5 hours",
+          "4.5 hours",
+          "4.0 hours"
         ]
       },
       "slop_report": {
@@ -5650,8 +5830,8 @@
         ]
       },
       "slop_report": {
-        "passed": false,
-        "hls_score": 90,
+        "passed": true,
+        "hls_score": 100,
         "tier1_count": 0,
         "tier1_violations": []
       },

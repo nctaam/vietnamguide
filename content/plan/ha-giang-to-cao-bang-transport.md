@@ -35,19 +35,19 @@ Navigating this passage requires understanding road surfaces, minibus timetables
 Travelers traversing between Ha Giang and Cao Bang follow one of two primary alignments:
 
 ```
-[Route Option A: Direct Southern Corridor via QL34]
+[Southern Alignment A: Direct Corridor via QL34]
 Ha Giang City ---> Bac Me (55 km) ---> Bao Lam (50 km) ---> Bao Lac (45 km) ---> Tinh Tuc (50 km) ---> Cao Bang City (45 km)
 (Total: 245 km | Follows the Gam River canyon, lowest elevation, regular local bus route)
 
-[Route Option B: Northern Loop Extension via Meo Vac]
+[Northern Alignment B: Loop Extension via Meo Vac]
 Dong Van / Meo Vac ---> Niem Son (35 km) ---> Bao Lac (40 km) ---> Khau Coc Cha Pass (40 km) ---> Cao Bang City (85 km)
 (Total: 200 km | Connects directly from the end of the Ha Giang Loop, includes 14-story switchbacks)
 ```
 
-### 1. Route A: The Standard Highway QL34 Alignment (245 km)
-Departing eastward from Ha Giang City, National Highway QL34 follows the winding course of the Lo and Gam rivers through **Bac Me** and **Bao Lam**. While fully paved in sections, road maintenance is an ongoing challenge. Heavy monsoon rains frequently cause limestone talus slides (*sat lo dat*), leaving stretches of unpaved crushed rock and packed clay. After passing through the market town of **Bao Lac**, the highway climbs past the historic tin-mining town of **Tinh Tuc** and over **Cao Bac Pass** (Elevation: 1,000m) before descending into Cao Bang City.
+### 1. Southern Alignment A: The Standard Highway QL34 Corridor (245 km)
+Departing eastward from Ha Giang City, National Highway QL34 follows the winding course of the Lo and Gam rivers through **Bac Me** and **Bao Lam**. Road maintenance remains a constant battle here. Heavy monsoon rains frequently cause limestone talus slides (*sat lo dat*), leaving stretches of unpaved crushed rock and packed clay across the mountain shoulder. After passing through the market town of **Bao Lac**, the highway climbs past the historic tin-mining town of **Tinh Tuc** and over **Cao Bac Pass** (Elevation: 1,000m) before descending into Cao Bang City.
 
-### 2. Route B: The Meo Vac to Bao Lac & Khau Coc Cha Pass Alignment
+### 2. Northern Alignment B: The Meo Vac to Bao Lac & Khau Coc Cha Pass Corridor
 Travelers completing the Ha Giang Loop at **Meo Vac** do not need to backtrack to Ha Giang City. Instead, take provincial road DT217 south out of Meo Vac through Niem Son to cross the provincial boundary into Cao Bang at Bao Lac (75 km, 2.5 hours).
 
 From Bao Lac, riders can take provincial road DT260 toward Xuan Truong commune to confront **Khau Coc Cha Pass** (*Deo Khau Coc Cha*, also known as Me Pia Pass). Famous across Southeast Asia, this engineering feat compresses **14 vertical hairpin turns** into a 3.5-kilometer climb up an 800-meter vertical cliff face. 
