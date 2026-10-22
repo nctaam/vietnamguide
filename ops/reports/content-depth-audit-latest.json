@@ -1,7 +1,7 @@
 {
   "passed": true,
-  "total_articles": 124,
-  "passed_articles": 124,
+  "total_articles": 130,
+  "passed_articles": 130,
   "min_words_threshold": 1200,
   "min_hls_threshold": 85.0,
   "articles": [
@@ -1797,6 +1797,306 @@
       "warnings": []
     },
     {
+      "path": "M:/Projects/vietnamguide/content/destinations/best-beaches-in-vietnam.md",
+      "relative_path": "content/destinations/best-beaches-in-vietnam.md",
+      "passed": true,
+      "word_count": 1340,
+      "frontmatter": {
+        "title": "12 Best Beaches in Vietnam (2026): Where to Go by Month, Monsoon Calendar & Island Comparison",
+        "slug": "best-beaches-in-vietnam",
+        "route_path": "destinations/best-beaches-in-vietnam",
+        "travel_cluster": "south_central_coast",
+        "last_verified": "2026-10-22",
+        "author": "Minh Tran — Senior Coastal Geography & Marine Correspondent",
+        "reading_time_minutes": 11,
+        "word_count": 1340
+      },
+      "elements": {
+        "h2_count": 4,
+        "h3_count": 14,
+        "table_count": 5,
+        "blockquote_count": 2,
+        "callout_count": 1,
+        "has_faq": true,
+        "has_steps": true
+      },
+      "empirical_signals": {
+        "currency_mentions": 13,
+        "distance_mentions": 19,
+        "transit_time_mentions": 16,
+        "total_empirical_signals": 48,
+        "sample_currencies": [
+          "100,000 VND",
+          "80,000 VND",
+          "1,800,000 VND",
+          "850,000 VND",
+          "170,000 VND"
+        ],
+        "sample_distances": [
+          "260 kilometers",
+          "25 km",
+          "400 meters",
+          "185 kilometers",
+          "14 km"
+        ],
+        "sample_transit_times": [
+          "45 minutes",
+          "4 hours",
+          "15 minutes",
+          "2 hours",
+          "15 minutes"
+        ]
+      },
+      "slop_report": {
+        "passed": true,
+        "hls_score": 100,
+        "tier1_count": 0,
+        "tier1_violations": []
+      },
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "path": "M:/Projects/vietnamguide/content/destinations/best-day-trips-from-hanoi.md",
+      "relative_path": "content/destinations/best-day-trips-from-hanoi.md",
+      "passed": true,
+      "word_count": 1432,
+      "frontmatter": {
+        "title": "9 Best Day Trips from Hanoi (2026): Ninh Binh, Ha Long Bay, Perfume Pagoda, Bat Trang & Duong Lam",
+        "slug": "best-day-trips-from-hanoi",
+        "route_path": "destinations/best-day-trips-from-hanoi",
+        "travel_cluster": "hanoi_red_river",
+        "last_verified": "2026-10-22",
+        "author": "Minh Tran — Senior Red River Delta & Northern Logistics Correspondent",
+        "reading_time_minutes": 11,
+        "word_count": 1432
+      },
+      "elements": {
+        "h2_count": 4,
+        "h3_count": 12,
+        "table_count": 5,
+        "blockquote_count": 2,
+        "callout_count": 1,
+        "has_faq": true,
+        "has_steps": true
+      },
+      "empirical_signals": {
+        "currency_mentions": 91,
+        "distance_mentions": 29,
+        "transit_time_mentions": 36,
+        "total_empirical_signals": 156,
+        "sample_currencies": [
+          "450k VND",
+          "250k VND",
+          "100k VND",
+          "$34",
+          "$42"
+        ],
+        "sample_distances": [
+          "315 km",
+          "300 km",
+          "95 km",
+          "155 km",
+          "1.35M"
+        ],
+        "sample_transit_times": [
+          "4 hours",
+          "2.5 hours",
+          "110 minutes",
+          "1.75 hrs",
+          "2.5 hrs"
+        ]
+      },
+      "slop_report": {
+        "passed": true,
+        "hls_score": 100,
+        "tier1_count": 0,
+        "tier1_violations": []
+      },
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "path": "M:/Projects/vietnamguide/content/destinations/best-day-trips-from-ho-chi-minh-city.md",
+      "relative_path": "content/destinations/best-day-trips-from-ho-chi-minh-city.md",
+      "passed": true,
+      "word_count": 1372,
+      "frontmatter": {
+        "title": "8 Best Day Trips from Ho Chi Minh City (2026): Cu Chi Tunnels, Mekong Delta, Can Gio, Ba Den & Vung Tau",
+        "slug": "best-day-trips-from-ho-chi-minh-city",
+        "route_path": "destinations/best-day-trips-from-ho-chi-minh-city",
+        "travel_cluster": "southern_vietnam",
+        "last_verified": "2026-10-22",
+        "author": "Minh Tran — Senior Southern Vietnam & Mekong Logistics Correspondent",
+        "reading_time_minutes": 11,
+        "word_count": 1372
+      },
+      "elements": {
+        "h2_count": 4,
+        "h3_count": 12,
+        "table_count": 5,
+        "blockquote_count": 2,
+        "callout_count": 1,
+        "has_faq": true,
+        "has_steps": true
+      },
+      "empirical_signals": {
+        "currency_mentions": 82,
+        "distance_mentions": 31,
+        "transit_time_mentions": 29,
+        "total_empirical_signals": 142,
+        "sample_currencies": [
+          "$12",
+          "70k VND",
+          "125,000 VND",
+          "30,000 VND",
+          "$22"
+        ],
+        "sample_distances": [
+          "986m",
+          "70 km",
+          "85 km",
+          "190 km",
+          "50 km"
+        ],
+        "sample_transit_times": [
+          "2.5 hours",
+          "3 hours",
+          "1.75 hrs",
+          "75 mins",
+          "2.0 hrs"
+        ]
+      },
+      "slop_report": {
+        "passed": true,
+        "hls_score": 100,
+        "tier1_count": 0,
+        "tier1_violations": []
+      },
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "path": "M:/Projects/vietnamguide/content/destinations/best-islands-in-vietnam.md",
+      "relative_path": "content/destinations/best-islands-in-vietnam.md",
+      "passed": true,
+      "word_count": 1539,
+      "frontmatter": {
+        "title": "Best Islands in Vietnam: Phu Quoc, Con Dao, Cat Ba, and More",
+        "slug": "best-islands-in-vietnam",
+        "route_path": "/destinations/best-islands-in-vietnam/",
+        "travel_cluster": "vietnam_national",
+        "last_verified": "2026-10-22",
+        "author": "Minh-Tam Nguyen",
+        "reading_time_minutes": 8,
+        "word_count": 1539
+      },
+      "elements": {
+        "h2_count": 6,
+        "h3_count": 11,
+        "table_count": 7,
+        "blockquote_count": 4,
+        "callout_count": 2,
+        "has_faq": true,
+        "has_steps": true
+      },
+      "empirical_signals": {
+        "currency_mentions": 40,
+        "distance_mentions": 20,
+        "transit_time_mentions": 27,
+        "total_empirical_signals": 87,
+        "sample_currencies": [
+          "340,000 VND",
+          "790,000 VND",
+          "380,000 VND",
+          "450,000 VND",
+          "90,000 VND"
+        ],
+        "sample_distances": [
+          "15m",
+          "30m",
+          "30m",
+          "45m",
+          "45 km"
+        ],
+        "sample_transit_times": [
+          "55 min",
+          "50 min",
+          "3.5 hours",
+          "20 min",
+          "40 min"
+        ]
+      },
+      "slop_report": {
+        "passed": true,
+        "hls_score": 100,
+        "tier1_count": 0,
+        "tier1_violations": []
+      },
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "path": "M:/Projects/vietnamguide/content/destinations/best-places-to-visit-vietnam.md",
+      "relative_path": "content/destinations/best-places-to-visit-vietnam.md",
+      "passed": true,
+      "word_count": 1562,
+      "frontmatter": {
+        "title": "Best Places to Visit in Vietnam: Where to Go First",
+        "slug": "best-places-to-visit-vietnam",
+        "route_path": "/destinations/best-places-to-visit-vietnam/",
+        "travel_cluster": "vietnam_national",
+        "last_verified": "2026-10-22",
+        "author": "Minh-Tam Nguyen",
+        "reading_time_minutes": 8,
+        "word_count": 1562
+      },
+      "elements": {
+        "h2_count": 6,
+        "h3_count": 14,
+        "table_count": 7,
+        "blockquote_count": 4,
+        "callout_count": 2,
+        "has_faq": true,
+        "has_steps": true
+      },
+      "empirical_signals": {
+        "currency_mentions": 96,
+        "distance_mentions": 22,
+        "transit_time_mentions": 19,
+        "total_empirical_signals": 137,
+        "sample_currencies": [
+          "70,000 VND",
+          "50,000 VND",
+          "250,000 VND",
+          "100,000 VND",
+          "750,000 VND"
+        ],
+        "sample_distances": [
+          "650 kilometers",
+          "95 km",
+          "155 km",
+          "300 km",
+          "500m"
+        ],
+        "sample_transit_times": [
+          "5.5 hours",
+          "17 hours",
+          "60 minutes",
+          "90 minutes",
+          "2 hours"
+        ]
+      },
+      "slop_report": {
+        "passed": true,
+        "hls_score": 100,
+        "tier1_count": 0,
+        "tier1_violations": []
+      },
+      "errors": [],
+      "warnings": []
+    },
+    {
       "path": "M:/Projects/vietnamguide/content/destinations/best-things-to-do-in-da-lat.md",
       "relative_path": "content/destinations/best-things-to-do-in-da-lat.md",
       "passed": true,
@@ -2714,6 +3014,66 @@
           "60 minutes",
           "5.0 hours",
           "2.0 hours"
+        ]
+      },
+      "slop_report": {
+        "passed": true,
+        "hls_score": 100,
+        "tier1_count": 0,
+        "tier1_violations": []
+      },
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "path": "M:/Projects/vietnamguide/content/destinations/cham-islands-travel-guide.md",
+      "relative_path": "content/destinations/cham-islands-travel-guide.md",
+      "passed": true,
+      "word_count": 1446,
+      "frontmatter": {
+        "title": "Cham Islands Travel Guide: Hoi An Day Trip or Overnight?",
+        "slug": "cham-islands-travel-guide",
+        "route_path": "/destinations/cham-islands-travel-guide/",
+        "travel_cluster": "central_heritage",
+        "last_verified": "2026-10-22",
+        "author": "Minh-Tam Nguyen",
+        "reading_time_minutes": 8,
+        "word_count": 1446
+      },
+      "elements": {
+        "h2_count": 5,
+        "h3_count": 8,
+        "table_count": 6,
+        "blockquote_count": 4,
+        "callout_count": 2,
+        "has_faq": true,
+        "has_steps": true
+      },
+      "empirical_signals": {
+        "currency_mentions": 40,
+        "distance_mentions": 15,
+        "transit_time_mentions": 9,
+        "total_empirical_signals": 64,
+        "sample_currencies": [
+          "90,000 VND",
+          "$3.55",
+          "70,000 VND",
+          "20,000 VND",
+          "450,000 VND"
+        ],
+        "sample_distances": [
+          "15 kilometers",
+          "517 meters",
+          "1.2 km",
+          "2 km",
+          "20 meters"
+        ],
+        "sample_transit_times": [
+          "20 minutes",
+          "20 min",
+          "6.5 hours",
+          "90 min",
+          "24 hours"
         ]
       },
       "slop_report": {
