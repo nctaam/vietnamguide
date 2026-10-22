@@ -1,7 +1,7 @@
 {
   "passed": true,
-  "total_articles": 82,
-  "passed_articles": 82,
+  "total_articles": 85,
+  "passed_articles": 85,
   "min_words_threshold": 1200,
   "min_hls_threshold": 85.0,
   "articles": [
@@ -3816,6 +3816,66 @@
       "warnings": []
     },
     {
+      "path": "M:/Projects/vietnamguide/content/itineraries/central-highlands-vietnam-itinerary.md",
+      "relative_path": "content/itineraries/central-highlands-vietnam-itinerary.md",
+      "passed": true,
+      "word_count": 1706,
+      "frontmatter": {
+        "title": "Central Highlands Vietnam Itinerary (2026): 5 to 7-Day Da Lat, Buon Ma Thuot & Kon Tum Route",
+        "slug": "central-highlands-vietnam-itinerary",
+        "route_path": "itineraries/central-highlands-vietnam-itinerary",
+        "travel_cluster": "central_highlands",
+        "last_verified": "2026-10-22",
+        "author": "Minh Pham — Lead Travel Technologist",
+        "reading_time_minutes": 10,
+        "word_count": 1940
+      },
+      "elements": {
+        "h2_count": 6,
+        "h3_count": 10,
+        "table_count": 7,
+        "blockquote_count": 2,
+        "callout_count": 1,
+        "has_faq": true,
+        "has_steps": true
+      },
+      "empirical_signals": {
+        "currency_mentions": 35,
+        "distance_mentions": 56,
+        "transit_time_mentions": 22,
+        "total_empirical_signals": 113,
+        "sample_currencies": [
+          "150k VND",
+          "1,400,000 VND",
+          "80,000 VND",
+          "170,000 VND",
+          "50,000 VND"
+        ],
+        "sample_distances": [
+          "500 meters",
+          "500m",
+          "160 km",
+          "50 km",
+          "180 km"
+        ],
+        "sample_transit_times": [
+          "40 mins",
+          "5.0 hrs",
+          "2.0 hrs",
+          "20 mins",
+          "55 mins"
+        ]
+      },
+      "slop_report": {
+        "passed": true,
+        "hls_score": 100,
+        "tier1_count": 0,
+        "tier1_violations": []
+      },
+      "errors": [],
+      "warnings": []
+    },
+    {
       "path": "M:/Projects/vietnamguide/content/itineraries/central-vietnam-itinerary.md",
       "relative_path": "content/itineraries/central-vietnam-itinerary.md",
       "passed": true,
@@ -3983,6 +4043,126 @@
           "12 minutes",
           "48 hours",
           "9.5 hours"
+        ]
+      },
+      "slop_report": {
+        "passed": true,
+        "hls_score": 100,
+        "tier1_count": 0,
+        "tier1_violations": []
+      },
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "path": "M:/Projects/vietnamguide/content/itineraries/northeast-vietnam-itinerary.md",
+      "relative_path": "content/itineraries/northeast-vietnam-itinerary.md",
+      "passed": true,
+      "word_count": 1904,
+      "frontmatter": {
+        "title": "Northeast Vietnam Itinerary (2026): 5 to 7-Day Ba Be, Cao Bang & Ha Giang Loop",
+        "slug": "northeast-vietnam-itinerary",
+        "route_path": "itineraries/northeast-vietnam-itinerary",
+        "travel_cluster": "far_north_frontier",
+        "last_verified": "2026-10-22",
+        "author": "Minh Pham — Lead Travel Technologist",
+        "reading_time_minutes": 10,
+        "word_count": 1910
+      },
+      "elements": {
+        "h2_count": 7,
+        "h3_count": 13,
+        "table_count": 8,
+        "blockquote_count": 4,
+        "callout_count": 2,
+        "has_faq": true,
+        "has_steps": true
+      },
+      "empirical_signals": {
+        "currency_mentions": 37,
+        "distance_mentions": 38,
+        "transit_time_mentions": 20,
+        "total_empirical_signals": 95,
+        "sample_currencies": [
+          "45,000 VND",
+          "45,000 VND",
+          "120,000 VND",
+          "40,000 VND",
+          "30,000 VND"
+        ],
+        "sample_distances": [
+          "230 km",
+          "130 km",
+          "90 km",
+          "280 km",
+          "145 km"
+        ],
+        "sample_transit_times": [
+          "7.5 hours",
+          "120 hours",
+          "45 minutes",
+          "5.0 hrs",
+          "4.0 hrs"
+        ]
+      },
+      "slop_report": {
+        "passed": true,
+        "hls_score": 100,
+        "tier1_count": 0,
+        "tier1_violations": []
+      },
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "path": "M:/Projects/vietnamguide/content/itineraries/northwest-vietnam-itinerary.md",
+      "relative_path": "content/itineraries/northwest-vietnam-itinerary.md",
+      "passed": true,
+      "word_count": 1536,
+      "frontmatter": {
+        "title": "Northwest Vietnam Itinerary (2026): 6 to 8-Day Rice Terrace & Valley Loop",
+        "slug": "northwest-vietnam-itinerary",
+        "route_path": "itineraries/northwest-vietnam-itinerary",
+        "travel_cluster": "northern_highlands",
+        "last_verified": "2026-10-22",
+        "author": "Minh Pham — Lead Travel Technologist",
+        "reading_time_minutes": 10,
+        "word_count": 1960
+      },
+      "elements": {
+        "h2_count": 6,
+        "h3_count": 11,
+        "table_count": 7,
+        "blockquote_count": 4,
+        "callout_count": 2,
+        "has_faq": true,
+        "has_steps": true
+      },
+      "empirical_signals": {
+        "currency_mentions": 45,
+        "distance_mentions": 51,
+        "transit_time_mentions": 16,
+        "total_empirical_signals": 112,
+        "sample_currencies": [
+          "30,000 VND",
+          "100,000 VND",
+          "100,000 VND",
+          "20,000 VND",
+          "70,000 VND"
+        ],
+        "sample_distances": [
+          "800 meters",
+          "140 km",
+          "235 km",
+          "145 km",
+          "143m"
+        ],
+        "sample_transit_times": [
+          "3.5 hrs",
+          "1.5 hrs",
+          "6.0 hrs",
+          "2.0 hrs",
+          "5.0 hrs"
         ]
       },
       "slop_report": {
