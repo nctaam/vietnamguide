@@ -1,7 +1,7 @@
 {
   "passed": true,
-  "total_articles": 100,
-  "passed_articles": 100,
+  "total_articles": 103,
+  "passed_articles": 103,
   "min_words_threshold": 1200,
   "min_hls_threshold": 85.0,
   "articles": [
@@ -4830,6 +4830,66 @@
       "warnings": []
     },
     {
+      "path": "M:/Projects/vietnamguide/content/plan/da-nang-airport-to-hoi-an.md",
+      "relative_path": "content/plan/da-nang-airport-to-hoi-an.md",
+      "passed": true,
+      "word_count": 1473,
+      "frontmatter": {
+        "title": "Da Nang Airport (DAD) to Hoi An & My Khe Beach Transfer Guide (2026): Private Car, Grab & Shuttle Bus",
+        "slug": "da-nang-airport-to-hoi-an",
+        "route_path": "plan/da-nang-airport-to-hoi-an",
+        "travel_cluster": "central_heritage",
+        "last_verified": "2026-10-22",
+        "author": "Minh Tran — Senior Transport & Aviation Correspondent",
+        "reading_time_minutes": 9,
+        "word_count": 1530
+      },
+      "elements": {
+        "h2_count": 9,
+        "h3_count": 8,
+        "table_count": 10,
+        "blockquote_count": 4,
+        "callout_count": 2,
+        "has_faq": true,
+        "has_steps": true
+      },
+      "empirical_signals": {
+        "currency_mentions": 117,
+        "distance_mentions": 27,
+        "transit_time_mentions": 31,
+        "total_empirical_signals": 175,
+        "sample_currencies": [
+          "320,000 VND",
+          "$10.00",
+          "$12.80",
+          "410,000 VND",
+          "$13.60"
+        ],
+        "sample_distances": [
+          "5.5 kilometers",
+          "30 kilometers",
+          "29 km",
+          "5.5 km",
+          "120m"
+        ],
+        "sample_transit_times": [
+          "15 minutes",
+          "50 minutes",
+          "45 min",
+          "15 min",
+          "75 min"
+        ]
+      },
+      "slop_report": {
+        "passed": true,
+        "hls_score": 100,
+        "tier1_count": 0,
+        "tier1_violations": []
+      },
+      "errors": [],
+      "warnings": []
+    },
+    {
       "path": "M:/Projects/vietnamguide/content/plan/da-nang-to-hoi-an-transport.md",
       "relative_path": "content/plan/da-nang-to-hoi-an-transport.md",
       "passed": true,
@@ -5183,6 +5243,64 @@
       "slop_report": {
         "passed": false,
         "hls_score": 90,
+        "tier1_count": 0,
+        "tier1_violations": []
+      },
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "path": "M:/Projects/vietnamguide/content/plan/hanoi-airport-to-old-quarter.md",
+      "relative_path": "content/plan/hanoi-airport-to-old-quarter.md",
+      "passed": true,
+      "word_count": 1467,
+      "frontmatter": {
+        "title": "Hanoi Airport (HAN) to Old Quarter Transfer Guide (2026): Express Bus 86, Grab, Taxi & Late-Night Cars",
+        "slug": "hanoi-airport-to-old-quarter",
+        "route_path": "plan/hanoi-airport-to-old-quarter",
+        "travel_cluster": "northern_vietnam",
+        "last_verified": "2026-10-22",
+        "author": "Minh Tran — Senior Transport & Aviation Correspondent",
+        "reading_time_minutes": 9,
+        "word_count": 1540
+      },
+      "elements": {
+        "h2_count": 8,
+        "h3_count": 12,
+        "table_count": 9,
+        "blockquote_count": 6,
+        "callout_count": 3,
+        "has_faq": true,
+        "has_steps": true
+      },
+      "empirical_signals": {
+        "currency_mentions": 76,
+        "distance_mentions": 3,
+        "transit_time_mentions": 22,
+        "total_empirical_signals": 101,
+        "sample_currencies": [
+          "45,000 VND",
+          "$1.80",
+          "15,000 VND",
+          "$0.60",
+          "370,000 VND"
+        ],
+        "sample_distances": [
+          "30 kilometers",
+          "1.2 km",
+          "1.2 km"
+        ],
+        "sample_transit_times": [
+          "50 minutes",
+          "75 minutes",
+          "60 min",
+          "30 min",
+          "50 min"
+        ]
+      },
+      "slop_report": {
+        "passed": true,
+        "hls_score": 100,
         "tier1_count": 0,
         "tier1_violations": []
       },
@@ -5655,6 +5773,66 @@
           "45 minutes",
           "30 minutes",
           "40 minutes"
+        ]
+      },
+      "slop_report": {
+        "passed": true,
+        "hls_score": 100,
+        "tier1_count": 0,
+        "tier1_violations": []
+      },
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "path": "M:/Projects/vietnamguide/content/plan/saigon-airport-to-district-1.md",
+      "relative_path": "content/plan/saigon-airport-to-district-1.md",
+      "passed": true,
+      "word_count": 1497,
+      "frontmatter": {
+        "title": "Saigon Airport (SGN) to District 1 Transfer Guide (2026): Grab TCP Garage, Bus 109 & T1/T2/T3 Terminals",
+        "slug": "saigon-airport-to-district-1",
+        "route_path": "plan/saigon-airport-to-district-1",
+        "travel_cluster": "southern_vietnam",
+        "last_verified": "2026-10-22",
+        "author": "Minh Tran — Senior Transport & Aviation Correspondent",
+        "reading_time_minutes": 9,
+        "word_count": 1520
+      },
+      "elements": {
+        "h2_count": 9,
+        "h3_count": 12,
+        "table_count": 10,
+        "blockquote_count": 2,
+        "callout_count": 1,
+        "has_faq": true,
+        "has_steps": true
+      },
+      "empirical_signals": {
+        "currency_mentions": 79,
+        "distance_mentions": 10,
+        "transit_time_mentions": 21,
+        "total_empirical_signals": 110,
+        "sample_currencies": [
+          "20,000 VND",
+          "$0.20",
+          "$0.80",
+          "165,000 VND",
+          "$4.60"
+        ],
+        "sample_distances": [
+          "30 kilometers",
+          "8.5 kilometers",
+          "1.2 km",
+          "300 meters",
+          "7.5 km"
+        ],
+        "sample_transit_times": [
+          "30 minutes",
+          "60 minutes",
+          "35 min",
+          "35 min",
+          "35 min"
         ]
       },
       "slop_report": {
