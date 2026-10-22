@@ -1,7 +1,7 @@
 {
   "passed": true,
-  "total_articles": 88,
-  "passed_articles": 88,
+  "total_articles": 91,
+  "passed_articles": 91,
   "min_words_threshold": 1200,
   "min_hls_threshold": 85.0,
   "articles": [
@@ -4462,6 +4462,182 @@
           "35 mins",
           "50 minutes",
           "2 hours"
+        ]
+      },
+      "slop_report": {
+        "passed": true,
+        "hls_score": 100,
+        "tier1_count": 0,
+        "tier1_violations": []
+      },
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "path": "M:/Projects/vietnamguide/content/plan/best-time-for-northern-vietnam.md",
+      "relative_path": "content/plan/best-time-for-northern-vietnam.md",
+      "passed": true,
+      "word_count": 1394,
+      "frontmatter": {
+        "title": "Best Time for Northern Vietnam (2026): Hanoi, Ha Long Bay, Ninh Binh, Sapa & Ha Giang",
+        "slug": "best-time-for-northern-vietnam",
+        "route_path": "plan/best-time-for-northern-vietnam",
+        "travel_cluster": "northern_triangle",
+        "last_verified": "2026-10-22",
+        "author": "Minh Pham — Lead Travel Technologist",
+        "reading_time_minutes": 11,
+        "word_count": 2050
+      },
+      "elements": {
+        "h2_count": 5,
+        "h3_count": 8,
+        "table_count": 6,
+        "blockquote_count": 6,
+        "callout_count": 2,
+        "has_faq": true,
+        "has_steps": true
+      },
+      "empirical_signals": {
+        "currency_mentions": 21,
+        "distance_mentions": 16,
+        "transit_time_mentions": 2,
+        "total_empirical_signals": 39,
+        "sample_currencies": [
+          "60,000 VND",
+          "40,000 VND",
+          "50,000 VND",
+          "2,450,000 VND",
+          "6,800,000 VND"
+        ],
+        "sample_distances": [
+          "143 meters",
+          "0m",
+          "50m",
+          "500m",
+          "500m"
+        ],
+        "sample_transit_times": [
+          "48 hours",
+          "24 hours"
+        ]
+      },
+      "slop_report": {
+        "passed": true,
+        "hls_score": 100,
+        "tier1_count": 0,
+        "tier1_violations": []
+      },
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "path": "M:/Projects/vietnamguide/content/plan/best-time-to-visit-vietnam.md",
+      "relative_path": "content/plan/best-time-to-visit-vietnam.md",
+      "passed": true,
+      "word_count": 1548,
+      "frontmatter": {
+        "title": "Best Time to Visit Vietnam (2026): Month-by-Month Weather, Regions & Route Pivots",
+        "slug": "best-time-to-visit-vietnam",
+        "route_path": "plan/best-time-to-visit-vietnam",
+        "travel_cluster": "national_circuit",
+        "last_verified": "2026-10-22",
+        "author": "Minh Pham — Lead Travel Technologist",
+        "reading_time_minutes": 11,
+        "word_count": 2050
+      },
+      "elements": {
+        "h2_count": 5,
+        "h3_count": 8,
+        "table_count": 6,
+        "blockquote_count": 4,
+        "callout_count": 1,
+        "has_faq": true,
+        "has_steps": true
+      },
+      "empirical_signals": {
+        "currency_mentions": 20,
+        "distance_mentions": 10,
+        "transit_time_mentions": 4,
+        "total_empirical_signals": 34,
+        "sample_currencies": [
+          "190,000 VND",
+          "170,000 VND",
+          "50,000 VND",
+          "120,000 VND",
+          "50,000 VND"
+        ],
+        "sample_distances": [
+          "650 kilometers",
+          "500 meters",
+          "500m",
+          "200m",
+          "25 km"
+        ],
+        "sample_transit_times": [
+          "2 hour",
+          "48 hours",
+          "48 hours",
+          "1.5 hours"
+        ]
+      },
+      "slop_report": {
+        "passed": true,
+        "hls_score": 100,
+        "tier1_count": 0,
+        "tier1_violations": []
+      },
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "path": "M:/Projects/vietnamguide/content/plan/best-vietnam-routes-first-time-visitors.md",
+      "relative_path": "content/plan/best-vietnam-routes-first-time-visitors.md",
+      "passed": true,
+      "word_count": 1494,
+      "frontmatter": {
+        "title": "Best Vietnam Routes for First-Time Visitors (2026): 7, 10 & 14-Day Blueprints",
+        "slug": "best-vietnam-routes-first-time-visitors",
+        "route_path": "plan/best-vietnam-routes-first-time-visitors",
+        "travel_cluster": "national_circuit",
+        "last_verified": "2026-10-22",
+        "author": "Minh Pham — Lead Travel Technologist",
+        "reading_time_minutes": 11,
+        "word_count": 2100
+      },
+      "elements": {
+        "h2_count": 5,
+        "h3_count": 9,
+        "table_count": 6,
+        "blockquote_count": 4,
+        "callout_count": 2,
+        "has_faq": true,
+        "has_steps": true
+      },
+      "empirical_signals": {
+        "currency_mentions": 52,
+        "distance_mentions": 23,
+        "transit_time_mentions": 14,
+        "total_empirical_signals": 89,
+        "sample_currencies": [
+          "2,200,000 VND",
+          "$56",
+          "$88",
+          "$500",
+          "$780"
+        ],
+        "sample_distances": [
+          "650 kilometers",
+          "50 kilometers",
+          "80m",
+          "12.5M",
+          "19.5M"
+        ],
+        "sample_transit_times": [
+          "1.5 hours",
+          "3.5 hours",
+          "2.5 hours",
+          "1 hour",
+          "20 minutes"
         ]
       },
       "slop_report": {
