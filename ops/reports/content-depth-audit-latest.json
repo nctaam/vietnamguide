@@ -1,7 +1,7 @@
 {
   "passed": true,
-  "total_articles": 118,
-  "passed_articles": 118,
+  "total_articles": 121,
+  "passed_articles": 121,
   "min_words_threshold": 1200,
   "min_hls_threshold": 85.0,
   "articles": [
@@ -1796,6 +1796,66 @@
       "warnings": []
     },
     {
+      "path": "M:/Projects/vietnamguide/content/destinations/best-things-to-do-in-da-nang.md",
+      "relative_path": "content/destinations/best-things-to-do-in-da-nang.md",
+      "passed": true,
+      "word_count": 1543,
+      "frontmatter": {
+        "title": "Best Things to Do in Da Nang (2026): Marble Mountains, Son Tra Peninsula, Dragon Bridge & My Khe Beach",
+        "slug": "best-things-to-do-in-da-nang",
+        "route_path": "destinations/best-things-to-do-in-da-nang",
+        "travel_cluster": "central_heritage",
+        "last_verified": "2026-10-22",
+        "author": "Minh Tran — Senior Central Coast & Urban Architecture Correspondent",
+        "reading_time_minutes": 10,
+        "word_count": 1543
+      },
+      "elements": {
+        "h2_count": 5,
+        "h3_count": 13,
+        "table_count": 6,
+        "blockquote_count": 2,
+        "callout_count": 1,
+        "has_faq": true,
+        "has_steps": true
+      },
+      "empirical_signals": {
+        "currency_mentions": 51,
+        "distance_mentions": 24,
+        "transit_time_mentions": 9,
+        "total_empirical_signals": 84,
+        "sample_currencies": [
+          "40,000 VND",
+          "40,000 VND",
+          "$1.60",
+          "15,000 VND",
+          "30,000 VND"
+        ],
+        "sample_distances": [
+          "28 km",
+          "3.5 kilometers",
+          "5.5 kilometers",
+          "8 km",
+          "40 meters"
+        ],
+        "sample_transit_times": [
+          "10 minutes",
+          "35 minutes",
+          "2026 Hours",
+          "24 hours",
+          "2 hrs"
+        ]
+      },
+      "slop_report": {
+        "passed": true,
+        "hls_score": 100,
+        "tier1_count": 0,
+        "tier1_violations": []
+      },
+      "errors": [],
+      "warnings": []
+    },
+    {
       "path": "M:/Projects/vietnamguide/content/destinations/best-things-to-do-in-ha-long-bay.md",
       "relative_path": "content/destinations/best-things-to-do-in-ha-long-bay.md",
       "passed": true,
@@ -2025,7 +2085,7 @@
         "last_verified": "2026-10-22",
         "author": "Minh Tran — Senior Central Heritage & Architecture Correspondent",
         "reading_time_minutes": 10,
-        "word_count": 1450
+        "word_count": 1261
       },
       "elements": {
         "h2_count": 5,
@@ -2084,7 +2144,7 @@
         "last_verified": "2026-10-22",
         "author": "Minh Tran — Senior South-Central Coast & Adventure Correspondent",
         "reading_time_minutes": 10,
-        "word_count": 1450
+        "word_count": 1208
       },
       "elements": {
         "h2_count": 5,
@@ -2132,6 +2192,66 @@
       "warnings": []
     },
     {
+      "path": "M:/Projects/vietnamguide/content/destinations/best-things-to-do-in-nha-trang.md",
+      "relative_path": "content/destinations/best-things-to-do-in-nha-trang.md",
+      "passed": true,
+      "word_count": 1276,
+      "frontmatter": {
+        "title": "Best Things to Do in Nha Trang (2026): Po Nagar Cham Towers, Mud Baths, Island Snorkeling & Seafood",
+        "slug": "best-things-to-do-in-nha-trang",
+        "route_path": "destinations/best-things-to-do-in-nha-trang",
+        "travel_cluster": "south_central_coast",
+        "last_verified": "2026-10-22",
+        "author": "Minh Tran — Senior South-Central Coast & Marine Correspondent",
+        "reading_time_minutes": 10,
+        "word_count": 1276
+      },
+      "elements": {
+        "h2_count": 5,
+        "h3_count": 13,
+        "table_count": 6,
+        "blockquote_count": 2,
+        "callout_count": 1,
+        "has_faq": true,
+        "has_steps": true
+      },
+      "empirical_signals": {
+        "currency_mentions": 61,
+        "distance_mentions": 14,
+        "transit_time_mentions": 5,
+        "total_empirical_signals": 80,
+        "sample_currencies": [
+          "30,000 VND",
+          "$1.20",
+          "450,000 VND",
+          "$16",
+          "$18"
+        ],
+        "sample_distances": [
+          "1.2m",
+          "7 km",
+          "5 km",
+          "1.0m",
+          "1.4m"
+        ],
+        "sample_transit_times": [
+          "2026 Hours",
+          "60 mins",
+          "20 minutes",
+          "3 hours",
+          "45 minutes"
+        ]
+      },
+      "slop_report": {
+        "passed": true,
+        "hls_score": 100,
+        "tier1_count": 0,
+        "tier1_violations": []
+      },
+      "errors": [],
+      "warnings": []
+    },
+    {
       "path": "M:/Projects/vietnamguide/content/destinations/best-things-to-do-in-ninh-binh.md",
       "relative_path": "content/destinations/best-things-to-do-in-ninh-binh.md",
       "passed": true,
@@ -2144,7 +2264,7 @@
         "last_verified": "2026-10-22",
         "author": "Minh Tran — Senior Northern Karst & Eco-Heritage Correspondent",
         "reading_time_minutes": 11,
-        "word_count": 1500
+        "word_count": 1514
       },
       "elements": {
         "h2_count": 6,
@@ -2180,6 +2300,66 @@
           "3 hr",
           "2 hours",
           "3 hours"
+        ]
+      },
+      "slop_report": {
+        "passed": true,
+        "hls_score": 100,
+        "tier1_count": 0,
+        "tier1_violations": []
+      },
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "path": "M:/Projects/vietnamguide/content/destinations/best-things-to-do-in-phu-quoc.md",
+      "relative_path": "content/destinations/best-things-to-do-in-phu-quoc.md",
+      "passed": true,
+      "word_count": 1367,
+      "frontmatter": {
+        "title": "Best Things to Do in Phu Quoc (2026): Hon Thom Cable Car, An Thoi Islands, Beaches & 30-Day Visa Free",
+        "slug": "best-things-to-do-in-phu-quoc",
+        "route_path": "destinations/best-things-to-do-in-phu-quoc",
+        "travel_cluster": "southern_vietnam",
+        "last_verified": "2026-10-22",
+        "author": "Minh Tran — Senior Southern Islands & Marine Correspondent",
+        "reading_time_minutes": 11,
+        "word_count": 1367
+      },
+      "elements": {
+        "h2_count": 5,
+        "h3_count": 13,
+        "table_count": 6,
+        "blockquote_count": 2,
+        "callout_count": 1,
+        "has_faq": true,
+        "has_steps": true
+      },
+      "empirical_signals": {
+        "currency_mentions": 38,
+        "distance_mentions": 17,
+        "transit_time_mentions": 6,
+        "total_empirical_signals": 61,
+        "sample_currencies": [
+          "850,000 VND",
+          "$34",
+          "1,150,000 VND",
+          "$46",
+          "700,000 VND"
+        ],
+        "sample_distances": [
+          "45 kilometers",
+          "50 kilometers",
+          "899.9m",
+          "1.0m",
+          "1.4m"
+        ],
+        "sample_transit_times": [
+          "30 minutes",
+          "20 minutes",
+          "25 minutes",
+          "60 minutes",
+          "30 minutes"
         ]
       },
       "slop_report": {
