@@ -1,7 +1,7 @@
 {
   "passed": true,
-  "total_articles": 106,
-  "passed_articles": 106,
+  "total_articles": 109,
+  "passed_articles": 109,
   "min_words_threshold": 1200,
   "min_hls_threshold": 85.0,
   "articles": [
@@ -4890,6 +4890,66 @@
       "warnings": []
     },
     {
+      "path": "M:/Projects/vietnamguide/content/plan/cham-islands-day-trip-guide.md",
+      "relative_path": "content/plan/cham-islands-day-trip-guide.md",
+      "passed": true,
+      "word_count": 1366,
+      "frontmatter": {
+        "title": "Cham Islands (Cu Lao Cham) Day Trip Guide from Hoi An (2026): Cua Dai Speedboat, Snorkeling & Fees",
+        "slug": "cham-islands-day-trip-guide",
+        "route_path": "plan/cham-islands-day-trip-guide",
+        "travel_cluster": "central_heritage",
+        "last_verified": "2026-10-22",
+        "author": "Minh Tran — Senior Central Coast & Marine Correspondent",
+        "reading_time_minutes": 10,
+        "word_count": 1580
+      },
+      "elements": {
+        "h2_count": 7,
+        "h3_count": 13,
+        "table_count": 8,
+        "blockquote_count": 2,
+        "callout_count": 1,
+        "has_faq": true,
+        "has_steps": true
+      },
+      "empirical_signals": {
+        "currency_mentions": 60,
+        "distance_mentions": 11,
+        "transit_time_mentions": 14,
+        "total_empirical_signals": 85,
+        "sample_currencies": [
+          "850,000 VND",
+          "$24.00",
+          "$34.00",
+          "70,000 VND",
+          "20,000 VND"
+        ],
+        "sample_distances": [
+          "18 kilometers",
+          "20 meters",
+          "3 meters",
+          "8 meters",
+          "7 km"
+        ],
+        "sample_transit_times": [
+          "20 minutes",
+          "20 min",
+          "35 min",
+          "20 min",
+          "90 min"
+        ]
+      },
+      "slop_report": {
+        "passed": true,
+        "hls_score": 100,
+        "tier1_count": 0,
+        "tier1_violations": []
+      },
+      "errors": [],
+      "warnings": []
+    },
+    {
       "path": "M:/Projects/vietnamguide/content/plan/da-lat-to-buon-ma-thuot-transport.md",
       "relative_path": "content/plan/da-lat-to-buon-ma-thuot-transport.md",
       "passed": true,
@@ -5430,6 +5490,62 @@
       "warnings": []
     },
     {
+      "path": "M:/Projects/vietnamguide/content/plan/ha-long-bay-cruise-questions-before-booking.md",
+      "relative_path": "content/plan/ha-long-bay-cruise-questions-before-booking.md",
+      "passed": true,
+      "word_count": 1368,
+      "frontmatter": {
+        "title": "10 Ha Long Bay Cruise Questions to Ask Before Booking (2026): Lan Ha vs Bai Tu Long, Hidden Fees & Hull Safety",
+        "slug": "ha-long-bay-cruise-questions-before-booking",
+        "route_path": "plan/ha-long-bay-cruise-questions-before-booking",
+        "travel_cluster": "northern_vietnam",
+        "last_verified": "2026-10-22",
+        "author": "Minh Tran — Senior Maritime & Northern Heritage Correspondent",
+        "reading_time_minutes": 10,
+        "word_count": 1610
+      },
+      "elements": {
+        "h2_count": 6,
+        "h3_count": 13,
+        "table_count": 7,
+        "blockquote_count": 2,
+        "callout_count": 1,
+        "has_faq": true,
+        "has_steps": true
+      },
+      "empirical_signals": {
+        "currency_mentions": 51,
+        "distance_mentions": 1,
+        "transit_time_mentions": 22,
+        "total_empirical_signals": 74,
+        "sample_currencies": [
+          "6,800,000 VND",
+          "$145",
+          "$270",
+          "13,500,000 VND",
+          "$290"
+        ],
+        "sample_distances": [
+          "1.8M"
+        ],
+        "sample_transit_times": [
+          "21.5 hours",
+          "2.0 hrs",
+          "2.5 hrs",
+          "21 hours",
+          "45 hours"
+        ]
+      },
+      "slop_report": {
+        "passed": true,
+        "hls_score": 100,
+        "tier1_count": 0,
+        "tier1_violations": []
+      },
+      "errors": [],
+      "warnings": []
+    },
+    {
       "path": "M:/Projects/vietnamguide/content/plan/hanoi-airport-to-old-quarter.md",
       "relative_path": "content/plan/hanoi-airport-to-old-quarter.md",
       "passed": true,
@@ -5476,6 +5592,66 @@
           "60 min",
           "30 min",
           "50 min"
+        ]
+      },
+      "slop_report": {
+        "passed": true,
+        "hls_score": 100,
+        "tier1_count": 0,
+        "tier1_violations": []
+      },
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "path": "M:/Projects/vietnamguide/content/plan/hanoi-first-time-visitor-mistakes.md",
+      "relative_path": "content/plan/hanoi-first-time-visitor-mistakes.md",
+      "passed": true,
+      "word_count": 1501,
+      "frontmatter": {
+        "title": "12 Hanoi First-Time Visitor Mistakes to Avoid (2026): Train Street, Mausoleum Hours, Taxis & Scams",
+        "slug": "hanoi-first-time-visitor-mistakes",
+        "route_path": "plan/hanoi-first-time-visitor-mistakes",
+        "travel_cluster": "northern_vietnam",
+        "last_verified": "2026-10-22",
+        "author": "Minh Tran — Senior Hanoi Cultural & Urban Correspondent",
+        "reading_time_minutes": 10,
+        "word_count": 1620
+      },
+      "elements": {
+        "h2_count": 6,
+        "h3_count": 16,
+        "table_count": 7,
+        "blockquote_count": 2,
+        "callout_count": 1,
+        "has_faq": true,
+        "has_steps": true
+      },
+      "empirical_signals": {
+        "currency_mentions": 82,
+        "distance_mentions": 6,
+        "transit_time_mentions": 12,
+        "total_empirical_signals": 100,
+        "sample_currencies": [
+          "500,000 VND",
+          "$20.00",
+          "20,000 VND",
+          "2,500,000 VND",
+          "$20"
+        ],
+        "sample_distances": [
+          "300m",
+          "1 m",
+          "1.2 meters",
+          "300 meters",
+          "15 meters"
+        ],
+        "sample_transit_times": [
+          "48 hours",
+          "48 hours",
+          "5 hours",
+          "30 minutes",
+          "15 minutes"
         ]
       },
       "slop_report": {
