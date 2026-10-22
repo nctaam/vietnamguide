@@ -573,12 +573,22 @@ flowchart TD
 - [x] **Task 36.4**: Chạy `ops/content_depth_auditor.py` kiểm định toàn bộ 76 bài viết trong `content/` (Tổng số từ: **119.247 từ**, trung bình 1.569,0 từ/bài, 100% PASS, Mean HLS 99.74/100, 4.417 empirical signals, 0 Tier 1 clichés).
 - [x] **Task 36.5**: Xác minh 8 Quality Gates (8/8 PASS, Exit Code 0, 315 tests passed), commit và push lên `origin/master`.
 
-### Giai Đoạn 37: Lịch Trình Chuyên Sâu 21 Ngày, Miền Trung & Nam Bộ (Stage 156) [TIẾP THEO]
-- [ ] **Task 37.1**: Dùng `ag-search` xác minh thực tế và biên soạn bài viết lịch trình 3 tuần trọn vẹn:
-  - `content/itineraries/21-days-in-vietnam.md`: Lịch trình 21 ngày khám phá toàn diện chiều sâu Việt Nam (Hà Giang Loop hoặc Sa Pa -> Tam giác vàng miền Bắc Hà Nội/Ninh Bình/Hạ Long -> Vương quốc hang động Phong Nha -> Di sản miền Trung Huế/Đà Nẵng/Hội An -> Cao nguyên Đà Lạt -> Đô thị Sài Gòn & Đồng bằng sông Cửu Long -> Nghỉ dưỡng biển Côn Đảo hoặc Phú Quốc).
-- [ ] **Task 37.2**: Dùng `ag-search` xác minh thực tế và biên soạn bài viết lịch trình miền Trung:
-  - `content/itineraries/central-vietnam-itinerary.md`: Lịch trình 5–7 ngày chuyên sâu Di sản & Duyên hải miền Trung (Phong Nha - Kẻ Bàng -> Cố đô Huế -> Đèo Hải Vân -> Đà Nẵng -> Phố cổ Hội An & Thánh địa Mỹ Sơn; cách phân bổ ngày, vé tàu hỏa HD kết nối di sản, ẩm thực cung đình vs bánh mì phố cổ).
-- [ ] **Task 37.3**: Dùng `ag-search` xác minh thực tế và biên soạn bài viết lịch trình miền Nam:
-  - `content/itineraries/southern-vietnam-itinerary.md`: Lịch trình 5–7 ngày khám phá miền Nam nhiệt đới (TP. Hồ Chí Minh trung tâm kinh tế & di tích lịch sử -> Địa đạo Củ Chi -> Mạng lưới sông ngòi Cần Thơ / Bến Tre / Châu Đốc -> Nghỉ dưỡng biển đảo ngọc Phú Quốc; kết nối cano cao tốc và đường bay nội địa).
-- [ ] **Task 37.4**: Chạy `ops/content_depth_auditor.py` kiểm định toàn bộ 79 bài viết trong `content/` (bảo đảm >= 1,200 từ, HLS >= 85, 0 Tier 1 clichés, mật độ dữ liệu thực chứng cao, vượt mốc 124k từ).
-- [ ] **Task 37.5**: Xác minh 8 Quality Gates (8/8 PASS, Exit Code 0, 315 tests passed), commit và push lên `origin/master`.
+### Giai Đoạn 37: Lịch Trình Chuyên Sâu 21 Ngày, Miền Trung & Nam Bộ (Stage 156) [HOÀN THÀNH 100%]
+- [x] **Task 37.1**: Dùng `ag-search` xác minh thực tế và biên soạn bài viết lịch trình 3 tuần trọn vẹn:
+  - `content/itineraries/21-days-in-vietnam.md`: Lịch trình 21 ngày khám phá toàn diện chiều sâu Việt Nam (Hà Giang Loop đèo Mã Pí Lèng 3 ngày -> Tam giác vàng miền Bắc Hà Nội/Ninh Bình/Hạ Long -> Vương quốc hang động Phong Nha Động Thiên Đường & Động Tối -> Di sản Cố đô Huế lăng tẩm hoàng gia -> Đèo Hải Vân tàu hỏa HD1 sang Phố cổ Hội An & Thánh địa Mỹ Sơn -> Đô thị Sài Gòn & Địa đạo Bến Dược -> Đồng bằng sông Cửu Long ngủ đêm Cần Thơ & chợ nổi Cái Răng lúc bình minh 05:30 -> Nghỉ dưỡng biển đảo ngọc Phú Quốc; cấm tự lái xe máy bằng IDP Geneva 1949; bảng kinh phí ước tính 3 cấp độ từ 50M đến 250M VND) (2,070 substantive words, HLS 100.0/100, 145 empirical signals).
+- [x] **Task 37.2**: Dùng `ag-search` xác minh thực tế và biên soạn bài viết lịch trình miền Trung:
+  - `content/itineraries/central-vietnam-itinerary.md`: Lịch trình 5–7 ngày chuyên sâu Di sản & Duyên hải miền Trung (Cố đô Huế Đại Nội 200k & Lăng Khải Định/Tự Đức 150k -> Đèo Hải Vân tàu hỏa du lịch HD1 ngắm vịnh Lăng Cô -> Bán đảo Sơn Trà & Ngũ Hành Sơn 40k -> Phố cổ Hội An vé 120k, may đo 24h & Thánh địa Mỹ Sơn 150k -> Mở rộng 7 ngày bãi biển Mỹ Khê & Bà Nà Hills Cầu Vàng 1.000k VND; bay open-jaw vào HUI ra DAD; bảng kinh phí từ 13.3M đến 21.9M VND) (1,830 substantive words, HLS 100.0/100, 69 empirical signals).
+- [x] **Task 37.3**: Dùng `ag-search` xác minh thực tế và biên soạn bài viết lịch trình miền Nam:
+  - `content/itineraries/southern-vietnam-itinerary.md`: Lịch trình 5–7 ngày khám phá miền Nam nhiệt đới (TP. Hồ Chí Minh Dinh Độc Lập / Bưu điện Trung tâm / Bảo tàng Chứng tích Chiến tranh 60k -> Địa đạo Bến Dược Củ Chi 125k nguyên bản -> Cao tốc CT01 về Cần Thơ khám phá cồn Sơn -> Chợ nổi Cái Răng 05:30 sáng thuyền riêng 400k–500k -> Mở rộng 7 ngày bay thẳng Can Tho VCA sang Phú Quốc PQC 50 phút 750k–1.200k VND nghỉ dưỡng bãi Khem, bãi Sao & cáp treo Hòn Thơm 7.899m; chính sách miễn visa 30 ngày Phú Quốc; bảng kinh phí từ 12.5M đến 28.9M VND) (1,636 substantive words, HLS 100.0/100, 66 empirical signals).
+- [x] **Task 37.4**: Chạy `ops/content_depth_auditor.py` kiểm định toàn bộ 79 bài viết trong `content/` (Tổng số từ: **124.783 từ**, trung bình 1.579,5 từ/bài, 100% PASS, Mean HLS 99.75/100, 4.697 empirical signals, 0 Tier 1 clichés).
+- [x] **Task 37.5**: Xác minh 8 Quality Gates (8/8 PASS, Exit Code 0, 315 tests passed), commit và push lên `origin/master`.
+
+### Giai Đoạn 38: Bộ Ba Cẩm Nang 48 Giờ Đô Thị & Du Lịch Gia Đình (Stage 157) [TIẾP THEO]
+- [ ] **Task 38.1**: Dùng `ag-search` xác minh thực tế và biên soạn bài viết lịch trình 48 giờ Thủ đô:
+  - `content/itineraries/hanoi-in-2-days.md`: Lịch trình 48 giờ tinh hoa Hà Nội thong thả, thực chứng cho người lần đầu (24 giờ đầu: 36 phố phường, Hồ Gươm, Văn Miếu, cà phê trứng Giảng; 24 giờ tiếp theo: Di tích Hỏa Lò, Bảo tàng Dân tộc học, hồ Tây, ẩm thực chả cá Lã Vọng).
+- [ ] **Task 38.2**: Dùng `ag-search` xác minh thực tế và biên soạn bài viết lịch trình 48 giờ Sài Gòn:
+  - `content/itineraries/ho-chi-minh-city-in-2-days.md`: Lịch trình 48 giờ khám phá nhịp đập kinh tế phương Nam (24 giờ đầu: Quận 1 di sản Pháp, Bảo tàng Chứng tích Chiến tranh, hoàng hôn Saigon Waterbus, ẩm thực cơm tấm Ba Ghiền; 24 giờ tiếp theo: Địa đạo Bến Dược Củ Chi nửa ngày, Chợ Lớn Quận 5 Chùa Bà Thiên Hậu & chợ Bình Tây).
+- [ ] **Task 38.3**: Dùng `ag-search` xác minh thực tế và biên soạn bài viết cẩm nang du lịch gia đình:
+  - `content/itineraries/vietnam-family-travel-guide.md`: Cẩm nang du lịch Việt Nam cùng gia đình và trẻ nhỏ (lựa chọn tuyến đường thân thiện với xe đẩy và trẻ em; quản lý vệ sinh an toàn thực phẩm & nước uống đóng chai; nhịp độ di chuyển tránh kiệt sức; danh sách khách sạn có hồ bơi và phòng gia đình kết nối).
+- [ ] **Task 38.4**: Chạy `ops/content_depth_auditor.py` kiểm định toàn bộ 82 bài viết trong `content/` (bảo đảm >= 1,200 từ, HLS >= 85, 0 Tier 1 clichés, mật độ dữ liệu cao, chính thức vượt mốc 130,000 từ).
+- [ ] **Task 38.5**: Xác minh 8 Quality Gates (8/8 PASS, Exit Code 0, 315 tests passed), commit và push lên `origin/master`.

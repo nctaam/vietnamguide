@@ -1,7 +1,7 @@
 {
   "passed": true,
-  "total_articles": 76,
-  "passed_articles": 76,
+  "total_articles": 79,
+  "passed_articles": 79,
   "min_words_threshold": 1200,
   "min_hls_threshold": 85.0,
   "articles": [
@@ -3696,6 +3696,66 @@
       "warnings": []
     },
     {
+      "path": "M:/Projects/vietnamguide/content/itineraries/21-days-in-vietnam.md",
+      "relative_path": "content/itineraries/21-days-in-vietnam.md",
+      "passed": true,
+      "word_count": 2070,
+      "frontmatter": {
+        "title": "21 Days in Vietnam: Best Three-Week Route for First Trips",
+        "slug": "21-days-in-vietnam",
+        "route_path": "itineraries/21-days-in-vietnam",
+        "travel_cluster": "national_circuit",
+        "last_verified": "2026-10-22",
+        "author": "Antigravity Travel Intelligence",
+        "reading_time_minutes": 16,
+        "word_count": 2650
+      },
+      "elements": {
+        "h2_count": 5,
+        "h3_count": 14,
+        "table_count": 7,
+        "blockquote_count": 4,
+        "callout_count": 2,
+        "has_faq": true,
+        "has_steps": false
+      },
+      "empirical_signals": {
+        "currency_mentions": 101,
+        "distance_mentions": 19,
+        "transit_time_mentions": 25,
+        "total_empirical_signals": 145,
+        "sample_currencies": [
+          "30,000 VND",
+          "60,000 VND",
+          "35,000 VND",
+          "70,000 VND",
+          "50,000 VND"
+        ],
+        "sample_distances": [
+          "300 km",
+          "300 km",
+          "95 km",
+          "145 km",
+          "150 km"
+        ],
+        "sample_transit_times": [
+          "45 min",
+          "90 min",
+          "2.5 hr",
+          "3 hr",
+          "3.5 hr"
+        ]
+      },
+      "slop_report": {
+        "passed": true,
+        "hls_score": 100,
+        "tier1_count": 0,
+        "tier1_violations": []
+      },
+      "errors": [],
+      "warnings": []
+    },
+    {
       "path": "M:/Projects/vietnamguide/content/itineraries/7-days-in-vietnam.md",
       "relative_path": "content/itineraries/7-days-in-vietnam.md",
       "passed": true,
@@ -3744,6 +3804,126 @@
           "55 minutes",
           "55 mins",
           "105 mins"
+        ]
+      },
+      "slop_report": {
+        "passed": true,
+        "hls_score": 100,
+        "tier1_count": 0,
+        "tier1_violations": []
+      },
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "path": "M:/Projects/vietnamguide/content/itineraries/central-vietnam-itinerary.md",
+      "relative_path": "content/itineraries/central-vietnam-itinerary.md",
+      "passed": true,
+      "word_count": 1830,
+      "frontmatter": {
+        "title": "Central Vietnam Itinerary (2026): 5 to 7-Day Route",
+        "slug": "central-vietnam-itinerary",
+        "route_path": "itineraries/central-vietnam-itinerary",
+        "travel_cluster": "central_heritage",
+        "last_verified": "2026-10-22",
+        "author": "Antigravity Travel Intelligence",
+        "reading_time_minutes": 13,
+        "word_count": 2200
+      },
+      "elements": {
+        "h2_count": 6,
+        "h3_count": 10,
+        "table_count": 7,
+        "blockquote_count": 2,
+        "callout_count": 1,
+        "has_faq": true,
+        "has_steps": false
+      },
+      "empirical_signals": {
+        "currency_mentions": 44,
+        "distance_mentions": 12,
+        "transit_time_mentions": 13,
+        "total_empirical_signals": 69,
+        "sample_currencies": [
+          "150k VND",
+          "300k VND",
+          "75,000 VND",
+          "200,000 VND",
+          "350,000 VND"
+        ],
+        "sample_distances": [
+          "140 kilometers",
+          "15 km",
+          "103 km",
+          "100 km",
+          "30 km"
+        ],
+        "sample_transit_times": [
+          "35 mins",
+          "3.5 hours",
+          "2.5 hours",
+          "50 mins",
+          "65 mins"
+        ]
+      },
+      "slop_report": {
+        "passed": true,
+        "hls_score": 100,
+        "tier1_count": 0,
+        "tier1_violations": []
+      },
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "path": "M:/Projects/vietnamguide/content/itineraries/southern-vietnam-itinerary.md",
+      "relative_path": "content/itineraries/southern-vietnam-itinerary.md",
+      "passed": true,
+      "word_count": 1636,
+      "frontmatter": {
+        "title": "Southern Vietnam Itinerary (2026): 5 to 7-Day Route",
+        "slug": "southern-vietnam-itinerary",
+        "route_path": "itineraries/southern-vietnam-itinerary",
+        "travel_cluster": "southern_delta",
+        "last_verified": "2026-10-22",
+        "author": "Antigravity Travel Intelligence",
+        "reading_time_minutes": 13,
+        "word_count": 2200
+      },
+      "elements": {
+        "h2_count": 6,
+        "h3_count": 10,
+        "table_count": 7,
+        "blockquote_count": 4,
+        "callout_count": 2,
+        "has_faq": true,
+        "has_steps": false
+      },
+      "empirical_signals": {
+        "currency_mentions": 42,
+        "distance_mentions": 15,
+        "transit_time_mentions": 9,
+        "total_empirical_signals": 66,
+        "sample_currencies": [
+          "180,000 VND",
+          "15,000 VND",
+          "85,000 VND",
+          "125,000 VND",
+          "120,000 VND"
+        ],
+        "sample_distances": [
+          "7 km",
+          "70 km",
+          "170 km",
+          "6 km",
+          "200 km"
+        ],
+        "sample_transit_times": [
+          "40 mins",
+          "2.0 hours",
+          "3.5 hours",
+          "30 mins",
+          "50 mins"
         ]
       },
       "slop_report": {
