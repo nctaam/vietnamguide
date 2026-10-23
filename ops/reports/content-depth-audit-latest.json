@@ -1,7 +1,7 @@
 {
   "passed": true,
-  "total_articles": 130,
-  "passed_articles": 130,
+  "total_articles": 133,
+  "passed_articles": 133,
   "min_words_threshold": 1200,
   "min_hls_threshold": 85.0,
   "articles": [
@@ -3379,6 +3379,64 @@
       "warnings": []
     },
     {
+      "path": "M:/Projects/vietnamguide/content/destinations/da-nang-beaches-guide.md",
+      "relative_path": "content/destinations/da-nang-beaches-guide.md",
+      "passed": true,
+      "word_count": 1336,
+      "frontmatter": {
+        "title": "Da Nang Beaches Guide: My Khe, Non Nuoc or Hoi An Coast?",
+        "slug": "da-nang-beaches-guide",
+        "route_path": "/destinations/da-nang-beaches-guide/",
+        "travel_cluster": "central_heritage",
+        "last_verified": "2026-10-23",
+        "author": "Minh-Tam Nguyen",
+        "reading_time_minutes": 8,
+        "word_count": 1336
+      },
+      "elements": {
+        "h2_count": 6,
+        "h3_count": 11,
+        "table_count": 7,
+        "blockquote_count": 4,
+        "callout_count": 2,
+        "has_faq": true,
+        "has_steps": true
+      },
+      "empirical_signals": {
+        "currency_mentions": 33,
+        "distance_mentions": 9,
+        "transit_time_mentions": 3,
+        "total_empirical_signals": 45,
+        "sample_currencies": [
+          "50,000 VND",
+          "5,000 VND",
+          "50,000 VND",
+          "0 VND",
+          "100,000 VND"
+        ],
+        "sample_distances": [
+          "3 km",
+          "8 km",
+          "14 km",
+          "18 km",
+          "6 km"
+        ],
+        "sample_transit_times": [
+          "15 minutes",
+          "20 minutes",
+          "35 minutes"
+        ]
+      },
+      "slop_report": {
+        "passed": true,
+        "hls_score": 100,
+        "tier1_count": 0,
+        "tier1_violations": []
+      },
+      "errors": [],
+      "warnings": []
+    },
+    {
       "path": "M:/Projects/vietnamguide/content/destinations/da-nang-street-food-guide.md",
       "relative_path": "content/destinations/da-nang-street-food-guide.md",
       "passed": true,
@@ -4309,6 +4367,66 @@
       "warnings": []
     },
     {
+      "path": "M:/Projects/vietnamguide/content/destinations/mekong-delta-travel-guide.md",
+      "relative_path": "content/destinations/mekong-delta-travel-guide.md",
+      "passed": true,
+      "word_count": 1260,
+      "frontmatter": {
+        "title": "Mekong Delta Travel Guide: Day Trip, Overnight or Skip?",
+        "slug": "mekong-delta-travel-guide",
+        "route_path": "/destinations/mekong-delta-travel-guide/",
+        "travel_cluster": "mekong_delta",
+        "last_verified": "2026-10-23",
+        "author": "Minh-Tam Nguyen",
+        "reading_time_minutes": 8,
+        "word_count": 1260
+      },
+      "elements": {
+        "h2_count": 6,
+        "h3_count": 10,
+        "table_count": 7,
+        "blockquote_count": 4,
+        "callout_count": 2,
+        "has_faq": true,
+        "has_steps": true
+      },
+      "empirical_signals": {
+        "currency_mentions": 31,
+        "distance_mentions": 7,
+        "transit_time_mentions": 9,
+        "total_empirical_signals": 47,
+        "sample_currencies": [
+          "$12",
+          "$18",
+          "1,600,000 VND",
+          "$30",
+          "$65"
+        ],
+        "sample_distances": [
+          "105 km",
+          "170 km",
+          "85 km",
+          "70 kilometers",
+          "170 km"
+        ],
+        "sample_transit_times": [
+          "2 hours",
+          "3 hours",
+          "4.5 hours",
+          "2 hours",
+          "3 hours"
+        ]
+      },
+      "slop_report": {
+        "passed": true,
+        "hls_score": 100,
+        "tier1_count": 0,
+        "tier1_violations": []
+      },
+      "errors": [],
+      "warnings": []
+    },
+    {
       "path": "M:/Projects/vietnamguide/content/destinations/mu-cang-chai-travel-guide.md",
       "relative_path": "content/destinations/mu-cang-chai-travel-guide.md",
       "passed": true,
@@ -4651,6 +4769,64 @@
       },
       "slop_report": {
         "passed": false,
+        "hls_score": 100,
+        "tier1_count": 0,
+        "tier1_violations": []
+      },
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "path": "M:/Projects/vietnamguide/content/destinations/phu-quoc-beaches-guide.md",
+      "relative_path": "content/destinations/phu-quoc-beaches-guide.md",
+      "passed": true,
+      "word_count": 1267,
+      "frontmatter": {
+        "title": "Phu Quoc Beaches Guide: 7 Best Beaches & Coast Map (2026)",
+        "slug": "phu-quoc-beaches-guide",
+        "route_path": "/destinations/phu-quoc-beaches-guide/",
+        "travel_cluster": "southern_islands",
+        "last_verified": "2026-10-23",
+        "author": "Minh-Tam Nguyen",
+        "reading_time_minutes": 8,
+        "word_count": 1267
+      },
+      "elements": {
+        "h2_count": 6,
+        "h3_count": 11,
+        "table_count": 7,
+        "blockquote_count": 4,
+        "callout_count": 2,
+        "has_faq": true,
+        "has_steps": true
+      },
+      "empirical_signals": {
+        "currency_mentions": 23,
+        "distance_mentions": 10,
+        "transit_time_mentions": 3,
+        "total_empirical_signals": 36,
+        "sample_currencies": [
+          "100,000 VND",
+          "20,000 VND",
+          "0 VND",
+          "50,000 VND",
+          "20,000 VND"
+        ],
+        "sample_distances": [
+          "150 kilometers",
+          "25 km",
+          "8 km",
+          "20 km",
+          "25 km"
+        ],
+        "sample_transit_times": [
+          "15 minutes",
+          "35 minutes",
+          "45 minutes"
+        ]
+      },
+      "slop_report": {
+        "passed": true,
         "hls_score": 100,
         "tier1_count": 0,
         "tier1_violations": []
