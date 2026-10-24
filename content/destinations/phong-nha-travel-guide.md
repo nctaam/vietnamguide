@@ -2,11 +2,14 @@
 title: "Phong Nha Travel Guide: Caves, Seasons and Route Fit"
 slug: "phong-nha-travel-guide"
 route_path: "destinations/phong-nha-travel-guide"
+category: "destinations"
+description: "Authoritative Phong Nha travel guide: decide whether Phong Nha is worth the cave detour by route fit, season, nights needed, fitness, and trade-offs."
+author: "VietnamGuide Editorial Team"
+last_updated: "2026-06-15"
+word_count: 1729
 travel_cluster: "phong_nha_caves"
 last_verified: "2026-10-21"
-author: "Antigravity Travel Intelligence"
-reading_time_minutes: 14
-word_count: 1950
+reading_time_minutes: "14"
 ---
 
 # Phong Nha Travel Guide: Caves, Seasons and Route Fit

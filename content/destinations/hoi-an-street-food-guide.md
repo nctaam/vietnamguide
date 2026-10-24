@@ -2,11 +2,14 @@
 title: "Hoi An Street Food Guide: 9 Essential Dishes & Stalls (2026)"
 slug: "hoi-an-street-food-guide"
 route_path: "destinations/hoi-an-street-food-guide"
+category: "destinations"
+description: "Complete Hoi An street food guide: where to eat Cao Lau, Mi Quang, White Rose dumplings, Madam Khanh banh mi, night market snacks, and hygiene tips."
+author: "VietnamGuide Editorial Team"
+last_updated: "2026-06-15"
+word_count: 1455
 travel_cluster: "central_heritage"
 last_verified: "2026-10-21"
-author: "Antigravity Travel Intelligence"
-reading_time_minutes: 12
-word_count: 1850
+reading_time_minutes: "12"
 ---
 
 # Hoi An Street Food Guide: 9 Essential Dishes & Stalls (2026)

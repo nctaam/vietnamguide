@@ -2,11 +2,14 @@
 title: "Best Things to Do in Nha Trang (2026): Po Nagar Cham Towers, Mud Baths, Island Snorkeling & Seafood"
 slug: "best-things-to-do-in-nha-trang"
 route_path: "destinations/best-things-to-do-in-nha-trang"
+category: "destinations"
+description: "Explore the best things to do in Nha Trang: island snorkeling tours, Po Nagar Cham Towers, mud baths, scuba diving, and seafood feasts with 2026 prices."
+author: "VietnamGuide Editorial Team"
+last_updated: "2026-06-15"
+word_count: 1276
 travel_cluster: "south_central_coast"
 last_verified: "2026-10-22"
-author: "Minh Tran — Senior South-Central Coast & Marine Correspondent"
-reading_time_minutes: 10
-word_count: 1276
+reading_time_minutes: "10"
 ---
 
 # Best Things to Do in Nha Trang (2026): Po Nagar Cham Towers, Mud Baths, Island Snorkeling & Seafood

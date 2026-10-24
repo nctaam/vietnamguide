@@ -748,9 +748,11 @@ class TestGuideSEO(unittest.TestCase):
         self.assertIn('aria-live="polite"', map_code)
         self.assertIn('<noscript>', map_code, "Interactive map must provide <noscript> accessible fallback")
         self.assertIn('<th scope="row">', map_code, "<noscript> table must have <th scope='row'> headers")
-        # Ensure SVG pins do NOT have interactive tabindex="0" (prevents focus traps)
-        svg_pin_matches = re.findall(r'<g[^>]+class="[^"]*vg-map-pin[^"]*"[^>]*tabindex=', map_code)
-        self.assertEqual(len(svg_pin_matches), 0, "SVG pins must not have tabindex attributes when parent is aria-hidden")
+        # Ensure SVG map is not aria-hidden and SVG pins have keyboard tabindex="0", role="button", and aria-label
+        self.assertNotIn('<svg class="vg-map-svg" viewBox="0 0 320 540" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">', map_code)
+        self.assertIn('class="vg-map-pin-group', map_code)
+        self.assertIn('tabindex="0" role="button"', map_code)
+        self.assertIn("e.key === 'ArrowRight' || e.key === 'ArrowLeft'", map_code)
 
         # 2. Photo dispatch
         with open(PHOTO_DISPATCH_PHP, 'r', encoding='utf-8') as f:
@@ -2878,8 +2880,27 @@ echo json_encode([
         self.assertIn('486 stone steps', nb_faqs)
         self.assertIn('Bai Dinh Pagoda', nb_faqs)
 
+    def test_track_p0c_lcp_preload_aio_and_interactive_enqueue(self):
+        """Track P0-C: LCP hero preload imagesrcset, AIO 404/search X-Robots-Tag guard, markdown /llms-full.txt highlights, and early interactive CSS enqueue."""
+        with open(GUIDE_SEO_PHP, 'r', encoding='utf-8') as f:
+            seo_src = f.read()
+        self.assertIn('imagesrcset=', seo_src)
+        self.assertIn('imagesizes="100vw"', seo_src)
+        self.assertIn('home-hero-640.webp', seo_src)
+        self.assertIn('home-hero-960.webp', seo_src)
 
+        with open(GUIDE_AIO_PHP, 'r', encoding='utf-8') as f:
+            aio_src = f.read()
+        self.assertIn('function vg_send_ai_crawler_headers()', aio_src)
+        self.assertIn('function vg_extract_markdown_route_highlights(', aio_src)
+        self.assertIn('is_404()', aio_src)
+        self.assertIn('is_search()', aio_src)
 
+        with open(PHOTO_DISPATCH_PHP, 'r', encoding='utf-8') as f:
+            dispatch_src = f.read()
+        self.assertIn('function vg_resolve_dispatch_image_url(', dispatch_src)
+        self.assertIn("'hoi-an'              => 'central-heritage-hero.jpg'", dispatch_src)
+        self.assertIn("e.key === 'ArrowRight' || e.key === 'ArrowLeft'", dispatch_src)
 
 
 if __name__ == '__main__':

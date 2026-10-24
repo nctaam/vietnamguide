@@ -2,11 +2,14 @@
 title: "14 Days in Vietnam Itinerary: Best Two-Week Route"
 slug: "14-days-in-vietnam"
 route_path: "itineraries/14-days-in-vietnam"
+category: "itineraries"
+description: "Plan 14 days in Vietnam by month, route shape, and travel style, with a two-week route chooser, transfer checks, route photos, and booking sequence."
+author: "VietnamGuide Editorial Team"
+last_updated: "2026-06-15"
+word_count: 2534
 travel_cluster: "national_circuit"
 last_verified: "2026-10-22"
-author: "Antigravity Travel Intelligence"
-reading_time_minutes: 15
-word_count: 2450
+reading_time_minutes: "15"
 ---
 
 # 14 Days in Vietnam: The Definitive Two-Week Route Guide

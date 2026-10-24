@@ -2,11 +2,14 @@
 title: "Vietnam E-Visa Guide (2026): Official evisa.gov.vn Portal, Fees & Photo Rules"
 slug: "vietnam-evisa"
 route_path: "plan/vietnam-evisa"
+category: "plan"
+description: "Vietnam e-visa application guide: official portal link, exact fees, photo rules, entry port requirements, processing times, and common mistake prevention."
+author: "VietnamGuide Editorial Team"
+last_updated: "2026-06-15"
+word_count: 1402
 travel_cluster: "national_circuit"
 last_verified: "2026-10-22"
-author: "Minh Pham — Lead Travel Technologist"
-reading_time_minutes: 7
-word_count: 1402
+reading_time_minutes: "7"
 ---
 
 # Vietnam E-Visa Guide (2026): Official evisa.gov.vn Portal, Fees & Photo Rules

@@ -2,11 +2,14 @@
 title: "Ha Long Bay Day Trip vs Overnight Cruise (2026): Real Water Time & Cost Breakdown"
 slug: "ha-long-bay-day-trip-vs-overnight-cruise"
 route_path: "itineraries/ha-long-bay-day-trip-vs-overnight-cruise"
+category: "itineraries"
+description: "Ha Long Bay day trip vs overnight cruise comparison: compare travel time from Hanoi, costs, karst depth, kayaking, sleeping on water, and route value."
+author: "VietnamGuide Editorial Team"
+last_updated: "2026-06-15"
+word_count: 1410
 travel_cluster: "ha_long_bay"
 last_verified: "2026-10-22"
-author: "Minh Pham — Lead Travel Technologist"
-reading_time_minutes: 10
-word_count: 1950
+reading_time_minutes: "10"
 ---
 
 # Ha Long Bay Day Trip vs Overnight Cruise (2026): Real Water Time & Cost Breakdown

@@ -2,11 +2,14 @@
 title: "Bai Tu Long Bay Travel Guide (2026): Uncrowded Cruise Routes, Ao Tien Port, Vung Vieng & Kayaking"
 slug: "bai-tu-long-bay-guide"
 route_path: "destinations/bai-tu-long-bay-guide"
+category: "destinations"
+description: "Bai Tu Long Bay guide: uncrowded limestone karst alternative to Ha Long Bay with 2-day cruise rates, kayak routes, cave excursions, and port logistics."
+author: "VietnamGuide Editorial Team"
+last_updated: "2026-06-15"
+word_count: 1251
 travel_cluster: "halong_catba"
 last_verified: "2026-10-22"
-author: "Minh Tran — Senior Northern Gulf & Maritime Heritage Correspondent"
-reading_time_minutes: 10
-word_count: 1251
+reading_time_minutes: "10"
 ---
 
 # Bai Tu Long Bay Travel Guide (2026): Uncrowded Cruise Routes, Ao Tien Port, Vung Vieng & Kayaking

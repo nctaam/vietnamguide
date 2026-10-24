@@ -2,11 +2,14 @@
 title: "Ly Son Island Travel Guide (2026): Volcanic Cliffs, Sa Ky Speedboat, Dao Be & Garlic Kingdom"
 slug: "ly-son-travel-guide"
 route_path: "destinations/ly-son-travel-guide"
+category: "destinations"
+description: "Ly Son travel guide: volcanic crater views at Thoi Loi, To Vo gate, garlic farming heritage, Sa Ky port ferry logistics, homestays, and sea weather safety."
+author: "VietnamGuide Editorial Team"
+last_updated: "2026-06-15"
+word_count: 1364
 travel_cluster: "central_coast"
 last_verified: "2026-10-22"
-author: "Minh Tran — Senior Central Coast & Marine Geology Correspondent"
-reading_time_minutes: 10
-word_count: 1364
+reading_time_minutes: "10"
 ---
 
 # Ly Son Island Travel Guide (2026): Volcanic Cliffs, Sa Ky Speedboat, Dao Be & Garlic Kingdom

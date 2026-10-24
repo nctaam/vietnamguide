@@ -2,11 +2,14 @@
 title: "12 Hanoi First-Time Visitor Mistakes to Avoid (2026): Train Street, Mausoleum Hours, Taxis & Scams"
 slug: "hanoi-first-time-visitor-mistakes"
 route_path: "plan/hanoi-first-time-visitor-mistakes"
+category: "plan"
+description: "Avoid common Hanoi first-time visitor mistakes regarding hotel locations, arrival night transit, day trip booking pressure, and winter weather packing."
+author: "VietnamGuide Editorial Team"
+last_updated: "2026-06-15"
+word_count: 1501
 travel_cluster: "northern_vietnam"
 last_verified: "2026-10-22"
-author: "Minh Tran — Senior Hanoi Cultural & Urban Correspondent"
-reading_time_minutes: 10
-word_count: 1620
+reading_time_minutes: "10"
 ---
 
 # 12 Hanoi First-Time Visitor Mistakes to Avoid (2026): Train Street, Mausoleum Hours, Taxis & Scams

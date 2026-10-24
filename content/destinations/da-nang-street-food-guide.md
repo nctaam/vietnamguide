@@ -2,11 +2,14 @@
 title: "Da Nang Street Food Guide: Seafood, Mi Quang & Gems (2026)"
 slug: "da-nang-street-food-guide"
 route_path: "destinations/da-nang-street-food-guide"
+category: "destinations"
+description: "Complete Da Nang street food guide: where to eat authentic mi quang, banh xeo Ba Duong, Nam O fish salad, coastal seafood, Con Market, and local prices."
+author: "VietnamGuide Editorial Team"
+last_updated: "2026-06-15"
+word_count: 1517
 travel_cluster: "central_heritage"
 last_verified: "2026-10-21"
-author: "Antigravity Travel Intelligence"
-reading_time_minutes: 12
-word_count: 1850
+reading_time_minutes: "12"
 ---
 
 # Da Nang Street Food Guide: Seafood, Mi Quang & Gems (2026)

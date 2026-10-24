@@ -2,11 +2,14 @@
 title: "Transport Within Vietnam (2026): Domestic Flights, Trains, VIP Buses & Cars"
 slug: "transport-within-vietnam"
 route_path: "plan/transport-within-vietnam"
+category: "plan"
+description: "Choose transport within Vietnam by route: domestic flights, trains, private cars, sleeper buses, ferries, airport transfers, prebooking, and live checks."
+author: "VietnamGuide Editorial Team"
+last_updated: "2026-06-15"
+word_count: 1567
 travel_cluster: "national_circuit"
 last_verified: "2026-10-22"
-author: "Minh Pham — Lead Travel Technologist"
-reading_time_minutes: 8
-word_count: 1568
+reading_time_minutes: "8"
 ---
 
 # Transport Within Vietnam (2026): Domestic Flights, Trains, VIP Buses & Cars

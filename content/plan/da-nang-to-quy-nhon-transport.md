@@ -2,12 +2,17 @@
 title: "Da Nang to Quy Nhon Transport: Coastal Railway, Luxury Rail & Limousine"
 slug: "da-nang-to-quy-nhon-transport"
 route_path: "plan/da-nang-to-quy-nhon-transport"
+category: "plan"
+description: "Da Nang to Quy Nhon transport guide: Reunification Express train berths vs luxury Vietage rail carriages, limousine vans, and coastal highway travel times."
+author: "VietnamGuide Editorial Team"
+last_updated: "2026-06-15"
+word_count: 1632
 travel_cluster: "coastal_islands"
 last_verified: "2026-10-20"
-author: "Antigravity Travel Intelligence"
-reading_time_minutes: 13
-word_count: 2200
+reading_time_minutes: "13"
 ---
+
+# Da Nang to Quy Nhon Transport: Coastal Railway, Luxury Rail & Limousine
 
 The 300-kilometer transit corridor connecting Da Nang with Quy Nhon links central Vietnam’s most dynamic commercial metropolis with the quiet maritime coast of Binh Dinh province. Travelers navigating this route traverse the historic coastal landscapes of Quang Nam and Quang Ngai provinces, crossing fertile river estuaries, the ancient salt pans of Sa Huynh, and the southern plains of the ancient Champa kingdom.
 

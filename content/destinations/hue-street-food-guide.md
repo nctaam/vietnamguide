@@ -2,11 +2,14 @@
 title: "Hue Street Food Guide: 9 Essential Dishes & Stalls (2026)"
 slug: "hue-street-food-guide"
 route_path: "destinations/hue-street-food-guide"
+category: "destinations"
+description: "Complete Hue street food guide: taste authentic Bun Bo Hue, royal steamed rice cakes (banh beo, nam, loc), crispy banh khoai, sweet che, and top stalls."
+author: "VietnamGuide Editorial Team"
+last_updated: "2026-06-15"
+word_count: 1595
 travel_cluster: "central_heritage"
 last_verified: "2026-10-21"
-author: "Antigravity Travel Intelligence"
-reading_time_minutes: 12
-word_count: 1850
+reading_time_minutes: "12"
 ---
 
 # Hue Street Food Guide: 9 Essential Dishes & Stalls (2026)

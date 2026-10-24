@@ -2,11 +2,14 @@
 title: "Vietnam Coffee Guide (2026): Egg Coffee, Salt Coffee, Coconut Coffee, Phin Culture & Iconic Cafes"
 slug: "vietnam-coffee-guide"
 route_path: "destinations/vietnam-coffee-guide"
+category: "destinations"
+description: "Complete Vietnam coffee guide: authentic egg coffee, salt coffee, coconut coffee, robusta phin culture, specialty roasters, and iconic cafes nationwide."
+author: "VietnamGuide Editorial Team"
+last_updated: "2026-06-15"
+word_count: 1395
 travel_cluster: "southern_vietnam"
 last_verified: "2026-10-22"
-author: "Minh Tran — Senior Vietnamese Culinary & Beverage Correspondent"
-reading_time_minutes: 11
-word_count: 1840
+reading_time_minutes: "11"
 ---
 
 # Vietnam Coffee Guide (2026): Egg Coffee, Salt Coffee, Coconut Coffee, Phin Culture & Iconic Cafes

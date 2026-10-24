@@ -2,11 +2,14 @@
 title: "Best Things to Do in Da Lat: Highlands & Waterfalls (2026)"
 slug: "best-things-to-do-in-da-lat"
 route_path: "destinations/best-things-to-do-in-da-lat"
+category: "destinations"
+description: "Discover the best things to do in Da Lat: Arabica coffee cupping, alpine coaster rides, Datanla falls, pine trails, and night markets with 2026 prices."
+author: "VietnamGuide Editorial Team"
+last_updated: "2026-06-15"
+word_count: 1763
 travel_cluster: "central_highlands"
 last_verified: "2026-10-21"
-author: "Antigravity Travel Intelligence"
-reading_time_minutes: 13
-word_count: 1850
+reading_time_minutes: "13"
 ---
 
 # Best Things to Do in Da Lat: Highlands & Waterfalls (2026)

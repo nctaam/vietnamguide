@@ -28,7 +28,7 @@ class TariffSentinelTests(unittest.TestCase):
         self.assertEqual(len(reg['invalid_date_routes']), 0)
         self.assertEqual(len(reg['title_violations']), 0)
         self.assertEqual(len(reg['description_violations']), 0)
-        self.assertGreaterEqual(reg['empirical_coverage_pct'], 85.0)
+        self.assertGreaterEqual(reg['empirical_coverage_pct'], 98.0)
         self.assertEqual(len(tk['missing_files']), 0)
         self.assertEqual(len(tk['missing_anchors']), 0)
 

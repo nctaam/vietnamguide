@@ -17,7 +17,7 @@ import urllib.request
 from typing import Any
 
 DEFAULT_SEARCH_URL = os.environ.get("AG_SEARCH_URL", "http://localhost:20128/v1/search")
-DEFAULT_API_KEY = os.environ.get("AG_SEARCH_API_KEY", "sk-4fe19abbb8c5098c-b3nkl4-16b15a4a")
+DEFAULT_API_KEY = os.environ.get("AG_SEARCH_API_KEY", "ag-local-dev-key")
 DEFAULT_MODEL = os.environ.get("AG_SEARCH_MODEL", "ag")
 
 

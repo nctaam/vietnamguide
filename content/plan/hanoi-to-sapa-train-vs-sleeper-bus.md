@@ -1,15 +1,18 @@
 ---
-title: "Hanoi to Sa Pa Transport: Overnight Sleeper Train vs Express Cabin Bus"
-slug: "hanoi-to-sa-pa-train-vs-bus"
-route_path: "plan/hanoi-to-sa-pa-train-vs-bus"
+title: "Hanoi to Sapa: Sleeper Train vs Sleeper Bus (2026)"
+slug: "hanoi-to-sapa-train-vs-sleeper-bus"
+route_path: "plan/hanoi-to-sapa-train-vs-sleeper-bus"
+category: "plan"
+description: "Compare Hanoi to Sapa travel: overnight railway sleeper train to Lao Cai vs luxury cabin sleeper bus direct to Sapa town. Fares, timing, and comfort."
+author: "VietnamGuide Editorial Team"
+last_updated: "2026-06-15"
+word_count: 1273
 travel_cluster: "northern_highlands"
 last_verified: "2026-10-20"
-author: "Antigravity Travel Intelligence"
-reading_time_minutes: 8
-word_count: 1450
+reading_time_minutes: "8"
 ---
 
-# Hanoi to Sa Pa Transport: Overnight Sleeper Train vs Express Cabin Bus
+# Hanoi to Sapa: Sleeper Train vs Sleeper Bus (2026)
 
 Traveling the 315 kilometers northwest from Hanoi into the alpine highlands of Sa Pa is one of the classic overland journeys in Southeast Asia. For decades, the only viable connection was the historic colonial-era meter-gauge railway line winding up the Red River Valley to the Chinese border city of Lao Cai. Today, the modern Noi Bai – Lao Cai Expressway (Expressway CT05) provides a competing direct highway alternative.
 

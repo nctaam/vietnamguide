@@ -2,12 +2,17 @@
 title: "Mui Ne vs Nha Trang: Sand Dunes & Surf vs Urban Island Beachfront"
 slug: "mui-ne-vs-nha-trang"
 route_path: "compare/mui-ne-vs-nha-trang"
+category: "compare"
+description: "Mui Ne vs Nha Trang: compare coastal kitesurfing and sand dunes in Mui Ne with high-rise hotels, scuba diving, and nightlife in Nha Trang for 2026."
+author: "VietnamGuide Editorial Team"
+last_updated: "2026-06-15"
+word_count: 1491
 travel_cluster: "coastal_islands"
 last_verified: "2026-10-20"
-author: "Antigravity Travel Intelligence"
-reading_time_minutes: 12
-word_count: 2200
+reading_time_minutes: "12"
 ---
+
+# Mui Ne vs Nha Trang: Sand Dunes & Surf vs Urban Island Beachfront
 
 Choosing between Mui Ne and Nha Trang along Vietnam's South-Central coast represents a decision between two fundamentally contrasting coastal environments. While both destinations border the South China Sea, their physical topography, oceanic conditions, urban scale, and leisure activities appeal to distinct styles of travel.
 

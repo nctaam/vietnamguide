@@ -1,12 +1,15 @@
 ---
 title: "Da Nang Beaches Guide: My Khe, Non Nuoc or Hoi An Coast?"
 slug: "da-nang-beaches-guide"
-route_path: "/destinations/da-nang-beaches-guide/"
+route_path: "destinations/da-nang-beaches-guide"
+category: "destinations"
+description: "Authoritative Da Nang beaches guide: choose between My Khe, Non Nuoc, Son Tra edge, and Hoi An coast by weather season, hotel style, and family needs."
+author: "VietnamGuide Editorial Team"
+last_updated: "2026-06-15"
+word_count: 1336
 travel_cluster: "central_heritage"
 last_verified: "2026-10-23"
-author: "Minh-Tam Nguyen"
-reading_time_minutes: 8
-word_count: 1336
+reading_time_minutes: "8"
 ---
 
 # Da Nang Beaches Guide: My Khe, Non Nuoc or Hoi An Coast?

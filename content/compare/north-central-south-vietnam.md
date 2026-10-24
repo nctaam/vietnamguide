@@ -2,11 +2,14 @@
 title: "North vs Central vs South Vietnam: Where to Go First"
 slug: "north-central-south-vietnam"
 route_path: "compare/north-central-south-vietnam"
+category: "compare"
+description: "Compare North vs Central vs South Vietnam for a first trip: choose the best region by season, route length, travel style, pacing, and what to skip."
+author: "VietnamGuide Editorial Team"
+last_updated: "2026-06-15"
+word_count: 1550
 travel_cluster: "national_circuit"
 last_verified: "2026-10-22"
-author: "Antigravity Travel Intelligence"
-reading_time_minutes: 11
-word_count: 1780
+reading_time_minutes: "11"
 ---
 
 # North vs Central vs South Vietnam: Where to Go First

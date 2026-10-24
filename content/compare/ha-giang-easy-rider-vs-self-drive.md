@@ -2,11 +2,14 @@
 title: "Ha Giang Easy Rider vs Self-Drive: Motorbike Route Guide"
 slug: "ha-giang-easy-rider-vs-self-drive"
 route_path: "compare/ha-giang-easy-rider-vs-self-drive"
+category: "compare"
+description: "Decide between Ha Giang easy rider vs self-drive: compare tour costs, 1968 IDP license rules, road hazards, physical fatigue, and passenger safety."
+author: "VietnamGuide Editorial Team"
+last_updated: "2026-06-15"
+word_count: 1486
 travel_cluster: "northern_highlands"
 last_verified: "2026-10-22"
-author: "Antigravity Travel Intelligence"
-reading_time_minutes: 10
-word_count: 1720
+reading_time_minutes: "10"
 ---
 
 # Ha Giang Easy Rider vs Self-Drive: Motorbike Route Guide

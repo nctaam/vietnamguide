@@ -2,11 +2,14 @@
 title: "Trang An vs Tam Coc Boat Tour Guide (2026): Routes 1–3, Ticket Prices & Rice Harvest Season"
 slug: "trang-an-vs-tam-coc"
 route_path: "compare/trang-an-vs-tam-coc"
+category: "compare"
+description: "Trang An vs Tam Coc: compare 250,000 VND boat tickets, 3-hour river routes through UNESCO caves, crowd levels, photography, and Hanoi day trip logistics."
+author: "VietnamGuide Editorial Team"
+last_updated: "2026-06-15"
+word_count: 1318
 travel_cluster: "red_river_delta"
 last_verified: "2026-10-22"
-author: "Minh Tran — Senior Northern Heritage & River Correspondent"
-reading_time_minutes: 10
-word_count: 1570
+reading_time_minutes: "10"
 ---
 
 # Trang An vs Tam Coc Boat Tour Guide (2026): Routes 1–3, Ticket Prices & Rice Harvest Season

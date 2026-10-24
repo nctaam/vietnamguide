@@ -2,11 +2,14 @@
 title: "Best Things to Do in Mui Ne (2026): White Sand Dunes Sunrise Jeep, Fairy Stream, Kitesurfing & Seafood"
 slug: "best-things-to-do-in-mui-ne"
 route_path: "destinations/best-things-to-do-in-mui-ne"
+category: "destinations"
+description: "The best things to do in Mui Ne: White and Red Sand Dunes sunrise tours, Fairy Stream walks, fishing harbor seafood, and kitesurfing with VND costs."
+author: "VietnamGuide Editorial Team"
+last_updated: "2026-06-15"
+word_count: 1208
 travel_cluster: "south_central_coast"
 last_verified: "2026-10-22"
-author: "Minh Tran — Senior South-Central Coast & Adventure Correspondent"
-reading_time_minutes: 10
-word_count: 1208
+reading_time_minutes: "10"
 ---
 
 # Best Things to Do in Mui Ne (2026): White Sand Dunes Sunrise Jeep, Fairy Stream, Kitesurfing & Seafood

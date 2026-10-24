@@ -1,12 +1,15 @@
 ---
 title: "Phu Quoc Beaches Guide: 7 Best Beaches & Coast Map (2026)"
 slug: "phu-quoc-beaches-guide"
-route_path: "/destinations/phu-quoc-beaches-guide/"
+route_path: "destinations/phu-quoc-beaches-guide"
+category: "destinations"
+description: "Complete Phu Quoc beaches guide: compare Sao Beach, Ong Lang sunsets, Bai Khem resorts, starfish ethics at Rach Vem, seasonal winds, and clear water."
+author: "VietnamGuide Editorial Team"
+last_updated: "2026-06-15"
+word_count: 1267
 travel_cluster: "southern_islands"
 last_verified: "2026-10-23"
-author: "Minh-Tam Nguyen"
-reading_time_minutes: 8
-word_count: 1267
+reading_time_minutes: "8"
 ---
 
 # Phu Quoc Beaches Guide: 7 Best Beaches & Coast Map (2026)

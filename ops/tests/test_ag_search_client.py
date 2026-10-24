@@ -143,6 +143,21 @@ class TestAgSearchClient(unittest.TestCase):
             self.assertIn(expected_tariff, content)
         self.assertEqual(len(re.findall(r"<h2\b", content, re.IGNORECASE)), 0)
 
+    def test_no_hardcoded_sk_api_secret(self):
+        """ag_search_client must not contain a hardcoded sk-... API secret token."""
+        import os
+        from pathlib import Path
+        from ops.deploy_security_audit import audit_source
+
+        client_path = Path(os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "ag_search_client.py")))
+        source = client_path.read_text(encoding="utf-8")
+        self.assertNotIn("sk-", source)
+        self.assertNotIn("hardcoded_api_secret", audit_source(client_path, source))
+        self.assertIn(
+            "hardcoded_api_secret",
+            audit_source("ops/fake.py", 'API_KEY = "sk-4fe19abbb8c5098c"\n'),
+        )
+
 
 if __name__ == "__main__":
     unittest.main()

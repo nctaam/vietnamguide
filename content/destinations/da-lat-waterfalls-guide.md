@@ -2,11 +2,14 @@
 title: "Da Lat Waterfalls Guide: Top 5 Falls, Routes & Map (2026)"
 slug: "da-lat-waterfalls-guide"
 route_path: "destinations/da-lat-waterfalls-guide"
+category: "destinations"
+description: "Complete Da Lat waterfalls guide: compare Pongour terraced cascades, Elephant falls, Datanla alpine coaster, canyoning thrills, and taxi hire tips."
+author: "VietnamGuide Editorial Team"
+last_updated: "2026-06-15"
+word_count: 1561
 travel_cluster: "central_highlands"
 last_verified: "2026-10-21"
-author: "Antigravity Travel Intelligence"
-reading_time_minutes: 13
-word_count: 1900
+reading_time_minutes: "13"
 ---
 
 # Da Lat Waterfalls Guide: Top 5 Falls, Routes & Map (2026)

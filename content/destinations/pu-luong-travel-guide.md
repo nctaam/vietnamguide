@@ -2,11 +2,14 @@
 title: "Pu Luong Nature Reserve Travel Guide (2026): Rice Terraces, Bamboo Water Wheels, Treks & Hanoi Limousines"
 slug: "pu-luong-travel-guide"
 route_path: "destinations/pu-luong-travel-guide"
+category: "destinations"
+description: "Pu Luong travel guide: plan May and Oct golden harvest season, 160 km limousine transfer from Hanoi, bamboo water wheels, homestay rates, and village treks."
+author: "VietnamGuide Editorial Team"
+last_updated: "2026-06-15"
+word_count: 1360
 travel_cluster: "northern_vietnam"
 last_verified: "2026-10-22"
-author: "Minh Tran — Senior Northern Highlands & Eco-Trekking Correspondent"
-reading_time_minutes: 10
-word_count: 1360
+reading_time_minutes: "10"
 ---
 
 # Pu Luong Nature Reserve Travel Guide (2026): Rice Terraces, Bamboo Water Wheels, Treks & Hanoi Limousines

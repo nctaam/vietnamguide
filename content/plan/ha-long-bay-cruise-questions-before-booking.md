@@ -2,11 +2,14 @@
 title: "10 Ha Long Bay Cruise Questions to Ask Before Booking (2026): Lan Ha vs Bai Tu Long, Hidden Fees & Hull Safety"
 slug: "ha-long-bay-cruise-questions-before-booking"
 route_path: "plan/ha-long-bay-cruise-questions-before-booking"
+category: "plan"
+description: "Ask these crucial Ha Long Bay cruise questions before booking: port, cabin tier, route map, weather policy, bay choice, family comfort, and transfer risk."
+author: "VietnamGuide Editorial Team"
+last_updated: "2026-06-15"
+word_count: 1368
 travel_cluster: "northern_vietnam"
 last_verified: "2026-10-22"
-author: "Minh Tran — Senior Maritime & Northern Heritage Correspondent"
-reading_time_minutes: 10
-word_count: 1610
+reading_time_minutes: "10"
 ---
 
 # 10 Ha Long Bay Cruise Questions to Ask Before Booking (2026): Lan Ha vs Bai Tu Long, Hidden Fees & Hull Safety

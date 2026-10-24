@@ -1,12 +1,15 @@
 ---
 title: "Cham Islands Travel Guide: Hoi An Day Trip or Overnight?"
 slug: "cham-islands-travel-guide"
-route_path: "/destinations/cham-islands-travel-guide/"
+route_path: "destinations/cham-islands-travel-guide"
+category: "destinations"
+description: "Cham Islands travel guide: speedboats from Hoi An, UNESCO biosphere marine reserve snorkeling, Bai Chong beach, homestay visits, and rough sea season advice."
+author: "VietnamGuide Editorial Team"
+last_updated: "2026-06-15"
+word_count: 1446
 travel_cluster: "central_heritage"
 last_verified: "2026-10-22"
-author: "Minh-Tam Nguyen"
-reading_time_minutes: 8
-word_count: 1446
+reading_time_minutes: "8"
 ---
 
 # Cham Islands Travel Guide: Hoi An Day Trip or Overnight?

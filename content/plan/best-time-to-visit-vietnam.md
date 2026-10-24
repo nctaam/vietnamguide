@@ -2,11 +2,14 @@
 title: "Best Time to Visit Vietnam (2026): Month-by-Month Weather, Regions & Route Pivots"
 slug: "best-time-to-visit-vietnam"
 route_path: "plan/best-time-to-visit-vietnam"
+category: "plan"
+description: "Best time to visit Vietnam by route in 2026: north, central, south, beaches, weather trade-offs, seasonal pivots, booking checks, and live sources."
+author: "VietnamGuide Editorial Team"
+last_updated: "2026-06-15"
+word_count: 1548
 travel_cluster: "national_circuit"
 last_verified: "2026-10-22"
-author: "Minh Pham — Lead Travel Technologist"
-reading_time_minutes: 11
-word_count: 2050
+reading_time_minutes: "11"
 ---
 
 # Best Time to Visit Vietnam (2026): Month-by-Month Weather, Regions & Route Pivots
@@ -116,4 +119,3 @@ While Southern Vietnam never drops below `21°C`, Northern Vietnam experiences c
 
 ### Where can I check official live typhoon, flood, and port-closure alerts while traveling in Vietnam?
 Bookmark two authoritative sources before departure: the **National Center for Hydro-Meteorological Forecasting (`nchmf.gov.vn`)** for official tropical depression tracks (`Áp Thấp Nhiệt Đới`), heavy rain warnings, and upstream reservoir discharge notices in Central Vietnam, and **Windy.com (ECMWF model)** for hour-by-hour wind speed and cloud-base forecasts over **Ha Long Bay (`Tuan Chau`)**, **Fansipan (`Sapa`)**, and **Phu Quoc Island**. If you hold tickets for high-speed island ferries—such as **Superdong or Phu Quoc Express** from **Rach Gia / Ha Tien to Phu Quoc (`230,000–340,000 VND`)** or **Mai Linh / GreenlinesDP** to **Con Dao (`450,000–990,000 VND`)**—or overnight cruises in **Ha Long Bay (`590,000 VND` permit zone)**, your operator will notify you via WhatsApp by `06:45` on the morning of departure if the provincial Port Authority (`Cảng Vụ Hàng Hải`) suspends sailings due to Force 6+ swells, entitling you to a 100% ticket refund or complimentary date transfer.
-

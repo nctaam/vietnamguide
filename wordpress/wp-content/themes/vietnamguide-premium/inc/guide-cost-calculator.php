@@ -43,10 +43,9 @@ function vg_render_cost_calculator_html(): string
                 <p style="font-weight:700;margin-bottom:8px;color:#1a365d;">📋 2026 Vietnam Travel Daily Budget Benchmarks (No-JavaScript Reference):</p>
                 <p style="font-size:0.9rem;margin-bottom:12px;color:#475569;">Interactive calculator features require JavaScript. Here is the authoritative daily cost breakdown across travel tiers:</p>
                 <ul style="margin-bottom:0;padding-left:20px;font-size:0.9rem;line-height:1.6;">
-                    <li><strong>Backpacker / Budget:</strong> $35 USD (~890,000 VND / €32 / £27 / A$53) / person / day (hostel dorm, street food, bus transit).</li>
-                    <li><strong>Mid-Range Comfort:</strong> $80 USD (~2,040,000 VND / €74 / £62 / A$122) / person / day (3-star hotel, casual restaurants, Grab rides).</li>
-                    <li><strong>Comfort / Boutique:</strong> $160 USD (~4,080,000 VND / €147 / £125 / A$243) / person / day (4-star boutique hotel, guided tours, domestic flights).</li>
-                    <li><strong>Luxury / Bespoke:</strong> $350+ USD (~8,900,000+ VND / €322+ / £273+ / A$532+) / person / day (5-star resorts, private vehicles, luxury cruises).</li>
+                    <li><strong>Backpacker / Budget:</strong> $32/day ($35 USD solo / ~890,000 VND / €32 / £27 / A$53) / person / day (hostel dorm or shared homestay, street food, bus transit).</li>
+                    <li><strong>Mid-Range Comfort:</strong> $78/day ($80 USD solo / ~2,040,000 VND / €74 / £62 / A$122) / person / day (3-star boutique hotel, casual restaurants, Grab rides).</li>
+                    <li><strong>Boutique &amp; Heritage (Luxury):</strong> $195/day (~4,970,000 VND / €179 / £152 / A$296) / person / day (5-star heritage resorts, private cruise cabins, fine dining &amp; private chauffeured AC cars).</li>
                 </ul>
             </div>
         </noscript>
@@ -1589,6 +1588,11 @@ function vg_inject_cost_calculator_on_page(string $content): string
         'costs',
         'where-to-stay-in-vietnam-base-decisions',
         'money-cash-cards-atms',
+        'atm-fees-and-limits-vietnam',
+        'currency-exchange-vietnam',
+        'using-credit-cards-in-vietnam',
+        'how-much-cash-to-carry-in-vietnam',
+        'bargaining-in-vietnam',
         'tipping-in-vietnam',
         'tipping-in-vietnam-etiquette',
         'vietnam-budget-travel-guide',
@@ -1598,32 +1602,41 @@ function vg_inject_cost_calculator_on_page(string $content): string
     ];
 
     $routeBudgetPresetMap = [
-        'ha-giang-loop-planning-guide'          => 'ha-giang',
-        'ha-giang-easy-rider-vs-self-drive'     => 'ha-giang',
-        'where-to-stay-in-ha-giang'             => 'ha-giang',
-        'hanoi-to-ha-giang-transport'           => 'ha-giang',
-        'ha-giang-to-dong-van-transport'        => 'ha-giang',
-        'sapa-vs-ha-giang'                      => 'ha-giang',
-        'da-nang-vs-hoi-an'                     => 'da-nang-hoi-an',
-        'da-nang-travel-guide'                  => 'da-nang-hoi-an',
-        'hoi-an-ancient-town-guide'             => 'da-nang-hoi-an',
-        'where-to-stay-in-da-nang'              => 'da-nang-hoi-an',
-        'where-to-stay-in-hoi-an'               => 'da-nang-hoi-an',
-        'best-things-to-do-in-da-nang'          => 'da-nang-hoi-an',
-        'best-things-to-do-in-hoi-an'           => 'da-nang-hoi-an',
-        'central-vietnam-itinerary'             => 'da-nang-hoi-an',
-        'ninh-binh-travel-guide'                => 'hanoi-ninh-binh-halong',
-        'ha-long-bay-travel-guide'              => 'hanoi-ninh-binh-halong',
-        'ninh-binh-to-ha-long-bay-transfer'     => 'hanoi-ninh-binh-halong',
-        'ha-long-to-ninh-binh-transport'        => 'hanoi-ninh-binh-halong',
+        'ha-giang-loop-planning-guide'            => 'ha-giang',
+        'ha-giang-easy-rider-vs-self-drive'       => 'ha-giang',
+        'where-to-stay-in-ha-giang'               => 'ha-giang',
+        'hanoi-to-ha-giang-transport'             => 'ha-giang',
+        'ha-giang-to-dong-van-transport'          => 'ha-giang',
+        'sapa-vs-ha-giang'                        => 'ha-giang',
+        'northeast-vietnam-itinerary'             => 'ha-giang',
+        'northwest-vietnam-itinerary'             => 'ha-giang',
+        'da-nang-vs-hoi-an'                       => 'da-nang-hoi-an',
+        'da-nang-travel-guide'                    => 'da-nang-hoi-an',
+        'hoi-an-ancient-town-guide'               => 'da-nang-hoi-an',
+        'where-to-stay-in-da-nang'                => 'da-nang-hoi-an',
+        'where-to-stay-in-hoi-an'                 => 'da-nang-hoi-an',
+        'best-things-to-do-in-da-nang'            => 'da-nang-hoi-an',
+        'best-things-to-do-in-hoi-an'             => 'da-nang-hoi-an',
+        'central-vietnam-itinerary'               => 'da-nang-hoi-an',
+        'central-highlands-vietnam-itinerary'     => 'da-nang-hoi-an',
+        'da-nang-to-hue-train-vs-car'             => 'da-nang-hoi-an',
+        'ninh-binh-travel-guide'                  => 'hanoi-ninh-binh-halong',
+        'ha-long-bay-travel-guide'                => 'hanoi-ninh-binh-halong',
+        'ninh-binh-to-ha-long-bay-transfer'       => 'hanoi-ninh-binh-halong',
+        'ha-long-to-ninh-binh-transport'          => 'hanoi-ninh-binh-halong',
         'ha-long-bay-day-trip-vs-overnight-cruise' => 'hanoi-ninh-binh-halong',
-        'ha-long-bay-vs-lan-ha-bay'             => 'hanoi-ninh-binh-halong',
-        'ninh-binh-day-trip-vs-overnight'       => 'hanoi-ninh-binh-halong',
-        'where-to-stay-in-ninh-binh'            => 'hanoi-ninh-binh-halong',
-        'where-to-stay-in-ha-long-bay'          => 'hanoi-ninh-binh-halong',
-        '7-days-in-vietnam'                     => 'hanoi-ninh-binh-halong',
-        '10-days-in-vietnam'                    => 'classic-10d',
-        '14-days-in-vietnam'                    => 'classic-10d',
+        'ha-long-bay-vs-lan-ha-bay'               => 'hanoi-ninh-binh-halong',
+        'ninh-binh-day-trip-vs-overnight'         => 'hanoi-ninh-binh-halong',
+        'where-to-stay-in-ninh-binh'              => 'hanoi-ninh-binh-halong',
+        'where-to-stay-in-ha-long-bay'            => 'hanoi-ninh-binh-halong',
+        'hanoi-in-2-days'                         => 'hanoi-ninh-binh-halong',
+        '7-days-in-vietnam'                       => 'hanoi-ninh-binh-halong',
+        '10-days-in-vietnam'                      => 'classic-10d',
+        '14-days-in-vietnam'                      => 'classic-10d',
+        '21-days-in-vietnam'                      => 'classic-10d',
+        'ho-chi-minh-city-in-2-days'              => 'classic-10d',
+        'southern-vietnam-itinerary'              => 'classic-10d',
+        'vietnam-family-travel-guide'             => 'classic-10d',
     ];
 
     $isCostGuide = in_array($postSlug, $costSlugs, true)

@@ -2,11 +2,14 @@
 title: "Ho Chi Minh City Travel Guide: Districts, Food & Routes (2026)"
 slug: "ho-chi-minh-city-travel-guide"
 route_path: "destinations/ho-chi-minh-city-travel-guide"
+category: "destinations"
+description: "Ho Chi Minh City travel guide: District 1 vs District 3 bases, War Remnants Museum, street food scenes, Tan Son Nhat airport tips, and Cu Chi day trips."
+author: "VietnamGuide Editorial Team"
+last_updated: "2026-06-15"
+word_count: 1666
 travel_cluster: "southern_delta"
 last_verified: "2026-10-21"
-author: "Antigravity Travel Intelligence"
-reading_time_minutes: 14
-word_count: 1900
+reading_time_minutes: "14"
 ---
 
 # Ho Chi Minh City Travel Guide: Districts, Food & Routes (2026)

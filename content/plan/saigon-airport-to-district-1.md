@@ -2,11 +2,14 @@
 title: "Saigon Airport (SGN) to District 1 Transfer Guide (2026): Grab TCP Garage, Bus 109 & T1/T2/T3 Terminals"
 slug: "saigon-airport-to-district-1"
 route_path: "plan/saigon-airport-to-district-1"
+category: "plan"
+description: "Complete Saigon airport to District 1 guide: compare Bus 109, Grab car pickup at TCP garage, metered taxi fares, travel times, and airport scam traps."
+author: "VietnamGuide Editorial Team"
+last_updated: "2026-06-15"
+word_count: 1497
 travel_cluster: "southern_vietnam"
 last_verified: "2026-10-22"
-author: "Minh Tran — Senior Transport & Aviation Correspondent"
-reading_time_minutes: 9
-word_count: 1520
+reading_time_minutes: "9"
 ---
 
 # Saigon Airport (SGN) to District 1 Transfer Guide (2026): Grab TCP Garage, Bus 109 & T1/T2/T3 Terminals

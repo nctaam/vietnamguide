@@ -1,15 +1,18 @@
 ---
-title: "Phong Nha Caves Guide: Cavern Systems, Trekking, and Route Fit"
-slug: "phong-nha-caves-exploration-guide"
-route_path: "destinations/phong-nha-travel-guide"
+title: "Phong Nha Cave Treks: 1 to 3-Day Expedition Guide (2026)"
+slug: "phong-nha-cave-treks"
+route_path: "plan/phong-nha-cave-treks"
+category: "plan"
+description: "Top Phong Nha cave treks: compare Hang En 2-day expedition, Tu Lan river cave swimming, Paradise Cave 7km trek, operator standards, fitness, and gear."
+author: "VietnamGuide Editorial Team"
+last_updated: "2026-06-15"
+word_count: 1914
 travel_cluster: "phong_nha_caves"
 last_verified: "2026-10-20"
-author: "Antigravity Travel Intelligence"
-reading_time_minutes: 12
-word_count: 2200
+reading_time_minutes: "12"
 ---
 
-# Phong Nha Caves Guide: Cavern Systems, Trekking, and Route Fit
+# Phong Nha Cave Treks: 1 to 3-Day Expedition Guide (2026)
 
 Designated a UNESCO World Heritage site in 2003 and expanded in 2015, **Phong Nha-Ke Bang National Park** (*Vườn quốc gia Phong Nha - Kẻ Bàng*) in Quang Binh province protects the oldest major karst massif in Asia, dating back roughly 400 million years to the Paleozoic era. Spanning 123,326 hectares along the Annamite Range (*Dãy Trường Sơn*) adjacent to Laos, this subterranean landscape contains over 300 surveyed caves and grottoes carved out by the subterranean river systems of the Son and Chay rivers.
 

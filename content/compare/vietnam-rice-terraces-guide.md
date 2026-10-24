@@ -2,11 +2,14 @@
 title: "Vietnam Rice Terraces Guide (2026): Sapa vs Mu Cang Chai vs Hoang Su Phi vs Pu Luong"
 slug: "vietnam-rice-terraces-guide"
 route_path: "compare/vietnam-rice-terraces-guide"
+category: "compare"
+description: "Authoritative Vietnam rice terraces guide: compare Sapa, Mu Cang Chai, Hoang Su Phi, and Pu Luong by golden season harvest timing and 2026 hike trails."
+author: "VietnamGuide Editorial Team"
+last_updated: "2026-06-15"
+word_count: 1538
 travel_cluster: "northern_highlands"
 last_verified: "2026-10-22"
-author: "Minh Pham — Lead Travel Technologist"
-reading_time_minutes: 10
-word_count: 1940
+reading_time_minutes: "10"
 ---
 
 # Vietnam Rice Terraces Guide (2026): Sapa vs Mu Cang Chai vs Hoang Su Phi vs Pu Luong
@@ -141,4 +144,3 @@ They connect directly along National Highway **`QL32`** and **`QL4D` (`160 km`, 
 
 ### What should I pay local ethnic guides and farming households when visiting rice terraces?
 In **Mu Cang Chai** and **Sapa**, small bamboo viewing platforms, wooden swings, and heart-shaped photo frames placed inside private rice terraces are built and maintained by individual H'Mong farming families to supplement their single annual rice harvest. Always carry crisp **`10,000`, `20,000`, and `50,000 VND` polymer banknotes** to pay the posted **`20,000–30,000 VND`** entry fee at each private terrace gate (`Đồi Mâm Xôi`, `Đồi Móng Ngựa`, `Vành Móng Ngựa`), and walk strictly along the raised earth and stone paddy bunds (`bờ ruộng`) rather than stepping onto ripening rice stalks. When hiring an independent Black H'Mong, Red Dao, or La Chi local trekking guide in Sapa, Hoang Su Phi, or Pu Luong, the fair 2026 direct daily rate is **`600,000 to 800,000 VND` per group** (`~$24–$32 USD` for a full `12–15 km` day hike), plus a `100,000–150,000 VND` tip and covering their `50,000 VND` trail lunch.
-

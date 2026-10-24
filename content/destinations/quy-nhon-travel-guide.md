@@ -1,13 +1,18 @@
 ---
-title: "Quy Nhon Travel Guide: Coastal Cliffs, Ky Co Beach, and Cham Antiquities"
-slug: "quy-nhon-coastal-guide"
+title: "Quy Nhon Travel Guide: Quiet Beaches, Ky Co & Transfers"
+slug: "quy-nhon-travel-guide"
 route_path: "destinations/quy-nhon-travel-guide"
+category: "destinations"
+description: "Quy Nhon travel guide: uncrowded central coast beaches, Ky Co and Eo Gio coastal cliffs, Cham towers, local seafood dining, and Phu Cat airport access."
+author: "VietnamGuide Editorial Team"
+last_updated: "2026-06-15"
+word_count: 1732
 travel_cluster: "coastal_islands"
 last_verified: "2026-10-20"
-author: "Antigravity Travel Intelligence"
-reading_time_minutes: 13
-word_count: 2200
+reading_time_minutes: "13"
 ---
+
+# Quy Nhon Travel Guide: Quiet Beaches, Ky Co & Transfers
 
 Quy Nhon occupies a sheltered coastal amphitheater in Binh Dinh province, framed by the emerald headlands of Phuong Mai peninsula to the east and the rounded granite hills of the South-Central coast to the west. While Da Nang and Nha Trang transformed rapidly into high-density international resort strips, Quy Nhon preserved the unhurried cadence of a working maritime city of roughly 480,000 residents, where timber fishing smacks anchor along broad municipal beaches and open-air seafood halls outnumber high-rise chain hotels.
 

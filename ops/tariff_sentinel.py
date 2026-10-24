@@ -83,14 +83,15 @@ def parse_iso_date(value: str) -> date | None:
 def audit_route_registry(
     registry_path: Path = DEFAULT_REGISTRY_PATH,
     *,
-    reference_date: date | None = None,
-    max_age_days: int = 365,
+    reference_date: date | str | None = None,
+    max_age_days: int = 180,
 ) -> dict[str, Any]:
     raw = json.loads(registry_path.read_text(encoding='utf-8'))
     routes = raw.get('routes', [])
     if reference_date is None:
-        gen_str = str(raw.get('generated_at', '')).strip()
-        reference_date = parse_iso_date(gen_str) or date.today()
+        reference_date = parse_iso_date(date.today().isoformat()) or date.today()
+    elif isinstance(reference_date, str):
+        reference_date = parse_iso_date(reference_date) or date.today()
 
     stale_routes: list[dict[str, Any]] = []
     invalid_date_routes: list[str] = []
@@ -311,7 +312,7 @@ def run_sentinel(
     theme_inc_dir: Path = DEFAULT_THEME_INC_DIR,
     *,
     reference_date: date | None = None,
-    max_age_days: int = 365,
+    max_age_days: int = 180,
     min_empirical_pct: float = 98.0,
 ) -> tuple[bool, dict[str, Any]]:
     reg_report = audit_route_registry(
@@ -354,7 +355,7 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument('--registry', type=Path, default=DEFAULT_REGISTRY_PATH)
     parser.add_argument('--theme-inc', type=Path, default=DEFAULT_THEME_INC_DIR)
     parser.add_argument('--reference-date', type=str, default='')
-    parser.add_argument('--max-age-days', type=int, default=365)
+    parser.add_argument('--max-age-days', type=int, default=180)
     parser.add_argument('--min-empirical-pct', type=float, default=98.0)
     parser.add_argument('--json', action='store_true', help='emit full JSON report')
     args = parser.parse_args(argv)

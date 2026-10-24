@@ -2,11 +2,14 @@
 title: "Money in Vietnam (2026): Zero-Fee ATMs, Polymer Notes & Cash vs Card Guide"
 slug: "money-cash-cards-atms"
 route_path: "plan/money-cash-cards-atms"
+category: "plan"
+description: "Plan money in Vietnam with VND cash, card use, ATM withdrawals, exchange checks, arrival cash, declaration thresholds, payment safety, and live checks."
+author: "VietnamGuide Editorial Team"
+last_updated: "2026-06-15"
+word_count: 1561
 travel_cluster: "national_circuit"
 last_verified: "2026-10-22"
-author: "Minh Pham — Lead Travel Technologist"
-reading_time_minutes: 8
-word_count: 1565
+reading_time_minutes: "8"
 ---
 
 # Money in Vietnam (2026): Zero-Fee ATMs, Polymer Notes & Cash vs Card Guide

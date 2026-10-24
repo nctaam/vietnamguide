@@ -2,12 +2,17 @@
 title: "Ba Na Hills Golden Bridge Guide: Cable Cars, Crowd Strategy, and Map"
 slug: "ba-na-hills-golden-bridge-guide"
 route_path: "destinations/ba-na-hills-golden-bridge-guide"
+category: "destinations"
+description: "Complete Ba Na Hills Golden Bridge guide: compare cable car ticket prices, early morning crowd beats, mountain fog forecasts, opening hours, and transport."
+author: "VietnamGuide Editorial Team"
+last_updated: "2026-06-15"
+word_count: 1262
 travel_cluster: "central_heritage"
 last_verified: "2026-10-20"
-author: "Antigravity Travel Intelligence"
-reading_time_minutes: 13
-word_count: 2200
+reading_time_minutes: "13"
 ---
+
+# Ba Na Hills Golden Bridge Guide: Cable Cars, Crowd Strategy, and Map
 
 Perched at an elevation of 1,487 meters atop Chua Mountain in the Truong Son range, Sun World Ba Na Hills sits roughly 30 kilometers southwest of central Da Nang. Originally established by French colonial authorities in 1919 as a high-altitude sanatorium and cool-weather hill retreat from lowland tropical heat, the ridge was comprehensively redeveloped over the past two decades into a sprawling mountaintop entertainment resort.
 

@@ -2,11 +2,14 @@
 title: "Mu Cang Chai Travel Guide (2026): Golden Rice Terraces, Khau Pha Pass, Mam Xoi Hill & Hanoi Routes"
 slug: "mu-cang-chai-travel-guide"
 route_path: "destinations/mu-cang-chai-travel-guide"
+category: "destinations"
+description: "Mu Cang Chai travel guide: plan Sep–Oct golden harvest season, 300 km sleeper bus routes from Hanoi across Khau Pha Pass, homestay rates, and loop tips."
+author: "VietnamGuide Editorial Team"
+last_updated: "2026-06-15"
+word_count: 1400
 travel_cluster: "northwest_highlands"
 last_verified: "2026-10-22"
-author: "Minh Tran — Senior Northwest Highlands & Photography Correspondent"
-reading_time_minutes: 10
-word_count: 1400
+reading_time_minutes: "10"
 ---
 
 # Mu Cang Chai Travel Guide (2026): Golden Rice Terraces, Khau Pha Pass, Mam Xoi Hill & Hanoi Routes

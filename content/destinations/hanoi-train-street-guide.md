@@ -2,11 +2,14 @@
 title: "Hanoi Train Street Guide: Timetable, Checkpoints, and Safety Protocols"
 slug: "hanoi-train-street-guide"
 route_path: "destinations/hanoi-train-street-guide"
+category: "destinations"
+description: "Complete Hanoi train street guide: compare Tran Phu and Phung Hung sections, train timetable schedules, police checkpoints, cafe access, and safety."
+author: "VietnamGuide Editorial Team"
+last_updated: "2026-06-15"
+word_count: 1283
 travel_cluster: "hanoi-red-river-delta"
 last_verified: "2026-10-20"
-author: "Antigravity Travel Intelligence"
-reading_time_minutes: 8
-word_count: 1480
+reading_time_minutes: "8"
 ---
 
 # Hanoi Train Street Guide: Timetable, Checkpoints, and Safety Protocols

@@ -2,11 +2,14 @@
 title: "Da Lat to Buon Ma Thuot Transport: Bus, Car & Route QL27 (2026)"
 slug: "da-lat-to-buon-ma-thuot-transport"
 route_path: "plan/da-lat-to-buon-ma-thuot-transport"
+category: "plan"
+description: "Highway 27 highland route covering 210 km: shared limousine vans (5-6 hours, 220,000-260,000 VND) past Lak Lake vs private cars and 2026 schedules."
+author: "VietnamGuide Editorial Team"
+last_updated: "2026-06-15"
+word_count: 1443
 travel_cluster: "central_highlands"
 last_verified: "2026-10-21"
-author: "Antigravity Travel Intelligence"
-reading_time_minutes: 13
-word_count: 1800
+reading_time_minutes: "13"
 ---
 
 # Da Lat to Buon Ma Thuot Transport: Bus, Car & Route QL27 (2026)

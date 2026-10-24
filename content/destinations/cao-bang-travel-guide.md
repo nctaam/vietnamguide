@@ -2,11 +2,14 @@
 title: "Cao Bang Travel Guide: Ban Gioc Waterfall & Loop Routes"
 slug: "cao-bang-travel-guide"
 route_path: "destinations/cao-bang-travel-guide"
+category: "destinations"
+description: "Cao Bang travel guide: how to visit Ban Gioc Waterfall, Non Nuoc UNESCO Geopark, Nguom Ngao Cave, and integrate Cao Bang into a Northern Vietnam loop."
+author: "VietnamGuide Editorial Team"
+last_updated: "2026-06-15"
+word_count: 1544
 travel_cluster: "far_north_frontier"
 last_verified: "2026-10-21"
-author: "Antigravity Travel Intelligence"
-reading_time_minutes: 13
-word_count: 1950
+reading_time_minutes: "13"
 ---
 
 # Cao Bang Travel Guide: Ban Gioc Waterfall & Loop Routes

@@ -1,15 +1,18 @@
 ---
-title: "Cat Ba Island Travel Guide: Lan Ha Bay Cruises, National Park Hikes, and Island Logistics"
-slug: "cat-ba-island-guide"
+title: "Cat Ba Travel Guide: Island Base, Lan Ha Bay, and Park Time"
+slug: "cat-ba-travel-guide"
 route_path: "destinations/cat-ba-travel-guide"
+category: "destinations"
+description: "Cat Ba travel guide: island base logistics, Lan Ha Bay boat tours, Cannon Fort, Cat Ba National Park hikes, ferry connections from Hanoi, and hotels."
+author: "VietnamGuide Editorial Team"
+last_updated: "2026-06-15"
+word_count: 1502
 travel_cluster: "ha_long_northeast"
 last_verified: "2026-10-20"
-author: "Antigravity Travel Intelligence"
-reading_time_minutes: 11
-word_count: 1880
+reading_time_minutes: "11"
 ---
 
-# Cat Ba Island Travel Guide: Lan Ha Bay Cruises, National Park Hikes, and Island Logistics
+# Cat Ba Travel Guide: Island Base, Lan Ha Bay, and Park Time
 
 Covering 260 square kilometers across an archipelago of 367 islands, **Cat Ba Island** is the ecological anchor of northern Vietnam's coastal karst landscape. While politically part of Hai Phong municipality, Cat Ba borders the southern rim of Ha Long Bay and sits directly inside **Lan Ha Bay** and the **Cat Ba UNESCO Biosphere Reserve**.
 

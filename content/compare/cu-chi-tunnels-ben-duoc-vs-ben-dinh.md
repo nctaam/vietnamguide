@@ -2,11 +2,14 @@
 title: "Ben Duoc vs Ben Dinh: Which Cu Chi Tunnels Site to Visit?"
 slug: "cu-chi-tunnels-ben-duoc-vs-ben-dinh"
 route_path: "compare/cu-chi-tunnels-ben-duoc-vs-ben-dinh"
+category: "compare"
+description: "Ben Duoc vs Ben Dinh comparison: compare authentic historical tunnels, tour bus crowds, distance from Saigon, crawl sizes, shooting ranges, and costs."
+author: "VietnamGuide Editorial Team"
+last_updated: "2026-06-15"
+word_count: 1608
 travel_cluster: "southern_delta"
 last_verified: "2026-10-20"
-author: "Antigravity Travel Intelligence"
-reading_time_minutes: 11
-word_count: 1900
+reading_time_minutes: "11"
 ---
 
 # Ben Duoc vs Ben Dinh: Which Cu Chi Tunnels Site to Visit?

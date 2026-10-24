@@ -947,6 +947,34 @@ class TestRouteRegistryClassificationsCoverage(unittest.TestCase):
                 self.assertIn('@graph', data)
                 self.assertGreater(len(data['@graph']), 0)
 
+    def test_zero_duplicate_php_keys_and_howto_visible_step_parity(self):
+        """Ensure zero duplicate PHP array keys in FAQ/HowTo/WebApplication registries and visible #step-1 parity."""
+        with open(GUIDE_SEO_PHP, 'r', encoding='utf-8') as f:
+            seo_src = f.read()
+        for fn_name in ['vg_get_curated_faq_items', 'vg_get_page_howto_schema', 'vg_get_page_webapplication_schema']:
+            start = seo_src.find(f'function {fn_name}')
+            end = seo_src.find('\nfunction ', start + 1)
+            block = seo_src[start:end]
+            keys = re.findall(r"^\s{8}'([a-z0-9-]+)'\s*=>\s*\[", block, re.M)
+            self.assertEqual(len(keys), len(set(keys)), f'Duplicate keys found in {fn_name}')
+
+        res = _run_php("""
+        $_SERVER['REQUEST_URI'] = '/plan/vietnam-evisa/';
+        $rendered = vg_inject_curated_faq_on_non_guide_pages('<p>Fallback page body without hero.</p>');
+        echo json_encode([
+            'has_faq' => strpos($rendered, 'vg-curated-faq') !== false,
+            'has_howto' => strpos($rendered, 'vg-curated-howto-steps') !== false,
+            'has_step1' => strpos($rendered, 'id="step-1"') !== false,
+            'has_h2' => stripos($rendered, '<h2') !== false,
+        ]);
+        """)
+        self.assertEqual(res.returncode, 0, res.stderr)
+        howto_html = json.loads(res.stdout.strip())
+        self.assertTrue(howto_html['has_faq'])
+        self.assertTrue(howto_html['has_howto'])
+        self.assertTrue(howto_html['has_step1'])
+        self.assertFalse(howto_html['has_h2'])
+
 
 if __name__ == '__main__':
     unittest.main()

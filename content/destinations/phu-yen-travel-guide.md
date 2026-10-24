@@ -2,12 +2,17 @@
 title: "Phu Yen Travel Guide: Basalt Cliffs, Easternmost Sunrise, and Coastal Drives"
 slug: "phu-yen-travel-guide"
 route_path: "destinations/phu-yen-travel-guide"
+category: "destinations"
+description: "Complete Phu Yen travel guide: explore Ganh Da Dia basalt cliffs, Mui Dien lighthouse, Bai Xep beach, O Loan lagoon seafood, routes, and coastal drives."
+author: "VietnamGuide Editorial Team"
+last_updated: "2026-06-15"
+word_count: 1742
 travel_cluster: "coastal_islands"
 last_verified: "2026-10-20"
-author: "Antigravity Travel Intelligence"
-reading_time_minutes: 13
-word_count: 2200
+reading_time_minutes: "13"
 ---
+
+# Phu Yen Travel Guide: Basalt Cliffs, Easternmost Sunrise, and Coastal Drives
 
 Phu Yen province occupies a pristine coastal expanse of south-central Vietnam, positioned between the granite massif of Cu Mong Pass to the north and the sea cliffs of Deo Ca Pass to the south. Celebrated nationally as the "Land of Yellow Flowers on Green Grass" following Victor Vu’s acclaimed 2015 cinematic adaptation, the province presents a striking juxtaposition of wild volcanic shorelines, vast lagoons, and fertile agricultural deltas nourished by the Da Rang river.
 

@@ -735,6 +735,153 @@ class TestInteractiveShortcodes(unittest.TestCase):
         ]:
             self.assertIn(f"'{slug}'", photo_code)
 
+    def test_p0a_canonical_toolkit_coverage_forms_context_perf_and_print_ux(self):
+        """P0-A: All 6 toolkits cover canonical slugs, forms retain email & rate-limit, context caches fingerprints, and print button works on standard pages."""
+        # 1. Canonical route coverage across all 6 toolkits
+        self.assertIn("'vietnam-customs-allowances-prohibited-items'", self.contents['visa_checker'])
+        for slug in [
+            'saigon-airport-to-district-1',
+            'da-nang-airport-to-hoi-an',
+            'domestic-flights-in-vietnam',
+            'apps-for-vietnam-travel',
+            'sim-esim-vietnam',
+            'grab-taxi-scams-vietnam',
+        ]:
+            self.assertIn(f"'{slug}'", self.contents['airport_navigator'])
+
+        for slug in [
+            'atm-fees-and-limits-vietnam',
+            'currency-exchange-vietnam',
+            'using-credit-cards-in-vietnam',
+            'how-much-cash-to-carry-in-vietnam',
+            'bargaining-in-vietnam',
+            '21-days-in-vietnam',
+            'hanoi-in-2-days',
+            'ho-chi-minh-city-in-2-days',
+            'northeast-vietnam-itinerary',
+            'northwest-vietnam-itinerary',
+            'southern-vietnam-itinerary',
+            'central-highlands-vietnam-itinerary',
+            'da-nang-to-hue-train-vs-car',
+            'vietnam-family-travel-guide',
+        ]:
+            self.assertIn(f"'{slug}'", self.contents['cost_calculator'])
+
+        self.assertIn('$32/day', self.contents['cost_calculator'])
+        self.assertIn('$78/day', self.contents['cost_calculator'])
+        self.assertIn('$195/day', self.contents['cost_calculator'])
+
+        for slug in [
+            'solo-female-travel-in-vietnam',
+            'safety-scams-vietnam',
+            'scams-safety-vietnam',
+            'vaccines-water-food-safety-vietnam',
+            'vietnam-with-kids',
+            'accessible-travel-vietnam',
+        ]:
+            self.assertIn(f"'{slug}'", self.contents['packing_checklist'])
+
+        for slug in [
+            'vietnam-train-travel',
+            'north-to-south-vietnam-route',
+            'south-to-north-vietnam-route',
+            'how-many-days-in-vietnam',
+            'sleeper-buses-in-vietnam',
+            'motorbike-rental-laws-vietnam',
+            'da-nang-to-hue-train-vs-car',
+            'ha-long-bay-day-trip-vs-overnight-cruise',
+            'vietnam-family-travel-guide',
+        ]:
+            self.assertIn(f"'{slug}'", self.contents['itinerary_finder'])
+
+        for slug in [
+            'typhoon-season-in-vietnam',
+            'tet-lunar-new-year-travel-guide',
+        ]:
+            self.assertIn(f"'{slug}'", self.contents['season_matrix'])
+
+        # 2. Forms email persistence & rate limiting + fallback telemetry debounce
+        routing_path = os.path.join(THEME_INC, 'guide-routing.php')
+        with open(routing_path, 'r', encoding='utf-8') as f:
+            routing_code = f.read()
+        self.assertIn('function vg_is_form_submission_rate_limited', routing_code)
+        self.assertIn("'email'         => $normalized_email", routing_code)
+        self.assertIn("'email'        => $normalized_email", routing_code)
+        self.assertIn('vg_route_fallback_telemetry_v1', routing_code)
+
+        # 3. Context fingerprint validation cache
+        context_path = os.path.join(THEME_INC, 'guide-context.php')
+        with open(context_path, 'r', encoding='utf-8') as f:
+            context_code = f.read()
+        self.assertIn('$validatedFingerprints', context_code)
+        self.assertIn('$validatedFingerprints[$fingerprint] = true;', context_code)
+
+        # 4. Print button on standard pages
+        content_page_path = os.path.join(THEME_DIR, 'template-parts', 'content-page.php')
+        with open(content_page_path, 'r', encoding='utf-8') as f:
+            content_page_code = f.read()
+        self.assertIn('data-vg-print onclick="window.print()"', content_page_code)
+
+        js_path = os.path.join(THEME_DIR, 'assets', 'js', 'guide-experience.js')
+        with open(js_path, 'r', encoding='utf-8') as f:
+            js_code = f.read()
+        print_idx = js_code.find("closest('[data-vg-print]')")
+        guard_idx = js_code.find('if (!guide)')
+        self.assertGreater(print_idx, 0)
+        self.assertLess(print_idx, guard_idx, "[data-vg-print] listener must be registered before early exit guard.")
+
+        # 5. Behavioral PHP execution test for form persistence, rate limiting, and fallback telemetry debounce
+        php_code = f"""
+        define('ABSPATH', {repr(REPO_ROOT + '/wordpress/')});
+        define('VG_SUPPRESS_FALLBACK_ERROR_LOG', true);
+        $GLOBALS['opts'] = [];
+        $GLOBALS['transients'] = [];
+        $GLOBALS['mails'] = [];
+        $GLOBALS['update_calls'] = 0;
+        function get_option($k, $d = []) {{ return $GLOBALS['opts'][$k] ?? $d; }}
+        function update_option($k, $v, $a = false) {{
+            $GLOBALS['opts'][$k] = $v;
+            if ($k === 'vg_route_fallback_telemetry_v1') $GLOBALS['update_calls']++;
+            return true;
+        }}
+        function get_transient($k) {{ return $GLOBALS['transients'][$k] ?? false; }}
+        function set_transient($k, $v, $t = 0) {{ $GLOBALS['transients'][$k] = $v; return true; }}
+        function wp_mail($to, $subj, $msg) {{ $GLOBALS['mails'][] = [$to, $subj]; return true; }}
+        function add_action($h, $c, $p = 10, $a = 1) {{}}
+        function add_filter($h, $c, $p = 10, $a = 1) {{}}
+        require_once {repr(routing_path.replace(chr(92), '/'))};
+
+        vg_record_route_fallback('destinations/hanoi', 'missing_hero');
+        vg_record_route_fallback('destinations/hanoi', 'missing_hero');
+        if ($GLOBALS['update_calls'] !== 1) {{ echo 'FAIL_DEBOUNCE_1'; exit(1); }}
+        vg_record_route_fallback('destinations/hanoi', 'different_reason');
+        if ($GLOBALS['update_calls'] !== 2) {{ echo 'FAIL_DEBOUNCE_2'; exit(1); }}
+
+        for ($i = 1; $i <= 10; $i++) {{
+            $res = vg_process_newsletter_subscription_payload("user$i@example.com", '', 'newsletter');
+            if (!$res['ok'] || $res['status'] !== 'subscribed') {{ echo 'FAIL_SUB_' . $i; exit(1); }}
+        }}
+        $res11 = vg_process_newsletter_subscription_payload('user11@example.com', '', 'newsletter');
+        if ($res11['ok'] || $res11['status'] !== 'rate_limited') {{ echo 'FAIL_RL'; exit(1); }}
+
+        $subs = array_values($GLOBALS['opts']['vg_newsletter_subscribers']);
+        if (($subs[0]['email'] ?? '') !== 'user1@example.com' || !isset($subs[0]['email_hash'], $subs[0]['email_masked'])) {{
+            echo 'FAIL_SUB_FIELDS'; exit(1);
+        }}
+
+        $c1 = vg_process_contact_submission_payload('Jane', 'Jane@Example.com', 'visa_update', 'Testing contact persistence and email retention.', '');
+        if (!$c1['ok']) {{ echo 'FAIL_CONTACT'; exit(1); }}
+        $contacts = $GLOBALS['opts']['vg_contact_submissions'];
+        if (($contacts[0]['email'] ?? '') !== 'jane@example.com' || !isset($contacts[0]['email_hash'], $contacts[0]['email_masked'])) {{
+            echo 'FAIL_CONTACT_FIELDS'; exit(1);
+        }}
+        if (count($GLOBALS['mails']) < 2) {{ echo 'FAIL_MAIL'; exit(1); }}
+        echo 'PASS';
+        """
+        proc = subprocess.run(['php', '-r', php_code], capture_output=True, text=True)
+        self.assertEqual(proc.returncode, 0, f"PHP behavioral test failed: {proc.stdout}\n{proc.stderr}")
+        self.assertEqual(proc.stdout.strip(), 'PASS')
+
 
 if __name__ == '__main__':
     unittest.main()

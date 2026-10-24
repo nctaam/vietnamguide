@@ -2,11 +2,14 @@
 title: "Ha Long Bay vs Lan Ha Bay: Cruise Routes, Costs, and Port Selection"
 slug: "ha-long-bay-vs-lan-ha-bay"
 route_path: "compare/ha-long-bay-vs-lan-ha-bay"
+category: "compare"
+description: "Ha Long Bay vs Lan Ha Bay: compare overnight cruise routes, limestone scenery, kayak stops, crowd levels, port transfers, and weather considerations."
+author: "VietnamGuide Editorial Team"
+last_updated: "2026-06-15"
+word_count: 1318
 travel_cluster: "ha-long-bay"
 last_verified: "2026-10-20"
-author: "Antigravity Travel Intelligence"
-reading_time_minutes: 9
-word_count: 1520
+reading_time_minutes: "9"
 ---
 
 # Ha Long Bay vs Lan Ha Bay: Cruise Routes, Costs, and Port Selection

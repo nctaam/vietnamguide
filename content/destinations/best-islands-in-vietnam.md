@@ -1,12 +1,15 @@
 ---
 title: "Best Islands in Vietnam: Phu Quoc, Con Dao, Cat Ba, and More"
 slug: "best-islands-in-vietnam"
-route_path: "/destinations/best-islands-in-vietnam/"
+route_path: "destinations/best-islands-in-vietnam"
+category: "destinations"
+description: "Best islands in Vietnam: compare Phu Quoc resort beaches, Con Dao marine tranquility, Cat Ba national park karsts, and Cham Islands diving day trips."
+author: "VietnamGuide Editorial Team"
+last_updated: "2026-06-15"
+word_count: 1539
 travel_cluster: "vietnam_national"
 last_verified: "2026-10-22"
-author: "Minh-Tam Nguyen"
-reading_time_minutes: 8
-word_count: 1539
+reading_time_minutes: "8"
 ---
 
 # Best Islands in Vietnam: Phu Quoc, Con Dao, Cat Ba, and More

@@ -2,11 +2,14 @@
 title: "Phu Quoc Travel Guide: Beaches, Where to Stay & Costs (2026)"
 slug: "phu-quoc-travel-guide"
 route_path: "destinations/phu-quoc-travel-guide"
+category: "destinations"
+description: "Phu Quoc travel guide: 30-day visa exemption rules, best beaches from Sao to Ong Lang, where to stay, direct international flights, and night markets."
+author: "VietnamGuide Editorial Team"
+last_updated: "2026-06-15"
+word_count: 1475
 travel_cluster: "coastal_islands"
 last_verified: "2026-10-21"
-author: "Antigravity Travel Intelligence"
-reading_time_minutes: 14
-word_count: 1900
+reading_time_minutes: "14"
 ---
 
 # Phu Quoc Travel Guide: Beaches, Where to Stay & Costs (2026)

@@ -2,11 +2,14 @@
 title: "Best Things to Do in Hoi An: What Is Actually Worth It"
 slug: "best-things-to-do-in-hoi-an"
 route_path: "destinations/best-things-to-do-in-hoi-an"
+category: "destinations"
+description: "Best things to do in Hoi An: Ancient Town heritage ticket rules, lantern night walks, An Bang beach, My Son Sanctuary day trips, and regional food tips."
+author: "VietnamGuide Editorial Team"
+last_updated: "2026-06-15"
+word_count: 1436
 travel_cluster: "central_heritage"
 last_verified: "2026-10-21"
-author: "Antigravity Travel Intelligence"
-reading_time_minutes: 13
-word_count: 1850
+reading_time_minutes: "13"
 ---
 
 # Best Things to Do in Hoi An: What Is Actually Worth It

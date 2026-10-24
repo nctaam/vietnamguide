@@ -2,11 +2,14 @@
 title: "Cham Islands (Cu Lao Cham) Day Trip Guide from Hoi An (2026): Cua Dai Speedboat, Snorkeling & Fees"
 slug: "cham-islands-day-trip-guide"
 route_path: "plan/cham-islands-day-trip-guide"
+category: "plan"
+description: "Complete Cham Islands day trip guide: speedboats from Cua Dai pier, snorkeling at Bai Ong, seafood lunch, UNESCO biosphere rules, tickets, and season."
+author: "VietnamGuide Editorial Team"
+last_updated: "2026-06-15"
+word_count: 1366
 travel_cluster: "central_heritage"
 last_verified: "2026-10-22"
-author: "Minh Tran — Senior Central Coast & Marine Correspondent"
-reading_time_minutes: 10
-word_count: 1580
+reading_time_minutes: "10"
 ---
 
 # Cham Islands (Cu Lao Cham) Day Trip Guide from Hoi An (2026): Cua Dai Speedboat, Snorkeling & Fees

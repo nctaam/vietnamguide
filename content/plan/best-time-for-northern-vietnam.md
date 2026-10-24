@@ -2,11 +2,14 @@
 title: "Best Time for Northern Vietnam (2026): Hanoi, Ha Long Bay, Ninh Binh, Sapa & Ha Giang"
 slug: "best-time-for-northern-vietnam"
 route_path: "plan/best-time-for-northern-vietnam"
+category: "plan"
+description: "Find the best time for northern Vietnam: monthly weather analysis across Hanoi, Ha Long Bay, Ninh Binh, Sapa, and Ha Giang to avoid fog and heavy rain."
+author: "VietnamGuide Editorial Team"
+last_updated: "2026-06-15"
+word_count: 1394
 travel_cluster: "northern_triangle"
 last_verified: "2026-10-22"
-author: "Minh Pham — Lead Travel Technologist"
-reading_time_minutes: 11
-word_count: 2050
+reading_time_minutes: "11"
 ---
 
 # Best Time for Northern Vietnam (2026): Hanoi, Ha Long Bay, Ninh Binh, Sapa & Ha Giang

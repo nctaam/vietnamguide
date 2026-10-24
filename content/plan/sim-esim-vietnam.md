@@ -2,11 +2,14 @@
 title: "SIM & eSIM in Vietnam (2026): Viettel vs Airalo, Passport Rules & Airport Traps"
 slug: "sim-esim-vietnam"
 route_path: "plan/sim-esim-vietnam"
+category: "plan"
+description: "Choose SIM and eSIM in Vietnam with device checks, local number needs, airport setup, coverage, hotspot tethering, roaming backup, and live signal checks."
+author: "VietnamGuide Editorial Team"
+last_updated: "2026-06-15"
+word_count: 1336
 travel_cluster: "national_circuit"
 last_verified: "2026-10-22"
-author: "Minh Pham — Lead Travel Technologist"
-reading_time_minutes: 7
-word_count: 1336
+reading_time_minutes: "7"
 ---
 
 # SIM & eSIM in Vietnam (2026): Viettel vs Airalo, Passport Rules & Airport Traps

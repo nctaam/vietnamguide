@@ -2,11 +2,14 @@
 title: "Ly Son vs Cham Islands: Which Central Island to Pick? (2026)"
 slug: "ly-son-vs-cham-islands"
 route_path: "compare/ly-son-vs-cham-islands"
+category: "compare"
+description: "Ly Son vs Cham Islands comparison: volcanic geology vs coral reef biosphere, speedboat transfers from Sa Ky or Hoi An, homestays, and 2026 VND costs."
+author: "VietnamGuide Editorial Team"
+last_updated: "2026-06-15"
+word_count: 1724
 travel_cluster: "central_heritage"
 last_verified: "2026-10-21"
-author: "Antigravity Travel Intelligence"
-reading_time_minutes: 11
-word_count: 1850
+reading_time_minutes: "11"
 ---
 
 # Ly Son vs Cham Islands: Which Central Island to Pick? (2026)

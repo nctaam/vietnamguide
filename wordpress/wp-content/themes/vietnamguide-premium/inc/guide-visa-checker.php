@@ -993,6 +993,7 @@ function vg_inject_visa_checker_on_page(string $content): string
         'phu-quoc-visa-exemption-guide',
         'vietnam-visa-extension-overstay-rules',
         'vietnam-land-border-crossings-guide',
+        'vietnam-customs-allowances-prohibited-items',
         'vietnam-to-cambodia-border-crossings',
         'vietnam-to-cambodia-boat-guide',
         'vietnam-travel-guide',

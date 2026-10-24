@@ -32,6 +32,10 @@ jobs:
         with:
           node-version: '20'
 
+      - name: Install Playwright & Chromium
+        run: |
+          pip install playwright && playwright install --with-deps chromium
+
       # Language Syntax & Linting Pre-flight
       - name: Python Compilation
         run: |
@@ -72,7 +76,7 @@ jobs:
 
       - name: Gate 6 - Canonical Route Registry, AIO & Fallback Contracts
         run: |
-          python -m unittest ops/tests/test_route_contract.py -v
+          python -m unittest ops/tests/test_route_contract.py ops/tests/test_guide_seo.py -v
 
       - name: Gate 7 - Deployment Configuration & SSH Trust Contracts
         run: |
@@ -81,6 +85,11 @@ jobs:
       - name: Gate 8 - Deployment Surface Static Security Audit
         run: |
           python ops/deploy_security_audit.py --root ops --release-path deploy_theme_updates.py --strict-release
+
+      - name: Gate 9 - Content Depth Auditor & Ground-Truth Tariff Sentinel
+        run: |
+          python ops/content_depth_auditor.py
+          python ops/tariff_sentinel.py
 
       # Comprehensive Unit Test Suite Auto-Discovery
       - name: Full Unit Test Suite Auto-Discovery

@@ -2,11 +2,14 @@
 title: "Hanoi Travel Guide: Where to Stay, What to Do & Route Fit (2026)"
 slug: "hanoi-travel-guide"
 route_path: "destinations/hanoi-travel-guide"
+category: "destinations"
+description: "Hanoi travel guide: how many days to stay, Old Quarter vs French Quarter hotels, Noi Bai airport taxis, street food safety, and day trips to Ninh Binh."
+author: "VietnamGuide Editorial Team"
+last_updated: "2026-06-15"
+word_count: 1646
 travel_cluster: "northern_triangle"
 last_verified: "2026-10-21"
-author: "Antigravity Travel Intelligence"
-reading_time_minutes: 14
-word_count: 1900
+reading_time_minutes: "14"
 ---
 
 # Hanoi Travel Guide: Where to Stay, What to Do & Route Fit (2026)

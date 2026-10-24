@@ -48,6 +48,10 @@ PATTERNS: tuple[tuple[str, re.Pattern[str]], ...] = (
         "allow_root_command",
         re.compile(r"--allow-root\b"),
     ),
+    (
+        "hardcoded_api_secret",
+        re.compile(r"\bsk-[0-9a-fA-F]{12,}"),
+    ),
 )
 
 
@@ -236,6 +240,13 @@ def audit_source(path: str | Path, source: str) -> list[str]:
             findings.append("auto_add_host_key_policy")
         if _contains_allow_root_command(tree):
             findings.append("allow_root_command")
+        if any(
+            isinstance(node, ast.Constant)
+            and isinstance(node.value, str)
+            and re.search(r"\bsk-[0-9a-fA-F]{12,}", node.value)
+            for node in ast.walk(tree)
+        ):
+            findings.append("hardcoded_api_secret")
         findings.extend(_connection_literal_findings(tree))
         uses_paramiko = _uses_paramiko(source)
         has_validated_config = _uses_validated_config(tree)

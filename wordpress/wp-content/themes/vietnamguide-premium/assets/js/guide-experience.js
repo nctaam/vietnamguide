@@ -1,6 +1,16 @@
 (function () {
   'use strict';
 
+  if (typeof document.addEventListener === 'function') {
+    document.addEventListener('click', function (e) {
+      var target = e.target;
+      var printBtn = target && target.closest ? target.closest('[data-vg-print]') : null;
+      if (printBtn && typeof window.print === 'function') {
+        window.print();
+      }
+    });
+  }
+
   var guide = document.querySelector('[data-vg-guide]');
   if (!guide) {
     return;
@@ -234,14 +244,6 @@
       if (e.key === 'Escape' && popover && popover.style && popover.style.display === 'block') {
         toggleTools(false);
         if (toolsBtn && typeof toolsBtn.focus === 'function') toolsBtn.focus();
-      }
-    });
-
-    document.addEventListener('click', function (e) {
-      var target = e.target;
-      var printBtn = target && target.closest ? target.closest('[data-vg-print]') : null;
-      if (printBtn && typeof window.print === 'function') {
-        window.print();
       }
     });
   }

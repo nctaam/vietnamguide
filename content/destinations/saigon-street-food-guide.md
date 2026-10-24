@@ -2,11 +2,14 @@
 title: "Saigon Street Food Guide (2026): 15 Must-Eat Dishes, Michelin Bib Gourmand Stalls, Districts & Prices"
 slug: "saigon-street-food-guide"
 route_path: "destinations/saigon-street-food-guide"
+category: "destinations"
+description: "Complete Saigon street food guide: best broken rice (com tam), banh mi, District 4 seafood street, Ho Thi Ky night market, prices, and food safety advice."
+author: "VietnamGuide Editorial Team"
+last_updated: "2026-06-15"
+word_count: 1304
 travel_cluster: "southern_vietnam"
 last_verified: "2026-10-22"
-author: "Minh Tran — Senior Southern Culinary & Urban Correspondent"
-reading_time_minutes: 11
-word_count: 1880
+reading_time_minutes: "11"
 ---
 
 # Saigon Street Food Guide (2026): 15 Must-Eat Dishes, Michelin Bib Gourmand Stalls, Districts & Prices

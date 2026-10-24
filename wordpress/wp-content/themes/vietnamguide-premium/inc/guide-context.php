@@ -226,6 +226,22 @@ function vg_guide_body_has_related_routes(string $html): bool
 
 function vg_is_valid_guide_context(array $context): bool
 {
+    static $validatedFingerprints = [];
+    $fingerprint = md5(serialize([
+        $context['path'] ?? '',
+        $context['title'] ?? '',
+        $context['hero_html'] ?? '',
+        $context['body_html'] ?? '',
+        $context['toc_html'] ?? '',
+        $context['quick_facts'] ?? [],
+        $context['summary_cards'] ?? [],
+        $context['related_routes'] ?? [],
+        $context,
+    ]));
+    if (isset($validatedFingerprints[$fingerprint])) {
+        return $validatedFingerprints[$fingerprint];
+    }
+
     if (
         ! array_key_exists('post_id', $context)
         || ! is_int($context['post_id'])
@@ -373,6 +389,7 @@ function vg_is_valid_guide_context(array $context): bool
         return false;
     }
 
+    $validatedFingerprints[$fingerprint] = true;
     return true;
 }
 

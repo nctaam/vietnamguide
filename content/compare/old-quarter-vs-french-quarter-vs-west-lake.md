@@ -2,11 +2,14 @@
 title: "Old Quarter vs French Quarter vs West Lake: Best Hanoi Base"
 slug: "old-quarter-vs-french-quarter-vs-west-lake"
 route_path: "compare/old-quarter-vs-french-quarter-vs-west-lake"
+category: "compare"
+description: "Compare Old Quarter vs French Quarter vs West Lake by hotel rates, 30 km airport transit costs, walking comfort, food scenes, and family sleep quality."
+author: "VietnamGuide Editorial Team"
+last_updated: "2026-06-15"
+word_count: 1232
 travel_cluster: "northern_triangle"
 last_verified: "2026-10-22"
-author: "Antigravity Travel Intelligence"
-reading_time_minutes: 10
-word_count: 1720
+reading_time_minutes: "10"
 ---
 
 # Old Quarter vs French Quarter vs West Lake: Best Hanoi Base

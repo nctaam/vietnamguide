@@ -2,12 +2,17 @@
 title: "Nha Trang to Quy Nhon Transport: Coastal Railway, Bus & Private Car"
 slug: "nha-trang-to-quy-nhon-transport"
 route_path: "plan/nha-trang-to-quy-nhon-transport"
+category: "plan"
+description: "Nha Trang to Quy Nhon transport: scenic coastal trains vs shared limousine vans and private cars along Highway 1D. 2026 ticket fares and travel times."
+author: "VietnamGuide Editorial Team"
+last_updated: "2026-06-15"
+word_count: 1565
 travel_cluster: "coastal_islands"
 last_verified: "2026-10-20"
-author: "Antigravity Travel Intelligence"
-reading_time_minutes: 13
-word_count: 2200
+reading_time_minutes: "13"
 ---
+
+# Nha Trang to Quy Nhon Transport: Coastal Railway, Bus & Private Car
 
 The 215-kilometer journey along Vietnam's South-Central coast between Nha Trang and Quy Nhon traces one of the country's most scenic coastal corridors. Linking Khanh Hoa province with Binh Dinh province via coastal Phu Yen, this route navigates past granite headlands, blue lagoons, and coastal fishing coves framed by the foothills of the Truong Son mountain range.
 

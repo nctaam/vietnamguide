@@ -573,13 +573,27 @@ add_action('wp_head', static function (): void {
     ]);
 
     if (is_singular()) {
-        $heroImage = vg_get_default_og_image_url();
+        $heroImage = '';
+        if (function_exists('get_post')) {
+            $post = get_post();
+            if ($post instanceof WP_Post && is_string($post->post_content) && strpos($post->post_content, 'vg-guide-hero') !== false) {
+                if (preg_match('/class=["\'][^"\']*vg-guide-hero[\s\S]*?<img[^>]+src=["\']([^"\']+)["\']/i', $post->post_content, $heroMatch)) {
+                    $heroImage = trim((string) $heroMatch[1]);
+                }
+            }
+        }
+        if ($heroImage === '') {
+            $heroImage = vg_get_default_og_image_url();
+        }
         if ($heroImage !== '') {
             $headTags[] = '<link rel="preload" as="image" href="' . esc_url($heroImage) . '" fetchpriority="high">';
         }
     } elseif (is_front_page() || is_home()) {
         $homeHeroWebp = $themeUrl . '/assets/images/home-hero.webp';
-        $headTags[] = '<link rel="preload" as="image" type="image/webp" href="' . esc_url($homeHeroWebp) . '" fetchpriority="high">';
+        $homeHeroSrcset = esc_url($themeUrl . '/assets/images/home-hero-640.webp') . ' 640w, '
+            . esc_url($themeUrl . '/assets/images/home-hero-960.webp') . ' 960w, '
+            . esc_url($homeHeroWebp) . ' 1376w';
+        $headTags[] = '<link rel="preload" as="image" type="image/webp" href="' . esc_url($homeHeroWebp) . '" imagesrcset="' . esc_attr($homeHeroSrcset) . '" imagesizes="100vw" fetchpriority="high">';
     }
 
     echo implode("\n", $headTags) . "\n";
@@ -2795,11 +2809,6 @@ function vg_get_curated_faq_items(string $uri_path): array
             ['q' => 'Can I travel directly between Ninh Binh and Ha Long Bay without returning to Hanoi?', 'a' => 'Yes. Direct limousine shuttle buses run daily at 7:00 AM–7:30 AM between Tam Coc/Trang An and Tuan Chau/Halong Cruise Port via National Highway 10 in 3.5 to 4 hours for 300,000 to 450,000 VND.'],
             ['q' => 'Which destination is less affected by typhoon cruise cancellations?', 'a' => 'Ninh Binh is an inland river valley and remains open when Gulf of Tonkin maritime port authorities suspend overnight Ha Long Bay cruises under Beaufort Force 6 wind warnings or tropical storms.'],
         ],
-        'sapa-vs-ha-giang' => [
-            ['q' => 'Is Sapa or the Ha Giang Loop better for first-time visitors?', 'a' => 'Sapa is better for guided village trekking in Muong Hoa Valley, riding the 3,143-meter Fansipan cable car (800,000 to 850,000 VND), and comfortable boutique hotels reached in 5.5 hours by expressway bus or overnight train. The Ha Giang Loop is a rugged 3-to-4-day, 350-kilometer motorcycle or Easy Rider circuit across Ma Pi Leng Pass and Dong Van Geopark.'],
-            ['q' => 'Can I travel directly from Sapa to Ha Giang without returning to Hanoi?', 'a' => 'Yes. Direct daily sleeper and cabin buses connect Sapa and Ha Giang city via National Highway 279 in 6 to 7 hours (300,000 to 380,000 VND), saving a 12-hour detour through Hanoi.'],
-            ['q' => 'Which destination requires a special border permit or motorcycle license?', 'a' => 'Ha Giang requires a 230,000 VND border area permit for foreign visitors entering Dong Van and Meo Vac, and self-riders legally require a 1968 IDP with a motorcycle endorsement; Sapa trekking requires neither.'],
-        ],
         'phu-quoc-vs-con-dao' => [
             ['q' => 'Should I choose Phu Quoc or Con Dao for a beach trip in Vietnam?', 'a' => 'Choose Phu Quoc for direct international flights (30-day visa-free entry), family beach resorts on Long Beach and Kem Beach, and the 7,899.9-meter Hon Thom sea cable car (650,000 VND). Choose Con Dao for quiet protected marine national park bays, historic prison heritage sites (50,000 VND), and green sea turtle nesting (May–October).'],
             ['q' => 'How do flight and ferry connections compare between Phu Quoc and Con Dao?', 'a' => 'Phu Quoc (PQC) has high-frequency daily jet flights from Ho Chi Minh City, Hanoi, and international hubs, plus 1.25-to-2.5-hour speed ferries from Ha Tien and Rach Gia. Con Dao (VCS) has limited regional flights from Ho Chi Minh City (45 minutes) and seasonal catamarans from Tran De (Soc Trang) and Vung Tau.'],
@@ -2986,9 +2995,10 @@ function vg_get_curated_faq_items(string $uri_path): array
             ['q' => 'What are the must-see landmark stops along National Highway 4C?', 'a' => 'Key highlights on the route to Dong Van include Quan Ba Heaven Gate (Cong troi Quan Ba) and the Fairy Twin Mountains (Nui Doi Co Tien, 45 km from Ha Giang), the pine forests of Yen Minh, the nine-turn Tham Ma Pass (Doc Tham Ma), the Sung La cultural valley (site of Pao Story house), and the 100-year-old H\'Mong King Palace (Dinh ho Vuong) in Sa Phin.'],
         ],
         'sapa-vs-ha-giang' => [
-            ['q' => 'Is Sapa or Ha Giang better for first-time visitors to northern Vietnam?', 'a' => 'Sapa is better suited for travelers seeking comfortable resort stays, well-marked guided valley day walks, fine dining, and modern infrastructure like the Fansipan cable car. Ha Giang is superior for adventurous backpackers and riders seeking raw geological landscapes, authentic ethnic village homestays, and remote mountain riding along the Dong Van Karst Plateau.'],
+            ['q' => 'Is Sapa or Ha Giang better for first-time visitors to northern Vietnam?', 'a' => 'Sapa is better suited for travelers seeking comfortable resort stays, well-marked guided valley day walks in Muong Hoa Valley, fine dining, and modern infrastructure like the 3,143-meter Fansipan cable car (800,000 to 850,000 VND). Ha Giang is superior for adventurous backpackers and riders seeking raw geological landscapes, authentic ethnic village homestays, and remote mountain riding along the Dong Van Karst Plateau.'],
             ['q' => 'How do transport and travel times compare between Sapa and Ha Giang?', 'a' => 'Sapa is directly accessible from Hanoi in 5.5 hours via the direct CT05 expressway cabin bus or overnight train to Lao Cai. Ha Giang also takes 5.5 to 6 hours from Hanoi by expressway bus, but exploring the region requires a multi-day 350-kilometer loop along steep mountain roads (requiring a qualified motorbike rider or Easy Rider driver) taking 3 to 4 full days.'],
             ['q' => 'Can I visit both Sapa and Ha Giang on the same trip?', 'a' => 'Yes. Interprovincial sleeper buses and shared limousine vans (such as Phuc Xuyen and Quang Nghi) connect Sapa Stone Church directly to Ha Giang City via National Highway 279 (QL279) and QL2. The 240-kilometer cross-mountain transfer takes 6 to 7 hours and costs 250,000 to 300,000 VND (approx. 10 to 12 USD) per seat.'],
+            ['q' => 'Which destination requires a special border permit or motorcycle license?', 'a' => 'Ha Giang requires a 230,000 VND border area permit for foreign visitors entering Dong Van and Meo Vac, and self-riders legally require a 1968 IDP with a motorcycle endorsement; Sapa trekking requires neither.'],
         ],
         'cu-chi-tunnels-ben-duoc-vs-ben-dinh' => [
             ['q' => 'What is the main difference between Ben Duoc and Ben Dinh tunnels?', 'a' => 'Ben Dinh sits 60 kilometers northwest of Ho Chi Minh City and handles over 85 percent of tourist group buses, with sections widened specifically to accommodate Western physiques. Ben Duoc lies 70 to 75 kilometers away in An Nhon Tay commune; its tunnels preserve original dimensions, receive far fewer tour groups, and incorporate the Ben Duoc Memorial Temple and rural wartime command bunkers.'],
@@ -3271,8 +3281,10 @@ function vg_render_curated_faq_accordion(string $uri_path, string $existing_html
         ];
     }
 
+    $howto_html = vg_render_curated_howto_steps($uri_path, $existing_html);
+
     if (empty($visible_items)) {
-        return '';
+        return $howto_html;
     }
 
     $rows_html = '';
@@ -3286,7 +3298,7 @@ function vg_render_curated_faq_accordion(string $uri_path, string $existing_html
         );
     }
 
-    return sprintf(
+    $faq_section = sprintf(
         '<section class="vg-faq-section vg-curated-faq" id="vg-curated-faq" aria-label="Frequently Asked Questions">'
         . '<div class="vg-faq-header">'
         . '<span class="vg-faq-kicker">Verified Field Answers</span>'
@@ -3296,11 +3308,68 @@ function vg_render_curated_faq_accordion(string $uri_path, string $existing_html
         . '</section>',
         $rows_html
     );
+
+    return $howto_html !== '' ? ($howto_html . "\n\n" . $faq_section) : $faq_section;
 }
 
 /**
- * Appends the visible curated FAQ accordion on non-Guide-Shell pages (e.g. /costs/vietnam-travel-cost/, /itineraries/)
- * so every page emitting FAQPage JSON-LD schema displays matching visible Q&A markup.
+ * Renders visible step-by-step HowTo procedure markup with #step-N anchor targets
+ * whenever a route emits HowTo JSON-LD schema and does not already include #step-1 in body HTML.
+ */
+function vg_render_curated_howto_steps(string $uri_path, string $existing_html = ''): string
+{
+    if ($existing_html !== '' && strpos($existing_html, 'id="step-1"') !== false) {
+        return '';
+    }
+
+    $howto = vg_get_page_howto_schema($uri_path, '');
+    if (! is_array($howto) || empty($howto['step']) || ! is_array($howto['step'])) {
+        return '';
+    }
+
+    $items_html = '';
+    foreach ($howto['step'] as $idx => $step) {
+        $pos  = (int) ($step['position'] ?? ($idx + 1));
+        $name = trim((string) ($step['name'] ?? ''));
+        $text = trim((string) ($step['text'] ?? ''));
+        if ($name === '' || $text === '') {
+            continue;
+        }
+        $items_html .= sprintf(
+            '<li id="step-%1$d" class="vg-howto-step"><strong class="vg-howto-step-title">%2$s:</strong> <span class="vg-howto-step-text">%3$s</span></li>',
+            $pos,
+            esc_html($name),
+            esc_html($text)
+        );
+    }
+
+    if ($items_html === '') {
+        return '';
+    }
+
+    $heading = trim((string) ($howto['name'] ?? 'Step-by-Step Field Procedure'));
+    $desc    = trim((string) ($howto['description'] ?? ''));
+    $desc_html = $desc !== '' ? sprintf('<p class="vg-howto-desc">%s</p>', esc_html($desc)) : '';
+
+    return sprintf(
+        '<section class="vg-curated-howto-steps" id="vg-curated-howto" aria-label="%1$s">'
+        . '<div class="vg-howto-header">'
+        . '<span class="vg-howto-kicker">Step-by-Step Procedure</span>'
+        . '<h3 class="vg-howto-heading">%1$s</h3>'
+        . '%2$s'
+        . '</div>'
+        . '<ol class="vg-howto-list">%3$s</ol>'
+        . '</section>',
+        esc_html($heading),
+        $desc_html,
+        $items_html
+    );
+}
+
+/**
+ * Appends the visible curated FAQ accordion and HowTo steps on non-Guide-Shell pages
+ * (or routes lacking .vg-guide-hero that fall back to content-page.php)
+ * so every page emitting FAQPage or HowTo JSON-LD schema displays matching visible DOM markup.
  */
 function vg_inject_curated_faq_on_non_guide_pages(string $content): string
 {
@@ -3312,15 +3381,26 @@ function vg_inject_curated_faq_on_non_guide_pages(string $content): string
         return $content;
     }
 
-    if (function_exists('vg_is_guide_experience_page') && vg_is_guide_experience_page()) {
+    if (! empty($GLOBALS['vg_rendering_guide_shell'])) {
         return $content;
     }
 
     $uri_path = function_exists('vg_get_current_uri_path') ? vg_get_current_uri_path() : '';
     if ($uri_path === '' && function_exists('get_post')) {
         $post = get_post();
-        if ($post instanceof WP_Post && function_exists('get_page_uri')) {
-            $uri_path = trim((string) get_page_uri($post), '/');
+        if ($post instanceof WP_Post) {
+            if (function_exists('get_page_uri')) {
+                $uri_path = trim((string) get_page_uri($post), '/');
+            }
+            if ($uri_path === '' && ! empty($post->post_name)) {
+                $uri_path = trim((string) $post->post_name, '/');
+            }
+        }
+    }
+    if ($uri_path === '' && isset($_SERVER['REQUEST_URI'])) {
+        $parsed_path = parse_url((string) $_SERVER['REQUEST_URI'], PHP_URL_PATH);
+        if (is_string($parsed_path)) {
+            $uri_path = trim($parsed_path, '/');
         }
     }
 

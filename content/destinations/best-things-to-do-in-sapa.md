@@ -2,11 +2,14 @@
 title: "Best Things to Do in Sapa (2026): Muong Hoa Valley Treks, Fansipan Cable Car, O Quy Ho Pass & Villages"
 slug: "best-things-to-do-in-sapa"
 route_path: "destinations/best-things-to-do-in-sapa"
+category: "destinations"
+description: "Discover the best things to do in Sapa: Fansipan peak cable cars, Muong Hoa valley treks, ethnic minority villages, and waterfalls with 2026 VND costs."
+author: "VietnamGuide Editorial Team"
+last_updated: "2026-06-15"
+word_count: 1359
 travel_cluster: "northern_highlands"
 last_verified: "2026-10-22"
-author: "Minh Tran — Senior Northern Highlands & Alpine Trekking Correspondent"
-reading_time_minutes: 11
-word_count: 1359
+reading_time_minutes: "11"
 ---
 
 # Best Things to Do in Sapa (2026): Muong Hoa Valley Treks, Fansipan Cable Car, O Quy Ho Pass & Villages

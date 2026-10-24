@@ -2,11 +2,14 @@
 title: "Hue Imperial City Guide: How to Visit Without Rushing"
 slug: "hue-imperial-city-guide"
 route_path: "destinations/hue-imperial-city-guide"
+category: "destinations"
+description: "Authoritative Hue Imperial City guide: decide whether Hue deserves a two-night stay, one-night stop, or half-day visit by pacing, heat, and royal tombs."
+author: "VietnamGuide Editorial Team"
+last_updated: "2026-06-15"
+word_count: 1845
 travel_cluster: "central_heritage"
 last_verified: "2026-10-21"
-author: "Antigravity Travel Intelligence"
-reading_time_minutes: 11
-word_count: 1850
+reading_time_minutes: "11"
 ---
 
 # Hue Imperial City Guide: How to Visit Without Rushing

@@ -2,11 +2,14 @@
 title: "Con Dao Travel Guide: Best Time, Where to Stay & Costs (2026)"
 slug: "con-dao-travel-guide"
 route_path: "destinations/con-dao-travel-guide"
+category: "destinations"
+description: "Con Dao travel guide: pristine coral reefs, sea turtle nesting seasons, historic prison sites, flights from Saigon, boutique resorts, and island weather."
+author: "VietnamGuide Editorial Team"
+last_updated: "2026-06-15"
+word_count: 1648
 travel_cluster: "coastal_islands"
 last_verified: "2026-10-21"
-author: "Antigravity Travel Intelligence"
-reading_time_minutes: 14
-word_count: 1950
+reading_time_minutes: "14"
 ---
 
 # Con Dao Travel Guide: Best Time, Where to Stay & Costs (2026)

@@ -2,11 +2,14 @@
 title: "Tam Coc vs Trang An Boat Tour: Which is Better in 2026?"
 slug: "tam-coc-vs-trang-an-boat-tour"
 route_path: "compare/tam-coc-vs-trang-an-boat-tour"
+category: "compare"
+description: "Tam Coc vs Trang An boat tour comparison: compare ticket prices, routes 1, 2, 3, cave depths, scenery, boatman tipping, crowd levels, and best season."
+author: "VietnamGuide Editorial Team"
+last_updated: "2026-06-15"
+word_count: 1845
 travel_cluster: "ninh_binh"
 last_verified: "2026-10-20"
-author: "Antigravity Travel Intelligence"
-reading_time_minutes: 10
-word_count: 1845
+reading_time_minutes: "10"
 ---
 
 # Tam Coc vs Trang An Boat Tour: Which is Better in 2026?

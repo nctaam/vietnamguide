@@ -34,11 +34,14 @@ DEFAULT_MIN_HLS = 85.0
 
 MANDATORY_FRONTMATTER_FIELDS = [
     "title",
+    "slug",
     "route_path",
+    "description",
     "travel_cluster",
     "last_verified",
     "author",
     "reading_time_minutes",
+    "word_count",
 ]
 
 # Empirical signal regexes
@@ -234,6 +237,22 @@ def audit_markdown_file(
         for field in MANDATORY_FRONTMATTER_FIELDS:
             if field not in frontmatter or frontmatter[field] is None or frontmatter[field] == "":
                 errors.append(f"Frontmatter missing mandatory field: '{field}'")
+        fm_slug = str(frontmatter.get("slug", "")).strip()
+        if fm_slug and fm_slug != file_path.stem:
+            errors.append(
+                f"Frontmatter slug '{fm_slug}' does not match filename stem '{file_path.stem}'"
+            )
+        fm_route = str(frontmatter.get("route_path", "")).strip()
+        if fm_route and (fm_route.startswith("/") or fm_route.endswith("/")):
+            errors.append(
+                f"Frontmatter route_path '{fm_route}' must not have leading or trailing slashes"
+            )
+        if file_path.parent.name in {"destinations", "itineraries", "compare", "plan"}:
+            expected_route = f"{file_path.parent.name}/{file_path.stem}"
+            if fm_route and fm_route != expected_route:
+                errors.append(
+                    f"Frontmatter route_path '{fm_route}' does not match relative path '{expected_route}'"
+                )
 
     # 2. Substantive Word Count
     word_count = count_substantive_words(body)
@@ -317,7 +336,7 @@ def audit_content_directory(
     min_words: int = DEFAULT_MIN_WORDS,
     min_hls: float = DEFAULT_MIN_HLS,
 ) -> Dict[str, Any]:
-    """Scan all .md files in the content/ directory tree."""
+    """Scan all .md files in the content/ directory tree and enforce 1-to-1 route registry parity."""
     if not root_dir.exists():
         return {
             "root": str(root_dir),
@@ -327,12 +346,62 @@ def audit_content_directory(
             "errors": [f"Directory not found: {root_dir}"],
         }
 
+    registry_path = OPS_DIR / "route_registry.json"
+    registry_routes: set[str] = set()
+    if registry_path.exists():
+        try:
+            reg_data = json.loads(registry_path.read_text(encoding="utf-8"))
+            registry_routes = {
+                str(r.get("path", "")).strip("/")
+                for r in reg_data.get("routes", [])
+                if r.get("path")
+            }
+        except Exception:
+            registry_routes = set()
+
     md_files = sorted(root_dir.rglob("*.md"))
     results = [audit_markdown_file(p, min_words=min_words, min_hls=min_hls) for p in md_files]
 
+    route_counts: Dict[str, int] = {}
+    for p, r in zip(md_files, results):
+        fm = r.get("frontmatter", {})
+        rp = str(fm.get("route_path", "")).strip()
+        if rp:
+            route_counts[rp] = route_counts.get(rp, 0) + 1
+
+    duplicate_routes = sorted([rp for rp, cnt in route_counts.items() if cnt > 1])
+
+    for p, r in zip(md_files, results):
+        fm = r.get("frontmatter", {})
+        rp = str(fm.get("route_path", "")).strip()
+        slug = str(fm.get("slug", "")).strip()
+        rel_expected = p.relative_to(root_dir).with_suffix("").as_posix()
+
+        if slug != p.stem:
+            msg = f"Slug '{slug}' does not match filename stem '{p.stem}'"
+            if msg not in r["errors"]:
+                r["errors"].append(msg)
+        if rp != rel_expected:
+            msg = f"route_path '{rp}' does not match file relative path '{rel_expected}'"
+            if msg not in r["errors"]:
+                r["errors"].append(msg)
+        if registry_routes and rp not in registry_routes:
+            r["errors"].append(
+                f"route_path '{rp}' does not exist in ops/route_registry.json"
+            )
+        if rp in duplicate_routes:
+            r["errors"].append(
+                f"Duplicate route_path '{rp}' detected across multiple Markdown files"
+            )
+        r["passed"] = len(r["errors"]) == 0
+
     total_scanned = len(results)
     total_passed = sum(1 for r in results if r["passed"])
-    all_passed = total_scanned > 0 and total_passed == total_scanned
+    all_passed = (
+        total_scanned > 0
+        and total_passed == total_scanned
+        and len(duplicate_routes) == 0
+    )
 
     return {
         "root": str(root_dir.as_posix()),
@@ -340,6 +409,7 @@ def audit_content_directory(
         "scanned_files": total_scanned,
         "passed_files": total_passed,
         "failed_files": total_scanned - total_passed,
+        "duplicate_route_paths": duplicate_routes,
         "results": results,
     }
 

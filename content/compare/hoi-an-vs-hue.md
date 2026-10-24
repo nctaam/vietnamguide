@@ -2,11 +2,14 @@
 title: "Hoi An vs Hue: Architecture, Cuisine, Atmosphere, and Itinerary Allocation"
 slug: "hoi-an-vs-hue"
 route_path: "compare/hoi-an-vs-hue"
+category: "compare"
+description: "Hoi An vs Hue comparison: evaluate UNESCO heritage sites, 125 km train transit over Hai Van Pass, street food costs, walking comfort, and travel pace."
+author: "VietnamGuide Editorial Team"
+last_updated: "2026-06-15"
+word_count: 1282
 travel_cluster: "central_heritage"
 last_verified: "2026-10-20"
-author: "Antigravity Travel Intelligence"
-reading_time_minutes: 9
-word_count: 1480
+reading_time_minutes: "9"
 ---
 
 # Hoi An vs Hue: Architecture, Cuisine, Atmosphere, and Itinerary Allocation

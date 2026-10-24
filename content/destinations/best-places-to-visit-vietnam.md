@@ -1,12 +1,15 @@
 ---
 title: "Best Places to Visit in Vietnam: Where to Go First"
 slug: "best-places-to-visit-vietnam"
-route_path: "/destinations/best-places-to-visit-vietnam/"
+route_path: "destinations/best-places-to-visit-vietnam"
+category: "destinations"
+description: "Best places to visit in Vietnam: curated shortlist of top destinations by season, travel pace, cultural depth, beach time, and realistic route connections."
+author: "VietnamGuide Editorial Team"
+last_updated: "2026-06-15"
+word_count: 1562
 travel_cluster: "vietnam_national"
 last_verified: "2026-10-22"
-author: "Minh-Tam Nguyen"
-reading_time_minutes: 8
-word_count: 1562
+reading_time_minutes: "8"
 ---
 
 # Best Places to Visit in Vietnam: Where to Go First

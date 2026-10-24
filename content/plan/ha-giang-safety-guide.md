@@ -2,11 +2,14 @@
 title: "Ha Giang Loop Safety Guide (2026): Decree 168 Fines, 1968 IDP Rules & Easy Riders"
 slug: "ha-giang-safety-guide"
 route_path: "plan/ha-giang-safety-guide"
+category: "plan"
+description: "Authoritative Ha Giang safety guide: evaluate easy rider vs self-drive risks, police checkpoints, hospital access, and valid motorbike insurance rules."
+author: "VietnamGuide Editorial Team"
+last_updated: "2026-06-15"
+word_count: 1710
 travel_cluster: "far_north_frontier"
 last_verified: "2026-10-22"
-author: "Minh Pham — Lead Travel Technologist"
-reading_time_minutes: 9
-word_count: 1710
+reading_time_minutes: "9"
 ---
 
 # Ha Giang Loop Safety Guide (2026): Decree 168 Fines, 1968 IDP Rules & Easy Riders

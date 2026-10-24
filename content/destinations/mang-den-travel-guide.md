@@ -2,11 +2,14 @@
 title: "Mang Den Travel Guide: Pine Plateau at 1,200m (2026)"
 slug: "mang-den-travel-guide"
 route_path: "destinations/mang-den-travel-guide"
+category: "destinations"
+description: "Kon Tum highland plateau guide: Pa Sy waterfall, pine forest trails, Kon Pring village, 16-22 deg C weather, QL24 road access, and 3-day itineraries."
+author: "VietnamGuide Editorial Team"
+last_updated: "2026-06-15"
+word_count: 1572
 travel_cluster: "central_highlands"
 last_verified: "2026-10-21"
-author: "Antigravity Travel Intelligence"
-reading_time_minutes: 13
-word_count: 1800
+reading_time_minutes: "13"
 ---
 
 # Mang Den Travel Guide: Pine Plateau at 1,200m (2026)

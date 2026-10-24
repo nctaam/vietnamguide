@@ -2,11 +2,14 @@
 title: "Hanoi in 2 Days: A Calm First-Time Itinerary"
 slug: "hanoi-in-2-days"
 route_path: "itineraries/hanoi-in-2-days"
+category: "itineraries"
+description: "Hanoi in 2 days itinerary: ideal 48-hour plan covering Hoan Kiem Lake, Temple of Literature, Old Quarter coffee culture, evening street food, and museums."
+author: "VietnamGuide Editorial Team"
+last_updated: "2026-06-15"
+word_count: 1888
 travel_cluster: "northern_triangle"
 last_verified: "2026-10-22"
-author: "Antigravity Travel Intelligence"
-reading_time_minutes: 12
-word_count: 1950
+reading_time_minutes: "12"
 ---
 
 # Hanoi in 2 Days: A Calm First-Time Itinerary

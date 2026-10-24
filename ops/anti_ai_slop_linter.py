@@ -843,6 +843,7 @@ def analyze_text(text, source_name="direct_input"):
     return {
         'source': source_name,
         'passed': passed,
+        'score': final_score,
         'hls_score': final_score,
         'edi': edi,
         'word_count': word_count,
@@ -951,11 +952,28 @@ def extract_clean_text_from_file(file_path):
     with open(file_path, 'r', encoding='utf-8', errors='ignore') as f:
         content = f.read()
     if file_path.endswith('.php'):
-        # Strip PHP tags, extract gettext strings
-        no_php = re.sub(r'<\?php.*?\?>', ' ', content, flags=re.DOTALL)
+        # Strip PHP tags (including trailing unclosed <?php blocks), extract gettext strings
+        no_php = re.sub(r'<\?php.*?(?:\?>|\Z)', ' ', content, flags=re.DOTALL)
         gettext_strings = re.findall(r'''(?:__|esc_html__|esc_attr__|_e)\(\s*['"](.*?)['"]\s*,''', content)
-        combined = no_php + " " + " ".join(gettext_strings)
-        return strip_html(combined)
+        if len(strip_html(no_php).split()) < 20 and len(gettext_strings) > 50:
+            prose_gt = [s.strip() for s in gettext_strings if len(s.strip().split()) >= 4 and s.strip()[-1:] in '.!?']
+            label_gt = [
+                f"<li>{s.strip()}</li>"
+                for s in gettext_strings
+                if not (len(s.strip().split()) >= 4 and s.strip()[-1:] in '.!?') and s.strip()
+            ]
+            combined = no_php + " " + " ".join(prose_gt) + "\n" + "\n".join(label_gt)
+        else:
+            combined = no_php + " " + " ".join(gettext_strings)
+        cleaned = strip_html(combined)
+        if len(cleaned.split()) < 20:
+            quoted = re.findall(r'''['"]([A-Z][^'"<>\\{}();=$]{15,})['"]''', content)
+            prose_candidates = [
+                q.strip() for q in quoted
+                if len(q.strip().split()) >= 3 and not re.search(r'[_/\\=>]', q)
+            ]
+            cleaned = (cleaned + " " + " ".join(prose_candidates)).strip()
+        return cleaned
     elif file_path.endswith('.html') or file_path.endswith('.htm'):
         return strip_html(content)
     else:
@@ -1071,11 +1089,13 @@ def scan_ui_templates(theme_dir=None, root_dir=None):
             'category': category,
             'file': filename,
             'path': filepath,
+            'passed': res['passed'],
+            'score': res['score'],
             'tier1_count': res['tier1_count'],
             'hls_score': res['hls_score'],
             'tier1_violations': res['tier1_violations']
         })
-        if res['tier1_count'] > 0:
+        if res['tier1_count'] > 0 or not res['passed'] or res['score'] < 85:
             failed_files.append((filename, res['tier1_count'], res['tier1_violations']))
 
     mean_hls = round(sum(scores) / len(scores), 2) if scores else 0.0

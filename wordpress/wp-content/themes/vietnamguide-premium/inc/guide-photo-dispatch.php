@@ -331,6 +331,46 @@ function vg_get_visual_dispatches_data(): array
     ];
 }
 
+function vg_resolve_dispatch_image_url(string $slug, string $fallback = ''): string
+{
+    $local_hero_map = [
+        'ha-long'             => 'ha-long-bay-vietnam-hero.jpg',
+        'ha-long-dawn'        => 'ha-long-bay-vietnam-hero.jpg',
+        'hoi-an'              => 'central-heritage-hero.jpg',
+        'hoi-an-dusk'         => 'home-editorial.jpg',
+        'sapa'                => 'sapa-rice-terraces-hero.jpg',
+        'sapa-terraces'       => 'sapa-rice-terraces-hero.jpg',
+        'ninh-binh'           => 'ninh-binh-mua-cave-hero.jpg',
+        'ninh-binh-karst'     => 'ninh-binh-mua-cave-hero.jpg',
+        'da-lat'              => 'da-lat-xuan-huong-hero.jpg',
+        'da-lat-highlands'    => 'da-lat-xuan-huong-hero.jpg',
+        'mekong'              => 'mekong-delta-phong-dien-hero.jpg',
+        'mekong-riverine'     => 'mekong-delta-phong-dien-hero.jpg',
+        'phong-nha'           => 'phong-nha-son-river-hero.jpg',
+        'phong-nha-caves'     => 'phong-nha-son-river-hero.jpg',
+        'cao-bang'            => 'cao-bang-tu-san-canyon-hero.jpg',
+        'cao-bang-frontier'   => 'cao-bang-tu-san-canyon-hero.jpg',
+        'phu-quoc'            => 'phu-quoc-kem-beach-hero.jpg',
+        'phu-quoc-archipelago'=> 'phu-quoc-kem-beach-hero.jpg',
+        'hanoi'               => 'hanoi-hoan-kiem-hero.jpg',
+        'hanoi-old-quarter'   => 'hanoi-hoan-kiem-hero.jpg',
+        'hue'                 => 'hue-imperial-citadel-hero.jpg',
+        'hue-imperial-citadel'=> 'hue-imperial-citadel-hero.jpg',
+        'saigon'              => 'saigon-city-hall-hero.jpg',
+        'saigon-metropolis'   => 'saigon-city-hall-hero.jpg',
+    ];
+    $theme_dir = function_exists('get_template_directory') ? get_template_directory() : dirname(__DIR__);
+    $theme_uri = function_exists('get_template_directory_uri') ? get_template_directory_uri() : '';
+    if (isset($local_hero_map[$slug])) {
+        $candidate = 'assets/images/' . $local_hero_map[$slug];
+        if (is_file($theme_dir . '/' . $candidate)) {
+            return rtrim($theme_uri, '/') . '/' . $candidate;
+        }
+    }
+    $resolved_rel = $fallback !== '' ? ltrim($fallback, '/') : 'assets/images/home-editorial.jpg';
+    return rtrim($theme_uri, '/') . '/' . $resolved_rel;
+}
+
 function vg_render_photo_dispatch(array $atts): string
 {
     $atts = shortcode_atts([
@@ -379,7 +419,7 @@ function vg_render_photo_dispatch(array $atts): string
         <?php foreach ($dispatches as $d_slug => $item):
             $is_active = ($d_slug === $active_slug);
             $theme_uri = get_template_directory_uri();
-            $img_src = esc_url($theme_uri . '/' . $item['image_fallback']);
+            $img_src = esc_url(vg_resolve_dispatch_image_url((string) $d_slug, (string) $item['image_fallback']));
             $related_url = function_exists('vg_home_url') ? esc_url(vg_home_url(ltrim($item['related_route'], '/'))) : esc_url(home_url($item['related_route']));
         ?>
         <article
@@ -617,10 +657,24 @@ function vg_render_photo_dispatch_lightbox_template(): void
                     });
                 }
 
-                tabBtns.forEach(function(btn) {
+                tabBtns.forEach(function(btn, idx) {
                     btn.addEventListener('click', function() {
                         var targetId = btn.getAttribute('data-dispatch-target');
                         if (targetId) switchDispatch(targetId);
+                    });
+                    btn.addEventListener('keydown', function(e) {
+                        if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') {
+                            e.preventDefault();
+                            var nextIdx = e.key === 'ArrowRight'
+                                ? (idx + 1) % tabBtns.length
+                                : (idx - 1 + tabBtns.length) % tabBtns.length;
+                            var nextBtn = tabBtns[nextIdx];
+                            if (nextBtn) {
+                                nextBtn.focus();
+                                var targetId = nextBtn.getAttribute('data-dispatch-target');
+                                if (targetId) switchDispatch(targetId);
+                            }
+                        }
                     });
                 });
             });

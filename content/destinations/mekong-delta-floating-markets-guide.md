@@ -1,15 +1,18 @@
 ---
-title: "Can Tho Travel Guide: Cai Rang Floating Market, River Culture, and Delta Islets"
-slug: "can-tho-cai-rang-floating-market-guide"
+title: "Mekong Delta Floating Markets: Cai Rang & Cai Be"
+slug: "mekong-delta-floating-markets-guide"
 route_path: "destinations/mekong-delta-floating-markets-guide"
+category: "destinations"
+description: "Explore the Mekong Delta floating markets in 2026: compare Cai Rang and Cai Be, early morning boat tours, departure timing, VND costs, and local fruits."
+author: "VietnamGuide Editorial Team"
+last_updated: "2026-06-15"
+word_count: 1558
 travel_cluster: "mekong_delta"
 last_verified: "2026-10-20"
-author: "Antigravity Travel Intelligence"
-reading_time_minutes: 12
-word_count: 2200
+reading_time_minutes: "12"
 ---
 
-# Can Tho Travel Guide: Cai Rang Floating Market, River Culture, and Delta Islets
+# Mekong Delta Floating Markets: Cai Rang & Cai Be
 
 Spanning the southern bank of the Hau River (*Sông Hậu*, the lower transboundary branch of the Mekong River), **Can Tho** (*Cần Thơ*) functions as the economic, culinary, and logistical capital of Vietnam's Mekong Delta. Positioned 170 km southwest of Ho Chi Minh City, this urban river hub has evolved from an agrarian trading post into a modern city while preserving its defining cultural institution: **Cai Rang Floating Market** (*Chợ nổi Cái Răng*).
 

@@ -2,11 +2,14 @@
 title: "Da Nang Travel Guide: Beaches, City Base & Day Trips"
 slug: "da-nang-travel-guide"
 route_path: "destinations/da-nang-travel-guide"
+category: "destinations"
+description: "Da Nang travel guide: My Khe beach resorts, Dragon Bridge weekend fire shows, Marble Mountains, Son Tra peninsula, and day trips to Hoi An and Hue."
+author: "VietnamGuide Editorial Team"
+last_updated: "2026-06-15"
+word_count: 1866
 travel_cluster: "central_heritage"
 last_verified: "2026-10-21"
-author: "Antigravity Travel Intelligence"
-reading_time_minutes: 13
-word_count: 1800
+reading_time_minutes: "13"
 ---
 
 # Da Nang Travel Guide: Beaches, City Base & Day Trips

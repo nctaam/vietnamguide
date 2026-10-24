@@ -432,7 +432,9 @@ function vg_handle_llms_txt_request(): void
     }
 
     header('Content-Type: text/plain; charset=utf-8');
-    header('X-Robots-Tag: all');
+    if (! ((function_exists('is_404') && is_404()) || (function_exists('is_search') && is_search()))) {
+        header('X-Robots-Tag: all');
+    }
 
     $site_url = untrailingslashit(home_url());
     $routes = vg_aio_routes_inventory();
@@ -627,6 +629,10 @@ function vg_handle_llms_txt_request(): void
             echo "  - Canonical URL: {$item['url']}\n";
             echo "  - Route Segment: {$item['path']}\n";
             echo "  - Editorial Summary: {$item['desc']}\n";
+            $md_highlights = vg_extract_markdown_route_highlights($item['path']);
+            if ($md_highlights !== '') {
+                echo "  - Field Sections & Empirical Coverage: {$md_highlights}\n";
+            }
             echo "  - Verification Status: Independently Vetted on Ground\n\n";
         }
         $idx++;
@@ -641,6 +647,53 @@ function vg_handle_llms_txt_request(): void
     exit;
 }
 add_action('init', 'vg_handle_llms_txt_request', 0);
+
+/**
+ * Extracts structured section headings from authored content/<route>.md
+ * when present on disk to enrich /llms-full.txt for AI answer engines.
+ */
+function vg_extract_markdown_route_highlights(string $guide_path): string
+{
+    $clean_path = trim($guide_path, '/');
+    if ($clean_path === '' || strpos($clean_path, '..') !== false) {
+        return '';
+    }
+    $md_file = dirname(__DIR__, 4) . '/content/' . $clean_path . '.md';
+    if (! is_file($md_file) || ! is_readable($md_file)) {
+        return '';
+    }
+    $raw = (string) file_get_contents($md_file);
+    if ($raw === '') {
+        return '';
+    }
+    $headings = [];
+    if (preg_match_all('/^##\s+(.+)$/m', $raw, $matches)) {
+        foreach ($matches[1] as $h) {
+            $clean_h = trim(strip_tags((string) $h));
+            if ($clean_h !== '') {
+                $headings[] = $clean_h;
+            }
+            if (count($headings) >= 6) {
+                break;
+            }
+        }
+    }
+    return ! empty($headings) ? implode(' | ', $headings) : '';
+}
+
+/**
+ * Emits X-Robots-Tag header for public indexable routes while strictly skipping 404 and search pages.
+ */
+function vg_send_ai_crawler_headers(): void
+{
+    if ((function_exists('is_404') && is_404()) || (function_exists('is_search') && is_search())) {
+        return;
+    }
+    if (! headers_sent()) {
+        header('X-Robots-Tag: all');
+    }
+}
+add_action('send_headers', 'vg_send_ai_crawler_headers');
 
 function vg_add_ai_crawler_directives(string $output, bool $public): string
 {

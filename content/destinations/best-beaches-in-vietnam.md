@@ -2,11 +2,14 @@
 title: "12 Best Beaches in Vietnam (2026): Where to Go by Month, Monsoon Calendar & Island Comparison"
 slug: "best-beaches-in-vietnam"
 route_path: "destinations/best-beaches-in-vietnam"
+category: "destinations"
+description: "Discover the best beaches in Vietnam by month: compare Phu Quoc dry season in Dec–Apr, Da Nang surf swells, Con Dao turtle nesting, and flight options."
+author: "VietnamGuide Editorial Team"
+last_updated: "2026-06-15"
+word_count: 1340
 travel_cluster: "south_central_coast"
 last_verified: "2026-10-22"
-author: "Minh Tran — Senior Coastal Geography & Marine Correspondent"
-reading_time_minutes: 11
-word_count: 1340
+reading_time_minutes: "11"
 ---
 
 # 12 Best Beaches in Vietnam (2026): Where to Go by Month, Monsoon Calendar & Island Comparison

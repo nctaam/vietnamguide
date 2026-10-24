@@ -2,11 +2,14 @@
 title: "Central Vietnam Itinerary (2026): 5 to 7-Day Route"
 slug: "central-vietnam-itinerary"
 route_path: "itineraries/central-vietnam-itinerary"
+category: "itineraries"
+description: "Central Vietnam itinerary for 2026: practical 5 to 7-day route connecting Hue Citadel, Hai Van Pass, Da Nang beaches, and Hoi An lantern old streets."
+author: "VietnamGuide Editorial Team"
+last_updated: "2026-06-15"
+word_count: 1830
 travel_cluster: "central_heritage"
 last_verified: "2026-10-22"
-author: "Antigravity Travel Intelligence"
-reading_time_minutes: 13
-word_count: 2200
+reading_time_minutes: "13"
 ---
 
 # Central Vietnam Itinerary (2026): The 5 to 7-Day Heritage Route

@@ -2,11 +2,14 @@
 title: "Best Things to Do in Ha Long Bay: Caves & Cruises"
 slug: "best-things-to-do-in-ha-long-bay"
 route_path: "destinations/best-things-to-do-in-ha-long-bay"
+category: "destinations"
+description: "The best things to do in Ha Long Bay: Sung Sot cave, Ti Top island viewpoints, Luon cave kayaking, floating pearl farms, and night fishing with 2026 costs."
+author: "VietnamGuide Editorial Team"
+last_updated: "2026-06-15"
+word_count: 1302
 travel_cluster: "ha_long_bay"
 last_verified: "2026-10-21"
-author: "Antigravity Travel Intelligence"
-reading_time_minutes: 12
-word_count: 1750
+reading_time_minutes: "12"
 ---
 
 # Best Things to Do in Ha Long Bay: Caves & Cruises

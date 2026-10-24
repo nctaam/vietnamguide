@@ -2,11 +2,14 @@
 title: "7 Days in Vietnam: Best One-Week Itinerary"
 slug: "7-days-in-vietnam"
 route_path: "itineraries/7-days-in-vietnam"
+category: "itineraries"
+description: "Plan 7 days in Vietnam with focused one-week routes covering the north (Hanoi, Ha Long Bay, Ninh Binh) or central region without rushing transfers."
+author: "VietnamGuide Editorial Team"
+last_updated: "2026-06-15"
+word_count: 2186
 travel_cluster: "northern_triangle"
 last_verified: "2026-10-22"
-author: "Antigravity Travel Intelligence"
-reading_time_minutes: 12
-word_count: 2186
+reading_time_minutes: "12"
 ---
 
 # 7 Days in Vietnam: The Strategic One-Week Route Guide

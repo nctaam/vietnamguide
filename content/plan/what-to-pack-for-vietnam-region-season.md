@@ -2,11 +2,14 @@
 title: "What to Pack for Vietnam by Region & Season (2026): Clothing, Plugs & Dress Codes"
 slug: "what-to-pack-for-vietnam-region-season"
 route_path: "plan/what-to-pack-for-vietnam-region-season"
+category: "plan"
+description: "Learn what to pack for Vietnam by region and season: north, central, south, mountain trekking, coastal beaches, rainy season, and carry-on route logic."
+author: "VietnamGuide Editorial Team"
+last_updated: "2026-06-15"
+word_count: 1380
 travel_cluster: "national_circuit"
 last_verified: "2026-10-22"
-author: "Minh Pham — Lead Travel Technologist"
-reading_time_minutes: 7
-word_count: 1380
+reading_time_minutes: "7"
 ---
 
 # What to Pack for Vietnam by Region & Season (2026): Clothing, Plugs & Dress Codes

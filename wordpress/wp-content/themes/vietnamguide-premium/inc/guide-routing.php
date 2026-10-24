@@ -132,6 +132,29 @@ function vg_record_route_fallback(string $path, string $reason): void
         do_action('vg_route_fallback_recorded', $entry, $formattedMessage);
     }
 
+    if (function_exists('get_option') && function_exists('update_option')) {
+        $normalized = strtolower(trim($sanitizedPath, '/')) ?: 'root';
+        $records = get_option('vg_route_fallback_telemetry_v1', []);
+        if (! is_array($records)) {
+            $records = [];
+        }
+        $now = time();
+        $existing = isset($records[$normalized]) && is_array($records[$normalized]) ? $records[$normalized] : null;
+        $lastTs = $existing !== null && isset($existing['last_timestamp']) ? (int) $existing['last_timestamp'] : 0;
+        if (! ($existing !== null && ($existing['reason'] ?? '') === $reason && ($now - $lastTs) < 300)) {
+            $records[$normalized] = [
+                'path'           => $sanitizedPath,
+                'reason'         => $reason,
+                'count'          => ($existing !== null && isset($existing['count']) ? (int) $existing['count'] : 0) + 1,
+                'last_timestamp' => $now,
+            ];
+            if (count($records) > 200) {
+                $records = array_slice($records, -200, null, true);
+            }
+            update_option('vg_route_fallback_telemetry_v1', $records, false);
+        }
+    }
+
     $customLogFile = defined('VG_ROUTE_FALLBACK_LOG_FILE') && is_string(VG_ROUTE_FALLBACK_LOG_FILE)
         ? VG_ROUTE_FALLBACK_LOG_FILE
         : '';
@@ -777,6 +800,31 @@ function vg_search_canonical_registry(string $search_query, int $limit = 12): ar
 }
 
 /**
+ * Rate-limits form submissions per client IP using WordPress transients (max 10 per 10 minutes).
+ *
+ * @param string $bucket Rate-limit bucket identifier (e.g., 'newsletter' or 'contact').
+ * @return bool True if the submission should be blocked due to rate limiting.
+ */
+function vg_is_form_submission_rate_limited(string $bucket): bool
+{
+    if (! function_exists('get_transient') || ! function_exists('set_transient')) {
+        return false;
+    }
+
+    $raw_ip = isset($_SERVER['REMOTE_ADDR']) ? trim((string) $_SERVER['REMOTE_ADDR']) : '127.0.0.1';
+    $ip_hash = substr(hash('sha256', $raw_ip), 0, 16);
+    $transient_key = 'vg_rl_' . preg_replace('/[^a-z0-9_]/i', '', $bucket) . '_' . $ip_hash;
+
+    $count = (int) get_transient($transient_key);
+    if ($count >= 10) {
+        return true;
+    }
+
+    set_transient($transient_key, $count + 1, 600);
+    return false;
+}
+
+/**
  * Processes and stores newsletter subscriptions submitted via admin-post.php or REST API.
  *
  * @param string $email       Raw email input.
@@ -797,6 +845,10 @@ function vg_process_newsletter_subscription_payload(string $email, string $honey
         return ['ok' => false, 'status' => 'invalid_email'];
     }
 
+    if (vg_is_form_submission_rate_limited('newsletter')) {
+        return ['ok' => false, 'status' => 'rate_limited'];
+    }
+
     $normalized_email = strtolower((string) $clean_email);
     $email_hash = hash('sha256', $normalized_email);
     $subscribers = function_exists('get_option') ? get_option('vg_newsletter_subscribers', []) : [];
@@ -804,11 +856,13 @@ function vg_process_newsletter_subscription_payload(string $email, string $honey
         $subscribers = [];
     }
 
+    $clean_source = preg_replace('/[^a-z0-9\/_-]/i', '', strtolower(trim($source_path, '/'))) ?: 'newsletter';
     $subscribers[$email_hash] = [
+        'email'         => $normalized_email,
         'email_hash'    => $email_hash,
         'email_masked'  => substr($normalized_email, 0, 2) . '***@' . substr((string) strrchr($normalized_email, '@'), 1),
         'subscribed_at' => gmdate('c'),
-        'source_path'   => preg_replace('/[^a-z0-9\/_-]/i', '', strtolower(trim($source_path, '/'))) ?: 'newsletter',
+        'source_path'   => $clean_source,
     ];
 
     if (count($subscribers) > 500) {
@@ -817,6 +871,22 @@ function vg_process_newsletter_subscription_payload(string $email, string $honey
 
     if (function_exists('update_option')) {
         update_option('vg_newsletter_subscribers', $subscribers, false);
+    }
+
+    if (function_exists('wp_mail')) {
+        $admin_email = function_exists('get_option') ? (string) get_option('admin_email', '') : '';
+        @wp_mail(
+            $normalized_email,
+            'VietnamGuide Field Notes — Subscription Confirmed',
+            "Thank you for subscribing to VietnamGuide Field Notes.\n\nYou will receive verified dispatches when Vietnam e-visa rules, rail timetables, or regional weather corridors shift."
+        );
+        if ($admin_email !== '' && $admin_email !== $normalized_email) {
+            @wp_mail(
+                $admin_email,
+                '[VietnamGuide] New Field Notes Subscriber',
+                sprintf("Subscriber: %s\nSource: %s\nTime: %s", $normalized_email, $clean_source, gmdate('c'))
+            );
+        }
     }
 
     return [
@@ -881,6 +951,12 @@ function vg_process_contact_submission_payload(string $name, string $email, stri
         return ['ok' => false, 'status' => 'validation_failed'];
     }
 
+    if (vg_is_form_submission_rate_limited('contact')) {
+        return ['ok' => false, 'status' => 'rate_limited'];
+    }
+
+    $normalized_email = strtolower((string) $clean_email);
+    $email_hash = hash('sha256', $normalized_email);
     $clean_name = trim(strip_tags($name)) ?: 'Reader';
     $clean_topic = preg_replace('/[^a-z0-9_-]/i', '', $topic) ?: 'route_correction';
 
@@ -891,7 +967,9 @@ function vg_process_contact_submission_payload(string $name, string $email, stri
 
     $submissions[] = [
         'name'         => substr($clean_name, 0, 120),
-        'email_hash'   => hash('sha256', strtolower((string) $clean_email)),
+        'email'        => $normalized_email,
+        'email_hash'   => $email_hash,
+        'email_masked' => substr($normalized_email, 0, 2) . '***@' . substr((string) strrchr($normalized_email, '@'), 1),
         'topic'        => substr($clean_topic, 0, 60),
         'message'      => substr($clean_message, 0, 2000),
         'submitted_at' => gmdate('c'),
@@ -903,6 +981,16 @@ function vg_process_contact_submission_payload(string $name, string $email, stri
 
     if (function_exists('update_option')) {
         update_option('vg_contact_submissions', $submissions, false);
+    }
+
+    if (function_exists('wp_mail')) {
+        $admin_email = function_exists('get_option') ? (string) get_option('admin_email', '') : '';
+        $recipient = $admin_email !== '' ? $admin_email : 'editorial@vietnamguide.net';
+        @wp_mail(
+            $recipient,
+            sprintf('[VietnamGuide Dispatch] %s from %s', $clean_topic, $clean_name),
+            sprintf("Name: %s\nEmail: %s\nTopic: %s\nSubmitted: %s\n\nMessage:\n%s", $clean_name, $normalized_email, $clean_topic, gmdate('c'), $clean_message)
+        );
     }
 
     return ['ok' => true, 'status' => 'received'];

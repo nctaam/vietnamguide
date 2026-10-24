@@ -2,11 +2,14 @@
 title: "Best Things to Do in Ninh Binh (2026): Trang An, Hang Mua, Tam Coc, Cuc Phuong & Cycling Routes"
 slug: "best-things-to-do-in-ninh-binh"
 route_path: "destinations/best-things-to-do-in-ninh-binh"
+category: "destinations"
+description: "The best things to do in Ninh Binh: Trang An boat rides, Hang Mua dragon viewpoint, Tam Coc river caves, Bai Dinh pagoda, and cycling with 2026 prices."
+author: "VietnamGuide Editorial Team"
+last_updated: "2026-06-15"
+word_count: 1514
 travel_cluster: "red_river_delta"
 last_verified: "2026-10-22"
-author: "Minh Tran — Senior Northern Karst & Eco-Heritage Correspondent"
-reading_time_minutes: 11
-word_count: 1514
+reading_time_minutes: "11"
 ---
 
 # Best Things to Do in Ninh Binh (2026): Trang An, Hang Mua, Tam Coc, Cuc Phuong & Cycling Routes

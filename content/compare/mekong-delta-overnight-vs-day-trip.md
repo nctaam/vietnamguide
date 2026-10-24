@@ -2,11 +2,14 @@
 title: "Mekong Delta Overnight vs Day Trip: Which Is Worth It?"
 slug: "mekong-delta-overnight-vs-day-trip"
 route_path: "compare/mekong-delta-overnight-vs-day-trip"
+category: "compare"
+description: "Decide between Mekong Delta overnight vs day trip: choose a quick day tour, Can Tho stay, deeper river route, or clean skip by timing and 2026 comfort."
+author: "VietnamGuide Editorial Team"
+last_updated: "2026-06-15"
+word_count: 1374
 travel_cluster: "mekong_delta"
 last_verified: "2026-10-22"
-author: "Antigravity Travel Intelligence"
-reading_time_minutes: 10
-word_count: 1710
+reading_time_minutes: "10"
 ---
 
 # Mekong Delta Overnight vs Day Trip: Which Is Worth It?

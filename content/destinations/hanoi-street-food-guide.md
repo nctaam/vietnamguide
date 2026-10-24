@@ -2,11 +2,14 @@
 title: "Hanoi Street Food Guide: Iconic Dishes, Provenance, and Sidewalk Etiquette"
 slug: "hanoi-street-food-guide"
 route_path: "destinations/hanoi-street-food-guide"
+category: "destinations"
+description: "Complete Hanoi street food guide: where to eat pho bo, bun cha, cha ca, banh cuon, and egg coffee. Old Quarter stall addresses, prices, and hygiene tips."
+author: "VietnamGuide Editorial Team"
+last_updated: "2026-06-15"
+word_count: 1342
 travel_cluster: "northern_triangle"
 last_verified: "2026-10-20"
-author: "Antigravity Travel Intelligence"
-reading_time_minutes: 9
-word_count: 1540
+reading_time_minutes: "9"
 ---
 
 # Hanoi Street Food Guide: Iconic Dishes, Provenance, and Sidewalk Etiquette

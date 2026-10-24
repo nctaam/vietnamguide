@@ -2,11 +2,14 @@
 title: "Best Things to Do in Quy Nhon (2026): Ky Co Beach, Eo Gio Cliffs, Cham Towers & Bai Xep Cove"
 slug: "best-things-to-do-in-quy-nhon"
 route_path: "destinations/best-things-to-do-in-quy-nhon"
+category: "destinations"
+description: "The best things to do in Quy Nhon: Ky Co beach, Eo Gio cliff trail, Banh It Cham towers, Bai Xep fishing cove, and local seafood with realistic VND costs."
+author: "VietnamGuide Editorial Team"
+last_updated: "2026-06-15"
+word_count: 1240
 travel_cluster: "south_central_coast"
 last_verified: "2026-10-22"
-author: "Minh Tran — Senior South-Central Coast & Cham Heritage Correspondent"
-reading_time_minutes: 10
-word_count: 1240
+reading_time_minutes: "10"
 ---
 
 # Best Things to Do in Quy Nhon (2026): Ky Co Beach, Eo Gio Cliffs, Cham Towers & Bai Xep Cove

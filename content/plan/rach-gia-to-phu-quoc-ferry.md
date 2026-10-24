@@ -2,11 +2,14 @@
 title: "Rach Gia to Phu Quoc Ferry: Speedboat Schedules, Fares, and Sea Port Logistics"
 slug: "rach-gia-to-phu-quoc-ferry"
 route_path: "plan/rach-gia-to-phu-quoc-ferry"
+category: "plan"
+description: "Fast catamarans across 120 km: Superdong and Phu Quoc Express speedboats (2.5 hours, 330,000-350,000 VND) from Rach Gia Port. 2026 timetables and sea tips."
+author: "VietnamGuide Editorial Team"
+last_updated: "2026-06-15"
+word_count: 1524
 travel_cluster: "mekong_delta"
 last_verified: "2026-10-20"
-author: "Antigravity Travel Intelligence"
-reading_time_minutes: 11
-word_count: 2040
+reading_time_minutes: "11"
 ---
 
 # Rach Gia to Phu Quoc Ferry: Speedboat Schedules, Fares, and Sea Port Logistics

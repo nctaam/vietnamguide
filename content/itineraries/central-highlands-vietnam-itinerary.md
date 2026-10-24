@@ -2,11 +2,14 @@
 title: "Central Highlands Vietnam Itinerary (2026): 5 to 7-Day Da Lat, Buon Ma Thuot & Kon Tum Route"
 slug: "central-highlands-vietnam-itinerary"
 route_path: "itineraries/central-highlands-vietnam-itinerary"
+category: "itineraries"
+description: "Experience the Central Highlands Vietnam itinerary: 5 to 7 days from Da Lat to Lak Lake, Dray Nur waterfalls, and Buon Ma Thuot coffee plantations."
+author: "VietnamGuide Editorial Team"
+last_updated: "2026-06-15"
+word_count: 1706
 travel_cluster: "central_highlands"
 last_verified: "2026-10-22"
-author: "Minh Pham — Lead Travel Technologist"
-reading_time_minutes: 10
-word_count: 1940
+reading_time_minutes: "10"
 ---
 
 # Central Highlands Vietnam Itinerary (2026): 5 to 7-Day Da Lat, Buon Ma Thuot & Kon Tum Route

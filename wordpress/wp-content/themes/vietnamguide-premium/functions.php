@@ -63,6 +63,35 @@ function vg_should_enqueue_interactive_assets(?WP_Post $post = null): bool
     }
 
     $post = $post ?? (function_exists('get_post') ? get_post() : null);
+
+    $guidePath = '';
+    if ($post instanceof WP_Post && function_exists('vg_get_guide_path') && function_exists('get_page_uri')) {
+        $guidePath = trim((string) vg_get_guide_path($post), '/');
+    }
+    if ($guidePath === '' && isset($_SERVER['REQUEST_URI'])) {
+        $parsedPath = parse_url((string) $_SERVER['REQUEST_URI'], PHP_URL_PATH);
+        if (is_string($parsedPath)) {
+            $guidePath = trim($parsedPath, '/');
+        }
+    }
+
+    if (
+        $guidePath === 'destinations'
+        || $guidePath === 'itineraries'
+        || str_starts_with($guidePath, 'destinations/')
+        || str_starts_with($guidePath, 'compare/')
+        || str_starts_with($guidePath, 'itineraries/')
+    ) {
+        return true;
+    }
+
+    if ($post instanceof WP_Post) {
+        $slug = (string) ($post->post_name ?? '');
+        if ($slug === 'destinations' || $slug === 'itineraries' || str_ends_with($slug, '-travel-guide') || str_contains($slug, '-vs-')) {
+            return true;
+        }
+    }
+
     if (! ($post instanceof WP_Post) || ! is_string($post->post_content) || $post->post_content === '') {
         return false;
     }

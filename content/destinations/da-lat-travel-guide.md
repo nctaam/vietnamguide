@@ -2,11 +2,14 @@
 title: "Da Lat Travel Guide: Highlands, Coffee & Route Planning (2026)"
 slug: "da-lat-travel-guide"
 route_path: "destinations/da-lat-travel-guide"
+category: "destinations"
+description: "Realistic Da Lat travel guide: how to plan 2-3 days in Vietnam's Central Highlands, specialty Arabica coffee farms, pine forest lodges, and transfers."
+author: "VietnamGuide Editorial Team"
+last_updated: "2026-06-15"
+word_count: 1389
 travel_cluster: "central_highlands"
 last_verified: "2026-10-21"
-author: "Antigravity Travel Intelligence"
-reading_time_minutes: 13
-word_count: 1850
+reading_time_minutes: "13"
 ---
 
 # Da Lat Travel Guide: Highlands, Coffee & Route Planning (2026)

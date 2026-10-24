@@ -141,6 +141,70 @@ class TestContentDepthAuditor(unittest.TestCase):
                 f"{md_path.name} must contain rich empirical signals",
             )
 
+    def test_canonical_content_registry_parity_and_no_duplicates(self):
+        import json
+
+        content_root = OPS_DIR.parent / "content"
+        registry_path = OPS_DIR / "route_registry.json"
+        self.assertTrue(registry_path.exists(), "ops/route_registry.json must exist")
+
+        reg_data = json.loads(registry_path.read_text(encoding="utf-8"))
+        registry_routes = {
+            str(r.get("path", "")).strip("/")
+            for r in reg_data.get("routes", [])
+            if r.get("path")
+        }
+
+        dir_report = auditor.audit_content_directory(content_root, min_words=1200, min_hls=85.0)
+        self.assertTrue(
+            dir_report["passed"],
+            f"Directory audit failed: failed_files={dir_report['failed_files']}, duplicates={dir_report.get('duplicate_route_paths')}",
+        )
+        self.assertEqual(dir_report["scanned_files"], 133)
+        self.assertEqual(dir_report["passed_files"], 133)
+        self.assertEqual(dir_report.get("duplicate_route_paths"), [])
+
+        seen_routes = set()
+        for r in dir_report["results"]:
+            fm = r.get("frontmatter", {})
+            rp = str(fm.get("route_path", "")).strip()
+            self.assertIn(rp, registry_routes, f"route_path '{rp}' must exist in route_registry.json")
+            self.assertNotIn(rp, seen_routes, f"Duplicate route_path '{rp}' found")
+            seen_routes.add(rp)
+        self.assertEqual(len(seen_routes), 133)
+
+    def test_compile_guide_content_and_php_runtime_bridge(self):
+        import compile_guide_content as compiler
+
+        content_root = OPS_DIR.parent / "content"
+        md_files = sorted(content_root.rglob("*.md"))
+        self.assertEqual(len(md_files), 133)
+
+        for md_path in md_files:
+            compiled = compiler.compile_markdown_file(md_path)
+            self.assertTrue(
+                compiled["passed"],
+                f"Compilation failed for {md_path.name}: {compiled['errors']}",
+            )
+            self.assertIn("vg-guide-hero", compiled["hero_html"])
+            self.assertIn("<h1>", compiled["hero_html"])
+            self.assertNotIn("<h1", compiled["body_html"].lower())
+            self.assertGreaterEqual(compiled["stats"]["h2_count"], 4)
+            self.assertGreaterEqual(compiled["stats"]["table_count"], 1)
+
+        php_path = (
+            OPS_DIR.parent
+            / "wordpress"
+            / "wp-content"
+            / "themes"
+            / "vietnamguide-premium"
+            / "inc"
+            / "guide-content.php"
+        )
+        php_src = php_path.read_text(encoding="utf-8")
+        self.assertIn("vg_try_load_repository_markdown_guide", php_src)
+        self.assertNotIn("<h2", php_src.lower())
+
 
 if __name__ == "__main__":
     unittest.main()

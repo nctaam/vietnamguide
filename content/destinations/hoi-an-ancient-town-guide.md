@@ -2,11 +2,14 @@
 title: "Hoi An Ancient Town Guide: When to Stay, Visit or Skip (2026)"
 slug: "hoi-an-ancient-town-guide"
 route_path: "destinations/hoi-an-ancient-town-guide"
+category: "destinations"
+description: "Authoritative Hoi An Ancient Town guide: decide whether to stay overnight, visit from Da Nang, go by day or evening, or skip when routes need focus."
+author: "VietnamGuide Editorial Team"
+last_updated: "2026-06-15"
+word_count: 1491
 travel_cluster: "central_heritage"
 last_verified: "2026-10-21"
-author: "Antigravity Travel Intelligence"
-reading_time_minutes: 14
-word_count: 1950
+reading_time_minutes: "14"
 ---
 
 # Hoi An Ancient Town Guide: When to Stay, Visit or Skip (2026)

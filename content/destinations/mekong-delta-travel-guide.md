@@ -1,12 +1,15 @@
 ---
 title: "Mekong Delta Travel Guide: Day Trip, Overnight or Skip?"
 slug: "mekong-delta-travel-guide"
-route_path: "/destinations/mekong-delta-travel-guide/"
+route_path: "destinations/mekong-delta-travel-guide"
+category: "destinations"
+description: "Mekong Delta travel guide: floating markets in Can Tho, Ben Tre riverboat day trips, homestays in Vinh Long, Chau Doc border routes, and transfer logistics."
+author: "VietnamGuide Editorial Team"
+last_updated: "2026-06-15"
+word_count: 1260
 travel_cluster: "mekong_delta"
 last_verified: "2026-10-23"
-author: "Minh-Tam Nguyen"
-reading_time_minutes: 8
-word_count: 1260
+reading_time_minutes: "8"
 ---
 
 # Mekong Delta Travel Guide: Day Trip, Overnight or Skip?

@@ -182,7 +182,7 @@ function vg_interactive_map_shortcode(array $atts = []): string
             <!-- Left: Vector Cartography Column -->
             <div class="vg-interactive-map-canvas-col">
                 <div class="vg-map-canvas-wrapper" role="region" aria-label="<?php esc_attr_e('Interactive Vietnam corridor map', 'vietnamguide-premium'); ?>">
-                    <svg class="vg-map-svg" viewBox="0 0 320 540" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                    <svg class="vg-map-svg" viewBox="0 0 320 540" xmlns="http://www.w3.org/2000/svg" role="group" aria-label="<?php esc_attr_e('Vietnam regional transit corridors map', 'vietnamguide-premium'); ?>">
                         <!-- Stylized S-curve coast path -->
                         <path class="vg-map-outline" d="M 120,40 Q 150,55 170,85 Q 185,110 185,145 Q 180,180 195,220 Q 215,260 235,300 Q 250,335 240,370 Q 220,410 180,440 Q 150,460 130,475 Q 120,490 140,500" fill="none" stroke="#E5DFD6" stroke-width="24" stroke-linecap="round" stroke-linejoin="round" />
                         <path class="vg-map-spine" d="M 120,40 Q 150,55 170,85 Q 185,110 185,145 Q 180,180 195,220 Q 215,260 235,300 Q 250,335 240,370 Q 220,410 180,440 Q 150,460 130,475 Q 120,490 140,500" fill="none" stroke="#0F2537" stroke-width="4" stroke-dasharray="6,4" opacity="0.45" />
@@ -193,7 +193,7 @@ function vg_interactive_map_shortcode(array $atts = []): string
                             $cy = (int) $corridor['coordinates']['y'];
                             $is_active = ($corridor['id'] === $default_id);
                         ?>
-                            <g class="vg-map-pin-group <?php echo $is_active ? 'is-active' : ''; ?>" data-corridor-pin="<?php echo esc_attr($corridor['id']); ?>">
+                            <g class="vg-map-pin-group <?php echo $is_active ? 'is-active' : ''; ?>" data-corridor-pin="<?php echo esc_attr($corridor['id']); ?>" tabindex="0" role="button" aria-label="<?php echo esc_attr($corridor['name'] . ' — ' . $corridor['focal_nodes'][0]); ?>">
                                 <circle class="vg-map-pin-pulse" cx="<?php echo $cx; ?>" cy="<?php echo $cy; ?>" r="14" fill="#C99446" opacity="0.2" />
                                 <circle class="vg-map-pin" cx="<?php echo $cx; ?>" cy="<?php echo $cy; ?>" r="7" fill="<?php echo $is_active ? '#C99446' : '#0F2537'; ?>" stroke="#FFFFFF" stroke-width="2.5" />
                                 <text class="vg-map-pin-label" x="<?php echo $cx + 12; ?>" y="<?php echo $cy + 4; ?>" font-family="'JetBrains Mono', monospace" font-size="10" font-weight="600" fill="#1A202C"><?php echo esc_html($corridor['focal_nodes'][0]); ?></text>
@@ -387,11 +387,27 @@ function vg_interactive_map_shortcode(array $atts = []): string
                         }
                     }
 
-                    Array.prototype.forEach.call(tabBtns, function(btn) {
+                    Array.prototype.forEach.call(tabBtns, function(btn, idx) {
                         btn.addEventListener('click', function() {
                             var targetId = this.getAttribute('data-corridor-target');
                             if (targetId) {
                                 activate(targetId);
+                            }
+                        });
+                        btn.addEventListener('keydown', function(e) {
+                            if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') {
+                                e.preventDefault();
+                                var nextIdx = e.key === 'ArrowRight'
+                                    ? (idx + 1) % tabBtns.length
+                                    : (idx - 1 + tabBtns.length) % tabBtns.length;
+                                var nextBtn = tabBtns[nextIdx];
+                                if (nextBtn) {
+                                    nextBtn.focus();
+                                    var targetId = nextBtn.getAttribute('data-corridor-target');
+                                    if (targetId) {
+                                        activate(targetId);
+                                    }
+                                }
                             }
                         });
                     });
@@ -401,6 +417,15 @@ function vg_interactive_map_shortcode(array $atts = []): string
                             var targetId = this.getAttribute('data-corridor-pin');
                             if (targetId) {
                                 activate(targetId);
+                            }
+                        });
+                        pin.addEventListener('keydown', function(e) {
+                            if (e.key === 'Enter' || e.key === ' ') {
+                                e.preventDefault();
+                                var targetId = this.getAttribute('data-corridor-pin');
+                                if (targetId) {
+                                    activate(targetId);
+                                }
                             }
                         });
                     });

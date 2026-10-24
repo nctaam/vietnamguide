@@ -2,11 +2,14 @@
 title: "Best Vietnam Cities for First-Time Visitors (2026): Ranking, Roles & Nights Needed"
 slug: "best-vietnam-cities-for-first-time-visitors"
 route_path: "plan/best-vietnam-cities-for-first-time-visitors"
+category: "plan"
+description: "Choose the best Vietnam cities for first-time visitors by route role, airport arrival logic, culinary culture, beach comfort, day trips, and pacing."
+author: "VietnamGuide Editorial Team"
+last_updated: "2026-06-15"
+word_count: 1407
 travel_cluster: "national_circuit"
 last_verified: "2026-10-22"
-author: "Minh Pham — Lead Travel Technologist"
-reading_time_minutes: 7
-word_count: 1407
+reading_time_minutes: "7"
 ---
 
 # Best Vietnam Cities for First-Time Visitors (2026): Ranking, Roles & Nights Needed

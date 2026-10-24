@@ -2,11 +2,14 @@
 title: "Hanoi vs Ho Chi Minh City: Which Should You Visit First?"
 slug: "hanoi-vs-ho-chi-minh-city"
 route_path: "compare/hanoi-vs-ho-chi-minh-city"
+category: "compare"
+description: "Compare Hanoi vs Ho Chi Minh City by first-night comfort, route direction, weather seasons, food scenes, day trips, airport logic, and trip length."
+author: "VietnamGuide Editorial Team"
+last_updated: "2026-06-15"
+word_count: 1916
 travel_cluster: "northern_triangle"
 last_verified: "2026-10-21"
-author: "Antigravity Travel Intelligence"
-reading_time_minutes: 10
-word_count: 1620
+reading_time_minutes: "10"
 ---
 
 # Hanoi vs Ho Chi Minh City: Which Should You Visit First?

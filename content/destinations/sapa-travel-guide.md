@@ -1,15 +1,18 @@
 ---
-title: "Sa Pa Trekking Guide: Muong Hoa Valley Routes, Village Checkpoints, and Homestays"
-slug: "sa-pa-trekking-guide"
-route_path: "destinations/sa-pa-trekking-guide"
+title: "Sapa Travel Guide: Terraces, Trekking and Softer Travel"
+slug: "sapa-travel-guide"
+route_path: "destinations/sapa-travel-guide"
+category: "destinations"
+description: "Authoritative Sapa travel guide: plan trekking routes, village vs town lodging, Fansipan weather windows, sleeper bus transit from Hanoi, and pacing."
+author: "VietnamGuide Editorial Team"
+last_updated: "2026-06-15"
+word_count: 1260
 travel_cluster: "northern_highlands"
 last_verified: "2026-10-20"
-author: "Antigravity Travel Intelligence"
-reading_time_minutes: 9
-word_count: 1510
+reading_time_minutes: "9"
 ---
 
-# Sa Pa Trekking Guide: Muong Hoa Valley Routes, Village Checkpoints, and Homestays
+# Sapa Travel Guide: Terraces, Trekking and Softer Travel
 
 Perched on the eastern slopes of the Hoang Lien Son mountain range beneath Mount Fansipan (3,143 meters), Sa Pa is northern Vietnam's premier hiking hub. The defining landscape of the region is the **Muong Hoa Valley**, a steep glacial fault basin where cascading rice terraces carved by the Black H'mong, Giay, and Red Dao ethnic groups line the banks of the Muong Hoa stream.
 

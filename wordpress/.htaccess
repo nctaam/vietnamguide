@@ -42,8 +42,9 @@
     RewriteEngine On
 
     # 1. Immediate 403 for scanner probes, hidden dotfiles & backups (0 PHP overhead)
+    RewriteRule ^wp-content/\..* - [F,L]
     RewriteRule ^(\.env|\.git|\.user\.ini|wp-config\.php|readme\.html|license\.txt) - [F,L]
-    RewriteRule \.(env|sql|bak|backup|config|save|swp|git|svn|bzr|hg|ini|log)$ - [F,L]
+    RewriteRule \.(env|sql|bak|backup|config|save|swp|git|svn|bzr|hg|ini|log|tar\.gz|tgz|tsv)$ - [F,L]
     RewriteRule ^(app|apps|api|web|core|config|vendor)/\.env - [F,L]
 
     # 2. Block XML-RPC completely

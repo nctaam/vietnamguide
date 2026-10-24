@@ -2,11 +2,14 @@
 title: "Da Nang to Hue Train vs Car (2026): Hai Van Pass Route & Cost Comparison"
 slug: "da-nang-to-hue-train-vs-car"
 route_path: "itineraries/da-nang-to-hue-train-vs-car"
+category: "itineraries"
+description: "Da Nang to Hue train vs car comparison: compare the scenic heritage train over Hai Van Pass with private car sightseeing stops, costs, and travel times."
+author: "VietnamGuide Editorial Team"
+last_updated: "2026-06-15"
+word_count: 1356
 travel_cluster: "central_heritage"
 last_verified: "2026-10-22"
-author: "Minh Pham — Lead Travel Technologist"
-reading_time_minutes: 10
-word_count: 1920
+reading_time_minutes: "10"
 ---
 
 # Da Nang to Hue Train vs Car (2026): Hai Van Pass Route & Cost Comparison

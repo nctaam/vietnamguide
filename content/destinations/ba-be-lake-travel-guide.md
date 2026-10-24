@@ -2,11 +2,14 @@
 title: "Ba Be Lake Travel Guide (2026): Boat Tours & Homestays"
 slug: "ba-be-lake-travel-guide"
 route_path: "destinations/ba-be-lake-travel-guide"
+category: "destinations"
+description: "Ba Be Lake travel guide: scenic boat tours, Puong Cave, Dau Dang waterfall, Pac Ngoi homestays, kayak rentals, park entry fees, and 2026 itineraries."
+author: "VietnamGuide Editorial Team"
+last_updated: "2026-06-15"
+word_count: 1605
 travel_cluster: "far_north_frontier"
 last_verified: "2026-10-21"
-author: "Antigravity Travel Intelligence"
-reading_time_minutes: 12
-word_count: 1850
+reading_time_minutes: "12"
 ---
 
 # Ba Be Lake Travel Guide (2026): Boat Tours & Homestays

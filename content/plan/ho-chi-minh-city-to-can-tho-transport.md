@@ -2,11 +2,14 @@
 title: "Ho Chi Minh City to Can Tho Transport: Expressway Bus, Limousine & Car"
 slug: "ho-chi-minh-city-to-can-tho-transport"
 route_path: "plan/ho-chi-minh-city-to-can-tho-transport"
+category: "plan"
+description: "Ho Chi Minh City to Can Tho transport guide: limousine vans, express buses, and private car options with travel times, station advice, and 2026 VND fares."
+author: "VietnamGuide Editorial Team"
+last_updated: "2026-06-15"
+word_count: 1643
 travel_cluster: "mekong_delta"
 last_verified: "2026-10-20"
-author: "Antigravity Travel Intelligence"
-reading_time_minutes: 12
-word_count: 2200
+reading_time_minutes: "12"
 ---
 
 # Ho Chi Minh City to Can Tho Transport: Expressway Bus, Limousine & Car

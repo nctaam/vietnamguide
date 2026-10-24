@@ -2,11 +2,14 @@
 title: "Ha Long Bay Travel Guide: Cruise, Timing, and Route Fit (2026)"
 slug: "ha-long-bay-travel-guide"
 route_path: "destinations/ha-long-bay-travel-guide"
+category: "destinations"
+description: "Ha Long Bay travel guide: decide between a 4-hour day cruise or a 2-day luxury overnight boat, pick Tuan Chau vs Halong International port, and avoid scams."
+author: "VietnamGuide Editorial Team"
+last_updated: "2026-06-15"
+word_count: 1350
 travel_cluster: "ha_long_bay"
 last_verified: "2026-10-21"
-author: "Antigravity Travel Intelligence"
-reading_time_minutes: 14
-word_count: 1950
+reading_time_minutes: "14"
 ---
 
 # Ha Long Bay Travel Guide: Cruise, Timing, and Route Fit (2026)

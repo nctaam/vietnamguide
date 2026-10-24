@@ -2,11 +2,14 @@
 title: "Using Grab in Vietnam (2026): Airport Pickups, Foreign Card Fees & Xanh SM"
 slug: "grab-in-vietnam-guide"
 route_path: "plan/grab-in-vietnam-guide"
+category: "plan"
+description: "Complete guide to Grab in Vietnam: foreign card setup, cash payments, airport pickup zones in Hanoi and Saigon, GrabBike safety, and app alternatives."
+author: "VietnamGuide Editorial Team"
+last_updated: "2026-06-15"
+word_count: 1737
 travel_cluster: "national_circuit"
 last_verified: "2026-10-22"
-author: "Minh Pham — Lead Travel Technologist"
-reading_time_minutes: 9
-word_count: 1730
+reading_time_minutes: "9"
 ---
 
 # Using Grab in Vietnam (2026): Airport Pickups, Foreign Card Fees & Xanh SM

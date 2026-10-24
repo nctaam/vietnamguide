@@ -2,11 +2,14 @@
 title: "Dong Hoi to Phong Nha Transport: Bus, Taxi, and Motorbike Route"
 slug: "dong-hoi-to-phong-nha-transport"
 route_path: "plan/dong-hoi-to-phong-nha-transport"
+category: "plan"
+description: "Bus B4 (50,000 VND, 75 mins) from Dong Hoi station vs taxis (350,000-450,000 VND, 45 mins) covering 45 km to Phong Nha town. 2026 schedules and transit tips."
+author: "VietnamGuide Editorial Team"
+last_updated: "2026-06-15"
+word_count: 1526
 travel_cluster: "phong_nha_caves"
 last_verified: "2026-10-20"
-author: "Antigravity Travel Intelligence"
-reading_time_minutes: 12
-word_count: 2200
+reading_time_minutes: "12"
 ---
 
 # Dong Hoi to Phong Nha Transport: Bus, Taxi, and Motorbike Route

@@ -2,11 +2,14 @@
 title: "Da Lat Coffee Farms: Arabica Tour & Cupping Guide (2026)"
 slug: "da-lat-coffee-farms-guide"
 route_path: "destinations/da-lat-coffee-farms-guide"
+category: "destinations"
+description: "Explore the best Da Lat coffee farms. Our guide covers arabica plantations, farm tour types, cupping sessions, costs, and the best seasons to visit."
+author: "VietnamGuide Editorial Team"
+last_updated: "2026-06-15"
+word_count: 1578
 travel_cluster: "central_highlands"
 last_verified: "2026-10-21"
-author: "Antigravity Travel Intelligence"
-reading_time_minutes: 12
-word_count: 1750
+reading_time_minutes: "12"
 ---
 
 # Da Lat Coffee Farms: Arabica Tour & Cupping Guide (2026)

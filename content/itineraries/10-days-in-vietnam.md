@@ -2,11 +2,14 @@
 title: "10 Days in Vietnam: Best Route for First-Time Visitors"
 slug: "10-days-in-vietnam"
 route_path: "itineraries/10-days-in-vietnam"
+category: "itineraries"
+description: "Plan 10 days in Vietnam with a balanced route order from Hanoi to Ho Chi Minh City, internal transfer timings, realistic night allocation, and daily costs."
+author: "VietnamGuide Editorial Team"
+last_updated: "2026-06-15"
+word_count: 2273
 travel_cluster: "national_circuit"
 last_verified: "2026-10-22"
-author: "Antigravity Travel Intelligence"
-reading_time_minutes: 13
-word_count: 2350
+reading_time_minutes: "13"
 ---
 
 # 10 Days in Vietnam: The Strategic First-Timer Itinerary

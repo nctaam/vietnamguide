@@ -2,11 +2,14 @@
 title: "Nha Trang Travel Guide: Beach, Food, Cam Ranh and Islands"
 slug: "nha-trang-travel-guide"
 route_path: "destinations/nha-trang-travel-guide"
+category: "destinations"
+description: "Nha Trang travel guide: urban beachfront hotels, island hopping boat tours, mud baths, diving spots, Cam Ranh airport transfers, and seasonal timing."
+author: "VietnamGuide Editorial Team"
+last_updated: "2026-06-15"
+word_count: 1650
 travel_cluster: "coastal_islands"
 last_verified: "2026-10-21"
-author: "Antigravity Travel Intelligence"
-reading_time_minutes: 13
-word_count: 1850
+reading_time_minutes: "13"
 ---
 
 # Nha Trang Travel Guide: Beach, Food, Cam Ranh and Islands

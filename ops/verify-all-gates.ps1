@@ -52,6 +52,19 @@ Write-Output "`n[GATE 8/8] Deployment Surface Static Security Audit..."
 python (Join-Path $ScriptDir 'deploy_security_audit.py') --root $ScriptDir --release-path 'deploy_theme_updates.py' --strict-release
 if ($LASTEXITCODE -ne 0) { throw "Gate 8 (Deployment Surface Security) failed!" }
 
+# Gate 9: Content-as-Code Depth & Ground-Truth Tariff Sentinel
+Write-Output "`n[GATE 9] Content-as-Code Depth & Ground-Truth Tariff Sentinel..."
+python (Join-Path $ScriptDir 'content_depth_auditor.py')
+if ($LASTEXITCODE -ne 0) { throw "Content Depth Auditor failed!" }
+python (Join-Path $ScriptDir 'tariff_sentinel.py')
+if ($LASTEXITCODE -ne 0) { throw "Tariff Sentinel failed!" }
+
+# Gate 10: Full Unit Test Suite Auto-Discovery
+Write-Output "`n[GATE 10] Full Unit Test Suite Auto-Discovery..."
+$env:VG_SKIP_NETWORK_TESTS = '1'
+python -m unittest discover -s (Join-Path $ScriptDir 'tests') -p "test_*.py"
+if ($LASTEXITCODE -ne 0) { throw "Full Unit Test Suite Discovery failed!" }
+
 # Optional Gate: AST Mutation Suite (112 mutations)
 if ($WithMutations -or $Full) {
     Write-Output "`n[EXTENDED GATE] Guide Experience AST Mutation Suite (112 mutations)..."

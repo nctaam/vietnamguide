@@ -2,11 +2,14 @@
 title: "Da Nang vs Hoi An: Which Central Vietnam Base Is Better?"
 slug: "da-nang-vs-hoi-an"
 route_path: "compare/da-nang-vs-hoi-an"
+category: "compare"
+description: "Choose your central Vietnam base by My Khe beach access, 15-minute airport transfers, dining variety, historic ancient town streets, and regional day trips."
+author: "VietnamGuide Editorial Team"
+last_updated: "2026-06-15"
+word_count: 1545
 travel_cluster: "central_heritage"
 last_verified: "2026-10-21"
-author: "Antigravity Travel Intelligence"
-reading_time_minutes: 10
-word_count: 1650
+reading_time_minutes: "10"
 ---
 
 # Da Nang vs Hoi An: Which Central Vietnam Base Is Better?

@@ -2,11 +2,14 @@
 title: "Hoi An Tailoring Guide (2026): Custom Suits, Dress Prices, Best Shops & 3-Fitting Timeline"
 slug: "hoi-an-tailoring-guide"
 route_path: "destinations/hoi-an-tailoring-guide"
+category: "destinations"
+description: "Planning Hoi An tailoring in 2026? Get expert tips for custom suits, dresses, fabric selection, fitting timelines, trusted shops, and VND shop pricing."
+author: "VietnamGuide Editorial Team"
+last_updated: "2026-06-15"
+word_count: 1614
 travel_cluster: "central_heritage"
 last_verified: "2026-10-22"
-author: "Minh Tran — Senior Central Vietnam Craft & Heritage Correspondent"
-reading_time_minutes: 11
-word_count: 1850
+reading_time_minutes: "11"
 ---
 
 # Hoi An Tailoring Guide (2026): Custom Suits, Dress Prices, Best Shops & 3-Fitting Timeline

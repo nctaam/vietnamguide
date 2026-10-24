@@ -563,6 +563,12 @@ class TestAntiAiSlopLinter(unittest.TestCase):
             self.assertGreaterEqual(report['registry']['mean_hls_score'], 85.0)
             self.assertEqual(report['registry']['total_routes'], 282)
             self.assertEqual(report['ui_templates']['total_tier1_violations'], 0)
+            for item in report['ui_templates']['results']:
+                self.assertGreaterEqual(
+                    item['hls_score'], 85,
+                    f"UI template {item['file']} scored {item['hls_score']} (< 85)"
+                )
+                self.assertTrue(item.get('passed', False), f"UI template {item['file']} did not pass")
 
 
 if __name__ == '__main__':

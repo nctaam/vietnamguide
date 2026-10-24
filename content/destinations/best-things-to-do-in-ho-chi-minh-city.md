@@ -2,11 +2,14 @@
 title: "Best Things to Do in Ho Chi Minh City (2026 Guide)"
 slug: "best-things-to-do-in-ho-chi-minh-city"
 route_path: "destinations/best-things-to-do-in-ho-chi-minh-city"
+category: "destinations"
+description: "Discover the best things to do in Ho Chi Minh City: war history museums, rooftop cafes, street food alleys, and day trips with 2026 prices rates in VND."
+author: "VietnamGuide Editorial Team"
+last_updated: "2026-06-15"
+word_count: 1500
 travel_cluster: "southern_delta"
 last_verified: "2026-10-21"
-author: "Antigravity Travel Intelligence"
-reading_time_minutes: 14
-word_count: 1950
+reading_time_minutes: "14"
 ---
 
 # Best Things to Do in Ho Chi Minh City (2026 Guide)
