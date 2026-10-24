@@ -160,8 +160,9 @@ class TestContentDepthAuditor(unittest.TestCase):
             dir_report["passed"],
             f"Directory audit failed: failed_files={dir_report['failed_files']}, duplicates={dir_report.get('duplicate_route_paths')}",
         )
-        self.assertEqual(dir_report["scanned_files"], 133)
-        self.assertEqual(dir_report["passed_files"], 133)
+        self.assertGreaterEqual(dir_report["scanned_files"], 139)
+        self.assertLessEqual(dir_report["scanned_files"], len(registry_routes))
+        self.assertEqual(dir_report["passed_files"], dir_report["scanned_files"])
         self.assertEqual(dir_report.get("duplicate_route_paths"), [])
 
         seen_routes = set()
@@ -171,14 +172,14 @@ class TestContentDepthAuditor(unittest.TestCase):
             self.assertIn(rp, registry_routes, f"route_path '{rp}' must exist in route_registry.json")
             self.assertNotIn(rp, seen_routes, f"Duplicate route_path '{rp}' found")
             seen_routes.add(rp)
-        self.assertEqual(len(seen_routes), 133)
+        self.assertEqual(len(seen_routes), dir_report["scanned_files"])
 
     def test_compile_guide_content_and_php_runtime_bridge(self):
         import compile_guide_content as compiler
 
         content_root = OPS_DIR.parent / "content"
         md_files = sorted(content_root.rglob("*.md"))
-        self.assertEqual(len(md_files), 133)
+        self.assertGreaterEqual(len(md_files), 139)
 
         for md_path in md_files:
             compiled = compiler.compile_markdown_file(md_path)

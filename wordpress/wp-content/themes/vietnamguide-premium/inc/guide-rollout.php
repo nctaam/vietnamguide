@@ -18,8 +18,8 @@ if (! function_exists('vg_get_compiled_route_registry_payload')) {
     {
         return [
             'schema_version' => 1,
-            'json_sha256' => 'facc26c97f53d3d813471255796e9b2866734497bc4de784133a426af59e4d9e',
-            'json_size' => 175911,
+            'json_sha256' => 'd77881c4b6709e8ec2296d56a737849601292bcb77399e8431fdcac7fbcccaa6',
+            'json_size' => 175912,
             'route_count' => 282,
             'routes' => [
                 'compare/con-dao-vs-phu-quoc' => [
@@ -1524,7 +1524,7 @@ if (! function_exists('vg_get_compiled_route_registry_payload')) {
                     'path' => 'destinations/where-to-stay-in-ho-chi-minh-city',
                     'type' => 'destination',
                     'title' => 'Where to Stay in Ho Chi Minh City: Best Areas & Hotels',
-                    'description' => 'Where to stay in Ho Chi Minh City: choose District 1, District 3, Thao Dien, riverside, Bui Vien, or airport areas by route job and 2026 2026 comfort.',
+                    'description' => 'Where to stay in Ho Chi Minh City: choose District 1, District 3, Thao Dien, riverside, Bui Vien, or airport areas by route job and 2026 sleep comfort.',
                     'status' => 'published',
                     'template' => 'guide',
                     'last_reviewed' => '2026-09-28',
@@ -1748,7 +1748,7 @@ if (! function_exists('vg_get_compiled_route_registry_payload')) {
                     'path' => 'destinations/where-to-stay-in-phu-yen',
                     'type' => 'destination',
                     'title' => 'Where to Stay in Phu Yen (2026): Best Areas & Resorts',
-                    'description' => 'Where to stay in Phu Yen: Tuy Hoa city beach hotels vs Xuan Dai bay luxury villas and Bai Xep seaside resorts with 2026 nightly room rates rates in VND.',
+                    'description' => 'Where to stay in Phu Yen: Tuy Hoa city beach hotels vs Xuan Dai bay luxury villas and Bai Xep seaside resorts with 2026 nightly hotel room rates in VND.',
                     'status' => 'published',
                     'template' => 'guide',
                     'last_reviewed' => '2026-09-28',
@@ -2616,7 +2616,7 @@ if (! function_exists('vg_get_compiled_route_registry_payload')) {
                     'path' => 'plan/hanoi-to-cao-bang-transport',
                     'type' => 'practical',
                     'title' => 'Hanoi to Cao Bang Transport (2026): Limousine & Bus',
-                    'description' => 'Hanoi to Cao Bang transport guide: VIP limousine vans, overnight sleeper buses, and motorcycle routes to Ban Gioc Waterfall with 2026 VND VND fares.',
+                    'description' => 'Hanoi to Cao Bang transport guide: VIP limousine vans, overnight sleeper buses, and motorcycle routes to Ban Gioc Waterfall with 2026 bus VND fares.',
                     'status' => 'published',
                     'template' => 'guide',
                     'last_reviewed' => '2026-09-28',
