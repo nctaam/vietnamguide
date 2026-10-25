@@ -160,7 +160,7 @@ class TestContentDepthAuditor(unittest.TestCase):
             dir_report["passed"],
             f"Directory audit failed: failed_files={dir_report['failed_files']}, duplicates={dir_report.get('duplicate_route_paths')}",
         )
-        self.assertGreaterEqual(dir_report["scanned_files"], 211)
+        self.assertGreaterEqual(dir_report["scanned_files"], 217)
         self.assertLessEqual(dir_report["scanned_files"], len(registry_routes))
         self.assertEqual(dir_report["passed_files"], dir_report["scanned_files"])
         self.assertEqual(dir_report.get("duplicate_route_paths"), [])
@@ -179,7 +179,7 @@ class TestContentDepthAuditor(unittest.TestCase):
 
         content_root = OPS_DIR.parent / "content"
         md_files = sorted(content_root.rglob("*.md"))
-        self.assertGreaterEqual(len(md_files), 211)
+        self.assertGreaterEqual(len(md_files), 217)
 
         for md_path in md_files:
             compiled = compiler.compile_markdown_file(md_path)
