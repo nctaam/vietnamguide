@@ -542,7 +542,7 @@ function vg_get_airport_navigator_dataset(): array
                 'id' => 'grab_cancelled',
                 'title' => 'The "Grab Cancelled / I Am Your Driver" Switch',
                 'severity' => 'Critical',
-                'icon' => '🚨',
+                'icon' => '!',
                 'pattern' => 'A tout approaches you inside the arrivals hall or curbside holding a smartphone with an active Grab screen. They insist: "Your Grab ride was cancelled because of traffic" or "I am your Grab driver, come to my car". They then disable the app or quote 5x the real price upon arrival.',
                 'antidote' => 'Never follow anyone inside the terminal. Only board a vehicle whose license plate matches the registration number shown in your Grab app. If your Grab booking were cancelled, your app would notify you directly.',
             ],
@@ -550,7 +550,7 @@ function vg_get_airport_navigator_dataset(): array
                 'id' => 'fast_meter',
                 'title' => 'Rigged Fast Meter (Đồng hồ nhảy xung)',
                 'severity' => 'High',
-                'icon' => '⏱️',
+                'icon' => '!',
                 'pattern' => 'Unofficial or counterfeit taxis (painted like Mai Linh or Vinasun with subtle spelling changes like "Mailinh" or "Vinasum") install an electronic pulse accelerator. The fare jumps 50,000 VND every 300 meters.',
                 'antidote' => 'Only use the official uniformed dispatcher booths outside the terminal. Ensure the driver turns on the dashboard meter (starting around 10,000–20,000 VND) and that the driver ID card with photo is clearly visible on the dashboard.',
             ],
@@ -558,7 +558,7 @@ function vg_get_airport_navigator_dataset(): array
                 'id' => 'note_switch',
                 'title' => 'The 500,000 VND vs 20,000 VND Color Switch',
                 'severity' => 'High',
-                'icon' => '💵',
+                'icon' => '§',
                 'pattern' => 'The 500,000 VND note (highest denomination, ~$20 USD) and the 20,000 VND note (~$0.80 USD) share an identical cyan/blue color palette. In dim vehicle lighting, the driver takes your 500k note, quickly drops it between the seats, flashes a 20k note, and angrily demands: "You only gave me 20k!"',
                 'antidote' => 'Always separate your notes beforehand. When paying cash, hold the note up, look the driver in the eye, and clearly announce: "Here is five hundred thousand VND" before handing it over.',
             ],
@@ -566,7 +566,7 @@ function vg_get_airport_navigator_dataset(): array
                 'id' => 'hotel_closed',
                 'title' => '"Your Hotel Is Closed / On Fire" Diversion',
                 'severity' => 'Medium',
-                'icon' => '🏨',
+                'icon' => '§',
                 'pattern' => 'During transit from the airport, the driver claims your booked hotel is closed for government inspection, undergoing noisy construction, or burned down yesterday. They offer to take you to a "much better, cheaper" hotel where they pocket a 40% kickback.',
                 'antidote' => 'Never accept route deviations. Insist firmly: "Take me to my address, my friend is already waiting for me at reception." Call your hotel reception directly if in doubt.',
             ],
@@ -574,7 +574,7 @@ function vg_get_airport_navigator_dataset(): array
                 'id' => 'toll_extortion',
                 'title' => 'Inflated Airport Toll Fee (Phí ra cổng)',
                 'severity' => 'Medium',
-                'icon' => '🚧',
+                'icon' => '!',
                 'pattern' => 'At the airport exit toll booth, the driver demands 100,000 – 200,000 VND cash from you, claiming it is an "international airport passenger tax".',
                 'antidote' => 'The official statutory airport gate toll across all Vietnamese airports is strictly 10,000 – 15,000 VND (~$0.40 – $0.60 USD). On Grab, this toll is automatically added into your digital receipt.',
             ],
@@ -619,21 +619,21 @@ function vg_render_airport_navigator_html(): string
             </div>
             <div class="vg-an-header-actions">
                 <button type="button" class="vg-an-btn vg-an-btn-secondary vg-an-copy-btn" id="vg-an-copy-cheat-sheet" aria-label="<?php esc_attr_e('Copy arrival cheat sheet to clipboard', 'vietnamguide-premium'); ?>">
-                    <span class="vg-an-btn-icon">📋</span>
+                    <span class="vg-an-btn-icon" aria-hidden="true">§</span>
                     <span class="vg-an-btn-text"><?php esc_html_e('Copy Arrival Sheet', 'vietnamguide-premium'); ?></span>
                 </button>
                 <button type="button" class="vg-an-btn vg-an-btn-secondary vg-an-print-btn" onclick="window.print()" aria-label="<?php esc_attr_e('Print arrival guide', 'vietnamguide-premium'); ?>">
-                    <span class="vg-an-btn-icon">🖨️</span>
+                    <span class="vg-an-btn-icon" aria-hidden="true">↗</span>
                     <span class="vg-an-btn-text"><?php esc_html_e('Print Sheet', 'vietnamguide-premium'); ?></span>
                 </button>
             </div>
         </div>
 
         <noscript>
-            <div class="vg-airport-noscript-card" style="background:#f8f9fa;border:1px solid #cbd5e1;border-radius:8px;padding:20px;margin-bottom:24px;">
-                <p style="font-weight:700;margin-bottom:8px;color:#1a365d;">✈️ 2026 Vietnam Major Airports Transit Summary (No-JavaScript Reference):</p>
-                <p style="font-size:0.9rem;margin-bottom:12px;color:#475569;">Interactive airport navigator requires JavaScript. Flat arrival transfer benchmarks:</p>
-                <ul style="margin-bottom:0;padding-left:20px;font-size:0.9rem;line-height:1.6;">
+            <div class="vg-airport-noscript-card">
+                <p><strong>2026 Vietnam Major Airports Transit Summary (No-JavaScript Reference):</strong></p>
+                <p>Interactive airport navigator requires JavaScript. Flat arrival transfer benchmarks:</p>
+                <ul>
                     <li><strong>Hanoi Noi Bai (HAN):</strong> Express Bus 86 costs 45,000 VND (Pillar 2, T2); GrabCar to Hoan Kiem costs 280,000–320,000 VND (40 mins).</li>
                     <li><strong>HCMC Tan Son Nhat (SGN):</strong> Yellow Bus 109 costs 20,000 VND to Ben Thanh; GrabCar pickup from Pillar 4 (International) costs 140,000–180,000 VND (25 mins).</li>
                     <li><strong>Da Nang International (DAD):</strong> 4 km to downtown; GrabCar to city center costs 45,000–65,000 VND; to Hoi An costs 320,000–380,000 VND (45 mins).</li>
@@ -674,9 +674,9 @@ function vg_render_airport_navigator_html(): string
                     <span class="vg-an-badge" id="vg-an-b-badge">North Gateway</span>
                 </div>
                 <div class="vg-an-banner-meta">
-                    <span class="vg-an-meta-item">📍 <strong id="vg-an-b-dist">28–32 km to Hanoi Old Quarter</strong></span>
-                    <span class="vg-an-meta-item">⏱️ <strong id="vg-an-b-time">40–55 mins</strong></span>
-                    <span class="vg-an-meta-item">🚧 Toll: <strong id="vg-an-b-toll">15,000 VND</strong></span>
+                    <span class="vg-an-meta-item">Distance: <strong id="vg-an-b-dist">28–32 km to Hanoi Old Quarter</strong></span>
+                    <span class="vg-an-meta-item">Transit: <strong id="vg-an-b-time">40–55 mins</strong></span>
+                    <span class="vg-an-meta-item">Toll: <strong id="vg-an-b-toll">15,000 VND</strong></span>
                 </div>
                 <div class="vg-an-terminal-note" id="vg-an-b-terminals">
                     T1 (Domestic) & T2 (International) — Free shuttle bus runs between T1 & T2 every 15–20 mins.
@@ -687,19 +687,19 @@ function vg_render_airport_navigator_html(): string
         <!-- Module Navigation Tabs -->
         <div class="vg-an-tabs" role="tablist" aria-label="<?php esc_attr_e('Navigator Sections', 'vietnamguide-premium'); ?>">
             <button type="button" class="vg-an-tab active" role="tab" aria-selected="true" data-tab="fare-calc" id="vg-tab-fare-calc">
-                <span class="vg-tab-icon">🚗</span>
+                <span class="vg-tab-icon" aria-hidden="true">•</span>
                 <span class="vg-tab-text"><?php esc_html_e('Fair Fares & Options', 'vietnamguide-premium'); ?></span>
             </button>
             <button type="button" class="vg-an-tab" role="tab" aria-selected="false" data-tab="gate-nav" id="vg-tab-gate-nav">
-                <span class="vg-tab-icon">🚶</span>
+                <span class="vg-tab-icon" aria-hidden="true">•</span>
                 <span class="vg-tab-text"><?php esc_html_e('Gate-to-Curb Navigator', 'vietnamguide-premium'); ?></span>
             </button>
             <button type="button" class="vg-an-tab" role="tab" aria-selected="false" data-tab="scam-shield" id="vg-tab-scam-shield">
-                <span class="vg-tab-icon">🛡️</span>
+                <span class="vg-tab-icon" aria-hidden="true">!</span>
                 <span class="vg-tab-text"><?php esc_html_e('Scam Shield & Red Flags', 'vietnamguide-premium'); ?></span>
             </button>
             <button type="button" class="vg-an-tab" role="tab" aria-selected="false" data-tab="money-sim" id="vg-tab-money-sim">
-                <span class="vg-tab-icon">💱</span>
+                <span class="vg-tab-icon" aria-hidden="true">§</span>
                 <span class="vg-tab-text"><?php esc_html_e('Cash & SIM Reality', 'vietnamguide-premium'); ?></span>
             </button>
         </div>
@@ -765,12 +765,12 @@ function vg_render_airport_navigator_html(): string
 
             <!-- Grab Pickup Location Callout -->
             <div class="vg-an-pickup-callout" id="vg-an-pickup-callout">
-                <div class="vg-an-callout-icon">📍</div>
+                <div class="vg-an-callout-icon" aria-hidden="true">§</div>
                 <div class="vg-an-callout-content">
                     <strong class="vg-an-callout-title"><?php esc_html_e('Exact Grab Pickup Point:', 'vietnamguide-premium'); ?></strong>
                     <p id="vg-an-pickup-text"><?php esc_html_e('Exit T2 ground floor arrivals, cross pedestrian crosswalk to Outer Island Lane 2 / Lane 3 (between Columns 10 and 14).', 'vietnamguide-premium'); ?></p>
                     <div class="vg-an-callout-alert" id="vg-an-pickup-warning">
-                        <?php esc_html_e('⚠️ Never accept rides from individuals inside the terminal hall shouting "Grab, Grab". Genuine drivers must remain with their vehicles.', 'vietnamguide-premium'); ?>
+                        <?php esc_html_e('Advisory: Never accept rides from individuals inside the terminal hall shouting "Grab, Grab". Genuine drivers must remain with their vehicles.', 'vietnamguide-premium'); ?>
                     </div>
                 </div>
             </div>
@@ -829,11 +829,11 @@ function vg_render_airport_navigator_html(): string
                         </summary>
                         <div class="vg-an-scam-body">
                             <div class="vg-an-scam-pattern">
-                                <strong>⚠️ <?php esc_html_e('The Trap:', 'vietnamguide-premium'); ?></strong>
+                                <strong>! <?php esc_html_e('The Trap:', 'vietnamguide-premium'); ?></strong>
                                 <p><?php echo esc_html($scam['pattern']); ?></p>
                             </div>
                             <div class="vg-an-scam-antidote">
-                                <strong>🛡️ <?php esc_html_e('The Antidote:', 'vietnamguide-premium'); ?></strong>
+                                <strong>§ <?php esc_html_e('The Antidote:', 'vietnamguide-premium'); ?></strong>
                                 <p><?php echo esc_html($scam['antidote']); ?></p>
                             </div>
                         </div>
@@ -847,7 +847,7 @@ function vg_render_airport_navigator_html(): string
             <div class="vg-an-essentials-grid">
                 <div class="vg-an-essential-box">
                     <div class="vg-an-essential-head">
-                        <span class="vg-an-essential-icon">💵</span>
+                        <span class="vg-an-essential-icon" aria-hidden="true">§</span>
                         <div class="vg-an-essential-title" role="heading" aria-level="3"><?php echo esc_html($data['essentials']['currency']['title']); ?></div>
                     </div>
                     <div class="vg-an-essential-rule">
@@ -855,13 +855,13 @@ function vg_render_airport_navigator_html(): string
                     </div>
                     <p><?php echo esc_html($data['essentials']['currency']['detail']); ?></p>
                     <div class="vg-an-essential-tip">
-                        💡 <?php echo esc_html($data['essentials']['currency']['atm_tip']); ?>
+                        Note — <?php echo esc_html($data['essentials']['currency']['atm_tip']); ?>
                     </div>
                 </div>
 
                 <div class="vg-an-essential-box">
                     <div class="vg-an-essential-head">
-                        <span class="vg-an-essential-icon">📱</span>
+                        <span class="vg-an-essential-icon" aria-hidden="true">§</span>
                         <div class="vg-an-essential-title" role="heading" aria-level="3"><?php echo esc_html($data['essentials']['sim']['title']); ?></div>
                     </div>
                     <div class="vg-an-essential-rule">
@@ -869,7 +869,7 @@ function vg_render_airport_navigator_html(): string
                     </div>
                     <p><?php echo esc_html($data['essentials']['sim']['detail']); ?></p>
                     <div class="vg-an-essential-tip">
-                        💡 <?php esc_html_e('Viettel has the strongest coverage across remote mountainous regions (Ha Giang, Pu Luong, Sa Pa). Vinaphone is optimal for major metropolitan cities and island resorts.', 'vietnamguide-premium'); ?>
+                        Note — <?php esc_html_e('Viettel has the strongest coverage across remote mountainous regions (Ha Giang, Pu Luong, Sa Pa). Vinaphone is optimal for major metropolitan cities and island resorts.', 'vietnamguide-premium'); ?>
                     </div>
                 </div>
             </div>
@@ -879,16 +879,16 @@ function vg_render_airport_navigator_html(): string
         <div class="vg-tool-share-bar">
             <span class="vg-share-label"><?php esc_html_e('Share Airport Guide:', 'vietnamguide-premium'); ?></span>
             <button type="button" class="vg-btn-share" id="vg-an-share-link">
-                <span>🔗 <?php esc_html_e('Copy Airport Link', 'vietnamguide-premium'); ?></span>
+                <span><?php esc_html_e('Copy Airport Link', 'vietnamguide-premium'); ?></span>
             </button>
             <a href="#" class="vg-btn-share vg-btn-share--wa" id="vg-an-share-wa" target="_blank" rel="noopener noreferrer">
-                <span>💬 WhatsApp</span>
+                <span>WhatsApp ↗</span>
             </a>
             <a href="#" class="vg-btn-share vg-btn-share--tg" id="vg-an-share-tg" target="_blank" rel="noopener noreferrer">
-                <span>✈️ Telegram</span>
+                <span>Telegram ↗</span>
             </a>
             <button type="button" class="vg-btn-share vg-btn-share--qr" id="vg-an-share-qr" aria-label="<?php esc_attr_e('Show QR code for mobile', 'vietnamguide-premium'); ?>">
-                <span>📱 <?php esc_html_e('QR to Phone', 'vietnamguide-premium'); ?></span>
+                <span><?php esc_html_e('QR to Phone', 'vietnamguide-premium'); ?></span>
             </button>
         </div>
 
@@ -897,27 +897,27 @@ function vg_render_airport_navigator_html(): string
             <span class="vg-an-steps-kicker"><?php esc_html_e('Continue Planning Your Journey', 'vietnamguide-premium'); ?></span>
             <div class="vg-an-steps-grid">
                 <a href="<?php echo esc_url(home_url('/plan/vietnam-evisa/')); ?>" class="vg-an-step-link vg-synergy-bridge">
-                    <span class="vg-an-step-icon">🛂</span>
+                    <span class="vg-an-step-icon" aria-hidden="true">§</span>
                     <span class="vg-an-step-title"><?php esc_html_e('Visa Exemption & E-Visa Checker', 'vietnamguide-premium'); ?></span>
                     <span class="vg-an-step-desc"><?php esc_html_e('Verify entry rules & avoid middleman fees', 'vietnamguide-premium'); ?></span>
                 </a>
                 <a href="<?php echo esc_url(home_url('/costs/vietnam-travel-cost/')); ?>" class="vg-an-step-link vg-synergy-bridge">
-                    <span class="vg-an-step-icon">💰</span>
+                    <span class="vg-an-step-icon" aria-hidden="true">§</span>
                     <span class="vg-an-step-title"><?php esc_html_e('Travel Cost Calculator', 'vietnamguide-premium'); ?></span>
                     <span class="vg-an-step-desc"><?php esc_html_e('Calculate realistic daily travel budgets', 'vietnamguide-premium'); ?></span>
                 </a>
                 <a href="<?php echo esc_url(home_url('/plan/best-time-to-visit-vietnam/')); ?>" class="vg-an-step-link vg-synergy-bridge">
-                    <span class="vg-an-step-icon">🌤️</span>
+                    <span class="vg-an-step-icon" aria-hidden="true">§</span>
                     <span class="vg-an-step-title"><?php esc_html_e('Regional Weather & Packing Matrix', 'vietnamguide-premium'); ?></span>
                     <span class="vg-an-step-desc"><?php esc_html_e('Check 3-climate monsoon patterns', 'vietnamguide-premium'); ?></span>
                 </a>
                 <a href="<?php echo esc_url(home_url('/itineraries/')); ?>" class="vg-an-step-link vg-synergy-bridge">
-                    <span class="vg-an-step-icon">🗺️</span>
+                    <span class="vg-an-step-icon" aria-hidden="true">§</span>
                     <span class="vg-an-step-title"><?php esc_html_e('Interactive Itinerary Finder', 'vietnamguide-premium'); ?></span>
                     <span class="vg-an-step-desc"><?php esc_html_e('Filter tested routes from 7 to 21 days', 'vietnamguide-premium'); ?></span>
                 </a>
                 <a href="<?php echo esc_url(home_url('/plan/vietnam-first-trip-planning-checklist/')); ?>" class="vg-an-step-link vg-synergy-bridge">
-                    <span class="vg-an-step-icon">🎒</span>
+                    <span class="vg-an-step-icon" aria-hidden="true">§</span>
                     <span class="vg-an-step-title"><?php esc_html_e('Route Packing Checklist', 'vietnamguide-premium'); ?></span>
                     <span class="vg-an-step-desc"><?php esc_html_e('24-item gear & document checklist with state persistence', 'vietnamguide-premium'); ?></span>
                 </a>
@@ -1009,7 +1009,7 @@ function vg_render_airport_navigator_html(): string
 
             // Update pickup info
             if (pickupText) pickupText.textContent = data.grab_pickup.t2_international;
-            if (pickupWarning) pickupWarning.textContent = '⚠️ ' + data.grab_pickup.warning;
+            if (pickupWarning) pickupWarning.textContent = 'Advisory: ' + data.grab_pickup.warning;
             if (step4Detail) step4Detail.textContent = data.grab_pickup.t2_international + ' Official Taxi: ' + data.official_taxi.location;
 
             // Update zone select
@@ -1147,7 +1147,7 @@ function vg_render_airport_navigator_html(): string
                 var d = airportsData[currentAirport];
                 if (!d) return;
 
-                var text = '✈️ Vietnam Airport Arrival Cheat Sheet — ' + d.code + ' (' + d.city + ')\n' +
+                var text = 'Vietnam Airport Arrival Cheat Sheet — ' + d.code + ' (' + d.city + ')\n' +
                            '• Terminal: ' + d.terminals + '\n' +
                            '• Grab Pickup: ' + d.grab_pickup.t2_international + '\n' +
                            '• Warning: ' + d.grab_pickup.warning + '\n' +
@@ -1159,7 +1159,7 @@ function vg_render_airport_navigator_html(): string
                 if (navigator.clipboard && navigator.clipboard.writeText) {
                     navigator.clipboard.writeText(text).then(function() {
                         var originalHtml = copyBtn.innerHTML;
-                        copyBtn.innerHTML = '<span>✅</span> <span>Copied!</span>';
+                        copyBtn.innerHTML = '<span>Copied!</span>';
                         setTimeout(function() { copyBtn.innerHTML = originalHtml; }, 2000);
                     });
                 } else {
@@ -1187,7 +1187,7 @@ function vg_render_airport_navigator_html(): string
                 var url = window.location.href;
                 if (navigator.clipboard && navigator.clipboard.writeText) {
                     navigator.clipboard.writeText(url).then(function () {
-                        showToast('✓ Link copied to clipboard - Share with your travel companion!');
+                        showToast('Link copied to clipboard — Share with your travel companion!');
                         if (typeof window.vgTrack === 'function') {
                             window.vgTrack('vg_share_plan', { tool: 'airport_navigator', channel: 'copy_link' });
                         }

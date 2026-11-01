@@ -386,54 +386,54 @@ function vg_interactive_map_shortcode(array $atts = []): string
             </div>
         </div>
 
-        <details class="vg-map-metro-expressway-ledger" id="vg-map-metro-expressway-ledger" style="margin-top:1.35rem;background:#f8fafc;border:1px solid #cbd5e1;border-radius:10px;padding:0.95rem 1.15rem;">
-            <summary class="vg-map-ledger-summary" style="cursor:pointer;font-weight:700;color:#0f2537;font-size:0.95rem;">
-                <?php esc_html_e('🚇 2025–2026 Urban Metro Networks (HCMC Line 1 & Hanoi Lines 2A/3) & National Expressway Telemetry', 'vietnamguide-premium'); ?>
+        <details class="vg-map-metro-expressway-ledger vg-ref-ledger" id="vg-map-metro-expressway-ledger">
+            <summary class="vg-map-ledger-summary vg-ref-summary">
+                <?php esc_html_e('2025–2026 Urban Metro Networks (HCMC Line 1 & Hanoi Lines 2A/3) & National Expressway Telemetry', 'vietnamguide-premium'); ?>
             </summary>
-            <div class="vg-map-ledger-body" style="margin-top:0.85rem;">
-                <p style="margin:0 0 0.75rem;font-size:0.86rem;color:#334155;line-height:1.55;">
+            <div class="vg-map-ledger-body vg-ref-body">
+                <p class="vg-ref-lead">
                     <?php esc_html_e('Verified against HURC1 (HCMC Urban Railway No. 1), Hanoi Metro Company (HMC), and Ministry of Transport (MOT) North–South Expressway (CT01) commissioning schedules:', 'vietnamguide-premium'); ?>
                 </p>
-                <div class="vg-map-ledger-table-wrap" style="overflow-x:auto;">
-                    <table class="vg-guide-table" style="width:100%;border-collapse:collapse;font-size:0.84rem;text-align:left;">
+                <div class="vg-map-ledger-table-wrap vg-ref-table-wrap">
+                    <table class="vg-guide-table vg-ref-table">
                         <caption class="vg-table-caption screen-reader-text"><?php esc_html_e('2025–2026 Vietnam Urban Metro Lines and National Expressway Corridors', 'vietnamguide-premium'); ?></caption>
                         <thead>
-                            <tr style="border-bottom:2px solid #cbd5e1;color:#0f2537;">
-                                <th scope="col" style="padding:0.5rem 0.6rem;"><?php esc_html_e('Metro / Expressway Corridor', 'vietnamguide-premium'); ?></th>
-                                <th scope="col" style="padding:0.5rem 0.6rem;"><?php esc_html_e('Route & Key Stations / Nodes', 'vietnamguide-premium'); ?></th>
-                                <th scope="col" style="padding:0.5rem 0.6rem;"><?php esc_html_e('Verified Fare / Travel Time & Operating Window', 'vietnamguide-premium'); ?></th>
+                            <tr>
+                                <th scope="col"><?php esc_html_e('Metro / Expressway Corridor', 'vietnamguide-premium'); ?></th>
+                                <th scope="col"><?php esc_html_e('Route & Key Stations / Nodes', 'vietnamguide-premium'); ?></th>
+                                <th scope="col"><?php esc_html_e('Verified Fare / Travel Time & Operating Window', 'vietnamguide-premium'); ?></th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr style="border-bottom:1px solid #e2e8f0;">
-                                <th scope="row" style="padding:0.5rem 0.6rem;"><strong>HCMC Metro Line 1 (Bến Thành – Suối Tiên)</strong></th>
-                                <td style="padding:0.5rem 0.6rem;"><strong>19.7 km</strong> across 14 stations: 3 underground (<strong>Bến Thành</strong>, <strong>Nhà hát Thành phố</strong>, <strong>Ba Son</strong>) + 11 elevated to <strong>Bến xe Suối Tiên</strong> (New Eastern Bus Station).</td>
-                                <td style="padding:0.5rem 0.6rem;"><strong>6,000–19,000 VND</strong> single ride (cashless EMV/QR) or <strong>7,000–20,000 VND</strong> cash; <strong>40,000 VND</strong> 1-day pass; <strong>90,000 VND</strong> 3-day pass; operates <strong>05:00–22:00</strong> (Mon–Thu) &amp; <strong>05:00–23:00</strong> (Fri–Sun).</td>
-                            </tr>
-                            <tr style="border-bottom:1px solid #e2e8f0;">
-                                <th scope="row" style="padding:0.5rem 0.6rem;"><strong>Hanoi Metro Line 2A (Cát Linh – Hà Đông)</strong></th>
-                                <td style="padding:0.5rem 0.6rem;"><strong>13.05 km</strong> elevated corridor linking <strong>Cát Linh</strong> (Ba Đình / Old Quarter west edge) with <strong>Yên Nghĩa</strong> (Hà Đông southwest bus hub) across 12 stations.</td>
-                                <td style="padding:0.5rem 0.6rem;"><strong>9,000–19,000 VND</strong> single ride (<strong>8,595–18,625 VND</strong> cashless); <strong>40,000 VND</strong> unlimited 1-day pass; <strong>160,000 VND</strong> 7-day pass; <strong>05:30–22:00</strong> daily (6–10 min headway).</td>
-                            </tr>
-                            <tr style="border-bottom:1px solid #e2e8f0;">
-                                <th scope="row" style="padding:0.5rem 0.6rem;"><strong>Hanoi Metro Line 3 (Nhổn – Cầu Giấy Elevated)</strong></th>
-                                <td style="padding:0.5rem 0.6rem;"><strong>8.5 km</strong> elevated section connecting <strong>Nhổn</strong> through <strong>Quốc Gia University</strong> and <strong>Chùa Hà</strong> to <strong>Cầu Giấy</strong> interchange (8 operational stations).</td>
-                                <td style="padding:0.5rem 0.6rem;"><strong>9,000–15,000 VND</strong> single ride; <strong>40,000 VND</strong> 1-day pass; <strong>05:30–22:00</strong> daily; direct bus transfer at Cầu Giấy to Hoan Kiem Lake &amp; Lotte Center.</td>
-                            </tr>
-                            <tr style="border-bottom:1px solid #e2e8f0;">
-                                <th scope="row" style="padding:0.5rem 0.6rem;"><strong>CT04 / CT06 Northern Maritime Expressway</strong></th>
-                                <td style="padding:0.5rem 0.6rem;"><strong>Hà Nội – Hải Phòng – Hạ Long – Vân Đồn – Móng Cái</strong> high-speed toll corridor linking Red River Delta to Tuần Châu &amp; Đồng Bài (Cát Bà) piers.</td>
-                                <td style="padding:0.5rem 0.6rem;">Hanoi to <strong>Hạ Long Bay in 2.0–2.5 hours</strong> (down from 4h); Hanoi to <strong>Đồng Bài Ferry (Cát Bà) in 1.5–2.0 hours</strong>; Dcar limousine fare <strong>250,000–450,000 VND</strong>.</td>
-                            </tr>
-                            <tr style="border-bottom:1px solid #e2e8f0;">
-                                <th scope="row" style="padding:0.5rem 0.6rem;"><strong>CT01 South-Central Expressway (Dầu Giây – Phan Thiết – Vĩnh Hảo – Cam Lâm – Nha Trang)</strong></th>
-                                <td style="padding:0.5rem 0.6rem;">Continuous 4-lane expressway linking <strong>Ho Chi Minh City</strong> directly to <strong>Mũi Né / Phan Thiết</strong>, <strong>Vĩnh Hy Bay</strong>, <strong>Cam Ranh</strong>, and <strong>Nha Trang</strong>.</td>
-                                <td style="padding:0.5rem 0.6rem;">HCMC to <strong>Mũi Né / Phan Thiết in 2.5–3.0 hours</strong> (down from 5h); HCMC to <strong>Nha Trang in 4.5–5.0 hours</strong> by highway limousine coach (<strong>280,000–480,000 VND</strong>).</td>
+                            <tr>
+                                <th scope="row"><strong>HCMC Metro Line 1 (Bến Thành – Suối Tiên)</strong></th>
+                                <td><strong>19.7 km</strong> across 14 stations: 3 underground (<strong>Bến Thành</strong>, <strong>Nhà hát Thành phố</strong>, <strong>Ba Son</strong>) + 11 elevated to <strong>Bến xe Suối Tiên</strong> (New Eastern Bus Station).</td>
+                                <td><strong>6,000–19,000 VND</strong> single ride (cashless EMV/QR) or <strong>7,000–20,000 VND</strong> cash; <strong>40,000 VND</strong> 1-day pass; <strong>90,000 VND</strong> 3-day pass; operates <strong>05:00–22:00</strong> (Mon–Thu) &amp; <strong>05:00–23:00</strong> (Fri–Sun).</td>
                             </tr>
                             <tr>
-                                <th scope="row" style="padding:0.5rem 0.6rem;"><strong>CT01 / CT02 Mekong Delta Expressway (Trung Lương – Mỹ Thuận – Cần Thơ)</strong></th>
-                                <td style="padding:0.5rem 0.6rem;">Expressway spine and <strong>Mỹ Thuận 2 Bridge</strong> connecting HCMC (Bến xe Miền Tây) across Tiền Giang and Vĩnh Long directly to <strong>Cần Thơ</strong>.</td>
-                                <td style="padding:0.5rem 0.6rem;">HCMC to <strong>Cần Thơ (Cái Răng Floating Market hub) in 2.0–2.5 hours</strong> (down from 3.5–4h); Phương Trang (Futa) &amp; limousine fare <strong>165,000–250,000 VND</strong>.</td>
+                                <th scope="row"><strong>Hanoi Metro Line 2A (Cát Linh – Hà Đông)</strong></th>
+                                <td><strong>13.05 km</strong> elevated corridor linking <strong>Cát Linh</strong> (Ba Đình / Old Quarter west edge) with <strong>Yên Nghĩa</strong> (Hà Đông southwest bus hub) across 12 stations.</td>
+                                <td><strong>9,000–19,000 VND</strong> single ride (<strong>8,595–18,625 VND</strong> cashless); <strong>40,000 VND</strong> unlimited 1-day pass; <strong>160,000 VND</strong> 7-day pass; <strong>05:30–22:00</strong> daily (6–10 min headway).</td>
+                            </tr>
+                            <tr>
+                                <th scope="row"><strong>Hanoi Metro Line 3 (Nhổn – Cầu Giấy Elevated)</strong></th>
+                                <td><strong>8.5 km</strong> elevated section connecting <strong>Nhổn</strong> through <strong>Quốc Gia University</strong> and <strong>Chùa Hà</strong> to <strong>Cầu Giấy</strong> interchange (8 operational stations).</td>
+                                <td><strong>9,000–15,000 VND</strong> single ride; <strong>40,000 VND</strong> 1-day pass; <strong>05:30–22:00</strong> daily; direct bus transfer at Cầu Giấy to Hoan Kiem Lake &amp; Lotte Center.</td>
+                            </tr>
+                            <tr>
+                                <th scope="row"><strong>CT04 / CT06 Northern Maritime Expressway</strong></th>
+                                <td><strong>Hà Nội – Hải Phòng – Hạ Long – Vân Đồn – Móng Cái</strong> high-speed toll corridor linking Red River Delta to Tuần Châu &amp; Đồng Bài (Cát Bà) piers.</td>
+                                <td>Hanoi to <strong>Hạ Long Bay in 2.0–2.5 hours</strong> (down from 4h); Hanoi to <strong>Đồng Bài Ferry (Cát Bà) in 1.5–2.0 hours</strong>; Dcar limousine fare <strong>250,000–450,000 VND</strong>.</td>
+                            </tr>
+                            <tr>
+                                <th scope="row"><strong>CT01 South-Central Expressway (Dầu Giây – Phan Thiết – Vĩnh Hảo – Cam Lâm – Nha Trang)</strong></th>
+                                <td>Continuous 4-lane expressway linking <strong>Ho Chi Minh City</strong> directly to <strong>Mũi Né / Phan Thiết</strong>, <strong>Vĩnh Hy Bay</strong>, <strong>Cam Ranh</strong>, and <strong>Nha Trang</strong>.</td>
+                                <td>HCMC to <strong>Mũi Né / Phan Thiết in 2.5–3.0 hours</strong> (down from 5h); HCMC to <strong>Nha Trang in 4.5–5.0 hours</strong> by highway limousine coach (<strong>280,000–480,000 VND</strong>).</td>
+                            </tr>
+                            <tr>
+                                <th scope="row"><strong>CT01 / CT02 Mekong Delta Expressway (Trung Lương – Mỹ Thuận – Cần Thơ)</strong></th>
+                                <td>Expressway spine and <strong>Mỹ Thuận 2 Bridge</strong> connecting HCMC (Bến xe Miền Tây) across Tiền Giang and Vĩnh Long directly to <strong>Cần Thơ</strong>.</td>
+                                <td>HCMC to <strong>Cần Thơ (Cái Răng Floating Market hub) in 2.0–2.5 hours</strong> (down from 3.5–4h); Phương Trang (Futa) &amp; limousine fare <strong>165,000–250,000 VND</strong>.</td>
                             </tr>
                         </tbody>
                     </table>

@@ -231,6 +231,41 @@ class TestThemeAssetsPipeline(unittest.TestCase):
         self.assertIn('.vg-share-bar', content)
         self.assertIn('page-break-inside: avoid;', content)
 
+    def test_minimalist_ui_zero_emojis_and_zero_inline_toolkit_style_tags(self):
+        """Theme PHP files must contain zero decorative emojis and toolkit shortcodes must emit zero inline <style> tags."""
+        theme_root = THEME_ASSETS.parent
+        emoji_re = re.compile(r'[\U0001F300-\U0001FAFF\u2600-\u27BF]')
+        for php_path in sorted(theme_root.rglob('*.php')):
+            text = php_path.read_text(encoding='utf-8')
+            emojis = emoji_re.findall(text)
+            self.assertEqual(
+                emojis,
+                [],
+                f"Minimalist UI violation: {php_path.name} contains decorative emojis: {emojis}",
+            )
+
+        for inc_name in [
+            'guide-packing-checklist.php',
+            'guide-visa-checker.php',
+            'guide-cost-calculator.php',
+            'guide-season-matrix.php',
+            'guide-airport-navigator.php',
+            'guide-itinerary-finder.php',
+            'guide-interactive-map.php',
+            'guide-photo-dispatch.php',
+        ]:
+            inc_path = theme_root / 'inc' / inc_name
+            inc_text = inc_path.read_text(encoding='utf-8')
+            self.assertNotIn(
+                '<style',
+                inc_text.lower(),
+                f"{inc_name} must not emit inline <style> blocks; styles belong in assets/css/.",
+            )
+
+        homepage_css = (THEME_ASSETS / 'css' / 'homepage.css').read_text(encoding='utf-8')
+        self.assertIn('.vg-ref-ledger', homepage_css)
+        self.assertIn('body:has(.vg-guide-experience) .vg-back-to-top', homepage_css)
+
 
 if __name__ == '__main__':
     unittest.main()

@@ -105,11 +105,11 @@ $pageTitle = (string) ($args['title'] ?? get_the_title());
             <div class="vg-share-bar">
                 <span class="vg-share-label"><?php esc_html_e('Share this guide:', 'vietnamguide-premium'); ?></span>
                 <button type="button" class="vg-copy-link" data-vg-copy-link aria-label="<?php esc_attr_e('Copy guide link to clipboard', 'vietnamguide-premium'); ?>">
-                    <span class="vg-copy-link__icon" aria-hidden="true">&#128279;</span>
+                    <span class="vg-copy-link__icon" aria-hidden="true">↗</span>
                     <span class="vg-copy-link__text"><?php esc_html_e('Copy link', 'vietnamguide-premium'); ?></span>
                 </button>
                 <button type="button" class="vg-print-guide" data-vg-print aria-label="<?php esc_attr_e('Print or save field guide as PDF', 'vietnamguide-premium'); ?>">
-                    <span class="vg-print-guide__icon" aria-hidden="true">&#128424;</span>
+                    <span class="vg-print-guide__icon" aria-hidden="true">§</span>
                     <span class="vg-print-guide__text"><?php esc_html_e('Print Field Guide', 'vietnamguide-premium'); ?></span>
                 </button>
             </div>
@@ -149,12 +149,12 @@ $pageTitle = (string) ($args['title'] ?? get_the_title());
             </button>
             <?php if (count($headings) >= 2) : ?>
                 <button type="button" class="vg-dock-btn vg-dock-btn--toc" id="vg-dock-toc" aria-label="<?php esc_attr_e('Jump to Table of Contents', 'vietnamguide-premium'); ?>" title="<?php esc_attr_e('Table of Contents', 'vietnamguide-premium'); ?>">
-                    <span aria-hidden="true">📋</span>
+                    <span aria-hidden="true">§</span>
                     <span class="vg-dock-label"><?php esc_html_e('Sections', 'vietnamguide-premium'); ?></span>
                 </button>
             <?php endif; ?>
             <button type="button" class="vg-dock-btn vg-dock-btn--tools" id="vg-dock-tools" aria-expanded="false" aria-haspopup="dialog" aria-label="<?php esc_attr_e('Open travel planning tools', 'vietnamguide-premium'); ?>">
-                <span aria-hidden="true">🧳</span>
+                <span aria-hidden="true">•</span>
                 <span class="vg-dock-label"><?php esc_html_e('Tools', 'vietnamguide-premium'); ?></span>
             </button>
             <div class="vg-dock-progress-indicator" id="vg-dock-pct" aria-hidden="true">0%</div>
@@ -167,27 +167,27 @@ $pageTitle = (string) ($args['title'] ?? get_the_title());
             </div>
             <nav class="vg-dock-tools-grid">
                 <a href="<?php echo esc_url(home_url('/costs/vietnam-travel-cost/')); ?>" class="vg-dock-tool-link">
-                    <span class="vg-dock-tool-icon">💰</span>
+                    <span class="vg-dock-tool-icon" aria-hidden="true">§</span>
                     <span class="vg-dock-tool-name"><?php esc_html_e('Budget Calculator', 'vietnamguide-premium'); ?></span>
                 </a>
                 <a href="<?php echo esc_url(home_url('/plan/vietnam-evisa/')); ?>" class="vg-dock-tool-link">
-                    <span class="vg-dock-tool-icon">🛂</span>
+                    <span class="vg-dock-tool-icon" aria-hidden="true">§</span>
                     <span class="vg-dock-tool-name"><?php esc_html_e('Visa Checker', 'vietnamguide-premium'); ?></span>
                 </a>
                 <a href="<?php echo esc_url(home_url('/plan/best-time-to-visit-vietnam/')); ?>" class="vg-dock-tool-link">
-                    <span class="vg-dock-tool-icon">☀️</span>
+                    <span class="vg-dock-tool-icon" aria-hidden="true">§</span>
                     <span class="vg-dock-tool-name"><?php esc_html_e('Season & Weather', 'vietnamguide-premium'); ?></span>
                 </a>
                 <a href="<?php echo esc_url(home_url('/plan/vietnam-airport-arrival-checklist/')); ?>" class="vg-dock-tool-link">
-                    <span class="vg-dock-tool-icon">✈️</span>
+                    <span class="vg-dock-tool-icon" aria-hidden="true">↗</span>
                     <span class="vg-dock-tool-name"><?php esc_html_e('Airport Transit', 'vietnamguide-premium'); ?></span>
                 </a>
                 <a href="<?php echo esc_url(home_url('/itineraries/')); ?>" class="vg-dock-tool-link">
-                    <span class="vg-dock-tool-icon">🗺️</span>
+                    <span class="vg-dock-tool-icon" aria-hidden="true">↗</span>
                     <span class="vg-dock-tool-name"><?php esc_html_e('Itinerary Finder', 'vietnamguide-premium'); ?></span>
                 </a>
                 <a href="<?php echo esc_url(home_url('/plan/vietnam-first-trip-planning-checklist/')); ?>" class="vg-dock-tool-link">
-                    <span class="vg-dock-tool-icon">🎒</span>
+                    <span class="vg-dock-tool-icon" aria-hidden="true">§</span>
                     <span class="vg-dock-tool-name"><?php esc_html_e('Packing Checklist', 'vietnamguide-premium'); ?></span>
                 </a>
             </nav>

@@ -39,10 +39,10 @@ function vg_render_cost_calculator_html(): string
         </div>
 
         <noscript>
-            <div class="vg-calc-noscript-card" style="background:#f8f9fa;border:1px solid #cbd5e1;border-radius:8px;padding:20px;margin-bottom:24px;">
-                <p style="font-weight:700;margin-bottom:8px;color:#1a365d;">📋 2026 Vietnam Travel Daily Budget Benchmarks (No-JavaScript Reference):</p>
-                <p style="font-size:0.9rem;margin-bottom:12px;color:#475569;">Interactive calculator features require JavaScript. Here is the authoritative daily cost breakdown across travel tiers:</p>
-                <ul style="margin-bottom:0;padding-left:20px;font-size:0.9rem;line-height:1.6;">
+            <div class="vg-calc-noscript-card">
+                <p>2026 Vietnam Travel Daily Budget Benchmarks (No-JavaScript Reference):</p>
+                <p>Interactive calculator features require JavaScript. Here is the authoritative daily cost breakdown across travel tiers:</p>
+                <ul>
                     <li><strong>Backpacker / Budget:</strong> $32/day ($35 USD solo / ~890,000 VND / €32 / £27 / A$53) / person / day (hostel dorm or shared homestay, street food, bus transit).</li>
                     <li><strong>Mid-Range Comfort:</strong> $78/day ($80 USD solo / ~2,040,000 VND / €74 / £62 / A$122) / person / day (3-star boutique hotel, casual restaurants, Grab rides).</li>
                     <li><strong>Boutique &amp; Heritage (Luxury):</strong> $195/day (~4,970,000 VND / €179 / £152 / A$296) / person / day (5-star heritage resorts, private cruise cabins, fine dining &amp; private chauffeured AC cars).</li>
@@ -60,10 +60,10 @@ function vg_render_cost_calculator_html(): string
                         <span class="vg-calc-route-hint" id="vg-calc-route-active-hint"><?php esc_html_e('Click to load itinerary pacing', 'vietnamguide-premium'); ?></span>
                     </div>
                     <div class="vg-calc-route-chips" role="group" aria-label="<?php echo esc_attr__('Popular route presets', 'vietnamguide-premium'); ?>">
-                        <button type="button" class="vg-calc-route-chip" data-route="ha-giang" title="<?php echo esc_attr__('Ha Giang Loop 4 Days', 'vietnamguide-premium'); ?>" aria-pressed="false">🏍️ Ha Giang Loop (4d)</button>
-                        <button type="button" class="vg-calc-route-chip" data-route="da-nang-hoi-an" title="<?php echo esc_attr__('Da Nang & Hoi An 5 Days', 'vietnamguide-premium'); ?>" aria-pressed="false">🏮 Da Nang &amp; Hoi An (5d)</button>
-                        <button type="button" class="vg-calc-route-chip" data-route="hanoi-ninh-binh-halong" title="<?php echo esc_attr__('Hanoi, Ninh Binh & Ha Long 4 Days', 'vietnamguide-premium'); ?>" aria-pressed="false">⛵ Hanoi - Bay (4d)</button>
-                        <button type="button" class="vg-calc-route-chip" data-route="classic-10d" title="<?php echo esc_attr__('Classic North-to-South 10 Days', 'vietnamguide-premium'); ?>" aria-pressed="false">🚂 North-to-South (10d)</button>
+                        <button type="button" class="vg-calc-route-chip" data-route="ha-giang" title="<?php echo esc_attr__('Ha Giang Loop 4 Days', 'vietnamguide-premium'); ?>" aria-pressed="false">Ha Giang Loop (4d)</button>
+                        <button type="button" class="vg-calc-route-chip" data-route="da-nang-hoi-an" title="<?php echo esc_attr__('Da Nang & Hoi An 5 Days', 'vietnamguide-premium'); ?>" aria-pressed="false">Da Nang &amp; Hoi An (5d)</button>
+                        <button type="button" class="vg-calc-route-chip" data-route="hanoi-ninh-binh-halong" title="<?php echo esc_attr__('Hanoi, Ninh Binh & Ha Long 4 Days', 'vietnamguide-premium'); ?>" aria-pressed="false">Hanoi - Bay (4d)</button>
+                        <button type="button" class="vg-calc-route-chip" data-route="classic-10d" title="<?php echo esc_attr__('Classic North-to-South 10 Days', 'vietnamguide-premium'); ?>" aria-pressed="false">North-to-South (10d)</button>
                     </div>
                 </div>
 
@@ -108,7 +108,7 @@ function vg_render_cost_calculator_html(): string
                                     <span class="vg-calc-style-name"><?php esc_html_e('Mid-Range Comfort', 'vietnamguide-premium'); ?> <span class="vg-calc-tag-rec"><?php esc_html_e('Popular', 'vietnamguide-premium'); ?></span></span>
                                     <span class="vg-calc-style-rate">~$80 / day</span>
                                 </div>
-                                <span class="vg-calc-style-desc"><?php esc_html_e('3-4★ boutique hotels, mix of local bistros & street eats, Grab cars, curated small group day tours.', 'vietnamguide-premium'); ?></span>
+                                <span class="vg-calc-style-desc"><?php esc_html_e('3-4 Star boutique hotels, mix of local bistros & street eats, Grab cars, curated small group day tours.', 'vietnamguide-premium'); ?></span>
                             </div>
                         </label>
 
@@ -119,7 +119,7 @@ function vg_render_cost_calculator_html(): string
                                     <span class="vg-calc-style-name"><?php esc_html_e('Boutique & Heritage', 'vietnamguide-premium'); ?></span>
                                     <span class="vg-calc-style-rate">~$195 / day</span>
                                 </div>
-                                <span class="vg-calc-style-desc"><?php esc_html_e('5★ heritage resorts, private cruise cabins, fine dining & rooftop lounges, private chauffeured AC cars.', 'vietnamguide-premium'); ?></span>
+                                <span class="vg-calc-style-desc"><?php esc_html_e('5 Star heritage resorts, private cruise cabins, fine dining & rooftop lounges, private chauffeured AC cars.', 'vietnamguide-premium'); ?></span>
                             </div>
                         </label>
                     </div>
@@ -251,16 +251,16 @@ function vg_render_cost_calculator_html(): string
                     <div class="vg-tool-share-bar">
                         <span class="vg-share-label"><?php esc_html_e('Share Plan:', 'vietnamguide-premium'); ?></span>
                         <button type="button" class="vg-btn-share" id="vg-calc-share-link">
-                            <span>🔗 <?php esc_html_e('Copy Link', 'vietnamguide-premium'); ?></span>
+                            <span><?php esc_html_e('Copy Link', 'vietnamguide-premium'); ?></span>
                         </button>
                         <a href="#" class="vg-btn-share vg-btn-share--wa" id="vg-calc-share-wa" target="_blank" rel="noopener noreferrer">
-                            <span>💬 WhatsApp</span>
+                            <span>WhatsApp</span>
                         </a>
                         <a href="#" class="vg-btn-share vg-btn-share--tg" id="vg-calc-share-tg" target="_blank" rel="noopener noreferrer">
-                            <span>✈️ Telegram</span>
+                            <span>Telegram</span>
                         </a>
                         <button type="button" class="vg-btn-share vg-btn-share--qr" id="vg-calc-share-qr" aria-label="<?php esc_attr_e('Show QR code for mobile', 'vietnamguide-premium'); ?>">
-                            <span>📱 <?php esc_html_e('QR to Phone', 'vietnamguide-premium'); ?></span>
+                            <span><?php esc_html_e('QR to Phone', 'vietnamguide-premium'); ?></span>
                         </button>
                     </div>
 
@@ -1072,7 +1072,7 @@ function vg_render_cost_calculator_html(): string
                     var url = window.location.href;
                     if (navigator.clipboard && navigator.clipboard.writeText) {
                         navigator.clipboard.writeText(url).then(function () {
-                            showToast('✓ Link copied to clipboard - Share with your travel companion!');
+                            showToast('Link copied to clipboard - Share with your travel companion!');
                             if (typeof window.vgTrack === 'function') {
                                 window.vgTrack('vg_share_plan', { tool: 'cost_calculator', channel: 'copy_link' });
                             }

@@ -162,7 +162,7 @@ add_action('wp_footer', static function (): void {
                 var targetUrl = (modal && modal.getAttribute('data-target-url')) || window.location.href;
                 if (navigator.clipboard && navigator.clipboard.writeText) {
                     navigator.clipboard.writeText(targetUrl).then(function () {
-                        copyBtn.textContent = '✓ Link Copied!';
+                        copyBtn.textContent = 'Link Copied!';
                         setTimeout(function () { copyBtn.textContent = 'Copy Link to Clipboard'; }, 2200);
                     });
                 }

@@ -1,5 +1,6 @@
 # Local agent and worktree state
 .agents/
+.agents/teamwork/
 .qa/
 .superpowers/
 .worktrees/
@@ -8,6 +9,11 @@ __pycache__/
 **/__pycache__/
 *.py[cod]
 *$py.class
+ops/archive-apply-scripts/
+ops/content_fix/
+ops/thin_content/
+ops/reports/
+ops/verification-log.md
 
 # Production data, exports, snapshots, and backups
 *.sql

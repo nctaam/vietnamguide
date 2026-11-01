@@ -252,7 +252,7 @@ function vg_render_packing_checklist(array $attributes = []): string
             <div class="vg-checklist-title-row">
                 <span class="vg-checklist-badge"><?php esc_html_e('Planning Toolkit', 'vietnamguide-premium'); ?></span>
                 <div class="vg-checklist-title" role="heading" aria-level="2">
-                    <span class="vg-checklist-icon" aria-hidden="true">&#10003;</span>
+                    <span class="vg-checklist-icon" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3.5 8.5 6.5 11.5 12.5 4.5"></polyline></svg></span>
                     <?php esc_html_e('Vietnam Travel Packing & Preparation Checklist', 'vietnamguide-premium'); ?>
                 </div>
             </div>
@@ -272,7 +272,7 @@ function vg_render_packing_checklist(array $attributes = []): string
                         <?php esc_html_e('Reset Checklist', 'vietnamguide-premium'); ?>
                     </button>
                     <button type="button" class="vg-checklist-btn-print" data-vg-print aria-label="<?php esc_attr_e('Print this packing checklist', 'vietnamguide-premium'); ?>">
-                        <span aria-hidden="true">&#128424;</span> <?php esc_html_e('Print Checklist', 'vietnamguide-premium'); ?>
+                        <span aria-hidden="true">§</span> <?php esc_html_e('Print Checklist', 'vietnamguide-premium'); ?>
                     </button>
                 </div>
             </div>
@@ -341,26 +341,26 @@ function vg_render_packing_checklist(array $attributes = []): string
         <div class="vg-tool-share-bar">
             <span class="vg-share-label"><?php esc_html_e('Share Checklist:', 'vietnamguide-premium'); ?></span>
             <button type="button" class="vg-btn-share" id="vg-checklist-share-link">
-                <span>🔗 <?php esc_html_e('Copy Checklist Link', 'vietnamguide-premium'); ?></span>
+                <span><span aria-hidden="true">↗</span> <?php esc_html_e('Copy Checklist Link', 'vietnamguide-premium'); ?></span>
             </button>
             <a href="#" class="vg-btn-share vg-btn-share--wa" id="vg-checklist-share-wa" target="_blank" rel="noopener noreferrer">
-                <span>💬 WhatsApp</span>
+                <span><span aria-hidden="true">↗</span> WhatsApp</span>
             </a>
             <a href="#" class="vg-btn-share vg-btn-share--tg" id="vg-checklist-share-tg" target="_blank" rel="noopener noreferrer">
-                <span>✈️ Telegram</span>
+                <span><span aria-hidden="true">↗</span> Telegram</span>
             </a>
             <button type="button" class="vg-btn-share vg-btn-share--qr" id="vg-checklist-share-qr" aria-label="<?php esc_attr_e('Show QR code for mobile', 'vietnamguide-premium'); ?>">
-                <span>📱 <?php esc_html_e('QR to Phone', 'vietnamguide-premium'); ?></span>
+                <span><span aria-hidden="true">§</span> <?php esc_html_e('QR to Phone', 'vietnamguide-premium'); ?></span>
             </button>
         </div>
 
-        <details class="vg-checklist-field-specs" id="vg-checklist-field-specs">
-            <summary class="vg-checklist-specs-summary">
+        <details class="vg-checklist-field-specs vg-ref-ledger" id="vg-checklist-field-specs">
+            <summary class="vg-checklist-specs-summary vg-ref-summary">
                 <span><?php esc_html_e('2025–2026 Vietnam Electrical Grid (220V/50Hz), Aviation Battery & Pharmacy Reference', 'vietnamguide-premium'); ?></span>
                 <span class="vg-checklist-specs-badge"><?php esc_html_e('Verified Technical Specs', 'vietnamguide-premium'); ?></span>
             </summary>
-            <div class="vg-checklist-specs-table-wrap">
-                <table class="vg-checklist-specs-table">
+            <div class="vg-checklist-specs-table-wrap vg-ref-body vg-ref-table-wrap">
+                <table class="vg-checklist-specs-table vg-ref-table">
                     <caption><?php esc_html_e('Verified electrical socket standards, CAAV cabin battery limits, drone customs rules, and emergency pharmacy contacts in Vietnam', 'vietnamguide-premium'); ?></caption>
                     <thead>
                         <tr>
@@ -406,35 +406,35 @@ function vg_render_packing_checklist(array $attributes = []): string
             </div>
             <div class="vg-checklist-synergy-links">
                 <a href="<?php echo esc_url(home_url('/plan/vietnam-evisa/')); ?>" class="vg-checklist-synergy-card vg-synergy-bridge">
-                    <span class="vg-checklist-synergy-icon" aria-hidden="true">&#128196;</span>
+                    <span class="vg-checklist-synergy-icon" aria-hidden="true">§</span>
                     <div>
                         <strong><?php esc_html_e('Visa Exemption & E-Visa Checker', 'vietnamguide-premium'); ?></strong>
                         <p><?php esc_html_e('45-day exemption rules (25 countries), 42 port entry gates, and official $25/$50 90-day E-Visa guidelines.', 'vietnamguide-premium'); ?></p>
                     </div>
                 </a>
                 <a href="<?php echo esc_url(home_url('/costs/vietnam-travel-cost/')); ?>" class="vg-checklist-synergy-card vg-synergy-bridge">
-                    <span class="vg-checklist-synergy-icon" aria-hidden="true">&#128176;</span>
+                    <span class="vg-checklist-synergy-icon" aria-hidden="true">§</span>
                     <div>
                         <strong><?php esc_html_e('Vietnam Travel Cost Calculator', 'vietnamguide-premium'); ?></strong>
                         <p><?php esc_html_e('Calculate realistic cash, boutique stays, and daily budgets in 5 currencies.', 'vietnamguide-premium'); ?></p>
                     </div>
                 </a>
                 <a href="<?php echo esc_url(home_url('/plan/best-time-to-visit-vietnam/')); ?>" class="vg-checklist-synergy-card vg-synergy-bridge">
-                    <span class="vg-checklist-synergy-icon" aria-hidden="true">&#9728;</span>
+                    <span class="vg-checklist-synergy-icon" aria-hidden="true">§</span>
                     <div>
                         <strong><?php esc_html_e('Regional Season & Weather Matrix', 'vietnamguide-premium'); ?></strong>
                         <p><?php esc_html_e('12-month regional climate patterns and rainfall data across North, Central, and South.', 'vietnamguide-premium'); ?></p>
                     </div>
                 </a>
                 <a href="<?php echo esc_url(home_url('/plan/vietnam-airport-arrival-checklist/')); ?>" class="vg-checklist-synergy-card vg-synergy-bridge">
-                    <span class="vg-checklist-synergy-icon" aria-hidden="true">&#9992;</span>
+                    <span class="vg-checklist-synergy-icon" aria-hidden="true">↗</span>
                     <div>
                         <strong><?php esc_html_e('Airport Transit & Arrival Guide', 'vietnamguide-premium'); ?></strong>
                         <p><?php esc_html_e('Grab pick-up zones, metered taxi fares, and arrival procedures across 9 gateway airports (HAN, SGN, DAD, CXR, PQC, HUI, DLI, VDH, HPH).', 'vietnamguide-premium'); ?></p>
                     </div>
                 </a>
                 <a href="<?php echo esc_url(home_url('/itineraries/')); ?>" class="vg-checklist-synergy-card vg-synergy-bridge" data-flagship="<?php echo esc_url(home_url('/itineraries/10-days-in-vietnam/')); ?>">
-                    <span class="vg-checklist-synergy-icon" aria-hidden="true">&#128506;</span>
+                    <span class="vg-checklist-synergy-icon" aria-hidden="true">↗</span>
                     <div>
                         <strong><?php esc_html_e('Interactive Itinerary Finder', 'vietnamguide-premium'); ?></strong>
                         <p><?php esc_html_e('Compare 7, 10, 14, and 21-day itineraries or review the signature 10-day classic route.', 'vietnamguide-premium'); ?></p>
@@ -442,393 +442,6 @@ function vg_render_packing_checklist(array $attributes = []): string
                 </a>
             </div>
         </div>
-
-        <style>
-        .vg-checklist-widget {
-            background: var(--vg-paper-tactile, #FAF8F5);
-            border: 1px solid var(--vg-border-hairline, #E5DFD6);
-            border-radius: 16px;
-            padding: 24px;
-            margin: 32px 0;
-            box-shadow: 0 4px 20px -2px rgba(15, 37, 55, 0.05);
-            font-family: inherit;
-        }
-        .vg-checklist-header {
-            margin-bottom: 20px;
-        }
-        .vg-checklist-title-row {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            flex-wrap: wrap;
-            margin-bottom: 8px;
-        }
-        .vg-checklist-badge {
-            display: inline-block;
-            background: #fdf6e7;
-            color: var(--vg-gold-saffron, #7e5802);
-            font-size: 0.75rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            padding: 4px 10px;
-            border-radius: 9999px;
-            border: 1px solid rgba(201, 148, 70, 0.3);
-        }
-        .vg-checklist-title {
-            font-family: var(--vg-display, serif);
-            font-size: 1.35rem;
-            font-weight: 700;
-            color: var(--vg-navy, #0F2537);
-            margin: 0;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-optical-sizing: auto;
-        }
-        .vg-checklist-icon {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            width: 26px;
-            height: 26px;
-            background: var(--vg-forest, #1E6B52);
-            color: #ffffff;
-            border-radius: 50%;
-            font-size: 0.9rem;
-            font-weight: bold;
-        }
-        .vg-checklist-subhead {
-            color: #4a5568;
-            font-size: 0.95rem;
-            line-height: 1.5;
-            margin: 0 0 16px 0;
-        }
-        .vg-checklist-progress-bar-wrap {
-            height: 10px;
-            background: #ece7de;
-            border-radius: 9999px;
-            overflow: hidden;
-            margin-bottom: 12px;
-        }
-        .vg-checklist-progress-bar {
-            height: 100%;
-            background: linear-gradient(90deg, var(--vg-gold-saffron, #C99446) 0%, var(--vg-forest, #1E6B52) 100%);
-            border-radius: 9999px;
-            transition: width 0.35s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-        .vg-checklist-status-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 12px;
-            font-size: 0.88rem;
-        }
-        .vg-checklist-counter {
-            font-family: var(--vg-mono, monospace);
-            font-variant-numeric: tabular-nums;
-            font-weight: 700;
-            color: var(--vg-navy, #0F2537);
-        }
-        .vg-checklist-actions {
-            display: flex;
-            gap: 12px;
-            align-items: center;
-        }
-        .vg-checklist-btn-text {
-            background: none;
-            border: none;
-            color: #718096;
-            font-size: 0.82rem;
-            cursor: pointer;
-            padding: 4px 8px;
-            text-decoration: underline;
-            transition: color 0.15s ease;
-        }
-        .vg-checklist-btn-text:hover,
-        .vg-checklist-btn-text:focus {
-            color: #c53030;
-        }
-        .vg-checklist-btn-print {
-            background: #ffffff;
-            border: 1px solid var(--vg-border-hairline, #E5DFD6);
-            border-radius: 6px;
-            padding: 6px 12px;
-            font-size: 0.82rem;
-            font-weight: 600;
-            color: var(--vg-ink, #101417);
-            cursor: pointer;
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-        .vg-checklist-btn-print:hover,
-        .vg-checklist-btn-print:focus {
-            background: var(--vg-paper-tactile, #FAF8F5);
-            border-color: var(--vg-gold-saffron, #C99446);
-            transform: translateY(-1px);
-        }
-        .vg-checklist-filters {
-            display: flex;
-            gap: 8px;
-            overflow-x: auto;
-            padding-bottom: 8px;
-            margin-bottom: 20px;
-            border-bottom: 1px solid var(--vg-border-hairline, #E5DFD6);
-            -webkit-overflow-scrolling: touch;
-        }
-        .vg-checklist-tab {
-            background: #ffffff;
-            border: 1px solid var(--vg-border-hairline, #E5DFD6);
-            border-radius: 20px;
-            padding: 6px 14px;
-            font-size: 0.85rem;
-            font-weight: 600;
-            color: var(--vg-muted, #555e65);
-            cursor: pointer;
-            white-space: nowrap;
-            transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-        .vg-checklist-tab:hover,
-        .vg-checklist-tab:focus {
-            background: var(--vg-paper-tactile, #FAF8F5);
-            border-color: var(--vg-gold-saffron, #C99446);
-            color: var(--vg-navy, #0F2537);
-            transform: translateY(-1px);
-        }
-        .vg-checklist-tab.is-active {
-            background: var(--vg-navy, #0F2537);
-            border-color: var(--vg-navy, #0F2537);
-            color: #ffffff;
-            box-shadow: 0 2px 6px rgba(15, 37, 55, 0.25);
-        }
-        .vg-checklist-items {
-            list-style: none;
-            margin: 0;
-            padding: 0;
-            display: grid;
-            gap: 10px;
-        }
-        .vg-checklist-item {
-            background: #ffffff;
-            border: 1px solid var(--vg-border-hairline, #E5DFD6);
-            border-radius: 10px;
-            padding: 12px 16px;
-            transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-        .vg-checklist-item:hover {
-            border-color: var(--vg-gold-saffron, #C99446);
-            background: #ffffff;
-        }
-        .vg-checklist-item.is-packed {
-            background: #f0fdf4;
-            border-color: #bbf7d0;
-        }
-        .vg-checklist-item.is-packed .vg-checklist-name {
-            text-decoration: line-through;
-            color: #4b5563;
-        }
-        .vg-checklist-label {
-            display: flex;
-            align-items: flex-start;
-            gap: 12px;
-            cursor: pointer;
-            margin: 0;
-            user-select: none;
-        }
-        .vg-checklist-checkbox {
-            position: absolute;
-            opacity: 0;
-            width: 0;
-            height: 0;
-        }
-        .vg-checklist-box-custom {
-            flex-shrink: 0;
-            width: 22px;
-            height: 22px;
-            border: 2px solid #cbd5e1;
-            border-radius: 6px;
-            background: #ffffff;
-            margin-top: 2px;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-        .vg-checklist-checkbox:focus + .vg-checklist-box-custom {
-            outline: 2px solid var(--vg-gold-saffron, #C99446);
-            outline-offset: 2px;
-        }
-        .vg-checklist-checkbox:checked + .vg-checklist-box-custom {
-            background: var(--vg-forest, #1E6B52);
-            border-color: var(--vg-forest, #1E6B52);
-        }
-        .vg-checklist-checkbox:checked + .vg-checklist-box-custom::after {
-            content: "\2713";
-            color: #ffffff;
-            font-size: 0.85rem;
-            font-weight: bold;
-        }
-        .vg-checklist-text-col {
-            display: flex;
-            flex-direction: column;
-            gap: 2px;
-        }
-        .vg-checklist-name {
-            font-size: 0.95rem;
-            font-weight: 600;
-            color: #1a202c;
-            line-height: 1.4;
-        }
-        .vg-checklist-context {
-            font-size: 0.82rem;
-            color: #718096;
-            line-height: 1.4;
-        }
-        .vg-checklist-synergy-wrap {
-            margin-top: 28px;
-            padding-top: 20px;
-            border-top: 1px solid var(--vg-border-hairline, #E5DFD6);
-        }
-        .vg-checklist-synergy-title {
-            font-size: 0.9rem;
-            font-weight: 700;
-            color: var(--vg-navy, #0F2537);
-            margin-bottom: 12px;
-            text-transform: uppercase;
-            letter-spacing: 0.04em;
-        }
-        .vg-checklist-synergy-links {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 12px;
-        }
-        .vg-checklist-synergy-card {
-            display: flex;
-            align-items: flex-start;
-            gap: 10px;
-            padding: 10px 12px;
-            background: var(--vg-paper-tactile, #FAF8F5);
-            border: 1px solid var(--vg-border-hairline, #E5DFD6);
-            border-radius: 10px;
-            text-decoration: none;
-            color: inherit;
-            transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-        .vg-checklist-synergy-card:hover,
-        .vg-checklist-synergy-card:focus {
-            background: #ffffff;
-            border-color: var(--vg-gold-saffron, #C99446);
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(15, 37, 55, 0.08);
-        }
-        .vg-checklist-synergy-icon {
-            font-size: 1.25rem;
-            flex-shrink: 0;
-            margin-top: 2px;
-        }
-        .vg-checklist-synergy-card strong {
-            display: block;
-            font-size: 0.85rem;
-            color: var(--vg-navy, #0F2537);
-            line-height: 1.3;
-        }
-        .vg-checklist-synergy-card p {
-            margin: 2px 0 0 0;
-            font-size: 0.75rem;
-            color: #718096;
-            line-height: 1.3;
-        }
-        .vg-checklist-field-specs {
-            margin-top: 20px;
-            background: #ffffff;
-            border: 1px solid var(--vg-border-hairline, #E5DFD6);
-            border-radius: 10px;
-            overflow: hidden;
-        }
-        .vg-checklist-specs-summary {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 12px;
-            padding: 12px 16px;
-            cursor: pointer;
-            font-size: 0.88rem;
-            font-weight: 700;
-            color: var(--vg-navy, #0F2537);
-            background: #f8fafc;
-            list-style: none;
-        }
-        .vg-checklist-specs-summary::-webkit-details-marker {
-            display: none;
-        }
-        .vg-checklist-specs-badge {
-            font-size: 0.72rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.04em;
-            background: #ecfdf5;
-            color: #065f46;
-            padding: 3px 8px;
-            border-radius: 999px;
-            border: 1px solid #a7f3d0;
-            white-space: nowrap;
-        }
-        .vg-checklist-specs-table-wrap {
-            overflow-x: auto;
-            padding: 12px 16px;
-            border-top: 1px solid var(--vg-border-hairline, #E5DFD6);
-        }
-        .vg-checklist-specs-table {
-            width: 100%;
-            border-collapse: collapse;
-            font-size: 0.82rem;
-            text-align: left;
-        }
-        .vg-checklist-specs-table caption {
-            text-align: left;
-            font-size: 0.78rem;
-            color: #64748b;
-            margin-bottom: 8px;
-        }
-        .vg-checklist-specs-table th,
-        .vg-checklist-specs-table td {
-            padding: 8px 10px;
-            border-bottom: 1px solid #f1f5f9;
-            vertical-align: top;
-            line-height: 1.45;
-        }
-        .vg-checklist-specs-table thead th {
-            font-size: 0.75rem;
-            text-transform: uppercase;
-            letter-spacing: 0.04em;
-            color: #475569;
-            background: #f8fafc;
-        }
-        .vg-checklist-specs-table tbody th {
-            font-weight: 700;
-            color: var(--vg-navy, #0F2537);
-            white-space: nowrap;
-        }
-        @media print {
-            .vg-checklist-actions,
-            .vg-checklist-filters,
-            .vg-checklist-progress-bar-wrap,
-            .vg-checklist-synergy-wrap {
-                display: none !important;
-            }
-            .vg-checklist-item {
-                display: block !important;
-                border: 1px solid #999 !important;
-                break-inside: avoid;
-            }
-            .vg-checklist-box-custom {
-                border: 2px solid #000 !important;
-            }
-        }
-        </style>
 
         <script>
         (function() {
@@ -1022,7 +635,7 @@ function vg_render_packing_checklist(array $attributes = []): string
                     var url = window.location.href;
                     if (navigator.clipboard && navigator.clipboard.writeText) {
                         navigator.clipboard.writeText(url).then(function () {
-                            showToast('✓ Link copied to clipboard - Share with your travel companion!');
+                            showToast('Link copied to clipboard — Share with your travel companion!');
                             if (typeof window.vgTrack === 'function') {
                                 window.vgTrack('vg_share_plan', { tool: 'packing_checklist', channel: 'copy_link' });
                             }

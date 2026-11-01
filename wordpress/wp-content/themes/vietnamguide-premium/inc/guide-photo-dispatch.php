@@ -478,7 +478,7 @@ function vg_render_photo_dispatch(array $atts): string
 
                         <details class="vg-dispatch-telemetry-toggle">
                             <summary class="vg-dispatch-telemetry-summary">
-                                <span class="vg-telemetry-toggle-icon" aria-hidden="true">&#9881;</span>
+                                <span class="vg-telemetry-toggle-icon" aria-hidden="true">§</span>
                                 <span><?php echo esc_html__('Technical Optical Telemetry (EXIF & Altitude)', 'vietnamguide-premium'); ?></span>
                                 <span class="vg-telemetry-toggle-hint" aria-hidden="true">&dtrif;</span>
                             </summary>
@@ -515,14 +515,14 @@ function vg_render_photo_dispatch(array $atts): string
         </article>
         <?php endforeach; ?>
 
-        <details class="vg-dispatch-monument-ledger" id="vg-dispatch-monument-ledger">
-            <summary class="vg-dispatch-monument-summary">
+        <details class="vg-dispatch-monument-ledger vg-ref-ledger" id="vg-dispatch-monument-ledger">
+            <summary class="vg-dispatch-monument-summary vg-ref-summary">
                 <span class="vg-dispatch-monument-badge">VERIFIED MONUMENT &amp; BIOSPHERE TARIFFS</span>
                 <span class="vg-dispatch-monument-title">2025–2026 UNESCO Heritage, National Park &amp; Island Ferry Reference Ledger</span>
             </summary>
-            <div class="vg-dispatch-monument-body">
-                <div class="vg-table-scroll-wrapper" role="region" aria-label="2025-2026 Verified Monument, Biosphere and Island Ferry Tariff Reference Ledger" tabindex="0">
-                    <table class="vg-dispatch-monument-table">
+            <div class="vg-dispatch-monument-body vg-ref-body">
+                <div class="vg-table-scroll-wrapper vg-ref-table-wrap" role="region" aria-label="2025-2026 Verified Monument, Biosphere and Island Ferry Tariff Reference Ledger" tabindex="0">
+                    <table class="vg-dispatch-monument-table vg-ref-table">
                         <caption>Verified 2025–2026 UNESCO monument admissions, biosphere conservation fees, and island ferry tariffs across Vietnam</caption>
                         <thead>
                             <tr>

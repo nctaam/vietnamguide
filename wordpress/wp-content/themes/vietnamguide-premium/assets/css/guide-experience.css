@@ -1138,3 +1138,11 @@
     break-inside: avoid;
   }
 }
+
+/* Suppress duplicate footer back-to-top button when the guide experience dock is present */
+body.single .vg-back-to-top,
+body.vg-has-guide-shell .vg-back-to-top,
+body:has(.vg-guide-experience) .vg-back-to-top {
+  display: none !important;
+}
+

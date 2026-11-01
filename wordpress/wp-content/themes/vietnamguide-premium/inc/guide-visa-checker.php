@@ -192,10 +192,10 @@ function vg_render_visa_checker_html(): string
         </div>
 
         <noscript>
-            <div class="vg-visa-noscript-card" style="background:#f8f9fa;border:1px solid #cbd5e1;border-radius:8px;padding:20px;margin-bottom:24px;">
-                <p style="font-weight:700;margin-bottom:8px;color:#1a365d;">🛂 2025–2028 Vietnam Visa Policy Summary (No-JavaScript Reference):</p>
-                <p style="font-size:0.9rem;margin-bottom:12px;color:#475569;">Interactive checker requires JavaScript. Authoritative statutory visa rules under Resolutions 44/NQ-CP, 229/NQ-CP &amp; 127/NQ-CP:</p>
-                <ul style="margin-bottom:0;padding-left:20px;font-size:0.9rem;line-height:1.6;">
+            <div class="vg-visa-noscript-card">
+                <p>2025–2028 Vietnam Visa Policy Summary (No-JavaScript Reference):</p>
+                <p>Interactive checker requires JavaScript. Authoritative statutory visa rules under Resolutions 44/NQ-CP, 229/NQ-CP &amp; 127/NQ-CP:</p>
+                <ul>
                     <li><strong>45-Day Visa Exemption (Res 44/NQ-CP, 2025–2028):</strong> UK, Germany, France, Italy, Spain, Japan, South Korea, Russia, Sweden, Norway, Denmark, Finland (+ Belarus).</li>
                     <li><strong>45-Day Tourism Visa Exemption (Res 229/NQ-CP, Aug 2025–Aug 2028):</strong> Switzerland, Netherlands, Belgium, Poland, Czech Republic, Hungary, Luxembourg, Romania, Slovakia, Slovenia, Bulgaria, Croatia.</li>
                     <li><strong>30-Day Visa Exemption (ASEAN &amp; Bilateral):</strong> Singapore, Thailand, Malaysia, Indonesia, Cambodia, Laos, Kazakhstan, Mongolia, Panama, Philippines (21 days), Chile (90 days).</li>
@@ -210,7 +210,7 @@ function vg_render_visa_checker_html(): string
             <!-- Nationality Input & Quick Chips -->
             <div class="vg-vc-control-group">
                 <label for="vg-vc-country-select" class="vg-vc-label">
-                    <span class="vg-vc-label-icon">🛂</span>
+                    <span class="vg-vc-label-icon">&sect;</span>
                     <span>Your Passport Nationality:</span>
                 </label>
                 <div class="vg-vc-search-wrapper">
@@ -243,7 +243,7 @@ function vg_render_visa_checker_html(): string
             <div class="vg-vc-grid-two">
                 <div class="vg-vc-control-group">
                     <label for="vg-vc-duration-slider" class="vg-vc-label">
-                        <span class="vg-vc-label-icon">📅</span>
+                        <span class="vg-vc-label-icon">&sect;</span>
                         <span>Planned Trip Duration: <strong id="vg-vc-duration-val" class="vg-vc-highlight">14 days</strong></span>
                     </label>
                     <div class="vg-vc-slider-wrap">
@@ -260,7 +260,7 @@ function vg_render_visa_checker_html(): string
 
                 <div class="vg-vc-control-group">
                     <label class="vg-vc-label">
-                        <span class="vg-vc-label-icon">🔄</span>
+                        <span class="vg-vc-label-icon">&sect;</span>
                         <span>Border Entry Type:</span>
                     </label>
                     <div class="vg-vc-toggle-group" role="radiogroup" aria-label="Border Entry Type">
@@ -304,16 +304,16 @@ function vg_render_visa_checker_html(): string
             <div class="vg-tool-share-bar">
                 <span class="vg-share-label"><?php esc_html_e('Share Visa Information:', 'vietnamguide-premium'); ?></span>
                 <button type="button" class="vg-btn-share" id="vg-vc-share-link">
-                    <span>🔗 <?php esc_html_e('Copy Link', 'vietnamguide-premium'); ?></span>
+                    <span><?php esc_html_e('Copy Link', 'vietnamguide-premium'); ?></span>
                 </button>
                 <a href="#" class="vg-btn-share vg-btn-share--wa" id="vg-vc-share-wa" target="_blank" rel="noopener noreferrer">
-                    <span>💬 WhatsApp</span>
+                    <span>WhatsApp</span>
                 </a>
                 <a href="#" class="vg-btn-share vg-btn-share--tg" id="vg-vc-share-tg" target="_blank" rel="noopener noreferrer">
-                    <span>✈️ Telegram</span>
+                    <span>Telegram</span>
                 </a>
                 <button type="button" class="vg-btn-share vg-btn-share--qr" id="vg-vc-share-qr" aria-label="<?php esc_attr_e('Show QR code for mobile', 'vietnamguide-premium'); ?>">
-                    <span>📱 <?php esc_html_e('QR to Phone', 'vietnamguide-premium'); ?></span>
+                    <span><?php esc_html_e('QR to Phone', 'vietnamguide-premium'); ?></span>
                 </button>
             </div>
 
@@ -322,26 +322,26 @@ function vg_render_visa_checker_html(): string
                 <!-- Card 1: Statutory Entry Requirements -->
                 <div class="vg-vc-card">
                     <div class="vg-vc-card-head">
-                        <span class="vg-vc-card-icon">📋</span>
+                        <span class="vg-vc-card-icon">&sect;</span>
                         <div class="vg-vc-card-title">Mandatory Entry Rules</div>
                     </div>
                     <ul class="vg-vc-rule-list" id="vg-vc-rule-list">
                         <li class="vg-vc-rule-item passed">
-                            <span class="vg-vc-rule-icon">✓</span>
+                            <span class="vg-vc-rule-icon">+</span>
                             <div class="vg-vc-rule-content">
                                 <strong>6-Month Passport Validity:</strong>
                                 <span>Must remain valid for at least 6 months past your entry date.</span>
                             </div>
                         </li>
                         <li class="vg-vc-rule-item passed">
-                            <span class="vg-vc-rule-icon">✓</span>
+                            <span class="vg-vc-rule-icon">+</span>
                             <div class="vg-vc-rule-content">
                                 <strong>2 Blank Visa Pages:</strong>
                                 <span>Required for entry and exit immigration stamps.</span>
                             </div>
                         </li>
                         <li class="vg-vc-rule-item passed">
-                            <span class="vg-vc-rule-icon">✓</span>
+                            <span class="vg-vc-rule-icon">+</span>
                             <div class="vg-vc-rule-content">
                                 <strong>Outbound Flight Ticket:</strong>
                                 <span>Must prove departure from Vietnam within <span id="vg-vc-max-days-rule">45</span> days (mandated by airline boarding check).</span>
@@ -360,7 +360,7 @@ function vg_render_visa_checker_html(): string
                 <!-- Card 2: Interactive Passport Expiration Validator -->
                 <div class="vg-vc-card">
                     <div class="vg-vc-card-head">
-                        <span class="vg-vc-card-icon">⏳</span>
+                        <span class="vg-vc-card-icon">&sect;</span>
                         <div class="vg-vc-card-title">Passport Expiry Calculator</div>
                     </div>
                     <p class="vg-vc-card-sub">Test if your actual passport meets the 6-month rule based on your intended arrival date:</p>
@@ -375,7 +375,7 @@ function vg_render_visa_checker_html(): string
                                 <strong id="vg-vc-min-expiry-date"><?php echo esc_html(date('M j, Y', strtotime('+213 days'))); ?></strong>
                             </div>
                             <div class="vg-vc-calc-verdict" id="vg-vc-calc-verdict">
-                                🛡️ Ensure your passport expiration date is strictly after this threshold.
+                                Ensure your passport expiration date is strictly after this threshold.
                             </div>
                         </div>
                     </div>
@@ -384,7 +384,7 @@ function vg_render_visa_checker_html(): string
                 <!-- Card 3: E-Visa Photo & Document Specifications -->
                 <div class="vg-vc-card" id="vg-vc-photo-card">
                     <div class="vg-vc-card-head">
-                        <span class="vg-vc-card-icon">📷</span>
+                        <span class="vg-vc-card-icon">&sect;</span>
                         <div class="vg-vc-card-title">Document &amp; Photo Standards</div>
                     </div>
                     <div class="vg-vc-specs-row">
@@ -412,7 +412,7 @@ function vg_render_visa_checker_html(): string
                 <!-- Card 4: Official Link & Anti-Scam Shield -->
                 <div class="vg-vc-card vg-vc-scam-shield">
                     <div class="vg-vc-card-head">
-                        <span class="vg-vc-card-icon">🛡️</span>
+                        <span class="vg-vc-card-icon">!</span>
                         <div class="vg-vc-card-title">Anti-Scam Advisory &amp; Official Portal</div>
                     </div>
                     <p class="vg-vc-scam-text">
@@ -429,7 +429,7 @@ function vg_render_visa_checker_html(): string
                         </a>
                     </div>
                     <div class="vg-vc-scam-tips">
-                        <span>💡 Tip: Government portals in Vietnam always end in <strong>.gov.vn</strong>. Never enter your credit card on non-.gov.vn domains.</span>
+                        <span>Tip: Government portals in Vietnam always end in <strong>.gov.vn</strong>. Never enter your credit card on non-.gov.vn domains.</span>
                     </div>
                 </div>
             </div>
@@ -438,13 +438,13 @@ function vg_render_visa_checker_html(): string
             <div class="vg-vc-checkpoints-section">
                 <details class="vg-vc-details">
                     <summary class="vg-vc-details-summary">
-                        <span class="vg-vc-summary-icon">📍</span>
+                        <span class="vg-vc-summary-icon">&sect;</span>
                         <span class="vg-vc-summary-text">View All 33 Approved E-Visa Entry &amp; Exit Border Gates</span>
                         <span class="vg-vc-summary-pill">33 Ports Total</span>
                     </summary>
                     <div class="vg-vc-ports-grid">
                         <div class="vg-vc-port-col">
-                            <div class="vg-vc-port-subhead">✈️ 8 International Airports</div>
+                            <div class="vg-vc-port-subhead">8 International Airports</div>
                             <ul>
                                 <?php foreach ($checkpoints['airports'] as $port): ?>
                                     <li><?php echo esc_html($port); ?></li>
@@ -452,7 +452,7 @@ function vg_render_visa_checker_html(): string
                             </ul>
                         </div>
                         <div class="vg-vc-port-col">
-                            <div class="vg-vc-port-subhead">🛂 16 Land Border Gates</div>
+                            <div class="vg-vc-port-subhead">16 Land Border Gates</div>
                             <ul>
                                 <?php foreach ($checkpoints['land'] as $port): ?>
                                     <li><?php echo esc_html($port); ?></li>
@@ -460,7 +460,7 @@ function vg_render_visa_checker_html(): string
                             </ul>
                         </div>
                         <div class="vg-vc-port-col">
-                            <div class="vg-vc-port-subhead">🚢 9 International Seaports</div>
+                            <div class="vg-vc-port-subhead">9 International Seaports</div>
                             <ul>
                                 <?php foreach ($checkpoints['seaports'] as $port): ?>
                                     <li><?php echo esc_html($port); ?></li>
@@ -473,7 +473,7 @@ function vg_render_visa_checker_html(): string
 
             <!-- Special Zone Phu Quoc Accordion -->
             <div class="vg-vc-special-zone">
-                <div class="vg-vc-sz-badge">🏝️ Special Economic Zone Exemption</div>
+                <div class="vg-vc-sz-badge">Special Economic Zone Exemption</div>
                 <div class="vg-vc-sz-content">
                     <strong>Visiting Phu Quoc Island Only?</strong>
                     <span>All foreign nationals (including US, Australia, India, etc.) can enter Phu Quoc completely <strong>visa-free for up to 30 days</strong>, provided they fly directly from abroad or transit via Hanoi/Ho Chi Minh City without leaving the domestic transit terminal, with outbound flight leaving within 30 days.</span>
@@ -483,7 +483,7 @@ function vg_render_visa_checker_html(): string
             <!-- Cross-Tool Contextual Bridge: Next Steps -->
             <div class="vg-vc-next-steps vg-tool-synergy-bar" id="vg-vc-next-steps">
                 <div class="vg-vc-ns-head">
-                    <span class="vg-vc-ns-icon">🗺️</span>
+                    <span class="vg-vc-ns-icon">&rarr;</span>
                     <div class="vg-vc-ns-title"><?php esc_html_e('Next Steps for Your Vietnam Journey', 'vietnamguide-premium'); ?></div>
                 </div>
                 <div class="vg-vc-ns-grid">
@@ -518,7 +518,7 @@ function vg_render_visa_checker_html(): string
             <!-- Copy Action Bar -->
             <div class="vg-vc-action-bar">
                 <button type="button" id="vg-vc-copy-summary" class="vg-vc-btn-copy">
-                    <span class="vg-vc-copy-icon">📋</span>
+                    <span class="vg-vc-copy-icon">&sect;</span>
                     <span id="vg-vc-copy-label">Copy Visa Requirements Summary</span>
                 </button>
                 <span class="vg-vc-copy-hint">Copy formatted requirements checklist to clipboard for your travel notes.</span>
@@ -578,7 +578,7 @@ function vg_render_visa_checker_html(): string
         function updateVisaStatus() {
             const countryInfo = dataset.countries[currentCountry] || {
                 name: 'Your Country',
-                flag: '🌐',
+                flag: 'INTL',
                 cat: 'evisa_90',
                 days: 90
             };
@@ -789,7 +789,7 @@ function vg_render_visa_checker_html(): string
                 if (navigator.clipboard && navigator.clipboard.writeText) {
                     navigator.clipboard.writeText(summaryText).then(() => {
                         const orig = copyLabel.textContent;
-                        copyLabel.textContent = '✓ Copied to Clipboard!';
+                        copyLabel.textContent = 'Copied to Clipboard!';
                         copyBtn.classList.add('copied');
                         setTimeout(() => {
                             copyLabel.textContent = orig;
@@ -815,7 +815,7 @@ function vg_render_visa_checker_html(): string
                 document.execCommand('copy');
                 if (copyLabel) {
                     const orig = copyLabel.textContent;
-                    copyLabel.textContent = '✓ Copied to Clipboard!';
+                    copyLabel.textContent = 'Copied to Clipboard!';
                     setTimeout(() => { copyLabel.textContent = orig; }, 2500);
                 }
             } catch (e) {
@@ -843,7 +843,7 @@ function vg_render_visa_checker_html(): string
                 const url = window.location.href;
                 if (navigator.clipboard && navigator.clipboard.writeText) {
                     navigator.clipboard.writeText(url).then(() => {
-                        showToast('✓ Link copied to clipboard - Share with your travel companion!');
+                        showToast('Link copied to clipboard - Share with your travel companion!');
                         if (typeof window.vgTrack === 'function') {
                             window.vgTrack('vg_share_plan', { tool: 'visa_checker', channel: 'copy_link' });
                         }
