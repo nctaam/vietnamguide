@@ -31,6 +31,7 @@ DEFAULT_MIN_H2_COUNT = 4
 DEFAULT_MIN_TABLES = 1
 DEFAULT_MIN_BLOCKQUOTES = 1
 DEFAULT_MIN_HLS = 85.0
+DEFAULT_MIN_EMPIRICAL_SIGNALS = 30
 
 MANDATORY_FRONTMATTER_FIELDS = [
     "title",
@@ -316,6 +317,10 @@ def audit_markdown_file(
     signals = extract_empirical_signals(body)
     if signals["currency_mentions"] == 0:
         errors.append("No concrete pricing or fees found in text (missing VND/USD amounts)")
+    if signals["total_empirical_signals"] < DEFAULT_MIN_EMPIRICAL_SIGNALS:
+        errors.append(
+            f"Empirical signal density below minimum threshold: {signals['total_empirical_signals']} signals (required >= {DEFAULT_MIN_EMPIRICAL_SIGNALS})"
+        )
     if signals["distance_mentions"] == 0 and signals["transit_time_mentions"] == 0:
         warnings.append("Low transit/spatial density: no km or transit time mentions found")
 
