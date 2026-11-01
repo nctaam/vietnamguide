@@ -2,14 +2,12 @@
 title: "Where to Stay in Hue: Best Areas & Hotels (2026)"
 slug: "where-to-stay-in-hue"
 route_path: "destinations/where-to-stay-in-hue"
-category: "destinations"
-updated_at: "2026-10-24"
+description: "Where to stay in Hue for 2026: compare Imperial Citadel walking streets, Perfume River hotels, and quiet budget homestays in An Cuu with VND rates."
+travel_cluster: "central_heritage"
 last_verified: "2026-10-24"
 author: "VietnamGuide Editorial Team"
-travel_cluster: "central_heritage"
 reading_time_minutes: 12
 word_count: 1459
-description: "Where to stay in Hue for 2026: compare Imperial Citadel walking streets, Perfume River hotels, and quiet budget homestays in An Cuu with VND rates."
 ---
 
 # Where to Stay in Hue: Best Areas & Hotels (2026)

@@ -2,14 +2,12 @@
 title: "Southern Vietnam Itinerary (2026): 5 to 7-Day Route"
 slug: "southern-vietnam-itinerary"
 route_path: "itineraries/southern-vietnam-itinerary"
-category: "itineraries"
 description: "Southern Vietnam itinerary for 2026: practical 5 to 7-day route connecting Saigon, Mekong Delta floating markets, and Phu Quoc island sandy beaches."
-author: "VietnamGuide Editorial Team"
-last_updated: "2026-06-15"
-word_count: 1636
 travel_cluster: "southern_delta"
 last_verified: "2026-10-22"
-reading_time_minutes: "13"
+author: "VietnamGuide Editorial Team"
+reading_time_minutes: 13
+word_count: 1636
 ---
 
 # Southern Vietnam Itinerary (2026): 5 to 7-Day Route Guide

@@ -2,14 +2,12 @@
 title: "Tipping in Vietnam: Etiquette, Rules & Amounts (2026)"
 slug: "tipping-in-vietnam"
 route_path: "plan/tipping-in-vietnam"
-category: "plan"
-updated_at: "2026-10-24"
-author: "VietnamGuide Editorial Team"
-word_count: 1460
 description: "Complete tipping in Vietnam guide: when to tip, service charge norms for tour guides, drivers, spas, and restaurants, plus cash etiquette rates in VND."
 travel_cluster: "national_circuit"
 last_verified: "2026-10-24"
-reading_time_minutes: "9"
+author: "VietnamGuide Editorial Team"
+reading_time_minutes: 9
+word_count: 1460
 ---
 
 # Tipping in Vietnam: Etiquette, Rules & Amounts (2026)

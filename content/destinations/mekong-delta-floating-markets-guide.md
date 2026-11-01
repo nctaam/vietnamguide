@@ -2,14 +2,12 @@
 title: "Mekong Delta Floating Markets: Cai Rang & Cai Be"
 slug: "mekong-delta-floating-markets-guide"
 route_path: "destinations/mekong-delta-floating-markets-guide"
-category: "destinations"
 description: "Explore the Mekong Delta floating markets in 2026: compare Cai Rang and Cai Be, early morning boat tours, departure timing, VND costs, and local fruits."
-author: "VietnamGuide Editorial Team"
-last_updated: "2026-06-15"
-word_count: 1558
 travel_cluster: "mekong_delta"
 last_verified: "2026-10-20"
-reading_time_minutes: "12"
+author: "VietnamGuide Editorial Team"
+reading_time_minutes: 12
+word_count: 1558
 ---
 
 # Mekong Delta Floating Markets: Cai Rang & Cai Be

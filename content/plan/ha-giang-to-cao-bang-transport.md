@@ -2,14 +2,12 @@
 title: "Ha Giang to Cao Bang Transport: Mountain Buses, Motorbike Routes, and Pass Logistics"
 slug: "ha-giang-to-cao-bang-transport"
 route_path: "plan/ha-giang-to-cao-bang-transport"
-category: "plan"
 description: "Ha Giang to Cao Bang transport: local buses and shared minivans via Bao Lac and Highway 34 vs motorbike routes. 2026 schedules, fares, and road tips."
-author: "VietnamGuide Editorial Team"
-last_updated: "2026-06-15"
-word_count: 1315
 travel_cluster: "far_north_frontier"
 last_verified: "2026-10-20"
-reading_time_minutes: "12"
+author: "VietnamGuide Editorial Team"
+reading_time_minutes: 12
+word_count: 1315
 ---
 
 # Ha Giang to Cao Bang Transport: Mountain Buses, Motorbike Routes, and Pass Logistics

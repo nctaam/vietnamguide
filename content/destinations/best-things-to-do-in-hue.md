@@ -2,14 +2,12 @@
 title: "Best Things to Do in Hue (2026): Imperial Citadel, Royal Tombs Combo Tickets, Perfume River & Food"
 slug: "best-things-to-do-in-hue"
 route_path: "destinations/best-things-to-do-in-hue"
-category: "destinations"
 description: "Best things to do in Hue: UNESCO Imperial Citadel walking tours, 200,000 VND royal tomb combo tickets, Perfume River boats, and royal court food costs."
-author: "VietnamGuide Editorial Team"
-last_updated: "2026-06-15"
-word_count: 1261
 travel_cluster: "central_heritage"
 last_verified: "2026-10-22"
-reading_time_minutes: "10"
+author: "VietnamGuide Editorial Team"
+reading_time_minutes: 10
+word_count: 1261
 ---
 
 # Best Things to Do in Hue (2026): Imperial Citadel, Royal Tombs Combo Tickets, Perfume River & Food

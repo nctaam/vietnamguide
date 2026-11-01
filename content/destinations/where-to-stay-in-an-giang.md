@@ -2,7 +2,7 @@
 title: "Where to Stay in An Giang: Chau Doc to Long Xuyen Guide"
 slug: "where-to-stay-in-an-giang"
 route_path: "destinations/where-to-stay-in-an-giang"
-description: "Where to stay in An Giang: compare riverfront hotels in Chau Doc, Nui Sam pilgrimage inns, Long Xuyen city hotels, and rural Tri Ton stilt homestays."
+description: "Where to stay in An Giang: Chau Doc riverfront hotels vs Sam Mountain retreats and Long Xuyen floating market bases with 2026 room rates and travel advice."
 travel_cluster: "mekong_delta"
 last_verified: "2026-10-25"
 author: "VietnamGuide Editorial Team"

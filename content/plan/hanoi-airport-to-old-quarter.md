@@ -2,14 +2,12 @@
 title: "Hanoi Airport (HAN) to Old Quarter Transfer Guide (2026): Express Bus 86, Grab, Taxi & Late-Night Cars"
 slug: "hanoi-airport-to-old-quarter"
 route_path: "plan/hanoi-airport-to-old-quarter"
-category: "plan"
 description: "How to get from Hanoi airport to Old Quarter in 2026: choose hotel pickup, taxi, Grab ride, Express Bus 86, or public bus by arrival hour and bags."
-author: "VietnamGuide Editorial Team"
-last_updated: "2026-06-15"
-word_count: 1467
-travel_cluster: "northern_vietnam"
+travel_cluster: "northern_triangle"
 last_verified: "2026-10-22"
-reading_time_minutes: "9"
+author: "VietnamGuide Editorial Team"
+reading_time_minutes: 9
+word_count: 1467
 ---
 
 # Hanoi Airport (HAN) to Old Quarter Transfer Guide (2026): Express Bus 86, Grab, Taxi & Late-Night Cars

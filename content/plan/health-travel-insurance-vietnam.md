@@ -2,14 +2,12 @@
 title: "Vietnam Travel Insurance & Health Guide: What to Cover"
 slug: "health-travel-insurance-vietnam"
 route_path: "plan/health-travel-insurance-vietnam"
-category: "plan"
-updated_at: "2026-10-24"
-author: "VietnamGuide Editorial Team"
-word_count: 1522
 description: "Vietnam travel insurance and health guide: international hospital networks in Hanoi and HCMC, motorbike injury coverage rules, vaccines, and pharmacies."
 travel_cluster: "national_circuit"
 last_verified: "2026-10-24"
-reading_time_minutes: "8"
+author: "VietnamGuide Editorial Team"
+reading_time_minutes: 8
+word_count: 1522
 ---
 
 # Vietnam Travel Insurance & Health Guide: What to Cover

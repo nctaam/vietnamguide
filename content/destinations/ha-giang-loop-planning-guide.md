@@ -2,14 +2,12 @@
 title: "Ha Giang Loop Planning Guide: Safety, Scenery, Route Fit"
 slug: "ha-giang-loop-planning-guide"
 route_path: "destinations/ha-giang-loop-planning-guide"
-category: "destinations"
 description: "Authoritative Ha Giang Loop planning guide: plan by safety, scenery, easy rider vs self-drive, license rules, weather, road fatigue, and Hanoi buffers."
-author: "VietnamGuide Editorial Team"
-last_updated: "2026-06-15"
-word_count: 1239
 travel_cluster: "northern_highlands"
 last_verified: "2026-10-20"
-reading_time_minutes: "10"
+author: "VietnamGuide Editorial Team"
+reading_time_minutes: 10
+word_count: 1239
 ---
 
 # Ha Giang Loop Planning Guide: Safety, Scenery, Route Fit

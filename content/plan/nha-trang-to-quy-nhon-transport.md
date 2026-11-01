@@ -2,14 +2,12 @@
 title: "Nha Trang to Quy Nhon Transport: Coastal Railway, Bus & Private Car"
 slug: "nha-trang-to-quy-nhon-transport"
 route_path: "plan/nha-trang-to-quy-nhon-transport"
-category: "plan"
 description: "Nha Trang to Quy Nhon transport: scenic coastal trains vs shared limousine vans and private cars along Highway 1D. 2026 ticket fares and travel times."
-author: "VietnamGuide Editorial Team"
-last_updated: "2026-06-15"
-word_count: 1565
 travel_cluster: "coastal_islands"
 last_verified: "2026-10-20"
-reading_time_minutes: "13"
+author: "VietnamGuide Editorial Team"
+reading_time_minutes: 13
+word_count: 1565
 ---
 
 # Nha Trang to Quy Nhon Transport: Coastal Railway, Bus & Private Car

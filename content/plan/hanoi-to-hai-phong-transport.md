@@ -3,7 +3,7 @@ title: "Hanoi to Hai Phong Transport (2026): Train vs Van"
 slug: "hanoi-to-hai-phong-transport"
 route_path: "plan/hanoi-to-hai-phong-transport"
 description: "Daily trains from Hanoi Central and Long Bien (2.5 hours, 95,000 VND) vs 5B Expressway limousines (80 mins, 150,000 VND). 2026 schedules and food tour tips."
-travel_cluster: "ha_long_bay"
+travel_cluster: "northern_triangle"
 last_verified: "2026-10-31"
 author: "VietnamGuide Editorial Team"
 reading_time_minutes: 12

@@ -2,24 +2,17 @@
 title: "Vietnam Craft Beer Guide (2026): Breweries, Taps & Prices"
 slug: "vietnam-craft-beer-guide"
 route_path: "plan/vietnam-craft-beer-guide"
-section: "plan"
-category: "plan"
-page_type: "practical"
-template: "guide"
-status: "published"
-last_reviewed: "2026-10-24"
-last_verified: "2026-10-24"
-updated_at: "2026-10-24"
-author: "VietnamGuide Editorial Team"
-travel_cluster: "national_circuit"
-reading_time_minutes: "8"
-word_count: 1572
 description: "Vietnam craft beer guide: top artisanal breweries in Saigon, Hanoi, and Da Nang, signature tropical IPAs, taproom locations, and 2026 VND room prices."
+travel_cluster: "national_circuit"
+last_verified: "2026-10-24"
+author: "VietnamGuide Editorial Team"
+reading_time_minutes: 8
+word_count: 1572
 ---
 
 # Vietnam Craft Beer Guide (2026): Breweries, Taps & Prices
 
-Vietnam drinks more beer per capita than almost any nation in Southeast Asia, yet the glass in your hand splits into two distinct worlds. On neighborhood plastic stools, unpasteurized street **Bia hơi** costs **10,000 VND to 15,000 VND** ($0.40 to $0.60 USD) per mug, while ice-filled bottles of macro lagers like Saigon Red, Saigon Special, Hanoi Beer, Huda, and Larue sell for **20,000 VND to 35,000 VND** ($0.80 to $1.40 USD). Walk **300 m** from those sidewalk corners in [Ho Chi Minh City](/destinations/ho-chi-minh-city/), [Hanoi](/destinations/hanoi/), or [Da Nang](/destinations/da-nang/) and you enter Southeast Asia's premier craft microbrewery scene.
+Vietnam drinks more beer per capita than almost any nation in Southeast Asia, yet the glass in your hand splits into two distinct worlds. On neighborhood plastic stools, unpasteurized street **Bia hơi** costs **10,000 VND to 15,000 VND** ($0.40 to $0.60 USD) per mug, while ice-filled bottles of macro lagers like Saigon Red, Saigon Special, Hanoi Beer, Huda, and Larue sell for **20,000 VND to 35,000 VND** ($0.80 to $1.40 USD). Walk **300 m** from those sidewalk corners in [Ho Chi Minh City](/destinations/ho-chi-minh-city-travel-guide/), [Hanoi](/destinations/hanoi-travel-guide/), or [Da Nang](/destinations/da-nang-travel-guide/) and you enter Southeast Asia's premier craft microbrewery scene.
 
 Since pioneering taprooms fired up their stainless-steel mash tuns between 2014 and 2026, local brewers have paired imported American Mosaic and Citra hops with indigenous Vietnamese botanicals: single-origin Marou cacao nibs, Phu Quoc black pepper, Dalat passionfruit, calamansi (**Tắc**), red dragon fruit, jasmine blossoms, and northern **Mắc mật** mountain leaves. Expect to pay **85,000 VND to 145,000 VND** ($3.40 to $5.80 USD) for a **330 ml to 400 ml** draft pour and **220,000 VND to 320,000 VND** ($8.80 to $12.80 USD) for a four-glass or six-glass tasting flight.
 
@@ -44,7 +37,7 @@ Understanding how Vietnam's three beer tiers differ in fermentation, serving tem
 
 ## 2. Ho Chi Minh City (Saigon): The Birthplace of Vietnamese Craft Brewing
 
-Southern brewhouses in [Ho Chi Minh City](/destinations/ho-chi-minh-city/) anchor Vietnam's craft beer output, with flagship production facilities in District 12 and Cu Chi supplying high-energy taprooms across District 1, Binh Thanh, and Thao Dien.
+Southern brewhouses in [Ho Chi Minh City](/destinations/ho-chi-minh-city-travel-guide/) anchor Vietnam's craft beer output, with flagship production facilities in District 12 and Cu Chi supplying high-energy taprooms across District 1, Binh Thanh, and Thao Dien.
 
 ### District 1 Flagship Taprooms
 - **Heart of Darkness Craft Brewery** (31D Ly Tu Trong, Ben Nghe, District 1 — **600 m** from the Saigon Opera House, open **11:00 to 00:00**): Named after Joseph Conrad's novella, this regional powerhouse exports to **8** Asian markets and pours **20+** rotating beers on tap. Order a **330 ml** glass of **Dream Alone Pale Ale** (**5.7% ABV**, **42 IBU**, **105,000 VND** / $4.20 USD) or test your palate against **Kurtz's Insane IPA** (**7.1% ABV**, **102 IBU**, **120,000 VND** / $4.80 USD) alongside **Conquistador Mexican Pilsner** infused with fresh calamansi (**4.7% ABV**, **95,000 VND** / $3.80 USD).
@@ -59,7 +52,7 @@ Southern brewhouses in [Ho Chi Minh City](/destinations/ho-chi-minh-city/) ancho
 
 ## 3. Hanoi: Lakeside Microbreweries in Tay Ho & Truc Bach
 
-In [Hanoi](/destinations/hanoi/), the craft beer scene clusters around the breezy shorelines of West Lake (**Hồ Tây**), Truc Bach Lake, and the historic alleys of Hoan Kiem, blending experimental northern herbs with panoramic water views.
+In [Hanoi](/destinations/hanoi-travel-guide/), the craft beer scene clusters around the breezy shorelines of West Lake (**Hồ Tây**), Truc Bach Lake, and the historic alleys of Hoan Kiem, blending experimental northern herbs with panoramic water views.
 
 - **Standing Bar** (170 Tran Vu, Truc Bach, Ba Dinh — **1.5 km** northwest of the Old Quarter, open **15:00 to 23:30**): Occupying a two-story corner overlooking Truc Bach Lake, Standing Bar operates **19 rotating taps** curated from independent northern and central brewers. Pours cost **85,000 VND to 130,000 VND** ($3.40 to $5.20 USD), with weekday happy hours from **16:00 to 19:00** knocking **25,000 VND** ($1.00 USD) off select pints.
 - **Furbrew Craft Beer** (8B/52 To Ngoc Van, Quang An, Tay Ho — **5 km** north of Hoan Kiem Lake): Hanoi's boldest experimental microbrewery. Furbrew gained international fame for its **Phở Beer** (**5.2% ABV**, **115,000 VND** / $4.60 USD), infused with charred ginger, star anise, cinnamon, black cardamom, and coriander seed, alongside cloudy New England IPAs and sour goses brewed with northern **Mắc mật** leaves (**95,000 VND to 135,000 VND** / $3.80 to $5.40 USD).
@@ -70,9 +63,9 @@ In [Hanoi](/destinations/hanoi/), the craft beer scene clusters around the breez
 
 ## 4. Da Nang & Hoi An: Coastal Taprooms & Beachfront Rooftops
 
-Central Vietnam launched Vietnam's zero-impact craft movement. In [Da Nang](/destinations/da-nang/), head to **7 Bridges Da Nang Beach Taproom** in the **My An / An Thuong** neighborhood (**250 m** from My Khe Beach, open **14:00 to 23:30**), where a four-story rooftop terrace looks out toward the Son Tra Peninsula while pouring fresh **Beach Blonde Ale** (**4.5% ABV**, **85,000 VND** / $3.40 USD) and **Sunset Tangerine Wheat** (**95,000 VND** / $3.80 USD). Down the street in An Thuong, **Brewman** and **East West / Heart of Darkness partner bars** serve chilled **330 ml** cans and draft pints for **80,000 VND to 120,000 VND** ($3.20 to $4.80 USD).
+Central Vietnam launched Vietnam's zero-impact craft movement. In [Da Nang](/destinations/da-nang-travel-guide/), head to **7 Bridges Da Nang Beach Taproom** in the **My An / An Thuong** neighborhood (**250 m** from My Khe Beach, open **14:00 to 23:30**), where a four-story rooftop terrace looks out toward the Son Tra Peninsula while pouring fresh **Beach Blonde Ale** (**4.5% ABV**, **85,000 VND** / $3.40 USD) and **Sunset Tangerine Wheat** (**95,000 VND** / $3.80 USD). Down the street in An Thuong, **Brewman** and **East West / Heart of Darkness partner bars** serve chilled **330 ml** cans and draft pints for **80,000 VND to 120,000 VND** ($3.20 to $4.80 USD).
 
-Thirty minutes south in [Hoi An](/destinations/hoi-an/) (**28 km** down the coast), **Pasteur Street Brewing Co. Hoi An Taproom** and **7 Bridges Hoi An** sit within **300 m** of the Japanese Covered Bridge, offering air-conditioned relief after a **2-hour** walking tour with **240,000 VND** ($9.60 USD) four-beer flights.
+Thirty minutes south in [Hoi An](/destinations/hoi-an-ancient-town-guide/) (**28 km** down the coast), **Pasteur Street Brewing Co. Hoi An Taproom** and **7 Bridges Hoi An** sit within **300 m** of the Japanese Covered Bridge, offering air-conditioned relief after a **2-hour** walking tour with **240,000 VND** ($9.60 USD) four-beer flights.
 
 ---
 

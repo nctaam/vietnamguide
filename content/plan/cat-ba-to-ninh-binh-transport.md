@@ -3,7 +3,7 @@ title: "Cat Ba to Ninh Binh Transport (2026): Tourist Bus Combo"
 slug: "cat-ba-to-ninh-binh-transport"
 route_path: "plan/cat-ba-to-ninh-binh-transport"
 description: "Cat Ba to Ninh Binh transport: direct tourist bus and ferry combos via Hai Phong expressway vs private transfers. 2026 schedules, fares, and local tips."
-travel_cluster: "ninh_binh"
+travel_cluster: "ha_long_bay"
 last_verified: "2026-11-01"
 author: "VietnamGuide Editorial Team"
 reading_time_minutes: 12

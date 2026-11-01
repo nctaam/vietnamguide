@@ -412,13 +412,13 @@ function vg_resolve_repository_markdown_path(WP_Post $post): ?string
 
     $slug = trim((string) ($post->post_name ?? ''), '/');
     if ($slug !== '') {
-        foreach (['destinations', 'itineraries', 'compare', 'plan'] as $cat) {
+        foreach (['destinations', 'itineraries', 'compare', 'plan', 'recommend'] as $cat) {
             $routeCandidates[] = $cat . '/' . $slug;
         }
     }
 
     foreach (array_unique($routeCandidates) as $relRoute) {
-        if (! preg_match('#^(destinations|itineraries|compare|plan)/[a-z0-9-]+$#', $relRoute)) {
+        if (! preg_match('#^(destinations|itineraries|compare|plan|recommend)/[a-z0-9-]+$#', $relRoute)) {
             continue;
         }
         foreach ($candidateRoots as $root) {
@@ -472,6 +472,14 @@ function vg_try_load_repository_markdown_guide(WP_Post $post): string
     while ($i < $lineCount) {
         $trimmed = trim((string) $lines[$i]);
         if ($trimmed === '') {
+            $i++;
+            continue;
+        }
+
+        if (str_starts_with($trimmed, '<!--')) {
+            while ($i < $lineCount && ! str_contains((string) $lines[$i], '-->')) {
+                $i++;
+            }
             $i++;
             continue;
         }
@@ -610,6 +618,7 @@ function vg_try_load_repository_markdown_guide(WP_Post $post): string
                 || str_starts_with($cur, '>')
                 || str_starts_with($cur, '|')
                 || str_starts_with($cur, '```')
+                || str_starts_with($cur, '<!--')
                 || preg_match('/^[-*+]\s+/', $cur)
                 || preg_match('/^\d+\.\s+/', $cur)
                 || preg_match('/^-{3,}$|^\*{3,}$|^_{3,}$/', $cur)
@@ -626,10 +635,28 @@ function vg_try_load_repository_markdown_guide(WP_Post $post): string
 
     $title = (string) ($frontmatter['title'] ?? $extractedH1 ?? $post->post_title ?? '');
     $description = (string) ($frontmatter['description'] ?? '');
+    $routePath = trim((string) ($frontmatter['route_path'] ?? ''), '/');
+    $categoryParts = $routePath !== '' ? explode('/', $routePath) : [];
+    $categoryLabel = strtoupper((string) ($categoryParts[0] ?? basename(dirname($mdPath))));
+    $author = (string) ($frontmatter['author'] ?? 'VietnamGuide Editorial Team');
+    $lastVerified = (string) ($frontmatter['last_verified'] ?? $frontmatter['last_updated'] ?? '2026-10-31');
+    $readingTime = max(5, (int) ($frontmatter['reading_time_minutes'] ?? 7));
+
+    $kickerHtml = '<p class="vg-guide-kicker">' . esc_html($categoryLabel) . '</p>';
+    $leadHtml = $description !== '' ? '<p class="vg-guide-lead">' . esc_html($description) . '</p>' : '';
+    $metaHtml = sprintf(
+        '<div class="vg-guide-meta"><span class="vg-guide-meta__author">By %1$s</span><span class="vg-guide-meta__sep" aria-hidden="true"> &middot; </span><span class="vg-guide-meta__updated">Updated %2$s</span><span class="vg-guide-meta__sep" aria-hidden="true"> &middot; </span><span class="vg-guide-meta__reading-time">%3$d min read</span></div>',
+        esc_html($author),
+        esc_html($lastVerified),
+        $readingTime
+    );
+
     $heroHtml = sprintf(
-        '<div class="wp-block-group alignfull vg-guide-hero"><div class="vg-guide-hero__inner"><h1>%1$s</h1>%2$s</div></div>',
+        '<div class="wp-block-group alignfull vg-guide-hero"><div class="vg-guide-hero__inner">%1$s<h1>%2$s</h1>%3$s%4$s</div></div>',
+        $kickerHtml,
         esc_html($title),
-        $description !== '' ? '<p class="vg-guide-lead">' . esc_html($description) . '</p>' : ''
+        $leadHtml,
+        $metaHtml
     );
 
     return $heroHtml . "\n" . implode("\n", $htmlBlocks);

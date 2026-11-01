@@ -3,7 +3,7 @@ title: "Dong Hoi to Hue Transport (2026): Train, Bus & DMZ Car"
 slug: "dong-hoi-to-hue-transport"
 route_path: "plan/dong-hoi-to-hue-transport"
 description: "Reunification Express trains (3 hours, 110,000-160,000 VND) vs direct limousine vans and private DMZ car transfers across 165 km. 2026 rail timetables."
-travel_cluster: "central_heritage"
+travel_cluster: "phong_nha_caves"
 last_verified: "2026-11-01"
 author: "VietnamGuide Editorial Team"
 reading_time_minutes: 8

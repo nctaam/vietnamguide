@@ -2,14 +2,12 @@
 title: "Vietnam Travel Guide: First Trip Planning Order"
 slug: "vietnam-travel-guide"
 route_path: "plan/vietnam-travel-guide"
-category: "plan"
-updated_at: "2026-10-24"
-author: "VietnamGuide Editorial Team"
-word_count: 1583
 description: "Complete Vietnam travel guide for first-timers: step-by-step route planning, visa rules, regional climates, daily budgets, transport, and cultural norms."
 travel_cluster: "national_circuit"
 last_verified: "2026-10-24"
-reading_time_minutes: "9"
+author: "VietnamGuide Editorial Team"
+reading_time_minutes: 9
+word_count: 1583
 ---
 
 # Vietnam Travel Guide: First Trip Planning Order

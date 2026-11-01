@@ -2,14 +2,12 @@
 title: "Where to Stay in Yen Minh (2026): Loop Guesthouses & Pine Lodges"
 slug: "where-to-stay-in-yen-minh"
 route_path: "destinations/where-to-stay-in-yen-minh"
-category: "destinations"
-updated_at: "2026-10-25"
+description: "Where to stay in Yen Minh: town center guesthouses vs pine forest homestays and eco-lodges with 2026 room rates, loop amenities, and Night 1 advice."
+travel_cluster: "northern_highlands"
 last_verified: "2026-10-25"
 author: "VietnamGuide Editorial Team"
-travel_cluster: "northern_highlands"
 reading_time_minutes: 12
 word_count: 1498
-description: "Where to stay in Yen Minh: Night 1 Ha Giang Loop guesthouses along QL4C vs pine forest eco-lodges, steep pass logistics, and 2026 verified room rates."
 ---
 
 # Where to Stay in Yen Minh (2026): Loop Guesthouses & Pine Lodges

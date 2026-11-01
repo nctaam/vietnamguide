@@ -2,14 +2,12 @@
 title: "Where to Stay in Mu Cang Chai (2026): Stays & Resorts"
 slug: "where-to-stay-in-mu-cang-chai"
 route_path: "destinations/where-to-stay-in-mu-cang-chai"
-category: "destinations"
-updated_at: "2026-10-24"
+description: "Where to stay in Mu Cang Chai: La Pan Tan hillside homestays vs Tu Le valley hot spring luxury resorts and town hotels. 2026 room rates and harvest advice."
+travel_cluster: "northern_highlands"
 last_verified: "2026-10-24"
 author: "VietnamGuide Editorial Team"
-travel_cluster: "northern_highlands"
 reading_time_minutes: 12
 word_count: 1405
-description: "Where to stay in Mu Cang Chai: La Pan Tan hillside homestays vs Tu Le valley hot spring luxury resorts and town hotels. 2026 room rates and harvest advice."
 ---
 
 # Where to Stay in Mu Cang Chai (2026): Stays & Resorts

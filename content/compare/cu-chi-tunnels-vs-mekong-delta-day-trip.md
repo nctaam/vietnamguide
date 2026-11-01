@@ -2,14 +2,12 @@
 title: "Cu Chi Tunnels vs Mekong Delta Day Trip: Which Is Better?"
 slug: "cu-chi-tunnels-vs-mekong-delta-day-trip"
 route_path: "compare/cu-chi-tunnels-vs-mekong-delta-day-trip"
-category: "compare"
 description: "Cu Chi Tunnels vs Mekong Delta day trip: compare war history vs river scenery, travel times from Saigon, tour fatigue, speedboat options, and itinerary fit."
-author: "VietnamGuide Editorial Team"
-last_updated: "2026-06-15"
-word_count: 1595
-travel_cluster: "southern_delta"
+travel_cluster: "mekong_delta"
 last_verified: "2026-10-21"
-reading_time_minutes: "10"
+author: "VietnamGuide Editorial Team"
+reading_time_minutes: 10
+word_count: 1595
 ---
 
 # Cu Chi Tunnels vs Mekong Delta Day Trip: Which Is Better?

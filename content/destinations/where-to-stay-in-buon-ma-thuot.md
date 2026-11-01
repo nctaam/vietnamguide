@@ -2,14 +2,12 @@
 title: "Where to Stay in Buon Ma Thuot (2026): City & Eco-Stays"
 slug: "where-to-stay-in-buon-ma-thuot"
 route_path: "destinations/where-to-stay-in-buon-ma-thuot"
-category: "destinations"
-updated_at: "2026-10-24"
+description: "Where to stay in Buon Ma Thuot: central business hotels vs Ako Dhong Ede longhouses and peaceful Lak Lake eco-resorts with 2026 room rates and tips."
+travel_cluster: "central_highlands"
 last_verified: "2026-10-24"
 author: "VietnamGuide Editorial Team"
-travel_cluster: "central_highlands"
 reading_time_minutes: 12
 word_count: 1561
-description: "Where to stay in Buon Ma Thuot: central business hotels vs Ako Dhong Ede longhouses and peaceful Lak Lake eco-resorts with 2026 room rates and tips."
 ---
 
 # Where to Stay in Buon Ma Thuot (2026): City & Eco-Stays

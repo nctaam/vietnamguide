@@ -2,19 +2,12 @@
 title: "Vietnam in August: Mountain Harvests, Coastal Sun, and Late Summer Travel"
 slug: "vietnam-in-august"
 route_path: "plan/vietnam-in-august"
-section: "plan"
-category: "plan"
-page_type: "practical"
-template: "guide"
-status: "published"
-updated_at: "2026-10-25"
-last_reviewed: "2026-10-25"
+description: "Plan Vietnam in August by region: central coast dry sunshine, northern mountain rice terraces, afternoon monsoon rain windows, and 2026 rail transport."
+travel_cluster: "national_circuit"
 last_verified: "2026-10-25"
 author: "VietnamGuide Editorial Team"
-travel_cluster: "national_circuit"
 reading_time_minutes: 12
 word_count: 1524
-description: "Plan your trip to Vietnam in August with regional climate data, early rice harvest timing in northern highlands, central beaches, and rail resilience."
 ---
 
 August marks the late summer transition across Vietnam. Domestic family vacation crowds taper off by mid-month as schools prepare for the academic year. The shift opens quiet beach pockets and competitive lodging rates for international travelers.

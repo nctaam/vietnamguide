@@ -2,14 +2,12 @@
 title: "Tap Water in Vietnam: Drinking, Ice, Brushing Teeth (2026)"
 slug: "tap-water-in-vietnam"
 route_path: "plan/tap-water-in-vietnam"
-category: "plan"
-updated_at: "2026-10-24"
-author: "VietnamGuide Editorial Team"
-word_count: 1484
 description: "Can you drink tap water in Vietnam? Complete guide covering bottled water, street drink ice safety, brushing teeth, boiling, and avoiding stomach illness."
-travel_cluster: "travel_planning"
+travel_cluster: "national_circuit"
 last_verified: "2026-10-24"
+author: "VietnamGuide Editorial Team"
 reading_time_minutes: 8
+word_count: 1484
 ---
 
 # Tap Water in Vietnam: Drinking, Ice, Brushing Teeth (2026)

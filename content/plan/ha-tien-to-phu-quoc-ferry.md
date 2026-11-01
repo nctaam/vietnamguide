@@ -3,7 +3,7 @@ title: "Ha Tien to Phu Quoc Ferry (2026): Speedboat Guide"
 slug: "ha-tien-to-phu-quoc-ferry"
 route_path: "plan/ha-tien-to-phu-quoc-ferry"
 description: "Fast catamarans across 45 km: Superdong (75 mins, 230,000 VND) vs Phu Quoc Express boats departing Ha Tien Port. 2026 timetables and pier vehicle advice."
-travel_cluster: "coastal_islands"
+travel_cluster: "mekong_delta"
 last_verified: "2026-11-01"
 author: "VietnamGuide Editorial Team"
 reading_time_minutes: 8

@@ -2,14 +2,12 @@
 title: "21 Days in Vietnam: Best Three-Week Route for First Trips"
 slug: "21-days-in-vietnam"
 route_path: "itineraries/21-days-in-vietnam"
-category: "itineraries"
 description: "Plan 21 days in Vietnam with a complete full-country route from North to South featuring Ha Giang Loop, Sapa, Central Heritage, Saigon, and Mekong Delta."
-author: "VietnamGuide Editorial Team"
-last_updated: "2026-06-15"
-word_count: 2070
 travel_cluster: "national_circuit"
 last_verified: "2026-10-22"
-reading_time_minutes: "16"
+author: "VietnamGuide Editorial Team"
+reading_time_minutes: 16
+word_count: 2070
 ---
 
 # 21 Days in Vietnam: The Definitive Three-Week Route Guide

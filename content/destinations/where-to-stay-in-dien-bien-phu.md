@@ -2,19 +2,12 @@
 title: "Where to Stay in Dien Bien Phu (2026): Valley Hotels"
 slug: "where-to-stay-in-dien-bien-phu"
 route_path: "destinations/where-to-stay-in-dien-bien-phu"
-section: "destinations"
-category: "destinations"
-page_type: "destination"
-template: "guide"
-status: "published"
-updated_at: "2026-10-25"
-last_reviewed: "2026-10-25"
+description: "Muong Thanh valley hotels near A1 Hill (350,000-800,000 VND) vs French battlefield guesthouses and suburban eco-homestays. 2026 room rates and travel advice."
+travel_cluster: "far_north_frontier"
 last_verified: "2026-10-25"
 author: "VietnamGuide Editorial Team"
-travel_cluster: "far_north_frontier"
 reading_time_minutes: 12
 word_count: 1437
-description: "Muong Thanh valley hotels near A1 Hill (350,000-800,000 VND) vs French battlefield guesthouses and suburban eco-homestays. 2026 room rates and travel advice."
 ---
 
 # Where to Stay in Dien Bien Phu (2026): Valley Hotels

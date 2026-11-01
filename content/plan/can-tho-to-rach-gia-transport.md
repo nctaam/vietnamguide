@@ -2,12 +2,12 @@
 title: "Can Tho to Rach Gia Transport: Bus Schedules, Limousines, Expressways, and Port Transfers"
 slug: "can-tho-to-rach-gia-transport"
 route_path: "plan/can-tho-to-rach-gia-transport"
-description: "Master transit from Can Tho to Rach Gia: 110 km highway routes, FUTA buses, limousine vans, expressway conditions, and fast ferry transfers to Phu Quoc."
+description: "Futa buses and limousine vans covering 110 km (2.5-3 hours, 120,000-160,000 VND) for morning Phu Quoc speedboats. 2026 timetables and pier transfer tips."
 travel_cluster: "mekong_delta"
 last_verified: "2026-10-25"
 author: "VietnamGuide Editorial Team"
 reading_time_minutes: 12
-word_count: 1485
+word_count: 1702
 ---
 
 # Can Tho to Rach Gia Transport: Bus Schedules, Limousines, Expressways, and Port Transfers

@@ -2,24 +2,19 @@
 title: "Pu Luong Trekking Guide (2026): Trails, Difficulty & Maps"
 slug: "pu-luong-trekking-routes-guide"
 route_path: "plan/pu-luong-trekking-routes-guide"
-section: "plan"
-page_type: "practical"
-template: "guide"
-status: "published"
-last_reviewed: "2026-10-24"
+description: "Pu Luong trekking guide: trail maps, day hikes from Ban Don to Kho Muong, Hieu Waterfall walks, local mountain guides, gear advice, and 2026 costs."
+travel_cluster: "northern_highlands"
 last_verified: "2026-10-24"
 author: "VietnamGuide Editorial Team"
-travel_cluster: "northern_triangle"
-reading_time_minutes: "10"
+reading_time_minutes: 10
 word_count: 1449
-description: "Pu Luong trekking guide: trail maps, day hikes from Ban Don to Kho Muong, Hieu Waterfall walks, local mountain guides, gear advice, and 2026 costs."
 ---
 
 # Pu Luong Trekking Guide (2026): Trails, Difficulty & Maps
 
 The Pu Luong Nature Reserve (`Khu Bảo Tồn Thiên Nhiên Pù Luông`) covers 17,662 hectares of protected limestone karst mountains, dense old-growth forest, and agricultural terraces inhabited by the White Thai ethnic minority across Thanh Hóa Province in north-central Vietnam. Unlike the well-trodden corridors around Sa Pa, the trails here remain quiet, raw, and largely unmarked—drawing trekkers who want isolated ridge walks through bamboo canopy rather than paved tourism infrastructure.
 
-Getting to Pu Luong from Hanoi takes roughly 4 hours across 160 km. Drive southwest on national highway QL6 through Hòa Bình to [Mai Châu](/destinations/mai-chau/), then branch onto provincial road DT15C heading south into the reserve. Public buses depart from Mỹ Đình station in Hanoi to Mai Châu daily at 06:00 and 13:30, costing 100,000 VND to 130,000 VND per seat. From Mai Châu town, motorcycle taxis (`xe ôm`) cover the remaining 15 km to Bản Đôn village for 100,000 VND to 150,000 VND.
+Getting to Pu Luong from Hanoi takes roughly 4 hours across 160 km. Drive southwest on national highway QL6 through Hòa Bình to [Mai Châu](/destinations/where-to-stay-in-mai-chau/), then branch onto provincial road DT15C heading south into the reserve. Public buses depart from Mỹ Đình station in Hanoi to Mai Châu daily at 06:00 and 13:30, costing 100,000 VND to 130,000 VND per seat. From Mai Châu town, motorcycle taxis (`xe ôm`) cover the remaining 15 km to Bản Đôn village for 100,000 VND to 150,000 VND.
 
 The entrance fee to Pu Luong Nature Reserve costs 40,000 VND to 50,000 VND per person per day, collected at ranger checkpoints along DT15C. Before setting out, check [Where to Stay in Pù Luông](/destinations/where-to-stay-in-pu-luong/) for accommodation and consult [Where to Stay in Mai Châu](/destinations/where-to-stay-in-mai-chau/) for transit stopover options.
 

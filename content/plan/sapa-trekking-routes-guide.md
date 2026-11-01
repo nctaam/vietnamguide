@@ -2,22 +2,17 @@
 title: "Sapa Trekking Routes Guide: Trails, Difficulty & Maps (2026)"
 slug: "sapa-trekking-routes-guide"
 route_path: "plan/sapa-trekking-routes-guide"
-section: "plan"
-page_type: "practical"
-template: "guide"
-status: "published"
-last_reviewed: "2026-10-24"
+description: "Complete Sapa trekking routes guide: compare Muong Hoa valley trails, Y Linh Ho to Ta Van day hikes, hiring local guides vs solo trekking, and gear."
+travel_cluster: "northern_highlands"
 last_verified: "2026-10-24"
 author: "VietnamGuide Editorial Team"
-travel_cluster: "northern_triangle"
-reading_time_minutes: "10"
+reading_time_minutes: 10
 word_count: 1547
-description: "Complete Sapa trekking routes guide: compare Muong Hoa valley trails, Y Linh Ho to Ta Van day hikes, hiring local guides vs solo trekking, and gear."
 ---
 
 # Sapa Trekking Routes Guide: Trails, Difficulty & Maps (2026)
 
-Trekking in Sa Pa centers on navigating the Hoàng Liên Sơn mountain range, where alpine ridges drop steeply into terraced river valleys cut by monsoon-fed streams. The town of [Sa Pa](/destinations/sapa/) sits at 1,500m above sea level, acting as the staging hub for day walks and multi-day alpine expeditions across the region.
+Trekking in Sa Pa centers on navigating the Hoàng Liên Sơn mountain range, where alpine ridges drop steeply into terraced river valleys cut by monsoon-fed streams. The town of [Sa Pa](/destinations/sapa-travel-guide/) sits at 1,500m above sea level, acting as the staging hub for day walks and multi-day alpine expeditions across the region.
 
 Trail surfaces vary dramatically by season. From November to February, trails harden into packed dirt and loose shale; nighttime temperatures drop below 5°C. Between June and September, heavy monsoon rains turn steep village paths into slippery clay chutes where flash mudslides and leeches become real hazards along river crossings, especially near bamboo groves.
 

@@ -3,7 +3,7 @@ title: "Can Tho to Phu Quoc Transport (2026): Ferry vs Flight"
 slug: "can-tho-to-phu-quoc-transport"
 route_path: "plan/can-tho-to-phu-quoc-transport"
 description: "Direct Vietnam Airlines flights (50 mins) vs buses to Rach Gia Port and 2.5-hour Superdong speedboats. 2026 ticket fares, schedules, and logistics."
-travel_cluster: "coastal_islands"
+travel_cluster: "mekong_delta"
 last_verified: "2026-11-01"
 author: "VietnamGuide Editorial Team"
 reading_time_minutes: 8

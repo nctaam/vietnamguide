@@ -2,14 +2,12 @@
 title: "Where to Stay in Mang Den (2026): Pine Forest Stays"
 slug: "where-to-stay-in-mang-den"
 route_path: "destinations/where-to-stay-in-mang-den"
-category: "destinations"
-updated_at: "2026-10-24"
+description: "Where to stay in Mang Den: pine forest wooden chalets vs town center boutique hotels and Pa Sy waterfall eco-lodges with 2026 room rates and climate tips."
+travel_cluster: "central_highlands"
 last_verified: "2026-10-24"
 author: "VietnamGuide Editorial Team"
-travel_cluster: "central_highlands"
 reading_time_minutes: 12
 word_count: 1503
-description: "Where to stay in Mang Den: pine forest wooden chalets vs town center boutique hotels and Pa Sy waterfall eco-lodges with 2026 room rates and climate tips."
 ---
 
 # Where to Stay in Mang Den (2026): Pine Forest Stays

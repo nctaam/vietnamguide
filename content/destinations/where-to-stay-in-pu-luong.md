@@ -2,14 +2,12 @@
 title: "Where to Stay in Pu Luong (2026): Best Villages & Bases"
 slug: "where-to-stay-in-pu-luong"
 route_path: "destinations/where-to-stay-in-pu-luong"
-category: "destinations"
-updated_at: "2026-10-24"
+description: "Where to stay in Pu Luong: Don village valley view retreats vs Ban Hieu waterwheel homestays with 2026 VND room rates, trekking bases, and local advice."
+travel_cluster: "northern_highlands"
 last_verified: "2026-10-24"
 author: "VietnamGuide Editorial Team"
-travel_cluster: "northern_highlands"
 reading_time_minutes: 10
 word_count: 1555
-description: "Where to stay in Pu Luong: Don village valley view retreats vs Ban Hieu waterwheel homestays with 2026 VND room rates, trekking bases, and local advice."
 ---
 
 # Where to Stay in Pu Luong (2026): Best Villages & Bases

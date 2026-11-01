@@ -2,19 +2,12 @@
 title: "Where to Stay in Cam Ranh (2026): Bai Dai Beach Resorts"
 slug: "where-to-stay-in-cam-ranh"
 route_path: "destinations/where-to-stay-in-cam-ranh"
-section: "destinations"
-category: "destinations"
-page_type: "destination"
-template: "guide"
-status: "published"
-updated_at: "2026-10-24"
-last_reviewed: "2026-10-24"
+description: "Bai Dai beachfront resorts 10 minutes from CXR Airport vs central Cam Ranh hotels and transit guesthouses. 2026 rates, transfers, and beach access."
+travel_cluster: "coastal_islands"
 last_verified: "2026-10-24"
 author: "VietnamGuide Editorial Team"
-travel_cluster: "coastal_islands"
 reading_time_minutes: 12
 word_count: 1564
-description: "Bai Dai beachfront resorts 10 minutes from CXR Airport vs central Cam Ranh hotels and transit guesthouses. 2026 rates, transfers, and beach access."
 ---
 
 Cam Ranh sits between two distinct economic realities. International tourists land at Cam Ranh International Airport (CXR)—the largest resort-serving airport in central Vietnam—and shuttle directly to billion-dollar beach properties strung along a coastal highway. Domestic and business travelers skip the beachfront entirely, sleeping in town center guesthouses before continuing to [Nha Trang](destinations/nha-trang-travel-guide) or catching military supply buses southward.

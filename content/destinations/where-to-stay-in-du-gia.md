@@ -2,19 +2,12 @@
 title: "Where to Stay in Du Gia (2026): Waterfall Homestays"
 slug: "where-to-stay-in-du-gia"
 route_path: "destinations/where-to-stay-in-du-gia"
-section: "destinations"
-category: "destinations"
-page_type: "destination"
-template: "guide"
-status: "published"
-updated_at: "2026-10-25"
-last_reviewed: "2026-10-25"
+description: "Where to stay in Du Gia: traditional Tay wooden stilt houses vs quiet valley homestays near the waterfall with realistic 2026 room rates and meal tips."
+travel_cluster: "northern_highlands"
 last_verified: "2026-10-25"
 author: "VietnamGuide Editorial Team"
-travel_cluster: "northern_highlands"
 reading_time_minutes: 11
 word_count: 1422
-description: "Where to stay in Du Gia: traditional Tay wooden stilt houses vs quiet valley homestays near the waterfall with realistic 2026 room rates and meal tips."
 ---
 
 # Where to Stay in Du Gia (2026): Waterfall Homestays, Tay Stilt Houses & Valley Bases

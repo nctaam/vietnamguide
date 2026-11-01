@@ -2,14 +2,12 @@
 title: "Hue to Hoi An: Train, Car, Bus & Hai Van Pass"
 slug: "hue-to-hoi-an-transport"
 route_path: "plan/hue-to-hoi-an-transport"
-category: "plan"
 description: "Compare Hue to Hoi An transport options: scenic trains, private cars over Hai Van Pass, tourist shuttle buses, and motorbike tours with 2026 costs in VND."
-author: "VietnamGuide Editorial Team"
-last_updated: "2026-06-15"
-word_count: 1503
 travel_cluster: "central_heritage"
 last_verified: "2026-10-22"
-reading_time_minutes: "9"
+author: "VietnamGuide Editorial Team"
+reading_time_minutes: 9
+word_count: 1503
 ---
 
 # Hue to Hoi An: Train, Car, Bus & Hai Van Pass

@@ -2,14 +2,12 @@
 title: "Where to Stay in Hoi An: Old Town vs Beach & Fields (2026)"
 slug: "where-to-stay-in-hoi-an"
 route_path: "destinations/where-to-stay-in-hoi-an"
-category: "destinations"
-updated_at: "2026-10-24"
+description: "Complete guide on where to stay in Hoi An: compare Ancient Town walking distance, An Bang Beach resorts, and Cam Chau rice field villas rates for 2026."
+travel_cluster: "central_heritage"
 last_verified: "2026-10-24"
 author: "VietnamGuide Editorial Team"
-travel_cluster: "central_heritage"
 reading_time_minutes: 12
 word_count: 1411
-description: "Complete guide on where to stay in Hoi An: compare Ancient Town walking distance, An Bang Beach resorts, and Cam Chau rice field villas rates for 2026."
 ---
 
 # Where to Stay in Hoi An: Old Town vs Beach & Fields (2026)

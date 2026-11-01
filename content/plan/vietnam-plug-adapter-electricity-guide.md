@@ -2,14 +2,12 @@
 title: "Vietnam Plug Adapter & Electricity Guide (2026): Outlets"
 slug: "vietnam-plug-adapter-electricity-guide"
 route_path: "plan/vietnam-plug-adapter-electricity-guide"
-category: "plan"
-updated_at: "2026-10-24"
-author: "VietnamGuide Editorial Team"
-word_count: 1594
 description: "Complete Vietnam plug adapter and electricity guide: Type A, C, and F socket compatibility, 220V voltage rules, dual-voltage tech, and converter tips."
-travel_cluster: "travel_planning"
+travel_cluster: "national_circuit"
 last_verified: "2026-10-24"
+author: "VietnamGuide Editorial Team"
 reading_time_minutes: 8
+word_count: 1594
 ---
 
 # Vietnam Plug Adapter & Electricity Guide (2026): Outlets

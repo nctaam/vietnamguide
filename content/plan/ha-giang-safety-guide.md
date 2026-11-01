@@ -2,14 +2,12 @@
 title: "Ha Giang Loop Safety Guide (2026): Decree 168 Fines, 1968 IDP Rules & Easy Riders"
 slug: "ha-giang-safety-guide"
 route_path: "plan/ha-giang-safety-guide"
-category: "plan"
 description: "Authoritative Ha Giang safety guide: evaluate easy rider vs self-drive risks, police checkpoints, hospital access, and valid motorbike insurance rules."
-author: "VietnamGuide Editorial Team"
-last_updated: "2026-06-15"
-word_count: 1710
-travel_cluster: "far_north_frontier"
+travel_cluster: "northern_highlands"
 last_verified: "2026-10-22"
-reading_time_minutes: "9"
+author: "VietnamGuide Editorial Team"
+reading_time_minutes: 9
+word_count: 1710
 ---
 
 # Ha Giang Loop Safety Guide (2026): Decree 168 Fines, 1968 IDP Rules & Easy Riders
@@ -137,8 +135,8 @@ Traffic police (`CSGT`) maintain daily checkpoints at **Bac Sum Pass (`Km 12`)**
 ---
 
 ## Related Far North Frontier & Safety Guides
-- [Ha Giang Travel Guide (`destinations/ha-giang`)](/destinations/ha-giang/) — Complete geographic breakdown of Quan Ba, Dong Van, Ma Pi Leng, and Du Gia.
-- [Ha Giang Loop 3 to 5-Day Itinerary (`itineraries/ha-giang-loop-itinerary`)](/itineraries/ha-giang-loop-itinerary/) — Day-by-day mileage, elevation profiles, and overnight homestay stops.
+- [Ha Giang Travel Guide (`destinations/ha-giang`)](/destinations/ha-giang-loop-planning-guide/) — Complete geographic breakdown of Quan Ba, Dong Van, Ma Pi Leng, and Du Gia.
+- [Ha Giang Loop 3 to 5-Day Itinerary (`itineraries/ha-giang-loop-itinerary`)](/destinations/ha-giang-loop-planning-guide/) — Day-by-day mileage, elevation profiles, and overnight homestay stops.
 - [Northeast Vietnam Itinerary (`itineraries/northeast-vietnam-itinerary`)](/itineraries/northeast-vietnam-itinerary/) — Linking the Ha Giang Loop with Bao Lac (`QL34`), Cao Bang (`Ban Gioc Waterfall`), and Ba Be Lake.
 - [Best Time to Visit Northern Vietnam (`plan/best-time-for-northern-vietnam`)](/plan/best-time-for-northern-vietnam/) — Month-by-month fog, landslide, and temperature matrix for the northern mountains.
-- [Vietnam Safety, Scams & Emergency Numbers (`plan/safety`)](/plan/safety/) — National emergency hotlines (`113` Police, `115` Ambulance), travel insurance rules, and hospital directory.
+- [Vietnam Safety, Scams & Emergency Numbers (`plan/safety`)](/plan/safety-scams-vietnam/) — National emergency hotlines (`113` Police, `115` Ambulance), travel insurance rules, and hospital directory.

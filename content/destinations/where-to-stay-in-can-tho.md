@@ -2,14 +2,12 @@
 title: "Where to Stay in Can Tho (2026): Best Areas & Hotels"
 slug: "where-to-stay-in-can-tho"
 route_path: "destinations/where-to-stay-in-can-tho"
-category: "destinations"
-updated_at: "2026-10-24"
+description: "Where to stay in Can Tho for floating markets: Ninh Kieu Wharf walkability, Cai Rang river lodges, and luxury delta resorts with realistic 2026 VND rates."
+travel_cluster: "mekong_delta"
 last_verified: "2026-10-24"
 author: "VietnamGuide Editorial Team"
-travel_cluster: "mekong_delta"
 reading_time_minutes: 12
 word_count: 1475
-description: "Where to stay in Can Tho for floating markets: Ninh Kieu Wharf walkability, Cai Rang river lodges, and luxury delta resorts with realistic 2026 VND rates."
 ---
 
 # Where to Stay in Can Tho (2026): Best Areas & Hotels

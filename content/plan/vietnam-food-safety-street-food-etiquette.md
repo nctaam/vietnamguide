@@ -2,14 +2,12 @@
 title: "Vietnam Food Safety and Street Food Etiquette Guide"
 slug: "vietnam-food-safety-street-food-etiquette"
 route_path: "plan/vietnam-food-safety-street-food-etiquette"
-category: "plan"
-updated_at: "2026-10-24"
-author: "VietnamGuide Editorial Team"
-word_count: 1374
 description: "Master Vietnam food safety and street food etiquette: choose clean busy stalls, order politely, handle sauces, ice, cash, seating, and flexible dining."
 travel_cluster: "national_circuit"
 last_verified: "2026-10-24"
-reading_time_minutes: "9"
+author: "VietnamGuide Editorial Team"
+reading_time_minutes: 9
+word_count: 1374
 ---
 
 # Vietnam Food Safety and Street Food Etiquette Guide

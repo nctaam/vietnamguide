@@ -2,14 +2,12 @@
 title: "Cat Ba Travel Guide: Island Base, Lan Ha Bay, and Park Time"
 slug: "cat-ba-travel-guide"
 route_path: "destinations/cat-ba-travel-guide"
-category: "destinations"
 description: "Cat Ba travel guide: island base logistics, Lan Ha Bay boat tours, Cannon Fort, Cat Ba National Park hikes, ferry connections from Hanoi, and hotels."
-author: "VietnamGuide Editorial Team"
-last_updated: "2026-06-15"
-word_count: 1502
-travel_cluster: "ha_long_northeast"
+travel_cluster: "ha_long_bay"
 last_verified: "2026-10-20"
-reading_time_minutes: "11"
+author: "VietnamGuide Editorial Team"
+reading_time_minutes: 11
+word_count: 1502
 ---
 
 # Cat Ba Travel Guide: Island Base, Lan Ha Bay, and Park Time

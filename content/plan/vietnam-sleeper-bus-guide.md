@@ -2,14 +2,12 @@
 title: "Vietnam Sleeper Bus Guide: Cabin vs Sleeper & Safety (2026)"
 slug: "vietnam-sleeper-bus-guide"
 route_path: "plan/vietnam-sleeper-bus-guide"
-category: "plan"
-updated_at: "2026-10-24"
-travel_cluster: "practical_planning"
+description: "Complete Vietnam sleeper bus guide: compare luxury VIP private cabin buses with standard sleepers, top operators, safety tips, booking, and hygiene."
+travel_cluster: "national_circuit"
 last_verified: "2026-10-24"
 author: "VietnamGuide Editorial Team"
 reading_time_minutes: 8
 word_count: 1480
-description: "Complete Vietnam sleeper bus guide: compare luxury VIP private cabin buses with standard sleepers, top operators, safety tips, booking, and hygiene."
 ---
 
 # Vietnam Sleeper Bus Guide: Cabin vs Sleeper & Safety (2026)

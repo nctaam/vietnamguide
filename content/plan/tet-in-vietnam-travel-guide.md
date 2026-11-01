@@ -2,14 +2,12 @@
 title: "Tet in Vietnam Travel Guide: Dates, Closures and Routes"
 slug: "tet-in-vietnam-travel-guide"
 route_path: "plan/tet-in-vietnam-travel-guide"
-category: "plan"
-updated_at: "2026-10-24"
-author: "VietnamGuide Editorial Team"
-word_count: 1377
 description: "Authoritative Tet in Vietnam travel guide: exact dates, transport pressure, changed opening hours, holiday etiquette, cash needs, and route decisions."
 travel_cluster: "national_circuit"
 last_verified: "2026-10-24"
-reading_time_minutes: "8"
+author: "VietnamGuide Editorial Team"
+reading_time_minutes: 8
+word_count: 1377
 ---
 
 # Tet in Vietnam Travel Guide: Dates, Closures and Routes

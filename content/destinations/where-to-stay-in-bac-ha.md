@@ -2,14 +2,12 @@
 title: "Where to Stay in Bac Ha (2026): Town vs Village Stays"
 slug: "where-to-stay-in-bac-ha"
 route_path: "destinations/where-to-stay-in-bac-ha"
-category: "destinations"
-updated_at: "2026-10-24"
+description: "Where to stay in Bac Ha: town center hotels vs ethnic Hmong homestays with 2026 VND room rates, Sunday market advice, and Ban Pho village valley lodging."
+travel_cluster: "far_north_frontier"
 last_verified: "2026-10-24"
 author: "VietnamGuide Editorial Team"
-travel_cluster: "northern_highlands"
 reading_time_minutes: 12
 word_count: 1552
-description: "Where to stay in Bac Ha: town center hotels vs ethnic Hmong homestays with 2026 VND room rates, Sunday market advice, and Ban Pho village valley lodging."
 ---
 
 # Where to Stay in Bac Ha (2026): Town vs Village Stays

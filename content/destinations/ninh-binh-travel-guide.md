@@ -2,14 +2,12 @@
 title: "Ninh Binh Travel Guide: Day Trip, Overnight, or Skip?"
 slug: "ninh-binh-travel-guide"
 route_path: "destinations/ninh-binh-travel-guide"
-category: "destinations"
 description: "Ninh Binh travel guide: 95 km train transit from Hanoi, 250,000 VND UNESCO Trang An boat tickets, Hang Mua viewpoint climb, and hotel rates in Tam Coc."
-author: "VietnamGuide Editorial Team"
-last_updated: "2026-06-15"
-word_count: 1624
 travel_cluster: "ninh_binh"
 last_verified: "2026-10-21"
-reading_time_minutes: "13"
+author: "VietnamGuide Editorial Team"
+reading_time_minutes: 13
+word_count: 1624
 ---
 
 # Ninh Binh Travel Guide: Day Trip, Overnight, or Skip?

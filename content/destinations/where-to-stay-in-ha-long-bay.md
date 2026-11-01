@@ -2,14 +2,12 @@
 title: "Where to Stay in Ha Long Bay (2026): Best Areas & Bases"
 slug: "where-to-stay-in-ha-long-bay"
 route_path: "destinations/where-to-stay-in-ha-long-bay"
-category: "destinations"
-updated_at: "2026-10-24"
+description: "Where to stay in Ha Long Bay: Bai Chay hotel strip vs Tuan Chau marina resorts, Hon Gai local living, or overnight cruise staging with 2026 nightly rates."
+travel_cluster: "ha_long_bay"
 last_verified: "2026-10-24"
 author: "VietnamGuide Editorial Team"
-travel_cluster: "northern_coast"
 reading_time_minutes: 10
 word_count: 1599
-description: "Where to stay in Ha Long Bay: Bai Chay hotel strip vs Tuan Chau marina resorts, Hon Gai local living, or overnight cruise staging with 2026 nightly rates."
 ---
 
 # Where to Stay in Ha Long Bay (2026): Best Areas & Bases

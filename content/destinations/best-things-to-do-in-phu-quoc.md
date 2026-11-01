@@ -2,14 +2,12 @@
 title: "Best Things to Do in Phu Quoc (2026): Hon Thom Cable Car, An Thoi Islands, Beaches & 30-Day Visa Free"
 slug: "best-things-to-do-in-phu-quoc"
 route_path: "destinations/best-things-to-do-in-phu-quoc"
-category: "destinations"
 description: "Discover the best things to do in Phu Quoc: Hon Thom cable car, sunset beach bars, An Thoi snorkeling, night markets, and pepper farms with 2026 prices."
-author: "VietnamGuide Editorial Team"
-last_updated: "2026-06-15"
-word_count: 1367
-travel_cluster: "southern_vietnam"
+travel_cluster: "coastal_islands"
 last_verified: "2026-10-22"
-reading_time_minutes: "11"
+author: "VietnamGuide Editorial Team"
+reading_time_minutes: 11
+word_count: 1367
 ---
 
 # Best Things to Do in Phu Quoc (2026): Hon Thom Cable Car, An Thoi Islands, Beaches & 30-Day Visa Free

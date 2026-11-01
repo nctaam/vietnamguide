@@ -3,7 +3,7 @@ title: "Mai Chau to Pu Luong Transport (2026): Van vs Bike"
 slug: "mai-chau-to-pu-luong-transport"
 route_path: "plan/mai-chau-to-pu-luong-transport"
 description: "Highway 15C transfer across 45 km: resort shuttle vans (1.5 hours, 180,000-250,000 VND) vs private cars and motorbikes. 2026 transit times and road advice."
-travel_cluster: "northern_highlands"
+travel_cluster: "far_north_frontier"
 last_verified: "2026-10-31"
 author: "VietnamGuide Editorial Team"
 reading_time_minutes: 12

@@ -2,14 +2,12 @@
 title: "Where to Stay in Ha Giang (2026): Loop Bases & Stays"
 slug: "where-to-stay-in-ha-giang"
 route_path: "destinations/where-to-stay-in-ha-giang"
-category: "destinations"
-updated_at: "2026-10-24"
+description: "Where to stay in Ha Giang and the loop: city staging hostels, Dong Van old town homestays, Meo Vac clay lodges, and Du Gia waterfall stays in 2026."
+travel_cluster: "northern_highlands"
 last_verified: "2026-10-24"
 author: "VietnamGuide Editorial Team"
-travel_cluster: "northern_highlands"
 reading_time_minutes: 12
 word_count: 1562
-description: "Where to stay in Ha Giang and the loop: city staging hostels, Dong Van old town homestays, Meo Vac clay lodges, and Du Gia waterfall stays in 2026."
 ---
 
 # Where to Stay in Ha Giang (2026): Loop Bases & Stays

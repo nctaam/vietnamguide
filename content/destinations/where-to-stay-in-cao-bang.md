@@ -2,14 +2,12 @@
 title: "Where to Stay in Cao Bang (2026): City vs Waterfall"
 slug: "where-to-stay-in-cao-bang"
 route_path: "destinations/where-to-stay-in-cao-bang"
-category: "destinations"
-updated_at: "2026-10-24"
+description: "Bang River hotels in Cao Bang City vs Nguom Ngao and Ban Gioc waterfall stone homestays 85 km away in Trung Khanh. 2026 room rates and border tips."
+travel_cluster: "far_north_frontier"
 last_verified: "2026-10-24"
 author: "VietnamGuide Editorial Team"
-travel_cluster: "northern_highlands"
 reading_time_minutes: 12
 word_count: 1410
-description: "Bang River hotels in Cao Bang City vs Nguom Ngao and Ban Gioc waterfall stone homestays 85 km away in Trung Khanh. 2026 room rates and border tips."
 ---
 
 # Where to Stay in Cao Bang (2026): City vs Waterfall

@@ -2,19 +2,12 @@
 title: "Vietnam in May: Shoulder Season Value, Water Pouring, and Coastal Sun"
 slug: "vietnam-in-may"
 route_path: "plan/vietnam-in-may"
-section: "plan"
-category: "plan"
-page_type: "practical"
-template: "guide"
-status: "published"
-updated_at: "2026-10-25"
-last_reviewed: "2026-10-25"
+description: "Complete Vietnam in May guide: post-holiday shoulder season, central coast beach sunshine, early southern monsoon rains, northern warmth, and packing."
+travel_cluster: "national_circuit"
 last_verified: "2026-10-25"
 author: "VietnamGuide Editorial Team"
-travel_cluster: "national_circuit"
 reading_time_minutes: 12
 word_count: 1585
-description: "Master traveling Vietnam in May with regional climate data, water pouring season in mountain terraces, central beaches, plum harvests, and room rates."
 ---
 
 May delivers a rewarding shoulder-season window across Vietnam. Once the initial surge of the national April 30 and May 1 holiday subsides on May 3, domestic tourist crowds depart coastal hubs and hotel rates plunge between 20% and 35%. What remains is an expansive, unhurried travel landscape marked by distinct microclimates.

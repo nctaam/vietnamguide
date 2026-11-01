@@ -2,14 +2,12 @@
 title: "Where to Stay in Tam Dao (2026): Hotels & Chalets"
 slug: "where-to-stay-in-tam-dao"
 route_path: "destinations/where-to-stay-in-tam-dao"
-category: "destinations"
-updated_at: "2026-10-24"
+description: "Stone Church town-center hotels vs cliffside chalets at 900m elevation with 18-22 deg C mountain weather. 2026 room rates, valley views, and weekend tips."
+travel_cluster: "far_north_frontier"
 last_verified: "2026-10-24"
 author: "VietnamGuide Editorial Team"
-travel_cluster: "northern_highlands"
 reading_time_minutes: 12
 word_count: 1473
-description: "Stone Church town-center hotels vs cliffside chalets at 900m elevation with 18-22 deg C mountain weather. 2026 room rates, valley views, and weekend tips."
 ---
 
 # Where to Stay in Tam Dao (2026): Hotels & Chalets

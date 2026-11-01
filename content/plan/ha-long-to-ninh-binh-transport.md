@@ -3,7 +3,7 @@ title: "Ha Long to Ninh Binh Transport (2026): Bus vs Limousine"
 slug: "ha-long-to-ninh-binh-transport"
 route_path: "plan/ha-long-to-ninh-binh-transport"
 description: "Pier-to-hotel shared limousine vans (3.5 hours, 280,000-350,000 VND) vs express buses covering 190 km via Hai Phong. 2026 cruise transfer schedules."
-travel_cluster: "ninh_binh"
+travel_cluster: "ha_long_bay"
 last_verified: "2026-11-01"
 author: "VietnamGuide Editorial Team"
 reading_time_minutes: 12

@@ -2,14 +2,12 @@
 title: "Tam Coc Travel Guide: Ninh Binh Base, Boat and Route Tips"
 slug: "tam-coc-travel-guide"
 route_path: "destinations/tam-coc-travel-guide"
-category: "destinations"
 description: "Tam Coc travel guide for international visitors: choose the Ninh Binh base, boat timing, cycling, Bich Dong, Mua Cave, season, cost and route pacing."
-author: "VietnamGuide Editorial Team"
-last_updated: "2026-06-15"
-word_count: 1289
-travel_cluster: "hanoi_red_river_delta"
+travel_cluster: "ninh_binh"
 last_verified: "2026-10-22"
-reading_time_minutes: "10"
+author: "VietnamGuide Editorial Team"
+reading_time_minutes: 10
+word_count: 1289
 ---
 
 # Tam Coc Travel Guide: Ninh Binh Base, Boat and Route Tips

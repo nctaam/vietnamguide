@@ -2,14 +2,12 @@
 title: "Vietnam Motorbike License Laws (2026): IDP & Legal Rules"
 slug: "vietnam-motorbike-license-laws"
 route_path: "plan/vietnam-motorbike-license-laws"
-category: "plan"
-updated_at: "2026-10-24"
-author: "VietnamGuide Editorial Team"
-word_count: 1556
 description: "Vietnam motorbike license laws: 1968 Vienna IDP rules, 50cc vs 125cc limits, medical insurance validity risks, and police checkpoint fines for 2026."
 travel_cluster: "national_circuit"
 last_verified: "2026-10-24"
-reading_time_minutes: "9"
+author: "VietnamGuide Editorial Team"
+reading_time_minutes: 9
+word_count: 1556
 ---
 
 # Vietnam Motorbike License Laws (2026): IDP & Legal Rules

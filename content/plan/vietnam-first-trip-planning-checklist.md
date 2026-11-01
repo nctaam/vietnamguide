@@ -2,14 +2,12 @@
 title: "Vietnam First Trip Planning Checklist"
 slug: "vietnam-first-trip-planning-checklist"
 route_path: "plan/vietnam-first-trip-planning-checklist"
-category: "plan"
-updated_at: "2026-10-24"
-last_verified: "2026-10-24"
-travel_cluster: "national_circuit"
-reading_time_minutes: "7"
-author: "VietnamGuide Editorial Team"
-word_count: 1402
 description: "Prepare with our Vietnam first trip planning checklist before booking: entry checks, route shape, weather risk, cost anchors, arrival setup, and tips."
+travel_cluster: "national_circuit"
+last_verified: "2026-10-24"
+author: "VietnamGuide Editorial Team"
+reading_time_minutes: 7
+word_count: 1402
 ---
 
 # Vietnam First Trip Planning Checklist

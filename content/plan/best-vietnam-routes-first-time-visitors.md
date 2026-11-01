@@ -2,14 +2,12 @@
 title: "Best Vietnam Routes for First-Time Visitors (2026): 7, 10 & 14-Day Blueprints"
 slug: "best-vietnam-routes-first-time-visitors"
 route_path: "plan/best-vietnam-routes-first-time-visitors"
-category: "plan"
 description: "Plan the best Vietnam routes for first-time visitors: compare 10-day and 14-day circuits, domestic flight connections, train costs, and travel budgets."
-author: "VietnamGuide Editorial Team"
-last_updated: "2026-06-15"
-word_count: 1494
 travel_cluster: "national_circuit"
 last_verified: "2026-10-22"
-reading_time_minutes: "11"
+author: "VietnamGuide Editorial Team"
+reading_time_minutes: 11
+word_count: 1494
 ---
 
 # Best Vietnam Routes for First-Time Visitors (2026): 7, 10 & 14-Day Blueprints

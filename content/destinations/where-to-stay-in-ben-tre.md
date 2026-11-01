@@ -2,14 +2,12 @@
 title: "Where to Stay in Ben Tre (2026): Best River & Eco-Stays"
 slug: "where-to-stay-in-ben-tre"
 route_path: "destinations/where-to-stay-in-ben-tre"
-category: "destinations"
-updated_at: "2026-10-24"
+description: "Where to stay in Ben Tre: peaceful Ham Luong river eco-lodges vs An Khanh village homestays and central city hotels. 2026 room rates and travel advice."
+travel_cluster: "mekong_delta"
 last_verified: "2026-10-24"
 author: "VietnamGuide Editorial Team"
-travel_cluster: "mekong_delta"
 reading_time_minutes: 12
 word_count: 1442
-description: "Where to stay in Ben Tre: peaceful Ham Luong river eco-lodges vs An Khanh village homestays and central city hotels. 2026 room rates and travel advice."
 ---
 
 # Where to Stay in Ben Tre (2026): Best River & Eco-Stays

@@ -2,14 +2,12 @@
 title: "Transport Within Vietnam (2026): Domestic Flights, Trains, VIP Buses & Cars"
 slug: "transport-within-vietnam"
 route_path: "plan/transport-within-vietnam"
-category: "plan"
 description: "Choose transport within Vietnam by route: domestic flights, trains, private cars, sleeper buses, ferries, airport transfers, prebooking, and live checks."
-author: "VietnamGuide Editorial Team"
-last_updated: "2026-06-15"
-word_count: 1567
 travel_cluster: "national_circuit"
 last_verified: "2026-10-22"
-reading_time_minutes: "8"
+author: "VietnamGuide Editorial Team"
+reading_time_minutes: 8
+word_count: 1567
 ---
 
 # Transport Within Vietnam (2026): Domestic Flights, Trains, VIP Buses & Cars
@@ -127,6 +125,6 @@ Hiring a modern, air-conditioned **private sedan (`4-seater`) or SUV/MPV (`7-sea
 ## Related Transport & Route Planning Guides
 - [Using Grab in Vietnam (`plan/grab-in-vietnam-guide`)](/plan/grab-in-vietnam-guide/) — Connecting train stations and airports (`HAN`, `SGN`, `DAD`) to your hotel via GrabCar and Xanh SM.
 - [Da Nang to Hue: Heritage Train vs Private Car (`itineraries/da-nang-to-hue-train-vs-car`)](/itineraries/da-nang-to-hue-train-vs-car/) — Seat-side selection (`Right` northbound / `Left` southbound) on the `HD1–HD4` Hai Van Pass train.
-- [Hanoi to Sapa: Overnight Train vs VIP Cabin Bus (`plan/hanoi-to-sa-pa-train-vs-bus`)](/plan/hanoi-to-sa-pa-train-vs-bus/) — Comparing the `CT05` expressway sleeper bus (`5.5h`) against the `SP1/SP3` train to Lao Cai (`8h`).
+- [Hanoi to Sapa: Overnight Train vs VIP Cabin Bus (`plan/hanoi-to-sa-pa-train-vs-bus`)](/plan/hanoi-to-sapa-train-vs-sleeper-bus/) — Comparing the `CT05` expressway sleeper bus (`5.5h`) against the `SP1/SP3` train to Lao Cai (`8h`).
 - [Hanoi to Ha Giang Transport Guide (`plan/hanoi-to-ha-giang-transport`)](/plan/hanoi-to-ha-giang-transport/) — Booking `Bang Phan` and `Quang Nghi` 22-cabin palace buses from Old Quarter or Noi Bai Airport (`HAN`).
 - [Rach Gia & Ha Tien to Phu Quoc Ferry Guide (`plan/rach-gia-to-phu-quoc-ferry`)](/plan/rach-gia-to-phu-quoc-ferry/) — High-speed catamaran schedules, VIP anti-seasickness seating, and port transfers.

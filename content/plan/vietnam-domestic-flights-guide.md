@@ -2,14 +2,12 @@
 title: "Vietnam Domestic Flights Guide (2026): Airlines & Tips"
 slug: "vietnam-domestic-flights-guide"
 route_path: "plan/vietnam-domestic-flights-guide"
-category: "plan"
-updated_at: "2026-10-24"
-author: "VietnamGuide Editorial Team"
-word_count: 1590
 description: "Vietnam domestic flights guide: Vietnam Airlines vs Vietjet, baggage allowances, domestic terminals, and airport connection buffers for 2026 routes."
 travel_cluster: "national_circuit"
 last_verified: "2026-10-24"
-reading_time_minutes: "8"
+author: "VietnamGuide Editorial Team"
+reading_time_minutes: 8
+word_count: 1590
 ---
 
 # Vietnam Domestic Flights Guide (2026): Airlines & Tips

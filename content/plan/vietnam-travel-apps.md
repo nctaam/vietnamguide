@@ -2,14 +2,12 @@
 title: "Best Travel Apps for Vietnam (2026): Rides, Maps & Pay"
 slug: "vietnam-travel-apps"
 route_path: "plan/vietnam-travel-apps"
-category: "plan"
-updated_at: "2026-10-24"
-travel_cluster: "practical_planning"
+description: "Best travel apps for Vietnam: Grab and Xanh SM ride-hailing, BusMap transit routes, Google Translate offline packs, and cashless mobile payments tested."
+travel_cluster: "national_circuit"
 last_verified: "2026-10-24"
 author: "VietnamGuide Editorial Team"
 reading_time_minutes: 8
 word_count: 1454
-description: "Best travel apps for Vietnam: Grab and Xanh SM ride-hailing, BusMap transit routes, Google Translate offline packs, and cashless mobile payments tested."
 ---
 
 # Best Travel Apps for Vietnam (2026): Rides, Maps & Pay

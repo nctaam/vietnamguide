@@ -2,14 +2,12 @@
 title: "Vietnam Airport Arrival Checklist"
 slug: "vietnam-airport-arrival-checklist"
 route_path: "plan/vietnam-airport-arrival-checklist"
-category: "plan"
-updated_at: "2026-10-24"
-author: "VietnamGuide Editorial Team"
-word_count: 1577
 description: "Use this Vietnam airport arrival checklist to handle documents, luggage, SIM or eSIM, small cash, verified transport, scams, and first-night decisions."
 travel_cluster: "national_circuit"
 last_verified: "2026-10-24"
-reading_time_minutes: "10"
+author: "VietnamGuide Editorial Team"
+reading_time_minutes: 10
+word_count: 1577
 ---
 
 # Vietnam Airport Arrival Checklist: Step-by-Step Terminal Protocol for 2026

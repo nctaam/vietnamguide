@@ -2,7 +2,7 @@
 title: "Can Tho to Chau Doc Transport: Bus, Limousine, and Cambodia Speedboat Guide"
 slug: "can-tho-to-chau-doc-transport"
 route_path: "plan/can-tho-to-chau-doc-transport"
-description: "Compare Can Tho to Chau Doc transit options: hourly FUTA buses, VIP limousines, private transfers, terminal directions, and onward Cambodia boat departures."
+description: "Can Tho to Chau Doc transport: Futa express buses vs shared limousine minivans and private cars via Highway 91. 2026 schedules, ticket fares, and advice."
 travel_cluster: "mekong_delta"
 last_verified: "2026-10-25"
 author: "VietnamGuide Editorial Team"

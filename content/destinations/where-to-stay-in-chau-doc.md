@@ -2,14 +2,12 @@
 title: "Where to Stay in Chau Doc (2026): Sam Mountain & River"
 slug: "where-to-stay-in-chau-doc"
 route_path: "destinations/where-to-stay-in-chau-doc"
-category: "destinations"
-updated_at: "2026-10-24"
+description: "Where to stay in Chau Doc: luxury riverfront resorts on the Hau River vs Sam Mountain sunset retreats and center hotels. 2026 room rates and border tips."
+travel_cluster: "mekong_delta"
 last_verified: "2026-10-24"
 author: "VietnamGuide Editorial Team"
-travel_cluster: "mekong_delta"
 reading_time_minutes: 12
 word_count: 1453
-description: "Where to stay in Chau Doc: luxury riverfront resorts on the Hau River vs Sam Mountain sunset retreats and center hotels. 2026 room rates and border tips."
 ---
 
 # Where to Stay in Chau Doc (2026): Sam Mountain & River

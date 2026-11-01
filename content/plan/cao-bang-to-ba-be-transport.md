@@ -2,14 +2,12 @@
 title: "Cao Bang to Ba Be Transport (2026): Bus vs Car"
 slug: "cao-bang-to-ba-be-transport"
 route_path: "plan/cao-bang-to-ba-be-transport"
-category: "plan"
 description: "Highway 34 and 279 mountain transfer across 130 km: passenger minivans (4.5 hours, 150,000 VND) vs private cars. 2026 road conditions and lake access tips."
-author: "VietnamGuide Editorial Team"
-last_updated: "2026-06-15"
-word_count: 1290
 travel_cluster: "far_north_frontier"
 last_verified: "2026-10-22"
-reading_time_minutes: "9"
+author: "VietnamGuide Editorial Team"
+reading_time_minutes: 9
+word_count: 1290
 ---
 
 # Cao Bang to Ba Be Transport (2026): Bus vs Car

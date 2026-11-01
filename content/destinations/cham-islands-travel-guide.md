@@ -2,14 +2,12 @@
 title: "Cham Islands Travel Guide: Hoi An Day Trip or Overnight?"
 slug: "cham-islands-travel-guide"
 route_path: "destinations/cham-islands-travel-guide"
-category: "destinations"
 description: "Cham Islands travel guide: speedboats from Hoi An, UNESCO biosphere marine reserve snorkeling, Bai Chong beach, homestay visits, and rough sea season advice."
-author: "VietnamGuide Editorial Team"
-last_updated: "2026-06-15"
-word_count: 1446
 travel_cluster: "central_heritage"
 last_verified: "2026-10-22"
-reading_time_minutes: "8"
+author: "VietnamGuide Editorial Team"
+reading_time_minutes: 8
+word_count: 1446
 ---
 
 # Cham Islands Travel Guide: Hoi An Day Trip or Overnight?
@@ -39,7 +37,7 @@ Because high-speed canoes cross from Hoi An's Cua Dai Pier (`Bến Cửa Đại`
 ## 2. Day Trip vs. Overnight Stay: Which Should You Choose?
 
 ### When a Day Trip From Hoi An Is Enough
-If your [Hoi An](/destinations/hoi-an-travel-guide/) itinerary is limited to `3 nights` and your primary goal is swimming over shallow coral reefs between **April and August**, a half-day speedboat trip or two-tank diving boat covers the highlights without requiring you to pack an overnight bag. Standard day tours pick you up from your Hoi An hotel around `08:00`, clear Cua Dai Border Post by `08:45`, land at Bai Lang (`Bãi Làng`) at `09:05` for a quick walk past the Marine Protected Area museum, the 200-year-old Champa Ancient Well (`Giếng Cổ Chăm`), and Hai Tang Pagoda (`Chùa Hải Tạng`, built in `1758`), then motor out to **Hon Dai** (`Hòn Dài`) or **Bai Xep** (`Bãi Xếp`) for two `45-minute` snorkeling sessions before a grilled seafood lunch under the coconut palms at **Bai Ong** (`Bãi Ông`) or **Bai Chong** (`Bãi Chồng`).
+If your [Hoi An](/destinations/hoi-an-ancient-town-guide/) itinerary is limited to `3 nights` and your primary goal is swimming over shallow coral reefs between **April and August**, a half-day speedboat trip or two-tank diving boat covers the highlights without requiring you to pack an overnight bag. Standard day tours pick you up from your Hoi An hotel around `08:00`, clear Cua Dai Border Post by `08:45`, land at Bai Lang (`Bãi Làng`) at `09:05` for a quick walk past the Marine Protected Area museum, the 200-year-old Champa Ancient Well (`Giếng Cổ Chăm`), and Hai Tang Pagoda (`Chùa Hải Tạng`, built in `1758`), then motor out to **Hon Dai** (`Hòn Dài`) or **Bai Xep** (`Bãi Xếp`) for two `45-minute` snorkeling sessions before a grilled seafood lunch under the coconut palms at **Bai Ong** (`Bãi Ông`) or **Bai Chong** (`Bãi Chồng`).
 
 ### Why an Overnight Homestay Changes the Entire Island Experience
 Between `09:00` and `13:30`, Bai Lang Pier and Bai Ong Beach can host `1,500 to 3,000` day-trippers simultaneously. Once the last `14:00` speedboats roar back toward Cua Dai estuary, the wooden beach chairs at Bai Ong empty out, children play football along the harbor wall at Bai Lang, and squid boats prepare their halogen lamps for dusk.
@@ -88,7 +86,7 @@ Beyond its coral reefs, Hon Lao served for centuries as a freshwater resupply an
 ## 5. Frequently Asked Questions
 
 ### Can I visit the Cham Islands in October, November, December, or January?
-We strongly advise against planning a Cham Islands trip between **October and January**. Northeast monsoon winds create `2.0 to 3.5-meter` swells across the Cua Dai channel, underwater visibility drops below `2 meters` from river silt, and port authorities routinely ban all speedboat departures. During winter, spend your Hoi An days exploring [My Son Sanctuary](/destinations/my-son-sanctuary-guide/), cycling Tra Que Village, or taking the [Cham Islands Day Trip Guide](/plan/cham-islands-day-trip-guide/) alternatives on the mainland.
+We strongly advise against planning a Cham Islands trip between **October and January**. Northeast monsoon winds create `2.0 to 3.5-meter` swells across the Cua Dai channel, underwater visibility drops below `2 meters` from river silt, and port authorities routinely ban all speedboat departures. During winter, spend your Hoi An days exploring [My Son Sanctuary](/destinations/best-things-to-do-in-hoi-an/), cycling Tra Que Village, or taking the [Cham Islands Day Trip Guide](/plan/cham-islands-day-trip-guide/) alternatives on the mainland.
 
 ### Is the wooden supply boat (`Tàu gỗ`) better than the high-speed canoe?
 The `07:30` wooden supply boat (`150,000–200,000 VND` for foreign passengers, `75 to 90 minutes` crossing) is an atmospheric way to travel alongside local market vendors and cargo sacks, but its slow hull rolls heavily in any cross-swell and its single return departure from Bai Lang leaves early at `11:30`—making it impractical for a day trip. Only take the wooden boat if you are staying overnight on a calm summer morning (**May to August**) and want the slow maritime photography experience; otherwise, take the `18-minute` high-speed canoe.

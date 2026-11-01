@@ -2,14 +2,12 @@
 title: "UNESCO Heritage Sites in Vietnam: 2026 Route Guide"
 slug: "unesco-heritage-sites-vietnam"
 route_path: "destinations/unesco-heritage-sites-vietnam"
-category: "destinations"
 description: "Choose which UNESCO heritage sites in Vietnam fit your route, with 2026 updates, first-trip priorities, skip logic, source checks, and verified photo proof."
-author: "VietnamGuide Editorial Team"
-last_updated: "2026-06-15"
-word_count: 1641
-travel_cluster: "national_overview"
+travel_cluster: "national_circuit"
 last_verified: "2026-10-22"
-reading_time_minutes: "11"
+author: "VietnamGuide Editorial Team"
+reading_time_minutes: 11
+word_count: 1641
 ---
 
 # UNESCO Heritage Sites in Vietnam: 2026 Route Guide

@@ -2,14 +2,12 @@
 title: "Mekong Delta Travel Guide: Day Trip, Overnight or Skip?"
 slug: "mekong-delta-travel-guide"
 route_path: "destinations/mekong-delta-travel-guide"
-category: "destinations"
 description: "Mekong Delta travel guide: floating markets in Can Tho, Ben Tre riverboat day trips, homestays in Vinh Long, Chau Doc border routes, and transfer logistics."
-author: "VietnamGuide Editorial Team"
-last_updated: "2026-06-15"
-word_count: 1260
 travel_cluster: "mekong_delta"
 last_verified: "2026-10-23"
-reading_time_minutes: "8"
+author: "VietnamGuide Editorial Team"
+reading_time_minutes: 8
+word_count: 1260
 ---
 
 # Mekong Delta Travel Guide: Day Trip, Overnight or Skip?
@@ -37,7 +35,7 @@ Budget day tours frequently compress thousands of tourists into the same cookie-
 ## 2. Day-Trip Terraces: Ben Tre vs. My Tho
 
 ### Ben Tre: The Coconut Kingdom (`85 km` from Saigon)
-If your schedule only permits a single day out of Ho Chi Minh City, skip commercialized My Tho and cross the Rach Mieu Bridge directly into [Ben Tre](/compare/can-tho-vs-ben-tre/). Known as Vietnam's coconut capital, Ben Tre province contains over `70,000 hectares` of dense coconut plantations threaded by narrow distributary canals (`rạch`) feeding off the Ham Luong River (`Sông Hàm Luông`).
+If your schedule only permits a single day out of Ho Chi Minh City, skip commercialized My Tho and cross the Rach Mieu Bridge directly into [Ben Tre](/compare/mekong-delta-overnight-vs-day-trip/). Known as Vietnam's coconut capital, Ben Tre province contains over `70,000 hectares` of dense coconut plantations threaded by narrow distributary canals (`rạch`) feeding off the Ham Luong River (`Sông Hàm Luông`).
 
 Independent day trips from Saigon take under `2 hours` door-to-door via the Ho Chi Minh City–Trung Luong Expressway (`CT01`). From Ben Tre's Hung Vuong pier, private wooden motorboats navigate quiet side channels before transferring passengers to hand-paddled wooden sampans (`xuồng ba lá`, `200,000 to 350,000 VND` for a private boat charter). Here, rowers guide you through arched water-coconut tunnels (`dừa nước`) where water levels rise and fall with the coastal tide.
 
@@ -83,7 +81,7 @@ The boats stop at the international border checkpoint at Vinh Xuong (Vietnam) an
 
 ## 5. Step-by-Step Logistics & Itinerary Decision (HowTo)
 
-1. **Calculate Your Available Days:** If you have **less than 10 days** total in Vietnam and your itinerary already includes [Hanoi](/destinations/hanoi-travel-guide/), [Ninh Binh](/destinations/ninh-binh-travel-guide/), and [Hoi An](/destinations/hoi-an-travel-guide/), consider **skipping the Delta**. The rural limestone valleys of Ninh Binh provide equally compelling boat excursions without extra travel days.
+1. **Calculate Your Available Days:** If you have **less than 10 days** total in Vietnam and your itinerary already includes [Hanoi](/destinations/hanoi-travel-guide/), [Ninh Binh](/destinations/ninh-binh-travel-guide/), and [Hoi An](/destinations/hoi-an-ancient-town-guide/), consider **skipping the Delta**. The rural limestone valleys of Ninh Binh provide equally compelling boat excursions without extra travel days.
 2. **Book Ben Tre for a Quality 1-Day Trip:** If based in Ho Chi Minh City with a single free day, book a private car (`1,400,000–1,800,000 VND` round-trip) or small-group tour directly to **Ben Tre** rather than My Tho. Depart Saigon by `07:30` to avoid highway traffic.
 3. **Choose Can Tho for an Authentic 2D1N Stay:** If you have **12 to 14 days**, allocate `2 days and 1 night` to Can Tho. Take an express morning coach (`CT02`), explore city sights and the Binh Thuy Ancient House in the afternoon, sleep near Ninh Kieu Wharf, and board a `05:30` private dawn sampan to Cai Rang Market.
 4. **Pack Lightweight Cash and Sun Protection:** Village piers, market boats, and rural fruit orchards operate strictly in cash (`VND`). Carry small denominations (`20,000 to 100,000 VND`) for sampan tips and market fruit purchases.
@@ -102,4 +100,4 @@ Independent travel to Can Tho is straightforward. Book an air-conditioned limous
 Do not miss crispy fried elephant-ear fish (`cá tai tượng chiên xù`), *bánh xèo miền Tây* (crispy turmeric rice crepes stuffed with river shrimp, pork, and bean sprouts, wrapped in wild mustard leaves), and *bún nước lèo* or *lẩu mắm* (rich fermented fish hotpots simmered with eggplant and water lilies).
 
 ### Where should I go next to continue my journey?
-Read our direct head-to-head [Can Tho vs. Ben Tre Comparison](/compare/can-tho-vs-ben-tre/), plan ground transfers with our [Saigon to Can Tho Transport Guide](/plan/ho-chi-minh-city-to-can-tho-transport/), or connect onward to southern beaches via our [Rach Gia to Phu Quoc Ferry Guide](/plan/rach-gia-to-phu-quoc-ferry/).
+Read our direct head-to-head [Can Tho vs. Ben Tre Comparison](/compare/mekong-delta-overnight-vs-day-trip/), plan ground transfers with our [Saigon to Can Tho Transport Guide](/plan/ho-chi-minh-city-to-can-tho-transport/), or connect onward to southern beaches via our [Rach Gia to Phu Quoc Ferry Guide](/plan/rach-gia-to-phu-quoc-ferry/).

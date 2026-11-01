@@ -2,14 +2,12 @@
 title: "Where to Stay in Da Lat: Best Areas & Hotels (2026)"
 slug: "where-to-stay-in-da-lat"
 route_path: "destinations/where-to-stay-in-da-lat"
-category: "destinations"
-updated_at: "2026-10-24"
+description: "Decide where to stay in Da Lat with our neighborhood breakdown: Xuan Huong Lake, French Quarter villas, Tuyen Lam Lake, and farm homestays with VND rates."
+travel_cluster: "central_highlands"
 last_verified: "2026-10-24"
 author: "VietnamGuide Editorial Team"
-travel_cluster: "central_highlands"
 reading_time_minutes: 12
 word_count: 1397
-description: "Decide where to stay in Da Lat with our neighborhood breakdown: Xuan Huong Lake, French Quarter villas, Tuyen Lam Lake, and farm homestays with VND rates."
 ---
 
 # Where to Stay in Da Lat: Best Areas & Hotels (2026)

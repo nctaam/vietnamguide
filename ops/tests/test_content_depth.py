@@ -160,8 +160,8 @@ class TestContentDepthAuditor(unittest.TestCase):
             dir_report["passed"],
             f"Directory audit failed: failed_files={dir_report['failed_files']}, duplicates={dir_report.get('duplicate_route_paths')}",
         )
-        self.assertGreaterEqual(dir_report["scanned_files"], 282)
-        self.assertLessEqual(dir_report["scanned_files"], len(registry_routes))
+        self.assertEqual(dir_report["scanned_files"], 282)
+        self.assertEqual(dir_report["scanned_files"], len(registry_routes))
         self.assertEqual(dir_report["passed_files"], dir_report["scanned_files"])
         self.assertEqual(dir_report.get("duplicate_route_paths"), [])
 
@@ -169,6 +169,21 @@ class TestContentDepthAuditor(unittest.TestCase):
         for r in dir_report["results"]:
             fm = r.get("frontmatter", {})
             rp = str(fm.get("route_path", "")).strip()
+            self.assertEqual(
+                set(fm.keys()),
+                set(auditor.MANDATORY_FRONTMATTER_FIELDS),
+                f"Frontmatter keys must be strictly the 9 canonical keys for '{rp}'",
+            )
+            self.assertIn(
+                fm.get("travel_cluster"),
+                auditor.CANONICAL_TRAVEL_CLUSTERS,
+                f"travel_cluster must be in 12 canonical clusters for '{rp}'",
+            )
+            self.assertEqual(
+                fm.get("word_count"),
+                r.get("word_count"),
+                f"Frontmatter word_count must match substantive word count for '{rp}'",
+            )
             self.assertIn(rp, registry_routes, f"route_path '{rp}' must exist in route_registry.json")
             self.assertNotIn(rp, seen_routes, f"Duplicate route_path '{rp}' found")
             seen_routes.add(rp)
@@ -179,7 +194,7 @@ class TestContentDepthAuditor(unittest.TestCase):
 
         content_root = OPS_DIR.parent / "content"
         md_files = sorted(content_root.rglob("*.md"))
-        self.assertGreaterEqual(len(md_files), 282)
+        self.assertEqual(len(md_files), 282)
 
         for md_path in md_files:
             compiled = compiler.compile_markdown_file(md_path)
@@ -204,6 +219,9 @@ class TestContentDepthAuditor(unittest.TestCase):
         )
         php_src = php_path.read_text(encoding="utf-8")
         self.assertIn("vg_try_load_repository_markdown_guide", php_src)
+        self.assertIn("recommend", php_src)
+        self.assertIn("vg-guide-kicker", php_src)
+        self.assertIn("vg-guide-meta", php_src)
         self.assertNotIn("<h2", php_src.lower())
 
 

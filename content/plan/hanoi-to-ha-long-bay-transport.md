@@ -3,7 +3,7 @@ title: "Hanoi to Ha Long Bay Transport: Limousine, Bus & Car (2026)"
 slug: "hanoi-to-ha-long-bay-transport"
 route_path: "plan/hanoi-to-ha-long-bay-transport"
 description: "Complete Hanoi to Ha Long Bay transport guide: compare 9-seat luxury limousines via Expressway 5B, private transfers, local buses, and cruise pickups."
-travel_cluster: "ha_long_bay"
+travel_cluster: "northern_triangle"
 last_verified: "2026-10-31"
 author: "VietnamGuide Editorial Team"
 reading_time_minutes: 12

@@ -2,14 +2,12 @@
 title: "Best Things to Do in Hanoi: What Is Actually Worth Your Time"
 slug: "best-things-to-do-in-hanoi"
 route_path: "destinations/best-things-to-do-in-hanoi"
-category: "destinations"
 description: "Best things to do in Hanoi: Old Quarter street food walks, Temple of Literature entry fees, water puppet tickets, 2-day transit routes, and top sights."
-author: "VietnamGuide Editorial Team"
-last_updated: "2026-06-15"
-word_count: 1663
 travel_cluster: "northern_triangle"
 last_verified: "2026-10-21"
-reading_time_minutes: "13"
+author: "VietnamGuide Editorial Team"
+reading_time_minutes: 13
+word_count: 1663
 ---
 
 # Best Things to Do in Hanoi: What Is Actually Worth Your Time

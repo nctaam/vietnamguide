@@ -2,14 +2,12 @@
 title: "Sapa to Ha Giang Transport (2026): Bus vs Limousine"
 slug: "sapa-to-ha-giang-transport"
 route_path: "plan/sapa-to-ha-giang-transport"
-category: "plan"
 description: "Sapa to Ha Giang transport: daytime VIP limousines vs overnight sleeper buses via Lao Cai and Highway 279. 2026 schedules, ticket fares, and advice."
-author: "VietnamGuide Editorial Team"
-last_updated: "2026-06-15"
-word_count: 1465
 travel_cluster: "northern_highlands"
 last_verified: "2026-10-22"
-reading_time_minutes: "9"
+author: "VietnamGuide Editorial Team"
+reading_time_minutes: 9
+word_count: 1465
 ---
 
 # Sapa to Ha Giang Transport (2026): Bus vs Limousine

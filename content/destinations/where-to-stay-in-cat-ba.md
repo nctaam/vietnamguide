@@ -2,14 +2,12 @@
 title: "Where to Stay on Cat Ba Island (2026): Best Areas"
 slug: "where-to-stay-in-cat-ba"
 route_path: "destinations/where-to-stay-in-cat-ba"
-category: "destinations"
-updated_at: "2026-10-24"
+description: "Where to stay on Cat Ba Island: waterfront hotels in Cat Ba town, Cat Co cliff resorts, and quiet Viet Hai village eco-lodges with realistic 2026 rates."
+travel_cluster: "ha_long_bay"
 last_verified: "2026-10-24"
 author: "VietnamGuide Editorial Team"
-travel_cluster: "northern_triangle"
 reading_time_minutes: 12
 word_count: 1435
-description: "Where to stay on Cat Ba Island: waterfront hotels in Cat Ba town, Cat Co cliff resorts, and quiet Viet Hai village eco-lodges with realistic 2026 rates."
 ---
 
 # Where to Stay on Cat Ba Island (2026): Best Areas

@@ -2,14 +2,12 @@
 title: "Vietnam Rice Terraces Guide (2026): Sapa vs Mu Cang Chai vs Hoang Su Phi vs Pu Luong"
 slug: "vietnam-rice-terraces-guide"
 route_path: "compare/vietnam-rice-terraces-guide"
-category: "compare"
 description: "Authoritative Vietnam rice terraces guide: compare Sapa, Mu Cang Chai, Hoang Su Phi, and Pu Luong by golden season harvest timing and 2026 hike trails."
-author: "VietnamGuide Editorial Team"
-last_updated: "2026-06-15"
-word_count: 1538
 travel_cluster: "northern_highlands"
 last_verified: "2026-10-22"
-reading_time_minutes: "10"
+author: "VietnamGuide Editorial Team"
+reading_time_minutes: 10
+word_count: 1538
 ---
 
 # Vietnam Rice Terraces Guide (2026): Sapa vs Mu Cang Chai vs Hoang Su Phi vs Pu Luong

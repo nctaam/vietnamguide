@@ -2,19 +2,12 @@
 title: "Where to Stay in Dong Hoi (2026): Nhat Le Beach & Hotels"
 slug: "where-to-stay-in-dong-hoi"
 route_path: "destinations/where-to-stay-in-dong-hoi"
-section: "destinations"
-category: "destinations"
-page_type: "destination"
-template: "guide"
-status: "published"
-updated_at: "2026-10-24"
-last_reviewed: "2026-10-24"
+description: "Nhat Le beachfront resorts vs Dong Hoi railway station transit hotels 45 km south of Phong Nha. 2026 nightly rates, cave shuttles, and area advice."
+travel_cluster: "phong_nha_caves"
 last_verified: "2026-10-24"
 author: "VietnamGuide Editorial Team"
-travel_cluster: "central_heritage"
 reading_time_minutes: 12
 word_count: 1539
-description: "Nhat Le beachfront resorts vs Dong Hoi railway station transit hotels 45 km south of Phong Nha. 2026 nightly rates, cave shuttles, and area advice."
 ---
 
 Dong Hoi functions as the coastal rail and air gateway to Quang Binh province, positioned 45 km south of the world-famous cave networks in [Phong Nha-Ke Bang](destinations/phong-nha-travel-guide). Most international travelers treat Dong Hoi as an arrival junction before boarding an organized bus up the Son River valley. Choosing to base yourself in Dong Hoi instead offers distinct advantages: authentic coastal seafood dining, wide sandy beaches, and quiet seaside promenades absent from mountain settlements. 

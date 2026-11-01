@@ -2,14 +2,12 @@
 title: "Hanoi to Ha Giang Transport: Sleeper Buses, VIP Cabins, and Route Logistics"
 slug: "hanoi-to-ha-giang-transport"
 route_path: "plan/hanoi-to-ha-giang-transport"
-category: "plan"
 description: "Compare Hanoi to Ha Giang transport in 2026 by sleeper bus, day transfer, private car, and staged route using fatigue, safety, weather, and buffers."
-author: "VietnamGuide Editorial Team"
-last_updated: "2026-06-15"
-word_count: 1399
-travel_cluster: "northern_highlands"
+travel_cluster: "northern_triangle"
 last_verified: "2026-10-20"
-reading_time_minutes: "10"
+author: "VietnamGuide Editorial Team"
+reading_time_minutes: 10
+word_count: 1399
 ---
 
 # Hanoi to Ha Giang Transport: Sleeper Buses, VIP Cabins, and Route Logistics

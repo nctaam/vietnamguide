@@ -2,14 +2,12 @@
 title: "Northwest Vietnam Itinerary (2026): 6 to 8-Day Rice Terrace & Valley Loop"
 slug: "northwest-vietnam-itinerary"
 route_path: "itineraries/northwest-vietnam-itinerary"
-category: "itineraries"
 description: "Northwest Vietnam itinerary: realistic 6 to 8-day overland circuit connecting Hanoi, Mai Chau valley, Pu Luong nature reserve, and Ninh Binh karsts."
-author: "VietnamGuide Editorial Team"
-last_updated: "2026-06-15"
-word_count: 1536
-travel_cluster: "northern_highlands"
+travel_cluster: "far_north_frontier"
 last_verified: "2026-10-22"
-reading_time_minutes: "10"
+author: "VietnamGuide Editorial Team"
+reading_time_minutes: 10
+word_count: 1536
 ---
 
 # Northwest Vietnam Itinerary (2026): 6 to 8-Day Rice Terrace & Valley Loop

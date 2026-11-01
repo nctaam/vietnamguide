@@ -3,7 +3,7 @@ title: "Vietnam to Cambodia Border Crossings: Routes & Visas (2026)"
 slug: "vietnam-to-cambodia-border-crossings"
 route_path: "plan/vietnam-to-cambodia-border-crossings"
 description: "Complete Vietnam to Cambodia border crossings guide: compare Moc Bai bus transit, Chau Doc Mekong speedboats, Ha Tien coastal routes, e-visas, and scams."
-travel_cluster: "national_circuit"
+travel_cluster: "mekong_delta"
 last_verified: "2026-11-01"
 author: "VietnamGuide Editorial Team"
 reading_time_minutes: 8

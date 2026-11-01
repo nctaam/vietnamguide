@@ -2,19 +2,12 @@
 title: "Where to Stay in Bao Loc (2026): Tea Hills vs Town Center"
 slug: "where-to-stay-in-bao-loc"
 route_path: "destinations/where-to-stay-in-bao-loc"
-section: "destinations"
-category: "destinations"
-page_type: "destination"
-template: "guide"
-status: "published"
-updated_at: "2026-10-25"
-last_reviewed: "2026-10-25"
+description: "Where to stay in Bao Loc: central commercial hotels vs tea plantation eco-lodges with 2026 room prices, Dambri waterfall tips, and highland advice."
+travel_cluster: "central_highlands"
 last_verified: "2026-10-25"
 author: "VietnamGuide Editorial Team"
-travel_cluster: "central_highlands"
 reading_time_minutes: 12
 word_count: 1487
-description: "Where to stay in Bao Loc: central commercial hotels vs tea plantation eco-lodges with 2026 room prices, Dambri waterfall tips, and highland advice."
 ---
 
 # Where to Stay in Bao Loc (2026): Tea Hills vs Town Center

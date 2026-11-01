@@ -2,14 +2,12 @@
 title: "Where to Stay in Dong Van (2026): Hotels & Homestays"
 slug: "where-to-stay-in-dong-van"
 route_path: "destinations/where-to-stay-in-dong-van"
-category: "destinations"
-updated_at: "2026-10-24"
+description: "Old Quarter stone houses and 150,000-350,000 VND dorms vs Ma Pi Leng canyon cliffside homestays. 2026 room rates, mountain lodges, and Loop advice."
+travel_cluster: "northern_highlands"
 last_verified: "2026-10-24"
 author: "VietnamGuide Editorial Team"
-travel_cluster: "northern_highlands"
 reading_time_minutes: 12
 word_count: 1498
-description: "Old Quarter stone houses and 150,000-350,000 VND dorms vs Ma Pi Leng canyon cliffside homestays. 2026 room rates, mountain lodges, and Loop advice."
 ---
 
 # Where to Stay in Dong Van (2026): Old Quarter Clay Houses, Heated Brick Hotels & Lo Lo Chai Border Homestays

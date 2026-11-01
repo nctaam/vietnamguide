@@ -2,19 +2,12 @@
 title: "Vietnam in January: Weather, Routes and Tet Tips"
 slug: "vietnam-in-january"
 route_path: "plan/vietnam-in-january"
-section: "plan"
-category: "plan"
-page_type: "practical"
-template: "guide"
-status: "published"
-updated_at: "2026-10-25"
-last_reviewed: "2026-10-25"
+description: "Plan Vietnam in January by regional dry weather, route shape, Tet holiday lead-up, northern cold fronts, transport booking pressure, and live checks."
+travel_cluster: "national_circuit"
 last_verified: "2026-10-25"
 author: "VietnamGuide Editorial Team"
-travel_cluster: "national_circuit"
 reading_time_minutes: 12
 word_count: 1447
-description: "Plan Vietnam in January by regional dry weather, route shape, Tet holiday lead-up, northern cold fronts, transport booking pressure, and live checks."
 ---
 
 January splits Vietnam into three starkly distinct climate sectors. Clear skies define the southern beaches and southern highlands, while continental winter blankets the north in cool mist. Understanding these split weather conditions prevents severe packing mistakes and realistic schedule failures.
@@ -29,19 +22,19 @@ Traveling through Vietnam during January requires distinct thermal expectations 
 
 The northern provinces endure dry continental winter conditions from late December through early February. In Hanoi, daily temperatures span 15–20°C with persistent cloud cover and humidity hovering near 70% humidity. Light drizzle surfaces periodically around the Old Quarter and Hoan Kiem Lake.
 
-At higher elevations, the cold sharpens significantly. Daytime readings in Sa Pa sit at 3–10°C, and nightly drops frequently bring ice or frost to the Fansipan summit at 3,143m (3143 meters). Thick morning fog blankets Ha Giang mountain passes, where readings of 8–15°C cling to limestone valleys until noon along QL4C. Over in Ninh Binh, travelers encounter 12–18°C alongside misty drizzle over karst waterways. Across the Gulf of Tonkin, Ha Long Bay records daytime temperatures lingering around 14–19°C beneath heavy gray marine cloud banks that require thick thermal fleece while cruising on the open water. Cool mist often reduces sea visibility, requiring warm fleece jackets aboard overnight cruise vessels. Check the [Sa Pa](/destinations/sapa/) regional hub for local village trail conditions.
+At higher elevations, the cold sharpens significantly. Daytime readings in Sa Pa sit at 3–10°C, and nightly drops frequently bring ice or frost to the Fansipan summit at 3,143m (3143 meters). Thick morning fog blankets Ha Giang mountain passes, where readings of 8–15°C cling to limestone valleys until noon along QL4C. Over in Ninh Binh, travelers encounter 12–18°C alongside misty drizzle over karst waterways. Across the Gulf of Tonkin, Ha Long Bay records daytime temperatures lingering around 14–19°C beneath heavy gray marine cloud banks that require thick thermal fleece while cruising on the open water. Cool mist often reduces sea visibility, requiring warm fleece jackets aboard overnight cruise vessels. Check the [Sa Pa](/destinations/sapa-travel-guide/) regional hub for local village trail conditions.
 
 ### Central Vietnam: Monsoon Transition, Persistent Rain, and Rougher Seas
 
 Central coastal provinces occupy an atmospheric transition zone throughout January. Da Nang and Hoi An average 20–24°C, marking the tail-end of the winter monsoon with 200–400mm rainfall across thirty days. Cool northeast winds blow continuously across My Khe Beach, generating coastal swells that limit swimming.
 
-North of the Hai Van Pass, Hue registers cooler temperatures of 17–22°C with persistent drizzle known locally as *mưa phùn*. Waterproof shell jackets and sturdy shoes become mandatory for exploring the Imperial Citadel. Further south along the coast, Nha Trang begins clearing up with highs around 27°C and 40mm monthly rainfall. In the Central Highlands, [Đà Lạt](/destinations/da-lat/) offers dry and cool mountain conditions at 1,500m elevation, featuring crisp 15–22°C days and cool 11°C nights.
+North of the Hai Van Pass, Hue registers cooler temperatures of 17–22°C with persistent drizzle known locally as *mưa phùn*. Waterproof shell jackets and sturdy shoes become mandatory for exploring the Imperial Citadel. Further south along the coast, Nha Trang begins clearing up with highs around 27°C and 40mm monthly rainfall. In the Central Highlands, [Đà Lạt](/destinations/da-lat-travel-guide/) offers dry and cool mountain conditions at 1,500m elevation, featuring crisp 15–22°C days and cool 11°C nights.
 
 ### Southern Vietnam: Peak Dry Season and Warm Sunshine
 
 Southern provinces deliver reliable warm sunshine and minimal precipitation throughout January. Ho Chi Minh City experiences its peak dry season with 25–32°C afternoon heat and under 15mm monthly rainfall. Urban walking tours remain comfortable early in the morning before midday asphalt temperatures rise.
 
-Island and coastal getaways present pristine conditions across the Gulf of Thailand. [Phú Quốc](/destinations/phu-quoc/) records 27–31°C under azure skies, calm seas, and gentle breezes ideal for marine excursions. On the southeastern mainland, Mui Ne charts 24–30°C accompanied by steady 18–25 knot coastal winds that draw kitesurfers from across the globe. Further offshore, Con Dao sees pleasant 27–30°C warmth, though winter trade winds bring rough seas to western coastal straits, occasionally delaying local speedboats.
+Island and coastal getaways present pristine conditions across the Gulf of Thailand. [Phú Quốc](/destinations/phu-quoc-travel-guide/) records 27–31°C under azure skies, calm seas, and gentle breezes ideal for marine excursions. On the southeastern mainland, Mui Ne charts 24–30°C accompanied by steady 18–25 knot coastal winds that draw kitesurfers from across the globe. Further offshore, Con Dao sees pleasant 27–30°C warmth, though winter trade winds bring rough seas to western coastal straits, occasionally delaying local speedboats.
 
 | Region & Destination | Daytime Temp | Nighttime Temp | Rainfall Index | Sea & Outdoor Conditions |
 | :--- | :--- | :--- | :--- | :--- |

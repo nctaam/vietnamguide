@@ -2,7 +2,7 @@
 title: "Vietnam in October (2026): Climate, Trekking & Regions"
 slug: "vietnam-in-october"
 route_path: "plan/vietnam-in-october"
-description: "Vietnam in October travel guide: pleasant autumn in Hanoi, golden Mu Cang Chai terraces, Central typhoon precautions, and dry Mekong Delta boat excursions."
+description: "Plan Vietnam in October across regions: shoulder season transition, central coast typhoon and flood watchouts, and dry northern trekking clear windows."
 travel_cluster: "national_circuit"
 last_verified: "2026-10-25"
 author: "VietnamGuide Editorial Team"

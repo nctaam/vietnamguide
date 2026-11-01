@@ -2,14 +2,12 @@
 title: "Ho Chi Minh City to Ben Tre Transport (2026): Van & Bus"
 slug: "ho-chi-minh-city-to-ben-tre-transport"
 route_path: "plan/ho-chi-minh-city-to-ben-tre-transport"
-category: "plan"
 description: "Ho Chi Minh City to Ben Tre transport: shared limousine vans vs local buses and private cars via Highway 1A. 2026 schedules, fares, and travel tips."
-author: "VietnamGuide Editorial Team"
-last_updated: "2026-06-15"
-word_count: 1204
 travel_cluster: "mekong_delta"
 last_verified: "2026-10-22"
-reading_time_minutes: "9"
+author: "VietnamGuide Editorial Team"
+reading_time_minutes: 9
+word_count: 1204
 ---
 
 # Ho Chi Minh City to Ben Tre Transport (2026): Van & Bus

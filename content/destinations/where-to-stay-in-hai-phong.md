@@ -2,19 +2,12 @@
 title: "Where to Stay in Hai Phong (2026): Hotels & Districts"
 slug: "where-to-stay-in-hai-phong"
 route_path: "destinations/where-to-stay-in-hai-phong"
-section: "destinations"
-category: "destinations"
-page_type: "destination"
-template: "guide"
-status: "published"
-updated_at: "2026-10-24"
-last_reviewed: "2026-10-24"
+description: "French Quarter boutique hotels near the Opera House vs Le Hong Phong business towers 5 km from Cat Bi Airport. 2026 room rates and food tour local tips."
+travel_cluster: "ha_long_bay"
 last_verified: "2026-10-24"
 author: "VietnamGuide Editorial Team"
-travel_cluster: "northern_triangle"
 reading_time_minutes: 11
 word_count: 1407
-description: "French Quarter boutique hotels near the Opera House vs Le Hong Phong business towers 5 km from Cat Bi Airport. 2026 room rates and food tour local tips."
 ---
 
 ## Strategic District Selection in Hai Phong

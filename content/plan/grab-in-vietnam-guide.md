@@ -2,14 +2,12 @@
 title: "Using Grab in Vietnam (2026): Airport Pickups, Foreign Card Fees & Xanh SM"
 slug: "grab-in-vietnam-guide"
 route_path: "plan/grab-in-vietnam-guide"
-category: "plan"
 description: "Complete guide to Grab in Vietnam: foreign card setup, cash payments, airport pickup zones in Hanoi and Saigon, GrabBike safety, and app alternatives."
-author: "VietnamGuide Editorial Team"
-last_updated: "2026-06-15"
-word_count: 1737
 travel_cluster: "national_circuit"
 last_verified: "2026-10-22"
-reading_time_minutes: "9"
+author: "VietnamGuide Editorial Team"
+reading_time_minutes: 9
+word_count: 1737
 ---
 
 # Using Grab in Vietnam (2026): Airport Pickups, Foreign Card Fees & Xanh SM
@@ -136,8 +134,8 @@ Grab Vietnam applies a **`4%` processing fee** on all transactions charged to cr
 ---
 
 ## Related Practical Planning & Arrival Guides
-- [Vietnam e-Visa & Entry Requirements (`plan/visa`)](/plan/visa/) — Airport fast-track lanes, 90-day e-Visa rules, and customs declarations.
-- [Vietnam Currency, ATMs & Cash vs Card Guide (`plan/money`)](/plan/money/) — Zero-fee ATMs (*VPBank*, *TPBank*), polymer note confusion (`20k` vs `500k`), and Wise/Revolut tips.
-- [Vietnam Domestic Flights, Trains & Sleeper Buses (`plan/transport`)](/plan/transport/) — Connecting urban Grab hops with Reunification Express trains and VIP cabin coaches.
-- [Hanoi Travel Guide (`destinations/hanoi`)](/destinations/hanoi/) — Navigating Noi Bai Airport (`HAN`) T2 Columns 7–9 and Old Quarter weekend walking street closures.
-- [Ho Chi Minh City Travel Guide (`destinations/ho-chi-minh-city`)](/destinations/ho-chi-minh-city/) — Tan Son Nhat (`SGN`) Domestic TCP Garage Lane D1/D2 pickups and District 1 metro links.
+- [Vietnam e-Visa & Entry Requirements (`plan/visa`)](/plan/vietnam-evisa/) — Airport fast-track lanes, 90-day e-Visa rules, and customs declarations.
+- [Vietnam Currency, ATMs & Cash vs Card Guide (`plan/money`)](/plan/money-cash-cards-atms/) — Zero-fee ATMs (*VPBank*, *TPBank*), polymer note confusion (`20k` vs `500k`), and Wise/Revolut tips.
+- [Vietnam Domestic Flights, Trains & Sleeper Buses (`plan/transport`)](/plan/transport-within-vietnam/) — Connecting urban Grab hops with Reunification Express trains and VIP cabin coaches.
+- [Hanoi Travel Guide (`destinations/hanoi`)](/destinations/hanoi-travel-guide/) — Navigating Noi Bai Airport (`HAN`) T2 Columns 7–9 and Old Quarter weekend walking street closures.
+- [Ho Chi Minh City Travel Guide (`destinations/ho-chi-minh-city`)](/destinations/ho-chi-minh-city-travel-guide/) — Tan Son Nhat (`SGN`) Domestic TCP Garage Lane D1/D2 pickups and District 1 metro links.

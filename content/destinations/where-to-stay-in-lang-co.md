@@ -2,26 +2,19 @@
 title: "Where to Stay in Lang Co (2026): Beach & Lagoon Resorts"
 slug: "where-to-stay-in-lang-co"
 route_path: "destinations/where-to-stay-in-lang-co"
-section: "destinations"
-category: "destinations"
-page_type: "destination"
-template: "guide"
-status: "published"
-last_reviewed: "2026-10-24"
-updated_at: "2026-10-24"
+description: "Canh Duong beach villas at Banyan Tree and Angsana vs Lap An oyster lagoon homestays 30 km north of Da Nang. 2026 room rates and coastal road tips."
+travel_cluster: "far_north_frontier"
 last_verified: "2026-10-24"
 author: "VietnamGuide Editorial Team"
-travel_cluster: "central_heritage"
 reading_time_minutes: 8
 word_count: 1498
-description: "Canh Duong beach villas at Banyan Tree and Angsana vs Lap An oyster lagoon homestays 30 km north of Da Nang. 2026 room rates and coastal road tips."
 ---
 
 # Where to Stay in Lang Co (2026): Beach & Lagoon Resorts
 
-Stretched along a narrow 10 km white-sand peninsula in Phu Loc District, Thua Thien Hue Province, [Lang Co](/destinations/lang-co/) occupies the dramatic coastal hinge between [Da Nang](/destinations/da-nang/) and [Hue](/destinations/hue/). Along its eastern shore, the turquoise swells of the East Sea roll onto **Lang Co Spit** and **Canh Duong Beach**. Across its western edge, the brackish, mirror-flat waters of **Lap An Lagoon** (`Đầm Lập An`) cover 800 hectares against the forested granite walls of the Truong Son Range and **Bach Ma National Park** (28 km inland).
+Stretched along a narrow 10 km white-sand peninsula in Phu Loc District, Thua Thien Hue Province, [Lang Co](/destinations/where-to-stay-in-lang-co/) occupies the dramatic coastal hinge between [Da Nang](/destinations/da-nang-travel-guide/) and [Hue](/destinations/hue-imperial-city-guide/). Along its eastern shore, the turquoise swells of the East Sea roll onto **Lang Co Spit** and **Canh Duong Beach**. Across its western edge, the brackish, mirror-flat waters of **Lap An Lagoon** (`Đầm Lập An`) cover 800 hectares against the forested granite walls of the Truong Son Range and **Bach Ma National Park** (28 km inland).
 
-Location dictates your entire stay here. **Da Nang International Airport (`DAD`)** lies just 30 km south (40 to 45 minutes by private car, 450,000 to 600,000 VND / $18 to $24 USD) if your driver takes the 6.28 km **Hai Van Tunnel** (`Hầm Hải Vân`, toll fee 110,000 VND per car), or 55 to 70 minutes over the switchbacks of the 21 km **Hai Van Pass** (`Đèo Hải Vân`, `QL1A`) rising to 496 meters elevation. In the opposite direction, the Imperial Citadel of [Hue](/destinations/hue/) sits 65 km north (1 hour 15 minutes via `QL1A` through Phu Bai Tunnel and Phuoc Tuong Tunnel, 700,000 to 850,000 VND / $28 to $34 USD by taxi), while **Hue Phu Bai Airport (`HUI`)** is 50 km north (50 minutes).
+Location dictates your entire stay here. **Da Nang International Airport (`DAD`)** lies just 30 km south (40 to 45 minutes by private car, 450,000 to 600,000 VND / $18 to $24 USD) if your driver takes the 6.28 km **Hai Van Tunnel** (`Hầm Hải Vân`, toll fee 110,000 VND per car), or 55 to 70 minutes over the switchbacks of the 21 km **Hai Van Pass** (`Đèo Hải Vân`, `QL1A`) rising to 496 meters elevation. In the opposite direction, the Imperial Citadel of [Hue](/destinations/hue-imperial-city-guide/) sits 65 km north (1 hour 15 minutes via `QL1A` through Phu Bai Tunnel and Phuoc Tuong Tunnel, 700,000 to 850,000 VND / $28 to $34 USD by taxi), while **Hue Phu Bai Airport (`HUI`)** is 50 km north (50 minutes).
 
 Yet Lang Co is split into three distinct lodging zones that do not connect on foot. A traveler booking the luxury sanctuary of **Laguna Lang Co** (`Banyan Tree Lang Co` and `Angsana Lang Co`) stays 14 km north of Lang Co town near **Chan May Port** (`Cảng Chân Mây`), separated from the town's oyster shacks by a mountain spur and a 20-minute taxi ride (220,000 to 280,000 VND / $8.80 to $11.20 USD each way). Conversely, travelers booking along the 10 km sandbar of `Lac Long Quan` street must distinguish between quiet east-side beachfront bungalows and noisy west-side guesthouses backing onto National Highway 1A (`QL1A`).
 
@@ -44,7 +37,7 @@ Fourteen kilometers north of the Hai Van Tunnel portal, where travelers turn off
 
 Two sister five-star properties share the Laguna shoreline and connect via a 1.5 km internal canal boat and electric buggy network:
 
-* **Banyan Tree Lang Co** (`7,800,000–12,500,000 VND` / `$312–$500 USD` per night for Lagoon Pool Villas and Beach Pool Villas; two-bedroom Hillside Seaview Pool Villas reach `18,500,000–26,000,000 VND` / `$740–$1,040 USD`): Every single key here is an all-pool villa modeled after traditional imperial garden houses of [Hue](/destinations/hue/), featuring timber lattice screens, Champa sandstone carvings, and private infinity plunge pools. Couples book the cantilevered Hillside Pool Villas for 180-degree views over the East Sea, or the Beach Pool Villas for direct barefoot access to the sand.
+* **Banyan Tree Lang Co** (`7,800,000–12,500,000 VND` / `$312–$500 USD` per night for Lagoon Pool Villas and Beach Pool Villas; two-bedroom Hillside Seaview Pool Villas reach `18,500,000–26,000,000 VND` / `$740–$1,040 USD`): Every single key here is an all-pool villa modeled after traditional imperial garden houses of [Hue](/destinations/hue-imperial-city-guide/), featuring timber lattice screens, Champa sandstone carvings, and private infinity plunge pools. Couples book the cantilevered Hillside Pool Villas for 180-degree views over the East Sea, or the Beach Pool Villas for direct barefoot access to the sand.
 * **Angsana Lang Co** (`3,800,000–6,500,000 VND` / `$152–$260 USD` per night for Deluxe Rooms and One-Bedroom Pool Lofts): Built in a sleek contemporary low-rise block right beside Banyan Tree, Angsana targets families and groups. Its centerpiece is a 300-meter serpentine freeform swimming pool that winds through the entire resort grounds to the beach.
 * **Laguna Park Townhouses** (`2,900,000–4,600,000 VND` / `$116–$184 USD` per night): Two-bedroom and three-bedroom garden residences lining the 18th fairway of the Laguna Golf Course, ideal for families cooking their own breakfasts with full kitchenettes while accessing Angsana's pools and water sports center.
 
@@ -95,4 +88,4 @@ Book **Laguna Lang Co** (`3,800,000–12,500,000 VND` / `$152–$500 USD`) if yo
 
 ### Can I visit Hue and Da Nang as day trips while staying in Lang Co?
 
-Yes. Lang Co sits directly between both cities: downtown [Da Nang](/destinations/da-nang/) is **30 km (40 minutes)** south through the Hai Van Tunnel, **Hoi An Ancient Town** is **60 km (1 hour 20 minutes)** south, and the **Hue Imperial Citadel** and royal tombs are **55 to 65 km (1 hour to 1 hour 15 minutes)** north along `QL1A`.
+Yes. Lang Co sits directly between both cities: downtown [Da Nang](/destinations/da-nang-travel-guide/) is **30 km (40 minutes)** south through the Hai Van Tunnel, **Hoi An Ancient Town** is **60 km (1 hour 20 minutes)** south, and the **Hue Imperial Citadel** and royal tombs are **55 to 65 km (1 hour to 1 hour 15 minutes)** north along `QL1A`.

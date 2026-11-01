@@ -2,14 +2,12 @@
 title: "Hanoi to Cat Ba Island Transport: Tourist Combo Bus, Dong Bai Ferry, and Cable Car"
 slug: "hanoi-to-cat-ba-island-transport"
 route_path: "plan/hanoi-to-cat-ba-island-transport"
-category: "plan"
 description: "Complete Hanoi to Cat Ba island transport guide: compare tourist combo bus-and-ferry packages, private transfers, Hai Phong speedboats, and travel times."
-author: "VietnamGuide Editorial Team"
-last_updated: "2026-06-15"
-word_count: 1357
-travel_cluster: "ha-long-bay"
+travel_cluster: "northern_triangle"
 last_verified: "2026-10-20"
-reading_time_minutes: "8"
+author: "VietnamGuide Editorial Team"
+reading_time_minutes: 8
+word_count: 1357
 ---
 
 # Hanoi to Cat Ba Island Transport: Tourist Combo Bus, Dong Bai Ferry, and Cable Car

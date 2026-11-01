@@ -3,7 +3,7 @@ title: "Hanoi to Mai Chau Transport (2026): Bus vs Limousine"
 slug: "hanoi-to-mai-chau-transport"
 route_path: "plan/hanoi-to-mai-chau-transport"
 description: "Hanoi to Mai Chau transport: Old Quarter limousine shuttles vs local buses and motorbike routes over Thung Khe Pass. 2026 fares, travel times, and advice."
-travel_cluster: "northern_highlands"
+travel_cluster: "far_north_frontier"
 last_verified: "2026-10-31"
 author: "VietnamGuide Editorial Team"
 reading_time_minutes: 12

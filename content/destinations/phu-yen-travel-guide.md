@@ -2,14 +2,12 @@
 title: "Phu Yen Travel Guide: Basalt Cliffs, Easternmost Sunrise, and Coastal Drives"
 slug: "phu-yen-travel-guide"
 route_path: "destinations/phu-yen-travel-guide"
-category: "destinations"
 description: "Complete Phu Yen travel guide: explore Ganh Da Dia basalt cliffs, Mui Dien lighthouse, Bai Xep beach, O Loan lagoon seafood, routes, and coastal drives."
-author: "VietnamGuide Editorial Team"
-last_updated: "2026-06-15"
-word_count: 1742
 travel_cluster: "coastal_islands"
 last_verified: "2026-10-20"
-reading_time_minutes: "13"
+author: "VietnamGuide Editorial Team"
+reading_time_minutes: 13
+word_count: 1742
 ---
 
 # Phu Yen Travel Guide: Basalt Cliffs, Easternmost Sunrise, and Coastal Drives

@@ -2,14 +2,12 @@
 title: "Phong Nha to Hue Transport: Bus, Train & DMZ Car (2026)"
 slug: "phong-nha-to-hue-transport"
 route_path: "plan/phong-nha-to-hue-transport"
-category: "plan"
 description: "Complete Phong Nha to Hue transport guide: compare direct tourist buses, Dong Hoi heritage trains, and scenic DMZ private cars via Vinh Moc tunnels."
-author: "VietnamGuide Editorial Team"
-last_updated: "2026-06-15"
-word_count: 1353
-travel_cluster: "central_heritage"
+travel_cluster: "phong_nha_caves"
 last_verified: "2026-10-22"
-reading_time_minutes: "9"
+author: "VietnamGuide Editorial Team"
+reading_time_minutes: 9
+word_count: 1353
 ---
 
 # Phong Nha to Hue Transport: Bus, Train & DMZ Car (2026)

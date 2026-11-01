@@ -2,19 +2,12 @@
 title: "Vietnam in March: Climate Dynamics, Central Trails, and Itineraries"
 slug: "vietnam-in-march"
 route_path: "plan/vietnam-in-march"
-section: "plan"
-category: "plan"
-page_type: "practical"
-template: "guide"
-status: "published"
-updated_at: "2026-10-25"
-last_reviewed: "2026-10-25"
+description: "Complete Vietnam in March guide: regional weather patterns, ideal nationwide routes, beach conditions in Central Vietnam, crowd levels, and packing advice."
+travel_cluster: "national_circuit"
 last_verified: "2026-10-25"
 author: "VietnamGuide Editorial Team"
-travel_cluster: "national_circuit"
 reading_time_minutes: 12
 word_count: 1433
-description: "Plan your trip to Vietnam in March with regional climate data, cave trekking seasons, coffee harvest routes, flight costs, packing gear, and travel tips."
 ---
 
 March represents one of the most balanced weather windows across Vietnam. Northern drizzle abates, replaced by mild spring warmth. Central coastal provinces enjoy clear skies, while southern lowlands enter their dry, sunny late-dry season.

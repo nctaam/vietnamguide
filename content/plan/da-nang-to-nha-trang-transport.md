@@ -3,7 +3,7 @@ title: "Da Nang to Nha Trang (2026): Train, Bus & Flight Guide"
 slug: "da-nang-to-nha-trang-transport"
 route_path: "plan/da-nang-to-nha-trang-transport"
 description: "How to travel from Da Nang to Nha Trang: Reunification Express sleeper train vs day seats, sleeper coaches, flights, and travel times with 2026 VND fares."
-travel_cluster: "coastal_islands"
+travel_cluster: "central_heritage"
 last_verified: "2026-11-01"
 author: "VietnamGuide Editorial Team"
 reading_time_minutes: 8

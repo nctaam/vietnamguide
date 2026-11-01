@@ -2,14 +2,12 @@
 title: "Where to Stay in Ninh Binh: Best Areas"
 slug: "where-to-stay-in-ninh-binh"
 route_path: "destinations/where-to-stay-in-ninh-binh"
-category: "destinations"
-updated_at: "2026-10-24"
-author: "VietnamGuide Editorial Team"
-word_count: 1421
 description: "Where to stay in Ninh Binh: choose Tam Coc, Trang An area, Ninh Binh city, Van Long, Gia Vien, or Cuc Phuong by route, sleep, pickup, and 2026 comfort."
-travel_cluster: "northern_core"
+travel_cluster: "ninh_binh"
 last_verified: "2026-10-24"
-reading_time_minutes: "8"
+author: "VietnamGuide Editorial Team"
+reading_time_minutes: 8
+word_count: 1421
 ---
 
 # Where to Stay in Ninh Binh: Best Areas

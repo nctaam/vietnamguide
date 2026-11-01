@@ -3,7 +3,7 @@ title: "Vung Tau to Con Dao Ferry (2026): Express Catamaran"
 slug: "vung-tau-to-con-dao-ferry"
 route_path: "plan/vung-tau-to-con-dao-ferry"
 description: "Vung Tau to Con Dao ferry: Con Dao Express 36 fast catamaran timetables, 2026 ticket prices, Cau Da pier transfers, and open-ocean crossing advice."
-travel_cluster: "coastal_islands"
+travel_cluster: "southern_delta"
 last_verified: "2026-11-01"
 author: "VietnamGuide Editorial Team"
 reading_time_minutes: 8

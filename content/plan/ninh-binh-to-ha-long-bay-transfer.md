@@ -3,7 +3,7 @@ title: "Ninh Binh to Ha Long Bay Transfer Guide"
 slug: "ninh-binh-to-ha-long-bay-transfer"
 route_path: "plan/ninh-binh-to-ha-long-bay-transfer"
 description: "Ninh Binh to Ha Long Bay transfer guide: choose private car, cruise shuttle, shared van, or overnight buffer by port, pickup, luggage, and boat timing."
-travel_cluster: "ninh_binh"
+travel_cluster: "ha_long_bay"
 last_verified: "2026-11-01"
 author: "VietnamGuide Editorial Team"
 reading_time_minutes: 12

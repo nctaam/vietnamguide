@@ -3,7 +3,7 @@ title: "Hanoi to Ninh Binh: Train vs Limousine Van (2026)"
 slug: "hanoi-to-ninh-binh-train-vs-limousine"
 route_path: "plan/hanoi-to-ninh-binh-train-vs-limousine"
 description: "Hanoi to Ninh Binh transport comparison: express train from Hanoi station vs luxury limousine door-to-door vans with schedules, comfort, and 2026 fares."
-travel_cluster: "ninh_binh"
+travel_cluster: "northern_triangle"
 last_verified: "2026-11-01"
 author: "VietnamGuide Editorial Team"
 reading_time_minutes: 12

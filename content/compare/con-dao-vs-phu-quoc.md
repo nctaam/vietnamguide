@@ -2,14 +2,12 @@
 title: "Con Dao vs Phu Quoc (2026): Remote Marine Sanctuary vs Mega-Resort Island"
 slug: "con-dao-vs-phu-quoc"
 route_path: "compare/con-dao-vs-phu-quoc"
-category: "compare"
 description: "Con Dao vs Phu Quoc comparison: compare pristine turtle beaches, national park hiking, flight logistics, luxury resorts, nightlife, and travel costs."
-author: "VietnamGuide Editorial Team"
-last_updated: "2026-06-15"
-word_count: 1358
-travel_cluster: "southern_vietnam"
+travel_cluster: "coastal_islands"
 last_verified: "2026-10-22"
-reading_time_minutes: "10"
+author: "VietnamGuide Editorial Team"
+reading_time_minutes: 10
+word_count: 1358
 ---
 
 # Con Dao vs Phu Quoc (2026): Remote Marine Sanctuary vs Mega-Resort Island

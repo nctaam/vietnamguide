@@ -2,12 +2,12 @@
 title: "Can Tho to Ha Tien Transport: Bus Schedules, Limousines, Border Transit, and Ferry Logistics"
 slug: "can-tho-to-ha-tien-transport"
 route_path: "plan/can-tho-to-ha-tien-transport"
-description: "Transit 190 km from Can Tho to Ha Tien by FUTA coach or VIP limousine. Complete 2026 terminal guides, QL80 road tips, and fast ferry connections to Phu Quoc."
+description: "Futa coaches and limousines across 190 km (4-4.5 hours, 170,000-220,000 VND) connecting to early Phu Quoc ferries. 2026 schedules and port transfer advice."
 travel_cluster: "mekong_delta"
 last_verified: "2026-10-25"
 author: "VietnamGuide Editorial Team"
 reading_time_minutes: 12
-word_count: 1490
+word_count: 1688
 ---
 
 # Can Tho to Ha Tien Transport: Bus Schedules, Limousines, Border Transit, and Ferry Logistics

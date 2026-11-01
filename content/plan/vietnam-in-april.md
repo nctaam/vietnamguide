@@ -2,19 +2,12 @@
 title: "Vietnam in April: Weather Transitions, Coastal Heat, and Holidays"
 slug: "vietnam-in-april"
 route_path: "plan/vietnam-in-april"
-section: "plan"
-category: "plan"
-page_type: "practical"
-template: "guide"
-status: "published"
-updated_at: "2026-10-25"
-last_reviewed: "2026-10-25"
+description: "Complete Vietnam in April guide: pleasant northern spring, central beach conditions, southern heat prep, April 30 national holiday surge, and packing."
+travel_cluster: "national_circuit"
 last_verified: "2026-10-25"
 author: "VietnamGuide Editorial Team"
-travel_cluster: "national_circuit"
 reading_time_minutes: 12
 word_count: 1469
-description: "Plan your trip to Vietnam in April with climate benchmarks, beach conditions, pre-monsoon heat, April 30 holiday surges, hotel rates, and packing lists."
 ---
 
 April marks the distinct atmospheric pivot from spring into early summer across Vietnam. Northern valleys shed their last lingering chill as daytime temperatures climb past 28°C. Central shorelines bask under dry, sunny skies. Meanwhile, southern provinces reach peak pre-monsoon heat, pushing mercury levels above 36°C before afternoon convective rains appear late in the month.

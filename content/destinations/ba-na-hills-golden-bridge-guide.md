@@ -2,14 +2,12 @@
 title: "Ba Na Hills Golden Bridge Guide: Cable Cars, Crowd Strategy, and Map"
 slug: "ba-na-hills-golden-bridge-guide"
 route_path: "destinations/ba-na-hills-golden-bridge-guide"
-category: "destinations"
 description: "Complete Ba Na Hills Golden Bridge guide: compare cable car ticket prices, early morning crowd beats, mountain fog forecasts, opening hours, and transport."
-author: "VietnamGuide Editorial Team"
-last_updated: "2026-06-15"
-word_count: 1262
 travel_cluster: "central_heritage"
 last_verified: "2026-10-20"
-reading_time_minutes: "13"
+author: "VietnamGuide Editorial Team"
+reading_time_minutes: 13
+word_count: 1262
 ---
 
 # Ba Na Hills Golden Bridge Guide: Cable Cars, Crowd Strategy, and Map

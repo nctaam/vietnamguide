@@ -2,19 +2,12 @@
 title: "Vietnam in June: Golden Rice, Coastal Sunshine, and Summer Travel"
 slug: "vietnam-in-june"
 route_path: "plan/vietnam-in-june"
-section: "plan"
-category: "plan"
-page_type: "practical"
-template: "guide"
-status: "published"
-updated_at: "2026-10-25"
-last_reviewed: "2026-10-25"
+description: "Complete Vietnam in June guide: explore peak central coast beach sunshine, northern mountain harvest escapes, southern rain patterns, and smart packing."
+travel_cluster: "national_circuit"
 last_verified: "2026-10-25"
 author: "VietnamGuide Editorial Team"
-travel_cluster: "national_circuit"
 reading_time_minutes: 12
 word_count: 1541
-description: "Plan your trip to Vietnam in June with regional climate data, Tam Coc golden harvests, central beaches, summer fruit seasons, and booking dynamics."
 ---
 
 June brings Vietnam into full tropical summer. As school terms conclude in Hanoi and Ho Chi Minh City, domestic family tourism surges toward coastal resort towns. Navigating June requires matching regional strengths with deliberate timing.

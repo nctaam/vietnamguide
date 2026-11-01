@@ -2,14 +2,12 @@
 title: "Phong Nha Cave Treks: 1 to 3-Day Expedition Guide (2026)"
 slug: "phong-nha-cave-treks"
 route_path: "plan/phong-nha-cave-treks"
-category: "plan"
 description: "Top Phong Nha cave treks: compare Hang En 2-day expedition, Tu Lan river cave swimming, Paradise Cave 7km trek, operator standards, fitness, and gear."
-author: "VietnamGuide Editorial Team"
-last_updated: "2026-06-15"
-word_count: 1914
 travel_cluster: "phong_nha_caves"
 last_verified: "2026-10-20"
-reading_time_minutes: "12"
+author: "VietnamGuide Editorial Team"
+reading_time_minutes: 12
+word_count: 1914
 ---
 
 # Phong Nha Cave Treks: 1 to 3-Day Expedition Guide (2026)

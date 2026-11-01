@@ -2,14 +2,12 @@
 title: "Where to Stay in Con Dao (2026): Best Areas & Resorts"
 slug: "where-to-stay-in-con-dao"
 route_path: "destinations/where-to-stay-in-con-dao"
-category: "destinations"
-updated_at: "2026-10-24"
+description: "Where to stay in Con Dao: Con Son town heritage guesthouses vs Dat Doc bay luxury villas and quiet beaches with 2026 nightly hotel prices rates in VND."
+travel_cluster: "coastal_islands"
 last_verified: "2026-10-24"
 author: "VietnamGuide Editorial Team"
-travel_cluster: "coastal_islands"
 reading_time_minutes: 12
 word_count: 1518
-description: "Where to stay in Con Dao: Con Son town heritage guesthouses vs Dat Doc bay luxury villas and quiet beaches with 2026 nightly hotel prices rates in VND."
 ---
 
 # Where to Stay in Con Dao (2026): Best Areas & Resorts

@@ -2,14 +2,12 @@
 title: "Hanoi to Sapa: Sleeper Train vs Sleeper Bus (2026)"
 slug: "hanoi-to-sapa-train-vs-sleeper-bus"
 route_path: "plan/hanoi-to-sapa-train-vs-sleeper-bus"
-category: "plan"
 description: "Compare Hanoi to Sapa travel: overnight railway sleeper train to Lao Cai vs luxury cabin sleeper bus direct to Sapa town. Fares, timing, and comfort."
-author: "VietnamGuide Editorial Team"
-last_updated: "2026-06-15"
-word_count: 1273
-travel_cluster: "northern_highlands"
+travel_cluster: "northern_triangle"
 last_verified: "2026-10-20"
-reading_time_minutes: "8"
+author: "VietnamGuide Editorial Team"
+reading_time_minutes: 8
+word_count: 1273
 ---
 
 # Hanoi to Sapa: Sleeper Train vs Sleeper Bus (2026)

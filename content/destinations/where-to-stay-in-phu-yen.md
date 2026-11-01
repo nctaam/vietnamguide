@@ -2,14 +2,12 @@
 title: "Where to Stay in Phu Yen (2026): Best Areas & Resorts"
 slug: "where-to-stay-in-phu-yen"
 route_path: "destinations/where-to-stay-in-phu-yen"
-category: "destinations"
-updated_at: "2026-10-24"
-author: "VietnamGuide Editorial Team"
-word_count: 1442
 description: "Where to stay in Phu Yen: Tuy Hoa city beach hotels vs Xuan Dai bay luxury villas and Bai Xep seaside resorts with 2026 nightly hotel room rates in VND."
 travel_cluster: "coastal_islands"
 last_verified: "2026-10-24"
-reading_time_minutes: "8"
+author: "VietnamGuide Editorial Team"
+reading_time_minutes: 8
+word_count: 1442
 ---
 
 # Where to Stay in Phu Yen (2026): Best Areas & Resorts

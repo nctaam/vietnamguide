@@ -2,19 +2,12 @@
 title: "Where to Stay in Ha Tien (2026): Pier Hotels & Beach Bases"
 slug: "where-to-stay-in-ha-tien"
 route_path: "destinations/where-to-stay-in-ha-tien"
-section: "destinations"
-category: "destinations"
-page_type: "destination"
-template: "guide"
-status: "published"
-updated_at: "2026-10-24"
-last_reviewed: "2026-10-24"
+description: "Where to stay in Ha Tien: downtown pier hotels for Phu Quoc speedboats vs quiet Mui Nai beach resorts and riverfront guesthouses with 2026 room rates."
+travel_cluster: "mekong_delta"
 last_verified: "2026-10-24"
 author: "VietnamGuide Editorial Team"
-travel_cluster: "mekong_delta"
 reading_time_minutes: 12
 word_count: 1519
-description: "Where to stay in Ha Tien: downtown pier hotels for Phu Quoc speedboats vs quiet Mui Nai beach resorts and riverfront guesthouses with 2026 room rates."
 ---
 
 ## Strategic District Geography in Ha Tien

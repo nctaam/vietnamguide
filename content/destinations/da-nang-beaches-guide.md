@@ -2,14 +2,12 @@
 title: "Da Nang Beaches Guide: My Khe, Non Nuoc or Hoi An Coast?"
 slug: "da-nang-beaches-guide"
 route_path: "destinations/da-nang-beaches-guide"
-category: "destinations"
 description: "Authoritative Da Nang beaches guide: choose between My Khe, Non Nuoc, Son Tra edge, and Hoi An coast by weather season, hotel style, and family needs."
-author: "VietnamGuide Editorial Team"
-last_updated: "2026-06-15"
-word_count: 1336
 travel_cluster: "central_heritage"
 last_verified: "2026-10-23"
-reading_time_minutes: "8"
+author: "VietnamGuide Editorial Team"
+reading_time_minutes: 8
+word_count: 1336
 ---
 
 # Da Nang Beaches Guide: My Khe, Non Nuoc or Hoi An Coast?
@@ -70,7 +68,7 @@ Local family-run stilt restaurants rent shaded wooden platforms (`100,000 to 300
 ## 4. The Hoi An Coast: An Bang, Ha My & Cua Dai
 
 ### An Bang Beach: Village Character & Beach Bars
-Sitting `4 kilometers` north of [Hoi An Ancient Town](/destinations/hoi-an-travel-guide/) and reachable in `15 to 20 minutes` on an easy bicycle ride through the Cam Ha rice paddies, An Bang is the undisputed social heart of the Hoi An coast. Unlike Da Nang's modern boulevard towers, An Bang preserves a village scale of thatched-bamboo beach clubs, wooden beach loungers, and seafood stalls shaded by casuarina trees.
+Sitting `4 kilometers` north of [Hoi An Ancient Town](/destinations/hoi-an-ancient-town-guide/) and reachable in `15 to 20 minutes` on an easy bicycle ride through the Cam Ha rice paddies, An Bang is the undisputed social heart of the Hoi An coast. Unlike Da Nang's modern boulevard towers, An Bang preserves a village scale of thatched-bamboo beach clubs, wooden beach loungers, and seafood stalls shaded by casuarina trees.
 
 Most venues (such as Soul Kitchen, The Deck House, and Shore Club) provide free use of cushioned loungers and freshwater showers if you purchase a fresh fruit smoothie or beer (`50,000 to 90,000 VND`). Independent loungers rent for `40,000 to 50,000 VND`. The sea floor deepens more gradually here than at central My Khe, creating family-friendly swimming conditions from March through September.
 

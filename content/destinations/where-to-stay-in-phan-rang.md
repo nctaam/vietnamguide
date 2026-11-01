@@ -2,26 +2,19 @@
 title: "Where to Stay in Phan Rang (2026): Hotels & Resorts"
 slug: "where-to-stay-in-phan-rang"
 route_path: "destinations/where-to-stay-in-phan-rang"
-section: "destinations"
-category: "destinations"
-page_type: "destination"
-template: "guide"
-status: "published"
-last_reviewed: "2026-10-24"
-updated_at: "2026-10-24"
+description: "Where to stay in Phan Rang: Ninh Chu beach resorts vs central city hotels near Cham towers and Vinh Hy villas. 2026 room rates, areas, and local advice."
+travel_cluster: "coastal_islands"
 last_verified: "2026-10-24"
 author: "VietnamGuide Editorial Team"
-travel_cluster: "south_central_coast"
 reading_time_minutes: 8
 word_count: 1513
-description: "Where to stay in Phan Rang: Ninh Chu beach resorts vs central city hotels near Cham towers and Vinh Hy villas. 2026 room rates, areas, and local advice."
 ---
 
 # Where to Stay in Phan Rang (2026): Hotels & Resorts
 
-Ringed by a horseshoe of granite mountains that block inland rain clouds, [Phan Rang](/destinations/phan-rang/) (`Phan Rang-Tháp Chàm`, capital of Ninh Thuan Province) sits inside Vietnam's driest and sunniest coastal basin. While the rest of central Vietnam deals with heavy autumn deluges, Phan Rang records just `700 to 800 mm` of annual rainfall across 300+ days of bright sunshine, feeding sprawling table-grape vineyards, salt pans, and cactus-studded sand dunes.
+Ringed by a horseshoe of granite mountains that block inland rain clouds, [Phan Rang](/destinations/where-to-stay-in-phan-rang/) (`Phan Rang-Tháp Chàm`, capital of Ninh Thuan Province) sits inside Vietnam's driest and sunniest coastal basin. While the rest of central Vietnam deals with heavy autumn deluges, Phan Rang records just `700 to 800 mm` of annual rainfall across 300+ days of bright sunshine, feeding sprawling table-grape vineyards, salt pans, and cactus-studded sand dunes.
 
-Geography and wind dictate where you should book your hotel. **Cam Ranh International Airport (`CXR`)** lies 60 km north (1 hour 15 minutes via National Highway `QL1A` or the scenic coastal road `DT702`, 550,000 to 750,000 VND / $22 to $30 USD by private taxi), while **Thap Cham Railway Station** (`Ga Tháp Chàm`) sits 7 km west of the city center, welcoming daily North–South **Reunification Express** (`SE1/SE2`, `SE3/SE4`, `SE21/SE22`) trains from Ho Chi Minh City (5.5 to 6 hours, 320,000 to 650,000 VND / $13 to $26 USD) and [Nha Trang](/destinations/nha-trang/) (2 hours, 110,000 to 220,000 VND). Meanwhile, the dramatic granite cove of [Vinh Hy](/destinations/vinh-hy/) sits 38 km northeast along coastal road `DT702` (45 minutes by car or rented motorbike), and highland [Da Lat](/destinations/da-lat/) rises 110 km northwest over the 1,500-meter Ngoan Muc Pass (`Đèo Ngoạn Mục`, `QL27`).
+Geography and wind dictate where you should book your hotel. **Cam Ranh International Airport (`CXR`)** lies 60 km north (1 hour 15 minutes via National Highway `QL1A` or the scenic coastal road `DT702`, 550,000 to 750,000 VND / $22 to $30 USD by private taxi), while **Thap Cham Railway Station** (`Ga Tháp Chàm`) sits 7 km west of the city center, welcoming daily North–South **Reunification Express** (`SE1/SE2`, `SE3/SE4`, `SE21/SE22`) trains from Ho Chi Minh City (5.5 to 6 hours, 320,000 to 650,000 VND / $13 to $26 USD) and [Nha Trang](/destinations/nha-trang-travel-guide/) (2 hours, 110,000 to 220,000 VND). Meanwhile, the dramatic granite cove of [Vinh Hy](/destinations/where-to-stay-in-vinh-hy/) sits 38 km northeast along coastal road `DT702` (45 minutes by car or rented motorbike), and highland [Da Lat](/destinations/da-lat-travel-guide/) rises 110 km northwest over the 1,500-meter Ngoan Muc Pass (`Đèo Ngoạn Mục`, `QL27`).
 
 Within Phan Rang itself, accommodations divide into four distinct zones ranging from `350,000 VND` ($14 USD) downtown city hotels to `4,500,000 VND` ($180 USD) beachfront pool villas along **Ninh Chu Beach**.
 
@@ -81,7 +74,7 @@ Between **November and March** (and during the secondary southwest wind window f
 
 ### Should I stay in Phan Rang (Ninh Chu Beach) or Vinh Hy Bay?
 
-Base at **Ninh Chu Beach** in [Phan Rang](/destinations/phan-rang/) (`1,200,000–4,500,000 VND` / `$48–$180 USD`) if you want a wide, walk-in sandy swimming beach, large resort pools, proximity to **Thap Cham Railway Station** (20 minutes) and **Po Klong Garai Cham Towers**, and easy city dining. Base 38 km northeast in [Vinh Hy](/destinations/vinh-hy/) (`350,000–1,800,000 VND` in the fishing village or `$1,100+ USD` at **Amanoi**) if you prefer dramatic vertical granite cliffs inside **Nui Chua National Park**, glass-bottom coral boat trips, and floating lobster rafts—keeping in mind that Vinh Hy village itself has a concrete harbor wall rather than a wide walk-in sand beach.
+Base at **Ninh Chu Beach** in [Phan Rang](/destinations/where-to-stay-in-phan-rang/) (`1,200,000–4,500,000 VND` / `$48–$180 USD`) if you want a wide, walk-in sandy swimming beach, large resort pools, proximity to **Thap Cham Railway Station** (20 minutes) and **Po Klong Garai Cham Towers**, and easy city dining. Base 38 km northeast in [Vinh Hy](/destinations/where-to-stay-in-vinh-hy/) (`350,000–1,800,000 VND` in the fishing village or `$1,100+ USD` at **Amanoi**) if you prefer dramatic vertical granite cliffs inside **Nui Chua National Park**, glass-bottom coral boat trips, and floating lobster rafts—keeping in mind that Vinh Hy village itself has a concrete harbor wall rather than a wide walk-in sand beach.
 
 ### How do I get from Cam Ranh Airport (`CXR`) or Thap Cham Train Station to Ninh Chu Beach?
 

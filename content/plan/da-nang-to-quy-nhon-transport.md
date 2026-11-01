@@ -2,14 +2,12 @@
 title: "Da Nang to Quy Nhon Transport: Coastal Railway, Luxury Rail & Limousine"
 slug: "da-nang-to-quy-nhon-transport"
 route_path: "plan/da-nang-to-quy-nhon-transport"
-category: "plan"
 description: "Da Nang to Quy Nhon transport guide: Reunification Express train berths vs luxury Vietage rail carriages, limousine vans, and coastal highway travel times."
-author: "VietnamGuide Editorial Team"
-last_updated: "2026-06-15"
-word_count: 1632
-travel_cluster: "coastal_islands"
+travel_cluster: "central_heritage"
 last_verified: "2026-10-20"
-reading_time_minutes: "13"
+author: "VietnamGuide Editorial Team"
+reading_time_minutes: 13
+word_count: 1632
 ---
 
 # Da Nang to Quy Nhon Transport: Coastal Railway, Luxury Rail & Limousine

@@ -2,14 +2,12 @@
 title: "Where to Stay in Tam Coc (2026): Homestays & Resorts"
 slug: "where-to-stay-in-tam-coc"
 route_path: "destinations/where-to-stay-in-tam-coc"
-category: "destinations"
-updated_at: "2026-10-24"
+description: "Where to stay in Tam Coc: riverside village homestays vs boutique karst resorts along the Ngo Dong River and budget backpacker hostels with 2026 rates."
+travel_cluster: "ninh_binh"
 last_verified: "2026-10-24"
 author: "VietnamGuide Editorial Team"
-travel_cluster: "northern_core"
 reading_time_minutes: 10
 word_count: 1497
-description: "Where to stay in Tam Coc: riverside village homestays vs boutique karst resorts along the Ngo Dong River and budget backpacker hostels with 2026 rates."
 ---
 
 # Where to Stay in Tam Coc (2026): Homestays & Resorts

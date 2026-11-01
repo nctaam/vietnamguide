@@ -2,14 +2,12 @@
 title: "Ho Chi Minh City in 2 Days (2026): 48-Hour Itinerary"
 slug: "ho-chi-minh-city-in-2-days"
 route_path: "itineraries/ho-chi-minh-city-in-2-days"
-category: "itineraries"
 description: "Plan Ho Chi Minh City in 2 days without wasted travel: District 1 colonial sights, War Remnants Museum, Cholon pagodas, rooftop sunset, and street food."
-author: "VietnamGuide Editorial Team"
-last_updated: "2026-06-15"
-word_count: 1786
 travel_cluster: "southern_delta"
 last_verified: "2026-10-22"
-reading_time_minutes: "12"
+author: "VietnamGuide Editorial Team"
+reading_time_minutes: 12
+word_count: 1786
 ---
 
 # Ho Chi Minh City in 2 Days (2026): 48-Hour Itinerary

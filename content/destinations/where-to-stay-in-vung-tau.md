@@ -2,14 +2,12 @@
 title: "Where to Stay in Vung Tau (2026): Best Beaches & Hotels"
 slug: "where-to-stay-in-vung-tau"
 route_path: "destinations/where-to-stay-in-vung-tau"
-category: "destinations"
-updated_at: "2026-10-24"
+description: "Where to stay in Vung Tau: Back Beach resort towers vs Front Beach sunset hotels and quiet Bai Dau hillside villas with 2026 room rates and beach advice."
+travel_cluster: "southern_delta"
 last_verified: "2026-10-24"
 author: "VietnamGuide Editorial Team"
-travel_cluster: "southern_coast"
 reading_time_minutes: 12
 word_count: 1442
-description: "Where to stay in Vung Tau: Back Beach resort towers vs Front Beach sunset hotels and quiet Bai Dau hillside villas with 2026 room rates and beach advice."
 ---
 
 # Where to Stay in Vung Tau (2026): Best Beaches & Hotels

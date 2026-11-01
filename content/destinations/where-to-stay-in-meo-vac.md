@@ -2,14 +2,12 @@
 title: "Where to Stay in Meo Vac (2026): Pa Vi Stays & Town"
 slug: "where-to-stay-in-meo-vac"
 route_path: "destinations/where-to-stay-in-meo-vac"
-category: "destinations"
-updated_at: "2026-10-24"
+description: "Where to stay in Meo Vac: clay stilt homestays in Pa Vi Hmong cultural village vs town hotels for Ma Pi Leng pass and Nho Que river with 2026 rates."
+travel_cluster: "northern_highlands"
 last_verified: "2026-10-24"
 author: "VietnamGuide Editorial Team"
-travel_cluster: "northern_highlands"
 reading_time_minutes: 12
 word_count: 1465
-description: "Where to stay in Meo Vac: clay stilt homestays in Pa Vi Hmong cultural village vs town hotels for Ma Pi Leng pass and Nho Que river with 2026 rates."
 ---
 
 # Where to Stay in Meo Vac (2026): Pa Vi Hexagonal H'Mong Village, Chung Pua Heritage & Nho Que Canyon

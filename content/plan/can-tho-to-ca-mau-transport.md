@@ -2,7 +2,7 @@
 title: "Can Tho to Ca Mau Transport: Bus, Limousine, and Dat Mui Transit Guide"
 slug: "can-tho-to-ca-mau-transport"
 route_path: "plan/can-tho-to-ca-mau-transport"
-description: "Plan your Can Tho to Ca Mau trip with verified 2026 bus timetables, FUTA sleeper fares, VIP limousines, terminal details, QL1A road tips, and Dat Mui links."
+description: "Futa express buses (150,000 VND, 3.5 hours) vs limousine minivans covering 150 km south via Highway 1A. 2026 departure times, ticket fares, and Dat Mui tips."
 travel_cluster: "mekong_delta"
 last_verified: "2026-10-25"
 author: "VietnamGuide Editorial Team"

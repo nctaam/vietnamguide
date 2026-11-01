@@ -2,14 +2,12 @@
 title: "Sa Pa vs Ha Giang (2026): Terraced Trekking & Fansipan vs Karst Motorbike Loop"
 slug: "sapa-vs-ha-giang"
 route_path: "compare/sapa-vs-ha-giang"
-category: "compare"
 description: "Compare Sapa vs Ha Giang: choose Sapa, Ha Giang, both, or neither by mountain scenery style, comfort, season, road safety, and Hanoi transfer pressure."
-author: "VietnamGuide Editorial Team"
-last_updated: "2026-06-15"
-word_count: 1405
-travel_cluster: "northern_vietnam"
+travel_cluster: "northern_highlands"
 last_verified: "2026-10-22"
-reading_time_minutes: "10"
+author: "VietnamGuide Editorial Team"
+reading_time_minutes: 10
+word_count: 1405
 ---
 
 # Sa Pa vs Ha Giang (2026): Terraced Trekking & Fansipan vs Karst Motorbike Loop

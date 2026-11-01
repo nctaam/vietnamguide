@@ -2,14 +2,12 @@
 title: "Where to Stay in Ba Be (2026): Lake Homestays & Lodges"
 slug: "where-to-stay-in-ba-be"
 route_path: "destinations/where-to-stay-in-ba-be"
-category: "destinations"
-updated_at: "2026-10-24"
+description: "Where to stay in Ba Be: Pac Ngoi stilt village homestays on Ba Be Lake vs Bo Lu waterfront lodges and national park bases with 2026 nightly VND rates."
+travel_cluster: "far_north_frontier"
 last_verified: "2026-10-24"
 author: "VietnamGuide Editorial Team"
-travel_cluster: "northern_highlands"
 reading_time_minutes: 12
 word_count: 1554
-description: "Where to stay in Ba Be: Pac Ngoi stilt village homestays on Ba Be Lake vs Bo Lu waterfront lodges and national park bases with 2026 nightly VND rates."
 ---
 
 # Where to Stay in Ba Be (2026): Lake Homestays & Lodges

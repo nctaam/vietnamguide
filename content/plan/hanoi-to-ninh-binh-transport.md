@@ -3,7 +3,7 @@ title: "Hanoi to Ninh Binh Transport: Train, Van or Car?"
 slug: "hanoi-to-ninh-binh-transport"
 route_path: "plan/hanoi-to-ninh-binh-transport"
 description: "Compare Hanoi to Ninh Binh transport options: evaluate train, limousine van, private car, and day tours by drop-off point, luggage space, and timing."
-travel_cluster: "ninh_binh"
+travel_cluster: "northern_triangle"
 last_verified: "2026-11-01"
 author: "VietnamGuide Editorial Team"
 reading_time_minutes: 12

@@ -2,14 +2,12 @@
 title: "Where to Stay in Phu Quoc: Best Beaches & Areas"
 slug: "where-to-stay-in-phu-quoc"
 route_path: "destinations/where-to-stay-in-phu-quoc"
-category: "destinations"
-updated_at: "2026-10-24"
-author: "VietnamGuide Editorial Team"
-word_count: 1457
 description: "Decide where to stay in Phu Quoc for 2026 with our breakdown of Long Beach, Ong Lang, Bai Sao, and Duong Dong town with nightly hotel prices in VND."
-travel_cluster: "southern_delta_islands"
+travel_cluster: "coastal_islands"
 last_verified: "2026-10-24"
-reading_time_minutes: "8"
+author: "VietnamGuide Editorial Team"
+reading_time_minutes: 8
+word_count: 1457
 ---
 
 # Where to Stay in Phu Quoc: Best Beaches & Areas

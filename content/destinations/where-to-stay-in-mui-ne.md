@@ -2,14 +2,12 @@
 title: "Where to Stay in Mui Ne: Beach Resorts & Coast Areas"
 slug: "where-to-stay-in-mui-ne"
 route_path: "destinations/where-to-stay-in-mui-ne"
-category: "destinations"
-updated_at: "2026-10-24"
+description: "Decide where to stay in Mui Ne: Nguyen Dinh Chieu resort strip, Ham Tien guesthouses, and quiet Mui Ne village with realistic 2026 nightly rates in VND."
+travel_cluster: "coastal_islands"
 last_verified: "2026-10-24"
 author: "VietnamGuide Editorial Team"
-travel_cluster: "southern_hub"
 reading_time_minutes: 12
 word_count: 1563
-description: "Decide where to stay in Mui Ne: Nguyen Dinh Chieu resort strip, Ham Tien guesthouses, and quiet Mui Ne village with realistic 2026 nightly rates in VND."
 ---
 
 # Where to Stay in Mui Ne: Beach Resorts & Coast Areas

@@ -2,19 +2,17 @@
 title: "Vietnam Scooter Rental Checklist (2026): Bike Checks"
 slug: "vietnam-scooter-rental-checklist"
 route_path: "plan/vietnam-scooter-rental-checklist"
-category: "plan"
-updated_at: "2026-10-24"
-author: "VietnamGuide Editorial Team"
-word_count: 1448
 description: "Vietnam scooter rental checklist: brake testing, tire checks, blue card papers, helmet safety, damage video recording, and deposit rules for 2026 travel."
 travel_cluster: "national_circuit"
 last_verified: "2026-10-24"
-reading_time_minutes: "9"
+author: "VietnamGuide Editorial Team"
+reading_time_minutes: 9
+word_count: 1448
 ---
 
 # Vietnam Scooter Rental Checklist (2026): Bike Checks
 
-Bad brakes ruin trips fast. Across coastal hubs like [Da Nang](/destinations/da-nang) and [Hoi An](/destinations/hoi-an) or mountain gateways like [Ha Giang](/destinations/ha-giang), sidewalk boards advertise scooters for **120,000 to 180,000 VND per day** ($4.80 to $7.20 USD), yet fleet upkeep varies wildly between professional mechanics and casual guesthouse owners. One uninspected machine can leave you stranded with a snapped drive belt on a 10 percent grade or facing a **2,000,000 VND** ($80.00 USD) dispute over pre-existing plastic scratches.
+Bad brakes ruin trips fast. Across coastal hubs like [Da Nang](/destinations/da-nang-travel-guide/) and [Hoi An](/destinations/hoi-an-ancient-town-guide/) or mountain gateways like [Ha Giang](/destinations/ha-giang-loop-planning-guide/), sidewalk boards advertise scooters for **120,000 to 180,000 VND per day** ($4.80 to $7.20 USD), yet fleet upkeep varies wildly between professional mechanics and casual guesthouse owners. One uninspected machine can leave you stranded with a snapped drive belt on a 10 percent grade or facing a **2,000,000 VND** ($80.00 USD) dispute over pre-existing plastic scratches.
 
 Never rush the handover. Spending 3 minutes running a structured mechanical, document, and deposit inspection before signing your rental slip protects both your safety and your wallet. Review our [Vietnam Motorbike License Laws](/plan/vietnam-motorbike-license-laws) guide first to confirm your 1968 International Driving Permit eligibility, then run every check below before turning the ignition key.
 

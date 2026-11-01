@@ -2,14 +2,12 @@
 title: "Vegetarian in Vietnam (2026): Food Guide & Phrases"
 slug: "vietnam-vegetarian-travel-guide"
 route_path: "plan/vietnam-vegetarian-travel-guide"
-category: "plan"
-updated_at: "2026-10-24"
-author: "VietnamGuide Editorial Team"
-word_count: 1379
 description: "Vegetarian travel in Vietnam: essential plant-based guide, Buddhist com chay buffets, fish sauce watchouts, ordering cards, and 2026 Viet menu phrases."
 travel_cluster: "national_circuit"
 last_verified: "2026-10-24"
-reading_time_minutes: "8"
+author: "VietnamGuide Editorial Team"
+reading_time_minutes: 8
+word_count: 1379
 ---
 
 # Vegetarian in Vietnam (2026): Food Guide & Phrases

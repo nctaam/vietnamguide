@@ -3,7 +3,7 @@ title: "Hanoi to Tam Dao Transport (2026): Bus, Van & Bike"
 slug: "hanoi-to-tam-dao-transport"
 route_path: "plan/hanoi-to-tam-dao-transport"
 description: "Old Quarter pickup limousines (2 hours, 160,000-200,000 VND) vs Bus 58 and motorbike climbs up Tam Dao Mountain (75 km). 2026 schedules and traffic advice."
-travel_cluster: "northern_triangle"
+travel_cluster: "far_north_frontier"
 last_verified: "2026-10-25"
 author: "VietnamGuide Editorial Team"
 reading_time_minutes: 12

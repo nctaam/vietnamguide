@@ -2,19 +2,12 @@
 title: "Vietnam in February: Weather, Tet and Best Routes"
 slug: "vietnam-in-february"
 route_path: "plan/vietnam-in-february"
-section: "plan"
-category: "plan"
-page_type: "practical"
-template: "guide"
-status: "published"
-updated_at: "2026-10-25"
-last_reviewed: "2026-10-25"
+description: "Plan Vietnam in February by Tet holiday timing, post-Tet restart, dry regional weather, route shape, transport pressure, packing, and live route checks."
+travel_cluster: "national_circuit"
 last_verified: "2026-10-25"
 author: "VietnamGuide Editorial Team"
-travel_cluster: "national_circuit"
 reading_time_minutes: 12
 word_count: 1422
-description: "Plan Vietnam in February by Tet holiday timing, post-Tet restart, dry regional weather, route shape, transport pressure, packing, and live route checks."
 ---
 
 February delivers some of the most stable and rewarding travel weather across Vietnam. Dry sunshine warms the southern beaches, while the central coast sheds its winter monsoon rains. In the northern mountains, warming days coax plum and peach orchards into bloom across limestone valleys.
@@ -27,13 +20,13 @@ Weather patterns shift favorably across all three geographic zones throughout Fe
 
 ### Northern Provinces: Spring Warming, Blossom Season, and Gradual Clearing
 
-Winter gradually relaxes its grip across the north by mid-February. Daytime temperatures in [Hanoi](/destinations/hanoi/) range between 15°C and 22°C, with the mercury occasionally touching 24°C during late afternoons. While overcast mornings and light humidity persist near 75% humidity, prolonged spells of clear spring sunshine emerge by late February.
+Winter gradually relaxes its grip across the north by mid-February. Daytime temperatures in [Hanoi](/destinations/hanoi-travel-guide/) range between 15°C and 22°C, with the mercury occasionally touching 24°C during late afternoons. While overcast mornings and light humidity persist near 75% humidity, prolonged spells of clear spring sunshine emerge by late February.
 
 Mountain highlands undergo a visual transformation. In Moc Chau, hillsides fill with white plum blossoms (*hoa mận*) under crisp 12–18°C skies. Meanwhile, pink peach blossoms (*hoa đào*) cover traditional villages across Sa Pa and Bac Ha. In Ha Giang, daytime temperatures along QL4C climb above 15°C. Farmers begin preparing mountain terraces for the spring planting season at 1,200m elevation. Over in Ninh Binh, limestone waterways average 16–21°C, while Ha Long Bay records 17–22°C with significantly fewer fog delays than in mid-winter.
 
 ### Central Provinces: Rain Tapering Off and Coastal Warmth
 
-Central Vietnam experiences its most welcome climate shift of the winter during February. Rainfall drops drastically from January levels. Da Nang and [Hoi An](/destinations/hoi-an/) record comfortable 20–26°C warmth, receiving under 40mm rainfall across the entire month.
+Central Vietnam experiences its most welcome climate shift of the winter during February. Rainfall drops drastically from January levels. Da Nang and [Hoi An](/destinations/hoi-an-ancient-town-guide/) record comfortable 20–26°C warmth, receiving under 40mm rainfall across the entire month.
 
 Ancient streets in Hoi An dry out completely, making cycling through surrounding rice paddies pleasant under mild sunshine. North of the Hai Van Pass, Hue warms to 19–24°C as persistent winter drizzle dissipates into periodic cloud breaks. Further south in Khanh Hoa province, Nha Trang basks in 23–29°C temperatures with calm blue seas and 20mm monthly precipitation. Up on the Lang Biang plateau, Da Lat maintains pleasant 14–24°C days, accompanied by cool 12°C evenings and blooming cherry blossom trees (*mai anh đào*).
 

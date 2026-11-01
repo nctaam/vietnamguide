@@ -3,7 +3,7 @@ title: "Hanoi to Pu Luong Transport (2026): Shuttle vs Car"
 slug: "hanoi-to-pu-luong-transport"
 route_path: "plan/hanoi-to-pu-luong-transport"
 description: "Hanoi to Pu Luong transport: direct Old Quarter eco-bus shuttles vs private transfers and motorbike routes via Ban Don. 2026 fares, travel times, and tips."
-travel_cluster: "northern_highlands"
+travel_cluster: "northern_triangle"
 last_verified: "2026-10-31"
 author: "VietnamGuide Editorial Team"
 reading_time_minutes: 12

@@ -2,24 +2,17 @@
 title: "Gluten-Free in Vietnam (2026): Celiac Travel Guide"
 slug: "vietnam-gluten-free-travel-guide"
 route_path: "plan/vietnam-gluten-free-travel-guide"
-section: "plan"
-category: "plan"
-page_type: "practical"
-template: "guide"
-status: "published"
-last_reviewed: "2026-10-24"
-last_verified: "2026-10-24"
-updated_at: "2026-10-24"
-author: "VietnamGuide Editorial Team"
-travel_cluster: "national_circuit"
-reading_time_minutes: "8"
-word_count: 1405
 description: "Gluten-free in Vietnam: essential celiac guide to naturally gluten-free rice dishes, soy sauce warnings, cross-contamination tips, and restaurant phrases."
+travel_cluster: "national_circuit"
+last_verified: "2026-10-24"
+author: "VietnamGuide Editorial Team"
+reading_time_minutes: 8
+word_count: 1405
 ---
 
 # Gluten-Free in Vietnam (2026): Celiac Travel Guide
 
-Rice rules the Vietnamese table. Because traditional kitchens build almost every meal around white rice (**Gạo**), extruded rice noodles (**Bánh phở** and **Bún**), translucent rice paper (**Bánh tráng**), and pure fermented anchovy fish sauce (**Nước mắm nguyên chất**), Vietnam looks on paper like an effortless destination for celiac travelers. Yet a structural paradox defines gluten-free dining from [Hanoi](/destinations/hanoi/) to [Ho Chi Minh City](/destinations/ho-chi-minh-city/). While the foundational starch and primary liquid seasoning contain zero wheat, modern urban street carts and mid-range restaurants routinely introduce hidden wheat (**Lúa mì** / **Bột mì**) and barley malt through industrial bouillon powders (**Hạt nêm**), soy sauce (**Nước tương** / **Xì dầu**), thick oyster sauce (**Dầu hào**), and shared noodle blanching baskets.
+Rice rules the Vietnamese table. Because traditional kitchens build almost every meal around white rice (**Gạo**), extruded rice noodles (**Bánh phở** and **Bún**), translucent rice paper (**Bánh tráng**), and pure fermented anchovy fish sauce (**Nước mắm nguyên chất**), Vietnam looks on paper like an effortless destination for celiac travelers. Yet a structural paradox defines gluten-free dining from [Hanoi](/destinations/hanoi-travel-guide/) to [Ho Chi Minh City](/destinations/ho-chi-minh-city-travel-guide/). While the foundational starch and primary liquid seasoning contain zero wheat, modern urban street carts and mid-range restaurants routinely introduce hidden wheat (**Lúa mì** / **Bột mì**) and barley malt through industrial bouillon powders (**Hạt nêm**), soy sauce (**Nước tương** / **Xì dầu**), thick oyster sauce (**Dầu hào**), and shared noodle blanching baskets.
 
 Eating safely requires surgical Ingredient awareness. You can enjoy steaming **45,000 VND to 75,000 VND** ($1.80 to $3.00 USD) bowls of beef **Phở**, charcoal-grilled **Bún chả**, crispy turmeric **Bánh xèo** crêpes, and broken rice (**Cơm tấm**) without triggering an autoimmune reaction—provided you carry a Pocket bottle of pure fish sauce, verify broth seasoning before ordering, and present a clear Vietnamese celiac dining card within **30 seconds** of sitting down.
 
@@ -46,7 +39,7 @@ Knowing which regional specialties remain grain-pure and which hide wheat flour 
 | **Bún Chả Hà Nội** (Grilled Pork & Vermicelli) | Extruded rice vermicelli (**Bún**), charcoal-grilled pork patties, green papaya, fish sauce broth | **Low to Moderate** | Verify the pork marinade omits oyster sauce (**Dầu hào**) and soy sauce; skip fried spring rolls (**Nem rán**) if fried in a shared wok with wheat-battered snacks. | **50,000 VND to 90,000 VND** ($2.00 to $3.60) |
 | **Bánh Xèo** (Crispy Turmeric Rice Crêpe) | Rice flour (**Bột gạo**), turmeric, coconut milk, shrimp, pork, bean sprouts | **Moderate** | Traditional southern batter is **100%** rice flour, but some central stalls mix **10%** wheat flour for crispness. Ask **"Bột bánh xèo có pha bột mì không?"** and dip only in fish sauce. | **35,000 VND to 110,000 VND** ($1.40 to $4.40) |
 | **Cơm Tấm Sườn Nướng** (Broken Rice with Grilled Pork) | Steamed broken rice grains, grilled pork chop, scallion oil, pickled daikon | **Moderate** | Plain rice, fried egg, and fish sauce are safe; pork ribs are sometimes glazed with soy or oyster sauce. Order plain grilled pork or steamed egg loaf checked for wheat binders. | **45,000 VND to 80,000 VND** ($1.80 to $3.20) |
-| **Cao Lầu & Mì Quảng** (Central Noodle Specialties) | Thick noodles, braised pork, herbs, toasted sesame rice cracker (**Bánh tráng mè**) | **High Trap** | **Cao lầu** in [Hoi An](/destinations/hoi-an/) often incorporates wheat flour or shares boiling water with yellow wheat noodles (**Mì vàng**). Choose pure rice **Mì Quảng** and inspect meat marinades. | **40,000 VND to 65,000 VND** ($1.60 to $2.60) |
+| **Cao Lầu & Mì Quảng** (Central Noodle Specialties) | Thick noodles, braised pork, herbs, toasted sesame rice cracker (**Bánh tráng mè**) | **High Trap** | **Cao lầu** in [Hoi An](/destinations/hoi-an-ancient-town-guide/) often incorporates wheat flour or shares boiling water with yellow wheat noodles (**Mì vàng**). Choose pure rice **Mì Quảng** and inspect meat marinades. | **40,000 VND to 65,000 VND** ($1.60 to $2.60) |
 | **Bánh Mì & Mì Xào** (Baguettes & Stir-Fried Egg Noodles) | Wheat flour baguette (**Bánh mì**) or yellow wheat-egg noodles (**Mì trứng** / **Mì gói**) | **Extreme (Strictly Avoid)** | **100%** gluten base; instant noodles and yellow egg noodles are boiled in shared pots across late-night carts. Never order from mixed **Mì** and **Phở** stalls. | **20,000 VND to 60,000 VND** ($0.80 to $2.40) |
 
 ---
@@ -57,7 +50,7 @@ Even when a dish contains zero bread or yellow noodles, six hidden ingredients a
 
 ### Sauces, Seasonings, and Factory Toppings
 1. **Soy Sauce (Nước tương / Xì dầu) and Maggi Seasoning**: Widely placed in plastic caddies on every street table for **2,000 VND** extra flavor, brands like Chin-Su, Nam Duong, and Maggi contain fermented wheat or hydrolyzed wheat protein.
-2. **Oyster Sauce (Dầu hào) and Hoisin Sauce (Tương đen)**: Every stir-fried vegetable dish (**Rau muống xào tỏi**) defaults to a glossy spoonful of wheat-thickened oyster sauce unless you specify salt and fish sauce only. At southern **Phở** shops in [Ho Chi Minh City](/destinations/ho-chi-minh-city/), the black squeeze bottle of **Tương đen** contains wheat starch.
+2. **Oyster Sauce (Dầu hào) and Hoisin Sauce (Tương đen)**: Every stir-fried vegetable dish (**Rau muống xào tỏi**) defaults to a glossy spoonful of wheat-thickened oyster sauce unless you specify salt and fish sauce only. At southern **Phở** shops in [Ho Chi Minh City](/destinations/ho-chi-minh-city-travel-guide/), the black squeeze bottle of **Tương đen** contains wheat starch.
 3. **Bouillon Seasoning Powder (Hạt nêm)**: Many domestic soup kitchens season broths with pork-and-mushroom **Hạt nêm** granules. While pure MSG (**Bột ngọt** / **Mì chính** made from fermented cassava or sugarcane) is **100%** gluten-free, compound **Hạt nêm** blends frequently list wheat starch or barley malt extract on their back labels.
 4. **Commercial Crispy Fried Shallots (Hành phi)**: Homemade fried shallots are just sliced bulbs cooked in oil for **15 minutes**. Cheap wholesale bags sold to budget stalls for **60,000 VND** ($2.40 USD) per kilogram dust the shallots in wheat flour (**Bột mì**) so they stay crunchy in humid air. Always ask for raw scallions (**Hành lá**) and skip pre-fried toppings.
 5. **Processed Meatballs and Fish Cakes (Bò viên, Chả lụa, Chả cá)**: Artisanal pork roll (**Chả lụa**) binds lean meat with fish sauce and potato or tapioca starch, whereas low-cost factory meatballs (**Bò viên**) and fried fish cakes (**Chả cá**) add wheat flour fillers. Stick to sliced whole beef brisket (**Nạm**), rare tenderloin (**Tái**), or shredded chicken (**Gà xé**).
@@ -89,9 +82,9 @@ Screenshot or print this exact Vietnamese block with full diacritics and show it
 
 While **100%** dedicated gluten-free kitchens remain rare, these verified addresses across Vietnam's main hubs train staff on gluten cross-contamination, use pure fish sauce or tamari, and cook fresh to order within **15 minutes to 25 minutes**.
 
-- **[Hanoi](/destinations/hanoi/)**: **Ngoặm** (19 Nguyen Quang Bich, Hoan Kiem — **800 m** from Hoan Kiem Lake; clearly labeled gluten-free buns and dedicated fryer protocols, mains **140,000 VND to 240,000 VND** / $5.60 to $9.60 USD), **iVegan Supershop** (37 To Ngoc Van, Tay Ho — **4.5 km** north of the Old Quarter; smoothie bowls, buckwheat pancakes, and gluten-free labeled rice plates for **95,000 VND to 165,000 VND** / $3.80 to $6.60 USD), and single-dish traditional **Phở Bò Ấu Triệu** (34 Au Trieu, beside St. Joseph's Cathedral — pure beef bone and fish sauce broth with zero yellow noodles on site, **60,000 VND to 75,000 VND** / $2.40 to $3.00 USD, open **06:30 to 10:00**).
-- **[Da Nang](/destinations/da-nang/) & [Hoi An](/destinations/hoi-an/)**: **Roots Plant-Based Cafe** (An Thuong 30, My An, Da Nang — **200 m** from My Khe Beach; explicit gluten-free menu icons and tamari substitutions, **90,000 VND to 170,000 VND** / $3.60 to $6.80 USD), **Good Eats Hoi An** (411 Cua Dai, Cam Chau — **1.8 km** from the Ancient Town; dedicated celiac-aware kitchen procedures, gluten-free bread, and safe local dishes for **85,000 VND to 160,000 VND** / $3.40 to $6.40 USD), and **Morning Glory Signature** (41 Nguyen Phuc Chu, Hoi An — staff trained to prepare rice-flour specialties in clean woks with pure fish sauce, **150,000 VND to 280,000 VND** / $6.00 to $11.20 USD).
-- **[Ho Chi Minh City](/destinations/ho-chi-minh-city/)**: **Poke Saigon** (42 Nguyen Hue, District 1 — custom sushi-rice and salad bowls with certified gluten-free tamari dressing, **130,000 VND to 195,000 VND** / $5.20 to $7.80 USD), **Hum Garden & Restaurant** (32 D10 Street, Thao Dien, District 2 — **6 km** from Ben Thanh Market; upscale kitchen that swaps soy sauce for pure salt, mushroom stock, or tamari upon seeing a celiac card, **160,000 VND to 340,000 VND** / $6.40 to $13.60 USD), and **Propaganda Vietnamese Bistro** (21 Han Thuyen, District 1 — marks gluten-free rice dishes clearly on the menu, **145,000 VND to 260,000 VND** / $5.80 to $10.40 USD).
+- **[Hanoi](/destinations/hanoi-travel-guide/)**: **Ngoặm** (19 Nguyen Quang Bich, Hoan Kiem — **800 m** from Hoan Kiem Lake; clearly labeled gluten-free buns and dedicated fryer protocols, mains **140,000 VND to 240,000 VND** / $5.60 to $9.60 USD), **iVegan Supershop** (37 To Ngoc Van, Tay Ho — **4.5 km** north of the Old Quarter; smoothie bowls, buckwheat pancakes, and gluten-free labeled rice plates for **95,000 VND to 165,000 VND** / $3.80 to $6.60 USD), and single-dish traditional **Phở Bò Ấu Triệu** (34 Au Trieu, beside St. Joseph's Cathedral — pure beef bone and fish sauce broth with zero yellow noodles on site, **60,000 VND to 75,000 VND** / $2.40 to $3.00 USD, open **06:30 to 10:00**).
+- **[Da Nang](/destinations/da-nang-travel-guide/) & [Hoi An](/destinations/hoi-an-ancient-town-guide/)**: **Roots Plant-Based Cafe** (An Thuong 30, My An, Da Nang — **200 m** from My Khe Beach; explicit gluten-free menu icons and tamari substitutions, **90,000 VND to 170,000 VND** / $3.60 to $6.80 USD), **Good Eats Hoi An** (411 Cua Dai, Cam Chau — **1.8 km** from the Ancient Town; dedicated celiac-aware kitchen procedures, gluten-free bread, and safe local dishes for **85,000 VND to 160,000 VND** / $3.40 to $6.40 USD), and **Morning Glory Signature** (41 Nguyen Phuc Chu, Hoi An — staff trained to prepare rice-flour specialties in clean woks with pure fish sauce, **150,000 VND to 280,000 VND** / $6.00 to $11.20 USD).
+- **[Ho Chi Minh City](/destinations/ho-chi-minh-city-travel-guide/)**: **Poke Saigon** (42 Nguyen Hue, District 1 — custom sushi-rice and salad bowls with certified gluten-free tamari dressing, **130,000 VND to 195,000 VND** / $5.20 to $7.80 USD), **Hum Garden & Restaurant** (32 D10 Street, Thao Dien, District 2 — **6 km** from Ben Thanh Market; upscale kitchen that swaps soy sauce for pure salt, mushroom stock, or tamari upon seeing a celiac card, **160,000 VND to 340,000 VND** / $6.40 to $13.60 USD), and **Propaganda Vietnamese Bistro** (21 Han Thuyen, District 1 — marks gluten-free rice dishes clearly on the menu, **145,000 VND to 260,000 VND** / $5.80 to $10.40 USD).
 
 ---
 

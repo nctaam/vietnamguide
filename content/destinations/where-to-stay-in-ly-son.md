@@ -2,14 +2,12 @@
 title: "Where to Stay in Ly Son (2026): Big vs Small Island"
 slug: "where-to-stay-in-ly-son"
 route_path: "destinations/where-to-stay-in-ly-son"
-category: "destinations"
-updated_at: "2026-10-24"
+description: "Where to stay in Ly Son: Big Island port hotels vs Little Island beach homestays and Mu Cu sunrise eco-lodges with 2026 room rates and island advice."
+travel_cluster: "coastal_islands"
 last_verified: "2026-10-24"
 author: "VietnamGuide Editorial Team"
-travel_cluster: "coastal_islands"
 reading_time_minutes: 12
 word_count: 1368
-description: "Where to stay in Ly Son: Big Island port hotels vs Little Island beach homestays and Mu Cu sunrise eco-lodges with 2026 room rates and island advice."
 ---
 
 # Where to Stay in Ly Son (2026): Big vs Small Island

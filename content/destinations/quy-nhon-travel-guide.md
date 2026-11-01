@@ -2,14 +2,12 @@
 title: "Quy Nhon Travel Guide: Quiet Beaches, Ky Co & Transfers"
 slug: "quy-nhon-travel-guide"
 route_path: "destinations/quy-nhon-travel-guide"
-category: "destinations"
 description: "Quy Nhon travel guide: uncrowded central coast beaches, Ky Co and Eo Gio coastal cliffs, Cham towers, local seafood dining, and Phu Cat airport access."
-author: "VietnamGuide Editorial Team"
-last_updated: "2026-06-15"
-word_count: 1732
 travel_cluster: "coastal_islands"
 last_verified: "2026-10-20"
-reading_time_minutes: "13"
+author: "VietnamGuide Editorial Team"
+reading_time_minutes: 13
+word_count: 1732
 ---
 
 # Quy Nhon Travel Guide: Quiet Beaches, Ky Co & Transfers

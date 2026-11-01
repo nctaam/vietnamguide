@@ -2,14 +2,12 @@
 title: "Mui Ne vs Nha Trang: Sand Dunes & Surf vs Urban Island Beachfront"
 slug: "mui-ne-vs-nha-trang"
 route_path: "compare/mui-ne-vs-nha-trang"
-category: "compare"
 description: "Mui Ne vs Nha Trang: compare coastal kitesurfing and sand dunes in Mui Ne with high-rise hotels, scuba diving, and nightlife in Nha Trang for 2026."
-author: "VietnamGuide Editorial Team"
-last_updated: "2026-06-15"
-word_count: 1491
 travel_cluster: "coastal_islands"
 last_verified: "2026-10-20"
-reading_time_minutes: "12"
+author: "VietnamGuide Editorial Team"
+reading_time_minutes: 12
+word_count: 1491
 ---
 
 # Mui Ne vs Nha Trang: Sand Dunes & Surf vs Urban Island Beachfront

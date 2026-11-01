@@ -2,14 +2,12 @@
 title: "Hang Mua Ninh Binh Guide: 486 Stone Steps, Ngoa Long Peak, and Timing"
 slug: "hang-mua-ninh-binh-guide"
 route_path: "destinations/hang-mua-ninh-binh-guide"
-category: "destinations"
 description: "Complete Hang Mua Ninh Binh guide: how to climb 500 stone steps to Ngoa Long dragon peak, lotus boardwalk timing, tickets, avoiding crowds, and photo tips."
-author: "VietnamGuide Editorial Team"
-last_updated: "2026-06-15"
-word_count: 1502
-travel_cluster: "ninh-binh"
+travel_cluster: "ninh_binh"
 last_verified: "2026-10-20"
-reading_time_minutes: "8"
+author: "VietnamGuide Editorial Team"
+reading_time_minutes: 8
+word_count: 1502
 ---
 
 # Hang Mua Ninh Binh Guide: 486 Stone Steps, Ngoa Long Peak, and Timing

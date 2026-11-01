@@ -2,19 +2,12 @@
 title: "Where to Stay in Quang Ngai (2026): City vs Sa Ky Port"
 slug: "where-to-stay-in-quang-ngai"
 route_path: "destinations/where-to-stay-in-quang-ngai"
-section: "destinations"
-category: "destinations"
-page_type: "destination"
-template: "guide"
-status: "published"
-updated_at: "2026-10-25"
-last_reviewed: "2026-10-25"
+description: "Quang Ngai hotels near the station vs Sa Ky Port transit guesthouses 20 km away for 07:30 Ly Son speedboats. 2026 room rates, amenities, and transit advice."
+travel_cluster: "far_north_frontier"
 last_verified: "2026-10-25"
 author: "VietnamGuide Editorial Team"
-travel_cluster: "central_heritage"
 reading_time_minutes: 11
 word_count: 1464
-description: "Quang Ngai hotels near the station vs Sa Ky Port transit guesthouses 20 km away for 07:30 Ly Son speedboats. 2026 room rates, amenities, and transit advice."
 ---
 
 # Where to Stay in Quang Ngai (2026): City Hubs, Tra Khuc River & Sa Ky Port Transit

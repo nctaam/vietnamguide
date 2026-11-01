@@ -2,14 +2,12 @@
 title: "Best Things to Do in Da Nang (2026): Marble Mountains, Son Tra Peninsula, Dragon Bridge & My Khe Beach"
 slug: "best-things-to-do-in-da-nang"
 route_path: "destinations/best-things-to-do-in-da-nang"
-category: "destinations"
 description: "Explore the best things to do in Da Nang: My Khe Beach, Marble Mountains, Dragon Bridge, Ba Na Hills, and local street food with 2026 prices in VND."
-author: "VietnamGuide Editorial Team"
-last_updated: "2026-06-15"
-word_count: 1543
 travel_cluster: "central_heritage"
 last_verified: "2026-10-22"
-reading_time_minutes: "10"
+author: "VietnamGuide Editorial Team"
+reading_time_minutes: 10
+word_count: 1543
 ---
 
 # Best Things to Do in Da Nang (2026): Marble Mountains, Son Tra Peninsula, Dragon Bridge & My Khe Beach

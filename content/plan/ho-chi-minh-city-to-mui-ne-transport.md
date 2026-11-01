@@ -3,7 +3,7 @@ title: "Ho Chi Minh City to Mui Ne: Express Bus, Train & Car"
 slug: "ho-chi-minh-city-to-mui-ne-transport"
 route_path: "plan/ho-chi-minh-city-to-mui-ne-transport"
 description: "Compare Ho Chi Minh City to Mui Ne transport options via the new expressway: limousine buses, coastal trains to Phan Thiet, private cars, and travel times."
-travel_cluster: "coastal_islands"
+travel_cluster: "southern_delta"
 last_verified: "2026-11-01"
 author: "VietnamGuide Editorial Team"
 reading_time_minutes: 8

@@ -2,14 +2,12 @@
 title: "9 Best Day Trips from Hanoi (2026): Ninh Binh, Ha Long Bay, Perfume Pagoda, Bat Trang & Duong Lam"
 slug: "best-day-trips-from-hanoi"
 route_path: "destinations/best-day-trips-from-hanoi"
-category: "destinations"
 description: "Best day trips from Hanoi, compared by route job: Ninh Binh, Ha Long or Lan Ha, Bat Trang, Duong Lam, Perfume Pagoda, Ba Vi, timing, weather, and skip logic."
-author: "VietnamGuide Editorial Team"
-last_updated: "2026-06-15"
-word_count: 1432
-travel_cluster: "hanoi_red_river"
+travel_cluster: "northern_triangle"
 last_verified: "2026-10-22"
-reading_time_minutes: "11"
+author: "VietnamGuide Editorial Team"
+reading_time_minutes: 11
+word_count: 1432
 ---
 
 # 9 Best Day Trips from Hanoi (2026): Ninh Binh, Ha Long Bay, Perfume Pagoda, Bat Trang & Duong Lam

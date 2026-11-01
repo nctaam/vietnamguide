@@ -3,7 +3,7 @@ title: "Hanoi to Hue Transport (2026): Train, Flight or Bus"
 slug: "hanoi-to-hue-transport"
 route_path: "plan/hanoi-to-hue-transport"
 description: "Hanoi to Hue transport options: SE1 and SE3 overnight sleeper trains, direct domestic flights, and cabin buses compared with 2026 prices rates in VND."
-travel_cluster: "central_heritage"
+travel_cluster: "northern_triangle"
 last_verified: "2026-11-01"
 author: "VietnamGuide Editorial Team"
 reading_time_minutes: 8

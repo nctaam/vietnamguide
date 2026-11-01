@@ -2,14 +2,12 @@
 title: "Da Lat to Nha Trang Transport: Scenic Mountain Pass, Limousine, and Bus Route"
 slug: "da-lat-to-nha-trang-transport"
 route_path: "plan/da-lat-to-nha-trang-transport"
-category: "plan"
 description: "Complete Da Lat to Nha Trang transport guide: compare 9-seat VIP limousines, local buses over scenic Khanh Le Pass, private cars, and travel times."
-author: "VietnamGuide Editorial Team"
-last_updated: "2026-06-15"
-word_count: 1858
 travel_cluster: "central_highlands"
 last_verified: "2026-10-20"
-reading_time_minutes: "12"
+author: "VietnamGuide Editorial Team"
+reading_time_minutes: 12
+word_count: 1858
 ---
 
 # Da Lat to Nha Trang Transport: Scenic Mountain Pass, Limousine, and Bus Route

@@ -2,14 +2,12 @@
 title: "Vietnam Train Travel: Reunification Express & Sleeper Guide"
 slug: "vietnam-train-travel"
 route_path: "plan/vietnam-train-travel"
-category: "plan"
-updated_at: "2026-10-24"
-author: "VietnamGuide Editorial Team"
-word_count: 1596
 description: "Complete Vietnam train travel guide: compare 4-berth soft sleepers vs 6-berth cabins, scenic Hai Van Pass coastal views, dsvn.vn booking, and top routes."
 travel_cluster: "national_circuit"
 last_verified: "2026-10-24"
-reading_time_minutes: "10"
+author: "VietnamGuide Editorial Team"
+reading_time_minutes: 10
+word_count: 1596
 ---
 
 # Vietnam Train Travel: 2026 Reunification Express, Sleeper Cabins & Scenic Routes

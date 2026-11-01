@@ -2,14 +2,12 @@
 title: "Ninh Binh Day Trip vs Overnight: Which Is Better?"
 slug: "ninh-binh-day-trip-vs-overnight"
 route_path: "compare/ninh-binh-day-trip-vs-overnight"
-category: "compare"
 description: "Evaluate Ninh Binh day trip vs overnight stay: practical verdict by route length, transfer pressure, Trang An vs Tam Coc, weather, cost, and hotels."
-author: "VietnamGuide Editorial Team"
-last_updated: "2026-06-15"
-word_count: 1341
 travel_cluster: "ninh_binh"
 last_verified: "2026-10-22"
-reading_time_minutes: "10"
+author: "VietnamGuide Editorial Team"
+reading_time_minutes: 10
+word_count: 1341
 ---
 
 # Ninh Binh Day Trip vs Overnight: Which Is Better?

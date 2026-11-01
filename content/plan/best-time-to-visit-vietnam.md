@@ -2,14 +2,12 @@
 title: "Best Time to Visit Vietnam (2026): Month-by-Month Weather, Regions & Route Pivots"
 slug: "best-time-to-visit-vietnam"
 route_path: "plan/best-time-to-visit-vietnam"
-category: "plan"
 description: "Best time to visit Vietnam by route in 2026: north, central, south, beaches, weather trade-offs, seasonal pivots, booking checks, and live sources."
-author: "VietnamGuide Editorial Team"
-last_updated: "2026-06-15"
-word_count: 1548
 travel_cluster: "national_circuit"
 last_verified: "2026-10-22"
-reading_time_minutes: "11"
+author: "VietnamGuide Editorial Team"
+reading_time_minutes: 11
+word_count: 1548
 ---
 
 # Best Time to Visit Vietnam (2026): Month-by-Month Weather, Regions & Route Pivots

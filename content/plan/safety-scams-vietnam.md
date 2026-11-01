@@ -2,14 +2,12 @@
 title: "Vietnam Safety & Scams Guide (2026): Taxi Clones, Street Hustles & Emergency Numbers"
 slug: "safety-scams-vietnam"
 route_path: "plan/safety-scams-vietnam"
-category: "plan"
 description: "Vietnam safety and scams guide: practical advice on airport taxi fraud, fake Grab drivers, ATM skimming, street crossing safety, and emergency contacts."
-author: "VietnamGuide Editorial Team"
-last_updated: "2026-06-15"
-word_count: 1514
 travel_cluster: "national_circuit"
 last_verified: "2026-10-22"
-reading_time_minutes: "8"
+author: "VietnamGuide Editorial Team"
+reading_time_minutes: 8
+word_count: 1514
 ---
 
 # Vietnam Safety & Scams Guide (2026): Taxi Clones, Street Hustles & Emergency Numbers

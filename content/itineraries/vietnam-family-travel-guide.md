@@ -2,14 +2,12 @@
 title: "Vietnam Family Travel Guide (2026): Route & Kid Advice"
 slug: "vietnam-family-travel-guide"
 route_path: "itineraries/vietnam-family-travel-guide"
-category: "itineraries"
 description: "Vietnam family travel guide: practical 10 to 14-day routes with kids, stroller access, child-friendly trains, meal tips, and 2026 safety logistics."
-author: "VietnamGuide Editorial Team"
-last_updated: "2026-06-15"
-word_count: 2130
 travel_cluster: "national_circuit"
 last_verified: "2026-10-22"
-reading_time_minutes: "14"
+author: "VietnamGuide Editorial Team"
+reading_time_minutes: 14
+word_count: 2130
 ---
 
 # Vietnam Family Travel Guide (2026): Route & Kid Advice

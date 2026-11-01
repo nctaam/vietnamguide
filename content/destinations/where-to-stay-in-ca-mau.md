@@ -2,14 +2,12 @@
 title: "Where to Stay in Ca Mau (2026): City Hotels to Dat Mui Eco-Lodges"
 slug: "where-to-stay-in-ca-mau"
 route_path: "destinations/where-to-stay-in-ca-mau"
-category: "destinations"
-updated_at: "2026-10-25"
+description: "Where to stay in Ca Mau: central city hotels along Quan Lo canal vs Dat Mui mangrove eco-lodges near the southern tip. 2026 room rates and travel advice."
+travel_cluster: "mekong_delta"
 last_verified: "2026-10-25"
 author: "VietnamGuide Editorial Team"
-travel_cluster: "mekong_delta"
 reading_time_minutes: 12
 word_count: 1546
-description: "Where to stay in Ca Mau: City center hotels along Tran Hung Dao vs Dat Mui mangrove eco-lodges, speedboat transit logistics, and 2026 verified nightly rates."
 ---
 
 # Where to Stay in Ca Mau (2026): City Hotels to Dat Mui Eco-Lodges

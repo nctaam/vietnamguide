@@ -2,14 +2,12 @@
 title: "Where to Stay in Soc Trang (2026): Best Hotels & Stays"
 slug: "where-to-stay-in-soc-trang"
 route_path: "destinations/where-to-stay-in-soc-trang"
-category: "destinations"
-updated_at: "2026-10-25"
+description: "Where to stay in Soc Trang: central city hotels near Khmer pagodas vs Tran De port transit stays for Con Dao ferries. 2026 room rates and travel advice."
+travel_cluster: "mekong_delta"
 last_verified: "2026-10-25"
 author: "VietnamGuide Editorial Team"
-travel_cluster: "mekong_delta"
 reading_time_minutes: 12
 word_count: 1585
-description: "Where to stay in Soc Trang: central city hotels near Bat Pagoda vs Tran De port lodges for the Con Dao ferry. 2026 verified room rates and travel logistics."
 ---
 
 # Where to Stay in Soc Trang (2026): Best Hotels & Stays

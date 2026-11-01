@@ -2,14 +2,12 @@
 title: "8 Best Day Trips from Ho Chi Minh City (2026): Cu Chi Tunnels, Mekong Delta, Can Gio, Ba Den & Vung Tau"
 slug: "best-day-trips-from-ho-chi-minh-city"
 route_path: "destinations/best-day-trips-from-ho-chi-minh-city"
-category: "destinations"
 description: "Best day trips from Ho Chi Minh City: Cu Chi Tunnels 70 km transit, Ben Tre Mekong Delta boat tours, entry ticket fees, and travel schedules compared."
-author: "VietnamGuide Editorial Team"
-last_updated: "2026-06-15"
-word_count: 1372
-travel_cluster: "southern_vietnam"
+travel_cluster: "southern_delta"
 last_verified: "2026-10-22"
-reading_time_minutes: "11"
+author: "VietnamGuide Editorial Team"
+reading_time_minutes: 11
+word_count: 1372
 ---
 
 # 8 Best Day Trips from Ho Chi Minh City (2026): Cu Chi Tunnels, Mekong Delta, Can Gio, Ba Den & Vung Tau

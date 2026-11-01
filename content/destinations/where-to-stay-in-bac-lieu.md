@@ -2,14 +2,12 @@
 title: "Where to Stay in Bac Lieu (2026): Best Hotels & Stays"
 slug: "where-to-stay-in-bac-lieu"
 route_path: "destinations/where-to-stay-in-bac-lieu"
-category: "destinations"
-updated_at: "2026-10-25"
+description: "Central city hotels near Bac Lieu Prince mansion (300,000-650,000 VND) vs coastal wind farm homestays 15 km away. 2026 room rates, districts, and advice."
+travel_cluster: "mekong_delta"
 last_verified: "2026-10-25"
 author: "VietnamGuide Editorial Team"
-travel_cluster: "mekong_delta"
 reading_time_minutes: 12
 word_count: 1552
-description: "Where to stay in Bac Lieu: city center hotels near the Prince House vs Nha Mat coastal resorts and wind farm eco-lodges. 2026 room rates and travel advice."
 ---
 
 # Where to Stay in Bac Lieu (2026): Best Hotels & Stays

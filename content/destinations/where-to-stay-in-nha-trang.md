@@ -2,14 +2,12 @@
 title: "Where to Stay in Nha Trang: Best Areas & Hotels"
 slug: "where-to-stay-in-nha-trang"
 route_path: "destinations/where-to-stay-in-nha-trang"
-category: "destinations"
-updated_at: "2026-10-24"
-author: "VietnamGuide Editorial Team"
-word_count: 1512
 description: "Find where to stay in Nha Trang with our 2026 district guide covering Tran Phu beachfront, city center, and Bai Dai resorts with hotel rates in VND."
 travel_cluster: "coastal_islands"
 last_verified: "2026-10-24"
-reading_time_minutes: "8"
+author: "VietnamGuide Editorial Team"
+reading_time_minutes: 8
+word_count: 1512
 ---
 
 # Where to Stay in Nha Trang: Best Areas & Hotels

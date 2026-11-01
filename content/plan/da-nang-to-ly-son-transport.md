@@ -3,7 +3,7 @@ title: "Da Nang to Ly Son Transport (2026): Train, Bus & Ferry"
 slug: "da-nang-to-ly-son-transport"
 route_path: "plan/da-nang-to-ly-son-transport"
 description: "Express train to Quang Ngai (2.5 hours, 95,000 VND), 20 km taxi to Sa Ky Port, and 35-minute speedboat to Ly Son Island. 2026 schedules and weather tips."
-travel_cluster: "coastal_islands"
+travel_cluster: "central_heritage"
 last_verified: "2026-11-01"
 author: "VietnamGuide Editorial Team"
 reading_time_minutes: 8
@@ -110,4 +110,4 @@ Once your speedboat docks at **Ben Dinh Port** (`Thôn Đông, An Vĩnh`) on Big
 3. Arrive at Sa Ky Port at least **40 minutes early** to verify your original passport at the terminal window and pay the 178,000 to 210,000 VND ($7.10 to $8.40 USD) ticket fare.
 
 ### Should I visit Ly Son Island or the Cham Islands from Da Nang?
-If you only have one day or are traveling between October and February when rough seas disrupt offshore crossings, take a 20-minute speedboat from Cua Dai Pier to the Cham Islands; compare both archipelagos in our [Ly Son vs Cham Islands](/compare/ly-son-vs-cham-islands/) guide. Travelers linking Ly Son with other central coast stops can also consult our [Da Nang to Hoi An Transport](/plan/da-nang-to-hoi-an-transport/) and [Da Nang to Hue Transport](/plan/da-nang-to-hue-transport/) guides.
+If you only have one day or are traveling between October and February when rough seas disrupt offshore crossings, take a 20-minute speedboat from Cua Dai Pier to the Cham Islands; compare both archipelagos in our [Ly Son vs Cham Islands](/compare/ly-son-vs-cham-islands/) guide. Travelers linking Ly Son with other central coast stops can also consult our [Da Nang to Hoi An Transport](/plan/da-nang-airport-to-hoi-an/) and [Da Nang to Hue Transport](/itineraries/da-nang-to-hue-train-vs-car/) guides.

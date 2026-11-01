@@ -2,14 +2,12 @@
 title: "Saigon Night Markets: 5 Best Food & Street Markets (2026)"
 slug: "saigon-night-markets-guide"
 route_path: "destinations/saigon-night-markets-guide"
-category: "destinations"
 description: "Complete Saigon night markets guide: explore Ho Thi Ky food street, Ben Thanh night stalls, Ba Chieu street eats, opening hours, prices, and safety."
-author: "VietnamGuide Editorial Team"
-last_updated: "2026-06-15"
-word_count: 1250
-travel_cluster: "southern_urban_mekong"
+travel_cluster: "southern_delta"
 last_verified: "2026-10-22"
-reading_time_minutes: "10"
+author: "VietnamGuide Editorial Team"
+reading_time_minutes: 10
+word_count: 1250
 ---
 
 # Saigon Night Markets: 5 Best Food & Street Markets (2026)

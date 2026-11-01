@@ -2,14 +2,12 @@
 title: "Ninh Binh to Phong Nha Transport (2026): Bus vs Train"
 slug: "ninh-binh-to-phong-nha-transport"
 route_path: "plan/ninh-binh-to-phong-nha-transport"
-category: "plan"
 description: "Ninh Binh to Phong Nha transport: direct overnight sleeper buses vs trains to Dong Hoi with local taxi transfers. 2026 ticket fares, schedules, and advice."
-author: "VietnamGuide Editorial Team"
-last_updated: "2026-06-15"
-word_count: 1328
-travel_cluster: "north_central"
+travel_cluster: "phong_nha_caves"
 last_verified: "2026-10-22"
-reading_time_minutes: "10"
+author: "VietnamGuide Editorial Team"
+reading_time_minutes: 10
+word_count: 1328
 ---
 
 # Ninh Binh to Phong Nha Transport (2026): Bus vs Train

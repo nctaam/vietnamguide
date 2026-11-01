@@ -3,7 +3,7 @@ title: "Ho Chi Minh City to Phu Quoc: Flights & Ferry"
 slug: "ho-chi-minh-city-to-phu-quoc-transport"
 route_path: "plan/ho-chi-minh-city-to-phu-quoc-transport"
 description: "Compare Ho Chi Minh City to Phu Quoc transport options: direct flights, bus-and-ferry routes, departure ports, ticket costs in VND, and travel times."
-travel_cluster: "coastal_islands"
+travel_cluster: "southern_delta"
 last_verified: "2026-11-01"
 author: "VietnamGuide Editorial Team"
 reading_time_minutes: 8

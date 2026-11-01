@@ -2,14 +2,12 @@
 title: "Where to Stay in Hanoi: Best Areas for First-Timers"
 slug: "where-to-stay-in-hanoi"
 route_path: "destinations/where-to-stay-in-hanoi"
-category: "destinations"
-updated_at: "2026-10-24"
+description: "Where to stay in Hanoi for 2026: choose Hoan Kiem, Old Quarter edge, French Quarter, Ba Dinh, Tay Ho, or Noi Bai by first-night and pickup route logic."
+travel_cluster: "northern_triangle"
 last_verified: "2026-10-24"
 author: "VietnamGuide Editorial Team"
-travel_cluster: "northern_triangle"
 reading_time_minutes: 12
 word_count: 1429
-description: "Where to stay in Hanoi for 2026: choose Hoan Kiem, Old Quarter edge, French Quarter, Ba Dinh, Tay Ho, or Noi Bai by first-night and pickup route logic."
 ---
 
 # Where to Stay in Hanoi: Best Areas for First-Timers

@@ -2,14 +2,12 @@
 title: "Phu Quoc vs Nha Trang: Which Beach Is Better?"
 slug: "phu-quoc-vs-nha-trang"
 route_path: "compare/phu-quoc-vs-nha-trang"
-category: "compare"
 description: "Phu Quoc vs Nha Trang: compare island resort relaxation with active city-beach energy, water sports, dining scenes, direct flights, and rainy seasons."
-author: "VietnamGuide Editorial Team"
-last_updated: "2026-06-15"
-word_count: 1347
 travel_cluster: "coastal_islands"
 last_verified: "2026-10-22"
-reading_time_minutes: "10"
+author: "VietnamGuide Editorial Team"
+reading_time_minutes: 10
+word_count: 1347
 ---
 
 # Phu Quoc vs Nha Trang: Which Beach Is Better?

@@ -2,14 +2,12 @@
 title: "Where to Stay in Sapa: Town, Valley Lodge or Homestay?"
 slug: "where-to-stay-in-sapa"
 route_path: "destinations/where-to-stay-in-sapa"
-category: "destinations"
-updated_at: "2026-10-24"
+description: "Choose where to stay in Sapa: compare central town hotels, Muong Hoa valley eco-lodges, and village homestays by views, quiet sleep, and taxi cost."
+travel_cluster: "northern_highlands"
 last_verified: "2026-10-24"
 author: "VietnamGuide Editorial Team"
-travel_cluster: "northern_highlands"
 reading_time_minutes: 12
 word_count: 1571
-description: "Choose where to stay in Sapa: compare central town hotels, Muong Hoa valley eco-lodges, and village homestays by views, quiet sleep, and taxi cost."
 ---
 
 # Where to Stay in Sapa: Town, Valley Lodge or Homestay?

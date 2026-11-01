@@ -44,6 +44,21 @@ MANDATORY_FRONTMATTER_FIELDS = [
     "word_count",
 ]
 
+CANONICAL_TRAVEL_CLUSTERS = {
+    "northern_triangle",
+    "ha_long_bay",
+    "ninh_binh",
+    "central_heritage",
+    "southern_delta",
+    "northern_highlands",
+    "coastal_islands",
+    "central_highlands",
+    "phong_nha_caves",
+    "mekong_delta",
+    "far_north_frontier",
+    "national_circuit",
+}
+
 # Empirical signal regexes
 EMPIRICAL_CURRENCY_REGEX = re.compile(
     r"(?:\b\d{1,3}(?:[.,]\d{3})*\s*(?:VND|k\s*VND|d\b|đ\b)|\$\s*\d+(?:\.\d{2})?)",
@@ -247,18 +262,32 @@ def audit_markdown_file(
             errors.append(
                 f"Frontmatter route_path '{fm_route}' must not have leading or trailing slashes"
             )
-        if file_path.parent.name in {"destinations", "itineraries", "compare", "plan"}:
+        if file_path.parent.name in {"destinations", "itineraries", "compare", "plan", "recommend"}:
             expected_route = f"{file_path.parent.name}/{file_path.stem}"
             if fm_route and fm_route != expected_route:
                 errors.append(
                     f"Frontmatter route_path '{fm_route}' does not match relative path '{expected_route}'"
                 )
+        extra_keys = set(frontmatter.keys()) - set(MANDATORY_FRONTMATTER_FIELDS)
+        if extra_keys:
+            errors.append(
+                f"Frontmatter contains non-canonical keys: {sorted(extra_keys)}"
+            )
+        fm_cluster = str(frontmatter.get("travel_cluster", "")).strip()
+        if fm_cluster and fm_cluster not in CANONICAL_TRAVEL_CLUSTERS:
+            errors.append(
+                f"Frontmatter travel_cluster '{fm_cluster}' is not one of the 12 canonical regional travel clusters"
+            )
 
     # 2. Substantive Word Count
     word_count = count_substantive_words(body)
     if word_count < min_words:
         errors.append(
             f"Word count below minimum substantive threshold: {word_count} words (required >= {min_words})"
+        )
+    if frontmatter and frontmatter.get("word_count") != word_count:
+        errors.append(
+            f"Frontmatter word_count ({frontmatter.get('word_count')}) does not match substantive word count ({word_count})"
         )
 
     # 3. Structural Markdown Elements
@@ -348,16 +377,18 @@ def audit_content_directory(
 
     registry_path = OPS_DIR / "route_registry.json"
     registry_routes: set[str] = set()
+    registry_map: Dict[str, Dict[str, Any]] = {}
     if registry_path.exists():
         try:
             reg_data = json.loads(registry_path.read_text(encoding="utf-8"))
-            registry_routes = {
-                str(r.get("path", "")).strip("/")
-                for r in reg_data.get("routes", [])
-                if r.get("path")
-            }
+            for r_entry in reg_data.get("routes", []):
+                r_path = str(r_entry.get("path", "")).strip("/")
+                if r_path:
+                    registry_routes.add(r_path)
+                    registry_map[r_path] = r_entry
         except Exception:
             registry_routes = set()
+            registry_map = {}
 
     md_files = sorted(root_dir.rglob("*.md"))
     results = [audit_markdown_file(p, min_words=min_words, min_hls=min_hls) for p in md_files]
@@ -389,6 +420,24 @@ def audit_content_directory(
             r["errors"].append(
                 f"route_path '{rp}' does not exist in ops/route_registry.json"
             )
+        elif rp in registry_map:
+            expected_desc = str(registry_map[rp].get("description", "")).strip()
+            actual_desc = str(fm.get("description", "")).strip()
+            if expected_desc and actual_desc != expected_desc:
+                r["errors"].append(
+                    f"Frontmatter description does not match ops/route_registry.json description for '{rp}'"
+                )
+        if registry_routes:
+            try:
+                _, raw_body = parse_frontmatter(p.read_text(encoding="utf-8"))
+                for m_link in re.finditer(r"\]\((/[^)#\s]+)", raw_body):
+                    target_route = m_link.group(1).strip("/")
+                    if target_route and target_route not in registry_routes:
+                        r["errors"].append(
+                            f"Broken or non-canonical internal link '{m_link.group(1)}' (not in ops/route_registry.json)"
+                        )
+            except Exception:
+                pass
         if rp in duplicate_routes:
             r["errors"].append(
                 f"Duplicate route_path '{rp}' detected across multiple Markdown files"

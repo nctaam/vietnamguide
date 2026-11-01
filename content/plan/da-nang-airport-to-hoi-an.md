@@ -2,14 +2,12 @@
 title: "Da Nang Airport (DAD) to Hoi An & My Khe Beach Transfer Guide (2026): Private Car, Grab & Shuttle Bus"
 slug: "da-nang-airport-to-hoi-an"
 route_path: "plan/da-nang-airport-to-hoi-an"
-category: "plan"
 description: "Complete Da Nang airport to Hoi An transfer guide: compare pre-booked private cars, Grab fares, shuttle buses, taxi costs, and coastal route options."
-author: "VietnamGuide Editorial Team"
-last_updated: "2026-06-15"
-word_count: 1473
 travel_cluster: "central_heritage"
 last_verified: "2026-10-22"
-reading_time_minutes: "9"
+author: "VietnamGuide Editorial Team"
+reading_time_minutes: 9
+word_count: 1473
 ---
 
 # Da Nang Airport (DAD) to Hoi An & My Khe Beach Transfer Guide (2026): Private Car, Grab & Shuttle Bus

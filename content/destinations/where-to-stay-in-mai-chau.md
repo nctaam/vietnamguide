@@ -2,14 +2,12 @@
 title: "Where to Stay in Mai Chau (2026): Best Areas & Lodges"
 slug: "where-to-stay-in-mai-chau"
 route_path: "destinations/where-to-stay-in-mai-chau"
-category: "destinations"
-updated_at: "2026-10-24"
+description: "Where to stay in Mai Chau: Ban Lac and Pom Coong stilt homestays vs luxury valley eco-resorts with 2026 nightly VND room rates and transport local tips."
+travel_cluster: "far_north_frontier"
 last_verified: "2026-10-24"
 author: "VietnamGuide Editorial Team"
-travel_cluster: "northern_highlands"
 reading_time_minutes: 10
 word_count: 1524
-description: "Where to stay in Mai Chau: Ban Lac and Pom Coong stilt homestays vs luxury valley eco-resorts with 2026 nightly VND room rates and transport local tips."
 ---
 
 # Where to Stay in Mai Chau (2026): Best Areas & Lodges

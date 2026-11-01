@@ -2,14 +2,12 @@
 title: "Where to Stay in Quy Nhon (2026): Beach Areas & Resorts"
 slug: "where-to-stay-in-quy-nhon"
 route_path: "destinations/where-to-stay-in-quy-nhon"
-category: "destinations"
-updated_at: "2026-10-24"
-author: "VietnamGuide Editorial Team"
-word_count: 1457
 description: "Decide where to stay in Quy Nhon: city beach hotels along Xuan Dieu, Bai Xep backpacker cove homestays, or luxury private bay resorts with 2026 VND prices."
 travel_cluster: "coastal_islands"
 last_verified: "2026-10-24"
-reading_time_minutes: "8"
+author: "VietnamGuide Editorial Team"
+reading_time_minutes: 8
+word_count: 1457
 ---
 
 # Where to Stay in Quy Nhon (2026): Beach Areas & Resorts

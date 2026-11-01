@@ -2,14 +2,12 @@
 title: "Nha Trang to Da Lat Transport (2026): Bus vs Van"
 slug: "nha-trang-to-da-lat-transport"
 route_path: "plan/nha-trang-to-da-lat-transport"
-category: "plan"
 description: "Khanh Le Pass mountain climb across 135 km: limousine vans (3.5 hours, 190,000-230,000 VND) vs coaches. 2026 departure times and pass weather advice."
-author: "VietnamGuide Editorial Team"
-last_updated: "2026-06-15"
-word_count: 1314
 travel_cluster: "central_highlands"
 last_verified: "2026-10-22"
-reading_time_minutes: "9"
+author: "VietnamGuide Editorial Team"
+reading_time_minutes: 9
+word_count: 1314
 ---
 
 # Nha Trang to Da Lat Transport (2026): Bus vs Van

@@ -2,19 +2,12 @@
 title: "Vietnam in July: Coastal Sunshine, Mountain Trails, and Summer Travel"
 slug: "vietnam-in-july"
 route_path: "plan/vietnam-in-july"
-section: "plan"
-category: "plan"
-page_type: "practical"
-template: "guide"
-status: "published"
-updated_at: "2026-10-25"
-last_reviewed: "2026-10-25"
+description: "Complete Vietnam in July guide: explore prime central coast beach weather, northern summer rain patterns, southern monsoon rhythms, packing, and crowds."
+travel_cluster: "national_circuit"
 last_verified: "2026-10-25"
 author: "VietnamGuide Editorial Team"
-travel_cluster: "national_circuit"
 reading_time_minutes: 12
 word_count: 1529
-description: "Master traveling Vietnam in July with regional weather data, central beach recommendations, mountain safety guidelines, and domestic flight strategies."
 ---
 
 July brings peak domestic travel across Vietnam. School breaks in Hanoi and Ho Chi Minh City fill coastal resorts with local holidaymakers. Understanding regional weather patterns helps travelers target dry coastal bays while managing tropical precipitation in northern valleys and southern waterways.

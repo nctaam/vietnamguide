@@ -2,14 +2,12 @@
 title: "How to Get to Con Dao: Flight vs High-Speed Ferry (2026)"
 slug: "how-to-get-to-con-dao-flight-vs-ferry"
 route_path: "plan/how-to-get-to-con-dao-flight-vs-ferry"
-category: "plan"
 description: "Discover how to get to Con Dao: flights from Saigon and Can Tho vs fast ferries from Vung Tau and Tran De. Schedules, ticket costs, and sea advice."
-author: "VietnamGuide Editorial Team"
-last_updated: "2026-06-15"
-word_count: 1323
 travel_cluster: "coastal_islands"
 last_verified: "2026-10-22"
-reading_time_minutes: "10"
+author: "VietnamGuide Editorial Team"
+reading_time_minutes: 10
+word_count: 1323
 ---
 
 # How to Get to Con Dao: Flight vs High-Speed Ferry (2026)

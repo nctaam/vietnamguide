@@ -3,7 +3,7 @@ title: "Hanoi to Sapa Transport: Train, Cabin Bus or Private Car?"
 slug: "hanoi-to-sapa-transport"
 route_path: "plan/hanoi-to-sapa-transport"
 description: "Compare Hanoi to Sapa transport by train, cabin bus, limousine van, and private car using sleep, arrival hour, luggage, motion comfort, and VND fares."
-travel_cluster: "northern_highlands"
+travel_cluster: "northern_triangle"
 last_verified: "2026-10-31"
 author: "VietnamGuide Editorial Team"
 reading_time_minutes: 12

@@ -2,14 +2,12 @@
 title: "Where to Stay in Phong Nha: Son Trach & Valleys"
 slug: "where-to-stay-in-phong-nha"
 route_path: "destinations/where-to-stay-in-phong-nha"
-category: "destinations"
-updated_at: "2026-10-24"
+description: "Decide where to stay in Phong Nha with our lodging guide: Son Trach town, riverside eco-resorts, and Bong Lai Valley farm homestays with prices in VND."
+travel_cluster: "phong_nha_caves"
 last_verified: "2026-10-24"
 author: "VietnamGuide Editorial Team"
-travel_cluster: "central_heritage"
 reading_time_minutes: 12
 word_count: 1369
-description: "Decide where to stay in Phong Nha with our lodging guide: Son Trach town, riverside eco-resorts, and Bong Lai Valley farm homestays with prices in VND."
 ---
 
 # Where to Stay in Phong Nha: Son Trach & Valleys

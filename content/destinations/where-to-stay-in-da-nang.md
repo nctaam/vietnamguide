@@ -2,14 +2,12 @@
 title: "Where to Stay in Da Nang: Best Areas & Hotels (2026)"
 slug: "where-to-stay-in-da-nang"
 route_path: "destinations/where-to-stay-in-da-nang"
-category: "destinations"
-updated_at: "2026-10-24"
-author: "VietnamGuide Editorial Team"
-word_count: 1570
 description: "Complete guide on where to stay in Da Nang: compare My Khe Beach, Han River, An Thuong expat quarter, and Son Tra resorts with 2026 hotel room prices."
 travel_cluster: "central_heritage"
 last_verified: "2026-10-24"
-reading_time_minutes: "8"
+author: "VietnamGuide Editorial Team"
+reading_time_minutes: 8
+word_count: 1570
 ---
 
 # Where to Stay in Da Nang: Best Areas & Hotels (2026)

@@ -2,14 +2,12 @@
 title: "Where to Stay in Vietnam: Base Decision Guide"
 slug: "where-to-stay-in-vietnam-base-decisions"
 route_path: "plan/where-to-stay-in-vietnam-base-decisions"
-category: "plan"
-updated_at: "2026-10-24"
-last_verified: "2026-10-24"
-travel_cluster: "national_circuit"
-reading_time_minutes: "7"
-author: "VietnamGuide Editorial Team"
-word_count: 1478
 description: "Choose where to stay in Vietnam by base job: arrival ease, street food access, quiet sleep, family rhythm, rail transfers, beach rest, and airport."
+travel_cluster: "national_circuit"
+last_verified: "2026-10-24"
+author: "VietnamGuide Editorial Team"
+reading_time_minutes: 7
+word_count: 1478
 ---
 
 # Where to Stay in Vietnam: Base Decision Guide

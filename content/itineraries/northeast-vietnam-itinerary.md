@@ -2,14 +2,12 @@
 title: "Northeast Vietnam Itinerary (2026): 5 to 7-Day Ba Be, Cao Bang & Ha Giang Loop"
 slug: "northeast-vietnam-itinerary"
 route_path: "itineraries/northeast-vietnam-itinerary"
-category: "itineraries"
 description: "Plan your Northeast Vietnam itinerary: 5 to 7 days from Hanoi through Ba Be Lake to Ban Gioc Waterfall and Cao Bang karst valleys with 2026 route maps."
-author: "VietnamGuide Editorial Team"
-last_updated: "2026-06-15"
-word_count: 1904
 travel_cluster: "far_north_frontier"
 last_verified: "2026-10-22"
-reading_time_minutes: "10"
+author: "VietnamGuide Editorial Team"
+reading_time_minutes: 10
+word_count: 1904
 ---
 
 # Northeast Vietnam Itinerary (2026): 5 to 7-Day Ba Be, Cao Bang & Ha Giang Loop

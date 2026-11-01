@@ -3,7 +3,7 @@ title: "Hanoi to Mu Cang Chai Transport (2026): Bus vs Van"
 slug: "hanoi-to-mu-cang-chai-transport"
 route_path: "plan/hanoi-to-mu-cang-chai-transport"
 description: "Hanoi to Mu Cang Chai transport guide: shared limousine vans vs sleeper buses and private transfers via Khau Pha Pass. 2026 ticket costs and harvest times."
-travel_cluster: "northern_highlands"
+travel_cluster: "northern_triangle"
 last_verified: "2026-10-25"
 author: "VietnamGuide Editorial Team"
 reading_time_minutes: 12

@@ -62,7 +62,7 @@ Three routes suit self-guided hikers in dry weather:
 
 ## Rainy Season Mud Risks (May–September) vs Dry Season Visibility
 
-Trail conditions shift sharply across the year, as detailed in our [Sapa Weather & Best Time to Visit](/plan/sapa-weather-best-time-to-visit/) guide. Sapa's terraces rest on dense red laterite clay. Between October and April, dry clay bakes into firm steps. Between **May and September** (300 mm to 450 mm monthly rain), monsoon downpours turn upper slopes into slick mud chutes.
+Trail conditions shift sharply across the year, as detailed in our [Sapa Weather & Best Time to Visit](/plan/best-time-for-northern-vietnam/) guide. Sapa's terraces rest on dense red laterite clay. Between October and April, dry clay bakes into firm steps. Between **May and September** (300 mm to 450 mm monthly rain), monsoon downpours turn upper slopes into slick mud chutes.
 
 Water buffaloes share these mountain paths, churning wet clay into ankle-deep troughs 15 cm to 25 cm deep. A 12 km ridge walk that takes 4 hours in October can take 6.5 hours in July. Winter drizzle and mountain fog (`mù sương`) between December and February can also cut visibility on the Hang Da and Hau Thao ridges to under 15 meters.
 
