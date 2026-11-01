@@ -8,12 +8,12 @@
   position: relative;
   margin-block: clamp(48px, 6vw, 84px);
   padding: clamp(28px, 4vw, 56px);
-  background: var(--vg-paper-tactile);
-  border: 1px solid var(--vg-border-hairline);
+  background: var(--vg-paper-tactile, #FAF8F5);
+  border: 1px solid var(--vg-border-hairline, #E5DFD6);
   border-radius: 8px;
   box-shadow: 0 4px 20px -2px rgba(15, 37, 55, 0.05);
   font-family: var(--vg-body);
-  color: var(--vg-ink);
+  color: var(--vg-ink, #1A202C);
 }
 
 .vg-interactive-map-header {
@@ -26,13 +26,13 @@
   margin-bottom: 10px;
   padding: 4px 10px;
   background: rgba(15, 37, 55, 0.06);
-  border: 1px solid var(--vg-border-hairline);
+  border: 1px solid var(--vg-border-hairline, #E5DFD6);
   border-radius: 3px;
   font-family: var(--vg-mono);
   font-size: 11px;
   font-weight: 600;
   letter-spacing: 0.08em;
-  color: var(--vg-navy);
+  color: var(--vg-navy, #0F2537);
   text-transform: uppercase;
 }
 
@@ -43,7 +43,7 @@
   font-weight: 600;
   line-height: 1.15;
   letter-spacing: -0.02em;
-  color: var(--vg-navy);
+  color: var(--vg-navy, #0F2537);
 }
 
 .vg-interactive-map-lede {
@@ -74,31 +74,39 @@
   align-items: center;
   padding: 24px 16px;
   background: #FFFFFF;
-  border: 1px solid var(--vg-border-hairline);
+  border: 1px solid var(--vg-border-hairline, #E5DFD6);
   border-radius: 6px;
 }
 
 .vg-map-svg {
   width: 100%;
-  max-width: 280px;
+  max-width: 340px;
   height: auto;
   aspect-ratio: 320 / 540;
   display: block;
 }
 
 .vg-map-outline {
-  stroke: #E5DFD6;
-  stroke-width: 28;
+  fill: url(#vgLandGrad);
+  stroke: #0F2537;
+  stroke-width: 1.25;
   stroke-linecap: round;
   stroke-linejoin: round;
-  opacity: 0.85;
+  opacity: 1;
+}
+
+.vg-map-islands {
+  fill: url(#vgLandGrad);
+  stroke: #0F2537;
+  stroke-width: 1;
+  stroke-linejoin: round;
 }
 
 .vg-map-spine {
-  stroke: var(--vg-navy);
-  stroke-width: 3.5;
-  stroke-dasharray: 6 4;
-  opacity: 0.4;
+  stroke: var(--vg-gold-saffron, #C99446);
+  stroke-width: 2.2;
+  stroke-dasharray: 4 3;
+  opacity: 0.9;
 }
 
 .vg-map-pin-group {
@@ -117,7 +125,7 @@
 
 .vg-map-pin-group:hover .vg-map-pin,
 .vg-map-pin-group.is-active .vg-map-pin {
-  fill: var(--vg-gold-saffron);
+  fill: var(--vg-gold-saffron, #C99446);
   r: 9;
 }
 
@@ -131,7 +139,7 @@
   font-family: var(--vg-mono);
   font-size: 11px;
   font-weight: 600;
-  fill: var(--vg-ink);
+  fill: var(--vg-ink, #1A202C);
   pointer-events: none;
   user-select: none;
 }
@@ -151,7 +159,7 @@
   gap: 6px;
   padding: 6px 12px;
   background: #FFFFFF;
-  border: 1px solid var(--vg-border-hairline);
+  border: 1px solid var(--vg-border-hairline, #E5DFD6);
   border-radius: 9999px;
   font-family: var(--vg-body);
   font-size: 12px;
@@ -164,12 +172,12 @@
 .vg-map-pill-btn:hover {
   background: #F4EFEB;
   border-color: #D3CBBE;
-  color: var(--vg-navy);
+  color: var(--vg-navy, #0F2537);
 }
 
 .vg-map-pill-btn.is-active {
-  background: var(--vg-navy);
-  border-color: var(--vg-navy);
+  background: var(--vg-navy, #0F2537);
+  border-color: var(--vg-navy, #0F2537);
   color: #FFFFFF;
 }
 
@@ -182,13 +190,13 @@
 }
 
 .vg-map-pill-btn.is-active .vg-pill-bullet {
-  background: var(--vg-gold-saffron);
+  background: var(--vg-gold-saffron, #C99446);
 }
 
 /* Dossier Column */
 .vg-corridor-dossier {
   background: #FFFFFF;
-  border: 1px solid var(--vg-border-hairline);
+  border: 1px solid var(--vg-border-hairline, #E5DFD6);
   border-radius: 8px;
   padding: clamp(24px, 3.5vw, 36px);
   box-shadow: 0 4px 16px -2px rgba(15, 37, 55, 0.04);
@@ -227,7 +235,7 @@
 
 .vg-dossier-k {
   font-weight: 600;
-  color: var(--vg-navy);
+  color: var(--vg-navy, #0F2537);
 }
 
 .vg-dossier-title {
@@ -236,7 +244,7 @@
   font-size: clamp(22px, 2.5vw, 30px);
   font-weight: 600;
   line-height: 1.2;
-  color: var(--vg-navy);
+  color: var(--vg-navy, #0F2537);
 }
 
 .vg-dossier-nodes {
@@ -262,7 +270,7 @@
   grid-template-columns: 1fr;
   gap: 16px;
   padding-block: 20px;
-  border-block: 1px solid var(--vg-border-hairline);
+  border-block: 1px solid var(--vg-border-hairline, #E5DFD6);
   margin-bottom: 24px;
 }
 
@@ -299,7 +307,7 @@
   font-family: var(--vg-mono);
   font-size: 15px;
   font-weight: 600;
-  color: var(--vg-navy);
+  color: var(--vg-navy, #0F2537);
 }
 
 .vg-stat-sub {
@@ -325,8 +333,8 @@
   align-items: center;
   gap: 8px;
   padding: 10px 20px;
-  background: var(--vg-navy);
-  border: 1px solid var(--vg-navy);
+  background: var(--vg-navy, #0F2537);
+  border: 1px solid var(--vg-navy, #0F2537);
   border-radius: 4px;
   font-family: var(--vg-body);
   font-size: 14px;

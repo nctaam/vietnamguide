@@ -157,12 +157,21 @@ class TestInteractiveMap(unittest.TestCase):
                 self.assertIn(f"'{key}'", block_text, f"Corridor '{corridor}' missing key '{key}'")
 
     def test_svg_vector_markup_elements(self):
-        """Map canvas must render S-curve vector path, waypoint pins, and pulse indicators."""
+        """Map canvas must render real Natural Earth geographic polygon, sovereign archipelagos, and waypoint pins."""
         self.assertIn('class="vg-map-svg"', self.content)
+        self.assertIn('class="vg-map-outline"', self.content)
+        self.assertIn('class="vg-map-islands"', self.content)
         self.assertIn('class="vg-map-spine"', self.content)
+        self.assertIn('QĐ. HOÀNG SA', self.content)
+        self.assertIn('QĐ. TRƯỜNG SA', self.content)
+        self.assertIn('BIỂN ĐÔNG', self.content)
+        self.assertNotIn('openstreetmap', self.content.lower())
         self.assertIn('vg-map-pin', self.content)
         self.assertIn('vg-map-pin-pulse', self.content)
         self.assertIn('data-corridor-pin=', self.content)
+        outline_m = re.search(r'class="vg-map-outline"\s+d="([^"]+)"', self.content)
+        self.assertIsNotNone(outline_m, "Must have vg-map-outline path d attribute")
+        self.assertGreater(outline_m.group(1).count('L'), 400, "Vietnam mainland polygon must have > 400 real geographic vertices")
 
     def test_enriched_field_telemetry_gps_and_transit_corridors(self):
         """Enriched corridors must feature verified GPS coordinates for mountain passes and island harbors."""
