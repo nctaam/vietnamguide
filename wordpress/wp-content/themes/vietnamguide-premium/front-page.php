@@ -235,44 +235,6 @@ $data = vg_homepage_data();
             >
                 <?php echo do_shortcode('[vg_photo_dispatch layout="standard"]'); ?>
             </div>
-            <script>
-            (function() {
-                'use strict';
-                function initFieldDesk() {
-                    var showcase = document.getElementById('field-desk');
-                    if (!showcase) return;
-                    var switchBtns = showcase.querySelectorAll('[data-vg-field-switch]');
-                    var panels = showcase.querySelectorAll('[data-vg-field-panel]');
-                    function switchView(target) {
-                        Array.prototype.forEach.call(switchBtns, function(btn) {
-                            var isActive = btn.getAttribute('data-vg-field-switch') === target;
-                            btn.classList.toggle('is-active', isActive);
-                            btn.setAttribute('aria-selected', isActive ? 'true' : 'false');
-                        });
-                        Array.prototype.forEach.call(panels, function(panel) {
-                            var isActive = panel.getAttribute('data-vg-field-panel') === target;
-                            panel.classList.toggle('is-active', isActive);
-                            if (isActive) {
-                                panel.removeAttribute('hidden');
-                            } else {
-                                panel.setAttribute('hidden', '');
-                            }
-                        });
-                    }
-                    Array.prototype.forEach.call(switchBtns, function(btn) {
-                        btn.addEventListener('click', function() {
-                            var target = this.getAttribute('data-vg-field-switch');
-                            if (target) switchView(target);
-                        });
-                    });
-                }
-                if (document.readyState === 'loading') {
-                    document.addEventListener('DOMContentLoaded', initFieldDesk);
-                } else {
-                    initFieldDesk();
-                }
-            })();
-            </script>
         </div>
     </section>
 

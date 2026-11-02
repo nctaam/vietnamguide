@@ -1,8 +1,4 @@
-/* ==========================================================================
-   VietnamGuide Interactive Cartography & Regional Exploration Desk
-   Design Tokens: Warm Rice Paper (#FAF8F5), Indochine Navy (#0F2537),
-   Hoi An Saffron Gold (#C99446), Pure Alabaster (#FFFFFF).
-   ========================================================================== */
+/* Interactive Cartography & Regional Exploration Desk */
 
 .vg-interactive-map-desk {
   position: relative;
@@ -154,16 +150,21 @@
   stroke-width: 2.2px;
 }
 
-.vg-map-pill-selector {
+.vg-map-pill-selector,
+.vg-dispatch-pill-selector {
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
-  margin-top: 20px;
   width: 100%;
   justify-content: center;
 }
 
-.vg-map-pill-btn {
+.vg-map-pill-selector {
+  margin-top: 20px;
+}
+
+.vg-map-pill-btn,
+.vg-dispatch-pill-btn {
   display: inline-flex;
   align-items: center;
   gap: 6px;
@@ -171,7 +172,7 @@
   background: #FFFFFF;
   border: 1px solid var(--vg-border-hairline, #E5DFD6);
   border-radius: 9999px;
-  font-family: var(--vg-body);
+  font-family: var(--vg-body, system-ui, sans-serif);
   font-size: 12px;
   font-weight: 500;
   color: #4A5568;
@@ -179,19 +180,22 @@
   transition: all 0.18s ease;
 }
 
-.vg-map-pill-btn:hover {
+.vg-map-pill-btn:hover,
+.vg-dispatch-pill-btn:hover {
   background: #F4EFEB;
   border-color: #D3CBBE;
   color: var(--vg-navy, #0F2537);
 }
 
-.vg-map-pill-btn.is-active {
+.vg-map-pill-btn.is-active,
+.vg-dispatch-pill-btn.is-active {
   background: var(--vg-navy, #0F2537);
   border-color: var(--vg-navy, #0F2537);
   color: #FFFFFF;
 }
 
-.vg-pill-bullet {
+.vg-pill-bullet,
+.vg-dispatch-pill-btn .vg-pill-bullet {
   width: 6px;
   height: 6px;
   border-radius: 50%;
@@ -199,7 +203,8 @@
   transition: background-color 0.18s ease;
 }
 
-.vg-map-pill-btn.is-active .vg-pill-bullet {
+.vg-map-pill-btn.is-active .vg-pill-bullet,
+.vg-dispatch-pill-btn.is-active .vg-pill-bullet {
   background: var(--vg-gold-saffron, #C99446);
 }
 
@@ -374,9 +379,7 @@
 }
 
 
-/* ==========================================================================
-   Visual Dispatch & Photo Storytelling (FT Weekend / Monocle Style)
-   ========================================================================== */
+/* Visual Dispatch & Photo Storytelling */
 .vg-photo-dispatch {
   margin: 48px auto;
   max-width: 1120px;
@@ -704,61 +707,19 @@
 
 /* Visual Dispatch Switcher Tabs */
 .vg-dispatch-pill-selector {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
   margin-bottom: 24px;
-  width: 100%;
-  justify-content: center;
 }
 
 .vg-dispatch-pill-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
   padding: 6px 14px;
-  background: #FFFFFF;
-  border: 1px solid var(--vg-border-hairline, rgba(15, 37, 55, 0.08));
-  border-radius: 9999px;
-  font-family: var(--vg-body, system-ui, sans-serif);
   font-size: 12.5px;
-  font-weight: 500;
-  color: #4A5568;
-  cursor: pointer;
-  transition: all 0.18s ease;
-}
-
-.vg-dispatch-pill-btn:hover {
-  background: #F4EFEB;
-  border-color: #D3CBBE;
-  color: var(--vg-navy, #0F2537);
-}
-
-.vg-dispatch-pill-btn.is-active {
-  background: var(--vg-navy, #0F2537);
-  border-color: var(--vg-navy, #0F2537);
-  color: #FFFFFF;
-}
-
-.vg-dispatch-pill-btn .vg-pill-bullet {
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: #CBD5E1;
-  transition: background-color 0.18s ease;
-}
-
-.vg-dispatch-pill-btn.is-active .vg-pill-bullet {
-  background: var(--vg-gold-saffron, #C99446);
 }
 
 .vg-dispatch-card[hidden] {
   display: none !important;
 }
 
-/* ==========================================================================
-   Vietnam Field Desk: Unified Cartography & Visual Dispatches
-   ========================================================================== */
+/* Vietnam Field Desk: Unified Cartography & Visual Dispatches */
 .vg-field-desk-showcase {
   background: var(--vg-canvas-light, #FAF8F5);
   border-top: 1px solid var(--vg-border-hairline, rgba(15, 37, 55, 0.08));
@@ -877,43 +838,7 @@
   padding: 0;
 }
 
-/* ==========================================================================
-   Shared Minimalist Reference Ledger & Technical Specification Tables
-   ========================================================================== */
-
-.vg-ref-ledger,
-details[class$="-ledger"],
-details[class$="-specs"] {
-  margin-top: 1.35rem;
-  background: var(--vg-paper-tactile, #FAF8F5);
-  border: 1px solid var(--vg-border-hairline, #E5DFD6);
-  border-radius: 10px;
-  padding: 0.95rem 1.15rem;
-  box-shadow: none;
-}
-
-.vg-ref-summary,
-details[class$="-ledger"] > summary,
-details[class$="-specs"] > summary {
-  cursor: pointer;
-  font-weight: 700;
-  color: var(--vg-navy, #0F2537);
-  font-size: 0.94rem;
-  line-height: 1.4;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 0.65rem;
-  list-style: none;
-}
-
-.vg-ref-summary::-webkit-details-marker,
-details[class$="-ledger"] > summary::-webkit-details-marker,
-details[class$="-specs"] > summary::-webkit-details-marker {
-  display: none;
-}
-
+/* Dispatch Monument Ledger Badges */
 .vg-dispatch-monument-badge {
   display: inline-block;
   font-family: var(--vg-mono, monospace);
@@ -930,100 +855,6 @@ details[class$="-specs"] > summary::-webkit-details-marker {
 
 .vg-dispatch-monument-title {
   flex: 1 1 260px;
-}
-
-.vg-ref-body,
-details[class$="-ledger"] > div,
-details[class$="-specs"] > div {
-  margin-top: 0.85rem;
-  padding-top: 0.75rem;
-  border-top: 1px solid var(--vg-border-hairline, #E5DFD6);
-}
-
-.vg-ref-lead,
-details[class$="-ledger"] > div > p {
-  margin: 0 0 0.75rem;
-  font-size: 0.86rem;
-  color: var(--vg-muted, #475569);
-  line-height: 1.55;
-}
-
-.vg-ref-table-wrap,
-.vg-table-scroll-wrapper,
-details[class$="-ledger"] [class*="table-wrap"],
-details[class$="-specs"] [class*="table-wrap"] {
-  overflow-x: auto;
-  -webkit-overflow-scrolling: touch;
-}
-
-.vg-ref-table,
-details[class$="-ledger"] table,
-details[class$="-specs"] table {
-  width: 100%;
-  border-collapse: collapse;
-  font-size: 0.84rem;
-  text-align: left;
-  font-variant-numeric: tabular-nums;
-  background: var(--vg-white, #FFFFFF);
-  border: 1px solid var(--vg-border-hairline, #E5DFD6);
-}
-
-.vg-ref-table caption,
-details[class$="-ledger"] table caption,
-details[class$="-specs"] table caption {
-  text-align: left;
-  font-size: 0.78rem;
-  color: var(--vg-muted, #64748B);
-  margin-bottom: 0.5rem;
-}
-
-.vg-ref-table thead tr,
-details[class$="-ledger"] table thead tr,
-details[class$="-specs"] table thead tr {
-  border-bottom: 1px solid var(--vg-border-hairline, #E5DFD6);
-  background: var(--vg-paper-tactile, #FAF8F5);
-  color: var(--vg-navy, #0F2537);
-}
-
-.vg-ref-table thead th,
-details[class$="-ledger"] table thead th,
-details[class$="-specs"] table thead th {
-  padding: 0.55rem 0.7rem;
-  font-size: 0.74rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-  color: var(--vg-navy, #0F2537);
-}
-
-.vg-ref-table tbody tr,
-details[class$="-ledger"] table tbody tr,
-details[class$="-specs"] table tbody tr {
-  border-bottom: 1px solid var(--vg-border-hairline, #E5DFD6);
-}
-
-.vg-ref-table tbody tr:last-child,
-details[class$="-ledger"] table tbody tr:last-child,
-details[class$="-specs"] table tbody tr:last-child {
-  border-bottom: none;
-}
-
-.vg-ref-table th,
-.vg-ref-table td,
-details[class$="-ledger"] table th,
-details[class$="-ledger"] table td,
-details[class$="-specs"] table th,
-details[class$="-specs"] table td {
-  padding: 0.55rem 0.7rem;
-  vertical-align: top;
-  line-height: 1.5;
-}
-
-.vg-ref-table tbody th,
-details[class$="-ledger"] table tbody th,
-details[class$="-specs"] table tbody th {
-  font-weight: 700;
-  color: var(--vg-navy, #0F2537);
 }
 
 

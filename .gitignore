@@ -5,6 +5,7 @@
 .superpowers/
 .worktrees/
 .codex/
+.stitch/designs/
 __pycache__/
 **/__pycache__/
 *.py[cod]

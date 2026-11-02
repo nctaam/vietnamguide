@@ -59,8 +59,14 @@ class TestPhotoDispatchComponent(unittest.TestCase):
         """Lightbox modal must have dialog role, aria-modal, and escape key listener."""
         self.assertIn('role="dialog"', self.content, "Modal must declare role='dialog'")
         self.assertIn('aria-modal="true"', self.content, "Modal must declare aria-modal='true'")
-        self.assertIn("key === 'Escape'", self.content, "Modal must close on Escape key")
-        self.assertIn("document.body.style.overflow = 'hidden'", self.content, "Modal must trap scroll when active")
+        self.assertNotIn('<script', self.content.lower(), "guide-photo-dispatch.php must not emit inline <script> blocks")
+        interactive_js_path = os.path.join(
+            REPO_ROOT, 'wordpress', 'wp-content', 'themes', 'vietnamguide-premium', 'assets', 'js', 'guide-interactive.js'
+        )
+        with open(interactive_js_path, 'r', encoding='utf-8') as f:
+            js_content = f.read()
+        self.assertIn("key === 'Escape'", js_content, "Modal must close on Escape key")
+        self.assertIn("document.body.style.overflow = 'hidden'", js_content, "Modal must trap scroll when active")
 
     def test_zero_tier1_cliches(self):
         """Visual dispatch copy must be free of generic AI-slop clichés."""

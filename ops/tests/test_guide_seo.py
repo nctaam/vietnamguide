@@ -752,7 +752,8 @@ class TestGuideSEO(unittest.TestCase):
         self.assertNotIn('<svg class="vg-map-svg" viewBox="0 0 320 540" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">', map_code)
         self.assertIn('class="vg-map-pin-group', map_code)
         self.assertIn('tabindex="0" role="button"', map_code)
-        self.assertIn("e.key === 'ArrowRight' || e.key === 'ArrowLeft'", map_code)
+        interactive_js = (THEME_DIR / 'assets' / 'js' / 'guide-interactive.js').read_text(encoding='utf-8')
+        self.assertIn("e.key === 'ArrowRight' || e.key === 'ArrowLeft'", interactive_js)
 
         # 2. Photo dispatch
         with open(PHOTO_DISPATCH_PHP, 'r', encoding='utf-8') as f:
@@ -2900,7 +2901,8 @@ echo json_encode([
             dispatch_src = f.read()
         self.assertIn('function vg_resolve_dispatch_image_url(', dispatch_src)
         self.assertIn("'hoi-an'              => 'central-heritage-hero.jpg'", dispatch_src)
-        self.assertIn("e.key === 'ArrowRight' || e.key === 'ArrowLeft'", dispatch_src)
+        interactive_js = (THEME_DIR / 'assets' / 'js' / 'guide-interactive.js').read_text(encoding='utf-8')
+        self.assertIn("e.key === 'ArrowRight' || e.key === 'ArrowLeft'", interactive_js)
 
 
 if __name__ == '__main__':

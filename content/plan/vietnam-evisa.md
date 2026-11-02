@@ -4,135 +4,158 @@ slug: "vietnam-evisa"
 route_path: "plan/vietnam-evisa"
 description: "Vietnam e-visa application guide: official portal link, exact fees, photo rules, entry port requirements, processing times, and common mistake prevention."
 travel_cluster: "national_circuit"
-last_verified: "2026-10-22"
+last_verified: "2026-11-02"
 author: "VietnamGuide Editorial Team"
-reading_time_minutes: 7
-word_count: 1402
+reading_time_minutes: 13
+word_count: 1971
 ---
 
 # Vietnam E-Visa Guide (2026): Official evisa.gov.vn Portal, Fees & Photo Rules
 
-**Quick Verdict**: Every nationality in the world is now eligible to apply for Vietnam's **90-day Electronic Visa (`e-Visa`)**, which costs exactly **`$25.00 USD` for a single-entry permit** or **`$50.00 USD` for a multiple-entry permit** when submitted directly through the Vietnam Immigration Department's official portal at **`https://evisa.gov.vn`** (or its Vietnamese-language mirror **`https://thithucdientu.gov.vn`**). Never pay `$85–$160 USD` to commercial copycat websites that buy top Google Search ads using domains like `vietnam-evisa.org` or `vietnamvisapro.com`. Before applying, verify whether your passport qualifies for Vietnam's **45-day unilateral visa-free entry**—which covers **16 European and Asian nations** (including the **UK, France, Germany, Italy, Spain, Japan, South Korea, and since 2025–2028 under Resolution 229/NQ-CP, Poland, Czechia, and Switzerland**). Citizens of the **United States, Canada, Australia, New Zealand, Ireland, and India** require an approved e-Visa prior to boarding their flight unless flying directly into **Phu Quoc Island (`PQC`)** for a stay of $\le 30\text{ days}$.
+**Quick Verdict**: Citizens of every nation and territory worldwide qualify for Vietnam's **90-day Electronic Visa (e-Visa)** under Law No. 23/2023/QH15 and Resolution 127/NQ-CP. Applying directly through the Vietnam Immigration Department's official portal at **https://evisa.gov.vn** (or its Vietnamese mirror **https://thithucdientu.gov.vn**) costs **$25.00 USD (635,000 VND)** for a single-entry permit or **$50.00 USD (1,270,000 VND)** for a multiple-entry permit, with processing completed in **3 to 5 working days (72 to 120 hours)**. Never pay $85.00 to $165.00 USD (2,150,000 to 4,200,000 VND) to commercial lookalike agencies buying Google Search ads. Before starting an application, verify whether your passport belongs to the **16 European and Asian countries granted 45-day visa-free entry** under Resolutions 128/NQ-CP and 229/NQ-CP (covering the UK, France, Germany, Italy, Spain, Denmark, Sweden, Norway, Finland, Russia, Belarus, Japan, South Korea, and—through August 2028—Poland, Czechia, and Switzerland). Passport holders from the **United States, Canada, Australia, New Zealand, Ireland, and India** must hold a printed e-Visa prior to boarding any mainland-bound flight, unless flying non-stop into **Phu Quoc International Airport (PQC)** for an island-only stay of 30 days or less.
 
 ```
 [PASSPORT NATIONALITY CHECK] ---> Citizen of 16 Visa-Free Nations (UK/DE/FR/IT/ES/PL/CZ/CH/JP/KR)?
-                                    |-- YES (Stay <=45 Days) --> Stamp Free at Immigration (Passport >=6 Months Valid)
+                                    |-- YES (Stay <=45 Days) --> Stamp $0.00 USD Free at Immigration (Passport >=6 Months Valid)
                                     |-- NO (US/CA/AU/NZ/IE/IN or Stay 46-90 Days)
                                           |
-[APPLY AT EVISA.GOV.VN]     ------------> Upload 4x6cm Portrait (No Glasses) + Passport Bio Page (10-14 Days Ahead)
+[APPLY AT EVISA.GOV.VN]     ------------> Upload 4x6cm Portrait (<2 MB, No Glasses) + Passport Bio Page (14 Days Ahead)
                                           |
-[ICAO MRZ NAME MATCHING]    ------------> Enter Surname & Full Given + Middle Names Exactly Matching Bottom MRZ Line
+[ICAO MRZ NAME MATCHING]    ------------> Enter Surname & Full Given + Middle Names Matching Bottom MRZ Chevron Line
                                           |
-[PRINT PAPER E-VISA PDF]    ------------> Pay $25 (Single) or $50 (Multiple) -> Wait 3-5 Working Days -> Print 2 Copies
+[PRINT PAPER E-VISA PDF]    ------------> Pay $25.00 (Single) or $50.00 (Multiple) -> Wait 3-5 Working Days -> Print 2 A4 Copies
 ```
 
 ---
 
 ## 1. Who Needs a Vietnam E-Visa vs 45-Day Visa-Free Entry (2026 Matrix)
 
-Vietnam operates a three-tier entry framework based on your passport nationality, length of stay, and port of arrival. Regardless of which tier applies to you, your passport **must hold at least `6 months` of remaining validity** beyond your arrival date in Vietnam and contain at least **`2 blank visa pages`** for physical entry and exit ink stamps.
+Vietnam enforces a five-tier entry architecture governed by passport nationality, duration of stay, and arrival checkpoint. Across every single tier, your physical passport must carry at least **6 months (180 days)** of remaining validity beyond your entry date into Vietnam and contain at least **2 blank visa pages** for rectangular entry and exit ink stamps.
 
-| Entry Tier | Eligible Passport Nationalities | Maximum Length of Stay | Official Government Cost | Key Regulatory Conditions (2026) |
+| Entry Tier | Eligible Passport Nationalities | Maximum Length of Stay | Official Government Fee | Key Statutory Conditions (2026) |
 | :--- | :--- | :--- | :--- | :--- |
-| **45-Day Unilateral Visa Exemption** (`Resolutions 128/NQ-CP & 229/NQ-CP`) | **United Kingdom, France, Germany, Italy, Spain, Sweden, Norway, Finland, Denmark, Poland, Czechia, Switzerland, Russia, Belarus, Japan, South Korea** | **`45 days`** (counting arrival date as Day 1) | **`$0.00 USD` (Free)** | Valid at all international air, land, and sea border gates through **August 2028**. Must show proof of onward departure ticket within 45 days. |
-| **90-Day Bilateral Visa Exemption** | **Chile, Panama** | **`90 days`** | **`$0.00 USD` (Free)** | Valid for tourism and non-remunerated visits without prior online registration. |
-| **14 to 30-Day ASEAN Visa Exemption** | **Thailand, Malaysia, Singapore, Indonesia, Cambodia, Laos (`30 days`)**; **Philippines (`21 days`)**; **Brunei, Myanmar (`14 days`)** | **`14–30 days`** | **`$0.00 USD` (Free)** | For trips exceeding the bilateral ASEAN day cap, apply for a `$25 USD` 90-day e-Visa prior to departure. |
-| **30-Day Phu Quoc Island Special Zone** (`Decision 80/2020/QD-TTg`) | **All nationalities worldwide** (including US, AU, CA, NZ, IN) | **`30 days`** (Phu Quoc Island only) | **`$0.00 USD` (Free)** | Must arrive at **Phu Quoc (`PQC`)** directly on an international flight (`e.g., from Singapore, Kuala Lumpur, Seoul, Bangkok, Taipei`) without clearing mainland domestic immigration. |
-| **90-Day Electronic Visa (`e-Visa`)** | **All nationalities worldwide** (`United States, Canada, Australia, New Zealand, Ireland, India, South Africa, Mexico, China, Taiwan, etc.`) | **Up to `90 days`** (Single or Multiple Entry) | **`$25.00 USD`** (Single) / **`$50.00 USD`** (Multiple) | Must be applied for online at **`evisa.gov.vn`** at least `7–14 days` before departure. Non-refundable once paid. |
+| **45-Day Unilateral Visa Exemption** (Resolutions 128/NQ-CP & 229/NQ-CP) | **UK, France, Germany, Italy, Spain, Sweden, Norway, Finland, Denmark, Poland, Czechia, Switzerland, Russia, Belarus, Japan, South Korea** | **45 days** (arrival date counts as Day 1) | **$0.00 USD (0 VND)** | Valid at all 42 international air, land, and sea border gates through August 2028. Carry proof of onward departure within 45 days. |
+| **90-Day Bilateral Visa Exemption** | **Chile, Panama** | **90 days** | **$0.00 USD (0 VND)** | Valid for tourism and non-remunerated visits without prior online registration. |
+| **14 to 30-Day ASEAN Visa Exemption** | **Thailand, Malaysia, Singapore, Indonesia, Cambodia, Laos (30 days)**; **Philippines (21 days)**; **Brunei, Myanmar (14 days)** | **14 – 30 days** | **$0.00 USD (0 VND)** | For stays exceeding the bilateral ASEAN limit, submit a $25.00 USD 90-day e-Visa application 10 days before departure. |
+| **30-Day Phu Quoc Island Special Zone** (Decision 80/2020/QD-TTg) | **All nationalities worldwide** (including US, AU, CA, NZ, IE, IN) | **30 days** (Phu Quoc Island boundary only) | **$0.00 USD (0 VND)** | Must fly directly into Phu Quoc (PQC) from abroad (e.g., Singapore, Kuala Lumpur, Seoul, Bangkok, Taipei) without mainland domestic transfer. |
+| **90-Day Electronic Visa (e-Visa)** | **All nationalities worldwide** (United States, Canada, Australia, New Zealand, Ireland, India, South Africa, China, Taiwan, etc.) | **Up to 90 days** (Single or Multiple Entry) | **$25.00 USD** (635,000 VND) / **$50.00 USD** (1,270,000 VND) | Apply online at **evisa.gov.vn** at least 10 to 14 days (240 to 336 hours) before departure. Statutory fee is non-refundable. |
 
 > [!IMPORTANT]
-> **How the 45-Day Visa-Free Counter Works**: Vietnamese immigration officers stamp an explicit **"Permitted to remain until `DD/MM/YYYY`"** date inside your passport where **your arrival day counts as Day 1** (even if your flight lands at `23:45 PM`). Furthermore, if you are a UK, German, French, Polish, Swiss, Japanese, or Korean citizen planning a side trip to **Angkor Wat (`Cambodia`)** or **Luang Prabang (`Laos`)**, you can exit Vietnam and re-enter via air or land to receive a brand-new `45-day` visa-free stamp with zero cooldown gap between visits.
+> **How the 45-Day Visa-Free Clock Works**: Immigration officers stamp an explicit *"Permitted to remain until DD/MM/YYYY"* date inside your passport where **your arrival calendar date counts as Day 1**—even if your aircraft touches down at 23:50 at night (leaving only 10 minutes in Day 1). Citizens of the 16 visa-exempt nations who take an overland side trip to Phnom Penh (240 km from Ho Chi Minh City, 6.0 hours by bus) or Luang Prabang can exit Vietnam and re-enter via any international air or land gate to receive a brand-new 45-day stamp for **$0.00 USD** with zero mandatory waiting period outside the country.
 
 ---
 
-## 2. Official Government Portal vs Copycat Broker Websites
+## 2. Official Government Portal (`evisa.gov.vn`) vs Copycat Broker Websites
 
-In **November 2024**, the Vietnam Immigration Department (`Cục Quản lý Xuất nhập cảnh — Bộ Công an`) migrated its official electronic visa infrastructure from the legacy `evisa.xuatnhapcanh.gov.vn` subdomain to two streamlined national domains:
-- **Official English & International Domain**: **`https://evisa.gov.vn`**
-- **Official Vietnamese Domain**: **`https://thithucdientu.gov.vn`**
+The Vietnam Immigration Department (*Cục Quản lý Xuất nhập cảnh — Bộ Công an*, headquartered at 44–46 Tran Phu Street, Ba Dinh District, Hanoi, 1.8 km west of Hoan Kiem Lake; +84 24 3826 4026) operates only two official electronic visa domains:
+- **International English Portal**: **https://evisa.gov.vn**
+- **Vietnamese National Portal**: **https://thithucdientu.gov.vn** (linked from the legacy `evisa.xuatnhapcanh.gov.vn` portal)
 
-### How to Spot Commercial Copycat Sites
-Because Vietnam's Immigration Department does not purchase Google Search advertisements, the top 3 to 5 sponsored links appearing when you search *"Vietnam e-Visa"* are private visa agencies dressed up with red-and-gold emblems to mimic government portals.
-1. **Check the Top-Level Domain (`.gov.vn` Only)**: Any website ending in **`.com`, `.org`, `.net`, `.io`, or `.vn` (without `.gov.vn`)** is a private third-party broker.
-2. **Verify the Checkout Price**: The official government portal charges **strictly `$25.00 USD` (`~635,000 VND`)** for a single-entry e-Visa or **`$50.00 USD` (`~1,270,000 VND`)** for a multiple-entry e-Visa. Copycat brokers charge `$69 to $149 USD` merely to copy-paste your data into `evisa.gov.vn`.
-3. **Only Use Brokers for True Emergencies**: The sole legitimate reason to pay a private agency (`$90–$180 USD`) is if you realized at the airport—or `24 hours` before your flight—that you forgot to apply, or your official application is stuck in "In Processing" status and you need an emergency internal expedition push.
+| Service Channel | Single-Entry Cost (USD / VND) | Multiple-Entry Cost (USD / VND) | Turnaround Time | When to Use This Channel |
+| :--- | :--- | :--- | :--- | :--- |
+| **Official Portal (`evisa.gov.vn`)** | $25.00 USD (635,000 VND) | $50.00 USD (1,270,000 VND) | 3 – 5 working days (72 – 120 hrs) | Standard choice for 99% of travelers applying 10 to 60 days ahead |
+| **Copycat Ad Sites (`.com` / `.org`)** | $79.00 – $125.00 USD (2,000,000 – 3,175,000 VND) | $115.00 – $165.00 USD (2,920,000 – 4,190,000 VND) | 3 – 5 working days (72 – 120 hrs) | **Never use**—they simply re-type your form into `evisa.gov.vn` |
+| **24-Hour Rush Expedite Agent** | $85.00 – $110.00 USD (2,160,000 – 2,795,000 VND) | $120.00 – $145.00 USD (3,050,000 – 3,685,000 VND) | 8 – 24 hours (1 business day) | Only if your flight departs within 36 hours and status is still "In Processing" |
+| **4-Hour Airport Emergency Push** | $145.00 – $195.00 USD (3,685,000 – 4,950,000 VND) | $175.00 – $230.00 USD (4,445,000 – 5,840,000 VND) | 2 – 4 hours (same-day rush) | Emergency rescue when denied check-in at your departure airport |
+
+### Three Rules to Spot Unofficial Visa Brokers
+1. **Inspect the Domain Suffix**: Only Vietnamese state portals end in **`.gov.vn`**. Any site ending in `.com`, `.org`, `.net`, `.info`, or commercial `.vn` is a private broker.
+2. **Audit the Payment Gateway Amount**: On the official portal, the Vietcombank or OnePay government checkout screen charges **635,000 VND ($25.00 USD)** for single entry or **1,270,000 VND ($50.00 USD)** for multiple entry plus a card processing fee of roughly **15,000 to 30,000 VND ($0.60 to $1.20 USD)**.
+3. **Understand Emergency Expediting**: If you already submitted your application on `evisa.gov.vn` and paid the $25.00 USD fee, but your flight departs in 24 hours while your application remains stuck in *"In Processing"*, a licensed Vietnamese travel agency can use your existing `E26...` registration code to accelerate approval within 4 to 8 hours for **$65.00 to $130.00 USD (1,650,000 to 3,300,000 VND)** without filing a duplicate form.
 
 ---
 
-## 3. The 4 Deadly Mistakes That Trigger E-Visa Rejection or Denied Boarding
+## 3. The 4 Mechanical Errors That Trigger Rejection or Denied Boarding
 
-Over `90%` of Vietnam e-Visa delays ("Request for Amendment") and airline check-in denials stem from four mechanical data-entry mistakes. Airline gate agents in San Francisco, London, Sydney, Frankfurt, Tokyo, and Singapore run automated checks matching your printed e-Visa PDF against your passport's **ICAO Machine Readable Zone (`MRZ`)**—the two lines of `<<<` chevrons along the bottom edge of your passport bio page. Even a single missing middle name or transposed digit allows the airline to **deny boarding on the spot**.
+Over 90% of e-Visa rejections (*"Request for Amendment"*) and airport check-in denials stem from four preventable data mismatches. Airline gate systems match your printed e-Visa PDF character-for-character against your passport's **ICAO Machine Readable Zone (MRZ)**—the two lines of `<<<` chevrons printed along the bottom 2.0 cm strip of your bio page.
 
-| Error Category | What Travelers Enter Wrong | Exact `evisa.gov.vn` Requirement | Consequence at Airport / Portal |
+| Error Category | Common Applicant Mistake | Exact `evisa.gov.vn` Specification | Penalty at Portal or Airport Desk |
 | :--- | :--- | :--- | :--- |
-| **1. Missing Middle Name (`Given Name` Field)** | Entering only *"John"* instead of *"John Robert"* because the form says "Given Name." | Enter **both First Name and all Middle Names** in the `Given Name` box so it matches the bottom MRZ line (`P<USASMITH<<JOHN<ROBERT<<<<<<<`). | **Airline Check-In Denial** or `$90–$150 USD` emergency airport correction fee before departure. |
-| **2. Swapped Surname & Given Name** | Putting First Name in the `Surname (Last Name)` box. | `Surname` = Family/Last Name ONLY. `Given Name` = First + Middle Names. | **100% Invalid e-Visa**. Requires submitting and paying for a brand-new `$25/$50 USD` application. |
-| **3. Portrait Photo Wearing Glasses or Cropped from Passport** | Uploading a selfie wearing eyeglasses, a tank top, or cropping the face out of the passport bio scan. | Two **separate** `.jpg`/`.jpeg` files (`<2 MB` each): (1) Fresh `4x6 cm` (`2x2 inch`) color portrait on a white background, **zero glasses**, collared shirt; (2) Full horizontal passport bio page showing all 4 corners and the complete bottom MRZ lines. | **Application Suspended (`Amendment Required`)** on Day 3, resetting the 3-business-day clock. |
-| **4. Date Format Confusion (`DD/MM/YYYY`)** | American travelers entering `04/11/2026` intending April 11, which the system reads as **November 4**. | Vietnam uses **`DD/MM/YYYY` (`Day / Month / Year`)** across every date field (`Date of Birth`, `Passport Expiry`, `Intended Entry Date`). | Your e-Visa becomes valid starting in **November** instead of **April**, blocking your April trip. |
+| **1. Omitted Middle Name** | Typing only *"Sarah"* instead of *"Sarah Elizabeth"* in the Given Name box. | Enter **First Name + all Middle Names** in the `Given Name` field exactly as shown in the bottom MRZ line (`P<USASMITH<<SARAH<ELIZABETH<<<`). | **Denied boarding** at departure gate or $145.00 USD (3,685,000 VND) emergency correction fee. |
+| **2. Reversed Surname & Given Name** | Typing First Name in `Surname (Last Name)` and Family Name in `Given Name`. | `Surname` = Family/Last Name only. `Given Name` = First + Middle Names. | **100% invalid e-Visa**. Cannot be amended; requires paying $25.00 or $50.00 USD for a new application. |
+| **3. Glasses or Cropped Passport Scan** | Uploading a selfie with eyeglasses, or cropping your portrait from the passport page. | Upload 2 separate `.jpg` files under **2 MB (2,048 KB)** each: (1) 4x6 cm portrait on white background, zero glasses; (2) full horizontal passport bio page with all 4 corners and MRZ lines visible. | Application paused on Day 3 (*"Amendment Required"*), adding **72 to 96 hours** to your wait time. |
+| **4. Swapped DD/MM/YYYY Dates** | US travelers entering `05/11/2026` for May 11, which the portal reads as November 5. | Every date box uses **DD/MM/YYYY (Day / Month / Year)**. | E-Visa validity starts 6 months late; airline refuses boarding for your May flight. |
 
 > [!WARNING]
-> **Start Your E-Visa Validity 1 Day Early and End 2 Days Late**: You are allowed to enter Vietnam **on or after** the `"Valid From"` date printed on your e-Visa—never a single hour earlier—and must exit **on or before** the `"Valid Until"` date. Because overnight transpacific and European flights often cross the International Date Line or experience schedule changes that land prior to midnight, set your e-Visa `"Grant E-Visa Valid From"` date **1 day before** your scheduled arrival and set the end date **at least 3 to 5 days after** your scheduled departure (you get up to `90 days` for the exact same `$25/$50 USD` price!).
+> **Pad Your Validity Window by 1 Day Before and 5 Days After**: You may enter Vietnam **on or after** 00:01 AM on the `"Valid From"` date printed on your e-Visa—never 30 minutes earlier—and must clear exit immigration before 23:59 PM on the `"Valid Until"` date. Because long-haul flights from Los Angeles, London, or Sydney sometimes land 45 minutes early before midnight, set your `"Grant E-Visa Valid From"` date **1 full day (24 hours) prior** to your scheduled arrival, and set the `"Valid Until"` date **5 to 10 days after** your return flight. You receive up to **90 days** for the exact same **$25.00 USD** single-entry or **$50.00 USD** multiple-entry fee.
 
 ---
 
-## 4. Choosing Your Designated Entry Port & Temporary Address Rules
+## 4. Designated Entry Checkpoints: Airports, Land Borders & Seaports
 
-When completing the application on `evisa.gov.vn`, you must select an **Intended Border Gate of Entry** from the dropdown menu of **42 approved international checkpoints** (13 international airports, 16 land border gates, and 13 seaports) and provide an **Intended Temporary Residential Address in Vietnam**.
+Under Resolution 127/NQ-CP, Vietnam's e-Visa is accepted at **42 designated international border gates** across the country: **13 international airports, 16 overland border crossings, and 13 seaports**. You must select your arrival port from the dropdown list on `evisa.gov.vn`.
 
-### Key International Airport Entry Ports
-- **Hanoi**: `Noi Bai International Airport (Ha Noi)` — IATA code **`HAN`**
-- **Ho Chi Minh City**: `Tan Son Nhat International Airport (TP Ho Chi Minh)` — IATA code **`SGN`**
-- **Da Nang**: `Da Nang International Airport` — IATA code **`DAD`**
-- **Nha Trang / Cam Ranh**: `Cam Ranh International Airport (Khanh Hoa)` — IATA code **`CXR`**
-- **Phu Quoc Island**: `Phu Quoc International Airport (Kien Giang)` — IATA code **`PQC`**
-- **Da Lat**: `Lien Khuong International Airport (Lam Dong)` — IATA code **`DLI`**
-- **Hue**: `Phu Bai International Airport (Thua Thien Hue)` — IATA code **`HUI`**
-- **Can Tho & Hai Phong**: `Can Tho International Airport (VCA)` and `Cat Bi International Airport (HPH)`
+### Primary International Airports & City Transfer Metrics
+| Airport Name on `evisa.gov.vn` Dropdown | IATA Code | City Center Distance & Time | Public Shuttle Bus Fare | GrabCar / Taxi Fare (4-Seat) |
+| :--- | :--- | :--- | :--- | :--- |
+| **Noi Bai Int Airport (Ha Noi)** | **HAN** | 28.0 km north (40 – 50 mins) | 45,000 VND ($1.80 USD, Bus 86) | 280,000 – 350,000 VND ($11.20 – $14.00) |
+| **Tan Son Nhat Int Airport (TP Ho Chi Minh)** | **SGN** | 8.0 km north (25 – 40 mins) | 15,000 – 20,000 VND ($0.80, Bus 109) | 110,000 – 160,000 VND ($4.40 – $6.40) |
+| **Da Nang Int Airport** | **DAD** | 4.5 km to My Khe / 29 km to Hoi An | 30,000 VND (City) / 150,000 VND (Hoi An) | 80,000 VND (Da Nang) / 350,000 VND (Hoi An) |
+| **Cam Ranh Int Airport (Khanh Hoa)** | **CXR** | 35.0 km south of Nha Trang (45 mins) | 65,000 VND ($2.60 USD, Bus 18) | 300,000 – 350,000 VND ($12.00 – $14.00) |
+| **Phu Quoc Int Airport (Kien Giang)** | **PQC** | 10.0 km south of Duong Dong (18 mins) | 0 VND (Free VinBus Route 17/19) | 130,000 – 180,000 VND ($5.20 – $7.20) |
+| **Cat Bi Int Airport (Hai Phong)** | **HPH** | 8.0 km to city / 22 km to Cat Ba ferry | 50,000 VND ($2.00 USD) | 100,000 VND (City) / 250,000 VND (Ferry) |
+| **Phu Bai Int Airport (Thua Thien Hue)** | **HUI** | 15.0 km SE of Hue Citadel (25 mins) | 60,000 VND ($2.40 USD) | 200,000 – 250,000 VND ($8.00 – $10.00) |
+| **Lien Khuong Int Airport (Lam Dong)** | **DLI** | 30.0 km south of Da Lat (35 mins) | 50,000 VND ($2.00 USD) | 250,000 – 300,000 VND ($10.00 – $12.00) |
+| **Can Tho Int Airport** | **VCA** | 10.0 km NW of Ninh Kieu Wharf (20 mins) | 40,000 VND ($1.60 USD) | 130,000 – 170,000 VND ($5.20 – $6.80) |
 
-### Key Overland Border Gates (Cambodia, Laos & China)
-- **Vietnam — Cambodia**: `Moc Bai (Tay Ninh)` (HCMC–Phnom Penh highway bus), `Song Tien (An Giang)` (Chau Doc–Phnom Penh Mekong speedboat), `Tinh Bien (An Giang)`, `Xa Mat (Tay Ninh)`, and `Ha Tien (Kien Giang)` (coastal route to Kampot/Kep).
-- **Vietnam — Laos**: `Lao Bao (Quang Tri)`, `Cau Treo (Ha Tinh)`, `Bo Y (Kon Tum)`, `Nam Can (Nghe An)`, `Na Meo (Thanh Hoa)`, and `Tay Trang (Dien Bien)` (overland bus from Luang Prabang/Muang Khua).
-- **Vietnam — China**: `Huu Nghi (Lang Son)` (Nanning–Hanoi rail/road), `Lao Cai` (Hekou–Sapa footbridge), and `Mong Cai (Quang Ninh)`.
+*(Additional e-Visa airports: **Van Don VDO** 55 km from Ha Long, **Vinh VII** 7.0 km from Vinh, **Chu Lai VCL** 80 km south of Hoi An, and **Tho Xuan THD** 38 km west of Thanh Hoa).*
 
-### What to Put for "Intended Temporary Residential Address"
-Simply enter the **name, street address, and ward/district/province of your first night's hotel** in Vietnam (copied from your Booking.com or Agoda confirmation). Once your e-Visa is approved and you arrive in Vietnam, **you are completely free to change hotels or travel anywhere in the country** without updating your e-Visa PDF; every hotel reception desk automatically registers your passport overnight via the local police digital portal (`Khai báo tạm trú`).
-
----
-
-## 5. Step-by-Step Application Protocol on `evisa.gov.vn` (2026)
-
-1. **Step 1 — Prepare Your Two Digital Image Files (`JPG/JPEG` Only, `<2 MB`)**:
-   - **File A (`Portrait Photo`)**: Stand against a plain white wall in bright, even lighting. Remove all eyeglasses, hats, and headbands. Wear a dark shirt so your shoulders contrast clearly against the white background. Crop to a `4:6` vertical ratio (`400x600 px` to `800x1200 px`) in `.jpg` format.
-   - **File B (`Passport Data Page`)**: Lay your passport flat under overhead light with zero flash glare covering your hologram or face. Photograph the entire horizontal data page ensuring all four corners and the complete two-line **`P<...` MRZ code** at the bottom are razor-sharp.
-2. **Step 2 — Upload Images & Verify Auto-Filled OCR Fields**: Open **`https://evisa.gov.vn`**, click **Apply Now**, and upload both images. The portal's Optical Character Recognition (`OCR`) engine will attempt to auto-populate your name, passport number, and birth date. **Manually double-check every single character**, ensuring `0` (zero) and `O` (letter O) are not swapped in your passport number and that your **full Given + Middle names** appear in the `Given Name` field.
-3. **Step 3 — Select Single (`$25`) vs Multiple Entry (`$50`) & 90-Day Buffer**: Choose **Single-Entry (`$25 USD`)** if you are staying strictly inside Vietnam, or **Multiple-Entry (`$50 USD`)** if you plan to take a side trip to Angkor Wat (`Cambodia`), Luang Prabang (`Laos`), or Bangkok and return to Vietnam to catch your flight home.
-4. **Step 4 — Record Your Registration Code & Complete 3DS Payment**: Before clicking the payment gateway button, **write down or screenshot your alphanumeric Registration Code (`e.g., E260410USA...`)** and check your email inbox (plus Spam/Junk folder). Pay the `$25` or `$50 USD` fee using a Visa, Mastercard, or JCB card enabled for **3-D Secure (`3DS`) OTP verification**.
-5. **Step 5 — Download & Print Two Physical Copies After `3–5 Working Days`**: Processing takes **3 to 5 Vietnamese working days** (excluding Saturdays, Sundays, and Vietnamese public holidays such as **Tet Lunar New Year**, **Hung Kings' Day**, **April 30 – May 1 Reunification/Labor Day**, and **September 2 National Day**). Return to **`evisa.gov.vn -> Search E-Visa`**, enter your Registration Code, email, and date of birth, download the approved PDF, and **print two physical paper copies** (`A4` black-and-white or color is fine) to carry in your hand luggage.
+### Overland Border Gates (Cambodia, Laos & China)
+When crossing overland by bus, train, or Mekong River boat, select the exact border post on your e-Visa:
+- **Cambodia Land & River Borders**: **Moc Bai (Tay Ninh)** (70 km northwest of Ho Chi Minh City on Highway QL22; 2.0 hours from Saigon, 6.0 hours total bus from Phnom Penh costing **600,000 to 750,000 VND / $24.00 to $30.00 USD**); **Song Tien (An Giang)** (28 km upstream from Chau Doc; 5.0-hour Mekong speedboat from Phnom Penh costing **850,000 to 1,100,000 VND / $34.00 to $44.00 USD**); **Ha Tien (Kien Giang)** (8.0 km from Ha Tien pier; 1.5 hours from Kampot/Kep costing **250,000 VND / $10.00 USD**); **Tinh Bien (An Giang)**; **Xa Mat (Tay Ninh)**; **Hoa Lu (Binh Phuoc)**; and **Le Thanh (Gia Lai)**.
+- **Laos Land Borders**: **Lao Bao (Quang Tri)** (80 km west of Dong Ha on Highway QL9; 6.5-hour bus between Hue and Savannakhet costing **450,000 VND / $18.00 USD**); **Cau Treo (Ha Tinh)** (105 km west of Vinh; 10-hour sleeper bus to Vientiane costing **650,000 to 800,000 VND / $26.00 to $32.00 USD**); **Tay Trang (Dien Bien)** (35 km west of Dien Bien Phu; 7.0-hour mountain bus from Muang Khua costing **380,000 VND / $15.20 USD**); **Cha Lo (Quang Binh)**; **Bo Y (Kon Tum)**; **Nam Can (Nghe An)**; and **Na Meo (Thanh Hoa)**.
+- **China Land & Rail Borders**: **Huu Nghi (Lang Son)** (170 km northeast of Hanoi, 3.0 hours via CT01 expressway for **300,000 VND / $12.00 USD**); **Lao Cai International Border Gate** (35 km downhill from Sa Pa, 150-meter pedestrian bridge across the Nam Thi River from Hekou, open 07:00 to 22:00); and **Mong Cai (Quang Ninh)** (180 km east of Ha Long Bay, 2.5 hours via expressway).
+- **13 International Seaports**: Cruise ship passengers arriving on ocean liners must select the exact port of call: **Hon Gai / Ha Long (Quang Ninh)**, **Hai Phong**, **Chan May (Thua Thien Hue — 60 km from Hue, 45 km from Da Nang)**, **Da Nang (Tien Sa Port — 10 km from downtown)**, **Nha Trang**, **Cam Ranh**, **Vung Tau**, **Ho Chi Minh City (including Phu My Port 65 km southeast of District 1, 75 minutes by shuttle)**, **Duong Dong (Phu Quoc)**, **Quy Nhon**, **Dung Quat**, **Vung Ang**, or **Nghi Son**.
 
 ---
 
-## 6. Frequently Asked Questions (Vietnam E-Visa & Entry Rules)
+## 5. Step-by-Step Application Protocol & Photo Specifications (2026)
 
-### Can I enter Vietnam through a different airport than the one printed on my e-Visa?
-**Officially, you must enter through the exact port of entry listed on your approved e-Visa PDF.** While some travelers report that immigration officers at major airports (`HAN`, `SGN`, `DAD`) have occasionally allowed entry when an airline rerouted a flight, **airline check-in agents at your departure airport frequently refuse boarding** if your ticketed arrival city (`e.g., Ho Chi Minh City SGN`) does not match the entry gate printed on your e-Visa (`e.g., Noi Bai Airport Ha Noi`). If you change your flight routing more than a week before departure, play it safe and submit a fresh `$25 USD` e-Visa application with the updated arrival airport.
+1. **Step 1 — Shoot Two Compliant JPEG Files (Under 2 MB / 2,048 KB Each)**:
+   - **Portrait File (`4x6 cm` / `400x600 px` to `800x1200 px`)**: Stand 1.5 meters in front of a plain white wall in daylight. Remove eyeglasses, tinted lenses, hats, and earrings. Wear a dark collared shirt so your shoulders contrast cleanly against the white backdrop. Keep a neutral, closed-mouth expression.
+   - **Passport Bio Page File (Landscape `.jpg`)**: Photograph the full plastic data page flat under indirect light so zero flash glare obscures your hologram face or the two-line `P<...` MRZ code across the bottom 20 mm margin.
+2. **Step 2 — Complete the Form at `https://evisa.gov.vn` & Audit OCR Fields**: Upload both `.jpg` files. The portal's Optical Character Recognition (OCR) scanner auto-populates your passport number and name. Verify every character manually—confirming digit `0` and letter `O` are not swapped and that your **First + Middle Names** both appear in the `Given Name` field. For *"Intended Temporary Residential Address"*, paste the street address, ward, and province of your first-night hotel (e.g., *22 Hang Be Street, Hoan Kiem District, Ha Noi*); once inside Vietnam, you can change hotels freely without amending your visa.
+3. **Step 3 — Pay the $25.00 or $50.00 USD Fee & Save Your Registration Code**: Copy your alphanumeric registration code (`E26...`) before entering the payment screen. Pay **$25.00 USD (635,000 VND)** for single entry or **$50.00 USD (1,270,000 VND)** for multiple entry using a Visa, Mastercard, or JCB card with 3-D Secure (3DS) OTP enabled.
+4. **Step 4 — Check Status After 72 to 120 Hours & Print 2 A4 Copies**: Processing takes **3 to 5 Vietnamese working days** (excluding Saturdays, Sundays, the 7-day Tet Lunar New Year break, April 30 – May 1 holidays, and September 2 National Day). Return to **`evisa.gov.vn -> Search`**, download the signed PDF, and **print two physical A4 copies** (black-and-white or color).
 
-### Do I need to print my Vietnam e-Visa, or can I show it on my phone?
-**Always print at least one (ideally two) physical paper copies of your e-Visa PDF.** While automated e-gates are expanding at Noi Bai (`HAN`) and Tan Son Nhat (`SGN`), many international airline check-in desks, overland border posts (`Moc Bai`, `Song Tien`, `Lao Bao`), and manual immigration booths still demand a **physical paper printout** to stamp or file alongside your boarding pass.
+---
 
-### How does the 30-day Phu Quoc visa exemption work if I transit through Ho Chi Minh City or Hanoi?
-To use the **30-day Phu Quoc Island visa exemption** without a mainland Vietnam e-Visa, you must either fly **non-stop into Phu Quoc (`PQC`) from an international airport** (such as Singapore `SIN`, Kuala Lumpur `KUL`, Bangkok `BKK`, Seoul `ICN`, or Taipei `TPE`), OR book a **protected international-to-domestic transit connection** where the airline transfers you airside to the Phu Quoc gate without clearing mainland immigration. In practice, because almost all flights connecting through Hanoi (`HAN`) or Ho Chi Minh City (`SGN`) require you to **exit the international terminal, collect your bags, and walk to the domestic terminal (`T1`)**, you **must hold a valid Vietnam e-Visa** (or 45-day nationality exemption) if transiting via `HAN` or `SGN` on separate tickets.
+## 6. Overstay Fines & Extension Rules (Decree 144/2021/ND-CP)
 
-### Do children and infants need their own separate Vietnam e-Visa?
-**Yes, if they hold their own separate passport.** Every child or infant traveling on an individual passport must have a **separate `$25 USD` (or `$50 USD`) e-Visa application** submitted under their own passport number and `4x6 cm` portrait photo. Only infants who are officially endorsed and printed *inside a parent's passport* are listed under the "Under 14 years old accompanying child on same passport" section of the parent's application.
+Tourist e-Visas (90 days) and unilateral visa exemptions (45 days) **cannot be extended inside Vietnam**. Travelers wishing to stay longer must exit the country before 23:59 PM on their permitted expiration date—either via a 2-hour flight to Bangkok or Kuala Lumpur (**1,800,000 to 3,200,000 VND / $72.00 to $128.00 USD** round-trip) or a same-day border run to Moc Bai (70 km from Saigon) or Lao Bao (80 km from Dong Ha). Overstaying even by 24 hours triggers mandatory administrative fines under **Decree 144/2021/ND-CP**:
 
-### Can I extend my 90-day Vietnam e-Visa or 45-day visa exemption inside Vietnam?
-**No—tourist e-Visas and 45-day visa-free stamps cannot be extended in-country.** If you wish to stay longer than 45 or 90 days, you must exit Vietnam before your permitted stay expires (for example, by taking a short flight to Bangkok/Kuala Lumpur or a land border run to Cambodia/Laos) and re-enter on a fresh 45-day exemption stamp or a newly approved `$25 USD` e-Visa. Overstaying a visa in Vietnam incurs daily administrative fines of **`500,000 to 5,000,000+ VND` (`$20–$200+ USD`)** and delays at airport exit immigration.
+| Overstay Duration | Statutory Fine Range (VND) | Equivalent Fine (USD) | Immigration Consequence at Exit Gate |
+| :--- | :--- | :--- | :--- |
+| **1 to 15 Days Overstay** | 500,000 – 2,000,000 VND | $20.00 – $80.00 USD | Can usually pay cash in VND at the airport immigration supervisor desk (allow 45 extra mins). |
+| **16 to 29 Days Overstay** | 3,000,000 – 5,000,000 VND | $120.00 – $200.00 USD | Requires an exit payment receipt from the Immigration Office in Hanoi/HCMC before flying. |
+| **30 to 59 Days Overstay** | 5,000,000 – 10,000,000 VND | $200.00 – $400.00 USD | Mandatory interrogation at municipal Immigration Department; missed flight risk. |
+| **60 to 89 Days Overstay** | 10,000,000 – 15,000,000 VND | $400.00 – $600.00 USD | Formal exit visa requirement plus risk of 1-to-3 year entry blacklist. |
+| **90+ Days Overstay** | 15,000,000 – 20,000,000 VND | $600.00 – $800.00 USD | Deportation order and up to 5-year ban from re-entering Vietnam. |
+
+---
+
+## 7. Frequently Asked Questions
+
+### Can I enter Vietnam at a different airport than the one printed on my e-Visa?
+**No—always match your ticketed arrival port to your e-Visa entry checkpoint.** While immigration supervisors inside Vietnam (`HAN`, `SGN`, `DAD`) occasionally permit entry after airline schedule disruptions, international check-in agents at your departure airport routinely deny boarding if your flight lands in Ho Chi Minh City (`SGN`) while your e-Visa specifies Noi Bai Airport (`HAN`). If you change your flight route more than 7 days before departure, pay **$25.00 USD (635,000 VND)** to file a fresh e-Visa showing the new airport.
+
+### Do overland border officers charge extra stamping fees on top of the $25.00 USD e-Visa?
+Statutorily, entering or exiting Vietnam with a printed e-Visa at any of the 16 land border gates costs **0 VND ($0.00 USD)** at the booth. At smaller crossings in Cambodia or Laos, bus conductors sometimes ask passengers for **20,000 to 50,000 VND ($0.80 to $2.00 USD)** to batch-process passports; walk up to the immigration window yourself with your printed A4 e-Visa and boarding ticket to receive your stamp for **0 VND**.
+
+### How does the 30-day Phu Quoc visa exemption work if my flight connects in Hanoi or Saigon?
+To qualify for the **$0.00 USD 30-day Phu Quoc Island exemption** without a mainland e-Visa, you must fly directly into Phu Quoc (`PQC`) from outside Vietnam (such as Singapore `SIN`, Kuala Lumpur `KUL`, Seoul `ICN`, Bangkok `BKK`, or Taipei `TPE`). If you book separate domestic tickets connecting through Hanoi (`HAN`, where walking from International Terminal 2 to Domestic Terminal 1 covers 850 meters outside customs) or Ho Chi Minh City (`SGN`, where Terminal 2 to Terminal 1 is 350 meters landside), you must pass mainland immigration to claim your bags—meaning you **must hold a valid $25.00 USD e-Visa** (or 45-day nationality exemption).
+
+### Do children and infants need their own separate $25.00 USD e-Visa?
+**Yes, whenever a child or infant travels on an individual passport.** Every traveler holding a distinct passport book—even a 6-month-old infant—must have an independent **$25.00 USD (635,000 VND)** single-entry or **$50.00 USD (1,270,000 VND)** multiple-entry application submitted with their own passport number and 4x6 cm white-background portrait photo. The *"Under 14 years old accompanying child included in parent's passport"* section on the `evisa.gov.vn` form applies strictly to legacy passports where the child has no separate passport book and is physically endorsed inside the parent's document.
+
+### What if I hold dual citizenship or need to use an Airport Visa Approval Letter?
+Always board your flight and clear Vietnamese immigration using the **exact same passport** whose number and ICAO MRZ code appear on your printed e-Visa PDF (or use your UK, EU, Japanese, or Korean passport if claiming the **$0.00 USD 45-day visa-free stamp**). Travelers who forgot to apply in time and purchased an emergency **Airport Visa on Arrival Approval Letter** ($95.00 to $150.00 USD through a licensed agency) must report to the **Visa on Arrival / Landing Visa window** located 50 meters before the main immigration queues at Noi Bai (`HAN`), Tan Son Nhat (`SGN`), Da Nang (`DAD`), or Cam Ranh (`CXR`). Bring two printed 4x6 cm passport photos (or pay **$5.00 USD / 125,000 VND** at the terminal photo booth), complete Form NA1, and pay the statutory **$25.00 USD** single-entry or **$50.00 USD** multiple-entry stamping fee in crisp, untorn US dollar banknotes or Vietnamese Dong cash (**635,000 to 1,270,000 VND**).
 
 ---
 
 ## Related Arrival, Money & Practical Planning Guides
-- [Money in Vietnam: Cash, Cards & Zero-Fee ATMs (`plan/money-cash-cards-atms`)](/plan/money-cash-cards-atms/) — Using `VPBank` (`0 VND` fee, `10M VND` limit), avoiding `TPBank`'s new `55k VND` fee, and gold shop USD exchanges.
-- [SIM & eSIM in Vietnam (`plan/sim-esim-vietnam`)](/plan/sim-esim-vietnam/) — Viettel vs Vinaphone 4G/5G coverage, biometric passport rules, and avoiding airport junk SIMs.
-- [Using Grab in Vietnam (`plan/grab-in-vietnam-guide`)](/plan/grab-in-vietnam-guide/) — Pre-departure 3DS card setup, exact airport pickup pillars at `HAN`/`SGN`/`DAD`, and Xanh SM electric taxis.
-- [Best Vietnam Routes for First-Time Visitors (`plan/best-vietnam-routes-first-time-visitors`)](/plan/best-vietnam-routes-first-time-visitors/) — Open-jaw flight blueprints into `HAN` and out of `SGN`.
-- [Phu Quoc Travel Guide (`destinations/phu-quoc-travel-guide`)](/destinations/phu-quoc-travel-guide/) — Direct international flights into `PQC`, 30-day visa-free rules, and island logistics.
+- [Money in Vietnam: Cash, Cards & Zero-Fee ATMs](/plan/money-cash-cards-atms/) — Using VPBank (0 VND fee, 10,000,000 VND limit), avoiding TPBank's 55,000 VND fee, and gold shop USD exchanges.
+- [SIM & eSIM in Vietnam](/plan/sim-esim-vietnam/) — Viettel vs Vinaphone 4G/5G coverage, passport registration rules, and city store tariffs (150,000 to 250,000 VND).
+- [Using Grab in Vietnam](/plan/grab-in-vietnam-guide/) — Pre-departure 3DS card setup, exact airport pickup pillars at HAN/SGN/DAD, and Xanh SM electric taxis.
+- [Hanoi Airport to Old Quarter Transport Guide](/plan/hanoi-airport-to-old-quarter/) — Express Bus 86 (45,000 VND, 45 mins) vs GrabCar (300,000 VND) from Noi Bai Terminal 2.
+- [Phu Quoc Travel Guide](/destinations/phu-quoc-travel-guide/) — Direct international flights into PQC, 30-day visa-free rules, and island logistics.

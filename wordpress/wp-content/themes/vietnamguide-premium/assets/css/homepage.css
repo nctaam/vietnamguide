@@ -117,7 +117,8 @@ img {
   transform: translateY(0) scale(0.98);
 }
 
-.vg-sr-only {
+.vg-sr-only,
+.vg-checklist-live-announcer {
   position: absolute;
   width: 1px;
   height: 1px;
@@ -136,7 +137,6 @@ img {
 
 .vg-section,
 .vg-section-heading,
-.vg-hub-section,
 .vg-entry-content [id],
 :target {
   scroll-margin-top: calc(var(--vg-header-height) + 24px);
@@ -538,9 +538,7 @@ html:not(.vg-js) body.home .vg-site-header {
   transform: translateY(0) scale(0.97);
 }
 
-/* ==========================================================================
-   Hero Telemetry, Search Barometer & Decision Engines Showcase (Stitch Sync)
-   ========================================================================== */
+/* Hero Telemetry, Search Barometer & Decision Engines Showcase */
 
 /* 1. Hero Ground Telemetry Strip */
 .vg-hero__telemetry {
@@ -1701,7 +1699,6 @@ html:not(.vg-js) body.home .vg-site-header {
   display: block;
 }
 
-.vg-tag-cloud,
 .wp-block-tag-cloud {
   display: flex;
   flex-wrap: wrap;
@@ -1709,7 +1706,6 @@ html:not(.vg-js) body.home .vg-site-header {
   margin: 28px 0;
 }
 
-.vg-tag-cloud a,
 .wp-block-tag-cloud a {
   display: inline-flex;
   align-items: center;
@@ -1723,9 +1719,7 @@ html:not(.vg-js) body.home .vg-site-header {
   transition: background-color 180ms ease, border-color 180ms ease, color 180ms ease, transform 160ms ease;
 }
 
-.vg-tag-cloud a:hover,
 .wp-block-tag-cloud a:hover,
-.vg-tag-cloud a:focus-visible,
 .wp-block-tag-cloud a:focus-visible {
   border-color: var(--vg-jade);
   background: var(--vg-jade);
@@ -1733,7 +1727,6 @@ html:not(.vg-js) body.home .vg-site-header {
   transform: translateY(-1px);
 }
 
-.vg-tag-cloud a:active,
 .wp-block-tag-cloud a:active {
   transform: translateY(0) scale(0.97);
 }
@@ -2023,119 +2016,6 @@ html:not(.vg-js) body.home .vg-site-header {
   color: var(--vg-gold-saffron, #C99446);
 }
 
-/* Hub Ecosystem Components */
-.vg-hub-hero {
-  margin-bottom: 48px;
-}
-
-.vg-hub-lede {
-  margin: 0 0 36px;
-  font-size: clamp(20px, 2.2vw, 24px);
-  line-height: 1.5;
-  color: var(--vg-ink);
-}
-
-.vg-hub-section {
-  margin: 56px 0;
-}
-
-.vg-hub-section > h2 {
-  margin: 0 0 28px;
-  font-family: var(--vg-display);
-  font-size: clamp(26px, 2.8vw, 36px);
-  font-weight: 600;
-  letter-spacing: -0.025em;
-  line-height: 1.15;
-}
-
-.vg-hub-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: clamp(24px, 3vw, 36px);
-  margin: 32px 0;
-}
-
-.vg-hub-grid-two {
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-}
-
-.vg-hub-card {
-  display: flex;
-  flex-direction: column;
-  padding: 28px 26px;
-  border: 1px solid var(--vg-line);
-  background: var(--vg-white);
-  box-shadow: 0 2px 8px rgba(16, 20, 23, 0.04);
-  transition: transform 200ms cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 200ms ease, border-color 200ms ease;
-}
-
-.vg-hub-card:hover {
-  border-color: rgba(16, 20, 23, 0.28);
-  box-shadow: 0 8px 24px rgba(16, 20, 23, 0.08);
-  transform: translateY(-2px);
-}
-
-.vg-hub-card h3 {
-  margin: 0 0 12px;
-  font-family: var(--vg-display);
-  font-size: 22px;
-  font-weight: 600;
-  line-height: 1.25;
-  color: var(--vg-ink);
-}
-
-.vg-hub-card p {
-  margin: 0;
-  font-size: 16px;
-  line-height: 1.55;
-  color: rgba(16, 20, 23, 0.8);
-}
-
-.vg-hub-note {
-  margin: 36px 0;
-  padding: 24px 28px;
-  border-left: 4px solid var(--vg-jade);
-  background: color-mix(in srgb, var(--vg-paper) 60%, var(--vg-white));
-  box-shadow: 0 2px 8px rgba(16, 20, 23, 0.04);
-  transition: transform 200ms ease, box-shadow 200ms ease;
-}
-
-.vg-hub-note:hover {
-  box-shadow: 0 6px 16px rgba(16, 20, 23, 0.07);
-  transform: translateY(-1px);
-}
-
-.vg-hub-note h3 {
-  margin: 0 0 10px;
-  font-family: var(--vg-display);
-  font-size: 21px;
-  font-weight: 600;
-  color: var(--vg-ink);
-}
-
-.vg-hub-note p {
-  margin: 0;
-  font-size: 16px;
-  line-height: 1.6;
-  color: rgba(16, 20, 23, 0.85);
-}
-
-.vg-hub-note p + p {
-  margin-top: 12px;
-}
-
-.vg-hub-note a {
-  color: var(--vg-jade);
-  font-weight: 700;
-  text-decoration: underline;
-  text-underline-offset: 3px;
-  transition: color 180ms ease;
-}
-
-.vg-hub-note a:hover {
-  color: var(--vg-blue);
-}
-
 .vg-check-list {
   margin: 28px 0;
   padding-left: 0;
@@ -2192,54 +2072,6 @@ html:not(.vg-js) body.home .vg-site-header {
   color: var(--vg-jade);
   font-size: 24px;
   line-height: 1;
-}
-
-.vg-next-action {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 32px;
-  margin: 56px 0 32px;
-  padding: 32px 36px;
-  border: 1px solid var(--vg-line);
-  background: color-mix(in srgb, var(--vg-paper) 50%, var(--vg-white));
-  box-shadow: 0 4px 16px rgba(16, 20, 23, 0.04);
-}
-
-.vg-next-action h2 {
-  margin: 0 0 8px;
-  font-family: var(--vg-display);
-  font-size: clamp(24px, 2.5vw, 32px);
-  font-weight: 600;
-}
-
-.vg-next-action p {
-  margin: 0;
-  font-size: 16px;
-  line-height: 1.5;
-  color: rgba(16, 20, 23, 0.8);
-}
-
-.vg-next-action a {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 48px;
-  padding: 12px 24px;
-  border: 1px solid var(--vg-jade);
-  background: var(--vg-jade);
-  color: var(--vg-white);
-  font-size: 14px;
-  font-weight: 800;
-  text-decoration: none;
-  white-space: nowrap;
-  transition: background-color 180ms ease, border-color 180ms ease, transform 180ms cubic-bezier(0.34, 1.56, 0.64, 1);
-}
-
-.vg-next-action a:hover {
-  border-color: var(--vg-blue);
-  background: var(--vg-blue);
-  transform: translateY(-2px);
 }
 
 /* Post Metadata */
@@ -2619,16 +2451,6 @@ html:not(.vg-js) body.home .vg-site-header {
   overflow: hidden;
 }
 
-@media (min-width: 768px) {
-  .vg-search-tool-banner {
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-    gap: 28px;
-    padding: 28px 32px;
-  }
-}
-
 .vg-search-tool-banner:hover {
   transform: translateY(-2px);
   box-shadow: 0 10px 30px rgba(15, 37, 55, 0.1);
@@ -2774,6 +2596,14 @@ html:not(.vg-js) body.home .vg-site-header {
 }
 
 @media (min-width: 768px) {
+  .vg-search-tool-banner {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 28px;
+    padding: 28px 32px;
+  }
+
   .vg-search-toolkit-grid {
     grid-template-columns: repeat(3, 1fr);
   }
@@ -2950,7 +2780,6 @@ select[aria-invalid="true"]:focus {
   box-shadow: 0 0 0 3px rgba(197, 48, 48, 0.25);
 }
 
-.vg-form-error,
 .error-message {
   display: flex;
   align-items: center;
@@ -3461,20 +3290,6 @@ button[type="submit"]:active {
   .vg-site-footer__inner {
     padding-block: 64px;
   }
-
-  .vg-hub-grid-two {
-    grid-template-columns: 1fr;
-  }
-
-  .vg-next-action {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-
-  .vg-next-action a {
-    width: 100%;
-    text-align: center;
-  }
 }
 
 /* Breadcrumbs and Hierarchy Trail */
@@ -3570,26 +3385,13 @@ nav[aria-label="Breadcrumbs"] a:hover {
   font-weight: 700;
 }
 
-@media (max-width: 640px) {
-  .vg-back-to-top {
-    bottom: 20px;
-    right: 20px;
-    width: 44px;
-    height: 44px;
-  }
-}
-
 body.single .vg-back-to-top,
 body.vg-has-guide-shell .vg-back-to-top,
 body:has(.vg-guide-experience) .vg-back-to-top {
   display: none !important;
 }
 
-
-/* ==========================================================================
-   Interactive Itinerary Finder Component (.vg-itinerary-finder)
-   Stage 21: Route Selection by Duration, Travel Style, & Airport Gateway
-   ========================================================================== */
+/* Interactive Itinerary Finder (.vg-itinerary-finder) */
 
 .vg-itinerary-finder {
   background: var(--vg-paper-tactile, #FAF8F5);
@@ -4025,10 +3827,7 @@ body:has(.vg-guide-experience) .vg-back-to-top {
   transform: scale(0.97);
 }
 
-/* ==========================================================================
-   Interactive Cost Calculator Component (.vg-cost-calculator)
-   Stage 22: Budget Estimator by Duration, Style, Party Size, & Flights
-   ========================================================================== */
+/* Interactive Cost Calculator (.vg-cost-calculator) */
 
 .vg-cost-calculator {
   background: var(--vg-paper-tactile, #FAF8F5);
@@ -4779,10 +4578,7 @@ body:has(.vg-guide-experience) .vg-back-to-top {
   transform: scale(0.97);
 }
 
-/* ==========================================================================
-   Interactive Embeddable Route Budget Widget (.vg-route-budget-widget)
-   Stage 58: Content Hub "Vietnam Travel Budget by Route"
-   ========================================================================== */
+/* Interactive Route Budget Widget (.vg-route-budget-widget) */
 .vg-route-budget-widget {
   background: var(--vg-paper-tactile, #FAF8F5);
   border: 1px solid var(--vg-border-hairline, #E5DFD6);
@@ -5107,10 +4903,7 @@ body:has(.vg-guide-experience) .vg-back-to-top {
   color: var(--vg-gold-saffron, #7e5802);
 }
 
-/* ==========================================================================
-   Interactive Seasonality & Packing Weather Matrix (.vg-season-matrix)
-   Stage 23: Climate Intelligence, Route Heatmap, & Smart Packing Checklist
-   ========================================================================== */
+/* Interactive Seasonality & Packing Weather Matrix (.vg-season-matrix) */
 
 .vg-season-matrix {
   background: var(--vg-paper-tactile, #FAF8F5);
@@ -5427,12 +5220,6 @@ body:has(.vg-guide-experience) .vg-back-to-top {
   color: var(--vg-gold-saffron, #7e5802);
 }
 
-.vg-risk-high {
-  background: rgba(197, 48, 48, 0.12);
-  color: #9b2c2c;
-  font-weight: 800;
-}
-
 .vg-sm-region-name {
   font-family: var(--vg-display, serif);
   font-size: 20px;
@@ -5717,16 +5504,6 @@ body:has(.vg-guide-experience) .vg-back-to-top {
   white-space: nowrap;
 }
 
-.vg-tag-bring {
-  background: #edf2f7;
-  color: #2d3748;
-}
-
-.vg-tag-buy {
-  background: #e6fffa;
-  color: #234e52;
-}
-
 .vg-sm-item-note {
   font-size: 11px;
   color: var(--vg-muted, #555e65);
@@ -5959,10 +5736,7 @@ body:has(.vg-guide-experience) .vg-back-to-top {
   gap: 6px;
 }
 
-/* ==========================================================================
-   Interactive Visa Exemption & E-Visa Requirements Checker (.vg-visa-checker)
-   Stage 24: Immigration Policy Intelligence & Anti-Scam Shield
-   ========================================================================== */
+/* Interactive Visa Exemption & E-Visa Requirements Checker (.vg-visa-checker) */
 
 .vg-visa-checker {
   background: var(--vg-paper-tactile, #FAF8F5);
@@ -6150,13 +5924,6 @@ body:has(.vg-guide-experience) .vg-back-to-top {
   margin-top: 16px;
   padding-top: 16px;
   border-top: 1px dashed var(--vg-border-hairline, #E5DFD6);
-}
-
-@media (min-width: 768px) {
-  .vg-vc-grid-two {
-    grid-template-columns: 1.2fr 1fr;
-    gap: 24px;
-  }
 }
 
 /* Duration Slider */
@@ -6392,12 +6159,6 @@ body:has(.vg-guide-experience) .vg-back-to-top {
   margin-bottom: 24px;
 }
 
-@media (min-width: 768px) {
-  .vg-vc-details-grid {
-    grid-template-columns: 1fr 1fr;
-  }
-}
-
 .vg-vc-card {
   background: var(--vg-paper, #ffffff);
   border: 1px solid var(--vg-border-hairline, #E5DFD6);
@@ -6550,12 +6311,6 @@ body:has(.vg-guide-experience) .vg-back-to-top {
   gap: 12px;
 }
 
-@media (min-width: 480px) {
-  .vg-vc-specs-row {
-    grid-template-columns: 1fr 1fr;
-  }
-}
-
 .vg-vc-spec-box {
   background: var(--vg-paper-tactile, #FAF8F5);
   border: 1px solid var(--vg-border-hairline, #E5DFD6);
@@ -6605,6 +6360,10 @@ body:has(.vg-guide-experience) .vg-back-to-top {
 }
 
 @media (min-width: 480px) {
+  .vg-vc-specs-row {
+    grid-template-columns: 1fr 1fr;
+  }
+
   .vg-vc-official-box {
     flex-direction: row;
     align-items: center;
@@ -6714,6 +6473,15 @@ body:has(.vg-guide-experience) .vg-back-to-top {
 }
 
 @media (min-width: 768px) {
+  .vg-vc-grid-two {
+    grid-template-columns: 1.2fr 1fr;
+    gap: 24px;
+  }
+
+  .vg-vc-details-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
   .vg-vc-ports-grid {
     grid-template-columns: repeat(3, 1fr);
   }
@@ -6819,12 +6587,7 @@ body:has(.vg-guide-experience) .vg-back-to-top {
   text-align: center;
 }
 
-
-
-/* ==========================================================================
-   Cross-Tool Contextual Bridges & Synergy Toolkit
-   Unifies .vg-vc-next-steps, .vg-calc-next-steps, .vg-finder-toolkit, .vg-sm-bridge
-   ========================================================================== */
+/* Cross-Tool Contextual Bridges & Synergy Toolkit */
 
 .vg-vc-next-steps,
 .vg-calc-next-steps,
@@ -6979,10 +6742,7 @@ body:has(.vg-guide-experience) .vg-back-to-top {
   color: rgba(16, 20, 23, 0.65);
 }
 
-/* ==========================================================================
-   Interactive Airport Transit & Scam Shield Navigator (.vg-airport-navigator)
-   Stage 28: Ground Gateway Intelligence & Scam Prevention
-   ========================================================================== */
+/* Interactive Airport Transit & Scam Shield Navigator (.vg-airport-navigator) */
 
 .vg-airport-navigator {
   background: var(--vg-paper-tactile, #FAF8F5);
@@ -7674,9 +7434,7 @@ body:has(.vg-guide-experience) .vg-back-to-top {
   color: rgba(16, 20, 23, 0.6);
 }
 
-/* ==========================================================================
-   Interactive Packing Checklist Component (.vg-checklist-widget)
-   ========================================================================== */
+/* Interactive Packing Checklist (.vg-checklist-widget) */
 
 .vg-checklist-widget {
   background: var(--vg-paper-tactile, #FAF8F5);
@@ -7819,18 +7577,6 @@ body:has(.vg-guide-experience) .vg-back-to-top {
   background: var(--vg-paper-tactile, #FAF8F5);
   border-color: var(--vg-gold-saffron, #C99446);
   transform: translateY(-1px);
-}
-
-.vg-checklist-live-announcer {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  margin: -1px;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-  white-space: nowrap;
-  border: 0;
 }
 
 .vg-checklist-noscript {
@@ -8045,9 +7791,7 @@ body:has(.vg-guide-experience) .vg-back-to-top {
   white-space: nowrap;
 }
 
-/* ==========================================================================
-   Shared Minimalist Reference Ledger & Technical Specification Tables
-   ========================================================================== */
+/* Shared Minimalist Reference Ledger & Technical Specification Tables */
 
 .vg-ref-ledger,
 .vg-checklist-field-specs,
@@ -8188,10 +7932,7 @@ details[class$="-specs"] table tbody th {
   color: var(--vg-navy, #0F2537);
 }
 
-/* ==========================================================================
-   Interactive Travel Tools Layout Shift Prevention ($CLS = 0) & Container Stabilization
-   Stage 30: Zero Layout Shift & WCAG 2.2 AA 44px Touch Targets
-   ========================================================================== */
+/* Interactive Travel Tools Layout Shift Prevention ($CLS = 0) */
 
 .vg-visa-checker,
 .vg-cost-calculator,
@@ -8287,7 +8028,6 @@ details[class$="-specs"] table tbody th {
     transform: none !important;
   }
 
-  .vg-tag-cloud a:active,
   .wp-block-tag-cloud a:active,
   .vg-entry-content summary:active,
   .wp-block-details summary:active,
@@ -8400,9 +8140,7 @@ details[class$="-specs"] table tbody th {
 
   table,
   figure,
-  blockquote,
-  .vg-hub-card,
-  .vg-hub-note {
+  blockquote {
     break-inside: avoid;
   }
 
@@ -8425,10 +8163,8 @@ details[class$="-specs"] table tbody th {
   .vg-finder-toolkit,
   .vg-finder-card-links,
   .vg-finder-weather-link,
-  .vg-sm-header .vg-sm-switcher,
   .vg-sm-actions,
   .vg-sm-bridge,
-  .vg-sm-checklist-actions,
   .vg-an-header-actions,
   .vg-an-airports-bar,
   .vg-an-tabs,
@@ -8443,7 +8179,6 @@ details[class$="-specs"] table tbody th {
   .vg-search-tool-banner,
   .vg-search-toolkit-grid,
   .vg-search-chips,
-  .vg-search-quick-chips,
   .vg-floating-dock,
   .vg-reading-progress,
   .vg-qr-modal,
@@ -8486,7 +8221,6 @@ details[class$="-specs"] table tbody th {
 
   .vg-vc-verdict-banner,
   .vg-calc-results,
-  .vg-sm-verdict-card,
   .vg-an-airport-banner {
     border: 1pt solid #bbb !important;
     background: #f9f9f9 !important;
@@ -8511,19 +8245,7 @@ details[class$="-specs"] table tbody th {
 
 }
 
-/* WCAG 2.2 AAA Screen Reader Live Announcer & High-Contrast Focus Rings */
-.vg-sr-live {
-    position: absolute !important;
-    width: 1px !important;
-    height: 1px !important;
-    padding: 0 !important;
-    margin: -1px !important;
-    overflow: hidden !important;
-    clip: rect(0, 0, 0, 0) !important;
-    white-space: nowrap !important;
-    border: 0 !important;
-}
-
+/* WCAG 2.2 AAA High-Contrast Focus Rings */
 .vg-finder-pill:focus-visible,
 .vg-vc-chip:focus-visible,
 .vg-sm-month-pill:focus-visible,
@@ -8930,6 +8652,12 @@ body:has(#vg-reading-progress) .vg-site-header .vg-reading-progress {
 }
 
 @media (max-width: 640px) {
+  .vg-back-to-top {
+    bottom: 20px;
+    right: 20px;
+    width: 44px;
+    height: 44px;
+  }
   .vg-reading-progress {
     display: none !important;
   }
@@ -9086,9 +8814,7 @@ body:has(#vg-reading-progress) .vg-site-header .vg-reading-progress {
 }
 
 
-/* ==========================================================================
-   Editorial Megamenu Navigation
-   ========================================================================== */
+/* Editorial Megamenu Navigation */
 
 .vg-nav-item {
   position: relative;

@@ -165,17 +165,15 @@
   scrollbar-width: thin;
 }
 
-.vg-guide-toc ol {
-  margin: 0;
-  padding: 0;
-  list-style: none;
-  counter-reset: vg-toc-step;
-}
-
+.vg-guide-toc ol,
 .vg-guide-jump ol {
   margin: 0;
   padding: 0;
   list-style: none;
+}
+
+.vg-guide-toc ol {
+  counter-reset: vg-toc-step;
 }
 
 .vg-guide-toc li {
@@ -403,18 +401,10 @@
   transition: transform 180ms cubic-bezier(0.23, 1, 0.32, 1), box-shadow 180ms ease;
 }
 
-@media (hover: hover) and (pointer: fine) {
-  .vg-guide-trust > div:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 10px 24px -2px rgba(1, 45, 29, .08);
-  }
-}
-
 .vg-guide-trust > div:active {
   transform: translateY(0) scale(0.98);
   box-shadow: 0 2px 10px rgba(1, 45, 29, .03);
 }
-
 
 .vg-guide-trust strong {
   color: var(--vg-jade);
@@ -449,14 +439,12 @@
 }
 
 .vg-guide-article .vg-concierge-verdict,
-.vg-guide-article .vg-field-note,
 .vg-guide-article .vg-source-trail {
   border-left: 4px solid var(--vg-gold);
 }
 
 .vg-guide-article .vg-concierge-verdict {
   background: linear-gradient(180deg, var(--vg-white) 0%, color-mix(in srgb, var(--vg-paper) 32%, var(--vg-white)) 100%);
-  border-left: 4px solid var(--vg-gold);
   box-shadow: 0 10px 32px rgba(1, 45, 29, .04);
 }
 
@@ -471,11 +459,10 @@
   background: color-mix(in srgb, var(--vg-white) 88%, var(--vg-limestone));
 }
 
-.vg-guide-article .vg-concierge-verdict::before {
-  content: "Concierge Verdict";
+.vg-guide-article .vg-concierge-verdict::before,
+.vg-guide-article .vg-field-note::before {
   display: inline-block;
   margin-bottom: 12px;
-  color: var(--vg-gold-text);
   font-size: 11px;
   font-weight: 800;
   letter-spacing: .1em;
@@ -483,16 +470,14 @@
   text-transform: uppercase;
 }
 
+.vg-guide-article .vg-concierge-verdict::before {
+  content: "Concierge Verdict";
+  color: var(--vg-gold-text);
+}
+
 .vg-guide-article .vg-field-note::before {
   content: "Field Note \00b7  Verified On-Site";
-  display: inline-block;
-  margin-bottom: 12px;
   color: var(--vg-jade);
-  font-size: 11px;
-  font-weight: 800;
-  letter-spacing: .1em;
-  line-height: 1;
-  text-transform: uppercase;
 }
 
 .vg-guide-article .vg-concierge-verdict > :first-child,
@@ -584,12 +569,6 @@
   line-height: 1.15;
   text-decoration: none;
   transition: color 160ms ease, transform 120ms cubic-bezier(0.23, 1, 0.32, 1);
-}
-
-@media (hover: hover) and (pointer: fine) {
-  .vg-guide-article .vg-related-route-list a:hover {
-    color: var(--vg-gold-text);
-  }
 }
 
 .vg-guide-article .vg-related-route-list a:active {
@@ -865,6 +844,15 @@
 }
 
 @media (hover: hover) and (pointer: fine) {
+  .vg-guide-trust > div:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 24px -2px rgba(1, 45, 29, .08);
+  }
+
+  .vg-guide-article .vg-related-route-list a:hover {
+    color: var(--vg-gold-text);
+  }
+
   .vg-guide-related a:hover span {
     transform: translateX(6px);
   }
@@ -1143,12 +1131,5 @@
     page-break-inside: avoid;
     break-inside: avoid;
   }
-}
-
-/* Suppress duplicate footer back-to-top button when the guide experience dock is present */
-body.single .vg-back-to-top,
-body.vg-has-guide-shell .vg-back-to-top,
-body:has(.vg-guide-experience) .vg-back-to-top {
-  display: none !important;
 }
 

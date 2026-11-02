@@ -99,8 +99,8 @@ class TestPlaywrightE2ESmoke(unittest.TestCase):
             "require 'wordpress/wp-content/themes/vietnamguide-premium/inc/guide-interactive-map.php';\n"
             "echo vg_interactive_map_shortcode();\n"
         )
-        # Strip inline script so we test the external guide-interactive.js bundle directly
-        map_html_clean = map_html.split('<script>')[0] + '</section>'
+        self.assertNotIn('<script', map_html.lower())
+        map_html_clean = map_html
 
         full_doc = f"""<!doctype html>
         <html lang="en">
@@ -173,7 +173,8 @@ class TestPlaywrightE2ESmoke(unittest.TestCase):
             "echo vg_render_photo_dispatch(['slug' => 'ha-long-dawn', 'layout' => 'standard']);\n"
             "vg_render_photo_dispatch_lightbox_template();\n"
         )
-        dispatch_html_clean = dispatch_html.split('<script>')[0]
+        self.assertNotIn('<script', dispatch_html.lower())
+        dispatch_html_clean = dispatch_html
 
         full_doc = f"""<!doctype html>
         <html lang="en">

@@ -112,21 +112,12 @@ if ($q_clean !== '') {
                     <span class="vg-search-chips__title"><?php esc_html_e('Popular searches:', 'vietnamguide-premium'); ?></span>
                     <div class="vg-search-chips__list">
                         <a href="<?php echo esc_url(add_query_arg('s', 'Hanoi', home_url('/'))); ?>" class="vg-search-chip">Hanoi</a>
-                        <a href="<?php echo esc_url(add_query_arg('s', 'Da Nang', home_url('/'))); ?>" class="vg-search-chip">Da Nang</a>
                         <a href="<?php echo esc_url(add_query_arg('s', 'Ha Long Bay', home_url('/'))); ?>" class="vg-search-chip">Ha Long Bay</a>
                         <a href="<?php echo esc_url(add_query_arg('s', 'Hoi An', home_url('/'))); ?>" class="vg-search-chip">Hoi An</a>
-                        <a href="<?php echo esc_url(add_query_arg('s', 'Sa Pa', home_url('/'))); ?>" class="vg-search-chip">Sa Pa</a>
-                        <a href="<?php echo esc_url(add_query_arg('s', 'Ninh Binh', home_url('/'))); ?>" class="vg-search-chip">Ninh Binh</a>
                         <a href="<?php echo esc_url(add_query_arg('s', 'Ho Chi Minh City', home_url('/'))); ?>" class="vg-search-chip">Ho Chi Minh City</a>
-                        <a href="<?php echo esc_url(add_query_arg('s', 'Phu Quoc', home_url('/'))); ?>" class="vg-search-chip">Phu Quoc</a>
-                        <a href="<?php echo esc_url(add_query_arg('s', 'Ha Giang Loop', home_url('/'))); ?>" class="vg-search-chip">Ha Giang Loop</a>
-                        <a href="<?php echo esc_url(add_query_arg('s', 'Mekong Delta', home_url('/'))); ?>" class="vg-search-chip">Mekong Delta</a>
                         <a href="<?php echo esc_url(add_query_arg('s', 'Visa', home_url('/'))); ?>" class="vg-search-chip">Visa</a>
                         <a href="<?php echo esc_url(add_query_arg('s', 'Budget', home_url('/'))); ?>" class="vg-search-chip">Budget &amp; Cost</a>
                         <a href="<?php echo esc_url(add_query_arg('s', 'Weather', home_url('/'))); ?>" class="vg-search-chip">Weather</a>
-                        <a href="<?php echo esc_url(add_query_arg('s', 'Packing', home_url('/'))); ?>" class="vg-search-chip">Packing Checklist</a>
-                        <a href="<?php echo esc_url(add_query_arg('s', 'Airport', home_url('/'))); ?>" class="vg-search-chip">Airport Transit</a>
-                        <a href="<?php echo esc_url(add_query_arg('s', 'Itinerary', home_url('/'))); ?>" class="vg-search-chip">Itineraries</a>
                         <a href="<?php echo esc_url(add_query_arg('s', '10-Day Route', home_url('/'))); ?>" class="vg-search-chip">10-Day Route</a>
                     </div>
                 </div>

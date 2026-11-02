@@ -53,11 +53,27 @@
         }
       }
 
-      Array.prototype.forEach.call(tabBtns, function (btn) {
+      Array.prototype.forEach.call(tabBtns, function (btn, idx) {
         btn.addEventListener('click', function () {
           var targetId = this.getAttribute('data-corridor-target');
           if (targetId) {
             activate(targetId);
+          }
+        });
+        btn.addEventListener('keydown', function (e) {
+          if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') {
+            e.preventDefault();
+            var nextIdx = e.key === 'ArrowRight'
+              ? (idx + 1) % tabBtns.length
+              : (idx - 1 + tabBtns.length) % tabBtns.length;
+            var nextBtn = tabBtns[nextIdx];
+            if (nextBtn) {
+              nextBtn.focus();
+              var targetId = nextBtn.getAttribute('data-corridor-target');
+              if (targetId) {
+                activate(targetId);
+              }
+            }
           }
         });
       });
@@ -122,11 +138,27 @@
         }
       }
 
-      tabBtns.forEach(function (btn) {
+      tabBtns.forEach(function (btn, idx) {
         btn.addEventListener('click', function () {
           var targetId = btn.getAttribute('data-dispatch-target');
           if (targetId) {
             switchDispatch(targetId);
+          }
+        });
+        btn.addEventListener('keydown', function (e) {
+          if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') {
+            e.preventDefault();
+            var nextIdx = e.key === 'ArrowRight'
+              ? (idx + 1) % tabBtns.length
+              : (idx - 1 + tabBtns.length) % tabBtns.length;
+            var nextBtn = tabBtns[nextIdx];
+            if (nextBtn) {
+              nextBtn.focus();
+              var targetId = nextBtn.getAttribute('data-dispatch-target');
+              if (targetId) {
+                switchDispatch(targetId);
+              }
+            }
           }
         });
       });
@@ -204,9 +236,47 @@
     });
   }
 
+  function initFieldDesk() {
+    if (window.__vgFieldDeskInit) {
+      return;
+    }
+    var showcase = document.getElementById('field-desk');
+    if (!showcase) {
+      return;
+    }
+    window.__vgFieldDeskInit = true;
+    var switchBtns = showcase.querySelectorAll('[data-vg-field-switch]');
+    var panels = showcase.querySelectorAll('[data-vg-field-panel]');
+    function switchView(target) {
+      Array.prototype.forEach.call(switchBtns, function (btn) {
+        var isActive = btn.getAttribute('data-vg-field-switch') === target;
+        btn.classList.toggle('is-active', isActive);
+        btn.setAttribute('aria-selected', isActive ? 'true' : 'false');
+      });
+      Array.prototype.forEach.call(panels, function (panel) {
+        var isActive = panel.getAttribute('data-vg-field-panel') === target;
+        panel.classList.toggle('is-active', isActive);
+        if (isActive) {
+          panel.removeAttribute('hidden');
+        } else {
+          panel.setAttribute('hidden', '');
+        }
+      });
+    }
+    Array.prototype.forEach.call(switchBtns, function (btn) {
+      btn.addEventListener('click', function () {
+        var target = this.getAttribute('data-vg-field-switch');
+        if (target) {
+          switchView(target);
+        }
+      });
+    });
+  }
+
   function bootstrapInteractiveShortcodes() {
     initInteractiveMap();
     initPhotoDispatch();
+    initFieldDesk();
   }
 
   if (document.readyState === 'loading') {

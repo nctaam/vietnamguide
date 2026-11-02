@@ -269,6 +269,22 @@ class TestThemeAssetsPipeline(unittest.TestCase):
         interactive_css = (THEME_ASSETS / 'css' / 'guide-interactive.css').read_text(encoding='utf-8')
         self.assertIn('.vg-map-city-halo', interactive_css)
 
+        for rel_php in [
+            'inc/guide-interactive-map.php',
+            'inc/guide-photo-dispatch.php',
+            'front-page.php',
+        ]:
+            php_text = (theme_root / rel_php).read_text(encoding='utf-8')
+            self.assertNotIn(
+                '<script',
+                php_text.lower(),
+                f"{rel_php} must emit 0 inline <script> tags; interactive controllers belong in assets/js/guide-interactive.js.",
+            )
+
+        interactive_js = (THEME_ASSETS / 'js' / 'guide-interactive.js').read_text(encoding='utf-8')
+        for token in ['initFieldDesk', 'initInteractiveMap', 'initPhotoDispatch', 'ArrowRight']:
+            self.assertIn(token, interactive_js, f"guide-interactive.js must contain '{token}'")
+
 
 if __name__ == '__main__':
     unittest.main()
