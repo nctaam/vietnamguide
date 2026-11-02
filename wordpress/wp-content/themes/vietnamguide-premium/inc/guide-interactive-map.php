@@ -272,17 +272,17 @@ function vg_interactive_map_shortcode(array $atts = []): string
                         <!-- Secondary Geographic Reference Nodes -->
                         <g class="vg-map-secondary-nodes" font-family="'JetBrains Mono', monospace" font-size="7.5" fill="#334155">
                             <circle cx="117" cy="52" r="2.2" fill="#0F2537" opacity="0.65" />
-                            <text x="122" y="54" style="paint-order:stroke;stroke:#FFFFFF;stroke-width:2.2px;">Hà Giang</text>
+                            <text x="122" y="54" class="vg-map-city-halo">Hà Giang</text>
                             <circle cx="177" cy="110" r="2.2" fill="#0F2537" opacity="0.65" />
-                            <text x="183" y="113" style="paint-order:stroke;stroke:#FFFFFF;stroke-width:2.2px;">Hạ Long</text>
+                            <text x="183" y="113" class="vg-map-city-halo">Hạ Long</text>
                             <circle cx="209" cy="262" r="2.2" fill="#0F2537" opacity="0.65" />
-                            <text x="204" y="266" text-anchor="end" style="paint-order:stroke;stroke:#FFFFFF;stroke-width:2.2px;">Đà Nẵng</text>
+                            <text x="204" y="266" text-anchor="end" class="vg-map-city-halo">Đà Nẵng</text>
                             <circle cx="216" cy="390" r="2.2" fill="#0F2537" opacity="0.65" />
-                            <text x="176" y="392" style="paint-order:stroke;stroke:#FFFFFF;stroke-width:2.2px;">Đà Lạt</text>
+                            <text x="176" y="392" class="vg-map-city-halo">Đà Lạt</text>
                             <circle cx="139" cy="448" r="2.2" fill="#0F2537" opacity="0.65" />
-                            <text x="145" y="458" style="paint-order:stroke;stroke:#FFFFFF;stroke-width:2.2px;">Cần Thơ</text>
+                            <text x="145" y="458" class="vg-map-city-halo">Cần Thơ</text>
                             <circle cx="164" cy="491" r="2.2" fill="#0F2537" opacity="0.65" />
-                            <text x="171" y="494" style="paint-order:stroke;stroke:#FFFFFF;stroke-width:2.2px;">Côn Đảo</text>
+                            <text x="171" y="494" class="vg-map-city-halo">Côn Đảo</text>
                         </g>
 
                         <!-- Corridor Waypoint Anchors -->
@@ -297,7 +297,7 @@ function vg_interactive_map_shortcode(array $atts = []): string
                             <g class="vg-map-pin-group <?php echo $is_active ? 'is-active' : ''; ?>" data-corridor-pin="<?php echo esc_attr($corridor['id']); ?>" tabindex="0" role="button" aria-label="<?php echo esc_attr($corridor['name'] . ' — ' . $corridor['focal_nodes'][0]); ?>">
                                 <circle class="vg-map-pin-pulse" cx="<?php echo $cx; ?>" cy="<?php echo $cy; ?>" r="13" fill="#C99446" opacity="0.22" />
                                 <circle class="vg-map-pin" cx="<?php echo $cx; ?>" cy="<?php echo $cy; ?>" r="6.5" fill="<?php echo $is_active ? '#C99446' : '#0F2537'; ?>" stroke="#FFFFFF" stroke-width="2.2" />
-                                <text class="vg-map-pin-label" x="<?php echo $label_x; ?>" y="<?php echo $cy + 3.5; ?>" text-anchor="<?php echo esc_attr($label_anchor); ?>" font-family="'JetBrains Mono', monospace" font-size="9.5" font-weight="700" fill="#0F2537" style="paint-order:stroke;stroke:#FFFFFF;stroke-width:3px;stroke-linejoin:round;"><?php echo esc_html($corridor['focal_nodes'][0]); ?></text>
+                                <text class="vg-map-pin-label" x="<?php echo $label_x; ?>" y="<?php echo $cy + 3.5; ?>" text-anchor="<?php echo esc_attr($label_anchor); ?>" font-family="'JetBrains Mono', monospace" font-size="9.5" font-weight="700" fill="#0F2537"><?php echo esc_html($corridor['focal_nodes'][0]); ?></text>
                             </g>
                         <?php endforeach; ?>
                     </svg>

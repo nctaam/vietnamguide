@@ -1095,7 +1095,7 @@ function vg_render_newsletter_subscription_form(string $source_path = 'newslette
                 <input type="hidden" name="action" value="vg_newsletter_subscribe">
                 <input type="hidden" name="vg_newsletter_nonce" value="<?php echo esc_attr($nonce_val); ?>">
                 <input type="hidden" name="vg_source_path" value="<?php echo esc_attr($source_path); ?>">
-                <div class="vg-hp-field" aria-hidden="true" style="position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden;">
+                <div class="vg-hp-field" aria-hidden="true">
                     <label for="vg-hp-website">Leave this field empty</label>
                     <input type="text" id="vg-hp-website" name="vg_hp_website" value="" tabindex="-1" autocomplete="off">
                 </div>
@@ -1150,7 +1150,7 @@ function vg_render_contact_dispatch_form(): string
             <form method="post" action="<?php echo esc_url($action_url); ?>" class="vg-contact-form" data-vg-contact-form>
                 <input type="hidden" name="action" value="vg_contact_submit">
                 <input type="hidden" name="vg_contact_nonce" value="<?php echo esc_attr($nonce_val); ?>">
-                <div class="vg-hp-field" aria-hidden="true" style="position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden;">
+                <div class="vg-hp-field" aria-hidden="true">
                     <label for="vg-hp-company">Leave this field empty</label>
                     <input type="text" id="vg-hp-company" name="vg_hp_company" value="" tabindex="-1" autocomplete="off">
                 </div>

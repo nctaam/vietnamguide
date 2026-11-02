@@ -140,8 +140,18 @@
   font-size: 11px;
   font-weight: 600;
   fill: var(--vg-ink, #1A202C);
+  paint-order: stroke;
+  stroke: #FFFFFF;
+  stroke-width: 3px;
+  stroke-linejoin: round;
   pointer-events: none;
   user-select: none;
+}
+
+.vg-map-city-halo {
+  paint-order: stroke;
+  stroke: #FFFFFF;
+  stroke-width: 2.2px;
 }
 
 .vg-map-pill-selector {

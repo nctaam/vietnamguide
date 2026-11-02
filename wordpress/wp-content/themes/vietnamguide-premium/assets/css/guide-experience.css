@@ -430,6 +430,12 @@
   line-height: 1.45;
 }
 
+.vg-guide-trust__item--policy a {
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
 .vg-guide-article .vg-concierge-verdict,
 .vg-guide-article .vg-at-a-glance,
 .vg-guide-article .vg-field-note,

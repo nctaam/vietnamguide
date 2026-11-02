@@ -44,11 +44,11 @@ if (class_exists('WP_HTML_Tag_Processor')) {
             <div class="vg-share-bar">
                 <span class="vg-share-label"><?php esc_html_e('Share this page:', 'vietnamguide-premium'); ?></span>
                 <button type="button" class="vg-copy-link" data-vg-copy-link aria-label="<?php esc_attr_e('Copy page link to clipboard', 'vietnamguide-premium'); ?>">
-                    <span class="vg-copy-link__icon" aria-hidden="true">&#128279;</span>
+                    <span class="vg-copy-link__icon" aria-hidden="true">↗</span>
                     <span class="vg-copy-link__text"><?php esc_html_e('Copy link', 'vietnamguide-premium'); ?></span>
                 </button>
                 <button type="button" class="vg-print-guide" data-vg-print onclick="window.print()" aria-label="<?php esc_attr_e('Print or save field guide as PDF', 'vietnamguide-premium'); ?>">
-                    <span class="vg-print-guide__icon" aria-hidden="true">&#128424;</span>
+                    <span class="vg-print-guide__icon" aria-hidden="true">§</span>
                     <span class="vg-print-guide__text"><?php esc_html_e('Print Field Guide', 'vietnamguide-premium'); ?></span>
                 </button>
             </div>

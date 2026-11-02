@@ -232,9 +232,10 @@ class TestThemeAssetsPipeline(unittest.TestCase):
         self.assertIn('page-break-inside: avoid;', content)
 
     def test_minimalist_ui_zero_emojis_and_zero_inline_toolkit_style_tags(self):
-        """Theme PHP files must contain zero decorative emojis and toolkit shortcodes must emit zero inline <style> tags."""
+        """Theme PHP files must contain zero decorative emojis, zero numeric emoji entities, and zero inline <style> tags."""
         theme_root = THEME_ASSETS.parent
         emoji_re = re.compile(r'[\U0001F300-\U0001FAFF\u2600-\u27BF]')
+        entity_re = re.compile(r'&#12[789]\d\d\d;|&#x1[fF][0-9a-fA-F]{3};')
         for php_path in sorted(theme_root.rglob('*.php')):
             text = php_path.read_text(encoding='utf-8')
             emojis = emoji_re.findall(text)
@@ -243,28 +244,30 @@ class TestThemeAssetsPipeline(unittest.TestCase):
                 [],
                 f"Minimalist UI violation: {php_path.name} contains decorative emojis: {emojis}",
             )
-
-        for inc_name in [
-            'guide-packing-checklist.php',
-            'guide-visa-checker.php',
-            'guide-cost-calculator.php',
-            'guide-season-matrix.php',
-            'guide-airport-navigator.php',
-            'guide-itinerary-finder.php',
-            'guide-interactive-map.php',
-            'guide-photo-dispatch.php',
-        ]:
-            inc_path = theme_root / 'inc' / inc_name
-            inc_text = inc_path.read_text(encoding='utf-8')
+            entities = entity_re.findall(text)
+            self.assertEqual(
+                entities,
+                [],
+                f"Minimalist UI violation: {php_path.name} contains numeric emoji HTML entities: {entities}",
+            )
             self.assertNotIn(
                 '<style',
-                inc_text.lower(),
-                f"{inc_name} must not emit inline <style> blocks; styles belong in assets/css/.",
+                text.lower(),
+                f"{php_path.name} must not emit inline <style> blocks; styles belong in assets/css/.",
             )
 
         homepage_css = (THEME_ASSETS / 'css' / 'homepage.css').read_text(encoding='utf-8')
         self.assertIn('.vg-ref-ledger', homepage_css)
         self.assertIn('body:has(.vg-guide-experience) .vg-back-to-top', homepage_css)
+        self.assertIn('.vg-pwa-banner', homepage_css)
+        self.assertIn('.vg-hp-field', homepage_css)
+        self.assertIn('.vg-checklist-noscript', homepage_css)
+
+        experience_css = (THEME_ASSETS / 'css' / 'guide-experience.css').read_text(encoding='utf-8')
+        self.assertIn('.vg-guide-trust__item--policy a', experience_css)
+
+        interactive_css = (THEME_ASSETS / 'css' / 'guide-interactive.css').read_text(encoding='utf-8')
+        self.assertIn('.vg-map-city-halo', interactive_css)
 
 
 if __name__ == '__main__':

@@ -58,7 +58,7 @@ add_action('wp_head', static function (): void {
     ?>
     <script>
     window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
+    window.gtag = window.gtag || function(){dataLayer.push(arguments);};
     window.__vgAnalytics = {
         ga4Active: <?php echo $has_ga4 ? 'true' : 'false'; ?>,
         measurementId: '<?php echo esc_js($measurement_id); ?>',

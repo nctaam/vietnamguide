@@ -276,20 +276,20 @@ function vg_render_packing_checklist(array $attributes = []): string
                     </button>
                 </div>
             </div>
-            <div class="vg-checklist-live-announcer" role="status" aria-live="polite" style="position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;">
+            <div class="vg-checklist-live-announcer" role="status" aria-live="polite">
                 <?php esc_html_e('Packing checklist loaded with 24 items.', 'vietnamguide-premium'); ?>
             </div>
         </div>
 
         <noscript>
-            <div class="vg-checklist-noscript" style="background:#f8f9fa;border:1px solid #cbd5e1;border-radius:8px;padding:16px;margin-bottom:20px;">
-                <p style="font-weight:700;margin-bottom:8px;color:#1a365d;">
+            <div class="vg-checklist-noscript">
+                <p class="vg-checklist-noscript__title">
                     <?php esc_html_e('2026 Vietnam Travel Essentials Checklist (No-JavaScript Reference):', 'vietnamguide-premium'); ?>
                 </p>
-                <p style="font-size:0.9rem;margin-bottom:12px;color:#475569;">
+                <p class="vg-checklist-noscript__desc">
                     <?php esc_html_e('For full interactive progress saving, enable JavaScript. Key gear priorities across Vietnam:', 'vietnamguide-premium'); ?>
                 </p>
-                <ul style="margin-bottom:0;padding-left:20px;font-size:0.9rem;line-height:1.6;">
+                <ul class="vg-checklist-noscript__list">
                     <li><strong><?php esc_html_e('Documents:', 'vietnamguide-premium'); ?></strong> <?php esc_html_e('Valid passport (6+ months), printed physical E-Visa copies, uncreased USD/EUR notes, travel medical insurance.', 'vietnamguide-premium'); ?></li>
                     <li><strong><?php esc_html_e('Electronics:', 'vietnamguide-premium'); ?></strong> <?php esc_html_e('Unlocked phone for eSIM/SIM, universal power adapter, 10,000+ mAh power bank, pre-downloaded offline maps.', 'vietnamguide-premium'); ?></li>
                     <li><strong><?php esc_html_e('Clothing & Modesty:', 'vietnamguide-premium'); ?></strong> <?php esc_html_e('Linen/breathable fabrics, temple shoulder/knee cover, slip-on footwear, packable monsoon rain layer.', 'vietnamguide-premium'); ?></li>
