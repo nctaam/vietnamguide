@@ -255,6 +255,35 @@ class TestThemeAssetsPipeline(unittest.TestCase):
                 text.lower(),
                 f"{php_path.name} must not emit inline <style> blocks; styles belong in assets/css/.",
             )
+            self.assertNotIn(
+                'style="display:none;"',
+                text.lower().replace(' ', ''),
+                f"{php_path.name} must not emit inline style=\"display:none;\"; initial hidden states belong in assets/css/.",
+            )
+
+        template_php_files = list(theme_root.glob('*.php')) + list((theme_root / 'template-parts').glob('*.php'))
+        for tpl_path in sorted(template_php_files):
+            tpl_text = tpl_path.read_text(encoding='utf-8')
+            self.assertNotIn(
+                'style="',
+                tpl_text,
+                f"Template {tpl_path.name} must contain 0 static style=\" attributes.",
+            )
+
+        for css_name in ['homepage.css', 'guide-patterns.css', 'guide-interactive.css']:
+            css_text = (THEME_ASSETS / 'css' / css_name).read_text(encoding='utf-8')
+            media_headers = [m.strip() for m in re.findall(r'@media\s+[^{]+', css_text)]
+            self.assertEqual(
+                len(media_headers),
+                len(set(media_headers)),
+                f"{css_name} must not contain duplicate @media blocks: {media_headers}",
+            )
+            keyframes_headers = [k.strip() for k in re.findall(r'@keyframes\s+[^{]+', css_text)]
+            self.assertEqual(
+                len(keyframes_headers),
+                len(set(keyframes_headers)),
+                f"{css_name} must not contain duplicate @keyframes blocks: {keyframes_headers}",
+            )
 
         homepage_css = (THEME_ASSETS / 'css' / 'homepage.css').read_text(encoding='utf-8')
         self.assertIn('.vg-ref-ledger', homepage_css)

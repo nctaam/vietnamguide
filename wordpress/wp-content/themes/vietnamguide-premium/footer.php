@@ -50,7 +50,7 @@ $footer_data = vg_homepage_data();
 <button class="vg-back-to-top" type="button" aria-label="<?php esc_attr_e('Back to top', 'vietnamguide-premium'); ?>" data-vg-back-to-top>
     <span aria-hidden="true">&uarr;</span>
 </button>
-<div id="vg-cookie-consent" class="vg-cookie-banner" role="dialog" aria-label="<?php esc_attr_e('Cookie and privacy notice', 'vietnamguide-premium'); ?>" style="display:none;">
+<div id="vg-cookie-consent" class="vg-cookie-banner" role="dialog" aria-label="<?php esc_attr_e('Cookie and privacy notice', 'vietnamguide-premium'); ?>">
     <div class="vg-cookie-banner__inner">
         <p class="vg-cookie-banner__text">
             <?php esc_html_e('We use essential cookies and advertising cookies to support independent travel research and measure site usage in accordance with our', 'vietnamguide-premium'); ?>
@@ -71,6 +71,7 @@ $footer_data = vg_homepage_data();
     try {
         var consent = localStorage.getItem('vg_cookie_consent');
         var b = document.getElementById('vg-cookie-consent');
+        if (b) { b.style.display = 'none'; }
         if (!consent && b) {
             b.style.display = 'block';
             var acceptBtn = document.getElementById('vg-cookie-accept');

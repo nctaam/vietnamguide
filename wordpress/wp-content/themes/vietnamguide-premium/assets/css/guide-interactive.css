@@ -789,15 +789,8 @@
   display: none !important;
 }
 
-@keyframes vgFadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(6px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+.vg-calc-route-profile {
+  display: none;
 }
 
 @media (max-width: 640px) {

@@ -137,8 +137,8 @@ class TestContentDepthAuditor(unittest.TestCase):
             )
             self.assertGreaterEqual(
                 report["empirical_signals"]["total_empirical_signals"],
-                44,
-                f"{md_path.name} must contain >= 44 empirical signals",
+                51,
+                f"{md_path.name} must contain >= 51 empirical signals",
             )
 
     def test_canonical_content_registry_parity_and_no_duplicates(self):

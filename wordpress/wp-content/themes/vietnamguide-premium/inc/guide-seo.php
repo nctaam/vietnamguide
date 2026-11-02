@@ -603,7 +603,7 @@ add_action('wp_head', static function (): void {
 add_action('wp_footer', static function (): void {
     $swUrl = esc_url(home_url('/sw.js'));
     ?>
-    <aside id="vg-pwa-banner" class="vg-pwa-banner" role="region" aria-label="<?php esc_attr_e('Install Vietnam Travel Field Guide', 'vietnamguide-premium'); ?>" style="display:none;">
+    <aside id="vg-pwa-banner" class="vg-pwa-banner" role="region" aria-label="<?php esc_attr_e('Install Vietnam Travel Field Guide', 'vietnamguide-premium'); ?>">
         <div class="vg-pwa-banner-inner">
             <div class="vg-pwa-banner-text">
                 <span class="vg-pwa-badge"><?php esc_html_e('Offline Travel Guide', 'vietnamguide-premium'); ?></span>
@@ -626,6 +626,7 @@ add_action('wp_footer', static function (): void {
 
         var deferredPrompt = null;
         var banner = document.getElementById("vg-pwa-banner");
+        if (banner) banner.style.display = "none";
         var installBtn = document.getElementById("vg-pwa-install-btn");
         var dismissBtn = document.getElementById("vg-pwa-dismiss-btn");
         var STORAGE_KEY = "vg_pwa_dismissed";

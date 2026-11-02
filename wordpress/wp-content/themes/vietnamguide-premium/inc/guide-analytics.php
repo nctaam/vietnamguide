@@ -95,7 +95,7 @@ add_action('wp_head', static function (): void {
  */
 add_action('wp_footer', static function (): void {
     ?>
-    <div id="vg-qr-modal" class="vg-qr-modal" role="dialog" aria-modal="true" aria-labelledby="vg-qr-modal-title" style="display:none;">
+    <div id="vg-qr-modal" class="vg-qr-modal" role="dialog" aria-modal="true" aria-labelledby="vg-qr-modal-title">
         <div class="vg-qr-backdrop" data-vg-qr-close></div>
         <div class="vg-qr-card">
             <div class="vg-qr-header">

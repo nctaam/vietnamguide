@@ -227,7 +227,7 @@ function vg_render_cost_calculator_html(): string
                     </ul>
 
                     <!-- Route Profile Verified Cost Card -->
-                    <div class="vg-calc-route-profile" id="vg-calc-route-profile" style="display:none;" aria-live="polite">
+                    <div class="vg-calc-route-profile" id="vg-calc-route-profile" aria-live="polite">
                         <div class="vg-calc-rp-header">
                             <span class="vg-calc-rp-badge" id="vg-calc-rp-badge"><?php esc_html_e('Route Breakdown', 'vietnamguide-premium'); ?></span>
                             <div class="vg-calc-rp-title" id="vg-calc-rp-title"><?php esc_html_e('Verified Local Route Costs', 'vietnamguide-premium'); ?></div>

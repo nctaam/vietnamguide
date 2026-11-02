@@ -141,7 +141,7 @@ $pageTitle = (string) ($args['title'] ?? get_the_title());
     <!-- Reading Progress Bar & Floating Tactical Dock -->
     <div id="vg-reading-progress" class="vg-reading-progress" role="progressbar" aria-label="<?php esc_attr_e('Reading progress', 'vietnamguide-premium'); ?>" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
 
-    <aside id="vg-floating-dock" class="vg-floating-dock" aria-label="<?php esc_attr_e('Reading navigation dock', 'vietnamguide-premium'); ?>" style="display:none;">
+    <aside id="vg-floating-dock" class="vg-floating-dock" aria-label="<?php esc_attr_e('Reading navigation dock', 'vietnamguide-premium'); ?>">
         <div class="vg-dock-inner">
             <button type="button" class="vg-dock-btn vg-dock-btn--top" id="vg-dock-top" aria-label="<?php esc_attr_e('Scroll to top of guide', 'vietnamguide-premium'); ?>" title="<?php esc_attr_e('Back to top', 'vietnamguide-premium'); ?>">
                 <span aria-hidden="true">↑</span>
@@ -160,7 +160,7 @@ $pageTitle = (string) ($args['title'] ?? get_the_title());
             <div class="vg-dock-progress-indicator" id="vg-dock-pct" aria-hidden="true">0%</div>
         </div>
 
-        <div id="vg-dock-popover" class="vg-dock-popover" role="dialog" aria-label="<?php esc_attr_e('Vietnam Travel Planning Toolkits', 'vietnamguide-premium'); ?>" style="display:none;">
+        <div id="vg-dock-popover" class="vg-dock-popover" role="dialog" aria-label="<?php esc_attr_e('Vietnam Travel Planning Toolkits', 'vietnamguide-premium'); ?>">
             <div class="vg-dock-popover-header">
                 <strong><?php esc_html_e('Travel Planning Toolkits', 'vietnamguide-premium'); ?></strong>
                 <button type="button" id="vg-dock-close" class="vg-dock-close" aria-label="<?php esc_attr_e('Close tools menu', 'vietnamguide-premium'); ?>">&times;</button>
