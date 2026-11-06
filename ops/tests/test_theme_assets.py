@@ -314,6 +314,53 @@ class TestThemeAssetsPipeline(unittest.TestCase):
         for token in ['initFieldDesk', 'initInteractiveMap', 'initPhotoDispatch', 'ArrowRight']:
             self.assertIn(token, interactive_js, f"guide-interactive.js must contain '{token}'")
 
+        dead_legacy_selectors = [
+            '.comments-area',
+            '.comment-list',
+            '.comment-form',
+            '.wp-block-tag-cloud',
+            '.error-message',
+            '.breadcrumb-trail',
+            '.vg-photo-dispatch--fullwidth',
+        ]
+        for dead_sel in dead_legacy_selectors:
+            self.assertNotIn(dead_sel, homepage_css, f"homepage.css must not contain dead legacy selector '{dead_sel}'")
+            self.assertNotIn(dead_sel, interactive_css, f"guide-interactive.css must not contain dead legacy selector '{dead_sel}'")
+
+        def _extract_top_level_selectors(css_source: str) -> set[str]:
+            clean = re.sub(r'/\*.*?\*/', '', css_source, flags=re.S)
+            selectors: set[str] = set()
+            depth = 0
+            buf = []
+            for ch in clean:
+                if ch == '{':
+                    if depth == 0:
+                        raw_header = ' '.join(''.join(buf).strip().split())
+                        if raw_header and not raw_header.startswith('@'):
+                            for part in raw_header.split(','):
+                                s = part.strip()
+                                if s:
+                                    selectors.add(s)
+                        buf.clear()
+                    depth += 1
+                elif ch == '}':
+                    depth -= 1
+                    if depth <= 0:
+                        depth = 0
+                        buf.clear()
+                elif depth == 0:
+                    buf.append(ch)
+            return selectors
+
+        patterns_css = (THEME_ASSETS / 'css' / 'guide-patterns.css').read_text(encoding='utf-8')
+        hp_sels = _extract_top_level_selectors(homepage_css)
+        pat_sels = _extract_top_level_selectors(patterns_css)
+        int_sels = _extract_top_level_selectors(interactive_css)
+
+        self.assertEqual(hp_sels & pat_sels, set(), f"Overlap between homepage.css and guide-patterns.css: {hp_sels & pat_sels}")
+        self.assertEqual(hp_sels & int_sels, set(), f"Overlap between homepage.css and guide-interactive.css: {hp_sels & int_sels}")
+        self.assertEqual(pat_sels & int_sels, set(), f"Overlap between guide-patterns.css and guide-interactive.css: {pat_sels & int_sels}")
+
 
 if __name__ == '__main__':
     unittest.main()

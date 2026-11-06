@@ -1,0 +1,30 @@
+{
+  "robots_after_noindex": {
+    "index": "index",
+    "follow": "follow",
+    "max-snippet": "max-snippet:-1",
+    "max-image-preview": "max-image-preview:large",
+    "max-video-preview": "max-video-preview:-1"
+  },
+  "jsonld_before": "<script type=\"application/ld+json\">{\"description\":\"&lt;\\/script&gt;&lt;script&gt;window.__auditExecuted=true&lt;\\/script&gt;\"}</script>",
+  "jsonld_after": "<script type=\"application/ld+json\">{\"description\":\"</script><script>window.__auditExecuted=true</script>\"}</script>",
+  "subscriber_count": 500,
+  "first_subscriber_retained": false,
+  "last_subscriber_retained": true,
+  "markdown_edge_cases": {
+    "#hashtag": "TIMEOUT after 3 seconds",
+    "|incomplete table": "TIMEOUT after 3 seconds"
+  },
+  "jsonld_script_exec_before": false,
+  "jsonld_script_exec_after": true,
+  "reduced_motion": {
+    "no-preference": {
+      "copied": true,
+      "search_focused": true
+    },
+    "reduce": {
+      "copied": false,
+      "search_focused": false
+    }
+  }
+}

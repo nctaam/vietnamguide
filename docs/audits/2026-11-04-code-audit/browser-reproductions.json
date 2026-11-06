@@ -1,0 +1,59 @@
+{
+  "robots_after_noindex": {
+    "index": "index",
+    "follow": "follow",
+    "max-snippet": "max-snippet:-1",
+    "max-image-preview": "max-image-preview:large",
+    "max-video-preview": "max-video-preview:-1"
+  },
+  "jsonld_before": "<script type=\"application/ld+json\">{\"description\":\"&lt;\\/script&gt;&lt;script&gt;window.__auditExecuted=true&lt;\\/script&gt;\"}</script>",
+  "jsonld_after": "<script type=\"application/ld+json\">{\"description\":\"</script><script>window.__auditExecuted=true</script>\"}</script>",
+  "subscriber_count": 500,
+  "first_subscriber_retained": false,
+  "last_subscriber_retained": true,
+  "jsonld_script_exec_before": false,
+  "jsonld_script_exec_after": true,
+  "cost_clipboard_unavailable": [
+    "fallbackCopy is not defined"
+  ],
+  "cost_shared_state": {
+    "before_reload": {
+      "url": "https://audit.local/?days=7&currency=USD&tier=backpacker&party=1&route=ha-giang",
+      "days": "7",
+      "total": "$245"
+    },
+    "after_reload": {
+      "url": "https://audit.local/?days=4&currency=USD&tier=backpacker&party=1&route=ha-giang",
+      "days": "4",
+      "total": "$140"
+    }
+  },
+  "cost_reset": {
+    "before_reload": {
+      "url": "https://audit.local/?days=10&currency=USD&tier=midrange&party=2&route=ha-giang",
+      "days": "10",
+      "total": "$1,563"
+    },
+    "after_reload": {
+      "url": "https://audit.local/?days=4&currency=USD&tier=backpacker&party=1&route=ha-giang",
+      "days": "4",
+      "total": "$140"
+    }
+  },
+  "visa_shared_state": {
+    "before_reload": "true",
+    "url": "https://audit.local/?nationality=GB&days=14",
+    "after_reload": "false"
+  },
+  "packing_print_calls": 2,
+  "reduced_motion": {
+    "no-preference": {
+      "copied": true,
+      "search_focused": true
+    },
+    "reduce": {
+      "copied": false,
+      "search_focused": false
+    }
+  }
+}

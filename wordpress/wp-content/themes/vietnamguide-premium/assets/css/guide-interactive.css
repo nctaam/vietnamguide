@@ -386,11 +386,6 @@
   padding: 0 20px;
 }
 
-.vg-photo-dispatch--fullwidth {
-  max-width: 100%;
-  padding: 0;
-}
-
 .vg-dispatch-container {
   background: #FFFFFF;
   border: 1px solid var(--vg-border-hairline, rgba(15, 37, 55, 0.08));
@@ -787,10 +782,6 @@
 
 .vg-field-desk-panel[hidden] {
   display: none !important;
-}
-
-.vg-calc-route-profile {
-  display: none;
 }
 
 @media (max-width: 640px) {

@@ -1,0 +1,578 @@
+test_01_boundary_and_malformed_paths (test_adversarial_entity_graph.TestAdversarialEntityGraph.test_01_boundary_and_malformed_paths)
+Stress-test vg_find_travel_cluster_by_path with empty, boundary, malformed, and tricky inputs. ... ok
+test_02_all_282_canonical_routes_resolution (test_adversarial_entity_graph.TestAdversarialEntityGraph.test_02_all_282_canonical_routes_resolution)
+Verify that all 282 canonical routes in ops/route_registry.json resolve correctly. ... ok
+test_03_geo_coordinates_strictly_within_vietnam_bounds (test_adversarial_entity_graph.TestAdversarialEntityGraph.test_03_geo_coordinates_strictly_within_vietnam_bounds)
+Verify all geo-coordinates for all 12 clusters are strictly within Vietnam geographical boundaries (lat: 8.0-24.0, lon: 102.0-110.0). ... ok
+test_04_schema_org_json_ld_stress_testing (test_adversarial_entity_graph.TestAdversarialEntityGraph.test_04_schema_org_json_ld_stress_testing)
+Stress-test Schema.org JSON-LD generation in vg_rich_travel_schema_filter and rank_math/json_ld. ... ok
+test_05_deep_nesting_and_entity_clean_data (test_adversarial_entity_graph.TestAdversarialEntityGraph.test_05_deep_nesting_and_entity_clean_data)
+Stress-test recursive vg_schema_clean_data with deeply nested arrays and special entities. ... ok
+test_06_adversarial_vulnerability_reproduction (test_adversarial_entity_graph.TestAdversarialEntityGraph.test_06_adversarial_vulnerability_reproduction)
+Verify remediation of circular-structure recursion and upstream hook non-array input handling. ... ok
+test_all_theme_wikimedia_urls_have_valid_md5_hash_paths (test_ag_search_client.TestAgSearchClient.test_all_theme_wikimedia_urls_have_valid_md5_hash_paths)
+Every Wikimedia Commons thumbnail URL in theme inc/ and patterns/ must have a valid MD5 path. ... ok
+test_cost_calculator_official_tariffs_ledger (test_ag_search_client.TestAgSearchClient.test_cost_calculator_official_tariffs_ledger)
+Cost calculator must include the 2025-2026 Official Monument & Transport Tariff Ledger with zero <h2> tags. ... ok
+test_no_hardcoded_sk_api_secret (test_ag_search_client.TestAgSearchClient.test_no_hardcoded_sk_api_secret)
+ag_search_client must not contain a hardcoded sk-... API secret token. ... ok
+test_search_ag_builds_correct_post_request (test_ag_search_client.TestAgSearchClient.test_search_ag_builds_correct_post_request) ... ok
+test_verify_wikimedia_thumb_url_detects_broken_and_valid_md5_paths (test_ag_search_client.TestAgSearchClient.test_verify_wikimedia_thumb_url_detects_broken_and_valid_md5_paths) ... ok
+test_clean_human_evidence_text_passes (test_anti_ai_slop.TestAntiAiSlopLinter.test_clean_human_evidence_text_passes) ... ok
+test_clean_prose_passes_tier11 (test_anti_ai_slop.TestAntiAiSlopLinter.test_clean_prose_passes_tier11) ... ok
+test_clean_prose_passes_tier12_and_syntactic_cadence (test_anti_ai_slop.TestAntiAiSlopLinter.test_clean_prose_passes_tier12_and_syntactic_cadence) ... ok
+test_clean_text_passes_tier8_and_lexical_diversity (test_anti_ai_slop.TestAntiAiSlopLinter.test_clean_text_passes_tier8_and_lexical_diversity) ... ok
+test_consecutive_identical_bigram_openers (test_anti_ai_slop.TestAntiAiSlopLinter.test_consecutive_identical_bigram_openers) ... ok
+test_evidence_density_index_edi (test_anti_ai_slop.TestAntiAiSlopLinter.test_evidence_density_index_edi) ... ok
+test_evidence_token_extraction (test_anti_ai_slop.TestAntiAiSlopLinter.test_evidence_token_extraction) ... ok
+test_expanded_evidence_patterns (test_anti_ai_slop.TestAntiAiSlopLinter.test_expanded_evidence_patterns) ... ok
+test_lexical_diversity_analysis (test_anti_ai_slop.TestAntiAiSlopLinter.test_lexical_diversity_analysis) ... ok
+test_linter_audit_codebase_function (test_anti_ai_slop.TestAntiAiSlopLinter.test_linter_audit_codebase_function)
+Verify linter's scan_route_registry, scan_ui_templates, and audit_codebase functions return PASS. ... ok
+test_local_cadence_monotony_detection (test_anti_ai_slop.TestAntiAiSlopLinter.test_local_cadence_monotony_detection) ... ok
+test_passive_voice_density_threshold (test_anti_ai_slop.TestAntiAiSlopLinter.test_passive_voice_density_threshold) ... ok
+test_passive_voice_padding (test_anti_ai_slop.TestAntiAiSlopLinter.test_passive_voice_padding) ... ok
+test_recalibrated_prose_flesch_reading_ease (test_anti_ai_slop.TestAntiAiSlopLinter.test_recalibrated_prose_flesch_reading_ease) ... ok
+test_repetitive_adjective_clustering (test_anti_ai_slop.TestAntiAiSlopLinter.test_repetitive_adjective_clustering) ... ok
+test_repetitive_sentence_opener_detection (test_anti_ai_slop.TestAntiAiSlopLinter.test_repetitive_sentence_opener_detection) ... ok
+test_route_registry_282_routes_zero_tier1_and_mean_hls_threshold (test_anti_ai_slop.TestAntiAiSlopLinter.test_route_registry_282_routes_zero_tier1_and_mean_hls_threshold)
+Verify all 282 routes in ops/route_registry.json have 0 Tier 1 clichés and mean HLS >= 85. ... ok
+test_route_registry_sha256_byte_parity_100_percent (test_anti_ai_slop.TestAntiAiSlopLinter.test_route_registry_sha256_byte_parity_100_percent)
+Verify SHA-256 byte parity between ops/route_registry.json and inc/guide-route-registry.json is exactly 100%. ... ok
+test_sentence_length_cadence_variation (test_anti_ai_slop.TestAntiAiSlopLinter.test_sentence_length_cadence_variation) ... ok
+test_strict_edi_threshold_v4 (test_anti_ai_slop.TestAntiAiSlopLinter.test_strict_edi_threshold_v4) ... ok
+test_strict_repetition_gate_v10 (test_anti_ai_slop.TestAntiAiSlopLinter.test_strict_repetition_gate_v10) ... ok
+test_syntactic_participle_opener_monotony (test_anti_ai_slop.TestAntiAiSlopLinter.test_syntactic_participle_opener_monotony) ... ok
+test_syntactic_prepositional_opener_monotony (test_anti_ai_slop.TestAntiAiSlopLinter.test_syntactic_prepositional_opener_monotony) ... ok
+test_tier10_rhetorical_and_hedging_formulas (test_anti_ai_slop.TestAntiAiSlopLinter.test_tier10_rhetorical_and_hedging_formulas) ... ok
+test_tier10_synthetic_binary_parallelism (test_anti_ai_slop.TestAntiAiSlopLinter.test_tier10_synthetic_binary_parallelism) ... ok
+test_tier11_pseudo_philosophical_cliches (test_anti_ai_slop.TestAntiAiSlopLinter.test_tier11_pseudo_philosophical_cliches) ... ok
+test_tier11_synthetic_marketing_detection (test_anti_ai_slop.TestAntiAiSlopLinter.test_tier11_synthetic_marketing_detection) ... ok
+test_tier12_travel_fluff_and_false_equivalence (test_anti_ai_slop.TestAntiAiSlopLinter.test_tier12_travel_fluff_and_false_equivalence) ... ok
+test_tier1_banned_cliche_detection (test_anti_ai_slop.TestAntiAiSlopLinter.test_tier1_banned_cliche_detection) ... ok
+test_tier1_expanded_subtle_cliches (test_anti_ai_slop.TestAntiAiSlopLinter.test_tier1_expanded_subtle_cliches) ... ok
+test_tier3_structural_signposting (test_anti_ai_slop.TestAntiAiSlopLinter.test_tier3_structural_signposting) ... ok
+test_tier4_sycophancy_and_modern_ai_tropes (test_anti_ai_slop.TestAntiAiSlopLinter.test_tier4_sycophancy_and_modern_ai_tropes) ... ok
+test_tier5_empty_superlatives_and_travel_fluff (test_anti_ai_slop.TestAntiAiSlopLinter.test_tier5_empty_superlatives_and_travel_fluff) ... ok
+test_tier6_over_explanation_and_meta_commentary (test_anti_ai_slop.TestAntiAiSlopLinter.test_tier6_over_explanation_and_meta_commentary) ... ok
+test_tier7_false_authority_and_conclusion_padding (test_anti_ai_slop.TestAntiAiSlopLinter.test_tier7_false_authority_and_conclusion_padding) ... ok
+test_tier8_superficial_rhetoric_and_hollow_formulas (test_anti_ai_slop.TestAntiAiSlopLinter.test_tier8_superficial_rhetoric_and_hollow_formulas) ... ok
+test_tier9_synthetic_contrast_and_sycophancy (test_anti_ai_slop.TestAntiAiSlopLinter.test_tier9_synthetic_contrast_and_sycophancy) ... ok
+test_ui_theme_templates_zero_tier1_cliches (test_anti_ai_slop.TestAntiAiSlopLinter.test_ui_theme_templates_zero_tier1_cliches)
+Verify UI templates (Homepage, 6 Toolkits, search.php, 404.php, offline.html, patterns) contain 0 Tier 1 clichés. ... ok
+test_canonical_content_files_pass_depth_audit (test_content_depth.TestContentDepthAuditor.test_canonical_content_files_pass_depth_audit) ... ok
+test_canonical_content_registry_parity_and_no_duplicates (test_content_depth.TestContentDepthAuditor.test_canonical_content_registry_parity_and_no_duplicates) ... ok
+test_compile_guide_content_and_php_runtime_bridge (test_content_depth.TestContentDepthAuditor.test_compile_guide_content_and_php_runtime_bridge) ... ok
+test_count_markdown_elements (test_content_depth.TestContentDepthAuditor.test_count_markdown_elements) ... ok
+test_count_substantive_words (test_content_depth.TestContentDepthAuditor.test_count_substantive_words) ... ok
+test_extract_empirical_signals (test_content_depth.TestContentDepthAuditor.test_extract_empirical_signals) ... ok
+test_parse_frontmatter_missing (test_content_depth.TestContentDepthAuditor.test_parse_frontmatter_missing) ... ok
+test_parse_frontmatter_valid (test_content_depth.TestContentDepthAuditor.test_parse_frontmatter_valid) ... ok
+test_all_deploy_files_exist_on_local_disk (test_deploy_config.DeployConfigTests.test_all_deploy_files_exist_on_local_disk)
+Every local file referenced in DEPLOY_FILES must exist on disk. ... ok
+test_allows_root_only_with_explicit_opt_in (test_deploy_config.DeployConfigTests.test_allows_root_only_with_explicit_opt_in) ... ok
+test_cache_purge_quotes_a_root_with_spaces (test_deploy_config.DeployConfigTests.test_cache_purge_quotes_a_root_with_spaces) ... ok
+test_deploy_artifact_includes_the_route_registry (test_deploy_config.DeployConfigTests.test_deploy_artifact_includes_the_route_registry) ... ok
+test_deploy_files_destinations_unique_and_normalized (test_deploy_config.DeployConfigTests.test_deploy_files_destinations_unique_and_normalized)
+All remote destination paths in DEPLOY_FILES must be unique, non-empty, and forward-slash normalized. ... ok
+test_deploy_preflight_validation_rejects_empty_files (test_deploy_config.DeployConfigTests.test_deploy_preflight_validation_rejects_empty_files)
+Pre-flight check must reject non-existent or empty files. ... ok
+test_deploy_script_has_no_unsafe_connection_defaults (test_deploy_config.DeployConfigTests.test_deploy_script_has_no_unsafe_connection_defaults) ... ok
+test_deploy_tarball_batch_bundles_verifies_and_promotes_all_files (test_deploy_config.DeployConfigTests.test_deploy_tarball_batch_bundles_verifies_and_promotes_all_files)
+Tarball batch deployment must upload 1 .tar.gz via sftp.put, verify SHA-256 hashes, and atomically mv -f all files. ... ok
+test_deploy_tarball_batch_hash_mismatch_aborts_and_cleans_up_staging (test_deploy_config.DeployConfigTests.test_deploy_tarball_batch_hash_mismatch_aborts_and_cleans_up_staging)
+If remote SHA-256 verification fails during tarball batch deploy, it returns False and cleans up staging. ... ok
+test_functions_php_required_includes_exist_in_deploy_files (test_deploy_config.DeployConfigTests.test_functions_php_required_includes_exist_in_deploy_files)
+All 15 include files required in functions.php must exist in DEPLOY_FILES to prevent fatal crash. ... ok
+test_load_requires_explicit_remote_configuration (test_deploy_config.DeployConfigTests.test_load_requires_explicit_remote_configuration) ... ok
+test_loads_valid_non_root_configuration (test_deploy_config.DeployConfigTests.test_loads_valid_non_root_configuration) ... ok
+test_posix_key_permission_mode_validation (test_deploy_config.DeployConfigTests.test_posix_key_permission_mode_validation)
+On POSIX systems, SSH private key with open permissions (> 0600) is rejected. ... ok
+test_prune_remote_backups_retains_latest_snapshots (test_deploy_config.DeployConfigTests.test_prune_remote_backups_retains_latest_snapshots) ... ok
+test_rejects_invalid_port_and_remote_root (test_deploy_config.DeployConfigTests.test_rejects_invalid_port_and_remote_root) ... ok
+test_rejects_root_without_explicit_opt_in (test_deploy_config.DeployConfigTests.test_rejects_root_without_explicit_opt_in) ... ok
+test_remote_backup_is_created_before_upload_with_manifest (test_deploy_config.DeployConfigTests.test_remote_backup_is_created_before_upload_with_manifest) ... ok
+test_remote_path_rejects_escape_attempts (test_deploy_config.DeployConfigTests.test_remote_path_rejects_escape_attempts) ... ok
+test_restore_remote_backup_generates_correct_commands_and_restores_files (test_deploy_config.DeployConfigTests.test_restore_remote_backup_generates_correct_commands_and_restores_files)
+Automated rollback generates commands to restore present files and remove newly added ones. ... ok
+test_restore_remote_backup_raises_on_non_zero_exit_status (test_deploy_config.DeployConfigTests.test_restore_remote_backup_raises_on_non_zero_exit_status)
+Rollback failure raises RuntimeError with remote error message. ... ok
+test_stage_and_promote_file_hash_mismatch_cleans_up_without_promotion (test_deploy_config.DeployConfigTests.test_stage_and_promote_file_hash_mismatch_cleans_up_without_promotion)
+On hash mismatch, temporary staged file must be removed with rm -f and never promoted. ... ok
+test_stage_and_promote_file_promotion_failure_raises_and_cleans_up (test_deploy_config.DeployConfigTests.test_stage_and_promote_file_promotion_failure_raises_and_cleans_up)
+If mv -f promotion fails with non-zero exit code, error is raised and temp file cleaned up. ... ok
+test_stage_and_promote_file_rejects_empty_file_in_preflight (test_deploy_config.DeployConfigTests.test_stage_and_promote_file_rejects_empty_file_in_preflight)
+Pre-flight byte check in stage_and_promote_file rejects 0-byte files. ... ok
+test_stage_and_promote_file_sftp_failure_cleans_up_temp_path (test_deploy_config.DeployConfigTests.test_stage_and_promote_file_sftp_failure_cleans_up_temp_path)
+If SFTP upload fails, staging temp path must be cleaned up. ... ok
+test_stage_and_promote_file_success (test_deploy_config.DeployConfigTests.test_stage_and_promote_file_success)
+Atomic staging flow must upload to temp path, verify SHA-256, and atomically mv -f. ... ok
+test_comments_and_pattern_documentation_do_not_create_findings (test_deploy_security_audit.DeploySecurityAuditTests.test_comments_and_pattern_documentation_do_not_create_findings) ... ok
+test_direct_ssh_literals_are_audited (test_deploy_security_audit.DeploySecurityAuditTests.test_direct_ssh_literals_are_audited) ... ok
+test_legacy_script_reports_each_unsafe_connection_pattern (test_deploy_security_audit.DeploySecurityAuditTests.test_legacy_script_reports_each_unsafe_connection_pattern) ... ok
+test_paramiko_alias_is_detected_without_textual_false_positive (test_deploy_security_audit.DeploySecurityAuditTests.test_paramiko_alias_is_detected_without_textual_false_positive) ... ok
+test_paramiko_policy_aliases_are_audited (test_deploy_security_audit.DeploySecurityAuditTests.test_paramiko_policy_aliases_are_audited) ... ok
+test_report_marks_missing_release_path_as_not_ready (test_deploy_security_audit.DeploySecurityAuditTests.test_report_marks_missing_release_path_as_not_ready) ... ok
+test_report_marks_only_configured_release_path_eligible (test_deploy_security_audit.DeploySecurityAuditTests.test_report_marks_only_configured_release_path_eligible) ... ok
+test_safe_configured_script_has_no_release_blockers (test_deploy_security_audit.DeploySecurityAuditTests.test_safe_configured_script_has_no_release_blockers) ... ok
+test_surface_excludes_archive_and_tests (test_deploy_security_audit.DeploySecurityAuditTests.test_surface_excludes_archive_and_tests) ... ok
+test_e2e_airport_navigator_interactive_tabs (test_e2e_playwright_smoke.TestPlaywrightE2ESmoke.test_e2e_airport_navigator_interactive_tabs)
+Playwright E2E: [vg_airport_navigator] switches airports (HAN/SGN/DAD) and information tabs. ... ok
+test_e2e_cost_calculator_interactive_calculations (test_e2e_playwright_smoke.TestPlaywrightE2ESmoke.test_e2e_cost_calculator_interactive_calculations)
+Playwright E2E: [vg_cost_calculator] recalculates budget on duration and travel style change. ... ok
+test_e2e_guide_shell_sticky_toc_and_decision_table_wrapper (test_e2e_playwright_smoke.TestPlaywrightE2ESmoke.test_e2e_guide_shell_sticky_toc_and_decision_table_wrapper)
+Playwright E2E: Guide Shell wraps legacy decision tables and initializes Sticky TOC & reading progress. ... ok
+test_e2e_interactive_map_corridor_switching_and_keyboard_a11y (test_e2e_playwright_smoke.TestPlaywrightE2ESmoke.test_e2e_interactive_map_corridor_switching_and_keyboard_a11y)
+Playwright E2E: [vg_interactive_map] switches corridors via tabs and keyboard with 0 console errors. ... ok
+test_e2e_itinerary_finder_interactive_filtering (test_e2e_playwright_smoke.TestPlaywrightE2ESmoke.test_e2e_itinerary_finder_interactive_filtering)
+Playwright E2E: [vg_itinerary_finder] filters curated itineraries by duration and style. ... ok
+test_e2e_packing_checklist_interactive_toggles (test_e2e_playwright_smoke.TestPlaywrightE2ESmoke.test_e2e_packing_checklist_interactive_toggles)
+Playwright E2E: [vg_packing_checklist] tracks checked items and updates progress percentage. ... ok
+test_e2e_photo_dispatch_tabs_and_lightbox_escape_modal (test_e2e_playwright_smoke.TestPlaywrightE2ESmoke.test_e2e_photo_dispatch_tabs_and_lightbox_escape_modal)
+Playwright E2E: [vg_photo_dispatch] switches location tabs and opens/closes Lightbox via Escape key. ... ok
+test_e2e_season_matrix_interactive_navigation (test_e2e_playwright_smoke.TestPlaywrightE2ESmoke.test_e2e_season_matrix_interactive_navigation)
+Playwright E2E: [vg_season_matrix] switches months and updates regional climate briefs with 0 errors. ... ok
+test_e2e_visa_checker_interactive_calculations (test_e2e_playwright_smoke.TestPlaywrightE2ESmoke.test_e2e_visa_checker_interactive_calculations)
+Playwright E2E: [vg_visa_checker] computes exemption vs e-visa fees on nationality & slider change. ... ok
+test_destination_cluster_resolution_all_clusters (test_guide_schema.TestDestinationGuideSchema.test_destination_cluster_resolution_all_clusters)
+All 12 travel clusters in registry must resolve accurately with complete schemas. ... ok
+test_destination_geographic_and_attraction_metadata (test_guide_schema.TestDestinationGuideSchema.test_destination_geographic_and_attraction_metadata)
+Destination guides must contain GeoCoordinates, hasMap link, and TouristAttraction entities. ... ok
+test_destination_guides_generate_tourist_destination_entity (test_guide_schema.TestDestinationGuideSchema.test_destination_guides_generate_tourist_destination_entity)
+Destination guides must emit valid TouristDestination entities with required Schema.org fields. ... ok
+test_destination_links_to_article_and_webpage_via_about (test_guide_schema.TestDestinationGuideSchema.test_destination_links_to_article_and_webpage_via_about)
+Article and WebPage nodes must link to TouristDestination via the 'about' property. ... ok
+test_author_security_and_editorial_sanitization (test_guide_schema.TestGoogleRichResultsCompliance.test_author_security_and_editorial_sanitization)
+Forbidden author names (e.g. 'admin') must be sanitized to 'VietnamGuide editorial team'. ... ok
+test_google_rich_results_required_fields_article (test_guide_schema.TestGoogleRichResultsCompliance.test_google_rich_results_required_fields_article)
+Article nodes must meet Google Rich Results specification (headline, inLanguage, publisher, logo). ... ok
+test_google_rich_results_required_fields_faqpage (test_guide_schema.TestGoogleRichResultsCompliance.test_google_rich_results_required_fields_faqpage)
+FAQPage nodes must comply with Google Search Rich Results guidelines. ... ok
+test_top_level_context_and_type_declarations (test_guide_schema.TestGoogleRichResultsCompliance.test_top_level_context_and_type_declarations)
+All schema output documents must declare @context https://schema.org and valid vocabulary types. ... ok
+test_itinerary_guides_generate_tourist_trip_with_multistop_itinerary (test_guide_schema.TestItineraryGuideSchema.test_itinerary_guides_generate_tourist_trip_with_multistop_itinerary)
+Itineraries must emit TouristTrip entities with sequential day/stop ItemList and Free Offer. ... ok
+test_itinerary_travel_action_from_and_to_locations (test_guide_schema.TestItineraryGuideSchema.test_itinerary_travel_action_from_and_to_locations)
+Itineraries must include a TravelAction node with origin, destination stops, and result link. ... ok
+test_packing_checklist_webapplication (test_guide_schema.TestPracticalEssentialsSchema.test_packing_checklist_webapplication)
+First trip checklist guide must emit WebApplication schema with state persistence features. ... ok
+test_practical_guides_generate_faq_howto_webapplication (test_guide_schema.TestPracticalEssentialsSchema.test_practical_guides_generate_faq_howto_webapplication)
+The vietnam-evisa guide must output FAQPage, HowTo, and WebApplication entities simultaneously. ... ok
+test_sim_esim_practical_guide_schema (test_guide_schema.TestPracticalEssentialsSchema.test_sim_esim_practical_guide_schema)
+The sim-esim-vietnam guide must generate valid FAQPage and HowTo schemas. ... ok
+test_travel_cost_and_weather_matrix_webapplication (test_guide_schema.TestPracticalEssentialsSchema.test_travel_cost_and_weather_matrix_webapplication)
+Travel cost calculator and weather matrix must emit interactive WebApplication schemas. ... ok
+test_comparison_article_editorial_and_publisher_contracts (test_guide_schema.TestRouteComparisonSchema.test_comparison_article_editorial_and_publisher_contracts)
+Comparison articles must declare reviewedBy, publisher with 512x512 logo, speakable, and breadcrumb. ... ok
+test_comparison_guides_authoritative_faq_schema (test_guide_schema.TestRouteComparisonSchema.test_comparison_guides_authoritative_faq_schema)
+Curated comparison routes must generate authoritative FAQPage nodes with questions and answers. ... ok
+test_comparison_guides_generate_article_with_multi_destination_mentions (test_guide_schema.TestRouteComparisonSchema.test_comparison_guides_generate_article_with_multi_destination_mentions)
+Comparison routes must identify both comparison destinations and inject them into 'mentions'. ... ok
+test_route_registry_classifications_presence (test_guide_schema.TestRouteRegistryClassificationsCoverage.test_route_registry_classifications_presence)
+Route registry must contain exactly 282 canonical routes across the 4 classifications. ... ok
+test_sampled_routes_from_each_classification_pass_schema_generation (test_guide_schema.TestRouteRegistryClassificationsCoverage.test_sampled_routes_from_each_classification_pass_schema_generation)
+Sampled routes from each classification must execute cleanly through the schema pipeline. ... ok
+test_zero_duplicate_php_keys_and_howto_visible_step_parity (test_guide_schema.TestRouteRegistryClassificationsCoverage.test_zero_duplicate_php_keys_and_howto_visible_step_parity)
+Ensure zero duplicate PHP array keys in FAQ/HowTo/WebApplication registries and visible #step-1 parity. ... ok
+test_idempotent_schema_filter_invocation (test_guide_schema.TestSchemaRobustnessAndNullContext.test_idempotent_schema_filter_invocation)
+Invoking vg_rich_travel_schema_filter multiple times must not duplicate TouristDestination nodes. ... ok
+test_schema_filter_excludes_legal_and_trust_pages (test_guide_schema.TestSchemaRobustnessAndNullContext.test_schema_filter_excludes_legal_and_trust_pages)
+Legal, policy, and utility pages must NOT receive TouristDestination or TouristTrip nodes. ... ok
+test_schema_filter_handles_missing_request_uri_and_post (test_guide_schema.TestSchemaRobustnessAndNullContext.test_schema_filter_handles_missing_request_uri_and_post)
+When REQUEST_URI and post object are absent, filter falls back to national_circuit gracefully. ... ok
+test_schema_filter_handles_null_empty_and_scalar_inputs (test_guide_schema.TestSchemaRobustnessAndNullContext.test_schema_filter_handles_null_empty_and_scalar_inputs)
+Filter must safely handle null, empty arrays, or scalar types without PHP fatal errors. ... ok
+test_enhance_content_images_injects_dimensions_and_cwv_attributes (test_guide_schema.TestZeroClsImageDimensions.test_enhance_content_images_injects_dimensions_and_cwv_attributes)
+vg_enhance_content_images must inject width, height, loading=lazy, and decoding=async. ... ok
+test_hero_image_optimization_lcp_eager (test_guide_schema.TestZeroClsImageDimensions.test_hero_image_optimization_lcp_eager)
+Hero images must receive loading=eager and fetchpriority=high to optimize LCP without CLS. ... ok
+test_image_dimensions_registry_integrity (test_guide_schema.TestZeroClsImageDimensions.test_image_dimensions_registry_integrity)
+Image dimensions registry must contain >= 620 entries with valid positive widths and heights. ... ok
+test_unindexed_wikimedia_thumbnail_fallback (test_guide_schema.TestZeroClsImageDimensions.test_unindexed_wikimedia_thumbnail_fallback)
+Unindexed Wikimedia thumbnail images must fall back to 2/3 ratio heuristic without shifting layout. ... ok
+test_agentic_accessibility_tree (test_guide_seo.TestGuideSEO.test_agentic_accessibility_tree)
+Interactive components must declare role=status, aria-live=polite, aria-pressed, and level-3 headings. ... ok
+test_aio_llms_txt_documents_all_12_regional_travel_clusters (test_guide_seo.TestGuideSEO.test_aio_llms_txt_documents_all_12_regional_travel_clusters)
+inc/guide-aio.php must document all 12 regional travel clusters in /llms.txt and /llms-full.txt. ... ok
+test_author_eeat_profile_and_works_for_linkage (test_guide_seo.TestGuideSEO.test_author_eeat_profile_and_works_for_linkage)
+Author and reviewedBy in Schema JSON-LD must contain profile URL and worksFor linkage to #organization. ... ok
+test_canonical_registry_title_description_and_schema_headline_sync (test_guide_seo.TestGuideSEO.test_canonical_registry_title_description_and_schema_headline_sync)
+Canonical registry title (<=60 chars) and Golden Window description (147-157 chars) must override stale Rank Math DB values across document title, meta description, OpenGraph, and JSON-LD schema. ... ok
+test_cluster_aware_discover_image_object_and_exact_dimensions (test_guide_seo.TestGuideSEO.test_cluster_aware_discover_image_object_and_exact_dimensions)
+Discover ImageObject must resolve cluster-specific 1920px assets with exact natural dimensions. ... ok
+test_contextual_fallback_alt_on_content_images (test_guide_seo.TestGuideSEO.test_contextual_fallback_alt_on_content_images)
+vg_enhance_content_images must provide contextual fallback alt text when missing or empty. ... ok
+test_curated_faq_schema_has_100_percent_visible_accordion_parity (test_guide_seo.TestGuideSEO.test_curated_faq_schema_has_100_percent_visible_accordion_parity)
+Every route with curated FAQPage JSON-LD schema must render matching visible <details>/<summary> Q&As with zero <h2> tags. ... ok
+test_defensive_noindex_on_404_and_search (test_guide_seo.TestGuideSEO.test_defensive_noindex_on_404_and_search)
+Defensive indexing: 404 routes must emit noindex, nofollow; search routes must emit noindex, follow. ... ok
+test_expanded_curated_faqs_and_9_gateway_webapplication_schema (test_guide_seo.TestGuideSEO.test_expanded_curated_faqs_and_9_gateway_webapplication_schema)
+Expanded curated FAQs (Cat Ba, Nha Trang, Quy Nhon, Mui Ne, Hue, Can Tho, Train Travel) and 9-gateway WebApplication schema must emit verified 2026 ground truth. ... ok
+test_expanded_faq_and_howto_schema_coverage_across_regional_hubs (test_guide_seo.TestGuideSEO.test_expanded_faq_and_howto_schema_coverage_across_regional_hubs)
+Regional cluster hubs and arrival checklists must emit valid FAQPage and HowTo nodes. ... ok
+test_guide_context_object_caching_contract (test_guide_seo.TestGuideSEO.test_guide_context_object_caching_contract)
+vg_build_guide_context must cache its derived route context via wp_cache_get / wp_cache_set in group vietnamguide_context. ... ok
+test_internal_link_graph_zero_orphan_routes (test_guide_seo.TestGuideSEO.test_internal_link_graph_zero_orphan_routes)
+Internal link graph must contain 282 valid routes with 0 orphans and strict SHA-256 byte parity. ... ok
+test_lcp_hero_image_preloading_contract (test_guide_seo.TestGuideSEO.test_lcp_hero_image_preloading_contract)
+wp_head must output <link rel='preload' as='image'> for singular routes and front page LCP hero. ... ok
+test_non_travel_trust_pages_receive_eeat_person_name_and_organization_enrichment (test_guide_seo.TestGuideSEO.test_non_travel_trust_pages_receive_eeat_person_name_and_organization_enrichment)
+Trust and policy pages (/editorial-policy/) must receive full Organization/Person/Article E-E-A-T enrichment and Person.name fallback while omitting TouristDestination/Trip/Action. ... ok
+test_rank_math_head_json_ld_buffer_restores_native_types_and_unescaped_entities (test_guide_seo.TestGuideSEO.test_rank_math_head_json_ld_buffer_restores_native_types_and_unescaped_entities)
+rank_math/head priority 89/91 output buffering must undo Rank Math's post-filter HTML entity escaping and string coercion. ... ok
+test_robots_deduplication_when_rank_math_active_and_canonical_ordering (test_guide_seo.TestGuideSEO.test_robots_deduplication_when_rank_math_active_and_canonical_ordering)
+When Rank Math is active, wp_head must not emit a duplicate fallback meta robots tag, and rank_math/frontend/robots must enforce canonical directive order. ... ok
+test_robots_txt_ai_crawler_directives_no_llms_txt_header (test_guide_seo.TestGuideSEO.test_robots_txt_ai_crawler_directives_no_llms_txt_header)
+Robots.txt must NOT emit non-standard LLMs-Txt: lines while preserving valid AI crawler directives. ... ok
+test_route_registry_empirical_signal_density_threshold (test_guide_seo.TestGuideSEO.test_route_registry_empirical_signal_density_threshold)
+Route registry must maintain empirical signal density >= 98% (current 100% verified across 282/282 routes). ... ok
+test_schema_article_date_modified_iso8601_sync (test_guide_seo.TestGuideSEO.test_schema_article_date_modified_iso8601_sync)
+Article.dateModified must be valid ISO 8601 and synchronized with registry reviewed_at/last_reviewed. ... ok
+test_schema_google_discover_image_threshold (test_guide_seo.TestGuideSEO.test_schema_google_discover_image_threshold)
+Article.image must contain an ImageObject with width >= 1200px and height >= 675px for Google Discover eligibility. ... ok
+test_schema_org_json_ld_tourist_destination_and_trip_entities (test_guide_seo.TestGuideSEO.test_schema_org_json_ld_tourist_destination_and_trip_entities)
+Schema.org JSON-LD output must include TouristDestination, TouristTrip, TravelAction, containedInPlace, geo, includesAttraction, and ImageObject with width >= 1200px. ... ok
+test_semantic_table_enhancements (test_guide_seo.TestGuideSEO.test_semantic_table_enhancements)
+vg_enhance_table_markup must inject <caption>, <th scope="col">, and <th scope="row">. ... ok
+test_serp_title_and_description_golden_window_100_percent (test_guide_seo.TestGuideSEO.test_serp_title_and_description_golden_window_100_percent)
+All 282 routes must have titles <= 60 chars and meta descriptions strictly within the 147-157 char Google SERP Golden Window. ... ok
+test_sitemap_lastmod_sync_with_registry (test_guide_seo.TestGuideSEO.test_sitemap_lastmod_sync_with_registry)
+XML Sitemap entries (Rank Math and WP Core) must synchronize lastmod with canonical registry last_reviewed. ... ok
+test_stage118_expanded_faqs_howtos_and_toolkit_ground_truth (test_guide_seo.TestGuideSEO.test_stage118_expanded_faqs_howtos_and_toolkit_ground_truth)
+Stage 118: 10 new curated FAQ routes, 3 new HowTo routes, and enriched Itinerary Finder / Packing Checklist 2026 ground truth. ... ok
+test_stage119_expanded_faqs_howtos_and_cost_calculator_specs (test_guide_seo.TestGuideSEO.test_stage119_expanded_faqs_howtos_and_cost_calculator_specs)
+Stage 119: 8 new curated FAQ routes, 2 new HowTo routes, and enriched Cost Calculator 2026 ground truth. ... ok
+test_stage120_central_highlands_and_mekong_faqs_and_howtos (test_guide_seo.TestGuideSEO.test_stage120_central_highlands_and_mekong_faqs_and_howtos)
+Stage 120: 6 new Central Highlands & Mekong Delta FAQ routes, 1 new HowTo route with verified ground-truth data. ... ok
+test_stage121_central_coast_and_caves_faqs_and_howtos (test_guide_seo.TestGuideSEO.test_stage121_central_coast_and_caves_faqs_and_howtos)
+Stage 121: 7 new South Central Coast & Cave Kingdom FAQ routes, 1 new HowTo route with verified ground-truth data. ... ok
+test_stage122_northern_mountains_faqs_and_howtos (test_guide_seo.TestGuideSEO.test_stage122_northern_mountains_faqs_and_howtos)
+Stage 122: 6 new Northern Mountains & Far North Frontier FAQ routes, 1 new HowTo route with verified ground-truth data. ... ok
+test_stage123_central_heritage_cuchi_islands_faqs_and_howtos (test_guide_seo.TestGuideSEO.test_stage123_central_heritage_cuchi_islands_faqs_and_howtos)
+Stage 123: 7 new Central Heritage, Cu Chi, and Island comparison FAQ routes, 2 new HowTo routes with verified ground-truth data. ... ok
+test_stage124_urban_megacities_and_day_trips_faqs_and_howtos (test_guide_seo.TestGuideSEO.test_stage124_urban_megacities_and_day_trips_faqs_and_howtos)
+Stage 124: Verify curated FAQs and HowTo schemas for Hanoi, Ninh Binh, Mekong, Mui Ne, and Nha Trang. ... ok
+test_stage125_waterways_islands_dalat_sapa_faqs_and_howtos (test_guide_seo.TestGuideSEO.test_stage125_waterways_islands_dalat_sapa_faqs_and_howtos)
+Stage 125: Verify curated FAQs and HowTo schemas for Tam Coc/Trang An, Ly Son/Cham Islands, Phu Quoc/Nha Trang, Da Lat, and Sapa. ... ok
+test_stage126_beaches_street_food_halong_catba_faqs_and_howtos (test_guide_seo.TestGuideSEO.test_stage126_beaches_street_food_halong_catba_faqs_and_howtos)
+Stage 126: Verify curated FAQs and HowTo schemas for Beaches, Street Food (Hanoi & Saigon), Cat Ba, and Ha Long Bay. ... ok
+test_stage127_street_food_halong_catba_ninhbinh_faqs_and_howtos (test_guide_seo.TestGuideSEO.test_stage127_street_food_halong_catba_ninhbinh_faqs_and_howtos)
+Stage 127 must provide verified curated FAQs for Central street food trails, Ha Long/Cat Ba activities/stay, and inter-provincial Ninh Binh connections, plus 2 HowTo schemas. ... ok
+test_stage128_train_street_hang_mua_tailoring_transport_faqs_and_howtos (test_guide_seo.TestGuideSEO.test_stage128_train_street_hang_mua_tailoring_transport_faqs_and_howtos)
+Stage 128 must provide verified curated FAQs for Hanoi Train Street, Hang Mua, Da Nang street food, Mekong floating markets, Hoi An tailoring, and mountain transport, plus 2 HowTo schemas. ... ok
+test_stage129_best_things_to_do_hub_guides_faqs (test_guide_seo.TestGuideSEO.test_stage129_best_things_to_do_hub_guides_faqs)
+Stage 129 must provide verified curated FAQs for top 7 destination hub guides ('Best Things to Do'), achieving the landmark milestone of 120 Curated FAQ Routes. ... ok
+test_subdestination_discover_image_resolution_and_stage117_faqs_howtos (test_guide_seo.TestGuideSEO.test_subdestination_discover_image_resolution_and_stage117_faqs_howtos)
+Sub-destinations must resolve their own 1920px Wikimedia Commons Discover images, and Stage 117 FAQ/HowTo/Wikidata ground truth must be verified. ... ok
+test_template_parts_guide_page_semantics_and_cwv (test_guide_seo.TestGuideSEO.test_template_parts_guide_page_semantics_and_cwv)
+guide-page.php must render semantic HTML breadcrumbs matching JSON-LD, guard against duplicate breadcrumbs, and set fetchpriority=high on hero. ... ok
+test_track_p0c_lcp_preload_aio_and_interactive_enqueue (test_guide_seo.TestGuideSEO.test_track_p0c_lcp_preload_aio_and_interactive_enqueue)
+Track P0-C: LCP hero preload imagesrcset, AIO 404/search X-Robots-Tag guard, markdown /llms-full.txt highlights, and early interactive CSS enqueue. ... ok
+test_travel_cluster_path_resolution_regional_mapping (test_guide_seo.TestGuideSEO.test_travel_cluster_path_resolution_regional_mapping)
+vg_find_travel_cluster_by_path() must accurately resolve regional routes to their regional clusters rather than national fallback. ... ok
+test_travel_clusters_registry_all_12_clusters (test_guide_seo.TestGuideSEO.test_travel_clusters_registry_all_12_clusters)
+All 12 travel clusters in vg_get_travel_clusters_registry() must be defined with valid schemas, geo coordinates, and journey links. ... ok
+test_tri_file_registry_synchronization_and_sha256_parity (test_guide_seo.TestGuideSEO.test_tri_file_registry_synchronization_and_sha256_parity)
+Registry tri-file parity check across ops/route_registry.json, inc/guide-route-registry.json, and inc/guide-rollout.php. ... ok
+test_wikimedia_discover_images_cryptographic_md5_path_integrity (test_guide_seo.TestGuideSEO.test_wikimedia_discover_images_cryptographic_md5_path_integrity)
+Every Wikimedia Commons URL in guide-seo.php must have a cryptographically valid MD5 directory prefix /<h[0]>/<h[0:2]>/. ... ok
+test_wp_robots_filter_canonical_public_routes (test_guide_seo.TestGuideSEO.test_wp_robots_filter_canonical_public_routes)
+Canonical public routes must receive max-snippet:-1, max-image-preview:large, max-video-preview:-1. ... ok
+test_all_six_corridors_defined (test_interactive_map.TestInteractiveMap.test_all_six_corridors_defined)
+All 6 strategic geographical corridors must be defined in the dataset. ... ok
+test_anti_ai_slop_zero_cliches (test_interactive_map.TestInteractiveMap.test_anti_ai_slop_zero_cliches)
+Component must strictly contain zero Tier 1 marketing clichés. ... ok
+test_aria_accessibility_attributes (test_interactive_map.TestInteractiveMap.test_aria_accessibility_attributes)
+Component must declare proper tablist, tab, tabpanel, and role attributes. ... ok
+test_corridor_routes_link_to_canonical_registry (test_interactive_map.TestInteractiveMap.test_corridor_routes_link_to_canonical_registry)
+All primary route links from corridors must point to registered routes. ... ok
+test_enriched_field_telemetry_gps_and_transit_corridors (test_interactive_map.TestInteractiveMap.test_enriched_field_telemetry_gps_and_transit_corridors)
+Enriched corridors must feature verified GPS coordinates for mountain passes and island harbors. ... ok
+test_factual_density_and_metrics_present (test_interactive_map.TestInteractiveMap.test_factual_density_and_metrics_present)
+Component must contain distance (km), transit hours, VND spend, and seasons. ... ok
+test_php_syntax_verification (test_interactive_map.TestInteractiveMap.test_php_syntax_verification)
+guide-interactive-map.php must pass php -l linting without syntax errors. ... ok
+test_regional_transit_corridor_data_structure_completeness (test_interactive_map.TestInteractiveMap.test_regional_transit_corridor_data_structure_completeness)
+All 6 corridors must have complete required telemetry and non-empty values. ... ok
+test_shortcode_registration (test_interactive_map.TestInteractiveMap.test_shortcode_registration)
+The component must register shortcode [vg_interactive_map]. ... ok
+test_svg_coordinate_bounding_boxes (test_interactive_map.TestInteractiveMap.test_svg_coordinate_bounding_boxes)
+All waypoint pins must have SVG coordinates within viewBox bounds [0, 320] x [0, 540]. ... ok
+test_svg_vector_markup_elements (test_interactive_map.TestInteractiveMap.test_svg_vector_markup_elements)
+Map canvas must render real Natural Earth geographic polygon, sovereign archipelagos, and waypoint pins. ... ok
+test_zero_h2_in_component (test_interactive_map.TestInteractiveMap.test_zero_h2_in_component)
+Interactive map must NEVER emit <h2> tags to avoid TOC pollution (Gate 5 rule). ... ok
+test_aio_llms_txt_and_llms_full_txt_2026_ground_truth_sync (test_interactive_shortcodes.TestInteractiveShortcodes.test_aio_llms_txt_and_llms_full_txt_2026_ground_truth_sync)
+guide-aio.php (/llms.txt and /llms-full.txt) must synchronize 9 gateway airports, Resolutions 44/NQ-CP & 229/NQ-CP, and Metro/Rail ground truth. ... ok
+test_all_theme_shortcodes_registered_via_functions_php (test_interactive_shortcodes.TestInteractiveShortcodes.test_all_theme_shortcodes_registered_via_functions_php)
+All shortcodes defined across inc/*.php must be loaded via functions.php and prefixed with vg_. ... ok
+test_aria_live_regions (test_interactive_shortcodes.TestInteractiveShortcodes.test_aria_live_regions)
+All interactive components must contain aria-live='polite' for WCAG 2.2 AA dynamic announcements. ... ok
+test_cluster_aware_photo_dispatch_auto_injection (test_interactive_shortcodes.TestInteractiveShortcodes.test_cluster_aware_photo_dispatch_auto_injection)
+guide-photo-dispatch.php must resolve regional photo dispatches across all 12 travel clusters dynamically. ... ok
+test_cost_calculator_monument_tariffs_and_route_budget_expansion (test_interactive_shortcodes.TestInteractiveShortcodes.test_cost_calculator_monument_tariffs_and_route_budget_expansion)
+Cost calculator must include HCMC & Trang An 2026 tariffs and expanded route budget auto-injection. ... ok
+test_cross_tool_synergy_links (test_interactive_shortcodes.TestInteractiveShortcodes.test_cross_tool_synergy_links)
+Components must feature cross-tool synergy links connecting the travel planning workflow. ... ok
+test_css_class_prefix_scoping (test_interactive_shortcodes.TestInteractiveShortcodes.test_css_class_prefix_scoping)
+Interactive shortcode components must scope their CSS classes with the 'vg-' prefix. ... ok
+test_expanded_9_gateway_airport_navigator_ground_truth (test_interactive_shortcodes.TestInteractiveShortcodes.test_expanded_9_gateway_airport_navigator_ground_truth)
+Airport navigator must cover all 9 major and regional gateways (HAN, SGN, DAD, CXR, PQC, HUI, DLI, VDH, HPH) with verified ground-truth transfers. ... ok
+test_expanded_toolkit_and_visual_auto_injection_coverage (test_interactive_shortcodes.TestInteractiveShortcodes.test_expanded_toolkit_and_visual_auto_injection_coverage)
+Interactive map, photo dispatch, and all 6 toolkits must auto-inject across expanded canonical routes. ... ok
+test_front_page_hub_shortcodes_integration_and_headings (test_interactive_shortcodes.TestInteractiveShortcodes.test_front_page_hub_shortcodes_integration_and_headings)
+front-page.php must integrate [vg_interactive_map] and [vg_photo_dispatch] with zero-H2 TOC integrity. ... ok
+test_input_bounds_clamping_and_whitelisting (test_interactive_shortcodes.TestInteractiveShortcodes.test_input_bounds_clamping_and_whitelisting)
+Cost calculator and interactive widgets must clamp numerical inputs with Math.min/Math.max. ... ok
+test_interactive_map_metro_and_expressway_ledger (test_interactive_shortcodes.TestInteractiveShortcodes.test_interactive_map_metro_and_expressway_ledger)
+Interactive map must include the 2025-2026 Urban Metro (HCMC Line 1 & Hanoi Lines 2A/3) & National Expressway Telemetry Ledger. ... ok
+test_itinerary_finder_rail_and_aviation_reference_ledger (test_interactive_shortcodes.TestInteractiveShortcodes.test_itinerary_finder_rail_and_aviation_reference_ledger)
+Itinerary finder must include the 2025-2026 Verified Vietnam Railways (dsvn.vn) & Domestic Aviation Reference Ledger. ... ok
+test_keyboard_accessibility_contracts (test_interactive_shortcodes.TestInteractiveShortcodes.test_keyboard_accessibility_contracts)
+Interactive chips and pills must support keyboard focus and Enter/Space event handlers. ... ok
+test_mobile_qr_share_integration (test_interactive_shortcodes.TestInteractiveShortcodes.test_mobile_qr_share_integration)
+All 6 interactive toolkits must feature a QR to Phone share button and window.vgOpenQrModal. ... ok
+test_multi_currency_support (test_interactive_shortcodes.TestInteractiveShortcodes.test_multi_currency_support)
+Cost calculator must support 5 major currencies: USD, VND, EUR, GBP, AUD. ... ok
+test_noscript_fallback_presence (test_interactive_shortcodes.TestInteractiveShortcodes.test_noscript_fallback_presence)
+All 5 interactive components must contain a semantic <noscript> fallback block. ... ok
+test_p0a_canonical_toolkit_coverage_forms_context_perf_and_print_ux (test_interactive_shortcodes.TestInteractiveShortcodes.test_p0a_canonical_toolkit_coverage_forms_context_perf_and_print_ux)
+P0-A: All 6 toolkits cover canonical slugs, forms retain email & rate-limit, context caches fingerprints, and print button works on standard pages. ... ok
+test_packing_checklist_electrical_battery_pharmacy_ledger (test_interactive_shortcodes.TestInteractiveShortcodes.test_packing_checklist_electrical_battery_pharmacy_ledger)
+Packing checklist must include the 2025-2026 Electrical Grid (220V/50Hz), CAAV Battery & Pharmacy Reference Ledger. ... ok
+test_photo_dispatch_monument_tariff_ledger_and_wikimedia_urls (test_interactive_shortcodes.TestInteractiveShortcodes.test_photo_dispatch_monument_tariff_ledger_and_wikimedia_urls)
+Photo dispatch must include the 2025-2026 UNESCO Heritage, National Park & Island Ferry Reference Ledger and MD5-verified Wikimedia Commons URLs. ... ok
+test_php_syntax_linter (test_interactive_shortcodes.TestInteractiveShortcodes.test_php_syntax_linter)
+All modified PHP files must pass php -l syntax check. ... ok
+test_reading_experience_and_floating_dock (test_interactive_shortcodes.TestInteractiveShortcodes.test_reading_experience_and_floating_dock)
+Guide experience template and assets must implement reading progress and floating dock. ... ok
+test_route_budget_widget_and_presets (test_interactive_shortcodes.TestInteractiveShortcodes.test_route_budget_widget_and_presets)
+guide-cost-calculator.php must implement Route Presets and the [vg_route_budget] shortcode. ... ok
+test_rss_feed_page_inclusion (test_interactive_shortcodes.TestInteractiveShortcodes.test_rss_feed_page_inclusion)
+guide-seo.php must filter main RSS query to include 'page' post type. ... ok
+test_schema_geocoordinates_coverage (test_interactive_shortcodes.TestInteractiveShortcodes.test_schema_geocoordinates_coverage)
+Destination schema must feature GeoCoordinates (latitude, longitude) for rich snippets. ... ok
+test_schema_postal_address_and_map (test_interactive_shortcodes.TestInteractiveShortcodes.test_schema_postal_address_and_map)
+TouristDestination schema must feature PostalAddress (addressRegion, addressCountry) and hasMap. ... ok
+test_schema_wikidata_knowledge_graph_links (test_interactive_shortcodes.TestInteractiveShortcodes.test_schema_wikidata_knowledge_graph_links)
+TouristDestination schema must feature canonical Wikidata and Wikipedia sameAs links. ... ok
+test_search_engine_discovery_and_auto_ping (test_interactive_shortcodes.TestInteractiveShortcodes.test_search_engine_discovery_and_auto_ping)
+guide-seo.php must implement Webmaster verification tags, endpoints, and non-blocking Auto-Ping engine. ... ok
+test_season_matrix_2026_2027_holiday_and_maritime_ledger (test_interactive_shortcodes.TestInteractiveShortcodes.test_season_matrix_2026_2027_holiday_and_maritime_ledger)
+Season matrix must include the 2026-2027 Statutory Public Holidays, Lunar Festival Dates & Maritime Port Suspension Ledger. ... ok
+test_security_htaccess_hardening (test_interactive_shortcodes.TestInteractiveShortcodes.test_security_htaccess_hardening)
+wordpress/.htaccess must block scanner probes, xmlrpc, and brute-force wp-login. ... ok
+test_session_storage_continuity (test_interactive_shortcodes.TestInteractiveShortcodes.test_session_storage_continuity)
+Interactive components must utilize sessionStorage for seamless user state continuity. ... ok
+test_shortcodes_registered (test_interactive_shortcodes.TestInteractiveShortcodes.test_shortcodes_registered)
+All 6 components must register their corresponding shortcode. ... ok
+test_storage_fallback_resilience (test_interactive_shortcodes.TestInteractiveShortcodes.test_storage_fallback_resilience)
+Interactive components must feature resilient storage with fallback handling. ... ok
+test_target_slugs_in_auto_injection (test_interactive_shortcodes.TestInteractiveShortcodes.test_target_slugs_in_auto_injection)
+Auto-injection functions must cover strategic high-intent routes. ... ok
+test_telemetry_vgtrack_integration (test_interactive_shortcodes.TestInteractiveShortcodes.test_telemetry_vgtrack_integration)
+All 6 interactive toolkits must dispatch telemetry events via window.vgTrack. ... ok
+test_url_query_sync_presence (test_interactive_shortcodes.TestInteractiveShortcodes.test_url_query_sync_presence)
+All 5 interactive components must support URL query/hash parameter state synchronization. ... ok
+test_viral_social_share_bars (test_interactive_shortcodes.TestInteractiveShortcodes.test_viral_social_share_bars)
+All 6 interactive toolkits must feature a viral share bar with WhatsApp, Telegram, and Copy Link. ... ok
+test_visa_checker_resolution_44_and_229_nq_cp_ground_truth (test_interactive_shortcodes.TestInteractiveShortcodes.test_visa_checker_resolution_44_and_229_nq_cp_ground_truth)
+Visa checker must reflect Government Resolutions 44/NQ-CP and 229/NQ-CP (2025-2028) and official MPS portals. ... ok
+test_wcag_aaa_aria_live_announcers (test_interactive_shortcodes.TestInteractiveShortcodes.test_wcag_aaa_aria_live_announcers)
+All 5 interactive shortcodes must include an aria-live='polite' region for screen reader feedback. ... ok
+test_zero_duplicate_ids_in_each_component (test_interactive_shortcodes.TestInteractiveShortcodes.test_zero_duplicate_ids_in_each_component)
+Each component must have unique element IDs internally. ... ok
+test_zero_h2_in_components (test_interactive_shortcodes.TestInteractiveShortcodes.test_zero_h2_in_components)
+Interactive components must NEVER emit <h2> tags to avoid TOC pollution. ... ok
+test_zero_h2_invariant_across_all_inc_files (test_interactive_shortcodes.TestInteractiveShortcodes.test_zero_h2_invariant_across_all_inc_files)
+Zero-H2 Invariant must hold across all PHP files in inc/*.php to prevent TOC corruption. ... ok
+test_tier1_all_282_route_titles_and_descriptions_cliche_free (test_linguistic_e2e.TestTier1FeatureCoverage.test_tier1_all_282_route_titles_and_descriptions_cliche_free)
+Verify 0 Tier 1 clichés on all 282 route titles and descriptions. ... ok
+test_tier1_gutenberg_block_patterns_cliche_free (test_linguistic_e2e.TestTier1FeatureCoverage.test_tier1_gutenberg_block_patterns_cliche_free)
+Verify 0 Tier 1 clichés across all 13 Gutenberg Block Patterns. ... ok
+test_tier1_homepage_ui_templates_cliche_free (test_linguistic_e2e.TestTier1FeatureCoverage.test_tier1_homepage_ui_templates_cliche_free)
+Verify 0 Tier 1 clichés across all Homepage template files. ... ok
+test_tier1_six_interactive_toolkits_cliche_free (test_linguistic_e2e.TestTier1FeatureCoverage.test_tier1_six_interactive_toolkits_cliche_free)
+Verify 0 Tier 1 clichés across all 6 Interactive Travel Toolkits. ... ok
+test_tier1_theme_bundled_route_registry_cliche_free (test_linguistic_e2e.TestTier1FeatureCoverage.test_tier1_theme_bundled_route_registry_cliche_free)
+Verify 0 Tier 1 clichés on theme-bundled guide-route-registry.json. ... ok
+test_tier1_utility_pages_cliche_free (test_linguistic_e2e.TestTier1FeatureCoverage.test_tier1_utility_pages_cliche_free)
+Verify 0 Tier 1 clichés on Search, 404, and Offline PWA templates. ... ok
+test_tier2_empty_string_and_whitespace_handling (test_linguistic_e2e.TestTier2BoundaryAndCornerCases.test_tier2_empty_string_and_whitespace_handling)
+Verify empty and whitespace inputs evaluate gracefully without errors. ... ok
+test_tier2_extreme_string_lengths (test_linguistic_e2e.TestTier2BoundaryAndCornerCases.test_tier2_extreme_string_lengths)
+Verify performance and stability on very short and very long strings. ... ok
+test_tier2_non_ascii_and_vietnamese_diacritics_preservation (test_linguistic_e2e.TestTier2BoundaryAndCornerCases.test_tier2_non_ascii_and_vietnamese_diacritics_preservation)
+Verify Vietnamese diacritics and typography are preserved without mangling. ... ok
+test_tier2_numerical_and_currency_formatting_standards (test_linguistic_e2e.TestTier2BoundaryAndCornerCases.test_tier2_numerical_and_currency_formatting_standards)
+Verify standard Vietnamese Dong formatting conventions (e.g. VND 25,500). ... ok
+test_tier3_canonical_place_names_present_across_registry (test_linguistic_e2e.TestTier3CrossFeatureTerminologyAndUrlConsistency.test_tier3_canonical_place_names_present_across_registry)
+Verify canonical place names exist and are consistently formatted in registry. ... ok
+test_tier3_frozen_contracts_preserved (test_linguistic_e2e.TestTier3CrossFeatureTerminologyAndUrlConsistency.test_tier3_frozen_contracts_preserved)
+Verify frozen contracts: Route 1 verbatim title and total route count 282. ... ok
+test_tier3_geographical_place_name_consistency_in_routes (test_linguistic_e2e.TestTier3CrossFeatureTerminologyAndUrlConsistency.test_tier3_geographical_place_name_consistency_in_routes)
+Verify no unspaced forbidden forms (Danang, Dalat, Hoian, Halong Bay) in route titles. ... ok
+test_tier3_official_evisa_portal_url_consistency (test_linguistic_e2e.TestTier3CrossFeatureTerminologyAndUrlConsistency.test_tier3_official_evisa_portal_url_consistency)
+Verify official E-Visa URL is evisa.xuatnhapcanh.gov.vn and no commercial agencies linked. ... ok
+test_tier3_route_registry_sha256_byte_parity (test_linguistic_e2e.TestTier3CrossFeatureTerminologyAndUrlConsistency.test_tier3_route_registry_sha256_byte_parity)
+Verify 100% byte-for-byte SHA-256 synchronization between ops and inc route registries. ... ok
+test_tier4_absence_of_extended_ai_slop_tropes (test_linguistic_e2e.TestTier4RealWorldScenariosAndQualityThresholds.test_tier4_absence_of_extended_ai_slop_tropes)
+Verify 0 instances of extended AI slop tropes (Tiers 5, 7, 8, 9, 10, 11, 12). ... ok
+test_tier4_ground_truth_factual_density_in_route_descriptions (test_linguistic_e2e.TestTier4RealWorldScenariosAndQualityThresholds.test_tier4_ground_truth_factual_density_in_route_descriptions)
+Verify ground-truth operational metrics (distance, transit, pricing, climate) exist across routes. ... ok
+test_tier4_hls_score_threshold_on_all_282_routes (test_linguistic_e2e.TestTier4RealWorldScenariosAndQualityThresholds.test_tier4_hls_score_threshold_on_all_282_routes)
+Verify every route in the registry achieves HLS score >= 85. ... ok
+test_dispatch_image_explicit_dimensions_cwv (test_photo_dispatch.TestPhotoDispatchComponent.test_dispatch_image_explicit_dimensions_cwv)
+Visual dispatch <img> and lightbox <img> must declare width='1920' and height='1080' to prevent CLS. ... ok
+test_dispatch_tab_switcher_markup_and_accessibility (test_photo_dispatch.TestPhotoDispatchComponent.test_dispatch_tab_switcher_markup_and_accessibility)
+Dispatches suite must emit role='tablist', role='tab', and role='tabpanel' with data attributes. ... ok
+test_dispatches_data_structure (test_photo_dispatch.TestPhotoDispatchComponent.test_dispatches_data_structure)
+Visual dispatches data array must have required editorial and EXIF fields. ... ok
+test_exif_telemetry_density (test_photo_dispatch.TestPhotoDispatchComponent.test_exif_telemetry_density)
+EXIF pills must include essential optical parameters. ... ok
+test_fallback_image_files_exist_on_disk (test_photo_dispatch.TestPhotoDispatchComponent.test_fallback_image_files_exist_on_disk)
+All 12 regional fallback image files referenced in dispatches must exist on disk and be distinct per region. ... ok
+test_layout_modifier_classes (test_photo_dispatch.TestPhotoDispatchComponent.test_layout_modifier_classes)
+Layout modifier classes ('standard', 'fullwidth', 'compact') must be correctly emitted without PHP notices. ... ok
+test_lightbox_accessibility_contracts (test_photo_dispatch.TestPhotoDispatchComponent.test_lightbox_accessibility_contracts)
+Lightbox modal must have dialog role, aria-modal, and escape key listener. ... ok
+test_optical_telemetry_and_coordinates_format (test_photo_dispatch.TestPhotoDispatchComponent.test_optical_telemetry_and_coordinates_format)
+Dispatches must declare valid geographic coordinates and optical telemetry across all 12 regions. ... ok
+test_php_syntax_verification (test_photo_dispatch.TestPhotoDispatchComponent.test_php_syntax_verification)
+guide-photo-dispatch.php must pass php -l syntax check. ... ok
+test_shortcode_registration (test_photo_dispatch.TestPhotoDispatchComponent.test_shortcode_registration)
+Shortcode [vg_photo_dispatch] must be registered. ... ok
+test_zero_h2_toc_protection (test_photo_dispatch.TestPhotoDispatchComponent.test_zero_h2_toc_protection)
+Visual dispatch must NEVER emit <h2> tags to avoid TOC pollution (Gate 5 rule). ... ok
+test_zero_tier1_cliches (test_photo_dispatch.TestPhotoDispatchComponent.test_zero_tier1_cliches)
+Visual dispatch copy must be free of generic AI-slop clichés. ... ok
+test_calibrated_articles_achieve_perfect_hls (test_policy_cadence.TestPolicyCadence.test_calibrated_articles_achieve_perfect_hls)
+Verify all 6 remediated articles achieve HLS 100 with zero cadence defects. ... skipped 'Network tests skipped via VG_SKIP_NETWORK_TESTS'
+test_live_https_travel_schema_enrichment (test_policy_cadence.TestPolicyCadence.test_live_https_travel_schema_enrichment)
+Verify live production endpoints serve valid enriched TouristDestination JSON-LD schema. ... skipped 'Network tests skipped via VG_SKIP_NETWORK_TESTS'
+test_remediated_bigram_cadence_achieves_perfect_hls (test_policy_cadence.TestPolicyCadence.test_remediated_bigram_cadence_achieves_perfect_hls)
+Verify that guides remediated in Stage 36 achieve HLS=100 with zero bigram opener monotony. ... skipped 'Network tests skipped via VG_SKIP_NETWORK_TESTS'
+test_remediated_contact_cadence (test_policy_cadence.TestPolicyCadence.test_remediated_contact_cadence) ... ok
+test_remediated_editorial_policy_cadence (test_policy_cadence.TestPolicyCadence.test_remediated_editorial_policy_cadence) ... ok
+test_remediated_hub_benchmarks (test_policy_cadence.TestPolicyCadence.test_remediated_hub_benchmarks) ... ok
+test_remediated_privacy_policy_cadence (test_policy_cadence.TestPolicyCadence.test_remediated_privacy_policy_cadence) ... ok
+test_remediated_source_update_policy_cadence (test_policy_cadence.TestPolicyCadence.test_remediated_source_update_policy_cadence) ... ok
+test_remediated_terms_of_service_cadence (test_policy_cadence.TestPolicyCadence.test_remediated_terms_of_service_cadence) ... ok
+test_remediated_v10_guides_achieve_zero_repetition (test_policy_cadence.TestPolicyCadence.test_remediated_v10_guides_achieve_zero_repetition)
+Verify that guides remediated in Stage 37 achieve HLS=100 with zero repetitive single/bigram openers and zero Tier 1-10 slop. ... skipped 'Network tests skipped via VG_SKIP_NETWORK_TESTS'
+test_seo_schema_travel_attributes (test_policy_cadence.TestPolicyCadence.test_seo_schema_travel_attributes)
+Verify guide-seo.php defines necessary rich travel attributes. ... ok
+test_v11_tier11_marketing_perfection_on_core_guides (test_policy_cadence.TestPolicyCadence.test_v11_tier11_marketing_perfection_on_core_guides)
+Verify that live production guides have zero Tier 11 slop and pass v11.0 quality gate. ... skipped 'Network tests skipped via VG_SKIP_NETWORK_TESTS'
+test_batch_1_canary_coverage_and_disjointness (test_rollout_manager.RolloutManagerTests.test_batch_1_canary_coverage_and_disjointness) ... ok
+test_generate_php_config_all (test_rollout_manager.RolloutManagerTests.test_generate_php_config_all) ... ok
+test_generate_php_config_batch_1 (test_rollout_manager.RolloutManagerTests.test_generate_php_config_batch_1) ... ok
+test_generate_php_config_batch_2 (test_rollout_manager.RolloutManagerTests.test_generate_php_config_batch_2) ... ok
+test_generate_php_config_invalid_stage_raises (test_rollout_manager.RolloutManagerTests.test_generate_php_config_invalid_stage_raises) ... ok
+test_generate_php_config_rollback (test_rollout_manager.RolloutManagerTests.test_generate_php_config_rollback) ... ok
+test_load_production_manifest_and_registry (test_rollout_manager.RolloutManagerTests.test_load_production_manifest_and_registry) ... ok
+test_rollout_status_calculations (test_rollout_manager.RolloutManagerTests.test_rollout_status_calculations) ... ok
+test_verify_production_batches_against_registry (test_rollout_manager.RolloutManagerTests.test_verify_production_batches_against_registry) ... ok
+test_aio_full_directory_heading_uses_registry_route_count (test_route_contract.RouteContractTests.test_aio_full_directory_heading_uses_registry_route_count) ... ok
+test_aio_inventory_falls_back_to_legacy_when_registry_is_unavailable (test_route_contract.RouteContractTests.test_aio_inventory_falls_back_to_legacy_when_registry_is_unavailable) ... ok
+test_aio_inventory_falls_back_when_one_full_registry_record_is_invalid (test_route_contract.RouteContractTests.test_aio_inventory_falls_back_when_one_full_registry_record_is_invalid) ... ok
+test_aio_inventory_falls_back_when_registry_is_truncated_but_records_are_valid (test_route_contract.RouteContractTests.test_aio_inventory_falls_back_when_registry_is_truncated_but_records_are_valid) ... ok
+test_aio_inventory_falls_back_when_registry_json_is_malformed (test_route_contract.RouteContractTests.test_aio_inventory_falls_back_when_registry_json_is_malformed) ... ok
+test_aio_inventory_falls_back_when_registry_record_is_incomplete (test_route_contract.RouteContractTests.test_aio_inventory_falls_back_when_registry_record_is_incomplete) ... ok
+test_aio_inventory_falls_back_when_registry_type_does_not_match_path (test_route_contract.RouteContractTests.test_aio_inventory_falls_back_when_registry_type_does_not_match_path) ... ok
+test_aio_registry_inventory_path_set_matches_frozen_registry (test_route_contract.RouteContractTests.test_aio_registry_inventory_path_set_matches_frozen_registry) ... ok
+test_aio_registry_inventory_reads_all_published_routes (test_route_contract.RouteContractTests.test_aio_registry_inventory_reads_all_published_routes) ... ok
+test_archive_directory_and_git_index_contain_zero_pyc_bytecode_files (test_route_contract.RouteContractTests.test_archive_directory_and_git_index_contain_zero_pyc_bytecode_files)
+ops/archive-apply-scripts and git index must not contain compiled .pyc bytecode artifacts. ... ok
+test_canonical_alias_redirect_map_and_404_suppression (test_route_contract.RouteContractTests.test_canonical_alias_redirect_map_and_404_suppression)
+Routing engine must define canonical aliases for destinations and suppress 404 guessing. ... ok
+test_classify_path_recognizes_supported_route_prefixes_only (test_route_contract.RouteContractTests.test_classify_path_recognizes_supported_route_prefixes_only) ... ok
+test_compiled_php_registry_parity_and_tamper_fallback (test_route_contract.RouteContractTests.test_compiled_php_registry_parity_and_tamper_fallback)
+Compiled PHP route registry in inc/guide-rollout.php must match JSON registry 100% and reject stale cache on SHA-256 mismatch. ... ok
+test_newsletter_and_contact_conversion_handlers_and_forms (test_route_contract.RouteContractTests.test_newsletter_and_contact_conversion_handlers_and_forms)
+Newsletter and contact backend handlers must validate inputs, reject honeypots, persist entries, and render live forms. ... ok
+test_normalize_path_rejects_ambiguous_segments (test_route_contract.RouteContractTests.test_normalize_path_rejects_ambiguous_segments) ... ok
+test_normalize_path_removes_origin_query_fragment_and_trailing_slash (test_route_contract.RouteContractTests.test_normalize_path_removes_origin_query_fragment_and_trailing_slash) ... ok
+test_public_verifier_dynamic_batch_route_counts_and_ast_invariants (test_route_contract.RouteContractTests.test_public_verifier_dynamic_batch_route_counts_and_ast_invariants) ... ok
+test_public_verifier_executes_fixtures_only_cleanly (test_route_contract.RouteContractTests.test_public_verifier_executes_fixtures_only_cleanly) ... ok
+test_registry_artifact_matches_the_frozen_route_baseline (test_route_contract.RouteContractTests.test_registry_artifact_matches_the_frozen_route_baseline) ... ok
+test_registry_rollout_all_enables_published_target_routes (test_route_contract.RouteContractTests.test_registry_rollout_all_enables_published_target_routes) ... ok
+test_registry_rollout_is_opt_in_and_can_select_one_legacy_route (test_route_contract.RouteContractTests.test_registry_rollout_is_opt_in_and_can_select_one_legacy_route) ... ok
+test_rollout_batches_partition_pending_routes_with_zero_overlap (test_route_contract.RouteContractTests.test_rollout_batches_partition_pending_routes_with_zero_overlap) ... ok
+test_rollout_manifest_covers_every_pending_route_once (test_route_contract.RouteContractTests.test_rollout_manifest_covers_every_pending_route_once) ... ok
+test_rollout_manifest_rejects_duplicate_and_unknown_paths (test_route_contract.RouteContractTests.test_rollout_manifest_rejects_duplicate_and_unknown_paths) ... ok
+test_route_fallback_telemetry_emits_persistent_log_and_action_hook (test_route_contract.RouteContractTests.test_route_fallback_telemetry_emits_persistent_log_and_action_hook)
+vg_record_route_fallback must persist sanitized single-line warnings to configured log sink and fire action hooks. ... ok
+test_routing_engine_flexible_schema_count_validation (test_route_contract.RouteContractTests.test_routing_engine_flexible_schema_count_validation) ... ok
+test_routing_engine_o1_lookup_and_telemetry_contracts (test_route_contract.RouteContractTests.test_routing_engine_o1_lookup_and_telemetry_contracts) ... ok
+test_search_includes_pages_and_canonical_registry_matcher (test_route_contract.RouteContractTests.test_search_includes_pages_and_canonical_registry_matcher)
+Site-wide search must include 'page' post_type via pre_get_posts and match canonical 282-route registry items. ... ok
+test_split_guide_blocks_handles_nested_divs_and_sections_in_legacy_hero (test_route_contract.RouteContractTests.test_split_guide_blocks_handles_nested_divs_and_sections_in_legacy_hero)
+vg_split_guide_blocks must accurately track nested tag depth in legacy hero blocks and fail closed on malformed or secondary H1 markup. ... ok
+test_theme_registry_artifact_matches_ops_registry (test_route_contract.RouteContractTests.test_theme_registry_artifact_matches_ops_registry) ... ok
+test_validate_registry_accepts_a_complete_unique_route (test_route_contract.RouteContractTests.test_validate_registry_accepts_a_complete_unique_route) ... ok
+test_validate_registry_rejects_duplicate_paths_and_missing_required_metadata (test_route_contract.RouteContractTests.test_validate_registry_rejects_duplicate_paths_and_missing_required_metadata) ... ok
+test_audit_route_registry_detects_stale_dates_and_serp_violations (test_tariff_sentinel.TariffSentinelTests.test_audit_route_registry_detects_stale_dates_and_serp_violations)
+Sentinel must flag stale last_reviewed dates, titles > 60 chars, and descriptions outside 147-157 chars. ... ok
+test_audit_toolkit_anchors_detects_missing_files (test_tariff_sentinel.TariffSentinelTests.test_audit_toolkit_anchors_detects_missing_files)
+Toolkit anchor auditor must detect missing toolkit files in a synthetic theme directory. ... ok
+test_production_sentinel_passes_all_282_routes_and_toolkits (test_tariff_sentinel.TariffSentinelTests.test_production_sentinel_passes_all_282_routes_and_toolkits)
+Production route registry and interactive toolkits must pass all sentinel checks. ... ok
+test_build_script_check_mode_runs_successfully (test_theme_assets.TestThemeAssetsPipeline.test_build_script_check_mode_runs_successfully)
+build-theme-assets.py --check must exit with 0 and show compression savings. ... ok
+test_conditional_interactive_asset_enqueue_runtime (test_theme_assets.TestThemeAssetsPipeline.test_conditional_interactive_asset_enqueue_runtime)
+vg_should_enqueue_interactive_assets must only return true on front-page or pages with interactive shortcodes. ... ok
+test_css_minification_preserves_custom_properties_and_calc (test_theme_assets.TestThemeAssetsPipeline.test_css_minification_preserves_custom_properties_and_calc)
+CSS minifier must preserve all --vg-* custom property names and values. ... ok
+test_htaccess_security_and_caching_directives (test_theme_assets.TestThemeAssetsPipeline.test_htaccess_security_and_caching_directives)
+.htaccess must enforce strict security headers and long-lived asset caching. ... ok
+test_interactive_css_extracted_from_homepage_css (test_theme_assets.TestThemeAssetsPipeline.test_interactive_css_extracted_from_homepage_css)
+Interactive map and photo dispatch CSS must be isolated in guide-interactive.css, not bloating homepage.css. ... ok
+test_js_minification_syntax_validity (test_theme_assets.TestThemeAssetsPipeline.test_js_minification_syntax_validity)
+JS minifier output must retain essential event listeners and functions. ... ok
+test_minimalist_ui_zero_emojis_and_zero_inline_toolkit_style_tags (test_theme_assets.TestThemeAssetsPipeline.test_minimalist_ui_zero_emojis_and_zero_inline_toolkit_style_tags)
+Theme PHP files must contain zero decorative emojis, zero numeric emoji entities, and zero inline <style> tags. ... ok
+test_mobile_hero_responsive_min_height (test_theme_assets.TestThemeAssetsPipeline.test_mobile_hero_responsive_min_height)
+Block pattern hero must use viewport-aware responsive min-height on mobile (CWV LCP/FCP). ... ok
+test_print_stylesheet_contract (test_theme_assets.TestThemeAssetsPipeline.test_print_stylesheet_contract)
+Guide experience stylesheet must include @media print rules suppressing screen-only UI. ... ok
+test_theme_asset_version_contract_in_functions_php (test_theme_assets.TestThemeAssetsPipeline.test_theme_asset_version_contract_in_functions_php)
+functions.php must declare vg_theme_asset_version supporting all 5 core assets. ... ok
+
+----------------------------------------------------------------------
+Ran 322 tests in 240.659s
+
+OK (skipped=5)
+
+--- 282 Canonical Routes Travel Cluster Distribution ---
+  central_heritage      :  29 routes
+  central_highlands     :  23 routes
+  coastal_islands       :  32 routes
+  far_north_frontier    :  22 routes
+  ha_long_bay           :  13 routes
+  mekong_delta          :  25 routes
+  national_circuit      :  55 routes
+  ninh_binh             :  10 routes
+  northern_highlands    :  23 routes
+  northern_triangle     :  23 routes
+  phong_nha_caves       :  12 routes
+  southern_delta        :  15 routes
+  Total routes mapped   : 282 / 282
+
+--- 12 Travel Clusters Geo-Coordinates & Boundary Audit ---
+  central_heritage      : lat=15.8801, lon=108.3380 -> PASS [Within Vietnam Box] (Da Nang)
+  central_highlands     : lat=11.9404, lon=108.4583 -> PASS [Within Vietnam Box] (Da Lat & Buon Ma Thuot)
+  coastal_islands       : lat=10.2899, lon=103.9840 -> PASS [Within Vietnam Box] (Phu Quoc & Con Dao)
+  far_north_frontier    : lat=22.6667, lon=106.2500 -> PASS [Within Vietnam Box] (Cao Bang & Ba Be)
+  ha_long_bay           : lat=20.9101, lon=107.1839 -> PASS [Within Vietnam Box] (Ha Long Bay)
+  mekong_delta          : lat=10.0452, lon=105.7469 -> PASS [Within Vietnam Box] (Can Tho & Chau Doc)
+  national_circuit      : lat=16.0544, lon=108.2022 -> PASS [Within Vietnam Box] (Vietnam)
+  ninh_binh             : lat=20.2506, lon=105.9745 -> PASS [Within Vietnam Box] (Ninh Binh)
+  northern_highlands    : lat=22.3364, lon=103.8438 -> PASS [Within Vietnam Box] (Sa Pa & Ha Giang)
+  northern_triangle     : lat=21.0285, lon=105.8542 -> PASS [Within Vietnam Box] (Hanoi)
+  phong_nha_caves       : lat=17.5906, lon=106.2831 -> PASS [Within Vietnam Box] (Phong Nha (Son Trach) & Dong Hoi)
+  southern_delta        : lat=10.8231, lon=106.6297 -> PASS [Within Vietnam Box] (Ho Chi Minh City)
+  [OK] Promoted (batch): wordpress/wp-content/themes/vietnamguide-premium/header.php -> /srv/vietnamguide/wp-content/themes/vietnamguide-premium/header.php (efac7f5caf54c09604b7affdb1eb3958297cf0ece55d7fd402f9d3d558b6158a)
+  [OK] Promoted (batch): wordpress/wp-content/themes/vietnamguide-premium/footer.php -> /srv/vietnamguide/wp-content/themes/vietnamguide-premium/footer.php (eac0e790573fb6424e6008c9f3a1bdf262add6bb2460a001bb89549fb1ddf482)
+  [FAIL] Batch tarball promotion failed (10): TARBALL_HASH_MISMATCH:deadbeef
+CHECK PASSED: 100% SHA-256 Parity (d77881c4b6709e8ec2296d56a737849601292bcb77399e8431fdcac7fbcccaa6) across all 3 artifacts.

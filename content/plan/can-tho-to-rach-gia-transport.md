@@ -7,153 +7,152 @@ travel_cluster: "mekong_delta"
 last_verified: "2026-10-25"
 author: "VietnamGuide Editorial Team"
 reading_time_minutes: 12
-word_count: 1702
+word_count: 2006
 ---
 
 # Can Tho to Rach Gia Transport: Bus Schedules, Limousines, Expressways, and Port Transfers
 
-Connecting the commercial capital of the Mekong Delta to the primary seaport of Kien Giang Province, the 110-kilometer overland transit corridor between Can Tho and Rach Gia serves thousands of daily travelers. Most independent passengers cross this southwestern artery to board maritime speedboats bound for Phu Quoc or the Nam Du archipelago. Others head toward coastal seafood markets along the Gulf of Thailand. Recent infrastructure upgrades have altered transit times along this corridor. The completion of the Lo Te - Rach Soi Expressway (designated CT02) shifted heavy passenger volumes away from the congested surface route of National Route 80 (QL80), cutting vehicular travel durations down to two hours for private cars and light vans.
+Connecting the commercial capital of the Mekong Delta to the primary seaport of Kien Giang Province, the 110-kilometer to 115-kilometer overland transit corridor between **Can Tho** and **Rach Gia** serves thousands of daily passengers. Most independent travelers cross this southwestern artery to board high-speed ferries bound for **Phu Quoc Island** (120 km offshore, 2.25 hours to 2.5 hours by sea), **Hon Son** (55 km), or the **Nam Du Archipelago** (83 km).
 
-Navigating this transit corridor requires aligning coach arrival windows with strict maritime ferry manifests. Missing your port connection in Rach Gia can strand you on the mainland overnight. This operational guide provides field-tested route schedules, exact fares in Vietnamese Dong, terminal transfer procedures, and logistical protocols for a seamless trip.
+Infrastructure upgrades along the Hau River plain have shortened road travel times across the delta. The opening and asphalt resurfacing of the **Lo Te–Rach Soi Expressway (CT02)** shifted long-distance buses and limousine vans off the congested canal-side tarmac of **National Route 80 (QL80)**, cutting point-to-point transit down to 2.0 hours for 9-seat vans and 2.5 hours for 34-berth coaches.
+
+Navigating this route requires syncing your road departure in Can Tho with strict maritime manifest deadlines at **Rach Gia Port** (*Bến tàu Rạch Giá*). Missing your ferry cutoff can strand you on the mainland overnight in 31°C coastal heat and 80% humidity. This 2026 operational guide provides verified coach and limousine schedules, VND and USD fare breakdowns, Cai Rang market combo timing, and port transfer protocols.
 
 ---
 
 ## Route Overview and Core Transit Metrics
 
-Travelers moving westward from Can Tho to Rach Gia select between public interprovincial coaches, shared limousine passenger vans, private hired vehicles, and self-guided motorbikes. 
+Travelers moving 115 kilometers westward from Can Tho to Rach Gia choose between interprovincial coaches, shared 9-seat to 11-seat limousine vans, private hired cars, and self-ridden motorbikes.
 
-| Transport Mode | Operator Options | Departure Station (Can Tho) | Arrival Station (Rach Gia) | Duration | Ticket Price (VND) | Departure Frequency |
+| Transport Mode | Operator Options | Departure Station (Can Tho) | Arrival Station (Rach Gia) | Duration | Ticket Price (VND / USD) | Departure Frequency |
 | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
-| **Fixed-Route Coach** | FUTA Bus Lines (Phương Trang) | Bến xe Trung tâm Cần Thơ | Bến xe Rạch Giá (Mai Thị Hồng Hạnh) | 2.5–3.0 hours | 120,000–140,000 VND | Hourly, 05:00 to 18:00 |
-| **Limousine Shuttle Van** | Vũ Linh, Quân Bưu, Nam Quân | Hotel pickup in Ninh Kieu District | Bến xe Rạch Giá or direct port drop-off | 2.0–2.2 hours | 150,000–180,000 VND | Every 60–90 mins, 04:00 to 17:30 |
-| **Private Hired Car** | GrabCar Interprovincial, Local Drivers | On-demand door-to-door | Bến tàu Rạch Giá (Passenger Port) | 1.8–2.0 hours | 1,100,000–1,400,000 VND | On-demand 24/7 |
-| **Rented Motorbike** | Local rental shops (Ninh Kieu) | Independent departure | City center or port parking compound | 3.0–3.5 hours | ~50,000 VND fuel | Flexible departure |
+| **Fixed-Route Coach** | FUTA Bus Lines (Phương Trang, 1900 6067) | Bến xe Trung tâm Cần Thơ (6.5 km south of Ninh Kieu) | Bến xe Rạch Giá (260A Mai Thị Hồng Hạnh, 7.0 km from port) | 2.5 hours to 3.0 hours | 130,000 VND to 140,000 VND ($5.20 to $5.60 USD) | Every 60 minutes, 05:00 to 18:00 |
+| **Limousine Shuttle Van** | Vũ Linh (1900 7070), Nam Quân, Quân Bưu | Hotel pickup in Ninh Kieu District or bus station | Bến tàu Rạch Giá (Nguyen Cong Tru port gate) | 2.0 hours to 2.2 hours | 150,000 VND to 190,000 VND ($6.00 to $7.60 USD) | Every 60 minutes, 04:00 to 17:30 |
+| **Private Hired Car** | Local 4-seat or 7-seat charter, GrabCar | On-demand hotel door pickup | Bến tàu Rạch Giá (Passenger Port Pier 1–4) | 1.8 hours to 2.0 hours | 1,100,000 VND to 1,400,000 VND ($44.00 to $56.00 USD) | On-demand 24/7 |
+| **Rented Motorbike** | Ninh Kieu rental shops (150,000 VND / $6.00 USD day) | Independent departure via QL91 & QL80 | Port overnight parking lot (25,000 VND / $1.00 USD) | 3.0 hours to 3.5 hours | 50,000 VND to 65,000 VND ($2.00 to $2.60 USD) fuel | Flexible daylight hours |
 
 > [!IMPORTANT]
-> Maritime passenger regulations enforced by the Vietnam Maritime Administration require all high-speed craft operators to close boarding manifests 45 minutes before maritime departure. If your ferry leaves Rach Gia at 08:00 AM, you must physically present your passport or national identity card at the maritime counter no later than 07:15 AM.
+> Maritime safety rules enforced by the Kien Giang Port Authority require high-speed ferry operators to close passenger check-in manifests **30 minutes to 45 minutes before departure**. If your Phu Quoc Express or Superdong boat leaves Rach Gia Port at 08:30 AM, you must present your physical passport at the pier gate by 07:45 AM.
 
 ---
 
 ## Choosing Your Transport: Detailed Vehicle Comparison
 
-Selecting the right vehicle depends on departure timing, baggage volume, and whether you hold an advance ferry booking on the same morning.
+Selecting the best vehicle depends on your ferry departure window, luggage weight, and whether you plan to visit Cai Rang Floating Market on the same morning.
 
-### 1. Interprovincial Express Buses (FUTA Bus Lines)
+### 1. Interprovincial Express Buses (FUTA Bus Lines / Phương Trang)
 
-FUTA Bus Lines (Phương Trang) operates the most dependable commercial bus service between Can Tho and Rach Gia. Fleet operations utilize modern 29-seat mid-size coaches and 34-berth air-conditioned sleeper buses. Departing coaches run once every hour from 05:00 to 18:00 daily. Tickets cost between 120,000 VND and 140,000 VND per passenger.
+**FUTA Bus Lines** (Phương Trang, national hotline 1900 6067) operates the highest-capacity public service across the 115-kilometer route. The fleet deploys air-conditioned 29-seat Hyundai County coaches and 34-berth sleeper buses departing **Can Tho Central Bus Station** (*Bến xe Trung tâm Cần Thơ*) every 60 minutes from 05:00 to 18:00 daily. Tickets cost 130,000 VND to 140,000 VND ($5.20 to $5.60 USD) one-way, including up to 20 kg of undercarriage baggage.
 
-Each ticket purchased through the FUTA ticketing window or official mobile application includes complimentary transit aboard company internal transfer shuttles (*xe trung chuyển*). Upon pulling into Bến xe Rạch Giá on Mai Thị Hồng Hạnh Street, disembarking passengers can board a minibus directly to Bến tàu Rạch Giá on Nguyen Cong Tru Street without paying additional fares. Ensure you alert the depot dispatch desk immediately after stepping off the main bus.
+Every FUTA ticket includes a free city shuttle transfer (*xe trung chuyển*, worth 80,000 VND to 100,000 VND or $3.20 to $4.00 USD in saved taxi fares) at both ends of the journey. In Can Tho, a 16-seat orange FUTA van collects registered passengers from Ninh Kieu hotels 45 minutes to 60 minutes before coach departure. Upon arriving at **Bến xe Rạch Giá** (7.0 km southeast of the harbor), a connecting FUTA shuttle van transfers passengers in 15 minutes to 20 minutes straight to **Rach Gia Port** on Nguyen Cong Tru Street.
 
-### 2. Premium 9-Seat Limousine Minivans
+### 2. Premium 9-Seat & 11-Seat Limousine Minivans
 
-Shared limousine vans operated by transport companies such as Vũ Linh Limousine and Quân Bưu utilize customized Ford Transit chassis equipped with reclining leather captain seats, individual USB charging points, and dedicated luggage bays. Fares run from 150,000 VND to 180,000 VND per seat. 
+Shared limousine operators including **Vũ Linh Limousine** (hotline 1900 7070), **Nam Quân Limousine**, and **Thiện Thành** run customized Ford Transit and Hyundai Solati vans fitted with 9 to 11 wide leather captain chairs, individual USB-A/USB-C charging ports, cold bottled water, and cabin Wi-Fi. One-way tickets cost 150,000 VND to 190,000 VND ($6.00 to $7.60 USD) per passenger.
 
-These operators depart Can Tho between 04:00 AM and 17:30 PM. Their major competitive advantage lies in speed and direct routing. Limousines bypass traditional bus terminal waiting pens and access the Lo Te - Rach Soi expressway corridor immediately. In addition, drivers drop passengers directly at the ferry ticketing counters on Nguyen Cong Tru Street in Rach Gia when notified in advance.
+Limousines depart Can Tho every 60 minutes between 04:00 AM and 17:30 PM. Because 9-seat vans skip lengthy bus depot boarding queues and cruise at 80 km/h along the 51.5-kilometer **Lo Te–Rach Soi Expressway (CT02)**, they complete the 110-kilometer run in 2.0 hours to 2.2 hours and drop passengers directly outside the Superdong and Phu Quoc Express ticket counters at Rach Gia Port.
 
-### 3. Private Transfer Cars
+### 3. Private Transfer Cars (4-Seat Sedan & 7-Seat SUV)
 
-Hiring a private sedan or compact SUV provides absolute scheduling control. Standard point-to-point quotes from Can Tho downtown hotels to the Rach Gia port gate range between 1,100,000 VND for a 4-seat sedan and 1,400,000 VND for a 7-seat family vehicle. GrabCar drivers occasionally accept this long-distance run, though negotiating directly with licensed transport cooperatives or your hotel front desk yields firmer arrival guarantees. Private vehicles handle the 110-kilometer run in roughly 1 hour and 50 minutes under standard traffic conditions. It is fast.
+Booking a private air-conditioned car is the smartest move for families of 3 to 5 travelers or anyone catching an early 07:00 or 07:30 ferry. Standard point-to-point fares from Ninh Kieu District hotels to Rach Gia Port run 1,100,000 VND to 1,200,000 VND ($44.00 to $48.00 USD) for a 4-seat sedan (Toyota Vios or Honda City) and 1,300,000 VND to 1,400,000 VND ($52.00 to $56.00 USD) for a 7-seat SUV (Mitsubishi Xpander or Toyota Innova). Split four ways, a private car costs 275,000 VND ($11.00 USD) per person and covers the 110 km expressway drive in 1.8 hours to 2.0 hours.
 
-### 4. Motorbike Travel
+### 4. Independent Motorbike Travel
 
-Riding a two-wheeler between Can Tho and Rach Gia takes roughly 3 hours and 15 minutes. Motorcyclists must be alert to highway safety protocols: two-wheeled motorbikes are legally prohibited from entering the elevated main carriageway of the Lo Te - Rach Soi expressway (CT02). Motorbikes must follow National Route 91B out of Can Tho toward O Mon, cross into Thot Not, and navigate the older surface tarmac of QL80. Surface asphalt along QL80 exhibits frequent patches, rutted edges from heavy industrial aggregate haulers, and narrow bridges across irrigation waterways. Fuel expenditure totals roughly 50,000 VND to 65,000 VND each way.
+Riding a 110cc to 125cc scooter from Can Tho to Rach Gia covers 115 kilometers and takes 3.0 hours to 3.5 hours at an average speed of 40 km/h. Two-wheeled motorcycles are strictly prohibited from entering the 51.5 km **Lo Te–Rach Soi Expressway (CT02)**; police checkpoints at the Vam Cong and Rach Soi interchanges issue fines of 2,000,000 VND to 3,000,000 VND ($80.00 to $120.00 USD) to motorcyclists entering the expressway.
+
+Riders must follow **National Route 91 (QL91)** 42 km northwest through O Mon to Thot Not, then turn southwest onto **National Route 80 (QL80)** for 70 km into Rach Gia, spending 50,000 VND to 65,000 VND ($2.00 to $2.60 USD) on fuel.
 
 ---
 
 ## Highway Conditions and Corridor Infrastructure
 
-Two distinct overland routes link Can Tho with Rach Gia. Choosing the correct roadway prevents delays.
-
-### The Lo Te - Rach Soi Expressway (CT02)
-
-Spanning 51 kilometers from Thot Not District in Can Tho City to Chau Thanh District in Kien Giang Province, CT02 represents the primary high-speed trunk route for four-wheeled motor traffic. Designed initially as an access-controlled highway upgradeable to full expressway specifications, the corridor maintains an operational speed limit of 80 km/h. Commercial passenger coaches, limousines, container trucks, and private passenger automobiles use this flat roadway to bypass urban bottle-necks along the canal network. The highway surface consists of graded asphalt concrete, without intermediate service plazas.
+### The Lo Te–Rach Soi Expressway (CT02)
+Stretching 51.5 kilometers from the Vam Cong Bridge approach in Thot Not District (Can Tho) to the Rach Soi bypass in Chau Thanh District (Kien Giang), **Expressway CT02** serves as the high-speed four-lane trunk corridor for cars, limousines, and coaches. Upgraded with polymer-modified asphalt concrete and a statutory speed limit of 80 km/h, this 51.5 km section takes 40 minutes to 45 minutes to cross and bypasses 14 canal bridges and market bottlenecks along the old highway.
 
 ### Surface Highway Route 80 (QL80)
-
-Older highway infrastructure along QL80 runs parallel to the Cai San canal system and handles mixed regional traffic. While four-wheeled vehicles may legally use QL80, standard commercial coaches avoid it due to intense congestion in market settlements such as Tan Hiep and Soc Xoai. Motorcyclists, agricultural tractors, and low-speed three-wheelers remain restricted to this surface highway. Pavement conditions along QL80 require defensive driving maneuvers. Heavy monsoon rainfall between June and November regularly deposits silt at canal bridge approaches. Maintain a minimum following distance of 35 meters behind industrial flatbeds.
-
----
-
-## Step-by-Step Terminal Departure and Port Transfer
-
-Executing this transit transfer smoothly requires following a disciplined timeline.
-
-```
-04:30 AM - Hotel checkout in Can Tho (Ninh Kieu District)
-04:45 AM - Taxi ride (6 km, 75,000 VND) to Bến xe Trung tâm Cần Thơ
-05:15 AM - Board FUTA bus to Rach Gia (130,000 VND ticket)
-07:35 AM - Arrive at Bến xe Rạch Giá (Mai Thị Hồng Hạnh)
-07:45 AM - Board FUTA free shuttle van or GrabBike to sea port (7 km)
-08:05 AM - Check in at Bến tàu Rạch Giá ticket office (Nguyen Cong Tru)
-08:45 AM - Complete vessel boarding; manifest closes
-09:15 AM - High-speed ferry departs for Phu Quoc or Nam Du
-```
-
-### Departing from Can Tho
-
-Head to the Central Bus Station of Can Tho (**Bến xe Trung tâm Cần Thơ**), located along National Route 1A in Hung Thanh Ward, Cai Rang District. A metered taxi or GrabCar from the Ninh Kieu waterfront promenade to this terminal costs 70,000 VND to 85,000 VND and takes 12 to 15 minutes. 
-
-Inside the main passenger hall, step directly up to the illuminated **Phương Trang (FUTA)** ticket counters. Ticket agents accept cash in Vietnamese Dong or domestic banking app QR transfers (VietQR). Advance digital bookings via the FUTA mobile application issue a digital QR voucher that can be shown directly to vehicle boarding marshals on platform bays 4 through 7.
-
-### Arriving in Rach Gia and Reaching the Ferry Port
-
-Buses terminate at **Bến xe Rạch Giá**, situated on Mai Thị Hồng Hạnh Street in Vinh Hiep Ward, approximately 7 kilometers southeast of the waterfront port. Do not wander away into the outer parking lot if you intend to take advantage of the complimentary shuttle van. Instead, walk directly into the bus company's dispatch cubicle next to the arrival platform, present your coach ticket stub, and state your final destination clearly: *"Bến tàu Rạch Giá"*. 
-
-The shuttle van driver loads passenger bags into the rear compartment and transfers travelers across the Cai Lon river bridges directly to the maritime passenger port entrance on **Nguyen Cong Tru Street** in Vinh Thanh Ward. If you travel with an independent limousine company, your driver will drop you at the pier ticketing office directly, provided you confirm this drop-off point when boarding in Can Tho.
+Running parallel to the Cai San canal dug in the early 19th century, **National Route 80 (QL80)** handles motorcycles, local buses, and rice barges unloading at Vinh Thanh and Tan Hiep markets. Speed limits drop to 50 km/h inside densely populated market towns every 8 km to 10 km, and monsoon showers between June and November (when monthly rainfall hits 280 mm) leave slick clay silt near bridge expansion joints. Maintain a 35-meter safety cushion behind gravel trucks.
 
 ---
 
-## Ferry Connections to Phu Quoc and Nam Du Islands
+## Step-by-Step Timelines: Dawn Express vs Cai Rang Floating Market Combo
 
-Bến tàu Rạch Giá connects mainland transit directly to offshore island chains. Two primary maritime carriers dominate high-speed operations.
+Most travelers in Can Tho want to see the **Cai Rang Floating Market** before heading to Phu Quoc. Below are the two proven operational schedules for 2026:
 
 ```
-+-------------------------------------------------------------------------+
-|                  RACH GIA PASSENGER PORT (BEN TAU RACH GIA)             |
-|                                                                         |
-|  [Superdong Ferry Offices]                 [Phu Quoc Express Terminal]  |
-|  14 Nguyen Cong Tru Street                 Tran Phu / Harbor Pier Wall  |
-|  Hotline: 0297 3877 742                    Hotline: 0989 566 889        |
-|                                                                         |
-|    --> Daily Fast Ferry to Phu Quoc:         --> Daily Catamaran to PQ: |
-|        07:00 | 08:10 | 10:40 | 13:10             07:30 | 08:30 | 10:00  |
-|        Fare: 340,000 VND (2.5 hrs)               Fare: 380,000 VND      |
-|                                                                         |
-|    --> Daily Ferry to Nam Du Islands:        --> Ferry to Hon Son:      |
-|        06:30 | 07:30 | 08:30                     06:35 | 08:45          |
-|        Fare: 250,000 - 290,000 VND               Fare: 170,000 VND      |
-+-------------------------------------------------------------------------+
+SCHEDULE A: EARLY FERRY SPRINT (For 08:30 AM Phu Quoc Express / Superdong)
+04:30 AM - Checkout in Ninh Kieu; take 6.5 km taxi (75,000 VND / $3.00 USD, 15 mins) to Can Tho Bus Station
+05:00 AM - Board 05:00 AM FUTA coach (130,000 VND / $5.20 USD) or 05:00 AM Vũ Linh Limousine (165,000 VND / $6.60 USD)
+07:15 AM - Arrive in Rach Gia; take 15-min free FUTA shuttle (7.0 km) or direct limousine drop at Rach Gia Port
+07:45 AM - Clear passport check-in 45 minutes before sailing at Nguyen Cong Tru Pier
+08:30 AM - Depart Rach Gia on Phu Quoc Express catamaran (315,000 VND / $12.60 USD, 2.25 hours) -> Arrive Phu Quoc 10:45 AM
+
+SCHEDULE B: CAI RANG FLOATING MARKET + MIDDAY FERRY COMBO (Recommended)
+05:15 AM - Board private sampan at Ninh Kieu Wharf (350,000–450,000 VND / $14.00–$18.00 USD) for 6.0 km boat ride to Cai Rang
+05:45 AM - Eat floating boat noodle soup (hủ tiếu, 40,000 VND / $1.60 USD) & Vietnamese coffee (25,000 VND / $1.00 USD) on water
+07:15 AM - Return to Ninh Kieu hotel (15 mins), collect bags, and check out
+08:00 AM - Board Vũ Linh 9-seat Limousine (165,000 VND / $6.60 USD) for 110 km expressway drive via CT02 (2.0 hours)
+10:00 AM - Arrive directly at Rach Gia Port (Bến tàu Rạch Giá, Nguyen Cong Tru Street)
+10:30 AM - Depart on 10:30 AM Phu Quoc Express or 10:40 AM Superdong (315,000–330,000 VND / $12.60–$13.20 USD) -> Arrive Phu Quoc 13:00 PM
 ```
 
-### Superdong Speedboats
+### Departing from Can Tho Central Bus Station
+Located along National Route 1A in Hung Thanh Ward, Cai Rang District (6.5 kilometers south of Ninh Kieu Wharf, 15 minutes by Mai Linh taxi or GrabCar for 75,000 VND to 90,000 VND, or $3.00 to $3.60 USD), **Bến xe Trung tâm Cần Thơ** is a modern, air-conditioned terminal. Walk to the orange **Phương Trang (FUTA)** counters (open 04:30 to 21:00) to pay in VND cash, Visa/Mastercard, or VietQR, then proceed 50 meters to departure bays 4 through 7.
 
-Superdong operates single-hull and catamaran speedboats from Rach Gia to Bai Vong Port on Phu Quoc Island. Crossings take approximately 2 hours and 30 minutes. Adult tickets cost 340,000 VND per sector, while children pay 240,000 VND. Vessels depart Rach Gia at 07:00, 08:10, 10:40, and 13:10. Superdong also runs regular morning boats to Nam Du (An Son Port) departing at 06:30, 07:30, and 08:30, charging 250,000 VND to 290,000 VND for the 2-hour sea journey.
+### Transferring from Rach Gia Bus Station to the Ferry Port
+Interprovincial coaches terminate at **Bến xe Rạch Giá** (260A Mai Thị Hồng Hạnh Street, Vĩnh Hiệp Ward), situated 7.0 kilometers southeast of the ferry piers. Ignore freelance motorbike touts outside the bus door quoting 100,000 VND ($4.00 USD); instead, step 20 meters into the **FUTA Transfer Waiting Lounge** (*Phòng chờ xe trung chuyển*), show your 130,000 VND ($5.20 USD) bus stub, and board the free 16-seat shuttle van that runs every 15 minutes across the Cai Lon canal bridge to **Rach Gia Port** (or take a metered GrabCar for 85,000 VND to 110,000 VND, or $3.40 to $4.40 USD if pressed for time).
 
-### Fast Catamarans of Phu Quoc Express
+---
 
-The red-hulled catamaran fleet of Phu Quoc Express features twin-hull naval architecture designed to slice through ocean swell with minimal roll. Typical sailing duration to Phu Quoc is 2 hours and 15 minutes. Standard economy seating costs 380,000 VND, whereas VIP leather seating in the upper bridge lounge costs 540,000 VND. Morning sailings depart Rach Gia at 07:30, 08:30, and 10:00.
+## Ferry Connections to Phu Quoc, Hon Son, and Nam Du Islands
+
+**Rach Gia Port** (*Bến tàu Rạch Giá*, located at the western end of Nguyen Cong Tru Street) serves as the maritime hub for Kien Giang's islands.
+
+```
++-----------------------------------------------------------------------------------+
+|                   RACH GIA PASSENGER PORT (BEN TAU RACH GIA)                      |
+|                                                                                   |
+|  [Superdong High-Speed Ferries]             [Phu Quoc Express 5-Star Catamarans]  |
+|  14 Nguyen Cong Tru | Tel: 0297 3877 742    Harbor Pier 2 | Tel: 0989 566 889     |
+|                                                                                   |
+|  --> Rach Gia to Phu Quoc (120 km / 2.5h)   --> Rach Gia to Phu Quoc (120 km / 2.25h)
+|      Depart: 07:00 | 08:10 | 10:40 | 13:10      Depart: 07:30 | 08:30 | 10:30 | 13:30
+|      Adult: 330,000 VND ($13.20 USD)            Economy: 315,000 VND ($12.60 USD) |
+|      Child: 240,000 VND ($9.60 USD)             VIP Deck: 500,000 VND ($20.00 USD)|
+|                                                                                   |
+|  --> Rach Gia to Nam Du (83 km / 2.1h)      --> Rach Gia to Hon Son (55 km / 1.5h)|
+|      Depart: 06:30 | 07:30 | 08:30              Depart: 06:35 | 08:45             |
+|      Fare: 250,000 VND ($10.00 USD)             Fare: 170,000 VND ($6.80 USD)     |
++-----------------------------------------------------------------------------------+
+```
+
+1. **Superdong Fast Ferries:** Operates monohull speedboats across the 120 km channel from Rach Gia to **Bai Vong Port** on Phu Quoc in 2.5 hours. Standard adult fares are 330,000 VND ($13.20 USD), seniors (60+) pay 280,000 VND ($11.20 USD), and children (6–11) pay 240,000 VND ($9.60 USD). Upon landing at Bai Vong Port (15 km east of Duong Dong Town), shared shuttle buses transfer passengers into town in 25 minutes for 30,000 VND to 40,000 VND ($1.20 to $1.60 USD).
+
+2. **Phu Quoc Express Catamarans:** Twin-hull 30-knot aluminum catamarans complete the 120 km Phu Quoc crossing in 2.25 hours with superior stability in 1.5-meter monsoon swells. Economy seats cost 315,000 VND ($12.60 USD), seniors pay 265,000 VND ($10.60 USD), children pay 225,000 VND ($9.00 USD), and upper-deck VIP recliners cost 500,000 VND ($20.00 USD). Travelers bringing a motorbike (120,000 VND or $4.80 USD) or 4-to-7-seat car (900,000 VND to 1,300,000 VND or $36.00 to $52.00 USD) can board the **Thanh Thoi Ro-Ro Ferry** (3.0 hours crossing).
 
 ---
 
 ## Safety Guidelines, Baggage Protocols, and Scam Avoidance
 
-1. **Luggage Mass Allowances**: Standard passenger ferry tickets include an allowance of 15 to 20 kilograms of personal luggage. Deck crews stack large suitcases in the forward enclosed cargo bay or stern lockers. Keep electronics, portable power banks, cash, and passports inside a separate daypack carried at your seat.
-2. **Preventing Motion Sickness**: The waters of the Gulf of Thailand encounter southwesterly monsoon squalls between June and October. Wave chop during these months can induce seasickness. Purchase cinnarizine or dimenhydrinate tablets (*thuốc say sóng*) for 10,000 VND at any pharmacy on Nguyen Cong Tru Street before boarding. Ingest the medication 30 minutes prior to departure.
-3. **Countering Touting Scams at Bến xe Rạch Giá**: Unofficial motorbike taxi riders (*xe ôm*) frequently approach newly arrived bus passengers on platform bays, falsely claiming that company shuttle vans have stopped running or that morning ferries are canceled. Disregard these assertions. Walk straight to the official FUTA office desk to claim your free transfer ride.
-4. **Ticket Manifest Accuracy**: Double-check that your printed ferry ticket matches your passport number and full name identically. Port border guards audit identity documents at the turnstiles. Discrepancies require reissuing the ticket at the carrier's port desk for an administrative fee of 30,000 VND.
+1. **Baggage Weight Limits:** Ferry tickets include 15 kg to 20 kg of cabin and rack luggage free of charge; oversized cargo boxes above 20 kg incur a port handling fee of 20,000 VND to 50,000 VND ($0.80 to $2.00 USD).
+
+2. **Seasickness Prevention:** During the southwest monsoon (June to October), Gulf of Thailand swells reach 1.5 meters to 2.5 meters. Buy *Nautamine* or *Stugeron* (cinnarizine 25mg) tablets for 10,000 VND to 15,000 VND ($0.40 to $0.60 USD) at Pharmacity on Nguyen Cong Tru Street (200 meters from the pier) and take one tablet 30 minutes before boarding, choosing a center-aisle seat on the lower deck.
+
+3. **Passport Name Matching:** Border guards scan every ticket QR code against your physical passport at the pier turnstile; correcting a misspelled name or passport number at the port ticket window costs a 30,000 VND ($1.20 USD) reissue fee and requires at least 20 minutes before manifest lock.
+
+4. **Reverse Routing to Can Tho Airport (VCA) or Ho Chi Minh City:** Afternoon ferries returning from Phu Quoc dock at Rach Gia Port between 15:15 and 16:00. Waiting Vũ Linh limousine vans (165,000 VND or $6.60 USD) depart directly from the Nguyen Cong Tru port gate at 16:15, delivering passengers back to Ninh Kieu by 18:15 or to **Can Tho International Airport (VCA, 10 km northwest of downtown)** by 18:30 for evening flights to Hanoi and Da Nang.
 
 ---
 
 ## Frequently Asked Questions
 
-### Can I catch the 08:00 AM speedboat to Phu Quoc by leaving Can Tho early in the morning?
-Catching an 08:00 AM or 08:10 AM ferry from Rach Gia requires extreme precision. The 45-minute manifest closure mandates arrival at the port counter by 07:15 AM. You must book a private transfer car or board a 04:30 AM limousine van from Can Tho. Standard 05:00 AM public coaches arrive at Bến xe Rạch Giá around 07:30 AM, leaving insufficient time to clear harbor gates. If taking a public bus, target the 10:40 AM ferry instead.
+### Can I catch the 08:00 AM or 08:10 AM speedboat to Phu Quoc by leaving Can Tho early in the morning?
+Catching an 08:10 AM Superdong or 08:30 AM Phu Quoc Express ferry requires departing Can Tho no later than **05:00 AM** by Vũ Linh Limousine (165,000 VND or $6.60 USD, 2.0 hours via CT02) or private car (1,100,000 VND or $44.00 USD, 1.8 hours) to reach Rach Gia Port before the 07:30 AM to 07:45 AM manifest cutoff. If taking a public FUTA coach, book the 05:00 AM bus to catch the 08:30 AM catamaran, or take the 07:00 AM bus to connect comfortably with the 10:30 AM and 10:40 AM sailings.
 
 ### Where can I leave my rental motorbike in Rach Gia before crossing to the islands?
-Secure overnight motorcycle parking compounds (*bãi giữ xe qua đêm*) operate along Nguyen Cong Tru Street directly opposite the passenger port gate. Overnight fees range from 20,000 VND to 30,000 VND per 24-hour cycle. The parking attendant will issue an encoded plastic token or write your vehicle license plate number in chalk on the seat. Retain the receipt slip carefully.
+Guarded 24-hour covered parking compounds (*bãi giữ xe qua đêm*) sit directly opposite the port arch on Nguyen Cong Tru Street (100 meters walk from Pier 1). Overnight parking for a 110cc to 150cc motorbike costs 20,000 VND to 30,000 VND ($0.80 to $1.20 USD) per 24 hours, while covered 4-to-7-seat car parking costs 80,000 VND to 120,000 VND ($3.20 to $4.80 USD) per day.
 
 ### Are there ATM facilities and food stalls near the Rach Gia ferry terminal?
-Yes. Several domestic commercial banks maintain 24-hour ATMs within 250 meters of the port gate, including Vietcombank and Agribank. Local street vendors and casual eateries along Nguyen Cong Tru Street serve hot bowls of *bún cá Kiên Giang* (fish noodle soup) and iced Vietnamese coffee (*cà phê sữa đá*) for 35,000 VND to 45,000 VND starting from 05:30 AM.
+Yes. **Vietcombank, BIDV, and Agribank** operate 24/7 ATMs within 150 meters to 300 meters of the Nguyen Cong Tru port gate (dispensing up to 3,000,000 VND to 5,000,000 VND or $120.00 to $200.00 USD per withdrawal). Across from the terminal, morning cafés open at 05:30 AM serving signature *bún cá Rạch Giá* (mackerel and shrimp rice noodle soup) for 35,000 VND to 50,000 VND ($1.40 to $2.00 USD) and iced coffee for 20,000 VND ($0.80 USD).
 
-### What happens if bad weather halts ferry departures from Rach Gia?
-During periods of rough seas exceeding Beaufort wind force 6, the Kien Giang Port Authority halts all passenger vessel departures. Ferry operators will either transfer your booking to the next operational sailing window without surcharge or issue a full 100% ticket refund at the terminal ticket counter. In such circumstances, travelers can either lodge overnight in Rach Gia or hire a road car to Ha Tien, where maritime crossings to Phu Quoc are shorter and less susceptible to open ocean swells.
+### What happens if rough weather halts ferry departures from Rach Gia?
+When Gulf of Thailand winds hit Beaufort Force 6 to 7 (above 40 km/h to 50 km/h), the Maritime Administration suspends all Rach Gia sailings. Superdong and Phu Quoc Express provide a **100% cash or card refund** (or free rebooking onto the next day's boat). Stranded travelers needing same-day arrival can catch a 45 minutes taxi (18 km, 220,000 VND or $8.80 USD) to **Rach Gia Airport (VKG)** for a 50-minute Vietnam Airlines ATR-72 flight, or hire a car 90 km northwest along QL80 to **Ha Tien Port** (2.0 hours, 900,000 VND or $36.00 USD), where sheltered 45 km Phu Quoc car ferries often resume sailing earlier.

@@ -1,0 +1,42 @@
+{
+  "schema_version": 1,
+  "scope": {
+    "root": "ops",
+    "excluded_directories": [
+      "__pycache__",
+      "archive-apply-scripts",
+      "backups",
+      "tests"
+    ],
+    "excluded_files": [
+      "deploy_security_audit.py"
+    ]
+  },
+  "summary": {
+    "candidate_count": 2,
+    "release_path_count": 1,
+    "release_ready_count": 1,
+    "blocked_release_count": 0,
+    "missing_release_count": 0,
+    "legacy_blocked_count": 0,
+    "finding_counts": {}
+  },
+  "release_paths": [
+    "deploy_theme_updates.py"
+  ],
+  "missing_release_paths": [],
+  "records": [
+    {
+      "path": "deploy_config.py",
+      "findings": [],
+      "release_path": false,
+      "release_ready": false
+    },
+    {
+      "path": "deploy_theme_updates.py",
+      "findings": [],
+      "release_path": true,
+      "release_ready": true
+    }
+  ]
+}

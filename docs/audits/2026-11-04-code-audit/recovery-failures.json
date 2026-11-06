@@ -1,0 +1,132 @@
+[
+  {
+    "Name": "Baseline has no top-level raw ordering evaluators and annotates every retained authored pin",
+    "Passed": false,
+    "Error": "Retained raw authored check lacks an immediately adjacent standardized comment at line 812: $executionAddendumText.Contains($marker) Expected 'True'; received 'False'."
+  },
+  {
+    "Name": "Markdown parser treats a same-info fence line as body content",
+    "Passed": false,
+    "Error": "Markdown result should be valid. Expected 'True'; received 'False'."
+  },
+  {
+    "Name": "Markdown parser accepts tilde fences",
+    "Passed": false,
+    "Error": "Tilde fence should be valid. Expected 'True'; received 'False'."
+  },
+  {
+    "Name": "Markdown parser accepts longer closing fences with trailing whitespace",
+    "Passed": false,
+    "Error": "Long closing fence end line mismatch. Expected '4'; received ''."
+  },
+  {
+    "Name": "Markdown parser preserves blank lines in empty-info fences",
+    "Passed": false,
+    "Error": "Empty fence info should yield an empty language. Expected ''; received ''."
+  },
+  {
+    "Name": "Markdown parser handles stateful multiline HTML comments",
+    "Passed": false,
+    "Error": "Content after a multiline comment should remain structural. Expected 'True'; received 'False'."
+  },
+  {
+    "Name": "Markdown parser reports an unclosed fence at the opening marker",
+    "Passed": false,
+    "Error": "Cannot bind argument to parameter 'Diagnostics' because it is an empty array."
+  },
+  {
+    "Name": "Markdown parser reports an unclosed HTML comment at its opening marker",
+    "Passed": false,
+    "Error": "Unclosed comment diagnostic source line mismatch. Expected '2'; received '1'."
+  },
+  {
+    "Name": "Markdown parser normalizes language aliases to canonical keys",
+    "Passed": false,
+    "Error": "Declared language alias should satisfy the canonical requirement. Expected 'True'; received 'False'."
+  },
+  {
+    "Name": "Markdown parser reports unsupported fence languages when aliases are declared",
+    "Passed": false,
+    "Error": "Cannot bind argument to parameter 'Diagnostics' because it is an empty array."
+  },
+  {
+    "Name": "Markdown parser normalizes mixed line endings without losing source lines",
+    "Passed": false,
+    "Error": "Normalized section start line mismatch. Expected '1'; received ''."
+  },
+  {
+    "Name": "Bash parser joins a split heredoc operator before consuming its body",
+    "Passed": false,
+    "Error": "Bash event text mismatch. Count mismatch. Expected '2'; received '1'."
+  },
+  {
+    "Name": "Bash parser does not continue a backslash after comment start",
+    "Passed": false,
+    "Error": "Bash event text mismatch. Count mismatch. Expected '2'; received '1'."
+  },
+  {
+    "Name": "Bash parser skips shift operators inside supported arithmetic forms",
+    "Passed": false,
+    "Error": "Bash event text mismatch. Count mismatch. Expected '2'; received '1'."
+  },
+  {
+    "Name": "Bash parser rejects unclosed arithmetic forms",
+    "Passed": false,
+    "Error": "Bash event text mismatch. Count mismatch. Expected '1'; received '0'."
+  },
+  {
+    "Name": "Bash parser consumes multiple heredocs in FIFO order",
+    "Passed": false,
+    "Error": "FIFO heredoc queue should be valid. Expected 'True'; received 'False'."
+  },
+  {
+    "Name": "Bash parser removes supported heredoc delimiter quoting and escapes",
+    "Passed": false,
+    "Error": "Heredoc opener 'cat <<EOF' should be valid. Expected 'True'; received 'False'."
+  },
+  {
+    "Name": "Bash parser ignores heredoc text inside ordinary quoted strings",
+    "Passed": false,
+    "Error": "Bash event text mismatch. Count mismatch. Expected '2'; received '1'."
+  },
+  {
+    "Name": "Bash parser diagnoses unterminated ordinary quotes",
+    "Passed": false,
+    "Error": "Bash event text mismatch. Count mismatch. Expected '1'; received '0'."
+  },
+  {
+    "Name": "Bash parser rejects a heredoc queue missing any FIFO terminator",
+    "Passed": false,
+    "Error": "Bash event text mismatch. Count mismatch. Expected '2'; received '1'."
+  },
+  {
+    "Name": "Bash parser applies token boundaries when starting comments",
+    "Passed": false,
+    "Error": "Bash event text mismatch. Count mismatch. Expected '5'; received '0'."
+  },
+  {
+    "Name": "Bash parser preserves word token state across continuations",
+    "Passed": false,
+    "Error": "Bash event text mismatch. Item 0 mismatch. Expected 'echo word#fragmenttail'; received 'echo word\\\n#fragment\\\ntail'."
+  },
+  {
+    "Name": "Bash parser emits deterministic source metadata and statement identifiers",
+    "Passed": false,
+    "Error": "Metadata event count mismatch. Expected '2'; received '1'."
+  },
+  {
+    "Name": "Bash parser handles empty and trailing physical body lines deterministically",
+    "Passed": false,
+    "Error": "Bash event text mismatch. Count mismatch. Expected '2'; received '1'."
+  },
+  {
+    "Name": "Bash parser rejects comment-start heredoc delimiters and preserves authored delimiter words",
+    "Passed": false,
+    "Error": "Unexpected diagnostic codes. Expected 'BASH_AMBIGUOUS_REDIRECTION'; received 'BASH_UNBALANCED_HEREDOC_QUEUE'."
+  },
+  {
+    "Name": "Bash parser validates arithmetic expansion inside double quotes",
+    "Passed": false,
+    "Error": "Bash event text mismatch. Count mismatch. Expected '2'; received '1'."
+  }
+]

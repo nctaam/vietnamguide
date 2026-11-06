@@ -1,0 +1,19 @@
+============================================================
+   VietnamGuide Ground-Truth Tariff & Freshness Sentinel    
+============================================================
+Routes Audited         : 282/282
+Freshness Window       : <= 180 days (Ref: 2026-11-04)
+Stale / Invalid Dates  : 0 stale, 0 invalid
+SERP Title Violations  : 0 (100% <= 60 chars)
+SERP Window Violations : 0 (100% in 147-157 chars)
+Empirical Coverage     : 100.0% (282/282 routes, threshold: >= 98.0%)
+  - Currency/Tariffs   : 163 routes
+  - Transit/Distances  : 155 routes
+  - Climate/Seasons    : 83 routes
+  - Official Portals   : 211 routes
+Travel Clusters        : 12/12 verified (geo coordinates & journey links valid)
+Registry Parity        : 100% SHA-256 byte parity verified (d77881c4b6709e8e...)
+Toolkit Anchor Issues  : 0 missing files, 0 missing tokens
+------------------------------------------------------------
+OVERALL SENTINEL STATUS: PASS
+============================================================

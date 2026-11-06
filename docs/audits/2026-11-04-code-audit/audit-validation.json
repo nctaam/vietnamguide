@@ -1,0 +1,26 @@
+{
+  "source_files_unchanged_since_inventory": 104,
+  "source_files_changed": [],
+  "syntax_final": {
+    "php": 44,
+    "javascript": 5,
+    "python": 32,
+    "powershell": 13,
+    "errors": []
+  },
+  "additional_verification": {
+    "homepage_image_tests": {
+      "passed": 5,
+      "failed": 0
+    },
+    "anti_slop_self_tests": {
+      "passed": 38,
+      "failed": 0,
+      "included_in_unittest_suite": true
+    }
+  },
+  "report_exists": true,
+  "evidence_files": 25,
+  "invalid_report_links": [],
+  "browser_repro_script_verified": true
+}

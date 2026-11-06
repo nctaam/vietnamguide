@@ -1,0 +1,125 @@
+
+Name                                                                                                      Passed Error
+----                                                                                                      ------ -----
+Diagnostic constructor returns the typed diagnostic contract                                                True      
+Executable event constructor returns the typed event contract                                               True      
+Executable event query normalizes line endings and preserves event order                                    True      
+Executable event query applies ordinal text equality and language filtering                                 True      
+Executable event query handles scalar empty and null event inputs deterministically                         True      
+Executable event sequence accepts expected texts in exact event order                                       True      
+Executable event sequence rejects a missing expected text                                                   True      
+Executable event sequence rejects reordered expected texts                                                  True      
+Executable event sequence rejects duplicate expected events when uniqueness is required                     True      
+Executable event sequence handles scalar empty and null arrays deterministically                            True      
+Baseline section event selection rejects duplicate headings                                                 True      
+Baseline consecutive event windows require exactly one complete contiguous start                            True      
+Baseline contiguous event blocks require completeness but preserve legacy duplicate tolerance               True      
+Baseline public verifier requires one typed event in one fence before the first closing fences              True      
+Baseline section diagnostics require one expected language fence without parser errors                      True      
+Baseline event precedence compares the first exact typed events                                             True      
+Baseline ordered typed markers report the first missing or out-of-order event                               True      
+Baseline delegates legacy parser core exclusively to RecoveryParser                                         True      
+Legacy helper structural scanner rejects every forbidden definition and call                                True      
+Legacy helper structural scanner matches PowerShell names case-insensitively                                True      
+Baseline migrated contracts do not call legacy raw execution helpers                                        True      
+Baseline has no top-level raw ordering evaluators and annotates every retained authored pin                 True      
+Baseline requires the exact fence map and native diagnostic contract mapping                                True      
+Baseline inventory excludes exactly the parser verifier infrastructure from the 231-file target             True      
+Parse result filters null entries and derives validity from diagnostics                                     True      
+Markdown parser treats a same-info fence line as body content                                               True      
+Markdown parser ignores required headings inside HTML comments                                              True      
+Markdown parser reports a missing required fence language                                                   True      
+Markdown parser accepts tilde fences                                                                        True      
+Markdown parser accepts longer closing fences with trailing whitespace                                      True      
+Markdown parser preserves blank lines in empty-info fences                                                  True      
+Markdown parser handles stateful multiline HTML comments                                                    True      
+Markdown parser does not splice comment-hidden fence markers                                                True      
+Markdown parser reports an unclosed fence at the opening marker                                             True      
+Markdown parser reports an unclosed HTML comment at its opening marker                                      True      
+Markdown parser normalizes language aliases to canonical keys                                               True      
+Markdown parser reports unsupported fence languages when aliases are declared                               True      
+Markdown parser normalizes mixed line endings without losing source lines                                   True      
+Bash parser joins a split heredoc operator before consuming its body                                        True      
+Bash parser does not continue a backslash after comment start                                               True      
+Bash parser rejects an unfinished unquoted continuation                                                     True      
+Bash parser treats exact three less-than characters as a here-string                                        True      
+Bash parser rejects every long less-than redirection run                                                    True      
+Bash parser skips shift operators inside supported arithmetic forms                                         True      
+Bash parser rejects unclosed arithmetic forms                                                               True      
+Bash parser consumes multiple heredocs in FIFO order                                                        True      
+Bash parser removes supported heredoc delimiter quoting and escapes                                         True      
+Bash parser ignores heredoc text inside ordinary quoted strings                                             True      
+Bash parser diagnoses unterminated ordinary quotes                                                          True      
+Bash parser rejects a heredoc queue missing any FIFO terminator                                             True      
+Bash parser applies token boundaries when starting comments                                                 True      
+Bash parser preserves word token state across continuations                                                 True      
+Bash parser emits deterministic source metadata and statement identifiers                                   True      
+Bash parser handles empty and trailing physical body lines deterministically                                True      
+Bash parser rejects comment-start heredoc delimiters and preserves authored delimiter words                 True      
+Bash parser validates arithmetic expansion inside double quotes                                             True      
+PowerShell parser requires an immediate native guard                                                        True      
+PowerShell parser normalizes guarded scp executable names                                                   True      
+PowerShell parser rejects unsupported native wrappers                                                       True      
+PowerShell parser rejects PowerShell execution primitives that conceal native commands                      True      
+PowerShell parser rejects module loading that can conceal native commands                                   True      
+PowerShell parser rejects a zero exit guard                                                                 True      
+PowerShell parser accepts effective standard guard blockers                                                 True      
+PowerShell parser rejects guards containing traps                                                           True      
+PowerShell parser accepts a captured native exit guard                                                      True      
+PowerShell parser rejects unsafe captured exit targets                                                      True      
+PowerShell parser classifies malformed captured guards deterministically                                    True      
+PowerShell parser restricts dynamic native invocation                                                       True      
+PowerShell parser requires a static PhpExecutable assignment                                                True      
+PowerShell parser rejects ambiguous PhpExecutable tuple assignment                                          True      
+PowerShell parser rejects ambiguous PhpExecutable Set-Variable mutation                                     True      
+PowerShell parser rejects ambiguous PhpExecutable pipeline scriptblock mutation                             True      
+PowerShell parser rejects PhpExecutable foreach control-variable rebinding                                  True      
+PowerShell parser rejects nondominating PhpExecutable assignments                                           True      
+PowerShell parser rejects loop-carried PhpExecutable rebinding                                              True      
+PowerShell parser rejects native commands shadowed by alias cmdlets                                         True      
+PowerShell parser rejects native commands shadowed by function definitions or providers                     True      
+PowerShell parser rejects configured natives shadowed through provider-qualified assignments                True      
+PowerShell parser rejects configured natives shadowed through Set-Content provider writes                   True      
+PowerShell parser rejects expandable Set-Content provider paths                                             True      
+PowerShell parser rejects constant-computed Set-Content provider paths                                      True      
+PowerShell parser rejects dynamic Set-Content provider prefixes                                             True      
+PowerShell parser rejects a configured native shadowed through the Set-Item alias                           True      
+PowerShell parser canonicalizes same-fence command-resolution mutators                                      True      
+PowerShell parser rejects dynamic alias mutation before a PhpExecutable native event                        True      
+PowerShell parser rejects indirect PhpExecutable PSVariable mutation                                        True      
+PowerShell parser rejects dynamic PhpExecutable provider mutation                                           True      
+PowerShell parser rejects Set-Content PhpExecutable provider mutation                                       True      
+PowerShell parser rejects statically assigned PhpExecutable provider paths                                  True      
+PowerShell parser rejects provider paths hidden by unreachable reassignment                                 True      
+PowerShell parser rejects unknown dynamic provider prefixes but preserves proven filesystem concatenation   True      
+PowerShell parser rejects indirect provider-path variable rebinding                                         True      
+PowerShell parser rejects indirect Variable provider-path rebinding                                         True      
+PowerShell parser rejects first-definition provider-path variables                                          True      
+PowerShell parser rejects unresolved provider-path variable names                                           True      
+PowerShell parser allows filesystem item mutations around PhpExecutable                                     True      
+PowerShell parser does not treat Set-Content value as a positional path                                     True      
+PowerShell parser rejects dynamic alias provider mutation                                                   True      
+PowerShell parser preserves the authored New-Item directory command                                         True      
+PowerShell parser requires non-empty explicit native command configuration                                  True      
+PowerShell parser rejects whitespace-only native command configuration                                      True      
+PowerShell parser reports AST parse errors without events                                                   True      
+PowerShell parser rejects nested or piped native statements                                                 True      
+PowerShell parser rejects native commands nested in array expressions                                       True      
+PowerShell parser rejects native commands inside function definitions                                       True      
+PowerShell parser rejects guards swallowed by enclosing trap or catch                                       True      
+PowerShell parser rejects guards neutralized by enclosing finally exit                                      True      
+PowerShell parser rejects same-line intervening statements                                                  True      
+PowerShell parser normalizes powershell hosts and requires guards                                           True      
+PowerShell parser allows a guarded git assignment capture                                                   True      
+PowerShell parser rejects unsafe git assignment capture targets                                             True      
+PowerShell parser rejects automatic and preference git capture targets                                      True      
+PowerShell parser rejects non-simple git assignment targets and operators                                   True      
+PowerShell parser allows the authored trimmed git revision capture                                          True      
+PowerShell parser allows the authored git tri-state guard                                                   True      
+PowerShell parser emits exact normalized event metadata                                                     True      
+PowerShell parser preserves a null fence section identifier                                                 True      
+PowerShell parser emits multiple valid native commands in order                                             True      
+PowerShell parser ignores unknown ordinary commands and excluded natives                                    True      
+
+
+Recovery parser verification passed: 119/119

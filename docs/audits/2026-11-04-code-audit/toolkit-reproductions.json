@@ -1,0 +1,44 @@
+{
+  "cost_clipboard_unavailable": {
+    "errors": [
+      "fallbackCopy is not defined"
+    ]
+  },
+  "cost_shared_state": {
+    "before_reload": {
+      "url": "https://audit.local/?days=7&currency=USD&tier=backpacker&party=1&route=ha-giang",
+      "days": "7",
+      "total": "$245"
+    },
+    "after_reload": {
+      "url": "https://audit.local/?days=4&currency=USD&tier=backpacker&party=1&route=ha-giang",
+      "days": "4",
+      "total": "$140"
+    }
+  },
+  "cost_reset": {
+    "before_reload": {
+      "url": "https://audit.local/?days=10&currency=USD&tier=midrange&party=2&route=ha-giang",
+      "days": "10"
+    },
+    "after_reload": {
+      "url": "https://audit.local/?days=4&currency=USD&tier=backpacker&party=1&route=ha-giang",
+      "days": "4"
+    }
+  },
+  "visa_shared_state": {
+    "before_reload": {
+      "url": "https://audit.local/?nationality=GB&days=14",
+      "multiple_selected": "true"
+    },
+    "after_reload": {
+      "url": "https://audit.local/?nationality=GB&days=14",
+      "multiple_selected": "false"
+    },
+    "errors": []
+  },
+  "packing_print": {
+    "calls": 2,
+    "errors": []
+  }
+}
