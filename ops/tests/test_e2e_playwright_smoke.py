@@ -590,6 +590,137 @@ class TestPlaywrightE2ESmoke(unittest.TestCase):
         finally:
             page.close()
 
+    def test_e2e_stage209_toolkit_state_clipboard_and_print_remediation(self):
+        """Playwright E2E (F04, F05, F15): Verifies clipboard fallback, URL state reload round-trips, and single window.print() invocation."""
+        calc_html = _render_php_component(
+            "require 'wordpress/wp-content/themes/vietnamguide-premium/inc/guide-cost-calculator.php';\n"
+            "echo vg_render_cost_calculator_html();\n"
+        )
+        vc_html = _render_php_component(
+            "require 'wordpress/wp-content/themes/vietnamguide-premium/inc/guide-visa-checker.php';\n"
+            "echo vg_render_visa_checker_html();\n"
+        )
+        pc_html = _render_php_component(
+            "require 'wordpress/wp-content/themes/vietnamguide-premium/inc/guide-packing-checklist.php';\n"
+            "echo vg_render_packing_checklist();\n"
+        )
+
+        # 1. F05 & F04: Cost Calculator clipboard fallback + route/days URL round-trip + Reset
+        calc_doc = f"""<!doctype html>
+        <html lang="en">
+        <head>
+            <meta charset="utf-8">
+            <style>{self.homepage_css}</style>
+            <style>{self.interactive_css}</style>
+        </head>
+        <body>
+            {calc_html}
+        </body>
+        </html>"""
+
+        page = self._browser.new_page()
+        console_errors = []
+        page_errors = []
+        page.on("console", lambda msg: console_errors.append(msg.text) if msg.type == "error" else None)
+        page.on("pageerror", lambda err: page_errors.append(str(err)))
+
+        vc_doc = f"""<!doctype html>
+        <html lang="en">
+        <head>
+            <meta charset="utf-8">
+            <style>{self.homepage_css}</style>
+            <style>{self.interactive_css}</style>
+        </head>
+        <body>
+            {vc_html}
+        </body>
+        </html>"""
+
+        pc_doc = f"""<!doctype html>
+        <html lang="en">
+        <head>
+            <meta charset="utf-8">
+            <style>{self.homepage_css}</style>
+            <style>{self.interactive_css}</style>
+        </head>
+        <body>
+            {pc_html}
+            <script>{self.guide_js}</script>
+        </body>
+        </html>"""
+
+        def _handle_route(route):
+            req_url = route.request.url
+            if '/plan/vietnam-evisa/' in req_url:
+                route.fulfill(status=200, content_type="text/html; charset=utf-8", body=vc_doc)
+            elif '/plan/vietnam-first-trip-planning-checklist/' in req_url:
+                route.fulfill(status=200, content_type="text/html; charset=utf-8", body=pc_doc)
+            else:
+                route.fulfill(status=200, content_type="text/html; charset=utf-8", body=calc_doc)
+
+        page.route("https://vietnamguide.test/**", _handle_route)
+
+        try:
+            page.goto("https://vietnamguide.test/costs/vietnam-travel-cost/", wait_until="domcontentloaded")
+
+            # F05: Simulate missing navigator.clipboard and verify fallbackCopy executes with 0 ReferenceErrors
+            page.evaluate(
+                "() => { Object.defineProperty(navigator, 'clipboard', { value: undefined, configurable: true }); }"
+            )
+            page.locator('#vg-calc-copy-btn').click()
+            page.locator('#vg-calc-share-link').click()
+            self.assertEqual(page_errors, [])
+            self.assertIn('Copied to clipboard!', page.locator('#vg-global-toast').inner_text())
+
+            # F04: Click Ha Giang route preset (4 days, $140), then override duration to 7 days ($245)
+            page.locator('.vg-calc-route-chip[data-route="ha-giang"]').click()
+            self.assertEqual(page.locator('#vg-calc-total-display').text_content().strip(), '$140')
+            page.locator('.vg-calc-preset-chip[data-days="7"]').click()
+            self.assertEqual(page.locator('#vg-calc-days-display').text_content().strip(), '7 Days')
+            self.assertEqual(page.locator('#vg-calc-total-display').text_content().strip(), '$245')
+
+            # Reload page at the synced URL (?days=7&...&route=ha-giang)
+            synced_search = page.evaluate("() => window.location.search")
+            self.assertIn('route=ha-giang', synced_search)
+            self.assertIn('days=7', synced_search)
+            page.reload(wait_until="domcontentloaded")
+            self.assertEqual(page.locator('#vg-calc-days-display').text_content().strip(), '7 Days')
+            self.assertEqual(page.locator('#vg-calc-total-display').text_content().strip(), '$245')
+
+            # Click Reset and verify route is cleared from URL and reload keeps 10 Days / $1,563
+            page.locator('#vg-calc-reset-btn').click()
+            reset_search = page.evaluate("() => window.location.search")
+            self.assertNotIn('route=', reset_search)
+            self.assertEqual(page.locator('#vg-calc-days-display').text_content().strip(), '10 Days')
+            self.assertEqual(page.locator('#vg-calc-total-display').text_content().strip(), '$1,563')
+            page.reload(wait_until="domcontentloaded")
+            self.assertEqual(page.locator('#vg-calc-days-display').text_content().strip(), '10 Days')
+            self.assertEqual(page.locator('#vg-calc-total-display').text_content().strip(), '$1,563')
+
+            # 2. F04: Visa Checker entry=multiple URL round-trip
+            page.goto("https://vietnamguide.test/plan/vietnam-evisa/", wait_until="domcontentloaded")
+            page.locator('.vg-vc-toggle-btn[data-entry="multiple"]').click()
+            vc_search = page.evaluate("() => window.location.search")
+            self.assertIn('entry=multiple', vc_search)
+            page.reload(wait_until="domcontentloaded")
+            self.assertEqual(
+                page.locator('.vg-vc-toggle-btn[data-entry="multiple"]').get_attribute('aria-checked'),
+                'true',
+            )
+            self.assertEqual(page.locator('#vg-vc-cost-amount').inner_text().strip(), '$50 USD')
+
+            # 3. F15: Packing Checklist single window.print() invocation when guide-experience.js is present
+            page.goto("https://vietnamguide.test/plan/vietnam-first-trip-planning-checklist/", wait_until="domcontentloaded")
+            page.evaluate("() => { window.__printCount = 0; window.print = function() { window.__printCount += 1; }; }")
+            page.locator('[data-vg-print]').click()
+            print_count = page.evaluate("() => window.__printCount")
+            self.assertEqual(print_count, 1)
+
+            self.assertEqual(console_errors, [])
+            self.assertEqual(page_errors, [])
+        finally:
+            page.close()
+
 
 if __name__ == '__main__':
     unittest.main()

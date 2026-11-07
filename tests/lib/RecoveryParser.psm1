@@ -2103,7 +2103,7 @@ function ConvertFrom-RecoveryBashFence {
     )
 
     $normalizedBody = ([string]$Fence.Body).Replace("`r`n", "`n").Replace("`r", "`n")
-    $physicalLines = @($normalizedBody -split "`n", -1)
+    $physicalLines = @($normalizedBody.Split([string[]]@("`n"), [System.StringSplitOptions]::None))
     $events = [System.Collections.Generic.List[object]]::new()
     $diagnostics = [System.Collections.Generic.List[object]]::new()
     $heredocQueue = [System.Collections.Generic.List[object]]::new()
@@ -2356,7 +2356,7 @@ function ConvertFrom-RecoveryMarkdown {
     )
 
     $normalizedText = $Text.Replace("`r`n", "`n").Replace("`r", "`n")
-    $lines = @($normalizedText -split "`n", -1)
+    $lines = @($normalizedText.Split([string[]]@("`n"), [System.StringSplitOptions]::None))
     $sections = [System.Collections.Generic.List[object]]::new()
     $fences = [System.Collections.Generic.List[object]]::new()
     $diagnostics = [System.Collections.Generic.List[object]]::new()

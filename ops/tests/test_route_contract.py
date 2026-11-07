@@ -57,6 +57,8 @@ class RouteContractTests(unittest.TestCase):
                 public $post_parent = 0;
                 public $post_password = '';
                 public $post_content = '';
+                public $post_name = '';
+                public $post_title = '';
                 public $test_path = '';
             }}
             function get_theme_file_path($relative) {{
@@ -85,6 +87,7 @@ class RouteContractTests(unittest.TestCase):
                 cwd=REPO_PATH,
                 capture_output=True,
                 text=True,
+                encoding='utf-8',
                 check=False,
             )
         finally:
@@ -930,6 +933,73 @@ class RouteContractTests(unittest.TestCase):
         self.assertEqual(data['stored_contacts'], 1)
         self.assertTrue(data['has_nl_form'])
         self.assertTrue(data['has_ct_form'])
+
+    def test_newsletter_retains_more_than_500_subscribers_and_markdown_parsers_handle_non_heading_hashes(self):
+        """Stage 209: Newsletter storage must retain >500 subscribers without dropping the first, and both Python/PHP Markdown parsers must advance on #hashtag and |incomplete table."""
+        from ops.compile_guide_content import compile_markdown_body_to_html
+
+        _, py_html_hash, _ = compile_markdown_body_to_html("#hashtag\n\nNormal paragraph.")
+        _, py_html_pipe, _ = compile_markdown_body_to_html("|incomplete table\nnot a separator")
+        self.assertIn("<p>#hashtag</p>", py_html_hash)
+        self.assertIn("<p>|incomplete table</p>", py_html_pipe)
+
+        content_php = json.dumps(
+            str(
+                REPO_PATH
+                / 'wordpress'
+                / 'wp-content'
+                / 'themes'
+                / 'vietnamguide-premium'
+                / 'inc'
+                / 'guide-content.php'
+            ).replace('\\', '/')
+        )
+        with tempfile.TemporaryDirectory(prefix='vg-md-edge-') as tmp_dir:
+            tmp_path = Path(tmp_dir)
+            (tmp_path / 'content' / 'plan').mkdir(parents=True)
+            md_file = tmp_path / 'content' / 'plan' / 'edge-case-test.md'
+            md_file.write_text(
+                "---\ntitle: Edge Case\nroute_path: plan/edge-case-test\n---\n\n#hashtag\n\n|incomplete table\nnot a table\n",
+                encoding='utf-8',
+            )
+            tmp_root_php = json.dumps(str(tmp_path).replace('\\', '/'))
+            res = self._run_php_harness(
+                f"""
+                $GLOBALS['vg_options'] = [];
+                function get_option($k, $default = []) {{ return $GLOBALS['vg_options'][$k] ?? $default; }}
+                function update_option($k, $v, $autoload = false) {{ $GLOBALS['vg_options'][$k] = $v; return true; }}
+                function esc_attr($s) {{ return htmlspecialchars((string) $s, ENT_QUOTES, 'UTF-8'); }}
+                function esc_html($s) {{ return htmlspecialchars((string) $s, ENT_QUOTES, 'UTF-8'); }}
+                function esc_url($s) {{ return htmlspecialchars((string) $s, ENT_QUOTES, 'UTF-8'); }}
+                function sanitize_title($s) {{ return strtolower(preg_replace('/[^a-z0-9]+/i', '-', trim((string) $s))); }}
+                function get_template_directory() {{ return {tmp_root_php} . '/wp/wp-content/themes/vg'; }}
+                require_once {content_php};
+
+                $p = new WP_Post();
+                $p->post_name = 'edge-case-test';
+                $p->test_path = 'plan/edge-case-test';
+                $md_html = vg_try_load_repository_markdown_guide($p);
+
+                for ($i = 0; $i < 501; $i++) {{
+                    vg_process_newsletter_subscription_payload('audit' . $i . '@example.invalid');
+                }}
+                $subs = get_option('vg_newsletter_subscribers', []);
+
+                echo json_encode([
+                    'sub_count' => count($subs),
+                    'first_ok'  => isset($subs[hash('sha256', 'audit0@example.invalid')]),
+                    'last_ok'   => isset($subs[hash('sha256', 'audit500@example.invalid')]),
+                    'md_html'   => $md_html,
+                ]);
+                """
+            )
+            self.assertEqual(res.returncode, 0, res.stderr)
+            out = json.loads(res.stdout)
+            self.assertEqual(out['sub_count'], 501)
+            self.assertTrue(out['first_ok'])
+            self.assertTrue(out['last_ok'])
+            self.assertIn('<p>#hashtag</p>', out['md_html'])
+            self.assertIn('<p>|incomplete table</p>', out['md_html'])
 
 
 if __name__ == '__main__':

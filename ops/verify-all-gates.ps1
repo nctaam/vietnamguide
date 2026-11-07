@@ -73,7 +73,7 @@ if ($WithMutations -or $Full) {
 }
 
 # Optional Deployment Step
-if ($Deploy -or $Full) {
+if ($Deploy) {
     Write-Output "`n[DEPLOYMENT] Deploying Theme Updates to Production VPS..."
     python (Join-Path $ScriptDir 'deploy_theme_updates.py')
     if ($LASTEXITCODE -ne 0) { throw "Deployment failed!" }

@@ -611,7 +611,8 @@ function vg_render_packing_checklist(array $attributes = []): string
 
             // Print action
             if (printBtn) {
-                printBtn.addEventListener('click', function() {
+                printBtn.addEventListener('click', function(e) {
+                    if (e) e._vgPrinted = true;
                     window.print();
                 });
             }

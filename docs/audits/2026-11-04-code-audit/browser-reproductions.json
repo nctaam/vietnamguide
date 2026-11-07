@@ -1,51 +1,46 @@
 {
   "robots_after_noindex": {
-    "index": "index",
-    "follow": "follow",
-    "max-snippet": "max-snippet:-1",
-    "max-image-preview": "max-image-preview:large",
-    "max-video-preview": "max-video-preview:-1"
+    "index": "noindex",
+    "follow": "nofollow"
   },
   "jsonld_before": "<script type=\"application/ld+json\">{\"description\":\"&lt;\\/script&gt;&lt;script&gt;window.__auditExecuted=true&lt;\\/script&gt;\"}</script>",
-  "jsonld_after": "<script type=\"application/ld+json\">{\"description\":\"</script><script>window.__auditExecuted=true</script>\"}</script>",
-  "subscriber_count": 500,
-  "first_subscriber_retained": false,
+  "jsonld_after": "<script type=\"application/ld+json\">{\"description\":\"\\u003C/script\\u003E\\u003Cscript\\u003Ewindow.__auditExecuted=true\\u003C/script\\u003E\"}</script>",
+  "subscriber_count": 501,
+  "first_subscriber_retained": true,
   "last_subscriber_retained": true,
   "jsonld_script_exec_before": false,
-  "jsonld_script_exec_after": true,
-  "cost_clipboard_unavailable": [
-    "fallbackCopy is not defined"
-  ],
+  "jsonld_script_exec_after": false,
+  "cost_clipboard_unavailable": [],
   "cost_shared_state": {
     "before_reload": {
-      "url": "https://audit.local/?days=7&currency=USD&tier=backpacker&party=1&route=ha-giang",
+      "url": "https://audit.local/?days=7&currency=USD&tier=backpacker&party=1&flights=0&route=ha-giang",
       "days": "7",
       "total": "$245"
     },
     "after_reload": {
-      "url": "https://audit.local/?days=4&currency=USD&tier=backpacker&party=1&route=ha-giang",
-      "days": "4",
-      "total": "$140"
+      "url": "https://audit.local/?days=7&currency=USD&tier=backpacker&party=1&flights=0&route=ha-giang",
+      "days": "7",
+      "total": "$245"
     }
   },
   "cost_reset": {
     "before_reload": {
-      "url": "https://audit.local/?days=10&currency=USD&tier=midrange&party=2&route=ha-giang",
+      "url": "https://audit.local/?days=10&currency=USD&tier=midrange&party=2&flights=2",
       "days": "10",
       "total": "$1,563"
     },
     "after_reload": {
-      "url": "https://audit.local/?days=4&currency=USD&tier=backpacker&party=1&route=ha-giang",
-      "days": "4",
-      "total": "$140"
+      "url": "https://audit.local/?days=10&currency=USD&tier=midrange&party=2&flights=2",
+      "days": "10",
+      "total": "$1,563"
     }
   },
   "visa_shared_state": {
     "before_reload": "true",
-    "url": "https://audit.local/?nationality=GB&days=14",
-    "after_reload": "false"
+    "url": "https://audit.local/?nationality=GB&days=14&entry=multiple",
+    "after_reload": "true"
   },
-  "packing_print_calls": 2,
+  "packing_print_calls": 1,
   "reduced_motion": {
     "no-preference": {
       "copied": true,

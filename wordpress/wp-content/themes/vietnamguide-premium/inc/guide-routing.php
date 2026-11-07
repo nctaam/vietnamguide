@@ -865,10 +865,6 @@ function vg_process_newsletter_subscription_payload(string $email, string $honey
         'source_path'   => $clean_source,
     ];
 
-    if (count($subscribers) > 500) {
-        $subscribers = array_slice($subscribers, -500, null, true);
-    }
-
     if (function_exists('update_option')) {
         update_option('vg_newsletter_subscribers', $subscribers, false);
     }

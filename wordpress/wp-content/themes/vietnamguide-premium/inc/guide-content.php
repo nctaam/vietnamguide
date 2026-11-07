@@ -628,6 +628,13 @@ function vg_try_load_repository_markdown_guide(WP_Post $post): string
             $paraLines[] = $cur;
             $i++;
         }
+        if ($paraLines === [] && $i < $lineCount) {
+            $fallbackLine = trim((string) $lines[$i]);
+            if ($fallbackLine !== '') {
+                $paraLines[] = $fallbackLine;
+            }
+            $i++;
+        }
         if ($paraLines !== []) {
             $htmlBlocks[] = '<p>' . vg_render_inline_markdown_fallback(implode(' ', $paraLines)) . '</p>';
         }

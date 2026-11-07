@@ -93,12 +93,28 @@ if (! class_exists('WP_HTML_Tag_Processor')) {{
         }}
 
         public function next_tag($tag_query = null): bool {{
+            $visit_closers = is_array($tag_query) && (($tag_query['tag_closers'] ?? '') === 'visit');
+            $target_tag = null;
+            if (is_string($tag_query)) {{
+                $target_tag = strtoupper($tag_query);
+            }} elseif (is_array($tag_query) && isset($tag_query['tag_name']) && is_string($tag_query['tag_name'])) {{
+                $target_tag = strtoupper($tag_query['tag_name']);
+            }}
+            $target_class = (is_array($tag_query) && isset($tag_query['class_name']) && is_string($tag_query['class_name']))
+                ? $tag_query['class_name']
+                : null;
             while ($this->next_token()) {{
                 if ($this->tokens[$this->index]['is_tag']) {{
                     $raw = $this->tokens[$this->index]['raw'];
+                    if (str_starts_with($raw, '</') && ! $visit_closers) {{
+                        continue;
+                    }}
                     if (preg_match('/^<\\/?([a-zA-Z0-9_-]+)/', $raw, $m)) {{
                         $tag = strtoupper($m[1]);
-                        if ($tag_query === null || (is_string($tag_query) && strtoupper($tag_query) === $tag)) {{
+                        if ($target_tag === null || $target_tag === $tag) {{
+                            if ($target_class !== null && ! $this->has_class($target_class)) {{
+                                continue;
+                            }}
                             return true;
                         }}
                     }}
@@ -237,6 +253,7 @@ def _run_php(script_body: str) -> subprocess.CompletedProcess:
             cwd=str(REPO_ROOT),
             capture_output=True,
             text=True,
+            encoding='utf-8',
             check=False,
         )
     finally:
@@ -631,6 +648,8 @@ class TestPracticalEssentialsSchema(unittest.TestCase):
         webapp_cost = [n for n in data_cost['@graph'] if n.get('@type') == 'WebApplication'][0]
         self.assertEqual(webapp_cost.get('name'), 'Vietnam Travel Cost Calculator')
         self.assertIn('5-currency', webapp_cost.get('description', ''))
+        self.assertIn('3 spending tiers (Backpacker, Mid-Range, Luxury)', webapp_cost.get('description', ''))
+        self.assertIn('3 traveler spending tiers (Backpacker, Mid-Range, Luxury)', webapp_cost.get('featureList', []))
         self.assertGreaterEqual(len(webapp_cost.get('featureList', [])), 5)
 
         data_weather = _execute_schema_pipeline('plan/best-time-to-visit-vietnam')
@@ -797,6 +816,29 @@ class TestZeroClsImageDimensions(unittest.TestCase):
         self.assertIn('fetchpriority="high"', enhanced)
         self.assertIn('width="1280"', enhanced)
         self.assertIn('height="1280"', enhanced)
+
+    def test_hero_and_body_image_separation_exits_hero_container_cleanly(self):
+        """Hero images get loading=eager and fetchpriority=high while subsequent body images get loading=lazy."""
+        raw_html = (
+            '<div class="vg-guide-hero"><h1>Title</h1><img src="hero.jpg"></div>'
+            '<p>Body</p><img src="body.jpg">'
+        )
+
+        php_body = f"""
+        $html = {json.dumps(raw_html)};
+        $enhanced = vg_enhance_content_images($html);
+        echo json_encode(['enhanced' => $enhanced]);
+        """
+        res = _run_php(php_body)
+        self.assertEqual(res.returncode, 0, res.stderr)
+        enhanced = json.loads(res.stdout)['enhanced']
+
+        imgs = re.findall(r'<img\b[^>]*>', enhanced)
+        self.assertEqual(len(imgs), 2)
+        self.assertIn('loading="eager"', imgs[0])
+        self.assertIn('fetchpriority="high"', imgs[0])
+        self.assertIn('loading="lazy"', imgs[1])
+        self.assertNotIn('fetchpriority="high"', imgs[1])
 
     def test_unindexed_wikimedia_thumbnail_fallback(self):
         """Unindexed Wikimedia thumbnail images must fall back to 2/3 ratio heuristic without shifting layout."""

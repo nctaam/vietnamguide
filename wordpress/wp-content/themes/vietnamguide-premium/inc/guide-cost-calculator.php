@@ -700,7 +700,7 @@ function vg_render_cost_calculator_html(): string
             // Save state to safe storage and sync URL params
             setSafeStorage('vg_user_duration', state.days);
             setSafeStorage('vg_user_currency', state.currency);
-            syncUrlParams({ days: state.days, currency: state.currency, tier: state.style, party: state.party, route: state.route || '' });
+            syncUrlParams({ days: state.days, currency: state.currency, tier: state.style, party: state.party, flights: state.flights, route: state.route || '' });
 
             // Update WhatsApp and Telegram share links dynamically
             var shareUrl = window.location.href;
@@ -745,6 +745,8 @@ function vg_render_cost_calculator_html(): string
                 Object.keys(params).forEach(function(k) {
                     if (params[k] !== undefined && params[k] !== null && params[k] !== '') {
                         url.searchParams.set(k, params[k]);
+                    } else {
+                        url.searchParams.delete(k);
                     }
                 });
                 window.history.replaceState(null, '', url.toString());
@@ -755,13 +757,22 @@ function vg_render_cost_calculator_html(): string
             var root = document.getElementById('vg-cost-calculator');
             if (!root) return;
 
-            // Restore from URL query params first, then safe storage with bounds/NaN protection
+            // Restore from URL query params first (route preset defaults first, then explicit URL params), then safe storage with bounds/NaN protection
             try {
                 var urlParams = new URLSearchParams(window.location.search);
+                var qRoute = (urlParams.get('route') || '').toLowerCase();
+                if (ROUTE_PRESETS[qRoute]) {
+                    state.route = qRoute;
+                    state.days = ROUTE_PRESETS[qRoute].days;
+                    state.style = ROUTE_PRESETS[qRoute].style;
+                    state.party = ROUTE_PRESETS[qRoute].party;
+                    state.flights = ROUTE_PRESETS[qRoute].flights;
+                }
+
                 var qDays = parseInt(urlParams.get('days'), 10);
                 if (!isNaN(qDays)) {
                     state.days = Math.min(30, Math.max(3, qDays));
-                } else {
+                } else if (!state.route) {
                     var sDays = parseInt(getSafeStorage('vg_user_duration'), 10);
                     if (!isNaN(sDays)) {
                         state.days = Math.min(30, Math.max(3, sDays));
@@ -788,13 +799,9 @@ function vg_render_cost_calculator_html(): string
                     state.party = Math.min(6, Math.max(1, qParty));
                 }
 
-                var qRoute = (urlParams.get('route') || '').toLowerCase();
-                if (ROUTE_PRESETS[qRoute]) {
-                    state.route = qRoute;
-                    state.days = ROUTE_PRESETS[qRoute].days;
-                    state.style = ROUTE_PRESETS[qRoute].style;
-                    state.party = ROUTE_PRESETS[qRoute].party;
-                    state.flights = ROUTE_PRESETS[qRoute].flights;
+                var qFlights = parseInt(urlParams.get('flights'), 10);
+                if (!isNaN(qFlights)) {
+                    state.flights = Math.min(3, Math.max(0, qFlights));
                 }
             } catch(e) {}
 
@@ -852,11 +859,15 @@ function vg_render_cost_calculator_html(): string
 
             var routeChips = root.querySelectorAll('.vg-calc-route-chip');
             routeChips.forEach(function (chip, idx) {
+                var isMatchRoute = (chip.getAttribute('data-route') === state.route);
+                chip.classList.toggle('is-active', isMatchRoute);
+                chip.setAttribute('aria-pressed', isMatchRoute ? 'true' : 'false');
+
                 chip.addEventListener('click', function () {
                     var rKey = chip.getAttribute('data-route');
                     if (state.route === rKey) {
                         state.route = null;
-                        syncUrlParams({ days: state.days, currency: state.currency, tier: state.style, party: state.party, route: '' });
+                        syncUrlParams({ days: state.days, currency: state.currency, tier: state.style, party: state.party, flights: state.flights, route: '' });
                     } else if (ROUTE_PRESETS[rKey]) {
                         state.route = rKey;
                         var p = ROUTE_PRESETS[rKey];
@@ -886,7 +897,7 @@ function vg_render_cost_calculator_html(): string
                             btn.classList.toggle('is-active', isAct);
                             btn.setAttribute('aria-pressed', isAct ? 'true' : 'false');
                         });
-                        syncUrlParams({ days: state.days, currency: state.currency, tier: state.style, party: state.party, route: state.route });
+                        syncUrlParams({ days: state.days, currency: state.currency, tier: state.style, party: state.party, flights: state.flights, route: state.route });
                     }
                     updateUI();
                 });
@@ -905,6 +916,11 @@ function vg_render_cost_calculator_html(): string
 
             var styleRadios = root.querySelectorAll('input[name="vg_travel_style"]');
             styleRadios.forEach(function (radio) {
+                var isMatchStyle = (radio.value === state.style);
+                radio.checked = isMatchStyle;
+                var initCard = radio.closest('.vg-calc-style-card');
+                if (initCard) initCard.classList.toggle('is-selected', isMatchStyle);
+
                 radio.addEventListener('change', function () {
                     if (radio.checked) {
                         state.style = radio.value;
@@ -920,6 +936,11 @@ function vg_render_cost_calculator_html(): string
 
             var partyPills = root.querySelectorAll('[data-party]');
             partyPills.forEach(function (pill, idx) {
+                var pillParty = parseInt(pill.getAttribute('data-party'), 10);
+                var isMatchParty = (pillParty === state.party);
+                pill.classList.toggle('is-active', isMatchParty);
+                pill.setAttribute('aria-pressed', isMatchParty ? 'true' : 'false');
+
                 pill.addEventListener('click', function () {
                     var p = parseInt(pill.getAttribute('data-party'), 10);
                     if (p) {
@@ -948,6 +969,11 @@ function vg_render_cost_calculator_html(): string
 
             var flightPills = root.querySelectorAll('[data-flights]');
             flightPills.forEach(function (pill, idx) {
+                var pillFlights = parseInt(pill.getAttribute('data-flights'), 10);
+                var isMatchFlights = (pillFlights === state.flights);
+                pill.classList.toggle('is-active', isMatchFlights);
+                pill.setAttribute('aria-pressed', isMatchFlights ? 'true' : 'false');
+
                 pill.addEventListener('click', function () {
                     var f = parseInt(pill.getAttribute('data-flights'), 10);
                     if (typeof f === 'number' && !isNaN(f)) {
@@ -1007,6 +1033,34 @@ function vg_render_cost_calculator_html(): string
                 });
             });
 
+            function showToast(msg) {
+                var toast = document.getElementById('vg-global-toast');
+                if (!toast) {
+                    toast = document.createElement('div');
+                    toast.id = 'vg-global-toast';
+                    toast.className = 'vg-toast';
+                    document.body.appendChild(toast);
+                }
+                toast.textContent = msg;
+                toast.classList.add('is-active');
+                setTimeout(function () { toast.classList.remove('is-active'); }, 3000);
+            }
+
+            function fallbackCopy(text) {
+                try {
+                    var ta = document.createElement('textarea');
+                    ta.value = text;
+                    ta.setAttribute('readonly', '');
+                    ta.style.position = 'fixed';
+                    ta.style.opacity = '0';
+                    document.body.appendChild(ta);
+                    ta.select();
+                    document.execCommand('copy');
+                    document.body.removeChild(ta);
+                    showToast('Copied to clipboard!');
+                } catch (e) {}
+            }
+
             var copyBtn = document.getElementById('vg-calc-copy-btn');
             if (copyBtn) {
                 copyBtn.addEventListener('click', function () {
@@ -1051,19 +1105,6 @@ function vg_render_cost_calculator_html(): string
                         fallbackCopy(summaryText);
                     }
                 });
-            }
-
-            function showToast(msg) {
-                var toast = document.getElementById('vg-global-toast');
-                if (!toast) {
-                    toast = document.createElement('div');
-                    toast.id = 'vg-global-toast';
-                    toast.className = 'vg-toast';
-                    document.body.appendChild(toast);
-                }
-                toast.textContent = msg;
-                toast.classList.add('is-active');
-                setTimeout(function () { toast.classList.remove('is-active'); }, 3000);
             }
 
             var shareLinkBtn = document.getElementById('vg-calc-share-link');
@@ -1123,6 +1164,9 @@ function vg_render_cost_calculator_html(): string
                     state.party = 2;
                     state.flights = 2;
                     state.currency = 'USD';
+                    state.route = null;
+                    setSafeStorage('vg_user_duration', 10);
+                    setSafeStorage('vg_user_currency', 'USD');
 
                     if (slider) slider.value = 10;
 
@@ -1156,7 +1200,6 @@ function vg_render_cost_calculator_html(): string
                         b.setAttribute('aria-pressed', isUsd ? 'true' : 'false');
                     });
 
-                    state.route = null;
                     routeChips.forEach(function (c) {
                         c.classList.remove('is-active');
                         c.setAttribute('aria-pressed', 'false');

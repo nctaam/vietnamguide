@@ -835,7 +835,7 @@ if ($validatedLocalAuthored.Count -eq 1) {
     }
     else {
         $canaryActivationSectionMetadata = $canaryActivationSections[0]
-        $normalizedAddendumLines = @($normalizedAddendumText -split "`n", -1)
+        $normalizedAddendumLines = @($normalizedAddendumText.Split([string[]]@("`n"), [System.StringSplitOptions]::None))
         $sectionLineCount = [int]$canaryActivationSectionMetadata.EndLine - [int]$canaryActivationSectionMetadata.StartLine + 1
         $canaryActivationSection = [string]::Join("`n", @(
             $normalizedAddendumLines |

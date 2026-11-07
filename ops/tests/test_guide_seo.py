@@ -118,12 +118,28 @@ if (! class_exists('WP_HTML_Tag_Processor')) {{
         }}
 
         public function next_tag($tag_query = null): bool {{
+            $visit_closers = is_array($tag_query) && (($tag_query['tag_closers'] ?? '') === 'visit');
+            $target_tag = null;
+            if (is_string($tag_query)) {{
+                $target_tag = strtoupper($tag_query);
+            }} elseif (is_array($tag_query) && isset($tag_query['tag_name']) && is_string($tag_query['tag_name'])) {{
+                $target_tag = strtoupper($tag_query['tag_name']);
+            }}
+            $target_class = (is_array($tag_query) && isset($tag_query['class_name']) && is_string($tag_query['class_name']))
+                ? $tag_query['class_name']
+                : null;
             while ($this->next_token()) {{
                 if ($this->tokens[$this->index]['is_tag']) {{
                     $raw = $this->tokens[$this->index]['raw'];
+                    if (str_starts_with($raw, '</') && ! $visit_closers) {{
+                        continue;
+                    }}
                     if (preg_match('/^<\\/?([a-zA-Z0-9_-]+)/', $raw, $m)) {{
                         $tag = strtoupper($m[1]);
-                        if ($tag_query === null || (is_string($tag_query) && strtoupper($tag_query) === $tag)) {{
+                        if ($target_tag === null || $target_tag === $tag) {{
+                            if ($target_class !== null && ! $this->has_class($target_class)) {{
+                                continue;
+                            }}
                             return true;
                         }}
                     }}
@@ -325,6 +341,7 @@ def _run_php(script_body: str) -> subprocess.CompletedProcess:
             cwd=str(REPO_ROOT),
             capture_output=True,
             text=True,
+            encoding='utf-8',
             check=False,
         )
     finally:
@@ -2903,6 +2920,45 @@ echo json_encode([
         self.assertIn("'hoi-an'              => 'central-heritage-hero.jpg'", dispatch_src)
         interactive_js = (THEME_DIR / 'assets' / 'js' / 'guide-interactive.js').read_text(encoding='utf-8')
         self.assertIn("e.key === 'ArrowRight' || e.key === 'ArrowLeft'", interactive_js)
+
+    def test_stage209_json_ld_script_breakout_protection_and_upstream_noindex_preservation(self):
+        """Stage 209: JSON-LD normalization must hex-encode < and > to prevent </script> breakout, preserve upstream noindex, and resolve markdown route highlights."""
+        php_code = r"""
+        $GLOBALS['vg_is_singular'] = true;
+        $GLOBALS['vg_is_404'] = false;
+        $GLOBALS['vg_is_search'] = false;
+
+        $wp_noindex = apply_filters('wp_robots', ['noindex' => true, 'nofollow' => true]);
+        $rm_noindex = apply_filters('rank_math/frontend/robots', ['index' => 'noindex', 'follow' => 'nofollow']);
+
+        $raw_script = '<script type="application/ld+json">' . json_encode([
+            'description' => '&lt;/script&gt;&lt;script&gt;window.__auditExecuted=true&lt;/script&gt;',
+        ]) . '</script>';
+        $normalized_script = vg_normalize_serialized_json_ld_html($raw_script);
+
+        $highlights = vg_extract_markdown_route_highlights('plan/vietnam-in-july');
+
+        echo json_encode([
+            'wp_noindex'        => $wp_noindex,
+            'rm_noindex'        => $rm_noindex,
+            'normalized_script' => $normalized_script,
+            'highlights'        => $highlights,
+        ]);
+        """
+        res = _run_php(php_code)
+        self.assertEqual(res.returncode, 0, f"PHP error:\n{res.stderr}")
+        out = json.loads(res.stdout)
+
+        self.assertTrue(out['wp_noindex'].get('noindex'))
+        self.assertTrue(out['wp_noindex'].get('nofollow'))
+        self.assertNotIn('index', out['wp_noindex'])
+        self.assertEqual(out['rm_noindex'].get('index'), 'noindex')
+        self.assertEqual(out['rm_noindex'].get('follow'), 'nofollow')
+
+        norm = out['normalized_script']
+        self.assertEqual(norm.lower().count('</script>'), 1, "Normalized JSON-LD must not contain unescaped closing </script> inside JSON payload")
+        self.assertIn(r'\u003C/script\u003E', norm)
+        self.assertTrue(len(out['highlights']) > 0, "vg_extract_markdown_route_highlights must resolve content/plan/vietnam-in-july.md")
 
 
 if __name__ == '__main__':

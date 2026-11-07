@@ -658,8 +658,18 @@ function vg_extract_markdown_route_highlights(string $guide_path): string
     if ($clean_path === '' || strpos($clean_path, '..') !== false) {
         return '';
     }
-    $md_file = dirname(__DIR__, 4) . '/content/' . $clean_path . '.md';
-    if (! is_file($md_file) || ! is_readable($md_file)) {
+    $candidates = [
+        dirname(__DIR__, 5) . '/content/' . $clean_path . '.md',
+        dirname(__DIR__, 4) . '/content/' . $clean_path . '.md',
+    ];
+    $md_file = '';
+    foreach ($candidates as $candidate) {
+        if (is_file($candidate) && is_readable($candidate)) {
+            $md_file = $candidate;
+            break;
+        }
+    }
+    if ($md_file === '') {
         return '';
     }
     $raw = (string) file_get_contents($md_file);

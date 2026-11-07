@@ -48,7 +48,7 @@ jobs:
 
       - name: PHP Syntax Linting
         run: |
-          find wordpress -type f -name "*.php" -exec php -l {} +
+          find wordpress -type f -name "*.php" -print0 | xargs -0 -r -n1 php -l
 
       # 8 Master Quality Gates (1:1 alignment with ops/verify-all-gates.ps1)
       - name: Gate 1 - Anti-AI Slop Quality Engine Self-Test

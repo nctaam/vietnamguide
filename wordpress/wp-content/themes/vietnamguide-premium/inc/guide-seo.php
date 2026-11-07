@@ -376,6 +376,19 @@ add_filter('wp_robots', static function (array $robots): array {
         ];
     }
 
+    $hasNoindex = ! empty($robots['noindex'])
+        || (($robots['index'] ?? null) === false)
+        || (($robots['index'] ?? '') === 'noindex');
+    if ($hasNoindex) {
+        $robots['noindex'] = true;
+        unset($robots['index']);
+        if (! empty($robots['nofollow']) || (($robots['follow'] ?? null) === false) || (($robots['follow'] ?? '') === 'nofollow')) {
+            $robots['nofollow'] = true;
+            unset($robots['follow']);
+        }
+        return $robots;
+    }
+
     if (is_singular() || is_front_page() || is_home()) {
         $robots['index']             = true;
         $robots['follow']            = true;
@@ -396,6 +409,21 @@ add_filter('rank_math/frontend/robots', static function ($robots) {
     }
 
     if (is_array($robots)) {
+        $hasNoindex = ! empty($robots['noindex'])
+            || (($robots['index'] ?? '') === 'noindex')
+            || in_array('noindex', $robots, true);
+        $hasNofollow = ! empty($robots['nofollow'])
+            || (($robots['follow'] ?? '') === 'nofollow')
+            || in_array('nofollow', $robots, true);
+
+        if ($hasNoindex) {
+            unset($robots['index'], $robots['follow'], $robots['noindex'], $robots['nofollow']);
+            return array_merge([
+                'index'  => 'noindex',
+                'follow' => $hasNofollow ? 'nofollow' : 'follow',
+            ], $robots);
+        }
+
         unset(
             $robots['index'],
             $robots['follow'],
@@ -3702,12 +3730,12 @@ function vg_get_page_webapplication_schema(string $uri_path, string $current_url
     $webapp_registry = [
         'vietnam-travel-cost' => [
             'name'                => 'Vietnam Travel Cost Calculator',
-            'description'         => 'Interactive real-time budget calculator for Vietnam travel with 5-currency conversion (USD, VND, EUR, GBP, AUD) across backpacker, flashpacker, mid-range, and luxury tiers for 10+ destinations.',
+            'description'         => 'Interactive budget calculator for Vietnam travel with benchmark 5-currency conversion (USD, VND, EUR, GBP, AUD) across 3 spending tiers (Backpacker, Mid-Range, Luxury) and route presets.',
             'applicationCategory' => 'TravelApplication',
             'featureList'         => [
-                '5-currency real-time exchange conversion (USD, VND, EUR, GBP, AUD)',
+                '5-currency benchmark exchange conversion (USD, VND, EUR, GBP, AUD)',
                 'Itemized expense breakdown for accommodation, transport, meals, and activities',
-                '4 traveler spending tiers (Backpacker, Flashpacker, Mid-Range, Luxury)',
+                '3 traveler spending tiers (Backpacker, Mid-Range, Luxury)',
                 '1-click formatted clipboard summary export',
                 'URL state persistence and local storage synchronization',
             ],
@@ -3833,8 +3861,8 @@ function vg_normalize_serialized_json_ld_html(string $html): string
                 }
                 $cleaned = vg_schema_clean_data($decoded);
                 $encoded = function_exists('wp_json_encode')
-                    ? wp_json_encode($cleaned, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE)
-                    : json_encode($cleaned, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
+                    ? wp_json_encode($cleaned, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_HEX_TAG)
+                    : json_encode($cleaned, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_HEX_TAG);
                 if (! is_string($encoded) || $encoded === '') {
                     return $m[0];
                 }
@@ -3850,8 +3878,8 @@ function vg_normalize_serialized_json_ld_html(string $html): string
         if (is_array($decoded) && json_last_error() === JSON_ERROR_NONE) {
             $cleaned = vg_schema_clean_data($decoded);
             $encoded = function_exists('wp_json_encode')
-                ? wp_json_encode($cleaned, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE)
-                : json_encode($cleaned, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
+                ? wp_json_encode($cleaned, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_HEX_TAG)
+                : json_encode($cleaned, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_HEX_TAG);
             if (is_string($encoded) && $encoded !== '') {
                 return $encoded;
             }
@@ -4119,27 +4147,31 @@ function vg_enhance_content_images(string $content): string
     }
 
     $dimensions = function_exists('vg_get_known_image_dimensions') ? vg_get_known_image_dimensions() : [];
-    $isEntireHero = (stripos($content, 'vg-guide-hero') !== false && stripos($content, '<h1') !== false);
     $processor = new WP_HTML_Tag_Processor($content);
     $inHero = false;
     $heroDepth = 0;
+    $voidTags = ['IMG', 'BR', 'HR', 'INPUT', 'META', 'LINK', 'SOURCE', 'AREA', 'BASE', 'COL', 'EMBED', 'PARAM', 'TRACK', 'WBR'];
 
-    while ($processor->next_tag()) {
+    while ($processor->next_tag(['tag_closers' => 'visit'])) {
         $tag = $processor->get_tag();
 
         if (! $processor->is_tag_closer()) {
             if ($inHero) {
-                $heroDepth++;
+                if (! in_array($tag, $voidTags, true)) {
+                    $heroDepth++;
+                }
             } elseif (
                 $processor->has_class('vg-guide-hero')
                 || $processor->has_class('vg-guide-hero-cover')
                 || $processor->get_attribute('data-vg-hero') !== null
             ) {
-                $inHero = true;
-                $heroDepth = 1;
+                if (! in_array($tag, $voidTags, true)) {
+                    $inHero = true;
+                    $heroDepth = 1;
+                }
             }
         } else {
-            if ($inHero) {
+            if ($inHero && ! in_array($tag, $voidTags, true)) {
                 $heroDepth--;
                 if ($heroDepth <= 0) {
                     $inHero = false;
@@ -4148,7 +4180,7 @@ function vg_enhance_content_images(string $content): string
             }
         }
 
-        if ($tag !== 'IMG') {
+        if ($processor->is_tag_closer() || $tag !== 'IMG') {
             continue;
         }
 
@@ -4205,8 +4237,7 @@ function vg_enhance_content_images(string $content): string
             || $processor->get_attribute('data-vg-hero') !== null
             || $processor->has_class('vg-guide-hero')
             || $processor->has_class('vg-guide-hero-cover')
-            || $processor->has_class('wp-block-cover__image-background')
-            || ($isEntireHero && $heroDepth === 0);
+            || $processor->has_class('wp-block-cover__image-background');
 
         if ($isHeroImg) {
             $processor->set_attribute('loading', 'eager');

@@ -882,6 +882,27 @@ class TestInteractiveShortcodes(unittest.TestCase):
         self.assertEqual(proc.returncode, 0, f"PHP behavioral test failed: {proc.stdout}\n{proc.stderr}")
         self.assertEqual(proc.stdout.strip(), 'PASS')
 
+    def test_stage209_f04_f05_f15_state_clipboard_and_print_contracts(self):
+        """Stage 209 (F04, F05, F15): Verify cost calculator fallbackCopy & URL sync, visa checker entry URL sync, and single print invocation guard."""
+        calc_code = self.contents['cost_calculator']
+        self.assertIn('function fallbackCopy(text)', calc_code)
+        self.assertIn('url.searchParams.delete(k)', calc_code)
+        self.assertIn('flights: state.flights', calc_code)
+        self.assertIn("var qFlights = parseInt(urlParams.get('flights'), 10);", calc_code)
+
+        visa_code = self.contents['visa_checker']
+        self.assertIn("setSafeStorage('vg_user_entry', currentEntry);", visa_code)
+        self.assertIn('entry: currentEntry', visa_code)
+        self.assertIn("urlParams.get('entry')", visa_code)
+
+        pack_code = self.contents['packing_checklist']
+        self.assertIn('e._vgPrinted = true;', pack_code)
+
+        js_path = os.path.join(THEME_DIR, 'assets', 'js', 'guide-experience.js')
+        with open(js_path, 'r', encoding='utf-8') as f:
+            js_code = f.read()
+        self.assertIn('!e._vgPrinted', js_code)
+
 
 if __name__ == '__main__':
     unittest.main()

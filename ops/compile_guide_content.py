@@ -274,6 +274,12 @@ def compile_markdown_body_to_html(body: str) -> Tuple[Optional[str], str, Dict[s
             para_lines.append(cur)
             i += 1
 
+        if not para_lines and i < n:
+            fallback_line = lines[i].strip()
+            if fallback_line:
+                para_lines.append(fallback_line)
+            i += 1
+
         if para_lines:
             joined = " ".join(para_lines)
             html_blocks.append(f"<p>{render_inline_markdown(joined)}</p>")

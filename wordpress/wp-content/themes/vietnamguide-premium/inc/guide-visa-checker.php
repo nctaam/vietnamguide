@@ -663,7 +663,8 @@ function vg_render_visa_checker_html(): string
             // Save state to storage and sync URL
             setSafeStorage('vg_user_nationality', currentCountry);
             setSafeStorage('vg_user_duration', currentDuration);
-            syncUrlParams({ nationality: currentCountry, days: currentDuration });
+            setSafeStorage('vg_user_entry', currentEntry);
+            syncUrlParams({ nationality: currentCountry, days: currentDuration, entry: currentEntry });
 
             // Update WhatsApp and Telegram share links dynamically
             const shareUrl = window.location.href;
@@ -938,6 +939,16 @@ function vg_render_visa_checker_html(): string
                 currentDuration = storedDays;
                 if (durationSlider) durationSlider.value = currentDuration;
                 if (durationVal) durationVal.textContent = currentDuration + ' days';
+            }
+            var qEntry = (urlParams.get('entry') || getSafeStorage('vg_user_entry') || '').toLowerCase();
+            if (qEntry === 'single' || qEntry === 'multiple') {
+                currentEntry = qEntry;
+                toggleButtons.forEach(function (b) {
+                    var isMatchEntry = b.getAttribute('data-entry') === currentEntry;
+                    b.classList.toggle('active', isMatchEntry);
+                    b.setAttribute('aria-checked', isMatchEntry ? 'true' : 'false');
+                    b.setAttribute('aria-pressed', isMatchEntry ? 'true' : 'false');
+                });
             }
         } catch(e) {}
 

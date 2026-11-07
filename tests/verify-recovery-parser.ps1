@@ -90,7 +90,7 @@ function Assert-ParserProperties {
 function Assert-ParserDiagnosticCodes {
     param(
         [Parameter(Mandatory = $true)]
-        [object[]]$Diagnostics,
+        [AllowEmptyCollection()][object[]]$Diagnostics,
 
         [Parameter(Mandatory = $true)]
         [string[]]$Expected
@@ -622,7 +622,7 @@ Add-ParserResult -Name 'Baseline migrated contracts do not call legacy raw execu
 
 Add-ParserResult -Name 'Baseline has no top-level raw ordering evaluators and annotates every retained authored pin' -Test {
     $baselineAst = Get-RecoveryBaselineAst
-    $baselineLines = @($baselineAst.Extent.Text.Replace("`r`n", "`n").Replace("`r", "`n") -split "`n", -1)
+    $baselineLines = @($baselineAst.Extent.Text.Replace("`r`n", "`n").Replace("`r", "`n").Split([string[]]@("`n"), [System.StringSplitOptions]::None))
     $isTopLevel = {
         param([System.Management.Automation.Language.Ast]$Node)
         $ancestor = $Node.Parent
@@ -1075,7 +1075,7 @@ function New-TestRecoveryBashFence {
         RawInfo = 'bash'
         Body = $Body
         StartLine = $StartLine
-        EndLine = $StartLine + (@($Body.Replace("`r`n", "`n").Replace("`r", "`n") -split "`n", -1).Count) + 1
+        EndLine = $StartLine + (@($Body.Replace("`r`n", "`n").Replace("`r", "`n").Split([string[]]@("`n"), [System.StringSplitOptions]::None)).Count) + 1
     }
 }
 
@@ -1113,7 +1113,7 @@ function New-TestRecoveryPowerShellFence {
         RawInfo = 'powershell'
         Body = $Body
         StartLine = $StartLine
-        EndLine = $StartLine + @($Body.Replace("`r`n", "`n").Replace("`r", "`n") -split "`n", -1).Count + 1
+        EndLine = $StartLine + @($Body.Replace("`r`n", "`n").Replace("`r", "`n").Split([string[]]@("`n"), [System.StringSplitOptions]::None)).Count + 1
     }
 }
 

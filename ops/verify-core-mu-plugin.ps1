@@ -528,8 +528,11 @@ function vg_shortcode_update_log(array $atts = []): string
         vg_merge_affiliate_rel_tokens(is_string($rel_value) ? $rel_value : '')
     );
 '@
+    $PluginNewline = if ($PluginContent.Contains("`r`n")) { "`r`n" } else { "`n" }
+    $NormalizedAffiliateLoop = $AffiliateLoop.Replace("`r`n", "`n").Replace("`n", $PluginNewline)
+    $NormalizedEmptyAffiliateLoop = $EmptyAffiliateLoop.Replace("`r`n", "`n").Replace("`n", $PluginNewline)
     Test-PluginMutationRejected $Failures 'affiliate mutations moved outside loop' $PluginContent (
-        $PluginContent.Replace($AffiliateLoop, $EmptyAffiliateLoop)
+        $PluginContent.Replace($NormalizedAffiliateLoop, $NormalizedEmptyAffiliateLoop)
     ) $ThemePhpContents
 
     $IndirectThemeRegistrationContents = @($ThemePhpContents)
