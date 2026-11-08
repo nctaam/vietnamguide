@@ -143,7 +143,7 @@ Take an early morning private car (4 hours, 1,800,000–2,200,000 VND) or region
 
 ### Days 14–16: Maritime Heritage & Coastal Relaxation: Hoi An
 
-Travel south from Hue to Da Nang aboard the dedicated **"Central Heritage Connection"** tourist train HD1 (110,000–180,000 VND). The train hugs the coastal cliffs of the Hai Van Pass, providing spectacular ocean vistas. Transfer 30 minutes south from Da Nang to Hoi An.
+Travel south from Hue to Da Nang aboard the dedicated **"Central Heritage Connection"** tourist train HD1 (180,000–231,000 VND). The train hugs the coastal cliffs of the Hai Van Pass, providing spectacular ocean vistas. Transfer 30 minutes south from Da Nang to Hoi An.
 
 - **Day 14 (Ancient Port Discovery)**: Purchase the official five-monument heritage pass (120,000 VND). Visit the restored Japanese Covered Bridge (*Chua Cau*), the centuries-old Tan Ky family house, and the Fujian Assembly Hall. Commission custom tailored shirts or suits at Bebe Tailor or Yaly Couture. In the evening, watch silk lanterns illuminate the Thu Bon River.
 - **Day 15 (My Son Hindu Sanctuary & Craft Villages)**: Take an early 07:30 AM excursion to the forest valley of **My Son Sanctuary** (150,000 VND), touring 4th-to-13th-century red-brick Cham towers honoring Shiva. In the afternoon, cycle through the organic herb gardens of Tra Que village. Dine on *cao lau* noodles and crispy white rose dumplings.

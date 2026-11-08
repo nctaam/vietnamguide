@@ -10,9 +10,9 @@ reading_time_minutes: 12
 word_count: 1539
 ---
 
-Dong Hoi functions as the coastal rail and air gateway to Quang Binh province, positioned 45 km south of the world-famous cave networks in [Phong Nha-Ke Bang](destinations/phong-nha-travel-guide). Most international travelers treat Dong Hoi as an arrival junction before boarding an organized bus up the Son River valley. Choosing to base yourself in Dong Hoi instead offers distinct advantages: authentic coastal seafood dining, wide sandy beaches, and quiet seaside promenades absent from mountain settlements. 
+Dong Hoi functions as the coastal rail and air gateway to Quang Binh province, positioned 45 km south of the world-famous cave networks in [Phong Nha-Ke Bang](/destinations/phong-nha-travel-guide/). Most international travelers treat Dong Hoi as an arrival junction before boarding an organized bus up the Son River valley. Choosing to base yourself in Dong Hoi instead offers distinct advantages: authentic coastal seafood dining, wide sandy beaches, and quiet seaside promenades absent from mountain settlements. 
 
-Understanding the urban geography prevents logistical mistakes. Dong Hoi is split down the center by the Nhat Le River. The western bank holds the bustling administrative center, the historic Quang Binh Gate, and the railway station. Across the river lies the sandbar peninsula of Bao Ninh, bordered by the South China Sea. Deciding where to sleep depends on whether you prioritize early cave tour departures, beach leisure, or quick connections via [Dong Hoi to Phong Nha transport](plan/dong-hoi-to-phong-nha-transport) and [Dong Hoi to Hue transport](plan/dong-hoi-to-hue-transport).
+Understanding the urban geography prevents logistical mistakes. Dong Hoi is split down the center by the Nhat Le River. The western bank holds the bustling administrative center, the historic Quang Binh Gate, and the railway station. Across the river lies the sandbar peninsula of Bao Ninh, bordered by the South China Sea. Deciding where to sleep depends on whether you prioritize early cave tour departures, beach leisure, or quick connections via [Dong Hoi to Phong Nha transport](/plan/dong-hoi-to-phong-nha-transport/) and [Dong Hoi to Hue transport](/plan/dong-hoi-to-hue-transport/).
 
 ## Dong Hoi Neighborhood Breakdown
 
@@ -92,7 +92,7 @@ Deciding between Nhat Le, Bao Ninh, and the Railway Station area requires weighi
 ## Frequently Asked Questions
 
 ### Is it better to stay in Dong Hoi or Phong Nha?
-If your primary goal is hiking through jungle caverns and hanging out with other adventure travelers, base yourself in [Phong Nha town](destinations/where-to-stay-in-phong-nha). Choose Dong Hoi if you want beach recreation, fresh coastal seafood, easy domestic flight arrivals via VDH Airport, or a peaceful coastal stop before catching the daytime train to Hue.
+If your primary goal is hiking through jungle caverns and hanging out with other adventure travelers, base yourself in [Phong Nha town](/destinations/where-to-stay-in-phong-nha/). Choose Dong Hoi if you want beach recreation, fresh coastal seafood, easy domestic flight arrivals via VDH Airport, or a peaceful coastal stop before catching the daytime train to Hue.
 
 ### How much does a taxi cost from Dong Hoi to Phong Nha?
 A private 4-seater taxi (Mai Linh or Sun Taxi) from Dong Hoi to Phong Nha village costs between 450,000 VND ($ 18) and 550,000 VND ($ 22) each way. Travel duration is 50 minutes across a distance of 45 km. Local public bus B4 charges 40,000 VND ($ 1.60) per passenger and takes 80 minutes.

@@ -351,7 +351,7 @@ function vg_get_season_matrix_dataset(): array
             'routes' => [
                 ['title' => 'Da Nang Travel Guide', 'url' => '/destinations/da-nang-travel-guide/', 'fit' => 'Peak fireworks & beach season'],
                 ['title' => 'Cham Islands Travel Guide', 'url' => '/destinations/cham-islands-travel-guide/', 'fit' => 'Calm water, prime diving & snorkeling visibility'],
-                ['title' => 'Hoi An Travel Guide', 'url' => '/destinations/hoi-an-travel-guide/', 'fit' => 'Morning bike rides and afternoon beach lounging'],
+                ['title' => 'Hoi An Travel Guide', 'url' => '/destinations/hoi-an-ancient-town-guide/', 'fit' => 'Morning bike rides and afternoon beach lounging'],
             ],
         ],
         'jul' => [
@@ -458,7 +458,7 @@ function vg_get_season_matrix_dataset(): array
             ],
             'routes' => [
                 ['title' => 'Sapa vs Ha Giang Guide', 'url' => '/compare/sapa-vs-ha-giang/', 'fit' => 'Golden terrace preview season begins in late August'],
-                ['title' => 'Hoi An Travel Guide', 'url' => '/destinations/hoi-an-travel-guide/', 'fit' => 'Final dry beach and cycling weeks before autumn'],
+                ['title' => 'Hoi An Travel Guide', 'url' => '/destinations/hoi-an-ancient-town-guide/', 'fit' => 'Final dry beach and cycling weeks before autumn'],
                 ['title' => 'Mekong Delta Overnight Guide', 'url' => '/destinations/mekong-delta-travel-guide/', 'fit' => 'High water seasonal canals and floating markets'],
             ],
         ],
@@ -734,7 +734,7 @@ function vg_render_season_matrix_html(): string
             <!-- Month Selector Bar -->
             <div class="vg-sm-months-nav" role="tablist" aria-label="<?php echo esc_attr__('Months of the year', 'vietnamguide-premium'); ?>">
                 <?php foreach ($months as $mKey => $mData) : ?>
-                    <button type="button" class="vg-sm-month-pill<?php echo $mKey === 'nov' ? ' is-active' : ''; ?>" data-month="<?php echo esc_attr($mKey); ?>" role="tab" aria-selected="<?php echo $mKey === 'nov' ? 'true' : 'false'; ?>">
+                    <button type="button" class="vg-sm-month-pill<?php echo $mKey === 'nov' ? ' is-active' : ''; ?>" data-month="<?php echo esc_attr($mKey); ?>" role="tab" aria-selected="<?php echo $mKey === 'nov' ? 'true' : 'false'; ?>" aria-controls="vg-sm-verdict-box">
                         <span class="vg-sm-m-short"><?php echo esc_html(substr($mData['name'], 0, 3)); ?></span>
                         <span class="vg-sm-m-season"><?php echo esc_html($mData['season_label']); ?></span>
                     </button>
@@ -742,7 +742,7 @@ function vg_render_season_matrix_html(): string
             </div>
 
             <!-- Strategic Monthly Verdict Banner -->
-            <div class="vg-sm-verdict-banner" id="vg-sm-verdict-box">
+            <div class="vg-sm-verdict-banner" id="vg-sm-verdict-box" role="tabpanel">
                 <div class="vg-sm-verdict-tag"><?php esc_html_e('Strategic Route Verdict', 'vietnamguide-premium'); ?></div>
                 <div class="vg-sm-verdict-title" id="vg-sm-verdict-title" role="heading" aria-level="3">November Overview</div>
                 <p class="vg-sm-verdict-text" id="vg-sm-verdict-text"><?php echo esc_html($months['nov']['verdict']); ?></p>
@@ -889,7 +889,7 @@ function vg_render_season_matrix_html(): string
                     <div class="vg-sm-packing-metrics">
                         <div class="vg-sm-progress-wrap">
                             <span class="vg-sm-progress-text" id="vg-sm-progress-count">0 of 10 items packed (0%)</span>
-                            <div class="vg-sm-progress-bar">
+                            <div class="vg-sm-progress-bar" id="vg-sm-progress-bar" role="progressbar" aria-label="<?php echo esc_attr__('Seasonal packing checklist progress', 'vietnamguide-premium'); ?>" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
                                 <div class="vg-sm-progress-fill" id="vg-sm-progress-fill" style="width: 0%;"></div>
                             </div>
                         </div>
@@ -1087,6 +1087,7 @@ function vg_render_season_matrix_html(): string
                 <span class="vg-legend-item"><span class="vg-heat-cell vg-heat-mod">Mod</span> Moderate Friction (Chilly high peaks or brief afternoon rain)</span>
                 <span class="vg-legend-item"><span class="vg-heat-cell vg-heat-high">Flood</span> High Risk / Pivot (Heavy monsoon flooding / rough seas)</span>
             </div>
+        </div>
 
         <!-- Viral Social & Deep-Link Sharing Bar -->
         <div class="vg-tool-share-bar">
@@ -1144,7 +1145,7 @@ function vg_render_season_matrix_html(): string
 
     <!-- Embedded Raw Data in Script -->
     <script id="vg-season-matrix-raw-data" type="application/json">
-    <?php echo wp_json_encode($months); ?>
+    <?php echo wp_json_encode($months, JSON_HEX_TAG | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES); ?>
     </script>
 
     <script>
@@ -1232,14 +1233,14 @@ function vg_render_season_matrix_html(): string
             }
         }
 
-        function updateView() {
+        function updateView(isInitial) {
             var m = DATA[state.currentMonth];
             if (!m) return;
 
             // Aria live announcement
             var ariaStatus = document.getElementById('vg-season-aria-status');
-            if (ariaStatus) {
-                ariaStatus.textContent = 'Active climate briefing updated to ' + m.name + ' (' + m.season_label + '). North: ' + m.north.status + ', Central: ' + m.central.status + ', South: ' + m.south.status;
+            if (ariaStatus && !isInitial) {
+                ariaStatus.textContent = 'Viewing Vietnam weather intelligence for ' + m.name + ' (' + m.season_label + '). North: ' + m.north.status + ', Central: ' + m.central.status + ', South: ' + m.south.status + '. ' + m.verdict;
             }
 
             // Verdict
@@ -1267,12 +1268,6 @@ function vg_render_season_matrix_html(): string
             // Update Recommended Routes
             renderRoutes(m.routes);
 
-            // Update ARIA status
-            var ariaEl = document.getElementById('vg-season-aria-status');
-            if (ariaEl) {
-                ariaEl.textContent = 'Viewing Vietnam weather intelligence for ' + m.name + '. ' + m.verdict;
-            }
-
             // Update WhatsApp and Telegram share links dynamically
             var shareUrl = window.location.href;
             var shareMsg = 'Vietnam Weather & Climate Briefing for ' + m.name + ' (' + m.season_label + '): ' + m.verdict + ' Full matrix: ' + shareUrl;
@@ -1282,7 +1277,7 @@ function vg_render_season_matrix_html(): string
             if (tgBtn) tgBtn.href = 'https://t.me/share/url?url=' + encodeURIComponent(shareUrl) + '&text=' + encodeURIComponent(shareMsg);
 
             // Telemetry dispatch
-            if (typeof window.vgTrack === 'function') {
+            if (!isInitial && typeof window.vgTrack === 'function') {
                 window.vgTrack('vg_weather_select', {
                     month: state.currentMonth,
                     season: m.season_label
@@ -1386,9 +1381,11 @@ function vg_render_season_matrix_html(): string
 
             var countEl = document.getElementById('vg-sm-progress-count');
             var fillEl = document.getElementById('vg-sm-progress-fill');
+            var barEl = document.getElementById('vg-sm-progress-bar');
 
             if (countEl) countEl.textContent = packed + ' of ' + total + ' items packed (' + pct + '%)';
             if (fillEl) fillEl.style.width = pct + '%';
+            if (barEl) barEl.setAttribute('aria-valuenow', String(pct));
         }
 
         function renderRoutes(routes) {
@@ -1487,7 +1484,7 @@ function vg_render_season_matrix_html(): string
             var monthPanel = document.getElementById('vg-sm-month-panel');
             var routePanel = document.getElementById('vg-sm-route-panel');
 
-            modeBtns.forEach(function (btn) {
+            modeBtns.forEach(function (btn, idx) {
                 btn.addEventListener('click', function () {
                     var m = btn.getAttribute('data-mode');
                     modeBtns.forEach(function (b) { b.classList.remove('is-active'); b.setAttribute('aria-selected', 'false'); });
@@ -1502,6 +1499,20 @@ function vg_render_season_matrix_html(): string
                         if (routePanel) routePanel.hidden = true;
                     }
                 });
+
+                btn.addEventListener('keydown', function (e) {
+                    var targetIdx = -1;
+                    if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+                        targetIdx = (idx + 1) % modeBtns.length;
+                    } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+                        targetIdx = (idx - 1 + modeBtns.length) % modeBtns.length;
+                    }
+                    if (targetIdx !== -1) {
+                        e.preventDefault();
+                        modeBtns[targetIdx].focus();
+                        modeBtns[targetIdx].click();
+                    }
+                });
             });
 
             // Copy Action
@@ -1511,6 +1522,11 @@ function vg_render_season_matrix_html(): string
                     var m = DATA[state.currentMonth];
                     if (!m) return;
 
+                    var isFahrenheit = (String(state.unit || 'c').toUpperCase() === 'F');
+                    var northTemp = isFahrenheit ? m.north.temp_f : m.north.temp_c;
+                    var centralTemp = isFahrenheit ? m.central.temp_f : m.central.temp_c;
+                    var southTemp = isFahrenheit ? m.south.temp_f : m.south.temp_c;
+
                     var text = [
                         'Vietnam Travel Climate & Packing Briefing (VietnamGuide.net)',
                         '==========================================================',
@@ -1518,9 +1534,9 @@ function vg_render_season_matrix_html(): string
                         'Verdict: ' + m.verdict,
                         '',
                         'REGIONAL BREAKDOWN:',
-                        '- North Vietnam: ' + m.north.temp_c + ' (' + m.north.status + ') - Swimming: ' + m.north.swimming,
-                        '- Central Vietnam: ' + m.central.temp_c + ' (' + m.central.status + ') - Sea: ' + m.central.swimming,
-                        '- South Vietnam: ' + m.south.temp_c + ' (' + m.south.status + ') - Islands: ' + m.south.swimming,
+                        '- North Vietnam: ' + northTemp + ' (' + m.north.status + ') - Swimming: ' + m.north.swimming,
+                        '- Central Vietnam: ' + centralTemp + ' (' + m.central.status + ') - Sea: ' + m.central.swimming,
+                        '- South Vietnam: ' + southTemp + ' (' + m.south.status + ') - Islands: ' + m.south.swimming,
                         '',
                         'FESTIVAL RADAR:',
                         '- ' + m.radar.event + ': ' + m.radar.note,
@@ -1528,8 +1544,9 @@ function vg_render_season_matrix_html(): string
                         'PACKING CHECKLIST FOR ' + m.name.toUpperCase() + ':',
                     ];
 
-                    m.checklist.forEach(function (item) {
-                        text.push('[ ] ' + item.name + ' (' + (item.source === 'bring' ? 'Bring from home' : 'Buy in Vietnam') + ') - ' + item.note);
+                    m.checklist.forEach(function (item, idx) {
+                        var isChecked = !!(state.checkedItems[state.currentMonth + '_' + idx] || state.checkedItems[state.month + '_' + idx]);
+                        text.push((isChecked ? '[x] ' : '[ ] ') + item.name + ' (' + (item.source === 'bring' ? 'Bring from home' : 'Buy in Vietnam') + ') - ' + item.note);
                     });
 
                     text.push('');
@@ -1545,7 +1562,11 @@ function vg_render_season_matrix_html(): string
                                 copyBtn.innerHTML = originalHtml;
                                 copyBtn.classList.remove('is-copied');
                             }, 2200);
+                        }).catch(function () {
+                            fallbackCopy(summaryStr);
                         });
+                    } else {
+                        fallbackCopy(summaryStr);
                     }
                 });
             }
@@ -1650,7 +1671,7 @@ function vg_render_season_matrix_html(): string
             }
 
             // Initial render
-            updateView();
+            updateView(true);
         }
 
         if (document.readyState === 'loading') {
@@ -1702,7 +1723,6 @@ function vg_inject_season_matrix_on_page(string $content): string
     $seasonSlugs = [
         'best-time-to-visit-vietnam',
         'what-to-pack-for-vietnam-region-season',
-        'what-to-pack-vietnam',
         'best-time-for-northern-vietnam',
         'best-time-for-central-vietnam',
         'best-time-for-southern-vietnam',
@@ -1734,8 +1754,6 @@ function vg_inject_season_matrix_on_page(string $content): string
         || (is_singular('page') && get_post_field('post_name') === 'best-time-to-visit-vietnam')
         || is_page('what-to-pack-for-vietnam-region-season')
         || (is_singular('page') && get_post_field('post_name') === 'what-to-pack-for-vietnam-region-season')
-        || is_page('what-to-pack-vietnam')
-        || (is_singular('page') && get_post_field('post_name') === 'what-to-pack-vietnam')
         || is_page('best-time-for-northern-vietnam')
         || (is_singular('page') && get_post_field('post_name') === 'best-time-for-northern-vietnam')
         || is_page('vietnam-rainy-season-flexible-route')

@@ -292,7 +292,7 @@ def strip_html(html_text):
     # Remove script, style, svg, nav, and footer
     text = re.sub(r"<(script|style|svg|nav|footer)[^>]*>.*?</\1>", " ", html_text, flags=re.DOTALL | re.IGNORECASE)
     # Remove contextual journey, related routes, and interactive travel widgets so UI controls and form items do not pollute prose analysis
-    text = re.sub(r"<section[^>]*class=[\"'][^\"']*(?:vg-contextual-journey|vg-related-routes|vg-checklist-widget|vg-cost-calculator|vg-visa-checker|vg-season-weather)[^\"']*[\"'][^>]*>.*?</section>", " ", text, flags=re.DOTALL | re.IGNORECASE)
+    text = re.sub(r"<section[^>]*class=[\"'][^\"']*(?:vg-contextual-journey|vg-related-routes|vg-checklist-widget|vg-cost-calculator|vg-visa-checker|vg-season-weather|vg-season-matrix|vg-itinerary-finder|vg-airport-navigator|vg-route-budget-widget|vg-interactive-map-desk|vg-photo-dispatch)[^\"']*[\"'][^>]*>.*?</section>", " ", text, flags=re.DOTALL | re.IGNORECASE)
     # Remove source lists and evidence ledgers so external citations and audit logs do not distort prose analysis
     text = re.sub(r"<ul[^>]*class=[\"'][^\"']*vg-source-list[^\"']*[\"'][^>]*>.*?</ul>", " ", text, flags=re.DOTALL | re.IGNORECASE)
     # Remove HTML comments
@@ -343,7 +343,7 @@ def analyze_text(text, source_name="direct_input"):
     """
     Analyzes text and returns a comprehensive anti-ai slop audit dict.
     """
-    plain_text = strip_html(text) if "<" in text and ">" in text else text
+    plain_text = strip_html(text) if re.search(r"</?[a-zA-Z][^>]*>", text) else text
     sentences = extract_sentences(plain_text)
     words = plain_text.split()
     word_count = len(words)

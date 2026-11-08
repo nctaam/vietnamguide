@@ -192,7 +192,7 @@ function vg_get_visual_dispatches_data(): array
                 'elevation' => '25m ASL',
                 'time_of_day' => '08:15 ICT',
             ],
-            'field_notes' => 'Phong Nha Cave entrance tickets cost 150,000 VND per adult plus 550,000–700,000 VND per round-trip dragon boat shared across up to 12 passengers. Paradise Cave admission is 250,000 VND per adult, and Dark Cave zip-line/kayak/mud-bath packages cost 450,000 VND.',
+            'field_notes' => 'Phong Nha Cave entrance tickets cost 150,000 VND per adult plus 550,000–700,000 VND per round-trip dragon boat shared across up to 12 passengers. Paradise Cave admission is 270,000 VND per adult, and Dark Cave zip-line/kayak/mud-bath packages cost 450,000 VND.',
             'photographer' => 'BacLuong',
             'license' => 'CC BY-SA 4.0',
             'related_route' => '/destinations/phong-nha-travel-guide/',
@@ -296,10 +296,10 @@ function vg_get_visual_dispatches_data(): array
                 'elevation' => '8m ASL',
                 'time_of_day' => '08:30 ICT',
             ],
-            'field_notes' => 'Hue Monuments Conservation Centre tickets cost 200,000 VND for the Imperial City and 150,000 VND per Royal Tomb (Minh Mạng, Tự Đức, Khải Định), or 420,000 VND for the 2-day 3-site combo pass. Scenic Heritage Trains HĐ1/HĐ2 link Huế to Đà Nẵng over Hải Vân Pass for 150,000–180,000 VND.',
+            'field_notes' => 'Hue Monuments Conservation Centre tickets cost 200,000 VND for the Imperial City and 150,000 VND per Royal Tomb (Minh Mạng, Tự Đức, Khải Định), or 420,000 VND for the 2-day 3-site combo pass. Scenic Heritage Trains HĐ1/HĐ2 link Huế to Đà Nẵng over Hải Vân Pass for 180,000–231,000 VND.',
             'photographer' => 'CEphoto, Uwe Aranas',
             'license' => 'CC BY-SA 3.0',
-            'related_route' => '/destinations/hue-travel-guide/',
+            'related_route' => '/destinations/hue-imperial-city-guide/',
             'related_label' => 'Read Huế Field Guide',
         ],
         'saigon-metropolis' => [
@@ -451,7 +451,7 @@ function vg_render_photo_dispatch(array $atts): string
                              loading="lazy"
                              decoding="async"
                              data-full-src="<?php echo $img_src; ?>"
-                             data-caption="<?php echo esc_attr($item['title'] . ' &mdash; ' . $item['location']); ?>"
+                             data-caption="<?php echo esc_attr($item['title'] . ' — ' . $item['location']); ?>"
                              tabindex="0"
                              role="button"
                              aria-haspopup="dialog"
@@ -668,6 +668,7 @@ function vg_inject_photo_dispatch_on_pillar_destinations(string $content): strin
         'best-things-to-do-in-hoi-an'   => 'hoian',
         'da-nang-vs-hoi-an'             => 'hoian',
         'hoi-an-vs-hue'                 => 'hue',
+        'hue-imperial-city-guide'       => 'hue',
         'hue-travel-guide'              => 'hue',
         'da-nang-travel-guide'          => 'hoian',
         'sapa-travel-guide'             => 'highlands',

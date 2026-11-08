@@ -5,7 +5,8 @@
     document.addEventListener('click', function (e) {
       var target = e.target;
       var printBtn = target && target.closest ? target.closest('[data-vg-print]') : null;
-      if (printBtn && (!e || !e._vgPrinted) && typeof window.print === 'function') {
+      if (printBtn && (!e || !e._vgPrinted) && !printBtn.hasAttribute('onclick') && typeof window.print === 'function') {
+      if (e) { e._vgPrinted = true; }
         window.print();
       }
     });
@@ -125,6 +126,10 @@
 
   var reducedMotion = typeof window.matchMedia === 'function' && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var progressBar = document.getElementById('vg-reading-progress');
+  var duplicateHeaderBar = typeof document.querySelector === 'function' ? document.querySelector('.vg-site-header > .vg-reading-progress:not(#vg-reading-progress)') : null;
+  if (duplicateHeaderBar && duplicateHeaderBar.parentNode) {
+    duplicateHeaderBar.parentNode.removeChild(duplicateHeaderBar);
+  }
   var dock = document.getElementById('vg-floating-dock');
   var dockPct = document.getElementById('vg-dock-pct');
   var topBtn = document.getElementById('vg-dock-top');

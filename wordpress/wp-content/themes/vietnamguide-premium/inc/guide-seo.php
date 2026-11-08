@@ -748,7 +748,7 @@ function vg_get_travel_clusters_registry(): array
                     ['name' => 'Old Quarter', 'wikidata' => 'https://www.wikidata.org/wiki/Q10808390'],
                     ['name' => 'Hoan Kiem Lake', 'wikidata' => 'https://www.wikidata.org/wiki/Q844112'],
                     ['name' => 'Temple of Literature', 'wikidata' => 'https://www.wikidata.org/wiki/Q1081308'],
-                    ['name' => 'French Quarter', 'wikidata' => 'https://www.wikidata.org/wiki/Q10808390'],
+                    ['name' => 'French Quarter', 'wikidata' => 'https://www.wikidata.org/wiki/Q5501872'],
                 ],
             ],
             'trip_schema' => [
@@ -873,7 +873,7 @@ function vg_get_travel_clusters_registry(): array
                     ['name' => 'Trang An Landscape Complex', 'wikidata' => 'https://www.wikidata.org/wiki/Q10828551'],
                     ['name' => 'Tam Coc', 'wikidata' => 'https://www.wikidata.org/wiki/Q7680468'],
                     ['name' => 'Mua Caves Viewpoint', 'wikidata' => 'https://www.wikidata.org/wiki/Q36359'],
-                    ['name' => 'Bich Dong Pagoda', 'wikidata' => 'https://www.wikidata.org/wiki/Q36359'],
+                    ['name' => 'Bich Dong Pagoda', 'wikidata' => 'https://www.wikidata.org/wiki/Q10748020'],
                 ],
             ],
             'trip_schema' => [
@@ -1009,10 +1009,10 @@ function vg_get_travel_clusters_registry(): array
                 'wikipedia'    => 'https://en.wikipedia.org/wiki/Ho_Chi_Minh_City',
                 'tourist_type' => ['Urban exploration', 'Culinary tourism', 'Historical tourism', 'Riverine ecotourism'],
                 'attractions'  => [
-                    ['name' => 'War Remnants Museum', 'wikidata' => 'https://www.wikidata.org/wiki/Q1854'],
-                    ['name' => 'Cu Chi Tunnels', 'wikidata' => 'https://www.wikidata.org/wiki/Q192935'],
+                    ['name' => 'War Remnants Museum', 'wikidata' => 'https://www.wikidata.org/wiki/Q1062129'],
+                    ['name' => 'Cu Chi Tunnels', 'wikidata' => 'https://www.wikidata.org/wiki/Q185625'],
                     ['name' => 'Mekong Delta Waterways', 'wikidata' => 'https://www.wikidata.org/wiki/Q1052867'],
-                    ['name' => 'Ben Thanh Market', 'wikidata' => 'https://www.wikidata.org/wiki/Q1854'],
+                    ['name' => 'Ben Thanh Market', 'wikidata' => 'https://www.wikidata.org/wiki/Q1931159'],
                 ],
             ],
             'trip_schema' => [
@@ -1076,7 +1076,7 @@ function vg_get_travel_clusters_registry(): array
                 'tourist_type' => ['Mountain trekking', 'Adventure travel', 'Ethnic cultural immersion', 'Landscape photography'],
                 'attractions'  => [
                     ['name' => 'Fansipan Summit', 'wikidata' => 'https://www.wikidata.org/wiki/Q1005391'],
-                    ['name' => 'Ma Pi Leng Pass', 'wikidata' => 'https://www.wikidata.org/wiki/Q36352'],
+                    ['name' => 'Ma Pi Leng Pass', 'wikidata' => 'https://www.wikidata.org/wiki/Q6720697'],
                     ['name' => 'Mu Cang Chai Terraces', 'wikidata' => 'https://www.wikidata.org/wiki/Q6930267'],
                     ['name' => 'Dong Van Karst Plateau', 'wikidata' => 'https://www.wikidata.org/wiki/Q10744325'],
                     ['name' => 'Pu Luong Nature Reserve', 'wikidata' => 'https://www.wikidata.org/wiki/Q7257418'],
@@ -1269,7 +1269,7 @@ function vg_get_travel_clusters_registry(): array
                 ],
                 [
                     'name'    => 'Nha Trang Coastal Descent',
-                    'url'     => '/destinations/where-to-stay-in-da-lat/',
+                    'url'     => '/destinations/nha-trang-travel-guide/',
                     'transit' => '3.5 hrs via Khanh Le Pass',
                     'badge'   => 'Mountain-to-Sea',
                     'desc'    => 'Descend scenic mountain hairpins from 1,500m pine forests to turquoise coastal beaches in Nha Trang.',
@@ -1303,7 +1303,7 @@ function vg_get_travel_clusters_registry(): array
                     ['name' => 'Phong Nha Wet Cave & Underground River', 'wikidata' => 'https://www.wikidata.org/wiki/Q192135'],
                     ['name' => 'Dark Cave (Hang Toi) & Chay River', 'wikidata' => 'https://www.wikidata.org/wiki/Q192135'],
                     ['name' => 'Hang En Cave', 'wikidata' => 'https://www.wikidata.org/wiki/Q192135'],
-                    ['name' => 'Dong Hoi Coastal Gateway & Nhat Le Beach', 'wikidata' => 'https://www.wikidata.org/wiki/Q1879'],
+                    ['name' => 'Dong Hoi Coastal Gateway & Nhat Le Beach', 'wikidata' => 'https://www.wikidata.org/wiki/Q36173'],
                 ],
             ],
             'trip_schema' => [
@@ -1370,9 +1370,9 @@ function vg_get_travel_clusters_registry(): array
                     ['name' => 'Cai Rang Floating Market', 'wikidata' => 'https://www.wikidata.org/wiki/Q5017482'],
                     ['name' => 'Tra Su Cajuput Melaleuca Forest', 'wikidata' => 'https://www.wikidata.org/wiki/Q10828236'],
                     ['name' => 'Ben Tre Coconut Waterways', 'wikidata' => 'https://www.wikidata.org/wiki/Q25298'],
-                    ['name' => 'Sam Mountain & Chau Doc Border Temples', 'wikidata' => 'https://www.wikidata.org/wiki/Q36384'],
+                    ['name' => 'Sam Mountain & Chau Doc Border Temples', 'wikidata' => 'https://www.wikidata.org/wiki/Q737664'],
                     ['name' => 'Mui Ca Mau Biosphere (Southernmost Tip)', 'wikidata' => 'https://www.wikidata.org/wiki/Q33932'],
-                    ['name' => 'Ha Tien Coastal Frontier', 'wikidata' => 'https://www.wikidata.org/wiki/Q36384'],
+                    ['name' => 'Ha Tien Coastal Frontier', 'wikidata' => 'https://www.wikidata.org/wiki/Q1014494'],
                 ],
             ],
             'trip_schema' => [
@@ -1440,16 +1440,16 @@ function vg_get_travel_clusters_registry(): array
                 'geo'          => ['latitude' => 22.6667, 'longitude' => 106.2500],
                 'name'         => 'Cao Bang & Far North Frontier',
                 'description'  => 'An overland frontier circuit spanning the freshwater lakes of Ba Be, the tiered cascades of Ban Gioc Waterfall on the northern border, and the mountain valleys of Mai Chau and Dien Bien Phu.',
-                'wikidata'     => 'https://www.wikidata.org/wiki/Q36384',
+                'wikidata'     => 'https://www.wikidata.org/wiki/Q36355',
                 'wikipedia'    => 'https://en.wikipedia.org/wiki/Cao_B%E1%BA%B1ng_province',
                 'tourist_type' => ['Geopark geological exploration', 'Waterfall & freshwater lake ecotourism', 'Frontier motorcycle route touring', 'Ethnic minority homestay immersion', 'Historical battleground tourism'],
                 'attractions'  => [
                     ['name' => 'Ban Gioc Waterfall (UNESCO Global Geopark)', 'wikidata' => 'https://www.wikidata.org/wiki/Q806148'],
-                    ['name' => 'Ba Be National Park & Freshwater Lake', 'wikidata' => 'https://www.wikidata.org/wiki/Q10828551'],
+                    ['name' => 'Ba Be National Park & Freshwater Lake', 'wikidata' => 'https://www.wikidata.org/wiki/Q797559'],
                     ['name' => 'Nguom Ngao Tiger Cave', 'wikidata' => 'https://www.wikidata.org/wiki/Q10798734'],
-                    ['name' => 'Bac Ha Sunday Ethnic Market', 'wikidata' => 'https://www.wikidata.org/wiki/Q36384'],
-                    ['name' => 'Dien Bien Phu Historic Valley', 'wikidata' => 'https://www.wikidata.org/wiki/Q25298'],
-                    ['name' => 'Mai Chau Valley & Stilt Villages', 'wikidata' => 'https://www.wikidata.org/wiki/Q10788220'],
+                    ['name' => 'Bac Ha Sunday Ethnic Market', 'wikidata' => 'https://www.wikidata.org/wiki/Q2227060'],
+                    ['name' => 'Dien Bien Phu Historic Valley', 'wikidata' => 'https://www.wikidata.org/wiki/Q207139'],
+                    ['name' => 'Mai Chau Valley & Stilt Villages', 'wikidata' => 'https://www.wikidata.org/wiki/Q1935243'],
                 ],
             ],
             'trip_schema' => [
@@ -2613,7 +2613,7 @@ function vg_get_curated_faq_items(string $uri_path): array
         ],
         'phong-nha-travel-guide' => [
             ['q' => 'How do I reach Phong Nha-Ke Bang National Park?', 'a' => 'Arrive at Dong Hoi Airport (VDH) or Dong Hoi Railway Station, both located 45 kilometers (50 minutes by taxi, 450,000 to 550,000 VND, or local B4 bus for 35,000 VND) east of Phong Nha town. Direct sleeper buses also stop in Phong Nha from Hue (4 hours), Ninh Binh (7 hours), and Hanoi (9 hours).'],
-            ['q' => 'Which caves in Phong Nha can I visit without booking months in advance?', 'a' => 'Paradise Cave (31 km dry karst system, 250,000 VND entry), Phong Nha Cave (underground boat ride, 150,000 VND entry plus 550,000 VND shared boat for up to 12 people), and Dark Cave can be visited on arrival without multi-month expedition permits.'],
+            ['q' => 'Which caves in Phong Nha can I visit without booking months in advance?', 'a' => 'Paradise Cave (31 km dry karst system, 270,000 VND entry), Phong Nha Cave (underground boat ride, 150,000 VND entry plus 700,000 VND shared boat for up to 12 people), and Dark Cave can be visited on arrival without multi-month expedition permits.'],
             ['q' => 'When is Phong Nha affected by seasonal flooding?', 'a' => 'Heavy autumn rains in October and November raise the Son River level, occasionally submerging the boat entrance to Phong Nha Cave and river caverns, while elevated dry caverns like Paradise Cave usually remain open.'],
         ],
         'mekong-delta-travel-guide' => [
@@ -2649,7 +2649,7 @@ function vg_get_curated_faq_items(string $uri_path): array
         'da-nang-travel-guide' => [
             ['q' => 'How far is Da Nang Airport (DAD) from My Khe Beach?', 'a' => 'Da Nang International Airport is situated right inside the city, only 5.5 kilometers (12 to 15 minutes by Grab or metered taxi, costing 80,000 to 120,000 VND) west of My Khe Beach across the Han River bridges.'],
             ['q' => 'What time does the Dragon Bridge breathe fire in Da Nang?', 'a' => 'The Dragon Bridge (Cau Rong) breathes fire and sprays water every Friday, Saturday, and Sunday night at exactly 9:00 PM for 15 minutes; vehicle traffic across the bridge closes at 8:45 PM.'],
-            ['q' => 'How much does it cost to visit Marble Mountains vs Ba Na Hills?', 'a' => 'Marble Mountains (Ngu Hanh Son) costs 40,000 VND entry plus 15,000 VND for the glass elevator and 40,000 VND for Am Phu Cave. Sun World Ba Na Hills cable car and Golden Bridge admission costs 900,000 VND for international adult visitors.'],
+            ['q' => 'How much does it cost to visit Marble Mountains vs Ba Na Hills?', 'a' => 'Marble Mountains (Ngu Hanh Son) costs 40,000 VND entry plus 15,000 VND for the glass elevator and 20,000 VND for Am Phu Cave. Sun World Ba Na Hills cable car and Golden Bridge admission costs 950,000 VND for international adult visitors.'],
         ],
         'hoi-an-ancient-town-guide' => [
             ['q' => 'How does the Hoi An Ancient Town entrance ticket work?', 'a' => 'An Ancient Town heritage ticket costs 120,000 VND (approx. 5 USD) and includes 5 entry coupons to choose from 21 historic assembly halls, merchant houses, museums, and the Japanese Covered Bridge. Pedestrian streets are closed to motorbikes daily from 9:00 AM–11:00 AM and 3:00 PM–9:30 PM.'],
@@ -2658,7 +2658,7 @@ function vg_get_curated_faq_items(string $uri_path): array
         ],
         'hue-imperial-city-guide' => [
             ['q' => 'How much is the entrance ticket for the Hue Imperial Citadel and Royal Tombs?', 'a' => 'Adult admission to the Hue Imperial Citadel costs 200,000 VND. Individual tickets for the Royal Tombs of Minh Mang, Khai Dinh, or Tu Duc cost 150,000 VND each, while a 3-site combo ticket (Citadel + 2 Tombs) costs 420,000 VND and a 4-site combo costs 530,000 VND.'],
-            ['q' => 'Should I take the train or car over the Hai Van Pass between Da Nang and Hue?', 'a' => 'Both offer coastal views: the heritage train (HD1/HD2 or Reunification Express) hugs the cliffside tracks above Lang Co Bay for 2.5 to 3 hours (110,000 to 180,000 VND), while a private car or motorbike over the 21-kilometer Hai Van Pass allows stops at Hai Van Quan summit fort and Lap An Lagoon.'],
+            ['q' => 'Should I take the train or car over the Hai Van Pass between Da Nang and Hue?', 'a' => 'Both offer coastal views: the heritage train (HD1/HD2 or Reunification Express) hugs the cliffside tracks above Lang Co Bay for 2.5 to 3 hours (180,000–231,000 VND, ~$7.10–$9.10 USD), while a private car or motorbike over the 21-kilometer Hai Van Pass allows stops at Hai Van Quan summit fort and Lap An Lagoon.'],
             ['q' => 'How much time is needed inside the Hue Imperial City?', 'a' => 'Plan 2.5 to 3.5 hours to walk through Ngo Mon Gate, Thai Hoa Palace, the Purple Forbidden City, Dien Tho Residence, and the Royal Theatre within the 520-hectare walled Citadel.'],
         ],
         'phu-quoc-travel-guide' => [
@@ -2693,7 +2693,7 @@ function vg_get_curated_faq_items(string $uri_path): array
         ],
         'hue-travel-guide' => [
             ['q' => 'How much are Hue Imperial Citadel and Royal Tomb tickets in 2026?', 'a' => 'Hue Monuments Conservation Centre charges 200,000 VND for the Imperial Citadel and 150,000 VND each for Minh Mang, Tu Duc, and Khai Dinh Royal Tombs. The 2-day 3-site combo pass (Citadel + 2 Tombs) costs 420,000 VND and the 4-site pass costs 530,000 VND.'],
-            ['q' => 'How do I book the Central Heritage Train (HD1/HD2) between Hue and Da Nang?', 'a' => 'Book scenic trains HD1/HD2 or HD3/HD4 directly on dsvn.vn for 150,000 to 180,000 VND. The 3-hour coastal rail journey crosses Hai Van Pass, stops for 10 minutes at Lang Co Bay, and includes a cultural music carriage.'],
+            ['q' => 'How do I book the Central Heritage Train (HD1/HD2) between Hue and Da Nang?', 'a' => 'Book scenic trains HD1/HD2 or HD3/HD4 directly on dsvn.vn for 180,000–231,000 VND (~$7.10–$9.10 USD). The 3-hour coastal rail journey crosses Hai Van Pass, stops for 10 minutes at Lang Co Bay, and includes a cultural music carriage.'],
             ['q' => 'How do I get from Phu Bai Airport (HUI) to Hue city center?', 'a' => 'Phu Bai International Airport (Terminal T2) is 15 kilometers south of the Perfume River. Airport Bus Route 2 costs 50,000 VND (30 to 35 minutes), while Grab or Mai Linh metered taxis cost 200,000 to 250,000 VND.'],
         ],
         'can-tho-travel-guide' => [
@@ -2703,7 +2703,7 @@ function vg_get_curated_faq_items(string $uri_path): array
         ],
         'vietnam-train-travel' => [
             ['q' => 'What is the official website to buy Vietnam train tickets?', 'a' => 'Book directly on Vietnam Railways official portals at dsvn.vn or vetau.com.vn using an international Visa or Mastercard with zero agency markup. Regular tickets open 60 to 90 days before departure.'],
-            ['q' => 'Which Reunification Express train is best: SE1/SE2, SE3/SE4, or SE19/SE20?', 'a' => 'SE1/SE2 and SE3/SE4 are the fastest flagship North-South express trains with air-conditioned 4-berth soft sleepers (AnN). SE19/SE20 is the dedicated overnight Hanoi – Hue – Da Nang express (1,050,000 to 1,450,000 VND), and HD1/HD2 (150,000 to 180,000 VND) is the daytime Hai Van Pass scenic train.'],
+            ['q' => 'Which Reunification Express train is best: SE1/SE2, SE3/SE4, or SE19/SE20?', 'a' => 'SE1/SE2 and SE3/SE4 are the fastest flagship North-South express trains with air-conditioned 4-berth soft sleepers (AnN). SE19/SE20 is the dedicated overnight Hanoi – Hue – Da Nang express (1,050,000 to 1,450,000 VND), and HD1/HD2 (180,000–231,000 VND, ~$7.10–$9.10 USD) is the daytime Hai Van Pass scenic train.'],
             ['q' => 'What is the baggage allowance on Vietnam Railways trains?', 'a' => 'Adult passengers receive a 20-kilogram carry-on baggage allowance (up to 0.8m x 0.5m x 0.4m) stored under the lower berths or on overhead racks in 4-berth sleeper compartments.'],
         ],
         'ba-be-lake-travel-guide' => [
@@ -2757,7 +2757,7 @@ function vg_get_curated_faq_items(string $uri_path): array
             ['q' => 'What is a realistic 2-week Vietnam budget for two travelers?', 'a' => 'For two mid-range travelers sharing private double rooms, a 14-day trip costs 1,800 to 2,600 USD total (approximately 65 to 95 USD per person per day), covering boutique 4-star hotels, a 2D1N bay cruise, two domestic flights per person, and guided excursions.'],
         ],
         '21-days-in-vietnam' => [
-            ['q' => 'What extra destinations can I add on a 21-day Vietnam itinerary?', 'a' => 'With 21 days (3 weeks), you can add the 3-to-4-day Ha Giang Loop (350 km karst circuit) or Sapa trekking in the North, Phong Nha-Ke Bang National Park caves (Paradise Cave 250,000 VND, Phong Nha Cave 150,000 VND) in North-Central Vietnam, and a 3-night beach finale on Phu Quoc or Con Dao Island.'],
+            ['q' => 'What extra destinations can I add on a 21-day Vietnam itinerary?', 'a' => 'With 21 days (3 weeks), you can add the 3-to-4-day Ha Giang Loop (350 km karst circuit) or Sapa trekking in the North, Phong Nha-Ke Bang National Park caves (Paradise Cave 270,000 VND, Phong Nha Cave 150,000 VND plus 700,000 VND boat) in North-Central Vietnam, and a 3-night beach finale on Phu Quoc or Con Dao Island.'],
             ['q' => 'Does a 21-day Vietnam trip require a visa for European and British travelers?', 'a' => 'Citizens of 25 countries—including the UK, France, Germany, Spain, Italy, Denmark, Sweden, Norway, Finland, Japan, South Korea, and 12 additional European states under Resolutions 44/NQ-CP and 229/NQ-CP—receive a 45-day visa-free entry stamp, which easily covers a 21-day itinerary without applying for an e-visa.'],
             ['q' => 'Can I travel overland by train for the entire 21-day Vietnam route?', 'a' => 'Yes. Three weeks provides enough margin to travel 100 percent overland along the 1,726-kilometer Reunification Express rail line (Hanoi – Ninh Binh – Dong Hoi/Phong Nha – Hue – Da Nang/Hoi An – Quy Nhon/Nha Trang – Ho Chi Minh City) without taking a single domestic flight.'],
         ],
@@ -2903,7 +2903,7 @@ function vg_get_curated_faq_items(string $uri_path): array
         ],
         'where-to-stay-in-ha-giang' => [
             ['q' => 'Where should I stay along the Ha Giang Loop: city center, Dong Van, or Meo Vac?', 'a' => 'Most travelers stay in Ha Giang City on night one near the bus terminal (such as Lam Dong or Phuong Do commune), then stay overnight in Dong Van Old Quarter on night two to explore the Sunday ethnic market and historic stone shophouses, followed by night three in Meo Vac (especially the Pa Vi H\'Mong Cultural Tourism Village) after crossing Ma Pi Leng Pass.'],
-            ['q' => 'What permits and fees are required for foreign travelers on the Ha Giang Loop?', 'a' => 'Foreign tourists require a statutory Border Area Entry Permit (Giay phep vao khu vuc bien gioi) costing 230,000 VND (approx. 10 USD), obtainable at the Ha Giang Provincial Immigration Office (415 Tran Phu) or Dong Van Police Station. Entry to Lung Cu Flag Tower is 25,000 to 40,000 VND (buggy 15,000 VND) and the H\'Mong King Palace (Dinh ho Vuong) is 20,000 to 30,000 VND.'],
+            ['q' => 'What permits and fees are required for foreign travelers on the Ha Giang Loop?', 'a' => 'Foreign tourists require a statutory Border Area Entry Permit (Giay phep vao khu vuc bien gioi) costing 230,000 VND (approx. 10 USD), obtainable at the Ha Giang Provincial Immigration Office (296A Tran Phu Street) or Dong Van Police Station. Entry to Lung Cu Flag Tower is 25,000 to 40,000 VND (buggy 15,000 VND) and the H\'Mong King Palace (Dinh ho Vuong) is 20,000 to 30,000 VND.'],
             ['q' => 'How much does the Nho Que River boat tour in Tu San Canyon cost?', 'a' => 'The standard boat tour along the emerald Nho Que River through Tu San Canyon costs 120,000 to 150,000 VND per passenger (including boat ride and lifejacket). The steep 8-kilometer motorcycle shuttle descent from the DT193A highway switchbacks down to the river boat dock costs 50,000 VND each way with local riders.'],
         ],
         'where-to-stay-in-cao-bang' => [
@@ -2943,7 +2943,7 @@ function vg_get_curated_faq_items(string $uri_path): array
             ['q' => 'How do food prices and dining styles compare between Hue and Hoi An?', 'a' => 'Hue cuisine is famed for delicate royal tasting dishes (banh beo, banh nam, banh loc) and spicy Bun Bo Hue, with street meals typically costing 30,000 to 50,000 VND. Hoi An specialties focus on Cao Lau noodles, white rose dumplings (banh bao banh vac), and crispy Com Ga (chicken rice), with dining in the Ancient Town pedestrian zone priced slightly higher at 45,000 to 90,000 VND per dish.'],
         ],
         'ba-na-hills-golden-bridge-guide' => [
-            ['q' => 'What is the entrance ticket price for Sun World Ba Na Hills and Golden Bridge?', 'a' => 'Standard admission for non-Da Nang residents and international visitors is 1,000,000 VND for adults (height over 1.4m) and 800,000 VND for children (1.0m to 1.4m, free for children under 1m). The ticket includes round-trip cable car transit, access to the Golden Bridge (Cau Vang), French Village, Le Jardin D\'Amour gardens, and indoor rides at Fantasy Park (wax museum and wine cellar entry require small separate supplements).'],
+            ['q' => 'What is the entrance ticket price for Sun World Ba Na Hills and Golden Bridge?', 'a' => 'Standard admission for non-Da Nang residents and international visitors is 900,000 to 950,000 VND for adults (height over 1.4m) and 750,000 VND for children (1.0m to 1.4m, free for children under 1m). The ticket includes round-trip cable car transit, access to the Golden Bridge (Cau Vang), French Village, Le Jardin D\'Amour gardens, and indoor rides at Fantasy Park (wax museum and wine cellar entry require small separate supplements).'],
             ['q' => 'What is the best time of day to photograph the Golden Bridge without crowds?', 'a' => 'Board the earliest cable car line (Hoi An or Suoi Mo station) opening at 07:00 to 07:30 AM to reach Marseille Station and the Golden Bridge by 08:00 AM before day-tour groups arrive from Da Nang. Alternatively, visit between 16:30 and 17:30 PM when tour groups descend and soft late-afternoon fog gathers around the stone hands.'],
             ['q' => 'How do I travel from Da Nang city center to Ba Na Hills?', 'a' => 'Ba Na Hills is located 35 kilometers west of Da Nang. Shared round-trip shuttle minibuses pick up at city hotels for 100,000 to 150,000 VND per passenger. A Grab car or private taxi costs 300,000 to 350,000 VND one-way, or 550,000 to 650,000 VND for a round-trip charter including 5 to 6 hours driver waiting time.'],
         ],
@@ -2953,7 +2953,7 @@ function vg_get_curated_faq_items(string $uri_path): array
             ['q' => 'Can I take a public city bus from Da Nang to Hoi An?', 'a' => 'The historic yellow public Bus No. 1 has been replaced by modern provincial intercity bus lines. Travelers using public buses must board at Da Nang Central Bus Station (Ben xe Trung tam Da Nang) or designated street stops along Ton Duc Thang Street; however, shared airport shuttles remain substantially faster and more convenient for travelers carrying luggage.'],
         ],
         'da-nang-to-hue-train-vs-car' => [
-            ['q' => 'Should I take the heritage train or a private car between Da Nang and Hue?', 'a' => 'The heritage train ("Ket noi di san mien Trung" HD1/HD2/HD3/HD4) is superior for relaxed scenic travel, tracing dramatic cliffside rails 100 meters above the sea along Hai Van Pass and stopping 10 minutes at Lang Co Bay (3 hours, 110,000 to 180,000 VND). A private car is better if you want to stop atop Hai Van Pass summit bunker, walk the Marble Mountains, or swim at Elephant Springs (3.5 to 4 hours, 1,200,000 to 1,500,000 VND).'],
+            ['q' => 'Should I take the heritage train or a private car between Da Nang and Hue?', 'a' => 'The heritage train ("Ket noi di san mien Trung" HD1/HD2/HD3/HD4) is superior for relaxed scenic travel, tracing dramatic cliffside rails 100 meters above the sea along Hai Van Pass and stopping 10 minutes at Lang Co Bay (3 hours, 180,000–231,000 VND, ~$7.10–$9.10 USD). A private car is better if you want to stop atop Hai Van Pass summit bunker, walk the Marble Mountains, or swim at Elephant Springs (3.5 to 4 hours, 1,200,000 to 1,500,000 VND).'],
             ['q' => 'What is the timetable for the Hue – Da Nang heritage train?', 'a' => 'Vietnam Railways operates two daily train pairs: Morning trains depart Da Nang (HD2 at 07:50 AM, arriving Hue at 11:05 AM) and Hue (HD1 at 07:45 AM, arriving Da Nang at 10:35 AM). Afternoon trains depart Da Nang (HD4 at 15:00 PM, arriving Hue at 17:45 PM) and Hue (HD3 at 14:25 PM, arriving Da Nang at 17:40 PM).'],
             ['q' => 'Which side of the train has the best ocean views between Da Nang and Hue?', 'a' => 'When traveling north from Da Nang to Hue, sit on the right-hand side (window seats facing east) for panoramic views of Da Nang Bay, the open East Sea, and Lang Co Lagoon. When traveling south from Hue to Da Nang, sit on the left-hand side.'],
         ],
@@ -3059,7 +3059,7 @@ function vg_get_curated_faq_items(string $uri_path): array
         ],
         'hanoi-to-cat-ba-island-transport' => [
             ['q' => 'What is the fastest and most convenient way to travel from Hanoi to Cat Ba Island?', 'a' => 'A tourist combo bus (operated by Daiichi Travel, Cat Ba Express, or Good Morning Cat Ba) is the most seamless option, taking 3.5 hours for 300,000 to 350,000 VND (approx. 12 to 14 USD) one-way. The through-ticket includes hotel pickup in Hanoi Old Quarter, express bus travel via the CT04 expressway, a 10-minute speedboat or fast catamaran transfer from Dong Bai Pier bypassing vehicle ferry lines, and a connecting bus directly into Cat Ba town center.'],
-            ['q' => 'Can I take the public ferry from Hai Phong to Cat Ba Island?', 'a' => 'Yes, public car and passenger ferries depart from the Dong Bai ferry terminal (replacing the older Ben Got terminal) to Cai Vieng on Cat Ba Island (ticket 35,000 VND per person, 25 to 30 minutes). However, on summer weekends and public holidays, vehicle waiting queues can stretch from 2 to 4 hours; tourist combo buses using passenger speedboats avoid these vehicle queues entirely.'],
+            ['q' => 'Can I take the public ferry from Hai Phong to Cat Ba Island?', 'a' => 'Yes, public car and passenger ferries depart from the Dong Bai ferry terminal (replacing the older Ben Got terminal) to Cai Vieng on Cat Ba Island (ticket 12,000 VND per foot passenger or 45,000 VND with motorbike, 25 to 30 minutes). However, on summer weekends and public holidays, vehicle waiting queues can stretch from 2 to 4 hours; tourist combo buses using passenger speedboats avoid these vehicle queues entirely.'],
             ['q' => 'Is there a scenic cable car from the mainland to Cat Ba Island?', 'a' => 'Yes, Sun World operates the Cat Hai - Phu Long cable car line spanning 3.95 kilometers over the sea (one-way ticket 100,000 VND, 15 minutes). Operating schedules vary by season, and travelers must take a connecting taxi or public bus (30,000 to 50,000 VND, 40 minutes) from Phu Long station down to Cat Ba town center.'],
         ],
         'hanoi-to-ha-long-bay-transport' => [
@@ -3079,7 +3079,7 @@ function vg_get_curated_faq_items(string $uri_path): array
         ],
         'best-things-to-do-in-ha-long-bay' => [
             ['q' => 'What are the must-see caves and landmarks on a Ha Long Bay cruise?', 'a' => 'Key highlights include Sung Sot Cave (Surprise Cave) on Bo Hon Island, featuring two massive limestone chambers adorned with dramatic stalactite formations, Ti Top Island with its 400 stone steps ascending to a 360-degree panoramic summit pavilion and sandy swimming crescent, and Luon Cave, a secluded karst lagoon accessible only by two-seater kayak or bamboo rowing boat through a low arched entrance.'],
-            ['q' => 'How much do official Ha Long Bay sightseeing tickets cost and what is Route 2?', 'a' => 'Route 2 is the most popular sightseeing circuit, encompassing Sung Sot Cave, Ti Top Island, Luon Cave, and Bo Nau Cave. The mandatory scenic ticket costs 250,000 VND per person, plus a 40,000 VND port passenger terminal fee (total 290,000 VND, approx. 11.50 USD). Children under 1.2 meters enter free. Day cruise boat charter or tour operator fees (typically 400,000 to 800,000 VND for a 6-hour cruise including lunch) are charged separately.'],
+            ['q' => 'How much do official Ha Long Bay sightseeing tickets cost and what is Route 2?', 'a' => 'Route 2 is the most popular sightseeing circuit, encompassing Sung Sot Cave, Ti Top Island, Luon Cave, and Bo Nau Cave. The mandatory scenic ticket costs 250,000 VND per person, plus a 60,000 VND port passenger terminal fee (total 310,000 VND, approx. 12.20 USD). Children under 1.2 meters enter free. Day cruise boat charter or tour operator fees (typically 400,000 to 800,000 VND for a 6-hour cruise including lunch) are charged separately.'],
             ['q' => 'Should I choose a day cruise or an overnight cruise in Ha Long Bay?', 'a' => 'A 6-hour day cruise from Tuan Chau Marina suits travelers on tight schedules or modest budgets (approx. 40 to 60 USD including transfers and lunch). An overnight cruise (2 days / 1 night, ranging from 120 to 280+ USD per person) is recommended for a relaxed experience, allowing you to sail past distant karst clusters into quieter Lan Ha Bay or Bai Tu Long Bay, participate in sunrise Tai Chi on deck, and kayak at sunset away from day-tripper boat traffic.'],
         ],
         'where-to-stay-in-ha-long-bay' => [
@@ -3148,7 +3148,7 @@ function vg_get_curated_faq_items(string $uri_path): array
             ['q' => 'Where are the best areas for evening nightlife and rooftop views in Saigon?', 'a' => 'For bustling street energy and food stalls, visit the pedestrianized Nguyen Hue Boulevard and Ben Thanh street food markets. For panoramic sunset cocktails over the city, open-air rooftop lounges across District 1 (such as Chill Skybar, Social Club Rooftop at Hotel des Arts, or Saigon Saigon Bar at Caravelle) offer sweeping urban vistas, with smart-casual dress codes typically enforced after 18:00 PM.'],
         ],
         'best-things-to-do-in-hoi-an' => [
-            ['q' => 'Do I need to buy the official Ancient Town entrance ticket in Hoi An?', 'a' => 'The official entrance ticket costs 150,000 VND (approx. 6 USD) for international visitors and is valid for the duration of your stay. While walking public streets and crossing bridges requires no payment, the paper pass includes coupons to enter 5 designated heritage sites among 21 options, including the Japanese Covered Bridge (Chua Cau), Tan Ky Old House, Phung Hung Old House, Cantonese Assembly Hall, and traditional music performances.'],
+            ['q' => 'Do I need to buy the official Ancient Town entrance ticket in Hoi An?', 'a' => 'The official entrance ticket costs 120,000 VND (approx. 5 USD) for international visitors and is valid for the duration of your stay. While walking public streets and crossing bridges requires no payment, the paper pass includes coupons to enter 5 designated heritage sites among 21 options, including the Japanese Covered Bridge (Chua Cau), Tan Ky Old House, Phung Hung Old House, Cantonese Assembly Hall, and traditional music performances.'],
             ['q' => 'How does the Hoai River evening lantern boat ride work and what are the rates?', 'a' => 'Official ticket booths along Bach Dang waterfront coordinate traditional wooden boat rides on the Hoai River. Regulated prices are 150,000 VND per boat for 1 to 3 passengers or 200,000 VND for 4 to 5 passengers for a 20-minute gentle row. Biodegradable flower paper lanterns with candles cost 10,000 to 20,000 VND each from licensed riverside vendors.'],
             ['q' => 'Is the Hoi An Memories Show worth seeing?', 'a' => 'The Hoi An Memories Show (Ky Uc Hoi An) at Hoi An Impression Theme Park on Cam Nam Island is an impressive outdoor production featuring 500 performers on a 25,000-square-meter water stage tracing 400 years of Hoi An\'s trading history. Shows run nightly except Tuesdays from 20:00 to 21:00 PM, with tickets priced at 600,000 VND (ECO), 750,000 VND (MID), and 1,000,000 VND (VIP seats with elevated central sightlines).'],
         ],
@@ -3585,7 +3585,7 @@ function vg_get_page_howto_schema(string $uri_path, string $current_url): ?array
             'name'        => 'How to Take the Heritage Train Across Hai Van Pass between Da Nang and Hue',
             'description' => 'Step-by-step guide for booking tickets and riding the Central Heritage train (HD1/HD2/HD3/HD4) along the coastal cliffside railway across Hai Van Pass.',
             'steps'       => [
-                ['name' => 'Book Heritage Train Tickets Online or at the Station', 'text' => 'Reserve air-conditioned soft seats on train HD1/HD3 (Hue to Da Nang) or HD2/HD4 (Da Nang to Hue) via dsvn.vn or at station ticket counters for 110,000 to 180,000 VND.'],
+                ['name' => 'Book Heritage Train Tickets Online or at the Station', 'text' => 'Reserve air-conditioned soft seats on train HD1/HD3 (Hue to Da Nang) or HD2/HD4 (Da Nang to Hue) via dsvn.vn or at station ticket counters for 180,000–231,000 VND (~$7.10–$9.10 USD).'],
                 ['name' => 'Board at Da Nang Railway Station or Hue Railway Station', 'text' => 'Arrive at the railway station (202 Hai Phong Street in Da Nang or Bui Thi Xuan Street in Hue) 25 minutes prior to scheduled departure and show your digital QR ticket.'],
                 ['name' => 'Ride 102 Kilometers Across Hai Van Pass and Lang Co Bay', 'text' => 'Enjoy the 3-hour journey as the train hugs cliffside rails 100 meters above the sea, stopping 10 minutes at Lang Co Station for photographs of the turquoise bay.'],
                 ['name' => 'Disembark and Connect to City Center', 'text' => 'Arrive at your destination station and take an official metered taxi (Mai Linh or Sun Taxi, 40,000 to 70,000 VND) into the city center.'],
@@ -3745,7 +3745,7 @@ function vg_get_page_webapplication_schema(string $uri_path, string $current_url
             'description'         => 'Interactive nationality-based visa requirements, 45-day unilateral exemption rules (25 countries under Resolutions 44/NQ-CP & 229/NQ-CP), and official 90-day e-visa validation engine across 42 international checkpoints.',
             'applicationCategory' => 'TravelApplication',
             'featureList'         => [
-                'Instant nationality lookup across 80+ countries',
+                'Instant nationality lookup covering 53+ countries and 42 border checkpoints',
                 '45-day unilateral exemption (25 countries under Resolutions 44/NQ-CP & 229/NQ-CP) vs 30-day bilateral exemption status indicator',
                 '6-month passport validity expiration calculator',
                 '42 official international checkpoint gate inspector under Resolution 127/NQ-CP',
@@ -4127,6 +4127,9 @@ function vg_enhance_content_tables(string $content): string
     }
 
     return preg_replace_callback('/<table\b[^>]*>.*?<\/table>/is', static function ($matches) {
+        if (preg_match('/^<table\b[^>]*class=[\'"][^\'"]*\b(vg-ref-table|vg-sm-matrix-table|vg-sm-heatmap-table|vg-sm-holiday-table|vg-calc-tariffs-table)\b/i', $matches[0])) {
+            return $matches[0];
+        }
         return vg_enhance_table_markup($matches[0]);
     }, $content);
 }

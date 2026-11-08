@@ -7,7 +7,7 @@ travel_cluster: "central_heritage"
 last_verified: "2026-10-22"
 author: "VietnamGuide Editorial Team"
 reading_time_minutes: 9
-word_count: 1503
+word_count: 1505
 ---
 
 # Hue to Hoi An: Train, Car, Bus & Hai Van Pass
@@ -23,7 +23,7 @@ Because **Hoi An has no railway station and no airport**, every rail passenger t
 | Transport Mode | Total Duration | 2026 Cost (VND / USD) | Route Over **Hai Van Pass** or Tunnel? | Luggage Handling | Best For |
 | :--- | :--- | :--- | :--- | :--- | :--- |
 | **1. Private Sightseeing Car (4-Seater / 7-Seater)** | 4.5 to 5.5 Hours (with 4 scenic stops) or 2.5 Hours direct | **4-Seat**: 1,350,000–1,650,000 VND ($54–$66)<br>**7-Seat**: 1,550,000–1,900,000 VND ($62–$76) | **Over Hai Van Pass** (Stops at Lap An Lagoon, Lang Co, Pass Summit & Marble Mountains) | Locked in private trunk door-to-door | **#1 Best Overall Value for Couples, Families & Groups (2–5 pax)** |
-| **2. Heritage Train (HD1/HD3) or SE Train to Da Nang + Car** | 4.0 to 4.5 Hours (3h train + 45m car to Hoi An) | **SE Train**: 110,000–165,000 VND<br>**HD Heritage**: 180,000–210,000 VND<br>+ 280k–350k VND car to Hoi An | **Coastal Cliffside Railway** (18 bridges & 6 tunnels at 35 km/h below Hai Van Pass) | Carry onto train rack + transfer to car in Da Nang | Rail enthusiasts & solo/couple travelers wanting ocean cliff window views |
+| **2. Heritage Train (HD1/HD3) or SE Train to Da Nang + Car** | 4.0 to 4.5 Hours (3h train + 45m car to Hoi An) | **SE Train**: 110,000–165,000 VND<br>**HD Heritage**: 180,000–231,000 VND<br>+ 280k–350k VND car to Hoi An | **Coastal Cliffside Railway** (18 bridges & 6 tunnels at 35 km/h below Hai Van Pass) | Carry onto train rack + transfer to car in Da Nang | Rail enthusiasts & solo/couple travelers wanting ocean cliff window views |
 | **3. Easy Rider Motorbike Tour (or Self-Drive One-Way Rental)** | 6.0 to 7.0 Hours (full-day coastal & lagoon tour) | **Pillion w/ Driver**: 1,250,000–1,600,000 VND ($50–$64)<br>**Self-Drive Rental**: 380,000–550,000 VND | **Over Hai Van Pass** + Tam Giang Lagoon, Elephant Springs (Suối Voi) & Marble Mountains | **Free Separate Van Forwarding** to your Hoi An hotel | Solo travelers & adventure couples wanting open-air mountain riding |
 | **4. Shared 9-Seat VIP Limousine Van (Hạnh Café / Havaz)** | 3.0 to 3.5 Hours (point-to-point) | 220,000–320,000 VND (~$8.80–$12.80 USD) per seat | **Through Hai Van Tunnel** (Fastest road transit; does **not** climb the pass) | 1 medium 24-inch suitcase per passenger | Budget solo travelers wanting fast direct hotel-to-hotel transit |
 | **5. Direct Open-Tour Sleeper / Tourist Bus (The Sinh Tourist / Hưng Thành)** | 3.5 to 4.0 Hours | 150,000–220,000 VND (~$6.00–$8.80 USD) per seat | **Through Hai Van Tunnel** (Large buses are legally restricted from climbing the pass) | Stored in undercarriage cargo bay | Backpackers on a strict under-$8 USD budget |
@@ -52,7 +52,7 @@ The 103-kilometer rail section between **Hue Station (02 Bùi Thị Xuân)** and
 ### Choosing Between the HD1/HD3 Heritage Train vs Standard SE Trains (2026 Timetables):
 - **The "Connecting Central Heritage" Tourist Train (HD1 & HD3)**:
   - **Schedule**: **HD1** departs Hue at **07:45 AM** (arrives Da Nang at **10:35 AM**); **HD3** departs Hue at **14:25 PM** (arrives Da Nang at **17:40 PM**).
-  - **2026 Fare**: **180,000 to 210,000 VND (~$7.20–$8.40 USD)**.
+  - **2026 Fare**: **180,000 to 231,000 VND (~$7.10–$9.10 USD)**.
   - **Why Book It**: Includes a **10-minute photo pause at Lang Co Station**, a cultural community carriage featuring live **Ca Huế traditional chamber music** and central Vietnamese snacks (bánh ít, bánh lọc), and large panoramic windows.
 - **Standard Reunification Express Trains (SE1, SE3, SE5, SE7)**:
   - **Schedule**: Morning and midday departures (08:30, 09:15, 10:40, 13:50), taking **2.5 to 3.0 hours**.
@@ -85,7 +85,7 @@ If you are traveling solo on a budget or visiting during heavy October–Novembe
 ## Frequently Asked Questions (FAQ)
 
 ### Is there a direct train from Hue to Hoi An?
-No. **Hoi An does not have a railway station.** To travel by train, book the scenic **HD1/HD3 Heritage Train** (180k–210k VND) or a standard **SE train** (110k–165k VND) from **Hue Station (Ga Huế)** to **Da Nang Station (Ga Đà Nẵng)** (2.5 to 3 hours), and then take a 45-minute private car (280k–320k VND) or GrabCar (340k–400k VND) for the remaining 30 km south to Hoi An.
+No. **Hoi An does not have a railway station.** To travel by train, book the scenic **HD1/HD3 Heritage Train** (180,000–231,000 VND) or a standard **SE train** (110k–165k VND) from **Hue Station (Ga Huế)** to **Da Nang Station (Ga Đà Nẵng)** (2.5 to 3 hours), and then take a 45-minute private car (280k–320k VND) or GrabCar (340k–400k VND) for the remaining 30 km south to Hoi An.
 
 ### Which side of the train has the ocean view from Hue to Da Nang?
 When traveling **southbound from Hue to Da Nang**, book seats on the **LEFT (East) side of the train carriage** so your window faces **Lang Co Bay** and the open cliffs of the East Sea below the Hai Van Pass.

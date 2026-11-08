@@ -67,17 +67,15 @@ def minify_js(source: str) -> str:
             else:
                 continue
         
+        # Strip single-line block comments /* ... */
+        stripped = re.sub(r'/\*.*?\*/', '', stripped).strip()
+        
         if '/*' in stripped and '*/' not in stripped:
             in_multiline_comment = True
             stripped = stripped.split('/*', 1)[0].strip()
             
-        # Single-line comment removal
-        if '//' in stripped:
-            # Simple guard against URLs inside quotes
-            parts = stripped.split('//')
-            # If not part of a string (simple check)
-            if not ('http://' in stripped or 'https://' in stripped or '":' in parts[0]):
-                stripped = parts[0].strip()
+        # Single-line comment removal only when preceded by start of line or whitespace
+        stripped = re.sub(r'(^|\s)//.*$', '', stripped).strip()
         
         if stripped:
             processed_lines.append(stripped)

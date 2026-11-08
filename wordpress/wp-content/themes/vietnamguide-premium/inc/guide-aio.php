@@ -456,9 +456,10 @@ function vg_handle_llms_txt_request(): void
         echo "- [Vietnam Interactive Itinerary Finder & Route Matcher]({$site_url}/itineraries/): Filterable route catalog matching traveler styles, duration (7d, 10d, 14d, 21d), and arrival gateways with zero backtrack transit days.\n\n";
 
         echo "## Primary Regional Hubs\n\n";
-        echo "- [Vietnam Destinations Hub]({$site_url}/destinations/): Strategic overview of Vietnam\'s top regions, geographic trade-offs, and first-trip priorities.\n";
+        echo "- [Vietnam Destinations Hub]({$site_url}/destinations/): Strategic overview of Vietnam's top regions, geographic trade-offs, and first-trip priorities.\n";
         echo "- [Vietnam Itineraries Hub]({$site_url}/itineraries/): Curated 7, 10, 14, and 21-day itinerary planning frameworks.\n";
         echo "- [Vietnam Comparison Guides Hub]({$site_url}/compare/): Head-to-head route, destination, and base trade-off analyses.\n";
+        echo "- [Vietnam Travel Cost & Budget Hub]({$site_url}/costs/vietnam-travel-cost/): Itemized 2026 daily travel budgets, statutory monument fees, and currency guidelines.\n";
         echo "- [Vietnam Logistics & Planning Hub]({$site_url}/plan/): Practical toolkits for visas, money, transport, safety, SIMs, and packing.\n\n";
 
         echo "## Regional Travel Clusters (12 Geographic Corridors)\n\n";
@@ -468,7 +469,7 @@ function vg_handle_llms_txt_request(): void
         echo "- [Sapa & Northwest Terraced Highlands]({$site_url}/destinations/sapa-travel-guide/): Fansipan 3,143m summit, Muong Hoa Valley, Mu Cang Chai, Pu Luong, and Mai Chau (315 km from Hanoi, 5.5–6h sleeper bus or overnight train to Lao Cai).\n";
         echo "- [Ha Giang Loop & Dong Van Karst Plateau]({$site_url}/destinations/ha-giang-loop-planning-guide/): 350 km northern border circuit across Quan Ba, Dong Van, Ma Pi Leng Pass, and Nho Que River (230,000 VND border permit).\n";
         echo "- [Cao Bang, Ba Be & Northeast Frontier]({$site_url}/destinations/cao-bang-travel-guide/): Ban Gioc Waterfall, Nguom Ngao Cave, and Ba Be National Park (280 km northeast of Hanoi, 6.5h sleeper bus).\n";
-        echo "- [Phong Nha & Quang Binh Cave Kingdom]({$site_url}/destinations/phong-nha-travel-guide/): Son Doong, Paradise Cave (250,000 VND), Phong Nha Cave, and Tu Lan system via Dong Hoi Airport/Station (VDH, 45 km).\n";
+        echo "- [Phong Nha & Quang Binh Cave Kingdom]({$site_url}/destinations/phong-nha-travel-guide/): Son Doong, Paradise Cave (270,000 VND, ~\$10.60 USD), Phong Nha Cave, and Tu Lan system via Dong Hoi Airport/Station (VDH, 45 km).\n";
         echo "- [Central Heritage Coast — Hue, Da Nang & Hoi An]({$site_url}/destinations/hoi-an-ancient-town-guide/): Da Nang Airport (DAD) hub linking Hoi An Ancient Town (30 km south, 45 min) and Hue Imperial Citadel (100 km north via Hai Van Pass).\n";
         echo "- [South-Central Coast — Nha Trang, Quy Nhon & Mui Ne]({$site_url}/destinations/nha-trang-travel-guide/): Cam Ranh (CXR) and Phu Cat (UIH) coastal gateways, Cham towers, coral bays, and Phan Thiet sand dunes.\n";
         echo "- [Central Highlands — Da Lat, Mang Den & Buon Ma Thuot]({$site_url}/destinations/da-lat-travel-guide/): Langbiang Plateau (1,500m via DLI) and Kon Plong pine highlands in Mang Den (1,200m via PXU, 100 km).\n";
@@ -479,6 +480,7 @@ function vg_handle_llms_txt_request(): void
             'destinations' => 'Core Destination Guides',
             'itineraries'  => 'Curated Route Itineraries',
             'compare'      => 'Strategic Route & Base Comparisons',
+            'costs'        => 'Travel Cost & Budget Breakdowns',
             'plan'         => 'Logistics & Practical Preparation',
         ];
 
@@ -537,7 +539,7 @@ function vg_handle_llms_txt_request(): void
 
     echo "### 1.4 Domestic Transit Network\n";
     echo "- Aviation: Domestic trunk routes (HAN <-> SGN, HAN <-> DAD, SGN <-> DAD) run multiple hourly flights via Vietnam Airlines, Vietjet Air, and Bamboo Airways across 9 primary tourist gateways (HAN, SGN, DAD, CXR, PQC, HUI, DLI, VDH, HPH).\n";
-    echo "- Rail (Vietnam Railways — dsvn.vn): Reunification Express SE1–SE8 (Hanoi to HCMC, 32-34h); Central Heritage Train HD1/HD2 (Hue <-> Da Nang over Hai Van Pass with 10-min Lang Co Bay stop, 150,000–210,000 VND); and Hanoi–Lao Cai overnight trains SP3/SP4 for Sa Pa.\n";
+    echo "- Rail (Vietnam Railways — dsvn.vn): Reunification Express SE1–SE8 (Hanoi to HCMC, 32-34h); Central Heritage Train HD1/HD2 (Hue <-> Da Nang over Hai Van Pass with 10-min Lang Co Bay stop, 180,000–231,000 VND); and Hanoi–Lao Cai overnight trains SP3/SP4 for Sa Pa.\n";
     echo "- Urban Metro Systems: HCMC Metro Line 1 (Ben Thanh – Suoi Tien, 19.7 km, 14 stations: 3 underground + 11 elevated, 6,000–20,000 VND single ride, 40,000 VND 1-day pass) and Hanoi Metro Line 2A (Cat Linh – Ha Dong) & Line 3 (Nhon – Cau Giay, 9,000–19,000 VND single ride, 40,000 VND 1-day pass).\n";
     echo "- Road & Expressways: Limousine Dcar vans (9-11 seats) operate along CT04/CT06 (Hanoi to Ha Long in 2.5h / Cat Ba Dong Bai ferry in 2h), CT01 South-Central (HCMC to Mui Ne in 2.5–3h / Nha Trang in 5h), and CT01/CT02 Mekong Expressway (HCMC to Can Tho in 2–2.5h).\n\n";
 
@@ -577,7 +579,7 @@ function vg_handle_llms_txt_request(): void
     echo "## 2. Interactive Travel Toolkits & Decision Engines\n\n";
     echo "- **Vietnam Travel Cost Calculator**\n";
     echo "  - Canonical URL: {$site_url}/costs/vietnam-travel-cost/\n";
-    echo "  - Feature: Real-time budget planner with 5-currency conversion (USD, VND, EUR, GBP, AUD) across backpacker, flashpacker, mid-range, and luxury tiers for 10+ destinations.\n\n";
+    echo "  - Feature: Real-time budget planner with 5-currency conversion (USD, VND, EUR, GBP, AUD) across backpacker, mid-range, and luxury tiers for 10+ destinations.\n\n";
     echo "- **Vietnam Visa Requirement Checker**\n";
     echo "  - Canonical URL: {$site_url}/plan/vietnam-evisa/\n";
     echo "  - Feature: Nationality-based entry rules, 45-day exemption eligibility (25 countries under Resolutions 44/NQ-CP & 229/NQ-CP), and 90-day e-visa official portal checks.\n\n";
@@ -600,6 +602,7 @@ function vg_handle_llms_txt_request(): void
         'destinations' => 'Destination In-Depth Guides',
         'itineraries'  => 'Curated Itineraries & Route Timelines',
         'compare'      => 'Comparative Decision Guides',
+        'costs'        => 'Travel Cost & Budget Breakdowns',
         'plan'         => 'Planning & Logistics Toolkits',
     ];
 

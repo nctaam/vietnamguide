@@ -7,7 +7,7 @@ travel_cluster: "national_circuit"
 last_verified: "2026-10-31"
 author: "VietnamGuide Editorial Team"
 reading_time_minutes: 12
-word_count: 1594
+word_count: 1596
 ---
 
 December brings winter weather to Northern Vietnam, a drying rebound along the central coast, and peak sunshine across the Mekong Delta and southern islands. Across the 1,650 km length of the country, travelers can experience 2°C frost on Fansipan and 30°C beach weather in Phu Quoc within a 3-hour flight window.
@@ -45,7 +45,7 @@ By mid-December, central provinces shift from flood defense back to cultural tou
 
 In Hoi An, 30 km south of Da Nang Airport (35 minutes by car for 350,000 VND), river levels on the Thu Bon stabilize after December 10. Mild highs of 22°C to 25°C allow cyclists to ride the 6 km lane from the Ancient Town (entry 120,000 VND) through Tra Que Vegetable Village to An Bang Beach. Central beaches from My Khe to Cua Dai remain unsuitable for swimming due to 1.8-meter surf and 22°C water.
 
-Hue's Imperial Citadel (200,000 VND entry) and royal tombs of Tu Duc and Khai Dinh (150,000 VND each, 12 km upriver) experience cool 19°C to 23°C days with light morning mist (*mua phun*). Skip motorbike rides over the windy 496-meter Hai Van Pass. Ride the Heritage Train (*Tau Di San*) linking Hue and Da Nang across 100 km of cliffs in 3 hours for 150,000 VND.
+Hue's Imperial Citadel (200,000 VND entry) and royal tombs of Tu Duc and Khai Dinh (150,000 VND each, 12 km upriver) experience cool 19°C to 23°C days with light morning mist (*mua phun*). Skip motorbike rides over the windy 496-meter Hai Van Pass. Ride the Heritage Train (*Tau Di San*) linking Hue and Da Nang across 100 km of cliffs in 3 hours for 180,000–231,000 VND.
 
 Up at 1,500 meters in the Central Highlands, Da Lat hosts its biennial Flower Festival in December around the 5 km perimeter of Xuan Huong Lake. Monthly rainfall drops to 40 mm while temperatures range from 11°C to 21°C. Direct flights from Hanoi to Lien Khuong Airport (DLI) take 1 hour 50 minutes for 1,650,000 VND ($66.00), with a 30 km shuttle into town costing 50,000 VND (40 minutes).
 

@@ -7,7 +7,7 @@ travel_cluster: "central_heritage"
 last_verified: "2026-10-24"
 author: "VietnamGuide Editorial Team"
 reading_time_minutes: 12
-word_count: 1459
+word_count: 1460
 ---
 
 # Where to Stay in Hue: Best Areas & Hotels (2026)
@@ -53,7 +53,7 @@ HUE ACCOMMODATION ZONES & PERFUME RIVER DIVIDE (2026)
 
 Stretching 2.5 km along the southern bank of the Perfume River between Hue Railway Station and Trang Tien Bridge (Cầu Trường Tiền), Le Loi Boulevard forms the architectural spine of modern Hue. Century-old flame trees shade its riverside parks. Walk 10 minutes north across either Phu Xuan Bridge or the six steel arches of Trang Tien Bridge (engineered in 1899) and you stand directly before the Meridian Gate of the Imperial Citadel (`Đại Nội Huế`, 200,000 VND adult ticket, or 530,000 VND for the 4-site combo with Minh Mang, Tu Duc, and Khai Dinh Tombs).
 
-Rail passengers enjoy unmatched convenience at the western end of Le Loi. Hue Railway Station at 02 Bui Thi Xuan sits just 5 minutes away, handling both SE1/SE3 overnight Reunification Express sleepers and the scenic HD1/HD2 Heritage Train to Da Nang over the Hai Van Pass (150,000 to 210,000 VND / $6 to $8.40 USD, 3 hours). Three minutes from the platforms stands **Azerai La Residence Hue** (05 Le Loi), a 1930 French colonial governor's mansion with a curved art-deco facade and a 40-meter saltwater pool priced at 5,500,000 to 9,500,000 VND ($220 to $380 USD) per night. Nearby at 02 Le Loi, **Silk Path Grand Hue Hotel & Spa** charges 2,400,000 to 4,200,000 VND ($96 to $168 USD) across two hectares of gardens.
+Rail passengers enjoy unmatched convenience at the western end of Le Loi. Hue Railway Station at 02 Bui Thi Xuan sits just 5 minutes away, handling both SE1/SE3 overnight Reunification Express sleepers and the scenic HD1/HD2 Heritage Train to Da Nang over the Hai Van Pass (180,000 to 231,000 VND / $7.10 to $9.10 USD, 3 hours). Three minutes from the platforms stands **Azerai La Residence Hue** (05 Le Loi), a 1930 French colonial governor's mansion with a curved art-deco facade and a 40-meter saltwater pool priced at 5,500,000 to 9,500,000 VND ($220 to $380 USD) per night. Nearby at 02 Le Loi, **Silk Path Grand Hue Hotel & Spa** charges 2,400,000 to 4,200,000 VND ($96 to $168 USD) across two hectares of gardens.
 
 Opposite Trang Tien Bridge at the eastern tip of the boulevard, **Hotel Saigon Morin** (30 Le Loi) has welcomed guests since 1901 with colonial suites for 1,800,000 to 3,200,000 VND ($72 to $128 USD). Two blocks inland along Hung Vuong and Nguyen Truong To avenues, high-rise towers like **Indochine Palace** (105A Hung Vuong, 2,100,000 to 3,600,000 VND / $84 to $144 USD) deliver broad river panoramas and dry ground-floor lobbies during autumn storms.
 
@@ -97,7 +97,7 @@ For most travelers staying 2 nights, the **South Bank** (along Le Loi Boulevard 
 Phu Bai International Airport (`HUI` Terminal 2) sits 15 km southeast of central Hue. A metered GrabCar or Mai Linh taxi takes 20 minutes to reach South Bank or Citadel hotels and costs 200,000 to 250,000 VND ($8 to $10 USD) including the 10,000 VND airport toll. Airport Minibus Route 02 also runs every 30 to 45 minutes into Hung Vuong and Le Loi for 50,000 VND ($2 USD) per person.
 
 ### Where should I stay in Hue for the HD1/HD2 Heritage Train to Da Nang?
-Book along **western Le Loi Street** (such as Azerai La Residence or Silk Path Grand Hue) or **Bui Thi Xuan Street**, located 300 to 600 meters from Hue Railway Station (`02 Bui Thi Xuan`). From there, you can walk 5 minutes to catch the `07:45` (`HD1`) or `14:25` (`HD3`) Heritage Train to Da Nang (`150,000–210,000 VND`).
+Book along **western Le Loi Street** (such as Azerai La Residence or Silk Path Grand Hue) or **Bui Thi Xuan Street**, located 300 to 600 meters from Hue Railway Station (`02 Bui Thi Xuan`). From there, you can walk 5 minutes to catch the `07:45` (`HD1`) or `14:25` (`HD3`) Heritage Train to Da Nang (`180,000–231,000 VND`).
 
 ### How many nights do I need in Hue?
 Two full nights cover the essentials: Day 1 for the Imperial Citadel (`Đại Nội`), Thien Mu Pagoda, and a Perfume River sunset walk, and Day 2 for Minh Mang, Khai Dinh, and Tu Duc Tombs. Add a third night to cycle Thuy Bieu pomelo orchards or soak in the Alba Wellness Valley hot springs.

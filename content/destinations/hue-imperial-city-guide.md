@@ -90,7 +90,7 @@ Situated 7 km to 14 km southwest of the Citadel along the Perfume River hills, t
 - **Multimedia Audio Headset / Official HMCC Guide:** Audio guide rental at Ngo Mon Gate costs 100,000 VND ($4.00); hiring a licensed human HMCC English guide costs 300,000 VND to 500,000 VND ($12.00 to $20.00) for a 2 hours palace walk.
 - **Perfume River Dragon Boat (Bến Tòa Khâm):** 300,000 VND to 350,000 VND ($12.00 to $14.00) private one-way boat to Thien Mu Pagoda (45 minutes); 60,000 VND ($2.40) per seat on shared sunset boats.
 - **Private Car / Scooter Tomb Loop:** Private 4-seat car for the 35 km 3-tomb circuit costs 450,000 VND to 550,000 VND ($18.00 to $22.00) over 4.5 hours; automatic scooter rental along Đường Hùng Vương costs 120,000 VND to 150,000 VND ($4.80 to $6.00) per 24 hours plus 40,000 VND ($1.60) fuel.
-- **Da Nang to Hue Heritage Train (HD1/HD2/HD3/HD4):** 150,000 VND to 180,000 VND ($6.00 to $7.20) one-way from Ga Đà Nẵng to Ga Huế (2 Đường Bùi Thị Xuân, 3 hours across the 500 m high Hai Van Pass).
+- **Da Nang to Hue Heritage Train (HD1/HD2/HD3/HD4):** 180,000 VND to 231,000 VND ($7.10 to $9.10) one-way from Ga Đà Nẵng to Ga Huế (2 Đường Bùi Thị Xuân, 3 hours across the 500 m high Hai Van Pass).
 
 ## On-the-Ground Pro-Tips
 

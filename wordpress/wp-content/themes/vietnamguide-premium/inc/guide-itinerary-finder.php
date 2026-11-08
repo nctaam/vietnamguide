@@ -27,7 +27,7 @@ function vg_get_itinerary_finder_catalog(): array
             'duration_label'  => '10 Days',
             'duration_bucket' => '10d',
             'style_labels'    => ['Classic', 'First-Time'],
-            'style_values'    => ['classic'],
+            'style_values'    => ['classic', 'food'],
             'gateway_label'   => 'Hanoi or HCMC',
             'gateway_value'   => 'both',
             'route_summary'   => 'Hanoi &rarr; Ha Long Bay &rarr; Hoi An &rarr; Ho Chi Minh City',
@@ -47,7 +47,7 @@ function vg_get_itinerary_finder_catalog(): array
             'duration_label'  => '14 Days',
             'duration_bucket' => '14d',
             'style_labels'    => ['Slow Travel', 'Culture'],
-            'style_values'    => ['slow', 'culture'],
+            'style_values'    => ['slow', 'culture', 'food'],
             'gateway_label'   => 'Hanoi',
             'gateway_value'   => 'hanoi',
             'route_summary'   => 'Hanoi &rarr; Ninh Binh &rarr; Ha Long &rarr; Hue &rarr; Hoi An &rarr; HCMC',
@@ -67,7 +67,7 @@ function vg_get_itinerary_finder_catalog(): array
             'duration_label'  => '7 Days',
             'duration_bucket' => '7d',
             'style_labels'    => ['Highlights', 'Classic'],
-            'style_values'    => ['highlights', 'classic'],
+            'style_values'    => ['classic'],
             'gateway_label'   => 'Hanoi',
             'gateway_value'   => 'hanoi',
             'route_summary'   => 'Hanoi &rarr; Ninh Binh &rarr; Ha Long Bay &rarr; Hanoi',
@@ -87,14 +87,14 @@ function vg_get_itinerary_finder_catalog(): array
             'duration_label'  => '21 Days',
             'duration_bucket' => '21d',
             'style_labels'    => ['Grand Explorer', 'In-Depth'],
-            'style_values'    => ['grand', 'slow'],
+            'style_values'    => ['slow'],
             'gateway_label'   => 'Hanoi',
             'gateway_value'   => 'hanoi',
             'route_summary'   => 'Hanoi &rarr; Sa Pa &rarr; Ha Long &rarr; Central Coast &rarr; Highlands &rarr; Mekong',
             'description'     => 'The comprehensive 3-week expedition spanning 1,726 km from northern highland terraces (Sapa SP3/SP4 sleeper or Ha Giang Loop) and Phong Nha caves down to Central Heritage cities and Mekong Delta floating waterways.',
             'highlights'      => [
                 'Trekking 12–15 km through Muong Hoa Valley and ethnic homestays in Sapa',
-                'Hai Van Pass coastal railway (HĐ1/HĐ2, 150,000–180,000 VND) between Hue and Da Nang',
+                'Hai Van Pass coastal railway (HĐ1/HĐ2, 180,000–231,000 VND) between Hue and Da Nang',
                 '5:30 AM Cai Rang Floating Market sampan (350,000–500,000 VND) in Can Tho, Mekong Delta',
             ],
             'url'             => '/itineraries/21-days-in-vietnam/',
@@ -107,7 +107,7 @@ function vg_get_itinerary_finder_catalog(): array
             'duration_label'  => '2-3 Days',
             'duration_bucket' => 'short',
             'style_labels'    => ['City Break', 'Culture'],
-            'style_values'    => ['classic', 'culture'],
+            'style_values'    => ['classic', 'culture', 'food'],
             'gateway_label'   => 'Hanoi',
             'gateway_value'   => 'hanoi',
             'route_summary'   => 'Hanoi Old Quarter &rarr; French Quarter &rarr; West Lake &rarr; Street Food',
@@ -237,6 +237,7 @@ function vg_render_itinerary_finder_html(): string
                     <button type="button" class="vg-finder-pill" data-group="style" data-value="slow" aria-pressed="false"><?php esc_html_e('Slow & Culture', 'vietnamguide-premium'); ?></button>
                     <button type="button" class="vg-finder-pill" data-group="style" data-value="adventure" aria-pressed="false"><?php esc_html_e('Adventure & Nature', 'vietnamguide-premium'); ?></button>
                     <button type="button" class="vg-finder-pill" data-group="style" data-value="beach" aria-pressed="false"><?php esc_html_e('Beach & Islands', 'vietnamguide-premium'); ?></button>
+                    <button type="button" class="vg-finder-pill" data-group="style" data-filter="style" data-value="food" aria-pressed="false"><?php esc_html_e('Food & Culture', 'vietnamguide-premium'); ?></button>
                 </div>
             </div>
 
@@ -251,7 +252,7 @@ function vg_render_itinerary_finder_html(): string
         </div>
 
         <div class="vg-finder-status-bar">
-            <p class="vg-finder-count-text" aria-live="polite" aria-atomic="true">
+            <p class="vg-finder-count-text">
                 <?php
                 /* translators: %d: number of itineraries matching */
                 printf(
@@ -286,7 +287,7 @@ function vg_render_itinerary_finder_html(): string
                     </div>
                     <div class="vg-finder-route">
                         <span class="vg-finder-route-icon" aria-hidden="true">&#9678;</span>
-                        <span><?php echo wp_kses($item['route_summary'], ['rarr' => []]); ?></span>
+                        <span><?php echo wp_kses($item['route_summary'], []); ?></span>
                     </div>
                     <p class="vg-finder-card-desc"><?php echo esc_html($item['description']); ?></p>
                     <ul class="vg-finder-highlights">
@@ -485,9 +486,11 @@ function vg_render_itinerary_finder_html(): string
                 }
 
                 var qStyle = urlParams.get('style');
-                var validStyles = ['classic', 'adventure', 'culture', 'nature', 'food'];
+                var validStyles = ['all', 'classic', 'slow', 'adventure', 'beach', 'culture', 'nature', 'food'];
                 if (qStyle && validStyles.indexOf(qStyle) !== -1) {
-                    filters.style = qStyle;
+                    if (qStyle === 'culture') filters.style = 'slow';
+                    else if (qStyle === 'nature') filters.style = 'adventure';
+                    else filters.style = qStyle;
                 }
 
                 var qGateway = urlParams.get('gateway');
@@ -511,7 +514,7 @@ function vg_render_itinerary_finder_html(): string
                 }
             }
 
-            function update() {
+            function update(isInitial) {
                 var visibleCount = 0;
                 var hasActiveFilters = filters.duration !== 'all' || filters.style !== 'all' || filters.gateway !== 'all';
 
@@ -549,8 +552,10 @@ function vg_render_itinerary_finder_html(): string
                     ariaStatus.textContent = 'Showing ' + visibleCount + ' curated itineraries matching selected filters.';
                 }
 
-                // Sync URL query parameters
-                syncUrlParams({ duration: filters.duration, style: filters.style, gateway: filters.gateway });
+                // Sync URL query parameters on user interaction
+                if (!isInitial) {
+                    syncUrlParams({ duration: filters.duration, style: filters.style, gateway: filters.gateway });
+                }
 
                 // Update WhatsApp and Telegram share links dynamically
                 var shareUrl = window.location.href;
@@ -561,7 +566,7 @@ function vg_render_itinerary_finder_html(): string
                 if (tgBtn) tgBtn.href = 'https://t.me/share/url?url=' + encodeURIComponent(shareUrl) + '&text=' + encodeURIComponent(shareMsg);
 
                 // Telemetry dispatch
-                if (typeof window.vgTrack === 'function') {
+                if (!isInitial && typeof window.vgTrack === 'function') {
                     window.vgTrack('vg_itinerary_filter', {
                         duration: filters.duration,
                         style: filters.style,
@@ -713,7 +718,7 @@ function vg_render_itinerary_finder_html(): string
             }
 
             syncPillUI();
-            update();
+            update(true);
         }
 
         if (document.readyState === 'loading') {

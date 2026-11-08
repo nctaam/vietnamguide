@@ -148,7 +148,7 @@ If your travel dates fall between October and January—when Northern Vietnam ex
 ```
 
 1. **Days 1–3: Hoi An Ancient Town**: Land at Da Nang Airport (DAD) and transfer 45 minutes south to Hoi An. Explore lantern-lit pedestrian streets, bike through Cam Chau rice fields to An Bang Beach, and take a basket boat excursion in the Cam Thanh nipa palm forest.
-2. **Days 4–5: Imperial Hue**: Travel over the scenic Hai Van Pass to Hue on the daily "Central Heritage Connection" tourist train HD2 (110,000–180,000 VND). Tour the Imperial Citadel (200,000 VND) and the majestic garden tombs of Tu Duc and Khai Dinh.
+2. **Days 4–5: Imperial Hue**: Travel over the scenic Hai Van Pass to Hue on the daily "Central Heritage Connection" tourist train HD2 (180,000–231,000 VND). Tour the Imperial Citadel (200,000 VND) and the majestic garden tombs of Tu Duc and Khai Dinh.
 3. **Days 6–7: Da Nang Coastal Hub**: Return south to Da Nang. Visit the Marble Mountains (40,000 VND), see the Dragon Bridge fire-and-water show (Saturday and Sunday at 21:00), and depart from Da Nang International Airport (DAD).
 
 > [!TIP]

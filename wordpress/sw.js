@@ -7,19 +7,23 @@
 
 'use strict';
 
-var CACHE_NAME = 'vg-travel-handbook-v1.4.1';
+var CACHE_NAME = 'vg-travel-handbook-v1.4.2';
 var OFFLINE_URL = '/offline.html';
 
 var PRECACHE_ASSETS = [
   OFFLINE_URL,
   '/wp-content/themes/vietnamguide-premium/assets/css/homepage.css',
+  '/wp-content/themes/vietnamguide-premium/assets/css/guide-patterns.css',
   '/wp-content/themes/vietnamguide-premium/assets/css/guide-experience.css',
+  '/wp-content/themes/vietnamguide-premium/assets/css/guide-interactive.css',
+  '/wp-content/themes/vietnamguide-premium/assets/js/homepage.js',
   '/wp-content/themes/vietnamguide-premium/assets/js/guide-experience.js',
+  '/wp-content/themes/vietnamguide-premium/assets/js/guide-interactive.js',
   '/wp-content/themes/vietnamguide-premium/assets/images/vg-icon.svg',
   '/wp-content/themes/vietnamguide-premium/assets/images/vg-icon-192.png',
   '/wp-content/themes/vietnamguide-premium/site.webmanifest',
   '/plan/vietnam-travel-guide/',
-  '/costs/vietnam-travel-cost/',
+  '/plan/vietnam-travel-cost/',
   '/plan/best-time-to-visit-vietnam/',
   '/plan/vietnam-evisa/',
   '/plan/vietnam-first-trip-planning-checklist/',
@@ -119,7 +123,10 @@ self.addEventListener('fetch', function (event) {
 
   if (isStaticAsset) {
     event.respondWith(
-      caches.match(request).then(function (cachedResponse) {
+      caches.match(request).then(function (exactMatch) {
+        if (exactMatch) return exactMatch;
+        return caches.match(request, { ignoreSearch: true });
+      }).then(function (cachedResponse) {
         if (cachedResponse) {
           // Revalidate in background
           fetch(request).then(function (networkResponse) {

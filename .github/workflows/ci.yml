@@ -69,6 +69,7 @@ jobs:
         shell: pwsh
         run: |
           ./ops/verify-homepage-theme.ps1
+          pwsh -NoProfile -File ops/verify-guide-experience.ps1
 
       - name: Gate 5 - Interactive Shortcodes Unit Tests & A11y
         run: |
@@ -88,12 +89,12 @@ jobs:
 
       - name: Gate 9 - Content Depth Auditor & Ground-Truth Tariff Sentinel
         run: |
-          python ops/content_depth_auditor.py
+          python ops/content_depth_auditor.py --strict
           python ops/tariff_sentinel.py
 
       # Comprehensive Unit Test Suite Auto-Discovery
-      - name: Full Unit Test Suite Auto-Discovery
+      - name: Gate 10 - Full Unit Test Suite Auto-Discovery
         env:
           VG_SKIP_NETWORK_TESTS: '1'
         run: |
-          python -m unittest discover -s ops/tests -p 'test_*.py' -v
+          python -m unittest discover -s ops/tests -p "test_*.py" -v

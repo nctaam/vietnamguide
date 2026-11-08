@@ -87,9 +87,9 @@ Rising dramatically from coastal waters 25 km southeast of Ha Tien, the landmark
 
 ## Regional Transport Context & Connections
 
-Ha Tien serves as a key transit crossroads in the lower Mekong Delta. Arriving from central delta hubs is outlined in our [Can Tho to Ha Tien Transport](plan/can-tho-to-ha-tien-transport) guide, covering the 200 km, 5-hour journey via Rach Gia along QL80. If traveling down from Cambodia via Chau Doc, see [Where to Stay in Chau Doc](destinations/where-to-stay-in-chau-doc) for border city hotels.
+Ha Tien serves as a key transit crossroads in the lower Mekong Delta. Arriving from central delta hubs is outlined in our [Can Tho to Ha Tien Transport](/plan/can-tho-to-ha-tien-transport/) guide, covering the 200 km, 5-hour journey via Rach Gia along QL80. If traveling down from Cambodia via Chau Doc, see [Where to Stay in Chau Doc](/destinations/where-to-stay-in-chau-doc/) for border city hotels.
 
-Those heading seaward should consult our [Ha Tien to Phu Quoc Ferry](plan/ha-tien-to-phu-quoc-ferry) timetable guide for ticket booking rules and baggage limits. For choosing accommodation on the island, refer to [Where to Stay in Phu Quoc](destinations/where-to-stay-in-phu-quoc).
+Those heading seaward should consult our [Ha Tien to Phu Quoc Ferry](/plan/ha-tien-to-phu-quoc-ferry/) timetable guide for ticket booking rules and baggage limits. For choosing accommodation on the island, refer to [Where to Stay in Phu Quoc](/destinations/where-to-stay-in-phu-quoc/).
 
 ### Cross-Border Day Trip to Kampot
 

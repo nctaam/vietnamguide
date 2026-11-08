@@ -4,7 +4,7 @@
  *
  * Provides a real-time, zero-dependency client-side nationality visa lookup,
  * 45-day unilateral vs 30-day bilateral exemption status engine, 90-day e-visa cost/timeline,
- * 6-month passport validity calculator, 33-port gate inspector, and anti-scam official portal links.
+ * 6-month passport validity calculator, 42-port gate inspector, and anti-scam official portal links.
  *
  * @package VietnamGuide
  * @since 1.0.0
@@ -264,11 +264,11 @@ function vg_render_visa_checker_html(): string
                         <span>Border Entry Type:</span>
                     </label>
                     <div class="vg-vc-toggle-group" role="radiogroup" aria-label="Border Entry Type">
-                        <button type="button" class="vg-vc-toggle-btn active" data-entry="single" role="radio" aria-checked="true" aria-pressed="true">
+                        <button type="button" class="vg-vc-toggle-btn active" data-entry="single" role="radio" aria-checked="true">
                             <span class="vg-vc-tb-title">Single Entry</span>
                             <span class="vg-vc-tb-sub">One stay in Vietnam</span>
                         </button>
-                        <button type="button" class="vg-vc-toggle-btn" data-entry="multiple" role="radio" aria-checked="false" aria-pressed="false">
+                        <button type="button" class="vg-vc-toggle-btn" data-entry="multiple" role="radio" aria-checked="false">
                             <span class="vg-vc-tb-title">Multiple Entry</span>
                             <span class="vg-vc-tb-sub">Side trips to Cambodia/Laos</span>
                         </button>
@@ -288,7 +288,7 @@ function vg_render_visa_checker_html(): string
                     </div>
                     <div class="vg-vc-verdict-heading" id="vg-vc-verdict-title">No Visa Required for Your 14-Day Stay</div>
                     <p class="vg-vc-verdict-summary" id="vg-vc-verdict-desc">
-                        As a citizen of the United Kingdom, you are granted unilateral visa-free entry for up to 45 consecutive days under Resolution 128/NQ-CP. You do not need to apply for an E-visa or pay any visa fees.
+                        As a citizen of the United Kingdom, you are granted unilateral visa-free entry for up to 45 consecutive days under Resolution 44/NQ-CP (2025–2028). You do not need to apply for an E-visa or pay any visa fees.
                     </p>
                 </div>
                 <div class="vg-vc-verdict-right">
@@ -439,12 +439,12 @@ function vg_render_visa_checker_html(): string
                 <details class="vg-vc-details">
                     <summary class="vg-vc-details-summary">
                         <span class="vg-vc-summary-icon">&sect;</span>
-                        <span class="vg-vc-summary-text">View All 33 Approved E-Visa Entry &amp; Exit Border Gates</span>
-                        <span class="vg-vc-summary-pill">33 Ports Total</span>
+                        <span class="vg-vc-summary-text">View All 42 Approved E-Visa Entry &amp; Exit Border Gates</span>
+                        <span class="vg-vc-summary-pill">42 Ports Total</span>
                     </summary>
                     <div class="vg-vc-ports-grid">
                         <div class="vg-vc-port-col">
-                            <div class="vg-vc-port-subhead">8 International Airports</div>
+                            <div class="vg-vc-port-subhead">13 International Airports</div>
                             <ul>
                                 <?php foreach ($checkpoints['airports'] as $port): ?>
                                     <li><?php echo esc_html($port); ?></li>
@@ -460,7 +460,7 @@ function vg_render_visa_checker_html(): string
                             </ul>
                         </div>
                         <div class="vg-vc-port-col">
-                            <div class="vg-vc-port-subhead">9 International Seaports</div>
+                            <div class="vg-vc-port-subhead">13 International Seaports</div>
                             <ul>
                                 <?php foreach ($checkpoints['seaports'] as $port): ?>
                                     <li><?php echo esc_html($port); ?></li>
@@ -533,15 +533,16 @@ function vg_render_visa_checker_html(): string
     (function () {
         'use strict';
 
-        const dataset = <?php echo json_encode($data, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE); ?>;
+        const dataset = <?php echo wp_json_encode($data, JSON_HEX_TAG | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES); ?>;
         if (!dataset || !dataset.countries) return;
 
         // Elements
+        const root = document.getElementById('vg-visa-checker') || document;
         const countrySelect = document.getElementById('vg-vc-country-select');
         const durationSlider = document.getElementById('vg-vc-duration-slider');
         const durationVal = document.getElementById('vg-vc-duration-val');
-        const toggleButtons = document.querySelectorAll('.vg-vc-toggle-btn');
-        const chips = document.querySelectorAll('.vg-vc-chip');
+        const toggleButtons = root.querySelectorAll('.vg-vc-toggle-btn');
+        const chips = root.querySelectorAll('.vg-vc-chip');
 
         const verdictCard = document.getElementById('vg-vc-verdict-card');
         const statusBadge = document.getElementById('vg-vc-status-badge');
@@ -566,16 +567,19 @@ function vg_render_visa_checker_html(): string
             const arrivalVal = arrivalInput.value;
             if (!arrivalVal) return;
 
-            const arrDate = new Date(arrivalVal);
-            if (isNaN(arrDate.getTime())) return;
+            var parts = arrivalVal.split('-');
+            if (parts.length !== 3) return;
+            var arrival = new Date(parseInt(parts[0], 10), parseInt(parts[1], 10) - 1, parseInt(parts[2], 10));
+            if (isNaN(arrival.getTime())) return;
 
-            // Add 183 days (approx 6 months)
-            const expiry = new Date(arrDate.getTime() + (183 * 24 * 60 * 60 * 1000));
+            // Add 6 calendar months in local time
+            var minExpiry = new Date(arrival.getTime());
+            minExpiry.setMonth(minExpiry.getMonth() + 6);
             const options = { year: 'numeric', month: 'short', day: 'numeric' };
-            minExpiryDateEl.textContent = expiry.toLocaleDateString('en-US', options);
+            minExpiryDateEl.textContent = minExpiry.toLocaleDateString('en-US', options);
         }
 
-        function updateVisaStatus() {
+        function updateVisaStatus(isInitial) {
             const countryInfo = dataset.countries[currentCountry] || {
                 name: 'Your Country',
                 flag: 'INTL',
@@ -664,7 +668,7 @@ function vg_render_visa_checker_html(): string
             setSafeStorage('vg_user_nationality', currentCountry);
             setSafeStorage('vg_user_duration', currentDuration);
             setSafeStorage('vg_user_entry', currentEntry);
-            syncUrlParams({ nationality: currentCountry, days: currentDuration, entry: currentEntry });
+            if (!isInitial) { syncUrlParams({ nationality: currentCountry, days: currentDuration, entry: currentEntry }); }
 
             // Update WhatsApp and Telegram share links dynamically
             const shareUrl = window.location.href;
@@ -675,7 +679,7 @@ function vg_render_visa_checker_html(): string
             if (tgBtn) tgBtn.href = 'https://t.me/share/url?url=' + encodeURIComponent(shareUrl) + '&text=' + encodeURIComponent(shareMsg);
 
             // Telemetry dispatch
-            if (typeof window.vgTrack === 'function') {
+            if (!isInitial && typeof window.vgTrack === 'function') {
                 window.vgTrack('vg_visa_check', {
                     country: currentCountry,
                     duration: currentDuration,
@@ -744,11 +748,9 @@ function vg_render_visa_checker_html(): string
                 toggleButtons.forEach(b => {
                     b.classList.remove('active');
                     b.setAttribute('aria-checked', 'false');
-                    b.setAttribute('aria-pressed', 'false');
                 });
                 this.classList.add('active');
                 this.setAttribute('aria-checked', 'true');
-                this.setAttribute('aria-pressed', 'true');
                 currentEntry = this.getAttribute('data-entry');
                 updateVisaStatus();
             });
@@ -787,25 +789,30 @@ function vg_render_visa_checker_html(): string
                     '• Verified by VietnamGuide.net'
                 ].join('\n');
 
+                function markSummaryCopied() {
+                    if (!copyLabel) return;
+                    const orig = copyLabel.textContent;
+                    copyLabel.textContent = 'Copied to Clipboard!';
+                    copyBtn.classList.add('copied');
+                    setTimeout(() => {
+                        copyLabel.textContent = orig;
+                        copyBtn.classList.remove('copied');
+                    }, 2500);
+                }
+
                 if (navigator.clipboard && navigator.clipboard.writeText) {
                     navigator.clipboard.writeText(summaryText).then(() => {
-                        const orig = copyLabel.textContent;
-                        copyLabel.textContent = 'Copied to Clipboard!';
-                        copyBtn.classList.add('copied');
-                        setTimeout(() => {
-                            copyLabel.textContent = orig;
-                            copyBtn.classList.remove('copied');
-                        }, 2500);
+                        markSummaryCopied();
                     }).catch(() => {
-                        fallbackCopy(summaryText);
+                        fallbackCopy(summaryText, markSummaryCopied);
                     });
                 } else {
-                    fallbackCopy(summaryText);
+                    fallbackCopy(summaryText, markSummaryCopied);
                 }
             });
         }
 
-        function fallbackCopy(text) {
+        function fallbackCopy(text, onSuccess) {
             const ta = document.createElement('textarea');
             ta.value = text;
             ta.style.position = 'fixed';
@@ -814,7 +821,9 @@ function vg_render_visa_checker_html(): string
             ta.select();
             try {
                 document.execCommand('copy');
-                if (copyLabel) {
+                if (typeof onSuccess === 'function') {
+                    onSuccess();
+                } else if (copyLabel) {
                     const orig = copyLabel.textContent;
                     copyLabel.textContent = 'Copied to Clipboard!';
                     setTimeout(() => { copyLabel.textContent = orig; }, 2500);
@@ -842,17 +851,20 @@ function vg_render_visa_checker_html(): string
         if (shareLinkBtn) {
             shareLinkBtn.addEventListener('click', function () {
                 const url = window.location.href;
+                function onShareLinkSuccess() {
+                    showToast('Link copied to clipboard - Share with your travel companion!');
+                    if (typeof window.vgTrack === 'function') {
+                        window.vgTrack('vg_share_plan', { tool: 'visa_checker', channel: 'copy_link' });
+                    }
+                }
                 if (navigator.clipboard && navigator.clipboard.writeText) {
                     navigator.clipboard.writeText(url).then(() => {
-                        showToast('Link copied to clipboard - Share with your travel companion!');
-                        if (typeof window.vgTrack === 'function') {
-                            window.vgTrack('vg_share_plan', { tool: 'visa_checker', channel: 'copy_link' });
-                        }
+                        onShareLinkSuccess();
                     }).catch(() => {
-                        fallbackCopy(url);
+                        fallbackCopy(url, onShareLinkSuccess);
                     });
                 } else {
-                    fallbackCopy(url);
+                    fallbackCopy(url, onShareLinkSuccess);
                 }
             });
         }
@@ -947,14 +959,13 @@ function vg_render_visa_checker_html(): string
                     var isMatchEntry = b.getAttribute('data-entry') === currentEntry;
                     b.classList.toggle('active', isMatchEntry);
                     b.setAttribute('aria-checked', isMatchEntry ? 'true' : 'false');
-                    b.setAttribute('aria-pressed', isMatchEntry ? 'true' : 'false');
                 });
             }
         } catch(e) {}
 
         // Initialize
         calculatePassportExpiry();
-        updateVisaStatus();
+        updateVisaStatus(true);
     })();
     </script>
     <?php

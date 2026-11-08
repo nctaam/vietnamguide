@@ -231,8 +231,12 @@ function vg_get_packing_checklist_catalog(): array
  * @param array<string, mixed> $attributes Shortcode attributes.
  * @return string HTML output.
  */
-function vg_render_packing_checklist(array $attributes = []): string
+function vg_render_packing_checklist($attributes = []): string
 {
+    $atts = shortcode_atts([
+        'category' => 'all',
+    ], is_array($attributes) ? $attributes : [], 'vg_packing_checklist');
+
     $catalog = vg_get_packing_checklist_catalog();
     $totalCount = count($catalog);
 
@@ -245,9 +249,14 @@ function vg_render_packing_checklist(array $attributes = []): string
         'adventure'  => __('Motorbike & Mountains', 'vietnamguide-premium'),
     ];
 
+    $defaultCategory = sanitize_key((string) $atts['category']);
+    if (! isset($categories[$defaultCategory])) {
+        $defaultCategory = 'all';
+    }
+
     ob_start();
     ?>
-    <section class="vg-checklist-widget" id="vg-packing-checklist" data-vg-checklist aria-label="<?php esc_attr_e('Interactive Vietnam Travel Packing Checklist', 'vietnamguide-premium'); ?>">
+    <section class="vg-checklist-widget" id="vg-packing-checklist" data-vg-checklist data-default-category="<?php echo esc_attr($defaultCategory); ?>" aria-label="<?php esc_attr_e('Interactive Vietnam Travel Packing Checklist', 'vietnamguide-premium'); ?>">
         <div class="vg-checklist-header">
             <div class="vg-checklist-title-row">
                 <span class="vg-checklist-badge"><?php esc_html_e('Planning Toolkit', 'vietnamguide-premium'); ?></span>
@@ -260,15 +269,15 @@ function vg_render_packing_checklist(array $attributes = []): string
                 <?php esc_html_e('Check off items as you pack. Your progress is saved automatically in your browser so you can return anytime during your trip preparation.', 'vietnamguide-premium'); ?>
             </p>
 
-            <div class="vg-checklist-progress-bar-wrap" aria-hidden="true">
-                <div class="vg-checklist-progress-bar" data-vg-checklist-bar style="width: 0%;"></div>
+            <div class="vg-checklist-progress-bar-wrap">
+                <div class="vg-checklist-progress-bar" data-vg-checklist-bar role="progressbar" aria-label="<?php esc_attr_e('Packing checklist completion progress', 'vietnamguide-premium'); ?>" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" style="width: 0%;"></div>
             </div>
             <div class="vg-checklist-status-row">
                 <span class="vg-checklist-counter" data-vg-checklist-counter>
                     <?php printf(esc_html__('0 of %d items packed (0%%)', 'vietnamguide-premium'), $totalCount); ?>
                 </span>
                 <div class="vg-checklist-actions">
-                    <button type="button" class="vg-checklist-btn-text" data-vg-checklist-reset aria-label="<?php esc_attr_e('Reset all packed checkboxes', 'vietnamguide-premium'); ?>">
+                    <button type="button" class="vg-checklist-btn-text" id="vg-checklist-reset" data-vg-checklist-reset aria-label="<?php esc_attr_e('Reset all packed checkboxes', 'vietnamguide-premium'); ?>">
                         <?php esc_html_e('Reset Checklist', 'vietnamguide-premium'); ?>
                     </button>
                     <button type="button" class="vg-checklist-btn-print" data-vg-print aria-label="<?php esc_attr_e('Print this packing checklist', 'vietnamguide-premium'); ?>">
@@ -276,7 +285,7 @@ function vg_render_packing_checklist(array $attributes = []): string
                     </button>
                 </div>
             </div>
-            <div class="vg-checklist-live-announcer" role="status" aria-live="polite">
+            <div class="vg-checklist-live-announcer" id="vg-cl-aria-status" role="status" aria-live="polite" aria-atomic="true">
                 <?php esc_html_e('Packing checklist loaded with 24 items.', 'vietnamguide-premium'); ?>
             </div>
         </div>
@@ -304,16 +313,17 @@ function vg_render_packing_checklist(array $attributes = []): string
                 <button
                     type="button"
                     role="tab"
-                    class="vg-checklist-tab<?php echo $catKey === 'all' ? ' is-active' : ''; ?>"
+                    class="vg-checklist-tab vg-checklist-filter-btn<?php echo $catKey === $defaultCategory ? ' is-active' : ''; ?>"
                     data-vg-checklist-filter="<?php echo esc_attr($catKey); ?>"
-                    aria-selected="<?php echo $catKey === 'all' ? 'true' : 'false'; ?>"
+                    aria-selected="<?php echo $catKey === $defaultCategory ? 'true' : 'false'; ?>"
+                    aria-controls="vg-checklist-items-panel"
                 >
                     <?php echo esc_html($catLabel); ?>
                 </button>
             <?php endforeach; ?>
         </div>
 
-        <ul class="vg-checklist-items" data-vg-checklist-items>
+        <ul class="vg-checklist-items" id="vg-checklist-items-panel" role="tabpanel" data-vg-checklist-items>
             <?php foreach ($catalog as $item) : ?>
                 <li
                     class="vg-checklist-item"
@@ -494,6 +504,7 @@ function vg_render_packing_checklist(array $attributes = []): string
 
                 if (progressBar) {
                     progressBar.style.width = pct + '%';
+                    progressBar.setAttribute('aria-valuenow', String(pct));
                 }
 
                 if (counterEl) {
@@ -579,7 +590,7 @@ function vg_render_packing_checklist(array $attributes = []): string
                 }
             }
 
-            filterTabs.forEach(function(tab) {
+            filterTabs.forEach(function(tab, idx) {
                 tab.addEventListener('click', function() {
                     var category = tab.getAttribute('data-vg-checklist-filter');
                     applyFilter(category, true);
@@ -589,22 +600,33 @@ function vg_render_packing_checklist(array $attributes = []): string
                         e.preventDefault();
                         var category = tab.getAttribute('data-vg-checklist-filter');
                         applyFilter(category, true);
+                    } else if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') {
+                        e.preventDefault();
+                        var nextIdx = e.key === 'ArrowRight'
+                            ? (idx + 1) % filterTabs.length
+                            : (idx - 1 + filterTabs.length) % filterTabs.length;
+                        var nextTab = filterTabs[nextIdx];
+                        if (nextTab) {
+                            nextTab.focus();
+                            applyFilter(nextTab.getAttribute('data-vg-checklist-filter'), true);
+                        }
                     }
                 });
             });
 
-            // Reset action
+            // Reset action (non-blocking)
             if (resetBtn) {
                 resetBtn.addEventListener('click', function() {
-                    if (window.confirm('Reset all checked items in your packing checklist?')) {
-                        packedState = {};
-                        checkboxes.forEach(function(box) {
-                            box.checked = false;
-                            var parent = box.closest('.vg-checklist-item');
-                            if (parent) parent.classList.remove('is-packed');
-                        });
-                        saveState();
-                        updateProgress(true);
+                    packedState = {};
+                    checkboxes.forEach(function(box) {
+                        box.checked = false;
+                        var parent = box.closest('.vg-checklist-item');
+                        if (parent) parent.classList.remove('is-packed');
+                    });
+                    saveState();
+                    updateProgress(true);
+                    if (liveAnnouncer) {
+                        liveAnnouncer.textContent = 'Packing checklist reset. 0 of ' + totalCount + ' items packed.';
                     }
                 });
             }
@@ -618,10 +640,10 @@ function vg_render_packing_checklist(array $attributes = []): string
             }
 
             function showToast(msg) {
-                var toast = document.getElementById('vg-global-toast');
+                var toast = document.getElementById('vg-cl-share-toast') || document.getElementById('vg-global-toast');
                 if (!toast) {
                     toast = document.createElement('div');
-                    toast.id = 'vg-global-toast';
+                    toast.id = 'vg-cl-share-toast';
                     toast.className = 'vg-toast';
                     document.body.appendChild(toast);
                 }
@@ -630,7 +652,21 @@ function vg_render_packing_checklist(array $attributes = []): string
                 setTimeout(function () { toast.classList.remove('is-active'); }, 3000);
             }
 
-            var shareLinkBtn = document.getElementById('vg-checklist-share-link');
+            function fallbackCopy(str) {
+                var ta = document.createElement('textarea');
+                ta.value = str;
+                ta.style.position = 'fixed';
+                ta.style.left = '-9999px';
+                document.body.appendChild(ta);
+                ta.select();
+                try {
+                    document.execCommand('copy');
+                    showToast('Link copied to clipboard — Share with your travel companion!');
+                } catch (e) {}
+                document.body.removeChild(ta);
+            }
+
+            var shareLinkBtn = document.getElementById('vg-checklist-share-link') || document.getElementById('vg-cl-share-link');
             if (shareLinkBtn) {
                 shareLinkBtn.addEventListener('click', function () {
                     var url = window.location.href;
@@ -641,10 +677,10 @@ function vg_render_packing_checklist(array $attributes = []): string
                                 window.vgTrack('vg_share_plan', { tool: 'packing_checklist', channel: 'copy_link' });
                             }
                         }).catch(function () {
-                            prompt('Copy your link:', url);
+                            fallbackCopy(url);
                         });
                     } else {
-                        prompt('Copy your link:', url);
+                        fallbackCopy(url);
                     }
                 });
             }
@@ -679,16 +715,18 @@ function vg_render_packing_checklist(array $attributes = []): string
                 });
             }
 
-            // Initial URL or Session filter restore
-            var initialFilter = 'all';
+            // Initial URL, Session, or Shortcode attribute filter restore with category allowlist validation
+            var allowedCategories = ['all', 'documents', 'electronics', 'clothing', 'medical', 'adventure'];
+            var attrCategory = widget.getAttribute('data-default-category') || 'all';
+            var initialFilter = allowedCategories.indexOf(attrCategory) !== -1 ? attrCategory : 'all';
             try {
                 var urlParams = new URLSearchParams(window.location.search);
                 var urlFilter = urlParams.get('pack_cat');
-                if (urlFilter) {
+                if (urlFilter && allowedCategories.indexOf(urlFilter) !== -1) {
                     initialFilter = urlFilter;
                 } else {
                     var sessionFilter = sessionStorage.getItem(SESSION_KEY);
-                    if (sessionFilter) initialFilter = sessionFilter;
+                    if (sessionFilter && allowedCategories.indexOf(sessionFilter) !== -1) initialFilter = sessionFilter;
                 }
             } catch (e) {}
 

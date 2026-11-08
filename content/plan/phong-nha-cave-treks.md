@@ -30,8 +30,8 @@ For travelers visiting without advance technical trekking permits, three accessi
 +----------------------+--------------------+--------------------+-----------------+-----------------+---------------+
 | Cave Name            | Entry Tariff (VND) | Access Mechanism   | Physical Demand | Underground Path| Key Feature   |
 +----------------------+--------------------+--------------------+-----------------+-----------------+---------------+
-| Paradise Cave        | 250,000 VND        | Buggy + 524 stairs | Moderate        | 1.0 km wooden   | 72m-tall dry  |
-| (*Động Thiên Đường*) | (~$10.00 USD)      | or 1.6 km incline  |                 | raised platform | cathedral arch|
+| Paradise Cave        | 270,000 VND        | Buggy + 524 stairs | Moderate        | 1.0 km wooden   | 72m-tall dry  |
+| (*Động Thiên Đường*) | (~$10.60 USD)      | or 1.6 km incline  |                 | raised platform | cathedral arch|
 +----------------------+--------------------+--------------------+-----------------+-----------------+---------------+
 | Phong Nha Cave       | 150,000 VND        | Motorboat on Son   | Minimal         | 1.2 km boat row | Subterranean  |
 | (*Động Phong Nha*)   | + boat charter fee | River (550,000 VND)| (Seated cruise) | + 300m walk     | river passage |
@@ -45,7 +45,7 @@ For travelers visiting without advance technical trekking permits, three accessi
 
 Discovered in 2005 by local woodcutter Ho Khanh and surveyed by the British Cave Research Association (BCRA), Paradise Cave extends for 31.4 km inside a limestone mountain 25 km west of Phong Nha town. The initial 1.0 km section is open to general visitors via an elevated wooden walkway:
 
-- **Entrance Ticket**: 250,000 VND ($10.00 USD) per adult; 125,000 VND ($5.00 USD) for children measuring 1.1 to 1.3 meters; free for children under 1.1 meters.
+- **Entrance Ticket**: 270,000 VND ($10.60 USD) per adult; 135,000 VND ($5.30 USD) for children measuring 1.1 to 1.3 meters; free for children under 1.1 meters.
 - **Electric Buggy Transit**: From the ticket barrier to the base of the mountain is a 1.6 km paved road. Electric buggies carry passengers for 60,000 VND one-way or 100,000 VND round-trip per person (or 150,000–250,000 VND for private 4 to 8-seat buggies). Visitors seeking exercise can walk the path on foot in 20 minutes without charge.
 - **The Cave Ascent**: From the buggy drop-off point, visitors must ascend either 524 concrete switchback stairs or a zig-zagging 1.6 km concrete ramp to reach the narrow cave mouth.
 - **Interior Experience**: Descending into the cavern reveals massive vaulted ceilings reaching heights of 72 meters and widths up to 150 meters. Strategically positioned warm LED lights illuminate towering stalagmites shaped like pagodas, petrified waterfalls, and towering stone columns without disrupting natural mineral colors.

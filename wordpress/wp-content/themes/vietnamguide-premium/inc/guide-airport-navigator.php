@@ -622,7 +622,7 @@ function vg_render_airport_navigator_html(): string
                     <span class="vg-an-btn-icon" aria-hidden="true">§</span>
                     <span class="vg-an-btn-text"><?php esc_html_e('Copy Arrival Sheet', 'vietnamguide-premium'); ?></span>
                 </button>
-                <button type="button" class="vg-an-btn vg-an-btn-secondary vg-an-print-btn" onclick="window.print()" aria-label="<?php esc_attr_e('Print arrival guide', 'vietnamguide-premium'); ?>">
+                <button type="button" class="vg-an-btn vg-an-btn-secondary vg-an-print-btn" data-vg-print onclick="window.print()" aria-label="<?php esc_attr_e('Print arrival guide', 'vietnamguide-premium'); ?>">
                     <span class="vg-an-btn-icon" aria-hidden="true">↗</span>
                     <span class="vg-an-btn-text"><?php esc_html_e('Print Sheet', 'vietnamguide-premium'); ?></span>
                 </button>
@@ -635,9 +635,10 @@ function vg_render_airport_navigator_html(): string
                 <p>Interactive airport navigator requires JavaScript. Flat arrival transfer benchmarks:</p>
                 <ul>
                     <li><strong>Hanoi Noi Bai (HAN):</strong> Express Bus 86 costs 45,000 VND (Pillar 2, T2); GrabCar to Hoan Kiem costs 280,000–320,000 VND (40 mins).</li>
-                    <li><strong>HCMC Tan Son Nhat (SGN):</strong> Yellow Bus 109 costs 20,000 VND to Ben Thanh; GrabCar pickup from Pillar 4 (International) costs 140,000–180,000 VND (25 mins).</li>
-                    <li><strong>Da Nang International (DAD):</strong> 4 km to downtown; GrabCar to city center costs 45,000–65,000 VND; to Hoi An costs 320,000–380,000 VND (45 mins).</li>
+                    <li><strong>HCMC Tan Son Nhat (SGN):</strong> Yellow Bus 109 costs 20,000 VND to Ben Thanh; GrabCar pickup from Lane B / Lane C, columns 8–12 (T2 International) costs 120,000–180,000 VND (30–50 mins).</li>
+                    <li><strong>Da Nang International (DAD):</strong> 3.5 km to downtown; GrabCar to city center costs 70,000–100,000 VND (My Khe Beach: 110,000–150,000 VND); to Hoi An costs 320,000–400,000 VND (45 mins).</li>
                     <li><strong>Cam Ranh / Nha Trang (CXR):</strong> Dat Moi Bus 18 costs 60,000 VND; GrabCar to Nha Trang costs 320,000–380,000 VND (45 mins).</li>
+                    <li><strong>Phu Quoc International (PQC):</strong> 10 km to Duong Dong town; VinBus Route 17 &amp; 19 operate free 24/7 electric shuttles to Grand World &amp; Duong Dong; GrabCar/Xanh SM to Duong Dong costs 150,000–220,000 VND (20 mins).</li>
                     <li><strong>Hue Phu Bai T2 (HUI):</strong> 14.5 km to Hue center; Airport Shuttle costs 50,000–60,000 VND; GrabCar/Xanh SM costs 200,000–250,000 VND (25 mins).</li>
                     <li><strong>Da Lat Lien Khuong (DLI):</strong> 30 km to Da Lat Market via Prenn Pass; Airport Shuttle costs 40,000–50,000 VND; Lado Fixed Taxi costs 250,000–300,000 VND (40 mins).</li>
                     <li><strong>Dong Hoi (VDH):</strong> 44 km to Phong Nha town; private car costs 450,000–550,000 VND (50 mins); Public Bus B4 from Dong Hoi center costs 35,000–50,000 VND.</li>
@@ -657,7 +658,7 @@ function vg_render_airport_navigator_html(): string
                     $ariaSelected = $first ? 'true' : 'false';
                     $first = false;
                 ?>
-                    <button type="button" class="vg-an-chip<?php echo $activeClass; ?>" role="tab" aria-selected="<?php echo $ariaSelected; ?>" data-airport="<?php echo esc_attr($code); ?>" id="vg-an-chip-<?php echo esc_attr($code); ?>">
+                    <button type="button" class="vg-an-chip<?php echo $activeClass; ?>" role="tab" aria-selected="<?php echo $ariaSelected; ?>" aria-controls="vg-an-airport-banner" data-airport="<?php echo esc_attr($code); ?>" id="vg-an-chip-<?php echo esc_attr($code); ?>">
                         <span class="vg-an-chip-code"><?php echo esc_html($code); ?></span>
                         <span class="vg-an-chip-city"><?php echo esc_html($airport['city']); ?></span>
                     </button>
@@ -666,7 +667,7 @@ function vg_render_airport_navigator_html(): string
         </div>
 
         <!-- Active Airport Quick Banner -->
-        <div class="vg-an-airport-banner" id="vg-an-airport-banner">
+        <div class="vg-an-airport-banner" id="vg-an-airport-banner" role="tabpanel">
             <div class="vg-an-banner-info">
                 <div class="vg-an-banner-top">
                     <span class="vg-an-banner-code" id="vg-an-b-code">HAN</span>
@@ -686,19 +687,19 @@ function vg_render_airport_navigator_html(): string
 
         <!-- Module Navigation Tabs -->
         <div class="vg-an-tabs" role="tablist" aria-label="<?php esc_attr_e('Navigator Sections', 'vietnamguide-premium'); ?>">
-            <button type="button" class="vg-an-tab active" role="tab" aria-selected="true" data-tab="fare-calc" id="vg-tab-fare-calc">
+            <button type="button" class="vg-an-tab active" role="tab" aria-selected="true" aria-controls="vg-panel-fare-calc" data-tab="fare-calc" id="vg-tab-fare-calc">
                 <span class="vg-tab-icon" aria-hidden="true">•</span>
                 <span class="vg-tab-text"><?php esc_html_e('Fair Fares & Options', 'vietnamguide-premium'); ?></span>
             </button>
-            <button type="button" class="vg-an-tab" role="tab" aria-selected="false" data-tab="gate-nav" id="vg-tab-gate-nav">
+            <button type="button" class="vg-an-tab" role="tab" aria-selected="false" aria-controls="vg-panel-gate-nav" data-tab="gate-nav" id="vg-tab-gate-nav">
                 <span class="vg-tab-icon" aria-hidden="true">•</span>
                 <span class="vg-tab-text"><?php esc_html_e('Gate-to-Curb Navigator', 'vietnamguide-premium'); ?></span>
             </button>
-            <button type="button" class="vg-an-tab" role="tab" aria-selected="false" data-tab="scam-shield" id="vg-tab-scam-shield">
+            <button type="button" class="vg-an-tab" role="tab" aria-selected="false" aria-controls="vg-panel-scam-shield" data-tab="scam-shield" id="vg-tab-scam-shield">
                 <span class="vg-tab-icon" aria-hidden="true">!</span>
                 <span class="vg-tab-text"><?php esc_html_e('Scam Shield & Red Flags', 'vietnamguide-premium'); ?></span>
             </button>
-            <button type="button" class="vg-an-tab" role="tab" aria-selected="false" data-tab="money-sim" id="vg-tab-money-sim">
+            <button type="button" class="vg-an-tab" role="tab" aria-selected="false" aria-controls="vg-panel-money-sim" data-tab="money-sim" id="vg-tab-money-sim">
                 <span class="vg-tab-icon" aria-hidden="true">§</span>
                 <span class="vg-tab-text"><?php esc_html_e('Cash & SIM Reality', 'vietnamguide-premium'); ?></span>
             </button>
@@ -974,13 +975,15 @@ function vg_render_airport_navigator_html(): string
         var step4Detail = document.getElementById('vg-an-step4-detail');
         var ariaStatus = document.getElementById('vg-an-aria-status');
 
-        function updateAirport(code) {
+        function updateAirport(code, isInitial) {
             var data = airportsData[code];
             if (!data) return;
             currentAirport = code;
 
             setSafeStorage('vg_user_airport', code);
-            syncUrlParams({ airport: code, tab: currentTab });
+            if (!isInitial) {
+                syncUrlParams({ airport: code, tab: currentTab });
+            }
 
             // Update chips
             chips.forEach(function(c) {
@@ -1037,7 +1040,7 @@ function vg_render_airport_navigator_html(): string
             if (tgBtn) tgBtn.href = 'https://t.me/share/url?url=' + encodeURIComponent(shareUrl) + '&text=' + encodeURIComponent(shareMsg);
 
             // Telemetry dispatch
-            if (typeof window.vgTrack === 'function') {
+            if (!isInitial && typeof window.vgTrack === 'function') {
                 window.vgTrack('vg_airport_view', {
                     airport: code,
                     city: data.city,
@@ -1140,6 +1143,20 @@ function vg_render_airport_navigator_html(): string
             });
         });
 
+        function fallbackCopy(str, onDone) {
+            var ta = document.createElement('textarea');
+            ta.value = str;
+            ta.style.position = 'fixed';
+            ta.style.left = '-9999px';
+            document.body.appendChild(ta);
+            ta.select();
+            try {
+                document.execCommand('copy');
+                if (typeof onDone === 'function') onDone();
+            } catch (e) {}
+            document.body.removeChild(ta);
+        }
+
         // Copy cheat sheet to clipboard
         var copyBtn = document.getElementById('vg-an-copy-cheat-sheet');
         if (copyBtn) {
@@ -1156,14 +1173,18 @@ function vg_render_airport_navigator_html(): string
                            '• Express Bus: ' + d.public_bus.name + ' (' + d.public_bus.fare + ')\n' +
                            '• Source: VietnamGuide.net Practical Concierge';
 
+                function onCopySheetDone() {
+                    var originalHtml = copyBtn.innerHTML;
+                    copyBtn.innerHTML = '<span>Copied!</span>';
+                    setTimeout(function() { copyBtn.innerHTML = originalHtml; }, 2000);
+                }
+
                 if (navigator.clipboard && navigator.clipboard.writeText) {
-                    navigator.clipboard.writeText(text).then(function() {
-                        var originalHtml = copyBtn.innerHTML;
-                        copyBtn.innerHTML = '<span>Copied!</span>';
-                        setTimeout(function() { copyBtn.innerHTML = originalHtml; }, 2000);
+                    navigator.clipboard.writeText(text).then(onCopySheetDone).catch(function() {
+                        fallbackCopy(text, onCopySheetDone);
                     });
                 } else {
-                    prompt('Copy your airport arrival cheat sheet:', text);
+                    fallbackCopy(text, onCopySheetDone);
                 }
             });
         }
@@ -1185,17 +1206,18 @@ function vg_render_airport_navigator_html(): string
         if (shareLinkBtn) {
             shareLinkBtn.addEventListener('click', function () {
                 var url = window.location.href;
+                function onShareDone() {
+                    showToast('Link copied to clipboard — Share with your travel companion!');
+                    if (typeof window.vgTrack === 'function') {
+                        window.vgTrack('vg_share_plan', { tool: 'airport_navigator', channel: 'copy_link' });
+                    }
+                }
                 if (navigator.clipboard && navigator.clipboard.writeText) {
-                    navigator.clipboard.writeText(url).then(function () {
-                        showToast('Link copied to clipboard — Share with your travel companion!');
-                        if (typeof window.vgTrack === 'function') {
-                            window.vgTrack('vg_share_plan', { tool: 'airport_navigator', channel: 'copy_link' });
-                        }
-                    }).catch(function () {
-                        prompt('Copy your link:', url);
+                    navigator.clipboard.writeText(url).then(onShareDone).catch(function () {
+                        fallbackCopy(url, onShareDone);
                     });
                 } else {
-                    prompt('Copy your link:', url);
+                    fallbackCopy(url, onShareDone);
                 }
             });
         }
@@ -1294,7 +1316,7 @@ function vg_render_airport_navigator_html(): string
             }
         } catch(e) {}
 
-        updateAirport(initialAirport);
+        updateAirport(initialAirport, true);
     })();
     </script>
     <?php
@@ -1378,7 +1400,7 @@ function vg_inject_airport_navigator_on_page(string $content): string
         return $content;
     }
 
-    if (has_shortcode($content, 'vg_airport_navigator')) {
+    if (has_shortcode($content, 'vg_airport_navigator') || strpos($content, 'vg-airport-navigator') !== false) {
         return $content;
     }
 

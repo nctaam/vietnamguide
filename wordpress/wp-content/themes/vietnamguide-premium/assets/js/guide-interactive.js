@@ -252,6 +252,7 @@
         var isActive = btn.getAttribute('data-vg-field-switch') === target;
         btn.classList.toggle('is-active', isActive);
         btn.setAttribute('aria-selected', isActive ? 'true' : 'false');
+        btn.setAttribute('tabindex', isActive ? '0' : '-1');
       });
       Array.prototype.forEach.call(panels, function (panel) {
         var isActive = panel.getAttribute('data-vg-field-panel') === target;
@@ -263,11 +264,27 @@
         }
       });
     }
-    Array.prototype.forEach.call(switchBtns, function (btn) {
+    Array.prototype.forEach.call(switchBtns, function (btn, idx) {
+      btn.setAttribute('tabindex', btn.getAttribute('aria-selected') === 'true' ? '0' : '-1');
       btn.addEventListener('click', function () {
         var target = this.getAttribute('data-vg-field-switch');
         if (target) {
           switchView(target);
+        }
+      });
+      btn.addEventListener('keydown', function (e) {
+        var nextIdx = -1;
+        if (e.key === 'ArrowRight') nextIdx = (idx + 1) % switchBtns.length;
+        else if (e.key === 'ArrowLeft') nextIdx = (idx - 1 + switchBtns.length) % switchBtns.length;
+        else if (e.key === 'Home') nextIdx = 0;
+        else if (e.key === 'End') nextIdx = switchBtns.length - 1;
+        if (nextIdx !== -1 && switchBtns[nextIdx]) {
+          e.preventDefault();
+          switchBtns[nextIdx].focus();
+          var nextTarget = switchBtns[nextIdx].getAttribute('data-vg-field-switch');
+          if (nextTarget) {
+            switchView(nextTarget);
+          }
         }
       });
     });

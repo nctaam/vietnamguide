@@ -12,6 +12,7 @@ from ops.tariff_sentinel import (
     audit_route_registry,
     audit_toolkit_anchors,
     run_sentinel,
+    scan_theme_for_drifts,
 )
 
 
@@ -63,6 +64,22 @@ class TariffSentinelTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as tmpdir:
             res = audit_toolkit_anchors(theme_inc_dir=Path(tmpdir))
             self.assertGreater(len(res['missing_files']), 0)
+
+    def test_scan_theme_for_drifts_detects_stale_tariffs_and_resolutions(self):
+        """scan_theme_for_drifts must detect stale Paradise Cave 250,000 VND, Central Heritage Train fares, and Resolution 128/NQ-CP."""
+        with tempfile.TemporaryDirectory() as tmpdir:
+            tmp_inc = Path(tmpdir)
+            (tmp_inc / 'guide-seo.php').write_text(
+                "<?php\n$a = 'Paradise Cave entry is 250,000 VND';\n$b = 'Central Heritage Train HD1/HD2 costs 150,000–210,000 VND';\n",
+                encoding='utf-8',
+            )
+            (tmp_inc / 'guide-visa-checker.php').write_text(
+                "<?php\n$c = 'Exempt under Resolution 128/NQ-CP for 45 days.';\n",
+                encoding='utf-8',
+            )
+            res = scan_theme_for_drifts(theme_inc_dir=tmp_inc)
+            self.assertFalse(res['passed'])
+            self.assertEqual(len(res['drifts']), 3)
 
 
 if __name__ == '__main__':

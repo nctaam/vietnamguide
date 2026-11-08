@@ -53,7 +53,7 @@ get_header();
                                         <span class="vg-copy-link__icon" aria-hidden="true">↗</span>
                                         <span class="vg-copy-link__text"><?php esc_html_e('Copy link', 'vietnamguide-premium'); ?></span>
                                     </button>
-                                    <button type="button" class="vg-print-guide" data-vg-print aria-label="<?php esc_attr_e('Print or save field guide as PDF', 'vietnamguide-premium'); ?>">
+                                    <button type="button" class="vg-print-guide" data-vg-print onclick="window.print()" aria-label="<?php esc_attr_e('Print or save field guide as PDF', 'vietnamguide-premium'); ?>">
                                         <span class="vg-print-guide__icon" aria-hidden="true">§</span>
                                         <span class="vg-print-guide__text"><?php esc_html_e('Print Field Guide', 'vietnamguide-premium'); ?></span>
                                     </button>

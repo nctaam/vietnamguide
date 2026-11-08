@@ -263,7 +263,7 @@ $data = vg_homepage_data();
         </div>
     </section>
 
-    <section class="vg-section vg-itineraries" aria-labelledby="vg-itineraries-title">
+    <section id="itineraries" class="vg-section vg-itineraries" aria-labelledby="vg-itineraries-title">
         <div class="vg-shell">
             <div class="vg-section-heading" data-vg-reveal>
                 <p class="vg-kicker">Signature itineraries</p>

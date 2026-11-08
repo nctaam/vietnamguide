@@ -75,7 +75,7 @@ Technically a rural karst landscape surrounding Hoa Lu city rather than a dense 
 * **Why First-Timers Should Sleep Overnight**: Day-trippers from Hanoi arrive in a rush at `10:30` and leave at `15:30`. Booking 1 or 2 nights in a limestone-ringed bungalow in **Tam Coc** or **Trang An** (`900,000–2,400,000 VND/night`) lets you board the first **Trang An Route 2 sampan (`250,000 VND`)** at `07:00` on glass-calm water and climb the `500` stone steps of **Mua Cave (`100,000 VND`)** at dawn or sunset without heat or tour-bus crowds.
 
 ### 5. Hue: The Nguyen Dynasty Imperial Capital (`2 Nights`)
-Located `100 kilometers` north of Da Nang across the scenic **Hai Van Pass (`3 hours` on the `HD1–HD4` Heritage Train, `150,000–180,000 VND`)**, **Hue** served as Vietnam's imperial capital from 1802 to 1945.
+Located `100 kilometers` north of Da Nang across the scenic **Hai Van Pass (`3 hours` on the `HD1–HD4` Heritage Train, `180,000–231,000 VND`)**, **Hue** served as Vietnam's imperial capital from 1802 to 1945.
 * **Why First-Timers Love It**: While Hoi An was a merchant port, Hue was a royal court. The moated **Imperial Citadel and Forbidden Purple City (`200,000 VND`)** and the landscaped garden mausoleums of **Emperor Minh Mang (`150,000 VND`)**, **Tu Duc (`150,000 VND`)**, and **Khai Dinh (`150,000 VND` — combo tickets available)** along the Perfume River are architectural masterpieces. Hue is also Vietnam's culinary powerhouse, credited with creating over 1,700 dishes (`bún bò Huế`, steamed royal rice cakes `bánh bèo/nậm/lọc` at `30,000–50,000 VND` per tray).
 
 ### 6. Da Nang: Vietnam's Most Livable Coastal City (`1 to 2 Nights`)

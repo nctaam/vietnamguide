@@ -190,7 +190,7 @@ function vg_primary_menu_fallback(): void
             echo '<li><a href="' . esc_url(vg_home_url('destinations/best-things-to-do-in-hoi-an')) . '"><strong>Hoi An</strong> <span>Ancient Town & Coastal Base</span></a></li>';
             echo '<li><a href="' . esc_url(vg_home_url('compare/da-nang-vs-hoi-an')) . '"><strong>Da Nang</strong> <span>Coastal Hub & Flight Transit</span></a></li>';
             echo '<li><a href="' . esc_url(vg_home_url('destinations/phong-nha-travel-guide')) . '"><strong>Phong Nha</strong> <span>Cave Systems & Karsts</span></a></li>';
-            echo '<li><a href="' . esc_url(vg_home_url('destinations/hue-travel-guide')) . '"><strong>Hue</strong> <span>Imperial Citadels & Cuisine</span></a></li>';
+            echo '<li><a href="' . esc_url(vg_home_url('destinations/hue-imperial-city-guide')) . '"><strong>Hue</strong> <span>Imperial Citadels & Cuisine</span></a></li>';
             echo '</ul>';
             echo '</div>';
             echo '<div class="vg-megamenu-col">';

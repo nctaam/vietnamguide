@@ -250,6 +250,7 @@ function vg_guide_route_registry(): array
         'itineraries' => 'itinerary',
         'compare' => 'comparison',
         'plan' => 'practical',
+        'costs' => 'practical',
     ];
     $allowedStatuses = ['published', 'draft', 'archived'];
     $allowedTemplates = ['guide', 'legacy', 'hub', 'tool'];
@@ -471,6 +472,7 @@ function vg_classify_guide_path(string $path): ?string
         'itineraries' => 'itinerary',
         'compare' => 'comparison',
         'plan' => 'practical',
+        'costs' => 'practical',
     ];
 
     return $types[$segments[0]] ?? null;
@@ -536,10 +538,23 @@ function vg_get_canonical_alias_redirect_map(): array
 
     $map = [
         // Vanity & toolkit aliases
-        'vietnam-travel-cost'          => '/costs/vietnam-travel-cost/',
+        'vietnam-travel-cost'          => '/plan/vietnam-travel-cost/',
+        'costs'                        => '/plan/vietnam-travel-cost/',
+        'costs/vietnam-travel-cost'    => '/plan/vietnam-travel-cost/',
+        'costs/ha-giang-loop-cost-budget' => '/destinations/ha-giang-loop-planning-guide/',
+        'costs/da-nang-hoi-an-budget'  => '/itineraries/central-vietnam-itinerary/',
+        'costs/hanoi-ninh-binh-ha-long-budget' => '/itineraries/north-vietnam-itinerary/',
+        'costs/10-day-vietnam-trip-cost' => '/itineraries/10-days-in-vietnam/',
+        'costs/vietnam-2-week-budget'  => '/plan/vietnam-travel-cost/',
+        'costs/vietnam-3-week-budget'  => '/plan/vietnam-travel-cost/',
+        'costs/vietnam-backpacker-budget' => '/plan/vietnam-travel-cost/',
+        'costs/vietnam-comfort-budget' => '/plan/vietnam-travel-cost/',
+        'plan/getting-around-vietnam'  => '/plan/transport-within-vietnam/',
         'vietnam-visa-checker'         => '/plan/vietnam-evisa/',
         'vietnam-season-weather'       => '/plan/best-time-to-visit-vietnam/',
         'affiliate-review-policy'      => '/affiliate-disclosure/',
+        'editorial-policy'             => '/source-update-policy/',
+        'source-policy'                => '/source-update-policy/',
 
         // Northern Vietnam Pillar Destinations
         'destinations/hanoi'           => '/destinations/hanoi-travel-guide/',
@@ -571,7 +586,9 @@ function vg_get_canonical_alias_redirect_map(): array
         'destinations/danang'          => '/destinations/da-nang-travel-guide/',
         'destinations/hoi-an'          => '/destinations/hoi-an-ancient-town-guide/',
         'destinations/hoian'           => '/destinations/hoi-an-ancient-town-guide/',
+        'destinations/hoi-an-travel-guide' => '/destinations/hoi-an-ancient-town-guide/',
         'destinations/hue'             => '/destinations/hue-imperial-city-guide/',
+        'destinations/hue-travel-guide' => '/destinations/hue-imperial-city-guide/',
         'destinations/phong-nha'       => '/destinations/phong-nha-travel-guide/',
         'destinations/phongnha'        => '/destinations/phong-nha-travel-guide/',
         'destinations/quy-nhon'        => '/destinations/quy-nhon-travel-guide/',
@@ -635,7 +652,11 @@ function vg_handle_toolkit_vanity_redirects(): void
     $redirect_map = vg_get_canonical_alias_redirect_map();
 
     if (isset($redirect_map[$path])) {
-        wp_safe_redirect(home_url($redirect_map[$path]), 301);
+        if ($path === 'editorial-policy' && function_exists('is_404') && ! is_404()) {
+            return;
+        }
+        $target = '/' . trim((string) $redirect_map[$path], '/') . '/';
+        wp_safe_redirect(home_url($target), 301);
         exit;
     }
 }

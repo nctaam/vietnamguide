@@ -170,24 +170,31 @@ def extract_headings(body: str) -> List[Dict[str, Any]]:
 
 def count_markdown_elements(body: str) -> Dict[str, int]:
     """Count structural markdown elements: tables, blockquotes, code blocks, lists."""
-    h2_count = len(re.findall(r"^##\s+.*$", body, re.MULTILINE))
-    h3_count = len(re.findall(r"^###\s+.*$", body, re.MULTILINE))
+    body_no_code = re.sub(r"```.*?```", "", body, flags=re.DOTALL)
+    h2_count = len(re.findall(r"^##\s+.*$", body_no_code, re.MULTILINE))
+    h3_count = len(re.findall(r"^###\s+.*$", body_no_code, re.MULTILINE))
 
-    # Tables: counted by rows with pipe delimiters
-    table_separator_count = len(re.findall(r"^\|?\s*[-:]+[-| :]*\s*\|?$", body, re.MULTILINE))
-    blockquote_count = len(re.findall(r"^>\s+.*$", body, re.MULTILINE))
+    # Tables: counted by pipe table separator rows (must contain at least one '|') plus ASCII grid tables in fenced code blocks
+    pipe_table_count = len(re.findall(r"^(?=.*\|)\|?\s*[-:]+[-| :]*\s*\|?$", body_no_code, re.MULTILINE))
+    ascii_table_count = sum(
+        1
+        for block in re.findall(r"```[^\n]*\n(.*?)```", body, flags=re.DOTALL)
+        if re.search(r"^\+[=-]+\+", block, re.MULTILINE) and "|" in block
+    )
+    table_separator_count = pipe_table_count + ascii_table_count
+    blockquote_count = len(re.findall(r"^>\s+.*$", body_no_code, re.MULTILINE))
 
     # Pro-tip or tactical alert blocks
-    callouts_count = len(re.findall(r"^>\s*\[!(?:NOTE|TIP|IMPORTANT|WARNING|CAUTION)\]", body, re.MULTILINE))
+    callouts_count = len(re.findall(r"^>\s*\[!(?:NOTE|TIP|IMPORTANT|WARNING|CAUTION)\]", body_no_code, re.MULTILINE))
 
     # FAQ presence
     has_faq = bool(
-        re.search(r"^##\s+.*(?:Frequently Asked Questions|FAQ|Common Questions).*$", body, re.IGNORECASE | re.MULTILINE)
+        re.search(r"^##\s+.*(?:Frequently Asked Questions|FAQ|Common Questions).*$", body_no_code, re.IGNORECASE | re.MULTILINE)
     )
 
     # HowTo / Step-by-Step presence
     has_steps = bool(
-        re.search(r"^##\s+.*(?:Step-by-Step|How to|Protocol|Practical Checklist).*$", body, re.IGNORECASE | re.MULTILINE)
+        re.search(r"^##\s+.*(?:Step-by-Step|How to|Protocol|Practical Checklist).*$", body_no_code, re.IGNORECASE | re.MULTILINE)
     )
 
     return {
@@ -263,7 +270,7 @@ def audit_markdown_file(
             errors.append(
                 f"Frontmatter route_path '{fm_route}' must not have leading or trailing slashes"
             )
-        if file_path.parent.name in {"destinations", "itineraries", "compare", "plan", "recommend"}:
+        if file_path.parent.name in {"destinations", "itineraries", "compare", "plan", "recommend", "costs"}:
             expected_route = f"{file_path.parent.name}/{file_path.stem}"
             if fm_route and fm_route != expected_route:
                 errors.append(
@@ -323,6 +330,17 @@ def audit_markdown_file(
         )
     if signals["distance_mentions"] == 0 and signals["transit_time_mentions"] == 0:
         warnings.append("Low transit/spatial density: no km or transit time mentions found")
+
+    # 4b. Link Hygiene Validation (forbid file:// links and relative internal route links missing leading '/')
+    for m_file_link in re.finditer(r"file://[^\s)\"'>]+", body, flags=re.IGNORECASE):
+        errors.append(f"Forbidden local file:// link detected in body: '{m_file_link.group(0)}'")
+    for m_rel_link in re.finditer(
+        r"\]\(((?:destinations|itineraries|compare|plan|recommend|costs)/[^)#\s]+)",
+        body,
+    ):
+        errors.append(
+            f"Relative internal link missing leading '/': '({m_rel_link.group(1)}' (must start with '/{m_rel_link.group(1)}')"
+        )
 
     # 5. Anti-AI Slop Quality Engine Verification
     slop_report: Dict[str, Any] = {}

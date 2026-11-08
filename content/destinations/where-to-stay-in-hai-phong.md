@@ -89,15 +89,15 @@ Modest family guesthouses (*nha nghi*) around Ben Binh and Nguyen Tri Phuong pro
 
 From central Hai Phong docks, combination bus-and-speedferry tickets to Cat Ba Island cost 140,000–180,000 VND ($5.60–$7.20) per person. Travelers driving private motorbikes can proceed 28 km out along Dinh Vu port highway to Ben Got ferry pier. The public car and passenger ferry operates every 30 minutes, taking 45 minutes to 55 minutes to cross the channel to Ben Cai Vieng for 100,000–120,000 VND ($4.00–$4.80) per motorbike and rider. 
 
-The industrial port rim remains loud. Container trucks rumble day and night along port approach lanes. Keep lodging near Ben Got strictly for transit stopovers before heading out to [Cat Ba Travel Guide](destinations/cat-ba-travel-guide) or organizing your offshore island stay via [Where to Stay in Cat Ba](destinations/cat-ba-travel-guide).
+The industrial port rim remains loud. Container trucks rumble day and night along port approach lanes. Keep lodging near Ben Got strictly for transit stopovers before heading out to [Cat Ba Travel Guide](/destinations/cat-ba-travel-guide/) or organizing your offshore island stay via [Where to Stay in Cat Ba](/destinations/where-to-stay-in-cat-ba/).
 
 ---
 
 ## Practical Transport Links & Regional Planning
 
-Hai Phong functions as an essential connector in northern itineraries. If you are arriving from the capital, consult our comprehensive route manual [Hanoi to Hai Phong Transport](plan/hanoi-to-hai-phong-transport) for daily express train timetables departing Hanoi Railway Station (`Ga Ha Noi`) to Hai Phong Station (`Ga Hai Phong`) in 2 hours 15 minutes for 105,000–130,000 VND ($4.20–$5.20).
+Hai Phong functions as an essential connector in northern itineraries. If you are arriving from the capital, consult our comprehensive route manual [Hanoi to Hai Phong Transport](/plan/hanoi-to-hai-phong-transport/) for daily express train timetables departing Hanoi Railway Station (`Ga Ha Noi`) to Hai Phong Station (`Ga Hai Phong`) in 2 hours 15 minutes for 105,000–130,000 VND ($4.20–$5.20).
 
-For onward island exploration, coordinate your maritime logistics using [Hanoi to Cat Ba Island Transport](plan/hanoi-to-cat-ba-island-transport) or plan a direct transfer southward using [Cat Ba to Ninh Binh Transport](plan/cat-ba-to-ninh-binh-transport).
+For onward island exploration, coordinate your maritime logistics using [Hanoi to Cat Ba Island Transport](/plan/hanoi-to-cat-ba-island-transport/) or plan a direct transfer southward using [Cat Ba to Ninh Binh Transport](/plan/cat-ba-to-ninh-binh-transport/).
 
 ---
 

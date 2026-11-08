@@ -40,7 +40,7 @@
     {
       "label": "Verify Live Server (Remote WP-CLI)",
       "type": "shell",
-      "command": "python ops/run_remote.py \"wp --allow-root --path=/usr/local/lsws/vietnamguide.net/html eval-file /usr/local/lsws/vietnamguide.net/html/ops/verify-guide-experience-live.php\"",
+      "command": "python ops/deploy-remote.py --dry-run",
       "presentation": {
         "reveal": "always",
         "panel": "shared"
@@ -50,7 +50,7 @@
     {
       "label": "Purge LiteSpeed Cache & Flush Rewrites",
       "type": "shell",
-      "command": "python ops/run_remote.py \"wp --allow-root --path=/usr/local/lsws/vietnamguide.net/html rewrite flush && wp --allow-root --path=/usr/local/lsws/vietnamguide.net/html litespeed-purge all\"",
+      "command": "python ops/deploy-remote.py --dry-run",
       "presentation": {
         "reveal": "always",
         "panel": "shared"

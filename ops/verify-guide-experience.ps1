@@ -1628,6 +1628,7 @@ if ($null -ne $ClassifierFunction) {
             'itineraries=itinerary'
             'compare=comparison'
             'plan=practical'
+            'costs=practical'
         )
     }
 }

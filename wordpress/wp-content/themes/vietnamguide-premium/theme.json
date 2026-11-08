@@ -34,14 +34,19 @@
     "typography": {
       "fontFamilies": [
         {
-          "fontFamily": "'Source Serif 4', Georgia, serif",
+          "fontFamily": "'Playfair Display', 'Source Serif 4', Georgia, serif",
           "slug": "display",
-          "name": "Source Serif 4"
+          "name": "Playfair Display"
         },
         {
-          "fontFamily": "'Hanken Grotesk', 'Segoe UI', sans-serif",
+          "fontFamily": "'Be Vietnam Pro', 'Hanken Grotesk', 'Segoe UI', sans-serif",
           "slug": "body",
-          "name": "Hanken Grotesk"
+          "name": "Be Vietnam Pro"
+        },
+        {
+          "fontFamily": "'JetBrains Mono', monospace",
+          "slug": "mono",
+          "name": "JetBrains Mono"
         }
       ],
       "fluid": true
@@ -53,7 +58,7 @@
       "text": "#101417"
     },
     "typography": {
-      "fontFamily": "'Hanken Grotesk', 'Segoe UI', sans-serif",
+      "fontFamily": "'Be Vietnam Pro', 'Hanken Grotesk', 'Segoe UI', sans-serif",
       "fontSize": "18px",
       "lineHeight": "1.65"
     }

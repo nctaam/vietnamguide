@@ -42,7 +42,7 @@ Convenience rules here. **Son Trach (Thị trấn Phong Nha)** is the operationa
 
 ## 2. Cu Lac & Gia Tinh Quiet Riverbend (2–4 km East of Town Center)
 
-If you want to escape the horn blasts of limestone quarry trucks along central DT20 while remaining within a 10-minute pedal of town restaurants, book a garden lodge in **Cu Lac (Cự Lạc)** or **Gia Tinh (Gia Tịnh)**. Located on quiet backlanes tucked directly against the jungle-covered karst walls just east of Son Trach, this pocket puts you 5 minutes from the **Botanical Garden (Vườn Thực Vật, 40,000 VND entrance with a 30m waterfall climb)** and 20 km from **Paradise Cave (Động Thiên Đường, 250,000 VND ticket plus 100,000 VND golf buggy)** and **Dark Cave (Hang Tối, 450,000 VND mud bath, kayak, and river zipline)**.
+If you want to escape the horn blasts of limestone quarry trucks along central DT20 while remaining within a 10-minute pedal of town restaurants, book a garden lodge in **Cu Lac (Cự Lạc)** or **Gia Tinh (Gia Tịnh)**. Located on quiet backlanes tucked directly against the jungle-covered karst walls just east of Son Trach, this pocket puts you 5 minutes from the **Botanical Garden (Vườn Thực Vật, 40,000 VND entrance with a 30m waterfall climb)** and 20 km from **Paradise Cave (Động Thiên Đường, 270,000 VND ticket plus 100,000 VND golf buggy)** and **Dark Cave (Hang Tối, 450,000 VND mud bath, kayak, and river zipline)**.
 
 ```
 [Paradise Cave 20km] <──DT20── [Botanical Garden] ──5km──> [Son Trach Town & Boat Pier]

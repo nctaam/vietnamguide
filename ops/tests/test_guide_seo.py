@@ -2198,8 +2198,8 @@ echo json_encode([
         self.assertIn('Cao Lau', hoian_hue_faqs)
 
         bana_faqs = str(out['faq_results']['destinations/ba-na-hills-golden-bridge-guide']['items'])
-        self.assertIn('1,000,000 VND', bana_faqs)
-        self.assertIn('800,000 VND', bana_faqs)
+        self.assertIn('900,000 to 950,000 VND', bana_faqs)
+        self.assertIn('750,000 VND', bana_faqs)
         self.assertIn('Golden Bridge', bana_faqs)
         self.assertIn('Cau Vang', bana_faqs)
 
@@ -2212,7 +2212,7 @@ echo json_encode([
         self.assertIn('HD1/HD2/HD3/HD4', dnh_hue_faqs)
         self.assertIn('Hai Van Pass', dnh_hue_faqs)
         self.assertIn('Lang Co Bay', dnh_hue_faqs)
-        self.assertIn('110,000 to 180,000 VND', dnh_hue_faqs)
+        self.assertIn('180,000–231,000 VND', dnh_hue_faqs)
 
         cuchi_mekong_faqs = str(out['faq_results']['compare/cu-chi-tunnels-vs-mekong-delta-day-trip']['items'])
         self.assertIn('125,000 VND', cuchi_mekong_faqs)

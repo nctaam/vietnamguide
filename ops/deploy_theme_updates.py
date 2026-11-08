@@ -190,6 +190,23 @@ DEPLOY_FILES = [
      'wp-content/mu-plugins/vietnamguide-core.php'),
 ]
 
+
+def get_content_deploy_files(repo_root: Path | None = None) -> list[tuple[str, str]]:
+    """Return (local_relative, remote_relative) pairs for all Markdown guides under content/."""
+    root = repo_root or REPO_ROOT
+    content_dir = root / 'content'
+    if not content_dir.is_dir():
+        return []
+    pairs: list[tuple[str, str]] = []
+    for md_path in sorted(content_dir.rglob('*.md')):
+        if not md_path.is_file():
+            continue
+        rel = md_path.relative_to(root).as_posix()
+        remote_rel = f"wp-content/{rel}"
+        pairs.append((rel, remote_rel))
+    return pairs
+
+
 def get_sha256(filepath: Path) -> str:
     return hashlib.sha256(filepath.read_bytes()).hexdigest().lower()
 
@@ -202,9 +219,17 @@ def get_remote_path(config: DeployConfig, remote_relative: str) -> str:
     return candidate
 
 
-def validate_local_files() -> list[tuple[str, Path]]:
+def get_deploy_manifest(include_content: bool = False) -> list[tuple[str, str]]:
+    manifest = list(DEPLOY_FILES)
+    if include_content:
+        manifest.extend(get_content_deploy_files())
+    return manifest
+
+
+def validate_local_files(*, include_content: bool = False) -> list[tuple[str, Path]]:
     files = []
-    for local_relative, _remote_relative in DEPLOY_FILES:
+    manifest = get_deploy_manifest(include_content=include_content)
+    for local_relative, _remote_relative in manifest:
         local_path = REPO_ROOT / local_relative.replace('/', os.sep)
         if not local_path.is_file():
             raise FileNotFoundError(f"deploy source file not found: {local_relative}")
@@ -237,7 +262,7 @@ def connect_ssh(config: DeployConfig):
     return client
 
 
-def backup_remote_files(ssh, config: DeployConfig) -> str:
+def backup_remote_files(ssh, config: DeployConfig, *, include_content: bool = False) -> str:
     """Create a timestamped, per-file rollback copy before uploading anything."""
 
     backup_id = datetime.now(timezone.utc).strftime('%Y%m%dT%H%M%SZ') + '-' + uuid.uuid4().hex[:12]
@@ -250,7 +275,7 @@ def backup_remote_files(ssh, config: DeployConfig) -> str:
         f': > {shlex.quote(manifest_path)}',
     ]
 
-    for _local_relative, remote_relative in DEPLOY_FILES:
+    for _local_relative, remote_relative in get_deploy_manifest(include_content=include_content):
         source = get_remote_path(config, remote_relative)
         destination = posixpath.join(backup_dir, remote_relative)
         destination_parent = posixpath.dirname(destination)
@@ -277,7 +302,7 @@ def backup_remote_files(ssh, config: DeployConfig) -> str:
     return backup_dir
 
 
-def restore_remote_backup(ssh, config: DeployConfig, backup_dir: str) -> None:
+def restore_remote_backup(ssh, config: DeployConfig, backup_dir: str, *, include_content: bool = False) -> None:
     """Restore remote files from backup manifest in case of deployment failure."""
     manifest_path = posixpath.join(backup_dir, 'backup-manifest.tsv')
     commands = [
@@ -285,7 +310,7 @@ def restore_remote_backup(ssh, config: DeployConfig, backup_dir: str) -> None:
         f'test -f {shlex.quote(manifest_path)}',
     ]
 
-    for _local_relative, remote_relative in DEPLOY_FILES:
+    for _local_relative, remote_relative in get_deploy_manifest(include_content=include_content):
         target = get_remote_path(config, remote_relative)
         backup_file = posixpath.join(backup_dir, remote_relative)
         target_q = shlex.quote(target)
@@ -429,8 +454,9 @@ def deploy_tarball_batch(
 
     tar_buffer = io.BytesIO()
     manifest_entries: list[tuple[str, str, str]] = []
+    manifest = get_deploy_manifest(include_content=(len(local_files) > len(DEPLOY_FILES)))
     with tarfile.open(fileobj=tar_buffer, mode='w:gz') as tar:
-        for (local_relative, local_path), (_unused, remote_relative) in zip(local_files, DEPLOY_FILES):
+        for (local_relative, local_path), (_unused, remote_relative) in zip(local_files, manifest):
             local_bytes = local_path.read_bytes()
             if len(local_bytes) == 0:
                 raise ValueError(f'pre-flight check failed: invalid or empty file {local_path}')
@@ -504,8 +530,9 @@ def deploy(
     dry_run: bool = False,
     purge: bool = False,
     batch: bool = False,
+    include_content: bool = False,
 ) -> None:
-    local_files = validate_local_files()
+    local_files = validate_local_files(include_content=include_content)
     if dry_run:
         print('=== Dry-run: validating deploy artifact and hashes ===')
         for local_relative, local_path in local_files:
@@ -525,7 +552,7 @@ def deploy(
     ssh = connect_ssh(config)
     backup_dir = None
     try:
-        backup_dir = backup_remote_files(ssh, config)
+        backup_dir = backup_remote_files(ssh, config, include_content=include_content)
         print(f'Created rollback backup: {backup_dir}')
         all_matched = True
         sftp = ssh.open_sftp()
@@ -534,7 +561,8 @@ def deploy(
                 print(f'Uploading & promoting {len(local_files)} files via atomic tarball batch...')
                 all_matched = deploy_tarball_batch(ssh, sftp, config, local_files)
             else:
-                for (local_relative, local_path), (_unused, remote_relative) in zip(local_files, DEPLOY_FILES):
+                manifest = get_deploy_manifest(include_content=(include_content or len(local_files) > len(DEPLOY_FILES)))
+                for (local_relative, local_path), (_unused, remote_relative) in zip(local_files, manifest):
                     remote_path = get_remote_path(config, remote_relative)
                     print(f'Uploading (atomic staging): {local_relative} -> {remote_path}')
                     success, local_hash, remote_hash = stage_and_promote_file(ssh, sftp, local_path, remote_path)
@@ -563,7 +591,7 @@ def deploy(
             print(f'[ROLLBACK] Deployment encountered error: {deploy_err}', file=sys.stderr)
             print(f'[ROLLBACK] Automatically restoring remote state from backup: {backup_dir}...', file=sys.stderr)
             try:
-                restore_remote_backup(ssh, config, backup_dir)
+                restore_remote_backup(ssh, config, backup_dir, include_content=include_content)
                 print('[ROLLBACK] Remote files successfully restored to pre-deploy state.', file=sys.stderr)
                 try:
                     purge_cache(ssh, config)
@@ -584,10 +612,11 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument('--dry-run', action='store_true', help='validate local files without SSH')
     parser.add_argument('--purge-cache', action='store_true', help='purge configured public cache paths after parity checks')
     parser.add_argument('--batch', action='store_true', help='bundle files into a single atomic Gzip tarball for fast promotion')
+    parser.add_argument('--include-content', action='store_true', help='include content/<cat>/<slug>.md Markdown corpus in deployment')
     args = parser.parse_args(argv)
 
     try:
-        deploy(dry_run=args.dry_run, purge=args.purge_cache, batch=args.batch)
+        deploy(dry_run=args.dry_run, purge=args.purge_cache, batch=args.batch, include_content=args.include_content)
     except (FileNotFoundError, RuntimeError, ValueError, OSError) as exc:
         print(f'Deploy aborted: {exc}', file=sys.stderr)
         return 2

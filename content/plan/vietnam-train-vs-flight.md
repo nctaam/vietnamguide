@@ -47,7 +47,7 @@ On regional hops under `300 km`, commercial flights either do not exist or lose 
 
 * **Hanoi to Ninh Binh (`115 km`, `2 hours 15 minutes`):** Express trains `SE1`, `SE3`, `SE5`, `SE7`, and `SE19` depart Hanoi Railway Station (`120 Le Duan`) throughout the morning and evening, dropping passengers at Ninh Binh Station (`01 Hoang Hoa Tham`) for `130,000–220,000 VND` (`$5.20–$8.80 USD`) in an air-conditioned soft seat (`NML`).
 * **Hanoi to Hai Phong (`102 km`, `2 hours 30 minutes`):** The dedicated `HP1`, `LP3`, `LP5`, and `LP7` commuter trains connect Hanoi (`120 Le Duan` or Long Bien Station) directly to colonial Hai Phong Station (`75 Luong Khanh Thien`) for `95,000–155,000 VND` (`$3.80–$6.20 USD`), making it the easiest link for Cat Ba Island ferries and food tours.
-* **Hue to Da Nang (`103 km`, `3 hours`):** The `HD1/HD2` and `HD3/HD4` Central Heritage Trains—alongside daily Reunification Express services—climb straight over the `496m` Hai Van Pass cliffs above Lang Co Bay. Tickets cost `110,000–180,000 VND` (`$4.40–$7.20 USD`). Neither VietJet Air nor Vietnam Airlines operates direct flights between Hue (`HUI`) and Da Nang (`DAD`).
+* **Hue to Da Nang (`103 km`, `3 hours`):** The `HD1/HD2` and `HD3/HD4` Central Heritage Trains—alongside daily Reunification Express services—climb straight over the `496m` Hai Van Pass cliffs above Lang Co Bay. Tickets cost `180,000–231,000 VND` (`$7.10–$9.10 USD`). Neither VietJet Air nor Vietnam Airlines operates direct flights between Hue (`HUI`) and Da Nang (`DAD`).
 * **Da Nang to Quy Nhon (`300 km`, `5 hours`) & Quy Nhon to Nha Trang (`215 km`, `4.5 hours`):** Daytime soft-seat carriages into Dieu Tri Station (`11 km` west of Quy Nhon beach) or coastal Nha Trang Station (`17 Thai Nguyen`) cost `165,000–350,000 VND` (`$6.60–$14.00 USD`). Because Phu Cat Airport (`UIH`) sits `32 km` northwest of Quy Nhon and only connects to Hanoi and HCMC, rail is the undisputed coastal backbone.
 
 ---
@@ -116,7 +116,7 @@ During the Central Vietnam typhoon and northeast monsoon season (**October to No
 
 1. **Step 1 — Short Northern Rail Hop (`Hanoi to Ninh Binh`):** Skip highway buses and book a `2 hour 15 minute` morning soft-seat train (`SE7` at `06:00` or `SE5` at `08:50`) from `120 Le Duan` for `140,000 VND` (`$5.60 USD`).
 2. **Step 2 — Overnight Sleeper into Central Vietnam (`Ninh Binh to Hue`):** Board `SE3` (`21:28`) or `SE19` (`21:55`) at Ninh Binh Station in a 4-berth cabin (`800,000–1,850,000 VND` / `$32–$74 USD`), waking up beside the Perfume River at `08:32 AM`.
-3. **Step 3 — Coastal Pass by Daylight (`Hue to Da Nang`):** Catch the morning `HD1` (`07:45`) or afternoon `HD3` (`14:25`) Heritage Train across the `496m` Hai Van Pass for `150,000 VND` (`$6.00 USD`), then transfer `30 km` by car (`350,000 VND`) to Hoi An.
+3. **Step 3 — Coastal Pass by Daylight (`Hue to Da Nang`):** Catch the morning `HD1` (`07:45`) or afternoon `HD3` (`14:25`) Heritage Train across the `496m` Hai Van Pass for `180,000–231,000 VND` (`$7.10–$9.10 USD`), then transfer `30 km` by car (`350,000 VND`) to Hoi An.
 4. **Step 4 — Fly the Southern Trunk (`Da Nang to HCMC`):** Book a `1 hour 25 minute` morning flight from Da Nang (`DAD`) to Saigon (`SGN`) on Vietnam Airlines or VietJet Air for `1,150,000–1,950,000 VND` (`$46–$78 USD`), saving `16 hours` over the southern rail leg.
 
 ---

@@ -370,9 +370,40 @@ function vg_render_guide_toc(array $headings, string $className = 'vg-guide-toc'
 
 function vg_render_inline_markdown_fallback(string $text): string
 {
-    $escaped = esc_html($text);
+    $normalized = str_replace(
+        ['$\\leftrightarrow$', '$\\rightarrow$'],
+        ['↔', '→'],
+        $text
+    );
+    $normalized = (string) preg_replace('/<br\s*\/?>/i', "\x00VG_BR\x00", $normalized);
 
-    $escaped = (string) preg_replace('/`([^`]+)`/', '<code>$1</code>', $escaped);
+    $escaped = esc_html($normalized);
+
+    $codeSpans = [];
+    $escaped = (string) preg_replace_callback(
+        '/`([^`]+)`/',
+        static function (array $m) use (&$codeSpans): string {
+            $token = "\x00VG_CODE_" . count($codeSpans) . "\x00";
+            $codeSpans[$token] = '<code>' . $m[1] . '</code>';
+            return $token;
+        },
+        $escaped
+    );
+
+    $escaped = (string) preg_replace_callback(
+        '/!\[([^\]]*)\]\(([^)]+)\)/',
+        static function (array $matches): string {
+            $alt = $matches[1];
+            $raw_url = html_entity_decode(trim($matches[2]), ENT_QUOTES, 'UTF-8');
+            $url = esc_url($raw_url);
+            if ('' === $url) {
+                return $alt;
+            }
+            return '<img src="' . $url . '" alt="' . $alt . '" loading="lazy" decoding="async" />';
+        },
+        $escaped
+    );
+
     $escaped = (string) preg_replace_callback(
         '/\[([^\]]+)\]\(([^)]+)\)/',
         static function (array $m): string {
@@ -380,8 +411,15 @@ function vg_render_inline_markdown_fallback(string $text): string
         },
         $escaped
     );
-    $escaped = (string) preg_replace('/\*\*([^*]+)\*\*/', '<strong>$1</strong>', $escaped);
+
+    $escaped = (string) preg_replace('/\*\*\*([^\n*]+?)\*\*\*/', '<strong><em>$1</em></strong>', $escaped);
+    $escaped = (string) preg_replace('/\*\*((?:[^*]|\*(?!\*))+)\*\*/', '<strong>$1</strong>', $escaped);
     $escaped = (string) preg_replace('/(?<!\*)\*([^*\n]+)\*(?!\*)/', '<em>$1</em>', $escaped);
+
+    $escaped = str_replace("\x00VG_BR\x00", '<br>', $escaped);
+    if ($codeSpans !== []) {
+        $escaped = strtr($escaped, $codeSpans);
+    }
 
     return $escaped;
 }
@@ -391,12 +429,20 @@ function vg_resolve_repository_markdown_path(WP_Post $post): ?string
     $candidateRoots = [];
     if (defined('ABSPATH')) {
         $candidateRoots[] = rtrim((string) ABSPATH, '/\\') . '/../content';
+        $candidateRoots[] = rtrim((string) ABSPATH, '/\\') . '/wp-content/content';
     }
     if (function_exists('get_template_directory')) {
+        $candidateRoots[] = dirname((string) get_template_directory(), 2) . '/content';
         $candidateRoots[] = dirname((string) get_template_directory(), 4) . '/content';
     }
 
     $routeCandidates = [];
+    if (function_exists('vg_get_guide_path')) {
+        $gp = trim((string) vg_get_guide_path($post), '/');
+        if ($gp !== '') {
+            $routeCandidates[] = $gp;
+        }
+    }
     if (function_exists('vg_get_post_route_path')) {
         $rp = trim((string) vg_get_post_route_path($post), '/');
         if ($rp !== '') {
@@ -412,13 +458,13 @@ function vg_resolve_repository_markdown_path(WP_Post $post): ?string
 
     $slug = trim((string) ($post->post_name ?? ''), '/');
     if ($slug !== '') {
-        foreach (['destinations', 'itineraries', 'compare', 'plan', 'recommend'] as $cat) {
+        foreach (['destinations', 'itineraries', 'compare', 'plan', 'costs', 'recommend'] as $cat) {
             $routeCandidates[] = $cat . '/' . $slug;
         }
     }
 
     foreach (array_unique($routeCandidates) as $relRoute) {
-        if (! preg_match('#^(destinations|itineraries|compare|plan|recommend)/[a-z0-9-]+$#', $relRoute)) {
+        if (! preg_match('#^(destinations|itineraries|compare|plan|costs|recommend)/[a-z0-9-]+$#', $relRoute)) {
             continue;
         }
         foreach ($candidateRoots as $root) {
@@ -490,15 +536,20 @@ function vg_try_load_repository_markdown_guide(WP_Post $post): string
             continue;
         }
 
-        if (str_starts_with($trimmed, '```')) {
+        if (preg_match('/^```([a-zA-Z0-9_-]*)\s*$/', $trimmed, $fenceMatch) || str_starts_with($trimmed, '```')) {
+            $codeLang = isset($fenceMatch[1]) ? strtolower(trim((string) $fenceMatch[1])) : strtolower(trim(substr($trimmed, 3)));
+            $codeLang = (string) preg_replace('/[^a-z0-9_-]/', '', $codeLang);
             $codeLines = [];
             $i++;
             while ($i < $lineCount && ! str_starts_with(trim((string) $lines[$i]), '```')) {
-                $codeLines[] = esc_html((string) $lines[$i]);
+                $codeLines[] = esc_html(rtrim((string) $lines[$i], "\r\n"));
                 $i++;
             }
-            $i++;
-            $htmlBlocks[] = '<pre class="wp-block-code"><code>' . implode("\n", $codeLines) . '</code></pre>';
+            if ($i < $lineCount) {
+                $i++;
+            }
+            $langAttr = $codeLang !== '' ? ' class="language-' . esc_attr($codeLang) . '"' : '';
+            $htmlBlocks[] = '<pre class="wp-block-code vg-code-block"><code' . $langAttr . '>' . implode("\n", $codeLines) . '</code></pre>';
             continue;
         }
 
@@ -647,7 +698,14 @@ function vg_try_load_repository_markdown_guide(WP_Post $post): string
     $categoryLabel = strtoupper((string) ($categoryParts[0] ?? basename(dirname($mdPath))));
     $author = (string) ($frontmatter['author'] ?? 'VietnamGuide Editorial Team');
     $lastVerified = (string) ($frontmatter['last_verified'] ?? $frontmatter['last_updated'] ?? '2026-10-31');
-    $readingTime = max(5, (int) ($frontmatter['reading_time_minutes'] ?? 7));
+    $plainBody = (string) preg_replace('/```[\s\S]*?```/', ' ', $body);
+    $plainBody = (string) preg_replace('/[#*>`_~\[\]\(\)\|!-]+/', ' ', $plainBody);
+    $wordCount = str_word_count(strip_tags($plainBody));
+    $computedReadingTime = max(4, min(25, (int) ceil($wordCount / 220)));
+    $fmReadingTime = $frontmatter['reading_time_minutes'] ?? $frontmatter['reading_time'] ?? null;
+    $readingTime = (is_numeric($fmReadingTime) && (int) $fmReadingTime > 0)
+        ? max(4, min(25, (int) $fmReadingTime))
+        : $computedReadingTime;
 
     $kickerHtml = '<p class="vg-guide-kicker">' . esc_html($categoryLabel) . '</p>';
     $leadHtml = $description !== '' ? '<p class="vg-guide-lead">' . esc_html($description) . '</p>' : '';

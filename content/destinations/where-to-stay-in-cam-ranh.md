@@ -10,7 +10,7 @@ reading_time_minutes: 12
 word_count: 1564
 ---
 
-Cam Ranh sits between two distinct economic realities. International tourists land at Cam Ranh International Airport (CXR)—the largest resort-serving airport in central Vietnam—and shuttle directly to billion-dollar beach properties strung along a coastal highway. Domestic and business travelers skip the beachfront entirely, sleeping in town center guesthouses before continuing to [Nha Trang](destinations/nha-trang-travel-guide) or catching military supply buses southward.
+Cam Ranh sits between two distinct economic realities. International tourists land at Cam Ranh International Airport (CXR)—the largest resort-serving airport in central Vietnam—and shuttle directly to billion-dollar beach properties strung along a coastal highway. Domestic and business travelers skip the beachfront entirely, sleeping in town center guesthouses before continuing to [Nha Trang](/destinations/nha-trang-travel-guide/) or catching military supply buses southward.
 
 CXR Airport receives daily flights from Hanoi (2 hours), Ho Chi Minh City (1 hour 20 minutes), and seasonal charters from Seoul, Shanghai, and Moscow. On stepping outside the arrival terminal, you face a critical choice: turn left toward the resort strip running 18 km north along Bai Dai, or jump in a taxi heading 15 km northeast into downtown Cam Ranh City.
 
@@ -87,12 +87,12 @@ Choosing between Bai Dai and Cam Ranh City requires blunt honesty about what you
 * **Dining Freedom**: Cam Ranh City offers dozens of rice-and-noodle shops, fresh markets, and bia hoi corners where meals cost 35,000 VND ($ 1.40) to 65,000 VND ($ 2.60). On Bai Dai, you eat at resort restaurants paying 200,000 VND ($ 8) to 480,000 VND ($ 19.20) per dish, or ride 5 km on a motorbike to the highway shack cluster.
 * **Swimming Access**: Bai Dai delivers world-class turquoise surf from March through September. Cam Ranh City has no swimmable beach—the bay waterfront is industrial.
 * **Night Routine**: Bai Dai shuts down by 22:00. Pool bars close, restaurants dim, and security gates lock. Cam Ranh City stays alive past midnight along Nguyen Trai and Hai Thanh streets, with karaoke bars and streetside coffee stalls filling the sidewalks.
-* **Travel Connections**: Cam Ranh City is on the [Nha Trang to Quy Nhon transport](plan/quy-nhon-to-nha-trang-transport) corridor, which matters if you plan onward travel south or north by bus. Bai Dai is off the main highway, requiring a taxi detour to reach any intercity station.
+* **Travel Connections**: Cam Ranh City is on the [Nha Trang to Quy Nhon transport](/plan/quy-nhon-to-nha-trang-transport/) corridor, which matters if you plan onward travel south or north by bus. Bai Dai is off the main highway, requiring a taxi detour to reach any intercity station.
 
 ## Frequently Asked Questions
 
 ### Is Cam Ranh the same as Nha Trang?
-No. Cam Ranh and [Nha Trang](destinations/where-to-stay-in-nha-trang) are separate municipalities in Khanh Hoa Province, separated by 35 km. Cam Ranh hosts the airport (CXR) and the Bai Dai resort corridor; Nha Trang has the urban beach strip, seafood night markets, and Vinpearl cable car. Many travelers land at CXR and never set foot in Cam Ranh proper.
+No. Cam Ranh and [Nha Trang](/destinations/where-to-stay-in-nha-trang/) are separate municipalities in Khanh Hoa Province, separated by 35 km. Cam Ranh hosts the airport (CXR) and the Bai Dai resort corridor; Nha Trang has the urban beach strip, seafood night markets, and Vinpearl cable car. Many travelers land at CXR and never set foot in Cam Ranh proper.
 
 ### How far is CXR Airport from the Bai Dai resorts?
 The nearest Bai Dai resorts (The Anam, Movenpick) sit 3.5 km to 10 km from the CXR terminal. A taxi ride takes 10 minutes and costs 80,000 VND ($ 3.20) to 150,000 VND ($ 6). Resorts at the northern end (Alma) are 25 km away, requiring 25 minutes and around 380,000 VND ($ 15.20).

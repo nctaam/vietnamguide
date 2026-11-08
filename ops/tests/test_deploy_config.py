@@ -755,6 +755,62 @@ class DeployConfigTests(unittest.TestCase):
             self.assertFalse(success)
             self.assertTrue(any(cmd.startswith('rm -rf --') for cmd in mock_ssh.commands))
 
+    def test_content_deploy_files_discovery_and_include_content_validation(self):
+        import tarfile
+        from ops.deploy_theme_updates import get_content_deploy_files, get_deploy_manifest
+
+        content_pairs = get_content_deploy_files()
+        self.assertEqual(len(content_pairs), 282)
+        self.assertTrue(all(local_rel.startswith('content/') and remote_rel.startswith('wp-content/content/') for local_rel, remote_rel in content_pairs))
+        validated_with_content = validate_local_files(include_content=True)
+        self.assertEqual(len(validated_with_content), len(DEPLOY_FILES) + 282)
+        self.assertEqual(len(get_deploy_manifest(include_content=True)), len(DEPLOY_FILES) + 282)
+
+        class MockChannel:
+            def recv_exit_status(self):
+                return 0
+
+            def close(self):
+                pass
+
+        class MockStream:
+            channel = MockChannel()
+
+            def read(self):
+                return b''
+
+        class MockSFTP:
+            def __init__(self):
+                self.tar_members = []
+
+            def put(self, local_path, remote_path):
+                with tarfile.open(local_path, 'r:gz') as tar:
+                    self.tar_members = tar.getnames()
+
+        class MockSSH:
+            def __init__(self):
+                self.commands = []
+
+            def exec_command(self, command):
+                self.commands.append(command)
+                return None, MockStream(), MockStream()
+
+        config = DeployConfig(
+            host='staging.example.test',
+            port=2209,
+            user='vietnamguide-deploy',
+            key_path=r'C:\keys\deploy',
+            known_hosts=r'C:\keys\known_hosts',
+            remote_root='/srv/vietnamguide',
+            allow_root=False,
+        )
+        mock_sftp = MockSFTP()
+        mock_ssh = MockSSH()
+        success = deploy_tarball_batch(mock_ssh, mock_sftp, config, validated_with_content)
+        self.assertTrue(success)
+        self.assertEqual(len(mock_sftp.tar_members), len(DEPLOY_FILES) + 282)
+        self.assertTrue(any(m.startswith('wp-content/content/') for m in mock_sftp.tar_members))
+
 
 if __name__ == '__main__':
     unittest.main()

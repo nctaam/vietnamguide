@@ -85,6 +85,19 @@ class TestThemeAssetsPipeline(unittest.TestCase):
         self.assertIn('data-vg-print', minified)
         self.assertIn('window.print', minified)
 
+        # Verify single-line /* ... */ comments and trailing // comments are stripped without corrupting URLs or regex literals
+        sample_js = (
+            "/* single line block comment */\n"
+            "var url = 'https://vietnamguide.net/plan/'; // trailing comment\n"
+            "var rx = /\\//g; /* inline block */ var x = 1;\n"
+        )
+        min_sample = self.build_mod.minify_js(sample_js)
+        self.assertNotIn("single line block comment", min_sample)
+        self.assertNotIn("trailing comment", min_sample)
+        self.assertNotIn("inline block", min_sample)
+        self.assertIn("https://vietnamguide.net/plan/", min_sample)
+        self.assertIn("/\\//g", min_sample)
+
     def test_theme_asset_version_contract_in_functions_php(self):
         """functions.php must declare vg_theme_asset_version supporting all 5 core assets."""
         functions_path = REPO_ROOT / 'wordpress' / 'wp-content' / 'themes' / 'vietnamguide-premium' / 'functions.php'

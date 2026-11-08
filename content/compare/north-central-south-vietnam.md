@@ -7,7 +7,7 @@ travel_cluster: "national_circuit"
 last_verified: "2026-11-01"
 author: "VietnamGuide Editorial Team"
 reading_time_minutes: 9
-word_count: 1691
+word_count: 1698
 ---
 
 ## Quick Verdict: Which Region Should You Visit First?
@@ -67,7 +67,7 @@ Avoid squeezing all three regions into one week, which burns 40% of your dayligh
 ## Cost Breakdown: Daily Budgets and Inter-Regional Transfer Tariffs
 
 - **Inter-Regional Flights (`HAN`–`DAD`, `DAD`–`SGN`, `HAN`–`SGN`):** One-way economy fares with 20 kg baggage cost 1,100,000 VND to 1,650,000 VND ($44.00 to $66.00 USD) on the 80-minute `HAN`–`DAD` and 85-minute `DAD`–`SGN` legs, and 1,500,000 VND to 2,400,000 VND ($60.00 to $96.00 USD) on the 2-hour `HAN`–`SGN` route.
-- **Reunification Express Sleeper Trains (`SE1`/`SE2`/`SE3`/`SE4`):** A 4-berth soft sleeper on `dsvn.vn` costs 980,000 VND to 1,250,000 VND ($39.20 to $50.00 USD) from Hanoi to Hue (688 km, 13.5 hours), 220,000 VND ($8.80 USD) for the 3-hour heritage train from Hue to Da Nang (103 km), and 1,150,000 VND to 1,450,000 VND ($46.00 to $58.00 USD) from Da Nang to Saigon (935 km, 17.5 hours).
+- **Reunification Express Sleeper Trains (`SE1`/`SE2`/`SE3`/`SE4`):** A 4-berth soft sleeper on `dsvn.vn` costs 980,000 VND to 1,250,000 VND ($39.20 to $50.00 USD) from Hanoi to Hue (688 km, 13.5 hours), 180,000 VND to 231,000 VND ($7.10 to $9.10 USD) for the 3-hour heritage train from Hue to Da Nang (103 km), and 1,150,000 VND to 1,450,000 VND ($46.00 to $58.00 USD) from Da Nang to Saigon (935 km, 17.5 hours).
 - **Regional Expressway Limousines and Private Cars:** VIP 9-seat limousine vans cost 250,000 VND to 350,000 VND ($10.00 to $14.00 USD) per seat for Hanoi to Ninh Binh (95 km, 90 minutes), Hanoi to Ha Long Bay (155 km, 150 minutes), or Saigon to Mũi Né (185 km, 150 minutes). A private 4-seat car over Hải Vân Pass from Hoi An to Hue (130 km, 3.5 hours) costs 1,400,000 VND to 1,700,000 VND ($56.00 to $68.00 USD).
 - **Accommodation and Sightseeing by Region:** Northern homestays start at 250,000 VND ($10.00 USD) and 2-day Ha Long Bay cruises run 3,500,000 VND to 5,000,000 VND ($140.00 to $200.00 USD). Central boutique hotels in Hoi An average 900,000 VND to 1,600,000 VND ($36.00 to $64.00 USD) per night. Southern District 1 hotels and Phu Quoc resorts command 1,500,000 VND to 3,200,000 VND ($60.00 to $128.00 USD). Monument tickets run 40,000 VND to 250,000 VND ($1.60 to $10.00 USD).
 

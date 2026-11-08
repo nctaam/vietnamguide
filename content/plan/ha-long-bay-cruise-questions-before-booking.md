@@ -7,7 +7,7 @@ travel_cluster: "ha_long_bay"
 last_verified: "2026-10-22"
 author: "VietnamGuide Editorial Team"
 reading_time_minutes: 10
-word_count: 1368
+word_count: 1367
 ---
 
 # 10 Ha Long Bay Cruise Questions to Ask Before Booking (2026): Lan Ha vs Bai Tu Long, Hidden Fees & Hull Safety
@@ -88,7 +88,7 @@ On modern steel ships (`Stellar of the Seas`, `Capella`, `Orchid`, `Mon Cheri`, 
 
 ### 3. Final Step — Coordinate Your Luggage & Onward Transfer (`Hanoi` vs `Ninh Binh` vs `Noi Bai HAN`)
 - **Returning to the same Hanoi hotel?**: Leave your heavy `28-inch` suitcases in your Hanoi hotel's free luggage storage room and bring only a `30L` overnight duffel bag to the bay (though luxury limousine vans easily fit full-size suitcases if you are continuing elsewhere).
-- **Heading straight to Ninh Binh (`Tam Coc / Trang An`) after disembarking?**: Ask your cruise operator to book a seat on the **`11:30 AM` direct Tuan Chau / Got Pier $\rightarrow$ Ninh Binh limousine bus (`350,000–450,000 VND` / `$14–$18 USD`, `3.5 to 4 hours`)**. This saves you a pointless 3-hour detour through Hanoi traffic!
+- **Heading straight to Ninh Binh (`Tam Coc / Trang An`) after disembarking?**: Ask your cruise operator to book a seat on the **`11:30 AM` direct Tuan Chau / Got Pier → Ninh Binh limousine bus (`350,000–450,000 VND` / `$14–$18 USD`, `3.5 to 4 hours`)**. This saves you a pointless 3-hour detour through Hanoi traffic!
 - **Flying out of Hanoi (`HAN`) on Disembarkation Day?**: Never book a domestic flight departing Noi Bai before **`17:30 PM`** or an international flight before **`18:30 PM`** on the day your cruise ends.
 
 ---

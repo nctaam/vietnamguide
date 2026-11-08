@@ -6,7 +6,7 @@ param(
 )
 
 $ErrorActionPreference = 'Stop'
-$repoRoot = Split-Path -Parent $PSScriptRoot
+$repoRoot = (Resolve-Path (Join-Path $PSScriptRoot '..')).Path
 $verifier = Join-Path $PSScriptRoot 'verify-recovery-baseline.ps1'
 $localHistoryManifestRelative = 'tests\fixtures\recovery-local-history-manifest.json'
 $localAuthoredManifestRelative = 'tests\fixtures\recovery-local-authored-manifest.json'
@@ -606,12 +606,12 @@ try {
             FixtureName = 'runbook-full-public-verifier-html-comment'
             OldText = @(
                 '## Stage 2 Validate, Apply, Activate, and Close',
-                ($markdownFence + "powershell`n`$RepoRoot = 'C:\Users\NCTaam\projects\vietnamguide'`nSet-Location -LiteralPath `$RepoRoot`n" +
+                ($markdownFence + "powershell`n`$RepoRoot = '$repoRoot'`nSet-Location -LiteralPath `$RepoRoot`n" +
                     "powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\ops\verify-comparison-rollout-public.ps1 $lineContinuation`n    -Stage full $lineContinuation`n    -Origin 'https://vietnamguide.net'`nif (`$LASTEXITCODE -ne 0) { throw 'Full-stage public HTTP verification failed.' }`n" + $markdownFence)
             )
             NewText = @(
                 $splicedStage2Heading,
-                ($splicedPowerShellFence + "`n`$RepoRoot = 'C:\Users\NCTaam\projects\vietnamguide'`nSet-Location -LiteralPath `$RepoRoot`n" +
+                ($splicedPowerShellFence + "`n`$RepoRoot = '$repoRoot'`nSet-Location -LiteralPath `$RepoRoot`n" +
                     "powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\ops\verify-comparison-rollout-public.ps1 $lineContinuation`n    -Stage full $lineContinuation`n    -Origin 'https://vietnamguide.net'`nif (`$LASTEXITCODE -ne 0) { throw 'Full-stage public HTTP verification failed.' }`n" + $markdownFence)
             )
             ExpectedFailure = 'Stage 2 public HTTP verification contract failed'

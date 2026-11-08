@@ -3,33 +3,33 @@
   "entries": [
     {
       "relativePath": "ops/verify-core-block-patterns.ps1",
-      "length": 14206,
-      "sha256": "30f4be5818b15e4cd8c3ad9b616aeddebd77ff97aa4922a3c89dfaaa35b23c85"
+      "length": 13864,
+      "sha256": "3371170ca7702956e8d3c756bccf772bdeb53eb69fde693beeaf623148729e8e"
     },
     {
       "relativePath": "ops/verify-core-mu-plugin.ps1",
-      "length": 30539,
-      "sha256": "1334d35e895a8eac7d5122b482a188f19072ae5b636c46ce44f6257fd1a1419d"
+      "length": 31018,
+      "sha256": "3e0d79c53ee1b4cb0d417046cd0ebffcb1c9920a6e98d89a8efca98b10ce3275"
     },
     {
       "relativePath": "ops/verify-core-mu-plugin-live.php",
-      "length": 9743,
-      "sha256": "280424139dc8b29ba2911d7d3caf1a203499c742efd6d6a243b0d98a7dc8e842"
+      "length": 9499,
+      "sha256": "62b7f501819fea3e747cde5b9862e68f26d559d1f4b29cd6f2076fa8474f54ae"
     },
     {
       "relativePath": "ops/verify-homepage-theme.ps1",
-      "length": 30042,
-      "sha256": "0c58f228806da1d121bce622d991f738f3d4552c4bf9dbbb3a8640dbb474558b"
+      "length": 33700,
+      "sha256": "174178446d4d46dcf1bce38fc967e6ca5e4872825052817f0cdd27d97d07f43b"
     },
     {
       "relativePath": "ops/verify-guide-experience.ps1",
-      "length": 121518,
-      "sha256": "60f2446f513dae8ff9ea84b6a90823bb8ab35b30dd3699602ca65d41f95b21ec"
+      "length": 133961,
+      "sha256": "a972a65a3c71aebdff8bdd4b1e8d5d6e1cd8d4a16f9d537bfbdc0f8ec3360a78"
     },
     {
       "relativePath": "ops/verify-guide-experience-mutations.ps1",
-      "length": 44511,
-      "sha256": "8bb44777a33bf89478e54189f7377155b4e17eba7de71f60fae27c88563d6108"
+      "length": 44406,
+      "sha256": "96c4917810a9101274afe6dee883811dcf7845d98eab4cba3bc90fccb0be53ee"
     },
     {
       "relativePath": "ops/verify-guide-experience-tokenizer.php",
@@ -38,18 +38,18 @@
     },
     {
       "relativePath": "ops/verify-guide-experience-public.ps1",
-      "length": 55723,
-      "sha256": "03b018f463abe474d06b7006a5cdc952d757cd26825d0a1c9700f20f24873543"
+      "length": 65689,
+      "sha256": "b76faa04582040a1d3e00822c541e1bb3fa0a9a4c6634de0ebe72614d90a2403"
     },
     {
       "relativePath": "ops/verify-guide-experience-live.php",
-      "length": 26254,
-      "sha256": "33bf8f3791bd6b8e5cc6aff1a7cc2dbfa8a7df8df9d639ba262f431879f30643"
+      "length": 30383,
+      "sha256": "c1cb3c286d32bd505ea70ab74fe8ac5c52481b57c72cee030abcf96736c5faf0"
     },
     {
       "relativePath": "ops/verify-guide-experience-js-runtime.js",
-      "length": 3703,
-      "sha256": "031feabe4d0934a13085f9066e42088c941d5dd60be0e649b2b89e2c67eeeb4b"
+      "length": 3602,
+      "sha256": "3fb4559224f445075635819f122f1152a53afd4983f07224dc5806b2786b1cad"
     }
   ]
 }

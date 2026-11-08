@@ -903,6 +903,248 @@ class TestInteractiveShortcodes(unittest.TestCase):
             js_code = f.read()
         self.assertIn('!e._vgPrinted', js_code)
 
+    def test_stage210_p0_p1_remediation_contracts(self):
+        """Stage 210: Verify P0/P1 fixes across toolkits, homepage.js, sw.js, and guide-seo.php."""
+        # 1. Season Matrix: #vg-sm-route-panel closes before .vg-tool-share-bar
+        sm_code = self.contents['season_matrix']
+        legend_idx = sm_code.find('<div class="vg-sm-heatmap-legend">')
+        share_idx = sm_code.find('<div class="vg-tool-share-bar">')
+        self.assertGreater(legend_idx, 0)
+        self.assertGreater(share_idx, legend_idx)
+        between = sm_code[legend_idx:share_idx]
+        self.assertGreaterEqual(between.count('</div>'), 2, '#vg-sm-route-panel must close before .vg-tool-share-bar')
+        self.assertIn('function updateView(isInitial)', sm_code)
+        self.assertIn('updateView(true);', sm_code)
+
+        # 2. Cost Calculator: classic-10d route widget & party clamp 1..4 & initial URL guard
+        calc_code = self.contents['cost_calculator']
+        self.assertIn("'classic-10d'", calc_code)
+        self.assertIn('Math.min(4, Math.max(1, qParty))', calc_code)
+        self.assertIn('function updateUI(isInitial)', calc_code)
+        self.assertIn('updateUI(true);', calc_code)
+
+        # 3. Itinerary Finder: validStyles includes slow & beach, initial URL guard
+        finder_code = self.contents['itinerary_finder']
+        self.assertIn("'slow'", finder_code)
+        self.assertIn("'beach'", finder_code)
+        self.assertIn('function update(isInitial)', finder_code)
+        self.assertIn('update(true);', finder_code)
+
+        # 4. Packing Checklist: allowedCategories filter validation
+        pack_code = self.contents['packing_checklist']
+        self.assertIn("var allowedCategories = ['all', 'documents', 'electronics', 'clothing', 'medical', 'adventure'];", pack_code)
+
+        # 5. Visa Checker: 42 approved ports (13 airports, 16 land, 13 seaports) & initial URL guard
+        visa_code = self.contents['visa_checker']
+        self.assertIn('42 Ports Total', visa_code)
+        self.assertIn('13 International Airports', visa_code)
+        self.assertIn('13 International Seaports', visa_code)
+        self.assertIn('function updateVisaStatus(isInitial)', visa_code)
+
+        # 6. Airport Navigator: initial URL guard & aligned noscript fares
+        an_code = self.contents['airport_navigator']
+        self.assertIn('function updateAirport(code, isInitial)', an_code)
+        self.assertIn('updateAirport(initialAirport, true);', an_code)
+        self.assertIn('120,000–180,000 VND', an_code)
+
+        # 7. Photo Dispatch: literal em-dash in data-caption
+        pd_path = os.path.join(THEME_DIR, 'inc', 'guide-photo-dispatch.php')
+        with open(pd_path, 'r', encoding='utf-8') as f:
+            pd_code = f.read()
+        self.assertNotIn("' &mdash; '", pd_code)
+
+        # 8. homepage.js: no early return inside reducedMotion block
+        hp_js_path = os.path.join(THEME_DIR, 'assets', 'js', 'homepage.js')
+        with open(hp_js_path, 'r', encoding='utf-8') as f:
+            hp_js = f.read()
+        self.assertIn("if (reducedMotion || !('IntersectionObserver' in window))", hp_js)
+        self.assertIn('} else {\n    var revealObserver = new IntersectionObserver', hp_js.replace('\r\n', '\n'))
+
+        # 9. sw.js: precaches guide-patterns.css and homepage.js, uses ignoreSearch fallback
+        sw_path = os.path.join(REPO_ROOT, 'wordpress', 'sw.js')
+        with open(sw_path, 'r', encoding='utf-8') as f:
+            sw_code = f.read()
+        self.assertIn('guide-patterns.css', sw_code)
+        self.assertIn('homepage.js', sw_code)
+        self.assertIn('ignoreSearch: true', sw_code)
+
+    def test_stage211_p2_remediation_and_deduplication_contracts(self):
+        """Stage 211: Verify P2 fixes for image-dimensions duplicate key, guide-content route helper, guide-aio costs category, Field Desk WAI-ARIA keyboard roving focus, print onclick guard, and CSS custom property tokens."""
+        # 1. image-dimensions.php: TuSan_Canyon.jpg appears only once as an array key
+        img_dim_path = os.path.join(THEME_DIR, 'inc', 'image-dimensions.php')
+        with open(img_dim_path, 'r', encoding='utf-8') as f:
+            img_dim_code = f.read()
+        self.assertEqual(img_dim_code.count("'TuSan_Canyon.jpg' =>"), 1)
+
+        # 2. guide-content.php: uses vg_get_guide_path in vg_resolve_repository_markdown_path
+        gc_path = os.path.join(THEME_DIR, 'inc', 'guide-content.php')
+        with open(gc_path, 'r', encoding='utf-8') as f:
+            gc_code = f.read()
+        self.assertIn("if (function_exists('vg_get_guide_path'))", gc_code)
+
+        # 3. guide-aio.php: includes 'costs' category in /llms-full.txt directory
+        aio_path = os.path.join(THEME_DIR, 'inc', 'guide-aio.php')
+        with open(aio_path, 'r', encoding='utf-8') as f:
+            aio_code = f.read()
+        self.assertIn("'costs'        => 'Travel Cost & Budget Breakdowns'", aio_code)
+
+        # 4. guide-interactive.js: initFieldDesk supports ArrowRight/ArrowLeft/Home/End and roving tabindex
+        gi_path = os.path.join(THEME_DIR, 'assets', 'js', 'guide-interactive.js')
+        with open(gi_path, 'r', encoding='utf-8') as f:
+            gi_code = f.read()
+        self.assertIn("btn.setAttribute('tabindex', isActive ? '0' : '-1');", gi_code)
+        self.assertIn("if (e.key === 'ArrowRight') nextIdx = (idx + 1) % switchBtns.length;", gi_code)
+
+        # 5. guide-experience.js: print button guard checks !printBtn.hasAttribute('onclick')
+        ge_js_path = os.path.join(THEME_DIR, 'assets', 'js', 'guide-experience.js')
+        with open(ge_js_path, 'r', encoding='utf-8') as f:
+            ge_js = f.read()
+        self.assertIn("!printBtn.hasAttribute('onclick')", ge_js)
+        self.assertIn('if (e) { e._vgPrinted = true; }', ge_js)
+
+        # 6. homepage.css & guide-experience.css: --vg-sans and --vg-forest defined in :root
+        hp_css_path = os.path.join(THEME_DIR, 'assets', 'css', 'homepage.css')
+        with open(hp_css_path, 'r', encoding='utf-8') as f:
+            hp_css = f.read()
+        self.assertIn('--vg-sans: var(--vg-body);', hp_css)
+        self.assertIn('--vg-forest: #1E6B52;', hp_css)
+
+    def test_stage212_p0_p1_p2_remediation_contracts(self):
+        """Stage 212: Verify P0/P1/P2 remediation across routing, AIO, analytics QR modal, SW precache, interactive toolkits, SEO Wikidata/tariffs, and CSS tokens."""
+        # 1. guide-routing.php & guide-content.php: 'costs' => 'practical' and 'costs' markdown path
+        routing_path = os.path.join(THEME_DIR, 'inc', 'guide-routing.php')
+        with open(routing_path, 'r', encoding='utf-8') as f:
+            routing_code = f.read()
+        self.assertGreaterEqual(routing_code.count("'costs' => 'practical'"), 2)
+
+        gc_path = os.path.join(THEME_DIR, 'inc', 'guide-content.php')
+        with open(gc_path, 'r', encoding='utf-8') as f:
+            gc_code = f.read()
+        self.assertIn("'destinations', 'itineraries', 'compare', 'plan', 'costs', 'recommend'", gc_code)
+
+        # 2. guide-aio.php: 'costs' in both /llms.txt and /llms-full.txt, no literal Vietnam\'s in double-quoted echo
+        aio_path = os.path.join(THEME_DIR, 'inc', 'guide-aio.php')
+        with open(aio_path, 'r', encoding='utf-8') as f:
+            aio_code = f.read()
+        self.assertEqual(aio_code.count("'costs'        => 'Travel Cost & Budget Breakdowns'"), 2)
+        self.assertIn("Strategic overview of Vietnam's top regions", aio_code)
+
+        # 3. guide-analytics.php: QR modal focus restoration and fallback copy
+        analytics_path = os.path.join(THEME_DIR, 'inc', 'guide-analytics.php')
+        with open(analytics_path, 'r', encoding='utf-8') as f:
+            analytics_code = f.read()
+        self.assertIn('prevQrFocus = document.activeElement;', analytics_code)
+        self.assertIn('fallbackCopyQrLink(targetUrl, showCopied);', analytics_code)
+
+        # 4. sw.js: precaches guide-interactive.css and guide-interactive.js
+        sw_path = os.path.join(os.path.dirname(os.path.dirname(THEME_DIR)), '..', 'sw.js')
+        with open(sw_path, 'r', encoding='utf-8') as f:
+            sw_code = f.read()
+        self.assertIn('guide-interactive.css', sw_code)
+        self.assertIn('guide-interactive.js', sw_code)
+
+        # 5. Interactive toolkits P1/P2 fixes
+        if_path = os.path.join(THEME_DIR, 'inc', 'guide-itinerary-finder.php')
+        with open(if_path, 'r', encoding='utf-8') as f:
+            if_code = f.read()
+        self.assertIn('data-value="food"', if_code)
+        self.assertNotIn("['classic', 'highlights']", if_code)
+        self.assertNotIn("['classic', 'slow', 'grand']", if_code)
+
+        an_path = os.path.join(THEME_DIR, 'inc', 'guide-airport-navigator.php')
+        with open(an_path, 'r', encoding='utf-8') as f:
+            an_code = f.read()
+        self.assertIn('Phu Quoc International (PQC):', an_code)
+        self.assertNotIn("prompt('Copy", an_code)
+
+        pc_path = os.path.join(THEME_DIR, 'inc', 'guide-packing-checklist.php')
+        with open(pc_path, 'r', encoding='utf-8') as f:
+            pc_code = f.read()
+        self.assertNotIn('window.confirm(', pc_code)
+        self.assertNotIn("prompt('Copy", pc_code)
+
+        vc_path = os.path.join(THEME_DIR, 'inc', 'guide-visa-checker.php')
+        with open(vc_path, 'rb') as f:
+            vc_bytes = f.read()
+        self.assertNotIn(b'\r\n', vc_bytes)
+        vc_code = vc_bytes.decode('utf-8')
+        self.assertIn('minExpiry.setMonth(minExpiry.getMonth() + 6)', vc_code)
+
+        # 6. guide-seo.php: Wikidata entity IDs and 2026 tariffs
+        seo_path = os.path.join(THEME_DIR, 'inc', 'guide-seo.php')
+        with open(seo_path, 'r', encoding='utf-8') as f:
+            seo_code = f.read()
+        self.assertIn('https://www.wikidata.org/wiki/Q797559', seo_code)
+        self.assertIn('https://www.wikidata.org/wiki/Q10748020', seo_code)
+        self.assertIn('https://www.wikidata.org/wiki/Q1062129', seo_code)
+        self.assertIn('https://www.wikidata.org/wiki/Q1931159', seo_code)
+        self.assertIn('53+ countries and 42 border checkpoints', seo_code)
+
+        # 7. homepage.css: :root defines --vg-muted, --vg-guide-muted, --vg-guide-forest
+        hp_css_path = os.path.join(THEME_DIR, 'assets', 'css', 'homepage.css')
+        with open(hp_css_path, 'r', encoding='utf-8') as f:
+            hp_css = f.read()
+        self.assertIn('--vg-muted: #555e65;', hp_css)
+        self.assertIn('--vg-guide-muted: #4c504c;', hp_css)
+        self.assertIn('--vg-guide-forest: #012d1d;', hp_css)
+
+    def test_stage213_p0_p1_p2_remediation_contracts(self):
+        """Stage 213: Verify P0/P1/P2 fixes across runtime Markdown parser, alias redirects, Wikidata Q-IDs, route budget math, JSON_HEX_TAG, WAI-ARIA aria-controls, reading progress deduplication, and print CSS."""
+        # 1. Runtime Markdown parser: fenced code blocks, nested bold+italic, <br> preservation, inline images
+        gc_path = os.path.join(THEME_DIR, 'inc', 'guide-content.php')
+        with open(gc_path, 'r', encoding='utf-8') as f:
+            gc_code = f.read()
+        self.assertIn("vg-code-block", gc_code)
+        self.assertIn(r"'/\*\*((?:[^*]|\*(?!\*))+)\*\*/'", gc_code)
+        self.assertIn("VG_BR", gc_code)
+        self.assertIn("VG_CODE_", gc_code)
+
+        # 2. Routing aliases: hue-travel-guide, hoi-an-travel-guide, and costs/* redirects
+        routing_path = os.path.join(THEME_DIR, 'inc', 'guide-routing.php')
+        with open(routing_path, 'r', encoding='utf-8') as f:
+            routing_code = f.read()
+        self.assertIn("'destinations/hue-travel-guide' => '/destinations/hue-imperial-city-guide/'", routing_code)
+        self.assertIn("'destinations/hoi-an-travel-guide' => '/destinations/hoi-an-ancient-town-guide/'", routing_code)
+        self.assertIn("'costs/vietnam-travel-cost'    => '/plan/vietnam-travel-cost/'", routing_code)
+        self.assertIn("'costs/ha-giang-loop-cost-budget' => '/destinations/ha-giang-loop-planning-guide/'", routing_code)
+
+        # 3. Wikidata Q-IDs in vietnamguide-core.php and guide-seo.php (Cu Chi Q185625, Dong Hoi Q36173)
+        mu_path = os.path.join(REPO_ROOT, 'wordpress', 'wp-content', 'mu-plugins', 'vietnamguide-core.php')
+        with open(mu_path, 'r', encoding='utf-8') as f:
+            mu_code = f.read()
+        self.assertIn('https://www.wikidata.org/wiki/Q185625', mu_code)
+        self.assertIn('https://www.wikidata.org/wiki/Q36173', mu_code)
+        self.assertNotIn('Q192935', mu_code)
+        self.assertNotIn('Q1877', mu_code)
+
+        seo_path = os.path.join(THEME_DIR, 'inc', 'guide-seo.php')
+        with open(seo_path, 'r', encoding='utf-8') as f:
+            seo_code = f.read()
+        self.assertIn('https://www.wikidata.org/wiki/Q185625', seo_code)
+        self.assertIn('https://www.wikidata.org/wiki/Q36173', seo_code)
+        self.assertNotIn('Q192935', seo_code)
+
+        # 4. JSON_HEX_TAG, wp_kses without rarr, and WAI-ARIA aria-controls
+        self.assertIn('JSON_HEX_TAG', self.contents['visa_checker'])
+        self.assertIn('JSON_HEX_TAG', self.contents['season_matrix'])
+        self.assertIn('JSON_HEX_TAG', self.contents['cost_calculator'])
+        self.assertNotIn("'rarr' => []", self.contents['itinerary_finder'])
+        self.assertIn('aria-controls="vg-an-airport-banner"', self.contents['airport_navigator'])
+        self.assertIn('aria-controls="vg-sm-verdict-box"', self.contents['season_matrix'])
+        self.assertIn('aria-controls="vg-checklist-items-panel"', self.contents['packing_checklist'])
+
+        # 5. Reading progress deduplication & CSS print / reduced-motion rules
+        hp_js_path = os.path.join(THEME_DIR, 'assets', 'js', 'homepage.js')
+        with open(hp_js_path, 'r', encoding='utf-8') as f:
+            hp_js = f.read()
+        self.assertIn("var existingProgress = document.getElementById('vg-reading-progress');", hp_js)
+
+        gi_css_path = os.path.join(THEME_DIR, 'assets', 'css', 'guide-interactive.css')
+        with open(gi_css_path, 'r', encoding='utf-8') as f:
+            gi_css = f.read()
+        self.assertIn('@keyframes vgDispatchFadeIn', gi_css)
+        self.assertIn('@media print', gi_css)
+
 
 if __name__ == '__main__':
     unittest.main()

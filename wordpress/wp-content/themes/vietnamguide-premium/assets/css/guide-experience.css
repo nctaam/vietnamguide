@@ -132,10 +132,6 @@
   box-shadow: 0 1px 3px rgba(1, 45, 29, .03);
 }
 
-.vg-guide-meta span + span::before {
-  display: none;
-}
-
 .vg-guide-jump {
   display: none;
 }
@@ -648,7 +644,7 @@
 
 .vg-guide-article caption.vg-table-caption {
   padding: 14px 18px;
-  font-family: var(--vg-sans);
+  font-family: var(--vg-sans, var(--vg-body));
   font-size: 13px;
   font-weight: 700;
   letter-spacing: .02em;
@@ -767,6 +763,17 @@
   padding: 18px 20px;
   border-left: 3px solid var(--vg-gold);
   background: color-mix(in srgb, var(--vg-white) 72%, transparent);
+}
+
+.vg-guide-article .vg-check-list li::before,
+.vg-guide-article .vg-feature-list li::before {
+  content: none;
+  display: none;
+}
+
+.vg-guide-article .vg-check-list li,
+.vg-guide-article .vg-feature-list li {
+  padding-left: 20px;
 }
 
 .vg-guide-article .vg-faq-list details > summary {
@@ -991,10 +998,6 @@
     font-size: 11px;
   }
 
-  .vg-guide-meta span + span::before {
-    margin-right: 14px;
-  }
-
   .vg-guide-spine,
   .vg-guide-related {
     width: calc(100% - 32px);
@@ -1093,6 +1096,9 @@
   .vg-floating-dock,
   .vg-guide-dock,
   .vg-guide-jump,
+  .vg-guide-spine__toc,
+  .vg-guide-trust,
+  .vg-guide-related,
   .vg-guide-experience__dock,
   .vg-drawer,
   .vg-pattern-newsletter-capture,
@@ -1101,8 +1107,10 @@
     display: none !important;
   }
 
+  .vg-guide-spine,
   .vg-guide-layout {
     display: block !important;
+    width: 100% !important;
     max-width: 100% !important;
     margin: 0 !important;
     padding: 0 !important;

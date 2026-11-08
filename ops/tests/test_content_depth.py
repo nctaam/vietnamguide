@@ -224,6 +224,54 @@ class TestContentDepthAuditor(unittest.TestCase):
         self.assertIn("vg-guide-meta", php_src)
         self.assertNotIn("<h2", php_src.lower())
 
+    def test_render_inline_markdown_and_fenced_code_blocks(self):
+        import compile_guide_content as compiler
+
+        inline = compiler.render_inline_markdown(
+            r"Route A $\rightarrow$ B $\leftrightarrow$ C<br>`code *not* [link](x)` and ***both*** and **bold *italic* inside** and ![Map](https://vietnamguide.net/map.jpg) and [Query](https://vietnamguide.net/?a=1&b=2)"
+        )
+        self.assertIn("→", inline)
+        self.assertIn("↔", inline)
+        self.assertIn("<br>", inline)
+        self.assertNotIn("&lt;br&gt;", inline)
+        self.assertIn("<code>code *not* [link](x)</code>", inline)
+        self.assertIn("<strong><em>both</em></strong>", inline)
+        self.assertIn("<strong>bold <em>italic</em> inside</strong>", inline)
+        self.assertIn('<img src="https://vietnamguide.net/map.jpg" alt="Map"', inline)
+        self.assertIn('href="https://vietnamguide.net/?a=1&amp;b=2"', inline)
+        self.assertNotIn("&amp;amp;", inline)
+
+        body_html = compiler.compile_markdown_body("```text\nLine 1\nLine 2\n```")
+        self.assertIn("vg-code-block", body_html)
+
+    def test_link_hygiene_flags_file_uri_and_relative_internal_links(self):
+        import tempfile
+
+        with tempfile.TemporaryDirectory() as tmpdir:
+            costs_dir = Path(tmpdir) / "costs"
+            costs_dir.mkdir(parents=True, exist_ok=True)
+            md_file = costs_dir / "vietnam-travel-cost.md"
+            md_file.write_text(
+                "---\n"
+                'title: "Vietnam Travel Cost"\n'
+                'slug: "vietnam-travel-cost"\n'
+                'route_path: "plan/wrong-route"\n'
+                'description: "Valid description"\n'
+                'travel_cluster: "national_circuit"\n'
+                'last_verified: "2026-10-20"\n'
+                'author: "VietnamGuide Editorial Team"\n'
+                "reading_time_minutes: 6\n"
+                "word_count: 10\n"
+                "---\n"
+                "See [Local](file:///C:/test.md) and [Hanoi](destinations/hanoi-travel-guide) and [Plan](plan/vietnam-evisa).\n",
+                encoding="utf-8",
+            )
+            rep = auditor.audit_markdown_file(md_file, min_words=5, min_hls=0.0)
+            err_text = " | ".join(rep["errors"])
+            self.assertIn("does not match relative path 'costs/vietnam-travel-cost'", err_text)
+            self.assertIn("file://", err_text)
+            self.assertIn("Relative internal link missing leading '/'", err_text)
+
 
 if __name__ == "__main__":
     unittest.main()

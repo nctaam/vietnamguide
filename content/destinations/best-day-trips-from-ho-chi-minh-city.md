@@ -51,7 +51,7 @@ The single biggest day-trip mistake in Ho Chi Minh City is booking a `$12–$15 
   - **Or Go 30 Minutes Further to `Cái Bè` & `Vĩnh Long` (`An Bình` Island)**: Thanks to the completed `CT01` Trung Luong – My Thuan Expressway, `Cái Bè` (`115 km`) is now only **`2.0 hours`** from District 1.
 
 > [!TIP]
-> **Can You Combine `Cu Chi Tunnels` + `Mekong Delta` in One Day?** Yes! If you only have **one free day in Southern Vietnam**, booking a **VIP Limousine Combo Tour (`Cu Chi Tunnels in the morning 07:30–11:30 AM` $\rightarrow$ `Bến Tre / Mỹ Tho Mekong Delta in the afternoon 13:30–17:00 PM`, `$48–$68 USD`)** or hiring a private car (`2,000,000 VND`) is a tried-and-tested 11-hour circuit (`returning to District 1 by 19:00 PM`). Just make sure your operator uses a fast 9-to-16-seat van rather than a slow 45-seat coach!
+> **Can You Combine `Cu Chi Tunnels` + `Mekong Delta` in One Day?** Yes! If you only have **one free day in Southern Vietnam**, booking a **VIP Limousine Combo Tour (`Cu Chi Tunnels in the morning 07:30–11:30 AM` → `Bến Tre / Mỹ Tho Mekong Delta in the afternoon 13:30–17:00 PM`, `$48–$68 USD`)** or hiring a private car (`2,000,000 VND`) is a tried-and-tested 11-hour circuit (`returning to District 1 by 19:00 PM`). Just make sure your operator uses a fast 9-to-16-seat van rather than a slow 45-seat coach!
 
 ### 3. Black Virgin Mountain (`Núi Bà Đen`, `986m`) & The `12:00 PM` Cao Dai Great Temple Ceremony (`Tây Ninh`)
 Located `95 kilometers` northwest of Saigon in Tay Ninh Province (`just 35 km beyond Cu Chi Tunnels`), this two-stop cultural and mountain day trip has become a runaway favorite in 2026:

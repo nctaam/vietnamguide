@@ -18,6 +18,7 @@ ROUTE_TYPES = {
     "itineraries": "itinerary",
     "compare": "comparison",
     "plan": "practical",
+    "costs": "practical",
 }
 ALLOWED_STATUSES = {"published", "draft", "archived"}
 ALLOWED_TEMPLATES = {"guide", "legacy", "hub", "tool"}

@@ -7,7 +7,7 @@ travel_cluster: "national_circuit"
 last_verified: "2026-10-25"
 author: "VietnamGuide Editorial Team"
 reading_time_minutes: 14
-word_count: 2887
+word_count: 2891
 ---
 
 October brings sharp meteorological contrast across the 1,650 km length of Vietnam. Northern provinces welcome crisp autumn conditions with dropping humidity, whereas Central Vietnam faces peak annual rainfall, severe urban inundation, and tropical storm disruptions along the coast. Meanwhile, Southern Vietnam transitions out of southwest monsoon moisture, with Mekong waterways reaching peak seasonal depth and southern islands recording calmer seas.
@@ -55,11 +55,11 @@ Out on [Ha Long Bay](/destinations/ha-long-bay-travel-guide/) and Lan Ha Bay, se
 
 Proactive itinerary flexibility is mandatory across the central strip, and travelers should consult a [rainy season flexible route](/plan/vietnam-rainy-season-flexible-route/) before committing non-refundable bookings.
 
-In [Phong Nha-Ke Bang National Park](/destinations/phong-nha-travel-guide/), heavy rains raise the Son River by 2 meters to 4 meters, submerging the boat entrance to Phong Nha Cave (entry 150,000 VND / $6.00 USD, boat 550,000 VND / $22.00 USD for up to 12 passengers). Elevated dry caverns such as Paradise Cave remain open via wooden staircases 200 meters above the valley floor; adult entry costs 250,000 VND ($10.00 USD) plus 100,000 VND ($4.00 USD) for round-trip buggy transit across the 1.6 km forest access path. Operators like Oxalis Adventure resume Tu Lan and Hang En expeditions (7,600,000 VND / $304.00 USD for 2 days, 22 km trekking) in mid-to-late November once water tables stabilize.
+In [Phong Nha-Ke Bang National Park](/destinations/phong-nha-travel-guide/), heavy rains raise the Son River by 2 meters to 4 meters, submerging the boat entrance to Phong Nha Cave (entry 150,000 VND / $6.00 USD, boat 550,000 VND / $22.00 USD for up to 12 passengers). Elevated dry caverns such as Paradise Cave remain open via wooden staircases 200 meters above the valley floor; adult entry costs 270,000 VND ($10.60 USD) plus 100,000 VND ($4.00 USD) for round-trip buggy transit across the 1.6 km forest access path. Operators like Oxalis Adventure resume Tu Lan and Hang En expeditions (7,600,000 VND / $304.00 USD for 2 days, 22 km trekking) in mid-to-late November once water tables stabilize.
 
 [Hue](/destinations/hue-imperial-city-guide/) registers its wettest month at 750 mm. When the Perfume River exceeds Warning Level 2, water rises 1.5 meters above low-lying banks. Entry to the Hue Imperial Citadel remains open at 200,000 VND ($8.00 USD) per adult (or 420,000 VND / $16.80 USD for a 3-site combo pass including Minh Mang and Khai Dinh royal tombs located 12 km to 15 km upstream), though low-lying streets near Dap Da bridge can flood for 24 hours.
 
-[Da Nang](/destinations/da-nang-travel-guide/) experiences coastal winds of 35 km/h to 55 km/h along My Khe Beach. Red warning flags prohibit swimming due to rip currents. Hai Van Pass along the 21 km mountain road at 496 meters elevation occasionally suffers rockslides during multi-day rains, making the 6.28 km Hai Van Tunnel via express coach (180,000 VND / $7.20 USD, 2 hours from Hue) or heritage train (110,000 VND / $4.40 USD, 2.5 hours) safer than motorbike crossings.
+[Da Nang](/destinations/da-nang-travel-guide/) experiences coastal winds of 35 km/h to 55 km/h along My Khe Beach. Red warning flags prohibit swimming due to rip currents. Hai Van Pass along the 21 km mountain road at 496 meters elevation occasionally suffers rockslides during multi-day rains, making the 6.28 km Hai Van Tunnel via express coach (180,000 VND / $7.20 USD, 2 hours from Hue) or heritage train (180,000–231,000 VND / $7.10–$9.10 USD, 2.5 hours) safer than motorbike crossings.
 
 [Hoi An Ancient Town](/destinations/hoi-an-ancient-town-guide/) faces recurrent inundation when heavy rains coincide with upstream hydropower discharges along the Thu Bon River basin. Bach Dang street and An Hoi islet routinely submerge under 0.4 meters to 1.5 meters of water for 36 hours. Reserve hotels on elevated ground in Cam Chau or An Bang ward, 4 km northeast along Cua Dai Road, where rooms average 750,000 VND ($30.00 USD) per night.
 

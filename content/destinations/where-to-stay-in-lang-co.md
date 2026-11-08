@@ -55,7 +55,7 @@ For travelers who want to wake up on the famous 10 km sandbar directly beneath t
 * **Thanh Tam Seaside Resort** (`850,000–1,650,000 VND` / `$34–$66 USD` per night; 392 Lac Long Quan): A practical three-star coastal option right next door with direct sand access, a 25-meter pool, and family quad rooms popular with domestic road-trippers driving between [Where to Stay in Da Nang](/destinations/where-to-stay-in-da-nang/) and [Where to Stay in Hue](/destinations/where-to-stay-in-hue/).
 * **Nirvana Spa & Resort** (`950,000–1,800,000 VND` / `$38–$72 USD` per night; 130 Lac Long Quan): Located 3 km farther north up the spit where beach crowds thin out completely, offering spacious sea-facing duplex suites and quiet morning swims from April through August.
 
-Staying on `Lac Long Quan` puts you within 1.5 km of **Lang Co Railway Station** (`Ga Lăng Cô`), where regional heritage trains (`HĐ1/HĐ2` and `HĐ3/HĐ4` connecting Hue and Da Nang for `150,000 to 180,000 VND` / `$6.00 to $7.20 USD`) and select North–South **Reunification Express** (`SE21/SE22`) services pause right beside the lagoon before climbing the dramatic cliffside rail tracks of the Hai Van Pass.
+Staying on `Lac Long Quan` puts you within 1.5 km of **Lang Co Railway Station** (`Ga Lăng Cô`), where regional heritage trains (`HĐ1/HĐ2` and `HĐ3/HĐ4` connecting Hue and Da Nang for `180,000 to 231,000 VND` / `$7.10 to $9.10 USD`) and select North–South **Reunification Express** (`SE21/SE22`) services pause right beside the lagoon before climbing the dramatic cliffside rail tracks of the Hai Van Pass.
 
 ## 3. Lap An Lagoon & `Nguyen Van` Oyster Loop
 

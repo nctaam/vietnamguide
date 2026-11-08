@@ -29,7 +29,7 @@ Travelers can choose between affordable provincial buses, fixed-rate metered tax
 | Specification            | Ground-Truth Value                                                      |
 +--------------------------+-------------------------------------------------------------------------+
 | Total Road Distance      | 45 km (28 miles) door-to-door                                           |
-| Primary Highways         | National Route 1A (QL1A) $\rightarrow$ Provincial Road DT562 (Highway 20)|
+| Primary Highways         | National Route 1A (QL1A) → Provincial Road DT562 (Highway 20)           |
 | Typical Travel Time      | 45 to 50 minutes (Taxi / Car) | 75 to 90 minutes (Public Bus B4)        |
 | Road Surface Quality     | 100% paved asphalt; smooth two-lane highway with gentle terrain gradients|
 | Main Arrival Gateways    | Dong Hoi Railway Station (city center) | Dong Hoi Airport (6 km north)  |

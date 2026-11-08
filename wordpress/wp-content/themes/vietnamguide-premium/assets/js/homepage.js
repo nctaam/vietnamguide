@@ -73,21 +73,20 @@
     revealItems.forEach(function (item) {
       item.classList.add('is-visible');
     });
-    return;
-  }
+  } else {
+    var revealObserver = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.16 });
 
-  var revealObserver = new IntersectionObserver(function (entries) {
-    entries.forEach(function (entry) {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('is-visible');
-        revealObserver.unobserve(entry.target);
-      }
+    revealItems.forEach(function (item) {
+      revealObserver.observe(item);
     });
-  }, { threshold: 0.16 });
-
-  revealItems.forEach(function (item) {
-    revealObserver.observe(item);
-  });
+  }
 
   var backToTop = document.querySelector('[data-vg-back-to-top]');
   if (backToTop) {
@@ -106,7 +105,8 @@
   }
 
   var siteHeader = document.querySelector('.vg-site-header');
-  if (siteHeader && !reducedMotion) {
+  var existingProgress = document.getElementById('vg-reading-progress');
+  if (siteHeader && !existingProgress && !reducedMotion) {
     var progressBar = document.createElement('div');
     progressBar.className = 'vg-reading-progress';
     progressBar.setAttribute('aria-hidden', 'true');

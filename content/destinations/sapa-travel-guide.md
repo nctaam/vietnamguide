@@ -54,9 +54,9 @@ For detailed GPS waypoints and multi-day ridge options, consult our dedicated [S
 | Trek Route | Total Distance | Walking Duration | Checkpoint Ticket | Return Car / Moto Fare | Key Settlements & Elevation Profile |
 | :--- | :--- | :--- | :--- | :--- | :--- |
 | **Route 1: Cat Cat Half-Day Walk** | 3.5 – 4.5 km | 2.5 – 3.0 hours | 150,000 VND ($6.00 USD) | 60,000 – 100,000 VND | Cat Cat Hamlet (1,580 m down to 1,280 m), 1925 French waterfall |
-| **Route 2: Muong Hoa Valley Benchmark** | 12.5 – 14.5 km | 5.0 – 6.5 hours | 75,000 VND ($3.00 USD) | 100,000 – 350,000 VND | Y Linh Ho $\rightarrow$ Lao Chai $\rightarrow$ Ta Van (1,600 m down to 1,180 m) |
-| **Route 3: Two-Day Giang Ta Chai – Ban Ho** | 22.0 – 25.0 km | 2 Days / 1 Night | 75,000 + 40,000 VND | 400,000 – 550,000 VND | Ta Van overnight $\rightarrow$ Giang Ta Chai bamboo forest $\rightarrow$ Ban Ho (650 m) |
-| **Route 4: Ma Tra – Ta Phin Herbal Loop** | 9.5 – 11.5 km | 4.0 – 4.5 hours | 40,000 VND ($1.60 USD) | 200,000 – 250,000 VND | Ma Tra H'mong valley $\rightarrow$ Ta Phin Red Dao village (1,480 m) |
+| **Route 2: Muong Hoa Valley Benchmark** | 12.5 – 14.5 km | 5.0 – 6.5 hours | 75,000 VND ($3.00 USD) | 100,000 – 350,000 VND | Y Linh Ho → Lao Chai → Ta Van (1,600 m down to 1,180 m) |
+| **Route 3: Two-Day Giang Ta Chai – Ban Ho** | 22.0 – 25.0 km | 2 Days / 1 Night | 75,000 + 40,000 VND | 400,000 – 550,000 VND | Ta Van overnight → Giang Ta Chai bamboo forest → Ban Ho (650 m) |
+| **Route 4: Ma Tra – Ta Phin Herbal Loop** | 9.5 – 11.5 km | 4.0 – 4.5 hours | 40,000 VND ($1.60 USD) | 200,000 – 250,000 VND | Ma Tra H'mong valley → Ta Phin Red Dao village (1,480 m) |
 
 ```
 [Sa Pa Stone Church] (1,580m)

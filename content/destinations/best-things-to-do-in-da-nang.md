@@ -90,7 +90,7 @@ Arrive at **Marble Mountains (`Thủy Sơn`, `40,000 VND` + `15,000 VND` elevato
 Catch the **`05:30 AM` sunrise** and fishing coracles at **Man Thai Beach**, then ride up **Son Tra Peninsula** to **Lady Buddha (`Chùa Linh Ứng`, `0 VND`)** and look for wild **Red-Shanked Douc Langurs** along the forest ridge. After a midday break (`and Bánh Xèo Bà Dưỡng at K280/23 Hoàng Diệu`), spend Friday, Saturday, or Sunday evening strolling **An Thuong Tourist Quarter (`Phố Tây An Thượng`)** and watching the **`21:00 PM` Dragon Bridge Fire & Water Show**.
 
 ### 3. Final Step — Day 3: Choose Either `Đèo Hải Vân` Coastal Loop OR Early `07:30 AM` `Bà Nà Hills` Golden Bridge
-On your third day, either ride/take the scenic **Heritage Train over Hai Van Pass (`150,000 VND`)** to Lang Co Bay and Hue, or take a `50-minute` morning GrabCar (`350,000 VND`) to **Sun World Ba Na Hills (`950,000 VND`)** to walk the **`150-meter` Golden Bridge (`Cầu Vàng`)** in cool `18°C` mountain air before transferring `40 minutes` south to **Hoi An Ancient Town**.
+On your third day, either ride/take the scenic **Heritage Train over Hai Van Pass (`180,000–231,000 VND`)** to Lang Co Bay and Hue, or take a `50-minute` morning GrabCar (`350,000 VND`) to **Sun World Ba Na Hills (`950,000 VND`)** to walk the **`150-meter` Golden Bridge (`Cầu Vàng`)** in cool `18°C` mountain air before transferring `40 minutes` south to **Hoi An Ancient Town**.
 
 ---
 

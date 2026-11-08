@@ -142,7 +142,7 @@ Dedicate your morning to the elaborate royal mausoleums south of the city:
 
 Travel south from Hue to Hoi An along one of Asia's most spectacular coastal routes:
 
-- **09:00 – Coastal Rail Journey**: Board the daily **"Central Heritage Connection"** tourist train (HD1/HD3) from Hue to Da Nang (110,000–180,000 VND). The train snakes along the cliffs of the Hai Van Pass, providing dramatic vistas of turquoise waters and Lang Co Bay.
+- **09:00 – Coastal Rail Journey**: Board the daily **"Central Heritage Connection"** tourist train (HD1/HD3) from Hue to Da Nang (180,000–231,000 VND). The train snakes along the cliffs of the Hai Van Pass, providing dramatic vistas of turquoise waters and Lang Co Bay.
 - **12:30 – Arrival in Da Nang & Lunch**: Grab lunch in Da Nang, sampling *mi Quang* noodles with turmeric-stained broth and fresh herbs (40,000 VND).
 - **14:00 – Marble Mountains (*Ngu Hanh Son*)**: Stop at Thuy Son mountain to explore natural cave shrines and Buddhist grottoes carved into marble hills (40,000 VND entrance).
 - **16:00 – Check-in in Hoi An**: Settle into a boutique heritage resort in Cam Chau or along the Thu Bon River. Walk through lantern-lit lanes in the evening, enjoying the car-free pedestrian atmosphere.

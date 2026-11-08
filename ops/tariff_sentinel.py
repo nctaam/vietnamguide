@@ -307,6 +307,93 @@ def audit_registry_parity(repo_root: Path = REPO_ROOT) -> dict[str, Any]:
     }
 
 
+THEME_DRIFT_SCAN_FILES: list[str] = [
+    'homepage-data.php',
+    'guide-cost-calculator.php',
+    'guide-seo.php',
+    'guide-aio.php',
+    'guide-interactive-map.php',
+    'guide-photo-dispatch.php',
+    'guide-visa-checker.php',
+]
+
+STALE_THEME_DRIFT_PATTERNS: list[tuple[str, re.Pattern[str]]] = [
+    (
+        'Stale Paradise Cave 250,000 VND (current tariff is 270,000 VND)',
+        re.compile(r'Paradise\s+Cave[^.\n]{0,80}\b250,000\s*VND\b', re.IGNORECASE),
+    ),
+    (
+        'Stale Central Heritage Train 110,000–180,000 VND (current tariff is 180,000–231,000 VND)',
+        re.compile(r'(?:Heritage\s+Train|H[DĐ]1/H[DĐ][23])[^.\n]{0,120}\b110,000\s*(?:[–-]|to)\s*180,000\s*VND', re.IGNORECASE),
+    ),
+    (
+        'Stale Central Heritage Train 150,000–180,000 VND (current tariff is 180,000–231,000 VND)',
+        re.compile(r'(?:Heritage\s+Train|H[DĐ]1/H[DĐ][23])[^.\n]{0,120}\b150,000\s*(?:[–-]|to)\s*180,000\s*VND', re.IGNORECASE),
+    ),
+    (
+        'Stale Central Heritage Train 150,000–210,000 VND (current tariff is 180,000–231,000 VND)',
+        re.compile(r'(?:Heritage\s+Train|H[DĐ]1/H[DĐ][23])[^.\n]{0,120}\b150,000\s*(?:[–-]|to)\s*210,000\s*VND', re.IGNORECASE),
+    ),
+    (
+        'Stale Resolution 128/NQ-CP reference (superseded by Resolution 44/NQ-CP & Resolution 229/NQ-CP)',
+        re.compile(r'Resolution\s+128/NQ-CP', re.IGNORECASE),
+    ),
+]
+
+
+def scan_theme_for_drifts(
+    theme_inc_dir: Path = DEFAULT_THEME_INC_DIR,
+    content_dir: Path | None = None,
+) -> dict[str, Any]:
+    """Scan core theme PHP files and repository Markdown guides for stale tariff figures and superseded regulatory resolutions."""
+    drifts: list[dict[str, str]] = []
+    scanned_files: list[str] = []
+
+    for filename in THEME_DRIFT_SCAN_FILES:
+        file_path = theme_inc_dir / filename
+        if not file_path.is_file():
+            continue
+        scanned_files.append(filename)
+        raw_content = file_path.read_text(encoding='utf-8')
+        # Strip PHP/JS comments so historical docblocks/comments do not trigger false positives
+        content = re.sub(r'/\*.*?\*/', ' ', raw_content, flags=re.DOTALL)
+        content = re.sub(r'(^|\s)//[^\n]*', ' ', content, flags=re.MULTILINE)
+        for label, pattern in STALE_THEME_DRIFT_PATTERNS:
+            match = pattern.search(content)
+            if match:
+                drifts.append({
+                    'file': filename,
+                    'issue': label,
+                    'match': match.group(0),
+                })
+
+    resolved_content_dir = content_dir
+    if resolved_content_dir is None and theme_inc_dir == DEFAULT_THEME_INC_DIR:
+        candidate_dir = REPO_ROOT / 'content'
+        if candidate_dir.is_dir():
+            resolved_content_dir = candidate_dir
+
+    if resolved_content_dir is not None and resolved_content_dir.is_dir():
+        for md_file in sorted(resolved_content_dir.rglob('*.md')):
+            rel_name = md_file.relative_to(resolved_content_dir.parent).as_posix()
+            scanned_files.append(rel_name)
+            md_text = md_file.read_text(encoding='utf-8')
+            for label, pattern in STALE_THEME_DRIFT_PATTERNS:
+                match = pattern.search(md_text)
+                if match:
+                    drifts.append({
+                        'file': rel_name,
+                        'issue': label,
+                        'match': match.group(0),
+                    })
+
+    return {
+        'passed': len(drifts) == 0,
+        'scanned_files': scanned_files,
+        'drifts': drifts,
+    }
+
+
 def run_sentinel(
     registry_path: Path = DEFAULT_REGISTRY_PATH,
     theme_inc_dir: Path = DEFAULT_THEME_INC_DIR,
@@ -323,6 +410,7 @@ def run_sentinel(
     toolkit_report = audit_toolkit_anchors(theme_inc_dir)
     cluster_report = audit_travel_clusters(theme_inc_dir)
     parity_report = audit_registry_parity(REPO_ROOT)
+    drift_report = scan_theme_for_drifts(theme_inc_dir)
 
     passed = (
         reg_report['route_count'] == 282
@@ -338,6 +426,7 @@ def run_sentinel(
         and len(cluster_report['journey_link_errors']) == 0
         and len(cluster_report['path_mapping_errors']) == 0
         and parity_report['passed']
+        and drift_report['passed']
     )
 
     report = {
@@ -346,6 +435,7 @@ def run_sentinel(
         'toolkits': toolkit_report,
         'clusters': cluster_report,
         'parity': parity_report,
+        'theme_drifts': drift_report,
     }
     return passed, report
 
@@ -392,6 +482,10 @@ def main(argv: list[str] | None = None) -> int:
         print(f"Travel Clusters        : {clusters['cluster_count']}/12 verified (geo coordinates & journey links valid)")
         print(f"Registry Parity        : 100% SHA-256 byte parity verified ({parity.get('sha256', '')[:16]}...)")
         print(f"Toolkit Anchor Issues  : {len(tk['missing_files'])} missing files, {len(tk['missing_anchors'])} missing tokens")
+        drifts = report.get('theme_drifts', {}).get('drifts', [])
+        print(f"Theme Tariff Drifts    : {len(drifts)} stale references across {len(report.get('theme_drifts', {}).get('scanned_files', []))} files")
+        for d in drifts:
+            print(f"  ! [{d['file']}] {d['issue']} -> '{d['match']}'")
         print('------------------------------------------------------------')
         print(f"OVERALL SENTINEL STATUS: {report['status']}")
         print('============================================================')

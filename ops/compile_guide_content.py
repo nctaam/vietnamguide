@@ -10,6 +10,7 @@ from __future__ import annotations
 
 import argparse
 import html
+import math
 import re
 import sys
 from pathlib import Path
@@ -32,28 +33,51 @@ def slugify_heading(text: str) -> str:
 
 def render_inline_markdown(text: str) -> str:
     """Convert inline markdown (**bold**, *italic*, `code`, [label](url)) into safe HTML."""
-    escaped = html.escape(text, quote=False)
+    normalized = text.replace(r"$\leftrightarrow$", "↔").replace(r"$\rightarrow$", "→")
+    normalized = re.sub(r"<br\s*/?>", "\x00VG_BR\x00", normalized, flags=re.IGNORECASE)
 
-    # Inline code `...`
-    escaped = re.sub(
-        r"`([^`]+)`",
-        lambda m: f"<code>{m.group(1)}</code>",
-        escaped,
-    )
+    escaped = html.escape(normalized, quote=False)
+
+    # Inline code `...` extracted into placeholder tokens first so inner *, []() are not mutated
+    code_tokens: List[str] = []
+
+    def _stash_code(match: re.Match) -> str:
+        idx = len(code_tokens)
+        code_tokens.append(f"<code>{match.group(1)}</code>")
+        return f"\x00VG_CODE_{idx}\x00"
+
+    escaped = re.sub(r"`([^`]+)`", _stash_code, escaped)
+
+    # Markdown images ![alt](src)
+    def _replace_image(match: re.Match) -> str:
+        alt = html.escape(html.unescape(match.group(1)), quote=True)
+        src = html.escape(html.unescape(match.group(2)).strip(), quote=True)
+        return f'<img src="{src}" alt="{alt}" loading="lazy" decoding="async" />'
+
+    escaped = re.sub(r"!\[([^\]]*)\]\(([^)]+)\)", _replace_image, escaped)
 
     # Markdown links [label](url)
     def _replace_link(match: re.Match) -> str:
         label = match.group(1)
-        url = html.escape(match.group(2).strip(), quote=True)
+        url = html.escape(html.unescape(match.group(2).strip()), quote=True)
         return f'<a href="{url}">{label}</a>'
 
     escaped = re.sub(r"\[([^\]]+)\]\(([^)]+)\)", _replace_link, escaped)
 
-    # Bold **...**
-    escaped = re.sub(r"\*\*([^*]+)\*\*", r"<strong>\1</strong>", escaped)
+    # Bold + Italic ***...***
+    escaped = re.sub(r"\*\*\*([^*]+)\*\*\*", r"<strong><em>\1</em></strong>", escaped)
+
+    # Bold **...** (supports nested single * italic inside bold)
+    escaped = re.sub(r"\*\*((?:[^*]|\*(?!\*))+)\*\*", r"<strong>\1</strong>", escaped)
 
     # Italic *...*
     escaped = re.sub(r"(?<!\*)\*([^*\n]+)\*(?!\*)", r"<em>\1</em>", escaped)
+
+    # Restore inline code tokens and <br> tags
+    for idx, code_html in enumerate(code_tokens):
+        escaped = escaped.replace(f"\x00VG_CODE_{idx}\x00", code_html)
+
+    escaped = escaped.replace("\x00VG_BR\x00", "<br>")
 
     return escaped
 
@@ -123,7 +147,7 @@ def compile_markdown_body_to_html(body: str) -> Tuple[Optional[str], str, Dict[s
                 table_count += 1
             cls_attr = f' class="language-{html.escape(lang, quote=True)}"' if lang else ""
             html_blocks.append(
-                f'<pre class="wp-block-code"><code{cls_attr}>'
+                f'<pre class="wp-block-code vg-code-block"><code{cls_attr}>'
                 + "\n".join(code_lines)
                 + "</code></pre>"
             )
@@ -294,6 +318,12 @@ def compile_markdown_body_to_html(body: str) -> Tuple[Optional[str], str, Dict[s
     return extracted_h1, "\n".join(html_blocks), stats
 
 
+def compile_markdown_body(markdown_body: str) -> str:
+    """Compile Markdown body into deterministic Gutenberg HTML string."""
+    _, body_html, _ = compile_markdown_body_to_html(markdown_body)
+    return body_html
+
+
 def compile_markdown_file(file_path: Path) -> Dict[str, Any]:
     """Compile a single Markdown file into deterministic VietnamGuide Gutenberg HTML."""
     raw = file_path.read_text(encoding="utf-8")
@@ -314,7 +344,7 @@ def compile_markdown_file(file_path: Path) -> Dict[str, Any]:
         or "2026-06-15"
     ).strip()
     reading_time = frontmatter.get("reading_time_minutes") or max(
-        5, int(frontmatter.get("word_count", 1300)) // 200
+        1, math.ceil(int(frontmatter.get("word_count", 1300)) / 220)
     )
 
     kicker_html = f'<p class="vg-guide-kicker">{html.escape(category.upper())}</p>'

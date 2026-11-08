@@ -94,7 +94,7 @@ Designed for travelers with a single two-week work vacation (`10 days` on the gr
 If you are visiting between **March and August** when Central Vietnam's beaches are dry and sunny while the South enters its summer monsoon, skip Ho Chi Minh City entirely and dedicate 12 days to the North and Center:
 * **Days 1–6**: Complete the full **Hanoi (2N) -> Ninh Binh (2N) -> Lan Ha Bay (1N) -> Hanoi (1N)** loop—or swap Ninh Binh for **3 days in Sapa (`Muong Hoa Valley` + `Fansipan 3,143m`)**.
 * **Days 7–8 (`Imperial Hue`)**: Board the overnight **`SE19` sleeper train (`20:10 -> 09:30`, `950,000–1,350,000 VND` 4-berth cabin)** or a `75-minute` flight (`HAN -> HUI`) to **Hue**. Tour the **Imperial Citadel (`200,000 VND`)**, **Thien Mu Pagoda**, and the royal tombs of **Minh Mang and Khai Dinh (`150,000 VND` each)**.
-* **Days 9–12 (`Hai Van Pass, Hoi An & Da Nang`)**: Cross **Hai Van Pass (`496m`)** and **Lap An Lagoon** by Heritage Train `HD1` (`180,000 VND`) or private car (`1,450,000 VND`) into **Hoi An (3N)** and **Da Nang My Khe Beach (1N)**, flying out via **Da Nang International Airport (`DAD`)** (via Singapore, Bangkok, Seoul, Tokyo, Taipei, or Doha).
+* **Days 9–12 (`Hai Van Pass, Hoi An & Da Nang`)**: Cross **Hai Van Pass (`496m`)** and **Lap An Lagoon** by Heritage Train `HD1` (`180,000–231,000 VND`) or private car (`1,450,000 VND`) into **Hoi An (3N)** and **Da Nang My Khe Beach (1N)**, flying out via **Da Nang International Airport (`DAD`)** (via Singapore, Bangkok, Seoul, Tokyo, Taipei, or Doha).
 
 ### Route D: The 14-Day Classic Cross-Country Spine (`The Gold Standard`)
 With 14 full days, you never have to choose between Ninh Binh and Ha Long Bay, or between Hue and the Mekong Delta:

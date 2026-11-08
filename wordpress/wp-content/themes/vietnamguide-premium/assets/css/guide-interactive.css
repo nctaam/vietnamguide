@@ -372,8 +372,16 @@
   .vg-map-pin,
   .vg-map-pin-pulse,
   .vg-map-pill-btn,
-  .vg-dossier-btn {
+  .vg-dossier-btn,
+  .vg-dispatch-img,
+  .vg-dispatch-card,
+  .vg-dispatch-card-img,
+  .vg-dispatch-filter-btn,
+  .vg-dispatch-lightbox,
+  .vg-field-desk-switch-btn,
+  .vg-field-desk-panel {
     transition: none !important;
+    animation: none !important;
     transform: none !important;
   }
 }
@@ -775,9 +783,21 @@
   background: var(--vg-gold-saffron, #C99446);
 }
 
+@keyframes vgDispatchFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.vg-dispatch-card,
 .vg-field-desk-panel {
   display: block;
-  animation: vgFadeIn 0.3s ease forwards;
+  animation: vgDispatchFadeIn 0.3s ease forwards;
 }
 
 .vg-field-desk-panel[hidden] {
@@ -839,6 +859,24 @@
 
 .vg-dispatch-monument-title {
   flex: 1 1 260px;
+}
+
+@media print {
+  .vg-dispatch-lightbox,
+  .vg-dispatch-filter-bar,
+  .vg-dispatch-expand-btn,
+  .vg-map-filter-bar,
+  .vg-map-zoom-controls {
+    display: none !important;
+  }
+
+  .vg-interactive-map-desk,
+  .vg-map-sidebar-card {
+    background: #ffffff !important;
+    color: #111827 !important;
+    border: 1px solid #d1d5db !important;
+    box-shadow: none !important;
+  }
 }
 
 

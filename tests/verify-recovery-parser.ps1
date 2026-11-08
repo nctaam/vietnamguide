@@ -802,7 +802,7 @@ Add-ParserResult -Name 'Baseline inventory excludes exactly the parser verifier 
     foreach ($guardSpec in @(
         [pscustomobject]@{ Left = '$recoveryParserInfrastructurePaths.Count'; Right = 2; Message = 'Parser infrastructure exclusion count guard mismatch.' },
         [pscustomobject]@{ Left = '$candidatePaths.Count - $recoveryRepositoryPaths.Count'; Right = 2; Message = 'Parser infrastructure exclusion delta guard mismatch.' },
-        [pscustomobject]@{ Left = '$recoveryRepositoryPaths.Count'; Right = 231; Message = 'Recovery repository count guard mismatch.' }
+        [pscustomobject]@{ Left = '$recoveryRepositoryPaths.Count'; Right = 470; Message = 'Recovery repository count guard mismatch.' }
     )) {
         $guards = @($baselineAst.FindAll({
             param($node)

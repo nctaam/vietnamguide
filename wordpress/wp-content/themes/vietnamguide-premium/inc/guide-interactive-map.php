@@ -56,7 +56,7 @@ function vg_get_regional_corridors_data(): array
             'vietnamese' => 'Duyên Hải Miền Trung',
             'focal_nodes' => ['Huế', 'Đà Nẵng', 'Hội An', 'Phong Nha'],
             'distance_from_hanoi' => '500–785 km',
-            'transit_summary' => 'Reunification Express trains SE1–SE8 and Central Heritage Train HĐ1/HĐ2 (150,000–210,000 VND, 10-min Lăng Cô Bay stop) crossing Hải Vân Pass; daily flights into DAD, HUI (Terminal T2), and VDH; Đồng Hới Station (GPS 17.4722, 106.6042) shuttles to Phong Nha-Kẻ Bàng karst network.',
+            'transit_summary' => 'Reunification Express trains SE1–SE8 and Central Heritage Train HĐ1/HĐ2 (180,000–231,000 VND, 10-min Lăng Cô Bay stop) crossing Hải Vân Pass; daily flights into DAD, HUI (Terminal T2), and VDH; Đồng Hới Station (GPS 17.4722, 106.6042) shuttles to Phong Nha-Kẻ Bàng karst network.',
             'transit_hours' => '1.2h flight // 14–16h rail',
             'typical_daily_spend' => '1,150,000–2,650,000 VND',
             'spend_usd' => '~$45–$104 USD',

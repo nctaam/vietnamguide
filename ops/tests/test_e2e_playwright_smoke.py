@@ -445,6 +445,18 @@ class TestPlaywrightE2ESmoke(unittest.TestCase):
             page.set_content(full_doc, wait_until="domcontentloaded")
 
             verdict_title = page.locator('#vg-sm-verdict-title')
+            valid_months = (
+                'January', 'February', 'March', 'April', 'May', 'June',
+                'July', 'August', 'September', 'October', 'November', 'December',
+            )
+            initial_title = verdict_title.inner_text()
+            self.assertTrue(
+                any(m in initial_title for m in valid_months),
+                f"Expected a valid month name in verdict title, got: {initial_title!r}",
+            )
+
+            # Click November pill explicitly, then February pill
+            page.locator('.vg-sm-month-pill[data-month="nov"]').click()
             self.assertIn('November', verdict_title.inner_text())
 
             # Click February pill

@@ -66,7 +66,7 @@ Built in 1397 under reformer Ho Quy Ly along the Ma River basin in Vinh Loc Dist
 ### 5. Phong Nha-Ke Bang National Park, Quang Binh (Natural Heritage, Inscribed 2003 / 2015)
 Located 500 kilometers south of Hanoi and 215 kilometers north of Hue, **Phong Nha-Ke Bang** protects a 123,326-hectare Paleozoic limestone massif formed 400 million years ago, honeycombed with more than 400 surveyed caves and underground rivers.
 - **Independent Show Caves (`No Advance Permit Needed`)**:
-  - **Paradise Cave (`Động Thiên Đường`)**: `250,000 VND` entry + `100,000 VND` return electric buggy (`1.0 km` wooden boardwalk inside a `72-meter-high` dry cathedral cavern; open 365 days a year).
+  - **Paradise Cave (`Động Thiên Đường`)**: `270,000 VND` entry + `100,000 VND` return electric buggy (`1.0 km` wooden boardwalk inside a `72-meter-high` dry cathedral cavern; open 365 days a year).
   - **Phong Nha Cave (`Động Phong Nha`)**: `150,000 VND` entry + `550,000 VND` shared 12-seat dragon boat (`46,000–55,000 VND` per person when split at the Son Trach boat station).
   - **Dark Cave (`Hang Tối`)**: `450,000 VND` full adventure pass (`400m` river zipline, headlamp swim, subterranean mineral mud float, and Chay River kayak).
 - **Licensed Expedition Cave Treks (`Advance Booking Required`)**: Operated strictly through licensed concessionaires (**Oxalis Adventure** and **Jungle Boss**), ranging from 1-day **Tu Lan** and **Elephant Cave / Ma Da Valley** treks (`1,800,000–2,100,000 VND` / `$72–$84 USD`) to the 2-day **Hang En Cave Expedition** (`9,500,000 VND` / `~$380 USD`) and the 4-day **Hang Son Doong Expedition** (`80,000,000 VND` / `~$3,000 USD`, capped at 1,000 climbers annually).
@@ -106,7 +106,7 @@ Located `42 kilometers` (`60 minutes` by road) southwest of Hoi An in a lush gre
 1. **Days 1–3 (Hanoi & Imperial Citadel of Thang Long)**: Spend two hours at the Imperial Citadel of Thang Long (`100,000 VND`) alongside Hanoi's Old Quarter and Temple of Literature.
 2. **Days 4–5 (Ha Long Bay – Cat Ba Archipelago)**: Take the `2-hour` expressway bus to Cat Ba Island or Halong Port for an overnight cruise or a full-day Lan Ha Bay kayak and boat excursion (`650,000–850,000 VND`).
 3. **Days 6–7 (Trang An Landscape Complex, Ninh Binh)**: Transfer directly south to Ninh Binh (`3.5–4 hours`), take the morning `07:30 AM` sampan on **Trang An Route 3 (`250,000 VND`)**, and cycle through Tam Coc and Bich Dong.
-4. **Days 8–9 (Phong Nha-Ke Bang National Park)**: Board the overnight sleeper train `SE19` or `SE3` from Ninh Binh Station to Dong Hoi (`500,000–850,000 VND`) and explore Paradise Cave (`250,000 VND`), Phong Nha Cave, or a 2-day Hang En trek.
+4. **Days 8–9 (Phong Nha-Ke Bang National Park)**: Board the overnight sleeper train `SE19` or `SE3` from Ninh Binh Station to Dong Hoi (`500,000–850,000 VND`) and explore Paradise Cave (`270,000 VND`), Phong Nha Cave, or a 2-day Hang En trek.
 5. **Days 10–11 (Complex of Hue Monuments)**: Ride the 3.5-hour train or DMZ private car south to Hue, purchasing the **3-Site Combo Pass (`420,000 VND`)** for the Imperial Citadel, Minh Mang Tomb, and Khai Dinh Tomb.
 6. **Days 12–14 (Hoi An Ancient Town & My Son Sanctuary)**: Cross the **Hai Van Pass** by heritage train or private car into Hoi An, pairing early-morning walks in the Ancient Town (`120,000 VND`) with a dawn excursion to **My Son Sanctuary (`150,000 VND`)** before flying out of Da Nang Airport (`DAD`).
 

@@ -95,7 +95,7 @@ add_action('wp_head', static function (): void {
  */
 add_action('wp_footer', static function (): void {
     ?>
-    <div id="vg-qr-modal" class="vg-qr-modal" role="dialog" aria-modal="true" aria-labelledby="vg-qr-modal-title">
+    <div id="vg-qr-modal" class="vg-qr-modal" role="dialog" aria-modal="true" aria-labelledby="vg-qr-modal-title" hidden>
         <div class="vg-qr-backdrop" data-vg-qr-close></div>
         <div class="vg-qr-card">
             <div class="vg-qr-header">
@@ -116,9 +116,11 @@ add_action('wp_footer', static function (): void {
     <script>
     (function () {
         'use strict';
+        var prevQrFocus = null;
         window.vgOpenQrModal = function (url, title) {
             var modal = document.getElementById('vg-qr-modal');
             if (!modal) return;
+            prevQrFocus = document.activeElement;
             var titleEl = document.getElementById('vg-qr-modal-title');
             if (titleEl && title) {
                 titleEl.textContent = title;
@@ -129,6 +131,7 @@ add_action('wp_footer', static function (): void {
                 qrImg.src = 'https://api.qrserver.com/v1/create-qr-code/?size=200x200&margin=8&data=' + encoded;
             }
             modal.setAttribute('data-target-url', url || window.location.href);
+            modal.removeAttribute('hidden');
             modal.style.display = 'flex';
             document.body.style.overflow = 'hidden';
             var closeBtn = modal.querySelector('.vg-qr-close');
@@ -139,7 +142,12 @@ add_action('wp_footer', static function (): void {
             var modal = document.getElementById('vg-qr-modal');
             if (modal) {
                 modal.style.display = 'none';
+                modal.setAttribute('hidden', '');
                 document.body.style.overflow = '';
+            }
+            if (prevQrFocus && typeof prevQrFocus.focus === 'function') {
+                prevQrFocus.focus();
+                prevQrFocus = null;
             }
         }
 
@@ -155,16 +163,36 @@ add_action('wp_footer', static function (): void {
             }
         });
 
+        function fallbackCopyQrLink(text, onDone) {
+            try {
+                var ta = document.createElement('textarea');
+                ta.value = text;
+                ta.setAttribute('readonly', '');
+                ta.style.position = 'fixed';
+                ta.style.opacity = '0';
+                document.body.appendChild(ta);
+                ta.select();
+                document.execCommand('copy');
+                document.body.removeChild(ta);
+                if (onDone) onDone();
+            } catch (err) {}
+        }
+
         var copyBtn = document.getElementById('vg-qr-copy-btn');
         if (copyBtn) {
             copyBtn.addEventListener('click', function () {
                 var modal = document.getElementById('vg-qr-modal');
                 var targetUrl = (modal && modal.getAttribute('data-target-url')) || window.location.href;
+                var showCopied = function () {
+                    copyBtn.textContent = 'Link Copied!';
+                    setTimeout(function () { copyBtn.textContent = 'Copy Link to Clipboard'; }, 2200);
+                };
                 if (navigator.clipboard && navigator.clipboard.writeText) {
-                    navigator.clipboard.writeText(targetUrl).then(function () {
-                        copyBtn.textContent = 'Link Copied!';
-                        setTimeout(function () { copyBtn.textContent = 'Copy Link to Clipboard'; }, 2200);
+                    navigator.clipboard.writeText(targetUrl).then(showCopied).catch(function () {
+                        fallbackCopyQrLink(targetUrl, showCopied);
                     });
+                } else {
+                    fallbackCopyQrLink(targetUrl, showCopied);
                 }
             });
         }

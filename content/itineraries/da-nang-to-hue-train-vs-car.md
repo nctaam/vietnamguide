@@ -45,7 +45,7 @@ DA NANG <-> HUE CORRIDOR: THREE ELEVATION PROFILES (100 KM)
 
 | Evaluation Metric | Heritage Tourist Train (`HD1/HD2/HD3/HD4`) | Standard Reunification Express (`SE` Series) | Private Sightseeing Car (Over Hai Van Pass) | VIP Limousine Van (Through Hai Van Tunnel) |
 | :--- | :--- | :--- | :--- | :--- |
-| **One-Way Tariff (2026)** | **`150,000–180,000 VND`** (official DSVN) / `250k` agency | **`110,000–160,000 VND`** (Soft Seat / Sleeper) | **`1,250,000–1,600,000 VND`** per 4/7-seat car | **`180,000–250,000 VND`** per passenger seat |
+| **One-Way Tariff (2026)** | **`180,000–231,000 VND`** (official DSVN) / `250k` agency | **`110,000–160,000 VND`** (Soft Seat / Sleeper) | **`1,250,000–1,600,000 VND`** per 4/7-seat car | **`180,000–250,000 VND`** per passenger seat |
 | **Total Journey Time** | `3 hrs 00 mins` – `3 hrs 15 mins` | `2 hrs 30 mins` – `2 hrs 50 mins` | `3.5 to 5.0 hours` (with 3–4 scenic stops) | `1 hr 45 mins` – `2 hrs 00 mins` (direct) |
 | **Pickup & Drop-off** | Station-to-Station (`Da Nang` <-> `Hue`) | Station-to-Station (`Da Nang` <-> `Hue`) | **Door-to-Door** (Hoi An / Da Nang hotel to Hue hotel) | Hotel or Central Office pickup & drop-off |
 | **Hai Van Summit (`496m`)** | **No** (passes `300m` lower through 6 rail tunnels) | **No** (passes through lower cliffside rail tunnels) | **Yes** (`30-minute` stop at 1826 Hai Van Quan Gate) | **No** (drives through the `6.28 km` road tunnel) |
@@ -66,7 +66,7 @@ Launched by Vietnam Railways (`Đường Sắt Việt Nam`) specifically for sig
 * **Southbound (`Hue -> Da Nang`)**:
   * **Train `HD1`**: Departs Hue at **`07:45`**, stops at Lang Co Station (`09:10–09:20`), and arrives at Da Nang Station at **`10:35`** (`2 hours 50 minutes`).
   * **Train `HD3`**: Departs Hue at **`14:25`**, stops at Lang Co Station (`16:00–16:10`), and arrives at Da Nang Station at **`17:40`** (`3 hours 15 minutes`).
-* **Official Ticket Pricing**: **`150,000 to 180,000 VND`** (`~$6.00–$7.20 USD`) one-way when booked directly via `dsvn.vn`, `vetau.com.vn`, or at the station ticket counter. Online reseller platforms (`12Go`, `Baolau`, Klook) charge `220,000–320,000 VND` including booking fees.
+* **Official Ticket Pricing**: **`180,000 to 231,000 VND`** (`~$7.10–$9.10 USD`) one-way when booked directly via `dsvn.vn`, `vetau.com.vn`, or at the station ticket counter. Online reseller platforms (`12Go`, `Baolau`, Klook) charge `250,000–320,000 VND` including booking fees.
 
 ### What Happens Onboard the Heritage Train?
 Unlike long-distance `SE` overnight trains that arrive tired after a 16-hour run from Ho Chi Minh City or Hanoi, the `HD` trainset consists of 5 refurbished air-conditioned soft-seat carriages (`64 seats` per coach) flanking a central **Community Cultural Carriage (`Toa Cộng Đồng`)**:
@@ -107,7 +107,7 @@ Ever since the `6.28-kilometer` **Hai Van Road Tunnel** opened inside the mounta
 
 1. **Moving With Suitcases (One-Way Hotel Switch)**: If you are checking out of Hoi An or Da Nang with full luggage to check into a hotel in Hue (especially as a couple, family, or group of 3–4), **book a private 7-seat sightseeing car over Hai Van Pass (`1,400,000–1,850,000 VND`)**. Your bags stay locked in the trunk while you walk Marble Mountains, Hai Van Quan, and Lap An Lagoon.
 2. **The Ultimate Day-Trip Hybrid (Train One-Way + Car Return)**: If you are visiting Hue on a day trip from Da Nang (or vice versa) without heavy luggage, combine both perspectives:
-   * **07:50–11:05**: Ride the **`HD2` Heritage Train** from Da Nang to Hue (`180,000 VND`, right-side window seat) to experience the low cliffside rail tunnels and live *Ca Huế* music.
+   * **07:50–11:05**: Ride the **`HD2` Heritage Train** from Da Nang to Hue (`180,000–231,000 VND`, right-side window seat) to experience the low cliffside rail tunnels and live *Ca Huế* music.
    * **11:15–15:30**: Explore the **Hue Imperial Citadel (`200,000 VND`)** and **Khai Dinh Tomb (`150,000 VND`)**.
    * **15:30–19:00**: Hire a one-way private car (`1,250,000 VND`) back to Da Nang stopping at **Lap An Lagoon** for sunset and crossing the **496m Hai Van Pass Summit**.
 3. **Check the Cloud Ceiling Before Paying for the Pass**: During the central Vietnam rainy season (**mid-October through December**), low monsoon clouds frequently blanket the `496m` summit of Hai Van Pass in dense white fog while the lower `100m` coastal railway remains clear. If the mountain top is socked in with rain, take the **train** (which stays below the cloud deck along the surf line) or instruct your car driver to use the **`6.28 km` Hai Van Tunnel**.

@@ -308,7 +308,7 @@ function vg_render_cost_calculator_html(): string
                                     <tr>
                                         <th scope="row"><?php esc_html_e('Phong Nha-Ke Bang', 'vietnamguide-premium'); ?></th>
                                         <td><?php esc_html_e('Phong Nha Cave / Paradise Cave / Dark Cave Zipline', 'vietnamguide-premium'); ?></td>
-                                        <td>150,000 / 250,000 / 450,000 VND</td>
+                                        <td>150,000 / 270,000 / 450,000 VND</td>
                                         <td><?php esc_html_e('Phong Nha requires 700,000 VND dragon boat charter along Son River (shared up to 12 passengers)', 'vietnamguide-premium'); ?></td>
                                     </tr>
                                     <tr>
@@ -563,7 +563,7 @@ function vg_render_cost_calculator_html(): string
             };
         }
 
-        function updateUI() {
+        function updateUI(isInitial) {
             var calc = calculate();
             var cur = state.currency;
             var root = document.getElementById('vg-cost-calculator');
@@ -624,7 +624,7 @@ function vg_render_cost_calculator_html(): string
             if (barTours) barTours.style.width = calc.pctTours + '%';
 
             var ariaStatus = document.getElementById('vg-calc-aria-status');
-            if (ariaStatus) {
+            if (ariaStatus && !isInitial) {
                 ariaStatus.textContent = 'Estimated Vietnam trip cost: ' + formatCurrency(calc.totalUSD, cur) + ' for ' + state.party + ' people across ' + state.days + ' days.';
             }
 
@@ -697,10 +697,12 @@ function vg_render_cost_calculator_html(): string
                 }
             }
 
-            // Save state to safe storage and sync URL params
+            // Save state to safe storage and sync URL params on user interaction
             setSafeStorage('vg_user_duration', state.days);
             setSafeStorage('vg_user_currency', state.currency);
-            syncUrlParams({ days: state.days, currency: state.currency, tier: state.style, party: state.party, flights: state.flights, route: state.route || '' });
+            if (!isInitial) {
+                syncUrlParams({ days: state.days, currency: state.currency, tier: state.style, party: state.party, flights: state.flights, route: state.route || '' });
+            }
 
             // Update WhatsApp and Telegram share links dynamically
             var shareUrl = window.location.href;
@@ -712,7 +714,7 @@ function vg_render_cost_calculator_html(): string
             if (tgBtn) tgBtn.href = 'https://t.me/share/url?url=' + encodeURIComponent(shareUrl) + '&text=' + encodeURIComponent(shareMsg);
 
             // Telemetry dispatch
-            if (typeof window.vgTrack === 'function') {
+            if (!isInitial && typeof window.vgTrack === 'function') {
                 window.vgTrack('vg_calc_budget', {
                     days: state.days,
                     style: state.style,
@@ -796,7 +798,7 @@ function vg_render_cost_calculator_html(): string
 
                 var qParty = parseInt(urlParams.get('party'), 10);
                 if (!isNaN(qParty)) {
-                    state.party = Math.min(6, Math.max(1, qParty));
+                    state.party = Math.min(4, Math.max(1, qParty));
                 }
 
                 var qFlights = parseInt(urlParams.get('flights'), 10);
@@ -1206,10 +1208,17 @@ function vg_render_cost_calculator_html(): string
                     });
 
                     updateUI();
+                    try {
+                        var url = new URL(window.location.href);
+                        ['days', 'currency', 'tier', 'style', 'party', 'flights', 'route'].forEach(function (param) {
+                            url.searchParams.delete(param);
+                        });
+                        window.history.replaceState({}, '', url.pathname + (url.search ? url.search : '') + url.hash);
+                    } catch (e) {}
                 });
             }
 
-            updateUI();
+            updateUI(true);
         }
 
         if (document.readyState === 'loading') {
@@ -1247,9 +1256,11 @@ function vg_render_route_budget_widget(array $args = []): string
     $uid = 'vg-rb-' . $widget_count . '-' . substr(md5(uniqid('', true)), 0, 6);
 
     $route = isset($args['route']) ? sanitize_key($args['route']) : 'ha-giang';
-    if (! in_array($route, ['ha-giang', 'da-nang-hoi-an', 'hanoi-ninh-binh-halong'], true)) {
+    if (! in_array($route, ['ha-giang', 'da-nang-hoi-an', 'hanoi-ninh-binh-halong', 'classic-10d'], true)) {
         $route = 'ha-giang';
     }
+    $customDays  = isset($args['days']) ? max(0, (int) $args['days']) : 0;
+    $initialTier = isset($args['tier']) ? sanitize_key($args['tier']) : '';
 
     $configs = [
         'ha-giang' => [
@@ -1263,18 +1274,19 @@ function vg_render_route_budget_widget(array $args = []): string
                     'label'      => __('Self-Drive Motorbike', 'vietnamguide-premium'),
                     'tag'        => __('Budget Option', 'vietnamguide-premium'),
                     'total_usd'  => 130,
+                    'total_vnd'  => 3315000,
                     'stay_usd'   => 36,
                     'food_usd'   => 38,
                     'trans_usd'  => 40,
                     'act_usd'    => 16,
                     'calc_tier'  => 'backpacker',
                     'items'      => [
-                        ['name' => __('Round-trip VIP Cabin Bus (Hanoi - Ha Giang)', 'vietnamguide-premium'), 'usd' => 28],
-                        ['name' => __('Semi-Automatic Motorbike Rental (4 days)', 'vietnamguide-premium'), 'usd' => 32],
-                        ['name' => __('Petrol for 380km Mountain Passes', 'vietnamguide-premium'), 'usd' => 14],
-                        ['name' => __('Authentic Homestays (Du Gia, Dong Van, Meo Vac - 3N)', 'vietnamguide-premium'), 'usd' => 36],
-                        ['name' => __('Family Dinners & Local Market Eats', 'vietnamguide-premium'), 'usd' => 38],
-                        ['name' => __('Dong Van Karst Plateau Permit & Nho Que Boat', 'vietnamguide-premium'), 'usd' => 16],
+                        ['name' => __('Round-trip VIP Cabin Bus (Hanoi - Ha Giang)', 'vietnamguide-premium'), 'usd' => 16, 'vnd' => 408000],
+                        ['name' => __('Semi-Automatic Motorbike Rental (4 days)', 'vietnamguide-premium'), 'usd' => 16, 'vnd' => 408000],
+                        ['name' => __('Petrol for 380km Mountain Passes', 'vietnamguide-premium'), 'usd' => 8, 'vnd' => 204000],
+                        ['name' => __('Authentic Homestays (Du Gia, Dong Van, Meo Vac - 3N)', 'vietnamguide-premium'), 'usd' => 36, 'vnd' => 918000],
+                        ['name' => __('Family Dinners & Local Market Eats', 'vietnamguide-premium'), 'usd' => 38, 'vnd' => 969000],
+                        ['name' => __('Dong Van Karst Plateau Permit & Nho Que Boat', 'vietnamguide-premium'), 'usd' => 16, 'vnd' => 408000],
                     ],
                 ],
                 'mode_b' => [
@@ -1282,17 +1294,18 @@ function vg_render_route_budget_widget(array $args = []): string
                     'label'      => __('Easy Rider (Local Driver-Guide)', 'vietnamguide-premium'),
                     'tag'        => __('Recommended for Safety', 'vietnamguide-premium'),
                     'total_usd'  => 240,
+                    'total_vnd'  => 6120000,
                     'stay_usd'   => 45,
                     'food_usd'   => 45,
                     'trans_usd'  => 132,
                     'act_usd'    => 18,
                     'calc_tier'  => 'midrange',
                     'items'      => [
-                        ['name' => __('Round-trip VIP Cabin Bus (Hanoi - Ha Giang)', 'vietnamguide-premium'), 'usd' => 28],
-                        ['name' => __('Licensed Easy Rider Driver-Guide + Fuel & Helmet', 'vietnamguide-premium'), 'usd' => 132],
-                        ['name' => __('Private Room Homestay Upgrades (3 nights)', 'vietnamguide-premium'), 'usd' => 45],
-                        ['name' => __('All Communal Family Dinners & Breakfasts', 'vietnamguide-premium'), 'usd' => 45],
-                        ['name' => __('Border Permit, Tu San Boat & Viewpoint Passes', 'vietnamguide-premium'), 'usd' => 18],
+                        ['name' => __('Round-trip VIP Cabin Bus (Hanoi - Ha Giang)', 'vietnamguide-premium'), 'usd' => 28, 'vnd' => 714000],
+                        ['name' => __('Licensed Easy Rider Driver-Guide + Fuel & Helmet', 'vietnamguide-premium'), 'usd' => 104, 'vnd' => 2652000],
+                        ['name' => __('Private Room Homestay Upgrades (3 nights)', 'vietnamguide-premium'), 'usd' => 45, 'vnd' => 1147500],
+                        ['name' => __('All Communal Family Dinners & Breakfasts', 'vietnamguide-premium'), 'usd' => 45, 'vnd' => 1147500],
+                        ['name' => __('Border Permit, Tu San Boat & Viewpoint Passes', 'vietnamguide-premium'), 'usd' => 18, 'vnd' => 459000],
                     ],
                 ],
             ],
@@ -1308,18 +1321,19 @@ function vg_render_route_budget_widget(array $args = []): string
                     'label'      => __('Backpacker / Hostels', 'vietnamguide-premium'),
                     'tag'        => __('Budget Solo', 'vietnamguide-premium'),
                     'total_usd'  => 175,
+                    'total_vnd'  => 4462500,
                     'stay_usd'   => 48,
                     'food_usd'   => 50,
                     'trans_usd'  => 45,
                     'act_usd'    => 32,
                     'calc_tier'  => 'backpacker',
                     'items'      => [
-                        ['name' => __('DAD Airport Bus & GrabBike Rides', 'vietnamguide-premium'), 'usd' => 18],
-                        ['name' => __('Shared Shuttle to Hoi An Ancient Town', 'vietnamguide-premium'), 'usd' => 8],
-                        ['name' => __('Social Hostel Dorms / Homestays (4 nights)', 'vietnamguide-premium'), 'usd' => 48],
-                        ['name' => __('Street Food (Mi Quang, Cao Lau, Banh Mi Phuong)', 'vietnamguide-premium'), 'usd' => 50],
-                        ['name' => __('Hoi An Ancient Town 5-Attraction Pass', 'vietnamguide-premium'), 'usd' => 5],
-                        ['name' => __('Marble Mountains & An Bang Beach Bicycle', 'vietnamguide-premium'), 'usd' => 8],
+                        ['name' => __('DAD Airport Bus & GrabBike Rides', 'vietnamguide-premium'), 'usd' => 27, 'vnd' => 688500],
+                        ['name' => __('Shared Shuttle to Hoi An Ancient Town', 'vietnamguide-premium'), 'usd' => 18, 'vnd' => 459000],
+                        ['name' => __('Social Hostel Dorms / Homestays (4 nights)', 'vietnamguide-premium'), 'usd' => 48, 'vnd' => 1224000],
+                        ['name' => __('Street Food (Mi Quang, Cao Lau, Banh Mi Phuong)', 'vietnamguide-premium'), 'usd' => 50, 'vnd' => 1275000],
+                        ['name' => __('Hoi An Ancient Town 5-Attraction Pass', 'vietnamguide-premium'), 'usd' => 14, 'vnd' => 357000],
+                        ['name' => __('Marble Mountains & An Bang Beach Bicycle', 'vietnamguide-premium'), 'usd' => 18, 'vnd' => 459000],
                     ],
                 ],
                 'mode_b' => [
@@ -1327,17 +1341,18 @@ function vg_render_route_budget_widget(array $args = []): string
                     'label'      => __('Flashpacker / Mid-Range Comfort', 'vietnamguide-premium'),
                     'tag'        => __('Most Popular', 'vietnamguide-premium'),
                     'total_usd'  => 410,
+                    'total_vnd'  => 10455000,
                     'stay_usd'   => 160,
                     'food_usd'   => 115,
                     'trans_usd'  => 70,
                     'act_usd'    => 65,
                     'calc_tier'  => 'midrange',
                     'items'      => [
-                        ['name' => __('Private Car Transfers (DAD Airport & Hai Van Pass)', 'vietnamguide-premium'), 'usd' => 55],
-                        ['name' => __('Boutique Riverside & Beach Hotels with Pool (4N)', 'vietnamguide-premium'), 'usd' => 160],
-                        ['name' => __('Mix of Local Cafes, Bistros & Seafood Dinners', 'vietnamguide-premium'), 'usd' => 115],
-                        ['name' => __('Hoi An Ticket + Ba Na Hills / Golden Bridge', 'vietnamguide-premium'), 'usd' => 45],
-                        ['name' => __('Cocktails & An Bang Beach Loungers', 'vietnamguide-premium'), 'usd' => 20],
+                        ['name' => __('Private Car Transfers (DAD Airport & Hai Van Pass)', 'vietnamguide-premium'), 'usd' => 70, 'vnd' => 1785000],
+                        ['name' => __('Boutique Riverside & Beach Hotels with Pool (4N)', 'vietnamguide-premium'), 'usd' => 160, 'vnd' => 4080000],
+                        ['name' => __('Mix of Local Cafes, Bistros & Seafood Dinners', 'vietnamguide-premium'), 'usd' => 115, 'vnd' => 2932500],
+                        ['name' => __('Hoi An Ticket + Ba Na Hills / Golden Bridge', 'vietnamguide-premium'), 'usd' => 45, 'vnd' => 1147500],
+                        ['name' => __('Cocktails & An Bang Beach Loungers', 'vietnamguide-premium'), 'usd' => 20, 'vnd' => 510000],
                     ],
                 ],
             ],
@@ -1353,17 +1368,18 @@ function vg_render_route_budget_widget(array $args = []): string
                     'label'      => __('Day Cruise + Countryside', 'vietnamguide-premium'),
                     'tag'        => __('Active Value', 'vietnamguide-premium'),
                     'total_usd'  => 210,
+                    'total_vnd'  => 5355000,
                     'stay_usd'   => 68,
                     'food_usd'   => 58,
                     'trans_usd'  => 46,
                     'act_usd'    => 38,
                     'calc_tier'  => 'backpacker',
                     'items'      => [
-                        ['name' => __('Luxury Limousine Vans (Hanoi - Ninh Binh - Bay)', 'vietnamguide-premium'), 'usd' => 38],
-                        ['name' => __('Trang An Eco Boat Tour & Hang Mua Peak', 'vietnamguide-premium'), 'usd' => 14],
-                        ['name' => __('Ninh Binh Karst Bungalow (1 night)', 'vietnamguide-premium'), 'usd' => 30],
-                        ['name' => __('Full-Day Ha Long Bay Cruise (6 hours with lunch)', 'vietnamguide-premium'), 'usd' => 48],
-                        ['name' => __('Hanoi Old Quarter Boutique Hotel (2 nights)', 'vietnamguide-premium'), 'usd' => 60],
+                        ['name' => __('Luxury Limousine Vans (Hanoi - Ninh Binh - Bay)', 'vietnamguide-premium'), 'usd' => 46, 'vnd' => 1173000],
+                        ['name' => __('Trang An Eco Boat Tour & Hang Mua Peak', 'vietnamguide-premium'), 'usd' => 26, 'vnd' => 663000],
+                        ['name' => __('Ninh Binh Karst Bungalow (1 night)', 'vietnamguide-premium'), 'usd' => 30, 'vnd' => 765000],
+                        ['name' => __('Full-Day Ha Long Bay Cruise (6 hours with lunch)', 'vietnamguide-premium'), 'usd' => 48, 'vnd' => 1224000],
+                        ['name' => __('Hanoi Old Quarter Boutique Hotel (2 nights)', 'vietnamguide-premium'), 'usd' => 60, 'vnd' => 1530000],
                     ],
                 ],
                 'mode_b' => [
@@ -1371,17 +1387,64 @@ function vg_render_route_budget_widget(array $args = []): string
                     'label'      => __('2D1N Boutique Overnight Cruise', 'vietnamguide-premium'),
                     'tag'        => __('Signature Experience', 'vietnamguide-premium'),
                     'total_usd'  => 395,
+                    'total_vnd'  => 10072500,
                     'stay_usd'   => 195,
                     'food_usd'   => 75,
                     'trans_usd'  => 55,
                     'act_usd'    => 70,
                     'calc_tier'  => 'midrange',
                     'items'      => [
-                        ['name' => __('Door-to-Door Limousine Transfers', 'vietnamguide-premium'), 'usd' => 45],
-                        ['name' => __('Trang An Boat Pass & Local Guide in Ninh Binh', 'vietnamguide-premium'), 'usd' => 18],
-                        ['name' => __('Ninh Binh Riverside Eco-Resort (1 night)', 'vietnamguide-premium'), 'usd' => 45],
-                        ['name' => __('4-Star Boutique Cruise Cabin (All meals, kayaking, cave)', 'vietnamguide-premium'), 'usd' => 175],
-                        ['name' => __('Hanoi French Quarter / Old Quarter Stay (1 night)', 'vietnamguide-premium'), 'usd' => 55],
+                        ['name' => __('Door-to-Door Limousine Transfers', 'vietnamguide-premium'), 'usd' => 55, 'vnd' => 1402500],
+                        ['name' => __('Trang An Boat Pass & Local Guide in Ninh Binh', 'vietnamguide-premium'), 'usd' => 40, 'vnd' => 1020000],
+                        ['name' => __('Ninh Binh Riverside Eco-Resort (1 night)', 'vietnamguide-premium'), 'usd' => 55, 'vnd' => 1402500],
+                        ['name' => __('4-Star Boutique Cruise Cabin (All meals, kayaking, cave)', 'vietnamguide-premium'), 'usd' => 180, 'vnd' => 4590000],
+                        ['name' => __('Hanoi French Quarter / Old Quarter Stay (1 night)', 'vietnamguide-premium'), 'usd' => 65, 'vnd' => 1657500],
+                    ],
+                ],
+            ],
+        ],
+        'classic-10d' => [
+            'name'       => __('Classic 10-Day North-to-South Budget', 'vietnamguide-premium'),
+            'badge'      => __('Hanoi, Ha Long, Hoi An & HCMC', 'vietnamguide-premium'),
+            'days'       => 10,
+            'guide_url'  => home_url('/costs/10-day-vietnam-trip-cost/'),
+            'modes'      => [
+                'mode_a' => [
+                    'key'        => 'backpacker',
+                    'label'      => __('Backpacker / Sleeper Train & Hostels', 'vietnamguide-premium'),
+                    'tag'        => __('Smart Value', 'vietnamguide-premium'),
+                    'total_usd'  => 420,
+                    'total_vnd'  => 10710000,
+                    'stay_usd'   => 125,
+                    'food_usd'   => 110,
+                    'trans_usd'  => 105,
+                    'act_usd'    => 80,
+                    'calc_tier'  => 'backpacker',
+                    'items'      => [
+                        ['name' => __('Domestic Flight (DAD to SGN) + Sleeper Train (HAN to DAD)', 'vietnamguide-premium'), 'usd' => 85, 'vnd' => 2167500],
+                        ['name' => __('Social Hostels & Homestays (9 nights)', 'vietnamguide-premium'), 'usd' => 125, 'vnd' => 3187500],
+                        ['name' => __('Daily Street Food, Egg Coffee & Market Meals', 'vietnamguide-premium'), 'usd' => 110, 'vnd' => 2805000],
+                        ['name' => __('Ha Long Day Cruise, Hoi An Pass & Cu Chi Tunnels', 'vietnamguide-premium'), 'usd' => 80, 'vnd' => 2040000],
+                        ['name' => __('Airport Buses (86/109) & GrabBike Rides', 'vietnamguide-premium'), 'usd' => 20, 'vnd' => 510000],
+                    ],
+                ],
+                'mode_b' => [
+                    'key'        => 'midrange',
+                    'label'      => __('Mid-Range Comfort / Boutique & 2 Flights', 'vietnamguide-premium'),
+                    'tag'        => __('Most Popular 10D Pace', 'vietnamguide-premium'),
+                    'total_usd'  => 940,
+                    'total_vnd'  => 23970000,
+                    'stay_usd'   => 380,
+                    'food_usd'   => 210,
+                    'trans_usd'  => 175,
+                    'act_usd'    => 175,
+                    'calc_tier'  => 'midrange',
+                    'items'      => [
+                        ['name' => __('2 Domestic Flights (HAN to DAD & DAD to SGN with 20kg bag)', 'vietnamguide-premium'), 'usd' => 135, 'vnd' => 3442500],
+                        ['name' => __('Boutique Hotels in Hanoi, Hoi An & District 1 (8 nights)', 'vietnamguide-premium'), 'usd' => 380, 'vnd' => 9690000],
+                        ['name' => __('2D1N Ha Long / Lan Ha Bay Boutique Overnight Cruise', 'vietnamguide-premium'), 'usd' => 145, 'vnd' => 3697500],
+                        ['name' => __('Bistros, Specialty Cafes & Guided Street Food Walks', 'vietnamguide-premium'), 'usd' => 210, 'vnd' => 5355000],
+                        ['name' => __('Private Airport Transfers & Heritage Passes', 'vietnamguide-premium'), 'usd' => 70, 'vnd' => 1785000],
                     ],
                 ],
             ],
@@ -1389,6 +1452,15 @@ function vg_render_route_budget_widget(array $args = []): string
     ];
 
     $cfg = $configs[$route];
+    if ($customDays > 0) {
+        $cfg['days'] = $customDays;
+    }
+    $initialMode = 'mode_a';
+    if ($initialTier !== '') {
+        if ($initialTier === ($cfg['modes']['mode_b']['key'] ?? '') || $initialTier === ($cfg['modes']['mode_b']['calc_tier'] ?? '') || $initialTier === 'mode_b') {
+            $initialMode = 'mode_b';
+        }
+    }
     ob_start();
     ?>
     <section class="vg-route-budget-widget" id="<?php echo esc_attr($uid); ?>" aria-label="<?php echo esc_attr($cfg['name']); ?>">
@@ -1407,11 +1479,11 @@ function vg_render_route_budget_widget(array $args = []): string
         </div>
 
         <div class="vg-rb-mode-toggle" role="group" aria-label="<?php echo esc_attr__('Route budget style', 'vietnamguide-premium'); ?>">
-            <button type="button" class="vg-rb-mode-btn is-active" data-mode="mode_a" aria-pressed="true">
+            <button type="button" class="vg-rb-mode-btn<?php echo $initialMode === 'mode_a' ? ' is-active' : ''; ?>" data-mode="mode_a" aria-pressed="<?php echo $initialMode === 'mode_a' ? 'true' : 'false'; ?>">
                 <span class="vg-rb-mode-name"><?php echo esc_html($cfg['modes']['mode_a']['label']); ?></span>
                 <span class="vg-rb-mode-tag"><?php echo esc_html($cfg['modes']['mode_a']['tag']); ?></span>
             </button>
-            <button type="button" class="vg-rb-mode-btn" data-mode="mode_b" aria-pressed="false">
+            <button type="button" class="vg-rb-mode-btn<?php echo $initialMode === 'mode_b' ? ' is-active' : ''; ?>" data-mode="mode_b" aria-pressed="<?php echo $initialMode === 'mode_b' ? 'true' : 'false'; ?>">
                 <span class="vg-rb-mode-name"><?php echo esc_html($cfg['modes']['mode_b']['label']); ?></span>
                 <span class="vg-rb-mode-tag"><?php echo esc_html($cfg['modes']['mode_b']['tag']); ?></span>
             </button>
@@ -1436,7 +1508,7 @@ function vg_render_route_budget_widget(array $args = []): string
                         <span class="vg-bar-label-item"><span class="vg-bar-dot vg-dot-transit"></span> <?php esc_html_e('Transit', 'vietnamguide-premium'); ?></span>
                         <span class="vg-bar-label-item"><span class="vg-bar-dot vg-dot-tours"></span> <?php esc_html_e('Passes', 'vietnamguide-premium'); ?></span>
                     </div>
-                    <div class="vg-rb-bar" role="progressbar" aria-label="<?php echo esc_attr__('Route cost distribution', 'vietnamguide-premium'); ?>">
+                    <div class="vg-rb-bar" role="progressbar" aria-label="<?php echo esc_attr__('Route cost distribution', 'vietnamguide-premium'); ?>" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">
                         <div class="vg-bar-segment vg-seg-stay" id="<?php echo esc_attr($uid); ?>-bar-stay" style="width: 28%;"></div>
                         <div class="vg-bar-segment vg-seg-food" id="<?php echo esc_attr($uid); ?>-bar-food" style="width: 29%;"></div>
                         <div class="vg-bar-segment vg-seg-transit" id="<?php echo esc_attr($uid); ?>-bar-transit" style="width: 31%;"></div>
@@ -1471,9 +1543,9 @@ function vg_render_route_budget_widget(array $args = []): string
         var USD_TO_GBP = 0.78;
         var USD_TO_AUD = 1.52;
 
-        var routeData = <?php echo wp_json_encode($cfg); ?>;
+        var routeData = <?php echo wp_json_encode($cfg, JSON_HEX_TAG | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES); ?>;
         var currentCurrency = 'USD';
-        var currentMode = 'mode_a';
+        var currentMode = '<?php echo esc_js($initialMode); ?>';
 
         function formatVal(usd) {
             if (currentCurrency === 'VND') return Math.round(usd * USD_TO_VND).toLocaleString('vi-VN') + ' ₫';

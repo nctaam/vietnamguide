@@ -110,6 +110,7 @@ class RouteContractTests(unittest.TestCase):
         self.assertEqual(classify_path('itineraries/10-days-in-vietnam'), 'itinerary')
         self.assertEqual(classify_path('compare/hanoi-vs-ho-chi-minh-city'), 'comparison')
         self.assertEqual(classify_path('plan/vietnam-evisa'), 'practical')
+        self.assertEqual(classify_path('costs/vietnam-travel-cost-guide'), 'practical')
         self.assertIsNone(classify_path('privacy-policy'))
         self.assertIsNone(classify_path('destinations'))
 
