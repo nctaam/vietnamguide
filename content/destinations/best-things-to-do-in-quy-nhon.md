@@ -6,8 +6,8 @@ description: "The best things to do in Quy Nhon: Ky Co beach, Eo Gio cliff trail
 travel_cluster: "coastal_islands"
 last_verified: "2026-10-22"
 author: "VietnamGuide Editorial Team"
-reading_time_minutes: 10
-word_count: 1240
+reading_time_minutes: 7
+word_count: 1490
 ---
 
 # Best Things to Do in Quy Nhon (2026): Ky Co Beach, Eo Gio Cliffs, Cham Towers & Bai Xep Cove
@@ -75,7 +75,26 @@ Fly into **Phu Cat Airport (`UIH`, `30 km` north — take the `50,000 VND` airpo
 Cross **Thi Nai Bridge** at `07:45 AM` to **Nhon Ly Fishing Village**: board a morning speedboat (`650k–850k VND` all-inclusive) to swim in the turquoise cove of **Ky Co Beach**, snorkel coral gardens at **Hon Seo** (or **Hon Kho Island**), eat a fresh seafood lunch in the fishing village, and walk the cliffside trail of **Eo Gio (`25,000 VND`)** and **Ngoc Hoa Twin Buddha** in golden `16:00 PM` light.
 
 ### 3. Final Step — Day 3: Morning `Tháp Bánh Ít` (Silver Cham Towers) & `Chùa Thiên Hưng` + Afternoon in `Bãi Xép` Cove
-Start your third morning with a bowl of **`Bún Cá Ngọc Liên` (`379 Nguyễn Huệ`)**, then ride `25 minutes` north to photograph the 11th-century hilltop **Banh It Cham Towers (`20,000 VND`)** and **Thien Hung Zen Monastery (`0 VND`)** before spending a lazy final afternoon swimming and eating grilled squid on the sand at **Bai Xep Fishing Village (`12 km` south)**.
+Start your third morning with a bowl of **`Bún Cá Ngọc Liên` (`379 Nguyễn Huệ`)**, then ride `25 minutes` north to photograph the 11th-century hilltop **Banh It Cham Towers (`20,000 VND`)** and **Thien Hung Zen Monastery (`0 VND`)** before spending a lazy final afternoon swimming and eating grilled squid on the sand at **Bai Xep Fishing Village (`12 km` south)** or continuing down the coast toward [Phu Yen](/destinations/phu-yen-travel-guide) and [Nha Trang](/destinations/nha-trang-travel-guide).
+
+---
+
+## 2026 Quy Nhon Peninsula, Nhon Ly (Ky Co – Eo Gio) & Cham Towers Transport & Ticket Matrix
+
+For independent travelers budgeting daily rides across the Thi Nai Lagoon bridge, coastal speedboats, and Champa archaeological sites, this verified 2026 operational matrix breaks down exact door-to-door distances, drive durations, and segmented ticket structures:
+
+| Destination / Transit Corridor | Distance from Center | Drive / Transit Time | 2026 Ticket & Shuttle Breakdown (`VND` / `USD`) | Taxi / Canoe / Bus Options & Field Notes |
+| :--- | :--- | :--- | :--- | :--- |
+| **Eo Gio Cliffs & Ngoc Hoa Twin Buddha** (`Eo Gió`, Nhon Ly) | `22 km` across Thi Nai Bridge (`Cầu Thị Nại`) | `30 mins` by scooter or car | **Eo Gio Gate**: `25,000 VND` (`$1.00 USD`); **Ngoc Hoa Sanctuary**: `0 VND` (`free`); scooter parking `5,000–10,000 VND` | GrabCar / Sun Taxi one-way: `260,000–320,000 VND` (`$10.40–$12.80 USD`); half-day 4-seat car charter (`5 hours`) `650,000 VND` |
+| **Ky Co Beach Cove** (`Bãi Biển Kỳ Co`, Nhon Ly Peninsula) | `25 km` by road (`or 4.5 km` by sea from Nhon Ly pier) | `35 mins` road (`or 12–15 mins` speedboat) | **Road Entry**: `100,000 VND` (`$4.00 USD`) base ticket + `60,000 VND` (`$2.40 USD`) mountain shuttle buggy (`or 170,000 VND` full peak-season pass) | **Canoe + Snorkeling Package**: `350,000–450,000 VND` (`$14.00–$18.00 USD`) boat + reef gear (`or 650,000–850,000 VND` with 7-dish seafood lunch) |
+| **Thap Doi Twin Cham Towers** (`Tháp Đôi`, Tran Hung Dao Street) | `3 km` northwest of Xuan Dieu Beach | `8 mins` by taxi or bicycle | **Admission**: `20,000 VND` (`$0.80 USD`); parking `5,000 VND` (`open 07:00–18:00` daily; `45 mins` visit) | Quick `45,000–65,000 VND` (`$1.80–$2.60 USD`) GrabCar or Xanh SM electric taxi from any downtown beachfront hotel |
+| **Banh It Silver Cham Towers** (`Tháp Bánh Ít`, Tuy Phuoc) | `18 km` north via National Highway `QL1A` | `25 mins` drive | **Admission**: `20,000 VND` (`$0.80 USD`); motorbike parking `5,000 VND` (`open 07:00–18:00`; climb `200 stone steps` to main *Kalan*) | Combine with **Thien Hung Pagoda** (`10 km` east, `15 mins`) on a `4-hour` private car loop (`550,000–650,000 VND` / `$22.00–$26.00 USD`) |
+| **Phu Cat Airport (`UIH`) ↔ Downtown Quy Nhon** | `32 km` northwest via `QL19B` / `QL1A` | `40–45 mins` | **Official Airport Shuttle Bus**: `50,000 VND` (`$2.00 USD`) per passenger (`departs outside arrival hall to 01 Nguyễn Tất Thành`) | **Private Taxi / GrabCar**: `300,000–380,000 VND` (`$12.00–$15.20 USD`) fixed rate to Xuan Dieu Street (`400,000–480,000 VND` to Bai Xep resorts) |
+
+### How to Choose Between the Nhon Ly Speedboat and the Mountain Road at Ky Co
+- **Dry & Calm Sea Window (March to August)**: Boarding a licensed fiberglass canoe at **Nhon Ly Fishing Village** (`350,000–450,000 VND` for boat transfer, life jacket, Ky Co gate entry, and `45 mins` of coral snorkeling at **Bai Dua / Hon Seo**, or `650,000–850,000 VND` with a full seafood meal) is faster (`12 mins` over turquoise water) and lets you view the vertical basalt and granite sea caves from offshore.
+- **Monsoon & Swell Window (September to February)**: When northeast winds raise waves above `1.5 meters`, maritime authorities suspend passenger canoes. During these months, drive up the paved peninsula ridge road to the upper tollgate, pay the **100,000 VND admission + 60,000 VND electric shuttle (`or 170,000 VND` combined ticket)**, and ride the shuttle bus down the steep `2.5 km` switchback road directly to Ky Co beach.
+- **Phu Cat Airport (UIH) & Dieu Tri Railway Station Connections**: Travelers landing at **Phu Cat Airport (`32 km` northwest, `40–45 mins` drive)** can board the orange **Airport Shuttle Bus (`50,000 VND` per person)** parked outside the arrival gate, which drops passengers at the central ticket office on **Nguyen Tat Thanh Street**, or pre-book a private 4-seat sedan for **`300,000–380,000 VND` (`$12.00–$15.20 USD`)** door-to-door to Xuan Dieu Boulevard. For central-coast rail journeys, book daytime Reunification Express trains to **Dieu Tri Station (`12 km` west, `20 mins` by taxi for `150,000–180,000 VND`)** rather than waiting for the infrequent branch-line commuter shuttle into central Quy Nhon Station.
 
 ---
 

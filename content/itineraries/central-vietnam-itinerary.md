@@ -6,8 +6,8 @@ description: "Central Vietnam itinerary for 2026: practical 5 to 7-day route con
 travel_cluster: "central_heritage"
 last_verified: "2026-10-22"
 author: "VietnamGuide Editorial Team"
-reading_time_minutes: 13
-word_count: 1830
+reading_time_minutes: 9
+word_count: 1861
 ---
 
 # Central Vietnam Itinerary (2026): The 5 to 7-Day Heritage Route
@@ -86,7 +86,7 @@ Arrive at Hue’s Phu Bai Airport (HUI) or arrive via morning train. Transfer 25
 
 ### Day 2: Royal Mausoleums and Zen Monasteries
 
-Dedicate your second day to the monumental royal necropolises nestled into pine-covered hills south of Hue:
+Dedicate your second day to the monumental royal necropolises set among pine-covered hills south of [Hue](/destinations/hue-imperial-city-guide):
 
 - **08:30 – Tomb of Emperor Khai Dinh (*Ung Lang*)**: Constructed between 1920 and 1931, this dramatic hillside mausoleum blends French neoclassical architecture with Vietnamese dynastic structure (150,000 VND entrance). Climb the steep stone steps guarded by life-sized stone mandarins and cavalry horses to enter the Thien Dinh Palace, where the walls and ceilings are covered in intricate murals crafted from millions of colorful shards of broken porcelain and glass beer bottles.
 - **11:00 – Tomb of Emperor Tu Duc (*Khiem Lang*)**: Contrast Khai Dinh's theatrical grandeur with the pastoral serenity of Tu Duc's royal parkland (150,000 VND entrance). Built while the emperor was still alive as a personal country retreat, the complex features peaceful pine groves, a crescent-shaped lotus pond, and wooden open-air reading pavilions built on stilts over water.
@@ -97,7 +97,7 @@ Dedicate your second day to the monumental royal necropolises nestled into pine-
 
 Check out of your Hue hotel at 07:15 AM and transfer to Hue Railway Station.
 
-- **07:45 – Board the "Central Heritage Connection" Train (HD1)**: This dedicated tourist train operated by Vietnam Railways snakes along the mountainsides of the **Hai Van Pass** (180,000–231,000 VND). The route offers breathtaking, slow-paced views of Lang Co Bay's turquoise lagoon on one side and vertical jungle cliffs plunging into the sea on the other. The train stops for 10 minutes at Lang Co Station, allowing passengers to step onto the platform and photograph the coastal bay.
+- **07:45 – Board the "Central Heritage Connection" Train (HD1)**: This dedicated tourist train operated by Vietnam Railways snakes along the mountainsides of the **Hai Van Pass** (180,000–231,000 VND). The route offers sweeping, slow-paced views of Lang Co Bay's turquoise lagoon on one side and vertical jungle cliffs plunging into the sea on the other. The train stops for 10 minutes at Lang Co Station, allowing passengers to step onto the platform and photograph the coastal bay.
 - **11:30 – Arrival in Da Nang & Mì Quảng Lunch**: Disembark at Da Nang Station. Take a short 10-minute taxi to Mi Quang Ba Mua on Tran Binh Trong. Dine on authentic *mi Quang* (40,000–50,000 VND): broad rice noodles stained yellow with turmeric, topped with braised pork, shrimp, roasted peanuts, fresh banana blossom shreds, and crispy sesame crackers in a concentrated savory broth.
 - **13:30 – The Marble Mountains (*Ngu Hanh Son*)**: En route to Hoi An, stop at Thuy Son (Water Mountain), the largest of five limestone crags rising above the coastal plain (40,000 VND entrance; elevator 15,000 VND). Explore subterranean caverns like Huyen Khong Cave, where natural skylights in the cavern roof illuminate hidden Buddhist shrines carved into marble stone.
 - **16:00 – Arrival in Hoi An**: Check into a boutique resort along the Thu Bon River or in Cam Chau. Walk through the lantern-lit lanes in the evening, enjoying the car-free pedestrian atmosphere (motorbikes banned between 15:00 and 21:30). Dine on *cao lau* noodles made with well water from ancient Cham springs (40,000–55,000 VND).
@@ -150,6 +150,19 @@ If you have seven full days, extend your stay by adding two nights in Da Nang to
 | **Heritage Passes & Excursions** | 1,800,000 VND ($70) Citadel, My Son, caves | 4,200,000 VND ($165) includes Ba Na Hills |
 | **Total Estimated Expense (VND)** | **~13,300,000 VND** | **~21,900,000 VND** |
 | **Total Estimated Expense (USD)** | **~$520 USD** | **~$860 USD** |
+
+---
+
+## 2026 Central Heritage Corridor Stage-by-Stage Budget, Distance & Transit Ledger
+
+Travelers linking northern cave systems in [Phong Nha](/destinations/phong-nha-travel-guide) with the imperial and coastal hubs of [Hue](/destinations/hue-imperial-city-guide), [Da Nang](/destinations/da-nang-travel-guide), and [Hoi An](/destinations/hoi-an-ancient-town-guide) can benchmark every leg using this verified 2026 operational ledger:
+
+| Corridor Stage & Route Flow | Road / Rail Distance | Transit Duration | 2026 Transport Tariff (`VND` / `USD`) | Key Monument & Excursion Ticket Benchmark |
+| :--- | :--- | :--- | :--- | :--- |
+| **Stage 1: Dong Hoi (`VDH`) → Phong Nha – Ke Bang National Park** | `45 km` northwest via `QL16` & Ho Chi Minh Road | `50 mins` by car or shuttle bus | Private car: `450,000–550,000 VND` (`$18.00–$22.00 USD`); public bus `B4`: `35,000 VND` (`$1.40 USD`, `75 mins`) | **Paradise Cave**: `270,000 VND` (`$10.80 USD`, includes electric buggy); **Phong Nha Cave**: `150,000 VND` (`$6.00 USD`) + `550,000 VND` (`$22.00 USD`) dragon boat (`up to 12 pax`, `3 hours` tour) |
+| **Stage 2: Phong Nha → Imperial Hue** (`via Quang Tri / DMZ Corridor`) | `210 km` south via Highway `QL1A` or Cam Lo Expressway | `3.5–4 hours` nonstop (`or 6.5 hours` with Vinh Moc Tunnels stop) | Sleeper / VIP bus: `180,000–280,000 VND` (`$7.20–$11.20 USD`); Dong Hoi → Hue train: `140,000–240,000 VND` (`3 hours`) | **Hue Imperial Citadel + 2 Royal Tombs Combo Pass**: `420,000 VND` (`$16.80 USD`, valid `48 hours`); **Vinh Moc Tunnels**: `50,000 VND` (`$2.00 USD`) |
+| **Stage 3: Hue → Hai Van Pass → Da Nang** (`Rail HD1–HD4 vs Coastal Road`) | `102 km` by rail (`or 100 km` over `500 m` Hai Van Pass summit road) | `3 hours` on train (`or 2.5–3.5 hours` sightseeing car) | **Central Heritage Train `HD1–HD4`**: `180,000–231,000 VND` (`$7.20–$9.25 USD`); private car over pass: `1,100,000–1,350,000 VND` (`$44.00–$54.00 USD`) | **Hai Van Quan Historic Gate**: Free admission (`0 VND`, `30 mins` stop); **Marble Mountains**: `40,000 VND` (`$1.60 USD`) + `15,000 VND` (`$0.60 USD`) glass elevator |
+| **Stage 4: Da Nang → Hoi An Ancient Town & My Son Sanctuary** | `30 km` south to Hoi An (`+45 km` west to My Son) | `40–45 mins` to Hoi An (`55–60 mins` to My Son) | **Da Nang ↔ Hoi An GrabCar**: `320,000–380,000 VND` (`$12.80–$15.20 USD`) or shared shuttle `150,000 VND` (`$6.00 USD`) | **Hoi An Old Town Ticket**: `120,000 VND` (`$4.80 USD`); **My Son Sanctuary**: `150,000 VND` (`$6.00 USD`, includes electric shuttle across `2 km` valley trail) |
 
 ---
 

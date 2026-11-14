@@ -6,8 +6,8 @@ description: "Highway 27 highland route covering 210 km: shared limousine vans (
 travel_cluster: "central_highlands"
 last_verified: "2026-10-21"
 author: "VietnamGuide Editorial Team"
-reading_time_minutes: 13
-word_count: 1443
+reading_time_minutes: 7
+word_count: 1472
 ---
 
 # Da Lat to Buon Ma Thuot Transport: Bus, Car & Route QL27 (2026)
@@ -137,6 +137,19 @@ Navigating National Highway 27 demands awareness of unique highland road charact
 1. **Mountain Pass Gradients (Phú Sơn Pass):** Located in Dam Rong district roughly 75 to 90 kilometers northwest of Da Lat, this pass features continuous 8% to 10% gradients and blind switchbacks. Pavement quality is generally good, but heavy agricultural trucks carrying coffee and timber travel slowly; exercise extreme patience when overtaking.
 2. **Rainy Season Hazards (May to October):** Afternoon storms cause localized runoff, carrying loose red clay and gravel across road corners. Mud slicks severely reduce tire grip. Monitor weather forecasts for severe tropical depressions, which can trigger localized hillside soil slips along the Dam Rong corridor.
 3. **Livestock & Agricultural Crossings:** Rural stretches between Lien Son and Buon Ma Thuot pass through unfenced farming communes. Free-roaming water buffalo, cows, and stray dogs frequently wander onto the road shoulder. Maintain speeds below 50 km/h in village corridors.
+
+---
+
+## National Highway 27 (QL27) Kilometer-by-Kilometer Waypoint & Tariff Breakdown
+
+To track elevation drops, mountain pass segments, and carrier pricing along the **Da Lat → Lam Ha → Phi Lieng Pass → Lak Lake → Buon Ma Thuot** corridor, consult this kilometer-by-kilometer matrix:
+
+| Highway Segment & Waypoint | Cumulative Distance | Cumulative Driving Duration | Elevation & Road Gradient | Transport Cost / Stopover Benchmark (`VND` / `USD`) |
+| :--- | :--- | :--- | :--- | :--- |
+| **Da Lat (`Bến Xe Liên Tỉnh`) → Ta Nung (`DT725`) → Lam Ha (`QL27`)** | `35 km` (`35,000 m`) | `55–65 mins` (`1 hour`) | Drops from `1,500 m` to `1,050 m` | Weasel coffee farm & silk mill stop (`30 mins`, `45,000–60,000 VND` / `$1.80–$2.40 USD` espresso). |
+| **Lam Ha → Phi Lieng Pass (`Đèo Phi Liêng`) → Dam Rong (`Bằng Lăng`)** | `85 km` from Da Lat (`50 km` leg) | `2.0–2.5 hours` | Descends `1,050 m` to `550 m` (`10%` grade) | Rest stop at Bang Lang (`Đầm Rông`) for fuel and `40,000 VND` (`$1.60 USD`) noodle soup (`15 mins`). |
+| **Dam Rong → Krong No Bridge (`Cầu Krông Nô`) → Lak Lake (`Liên Sơn`)** | `155 km` from Da Lat (`70 km` leg) | `3.5–4 hours` | Levels out at `500 m` volcanic basin | Dugout canoe (`150,000 VND` / `$6.00 USD` for `30 mins`) + lakeside lunch (`150,000–200,000 VND`). |
+| **Lak Lake (`Hồ Lắk`) → Yang Reh Pass → Buon Ma Thuot (`QL27`)** | `205 km` total (`50 km` final leg) | `4.5–5.5 hours` total transit | Climbs gently from `500 m` to `536 m` | Sleeper bus / limousine fare `200,000–350,000 VND` (`$8.00–$14.00 USD`); private car `1,800,000–2,400,000 VND` (`$72.00–$96.00 USD`). |
 
 ---
 

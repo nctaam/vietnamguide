@@ -7,12 +7,12 @@ travel_cluster: "northern_triangle"
 last_verified: "2026-10-20"
 author: "VietnamGuide Editorial Team"
 reading_time_minutes: 8
-word_count: 1357
+word_count: 1522
 ---
 
 # Hanoi to Cat Ba Island Transport: Tourist Combo Bus, Dong Bai Ferry, and Cable Car
 
-Covering a total distance of 155 to 160 kilometers, traveling from Hanoi to Cat Ba Island requires crossing land, an ocean shipping channel, and the mountainous island interior. While the journey involves three separate transport phases, it has become one of northern Vietnam's most seamless travel corridors thanks to integrated **"Tourist Combo Bus"** services.
+Covering a total distance of 155 to 160 kilometers, traveling from Hanoi to Cat Ba Island requires crossing land, an ocean shipping channel, and the mountainous island interior. While the journey involves three separate transport phases, it has become one of northern Vietnam's most integrated travel corridors thanks to **"Tourist Combo Bus"** services.
 
 Navigating this route in 2026 demands awareness of significant infrastructural shifts. The legacy passenger terminal at **Got Pier (*Bến Gót*)** on Cat Hai Island has been decommissioned for general tourist passenger traffic. Mainland ferry and passenger speedboat operations have transitioned to the modern **Dong Bai Pier (*Bến phà Đồng Bài*)**, located immediately adjacent to the Sun World sea-crossing cable car station.
 
@@ -109,6 +109,23 @@ A visually striking alternative involves replacing the water crossing with the *
 - **Flight Time & Experience**: The aerial crossing takes approximately 15 minutes, gliding 100 meters above fishing flotillas, mangrove forests, and maritime shipping lanes.
 - **Ticket Tariff**: One-way tickets cost 150,000 VND ($6.00 USD) for adults and 100,000 VND for children (1.0m–1.4m).
 - **Logistics**: The mainland terminal is located directly next to Dong Bai Pier. At the arrival terminal in Phu Long, connecting electric shuttles or taxis transport passengers 25 km into Cat Ba Town (80,000–120,000 VND shared, or 250,000–350,000 VND private cab).
+
+---
+
+## Segment-by-Segment Corridor Breakdown: Hanoi Old Quarter → CT04 → Dong Bai vs Cable Car → Cat Ba Town
+
+To compare exact transit legs, terminal handoffs, and all-in-one combo pricing across operators, inspect the kilometer-by-kilometer breakdown below:
+
+| Corridor Segment / Operator Package | Distance / Span | Segment Duration | Official Fare (`VND` / `USD`) | Terminal & Operational Specifications |
+| :--- | :--- | :--- | :--- | :--- |
+| **Leg 1: Hanoi Old Quarter → CT04 Expressway → Dong Bai Terminal** | `120 km` (`incl. 5.44 km Tan Vu Bridge`) | `1.75–2 hours` (`105–120 mins`) | `180,000–220,000 VND` (`$7.20–$8.80 USD` bus-only) | Departs Tran Quang Khai / Tran Nhat Duat; includes a `15-minute` highway rest stop at Km52 on CT04. |
+| **Leg 2A: Dong Bai Ferry Terminal (Legacy Got Pier Replacement) → Cai Vieng Pier** | `3.2 km` maritime channel | `10–12 mins` (speedboat) / `25–35 mins` (ferry) | `12,000 VND` (`$0.50 USD` foot ferry) / `50,000–80,000 VND` (launch) | Replaces decommissioned Got Pier (`Bến Gót`); combo bus passengers use dedicated high-speed tenders. |
+| **Leg 2B: Cat Hai – Phu Long Aerial Cable Car Crossing** | `3,955 m` (`3.95 km` over-water span) | `10–12 mins` cabin flight | `100,000–150,000 VND` (`$4.00–$6.00 USD` child/adult) | Supported by a `214.8 m` concrete tower; bypasses all maritime channel vessel traffic and weekend ferry queues. |
+| **Leg 3: Cai Vieng Pier / Phu Long Station → Cat Ba Town (`1/4 Road`)** | `24 km` via coastal road `DT356` | `35–40 mins` mountain drive | `25,000–40,000 VND` (`$1.00–$1.60 USD` public Bus 14) | Included automatically in combo bus tickets; drop-off directly at hotel lobbies along `1/4 Road` and Nui Ngoc. |
+| **All-in-One Combo: Cat Ba Express / Good Morning Cat Ba / Daiichi Bus** | `158 km` total door-to-door | `3.5–4 hours` total transit | `320,000–400,000 VND` (`$13.00–$16.00 USD` one-way) | Single unified voucher covering Old Quarter pickup, CT04 highway coach, speedboat/cable car, and island bus. |
+
+### Why Dong Bai Ferry Terminal & the Cable Car Outperform Independent Transfers
+Since passenger operations shifted from legacy **Got Pier** to **Dong Bai Ferry Terminal**, independent travelers who drive a rented car or take an unbundled taxi from Hanoi (**120 km**, **1.75–2 hours** on the **CT04 Expressway**) frequently encounter **60 to 120 minute** vehicle-ferry bottlenecks on summer Fridays and Saturdays. Booking an integrated **Cat Ba Express**, **Good Morning Cat Ba**, or **Daiichi Bus** package (**320,000–400,000 VND / $13.00–$16.00 USD**, **3.5–4 hours** door-to-door) eliminates this queue: passengers step straight from their mainland coach onto a high-speed tender boat (**10–12 mins**) or the **Cat Hai – Phu Long Cable Car (3,955 m span, 10–12 mins, 100,000–150,000 VND / $4.00–$6.00 USD)**, then board a waiting coach at **Cai Vieng Pier** or **Phu Long** for the final **24 km (35–40 mins)** coastal run into **Cat Ba Town**.
 
 ---
 

@@ -6,8 +6,8 @@ description: "Complete Saigon night markets guide: explore Ho Thi Ky food street
 travel_cluster: "southern_delta"
 last_verified: "2026-10-22"
 author: "VietnamGuide Editorial Team"
-reading_time_minutes: 10
-word_count: 1250
+reading_time_minutes: 8
+word_count: 1548
 ---
 
 # Saigon Night Markets: 5 Best Food & Street Markets (2026)
@@ -84,7 +84,28 @@ For travelers who want to step completely outside the tourist bubble and see whe
 
 - **`17:30 – 19:15` (Stop 1 — Ho Thi Ky Alley, District 10)**: Take a GrabCar (`50,000 VND`) from District 1 to `103 Hồ Thị Kỷ`. Share 4 to 5 small street snacks (`bò nướng lá lốt`, `bánh tráng nướng`, `bún num bò chóc`, and `chè Campuchia`) for `~150,000 VND` per person, then stroll through the wholesale flower lanes.
 - **`19:30 – 21:00` (Stop 2 — Vinh Khanh Snail Street, District 4)**: Hop a 10-minute GrabCar (`45,000 VND`) across to `534 Vĩnh Khánh`. Order grilled scallops (`sò điệp nướng mỡ hành`), garlic-butter snails (`ốc hương xào bơ tỏi`) with baguette, and a cold Saigon beer (`~180,000 VND` per person).
-- **`21:15 – 22:30` (Stop 3 — Ben Thanh Night Market & Nguyen Hue Walk, District 1)**: Cross the canal back into District 1 (`35,000 VND` Grab or walk across Mong Bridge), browse the lantern-lit stalls along `Phan Chu Trinh` at Ben Thanh Night Market, and finish with an evening stroll down **Nguyen Hue Walking Street (`Phố Đi Bộ Nguyễn Huệ`)**.
+- **`21:15 – 22:30` (Stop 3 — Ben Thanh Night Market & Nguyen Hue Walk, District 1)**: Cross the canal back into District 1 (`35,000 VND` Grab or walk across Mong Bridge), browse the lantern-lit stalls along `Phan Chu Trinh` at Ben Thanh Night Market, and finish with an evening stroll down **Nguyen Hue Walking Street (`Phố Đi Bộ Nguyễn Huệ`)**—a classic highlight of any [Ho Chi Minh City travel itinerary](/destinations/ho-chi-minh-city-travel-guide).
+
+---
+
+## 2026 Ho Chi Minh City Night Market Transit, Metro Line 1 (Ben Thanh – Suoi Tien) Access & Street-Food Price Index
+
+With the commercial operation of **HCMC Metro Line 1 (`Ben Thanh – Suoi Tien`)** and app-based electric ride-hailing (**Xanh SM** and **Grab**), hopping between Saigon's evening food corridors is faster and more predictable than ever. Use this verified 2026 transit and price index to plan your evening movements from central District 1:
+
+| Night Market / Food Corridor | Distance & Transit Time from Ben Thanh | 2026 Metro / GrabBike / GrabCar Fare | Verified Operating Window | 2026 Street-Food Dish Price Benchmark (`VND` / `USD`) |
+| :--- | :--- | :--- | :--- | :--- |
+| **Ho Thi Ky Flower & Street Food Market** (`Chợ Hồ Thị Kỷ`, District 10) | `3.8 km` west via Ly Thai To Street (`12–18 mins` ride) | **GrabBike**: `35,000–75,000 VND` (`$1.40–$3.00 USD`, round-trip / peak); **GrabCar**: `50,000–75,000 VND` | Food stalls: `15:00–23:00` daily; Wholesale flower lanes: `24 hours` | **Savory skewers, grilled rice paper, Cambodian noodles & sweet soups**: `25,000–85,000 VND` (`$1.00–$3.40 USD`) per dish |
+| **Ben Thanh Night Market** (`Chợ Đêm Bến Thành`, District 1) | `100 m` walk from **Metro Line 1 Ben Thanh Station** (`Exit 1 & 2`) | **Metro Line 1 Fare**: `7,000–20,000 VND` (`$0.28–$0.80 USD`, single ride); `40,000 VND` (`$1.60 USD`) 1-day pass | Outdoor tented night market: `19:00–23:30` peak (`stalls set up from 18:00`) | **Banh xeo, pho, spring rolls & grilled prawns**: `55,000–180,000 VND` (`$2.20–$7.20 USD`); linen shirts `120,000–160,000 VND` |
+| **Nguyen Thuong Hien Food Street** (`Phố Ẩm Thực Nguyễn Thượng Hiền`, District 3) | `2.5 km` northwest of Ben Thanh (`10 mins` by scooter or car) | **GrabBike**: `25,000–40,000 VND` (`$1.00–$1.60 USD`); **GrabCar**: `40,000–60,000 VND` | Pedestrian-friendly evening hours: `18:00–22:30` daily | **Mixed rice paper (`Bánh Tráng Trộn Chú Viên`), tre-nem rolls & avocado smoothies**: `25,000–55,000 VND` (`$1.00–$2.20 USD`) |
+| **Vinh Khanh Snail & Seafood Street** (`Phố Ốc Vĩnh Khánh`, District 4) | `2.2 km` south across **Calmette Bridge** (`Cầu Calmette`, `8–12 mins`) | **GrabBike**: `25,000–40,000 VND` (`$1.00–$1.60 USD`); **GrabCar**: `35,000–55,000 VND` (`or 15 mins` walk via Mong Bridge) | `17:00–01:00` nightly (`peak local dining crowd 19:30–22:30`) | **Grilled scallops, salted-egg sea snails (`Ốc Hương`), clams & crab**: `60,000–180,000 VND` (`$2.40–$7.20 USD`) per plate |
+
+### Using Metro Line 1 (`Ben Thanh – Suoi Tien`) for Evening Market Runs
+Travelers staying in **Thao Dien (An Phu / Thao Dien stations)**, **Binh Thanh (Van Thanh Park / Ba Son stations)**, or near the **Opera House (Nha Hat Thanh Pho station)** can ride air-conditioned **Metro Line 1 trains (running 05:00 to 22:00 daily, `7,000–20,000 VND` cashless tap or single-journey QR ticket)** straight to **Ben Thanh Underground Station**. Emerging at Exit 1 or Exit 2 puts you `100 meters` (`2 mins` walk) from the Phan Chu Trinh and Phan Boi Chau night market tents, where you can browse souvenirs or catch a `10-minute` GrabBike onward to **Nguyen Thuong Hien Street (`2.5 km`)**, **Vinh Khanh Street (`2.2 km`)**, or **Ho Thi Ky Market (`3.8 km`)**.
+
+### District-by-District Evening Routing: Ho Thi Ky, Nguyen Thuong Hien & Vinh Khanh
+- **Ho Thi Ky Flower & Street Food Market (District 10, `3.8 km` from Ben Thanh, `12–18 mins`, `35,000–75,000 VND` GrabBike)**: Ideal as your first dinner stop between 17:30 and 20:00, where over 100 family carts serve Cambodian noodle soup, grilled beef skewers, and Da Lat rice paper pizzas for **`25,000–85,000 VND` (`$1.00–$3.40 USD`)** per portion alongside 24-hour wholesale rose and lotus florists.
+- **Nguyen Thuong Hien Food Street (District 3, `2.5 km` from Ben Thanh, `10 mins`)**: Situated halfway between District 1 and District 10, this compact evening pedestrian strip specializes in Saigon's signature *bánh tráng trộn* (tossed rice paper salad with dried beef, green mango, quail eggs, and kumquat dressing for `25,000–35,000 VND`), fermented pork rolls (*nem chua rán*), and fresh tropical fruit smoothies.
+- **Vinh Khanh Snail Street (District 4, `2.2 km` across Calmette Bridge, `8–12 mins`)**: Cross the Ben Nghe Canal after 20:00 for late-night open-air shellfish feasts where plates of charcoal-grilled scallops, garlic-butter sea snails (*ốc hương*), and steamed lemongrass clams range from **`60,000–180,000 VND` (`$2.40–$7.20 USD`)**.
 
 ---
 

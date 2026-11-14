@@ -6,8 +6,8 @@ description: "Where to stay in An Giang: Chau Doc riverfront hotels vs Sam Mount
 travel_cluster: "mekong_delta"
 last_verified: "2026-10-25"
 author: "VietnamGuide Editorial Team"
-reading_time_minutes: 12
-word_count: 1407
+reading_time_minutes: 7
+word_count: 1434
 ---
 
 # Where to Stay in An Giang: Chau Doc to Long Xuyen Guide
@@ -201,6 +201,22 @@ Chau Doc <-> Tri Ton       Local Bus No. 03         35,000 VND          1.2 hour
 
 *   **Futa Bus Lines (Phương Trang)**: Operates modern sleeper buses every hour between Ho Chi Minh City's Western Bus Station (*Bến xe Miền Tây*) and Chau Doc Terminal on Ton Duc Thang. Free shuttle vans deliver passengers directly to hotels in central Chau Doc.
 *   **Hang Chau Tourist Express**: High-speed passenger catamarans depart Chau Doc pier at 07:30 daily, clearing border formalities at Vinh Xuong international checkpoint before arriving at Sisowath Quay in Phnom Penh by 12:30. One-way tickets cost approximately 880,000 VND ($35 USD).
+
+---
+
+## 2026 Chau Doc, Sam Mountain & Cam Mountain Transport & Room Tariff Ledger
+
+Use the reference table below to verify exact 2026 room tariffs, point-to-point highway distances, and local transfer costs across An Giang's four primary lodging corridors before booking.
+
+| Lodging Property / Transport Leg | Distance from Chau Doc Waterfront | Transfer Time | Verified 2026 Tariff (VND / USD) | Booking & Operational Notes |
+| :--- | :--- | :--- | :--- | :--- |
+| **Victoria Chau Doc Hotel** (`1 Le Loi`) | `0.2 km` from Bach Dang Wharf | `3 mins` walk | `2,200,000–4,500,000 VND` (`$88–$180 USD`) | Private boat pier for `07:30` Phnom Penh catamaran (`5 hours`) |
+| **Dong Bao & Hai Chau Hotels** (Town Core) | `0.4 km` from Chau Doc Market | `5 mins` walk | `300,000–650,000 VND` (`$12–$26 USD`) | `1.5 km` (`6 mins`, `35,000 VND` taxi) from Chau Doc Floating Market |
+| **Victoria Nui Sam Lodge** (Sam Mountain) | `6 km` southwest via QL91 + `3.5 km` ascent | `15 mins` by taxi | `1,600,000–3,000,000 VND` (`$64–$120 USD`) | `80,000–110,000 VND` (`$3.20–$4.40 USD`) Mai Linh taxi from town |
+| **Sam Mountain Cable Car** (*Cáp treo Núi Sam*) | `5.5 km` southwest of Chau Doc | `12 mins` by car | `150,000 VND` (`$6.00 USD`) round-trip | Operates `24 hours` during peak pilgrimage days; `10 mins` ride |
+| **Tra Su Cajuput Forest Eco-Homestays** | `22 km` south of Sam Mountain (`28 km` from town) | `35 mins` by car | `250,000–450,000 VND` (`$10–$18 USD`) | Forest entry `100,000 VND` + motorboat & paddle sampan `100,000 VND` |
+| **Cam Mountain Cable Car & Resorts** (*Núi Cấm*) | `37 km` south of Chau Doc via DT948 | `50 mins` by car | `220,000–350,000 VND` (`$8.80–$14 USD`) ticket | `710 m` elevation; hillside guesthouses `300,000–750,000 VND` (`$12–$30 USD`) |
+| **Long Xuyen Central Hotels** (Hoa Binh / Lara) | `62 km` southeast via QL91 highway | `1.5 hours` by bus | `400,000–1,200,000 VND` (`$16–$48 USD`) | `5 km` (`10 mins`) to O Moi Pier for `05:30` floating market sampans |
 
 ---
 

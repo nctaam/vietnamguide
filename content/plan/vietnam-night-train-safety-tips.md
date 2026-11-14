@@ -6,8 +6,8 @@ description: "Vietnam night train safety tips: cabin door locks, luggage securit
 travel_cluster: "national_circuit"
 last_verified: "2026-10-24"
 author: "VietnamGuide Editorial Team"
-reading_time_minutes: 9
-word_count: 1426
+reading_time_minutes: 7
+word_count: 1448
 ---
 
 # Vietnam Night Train Safety Tips (2026): Sleeper Berths
@@ -80,6 +80,20 @@ When a cabin-mate boards or disembarks at midnight stops like **Vinh** (`01:20 A
 Every `SE1/SE3` sleeper carriage has a uniformed **carriage attendant (`Trưởng toa`)** stationed in Room 1 at the end of the car who checks QR tickets at boarding, locks heavy exterior carriage doors between stations, and personally knocks to wake passengers **20 to 30 minutes** before their destination stop—so you never oversleep past **Ninh Binh** (`115 km`), **Dong Hoi** (`522 km`), or **Hue** (`688 km`) at **04:30 AM**. Before boarding at busy city terminals like Hanoi (`120 Le Duan`), Ga Tran Quy Cap (for Sapa `SP3/SP4` trains), Da Nang (`202 Hai Phong`), or Saigon (`01 Nguyen Thong`), politely wave off unofficial platform porters who grab your suitcase handle without asking and then demand **50,000 to 100,000 VND** ($2.00 to $4.00 USD) per bag once inside the carriage. Walk straight to the car number (`Toa số`) printed on your `dsvn.vn` boarding pass and show your QR code only to the uniformed attendant standing at the carriage steps.
 
 For washroom and food hygiene, use the western-style toilet in the **first 2 hours** after evening departure (bring pocket tissues, wet wipes, hand sanitizer, and slip-on sandals so your socks stay dry). Rather than relying solely on the lukewarm dining-car cart (`Cơm tàu`, **50,000 to 70,000 VND** / $2.00 to $2.80 USD), pack a station **banh mi (35,000 VND)**, bananas, **1.5L bottled water (15,000 VND)**, and instant cup noodles—every carriage provides a **free `95°C–100°C` boiling water dispenser (`Bình nước sôi`)** right at the attendant's end of the car.
+
+---
+
+## 5. 2026 Reunification Express (SE1/SE2, SE3/SE4, SE19/SE20) Cabin Security, Lock & Luggage Dimension Matrix
+
+Verify your exact overnight corridor distance, berth dimensions, 4-berth vs 6-berth price differential, and station arrival window before heading to the platform:
+
+| Overnight Rail Corridor & Train Code | Track Distance & Duration | 4-Berth vs 6-Berth Fare (`VND` / `USD`) | Berth & Under-Bunk Box Dimensions | Station Arrival & Lock Protocol |
+| :--- | :--- | :--- | :--- | :--- |
+| **Hanoi ↔ Lao Cai / Sapa (`SP3/SP4`)** | `296 km` (`8 hours` overnight) | `450,000–780,000 VND` (`$18.00–$31.00 USD` `dsvn.vn`) / `1,500,000 VND` (`$60.00 USD` VIP) | `78 cm x 190 cm` berth; `28 cm` high under-bunk metal bin | Arrive at Ga Tran Quy Cap `30–45 mins` prior (`21:15` for `22:00` train); engage upper flip-bolt at boarding. |
+| **Hanoi ↔ Hue (`SE1/SE2`, `SE3/SE4`, `SE19/SE20`)** | `688 km` (`13.5 hours` overnight) | `950,000–1,450,000 VND` (`$38.00–$58.00 USD` 4-berth vs 6-berth) | `78 cm x 190 cm` (`4-berth`) vs `60 cm x 185 cm` (`6-berth`) | Arrive at Ga Ha Noi (`120 Le Duan`) `30–45 mins` prior; re-check door latch after `04:15 AM` Dong Hoi stop. |
+| **Hanoi ↔ Da Nang (`SE1/SE2`, `SE3/SE4`, `SE19/SE20`)** | `791 km` (`16.5 hours` overnight) | `1,050,000–1,650,000 VND` (`$42.00–$66.00 USD` 4-berth vs 6-berth) | Under-bunk vault holds `65L` pack (`max 30 cm` depth); cable-lock `32 cm+` cases | Arrive `30–45 mins` prior; keep curtains open over the `102 km` (`3-hour`) Hue–Da Nang Hai Van Pass morning stretch. |
+| **Da Nang ↔ Nha Trang (`SE1/SE2`, `SE3/SE4`)** | `524 km` (`10.5 hours` overnight) | `950,000–1,550,000 VND` (`$38.00–$62.00 USD` 4-berth vs 6-berth) | Overhead doorway cubby (`140 cm` high) fits `45 cm x 35 cm` carry-ons | Arrive at Ga Da Nang (`202 Hai Phong`) `30–45 mins` prior; lock door during `02:30 AM` Dieu Tri (`Quy Nhon`) stop. |
+| **Nha Trang ↔ Saigon (`SNT1/SNT2`, `SE1–SE4`)** | `411 km` (`8.5 hours` overnight) | `950,000–1,850,000 VND` (`$38.00–$74.00 USD` standard to VIP 2-berth) | `78 cm x 190 cm` mattress; `75 cm` vertical headroom (`Tầng 1/2`) | Arrive `30–45 mins` prior; attendant knocks `30 mins` before arriving at Saigon Station (`01 Nguyen Thong`). |
 
 ---
 

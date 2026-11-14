@@ -6,8 +6,8 @@ description: "Best things to do in Hue: UNESCO Imperial Citadel walking tours, 2
 travel_cluster: "central_heritage"
 last_verified: "2026-10-22"
 author: "VietnamGuide Editorial Team"
-reading_time_minutes: 10
-word_count: 1261
+reading_time_minutes: 8
+word_count: 1515
 ---
 
 # Best Things to Do in Hue (2026): Imperial Citadel, Royal Tombs Combo Tickets, Perfume River & Food
@@ -56,8 +56,28 @@ Even if you stay in Hue, the `3-hour` railway journey between **Hue Station (`Ga
 ### 5. Photograph the Abandoned Dragon at `Hồ Thủy Tiên` (`Thuy Tien Lake Waterpark`) & `Đồi Vọng Cảnh`
 Set inside the pine hills of Thien An (`8 km` southwest of Hue center, right on the road between Tu Duc and Khai Dinh tombs), the **abandoned `2004` Thuy Tien Lake Waterpark (`Khu Du Lịch Hồ Thủy Tiên`)** has been converted by the city into a public lakeside walking park (`entrance/parking 10,000–20,000 VND`), where you can still photograph the iconic **moss-covered 3-story concrete dragon head** rising from the center of the lake (`note: climbing inside the dragon's jaw is now fenced off for structural safety during municipal park renovation`). Pair it with sunset `1.5 km` away at **Vong Canh Hill (`Đồi Vọng Cảnh`, free)** overlooking the S-bend of the Perfume River.
 
-### 6. Cycle Through `Cầu Ngói Thanh Toàn` (`1776` Covered Tile Bridge) or `Làng Hương Thủy Xuân`
-Directly on **Huyen Tran Cong Chua Street (`500 meters` past Tu Duc Tomb)**, **Thuy Xuan Incense Village (`Làng Hương Thủy Xuân`)** is a centuries-old craft street where artisans roll vibrant bouquets of cinnamon, agarwood (`trầm hương`), and lemongrass incense sticks (`free to walk; buy a 50,000 VND box of natural agarwood incense to support a family stall`). If you prefer a peaceful countryside ride, pedal `8 kilometers` east of Hue through emerald duck farms to the **Thanh Toan Tile-Roofed Bridge (`Cầu Ngói Thanh Toàn`)**, built in **`1776`** using the same wooden arch-house design as Hoi An's Japanese Covered Bridge (`free entry`, complete with a lively morning village market and a traditional farming-tool museum).
+6. **Cycle Through `Cầu Ngói Thanh Toàn` (`1776` Covered Tile Bridge) or `Làng Hương Thủy Xuân`**
+Directly on **Huyen Tran Cong Chua Street (`500 meters` past Tu Duc Tomb)**, **Thuy Xuan Incense Village (`Làng Hương Thủy Xuân`)** is a centuries-old craft street where artisans roll colorful bouquets of cinnamon, agarwood (`trầm hương`), and lemongrass incense sticks (`free to walk; buy a 50,000 VND box of natural agarwood incense to support a family stall`). If you prefer a peaceful countryside ride, pedal `8 kilometers` east of Hue through emerald duck farms to the **Thanh Toan Tile-Roofed Bridge (`Cầu Ngói Thanh Toàn`)**, built in **`1776`** using the same wooden arch-house design as Hoi An's Japanese Covered Bridge (`free entry`, complete with a lively morning village market and a traditional farming-tool museum).
+
+---
+
+## 2026 Hue Monument Conservation Center Multi-Site Combo & Perfume River Logistics Ledger
+
+To maximize your sightseeing window across the Perfume River valley without overpaying for single-site admissions or unvetted transport, consult this verified distance, duration, and tariff ledger managed by the **Hue Monuments Conservation Center (`Trung Tâm Bảo Tồn Di Tích Cố Đô Huế`)**:
+
+| Monument / Corridor Segment | Distance from City Center | Transit Duration (Car / Scooter) | 2026 Official Tariff (`VND` / `USD`) | Operational & Ticket Validation Protocol |
+| :--- | :--- | :--- | :--- | :--- |
+| **Imperial Citadel (`Đại Nội Huế`)** | `1.2 km` north of Truong Tien Bridge | `5 mins` (`15 mins` walk) | `200,000 VND` (`$8.00 USD`) | Open `07:00–17:30` daily; reserve `2.5 to 3 hours` to cover Noon Gate, Thai Hoa Hall, and Kien Trung Palace. |
+| **Tomb of Emperor Tu Duc (`Lăng Tự Đức`)** | `7 km` southwest via Le Ngo Cat | `15 mins` drive | `150,000 VND` (`$6.00 USD`) | Stop at Thuy Xuan Incense Village (`500 m` south) immediately after exiting the main gate; allow `60 mins`. |
+| **Tomb of Emperor Khai Dinh (`Lăng Khải Định`)** | `10 km` south via Minh Mang Road | `20 mins` drive | `150,000 VND` (`$6.00 USD`) | Features `127` steep stone steps; arrive before `09:30 AM` or after `15:00 PM` to avoid tour group bottlenecks. |
+| **Tomb of Emperor Minh Mang (`Lăng Minh Mạng`)** | `12 km` southwest via QL49 | `25 mins` drive | `150,000 VND` (`$6.00 USD`) | Crosses Tuan Bridge (`Cầu Tuần`); plan `75 to 90 mins` to walk the full `700 m` symmetrical courtyard axis. |
+| **3-Site Heritage Combo (`Đại Nội` + `2 Tombs`)** | Covers `1.2 km` to `12 km` radius | `5 to 6 hours` total loop | `420,000 VND` (`$16.80 USD`) | Valid for `48 hours` (`2 days`); saves `80,000 VND` (`$3.20 USD`) over individual gate tickets (`500,000 VND`). |
+| **4-Site Heritage Combo (`Đại Nội` + `3 Tombs`)** | Covers `1.2 km` to `12 km` radius | `6 to 8 hours` total loop | `530,000 VND` (`$21.20 USD`) | Valid for `48 hours` (`2 days`); saves `120,000 VND` (`$4.80 USD`) over buying four separate tickets (`650,000 VND`). |
+| **Thien Mu Pagoda (`Chùa Thiên Mụ`)** | `5 km` west along Kim Long Road | `12 mins` drive (`30 mins` boat) | `0 VND` (`Free`; parking `10,000 VND`) | Open `08:00–18:00`; pair with a `30-minute` dragon boat return to Toa Kham Pier (`50,000–80,000 VND` shared). |
+| **Central Heritage Train (`HD1–HD4` Hue ↔ Da Nang)** | `102 km` via Hai Van Pass & Lang Co | `3 hours` (`180 mins`) rail transit | `180,000–231,000 VND` (`$7.20–$9.25 USD`) | Departs Hue at `07:45` (`HD1`) and `14:25` (`HD3`); includes a `10-minute` photo stop at Lang Co Station (`Ga Lăng Cô`). |
+
+### How to Execute the 4-Site Combo Loop Efficiently
+When purchasing the **3-Site Combo (420,000 VND / $16.80 USD)** or **4-Site Combo (530,000 VND / $21.20 USD)** at the **Imperial Citadel (200,000 VND / $8.00 USD single entry)** or any royal mausoleum ticket booth, your printed QR pass remains active for **48 hours** across two consecutive calendar days. Never buy single-site tickets (**150,000 VND** each at **Minh Mang**, **Khai Dinh**, or **Tu Duc**) if you plan to visit both the Citadel and at least two imperial tombs. To minimize road backtracking along the southern Perfume River hills, start farthest upriver at **Minh Mang Tomb (12 km, 25 mins drive)** right after lunch, backtrack north to **Khai Dinh Tomb (10 km from center, 20 mins drive)**, continue to **Tu Duc Tomb (7 km from center, 15 mins drive)** plus adjacent **Thuy Xuan Incense Village (500 m walk)**, and conclude your afternoon across the river at **Thien Mu Pagoda (0 VND entry, 5 km west, 12 mins drive)** before boarding a sunset dragon boat back to central Hue. Travelers continuing south to [Da Nang](/destinations/da-nang-travel-guide) or [Hoi An](/destinations/hoi-an-ancient-town-guide) the next morning should book window seats on the **Central Heritage Train (`HD1–HD4`, 180,000–231,000 VND / $7.20–$9.25 USD)** for the **102 km, 3-hour** coastal crossing over the Hai Van Pass.
 
 ---
 

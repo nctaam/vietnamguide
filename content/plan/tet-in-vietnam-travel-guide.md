@@ -7,7 +7,7 @@ travel_cluster: "national_circuit"
 last_verified: "2026-10-24"
 author: "VietnamGuide Editorial Team"
 reading_time_minutes: 8
-word_count: 1377
+word_count: 1524
 ---
 
 # Tet in Vietnam Travel Guide: Dates, Closures and Routes
@@ -78,6 +78,23 @@ Eliminate intercity transit between **29 Tết and Mùng 3 Tết** by anchoring 
 2. **Hoi An & Da Nang**: Lantern-lit streets along the **Thu Bồn River** and **An Bang Beach** restaurants stay active at **70% capacity** across **Mùng 1 to Mùng 3** while cloth tailors pause for **3 days**.
 3. **Phu Quoc Island**: Dry February sunshine (**28°C to 31°C**) where beachfront resorts run full dining and pool services (book **1,800,000 to 3,500,000 VND** flights **60 to 90 days** ahead).
 4. **Hanoi Old Quarter**: Ideal for walking **8 km to 10 km** across a serene, traffic-free **Hoan Kiem District** in crisp **18°C** weather.
+
+---
+
+## 2026 Lunar New Year (Tet Binh Ngo) Surcharge Window, Rail/Air Booking Lead-Time & Open-Destination Matrix
+
+To budget accurately and secure scarce long-distance seats during the **Tet Binh Ngo (`Tết Bính Ngọ`)** migration cycle, use this empirical booking lead-time, price ceiling, and open-destination matrix:
+
+| Logistics / Destination Category | Active Holiday Window / Lead Time | Distance / Transit Duration | 2026 Peak Tariff (`VND` / `USD`) | Operational Reality & Booking Protocol |
+| :--- | :--- | :--- | :--- | :--- |
+| **Holiday Service Surcharge (`Phụ thu Tết`) Window** | **Days 29 to +4 of Tet** (`Feb 16 – Feb 20, 2026` / `5 days`) | Citywide (`0.5 km to 15 km` urban cores) | **+20% to +30%** (`+15,000–35,000 VND` / `$0.60–$1.40 USD` per item) | Printed on cafe/restaurant menus and Grab apps to fund mandatory `300%` statutory holiday wages. |
+| **Vietnam Railways (`SE1–SE8` Sleeper Release)** | Tickets open **`60–90 days` out** (`Nov 15 – Dec 15`) | `688 km` (`Hanoi–Hue`, `13.5 hours`) to `1,726 km` (`33 hours`) | `1,450,000–2,650,000 VND` (`$58.00–$106.00 USD` per 4-berth) | Pre-Tet northbound (`SE2/SE4/SE6/SE8`) and Post-Tet southbound (`SE1/SE3`) sell out within `48 hours` of release. |
+| **Domestic Trunk Airfare Peak (`HAN ↔ SGN`)** | Book **`60–90 days` out** for `24 Chạp to Mùng 6` | `1,200 km` flight path (`2 hours 10 mins` block time) | `2,800,000–4,500,000 VND` (`$112.00–$180.00 USD` one-way economy) | Vietnam Airlines and Vietjet operate night-owl flights (`01:00–05:00 AM`); arrive at `SGN/HAN` terminals `3 hours` early. |
+| **Ha Long & Lan Ha Bay Overnight Cruises** | **100% Open** (`365 days/year`, zero closures) | `150 km` east of Hanoi via `CT04` (`2.5 hours`) | `4,200,000–7,800,000 VND` (`$168.00–$312.00 USD` per `2D1N` cabin) | Best all-inclusive buffer for `30 Tết to Mùng 2`; includes highway limousine, `4` meals, and kayaking. |
+| **Phu Quoc, Mui Ne & Cam Ranh Beach Resorts** | **100% Open** (peak check-in `Mùng 2 to Mùng 6`) | `300 km to 1,200 km` from SGN/HAN (`1 to 2 hours` flight) | `1,800,000–4,200,000 VND` (`$72.00–$168.00 USD` per night) | Resort pools, beach clubs, and buffets run normal hours (`06:30–22:30`); book rooms `45 days` in advance. |
+
+### How to Navigate the 60-to-90-Day Booking Window & Surcharge Period
+Because Vietnam Railways (**SE1–SE8**) opens its Lunar New Year reservation inventory **60 to 90 days** ahead of departure (**1,450,000–2,650,000 VND / $58.00–$106.00 USD** for a 4-berth sleeper), travelers planning north-south rail hops must set calendar alerts for mid-November. Likewise, domestic trunk airfares on the **1,200 km** Hanoi to Ho Chi Minh City (**HAN–SGN**, **2 hours 10 mins** flight duration) corridor surge to **2,800,000–4,500,000 VND ($112.00–$180.00 USD)** one-way during the peak migration wave. Once on the ground between **Days 29 and +4 of Tet**, budget an extra **20% to 30%** for the standard holiday service surcharge (**Phụ thu Tết**) at open cafes, street stalls, and beachfront resorts.
 
 ---
 

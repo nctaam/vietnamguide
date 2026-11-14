@@ -6,8 +6,8 @@ description: "Cham Islands travel guide: speedboats from Hoi An, UNESCO biospher
 travel_cluster: "central_heritage"
 last_verified: "2026-10-22"
 author: "VietnamGuide Editorial Team"
-reading_time_minutes: 8
-word_count: 1446
+reading_time_minutes: 7
+word_count: 1466
 ---
 
 # Cham Islands Travel Guide: Hoi An Day Trip or Overnight?
@@ -44,7 +44,7 @@ Between `09:00` and `13:30`, Bai Lang Pier and Bai Ong Beach can host `1,500 to 
 
 Staying one night in a family homestay at **Bai Lang**, **Bai Ong**, or the southern fishing village of **Bai Huong** (`350,000–650,000 VND` per night for a clean air-conditioned room with private bathroom) unlocks three experiences day-trippers never see:
 1. **Empty Afternoon Beaches at Bai Xep and Bai Bim:** Rent a local scooter (`150,000–200,000 VND` for `24 hours`) or hire a motorbike taxi (`xe ôm`, `100,000 VND`) at `15:00` to ride the cliffside coastal road south from Bai Lang to **Bai Xep** (`Bãi Xếp`) and **Bai Bim** (`Bãi Bìm`), where you will often have clear turquoise coves and granite boulders completely to yourself until sunset.
-2. **Sunset Coastal Drive & Night Squid Fishing:** Watch the sun drop behind the Hoi An mainland skyline from the high coastal bend between Bai Chong and Bai Huong, followed by an optional evening wooden-boat squid excursion (`300,000–400,000 VND` per person) or a harbor dinner of grilled sea urchin (`nhum biển nướng mỡ hành`, `30,000–40,000 VND` each), steamed stone crab (`cua đá hấp bia`—only eat crabs carrying an official eco-tag confirming shell width $\ge 7\text{ cm}$), and forest-leaf herbal tea (`nước lá rừng Cù Lao Chàm`).
+2. **Sunset Coastal Drive & Night Squid Fishing:** Watch the sun drop behind the Hoi An mainland skyline from the high coastal bend between Bai Chong and Bai Huong, followed by an optional evening wooden-boat squid excursion (`300,000–400,000 VND` per person) or a harbor dinner of grilled sea urchin (`nhum biển nướng mỡ hành`, `30,000–40,000 VND` each), steamed stone crab (`cua đá hấp bia`—only eat crabs carrying an official eco-tag confirming shell width of `7 cm` or greater), and forest-leaf herbal tea (`nước lá rừng Cù Lao Chàm`).
 3. **Dawn Harbor Market at Bai Lang (`06:00–07:30`):** Two hours before the first tourist speedboats arrive from Hoi An, basket boats (`thuyền thúng`) unload reef fish, squid, and sea snails directly onto Bai Lang quay while villagers eat bowls of *bánh canh cá* (`30,000 VND`).
 
 ---
@@ -83,7 +83,23 @@ Beyond its coral reefs, Hon Lao served for centuries as a freshwater resupply an
 
 ---
 
-## 5. Frequently Asked Questions
+## 5. 2026 Cua Dai Pier Speedboat, Wooden Supply Boat & Bai Lang – Bai Chong Ecological Tariff Breakdown
+
+Use this line-item tariff ledger to budget exact mainland transfers, marine biosphere fees, inter-village distances, and island rentals across Hon Lao.
+
+| Logistics Leg / Island Service | Distance & Route | Transit Time | Verified 2026 Tariff (VND / USD) | Operational Notes & Restrictions |
+| :--- | :--- | :--- | :--- | :--- |
+| **Hoi An Ancient Town → Cua Dai Pier** | `6 km` east via Cua Dai Road | `15 mins` | `80,000–110,000 VND` (`$3.20–$4.40 USD`) | GrabCar or metered Mai Linh taxi; arrive by `08:00` for border guard check |
+| **Cua Dai Pier → Bai Lang Speedboat** | `15 km` offshore channel | `18–20 mins` | `350,000–450,000 VND` (`$14–$18 USD`) return | Overnight return adds `50,000–100,000 VND` (`$2–$4 USD`) seat-hold surcharge |
+| **Cua Dai Pier → Bai Lang Wooden Boat** | `15 km` offshore channel | `75–90 mins` | `200,000 VND` (`$8.00 USD`) one-way | Local fare `100,000 VND`; foreign visitor ticket `200,000 VND` + `50,000 VND`/motorbike |
+| **Cham Islands MPA Entrance & Eco Fee** | Collected at Cua Dai terminal | `5 mins` gate | `90,000 VND` (`$3.60 USD`) mandatory | `70,000 VND` MPA admission + `20,000 VND` ecological fee |
+| **Bai Lang Pier → Bai Ong Beach** | `1.2 km` north coastal path | `4 mins` bike / `15 mins` walk | `30,000 VND` (`$1.20 USD`) *xe ôm* | Freshwater shower & changing locker `15,000–20,000 VND` |
+| **Bai Lang Pier → Bai Chong Beach** | `3.0 km` south cliff road | `8 mins` scooter | `50,000 VND` (`$2.00 USD`) *xe ôm* | Beach hammock & stream access `20,000–30,000 VND` |
+| **Bai Lang Pier → Bai Huong Village** | `5.5 km` south coastal road | `12 mins` scooter | `150,000–200,000 VND` (`$6–$8 USD`) 24h rental | Private wooden sampan reef charter from Bai Huong: `350,000–500,000 VND` (`2 hours`) |
+
+---
+
+## 6. Frequently Asked Questions
 
 ### Can I visit the Cham Islands in October, November, December, or January?
 We strongly advise against planning a Cham Islands trip between **October and January**. Northeast monsoon winds create `2.0 to 3.5-meter` swells across the Cua Dai channel, underwater visibility drops below `2 meters` from river silt, and port authorities routinely ban all speedboat departures. During winter, spend your Hoi An days exploring [My Son Sanctuary](/destinations/best-things-to-do-in-hoi-an/), cycling Tra Que Village, or taking the [Cham Islands Day Trip Guide](/plan/cham-islands-day-trip-guide/) alternatives on the mainland.

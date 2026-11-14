@@ -6,8 +6,8 @@ description: "Ho Chi Minh City to Ben Tre transport: shared limousine vans vs lo
 travel_cluster: "mekong_delta"
 last_verified: "2026-10-22"
 author: "VietnamGuide Editorial Team"
-reading_time_minutes: 9
-word_count: 1204
+reading_time_minutes: 7
+word_count: 1467
 ---
 
 # Ho Chi Minh City to Ben Tre Transport (2026): Van & Bus
@@ -66,6 +66,27 @@ If you prefer Vietnam's largest national bus carrier or are connecting onward to
 
 > [!WARNING]
 > **Sunday Afternoon Rach Mieu Bridge Bottleneck (15:00–19:30 PM)**: Until the parallel **Rach Mieu 2 Bridge** completes full traffic diversion, the single-deck **Rach Mieu 1 Bridge (QL60)** between Ben Tre and My Tho experiences heavy weekend congestion on **Sunday afternoons between 15:00 and 19:30 PM** as delta weekenders return to Saigon. When returning from Ben Tre to Ho Chi Minh City on a Sunday—especially if catching an evening flight at SGN—depart Ben Tre **before 13:00 PM** or allow an extra 45 to 60 minutes of bridge crossing time.
+
+---
+
+## 2026 Terminal-to-Pier & Canal Sampan Tariff Breakdown (Mien Tay, Rach Mieu & Chet Say)
+
+Navigating the final 5 to 18 kilometers from highway drop-off points to Ben Tre's riverside piers and rural coconut canals requires matching your bus or limousine arrival with the right local transfer. The ledger below details verified 2026 fares, distances, and transit durations for every segment from central Saigon to the water's edge.
+
+| Transit Leg / Local Boat Service | Distance & Corridor | Transit Duration | Verified 2026 Fare (VND / USD) | Operational Schedule & Booking Rules |
+| :--- | :--- | :--- | :--- | :--- |
+| **District 1 → Mien Tay Bus Station** | `10 km` west via Vo Van Kiet | `25–35 mins` | `120,000–160,000 VND` (`$4.80–$6.40 USD`) | GrabCar or Mai Linh taxi; **FREE (`0 VND`)** if boarding FUTA shuttle at `272 De Tham` (`45 mins` prior) |
+| **Saigon → Rach Mieu Bridge → Ben Tre** | `85 km` via CT01 & QL60 | `1.75–2.25 hours` | `95,000–220,000 VND` (`$3.80–$8.80 USD`) | Phuong Trang (`95,000–120,000 VND`), Kim Hoang (`140,000 VND`), Thinh Phat VIP (`160,000–220,000 VND`) |
+| **Ben Tre Bus Station → Chet Say Pier** | `6.5 km` east via DT885 | `12–15 mins` | `85,000–115,000 VND` (`$3.40–$4.60 USD`) | Metered Xanh SM or Mai Linh taxi to *Bến tàu Cầu Chẹt Sậy* (Phong Nam brick kilns) |
+| **Ben Tre Bus Station → Hung Phong Pier** | `8.0 km` southeast via DT885 | `15–18 mins` | `100,000–135,000 VND` (`$4.00–$5.40 USD`) | Access point for *Cồn Phụng* / *Hưng Phong* green coconut islets & bicycle paths |
+| **Chet Say & Phong Nam Canal Sampan** | `8–12 km` river & creek loop | `2.0–3.5 hours` | `150,000–350,000 VND` (`$6.00–$14.00 USD`) | `150,000 VND` for `60-min` paddle sampan (up to `4 pax`); `350,000 VND` for `3-hour` motorboat + bicycle |
+| **Ben Tre City → Cho Lach Nursery Hub** | `32 km` west via QL57 | `45–55 mins` | `380,000–450,000 VND` (`$15.20–$18.00 USD`) | Private 4-seat taxi to Cai Mon orchard homestays, or `35,000 VND` via Local Bus No. 02 |
+
+### How to Book an Independent Sampan at Chet Say or Hung Phong Without a Package Tour
+Travelers arriving independently by limousine van often worry that local boat piers only serve pre-booked Saigon tour groups. In reality, boarding a private wooden motorboat (*tàu máy*) and hand-paddled rowboat (*xuồng chèo*) along the **Chet Say River (*Sông Chẹt Sậy*)** in Phong Nam Commune (Giong Trom border, `6.5 km` east of downtown Ben Tre) is straightforward:
+1. **Ask Your Limousine Shuttle to Drop You at Cầu Chẹt Sậy (`6.5 km` from town)**: When boarding Thinh Phat or Thao Chau in District 5 (`150,000–200,000 VND`), give the driver the destination **Bến tàu du lịch Cầu Chẹt Sậy** on Provincial Road DT885. If the free shuttle van only covers the `5 km` municipal core, pay a `40,000 VND` top-up or take a `12-minute` Xanh SM electric taxi (`85,000–115,000 VND`).
+2. **Hire a Licensed Boat Directly at the Pier Counter (`150,000–350,000 VND` per boat)**: For `1 to 4 passengers`, a private `2.5-hour` motorboat charter visiting the riverside brick kilns (*lò gạch Phong Nẫm*), coconut-husking workshops, honey-tea orchards, and a `25-minute` hand-rowed nipa-palm creek (*rạch dừa nước*) costs **`300,000 to 350,000 VND` (`$12.00–$14.00 USD`) total per boat**—not per person. Adding a `2-hour` village bicycle rental costs an extra **`50,000 VND` (`$2.00 USD`)** per bike.
+3. **Schedule Your Return Limousine Pickup 2 Hours Ahead**: Because afternoon seats on Thinh Phat and Thao Chau vans back to Ho Chi Minh City fill quickly between **15:30 and 18:00**, call the Ben Tre dispatch office by **13:30** so their free city shuttle van can pick you up at your pier or riverside café before crossing the Rach Mieu Bridge.
 
 ---
 

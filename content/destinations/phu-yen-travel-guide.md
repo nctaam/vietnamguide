@@ -6,8 +6,8 @@ description: "Complete Phu Yen travel guide: explore Ganh Da Dia basalt cliffs, 
 travel_cluster: "coastal_islands"
 last_verified: "2026-10-20"
 author: "VietnamGuide Editorial Team"
-reading_time_minutes: 13
-word_count: 1742
+reading_time_minutes: 9
+word_count: 1768
 ---
 
 # Phu Yen Travel Guide: Basalt Cliffs, Easternmost Sunrise, and Coastal Drives
@@ -177,7 +177,7 @@ At night, high-tech architectural illumination projects dynamic light shows acro
 
 Erected atop Nhan Mountain on the northern bank of the Da Rang River, this 23.5-meter quadrangular brick sanctuary was built by Cham architects between the late 11th and early 12th centuries. The tower displays the characteristic stepped pyramidal roof tiers and corner pilasters of late Vijaya art.
 
-From the temple esplanade, visitors look down upon the Da Rang river flowing into the sea, crossed by the historic two-kilometer railway and highway bridges. The temple grounds are open daily, with illuminated evening lighting turning the red brick spire into a beacon visible across the Tuy Hoa plain.
+From the temple esplanade, visitors look down upon the Da Rang river flowing into the sea, crossed by the historic two-kilometer railway and highway bridges. The temple grounds are open daily, with illuminated evening lighting turning the red brick spire into a bright landmark visible across the Tuy Hoa plain.
 
 ### Mang Lang Church: The Cradle of Quoc Ngu
 
@@ -289,7 +289,22 @@ Because the airport sits close to the city, metered taxis (Mai Linh, Sun Taxi, o
 
 ### Railway Connections
 
-The North-South railway passes through the center of Tuy Hoa, with **Ga Tuy Hòa** located on Le Trung Kien street. Express trains like SE2, SE4, SE6, SE22, and SE21 provide direct rail links north to Quy Nhon, Da Nang, and Hue, or south to Nha Trang and Saigon.
+The North-South railway passes through the center of Tuy Hoa, with **Ga Tuy Hòa** located on Le Trung Kien street. Express trains like SE2, SE4, SE6, SE22, and SE21 provide direct rail links north to [Quy Nhon](/destinations/best-things-to-do-in-quy-nhon), [Da Nang](/destinations/da-nang-travel-guide), and [Hue](/destinations/hue-imperial-city-guide), or south to [Nha Trang](/destinations/nha-trang-travel-guide) and Saigon.
+
+---
+
+## 2026 Tuy Hoa Coastal Corridor (Ganh Da Dia, Bai Xep, Mui Dien & Vung Ro Bay) Tariff & Distance Ledger
+
+To calculate daily fuel, entrance tickets, and driver hire across Phu Yen's north–south axis, use the verified 2026 empirical tariff and distance ledger below:
+
+| Corridor Node / Route Segment | Distance from Tuy Hoa | Drive Duration | 2026 Official Admission & Parking | Private Car / Grab / Ferry Benchmark |
+| :--- | :--- | :--- | :--- | :--- |
+| **Ganh Da Dia Basalt Cliffs** (`Gành Đá Đĩa`, Tuy An) | `35 km` north via `DT649` coastal road | `45–50 mins` | `40,000 VND` (`$1.60 USD`) adult; `20,000 VND` child; `10,000 VND` electric buggy; `10,000 VND` scooter parking | `400,000–480,000 VND` (`$16.00–$19.20 USD`) one-way GrabCar; `850,000 VND` (`$34.00 USD`) 6-hour northern loop charter |
+| **Bai Xep & Ganh Ong Cactus Cliffs** (`Bãi Xép`, An Chan) | `14 km` north along coastal boulevard | `20 mins` | `20,000 VND` (`$0.80 USD`) cliff gate; `5,000 VND` motorbike parking (`60 mins` walk & swim window) | `160,000–210,000 VND` (`$6.40–$8.40 USD`) GrabCar or Xanh SM taxi from downtown Tuy Hoa |
+| **O Loan Lagoon & Mang Lang Church** (`Đầm Ô Loan` & `Nhà Thờ Mằng Lăng`) | `24–32 km` north via `QL1A` / `DT649` | `30–40 mins` | Church: `0 VND` (`free entry`, open `07:00–17:30`); Lagoon: `150,000–250,000 VND/kg` (`$6.00–$10.00 USD`) blood cockles | Included on northern coastal car charter (`6–8 hours`, `850,000–1,100,000 VND` / `$34.00–$44.00 USD`) |
+| **Mui Dien / Dai Lanh Lighthouse & Bai Mon** (`Mũi Điện`, Dong Hoa) | `35 km` south via coastal road `DT657` | `45 mins` drive + `20 mins` (`1.0 km`) stair hike | `20,000 VND` (`$0.80 USD`) adult entry + `10,000 VND` (`$0.40 USD`) parking; overnight beach camping `80,000 VND` | `420,000–500,000 VND` (`$16.80–$20.00 USD`) one-way car; `800,000 VND` (`$32.00 USD`) 5-hour dawn sunrise charter |
+| **Vung Ro Deepwater Bay & Hon Nua Island** (`Vịnh Vũng Rô` & `Hòn Nưa`) | `38 km` south at foot of Deo Ca Pass | `50–55 mins` | Historic No-Number Ship Memorial: `0 VND`; Hon Nua canoe & snorkeling: `150,000–250,000 VND` (`$6.00–$10.00 USD`) for `2–3 hours` | Floating lobster raft lunch averages `250,000–450,000 VND` (`$10.00–$18.00 USD`) per diner |
+| **Tuy Hoa Airport (TBB) ↔ City Center** (`Sân Bay Tuy Hòa`) | `7 km` south of Hung Vuong Boulevard | `15 mins` | Terminal toll included (`10,000 VND`); 110cc–125cc scooter rental `120,000–180,000 VND` (`$4.80–$7.20 USD`) per `24 hours` | `90,000–130,000 VND` (`$3.60–$5.20 USD`) GrabCar; `100,000–140,000 VND` (`$4.00–$5.60 USD`) metered taxi |
 
 ---
 

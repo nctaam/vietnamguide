@@ -6,8 +6,8 @@ description: "Southern Vietnam itinerary for 2026: practical 5 to 7-day route co
 travel_cluster: "southern_delta"
 last_verified: "2026-10-22"
 author: "VietnamGuide Editorial Team"
-reading_time_minutes: 13
-word_count: 1636
+reading_time_minutes: 8
+word_count: 1668
 ---
 
 # Southern Vietnam Itinerary (2026): 5 to 7-Day Route Guide
@@ -70,6 +70,22 @@ Southern Vietnam boasts the country’s most developed multi-lane expressway net
 | PQC Airport -> Resort| 12 km     | 15-20 mins     | Resort Shuttle / Taxi   |
 +----------------------+-----------+----------------+-------------------------+
 ```
+
+---
+
+## 2026 Southern Loop Stage-by-Stage Distance, Transit Time & Line-Item Cost Ledger
+
+Travelers extending or customizing the southern loop overland across the Mekong Delta, Ha Tien ferry corridor, or coastal expressways can use the 2026 stage-by-stage ledger below to calculate exact durations and fares.
+
+| Stage Corridor | Highway / Sea Distance | Transit Duration | Verified 2026 Fare (VND / USD) | Recommended Carrier & Operational Notes |
+| :--- | :--- | :--- | :--- | :--- |
+| **HCMC → My Tho / Ben Tre** | `70–85 km` via CT01 & QL60 | `1.5–2 hours` | `120,000–180,000 VND` (`$4.80–$7.20 USD`) | Thinh Phat or Thao Chau 9-seat limousine; private sampan `250,000–350,000 VND` (`1.5 hours`) |
+| **Ben Tre / My Tho → Can Tho** | `105 km` via QL60 & CT01 | `2.5 hours` | `160,000–220,000 VND` (`$6.40–$8.80 USD`) | FUTA coach or limousine transfer; Cai Rang private boat `400,000–500,000 VND` (`3 hours`) |
+| **Can Tho → Chau Doc (An Giang)** | `115 km` via QL91 highway | `3 hours` | `180,000–250,000 VND` (`$7.20–$10.00 USD`) | FUTA sleeper or shared minivan; Tra Su Forest excursion `200,000 VND` (`22 km`, `35 mins`) |
+| **Chau Doc → Ha Tien Pier** | `95 km` along N1 border road | `2.25–2.5 hours` | `170,000–230,000 VND` (`$6.80–$9.20 USD`) | Ha Tien Express minibus; connects directly to morning and midday island catamarans |
+| **Ha Tien / Rach Gia → Phu Quoc** | `45 km` (`Ha Tien`) / `120 km` (`Rach Gia`) | `1.25–1.5 hours` / `2.5 hours` | `230,000–340,000 VND` (`$9.20–$13.60 USD`) | Superdong & Phu Quoc Express high-speed ferries into Bai Vong Port (`15 km` from Duong Dong) |
+| **Can Tho / Soc Trang → Con Dao** | `90 km` sea route from Tran De | `1.75–2.5 hours` | `310,000–390,000 VND` (`$12.40–$15.60 USD`) | Bus Can Tho to Tran De (`65 km`, `1.5 hours`, `120,000 VND`) + catamaran to Ben Dam Port |
+| **HCMC → Mui Ne (Coastal Add-On)** | `185 km` via CT01 Phan Thiet | `2.5–3 hours` | `180,000–260,000 VND` (`$7.20–$10.40 USD`) | Hanh Cafe or Kumho Samco limousine via Dau Giay – Phan Thiet Expressway |
 
 ---
 
@@ -151,7 +167,7 @@ Extend your southern journey by adding three nights of marine tranquility on Vie
 | Expenditure Category | 5-Day City & Delta (2 Persons) | 7-Day Island Extension (2 Persons) |
 | :--- | :--- | :--- |
 | **Hotels & Resorts (4 / 6 Nights)** | 5,500,000–9,000,000 VND ($215–$350) | 12,000,000–22,000,000 VND ($470–$860) |
-| **Domestic Flights (VCA->PQC)** | None (Ground transport) | 2,400,000–3,600,000 VND ($94–$140) |
+| **Domestic Flights (VCA → PQC)** | None (Ground transport) | 2,400,000–3,600,000 VND ($94–$140) |
 | **Expressway Vans & Airport Cars** | 1,800,000 VND ($70) limousine vans | 3,200,000 VND ($125) vans + island taxis |
 | **Dining, Street Meals & Drinks** | 3,600,000 VND ($140) local eateries | 7,500,000 VND ($295) includes island seafood |
 | **Boat Tours, Tunnels & Entries** | 1,600,000 VND ($63) Cu Chi + Cai Rang | 3,800,000 VND ($149) includes cable car & boat |

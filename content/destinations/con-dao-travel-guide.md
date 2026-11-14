@@ -6,8 +6,8 @@ description: "Con Dao travel guide: pristine coral reefs, sea turtle nesting sea
 travel_cluster: "coastal_islands"
 last_verified: "2026-10-21"
 author: "VietnamGuide Editorial Team"
-reading_time_minutes: 14
-word_count: 1648
+reading_time_minutes: 8
+word_count: 1672
 ---
 
 # Con Dao Travel Guide: Best Time, Where to Stay & Costs (2026)
@@ -102,6 +102,20 @@ For budget travelers or those exploring the Mekong Delta, modern catamarans prov
 - **From Trần Đề Port (Sóc Trăng Province):** The shortest and most reliable sea crossing. **Superdong** and **Phú Quốc Express** operate daily high-speed catamarans across 85 kilometers of open sea into Ben Dam Port. Crossing duration is **2.0 to 2.5 hours**. Standard adult one-way tickets cost **390,000 to 450,000 VND (~$15.60 to $18.00 USD)**.
 - **From Vũng Tàu (Cầu Đá Port):** High-speed express boats navigate 185 kilometers south to Con Dao in **3.5 to 4.0 hours**. One-way tickets cost **660,000 to 880,000 VND**.
 - **Important Ferry Advisory:** Avoid sea crossings between December and February unless you possess strong sea legs, as open-ocean swells can induce severe motion sickness.
+
+### 3. 2026 Con Dao National Park Bay Canh Turtle Release, Diving & Ferry Logistics Matrix
+
+Use the operational schedule and tariff ledger below to compare sea ferry tiers, airport transfers, and mandatory Con Dao National Park marine conservation permits.
+
+| Transit Leg / National Park Activity | Distance & Route | Duration | Verified 2026 Fare / Permit (VND / USD) | Operational Schedule & Booking Rules |
+| :--- | :--- | :--- | :--- | :--- |
+| **Soc Trang (Tran De) → Ben Dam Ferry** | `90 km` sea channel | `1.75–2.5 hours` | `310,000–390,000 VND` (`$12–$15.50 USD`) | Superdong (`08:00`, `13:15`) & Phu Quoc Express (`08:30`); VIP seats `500,000 VND` |
+| **Vung Tau (Cau Da) → Ben Dam Ferry** | `185 km` open ocean | `3.75–4 hours` | `790,000–1,200,000 VND` (`$31–$48 USD`) | Phu Quoc Express catamaran (`07:30` departure); returns `13:00` |
+| **Co Ong Airport (`VCS`) → Con Son Town** | `14 km` coastal road | `20–25 mins` | `50,000–250,000 VND` (`$2.00–$10 USD`) | Shared shuttle van `50,000 VND`/pax; private 4-seat taxi `200,000–250,000 VND` |
+| **Ben Dam Port → Con Son Town Transfer** | `12 km` southwest | `18–20 mins` | `40,000–180,000 VND` (`$1.60–$7.20 USD`) | Shared minibus `40,000 VND`/pax; metered taxi `150,000–180,000 VND` |
+| **Marine Park Entry & Snorkeling Permit** | Offshore coral zones | `4–6 hours` boat | `60,000–150,000 VND` (`$2.40–$6.00 USD`) | Collected at town pier before boarding shared speedboat (`650,000 VND`/pax) |
+| **Hon Bay Canh Overnight Turtle Watch** | `7 km` east by boat | `14 hours` (`16:30–06:30`) | `750,000–1,200,000 VND` (`$30–$48 USD`) | Max `24 visitors`/night; includes `25 mins` boat transfer, ranger fee, morning release |
+| **2-Tank Certified SCUBA Dive Charter** | `8–15 km` (`Hon Tai` / `Hon Cau`) | `5.5 hours` (`08:00–13:30`) | `2,300,000–2,800,000 VND` (`$92–$112 USD`) | Operating `March–September`; `15–25 m` visibility; includes gear and marine permit |
 
 ---
 

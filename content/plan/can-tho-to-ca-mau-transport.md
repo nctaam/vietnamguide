@@ -6,8 +6,8 @@ description: "Futa express buses (150,000 VND, 3.5 hours) vs limousine minivans 
 travel_cluster: "mekong_delta"
 last_verified: "2026-10-25"
 author: "VietnamGuide Editorial Team"
-reading_time_minutes: 12
-word_count: 1540
+reading_time_minutes: 8
+word_count: 1585
 ---
 
 # Can Tho to Ca Mau Transport: Bus, Limousine, and Dat Mui Transit Guide
@@ -117,6 +117,21 @@ The 150 km drive along QL1A crosses three administrative boundaries: Can Tho Cit
 - **Surface Quality & Geometry**: QL1A is an asphalt-paved dual carriageway with concrete medians separating opposing traffic. Speed limits sit at 80 km/h for private cars outside urban zones and 60 km/h through town centers like Nga Bay, Soc Trang, and Gia Rai. Watch for uneven asphalt settlement caused by soft alluvial soil foundations across river canal bridges.
 - **Toll Plazas**: The journey passes through two automated Electronic Toll Collection (ETC) stations: BOT Soc Trang (KM 2123+250) and BOT Bac Lieu. Private vehicle drivers must ensure their VETC or ePass tag maintains an account balance of at least 100,000 VND to avoid manual lane delays.
 - **Rest Stops**: Long-distance coaches stop 20 minutes at highway service plazas like Tram Dung Chan Minh Khai. Facilities offer restrooms, hot noodle soups for 40,000 to 55,000 VND, and sugarcane juice for 15,000 VND.
+
+---
+
+## 2026 Can Tho – Soc Trang – Bac Lieu – Ca Mau – Dat Mui (GPS 0001) Corridor Matrix
+
+Use the stage-by-stage corridor table below to plan direct transfers from Can Tho to Ca Mau City (`150 km`) or break the journey at intermediate Khmer pagodas in Soc Trang, the coastal wind turbines in Bac Lieu, and the final `110 km` mangrove run to Dat Mui National Park (`Mũi Cà Mau`).
+
+| Corridor Segment | Distance & Route | Transit Duration | Verified 2026 Fare (VND / USD) | Primary Operators & Operational Notes |
+| :--- | :--- | :--- | :--- | :--- |
+| **Can Tho → Ca Mau City (Direct)** | `150 km` south via QL1A & Quan Lo – Phung Hiep | `2.75–3.5 hours` | `160,000–260,000 VND` (`$6.50–$10.50 USD`) | FUTA sleeper (`165,000 VND`, `3.5 hours`); Vu Linh & Giap Diep VIP limousine (`200,000–260,000 VND`, `2.75–3.0 hours`) |
+| **Can Tho → Soc Trang Stopover** | `62 km` south via QL1A highway | `1.25–1.5 hours` | `85,000–130,000 VND` (`$3.40–$5.20 USD`) | FUTA coach or local minibus; `38 km` (`45 mins`, `60,000 VND` bus) onward to Tran De Con Dao ferry port |
+| **Soc Trang → Bac Lieu City** | `50 km` southwest via QL1A | `1.0–1.25 hours` | `75,000–110,000 VND` (`$3.00–$4.40 USD`) | Bac Lieu Wind Farm (*Cánh đồng điện gió*) sits `12 km` (`20 mins`, `150,000 VND` taxi) southeast of town |
+| **Bac Lieu City → Ca Mau City** | `65 km` southwest via QL1A | `1.25–1.5 hours` | `90,000–140,000 VND` (`$3.60–$5.60 USD`) | Express buses and 9-seat limousines run every `30–45 mins` from `05:30` to `19:30` |
+| **Ca Mau City → Nam Can → Dat Mui (GPS 0001)** | `110 km` south (`52 km` to Nam Can + `58 km` to Dat Mui) | `2.25–2.75 hours` | `120,000–450,000 VND` (`$4.80–$18.00 USD`) | Bus No. 12 (`70,000–120,000 VND`), Ly Bon speedboat (`140,000 VND`, `2 hours`), or shared minivan (`250,000–450,000 VND`) |
+| **Dat Mui National Park Entry & Mangrove Boat** | `4–8 km` tidal mangrove boardwalk & canal circuit | `1.5–2.5 hours` | `30,000–600,000 VND` (`$1.20–$24.00 USD`) | Park entry `30,000 VND`/pax; private composite motor-shell boat (`vỏ lãi`) `400,000–600,000 VND` per boat (`4–6 pax`) |
 
 ---
 
