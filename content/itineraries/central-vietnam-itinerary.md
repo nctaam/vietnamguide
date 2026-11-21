@@ -86,7 +86,7 @@ Arrive at Hue’s Phu Bai Airport (HUI) or arrive via morning train. Transfer 25
 
 ### Day 2: Royal Mausoleums and Zen Monasteries
 
-Dedicate your second day to the monumental royal necropolises set among pine-covered hills south of [Hue](/destinations/hue-imperial-city-guide):
+Dedicate your second day to the monumental royal necropolises set among pine-covered hills south of [Hue](/destinations/hue-imperial-city-guide/):
 
 - **08:30 – Tomb of Emperor Khai Dinh (*Ung Lang*)**: Constructed between 1920 and 1931, this dramatic hillside mausoleum blends French neoclassical architecture with Vietnamese dynastic structure (150,000 VND entrance). Climb the steep stone steps guarded by life-sized stone mandarins and cavalry horses to enter the Thien Dinh Palace, where the walls and ceilings are covered in intricate murals crafted from millions of colorful shards of broken porcelain and glass beer bottles.
 - **11:00 – Tomb of Emperor Tu Duc (*Khiem Lang*)**: Contrast Khai Dinh's theatrical grandeur with the pastoral serenity of Tu Duc's royal parkland (150,000 VND entrance). Built while the emperor was still alive as a personal country retreat, the complex features peaceful pine groves, a crescent-shaped lotus pond, and wooden open-air reading pavilions built on stilts over water.
@@ -155,7 +155,7 @@ If you have seven full days, extend your stay by adding two nights in Da Nang to
 
 ## 2026 Central Heritage Corridor Stage-by-Stage Budget, Distance & Transit Ledger
 
-Travelers linking northern cave systems in [Phong Nha](/destinations/phong-nha-travel-guide) with the imperial and coastal hubs of [Hue](/destinations/hue-imperial-city-guide), [Da Nang](/destinations/da-nang-travel-guide), and [Hoi An](/destinations/hoi-an-ancient-town-guide) can benchmark every leg using this verified 2026 operational ledger:
+Travelers linking northern cave systems in [Phong Nha](/destinations/phong-nha-travel-guide/) with the imperial and coastal hubs of [Hue](/destinations/hue-imperial-city-guide/), [Da Nang](/destinations/da-nang-travel-guide/), and [Hoi An](/destinations/hoi-an-ancient-town-guide/) can benchmark every leg using this verified 2026 operational ledger:
 
 | Corridor Stage & Route Flow | Road / Rail Distance | Transit Duration | 2026 Transport Tariff (`VND` / `USD`) | Key Monument & Excursion Ticket Benchmark |
 | :--- | :--- | :--- | :--- | :--- |

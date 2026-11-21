@@ -75,7 +75,7 @@ Fly into **Phu Cat Airport (`UIH`, `30 km` north — take the `50,000 VND` airpo
 Cross **Thi Nai Bridge** at `07:45 AM` to **Nhon Ly Fishing Village**: board a morning speedboat (`650k–850k VND` all-inclusive) to swim in the turquoise cove of **Ky Co Beach**, snorkel coral gardens at **Hon Seo** (or **Hon Kho Island**), eat a fresh seafood lunch in the fishing village, and walk the cliffside trail of **Eo Gio (`25,000 VND`)** and **Ngoc Hoa Twin Buddha** in golden `16:00 PM` light.
 
 ### 3. Final Step — Day 3: Morning `Tháp Bánh Ít` (Silver Cham Towers) & `Chùa Thiên Hưng` + Afternoon in `Bãi Xép` Cove
-Start your third morning with a bowl of **`Bún Cá Ngọc Liên` (`379 Nguyễn Huệ`)**, then ride `25 minutes` north to photograph the 11th-century hilltop **Banh It Cham Towers (`20,000 VND`)** and **Thien Hung Zen Monastery (`0 VND`)** before spending a lazy final afternoon swimming and eating grilled squid on the sand at **Bai Xep Fishing Village (`12 km` south)** or continuing down the coast toward [Phu Yen](/destinations/phu-yen-travel-guide) and [Nha Trang](/destinations/nha-trang-travel-guide).
+Start your third morning with a bowl of **`Bún Cá Ngọc Liên` (`379 Nguyễn Huệ`)**, then ride `25 minutes` north to photograph the 11th-century hilltop **Banh It Cham Towers (`20,000 VND`)** and **Thien Hung Zen Monastery (`0 VND`)** before spending a lazy final afternoon swimming and eating grilled squid on the sand at **Bai Xep Fishing Village (`12 km` south)** or continuing down the coast toward [Phu Yen](/destinations/phu-yen-travel-guide/) and [Nha Trang](/destinations/nha-trang-travel-guide/).
 
 ---
 

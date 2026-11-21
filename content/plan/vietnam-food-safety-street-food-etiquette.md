@@ -6,7 +6,7 @@ description: "Master Vietnam food safety and street food etiquette: choose clean
 travel_cluster: "national_circuit"
 last_verified: "2026-10-24"
 author: "VietnamGuide Editorial Team"
-reading_time_minutes: 9
+reading_time_minutes: 12
 word_count: 2319
 ---
 

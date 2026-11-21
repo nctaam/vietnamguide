@@ -6,8 +6,8 @@ description: "Bus B4 (50,000 VND, 75 mins) from Dong Hoi station vs taxis (350,0
 travel_cluster: "phong_nha_caves"
 last_verified: "2026-10-20"
 author: "VietnamGuide Editorial Team"
-reading_time_minutes: 12
-word_count: 1526
+reading_time_minutes: 9
+word_count: 1788
 ---
 
 # Dong Hoi to Phong Nha Transport: Bus, Taxi, and Motorbike Route
@@ -51,8 +51,8 @@ As the road advances westward, flat coastal rice paddies give way to dense limes
 +----------------------+--------------------+--------------------+-----------------+--------------------+----------------+
 | Modality             | Primary Operators  | Fare (VND / USD)   | Travel Time     | Operating Window   | Best Suited For|
 +----------------------+--------------------+--------------------+-----------------+--------------------+----------------+
-| Public Bus B4        | Quang Binh DOT     | 35,000–45,000 VND  | 75 – 90 minutes | 05:30 – 17:00      | Solo budget    |
-| (Local Transit)      | (State Transit)    | ($1.40 – $1.80)    |                 | (Every 45–60 mins) | backpackers    |
+| Public Bus B4        | Quang Binh DOT     | 40,000–50,000 VND  | 75 – 90 minutes | 05:30 – 17:00      | Solo budget    |
+| (Local Transit)      | (State Transit)    | ($1.60 – $2.00)    |                 | (Every 45–60 mins) | backpackers    |
 +----------------------+--------------------+--------------------+-----------------+--------------------+----------------+
 | Metered Taxi / Grab  | Mai Linh, Sun Taxi,| 400,000–500,000 VND| 45 – 50 minutes | 24 Hours on demand | Couples, families|
 | (4-Seat Sedan)       | Tien Sa, GrabCar   | ($16.00 – $20.00)  |                 | (Pre-book at dawn) | late night/dawn|
@@ -70,7 +70,7 @@ As the road advances westward, flat coastal rice paddies give way to dense limes
 The green-and-yellow **Bus B4** is Quang Binh's designated municipal transit connection between coastal Dong Hoi and the Phong Nha tourist area:
 - **Route Itinerary**: The bus begins in Dong Hoi, travels past the central market, halts outside **Dong Hoi Railway Station** along Thuan Ly street, passes through Hoan Lao town, and terminates at the **Phong Nha Tourism Center** boat terminal in Son Trach village.
 - **Operating Schedule**: Services operate daily from 05:30 to 17:00, with departures running every 45 to 60 minutes.
-- **Fare Structure**: Fixed government-regulated tariff of 35,000 to 45,000 VND ($1.40–$1.80 USD) depending on boarding point. Conductors collect payment in cash onboard and issue paper receipts.
+- **Fare Structure**: Fixed government-regulated tariff of 40,000 VND to 50,000 VND ($1.60 to $2.00 USD) for the full Dong Hoi–Phong Nha run (shorter intermediate segments from Hoan Lao cost 35,000 VND / $1.40 USD). Conductors collect payment in cash onboard and issue paper receipts.
 - **Luggage Accommodation**: Standard backpacks and rolling suitcases are stowed near the front entryway or beside seats without extra fees, provided they do not obstruct passenger movement.
 - **Transit Duration**: 75 to 90 minutes. While slower than a private taxi due to periodic stops along Route 1A, the bus offers an economical and authentic public transit experience.
 
@@ -146,6 +146,25 @@ Returning from Phong Nha back to Dong Hoi follows the reverse transit corridor:
 - **Catching Bus B4**: Stand anywhere along the main street of Son Trach (*Đường 20 Quyết Thắng*) or wait at the Phong Nha Tourism Center boat pier. Buses pass through roughly every hour between 06:00 AM and 16:30 PM. Signal the driver clearly to stop.
 - **Homestay Taxi Bookings**: Guesthouses throughout Son Trach can dispatch a licensed taxi within 15 minutes at standard regulated flat rates (400,000–450,000 VND).
 - **Evening Train Departures**: Northbound sleeper trains to Hanoi (SE2, SE4) and southbound trains to Da Nang/Hue (SE5, SE7) depart Dong Hoi between 19:00 and 22:30. Travelers can enjoy a full afternoon caving in Phong Nha, take an easy 17:30 taxi into Dong Hoi, dine on fresh coastal seafood along Nhat Le beach, and board their night train comfortably.
+
+---
+
+## 2026 Hub Transfer Distances & Phong Nha Statutory Cave Tariffs
+
+Arriving at dawn on the SE1 or SE3 sleeper train means you can check your bag in Son Trach by 07:30 AM and head straight to the park gates at 08:30 AM. Planning both your Dong Hoi transfer fare and Quang Binh's updated 2026 statutory cave tariffs prevents cash shortfalls, as Son Trach's lone Agribank ATM occasionally runs dry during peak weekends.
+
+| Hub Transfer or 2026 Cave Activity | Distance from Base | Travel / Visit Time | 2026 Statutory Tariff (VND / USD) | Essential Logistics Detail |
+| :--- | :--- | :--- | :--- | :--- |
+| **Dong Hoi Station → Phong Nha (Bus B4)** | 45 km | 75–90 minutes | 45,000 VND to 50,000 VND ($1.80–$2.00) | Hourly 05:30–17:00; cash onboard. |
+| **Dong Hoi Airport (VDH) → Phong Nha (Taxi)** | 42 km | 42–48 minutes | 420,000 VND to 480,000 VND ($16.80–$19.20) | 7-seat SUV runs 520,000 VND to 600,000 VND ($20.80–$24.00). |
+| **VDH Terminal → QL1A Bus B4 Stop** | 800 m | 10 mins walk / 3 mins cab | 35,000 VND ($1.40) short taxi hop | Bus B4 stays on QL1A outside airport gates. |
+| **Nhat Le Beach → Phong Nha (Sedan)** | 48 km | 55 minutes | 450,000 VND to 500,000 VND ($18.00–$20.00) | Useful for seafood dinner layovers before night trains. |
+| **Paradise Cave (Động Thiên Đường)** | 25 km west of town | 35 mins drive + 2 hours inside | **270,000 VND ($10.80)** adult entry | 1.6 km buggy shuttle: 100,000 VND ($4.00) RT (4-seat cart). |
+| **Phong Nha Cave (Động Phong Nha)** | 0 km (Son Trach pier) | 2 hours 30 mins (10 km river) | **150,000 VND ($6.00)** + **550,000 VND ($22.00)** boat | Boat seats up to 12; solo travelers split from 50,000 VND ($2.00). |
+| **Dark Cave (Hang Tối) Full Combo** | 21 km west of town | 30 mins drive + 3 hours | 450,000 VND ($18.00) zipline/mud/kayak | Basic kayak-only entry costs 250,000 VND ($10.00). |
+| **Phong Nha Botanical Garden** | 12 km from town | 20 mins drive + 2 hours hike | 40,000 VND ($1.60) adult entry | Easy half-day loop with Gio Waterfall trail. |
+
+Pay close attention to the revised 2026 statutory admission at **Paradise Cave**: adult tickets now stand at **270,000 VND ($10.80 USD)**—replacing the older 250,000 VND figure still quoted on outdated blogs—while children measuring 1.1 m to 1.3 m pay 135,000 VND ($5.40 USD). Larger 6-to-8-seat electric carts along the 1.6 km shaded forest approach run 150,000 VND to 250,000 VND ($6.00 to $10.00 USD). At **Phong Nha Cave**, the mandatory 550,000 VND ($22.00 USD) dragon boat charter is charged per hull rather than per guest. Pairing up with other arrivals at the Son Trach pier desk cuts your boat share under 100,000 VND ($4.00 USD). Adding Tien Son Dry Cave above the river cavern costs an extra 80,000 VND ($3.20 USD) ticket plus 50,000 VND ($2.00 USD) for boat waiting time. Plan your full cave schedule and riverside base with our [Phong Nha travel guide](/destinations/phong-nha-travel-guide/), [where to stay in Phong Nha](/destinations/where-to-stay-in-phong-nha/), and [Phong Nha cave treks guide](/plan/phong-nha-cave-treks/).
 
 ---
 

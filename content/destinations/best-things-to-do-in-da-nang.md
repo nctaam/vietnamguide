@@ -6,7 +6,7 @@ description: "Explore the best things to do in Da Nang: My Khe Beach, Marble Mou
 travel_cluster: "central_heritage"
 last_verified: "2026-10-22"
 author: "VietnamGuide Editorial Team"
-reading_time_minutes: 10
+reading_time_minutes: 8
 word_count: 1543
 ---
 

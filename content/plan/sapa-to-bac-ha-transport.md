@@ -6,7 +6,7 @@ description: "Sunday market shuttles (2.5-3 hours, 200,000-250,000 VND return) v
 travel_cluster: "far_north_frontier"
 last_verified: "2026-10-31"
 author: "VietnamGuide Editorial Team"
-reading_time_minutes: 12
+reading_time_minutes: 8
 word_count: 1574
 ---
 

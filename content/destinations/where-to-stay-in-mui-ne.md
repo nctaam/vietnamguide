@@ -6,7 +6,7 @@ description: "Decide where to stay in Mui Ne: Nguyen Dinh Chieu resort strip, Ha
 travel_cluster: "coastal_islands"
 last_verified: "2026-10-24"
 author: "VietnamGuide Editorial Team"
-reading_time_minutes: 12
+reading_time_minutes: 8
 word_count: 1563
 ---
 

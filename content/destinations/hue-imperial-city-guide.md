@@ -6,7 +6,7 @@ description: "Authoritative Hue Imperial City guide: decide whether Hue deserves
 travel_cluster: "central_heritage"
 last_verified: "2026-11-01"
 author: "VietnamGuide Editorial Team"
-reading_time_minutes: 10
+reading_time_minutes: 9
 word_count: 1871
 ---
 
@@ -114,9 +114,9 @@ Yes. During dry spring and summer months, the Hue Monuments Conservation Centre 
 ## Internal Next Steps
 
 Connect your Hue Imperial City visit with regional transport, culinary stops, and Central Vietnam itineraries:
-- Broaden your sightseeing beyond the royal walls with our ranked guide to the [Best Things to Do in Hue](/destinations/best-things-to-do-in-hue).
-- Plan your midday lunch breaks around royal steamed dumplings and spicy beef noodles in our [Hue Street Food Guide](/destinations/hue-street-food-guide).
-- Compare south-bank riverside hotels against quiet garden homestays in [Where to Stay in Hue](/destinations/where-to-stay-in-hue).
-- Weighing time allocation between central heritage towns? Read our head-to-head breakdown of [Hoi An vs Hue](/compare/hoi-an-vs-hue).
-- Choose between coastal rail carriages and private cars over Hai Van Pass in [Da Nang to Hue Train vs Car](/itineraries/da-nang-to-hue-train-vs-car) and [Hue to Hoi An Transport](/plan/hue-to-hoi-an-transport).
-- Link Hue seamlessly into a 5-to-7-day regional loop using our [Central Vietnam Itinerary](/itineraries/central-vietnam-itinerary) or head north via [Hue to Phong Nha Transport](/plan/hue-to-phong-nha-transport).
+- Broaden your sightseeing beyond the royal walls with our ranked guide to the [Best Things to Do in Hue](/destinations/best-things-to-do-in-hue/).
+- Plan your midday lunch breaks around royal steamed dumplings and spicy beef noodles in our [Hue Street Food Guide](/destinations/hue-street-food-guide/).
+- Compare south-bank riverside hotels against quiet garden homestays in [Where to Stay in Hue](/destinations/where-to-stay-in-hue/).
+- Weighing time allocation between central heritage towns? Read our head-to-head breakdown of [Hoi An vs Hue](/compare/hoi-an-vs-hue/).
+- Choose between coastal rail carriages and private cars over Hai Van Pass in [Da Nang to Hue Train vs Car](/itineraries/da-nang-to-hue-train-vs-car/) and [Hue to Hoi An Transport](/plan/hue-to-hoi-an-transport/).
+- Link Hue seamlessly into a 5-to-7-day regional loop using our [Central Vietnam Itinerary](/itineraries/central-vietnam-itinerary/) or head north via [Hue to Phong Nha Transport](/plan/hue-to-phong-nha-transport/).

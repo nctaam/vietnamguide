@@ -6,7 +6,7 @@ description: "Pier-to-hotel shared limousine vans (3.5 hours, 280,000-350,000 VN
 travel_cluster: "ha_long_bay"
 last_verified: "2026-11-01"
 author: "VietnamGuide Editorial Team"
-reading_time_minutes: 12
+reading_time_minutes: 8
 word_count: 1561
 ---
 

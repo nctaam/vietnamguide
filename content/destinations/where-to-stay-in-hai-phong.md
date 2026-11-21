@@ -6,7 +6,7 @@ description: "French Quarter boutique hotels near the Opera House vs Le Hong Pho
 travel_cluster: "ha_long_bay"
 last_verified: "2026-10-24"
 author: "VietnamGuide Editorial Team"
-reading_time_minutes: 11
+reading_time_minutes: 7
 word_count: 1407
 ---
 

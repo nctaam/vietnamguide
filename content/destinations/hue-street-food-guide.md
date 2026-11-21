@@ -6,7 +6,7 @@ description: "Complete Hue street food guide: taste authentic Bun Bo Hue, royal 
 travel_cluster: "central_heritage"
 last_verified: "2026-11-02"
 author: "VietnamGuide Editorial Team"
-reading_time_minutes: 15
+reading_time_minutes: 11
 word_count: 2166
 ---
 

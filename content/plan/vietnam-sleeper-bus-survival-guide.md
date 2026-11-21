@@ -6,7 +6,7 @@ description: "Vietnam sleeper bus survival guide: VIP cabins vs standard bunks, 
 travel_cluster: "national_circuit"
 last_verified: "2026-11-01"
 author: "VietnamGuide Editorial Team"
-reading_time_minutes: 11
+reading_time_minutes: 12
 word_count: 2391
 ---
 

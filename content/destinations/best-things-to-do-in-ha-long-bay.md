@@ -6,7 +6,7 @@ description: "The best things to do in Ha Long Bay: Sung Sot cave, Ti Top island
 travel_cluster: "ha_long_bay"
 last_verified: "2026-11-01"
 author: "VietnamGuide Editorial Team"
-reading_time_minutes: 13
+reading_time_minutes: 12
 word_count: 2350
 ---
 
@@ -124,9 +124,9 @@ No. Operating a drone (UAV) over Ha Long Bay without an advance written permit f
 ## Internal Next Steps
 
 To finalize your northern maritime itinerary, compare routes, port transfers, and accommodation bases across our verified guides:
-- Read our comprehensive [Ha Long Bay Travel Guide](/destinations/ha-long-bay-travel-guide) for seasonal weather tables and Route 1 vs. Route 2 maps.
-- Deciding between adjacent bays? Compare crowd levels and karst routes in [Ha Long Bay vs Lan Ha Bay](/compare/ha-long-bay-vs-lan-ha-bay) or explore the quieter northeastern reaches in our [Bai Tu Long Bay Guide](/destinations/bai-tu-long-bay-guide).
-- Short on vacation days? Weigh a 6-hour express excursion against a 24-hour boat stay in [Ha Long Bay Day Trip vs Overnight Cruise](/itineraries/ha-long-bay-day-trip-vs-overnight-cruise).
-- Before paying a deposit, screen your operator with our checklist of [Ha Long Bay Cruise Questions Before Booking](/plan/ha-long-bay-cruise-questions-before-booking).
-- Coordinate your highway transit using our [Hanoi to Ha Long Bay Transport](/plan/hanoi-to-ha-long-bay-transport) guide or connect directly southward via our [Ninh Binh to Ha Long Bay Transfer Guide](/plan/ninh-binh-to-ha-long-bay-transfer).
-- If arriving a night early, review waterfront hotels in [Where to Stay in Ha Long Bay](/destinations/where-to-stay-in-ha-long-bay) or island lodges in our [Cat Ba Travel Guide](/destinations/cat-ba-travel-guide).
+- Read our comprehensive [Ha Long Bay Travel Guide](/destinations/ha-long-bay-travel-guide/) for seasonal weather tables and Route 1 vs. Route 2 maps.
+- Deciding between adjacent bays? Compare crowd levels and karst routes in [Ha Long Bay vs Lan Ha Bay](/compare/ha-long-bay-vs-lan-ha-bay/) or explore the quieter northeastern reaches in our [Bai Tu Long Bay Guide](/destinations/bai-tu-long-bay-guide/).
+- Short on vacation days? Weigh a 6-hour express excursion against a 24-hour boat stay in [Ha Long Bay Day Trip vs Overnight Cruise](/itineraries/ha-long-bay-day-trip-vs-overnight-cruise/).
+- Before paying a deposit, screen your operator with our checklist of [Ha Long Bay Cruise Questions Before Booking](/plan/ha-long-bay-cruise-questions-before-booking/).
+- Coordinate your highway transit using our [Hanoi to Ha Long Bay Transport](/plan/hanoi-to-ha-long-bay-transport/) guide or connect directly southward via our [Ninh Binh to Ha Long Bay Transfer Guide](/plan/ninh-binh-to-ha-long-bay-transfer/).
+- If arriving a night early, review waterfront hotels in [Where to Stay in Ha Long Bay](/destinations/where-to-stay-in-ha-long-bay/) or island lodges in our [Cat Ba Travel Guide](/destinations/cat-ba-travel-guide/).

@@ -6,8 +6,8 @@ description: "Trang An vs Tam Coc: compare 250,000 VND boat tickets, 3-hour rive
 travel_cluster: "ninh_binh"
 last_verified: "2026-10-22"
 author: "VietnamGuide Editorial Team"
-reading_time_minutes: 10
-word_count: 1318
+reading_time_minutes: 8
+word_count: 1646
 ---
 
 # Trang An vs Tam Coc Boat Tour Guide (2026): Routes 1–3, Ticket Prices & Rice Harvest Season
@@ -65,6 +65,31 @@ Departing from **Van Lam Pier (`Bến Đò Văn Lâm`)** right in the center of 
 
 ### Navigating Tam Coc's Floating Vendors & Tipping Etiquette in 2026
 While Ninh Binh Provincial Tourism Authorities instituted strict QR-coded rower vests and anti-harassment enforcement in 2024–2026, floating boats selling snacks, sodas (`40,000–50,000 VND`), and tourist photos still congregate outside `Hang Ba` (the third cave). If a floating vendor asks *"Do you want to buy a drink for your rower?"*, smile and say **"No, thank you (`Không, cảm ơn`)"**—some vendors charge `100,000 VND` for two cans of soda that the rower later resells back to the boatwoman for half price. Instead, thank your rower directly at the end of the trip with a cash tip of **`50,000 to 100,000 VND` (`~$2.00–$4.00 USD`) per boat** (applicable at both Tam Coc and Trang An, where rowers earn only a modest share of the official ticket fee for 2 to 3 hours of manual rowing in the heat).
+
+---
+
+## 2026 Route-by-Route Boat Tariff, Pier Distance & Hanoi Transfer Ledger
+
+Deciding between the two piers often comes down to transfer logistics and how tightly you are packing your day from Hanoi. Both boat wharves sit in Hoa Lu District within a short taxi hop of one another, yet road distances from Ninh Binh Railway Station, Hang Mua, and Bai Dinh Pagoda alter daily transport spending.
+
+| Route / Transit Segment (2026 Verified) | Distance | Duration | 2026 Official Tariff (VND / USD) | Key Operational Notes |
+| :--- | :--- | :--- | :--- | :--- |
+| **Trang An Route 1 (9 Caves + 3 Temples)** | 15 km circular | 180 mins (3 hours) | 250,000 VND ($10.00) adult / 120,000 VND ($4.80) child | 4 adults per boat; private charter 1,000,000 VND ($40.00) |
+| **Trang An Route 2 (4 Caves + 3 Temples)** | 12 km circular | 150 mins (2.5 hours) | 250,000 VND ($10.00) adult / 120,000 VND ($4.80) child | Best balanced cave-to-lagoon ratio; Vu Lam Palace stop |
+| **Trang An Route 3 (Hang Dot 1,000 m + 2 Caves)** | 13.5 km circular | 165 mins (2.75 hours) | 250,000 VND ($10.00) adult / 120,000 VND ($4.80) child | Includes 25-minute paddle inside 1,000 m Hang Dot |
+| **Tam Coc Standard Sampan (3 River Caves)** | 6 km out-and-back | 105 mins (1.75 hours) | 250,000 VND ($10.00) adult / 120,000 VND ($4.80) child | Max 2 foreign adults/boat; solo supplement 250,000 VND ($10.00) |
+| **Ninh Binh Train Station → Tam Coc Pier** | 7 km southwest | 12 mins by GrabCar | 95,000 VND ($3.80) to 120,000 VND ($4.80) | Flat town road; Mai Linh and Xanh SM taxis wait outside gate |
+| **Ninh Binh Train Station → Trang An Pier** | 8.5 km northwest | 15 mins by GrabCar | 115,000 VND ($4.60) to 140,000 VND ($5.60) | Direct boulevard via Trang An Avenue |
+| **Tam Coc Pier ↔ Trang An Pier** | 7.5 km north | 12 mins by taxi / 25 mins bike | 100,000 VND ($4.00) GrabCar; 120,000 VND ($4.80) scooter/day | Scenic backroad passing Hang Mua junction at km 4 |
+| **Hanoi Old Quarter ↔ Tam Coc VIP Limousine** | 95 km via CT01 | 100 mins each way | 170,000 VND ($6.80) to 230,000 VND ($9.20) per seat | Door-to-door hotel pickup; hourly 06:00–20:00 |
+| **Hanoi Station ↔ Ninh Binh Train (SE1–SE8)** | 115 km rail | 135 mins (2.25 hours) | 95,000 VND ($3.80) to 160,000 VND ($6.40) soft seat | Zero expressway traffic; add 12 mins station taxi |
+
+### Seasonal Light, Crowd Waves, and Doing Both Boats Over Two Days
+Crowd density flips dramatically across a single morning at both piers. Between 07:00 AM and 08:30 AM, river water stays mirror-flat and mist still clings to the sheer cliff faces above the lagoons. By 10:15 AM, dozens of 45-seat coaches roll off Expressway CT01 from Hanoi, pushing queue times at Trang An ticket windows to 25 minutes and crowding the narrow Hang Ca entrance at Tam Coc.
+
+Photographers get two clean shooting windows. Dawn light from 07:00 AM to 08:30 AM strikes the limestone walls from the east without harsh overhead shadows. Late afternoon light between 15:15 PM and 16:45 PM softens water glare across the Ngo Dong paddies while tour buses are already pulling back onto the highway toward Hanoi.
+
+Travelers spending two nights in Ninh Binh do not have to treat this choice as strictly either-or. Base yourself overnight in Tam Coc village for walkable goat restaurants and lotus lanes, board Trang An Route 2 or Route 3 at 07:15 AM on Day 1 for deep caves and quiet shrines, then ride Tam Coc at 07:00 AM on Day 2 if visiting between April and early June. During dry winter months from November through February, stick with Trang An and spend your second morning cycling out to Thung Nham Bird Park (6.5 km west of Tam Coc, 150,000 VND / $6.00 entry) or Hoa Lu Ancient Capital (11 km north). For full village lodging and cycling routes, see our [Tam Coc Travel Guide](/destinations/tam-coc-travel-guide/), [Hang Mua Guide](/destinations/hang-mua-ninh-binh-guide/), [Hanoi to Ninh Binh Train vs Limousine](/plan/hanoi-to-ninh-binh-train-vs-limousine/), and [Ninh Binh Day Trip vs Overnight](/compare/ninh-binh-day-trip-vs-overnight/).
 
 ---
 

@@ -6,8 +6,8 @@ description: "Fast catamarans across 45 km: Superdong (75 mins, 230,000 VND) vs 
 travel_cluster: "mekong_delta"
 last_verified: "2026-11-01"
 author: "VietnamGuide Editorial Team"
-reading_time_minutes: 8
-word_count: 1538
+reading_time_minutes: 9
+word_count: 1824
 ---
 
 # Ha Tien to Phu Quoc Ferry (2026): Speedboat & Vehicle Ro-Ro Guide
@@ -99,3 +99,23 @@ Once outside the port gate, three onward transport options connect you to the we
 Vietnamese Port Authority (`Cảng vụ Hàng hải Kiên Giang`) regulations enforce strict passenger manifest checks prior to boarding. Bring physical ID. Every passenger's full legal name, year of birth, nationality, and passport number (or Vietnamese CCCD ID number) must be printed on the ticket and matched against original documents at the pier turnstile. Arrive at the Kim Du Street terminal at least 30 minutes before scheduled departure, or 45 minutes early when checking a motorbike onto a Ro-Ro ferry.
 
 During the Southwest Monsoon (`May to October`), tropical depressions over the Gulf of Thailand occasionally generate **Beaufort Force 6 to 7** winds (`39 to 61 km/h`) and waves exceeding `2.0 to 2.5 meters`. Safety rules are absolute. When winds cross Force 6, the Maritime Administration suspends all high-speed departures on both the Ha Tien and Rach Gia routes, issuing a `100%` refund or free rebooking onto the next cleared sailing; compare both mainland ports in our master [Phu Quoc Ferry Guide](/plan/phu-quoc-ferry-guide/) or check backup hotels in [Where to Stay in Rach Gia](/destinations/where-to-stay-in-rach-gia/).
+
+---
+
+## Frequently Asked Questions (2026)
+
+### Can I buy Ha Tien to Phu Quoc ferry tickets directly at Kim Du Street Pier?
+
+Walk-up counters at Ha Tien Passenger Port (`Kim Du Street`, To Chau Ward) open at `05:30` daily and sell same-day seats for Superdong (`230,000 VND` / `$9.20 USD`) and Phu Quoc Express (`216,000 to 250,000 VND` / `$8.60 to $10.00 USD`). Spare seats vanish fast on weekends. During Friday–Sunday peaks, Tet holidays, and December–April dry-season mornings, reserve QR boarding passes `48 to 72 hours` ahead—especially for the `06:00`, `07:25`, and `08:00` sailings or any motorbike slot aboard Thanh Thoi Ro-Ro Ferry (`185,000 VND` passenger plus `80,000 VND` scooter).
+
+### Is it possible to cross from Kampot and catch a Phu Quoc ferry the same day?
+
+Yes, provided you leave Kampot before `08:00`. Road transit from Kampot to the Prek Chak / Xa Xia International Border Gate covers `45 km` (`60 minutes`), while exit-plus-entry stamping takes `35 to 55 minutes` when you carry a printed Vietnam 90-day e-Visa (`$25 USD` single-entry via `evisa.gov.vn`). From the Vietnamese barrier, a `9 km` taxi down Highway `QL80` reaches Ha Tien Port in `15 minutes` for `120,000 to 150,000 VND` (`$4.80 to $6.00 USD`), landing you cleanly ahead of the `12:00` Superdong (`75 minutes`), `12:30` Phu Quoc Express (`65 minutes`), or `13:45` final afternoon boat.
+
+### What happens if Southwest Monsoon winds cancel my Ha Tien ferry?
+
+Between May and October, sustained gusts reaching **Beaufort Force 6** (`39 to 49 km/h`) trigger an immediate Kien Giang Maritime Port Authority sailing halt across the `45 km` channel. Safety closures override every schedule. Both Phu Quoc Express and Superdong refund `100%` of your fare or shift your booking onto the next cleared departure at zero penalty, while Thanh Thoi Ro-Ro barges typically pause `6 to 24 hours` until swells settle below `2.0 meters`. If stranded overnight, riverside guesthouses near To Chau Bridge run `350,000 to 600,000 VND` (`$14.00 to $24.00 USD`)—check [Where to Stay in Ha Tien](/destinations/where-to-stay-in-ha-tien/)—or take a `90 km` (`2 hours`, `1,100,000 VND` / `$44.00 USD`) taxi south toward Rach Gia Airport (`VKG`) for mainland connections.
+
+### Should I ship my motorbike on Thanh Thoi Ro-Ro or rent a scooter at Bai Vong Port?
+
+Short island trips favor renting locally. Shipping a `110cc to 125cc` scooter round-trip on Thanh Thoi Ferry costs `160,000 VND` (`$6.40 USD`) in vehicle fees plus `45 minutes` of early check-in each way and `150 to 165 minutes` of slower sea time versus a `65-minute` catamaran. For stays of `1 to 3 days`, ride a fast boat (`230,000 VND` / `$9.20 USD`) and rent an automatic Honda Vision opposite Bai Vong Port for `130,000 to 150,000 VND` (`$5.20 to $6.00 USD`) per `24 hours`. Reserve the Ro-Ro barge only when touring the Mekong Delta for `5+ days` on your own motorcycle or bringing a `150cc+` manual touring bike.

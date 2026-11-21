@@ -6,7 +6,7 @@ description: "Decide between Mekong Delta overnight vs day trip: choose a quick 
 travel_cluster: "mekong_delta"
 last_verified: "2026-11-02"
 author: "VietnamGuide Editorial Team"
-reading_time_minutes: 15
+reading_time_minutes: 9
 word_count: 1899
 ---
 

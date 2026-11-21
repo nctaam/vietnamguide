@@ -1,14 +1,16 @@
 /**
  * VietnamGuide Service Worker (PWA & Offline Travel Field Guide)
- * 
+ *
  * Provides network-first caching for field guides and itineraries,
- * reliable static asset delivery, and offline fallback support for travelers.
+ * resilient precaching, bounded storage pruning, and offline fallback
+ * support for travelers outside cellular coverage.
  */
 
 'use strict';
 
-var CACHE_NAME = 'vg-travel-handbook-v1.4.2';
+var CACHE_NAME = 'vg-travel-handbook-v1.5.0';
 var OFFLINE_URL = '/offline.html';
+var MAX_CACHE_ENTRIES = 80;
 
 var PRECACHE_ASSETS = [
   OFFLINE_URL,
@@ -32,10 +34,33 @@ var PRECACHE_ASSETS = [
   '/itineraries/10-days-in-vietnam/'
 ];
 
+function trimCache(cacheName, maxItems) {
+  return caches.open(cacheName).then(function (cache) {
+    return cache.keys().then(function (keys) {
+      if (keys.length <= maxItems) {
+        return;
+      }
+      var excess = keys.length - maxItems;
+      var deletions = [];
+      for (var i = 0; i < keys.length && deletions.length < excess; i++) {
+        var reqUrl = new URL(keys[i].url);
+        if (PRECACHE_ASSETS.indexOf(reqUrl.pathname) === -1) {
+          deletions.push(cache.delete(keys[i]));
+        }
+      }
+      return Promise.all(deletions);
+    });
+  }).catch(function () {});
+}
+
 self.addEventListener('install', function (event) {
   event.waitUntil(
     caches.open(CACHE_NAME).then(function (cache) {
-      return cache.addAll(PRECACHE_ASSETS);
+      return Promise.allSettled(
+        PRECACHE_ASSETS.map(function (assetUrl) {
+          return cache.add(assetUrl);
+        })
+      );
     }).then(function () {
       return self.skipWaiting();
     })
@@ -74,12 +99,13 @@ self.addEventListener('fetch', function (event) {
     return;
   }
 
-  // Bypass admin, login, and dynamic query endpoints
+  // Bypass admin, login, search, REST API, and dynamic preview endpoints
   if (
     url.pathname.indexOf('/wp-admin/') !== -1 ||
     url.pathname.indexOf('/wp-login.php') !== -1 ||
+    url.pathname.indexOf('/wp-json/') !== -1 ||
     url.search.indexOf('preview=true') !== -1 ||
-    url.pathname.indexOf('/wp-json/wp/v2/users') !== -1
+    url.searchParams.has('s')
   ) {
     return;
   }
@@ -97,7 +123,9 @@ self.addEventListener('fetch', function (event) {
             if (cc.indexOf('no-store') === -1 && cc.indexOf('private') === -1) {
               var responseClone = networkResponse.clone();
               caches.open(CACHE_NAME).then(function (cache) {
-                cache.put(request, responseClone);
+                return cache.put(request, responseClone);
+              }).then(function () {
+                return trimCache(CACHE_NAME, MAX_CACHE_ENTRIES);
               });
             }
           }
@@ -115,7 +143,7 @@ self.addEventListener('fetch', function (event) {
     return;
   }
 
-  // Handle static assets (CSS, JS, images, fonts, manifest) with Cache-First, falling back to network
+  // Handle static assets (CSS, JS, images, fonts, manifest) with Stale-While-Revalidate
   var isStaticAsset = (
     url.pathname.match(/\.(css|js|svg|png|jpg|jpeg|webp|woff|woff2|webmanifest)$/i) ||
     url.pathname.indexOf('/assets/') !== -1
@@ -128,16 +156,13 @@ self.addEventListener('fetch', function (event) {
         return caches.match(request, { ignoreSearch: true });
       }).then(function (cachedResponse) {
         if (cachedResponse) {
-          // Revalidate in background
           fetch(request).then(function (networkResponse) {
             if (networkResponse && networkResponse.status === 200) {
               caches.open(CACHE_NAME).then(function (cache) {
                 cache.put(request, networkResponse);
               });
             }
-          }).catch(function () {
-            // Revalidation failed quietly
-          });
+          }).catch(function () {});
           return cachedResponse;
         }
 
@@ -145,7 +170,9 @@ self.addEventListener('fetch', function (event) {
           if (networkResponse && networkResponse.status === 200) {
             var responseClone = networkResponse.clone();
             caches.open(CACHE_NAME).then(function (cache) {
-              cache.put(request, responseClone);
+              return cache.put(request, responseClone);
+            }).then(function () {
+              return trimCache(CACHE_NAME, MAX_CACHE_ENTRIES);
             });
           }
           return networkResponse;

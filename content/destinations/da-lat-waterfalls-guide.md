@@ -6,7 +6,7 @@ description: "Complete Da Lat waterfalls guide: compare Pongour terraced cascade
 travel_cluster: "central_highlands"
 last_verified: "2026-10-21"
 author: "VietnamGuide Editorial Team"
-reading_time_minutes: 13
+reading_time_minutes: 10
 word_count: 1933
 ---
 

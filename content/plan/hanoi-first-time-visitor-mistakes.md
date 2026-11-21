@@ -6,7 +6,7 @@ description: "Avoid common Hanoi first-time visitor mistakes regarding hotel loc
 travel_cluster: "northern_triangle"
 last_verified: "2026-10-22"
 author: "VietnamGuide Editorial Team"
-reading_time_minutes: 10
+reading_time_minutes: 8
 word_count: 1501
 ---
 

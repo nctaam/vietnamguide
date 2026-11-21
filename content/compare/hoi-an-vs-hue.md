@@ -6,13 +6,13 @@ description: "Hoi An vs Hue comparison: evaluate UNESCO heritage sites, 125 km t
 travel_cluster: "central_heritage"
 last_verified: "2026-11-01"
 author: "VietnamGuide Editorial Team"
-reading_time_minutes: 9
+reading_time_minutes: 8
 word_count: 1599
 ---
 
 # Hoi An vs Hue: Architecture, Cuisine, Atmosphere, and Itinerary Allocation
 
-Separated by 125 km of coastal highway and the 496-meter crest of the Hải Vân Pass, [Hội An](/destinations/hoi-an-ancient-town-guide) and [Huế](/destinations/hue-imperial-city-guide) anchor central Vietnam's UNESCO World Heritage corridor while delivering sharply contrasting daily rhythms. Hội An evolved between the 15th and 19th centuries as Faifo, an international maritime entrepôt where Japanese merchants, Fujianese sea captains, and local artisans built timber shophouses along the Thu Bồn River. Everything inside its 2.5 km² historic core operates at pedestrian and bicycle scale, located 4.5 km from the sandy shoreline of An Bàng Beach.
+Separated by 125 km of coastal highway and the 496-meter crest of the Hải Vân Pass, [Hội An](/destinations/hoi-an-ancient-town-guide/) and [Huế](/destinations/hue-imperial-city-guide/) anchor central Vietnam's UNESCO World Heritage corridor while delivering sharply contrasting daily rhythms. Hội An evolved between the 15th and 19th centuries as Faifo, an international maritime entrepôt where Japanese merchants, Fujianese sea captains, and local artisans built timber shophouses along the Thu Bồn River. Everything inside its 2.5 km² historic core operates at pedestrian and bicycle scale, located 4.5 km from the sandy shoreline of An Bàng Beach.
 
 Huế, by contrast, served from 1802 to 1945 as the imperial capital of the thirteen Nguyễn Dynasty emperors. Its monuments span a vast geographic footprint across both banks of the Perfume River (*Sông Hương*): the 520-hectare Imperial Citadel (*Đại Nội*) enclosed by a 10 km brick rampart in the north, and seven royal mausoleums dispersed 5 km to 16 km upriver through pine hills in the south. Deciding how to split your central Vietnam days between them—or which city to prioritize on a compressed schedule—hinges on walking comfort, monument scale, culinary heat, and seasonal rain patterns across the Trường Sơn mountain divide.
 
@@ -62,7 +62,7 @@ Along Đường Trần Phú, Đường Nguyễn Thái Học, and riverside Đư�
 - **Merchant Residences**: The 200-year-old Tấn Ký Old House (101 Đường Nguyễn Thái Học) and Phùng Hưng House (04 Đường Nguyễn Thị Minh Khai) preserve ironwood beams and flood-high watermarks from the Thu Bồn River.
 
 ### 2. Huế: The 520-Hectare Citadel and Royal Mausoleums
-Exploring the [best things to do in Hue](/destinations/best-things-to-do-in-hue) requires planning around spatial scale and midday heat. Inside the northern bank's Imperial Enclosure, visitors enter through the towering two-tiered Meridian Gate (*Ngọ Môn*), cross the Golden Water Bridge over lotus ponds to Thái Hòa Palace, and walk 2.5 km to 3.5 km through the reconstructed halls, royal theater (*Duyệt Thị Đường*), and Forbidden Purple City (*Tử Cấm Thành*).
+Exploring the [best things to do in Hue](/destinations/best-things-to-do-in-hue/) requires planning around spatial scale and midday heat. Inside the northern bank's Imperial Enclosure, visitors enter through the towering two-tiered Meridian Gate (*Ngọ Môn*), cross the Golden Water Bridge over lotus ponds to Thái Hòa Palace, and walk 2.5 km to 3.5 km through the reconstructed halls, royal theater (*Duyệt Thị Đường*), and Forbidden Purple City (*Tử Cấm Thành*).
 South of the city along the Perfume River, three royal tombs warrant 60 minutes to 90 minutes each:
 - **Tomb of Minh Mạng** (16 km southwest, 30 minutes by car): Symmetrical Confucian courtyards, lakes, and pine pavilions aligned along a 700-meter sacred axis (150,000 VND / $6.00 USD).
 - **Tomb of Tự Đức** (7 km southwest, 15 minutes by car): A 12-hectare lakeside poet's retreat with timber pavilions over Luu Khiem Lake (150,000 VND / $6.00 USD).
@@ -72,7 +72,7 @@ South of the city along the Perfume River, three royal tombs warrant 60 minutes 
 
 ## Culinary Showdown: Faifo Merchant Staples vs Royal Court Spice
 
-Both cities anchor central Vietnamese gastronomy, yet our [Hoi An Street Food Guide](/destinations/hoi-an-street-food-guide) and [Hue Street Food Guide](/destinations/hue-street-food-guide) highlight distinct flavor profiles:
+Both cities anchor central Vietnamese gastronomy, yet our [Hoi An Street Food Guide](/destinations/hoi-an-street-food-guide/) and [Hue Street Food Guide](/destinations/hue-street-food-guide/) highlight distinct flavor profiles:
 
 1. **Hội An Specialties (Herbal, Crispy, and Savory)**:
    - **Cao Lầu (35,000 VND to 50,000 VND / $1.40 to $2.00 USD)**: Thick rice noodles cured in lye ash water from Cù Lao Chàm (Cham Islands), served with minimal broth, char siu pork slices, bean sprouts, and crispy pork-fat squares at Central Market (*Chợ Hội An* on Đường Trần Quý Cáp) or Thanh Cao Lầu (26 Đường Thái Phiên).
@@ -87,7 +87,7 @@ Both cities anchor central Vietnamese gastronomy, yet our [Hoi An Street Food Gu
 
 ## Step-by-Step Logistics: Crossing the 125 km Hải Vân Pass Divide
 
-Connecting [Hue to Hoi An](/plan/hue-to-hoi-an-transport) requires crossing the Bach Ma mountain spur via rail or highway:
+Connecting [Hue to Hoi An](/plan/hue-to-hoi-an-transport/) requires crossing the Bach Ma mountain spur via rail or highway:
 
 1. **Step 1: Transfer 30 km Between Hội An and Ga Đà Nẵng**:
    - Hội An has no railway station. Book a GrabCar or private taxi covering the 30 km route from your Hội An hotel to Ga Đà Nẵng (791 Đường Hải Phòng) in 45 minutes for 320,000 VND to 380,000 VND ($12.80 to $15.20 USD).
@@ -118,7 +118,7 @@ Connecting [Hue to Hoi An](/plan/hue-to-hoi-an-transport) requires crossing the 
 > **Buy the 530,000 VND ($21.20 USD) Huế 4-Site Combo Ticket and Sit on the East Side of the Train**: Purchasing individual tickets for the Imperial Citadel (200,000 VND / $8.00 USD) and the three major tombs of Minh Mạng, Tự Đức, and Khải Định (150,000 VND / $6.00 USD each) totals 650,000 VND ($26.00 USD). Request the **4-Site Combo Pass** at the Ngọ Môn ticket booth for 530,000 VND ($21.20 USD)—it remains valid for 2 consecutive days. When booking the `HD1`/`HD2` train, select **left-side seats going south** (Huế to Đà Nẵng) or **right-side seats going north** (Đà Nẵng to Huế) so your window faces the East Sea cliffs rather than the rock wall.
 
 - **Account for the Hải Vân Winter Cloud Barrier (November to February)**: The 496-meter Hải Vân ridge traps northeasterly winter monsoon clouds over Huế, producing 16°C to 20°C drizzle (*mưa dầm*), while Đà Nẵng and Hội An 30 km south of the pass frequently enjoy 23°C to 26°C dry spells. Conversely, during October and early November typhoons, Hội An's low-lying Đường Bạch Đằng floods by 0.5 meters to 1.2 meters; book upper-floor rooms in Cẩm Châu or An Bàng during autumn peak rain.
-- **Budget 72 Hours for Custom Tailoring in Hội An**: As detailed in our [Hoi An Tailoring Guide](/destinations/hoi-an-tailoring-guide), ordering a custom wool suit ($110.00 to $220.00 USD / 2,750,000 VND to 5,500,000 VND) at Yaly Couture (358 Đường Nguyễn Duy Hiệu) or Bebe Tailor (05 Đường Hoàng Diệu) requires 3 separate fittings spaced across 2.5 days to 3 days.
+- **Budget 72 Hours for Custom Tailoring in Hội An**: As detailed in our [Hoi An Tailoring Guide](/destinations/hoi-an-tailoring-guide/), ordering a custom wool suit ($110.00 to $220.00 USD / 2,750,000 VND to 5,500,000 VND) at Yaly Couture (358 Đường Nguyễn Duy Hiệu) or Bebe Tailor (05 Đường Hoàng Diệu) requires 3 separate fittings spaced across 2.5 days to 3 days.
 
 ---
 
@@ -137,6 +137,6 @@ The 120,000 VND ($4.80 USD) ticket is mandatory to enter any of the 21 historic 
 
 ## Internal Next Steps: Plan Your Central Heritage Route
 
-- **City Deep Dives**: Explore monument maps in our [Hoi An Ancient Town Guide](/destinations/hoi-an-ancient-town-guide) and [Hue Imperial City Guide](/destinations/hue-imperial-city-guide), plus curated activity rankings in [Best Things to Do in Hoi An](/destinations/best-things-to-do-in-hoi-an) and [Best Things to Do in Hue](/destinations/best-things-to-do-in-hue).
-- **Gastronomy & Tailoring**: Map out exact stall addresses in our [Hoi An Street Food Guide](/destinations/hoi-an-street-food-guide), [Hue Street Food Guide](/destinations/hue-street-food-guide), and [Hoi An Tailoring Guide](/destinations/hoi-an-tailoring-guide).
-- **Where to Stay & Transit**: Compare neighborhood hotel zones in [Where to Stay in Hoi An](/destinations/where-to-stay-in-hoi-an), [Where to Stay in Hue](/destinations/where-to-stay-in-hue), [Da Nang vs Hoi An](/compare/da-nang-vs-hoi-an), and book your pass crossing with [Hue to Hoi An Transport](/plan/hue-to-hoi-an-transport).
+- **City Deep Dives**: Explore monument maps in our [Hoi An Ancient Town Guide](/destinations/hoi-an-ancient-town-guide/) and [Hue Imperial City Guide](/destinations/hue-imperial-city-guide/), plus curated activity rankings in [Best Things to Do in Hoi An](/destinations/best-things-to-do-in-hoi-an/) and [Best Things to Do in Hue](/destinations/best-things-to-do-in-hue/).
+- **Gastronomy & Tailoring**: Map out exact stall addresses in our [Hoi An Street Food Guide](/destinations/hoi-an-street-food-guide/), [Hue Street Food Guide](/destinations/hue-street-food-guide/), and [Hoi An Tailoring Guide](/destinations/hoi-an-tailoring-guide/).
+- **Where to Stay & Transit**: Compare neighborhood hotel zones in [Where to Stay in Hoi An](/destinations/where-to-stay-in-hoi-an/), [Where to Stay in Hue](/destinations/where-to-stay-in-hue/), [Da Nang vs Hoi An](/compare/da-nang-vs-hoi-an/), and book your pass crossing with [Hue to Hoi An Transport](/plan/hue-to-hoi-an-transport/).

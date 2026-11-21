@@ -6,7 +6,7 @@ description: "Complete Quy Nhon to Phu Yen coastal drive guide: 100 km scenic ro
 travel_cluster: "coastal_islands"
 last_verified: "2026-11-01"
 author: "VietnamGuide Editorial Team"
-reading_time_minutes: 8
+reading_time_minutes: 7
 word_count: 1486
 ---
 

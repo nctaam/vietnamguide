@@ -6,8 +6,8 @@ description: "Can Tho to Chau Doc transport: Futa express buses vs shared limous
 travel_cluster: "mekong_delta"
 last_verified: "2026-10-25"
 author: "VietnamGuide Editorial Team"
-reading_time_minutes: 12
-word_count: 1560
+reading_time_minutes: 9
+word_count: 1725
 ---
 
 # Can Tho to Chau Doc Transport: Bus, Limousine, and Cambodia Speedboat Guide
@@ -117,6 +117,21 @@ The 120 km corridor follows National Route 91, running northwest along the south
 - **Highway Surface and Geometry**: QL91 features two lanes in each direction with a concrete barrier dividing traffic over most stretches. The pavement is generally smooth, though localized canal bridge approaches can produce abrupt bumps. Bypasses around Thot Not and Long Xuyen divert traffic away from busy market corridors.
 - **Toll Checkpoints**: The journey passes through two Electronic Toll Collection (ETC) gantries: BOT Cai Rang and BOT Thot Not (KM 56+150). Private car operators should keep their automated VETC or ePass balance above 80,000 VND to ensure frictionless passage through express lanes.
 - **Roadside Plazas**: Commercial buses pause for 15 minutes at registered highway rest areas near Long Xuyen. These stations feature clean washroom facilities, takeaway coffee (*ca phe sua da*) for 20,000 VND, fresh seasonal fruit, and hot rice dishes (*com tam*) for 45,000 VND.
+
+### Kilometer Splits: QL91 Direct vs Lo Te–Rach Soi (CT02) Bypass & Pier Transfers
+
+Timing your arrival accurately depends on understanding midpoint distances along QL91 and how private drivers bypass morning market traffic using the Lo Te–Rach Soi expressway corridor (CT02).
+
+| Route Segment or Pier Transfer | Road Distance | Driving Time | 2026 Verified Cost (VND / USD) | Field Note |
+| :--- | :--- | :--- | :--- | :--- |
+| **Can Tho → Thot Not (QL91)** | 45 km | 60 minutes | 35,000 VND ($1.40) BOT toll | Bang Lang Stork Sanctuary entry: 20,000 VND ($0.80). |
+| **Can Tho → Long Xuyen Midpoint (QL91)** | 62 km | 1 hour 25 mins | 70,000 VND ($2.80) cumulative tolls | Exact halfway mark; 58 km remaining to Chau Doc. |
+| **Long Xuyen → Chau Doc (QL91)** | 58 km | 1 hour 15 mins | 130,000 VND to 200,000 VND full bus/van | Two-lane divided trunk road; 50 km/h urban traps. |
+| **CT02 Lo Te–Rach Soi Bypass Alignment** | 132 km total | 2 hours 10 mins | 1,150,000 VND to 1,450,000 VND ($46–$58) car | Adds 12 km via Lo Te (51 km at 80 km/h), skips O Mon congestion. |
+| **Ben xe Chau Doc → Hang Chau Pier (26 Le Loi)** | 2.4 km | 8 minutes | 40,000 VND to 50,000 VND ($1.60–$2.00) taxi | Motorbike taxi (*xe om*) costs 25,000 VND ($1.00). |
+| **Ben xe Chau Doc → Victoria Hotel Pier (1 Phu Hiep)** | 3.2 km | 10 minutes | 50,000 VND to 65,000 VND ($2.00–$2.60) taxi | Check-in opens at 06:30 AM for the 07:00 AM launch. |
+
+Long Xuyen sits almost dead center along the corridor, dividing the 120 km run into a 62 km southern half and a 58 km northern stretch. Private cars departing Can Tho between 07:00 and 09:00 often pivot onto the 51 km Lo Te–Rach Soi (CT02) expressway for 45 minutes before cutting back to Long Xuyen, trimming 15 minutes to 20 minutes off peak-hour urban slowdowns. Once you reach Chau Doc, verify your riverbank stay in our [where to stay in Chau Doc guide](/destinations/where-to-stay-in-chau-doc/) so morning pier transfers stay under 10 minutes. Travelers crossing into Cambodia who plan to return to Vietnam later should double-check single-entry versus multiple-entry terms under **Resolution 44/NQ-CP (2025–2028)** and our [Vietnam e-Visa guide](/plan/vietnam-evisa/), or pivot southwest to Phu Quoc using the [Can Tho to Ha Tien transport corridor](/plan/can-tho-to-ha-tien-transport/).
 
 ---
 

@@ -6,7 +6,7 @@ description: "Complete Vietnam coffee guide: authentic egg coffee, salt coffee, 
 travel_cluster: "national_circuit"
 last_verified: "2026-10-22"
 author: "VietnamGuide Editorial Team"
-reading_time_minutes: 11
+reading_time_minutes: 15
 word_count: 2902
 ---
 

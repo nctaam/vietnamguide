@@ -6,7 +6,7 @@ description: "Complete Vietnam in May guide: post-holiday shoulder season, centr
 travel_cluster: "national_circuit"
 last_verified: "2026-11-02"
 author: "VietnamGuide Editorial Team"
-reading_time_minutes: 13
+reading_time_minutes: 10
 word_count: 1938
 ---
 

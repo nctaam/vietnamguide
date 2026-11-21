@@ -6,8 +6,8 @@ description: "Tran De to Con Dao ferry: Superdong fast speedboat schedule, 2026 
 travel_cluster: "coastal_islands"
 last_verified: "2026-11-01"
 author: "VietnamGuide Editorial Team"
-reading_time_minutes: 8
-word_count: 1488
+reading_time_minutes: 9
+word_count: 1829
 ---
 
 ## Why Tran De (Soc Trang) Is the Shortest Sea Crossing to Con Dao
@@ -102,3 +102,23 @@ Upon docking at **Ben Dam Port** (`Cảng Bến Đầm`) on Con Son Island, foll
 1. **Shared Electric Shuttle Buggy (*Xe điện*):** Waiting right outside the port gate, these open-sided `12-passenger` electric carts charge `40,000 to 50,000 VND` (`$1.60 to $2.00 USD`) per person directly to your hotel door in Con Son Town (`20 minutes`).
 2. **Taxi to Town or Dam Trau:** A `4-seat` or `7-seat` taxi into Con Son Town costs `220,000 to 300,000 VND` (`$8.80 to $12.00 USD`), or `400,000 to 500,000 VND` (`$16.00 to $20.00 USD`) to resorts near Dam Trau Beach (`24 km`).
 3. **Pier Scooter Delivery:** Pre-book an automatic `125cc` scooter (`150,000 to 200,000 VND` / `$6.00 to $8.00 USD` per day) via Zalo with your guesthouse so they leave the bike at Ben Dam Port—letting you ride the scenic coastal pass straight into town on your own schedule.
+
+---
+
+## Frequently Asked Questions (2026)
+
+### How do I avoid going to the wrong ferry pier in Tran De Town?
+
+Tran De operates two distinct passenger piers situated `1.8 km` apart along the Hau River estuary, and mixing them up leads to missed departures. Check the carrier logo printed on your electronic QR pass first. **Superdong** sails from its standalone white terminal at Ap Dau Giong near the estuary mouth (`08:00` and `13:15` departures, `310,000 to 340,000 VND` / `$12.40 to $13.60 USD`), whereas **Phu Quoc Express** boards upriver inside the main Tran De Fishing Port (`Cảng Cá Trần Đề`, `08:30` departure, `390,000 to 450,000 VND` / `$15.60 to $18.00 USD`). Confirm the pier name with your Futa or My Duyen dawn shuttle driver at `05:30`; a corrective local cab between the two gates takes `5 minutes` and costs `40,000 to 50,000 VND` (`$1.60 to $2.00 USD`).
+
+### Can I travel from Ho Chi Minh City to Con Dao via Tran De in a single daylight day?
+
+Yes, by catching Superdong's `13:15` afternoon sailing—making Tran De the sole Con Dao ferry hub reachable on a same-day daytime coach from Saigon. Board an `06:00` bus from Mien Tay Bus Station to Soc Trang City (`215 km`, `4.5 hours`, `190,000 to 230,000 VND` / `$7.60 to $9.20 USD`), then transfer `35 km` (`35 minutes`, `350,000 to 420,000 VND` / `$14.00 to $16.80 USD`) by taxi down Provincial Road `DT934` to reach Superdong Pier by `12:15`. Budget travelers still favor the `23:00` overnight My Duyen sleeper (`200,000 to 310,000 VND` / `$8.00 to $12.40 USD`, `5.5 hours`) to avoid both the Soc Trang taxi fare and an extra Saigon hotel night; compare sea versus air trade-offs in [How to Get to Con Dao: Flight vs Ferry](/plan/how-to-get-to-con-dao-flight-vs-ferry/).
+
+### Does the Tran De ferry still sail when Vung Tau ferries cancel in winter?
+
+Often yes, though every boat stops in Beaufort Force 7 gales. Because the Tran De channel spans `90 km` (`1 hour 45 minutes` to `2 hours 30 minutes`) rather than `185 km` (`3 hours 45 minutes`) from Vung Tau, Soc Trang Maritime Port Authority regularly clears Tran De vessels on moderate Force 5 to 6 Northeast Monsoon mornings from October through February while Cau Da Pier remains closed. Brace for a bouncy `100-minute` open-shelf stretch outside the sheltered `15-minute` river mouth: pick Phu Quoc Express's `12.2-meter` twin-hull catamaran (`390,000 to 450,000 VND` / `$15.60 to $18.00 USD`) over a monohull, take `25mg` of Cinnarizine `45 minutes` beforehand, and keep a `24-hour` weather buffer before international flights.
+
+### Can I leave my rented motorbike parked safely at Tran De Port overnight?
+
+Both the Superdong passenger pier and Tran De Fishing Port run gated, roofed overnight compounds guarded `24 hours` a day for `15,000 VND` (`$0.60 USD`) per night for scooters and `70,000 to 100,000 VND` (`$2.80 to $4.00 USD`) per night for four-wheeled cars. Parking beats freighting for stays under four days. Shipping a `110cc` to `150cc` motorcycle round-trip across the `90 km` strait costs `500,000 to 800,000 VND` (`$20.00 to $32.00 USD`) plus `60,000 VND` in stevedore tie-down fees, whereas renting a `125cc` automatic scooter on Con Son Island runs `150,000 to 200,000 VND` (`$6.00 to $8.00 USD`) per `24 hours`. Plan island coastal loops with our [Con Dao Travel Guide](/destinations/con-dao-travel-guide/) or overnight Mekong stays in [Where to Stay in Can Tho](/destinations/where-to-stay-in-can-tho/).

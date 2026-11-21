@@ -6,7 +6,7 @@ description: "Where to stay in Vung Tau: Back Beach resort towers vs Front Beach
 travel_cluster: "southern_delta"
 last_verified: "2026-10-24"
 author: "VietnamGuide Editorial Team"
-reading_time_minutes: 12
+reading_time_minutes: 7
 word_count: 1442
 ---
 

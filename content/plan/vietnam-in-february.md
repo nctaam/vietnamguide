@@ -6,7 +6,7 @@ description: "Plan Vietnam in February by Tet holiday timing, post-Tet restart, 
 travel_cluster: "national_circuit"
 last_verified: "2026-11-01"
 author: "VietnamGuide Editorial Team"
-reading_time_minutes: 9
+reading_time_minutes: 8
 word_count: 1676
 ---
 

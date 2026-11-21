@@ -6,7 +6,7 @@ description: "Hanoi in 2 days itinerary: ideal 48-hour plan covering Hoan Kiem L
 travel_cluster: "northern_triangle"
 last_verified: "2026-10-22"
 author: "VietnamGuide Editorial Team"
-reading_time_minutes: 12
+reading_time_minutes: 9
 word_count: 1888
 ---
 

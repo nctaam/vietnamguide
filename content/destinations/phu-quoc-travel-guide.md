@@ -6,7 +6,7 @@ description: "Phu Quoc travel guide: 30-day visa exemption rules, best beaches f
 travel_cluster: "coastal_islands"
 last_verified: "2026-10-21"
 author: "VietnamGuide Editorial Team"
-reading_time_minutes: 14
+reading_time_minutes: 10
 word_count: 2011
 ---
 

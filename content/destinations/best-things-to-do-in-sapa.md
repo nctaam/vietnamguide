@@ -6,7 +6,7 @@ description: "Discover the best things to do in Sapa: Fansipan peak cable cars, 
 travel_cluster: "northern_highlands"
 last_verified: "2026-10-22"
 author: "VietnamGuide Editorial Team"
-reading_time_minutes: 11
+reading_time_minutes: 7
 word_count: 1359
 ---
 

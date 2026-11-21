@@ -6,7 +6,7 @@ description: "How to get from Hanoi airport to Old Quarter in 2026: choose hotel
 travel_cluster: "northern_triangle"
 last_verified: "2026-10-22"
 author: "VietnamGuide Editorial Team"
-reading_time_minutes: 9
+reading_time_minutes: 7
 word_count: 1467
 ---
 

@@ -289,7 +289,7 @@ Because the airport sits close to the city, metered taxis (Mai Linh, Sun Taxi, o
 
 ### Railway Connections
 
-The North-South railway passes through the center of Tuy Hoa, with **Ga Tuy Hòa** located on Le Trung Kien street. Express trains like SE2, SE4, SE6, SE22, and SE21 provide direct rail links north to [Quy Nhon](/destinations/best-things-to-do-in-quy-nhon), [Da Nang](/destinations/da-nang-travel-guide), and [Hue](/destinations/hue-imperial-city-guide), or south to [Nha Trang](/destinations/nha-trang-travel-guide) and Saigon.
+The North-South railway passes through the center of Tuy Hoa, with **Ga Tuy Hòa** located on Le Trung Kien street. Express trains like SE2, SE4, SE6, SE22, and SE21 provide direct rail links north to [Quy Nhon](/destinations/best-things-to-do-in-quy-nhon/), [Da Nang](/destinations/da-nang-travel-guide/), and [Hue](/destinations/hue-imperial-city-guide/), or south to [Nha Trang](/destinations/nha-trang-travel-guide/) and Saigon.
 
 ---
 

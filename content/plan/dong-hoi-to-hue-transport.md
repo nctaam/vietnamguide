@@ -6,7 +6,7 @@ description: "Reunification Express trains (3 hours, 110,000-160,000 VND) vs dir
 travel_cluster: "phong_nha_caves"
 last_verified: "2026-11-01"
 author: "VietnamGuide Editorial Team"
-reading_time_minutes: 8
+reading_time_minutes: 7
 word_count: 1485
 ---
 

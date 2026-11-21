@@ -6,7 +6,7 @@ description: "Con Dao vs Phu Quoc comparison: compare pristine turtle beaches, n
 travel_cluster: "coastal_islands"
 last_verified: "2026-10-22"
 author: "VietnamGuide Editorial Team"
-reading_time_minutes: 10
+reading_time_minutes: 7
 word_count: 1358
 ---
 

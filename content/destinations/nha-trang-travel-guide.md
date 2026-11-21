@@ -6,7 +6,7 @@ description: "Nha Trang travel guide: urban beachfront hotels, island hopping bo
 travel_cluster: "coastal_islands"
 last_verified: "2026-11-02"
 author: "VietnamGuide Editorial Team"
-reading_time_minutes: 13
+reading_time_minutes: 10
 word_count: 1985
 ---
 

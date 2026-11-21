@@ -6,7 +6,7 @@ description: "Authoritative Hoi An Ancient Town guide: decide whether to stay ov
 travel_cluster: "central_heritage"
 last_verified: "2026-10-21"
 author: "VietnamGuide Editorial Team"
-reading_time_minutes: 14
+reading_time_minutes: 16
 word_count: 3189
 ---
 

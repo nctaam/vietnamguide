@@ -6,7 +6,7 @@ description: "Muong Thanh valley hotels near A1 Hill (350,000-800,000 VND) vs Fr
 travel_cluster: "far_north_frontier"
 last_verified: "2026-10-25"
 author: "VietnamGuide Editorial Team"
-reading_time_minutes: 12
+reading_time_minutes: 7
 word_count: 1450
 ---
 

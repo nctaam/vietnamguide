@@ -6,7 +6,7 @@ description: "Compare Hue to Hoi An transport options: scenic trains, private ca
 travel_cluster: "central_heritage"
 last_verified: "2026-10-22"
 author: "VietnamGuide Editorial Team"
-reading_time_minutes: 9
+reading_time_minutes: 8
 word_count: 1505
 ---
 

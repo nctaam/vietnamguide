@@ -6,8 +6,8 @@ description: "Futa coaches and limousines across 190 km (4-4.5 hours, 170,000-22
 travel_cluster: "mekong_delta"
 last_verified: "2026-10-25"
 author: "VietnamGuide Editorial Team"
-reading_time_minutes: 12
-word_count: 1688
+reading_time_minutes: 10
+word_count: 1969
 ---
 
 # Can Tho to Ha Tien Transport: Bus Schedules, Limousines, Border Transit, and Ferry Logistics
@@ -50,7 +50,7 @@ Shared limousine operators such as Vũ Linh Limousine and Trang Ngọc Phát dep
 
 These operators run direct routes, bypassing intermediate passenger depots along National Route 80. Transit durations average 3 hours and 30 minutes. Limousines collect travelers directly from hotels in Can Tho's central Ninh Kieu District and deliver them directly to the ferry pier or the border gate approach in Ha Tien, eliminating local terminal transfers.
 
-### 3. Private Chattered Cars
+### 3. Private Chartered Cars
 
 Hiring a private sedan or 7-seat SUV provides maximum schedule security for travel parties carrying heavy dive luggage or connecting to afternoon flights from Phu Quoc. Fixed-rate quotes from Can Tho downtown to Ha Tien range from 1,700,000 VND for a 4-seat sedan to 2,200,000 VND for an expansive 7-seat vehicle like a Toyota Fortuner or Mitsubishi Xpander. Drivers complete the 190-kilometer trip in 3 hours to 3.5 hours, depending on regional traffic conditions.
 
@@ -149,6 +149,17 @@ Superdong operates fast passenger vessels between Ha Tien and Bai Vong Port. The
 ### Fast Catamarans of Phu Quoc Express
 
 Operating sleek twin-hull vessels, Phu Quoc Express delivers passengers to Bai Vong Port in 1 hour and 10 minutes. Standard passenger tickets cost 350,000 VND, while VIP upper-deck tickets cost 390,000 VND. Morning sailings depart at 07:45, 09:00, and 11:30. These dual-hull vessels deliver superior stability, offering a calm ride even during moderate coastal swell.
+
+### 2026 Phuong Trang vs Kumho Samco Schedules & Rach Gia–Ha Tien Ferry Buffer Math
+
+Choosing between the Ha Tien and Rach Gia piers comes down to highway tolerance versus open-sea time—and selecting the right carrier schedule so you never forfeit a ferry ticket. **Phuong Trang (FUTA)** runs the densest Can Tho → Ha Tien frequency, dispatching coaches at 04:30, 06:00, 07:30, 09:00, 11:00, 13:00, 15:30, and 18:30 for 170,000 VND to 200,000 VND ($6.80 to $8.00 USD) across 190 km in 4 hours to 4.5 hours. **Kumho Samco Buslines** also runs Mekong trunk sleepers connecting Ho Chi Minh City via the Can Tho / Lo Te corridor to both Rach Gia (115 km from Can Tho, 2.5 hours, 140,000 VND to 160,000 VND / $5.60 to $6.40 USD) and Ha Tien (180,000 VND to 210,000 VND / $7.20 to $8.40 USD), with morning transit coaches clearing the Can Tho junction between 05:30 and 11:30 and overnight sleepers departing around 22:00.
+
+| Gateway Pier | Overland Distance & Bus Time | Terminal-to-Pier Hop | Sea Crossing & Ferry Fare | Recommended Buffer & Missed-Boat Fallback |
+| :--- | :--- | :--- | :--- | :--- |
+| **Ha Tien Pier (Ben tau Ha Tien)** | 190 km / 4 hours 15 mins (185,000 VND / $7.40) | 3 km / 10 mins (0 VND FUTA van or 50,000 VND / $2.00 taxi) | 45 km / 1 hour 15 mins (330,000 VND to 390,000 VND / $13.20–$15.60) | 75 mins total buffer; Tran Hau fallback hotel 350,000 VND to 550,000 VND ($14–$22) |
+| **Rach Gia Pier (Ben tau Rach Gia)** | 115 km / 2 hours 30 mins (140,000 VND / $5.60) | 8 km / 18 mins (0 VND FUTA van or 110,000 VND / $4.40 taxi) | 120 km / 2 hours 30 mins (330,000 VND to 340,000 VND / $13.20–$13.60) | 75 mins total buffer; afternoon backup sailings end by 13:10 |
+
+Always build a 75-minute cushion between your scheduled bus arrival and ferry departure. That margin absorbs 30 minutes of QL80 roadwork delays plus the strict 45-minute manifest cutoff at the pier. After stepping ashore at Bai Vong Port on Phu Quoc, budget another 150,000 VND ($6.00 USD) per passenger for a shared minivan or 250,000 VND ($10.00 USD) for a private taxi covering the 14 km (25 minutes) run into Duong Dong Town. For vessel seat maps and seasonal swell charts, compare our [Ha Tien to Phu Quoc ferry guide](/plan/ha-tien-to-phu-quoc-ferry/), the [Can Tho to Rach Gia transport route](/plan/can-tho-to-rach-gia-transport/), and overnight hotel options in [where to stay in Ha Tien](/destinations/where-to-stay-in-ha-tien/).
 
 ---
 

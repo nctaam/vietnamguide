@@ -6,8 +6,8 @@ description: "Fast catamarans across 120 km: Superdong and Phu Quoc Express spee
 travel_cluster: "mekong_delta"
 last_verified: "2026-10-20"
 author: "VietnamGuide Editorial Team"
-reading_time_minutes: 11
-word_count: 1524
+reading_time_minutes: 10
+word_count: 1966
 ---
 
 # Rach Gia to Phu Quoc Ferry: Speedboat Schedules, Fares, and Sea Port Logistics
@@ -20,12 +20,15 @@ Navigating port transfers, seasonal weather swells, luggage regulations, and arr
 
 ---
 
-## Service Specifications and Operator Comparison
+## Service Specifications and Operator Comparison (2026)
 
-| Operator | Vessel Architecture | Transit Time | Adult Fare (VND) | VIP / Business Fare (VND) | Child / Senior Concession | Key Features & Amenities |
+Three maritime carriers serve the **120 km** Rach Gia to Phu Quoc sea corridor: two high-speed passenger fleets (**Phu Quoc Express** and **Superdong**) plus **Thanh Thoi (*Phà Thạnh Thới*)** roll-on/roll-off car ferries for travelers shipping sedans, camper vans, or heavy touring bikes.
+
+| Operator | Vessel Architecture | Transit Time (120 km) | Adult Fare (VND / USD) | VIP / Vehicle Tariff (VND / USD) | Child / Senior Concession | Key Features & Amenities |
 | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
-| **Phu Quoc Express** | Red double-hull catamaran (European safety standard) | 2h 15m – 2h 25m | 340,000 VND ($13.60 USD) | 540,000 VND ($21.60 USD) | Senior (60+): 270,000 VND; Child (6–11): 240,000 VND | Twin-hull wave-piercing stabilization, Rolls-Royce MTU engines, leather recliners, open observation deck |
-| **Superdong Fast Ferry** | Monohull high-speed craft | 2h 25m – 2h 35m | 330,000 VND ($13.20 USD) | N/A (Standard single class) | Senior (60+): 280,000 VND; Child (6–11): 240,000 VND | Established carrier, enclosed air-conditioned cabin, overhead television screens, beverage trolley |
+| **Phu Quoc Express** | Red double-hull catamaran (European safety standard) | 2 hours 15 mins – 2 hours 25 mins | 340,000 VND ($13.60 USD) | VIP: 540,000 VND ($21.60 USD) | Senior (60+): 270,000 VND ($10.80 USD); Child (6–11): 240,000 VND ($9.60 USD) | Twin-hull wave-piercing stabilization, Rolls-Royce MTU engines, leather recliners, open observation deck |
+| **Superdong Fast Ferry** | Monohull high-speed craft | 2 hours 25 mins – 2 hours 35 mins | 330,000 VND ($13.20 USD) | Standard single class only | Senior (60+): 280,000 VND ($11.20 USD); Child (6–11): 240,000 VND ($9.60 USD) | Established carrier, enclosed air-conditioned cabin, overhead screens, beverage trolley |
+| **Thanh Thoi Ro-Ro Ferry** | Steel roll-on/roll-off vehicle & passenger ferry | 4.0 to 4.5 hours | 260,000 VND ($10.40 USD) | 4-Seat Car: 1,100,000–1,400,000 VND ($44–$56); Scooter: 120,000 VND ($4.80) | Child (6–11): 185,000 VND ($7.40 USD) | Carries 4-seat/7-seat cars, trucks, and motorcycles directly onto open lower vehicle deck |
 
 ---
 
@@ -70,10 +73,15 @@ The ferry terminal is situated on **Nguyen Cong Tru Street, Vinh Thanh Ward**, i
 - **Port Waiting Lounge:** The terminal provides air-conditioned waiting lounges, clean restrooms, coffee kiosks, and convenience stalls selling bottled water, fresh tropical fruit, and motion sickness medication.
 
 ### 2. Arrival Terminal: Bai Vong Passenger Port (*Ben Bai Vong*)
-All high-speed ferries from Rach Gia dock at **Bai Vong Port**, situated in Ham Ninh commune on the southeastern coast of Phu Quoc Island. The harbor features two long concrete piers jutting out into deep water. 
+All high-speed ferries from Rach Gia dock at **Bai Vong Port**, situated in Ham Ninh commune on the southeastern coast of [Phu Quoc Island](/destinations/phu-quoc-travel-guide/). Two concrete jetties extend **500 meters** into deep water.
 
-- **Pier Transfer:** Electric golf carts (*xe dien*) run the length of the 500-meter pier from the ship's gangway to the shore terminal building for **10,000 to 20,000 VND per passenger**, convenient for travelers with heavy luggage.
-- **Onward Transport to Duong Dong:** The central resort strip of Duong Dong is situated 14 kilometers northwest. Official metered taxis (Mai Linh, Taxi Phu Quoc) queue outside the terminal; fares average **150,000 to 220,000 VND**. Shared air-conditioned shuttle minivans operate outside the baggage hall, charging **30,000 to 50,000 VND per passenger** for drop-offs along Tran Hung Dao Street in Duong Dong.
+- **Pier Electric Cart**: Electric shuttles (*xe dien*) bridge the **500 meters** from the gangway to the shore concourse in **3 minutes** for **10,000 VND to 20,000 VND ($0.40–$0.80 USD)** per rider—helpful when wheeling heavy suitcases under midday sun.
+- **Onward Taxi & Shuttle Costs from Bai Vong Pier**: Official metered cabs (*Mai Linh*, *Xanh SM*, *Taxi Phu Quoc*) and shared minivans wait directly outside the baggage gate. Check your exact zone distance before negotiating:
+  - **Duong Dong Town Center (14 km northwest, 22 minutes to 25 minutes)**: Metered 4-seat taxi **150,000 VND to 220,000 VND ($6.00–$8.80 USD)**; shared air-conditioned shuttle van **30,000 VND to 50,000 VND ($1.20–$2.00 USD)** per person along Tran Hung Dao Street.
+  - **Phu Quoc International Airport PQC (11 km west, 18 minutes)**: Metered taxi **140,000 VND to 180,000 VND ($5.60–$7.20 USD)**.
+  - **Long Beach / Bai Truong Resorts (17 km west, 28 minutes)**: Metered taxi **190,000 VND to 260,000 VND ($7.60–$10.40 USD)**.
+  - **An Thoi / Sunset Town South (22 km south, 35 minutes)**: Metered taxi **250,000 VND to 320,000 VND ($10.00–$12.80 USD)**.
+  - **Grand World / Ganh Dau North (36 km northwest, 55 minutes)**: Metered taxi **420,000 VND to 520,000 VND ($16.80–$20.80 USD)**. See [Where to Stay in Phu Quoc](/destinations/where-to-stay-in-phu-quoc/) to match your pier transfer budget to your beach zone.
 
 ---
 
@@ -138,6 +146,13 @@ The Gulf of Thailand is an enclosed sea basin, but weather varies dramatically b
 > [!WARNING]
 > When the National Hydrometeorological Service issues weather warnings for winds of **Gale Force 6 or higher** (sustained wind speeds above 39 km/h), the Kien Giang Maritime Port Authority (*Cang Vu Hang Hai Kien Giang*) suspends all ferry sailings across the Gulf of Thailand for passenger safety. During the July to October monsoon, always maintain a flexible schedule or hold flight ticket contingencies.
 
+### Rough-Sea Fallback Flights & Alternative Port Pivots (2026)
+
+If a July–October monsoon depression cancels high-speed catamarans out of Rach Gia Port for 24 to 72 hours, do not sit idle at the pier. Pivot rapidly to air or sheltered short-sea backups:
+
+- **Option A — Shift 90 km North to Ha Tien Port (Shorter 45 km Crossing)**: Occasionally the Port Authority halts the exposed **120 km** Rach Gia run while keeping the sheltered **45 km** (**75 minutes**) [Ha Tien to Phu Quoc Ferry](/plan/ha-tien-to-phu-quoc-ferry/) corridor open (Superdong / Phu Quoc Express **230,000 VND to 250,000 VND / $9.20–$10.00 USD**; Thanh Thoi Ro-Ro **185,000 VND / $7.40 USD**). A taxi north along QL80 takes **2.0 hours** (**950,000 VND to 1,150,000 VND / $38.00–$46.00 USD**).
+- **Option B — Direct Regional Flights via Can Tho (VCA) or HCMC (SGN) to Phu Quoc (PQC)**: When every Kien Giang port shuts down completely, take a **2.5 hours** FUTA coach (**110 km**, **140,000 VND to 170,000 VND / $5.60–$6.80 USD**) back to Can Tho for direct **55 minutes** flights from Can Tho Airport (`VCA`) to Phu Quoc (`PQC`) (**1,250,000 VND to 1,950,000 VND / $50.00–$78.00 USD**). Alternatively, **Rach Gia Airport (`VKG`)** sits just **11 km** (**20 minutes**, **140,000 VND / $5.60 USD** taxi) from the pier with **50 minutes** VASCO ATR-72 flights to Saigon (`SGN`, **1,350,000 VND to 1,850,000 VND / $54.00–$74.00 USD**), connecting straight onto hourly **60 minutes** `SGN → PQC` jets (**1,100,000 VND to 1,900,000 VND / $44.00–$76.00 USD**). Compare every mainland pier and flight fallback in our master [Phu Quoc Ferry Guide](/plan/phu-quoc-ferry-guide/).
+
 ---
 
 ## Luggage Handling and Vehicle Freight Rules
@@ -161,10 +176,10 @@ Planning the return crossing from Phu Quoc back to the mainland requires attenti
 
 ---
 
-## Frequently Asked Questions
+## Frequently Asked Questions (2026)
 
 ### Can I book ferry tickets online in advance?
-Yes. It is highly recommended to reserve tickets through authorized operator websites or vetted ticketing platforms at least 48 hours in advance, especially during the dry season (December to April). Upon completion, an electronic ticket containing a QR code is emailed to you, which terminal agents can scan directly from your mobile phone screen.
+Yes. Reserve tickets through authorized operator websites or vetted booking platforms at least **48 hours** ahead, especially during the dry season (December to April). After payment, an electronic ticket with a QR barcode arrives by email so pier agents scan it straight from your phone screen.
 
 ### Is the VIP cabin on Phu Quoc Express worth the extra cost?
 For an additional **200,000 VND (approx. $8 USD)**, the VIP class on the upper deck provides spacious, reclining leather captain chairs with extra legroom, quieter surroundings with fewer passengers, private restrooms, and direct access to the private upper viewing deck. For long-legged travelers or those seeking tranquility, the upgrade is an exceptional value.

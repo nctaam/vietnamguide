@@ -6,7 +6,7 @@ description: "Where to stay in Kon Tum: Dak Bla riverfront hotels vs Bahnar ethn
 travel_cluster: "central_highlands"
 last_verified: "2026-10-24"
 author: "VietnamGuide Editorial Team"
-reading_time_minutes: 12
+reading_time_minutes: 8
 word_count: 1542
 ---
 

@@ -6,7 +6,7 @@ description: "Daily trains from Hanoi Central and Long Bien (2.5 hours, 95,000 V
 travel_cluster: "northern_triangle"
 last_verified: "2026-10-31"
 author: "VietnamGuide Editorial Team"
-reading_time_minutes: 12
+reading_time_minutes: 8
 word_count: 1513
 ---
 

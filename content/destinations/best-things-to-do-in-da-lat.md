@@ -6,8 +6,8 @@ description: "Discover the best things to do in Da Lat: Arabica coffee cupping, 
 travel_cluster: "central_highlands"
 last_verified: "2026-10-21"
 author: "VietnamGuide Editorial Team"
-reading_time_minutes: 13
-word_count: 1763
+reading_time_minutes: 9
+word_count: 1875
 ---
 
 # Best Things to Do in Da Lat: Highlands & Waterfalls (2026)
@@ -66,11 +66,11 @@ The reference matrix below summarizes essential Da Lat highlights, current admis
 
 ## 1. Conquer Lang Biang: 4x4 Jeep Runs and Mountain Summit Treks
 
-Dominating the northern horizon of the plateau, **Lang Biang Mountain** rises as the crowning geographic landmark of Lam Dong province. The massif features two prominent crests: the accessible Radar Peak (1,950 meters) and the wilder, true Lang Biang Summit (2,167 meters).
+Dominating the northern skyline, **Lang Biang Mountain** defines Lam Dong Province. Two distinct crests rise above the plateau: accessible Radar Peak at 1,950 meters and the wilder true Lang Biang Summit at 2,167 meters.
 
-Travelers seeking quick panoramic vistas can purchase admission at the base gate in Lac Duong for 50,000 VND, then board vintage Russian UAZ four-wheel-drive jeeps. These durable vehicles traverse a steep 6-kilometer paved access road through dense pine forests to Radar Peak in roughly 15 minutes. Shared roundtrip jeep seats cost 120,000 VND per person, while private charters cost 720,000 VND for groups of up to six passengers.
+Quick viewpoints require zero hiking. Buy your park ticket at the Lac Duong base gate for 50,000 VND ($2.00), then climb into a vintage Soviet-era UAZ 4x4 jeep that grinds up the steep 6 km paved pine road to Radar Peak in 15 minutes. Shared roundtrip seats cost 120,000 VND ($4.80) per rider, while a private six-passenger charter runs 720,000 VND ($28.80).
 
-Independent trekkers should bypass the jeep road entirely and tackle the backcountry trail to the true 2,167-meter summit. Starting from the park entrance, this 9-kilometer return trek climbs through native pine woods before ascending through dense montane cloud forest draped in wild orchids and moss. The final 45-minute scramble ascends steep clay ridges fitted with wooden steps, rewarding climbers with unobstructed views across the Golden River and the Dan Kia reservoir.
+Independent hikers skip the jeeps altogether. Starting directly from the park gate, the 9 km roundtrip trail climbs through scented native pines before pushing into damp montane cloud forest strung with wild orchids and hanging moss. A final 45-minute push up slick red-clay steps rewards climbers with clear views across the Golden River and Dan Kia Reservoir.
 
 ### Practical Trekking Logistics:
 - **Trail Duration:** 3.5 to 4.5 hours roundtrip.
@@ -154,6 +154,27 @@ The cool alpine air creates the perfect atmosphere for warming street snacks:
 - **Hot Soy and Mung Bean Milk (Sữa Đậu Nành / Sữa Đậu Xanh):** Steaming cups of freshly boiled plant milk served alongside sweet pastries (15,000 to 20,000 VND).
 - **Grilled Skewers (Xiên Nướng):** Marinated pork belly, wild boar, chicken wings, and local highland mushrooms grilled over charcoal (15,000 to 30,000 VND per skewer).
 - **Steamed Sweet Corn and Sweet Potatoes:** Harvested fresh from surrounding plateau valleys, boiled piping hot in massive street-side cauldrons (15,000 to 20,000 VND each).
+
+---
+
+## 2026 Da Lat Grab, Distance, Transit Time & Waterfall Ticket Matrix
+
+Da Lat's steep hills and winding pine corridors make point-to-point transport pricing essential when budgeting your day. Measured from Hoa Binh Square beside Xuan Huong Lake, urban heritage stops lie within a 10-minute ride, whereas signature southern cascades like Elephant Falls and Pongour Falls demand half-day road loops.
+
+| Destination (From Hoa Binh Square) | Distance | Drive Time | 2026 GrabCar / Car Fare (One-Way) | 2026 Entry & Activity Tariff (VND / USD) |
+| :--- | :--- | :--- | :--- | :--- |
+| **Crazy House (Hang Nga)** | 1.5 km | 5 mins | 25,000 VND ($1.00) GrabCar / 18,000 VND GrabBike | 80,000 VND ($3.20) adult / 30,000 VND ($1.20) child |
+| **Da Lat Railway Station** | 2.0 km | 6 mins | 32,000 VND ($1.28) GrabCar | 20,000 VND ($0.80) station; 150,000 VND ($6.00) Trai Mat train (7 km, 30 mins) |
+| **Dinh III (Bao Dai Palace)** | 2.5 km | 7 mins | 40,000 VND ($1.60) GrabCar | 50,000 VND ($2.00) adult entry |
+| **Robin Hill Cable Car** | 3.0 km | 8 mins | 45,000 VND ($1.80) GrabCar | 120,000 VND ($4.80) roundtrip / 100,000 VND ($4.00) one-way (2.3 km, 12 mins) |
+| **Datanla Falls & Alpine Coaster** | 5.0 km | 12 mins | 75,000 VND ($3.00) GrabCar | 50,000 VND ($2.00) gate; 250,000 VND ($10.00) Coaster 3; 350,000 VND ($14.00) high ropes |
+| **Tuyen Lam Lake Marina** | 6.0 km | 15 mins | 90,000 VND ($3.60) GrabCar | 250,000 VND ($10.00) 2-hour kayak / 400,000 VND ($16.00) boat charter |
+| **Lang Biang Base Gate** | 12.0 km | 25 mins | 170,000 VND ($6.80) GrabCar | 50,000 VND ($2.00) entry + 120,000 VND ($4.80) shared 4x4 jeep (15 mins) |
+| **Cau Dat Tea Plantation** | 25.0 km | 40 mins | 320,000 VND ($12.80) GrabCar | 90,000 VND ($3.60) grounds / 150,000 VND ($6.00) 1927 tea factory tour |
+| **Elephant Falls & Linh An Pagoda** | 28.0 km | 45 mins | 380,000 VND ($15.20) GrabCar | 30,000 VND ($1.20) falls entry; Linh An Pagoda free (0 VND) |
+| **Pongour Waterfall** | 48.0 km | 65 mins | 850,000 VND ($34.00) roundtrip private car | 50,000 VND ($2.00) conservation entry; 15 mins walk down paved path |
+
+Grouping stops along geographic spokes cuts daily Grab costs in half. Pair Elephant Falls (28 km southwest) with Pongour Falls (48 km south) via a full-day private car charter (950,000 VND / $38.00 for 8 hours), because Grab availability drops sharply outside Duc Trong town. Travelers chasing specialty Arabica roasters, cascading highland routes, or coastal transfers down Khanh Le Pass can continue with our [Da Lat Coffee Farms Guide](/destinations/da-lat-coffee-farms-guide/), [Da Lat Waterfalls Guide](/destinations/da-lat-waterfalls-guide/), [Da Lat to Nha Trang Transport](/plan/da-lat-to-nha-trang-transport/), and [Ho Chi Minh City to Da Lat Transport](/plan/ho-chi-minh-city-to-da-lat-transport/).
 
 ---
 

@@ -6,7 +6,7 @@ description: "Where to stay in Mu Cang Chai: La Pan Tan hillside homestays vs Tu
 travel_cluster: "northern_highlands"
 last_verified: "2026-10-24"
 author: "VietnamGuide Editorial Team"
-reading_time_minutes: 12
+reading_time_minutes: 7
 word_count: 1405
 ---
 

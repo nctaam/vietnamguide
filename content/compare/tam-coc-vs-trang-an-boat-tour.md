@@ -6,7 +6,7 @@ description: "Tam Coc vs Trang An boat tour comparison: compare ticket prices, r
 travel_cluster: "ninh_binh"
 last_verified: "2026-10-20"
 author: "VietnamGuide Editorial Team"
-reading_time_minutes: 12
+reading_time_minutes: 14
 word_count: 2822
 ---
 

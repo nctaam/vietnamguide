@@ -6,7 +6,7 @@ description: "Ba Be Lake travel guide: scenic boat tours, Puong Cave, Dau Dang w
 travel_cluster: "far_north_frontier"
 last_verified: "2026-10-21"
 author: "VietnamGuide Editorial Team"
-reading_time_minutes: 12
+reading_time_minutes: 11
 word_count: 2126
 ---
 

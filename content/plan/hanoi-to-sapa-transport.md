@@ -6,7 +6,7 @@ description: "Compare Hanoi to Sapa transport by train, cabin bus, limousine van
 travel_cluster: "northern_triangle"
 last_verified: "2026-10-31"
 author: "VietnamGuide Editorial Team"
-reading_time_minutes: 12
+reading_time_minutes: 8
 word_count: 1538
 ---
 

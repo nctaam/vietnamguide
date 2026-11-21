@@ -166,7 +166,7 @@ $pageTitle = (string) ($args['title'] ?? get_the_title());
                 <button type="button" id="vg-dock-close" class="vg-dock-close" aria-label="<?php esc_attr_e('Close tools menu', 'vietnamguide-premium'); ?>">&times;</button>
             </div>
             <nav class="vg-dock-tools-grid">
-                <a href="<?php echo esc_url(home_url('/costs/vietnam-travel-cost/')); ?>" class="vg-dock-tool-link">
+                <a href="<?php echo esc_url(home_url('/plan/vietnam-travel-cost/')); ?>" class="vg-dock-tool-link">
                     <span class="vg-dock-tool-icon" aria-hidden="true">§</span>
                     <span class="vg-dock-tool-name"><?php esc_html_e('Budget Calculator', 'vietnamguide-premium'); ?></span>
                 </a>

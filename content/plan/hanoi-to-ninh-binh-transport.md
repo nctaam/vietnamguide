@@ -6,7 +6,7 @@ description: "Compare Hanoi to Ninh Binh transport options: evaluate train, limo
 travel_cluster: "northern_triangle"
 last_verified: "2026-11-01"
 author: "VietnamGuide Editorial Team"
-reading_time_minutes: 12
+reading_time_minutes: 8
 word_count: 1596
 ---
 

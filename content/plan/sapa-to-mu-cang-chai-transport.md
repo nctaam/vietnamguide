@@ -6,7 +6,7 @@ description: "O Quy Ho Pass and Highway 32 mountain route across 140 km: local b
 travel_cluster: "northern_highlands"
 last_verified: "2026-10-31"
 author: "VietnamGuide Editorial Team"
-reading_time_minutes: 12
+reading_time_minutes: 8
 word_count: 1521
 ---
 

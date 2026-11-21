@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Offline Travel Assistance &mdash; VietnamGuide.net</title>
     <meta name="description" content="Offline travel resources, emergency contacts, and cached guide access for Vietnam.">
-    <meta name="theme-color" content="#0F2537">
+    <meta name="theme-color" content="#0e6f5c">
     <link rel="icon" href="/wp-content/themes/vietnamguide-premium/assets/images/vg-icon.svg" type="image/svg+xml">
     <style>
         :root {
@@ -29,6 +29,10 @@
             line-height: 1.6;
             padding: 0 16px 48px;
             -webkit-font-smoothing: antialiased;
+        }
+        a:focus-visible, button:focus-visible {
+            outline: 2px solid var(--vg-forest);
+            outline-offset: 2px;
         }
         .vg-offline-header {
             max-width: 800px;
@@ -55,7 +59,7 @@
             text-transform: uppercase;
             letter-spacing: 0.05em;
             background: rgba(201, 148, 70, 0.15);
-            color: #8C6020;
+            color: #7A5218;
             padding: 5px 12px;
             border-radius: 9999px;
             border: 1px solid rgba(201, 148, 70, 0.35);
@@ -88,6 +92,7 @@
             display: inline-flex;
             align-items: center;
             justify-content: center;
+            min-height: 44px;
             padding: 12px 22px;
             font-size: 14px;
             font-weight: 700;
@@ -117,7 +122,6 @@
             color: var(--vg-navy);
             transform: translateY(-1px);
         }
-        
         .vg-section-title {
             font-size: 19px;
             font-weight: 700;
@@ -127,8 +131,6 @@
             border-bottom: 1px solid var(--vg-border-hairline);
             letter-spacing: -0.01em;
         }
-
-        /* Cached Guides Grid */
         .vg-cached-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -139,6 +141,7 @@
             display: flex;
             align-items: center;
             gap: 12px;
+            min-height: 56px;
             background: var(--vg-paper-tactile);
             border: 1px solid var(--vg-border-hairline);
             border-radius: 10px;
@@ -170,8 +173,6 @@
             font-size: 12px;
             color: var(--vg-muted);
         }
-
-        /* Emergency Contacts */
         .vg-emergency-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -179,10 +180,17 @@
             margin: 16px 0 28px;
         }
         .vg-emergency-item {
+            display: block;
+            text-decoration: none;
             background: var(--vg-paper-tactile);
             border: 1px solid var(--vg-border-hairline);
             border-radius: 10px;
             padding: 14px 16px;
+            color: inherit;
+        }
+        .vg-emergency-item:hover {
+            background: #FFFFFF;
+            border-color: var(--vg-navy);
         }
         .vg-emergency-item--police { border-left: 4px solid #DC2626; }
         .vg-emergency-item--medical { border-left: 4px solid #059669; }
@@ -207,6 +215,13 @@
             font-size: 13px;
             color: var(--vg-muted);
         }
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                transition: none !important;
+                animation: none !important;
+                transform: none !important;
+            }
+        }
     </style>
 </head>
 <body>
@@ -217,7 +232,7 @@
         </span>
     </header>
 
-    <main class="vg-offline-card">
+    <main id="main" class="vg-offline-card">
         <h1>You are currently exploring offline</h1>
         <p>
             No internet connection detected. You may be navigating a remote northern pass in Ha Giang, trekking near the border, or cruising Lan Ha Bay outside cellular coverage.
@@ -240,56 +255,56 @@
         </h2>
         <div class="vg-cached-grid">
             <a href="/plan/vietnam-travel-guide/" class="vg-cached-item">
-                <span class="vg-cached-item__icon">🗺️</span>
+                <span class="vg-cached-item__icon" aria-hidden="true">&#x1F5FA;&#xFE0F;</span>
                 <span class="vg-cached-item__text">
                     <span class="vg-cached-item__title">Master Travel Guide</span>
                     <span class="vg-cached-item__sub">Core planning overview</span>
                 </span>
             </a>
             <a href="/plan/vietnam-evisa/" class="vg-cached-item">
-                <span class="vg-cached-item__icon">🛂</span>
+                <span class="vg-cached-item__icon" aria-hidden="true">&#x1F6C2;</span>
                 <span class="vg-cached-item__text">
                     <span class="vg-cached-item__title">Official E-Visa Guide</span>
                     <span class="vg-cached-item__sub">42 gates &amp; 45-day exemption rules</span>
                 </span>
             </a>
-            <a href="/costs/vietnam-travel-cost/" class="vg-cached-item">
-                <span class="vg-cached-item__icon">💰</span>
+            <a href="/plan/vietnam-travel-cost/" class="vg-cached-item">
+                <span class="vg-cached-item__icon" aria-hidden="true">&#x1F4B0;</span>
                 <span class="vg-cached-item__text">
                     <span class="vg-cached-item__title">Travel Cost Calculator</span>
                     <span class="vg-cached-item__sub">Daily budget benchmarks</span>
                 </span>
             </a>
             <a href="/plan/best-time-to-visit-vietnam/" class="vg-cached-item">
-                <span class="vg-cached-item__icon">☀️</span>
+                <span class="vg-cached-item__icon" aria-hidden="true">&#x2600;&#xFE0F;</span>
                 <span class="vg-cached-item__text">
                     <span class="vg-cached-item__title">Season &amp; Weather Matrix</span>
                     <span class="vg-cached-item__sub">Regional climate breakdown</span>
                 </span>
             </a>
             <a href="/plan/vietnam-airport-arrival-checklist/" class="vg-cached-item">
-                <span class="vg-cached-item__icon">✈️</span>
+                <span class="vg-cached-item__icon" aria-hidden="true">&#x2708;&#xFE0F;</span>
                 <span class="vg-cached-item__text">
                     <span class="vg-cached-item__title">Airport Transit &amp; Scams</span>
                     <span class="vg-cached-item__sub">9 gateways (HAN, SGN, DAD, CXR...)</span>
                 </span>
             </a>
             <a href="/plan/vietnam-first-trip-planning-checklist/" class="vg-cached-item">
-                <span class="vg-cached-item__icon">🎒</span>
+                <span class="vg-cached-item__icon" aria-hidden="true">&#x1F392;</span>
                 <span class="vg-cached-item__text">
                     <span class="vg-cached-item__title">Packing &amp; Gear Checklist</span>
                     <span class="vg-cached-item__sub">Interactive route packing</span>
                 </span>
             </a>
             <a href="/itineraries/10-days-in-vietnam/" class="vg-cached-item">
-                <span class="vg-cached-item__icon">🚂</span>
+                <span class="vg-cached-item__icon" aria-hidden="true">&#x1F682;</span>
                 <span class="vg-cached-item__text">
                     <span class="vg-cached-item__title">10 Days in Vietnam</span>
                     <span class="vg-cached-item__sub">Classic North-to-South route</span>
                 </span>
             </a>
             <a href="/itineraries/" class="vg-cached-item">
-                <span class="vg-cached-item__icon">🧭</span>
+                <span class="vg-cached-item__icon" aria-hidden="true">&#x1F9ED;</span>
                 <span class="vg-cached-item__text">
                     <span class="vg-cached-item__title">All Itineraries Hub</span>
                     <span class="vg-cached-item__sub">Browse route blueprints</span>
@@ -301,30 +316,30 @@
             Essential Vietnam Emergency Contacts
         </h2>
         <div class="vg-emergency-grid">
-            <div class="vg-emergency-item vg-emergency-item--police">
+            <a href="tel:113" class="vg-emergency-item vg-emergency-item--police">
                 <strong>113</strong>
                 <span>Police Assistance (National)</span>
-            </div>
-            <div class="vg-emergency-item vg-emergency-item--medical">
+            </a>
+            <a href="tel:115" class="vg-emergency-item vg-emergency-item--medical">
                 <strong>115</strong>
                 <span>Ambulance &amp; Medical Emergency</span>
-            </div>
-            <div class="vg-emergency-item vg-emergency-item--tourist">
+            </a>
+            <a href="tel:+842439261565" class="vg-emergency-item vg-emergency-item--tourist">
                 <strong>+84 24 3926 1565</strong>
                 <span>Hanoi Tourist Support Desk</span>
-            </div>
-            <div class="vg-emergency-item vg-emergency-item--tourist">
+            </a>
+            <a href="tel:+842363550111" class="vg-emergency-item vg-emergency-item--tourist">
                 <strong>+84 236 3550 111</strong>
                 <span>Da Nang Tourist Assistance</span>
-            </div>
-            <div class="vg-emergency-item vg-emergency-item--tourist">
+            </a>
+            <a href="tel:1022" class="vg-emergency-item vg-emergency-item--tourist">
                 <strong>1022 (ext. 8)</strong>
                 <span>HCMC Tourist Hotline (English)</span>
-            </div>
-            <div class="vg-emergency-item">
+            </a>
+            <a href="tel:114" class="vg-emergency-item">
                 <strong>114</strong>
                 <span>Fire &amp; Search / Rescue</span>
-            </div>
+            </a>
         </div>
 
         <h2 class="vg-section-title">
@@ -338,7 +353,7 @@
                 <strong>Lodging Confirmation:</strong> When communicating with taxi or xe ôm drivers, show your accommodation confirmation containing the full Vietnamese street name and diacritical marks.
             </li>
             <li>
-                <strong>Free Wi-Fi:</strong> Wi-Fi is ubiquitous in Vietnam. Roadside cafes and family homestays throughout rural provinces offer free connection. Look for signs reading <em>&ldquo;Wi-Fi Miễn Phí&rdquo;</em>.
+                <strong>Free Wi-Fi:</strong> Wi-Fi is widely available in Vietnam. Roadside cafes and family homestays throughout rural provinces offer free connection. Look for signs reading <em>&ldquo;Wi-Fi Miễn Phí&rdquo;</em>.
             </li>
         </ul>
     </main>

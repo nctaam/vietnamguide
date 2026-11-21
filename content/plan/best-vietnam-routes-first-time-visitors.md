@@ -6,7 +6,7 @@ description: "Plan the best Vietnam routes for first-time visitors: compare 10-d
 travel_cluster: "national_circuit"
 last_verified: "2026-10-22"
 author: "VietnamGuide Editorial Team"
-reading_time_minutes: 11
+reading_time_minutes: 7
 word_count: 1494
 ---
 

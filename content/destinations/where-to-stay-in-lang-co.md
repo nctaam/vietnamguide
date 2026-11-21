@@ -6,7 +6,7 @@ description: "Canh Duong beach villas at Banyan Tree and Angsana vs Lap An oyste
 travel_cluster: "far_north_frontier"
 last_verified: "2026-10-24"
 author: "VietnamGuide Editorial Team"
-reading_time_minutes: 8
+reading_time_minutes: 7
 word_count: 1498
 ---
 

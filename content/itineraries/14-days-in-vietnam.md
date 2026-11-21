@@ -6,7 +6,7 @@ description: "Plan 14 days in Vietnam by month, route shape, and travel style, w
 travel_cluster: "national_circuit"
 last_verified: "2026-10-22"
 author: "VietnamGuide Editorial Team"
-reading_time_minutes: 15
+reading_time_minutes: 13
 word_count: 2534
 ---
 

@@ -6,7 +6,7 @@ description: "Compare Hanoi vs Ho Chi Minh City by first-night comfort, route di
 travel_cluster: "northern_triangle"
 last_verified: "2026-10-21"
 author: "VietnamGuide Editorial Team"
-reading_time_minutes: 10
+reading_time_minutes: 15
 word_count: 2971
 ---
 

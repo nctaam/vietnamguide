@@ -6,7 +6,7 @@ description: "Mekong Delta travel guide: floating markets in Can Tho, Ben Tre ri
 travel_cluster: "mekong_delta"
 last_verified: "2026-10-23"
 author: "VietnamGuide Editorial Team"
-reading_time_minutes: 11
+reading_time_minutes: 15
 word_count: 3065
 ---
 

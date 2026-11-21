@@ -6,7 +6,7 @@ description: "Complete Vietnam train travel guide: compare 4-berth soft sleepers
 travel_cluster: "national_circuit"
 last_verified: "2026-10-24"
 author: "VietnamGuide Editorial Team"
-reading_time_minutes: 10
+reading_time_minutes: 8
 word_count: 1596
 ---
 

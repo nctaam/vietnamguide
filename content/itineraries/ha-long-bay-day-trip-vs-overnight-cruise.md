@@ -6,8 +6,8 @@ description: "Ha Long Bay day trip vs overnight cruise comparison: compare trave
 travel_cluster: "ha_long_bay"
 last_verified: "2026-10-22"
 author: "VietnamGuide Editorial Team"
-reading_time_minutes: 10
-word_count: 1410
+reading_time_minutes: 8
+word_count: 1612
 ---
 
 # Ha Long Bay Day Trip vs Overnight Cruise (2026): Real Water Time & Cost Breakdown
@@ -58,7 +58,7 @@ ACTUAL WATER-TIME AUDIT: 6-HOUR DAY CRUISE vs 2D1N vs 3D2N
 
 ---
 
-## Why Modern 6-to-7.5-Hour Day Cruises Beat Old stereotypes
+## Why Modern 6-to-7.5-Hour Day Cruises Beat Old Stereotypes
 
 If your Vietnam itinerary is capped at 5 to 7 days—or if you suffer from motion sickness when sleeping on boats—today's **Route 2 Luxury Day Cruises** (operated by steel vessels such as *Jade Sails*, *Ambassador Day Cruise*, *Amethyst Cruise*, *Symphony*, and *Cozy Bay Premium*) deliver 85% of the sightseeing value of a 2D1N cruise at one-third of the price.
 
@@ -88,8 +88,27 @@ While a 6-hour day cruise covers the daytime sightseeing checklist, it misses th
 ### Port Logistics: Tuan Chau Marina vs Halong International Cruise Port (`Bai Chay`) vs Ao Tien
 Before booking any day or overnight vessel, check which of the three ports in Quang Ninh province your ship uses, as terminal locations affect both highway drive time and bay routing:
 * **Tuan Chau International Passenger Port (`Cảng Tàu Khách Quốc Tế Tuần Châu`)**: Located on Tuan Chau Island (`150 km` from Hanoi via `CT04`, `2 hours 15 minutes`). This is the primary embarkation hub for both **Ha Long Bay Route 2 ships** and **Lan Ha Bay overnight ships** (which tender south across the Cat Ba channel). Waiting lounges (`Lot 1` through `Lot 36`) are spread across `2 kilometers` of waterfront; always verify your cruise line's exact lounge lot number before your driver drops you off.
-* **Halong International Cruise Port (`Cảng Tàu Khách Quốc Tế Hạ Long` / Sun Port, Bai Chay)**: Located `12 kilometers` east of Tuan Chau inside central Ha Long City (`2 hours 30 minutes` from Hanoi). Used by large steel day catamarans (*Ambassador Day Cruise*, *Sea Octopus*, *Symphony*) and Bai Tu Long-bound ships. Its multi-story terminal building Designed by Bill Bensley links directly to Bai Chay Beach hotels.
+* **Halong International Cruise Port (`Cảng Tàu Khách Quốc Tế Hạ Long` / Sun Port, Bai Chay)**: Located `12 kilometers` east of Tuan Chau inside central Ha Long City (`2 hours 30 minutes` from Hanoi). Used by large steel day catamarans (*Ambassador Day Cruise*, *Sea Octopus*, *Symphony*) and Bai Tu Long-bound ships. Its multi-story terminal building designed by Bill Bensley links directly to Bai Chay Beach hotels.
 * **Ao Tien International Port (`Cảng Quốc Tế Ao Tiên`, Van Don District)**: Opened in 2023 `50 kilometers` northeast of Bai Chay along the Ha Long–Van Don Expressway (`3 hours` from Hanoi), serving upscale vessels heading into outer **Bai Tu Long Bay** and island speedboats to Co To and Quan Lan.
+
+---
+
+## 2026 Statutory Permits, Port Fees & Expressway Transfer Math
+
+Every published cruise tariff breaks down into three fixed layers: Quang Ninh or Hai Phong bay permits, terminal departure levies, and highway transfers along the CT04 and CT06 expressways. Knowing these separate line items lets you spot unbundled online deals immediately.
+
+| Cost Component or Highway Corridor | Distance / Duration | 2026 Statutory Rate (VND) | Approximate USD | Included in Standard Package? |
+| :--- | :--- | :--- | :--- | :--- |
+| **Route 1 Day Permit (Thien Cung / Dau Go)** | 4 hours on water | 250,000 VND + 60,000 VND port | $12.40 USD | Bundled in 4-hour day boat tickets |
+| **Route 2 Day Permit (Sung Sot / Ti Top)** | 6–7.5 hours on water | 250,000 VND + 60,000 VND port | $12.40 USD | Bundled in luxury day catamarans |
+| **Route 2 Overnight Permit (2D1N)** | 22.5 hours onboard | 550,000 VND + 40,000 VND port | $23.60 USD | Bundled in reputable 4–5 star cruises |
+| **Route 2 Extended Permit (3D2N)** | 46.5 hours onboard | 750,000 VND total permit | $30.00 USD | Bundled in 3D2N overnight bookings |
+| **Lan Ha Bay Overnight Permit (2D1N)** | 22 hours onboard | 400,000 VND to 500,000 VND | $16.00–$20.00 USD | Bundled; lower fee than core Ha Long |
+| **Hanoi → Tuan Chau (CT04/CT06 Limousine)** | 150 km / 2 hours 15 mins | 350,000 VND to 450,000 VND OW | $14.00–$18.00 USD | Often excluded on OTA base cabin rates |
+| **Hanoi → Sun Port Bai Chay (Private Car)** | 162 km / 2 hours 30 mins | 1,800,000 VND to 2,200,000 VND | $72.00–$88.00 USD | Includes 240,000 VND expressway tolls |
+| **Hanoi → Got Pier Lan Ha (CT04 Limousine)** | 125 km / 2 hours | 350,000 VND to 400,000 VND OW | $14.00–$16.00 USD | Fastest highway run from Old Quarter |
+
+Cabin pricing splits into three clear brackets in 2026. Solid 4-star steel vessels with private balconies charge 3,600,000 VND to 4,800,000 VND ($144 to $192 USD) per person for a 2D1N double cabin. Modern 5-star steel suites with bow pools and 32 m² staterooms sit between 5,000,000 VND and 6,800,000 VND ($200 to $272 USD) per guest. Flagship vessels with butler service and oversized terraces reach 7,500,000 VND to 11,000,000 VND ($300 to $440 USD). Solo travelers should factor in a 55% to 75% single supplement, adding 1,900,000 VND to 3,500,000 VND ($76 to $140 USD) per night. Before signing off on any reservation, audit hull age and bar markups using our [Ha Long Bay cruise booking checklist](/plan/ha-long-bay-cruise-questions-before-booking/), weigh quieter southern anchorages in our [Ha Long Bay vs Lan Ha Bay comparison](/compare/ha-long-bay-vs-lan-ha-bay/), and check direct post-cruise vans in our [Ha Long to Ninh Binh transport guide](/plan/ha-long-to-ninh-binh-transport/).
 
 ---
 

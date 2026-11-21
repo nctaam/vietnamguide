@@ -6,7 +6,7 @@ description: "Hanoi to Cao Bang transport guide: VIP limousine vans, overnight s
 travel_cluster: "far_north_frontier"
 last_verified: "2026-10-25"
 author: "VietnamGuide Editorial Team"
-reading_time_minutes: 12
+reading_time_minutes: 7
 word_count: 1456
 ---
 

@@ -6,7 +6,7 @@ description: "Where to stay in Ba Be: Pac Ngoi stilt village homestays on Ba Be 
 travel_cluster: "far_north_frontier"
 last_verified: "2026-10-24"
 author: "VietnamGuide Editorial Team"
-reading_time_minutes: 12
+reading_time_minutes: 8
 word_count: 1554
 ---
 

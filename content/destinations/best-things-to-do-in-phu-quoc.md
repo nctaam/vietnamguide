@@ -6,7 +6,7 @@ description: "Discover the best things to do in Phu Quoc: Hon Thom cable car, su
 travel_cluster: "coastal_islands"
 last_verified: "2026-10-22"
 author: "VietnamGuide Editorial Team"
-reading_time_minutes: 11
+reading_time_minutes: 18
 word_count: 3690
 ---
 

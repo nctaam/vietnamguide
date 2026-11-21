@@ -6,7 +6,7 @@ description: "Best things to do in Hoi An: Ancient Town heritage ticket rules, l
 travel_cluster: "central_heritage"
 last_verified: "2026-11-02"
 author: "VietnamGuide Editorial Team"
-reading_time_minutes: 15
+reading_time_minutes: 9
 word_count: 1867
 ---
 

@@ -6,7 +6,7 @@ description: "Northwest Vietnam itinerary: realistic 6 to 8-day overland circuit
 travel_cluster: "far_north_frontier"
 last_verified: "2026-10-22"
 author: "VietnamGuide Editorial Team"
-reading_time_minutes: 10
+reading_time_minutes: 8
 word_count: 1536
 ---
 

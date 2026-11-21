@@ -6,8 +6,8 @@ description: "Ask these crucial Ha Long Bay cruise questions before booking: por
 travel_cluster: "ha_long_bay"
 last_verified: "2026-10-22"
 author: "VietnamGuide Editorial Team"
-reading_time_minutes: 10
-word_count: 1367
+reading_time_minutes: 8
+word_count: 1679
 ---
 
 # 10 Ha Long Bay Cruise Questions to Ask Before Booking (2026): Lan Ha vs Bai Tu Long, Hidden Fees & Hull Safety
@@ -75,6 +75,27 @@ In 2026, Quang Ninh Province charges a mandatory **`550,000 to 650,000 VND` (`~$
 
 ### 3. Navigating Summer Typhoon Cancellations (`July to September`)
 Only the **Quang Ninh and Hai Phong Maritime Port Authorities (`Cảng Vụ Đường Thủy Nội Địa`)** have the legal power to grant or suspend overnight sailing permits based on wind forecasts. During peak summer storm months (`July, August, and September`), if a tropical depression approaches the Gulf of Tonkin, the Port Authority shuts down all overnight departures at `07:00 AM` or `10:00 AM` that morning. Book directly with established operators or flexible OTA rates that guarantee a **100% refund of the cruise fare** if sailing permits are suspended (noting that if the shutdown is announced after your limousine has already driven you from Hanoi to the pier, you typically pay only the actual `350,000–400,000 VND` bus transfer cost).
+
+---
+
+## 2026 All-In Cost Audit: Permits, Port Transfers, Surcharges & Single Supplements
+
+Sticker shock happens when buyers compare a bare cabin listing against an all-inclusive quote. Breaking down Quang Ninh's 2026 statutory bay permits, expressway distances, onboard surcharges, and solo-traveler supplements shows the true out-of-pocket total before you enter a card number.
+
+| Cost Category or Transfer Leg | Distance / Duration | 2026 Verified Tariff (VND) | Approximate USD | Booking Tip |
+| :--- | :--- | :--- | :--- | :--- |
+| **Ha Long Route 2 Day Permit + Port Fee** | 6 hours cruising | 250,000 VND + 60,000 VND | $12.40 USD | Covers Sung Sot Cave, Luon Cave & Ti Top Island. |
+| **Ha Long Route 2 Overnight (2D1N) Permit** | 21.5 hours onboard | 550,000 VND + 40,000 VND | $23.60 USD | Verify written inclusion on any flash-sale OTA rate. |
+| **Ha Long Extended (3D2N) Overnight Permit** | 45 hours onboard | 750,000 VND total fee | $30.00 USD | Includes Day-2 outer lagoon tender access. |
+| **Lan Ha Bay Overnight (2D1N) Permit** | 22 hours (14 km tender) | 400,000 VND to 500,000 VND | $16.00–$20.00 USD | Tuan Chau speedboat crosses the 14 km channel in 25 mins. |
+| **Hanoi → Got Pier (CT04 / QL5B Limousine)** | 125 km / 2 hours | 350,000 VND to 400,000 VND OW | $14.00–$16.00 USD | Private 4-seat sedan costs 1,600,000 VND to 1,900,000 VND ($64–$76). |
+| **Hanoi → Tuan Chau Marina (CT04/CT06)** | 150 km / 2 hours 15 mins | 350,000 VND to 450,000 VND OW | $14.00–$18.00 USD | Private 4-seat sedan runs 1,800,000 VND to 2,200,000 VND ($72–$88). |
+| **Hanoi → Sun Port Bai Chay / Ao Tien** | 162 km (2.5 hrs) / 212 km (3 hrs) | 400,000 VND to 550,000 VND OW | $16.00–$22.00 USD | Sun Port sits 12 km east of Tuan Chau Marina. |
+| **Noi Bai Airport (HAN) → Tuan Chau Car** | 165 km / 2 hours 20 mins | 2,000,000 VND to 2,400,000 VND | $80.00–$96.00 USD | Ideal for late-afternoon direct flight connections. |
+
+Extra onboard charges follow predictable bands across 4-star and 5-star fleets. Double kayaks are bundled on 90% of modern steel vessels, though bare-bones promotional rates occasionally bill 100,000 VND to 150,000 VND ($4.00 to $6.00 USD) per hour, and local bamboo sampans cost 50,000 VND to 100,000 VND ($2.00 to $4.00 USD) if excluded. Bar menus charge 65,000 VND to 95,000 VND ($2.60 to $3.80 USD) for local beer, 160,000 VND to 240,000 VND ($6.40 to $9.60 USD) for cocktails, 45,000 VND to 65,000 VND ($1.80 to $2.60 USD) for dinner still water, and 650,000 VND to 1,100,000 VND ($26.00 to $44.00 USD) for a 60-minute cabin spa massage.
+
+Solo travelers face the steepest hidden multiplier: published cruise prices assume two adults per room. Expect a mandatory **single supplement of 55% to 80%**—adding 2,000,000 VND to 4,500,000 VND ($80.00 to $180.00 USD) per night—pushing a solo 2D1N balcony suite to 5,800,000 VND to 10,500,000 VND ($232.00 to $420.00 USD) all-in. Booking a Monday through Wednesday sailing often trims that single supplement down to 45% (1,600,000 VND to 2,200,000 VND / $64.00 to $88.00 USD). Before locking in dates, weigh daytime catamarans against sleeping onboard in our [Ha Long Bay day trip vs overnight cruise guide](/itineraries/ha-long-bay-day-trip-vs-overnight-cruise/), compare anchorages in [Ha Long Bay vs Lan Ha Bay](/compare/ha-long-bay-vs-lan-ha-bay/), and check direct vans in our [Ha Long to Ninh Binh transport guide](/plan/ha-long-to-ninh-binh-transport/).
 
 ---
 

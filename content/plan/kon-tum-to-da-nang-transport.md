@@ -6,8 +6,8 @@ description: "Highway 14 and Lo Xo Pass route across 290 km: shared limousines (
 travel_cluster: "central_highlands"
 last_verified: "2026-11-01"
 author: "VietnamGuide Editorial Team"
-reading_time_minutes: 8
-word_count: 1490
+reading_time_minutes: 10
+word_count: 1975
 ---
 
 # Kon Tum to Da Nang Transport (2026): Bus vs Car
@@ -95,3 +95,23 @@ For groups of three to six travelers, or anyone connecting directly to an aftern
 1. **Select Daytime Limousine Over Night Bus if Motion-Sick:** The 27 km concrete descent of Lo Xo Pass involves dozens of tight curves through Song Thanh Nature Reserve. Booking a morning 07:30 VIP limousine (Seats 3, 4, or 5) reduces motion sickness compared to riding an upper-tier sleeper bunk in pitch darkness.
 2. **Confirm Your Da Nang Drop-Off Zone Before Boarding:** Da Nang Central Bus Station (185 Ton Duc Thang Street) lies 8 km northwest of My Khe Beach and 32 km northwest of Hoi An Ancient Town. Ask Minh Quoc or Viet Tan Phat dispatchers to put you on their free downtown shuttle van to avoid a 130,000 VND ($5.20 USD) taxi fare from the bus terminal.
 3. **Carry a Light Hoodie for the Overnight Cabin:** Sleeper coaches set cabin air-conditioning to 20°C (68°F) while crossing the 1,050m summit of Lo Xo Pass at midnight, and the provided thin fleece blanket rarely covers tall passengers.
+
+---
+
+## Frequently Asked Questions (2026)
+
+### Is there a direct flight or train from Kon Tum to Da Nang?
+
+No civilian airport or railway line serves Kon Tum Province. Travelers flying out of the northern highlands must transfer 42 km south along Highway QL14 (45 minutes, 450,000 to 500,000 VND / $18.00 to $20.00 USD by taxi) to Pleiku Airport (PXU), which connects primarily to Ho Chi Minh City and Hanoi rather than daily Da Nang hops. Road transit therefore carries nearly all traffic across the 290 km QL14 corridor via Lo Xo Pass (5.5 to 6.5 hours by 9-seat VIP limousine, 280,000 to 350,000 VND / $11.20 to $14.00 USD) or the 315 km QL24–CT01 bypass via Mang Den.
+
+### How safe is Lo Xo Pass during the October and November rainy season?
+
+Lo Xo Pass demands extra caution in autumn. Sustained monsoon rains between October 1 and November 30 saturate the steep clay slopes flanking this 27 km concrete-slab pass inside Song Thanh Nature Reserve (1,050m summit), dropping visibility under 30 meters and occasionally causing 3-to-6-hour landslide cleanups near Kham Duc (165 km from Kon Tum). Skip overnight 40-berth coaches whenever storm advisories are posted. Book a 07:30 daytime Minh Quoc limousine (300,000 to 350,000 VND / $12.00 to $14.00 USD) or instruct a private charter driver (2,900,000 to 3,600,000 VND / $116.00 to $144.00 USD) to detour east across Highway QL24 through Mang Den and Violak Pass onto the four-lane CT01 Expressway (315 km, 6 hours).
+
+### Can I travel from Kon Tum directly to Hoi An without changing buses in Da Nang?
+
+Scheduled coaches terminate in western Da Nang, not Hoi An. Minh Quoc and Viet Tan Phat unload passengers at Da Nang Central Bus Station (185 Ton Duc Thang Street, Lien Chieu District) or shuttle riders by free feeder van into central Han River stops, leaving 30 to 32 km to reach Hoi An Ancient Town. From the bus terminal, a metered GrabCar or Xanh SM taxi straight to Hoi An takes 50 to 60 minutes and costs 360,000 to 440,000 VND ($14.40 to $17.60 USD). Private cars chartered from Kon Tum can continue straight to your Hoi An hotel lobby for an extra 250,000 to 300,000 VND ($10.00 to $12.00 USD); compare coastal shuttle options in [Da Nang Airport to Hoi An](/plan/da-nang-airport-to-hoi-an/).
+
+### Where do overnight buses from Kon Tum drop passengers at 03:00 AM in Da Nang?
+
+Every 19:00 to 20:00 sleeper departure from Kon Tum Bus Station (281 Phan Dinh Phung Street) pulls into Da Nang Central Bus Station between 02:30 and 03:30 AM after covering 290 km in 6.5 to 7.5 hours. Never step into an unmetered cab outside the gate before dawn. Remain asleep inside your parked Minh Quoc or Mai Linh coach until 05:30 AM—drivers keep cabin air-conditioning running free of charge—then hop on the company's morning feeder van or order a 110,000 to 140,000 VND ($4.40 to $5.60 USD) GrabCar for the 8 km transfer across the Han River toward beachfront hotels in [Where to Stay in Da Nang](/destinations/where-to-stay-in-da-nang/).

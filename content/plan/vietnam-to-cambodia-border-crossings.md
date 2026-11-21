@@ -6,8 +6,8 @@ description: "Complete Vietnam to Cambodia border crossings guide: compare Moc B
 travel_cluster: "mekong_delta"
 last_verified: "2026-11-01"
 author: "VietnamGuide Editorial Team"
-reading_time_minutes: 8
-word_count: 1591
+reading_time_minutes: 9
+word_count: 1890
 ---
 
 # Vietnam to Cambodia Border Crossings: Routes & Visas (2026)
@@ -72,9 +72,9 @@ Crossing between Vietnam and Cambodia by international highway coach or pedestri
 ## 2026 Visa Rules & Digital e-Arrival Cards
 
 ### Entering Cambodia from Vietnam
-1. **Cambodia e-Visa (`$36 USD`)**: Apply at least `4 business days` in advance exclusively via the official government portal (`evisa.gov.kh`). Cost is `$30 USD` visa fee + `$6 USD` processing charge. Print **two black-and-white or color paper copies** (one stapled at entry, one collected on exit). Accepted at Moc Bai/Bavet, Song Tien/Kaam Samnor, Ha Tien/Prek Chak, Tinh Bien/Phnom Den, Xa Mat/Trapeang Phlong, and Hoa Lu/Trapeang Sre.
-2. **Cambodia Visa on Arrival (`$30 USD` Tourist / `$35 USD` Ordinary)**: Available on the spot at all seven international gates above. Bring **one `4x6 cm` passport photo** (or pay `$2 USD` for a camera scan) and crisp US dollar bills.
-3. **Cambodia e-Arrival Card (`arrival.gov.kh`)**: Free mandatory registration rolled out for air arrivals and expanding across land checkpoints in 2026. Submit your form within `7 days` of travel and screenshot the QR code; land and river booths still keep paper arrival cards as a backup during network outages.
+1. **Cambodia e-Visa (`$36 USD`)**: Apply at least `4 business days` in advance exclusively via the official government portal (`evisa.gov.kh`). Cost is `$30 USD` visa fee + `$6 USD` processing charge. Print **two paper copies**—one stays stapled at entry, and officers collect the second on exit. Border posts honoring the e-Visa include Moc Bai/Bavet, Song Tien/Kaam Samnor, Ha Tien/Prek Chak, Tinh Bien/Phnom Den, Xa Mat/Trapeang Phlong, and Hoa Lu/Trapeang Sre.
+2. **Cambodia Visa on Arrival (`$30 USD` Tourist / `$35 USD` Ordinary)**: Issued on the spot at all seven checkpoints above. Bring **one `4x6 cm` passport photo** and crisp US dollar bills. Forgotten photos incur a `$2 USD` counter scan fee.
+3. **Cambodia e-Arrival Card (`arrival.gov.kh`)**: Free digital registration rolled out for airports and expanding to land posts in 2026. Submit your form within `7 days` of crossing and save the QR screenshot, as rural river booths still hand out paper backup slips whenever local cell networks drop.
 
 ### Entering Vietnam from Cambodia
 Vietnam **never** issues Tourist Visa on Arrival at land or river borders. Unless your nationality qualifies for a unilateral `45-day` or ASEAN `30-day` visa exemption, you must hold a **pre-approved Vietnam 90-day e-Visa** (`$25 USD` single-entry / `$50 USD` multiple-entry via `evisa.gov.vn`) before approaching the border. All seven Vietnamese gates listed in our matrix above (Moc Bai, Song Tien, Ha Tien, Tinh Bien, Xa Mat, Hoa Lu, and Le Thanh) are officially designated e-Visa entry and exit checkpoints. Always carry a **physical paper printout** of your Vietnam e-Visa PDF; Vietnamese Border Guard officers at remote gates will not stamp a smartphone screen.
@@ -85,3 +85,23 @@ Vietnam **never** issues Tourist Visa on Arrival at land or river borders. Unles
 - **Avoiding the "Quarantine / Temperature Check" Scam**: At Ha Tien – Prek Chak, Tinh Bien – Phnom Den, and Hoa Lu – Trapeang Sre, uniformed or semi-official clerks at a side desk before the main Cambodian immigration window occasionally wave pedestrians over to take a forehead thermometer reading and demand `$1 to $2 USD` (`25,000 to 50,000 VND`) for a yellow "health slip." In 2026, Cambodia has no mandatory temperature or yellow-card fee for travelers arriving from Vietnam. Politely decline and walk straight to the official glass Visa on Arrival / Immigration counter.
 - **Visa on Arrival "Tea Money"**: Statutory Cambodian tourist VoA fees are `$30 USD` printed directly on the visa sticker. At quiet land gates (Prek Chak, Phnom Den, Oyadav) and river pontoons (Kaam Samnor), officers or bus couriers routinely request `$32 to $35 USD` (`$2 to $5 USD` processing surcharge). Carrying an approved `$36 USD` e-Visa from `evisa.gov.kh` and walking past the VoA window directly to the e-Visa stamping lane eliminates cash negotiation at the counter.
 - **Cross-Border SIM Cards & Onward Taxis**: Avoid buying overpriced tourist SIM cards inside the Bavet or Prek Chak immigration halls (`$10 to $15 USD` for small data packages). Wait until your bus stops for lunch or reaches Phnom Penh or Kampot town, where an official Smart Axiata or Metfone store sells a `30-day` tourist eSIM or physical SIM with `30 to 50 GB` of 4G/5G data for `$5 to $6 USD` (`20,000 to 24,000 KHR`).
+
+---
+
+## Frequently Asked Questions (2026)
+
+### Can I cross from Vietnam to Cambodia and re-enter Vietnam on the same e-Visa?
+
+Only if you hold the multiple-entry tier. A standard single-entry Vietnam 90-day e-Visa (`$25 USD` via `evisa.gov.vn`) closes permanently the moment Border Guard officers stamp you out at Moc Bai, Song Tien, or Ha Tien. Travelers planning a Phnom Penh or Angkor Wat detour before looping back to Ho Chi Minh City must obtain a **multiple-entry Vietnam e-Visa (`$50 USD`)** upfront, or apply for a fresh `$25 USD` single-entry e-Visa while inside Cambodia (`3 to 5 business days` processing). Verify eligible port names in our [Vietnam e-Visa Guide](/plan/vietnam-evisa/).
+
+### Which border crossing is fastest between Phu Quoc and Kampot or Kep?
+
+Ha Tien (Xa Xia) – Prek Chak is the shortest coastal link by far. Board a morning Phu Quoc Express or Superdong boat from Bai Vong Port across the `45 km` strait to Ha Tien Port (`60 to 75 minutes`, `216,000 to 250,000 VND` / `$8.60 to $10.00 USD`), then hire a `9 km` taxi (`15 minutes`, `120,000 to 150,000 VND` / `$4.80 to $6.00 USD`) straight to the frontier—see full boat timetables in [Ha Tien to Phu Quoc Ferry](/plan/ha-tien-to-phu-quoc-ferry/). After clearing Prek Chak immigration (`30 to 45 minutes`), Kep sits `25 km` west (`35 minutes`, `$15 to $20 USD` taxi) and Kampot lies `45 km` northwest (`60 minutes`, `$25 to $30 USD` taxi).
+
+### Should I buy a Cambodia e-Visa online or get Visa on Arrival at the border?
+
+Paying the extra `$6 USD` online saves friction at every checkpoint except Oyadav. An approved Cambodia e-Visa (`$36 USD` via `evisa.gov.kh`) lets you skip cash Visa on Arrival windows and walk directly to biometric stamping booths, sidestepping the `$2 to $5 USD` unofficial handling markups common at Prek Chak, Kaam Samnor, and Phnom Den. Stick with the `$30 USD` cash Visa on Arrival only when departing within `72 hours`, entering via remote Le Thanh – Oyadav (`75 km` west of Pleiku, where e-Visas are rejected), or applying for an Ordinary (`E-class`, `$35 USD`) visa.
+
+### Do rainy season water levels ever cancel the Chau Doc to Phnom Penh river boats?
+
+High monsoon floods rarely halt Tien River speedboats, whereas dry-season sandbars in March and April occasionally add `20 to 30 minutes` of slower channel piloting. Boats sail nearly `365 days` a year. Even during September–October peak Mekong water levels, Hang Chau (`$35 to $40 USD`) and Victoria (`$48 to $65 USD`) speedboats clear Song Tien – Kaam Samnor (`135 km`, `5 to 5.5 hours`) normally; should heavy dawn river fog delay the `07:30` departure, pivot `25 km` southwest (`35 minutes`, `320,000 to 380,000 VND` / `$12.80 to $15.20 USD` taxi) to Tinh Bien – Phnom Den and continue `125 km` (`2.5 hours`, `$40 to $50 USD` taxi) into Phnom Penh. Book pre-departure riverfront lodging using [Where to Stay in Chau Doc](/destinations/where-to-stay-in-chau-doc/).

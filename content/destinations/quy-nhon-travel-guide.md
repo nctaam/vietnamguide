@@ -6,7 +6,7 @@ description: "Quy Nhon travel guide: uncrowded central coast beaches, Ky Co and 
 travel_cluster: "coastal_islands"
 last_verified: "2026-10-20"
 author: "VietnamGuide Editorial Team"
-reading_time_minutes: 13
+reading_time_minutes: 9
 word_count: 1732
 ---
 

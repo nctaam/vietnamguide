@@ -6,7 +6,7 @@ description: "Cat Ba travel guide: island base logistics, Lan Ha Bay boat tours,
 travel_cluster: "ha_long_bay"
 last_verified: "2026-10-20"
 author: "VietnamGuide Editorial Team"
-reading_time_minutes: 11
+reading_time_minutes: 12
 word_count: 2318
 ---
 

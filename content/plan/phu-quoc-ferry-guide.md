@@ -6,8 +6,8 @@ description: "Phu Quoc ferry guide: Superdong and Phu Quoc Express fast boats fr
 travel_cluster: "coastal_islands"
 last_verified: "2026-11-01"
 author: "VietnamGuide Editorial Team"
-reading_time_minutes: 8
-word_count: 1425
+reading_time_minutes: 10
+word_count: 1915
 ---
 
 # Phu Quoc Ferry Guide (2026): Fast Boats, Mainland Ports & Schedules
@@ -94,3 +94,23 @@ Every fast boat from both Rach Gia and Ha Tien docks at **Bai Vong Port** (`Xã 
 - **Ferry Shuttle Buses (40,000–50,000 VND / $1.60–$2.00 USD):** Coaster buses wait inside the pier apron for every arriving boat and drop passengers along Nguyen Trung Truc and Tran Hung Dao streets in central Duong Dong (25 to 30 minutes).
 - **Taxis & Grab (`Xanh SM`, `Mai Linh`, `Vinasun`):** A metered cab from Bai Vong Port to Duong Dong or central Long Beach (`Bãi Trường`) costs 200,000 to 250,000 VND ($8.00 to $10.00 USD). Transfers south to An Thoi Port and Sunset Town (26 km, 35 minutes) cost 320,000 to 380,000 VND ($12.80 to $15.20 USD), while northern rides to Ganh Dau and Grand World (38 km, 50 minutes) run 480,000 to 550,000 VND ($19.20 to $22.00 USD).
 - **Mandatory Boarding ID:** Bring your physical passport (or Vietnamese CCCD ID card) to the pier 30 to 45 minutes before departure; gate inspectors check every passenger's name and passport number against the vessel manifest before opening the boarding gangway.
+
+---
+
+## Frequently Asked Questions (2026)
+
+### Is Rach Gia or Ha Tien cheaper and faster from Ho Chi Minh City?
+
+Rach Gia wins on total door-to-door time from Saigon, whereas Ha Tien wins on boat fare. Leaving Mien Tay Bus Station, express sleeper buses reach Rach Gia Bus Station in 5.5 to 6 hours (270 km, 210,000 to 260,000 VND / $8.40 to $10.40 USD) before a 135-to-150-minute catamaran crossing (330,000 to 340,000 VND / $13.20 to $13.60 USD)—about 8.5 hours total for 550,000 to 600,000 VND ($22.00 to $24.00 USD). Continuing 90 km northwest to Ha Tien extends the highway ride to 7.5 to 8 hours (350 km, 230,000 to 330,000 VND / $9.20 to $13.20 USD) but cuts the sea crossing to 60 to 75 minutes (216,000 to 250,000 VND / $8.60 to $10.00 USD). Detailed southern pier schedules appear in our [Rach Gia to Phu Quoc Ferry](/plan/rach-gia-to-phu-quoc-ferry/) guide.
+
+### Does the 30-day Phu Quoc visa exemption work if I arrive by ferry from the mainland?
+
+No. Vietnam's 30-day Phu Quoc visa-free policy covers foreign travelers flying directly into Phu Quoc International Airport (`PQC`) from abroad or disembarking from an international cruise ship. Walking onto Rach Gia Pier (`Nguyen Cong Tru Street`) or Ha Tien Pier (`Kim Du Street`) means you have already crossed mainland Vietnamese immigration. Hold an approved 90-day Vietnam e-Visa ($25 USD single-entry via `evisa.gov.vn`) or qualify for a 45-day bilateral passport waiver before crossing overland from Cambodia or landing in Ho Chi Minh City; check port rules in our [Vietnam e-Visa Guide](/plan/vietnam-evisa/).
+
+### What luggage limits and motorbike freight fees apply on Phu Quoc ferries?
+
+Both Phu Quoc Express and Superdong include 15 to 20 kg of luggage per ticket, with large suitcases stacked on open steel racks beside the lower-deck boarding doors. Motorbike capacity varies sharply by vessel type. High-speed boats hoist just 10 to 15 light scooters onto the aft deck for 150,000 to 250,000 VND ($6.00 to $10.00 USD) plus a 20,000 to 30,000 VND stevedore tie-down fee and require nearly empty fuel tanks, whereas Thanh Thoi and Binh An Ro-Ro ferries departing Ha Tien roll 110cc to 150cc motorbikes directly onto the steel ramp for 80,000 VND ($3.20 USD) and 4-seat sedans for 700,000 VND ($28.00 USD). Arrive 60 minutes before sailing whenever shipping any vehicle.
+
+### How far is Bai Vong Port from Duong Dong, Phu Quoc Airport, and Sunset Town?
+
+Bai Vong Port (`Ham Ninh Commune`) occupies Phu Quoc's sheltered east coast, sitting 15 km east of central Duong Dong (25 to 30 minutes) and 10 km northeast of Phu Quoc International Airport (`PQC`, 15 to 20 minutes). Shared coaster shuttles lined up inside the pier apron charge 40,000 to 50,000 VND ($1.60 to $2.00 USD) to downtown Duong Dong. Metered Xanh SM electric cabs and GrabCars cost 160,000 to 190,000 VND ($6.40 to $7.60 USD) to the airport, 200,000 to 250,000 VND ($8.00 to $10.00 USD) to Long Beach hotels listed in [Where to Stay in Phu Quoc](/destinations/where-to-stay-in-phu-quoc/), and 320,000 to 380,000 VND ($12.80 to $15.20 USD) for the 26 km southern ride down to An Thoi and Sunset Town.

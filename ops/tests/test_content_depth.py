@@ -115,30 +115,34 @@ class TestContentDepthAuditor(unittest.TestCase):
         )
 
         for md_path in md_files:
-            report = auditor.audit_markdown_file(md_path, min_words=1200, min_hls=85.0)
+            report = auditor.audit_markdown_file(md_path, min_words=1350, min_hls=95.0)
             self.assertTrue(
                 report["passed"],
                 f"Content depth audit failed for {md_path.name}: {report.get('errors')}",
             )
             self.assertGreaterEqual(
                 report["word_count"],
-                1200,
-                f"{md_path.name} must have >= 1200 substantive words",
+                1350,
+                f"{md_path.name} must have >= 1350 substantive words",
             )
             self.assertEqual(
                 report["slop_report"]["tier1_count"],
                 0,
                 f"{md_path.name} must have 0 Tier 1 clichés",
             )
-            self.assertGreaterEqual(
+            self.assertEqual(
                 report["slop_report"]["hls_score"],
-                85.0,
-                f"{md_path.name} HLS must be >= 85.0",
+                100.0,
+                f"{md_path.name} HLS must be 100.0/100",
             )
             self.assertGreaterEqual(
                 report["empirical_signals"]["total_empirical_signals"],
-                63,
-                f"{md_path.name} must contain >= 63 empirical signals",
+                80,
+                f"{md_path.name} must contain >= 80 empirical signals",
+            )
+            self.assertTrue(
+                report["elements"]["has_faq"],
+                f"{md_path.name} must include an explicit FAQ H2 section",
             )
 
     def test_canonical_content_registry_parity_and_no_duplicates(self):
@@ -155,7 +159,7 @@ class TestContentDepthAuditor(unittest.TestCase):
             if r.get("path")
         }
 
-        dir_report = auditor.audit_content_directory(content_root, min_words=1200, min_hls=85.0)
+        dir_report = auditor.audit_content_directory(content_root, min_words=1350, min_hls=95.0)
         self.assertTrue(
             dir_report["passed"],
             f"Directory audit failed: failed_files={dir_report['failed_files']}, duplicates={dir_report.get('duplicate_route_paths')}",
@@ -263,7 +267,8 @@ class TestContentDepthAuditor(unittest.TestCase):
                 "reading_time_minutes: 6\n"
                 "word_count: 10\n"
                 "---\n"
-                "See [Local](file:///C:/test.md) and [Hanoi](destinations/hanoi-travel-guide) and [Plan](plan/vietnam-evisa).\n",
+                "See [Local](file:///C:/test.md) and [Hanoi](destinations/hanoi-travel-guide) and [Plan](plan/vietnam-evisa) and [NoSlash](/destinations/hanoi-travel-guide) via A $\\rightarrow$ B.\n"
+                "| Col1 | Col2 |\n| :--- | :--- |\n| OnlyOne |\n",
                 encoding="utf-8",
             )
             rep = auditor.audit_markdown_file(md_file, min_words=5, min_hls=0.0)
@@ -271,6 +276,11 @@ class TestContentDepthAuditor(unittest.TestCase):
             self.assertIn("does not match relative path 'costs/vietnam-travel-cost'", err_text)
             self.assertIn("file://", err_text)
             self.assertIn("Relative internal link missing leading '/'", err_text)
+            self.assertIn("Internal link missing canonical trailing slash", err_text)
+            self.assertIn("Raw LaTeX arrow detected", err_text)
+            self.assertIn("Malformed Markdown table", err_text)
+            self.assertIn("Frontmatter reading_time_minutes", err_text)
+            self.assertIn("Missing dedicated FAQ H2 section", err_text)
 
 
 if __name__ == "__main__":

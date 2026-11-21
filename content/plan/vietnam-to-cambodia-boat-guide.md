@@ -6,8 +6,8 @@ description: "Vietnam to Cambodia boat guide: Chau Doc to Phnom Penh high-speed 
 travel_cluster: "mekong_delta"
 last_verified: "2026-11-01"
 author: "VietnamGuide Editorial Team"
-reading_time_minutes: 8
-word_count: 1545
+reading_time_minutes: 9
+word_count: 1881
 ---
 
 # Vietnam to Cambodia Boat Guide (2026): Fast Mekong Ferry
@@ -22,11 +22,11 @@ River speedboats cost more than highway buses running through Moc Bai, with one-
 
 Three primary speedboat operators service the `135 km` Chau Doc to Phnom Penh corridor in 2026. All departures leave Chau Doc between `07:00` and `07:30` to ensure daylight clearance at the river border and midday arrival in the Cambodian capital.
 
-| Operator | One-Way Fare (USD / VND) | Chau Doc Departure Pier | Departure -> Arrival | Vessel Configuration & Inclusions |
+| Operator | One-Way Fare (USD / VND) | Chau Doc Departure Pier | Departure → Arrival | Vessel Configuration & Inclusions |
 | :--- | :--- | :--- | :--- | :--- |
-| **Hang Chau Tourist Express** | `$35–$40 USD` (`880,000–1,000,000 VND`) | Hang Chau Pier (`10 Nguyen Cong Tru`) or Victoria Pier (`01 Le Loi`) | `07:00–07:30` -> `12:30–13:00` (`5–5.5 hours`) | `25–45 seat` enclosed metal hull, cabin A/C, small rear open deck, bottled water (`500 ml`), cold towel, onboard toilet. |
-| **Victoria Speedboat** | `$48–$65 USD` (`1,200,000–1,625,000 VND`) | Victoria Chau Doc Hotel Pier (`01 Le Loi Street`) | `07:30` -> `12:30` (`5 hours`) | `18–26 seat` boutique steel cruiser, cushioned reclining seats, seasonal fruit, croissant box, soft drinks, cold towels, life vests. |
-| **Mandarin / Blue Cruiser** | `$38–$45 USD` (`950,000–1,125,000 VND`) | Chau Doc Tourist Pier (`Le Loi Street`) | `07:15–07:30` -> `12:45–13:15` (`5.5 hours`) | `28–35 seat` twin-outboard express hull, padded bench or pair seating, bottled water, border courier support. |
+| **Hang Chau Tourist Express** | `$35–$40 USD` (`880,000–1,000,000 VND`) | Hang Chau Pier (`10 Nguyen Cong Tru`) or Victoria Pier (`01 Le Loi`) | `07:00–07:30` → `12:30–13:00` (`5–5.5 hours`) | `25–45 seat` enclosed metal hull, cabin A/C, small rear open deck, bottled water (`500 ml`), cold towel, onboard toilet. |
+| **Victoria Speedboat** | `$48–$65 USD` (`1,200,000–1,625,000 VND`) | Victoria Chau Doc Hotel Pier (`01 Le Loi Street`) | `07:30` → `12:30` (`5 hours`) | `18–26 seat` boutique steel cruiser, cushioned reclining seats, seasonal fruit, croissant box, soft drinks, cold towels, life vests. |
+| **Mandarin / Blue Cruiser** | `$38–$45 USD` (`950,000–1,125,000 VND`) | Chau Doc Tourist Pier (`Le Loi Street`) | `07:15–07:30` → `12:45–13:15` (`5.5 hours`) | `28–35 seat` twin-outboard express hull, padded bench or pair seating, bottled water, border courier support. |
 
 ## Detailed Operator Breakdown: Choosing Your Hull
 
@@ -92,3 +92,19 @@ Because every Phnom Penh speedboat departs between `07:00` and `07:30`, travelin
 - **Strict US Dollar Note Condition**: Cambodian border officials and riverside vendors reject US dollar bills printed before `2013` or notes with even a `2 mm` edge tear, pinhole, ink stamp, or heavy crease. Withdraw VND in Chau Doc and exchange for crisp `$10`, `$20`, and `$5` USD notes at gold shops around Chau Doc Market (`Chợ Châu Đốc`) the afternoon before departure.
 - **Reverse Direction (Phnom Penh to Chau Doc)**: Boats depart Sisowath Quay (`Street 104`) daily at `12:30` or `13:00`, arriving in Chau Doc around `17:00 to 17:30` (`4.5 hours` downstream with the current). Traveling downstream into Vietnam requires either a visa-exempt passport or a **pre-printed Vietnam 90-day e-Visa** (`$25 USD` single-entry / `$50 USD` multiple-entry via `evisa.gov.vn`) designating **Song Tien Landport/Riverport** as the entry gate. Vietnam does **not** issue Visa on Arrival at Song Tien.
 - **Sun and Noise Protection**: Twin outboard motors generate `80 to 85 dB` of continuous hum at the stern, and glare off the Mekong water is intense between `10:00` and `12:30`. Pack earplugs, polarized sunglasses, SPF 50 sunscreen, and a light windbreaker for the air-conditioned cabin.
+
+---
+
+## Frequently Asked Questions (2026)
+
+### How much do Hang Chau and Victoria speedboats cost from Chau Doc to Phnom Penh in 2026?
+Hang Chau Tourist Express costs **$35.00 USD (`880,000 VND`)** booked directly in Chau Doc or **$38.00 to $40.00 USD (`950,000 VND to 1,000,000 VND`)** through online agencies for the **135 km**, **5.0 to 5.5 hours** river run. Victoria Speedboat charges **$48.00 to $65.00 USD (`1,200,000 VND to 1,625,000 VND`)** for wider seats, breakfast pastries, fruit, and faster immigration clearance with an 18–26 passenger cap, while Mandarin and Blue Cruiser sell mid-tier seats at **$38.00 to $45.00 USD (`950,000 VND to 1,125,000 VND`)**.
+
+### Are Cambodian e-Visas and $30 USD Visa on Arrival accepted at Vinh Xuong – Kaam Samnor?
+Yes. Kaam Samnor checkpoint (**1.5 km** upstream from Vietnam's Song Tien / Vinh Xuong exit post) processes both pre-printed **Cambodian e-Visas (`evisa.gov.kh`, $36.00 USD)** and **Visa on Arrival**. Statutory VoA costs **$30.00 USD** in unmarked post-2013 cash, plus **$2.00 to $5.00 USD (`50,000 VND to 125,000 VND`)** in courier handling fees and **$2.00 USD** without a passport photo. Going the reverse way into Vietnam? Song Tien offers zero Visa on Arrival—carry either a 45-day exempt passport under **Resolution 44/NQ-CP (2025–2028)** / **Resolution 229/NQ-CP** or a printed **$25.00 USD (`635,000 VND`)** [Vietnam e-Visa](/plan/vietnam-evisa/) specifying Song Tien as the entry gate.
+
+### What are the luggage limits and bicycle fees on Mekong speedboats?
+Every standard ticket covers **one 20 kg checked bag** stored below deck plus **one 7 kg personal daypack** at your seat. Bringing a touring bicycle or extra heavy suitcase adds a **$10.00 to $15.00 USD (`250,000 VND to 375,000 VND`)** deck cargo fee paid in cash at Chau Doc pier check-in at `06:30`. Always keep passports, cameras, and US dollar notes inside your carry-on bag when stepping ashore at Song Tien and Kaam Samnor.
+
+### Do dry-season water levels cancel or delay the Chau Doc to Phnom Penh ferry?
+Speedboats run 365 days a year, though dry-season water levels between **March and May** drop **3 to 5 meters** across the **16 km** Vinh Xuong lateral canal. Captains slow past shallow sandbars or relocate boarding **400 meters** downriver to deeper pontoons near Le Loi Street, adding **20 minutes to 35 minutes** to total travel time (**5.5 to 6.0 hours**). During extreme April low water, operators occasionally shuttle passengers **15 minutes** by minivan to the main Tien River jetty at **$0.00 USD** surcharge before launching upriver to Phnom Penh.

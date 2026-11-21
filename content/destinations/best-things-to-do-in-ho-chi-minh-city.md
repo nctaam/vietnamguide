@@ -6,7 +6,7 @@ description: "Discover the best things to do in Ho Chi Minh City: war history mu
 travel_cluster: "southern_delta"
 last_verified: "2026-11-01"
 author: "VietnamGuide Editorial Team"
-reading_time_minutes: 13
+reading_time_minutes: 12
 word_count: 2344
 ---
 
@@ -84,7 +84,7 @@ Located 5.5 km (15 minutes to 20 minutes by GrabCar for **65,000 VND** to **85,0
 
 ## Step-by-Step Logistics: Executing a Zero-Gridlock 48-Hour Plan
 
-1. **Step 1 — Airport Arrival & Metro Integration (0–60 minutes):** Upon landing at Tan Son Nhat International Airport (SGN, 8 km north of District 1), take a metered Vinasun or Mai Linh taxi (**160,000 VND** to **220,000 VND** including the **10,000 VND** airport toll gate fee, 30 minutes to 45 minutes) or **Bus 109** (**15,000 VND**, 45 minutes to Ga Bến Thành). See our [Saigon Airport to District 1 guide](/plan/saigon-airport-to-district-1) for exact TCP garage pickup lanes.
+1. **Step 1 — Airport Arrival & Metro Integration (0–60 minutes):** Upon landing at Tan Son Nhat International Airport (SGN, 8 km north of District 1), take a metered Vinasun or Mai Linh taxi (**160,000 VND** to **220,000 VND** including the **10,000 VND** airport toll gate fee, 30 minutes to 45 minutes) or **Bus 109** (**15,000 VND**, 45 minutes to Ga Bến Thành). See our [Saigon Airport to District 1 guide](/plan/saigon-airport-to-district-1/) for exact TCP garage pickup lanes.
 2. **Step 2 — Day 1 Morning Historical Core (07:30–12:00):** Arrive at the War Remnants Museum (28 Đường Võ Văn Tần) at 07:30 (**60,000 VND**). At 09:45, walk 850 meters (10 minutes) to Independence Palace (**80,000 VND** combo) before tour buses peak at 11:00.
 3. **Step 3 — Day 1 Afternoon Colonial Walk & Sunset Waterbus (14:30–19:00):** Visit the Central Post Office (2 Công xã Paris) and Book Street (**0 VND**), walk 900 meters south down Đường Đồng Khởi to the Cafe Apartments at 42 Đường Nguyễn Huệ, then walk 550 meters (7 minutes) east to **Bến Bạch Đằng** by 16:15 to purchase **15,000 VND** tickets for the 17:00 Saigon Waterbus sunset crossing to Bình An.
 4. **Step 4 — Day 2 Morning Củ Chi Tunnels or Chợ Lớn (07:00–13:00):** For war history, book a 07:00 departure to **Bến Dược Củ Chi Tunnels** (70 km via QL22, **135,000 VND** entry, or **1,850,000 VND** by river speedboat from Bến Bạch Đằng in 75 minutes). Alternatively, take a 15-minute (**75,000 VND**) GrabCar at 08:00 to Bà Thiên Hậu Pagoda in District 5 and walk 1.1 km through the herbal alleys to Bình Tây Market.
@@ -102,7 +102,7 @@ Located 5.5 km (15 minutes to 20 minutes by GrabCar for **65,000 VND** to **85,0
 > [!TIP]
 > **Avoid the Coconut Seller & Shoe-Shine Scams Around Công xã Paris:** Around Turtle Lake (Hồ Con Rùa), Independence Palace, and Notre-Dame Square, roving vendors carrying shoulder poles may place them on your shoulders for a photo and immediately demand **200,000 VND** to **500,000 VND** ($8.00 to $20.00) for a single coconut. Similarly, decline aggressive street shoe-shiners who squirt glue onto your sneakers and demand **300,000 VND**. Keep moving and say a firm *"Không, cảm ơn"* (No, thank you).
 
-- **Choose Bến Dược Over Bến Đình at Củ Chi:** The Củ Chi Tunnels operate two separate gates 18 km apart. **Bến Đình** (50 km from District 1) receives 85% of mass-market bus tours, resulting in 30-minute queues to crawl through widened concrete tubes alongside noisy AK-47 shooting ranges (**60,000 VND** per bullet, minimum 10 rounds = **600,000 VND**). **Bến Dược** (70 km from District 1, **135,000 VND** entry including the **35,000 VND** ticket and **100,000 VND** mandatory site guide fee) preserves original narrower Viet Cong command bunkers in quiet forest shade. Compare both sites in our [Bến Dược vs Bến Đình Củ Chi guide](/compare/cu-chi-tunnels-ben-duoc-vs-ben-dinh).
+- **Choose Bến Dược Over Bến Đình at Củ Chi:** The Củ Chi Tunnels operate two separate gates 18 km apart. **Bến Đình** (50 km from District 1) receives 85% of mass-market bus tours, resulting in 30-minute queues to crawl through widened concrete tubes alongside noisy AK-47 shooting ranges (**60,000 VND** per bullet, minimum 10 rounds = **600,000 VND**). **Bến Dược** (70 km from District 1, **135,000 VND** entry including the **35,000 VND** ticket and **100,000 VND** mandatory site guide fee) preserves original narrower Viet Cong command bunkers in quiet forest shade. Compare both sites in our [Bến Dược vs Bến Đình Củ Chi guide](/compare/cu-chi-tunnels-ben-duoc-vs-ben-dinh/).
 - **Beat Saigon Waterbus Sellouts:** Because municipal ferries seat only 66 passengers at **15,000 VND**, sunset departures between 16:30 and 17:30 sell out rapidly on weekends. Book online via saigonwaterbus.com a day ahead or buy both outbound and return tickets simultaneously at the Bến Bạch Đằng booth before 15:30.
 - **Cross Streets with Steady Pace:** When crossing multi-lane boulevards like Đường Lê Lợi or Đường Cách Mạng Tháng Tám, step off the curb when cars have passed and walk at a slow, predictable 3 km/h pace. Never sprint or step backward abruptly; oncoming motorbike riders calculate their trajectory around your steady forward motion.
 
@@ -119,8 +119,8 @@ Skip the inflated tourist stalls immediately outside Bến Thành Market after 1
 
 ## Internal Next Steps: Plan Your Southern Vietnam Route
 
-- **Comprehensive City Hub:** Read our [Ho Chi Minh City Travel Guide](/destinations/ho-chi-minh-city-travel-guide) for seasonal weather windows and route integration.
-- **Neighborhood & Hotel Selection:** Compare District 1, District 3, and Thảo Điền room rates in [Where to Stay in Ho Chi Minh City](/destinations/where-to-stay-in-ho-chi-minh-city).
-- **48-Hour Pacing Blueprint:** Follow our hour-by-hour [Ho Chi Minh City in 2 Days Itinerary](/itineraries/ho-chi-minh-city-in-2-days).
-- **Culinary & Night Market Deep Dives:** Explore verified stall addresses in the [Saigon Street Food Guide](/destinations/saigon-street-food-guide) and [Saigon Night Markets Guide](/destinations/saigon-night-markets-guide).
-- **Day Trip Decisions:** Weigh half-day and full-day excursions in [Best Day Trips from Ho Chi Minh City](/destinations/best-day-trips-from-ho-chi-minh-city) and [Củ Chi Tunnels vs Mekong Delta Day Trip](/compare/cu-chi-tunnels-vs-mekong-delta-day-trip).
+- **Comprehensive City Hub:** Read our [Ho Chi Minh City Travel Guide](/destinations/ho-chi-minh-city-travel-guide/) for seasonal weather windows and route integration.
+- **Neighborhood & Hotel Selection:** Compare District 1, District 3, and Thảo Điền room rates in [Where to Stay in Ho Chi Minh City](/destinations/where-to-stay-in-ho-chi-minh-city/).
+- **48-Hour Pacing Blueprint:** Follow our hour-by-hour [Ho Chi Minh City in 2 Days Itinerary](/itineraries/ho-chi-minh-city-in-2-days/).
+- **Culinary & Night Market Deep Dives:** Explore verified stall addresses in the [Saigon Street Food Guide](/destinations/saigon-street-food-guide/) and [Saigon Night Markets Guide](/destinations/saigon-night-markets-guide/).
+- **Day Trip Decisions:** Weigh half-day and full-day excursions in [Best Day Trips from Ho Chi Minh City](/destinations/best-day-trips-from-ho-chi-minh-city/) and [Củ Chi Tunnels vs Mekong Delta Day Trip](/compare/cu-chi-tunnels-vs-mekong-delta-day-trip/).

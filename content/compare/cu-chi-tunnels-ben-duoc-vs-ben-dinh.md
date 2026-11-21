@@ -6,8 +6,8 @@ description: "Ben Duoc vs Ben Dinh comparison: compare authentic historical tunn
 travel_cluster: "southern_delta"
 last_verified: "2026-10-20"
 author: "VietnamGuide Editorial Team"
-reading_time_minutes: 11
-word_count: 1608
+reading_time_minutes: 9
+word_count: 1733
 ---
 
 # Ben Duoc vs Ben Dinh: Which Cu Chi Tunnels Site to Visit?
@@ -58,13 +58,13 @@ The table below summarizes the operational, spatial, and financial parameters se
 
 Understanding why these two sectors feel so different requires examining their wartime roles and postwar development.
 
-During the war, Ben Dinh served primarily as an operational base for the Cu Chi District Party Committee. Because it lay closer to the Saigon River and adjacent American installations—specifically the sprawling 25th Infantry Division base camp at Dong Du—the area suffered intense chemical defoliation via Agent Orange, aerial bombardment by B-52 Stratofortresses, and aggressive search-and-destroy operations. Following 1975, the Ho Chi Minh City tourism authority identified Ben Dinh as the optimal portal for international tourism due to its relative proximity to downtown hotels.
+During the war, Ben Dinh served primarily as an operational base for the Cu Chi District Party Committee. Proximity to the Saigon River and the sprawling 25th Infantry Division camp at Dong Du exposed the sector to heavy Agent Orange defoliation, B-52 carpet bombing, and relentless search-and-destroy sweeps. Geography then dictated its peacetime fate. After 1975, Ho Chi Minh City tourism planners picked Ben Dinh as the commercial gateway simply because tour coaches could reach it fast from downtown hotels.
 
-To accommodate visitors of larger stature, engineers widened selected tunnel sections at Ben Dinh by 20 to 30 percent, reinforced collapsing clay ceilings with cement formwork, and installed low-voltage string lighting along the crawlways. Emergency exits were cut every 20 meters, allowing claustrophobic travelers to climb out into fresh air without impeding others.
+Engineers widened key passages at Ben Dinh by 20% to 30% to accommodate broader foreign frames. They braced fragile clay ceilings with cement formwork, strung low-voltage bulbs along the shafts, and cut emergency escape hatches every 20 meters so claustrophobic visitors can surface at any stage.
 
-Ben Duoc, located 20 kilometers further upstream in An Nhon Tay commune, functioned as the regional headquarters for the Saigon-Gia Dinh Military Zone Command (*Khu ủy Sài Gòn - Chợ Lớn - Gia Định*). This complex constituted a vital tactical sanctuary, housing weapon foundries, underground surgical wards, printing presses, and shelter chambers engineered to withstand 500-pound bomb strikes.
+Ben Duoc sits 20 km further upstream in An Nhon Tay commune. Throughout the conflict, it housed the Saigon-Gia Dinh Military Zone Command (*Khu ủy Sài Gòn - Chợ Lớn - Gia Định*), complete with underground weapons workshops, surgical bays, printing presses, and bunkers built to survive 500-pound bomb impacts.
 
-Because Ben Duoc remained further from central Ho Chi Minh City, authorities developed it not as a fast-turnaround tourist attraction, but as a formal national memorial park. The surrounding woodland has regenerated into dense foliage, and the underground tunnels retain their claustrophobic, hand-hewn profiles cut through reddish laterite earth.
+Distance insulated this northern sector from mass-tour commercialization. Municipal authorities shaped Ben Duoc into a formal national memorial park framed by 100 hectares of regenerated forest, preserving the narrow, hand-dug profiles cut straight into iron-rich laterite clay.
 
 ---
 
@@ -78,7 +78,7 @@ At Ben Duoc, the underground labyrinth tests spatial endurance. While an introdu
 
 Furthermore, Ben Duoc allows visitors to descend through all three historical tiers:
 
-- **Tier 1 (3 meters depth):** Upper living quarters, firing firing-slits (*lỗ châu mai*), and connection trenches designed to resist infantry assault and artillery shrapnel.
+- **Tier 1 (3 meters depth):** Upper living quarters, firing slits (*lỗ châu mai*), and connection trenches designed to resist infantry assault and artillery shrapnel.
 - **Tier 2 (6 meters depth):** Operational offices, kitchen quarters with underground Hoang Cam smoke-dispersion flues, and field surgical theaters.
 - **Tier 3 (9 to 10 meters depth):** Deepest bomb shelters and emergency water-well access shafts engineered to survive direct aerial concussions and bulldozer scraping.
 
@@ -109,9 +109,19 @@ Travelers can purchase brass ammunition cartridges to fire authentic wartime sma
 
 Key financial and procedural guidelines apply across both ranges:
 
-- **Ammunition Tariffs:** Cartridges are sold in minimum clips of 5 to 10 rounds. Standard 7.62×39mm (AK-47) and 5.56×45mm (M16) rounds cost 60,000 VND (~$2.40 USD) per round. A 10-round magazine requires an outlay of 600,000 VND (~$24.00 USD).
-- **Safety Protocol:** Range officers lock rifles onto stationary steel stanchions to eliminate muzzle deviation. Shooters wear ear protection and trigger rounds under direct, hands-on supervision by range marshals.
-- **Auditory Impact:** The gunfire reverberates loudly through adjacent forest trails. Travelers seeking quiet historical immersion should note that gunfire is audible across both Ben Dinh and Ben Duoc during peak operational hours.
+- **Ammunition Tariffs (2026 Official Price Board):** Range counters sell cartridges in fixed minimum clips of 5 or 10 rounds depending on firearm caliber. Standard AK-47 (7.62×39mm) and M16 (5.56×45mm) rounds cost 60,000 VND ($2.40) per bullet, putting a 10-round magazine at 600,000 VND ($24.00). M30 Carbine rounds run 55,000 VND ($2.20) each, M1 Garand cartridges cost 60,000 VND ($2.40), and heavy M60 machine gun belts run 65,000 VND ($2.60) per bullet with a 10-round minimum of 650,000 VND ($26.00).
+- **Safety Protocol:** Range officers bolt every rifle onto welded steel stanchions so barrels cannot swing off the berm. Shooters receive foam ear protection and fire under direct hands-on supervision by uniformed range marshals.
+- **Auditory Impact:** Sharp rifle cracks echo across adjacent forest trails for up to 500 meters. Travelers seeking quiet contemplation should budget extra time at the Ben Duoc Memorial Temple, positioned 600 meters east of the firing bay where dense timber dampens the gunfire.
+
+| Activity / Fee Item (2026) | Ben Dinh Sector | Ben Duoc Sector | Operational Notes |
+| :--- | :--- | :--- | :--- |
+| **Foreign Adult Entrance** | 125,000 VND ($5.00) | 125,000 VND ($5.00) | Includes mandatory documentary screening and surface guide |
+| **Domestic / Student Entry** | 35,000 VND ($1.40) | 35,000 VND ($1.40) | Valid Vietnamese ID or student card checked at gate |
+| **Internal Electric Buggy** | Not required (compact 400 m loop) | 5,000 VND ($0.20) per ride | Covers the 800 m forest road from parking to the tunnel gate |
+| **AK-47 / M16 Live-Fire (10 rds)** | 600,000 VND ($24.00) | 600,000 VND ($24.00) | 60,000 VND ($2.40) per round; cash or Visa accepted |
+| **M60 Machine Gun (10 rds)** | 650,000 VND ($26.00) | 650,000 VND ($26.00) | 65,000 VND ($2.60) per round; high recoil mount |
+| **M30 Carbine (10 rds)** | 550,000 VND ($22.00) | 550,000 VND ($22.00) | 55,000 VND ($2.20) per round; lighter recoil option |
+| **Ben Duoc Memorial Temple** | Not located at this site | Free (0 VND) | Open 07:00–17:00; modest attire covering knees required |
 
 ---
 
@@ -156,7 +166,19 @@ HO CHI MINH CITY TO CU CHI TRANSPORT VECTORS
     └── Fare: 1,200,000 to 1,600,000 VND (~$48–$64 USD) round-trip with driver waiting time
 ```
 
-Operating hours run daily from 07:00 AM to 17:00 PM at both sectors. For independent travelers heading to Ben Dinh, arriving between 07:30 AM and 08:30 AM avoids the major group tour coaches, which generally pull into the gates between 09:30 AM and 11:00 AM. At Ben Duoc, visitor arrivals remain steady and uncrowded throughout the entire operational day.
+Operating hours run daily from 07:00 AM to 17:00 PM at both sectors. For independent travelers heading to Ben Dinh, arriving between 07:30 AM and 08:30 AM beats the commercial coach convoys, which typically reach the parking lot between 09:30 AM and 11:00 AM. Ben Duoc stays calm all day.
+
+### 2026 Saigon-to-Cu Chi Transit Fare & Duration Matrix
+
+| Transport Mode (From District 1) | Target Sector | Distance | One-Way / Return Time | 2026 Verified Tariff (VND / USD) |
+| :--- | :--- | :--- | :--- | :--- |
+| **Public Bus 13 + Bus 79** | Ben Duoc direct gate | 70 km (33 km + 37 km) | 120 mins each way (75 mins + 45 mins) | 17,000 VND ($0.68) one-way; 34,000 VND ($1.36) return |
+| **Public Bus 13 + GrabBike** | Ben Dinh main gate | 50 km (33 km + 17 km) | 100 mins each way (75 mins + 25 mins) | 120,000 VND ($4.80) one-way (10,000 VND bus + 110,000 VND bike) |
+| **Shared Half-Day Coach Tour** | Ben Dinh (rarely Ben Duoc) | 50 km via Highway 22 | 90 to 110 mins each way | 350,000 VND ($14.00) to 550,000 VND ($22.00) incl. entry |
+| **Saigon River Speedboat** | Ben Dinh (48 km) or Ben Duoc (68 km) | 48 km to 68 km river channel | 75 mins (Ben Dinh) / 95 mins (Ben Duoc) | 1,900,000 VND ($76.00) to 2,400,000 VND ($96.00) all-in |
+| **Private 4-Seat Car Charter** | Ben Dinh or Ben Duoc | 50 km or 70 km | 90 mins or 130 mins each way | 1,200,000 VND ($48.00) to 1,600,000 VND ($64.00) return + wait |
+
+Departing early from District 1 pays off immediately on Highway 22, where container-truck bottlenecks near An Suong intersection routinely add 25 minutes after 08:00 AM. Bus 13 leaves 23/9 Park every 15 minutes starting at 05:00 AM, and Bus 79 connects out of Cu Chi Bus Station every 20 minutes with the last return departure to Cu Chi Station leaving Ben Duoc at 17:30 PM. Travelers pairing the tunnels with river life can review our [Cu Chi Tunnels vs Mekong Delta Day Trip](/compare/cu-chi-tunnels-vs-mekong-delta-day-trip/) guide or build a full southern itinerary from our [Ho Chi Minh City Travel Guide](/destinations/ho-chi-minh-city-travel-guide/).
 
 ---
 

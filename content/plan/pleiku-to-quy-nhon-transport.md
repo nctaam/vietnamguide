@@ -6,8 +6,8 @@ description: "QL19 mountain route across 165 km over An Khe and Mang Yang passes
 travel_cluster: "central_highlands"
 last_verified: "2026-11-01"
 author: "VietnamGuide Editorial Team"
-reading_time_minutes: 8
-word_count: 1525
+reading_time_minutes: 10
+word_count: 1980
 ---
 
 # Pleiku to Quy Nhon Transport (2026): Bus vs Private Car
@@ -89,3 +89,23 @@ Independent riders traveling from the Central Highlands down to the coast to con
 2. **Coordinate Direct Pleiku Airport (`PXU`) Transfers:** Travelers landing at Pleiku Airport who need to reach Quy Nhon the same day because of full flights into Phu Cat Airport (`UIH`) can either take a 15-minute taxi (`90,000 to 110,000 VND` / `$3.60 to $4.40 USD`) to `43 Ly Nam De` for an hourly limousine van, or pre-book a private 4-seater car (`1,650,000 VND` / `$66.00 USD`) waiting directly outside the `PXU` arrival gate.
 3. **Pack a Light Windbreaker for the Morning Departure:** Early morning departures from Pleiku (`06:00 to 07:30`) start in crisp highland air around **18°C to 21°C (64°F to 70°F)** before dropping into **30°C to 33°C (86°F to 91°F)** coastal sunshine in Quy Nhon by mid-morning.
 4. **Plan Onward Southbound Coastal Connections:** Once you arrive at `71 Tay Son` in Quy Nhon, you can connect the same afternoon or the next morning to southbound buses or trains from Dieu Tri Station; see our [Quy Nhon to Nha Trang Transport](/plan/quy-nhon-to-nha-trang-transport/) guide for complete 2026 timetables.
+
+---
+
+## Frequently Asked Questions (2026)
+
+### How long does Highway QL19 take now that the World Bank road upgrade is finished?
+
+Completed widening and resurfacing shortened point-to-point transit across this 165 km corridor to 3.5 to 4 hours in 2026. Older travel forums still quote 5.5 hours from the potholed construction years. Morning 9-seat VIP limousines (Tuan Anh or Anh Phat, 180,000 to 220,000 VND / $7.20 to $8.80 USD) depart Pleiku at 07:30, take one 15-minute rest break at Song Ba or Phu Phong, and drop riders along Xuan Dieu Beach in Quy Nhon around 11:15. Private 4-seat sedans (1,600,000 to 1,800,000 VND / $64.00 to $72.00 USD) complete the non-stop coastal descent in 3 hours 20 minutes to 3 hours 30 minutes.
+
+### Is there a direct shuttle from Pleiku Airport (PXU) to Quy Nhon Beach?
+
+No scheduled public shuttle links the `PXU` terminal curb straight to Quy Nhon, since most coastal flyers land at Phu Cat Airport (`UIH`, 35 km north of downtown Quy Nhon). Even so, flying into `PXU` works smoothly whenever summer `UIH` flights sell out. Ride a 15-minute taxi (90,000 to 110,000 VND / $3.60 to $4.40 USD, 8 km) south to Duc Long Gia Lai Bus Station (`43 Ly Nam De Street`) for an hourly express van (160,000 to 200,000 VND / $6.40 to $8.00 USD), or arrange a private 4-seat car waiting outside Arrivals for 1,650,000 to 1,800,000 VND ($66.00 to $72.00 USD).
+
+### Can I travel from Pleiku to Quy Nhon during the October–December coastal rain season?
+
+Highway QL19 stays open almost every day of the year, even when autumn tropical depressions drench Binh Dinh Province between October and December. Mountain fog is your main bottleneck. Thick cloud banks settle across Mang Yang Pass (`Km 52`, 500 meters elevation) and the 8 km An Khe Pass (`Km 88 to Km 96`) after 15:00 during stormy afternoons, adding 20 to 40 minutes to bus times and slowing container trucks to 25 km/h. Choose a morning 07:00 to 10:00 departure on speed-governed Mai Linh Willer coasters (160,000 to 180,000 VND / $6.40 to $7.20 USD, capped at 40 km/h on pass curves) and review dry coastal windows in our [Quy Nhon Travel Guide](/destinations/quy-nhon-travel-guide/).
+
+### Are there overnight buses between Pleiku and Quy Nhon, or only daytime vans?
+
+Daytime vans dominate this 165 km descent because a 3.5-hour road leg is far too brief for overnight sleep. Regular 9-seat limousines and 16-seat express coasters run their final daily departure from Duc Long Gia Lai Bus Station between 18:00 and 18:30, arriving at Quy Nhon Central Bus Station (`71 Tay Son Street`) around 22:00. After 19:00, only long-haul 34-berth sleeper coaches passing through from Kon Tum or Buon Ma Thuot (180,000 to 220,000 VND / $7.20 to $8.80 USD) continue east toward Highway QL1A, dropping passengers at outer highway junctions instead of central beachfront hotels. If you are coming south from Kon Tum that morning, check feeder timings in [Pleiku to Kon Tum Transport](/plan/pleiku-to-kon-tum-transport/).

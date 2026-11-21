@@ -6,7 +6,7 @@ description: "Ly Son vs Cham Islands comparison: volcanic geology vs coral reef 
 travel_cluster: "central_heritage"
 last_verified: "2026-10-21"
 author: "VietnamGuide Editorial Team"
-reading_time_minutes: 11
+reading_time_minutes: 15
 word_count: 3060
 ---
 

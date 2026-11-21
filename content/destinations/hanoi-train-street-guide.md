@@ -6,7 +6,7 @@ description: "Complete Hanoi train street guide: compare Tran Phu and Phung Hung
 travel_cluster: "northern_triangle"
 last_verified: "2026-11-02"
 author: "VietnamGuide Editorial Team"
-reading_time_minutes: 15
+reading_time_minutes: 12
 word_count: 2414
 ---
 

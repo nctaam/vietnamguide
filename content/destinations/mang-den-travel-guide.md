@@ -6,7 +6,7 @@ description: "Kon Tum highland plateau guide: Pa Sy waterfall, pine forest trail
 travel_cluster: "central_highlands"
 last_verified: "2026-10-21"
 author: "VietnamGuide Editorial Team"
-reading_time_minutes: 13
+reading_time_minutes: 12
 word_count: 2347
 ---
 

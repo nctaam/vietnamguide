@@ -6,7 +6,7 @@ description: "Top Phong Nha cave treks: compare Hang En 2-day expedition, Tu Lan
 travel_cluster: "phong_nha_caves"
 last_verified: "2026-10-20"
 author: "VietnamGuide Editorial Team"
-reading_time_minutes: 12
+reading_time_minutes: 10
 word_count: 1914
 ---
 

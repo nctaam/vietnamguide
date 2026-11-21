@@ -6,7 +6,7 @@ description: "QL4C mountain highway across 135 km: local passenger minibuses (4.
 travel_cluster: "northern_highlands"
 last_verified: "2026-10-31"
 author: "VietnamGuide Editorial Team"
-reading_time_minutes: 12
+reading_time_minutes: 8
 word_count: 1586
 ---
 

@@ -6,7 +6,7 @@ description: "Mui Ne vs Nha Trang: compare coastal kitesurfing and sand dunes in
 travel_cluster: "coastal_islands"
 last_verified: "2026-10-20"
 author: "VietnamGuide Editorial Team"
-reading_time_minutes: 12
+reading_time_minutes: 7
 word_count: 1491
 ---
 

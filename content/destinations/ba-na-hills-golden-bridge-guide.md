@@ -6,7 +6,7 @@ description: "Complete Ba Na Hills Golden Bridge guide: compare cable car ticket
 travel_cluster: "central_heritage"
 last_verified: "2026-10-20"
 author: "VietnamGuide Editorial Team"
-reading_time_minutes: 13
+reading_time_minutes: 11
 word_count: 2128
 ---
 

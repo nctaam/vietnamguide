@@ -6,7 +6,7 @@ description: "Futa buses and limousine vans covering 110 km (2.5-3 hours, 120,00
 travel_cluster: "mekong_delta"
 last_verified: "2026-10-25"
 author: "VietnamGuide Editorial Team"
-reading_time_minutes: 12
+reading_time_minutes: 10
 word_count: 2006
 ---
 

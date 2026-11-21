@@ -6,7 +6,7 @@ description: "Authoritative Phong Nha travel guide: decide whether Phong Nha is 
 travel_cluster: "phong_nha_caves"
 last_verified: "2026-11-01"
 author: "VietnamGuide Editorial Team"
-reading_time_minutes: 10
+reading_time_minutes: 9
 word_count: 1806
 ---
 
@@ -58,12 +58,12 @@ Located 18 km northwest of Sơn Trạch along ĐT20 (7 km before Paradise Cave),
 Beyond the boardwalks, multi-day caving inside the national park requires licensed guides, porters, helmets, and conservation permits managed by **Oxalis Adventure** and **Jungle Boss**:
 - **Hang En (Swallow Cave — 2 Days / 1 Night):** Priced at **8,500,000 VND to 9,200,000 VND** ($333.00 to $358.00 USD), this 22 km round-trip trek descends through Ban Đoòng ethnic Bru-Vân Kiều village and crosses the Rao Thuong stream 25 times before pitching tents on a subterranean sandbar beside an emerald lake inside a 100-meter-high, 180-meter-wide cavern.
 - **Tu Lan Cave System & Hang Va (1 to 4 Days):** Centered 70 km northwest in Tân Hóa village, Tu Lan links wet river caves where trekkers wear helmets, 350-lumen headlamps, and buoyancy vests to swim 300 meters to 800 meters through dark underground waterways. Fares range from **2,000,000 VND** ($80.00) for the 1-day 9 km experience to **8,500,000 VND** ($340.00) for the 2-day Hang Va water-cone expedition and **16,000,000 VND** ($640.00) for the 4-day wilderness circuit.
-- **Hang Son Doong (4 Days / 3 Nights):** Priced at **$3,000.00 USD (75,000,000 VND to 80,000,000 VND)** per person and strictly capped at 1,000 permits per calendar year, this 5.0 km passage reaches 200 meters in height and 150 meters in width, containing two collapsed doline skylights with primeval underground rainforests and the 90-meter calcite "Great Wall of Vietnam." Compare all operator routes in our [Phong Nha Cave Treks guide](/plan/phong-nha-cave-treks).
+- **Hang Son Doong (4 Days / 3 Nights):** Priced at **$3,000.00 USD (75,000,000 VND to 80,000,000 VND)** per person and strictly capped at 1,000 permits per calendar year, this 5.0 km passage reaches 200 meters in height and 150 meters in width, containing two collapsed doline skylights with primeval underground rainforests and the 90-meter calcite "Great Wall of Vietnam." Compare all operator routes in our [Phong Nha Cave Treks guide](/plan/phong-nha-cave-treks/).
 
 ## Step-by-Step Logistics: Dong Hoi Rail, Bus B4 & 48-Hour Cave Loop
 
 1. **Step 1 — Arrive at Dong Hoi (45 km East of Phong Nha):** Board overnight Reunification Express train **SE3** (departing **Ga Hà Nội** at 19:20, arriving **Ga Đồng Hới** at 05:10 across 522 km; 4-berth soft sleeper **680,000 VND** to **980,000 VND**), **SE19** (19:40 to 06:05), or **SE1** (22:10 to 07:35). From **Ga Huế** (165 km south), daytime trains take 3 hours (**110,000 VND** to **170,000 VND**). Alternatively, fly 80 minutes from Hanoi (HAN) or 95 minutes from Ho Chi Minh City (SGN) into **Dong Hoi Airport (VDH)** for **950,000 VND** to **1,800,000 VND**.
-2. **Step 2 — Transfer 45 km Inland to Sơn Trạch (45–75 minutes):** Take a private metered taxi or pre-booked car directly from Ga Đồng Hới or VDH Airport to your Phong Nha lodge in 45 minutes (**400,000 VND** to **500,000 VND** per vehicle), or catch municipal **Bus B4** from the Dong Hoi Post Office / Railway Station corridor (departing hourly 05:30 to 17:00, **35,000 VND** to **50,000 VND**, 70 minutes). See our [Dong Hoi to Phong Nha transport guide](/plan/dong-hoi-to-phong-nha-transport).
+2. **Step 2 — Transfer 45 km Inland to Sơn Trạch (45–75 minutes):** Take a private metered taxi or pre-booked car directly from Ga Đồng Hới or VDH Airport to your Phong Nha lodge in 45 minutes (**400,000 VND** to **500,000 VND** per vehicle), or catch municipal **Bus B4** from the Dong Hoi Post Office / Railway Station corridor (departing hourly 05:30 to 17:00, **35,000 VND** to **50,000 VND**, 70 minutes). See our [Dong Hoi to Phong Nha transport guide](/plan/dong-hoi-to-phong-nha-transport/).
 3. **Step 3 — Day 1 National Park Loop (07:30–16:30):** Rent a 110cc semi-automatic scooter (**150,000 VND** per day plus **50,000 VND** fuel) or hire a private car (**750,000 VND** to **900,000 VND**) to drive the 65 km National Park loop: hit **Paradise Cave** (**270,000 VND**) at 08:00 before tour groups arrive, ride 7 km east to **Dark Cave** (**450,000 VND**) at 11:00 for a cave swim and mud bath, and board a shared **Phong Nha Cave** dragon boat at 14:30 (**150,000 VND** + **70,000 VND** shared boat share).
 4. **Step 4 — Day 2 Bồng Lai Valley or Cave Trek (08:00–17:00):** Embark on a 1-day **Tu Lan** or **Tra Ang** river cave trek (**1,650,000 VND** to **2,000,000 VND**), or cycle 12 km through **Bồng Lai Valley** to eat charcoal-roasted chicken with peanut salt at the Pub With Cold Beer (**250,000 VND** to **350,000 VND**).
 
@@ -89,7 +89,7 @@ Beyond the boardwalks, multi-day caving inside the national park requires licens
 ## Frequently Asked Questions
 
 ### Should I stay in Sơn Trạch town or Bồng Lai Valley?
-Stay in **Sơn Trạch town (Phong Nha village)** along the Son River if you want walkable access to the Phong Nha Cave boat wharf, restaurants, and 07:30 trek pickups. Choose **Bồng Lai Valley** (10 km southeast across the Son River bridge) if you have 3+ nights and want quiet farmstays overlooking rice and pepper fields. Compare both zones in [Where to Stay in Phong Nha](/destinations/where-to-stay-in-phong-nha).
+Stay in **Sơn Trạch town (Phong Nha village)** along the Son River if you want walkable access to the Phong Nha Cave boat wharf, restaurants, and 07:30 trek pickups. Choose **Bồng Lai Valley** (10 km southeast across the Son River bridge) if you have 3+ nights and want quiet farmstays overlooking rice and pepper fields. Compare both zones in [Where to Stay in Phong Nha](/destinations/where-to-stay-in-phong-nha/).
 
 ### What is the best time of year to visit Phong Nha?
 The prime window runs from **March through August**. March to May brings comfortable **22°C to 29°C** trekking weather, while June to August reaches **34°C to 38°C** outside—making subterranean river swims inside 20°C caves refreshing. Avoid **late September to mid-November** due to monsoon flooding, and pack a thermal layer in **December to February** when temperatures dip to **14°C to 19°C** (Oxalis provides 3mm wetsuits for winter swims).
@@ -99,6 +99,6 @@ For **Hue** (210 km south), take a direct 4-hour tourist bus (**200,000 VND** to
 
 ## Internal Next Steps: Lock In Your Phong Nha Logistics
 
-- **Trekking & Expedition Comparisons:** Review fitness tiers and operators in [Phong Nha Cave Treks](/plan/phong-nha-cave-treks).
-- **Accommodation Guides:** Compare lodges in [Where to Stay in Phong Nha](/destinations/where-to-stay-in-phong-nha) and transit hotels in [Where to Stay in Dong Hoi](/destinations/where-to-stay-in-dong-hoi).
-- **Inbound & Outbound Transit:** Plan exact timetables with [Dong Hoi to Phong Nha Transport](/plan/dong-hoi-to-phong-nha-transport), [Hanoi to Phong Nha Transport](/plan/hanoi-to-phong-nha-transport), [Ninh Binh to Phong Nha Transport](/plan/ninh-binh-to-phong-nha-transport), [Phong Nha to Hue Transport](/plan/phong-nha-to-hue-transport), and [Da Nang to Phong Nha Transport](/plan/da-nang-to-phong-nha-transport).
+- **Trekking & Expedition Comparisons:** Review fitness tiers and operators in [Phong Nha Cave Treks](/plan/phong-nha-cave-treks/).
+- **Accommodation Guides:** Compare lodges in [Where to Stay in Phong Nha](/destinations/where-to-stay-in-phong-nha/) and transit hotels in [Where to Stay in Dong Hoi](/destinations/where-to-stay-in-dong-hoi/).
+- **Inbound & Outbound Transit:** Plan exact timetables with [Dong Hoi to Phong Nha Transport](/plan/dong-hoi-to-phong-nha-transport/), [Hanoi to Phong Nha Transport](/plan/hanoi-to-phong-nha-transport/), [Ninh Binh to Phong Nha Transport](/plan/ninh-binh-to-phong-nha-transport/), [Phong Nha to Hue Transport](/plan/phong-nha-to-hue-transport/), and [Da Nang to Phong Nha Transport](/plan/da-nang-to-phong-nha-transport/).

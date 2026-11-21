@@ -6,7 +6,7 @@ description: "Amanoi cliffside villas ($1,000+ USD) vs Vinh Hy fishing village h
 travel_cluster: "coastal_islands"
 last_verified: "2026-10-24"
 author: "VietnamGuide Editorial Team"
-reading_time_minutes: 8
+reading_time_minutes: 7
 word_count: 1446
 ---
 

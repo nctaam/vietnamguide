@@ -6,8 +6,8 @@ description: "Complete Saigon street food guide: best broken rice (com tam), ban
 travel_cluster: "southern_delta"
 last_verified: "2026-10-22"
 author: "VietnamGuide Editorial Team"
-reading_time_minutes: 11
-word_count: 1304
+reading_time_minutes: 8
+word_count: 1619
 ---
 
 # Saigon Street Food Guide (2026): 15 Must-Eat Dishes, Michelin Bib Gourmand Stalls, Districts & Prices
@@ -79,6 +79,31 @@ Three wrap-and-roll dishes round out a complete Saigon culinary education:
    - Walk **Cô Giang Street** (`10 minutes` south of Ben Thanh) between `16:30 and 20:30 PM` for **Bò Lá Lốt Hoàng Yến (`121 Cô Giang`)**, **Bún Thịt Nướng Chị Tuyền (`175 Cô Giang`)**, and coconut-milk sweet soups (`Chè`).
 4. **Ben Nghe Street Food Market (`134 Nam Kỳ Khởi Nghĩa, District 1` — Right Beside Independence Palace)**:
    - If you are traveling with young children or nervous first-timers who want an English-menu, covered food-court intro with live acoustic music and clean restrooms (`65,000–120,000 VND/dish`), start here on Night 1 before venturing out to District 3, District 4, and District 10 on Night 2.
+
+---
+
+## 2026 Metro Line 1 Station Walks, GrabBike Distances & District Price Matrix
+
+Navigating Ho Chi Minh City's best food quarters became faster once **Metro Line 1 (Ben Thanh ↔ Suoi Tien)** entered full passenger operation with single-ride fares of **7,000 VND to 20,000 VND ($0.28 to $0.80)** and unlimited 24-hour passes at **40,000 VND ($1.60)**. Central underground stations at **Ben Thanh**, **Opera House**, and **Ba Son** place several District 1 classics within a flat 10-to-15-minute sidewalk walk, while outer culinary corridors in District 3, District 4, District 5 (Cholon), District 10, and Phu Nhuan remain quick, cheap GrabBike hops.
+
+| Food Hub / Signature Stall | District | Access from Ben Thanh Metro / Center | Transit Time & 2026 Ride Fare | 2026 Dish Price Benchmark (VND / USD) |
+| :--- | :--- | :--- | :--- | :--- |
+| **Ben Nghe Street Food Market** | District 1 | 700 m walk from Opera House Metro | 9 mins walk (0 VND) | 70,000 VND ($2.80) to 120,000 VND ($4.80) |
+| **Banh Mi Huynh Hoa & Hong Hoa** | District 1 | 950 m walk west from Ben Thanh Metro | 12 mins walk (0 VND) | 45,000 VND ($1.80) to 75,000 VND ($3.00) |
+| **Co Giang Street (Bun Thit Nuong / Bo La Lot)** | District 1 | 1.1 km south of Ben Thanh Metro | 14 mins walk / 5 mins GrabBike (18,000 VND / $0.72) | 50,000 VND ($2.00) to 90,000 VND ($3.60) |
+| **Oc Dao (Hem 212B Nguyen Trai)** | District 1 | 1.2 km southwest of Ben Thanh Metro | 15 mins walk / 5 mins GrabBike (18,000 VND / $0.72) | 80,000 VND ($3.20) to 180,000 VND ($7.20) per plate |
+| **Banh Mi Hoa Ma & Cheo Leo Coffee** | District 3 | 1.9 km west of Ben Thanh Metro | 7 mins GrabBike (20,000 VND / $0.80) | 65,000 VND ($2.60) skillet + 25,000 VND ($1.00) coffee |
+| **Pho Hoa Pasteur & Bo La Lot Co Lieng** | District 3 | 2.4 km northwest of Ben Thanh Metro | 8 mins GrabBike (22,000 VND / $0.88) | 85,000 VND ($3.40) to 115,000 VND ($4.60) |
+| **Vinh Khanh Snail Street (Oc Oanh)** | District 4 | 2.3 km south across Calmette Bridge | 9 mins GrabBike (24,000 VND / $0.96) / 48,000 VND GrabCar | 75,000 VND ($3.00) to 220,000 VND ($8.80) |
+| **Xoi Ga Ba Chieu (Binh Thanh)** | Binh Thanh | 2.8 km north from Ba Son Metro | 10 mins GrabBike (26,000 VND / $1.04) | 35,000 VND ($1.40) to 45,000 VND ($1.80) |
+| **Ho Thi Ky Flower & Night Food Market** | District 10 | 3.4 km west of Ben Thanh Metro | 12 mins GrabBike (28,000 VND / $1.12) / 55,000 VND GrabCar | 20,000 VND ($0.80) to 60,000 VND ($2.40) per snack |
+| **Com Tam Ba Ghien (Michelin Bib Gourmand)** | Phu Nhuan | 4.6 km northwest of Ben Thanh Metro | 15 mins GrabBike (34,000 VND / $1.36) / 68,000 VND GrabCar | 85,000 VND ($3.40) to 145,000 VND ($5.80) |
+| **Ha Ton Quyen Wonton Street (Cholon)** | District 5 / 11 | 5.8 km southwest of Ben Thanh Metro | 20 mins GrabBike (42,000 VND / $1.68) / 82,000 VND GrabCar | 55,000 VND ($2.20) to 75,000 VND ($3.00) |
+
+### Coffee, Desserts & Sidewalk Ordering Etiquette in Saigon
+Street eating in southern Vietnam always includes a drink pairing served from a neighboring cart. Morning diners wash down broken rice or skillet eggs with iced milk coffee (`cà phê sữa đá`, 22,000 VND to 35,000 VND / $0.88 to $1.40) or hot cloth-filter coffee (`cà phê vợt`, 25,000 VND / $1.00) brewed continuously in clay pots along District 3 alleys. Afternoon walkers grab freshly crushed kumquat sugarcane juice (`nước mía tắc`, 15,000 VND / $0.60) from stainless-steel rollers on every corner. After dark in Cholon (District 5), cool down with a bowl of Teochew herbal sweet soup (`sâm bổ lượng` packed with dried longan, lotus seeds, barley, and seaweed, 35,000 VND / $1.40) or coconut-cream flan (`bánh flan`, 20,000 VND / $0.80).
+
+Pay attention to two sidewalk billing habits so bills never surprise you. Wet-towel packets (`khăn lạnh`) placed automatically beside your chopsticks cost 3,000 VND to 5,000 VND ($0.12 to $0.20) only if you tear open the wrapper, and iced jasmine tea (`trà đá`) runs 3,000 VND to 5,000 VND per glass with free refills. Carry 20,000 VND, 50,000 VND, and 100,000 VND notes because tiny family carts rarely hold change for 500,000 VND bills. Plan your wider neighborhood stops with our [Ho Chi Minh City Travel Guide](/destinations/ho-chi-minh-city-travel-guide/), [Saigon Night Markets Guide](/destinations/saigon-night-markets-guide/), [Vietnam Food Safety & Street Food Etiquette](/plan/vietnam-food-safety-street-food-etiquette/), and [Grab in Vietnam Guide](/plan/grab-in-vietnam-guide/).
 
 > [!TIP]
 > **Saigon Street Food Hygiene & Ice Cube Safety (`Đá Viên Tinh Khiết`)**: Never fear the cylindrical, hollow tube ice cubes (`đá bi / đá ống`) served in Saigon's iced coffees (`cà phê sữa đá`), sugarcane juice (`nước mía`), and beers—they are factory-produced from UV-filtered purified water and delivered daily in sealed sacks (`unlike ragged hand-chipped block ice used only for chilling raw fish`). For maximum food safety, follow two local rules: eat at **single-dish specialist stalls** with high turnover where food is cooked to order over live flame, and bring a small packet of wet wipes (`khăn ướt`) and `10,000–50,000 VND` polymer notes.

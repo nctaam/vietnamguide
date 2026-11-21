@@ -6,8 +6,8 @@ description: "Choose your central Vietnam base by My Khe beach access, 15-minute
 travel_cluster: "central_heritage"
 last_verified: "2026-10-21"
 author: "VietnamGuide Editorial Team"
-reading_time_minutes: 10
-word_count: 1545
+reading_time_minutes: 9
+word_count: 1775
 ---
 
 # Da Nang vs Hoi An: Which Central Vietnam Base Is Better?
@@ -90,8 +90,8 @@ Both destinations provide immediate ocean access, but their shorelines cater to 
   +-----------------------------------+     +-----------------------------------+
 ```
 
-### My Khe Beach in Da Nang
-My Khe Beach is a wide, deep expanse of pale sand that stretches continuously for over ten kilometers from the base of the Son Tra Peninsula southward toward the Marble Mountains.
+### Surfing & Promenade Life at My Khe Beach (Da Nang)
+Stretching continuously for 10 km from the base of the Son Tra Peninsula southward toward the Marble Mountains, this wide pale-sand strand anchors Da Nang's coastal recreation.
 - **Water Sports and Swell**: From September through March, winter monsoon swells generate rideable beach breaks, making My Khe Vietnam's primary hub for surfing and stand-up paddleboarding (board rentals: 150,000–250,000 VND per hour). During summer months (April to August), the ocean calms into flat, warm water suitable for lap swimming.
 - **Urban Infrastructure**: A wide paved promenade runs along the beach with public restrooms, freshwater rinse showers, active lifeguard towers, and outdoor fitness stations. Across the coastal boulevard (Vo Nguyen Giap) sit hundreds of seafood beer halls, convenience stores, and western cafes in the An Thuong tourist enclave.
 
@@ -185,6 +185,27 @@ Establishing your base in either city alters travel times to the major cultural 
 
 ---
 
+## 2026 Budget Ledger: DAD Transfers, Hotels, Grab Fares & Heritage Train (HD1–HD4)
+
+Daily travel budgets diverge sharply once you factor in airport transfers, beachfront room rates, and onward transit north across the Hai Van Pass to Hue. Da Nang delivers lower average Grab fares and more 3-star and 4-star oceanfront inventory. Hoi An rewards longer slow-travel stays with free homestay bicycles, compact walking streets, and quiet garden pools.
+
+| Cost Category (2026 Verified) | Da Nang (My Khe & Han River) | Hoi An (Ancient Town & An Bang) | Distance / Transit Benchmark |
+| :--- | :--- | :--- | :--- |
+| **DAD Airport Private Transfer / GrabCar** | 80,000 VND ($3.20) to 150,000 VND ($6.00) | 280,000 VND ($11.20) to 350,000 VND ($14.00) | 3 km to 6 km (10–15 mins) vs 30 km (45–55 mins) |
+| **DAD Airport Public Shuttle Bus 14** | 10,000 VND ($0.40) local bus hop | 30,000 VND ($1.20) direct route | 70 mins from Da Nang center to Hoi An Bus Station |
+| **Mid-Range Boutique Hotel / Villa (Night)** | 750,000 VND ($30.00) to 1,600,000 VND ($64.00) | 900,000 VND ($36.00) to 2,200,000 VND ($88.00) | My Khe sea-view room vs An Bang / Cam Chau garden pool |
+| **Budget Homestay / Guesthouse (Night)** | 380,000 VND ($15.20) to 650,000 VND ($26.00) | 450,000 VND ($18.00) to 850,000 VND ($34.00) | Free bicycles included at 80% of Hoi An villas |
+| **5-Star Beachfront Resort (Night)** | 2,500,000 VND ($100.00) to 5,500,000 VND ($220.00) | 3,200,000 VND ($128.00) to 7,500,000 VND ($300.00) | High-rise infinity towers vs low-density An Bang resorts |
+| **Intercity GrabCar (My Khe ↔ Hoi An)** | 250,000 VND ($10.00) to 320,000 VND ($12.80) | 250,000 VND ($10.00) to 320,000 VND ($12.80) | 28 km flat coastal avenue (35–40 mins one-way) |
+| **Central Heritage Train (HD1–HD4 to Hue)** | 180,000 VND ($7.20) weekday / 231,000 VND ($9.25) weekend | Add 300,000 VND ($12.00) taxi to Da Nang Station | 102 km coastal rail in 3 hours (180 mins) via Hai Van Pass |
+| **Hai Van Pass Private Car to Hue** | 1,400,000 VND ($56.00) one-way with stops | 1,650,000 VND ($66.00) one-way with stops | 100 km to 130 km; 3.5 to 4.5 hours via 21 km pass crest |
+| **Signature Heritage / Cable Car Ticket** | Ba Na Hills: 950,000 VND ($38.00) | Ancient Town: 120,000 VND ($4.80) / My Son: 150,000 VND ($6.00) | 35 km (50 mins) vs 0 km walk / 40 km (55 mins) |
+
+### Connecting Northward via the Central Heritage Train (HD1–HD4)
+Departing from Da Nang Railway Station (just 2.5 km or 8 minutes from the Han River), Vietnam Railways operates two daily scenic heritage pairs—**HD1 and HD3 northbound** (Da Nang to Hue) plus **HD2 and HD4 southbound** (Hue to Da Nang). Statutory 2026 soft-seat tickets cost **180,000 VND ($7.20)** on Monday through Friday and **231,000 VND ($9.25)** on weekends or public holidays. Over the 3-hour (180-minute) coastal run, the train hugs the sheer granite cliffs below Hai Van Pass and pauses for 10 minutes at Lang Co Station beside Lap An Lagoon. Staying in Da Nang lets you board the 07:50 AM HD1 departure after a quick 45,000 VND ($1.80) Grab ride, whereas travelers based in Hoi An must leave by 06:30 AM and pay 300,000 VND ($12.00) for a 45-minute car transfer to the railhead. For complete transfer schedules and terminal pickup tactics, check our [Da Nang Airport to Hoi An Guide](/plan/da-nang-airport-to-hoi-an/), [Da Nang Travel Guide](/destinations/da-nang-travel-guide/), [Hoi An Ancient Town Guide](/destinations/hoi-an-ancient-town-guide/), and [Hoi An vs Hue Comparison](/compare/hoi-an-vs-hue/).
+
+---
+
 > [!TIP]
 > **The Optimal 5-to-6 Day Split Strategy**: 
 > If your central Vietnam itinerary allows 5 or 6 total nights, avoid choosing just one base. Instead, divide your stay:
@@ -227,7 +248,7 @@ Use this structured breakdown to make an informed choice based on your party and
 Yes. Calling a Grab car or hailing a metered taxi from My Khe Beach to Hoi An costs approximately 250,000 to 320,000 VND ($10.00–$13.00 USD) each way and takes roughly 40 minutes. Many visitors staying in Da Nang head down to Hoi An around 16:30 for late afternoon photography, dinner by the river, and lantern boat rides, returning to their Da Nang hotel by 21:30.
 
 ### How much does custom tailoring cost in Hoi An?
-Pricing varies widely based on fabric quality (cashmere-wool blends vs local linen) and garment complexity. On average at established tailors like Bebe or Yaly Couture, a custom two-piece men's or women's suit ranges from **$120 to $250 USD (3,000,000–6,250,000 VND)**. Custom linen shirts cost **$25 to $40 USD**, and bespoke dresses range from **$35 to $80 USD**. Always allow a minimum of 2 to 3 days for fittings.
+Tailoring rates depend on cloth weight (cashmere-wool blends versus local linen) and construction complexity. On average at established tailors like Bebe or Yaly Couture, a custom two-piece men's or women's suit ranges from **$120 to $250 USD (3,000,000–6,250,000 VND)**. Custom linen shirts cost **$25 to $40 USD**, and bespoke dresses range from **$35 to $80 USD**. Always allow a minimum of 2 to 3 days for fittings.
 
 ### Is it safe to rent a motorbike to ride between Da Nang and Hoi An?
 The 30-kilometer coastal road (Vo Nguyen Giap connecting to Lac Long Quan) is completely flat, paved, and multi-laned. However, because it carries tour buses, airport shuttles, and heavy truck traffic, riding a scooter requires defensive driving skills and a valid International Driving Permit (IDP). If you do not have extensive experience riding motorbikes in Southeast Asia, using Grab cars or public buses is significantly safer and inexpensive.

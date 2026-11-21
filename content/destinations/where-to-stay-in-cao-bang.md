@@ -6,7 +6,7 @@ description: "Bang River hotels in Cao Bang City vs Nguom Ngao and Ban Gioc wate
 travel_cluster: "far_north_frontier"
 last_verified: "2026-10-24"
 author: "VietnamGuide Editorial Team"
-reading_time_minutes: 12
+reading_time_minutes: 7
 word_count: 1410
 ---
 

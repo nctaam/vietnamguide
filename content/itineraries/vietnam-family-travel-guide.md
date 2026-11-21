@@ -6,7 +6,7 @@ description: "Vietnam family travel guide: practical 10 to 14-day routes with ki
 travel_cluster: "national_circuit"
 last_verified: "2026-10-22"
 author: "VietnamGuide Editorial Team"
-reading_time_minutes: 14
+reading_time_minutes: 11
 word_count: 2130
 ---
 

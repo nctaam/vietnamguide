@@ -6,7 +6,7 @@ description: "Phu Quoc vs Nha Trang: compare island resort relaxation with activ
 travel_cluster: "coastal_islands"
 last_verified: "2026-11-02"
 author: "VietnamGuide Editorial Team"
-reading_time_minutes: 15
+reading_time_minutes: 9
 word_count: 1868
 ---
 

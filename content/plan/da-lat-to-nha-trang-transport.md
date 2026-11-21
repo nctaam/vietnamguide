@@ -6,7 +6,7 @@ description: "Complete Da Lat to Nha Trang transport guide: compare 9-seat VIP l
 travel_cluster: "central_highlands"
 last_verified: "2026-10-20"
 author: "VietnamGuide Editorial Team"
-reading_time_minutes: 12
+reading_time_minutes: 9
 word_count: 1858
 ---
 

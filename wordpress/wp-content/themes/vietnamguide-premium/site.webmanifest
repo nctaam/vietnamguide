@@ -47,7 +47,7 @@
       "name": "Cost Calculator",
       "short_name": "Cost",
       "description": "Calculate daily budget across 4 traveler tiers",
-      "url": "/costs/vietnam-travel-cost/",
+      "url": "/plan/vietnam-travel-cost/",
       "icons": [{ "src": "/wp-content/themes/vietnamguide-premium/assets/images/vg-icon.svg", "sizes": "any" }]
     },
     {

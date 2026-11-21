@@ -6,7 +6,7 @@ description: "Plan Ho Chi Minh City in 2 days without wasted travel: District 1 
 travel_cluster: "southern_delta"
 last_verified: "2026-10-22"
 author: "VietnamGuide Editorial Team"
-reading_time_minutes: 12
+reading_time_minutes: 9
 word_count: 1786
 ---
 

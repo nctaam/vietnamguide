@@ -6,7 +6,7 @@ description: "Best things to do in Hanoi: Old Quarter street food walks, Temple 
 travel_cluster: "northern_triangle"
 last_verified: "2026-11-01"
 author: "VietnamGuide Editorial Team"
-reading_time_minutes: 10
+reading_time_minutes: 9
 word_count: 1710
 ---
 
@@ -103,7 +103,7 @@ Yes. Even with a 20 minutes Grab ride costing 120,000 VND ($4.80) each way from 
 ## Internal Next Steps
 
 Build out your northern Vietnam itinerary using our companion neighborhood, food, and transport guides:
-- Review seasonal weather and district maps in our flagship [Hanoi Travel Guide](/destinations/hanoi-travel-guide) or follow our hour-by-hour [Hanoi in 2 Days](/itineraries/hanoi-in-2-days) route.
-- Picking a hotel base? Compare street noise and walkability in [Where to Stay in Hanoi](/destinations/where-to-stay-in-hanoi) and [Old Quarter vs French Quarter vs West Lake](/compare/old-quarter-vs-french-quarter-vs-west-lake).
-- Map your culinary stops with exact stall addresses in our [Hanoi Street Food Guide](/destinations/hanoi-street-food-guide) and check railway timetables in our [Hanoi Train Street Guide](/destinations/hanoi-train-street-guide).
-- Plan a smooth arrival using [Hanoi Airport to Old Quarter](/plan/hanoi-airport-to-old-quarter), avoid common pitfalls in [Hanoi First-Time Visitor Mistakes](/plan/hanoi-first-time-visitor-mistakes), and compare excursions in [Best Day Trips from Hanoi](/destinations/best-day-trips-from-hanoi).
+- Review seasonal weather and district maps in our flagship [Hanoi Travel Guide](/destinations/hanoi-travel-guide/) or follow our hour-by-hour [Hanoi in 2 Days](/itineraries/hanoi-in-2-days/) route.
+- Picking a hotel base? Compare street noise and walkability in [Where to Stay in Hanoi](/destinations/where-to-stay-in-hanoi/) and [Old Quarter vs French Quarter vs West Lake](/compare/old-quarter-vs-french-quarter-vs-west-lake/).
+- Map your culinary stops with exact stall addresses in our [Hanoi Street Food Guide](/destinations/hanoi-street-food-guide/) and check railway timetables in our [Hanoi Train Street Guide](/destinations/hanoi-train-street-guide/).
+- Plan a smooth arrival using [Hanoi Airport to Old Quarter](/plan/hanoi-airport-to-old-quarter/), avoid common pitfalls in [Hanoi First-Time Visitor Mistakes](/plan/hanoi-first-time-visitor-mistakes/), and compare excursions in [Best Day Trips from Hanoi](/destinations/best-day-trips-from-hanoi/).

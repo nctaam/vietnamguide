@@ -6,7 +6,7 @@ description: "Explore the best Da Lat coffee farms. Our guide covers arabica pla
 travel_cluster: "central_highlands"
 last_verified: "2026-10-21"
 author: "VietnamGuide Editorial Team"
-reading_time_minutes: 12
+reading_time_minutes: 15
 word_count: 3045
 ---
 

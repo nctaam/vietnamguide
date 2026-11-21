@@ -6,7 +6,7 @@ description: "Da Nang to Quy Nhon transport guide: Reunification Express train b
 travel_cluster: "central_heritage"
 last_verified: "2026-10-20"
 author: "VietnamGuide Editorial Team"
-reading_time_minutes: 13
+reading_time_minutes: 8
 word_count: 1632
 ---
 

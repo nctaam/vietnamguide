@@ -6,7 +6,7 @@ description: "Best day trips from Hanoi, compared by route job: Ninh Binh, Ha Lo
 travel_cluster: "northern_triangle"
 last_verified: "2026-10-22"
 author: "VietnamGuide Editorial Team"
-reading_time_minutes: 11
+reading_time_minutes: 7
 word_count: 1432
 ---
 

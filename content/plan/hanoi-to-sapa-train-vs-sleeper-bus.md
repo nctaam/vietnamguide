@@ -6,7 +6,7 @@ description: "Compare Hanoi to Sapa travel: overnight railway sleeper train to L
 travel_cluster: "northern_triangle"
 last_verified: "2026-10-20"
 author: "VietnamGuide Editorial Team"
-reading_time_minutes: 8
+reading_time_minutes: 10
 word_count: 2045
 ---
 

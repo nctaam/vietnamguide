@@ -6,7 +6,7 @@ description: "Learn what to pack for Vietnam by region and season: north, centra
 travel_cluster: "national_circuit"
 last_verified: "2026-11-02"
 author: "VietnamGuide Editorial Team"
-reading_time_minutes: 12
+reading_time_minutes: 9
 word_count: 1860
 ---
 

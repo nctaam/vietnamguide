@@ -6,8 +6,8 @@ description: "Where to stay in Ly Son: Big Island port hotels vs Little Island b
 travel_cluster: "coastal_islands"
 last_verified: "2026-10-24"
 author: "VietnamGuide Editorial Team"
-reading_time_minutes: 12
-word_count: 1368
+reading_time_minutes: 8
+word_count: 1660
 ---
 
 # Where to Stay in Ly Son (2026): Big vs Small Island
@@ -68,6 +68,25 @@ Three nautical miles north of Big Island lies **Little Island (Đảo Bé / Xã 
 While Big Island's coast is mostly dark volcanic rock, Little Island features **Bai Ngang (Bãi Ngang)**—a crescent cove of powdery white coral sand framed by coconut palms, black lava boulders, and clear turquoise water ideal for snorkeling over shallow coral gardens (60,000–100,000 VND wooden basket-boat thuyền thúng + mask rental). Between 08:30 AM and 14:00 PM, hundreds of day-trippers pack Bai Ngang. By 14:30 PM, the last scheduled canoe returns to Big Island, leaving overnight guests (Xa La Homestay, Gió Biển, Be Ecolodge, charging 750,000–1,300,000 VND / $30–$52 USD for A/C wooden beach bungalows or 400,000–700,000 VND for simpler fan/garden huts) with the entire island to themselves.
 
 **What to Expect Overnight on Little Island:** Although Little Island now connects to submarine power and solar-diesel microgrids alongside a seawater desalination plant, fresh water remains precious and high-draw appliances (like room air conditioners) may cycle during off-peak midday hours at smaller family homestays. Bring cash, insect repellent, and a flashlight for stargazing on the basalt cliff boardwalk, and pre-order your evening seafood BBQ (200,000–350,000 VND/person) with your host by noon.
+
+---
+
+## 2026 Sa Ky–Ly Son Ferry Tariffs, Canoe Rates & Landmark Distances
+
+Budgeting your island stay requires pairing nightly room rates with mainland-to-pier logistics and intra-island hops. High-speed boats operated by **Super Biển Đông**, **Chín Nghĩa Express**, and **An Vĩnh Express** cross the 30 km (15 nautical miles) strait from Sa Ky Port to Ben Dinh Pier in 30 minutes to 35 minutes. Outbound fares from Sa Ky run 200,000 VND to 240,000 VND ($8.00 to $9.60 USD) plus a 20,000 VND ($0.80 USD) terminal levy. Return tickets from Ly Son back to the mainland cost slightly less, typically 180,000 VND to 220,000 VND ($7.20 to $8.80 USD). First departures leave Sa Ky at 07:30 AM, with final crossings scheduled around 15:00 PM during the April–August peak.
+
+| Transfer Leg or Island Landmark | Distance from Hub | Typical Transit Time | 2026 Verified Tariff (VND / USD) | Operational Note |
+| :--- | :--- | :--- | :--- | :--- |
+| **Chu Lai Airport (VCL) → Sa Ky Port** | 45 km | 50 minutes | 550,000 VND to 650,000 VND ($22.00–$26.00) | Pre-book a 4-seat sedan; metered taxis cost more. |
+| **Quang Ngai Station → Sa Ky Port** | 20 km | 30 minutes (car) / 45 minutes (Bus #03) | 260,000 VND to 320,000 VND ($10.40–$12.80) | Public Bus #03 costs 30,000 VND ($1.20) hourly. |
+| **Da Nang (DAD) → Sa Ky Port** | 135 km | 2.5 hours | 1,400,000 VND to 1,700,000 VND ($56.00–$68.00) | See our [Da Nang to Ly Son transport guide](/plan/da-nang-to-ly-son-transport/). |
+| **Sa Ky Port → Ben Dinh Pier (Ferry)** | 30 km | 30–35 minutes | 200,000 VND to 240,000 VND ($8.00–$9.60) | Add 20,000 VND ($0.80) Sa Ky port departure fee. |
+| **Big Island → Little Island (Canoe)** | 5.5 km | 8–10 minutes | 120,000 VND to 140,000 VND ($4.80–$5.60) RT | Private 10-seat canoe charter runs 1,300,000 VND ($52.00). |
+| **Ben Dinh Pier → To Vo Gate & Duc Pagoda** | 2.2 km to 2.6 km | 6–8 minutes | 0 VND entry / 10,000 VND scooter parking | Flat coastal road; easy twilight scooter hop. |
+| **Ben Dinh Pier → Thoi Loi Peak & Hang Cau** | 5.2 km to 5.5 km | 14–15 minutes | 0 VND entry / 150,000 VND scooter rental | Steep climb up 169 m summit road; shift to first gear. |
+| **Ben Dinh Pier → Mu Cu Lighthouse** | 6.0 km | 15 minutes | 0 VND entry / 100,000 VND kayak rental | Paved eastern causeway; leave An Vinh by 04:50 AM. |
+
+Room tariffs swing sharply between quiet mid-week dates and domestic summer weekends. Between May and August, Friday and Saturday nights across An Vinh hotels jump by 150,000 VND to 400,000 VND ($6.00 to $16.00 USD) above weekday rates. Lock in seafront rooms at Ly Son Pearl or cliffside huts near To Vo Gate at least 14 days ahead if your dates overlap national holidays. Families wanting direct Little Island access without waiting for shared departures can charter a private speedboat canoe from Ben Dinh Pier for 1,200,000 VND to 1,500,000 VND ($48.00 to $60.00 USD) round-trip. Once ashore on An Binh, a private 10-seat electric buggy covering the 3 km coastal loop costs 300,000 VND ($12.00 USD), compared with 30,000 VND to 50,000 VND ($1.20 to $2.00 USD) per passenger on shared shuttles. For full ferry timetables, snorkeling maps, and volcano viewpoints, pair this hotel breakdown with our [Ly Son Island travel guide](/destinations/ly-son-travel-guide/).
 
 ---
 

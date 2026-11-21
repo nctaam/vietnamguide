@@ -6,7 +6,7 @@ description: "Compare Ho Chi Minh City to Phu Quoc transport options: direct fli
 travel_cluster: "southern_delta"
 last_verified: "2026-11-01"
 author: "VietnamGuide Editorial Team"
-reading_time_minutes: 8
+reading_time_minutes: 7
 word_count: 1473
 ---
 

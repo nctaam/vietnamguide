@@ -6,7 +6,7 @@ description: "Da Nang to Phong Nha transport guide: Reunification Express train 
 travel_cluster: "phong_nha_caves"
 last_verified: "2026-11-01"
 author: "VietnamGuide Editorial Team"
-reading_time_minutes: 8
+reading_time_minutes: 7
 word_count: 1475
 ---
 

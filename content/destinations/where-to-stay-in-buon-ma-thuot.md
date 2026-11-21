@@ -6,7 +6,7 @@ description: "Where to stay in Buon Ma Thuot: central business hotels vs Ako Dho
 travel_cluster: "central_highlands"
 last_verified: "2026-10-24"
 author: "VietnamGuide Editorial Team"
-reading_time_minutes: 12
+reading_time_minutes: 8
 word_count: 1561
 ---
 

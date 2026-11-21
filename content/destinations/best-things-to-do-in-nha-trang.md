@@ -6,8 +6,8 @@ description: "Explore the best things to do in Nha Trang: island snorkeling tour
 travel_cluster: "coastal_islands"
 last_verified: "2026-10-22"
 author: "VietnamGuide Editorial Team"
-reading_time_minutes: 10
-word_count: 1276
+reading_time_minutes: 8
+word_count: 1607
 ---
 
 # Best Things to Do in Nha Trang (2026): Po Nagar Cham Towers, Mud Baths, Island Snorkeling & Seafood
@@ -62,7 +62,32 @@ Founded in **`1889`** at the foot of **Trai Thuy Hill (`22 Đường 23 Tháng 1
 Right in the center of the city, **Tran Phu Beach (`Bãi Biển Trần Phú`)** offers `6 kilometers` of palm-lined parks, beach clubs (**Sailing Club Nha Trang**, **Louisiane Brewhouse** with craft beer brewed on-site), and morning swimmers (best from February to August when the water is flat and crystal clear). If you want shallow, knee-deep turquoise water and powdery chalk-white sand with zero high-rises, take a `50-minute` (`45 km`) taxi or **Bus #3** north to **Doc Let Beach (`Bãi Biển Dốc Lết`, Ninh Hoa)** or `25 km` south to **Bai Dai Beach (`Bãi Dài Cam Ranh`)**!
 
 ### 7. Ride the Over-Sea Cable Car to `VinWonders Nha Trang` (`Hon Tre Island`)
-Even if you aren't a theme-park fanatic, riding the **`3,320-meter` over-sea cable car (`950,000 VND` all-inclusive pass)** `50 meters` above the turquoise waters of Nha Trang Bay across to **Hon Tre Island** delivers sweeping aerial views—followed by the 5-dome botanical gardens (`The World Garden`), the `120-meter` Sky Wheel, the island alpine coaster, and the `19:30 PM` `$10-million` **Tata Multimedia Show**.
+Even if you aren't a theme-park fanatic, riding the **`3,320-meter` over-sea cable car (`950,000 VND` / `$38.00` all-inclusive adult pass; `710,000 VND` / `$28.40` child)** `50 meters` above the turquoise waters of Nha Trang Bay across to **Hon Tre Island** delivers sweeping aerial views in 12 minutes—followed by the 5-dome botanical gardens (`The World Garden`), the `120-meter` Sky Wheel, the island alpine coaster, and the `19:30 PM` `$10-million` **Tata Multimedia Show**.
+
+### 8. Explore Hon Chong Promontory (`Hòn Chồng`) & Local Morning Commerce at Dam Market (`Chợ Đầm`)
+Four kilometers north of central Tran Phu Beach (8 minutes and 55,000 VND / $2.20 by GrabCar), **Hon Chong Promontory** stacks colossal weathered granite boulders right into the surf where local acoustic musicians play traditional bamboo xylophones (`đàn đá` and `đàn t'rưng`) inside the clifftop pavilion. Admission costs **30,000 VND ($1.20)** and includes a clear coastal vista back across the curve of Nha Trang Bay toward Hon Tre Island. Pair the morning visit with a stop at **Dam Market (`Chợ Đầm`, 2 km north of the city center, free entry)**, a circular concrete market hall where Khanh Hoa fishermen trade sun-dried squid (`mực một nắng`, 450,000 VND to 650,000 VND / $18.00 to $26.00 per kg), salted mango rice paper (`bánh tráng xoài`, 40,000 VND / $1.60 per pack), and fresh tropical fruit before noon.
+
+### 9. Hike the Three Granite Cascade Pools of Ba Ho Waterfalls (`Thác Ba Hồ`)
+Located 25 kilometers north of downtown Nha Trang along National Route QL1A (40 minutes and 320,000 VND / $12.80 one-way by GrabCar, or a 130,000 VND / $5.20 daily scooter rental), **Ba Ho Eco-Tourism Area** cuts into coastal rainforest foothills behind Ninh Ich Commune. Official 2026 entrance tickets cost **100,000 VND ($4.00)** per adult. A 1.5-kilometer boulder-scrambling trail marked with painted arrows links three deep emerald plunge pools separated by smooth granite slabs and iron ladders. Pool 1 lies just 20 minutes from the parking gate for easy swimming; Pools 2 and 3 require dry grip footwear and steady scrambling to reach quiet cliff-jumping ledges (`6 meters` to `9 meters` high) best tackled between February and August when currents stay calm.
+
+---
+
+## 2026 CXR Airport Transfers, Marine Piers & Excursion Distance Ledger
+
+Nha Trang stretches linearly along the coast, so grouping northern river sights (Po Nagar, Hon Chong, I-Resort) separately from southern port launches (Vinh Truong Pier, VinWonders, Oceanographic Museum) saves both transit hours and ride-hailing fares.
+
+| Transfer Route / Excursion Leg (2026) | Distance | Transit Time | 2026 Verified Tariff (VND / USD) | Operational Logistics |
+| :--- | :--- | :--- | :--- | :--- |
+| **Cam Ranh Airport (CXR) → Tran Phu Center (Bus #18)** | 35 km | 50 mins | 65,000 VND ($2.60) per seat | Dat Moi yellow shuttle every 30 mins (05:30–21:30) |
+| **Cam Ranh Airport (CXR) → Downtown (Private Car / Grab)** | 35 km | 40 to 45 mins | 250,000 VND ($10.00) to 380,000 VND ($15.20) | Scenic Cu Hin Pass coastal highway; fixed pre-booked rates best |
+| **Tran Phu Center → Vinh Truong Tourist Pier** | 5.0 km south | 12 mins | 70,000 VND ($2.80) GrabCar | Departure hub for Hon Mun, Coral Bay, Mini Beach, Hon Tam |
+| **Vinh Truong Pier → Hon Mun MPA Dive Boat** | 12 km offshore | 25 mins canoe | 1,500,000 VND ($60.00) to 1,900,000 VND ($76.00) | 2 guided PADI boat dives; dedicated snorkel trip 900,000 VND ($36.00) |
+| **Tran Phu Center → VinWonders Cable Car Station** | 4.5 km south | 10 mins | 65,000 VND ($2.60) GrabCar + 950,000 VND ($38.00) pass | 3,320 m cable car takes 12 mins across Nha Trang Bay |
+| **Tran Phu Center → Po Nagar Cham Towers** | 3.0 km north | 8 mins | 45,000 VND ($1.80) GrabCar + 30,000 VND ($1.20) entry | Cross Tran Phu Bridge; combine with Thap Ba seafood lane |
+| **Po Nagar Towers → I-Resort Hot Mineral Mud Bath** | 4.0 km inland | 10 mins | 55,000 VND ($2.20) GrabCar + 400,000 VND ($16.00) tub | Total 7 km (15 mins) from downtown Tran Phu Square |
+| **Tran Phu Center → Doc Let Beach (Ninh Hoa)** | 45 km north | 55 mins | 500,000 VND ($20.00) GrabCar / 30,000 VND ($1.20) Bus #3 | Shallow white sand; depart by 08:00 AM for calm morning water |
+
+Travelers comparing South Central beach hubs or linking the coast directly into the Central Highlands can cross-reference our [Nha Trang Travel Guide](/destinations/nha-trang-travel-guide/), [Nha Trang to Da Lat Transport](/plan/nha-trang-to-da-lat-transport/), [Phu Quoc vs Nha Trang](/compare/phu-quoc-vs-nha-trang/), and [Mui Ne vs Nha Trang](/compare/mui-ne-vs-nha-trang/).
 
 ---
 

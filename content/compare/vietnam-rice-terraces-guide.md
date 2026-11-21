@@ -6,7 +6,7 @@ description: "Authoritative Vietnam rice terraces guide: compare Sapa, Mu Cang C
 travel_cluster: "northern_highlands"
 last_verified: "2026-10-22"
 author: "VietnamGuide Editorial Team"
-reading_time_minutes: 10
+reading_time_minutes: 8
 word_count: 1538
 ---
 

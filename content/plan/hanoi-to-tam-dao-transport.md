@@ -6,7 +6,7 @@ description: "Old Quarter pickup limousines (2 hours, 160,000-200,000 VND) vs Bu
 travel_cluster: "far_north_frontier"
 last_verified: "2026-10-25"
 author: "VietnamGuide Editorial Team"
-reading_time_minutes: 12
+reading_time_minutes: 8
 word_count: 1570
 ---
 

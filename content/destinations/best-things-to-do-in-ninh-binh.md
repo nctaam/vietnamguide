@@ -6,7 +6,7 @@ description: "The best things to do in Ninh Binh: Trang An boat rides, Hang Mua 
 travel_cluster: "ninh_binh"
 last_verified: "2026-10-22"
 author: "VietnamGuide Editorial Team"
-reading_time_minutes: 11
+reading_time_minutes: 8
 word_count: 1514
 ---
 

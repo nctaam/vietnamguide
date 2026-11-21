@@ -6,7 +6,7 @@ description: "Nhat Le beachfront resorts vs Dong Hoi railway station transit hot
 travel_cluster: "phong_nha_caves"
 last_verified: "2026-10-24"
 author: "VietnamGuide Editorial Team"
-reading_time_minutes: 12
+reading_time_minutes: 8
 word_count: 1539
 ---
 

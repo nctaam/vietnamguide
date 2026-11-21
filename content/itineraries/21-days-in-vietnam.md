@@ -6,7 +6,7 @@ description: "Plan 21 days in Vietnam with a complete full-country route from No
 travel_cluster: "national_circuit"
 last_verified: "2026-10-22"
 author: "VietnamGuide Editorial Team"
-reading_time_minutes: 16
+reading_time_minutes: 10
 word_count: 2070
 ---
 

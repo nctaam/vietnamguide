@@ -6,7 +6,7 @@ description: "Where to stay on Cat Ba Island: waterfront hotels in Cat Ba town, 
 travel_cluster: "ha_long_bay"
 last_verified: "2026-10-24"
 author: "VietnamGuide Editorial Team"
-reading_time_minutes: 12
+reading_time_minutes: 7
 word_count: 1435
 ---
 

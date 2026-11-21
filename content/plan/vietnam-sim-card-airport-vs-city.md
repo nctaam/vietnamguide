@@ -6,8 +6,8 @@ description: "Vietnam SIM card guide: buying at Noi Bai or Tan Son Nhat airport 
 travel_cluster: "national_circuit"
 last_verified: "2026-11-01"
 author: "VietnamGuide Editorial Team"
-reading_time_minutes: 8
-word_count: 1515
+reading_time_minutes: 9
+word_count: 1872
 ---
 
 # Vietnam SIM Card: Airport vs City Stores Guide (2026)
@@ -127,4 +127,20 @@ Before buying a data-only eSIM, consider your app setup. Review our [Vietnam Tra
 2. **The Midnight Arrival (`22:00–05:00`) or Short `4-Day` Trip:** Buy a local eSIM online (`$10.00–$15.00 USD`) before boarding, or use an official carrier-branded counter inside the arrival hall (`250,000–350,000 VND`). Run the `KTTK` to `191` SMS verification before stepping outside to the taxi curb.
 3. **The Remote Loop Rider (Ha Giang, Cao Bang, Mu Cang Chai):** Stick exclusively with **Viettel**. Even if your primary phone runs an international eSIM on Vinaphone or MobiFone towers, buy a secondary `170,000 VND` (`$6.80 USD`) physical Viettel **SD120** card for a backup handset or dual-SIM slot. When fog rolls across the Ma Pi Leng Pass `22 km` outside Meo Vac, that military-grade tower network is your lifeline for offline map refreshes and emergency roadside calls.
 4. **Top-Up and Extension After `30 Days`:** Extending your stay on a `90-day` e-Visa? Do not buy a new SIM card. Open the *My Viettel* or *My VNPT* app, purchase a `100,000 VND` (`$4.00 USD`) top-up scratch card at any Circle K or WinMart convenience shop, and dial `*100*<PIN_CODE>#` to reload. Your existing `30-day` data bundle will automatically renew at midnight without another store visit.
+
+---
+
+## Frequently Asked Questions (2026)
+
+### How much do Viettel, Vinaphone, and MobiFone SIMs and eSIMs cost in 2026?
+Official city transaction centers charge **150,000 VND to 250,000 VND ($6.00–$10.00 USD)** total for a 30-day tourist setup. That price combines a **50,000 VND ($2.00 USD)** blank physical SIM (or **35,000 VND to 50,000 VND** / $1.40–$2.00 USD eSIM QR code) with a monthly data bundle: **Viettel SD120** (`2 GB/day`, **120,000 VND / $4.80 USD**), **Viettel SD135** (`5 GB/day`, **135,000 VND / $5.40 USD**), or comparable **Vinaphone** and **MobiFone** 30-day urban 5G plans (**120,000 VND to 160,000 VND / $4.80–$6.40 USD**). Airport arrival kiosks at `HAN`, `SGN`, and `DAD` mark up equivalent cards to **250,000 VND to 450,000 VND ($10.00–$18.00 USD)**, while online local eSIM resellers charge **$8.00 to $18.00 USD** (`200,000 VND to 450,000 VND`).
+
+### Is passport registration mandatory for every Vietnam SIM card and local eSIM?
+Yes. Under **Decree 49/ND-CP**, every Vietnamese `+84` SIM card or local eSIM must link to your physical passport bio-page and a live biometric portrait taken at an official carrier counter—a process taking **10 minutes to 15 minutes**. Skip unregistered street cards around Bui Vien or Old Quarter kiosks, because automated carrier audits deactivate unverified numbers within **3 to 7 days**. Only international roaming eSIMs (Airalo, Nomad) bypass MIC registration by routing data through Singapore or Hong Kong gateways without issuing a `+84` number.
+
+### Do Vietnamese tourist SIM cards allow personal hotspot tethering without throttling?
+Official **Viettel**, **Vinaphone**, and **MobiFone** prepaid plans support full-speed 4G and 5G personal hotspot sharing with zero carrier throttling until you reach your daily allowance (`2 GB` on `SD120` or `5 GB` on `SD135`). Once the daily cap hits zero, data pauses cleanly until `00:00` rather than billing surprise overage charges. By contrast, many "unlimited" foreign roaming eSIMs cap tethering strictly at `500 MB/day` or drop speeds to unusable 2G rates after `3 GB`.
+
+### Which carrier works best for rural Ha Giang Loop, Phong Nha, and island routes?
+Pick **Viettel** without hesitation. Across the **350 km** [Ha Giang Loop](/destinations/ha-giang-loop-planning-guide/) (including Dong Van **145 km** north of Ha Giang City and Ma Pi Leng Pass **22 km** outside Meo Vac), inland valleys **45 km** from Dong Hoi in [Phong Nha](/destinations/phong-nha-travel-guide/), and offshore islands like Con Dao (**185 km** from Vung Tau), Viettel's military-built tower network holds steady 4G signal where Vinaphone and MobiFone frequently drop out. See our full carrier comparison in [SIM & eSIM Vietnam](/plan/sim-esim-vietnam/) before locking in a multi-week mountain route.
 

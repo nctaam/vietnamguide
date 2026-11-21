@@ -6,7 +6,7 @@ description: "Experience the Central Highlands Vietnam itinerary: 5 to 7 days fr
 travel_cluster: "central_highlands"
 last_verified: "2026-10-22"
 author: "VietnamGuide Editorial Team"
-reading_time_minutes: 10
+reading_time_minutes: 9
 word_count: 1706
 ---
 

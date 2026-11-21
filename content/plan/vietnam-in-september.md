@@ -6,7 +6,7 @@ description: "Plan Vietnam in September by region: typhoon season watchouts, cen
 travel_cluster: "national_circuit"
 last_verified: "2026-10-25"
 author: "VietnamGuide Editorial Team"
-reading_time_minutes: 12
+reading_time_minutes: 17
 word_count: 3368
 ---
 

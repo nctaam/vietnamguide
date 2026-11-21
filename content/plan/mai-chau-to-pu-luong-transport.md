@@ -6,7 +6,7 @@ description: "Highway 15C transfer across 45 km: resort shuttle vans (1.5 hours,
 travel_cluster: "far_north_frontier"
 last_verified: "2026-10-31"
 author: "VietnamGuide Editorial Team"
-reading_time_minutes: 12
+reading_time_minutes: 8
 word_count: 1543
 ---
 

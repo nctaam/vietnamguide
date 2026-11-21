@@ -1546,9 +1546,9 @@ foreach ($parserInfrastructurePath in $recoveryParserInfrastructurePaths) {
 if (
     $recoveryParserInfrastructurePaths.Count -ne 2 -or
     ($candidatePaths.Count - $recoveryRepositoryPaths.Count) -ne 2 -or
-    $recoveryRepositoryPaths.Count -ne 470
+    $recoveryRepositoryPaths.Count -ne 471
 ) {
-    Add-Failure "Recovery repository inventory count mismatch: expected 470; received $($recoveryRepositoryPaths.Count)."
+    Add-Failure "Recovery repository inventory count mismatch: expected 471; received $($recoveryRepositoryPaths.Count)."
 }
 
 $gitStageEntries = @(Get-GitPathLines -Arguments @('ls-files', '--stage', '--') -Label 'Git index path enumeration') + @($AdditionalGitStageEntry)

@@ -6,7 +6,7 @@ description: "Where to stay in Ben Tre: peaceful Ham Luong river eco-lodges vs A
 travel_cluster: "mekong_delta"
 last_verified: "2026-10-24"
 author: "VietnamGuide Editorial Team"
-reading_time_minutes: 12
+reading_time_minutes: 7
 word_count: 1442
 ---
 

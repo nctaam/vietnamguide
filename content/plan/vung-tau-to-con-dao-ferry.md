@@ -6,8 +6,8 @@ description: "Vung Tau to Con Dao ferry: Con Dao Express 36 fast catamaran timet
 travel_cluster: "southern_delta"
 last_verified: "2026-11-01"
 author: "VietnamGuide Editorial Team"
-reading_time_minutes: 8
-word_count: 1439
+reading_time_minutes: 9
+word_count: 1789
 ---
 
 ## Crossing the Open South China Sea from Vung Tau to Con Dao
@@ -100,3 +100,23 @@ As you walk down the concrete jetty (`250 meters` long) to the port gate, four t
 * **Shared Electric Buggy (*Xe điện*):** Open-air `12-seat` green and yellow electric shuttles wait directly outside the port barrier. They charge a flat `40,000 to 50,000 VND` (`$1.60 to $2.00 USD`) per person and drop passengers directly at any hotel inside Con Son Town. If your group of `6 to 8 travelers` charters the entire buggy privately, the total rate runs `250,000 to 300,000 VND` (`$10.00 to $12.00 USD`).
 * **Metered & Fixed-Rate Taxi:** **Mai Linh Con Dao** and **Con Son Taxi** sedans (`4-seat`) and SUVs (`7-seat`) line up beside the terminal. A direct ride over the coastal pass into Con Son Town costs `220,000 to 300,000 VND` (`$8.80 to $12.00 USD`). If you are staying further north near **Dam Trau Beach** or **Six Senses Con Dao** (`22 to 25 km` from Ben Dam Port), expect taxi fares of `400,000 to 500,000 VND` (`$16.00 to $20.00 USD`).
 * **Port Motorbike Rental:** Several local shops deliver `110cc` to `125cc` automatic scooters (*Honda Vision* or *AirBlade*) directly to Ben Dam Port for `150,000 to 200,000 VND` (`$6.00 to $8.00 USD`) per `24 hours`. Arrange delivery via WhatsApp or Zalo the day before arrival so your helmet and scooter are waiting at the pier gate, saving the `50,000 VND` transfer fee into town. Be aware that the only petrol station on the southern half of the island sits in Con Son Town (`12 km` away), so verify the tank holds at least `1.5 liters` of fuel before riding up the steep coastal pass past **Bai Nhat Beach**.
+
+---
+
+## Frequently Asked Questions (2026)
+
+### How far in advance should I book the Vung Tau to Con Dao catamaran?
+
+Reserve seats `7 to 14 days` ahead for Friday–Sunday departures (`950,000 VND` / `$38.00 USD` Eco; `1,200,000 VND` / `$48.00 USD` VIP) and `3 to 4 weeks` prior to Reunification Day (`April 30 – May 1`) or June–August summer school holidays. Weekday Monday–Thursday sailings (`790,000 to 880,000 VND` / `$31.60 to $35.20 USD`) often retain lower-deck Eco inventory `48 hours` before the `08:00` departure. Verify every digit of your passport number and birth year at checkout so border inspectors at Cau Da Pier (`09 Ha Long Street`) scan your QR boarding pass smoothly without manifest corrections.
+
+### What is the best backup plan if Northeast Monsoon winds cancel the Vung Tau ferry?
+
+Do not sit idle at Front Beach during November–February Force 7 gales, since port lockouts across this `185 km` open-ocean channel frequently run `3 to 7 days`. Pivot fast to air or the Mekong Delta pier. Your first fallback is the shorter `90 km` Soc Trang crossing (`1 hour 45 minutes` to `2 hours 30 minutes`, `310,000 to 450,000 VND` / `$12.40 to $18.00 USD`—see [Tran De to Con Dao Ferry](/plan/tran-de-to-con-dao-ferry/)), which reopens earlier than Vung Tau; your second is booking a `45-minute` Vietnam Airlines or VASCO ATR-72 flight from Tan Son Nhat (`SGN`) to Con Dao (`VCS`, `1,800,000 to 2,300,000 VND` / `$72.00 to $92.00 USD` one-way)—compare total costs in [How to Get to Con Dao: Flight vs Ferry](/plan/how-to-get-to-con-dao-flight-vs-ferry/). If you hold overnight waiting for a morning clearance bulletin, pick walkable Front Beach rooms in [Where to Stay in Vung Tau](/destinations/where-to-stay-in-vung-tau/).
+
+### Can I bring my motorbike or scuba diving gear aboard the Con Dao Express 36?
+
+Yes, provided you register heavy cargo early. Standard tickets include `15 kg` of free personal luggage, while oversized `28-inch` scuba bags, surfboards, or hard trunks carry an excess surcharge of `50,000 to 150,000 VND` (`$2.00 to $6.00 USD`) collected at the Cau Da Pier weigh-in counter. Loading a `110cc` to `150cc` motorbike onto the aft cargo bay costs `300,000 to 500,000 VND` (`$12.00 to $20.00 USD`) each way, requires `48-hour` phone reservation, and mandates `07:00` check-in (`60 minutes` prior) for deck lashing and fuel drainage. For trips shorter than four days, leaving your bike on the mainland and renting a `125cc` scooter delivered to Ben Dam Port for `150,000 to 200,000 VND` (`$6.00 to $8.00 USD`) per `24 hours` saves both cash and `90 minutes` of pier paperwork.
+
+### Can I make a same-day evening international flight out of Ho Chi Minh City after the 13:00 return ferry?
+
+Only for late-night flights departing after `22:30` during calm March–August weather, and never during winter swells. The `13:00` return catamaran from Ben Dam Port reaches Cau Da Pier (`09 Ha Long Street`) between `16:30` and `16:50` after `3 hours 30 minutes` to `3 hours 50 minutes` on the water. Disembarking takes `15 minutes`, followed by a `2 hour 15 minute` to `2 hour 45 minute` limousine (`160,000 to 220,000 VND` / `$6.40 to $8.80 USD`) or private car (`1,100,000 to 1,400,000 VND` / `$44.00 to $56.00 USD`) drive covering `110 km` up Highway `QL51` and the `CT01` Expressway into weekday Saigon rush hour—delivering you to Tan Son Nhat Airport (`SGN`) around `19:30` to `20:00`. One `60-minute` swell slowdown or highway jam ruins earlier check-in cutoffs, so sleep one night in Saigon or take a morning return flight from Con Son Island instead.

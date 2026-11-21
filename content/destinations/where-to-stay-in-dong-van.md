@@ -6,7 +6,7 @@ description: "Old Quarter stone houses and 150,000-350,000 VND dorms vs Ma Pi Le
 travel_cluster: "northern_highlands"
 last_verified: "2026-10-24"
 author: "VietnamGuide Editorial Team"
-reading_time_minutes: 12
+reading_time_minutes: 7
 word_count: 1498
 ---
 

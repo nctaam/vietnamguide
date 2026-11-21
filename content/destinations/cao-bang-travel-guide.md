@@ -6,7 +6,7 @@ description: "Cao Bang travel guide: how to visit Ban Gioc Waterfall, Non Nuoc U
 travel_cluster: "far_north_frontier"
 last_verified: "2026-10-21"
 author: "VietnamGuide Editorial Team"
-reading_time_minutes: 13
+reading_time_minutes: 12
 word_count: 2474
 ---
 

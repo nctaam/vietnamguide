@@ -6,7 +6,7 @@ description: "Da Nang travel guide: My Khe beach resorts, Dragon Bridge weekend 
 travel_cluster: "central_heritage"
 last_verified: "2026-11-02"
 author: "VietnamGuide Editorial Team"
-reading_time_minutes: 16
+reading_time_minutes: 20
 word_count: 3956
 ---
 

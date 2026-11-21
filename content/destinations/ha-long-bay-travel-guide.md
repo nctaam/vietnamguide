@@ -6,7 +6,7 @@ description: "Ha Long Bay travel guide: decide between a 4-hour day cruise or a 
 travel_cluster: "ha_long_bay"
 last_verified: "2026-11-02"
 author: "VietnamGuide Editorial Team"
-reading_time_minutes: 15
+reading_time_minutes: 9
 word_count: 1816
 ---
 

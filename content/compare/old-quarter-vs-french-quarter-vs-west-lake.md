@@ -6,7 +6,7 @@ description: "Compare Old Quarter vs French Quarter vs West Lake by hotel rates,
 travel_cluster: "northern_triangle"
 last_verified: "2026-11-02"
 author: "VietnamGuide Editorial Team"
-reading_time_minutes: 15
+reading_time_minutes: 16
 word_count: 3113
 ---
 

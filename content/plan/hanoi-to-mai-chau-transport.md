@@ -6,7 +6,7 @@ description: "Hanoi to Mai Chau transport: Old Quarter limousine shuttles vs loc
 travel_cluster: "far_north_frontier"
 last_verified: "2026-10-31"
 author: "VietnamGuide Editorial Team"
-reading_time_minutes: 12
+reading_time_minutes: 8
 word_count: 1589
 ---
 

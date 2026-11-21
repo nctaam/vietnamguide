@@ -6,7 +6,7 @@ description: "Cat Ba to Ninh Binh transport: direct tourist bus and ferry combos
 travel_cluster: "ha_long_bay"
 last_verified: "2026-11-01"
 author: "VietnamGuide Editorial Team"
-reading_time_minutes: 12
+reading_time_minutes: 8
 word_count: 1556
 ---
 

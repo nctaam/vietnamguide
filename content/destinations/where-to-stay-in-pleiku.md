@@ -6,7 +6,7 @@ description: "Central Gia Lai hotels along Le Duan (300,000-700,000 VND) vs Bien
 travel_cluster: "central_highlands"
 last_verified: "2026-10-24"
 author: "VietnamGuide Editorial Team"
-reading_time_minutes: 12
+reading_time_minutes: 7
 word_count: 1499
 ---
 

@@ -6,7 +6,7 @@ description: "Where to stay in Hue for 2026: compare Imperial Citadel walking st
 travel_cluster: "central_heritage"
 last_verified: "2026-10-24"
 author: "VietnamGuide Editorial Team"
-reading_time_minutes: 12
+reading_time_minutes: 7
 word_count: 1460
 ---
 

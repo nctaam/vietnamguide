@@ -6,7 +6,7 @@ description: "Where to stay in Pu Luong: Don village valley view retreats vs Ban
 travel_cluster: "northern_highlands"
 last_verified: "2026-10-24"
 author: "VietnamGuide Editorial Team"
-reading_time_minutes: 10
+reading_time_minutes: 8
 word_count: 1555
 ---
 

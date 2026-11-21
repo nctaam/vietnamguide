@@ -6,21 +6,21 @@ description: "Ho Chi Minh City to Can Tho transport guide: limousine vans, expre
 travel_cluster: "mekong_delta"
 last_verified: "2026-10-20"
 author: "VietnamGuide Editorial Team"
-reading_time_minutes: 12
-word_count: 1643
+reading_time_minutes: 11
+word_count: 2208
 ---
 
 # Ho Chi Minh City to Can Tho Transport: Expressway Bus, Limousine & Car
 
 Connecting the commercial hub of southern Vietnam with the provincial capital of the Mekong Delta, the 170 km transit corridor from **Ho Chi Minh City** to **Can Tho** (*Cần Thơ*) is one of the most heavily traveled routes in the country. Historically, this journey required five to six hours of stop-and-go driving along narrow, congested stretches of National Route 1A (QL1A).
 
-The completion of the southern expressway network—spanning the **Ho Chi Minh City–Trung Luong Expressway**, the **Trung Luong–My Thuan Expressway (CT01)**, and the modern **My Thuan 2 Bridge** crossing the Tien River—has cut overland transit times down to **3.0 to 3.5 hours**.
+The completion of the continuous southern expressway spine—linking the **Ho Chi Minh City–Trung Luong Expressway (40 km)**, the **Trung Luong–My Thuan Expressway (51 km)**, the **My Thuan 2 Bridge (6.6 km including approaches)**, and the **My Thuan–Can Tho Expressway (23 km)** along **CT01**—has cut overland transit times down to **3.0 to 3.5 hours**.
 
-Independent travelers can choose between scheduled high-deck sleeper coaches departing around the clock, premium 9-seat VIP limousines offering downtown hotel pickup, and private transfers directly from Tan Son Nhat International Airport (SGN). This logistical guide provides verified ticket tariffs, departure station directions, luggage allowances, and boarding protocols for 2026.
+Independent travelers can choose between scheduled high-deck sleeper coaches departing around the clock, 9-seat VIP limousines offering downtown hotel pickup, and private transfers directly from Tan Son Nhat International Airport (SGN). This logistical guide provides verified 2026 ticket tariffs in VND and USD, expressway segment distances, Mien Tay terminal transfer rates, Cai Rang Floating Market boat budgets, and boarding protocols.
 
 ---
 
-## Route Overview: Expressway Infrastructure and Travel Times
+## Route Overview: Expressway Infrastructure and Segment Distances
 
 ```
 +----------------------------------------------------------------------------------------------------+
@@ -29,15 +29,25 @@ Independent travelers can choose between scheduled high-deck sleeper coaches dep
 | Specification            | Ground-Truth Value                                                      |
 +--------------------------+-------------------------------------------------------------------------+
 | Total Road Distance      | 165 km – 170 km (103 – 106 miles)                                       |
-| Highway Routing          | CT01 (HCMC–Trung Luong–My Thuan Expressway) + My Thuan 2 Cable Bridge   |
+| Highway Routing          | CT01 (HCMC–Trung Luong–My Thuan–Can Tho Expressway) + My Thuan 2 Bridge |
 | Typical Travel Time      | 3.0 to 3.5 hours (VIP Limousine / Private Car) | 3.5 hours (Coach)      |
-| Road Infrastructure      | Fully grade-separated four-lane expressway; 80–100 km/h speed limits    |
+| Road Infrastructure      | Grade-separated four-lane expressway; 80–100 km/h speed limits          |
 | Primary Departure Point  | Western Bus Station (*Bến xe Miền Tây*) or central limousine offices   |
 | Primary Arrival Hub      | Can Tho Central Bus Station (*Bến xe Trung tâm Cần Thơ*, Cai Rang)      |
 +--------------------------+-------------------------------------------------------------------------+
 ```
 
-Vehicles depart Ho Chi Minh City via Binh Chanh district, entering the CT01 expressway. The highway crosses the Vam Co Dong and Vam Co Tay rivers in Long An province, passes the fruit-growing plains of Tien Giang, and crosses the majestic My Thuan 2 Bridge into Vinh Long province before joining National Route 1A across the Can Tho Bridge (*Cầu Cần Thơ*) over the Hau River.
+Vehicles exit Ho Chi Minh City through Binh Chanh district onto the CT01 corridor. Each highway segment maintains posted cruise speeds between 80 km/h and 100 km/h, bypassing older town-center traffic lights in Tan An, Cai Lay, and Vinh Long.
+
+| CT01 Expressway Segment | Distance | Typical Drive Time | Highway Toll (4-Seat / Coach) | Key Landmark & River Crossing |
+| :--- | :--- | :--- | :--- | :--- |
+| **District 1 to Binh Chanh Entry** | 18 km | 35 minutes to 50 minutes | 0 VND ($0.00 USD) | Kinh Duong Vuong Avenue and Western Bus Station junction |
+| **HCMC – Trung Luong Section** | 40 km | 30 minutes to 35 minutes | 0 VND (state-managed toll-free) | Vam Co Dong and Vam Co Tay river crossings in Long An |
+| **Trung Luong – My Thuan Section** | 51 km | 40 minutes to 45 minutes | 101,000 VND ($4.00 USD) / 180,000 VND | Cai Lay orchards and Cai Be midway rest area at Km 80 |
+| **My Thuan 2 Bridge & My Thuan – Can Tho** | 29.6 km | 25 minutes to 30 minutes | 45,000 VND ($1.80 USD) / 90,000 VND | Cable-stayed Tien River span linking Tien Giang to Vinh Long |
+| **Can Tho Bridge to Ninh Kieu Wharf** | 26 km | 25 minutes to 35 minutes | 0 VND ($0.00 USD) | Hau River approach via National Route 1A into Cai Rang |
+
+After descending from the My Thuan–Can Tho expressway interchange onto National Route 1A, vehicles cross the **Can Tho Bridge (*Cầu Cần Thơ*, 2.75 km main cable-stayed span)** over the Hau River and turn directly into Can Tho Central Bus Station.
 
 ---
 
@@ -53,22 +63,21 @@ Vehicles depart Ho Chi Minh City via Binh Chanh district, entering the CT01 expr
 | Coach (34–40 beds)   | Bus Lines          | ($6.60 – $7.80)    |                 | to Can Tho Central | large suitcases|
 +----------------------+--------------------+--------------------+-----------------+--------------------+----------------+
 | 9-Seat VIP Limousine | Vu Linh, Triet Thu,| 260,000–320,000 VND| 3.0 – 3.3 hours | District 1/10 to   | Comfort, hotel |
-| (DCar / Solati)      | Bao Nhi, Duy Thao  | ($10.40 – $12.80)  |                 | Can Tho hotel door | pickup seekers |
+| (DCar / Solati)      | Bao Nhi, Van Lang  | ($10.40 – $12.80)  |                 | Can Tho hotel door | pickup seekers |
 +----------------------+--------------------+--------------------+-----------------+--------------------+----------------+
 | Private Car Transfer | Local fleet / Grab | 1,600,000–2,400,000| 3.0 – 3.2 hours | Exact door-to-door | Families, SGN  |
 | (Sedan or 7-Seat SUV)| Intercity charter  | ($64.00 – $96.00)  |                 | custom timing      | airport arrivals|
 +----------------------+--------------------+--------------------+-----------------+--------------------+----------------+
 ```
 
-### 1. Scheduled Sleeper Coaches (Phuong Trang / FUTA Bus Lines)
+### 1. Scheduled Sleeper Coaches (Phuong Trang / FUTA & Thanh Buoi Corridor Status)
 
-**Phuong Trang** operates the premier intercity coach service connecting Saigon with the Mekong Delta:
-- **Departure Station**: All FUTA coaches depart from **Western Bus Station** (*Bến xe Miền Tây*), located at 395 Kinh Duong Vuong street in Binh Tan district, approximately 10 km southwest of District 1.
-- **Reaching Mien Tay Station**: Travelers based in central District 1 can take a metered taxi or GrabCar (120,000–160,000 VND, 30–45 minutes) or board public city bus No. 39 or No. 02 (7,000 VND).
-- **Service Frequency**: Coaches depart every 30 minutes, 24 hours a day, providing unmatched flexibility.
-- **Ticket Price**: 165,000 to 195,000 VND ($6.60–$7.80 USD) per passenger.
-- **Coach Amenities**: Modern 34-berth or 40-berth sleeper configurations equipped with air conditioning, onboard Wi-Fi, USB charging sockets, complimentary bottled water, and a wet towel.
-- **Can Tho Free Transfer Van**: Upon arrival at Can Tho Central Bus Station (*Bến xe Trung tâm Cần Thơ*), FUTA provides complimentary shuttle minivans (*xe trung chuyển*) that deliver passengers directly to their hotels within central Ninh Kieu district. Show your bus ticket stub to the shuttle dispatcher at the terminal.
+**Phuong Trang (FUTA Bus Lines)** operates the primary intercity coach service connecting Saigon with the Mekong Delta:
+- **Departure Station**: All FUTA coaches depart from **Western Bus Station** (*Bến xe Miền Tây*), located at 395 Kinh Duong Vuong Street in Binh Tan district, 10 km southwest of Ben Thanh Market in District 1 and 13 km southwest of Tan Son Nhat Airport (SGN).
+- **Reaching Mien Tay Station**: From central District 1, a GrabCar or metered Mai Linh taxi costs 120,000 VND to 160,000 VND ($4.80 to $6.40 USD) and takes 30 minutes to 45 minutes depending on rush hour. From SGN Airport Terminal 1 or Terminal 2, a 4-seat GrabCar runs 160,000 VND to 210,000 VND ($6.40 to $8.40 USD) over 35 minutes to 50 minutes, while public Bus No. 39 or No. 02 from Ben Thanh costs 7,000 VND ($0.28 USD) and takes 55 minutes.
+- **Service Frequency & 2026 Fares**: Coaches depart every 30 minutes, 24 hours a day. Standard 34-berth and 40-berth tickets cost **165,000 VND to 195,000 VND ($6.60 to $7.80 USD)** one-way, with weekend or holiday supplements rarely exceeding 20,000 VND ($0.80 USD).
+- **Note on Thanh Buoi Bus Lines**: Older guidebooks still cite **Thanh Buoi (*Thành Bưởi*)**, which historically competed head-to-head with Phuong Trang on the HCMC–Can Tho line at 170,000 VND ($6.80 USD). Following the regulatory suspension of Thanh Buoi's Ho Chi Minh City passenger license, FUTA Bus Lines plus licensed regional fleets (**Van Lang**, **Vu Linh**, and **Triet Thu**) now handle the corridor's daily schedule; avoid unofficial curbside brokers claiming to sell Thanh Buoi sleeper tickets outside District 5.
+- **Can Tho Free Transfer Van**: Upon arrival at Can Tho Central Bus Station (*Bến xe Trung tâm Cần Thơ*), FUTA provides complimentary shuttle minivans (*xe trung chuyển*) that deliver passengers directly to hotels within 8 km across central Ninh Kieu district. Show your bus ticket stub to the shuttle dispatcher at the terminal gate.
 
 ### 2. 9-Seat VIP Limousines (The Recommended Choice)
 
@@ -119,28 +128,38 @@ Virtually all coaches and limousines pause midway along the highway in Tien Gian
 3. Sturdy luggage handlers pack heavy backpacks and hard-shell suitcases into the undercarriage compartments, distributing matching baggage claim stickers that must be retained until arrival.
 
 ### Phase 3: The Expressway Journey
-1. The vehicle navigates the urban fringe along Kinh Duong Vuong street before accelerating onto the CT01 expressway.
-2. Observe the agricultural transition as urban concrete towers give way to flat green rice fields and dragon fruit plantations in Long An and Tien Giang.
-3. The coach halts for the scheduled 20-minute rest break in Cai Be before continuing across the My Thuan 2 Bridge.
+1. Leaving Western Bus Station, the coach clears Binh Chanh traffic along Kinh Duong Vuong before accelerating onto the four-lane CT01 highway.
+2. Concrete suburbs quickly yield to irrigated paddies, canal sluice gates, and sprawling dragon fruit plots across Long An and Tien Giang provinces.
+3. Midway through the run, drivers pause for 20 minutes at Cai Be rest stop. Refreshed passengers then reboard for the smooth crossing over the My Thuan 2 cable-stayed bridge.
 
 ### Phase 4: Arrival in Can Tho and Local Hotel Transfer
-1. Coaches arrive at **Can Tho Central Bus Station** in Cai Rang district. Retrieve your checked luggage from the baggage bay by presenting your claim ticket to the driver.
-2. Proceed to the FUTA transfer desk (*Quầy trung chuyển*) inside the station lobby. Show your ticket and inform the coordinator of your hotel name in Ninh Kieu district.
-3. Board the designated 16-seat shuttle minivan, which will deliver you directly to your hotel lobby at no extra charge within 15 to 25 minutes.
+1. Coaches pull into **Can Tho Central Bus Station** (*Bến xe Trung tâm Cần Thơ*) in Cai Rang district, 5.5 km south of Ninh Kieu Wharf. Present your baggage claim stub beside the luggage hold to collect your suitcases.
+2. Walk inside the main concourse to the FUTA transfer counter (*Quầy trung chuyển*) and hand the coordinator your ticket stub along with your hotel address in [Can Tho](/destinations/where-to-stay-in-can-tho/).
+3. Complimentary 16-seat shuttle vans depart every 10 minutes to 15 minutes and reach downtown Ninh Kieu hotels in 15 minutes to 25 minutes. Prefer an immediate ride? Metered Mai Linh, Vinasun, or Xanh SM taxis charge 75,000 VND to 105,000 VND ($3.00 to $4.20 USD) for the 5.5 km transfer to the waterfront.
+
+---
+
+## Cai Rang Floating Market Boat Transfers & Ninh Kieu Logistics
+
+Most travelers head to Can Tho specifically for dawn on the Hau River. Plan your local boat budget before checking in along Hai Ba Trung Street:
+
+- **Ninh Kieu Wharf to Cai Rang Distance & Timing**: Cai Rang Floating Market sits **6 km upstream** from Ninh Kieu Pier (35 minutes to 40 minutes by motorized wooden sampan, or 15 minutes by road to An Binh Market Pier for 65,000 VND / $2.60 USD by GrabCar). Depart Ninh Kieu Wharf by **05:00 AM** to reach trading barges before wholesale activity peaks at 06:30 AM.
+- **2026 Private Wooden Sampan Fares**: Negotiated directly at Ninh Kieu Boat Pier (not through touts along the river promenade), a private 2-to-4-passenger wooden boat costs **350,000 VND to 450,000 VND ($14.00 to $18.00 USD)** for a 2.5-hour Cai Rang loop, or **550,000 VND to 700,000 VND ($22.00 to $28.00 USD)** for a 4.5-hour circuit adding a rice-noodle workshop and small-canal orchard stop.
+- **Shared Join-In Boat Seats**: Solo travelers can book a seat on a shared morning wooden launch at Ninh Kieu Pier for **120,000 VND to 180,000 VND ($4.80 to $7.20 USD)** per person, plus 40,000 VND ($1.60 USD) for a steaming bowl of *hủ tiếu* handed across the gunwale from a floating kitchen skiff. For full river timing and canal photography tactics, see our [Mekong Delta Floating Markets Guide](/destinations/mekong-delta-floating-markets-guide/).
 
 ---
 
 ## Onward Connections from Can Tho
 
-As the primary logistics crossroads of the lower delta, Can Tho offers straightforward connections deeper into southern Vietnam:
-- **Chau Doc and the Cambodian Border**: Regular buses depart Can Tho Central Bus Station heading northwest along National Route 91 to Chau Doc (115 km, 3.0 hours, 120,000–150,000 VND). From Chau Doc, daily express speedboats travel up the Mekong River to Phnom Penh (5 hours, $35.00 USD).
-- **Rach Gia and Ha Tien (Phu Quoc Ferry Hubs)**: Express coaches run west along National Route 80 to Rach Gia (110 km, 2.5 hours, 110,000–140,000 VND) and Ha Tien (140 km, 3.5 hours, 140,000–170,000 VND) for onward passenger catamarans to Phu Quoc Island.
-- **Ca Mau (The Southern Tip)**: Sleeper buses run south along National Route 1A to Ca Mau city (180 km, 4.0 to 4.5 hours, 150,000–190,000 VND).
-- **Can Tho International Airport (VCA)**: Located 9 km northwest of downtown along Vo Van Kiet avenue, Can Tho Airport offers domestic flights to Hanoi, Da Nang, and Phu Quoc, as well as seasonal international routes.
+As the primary logistics crossroads of the lower delta, Can Tho connects overland travelers directly to the Cambodian river border and Gulf of Thailand ferries:
+- **Chau Doc and the Cambodian Border**: Regular coaches depart Can Tho Central Bus Station heading northwest along National Route 91 to Chau Doc (115 km, 3.0 hours, 120,000 VND to 150,000 VND / $4.80 to $6.00 USD); see [Can Tho to Chau Doc Transport](/plan/can-tho-to-chau-doc-transport/). From Chau Doc, daily express speedboats run 135 km up the Mekong River to Phnom Penh in 5.0 hours ($35.00 to $65.00 USD) as detailed in our [Vietnam to Cambodia Boat Guide](/plan/vietnam-to-cambodia-boat-guide/).
+- **Rach Gia and Ha Tien (Phu Quoc Ferry Hubs)**: Express coaches run west along National Route 80 to Rach Gia (110 km, 2.5 hours, 140,000 VND to 170,000 VND / $5.60 to $6.80 USD) and Ha Tien (190 km, 4.5 hours, 170,000 VND to 210,000 VND / $6.80 to $8.40 USD) for onward catamarans on the [Rach Gia to Phu Quoc Ferry](/plan/rach-gia-to-phu-quoc-ferry/) route.
+- **Ca Mau (The Southern Tip)**: Sleeper buses run south along National Route 1A to Ca Mau city (180 km, 4.0 to 4.5 hours, 150,000 VND to 190,000 VND / $6.00 to $7.60 USD).
+- **Can Tho International Airport (VCA)**: Located 9 km northwest of downtown along Vo Van Kiet Avenue (18 minutes, 120,000 VND to 150,000 VND / $4.80 to $6.00 USD by taxi), Can Tho Airport operates direct flights to Hanoi (2 hours 10 minutes), Da Nang (1 hour 35 minutes), and Con Dao (45 minutes).
 
 ---
 
-## Frequently Asked Questions
+## Frequently Asked Questions (2026)
 
 ### Can I take a train from Ho Chi Minh City to Can Tho?
 No. There is currently no operational passenger railway line connecting Ho Chi Minh City with Can Tho or any other city in the Mekong Delta. All passenger travel across this corridor relies on road transport (buses, limousines, and cars) or domestic flights. A proposed high-speed passenger railway linking Saigon and Can Tho remains in the long-term planning stages.

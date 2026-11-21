@@ -7,7 +7,7 @@ travel_cluster: "national_circuit"
 last_verified: "2026-10-24"
 author: "VietnamGuide Editorial Team"
 reading_time_minutes: 9
-word_count: 1583
+word_count: 1854
 ---
 
 # Vietnam Travel Guide: First Trip Planning Order
@@ -64,8 +64,8 @@ Ask "When is the best month to visit Vietnam?" and you will get three different 
 
 Check your passport bio-page first. Vietnam Immigration requires **at least 6 months of remaining passport validity** beyond your arrival date and **2 blank visa pages** for physical entry and exit stamps.
 
-- **90-Day Official e-Visa (`$25 / $50 USD`)**: Citizens of all nationalities—including the United States, Canada, Australia, New Zealand, India, and all European Union states—can apply online for a **90-day e-Visa**. It costs **$25 USD** for single entry or **$50 USD** for multiple entry. Apply **exclusively through the official government portal (`evisa.gov.vn` or `thithucdientu.gov.vn`)** at least 10 to 15 business days prior to departure; processing takes 3 to 5 working days, and commercial copycat sites charge `$80 to $160 USD` for the exact same document.
-- **45-Day Visa-Free Exemption (`13 Countries`)**: Passport holders from **13 countries**—the **United Kingdom, Germany, France, Italy, Spain, Denmark, Sweden, Norway, Finland, Russia, Japan, South Korea, and Belarus**—receive an automatic **45-day visa-free stamp** upon arrival at any airport or land border at zero cost. ASEAN citizens receive 14 to 30 days visa-free.
+- **90-Day Official e-Visa (`$25.00 / $50.00 USD`)**: Citizens of all nationalities—including the United States, Canada, Australia, New Zealand, Ireland, and India—can apply online for a **90-day e-Visa** under Resolution 127/NQ-CP. Statutory fees are **$25.00 USD (`635,000 VND`)** for single entry or **$50.00 USD (`1,270,000 VND`)** for multiple entry. Submit directly via **`evisa.gov.vn`** or **`thithucdientu.gov.vn`** at least 10 to 15 working days ahead (processing takes **72 to 120 hours**), skipping copycat brokers charging `$80.00 to $160.00 USD`; see our step-by-step [Vietnam E-Visa Guide](/plan/vietnam-evisa/).
+- **45-Day Visa-Free Exemption (`Resolution 44/NQ-CP (2025–2028)` & `Resolution 229/NQ-CP`)**: Passport holders from **13 core countries** under **Resolution 44/NQ-CP (2025–2028)**—the **United Kingdom, Germany, France, Italy, Spain, Denmark, Sweden, Norway, Finland, Russia, Japan, South Korea, and Belarus**—plus **12 European nations** under **Resolution 229/NQ-CP (August 2025–August 2028)** (**Switzerland, Netherlands, Belgium, Poland, Czech Republic, Hungary, Luxembourg, Romania, Slovakia, Slovenia, Bulgaria, and Croatia**) receive an automatic **45-day visa-free stamp** at `$0.00 USD` across all international gates. ASEAN citizens receive 14 to 30 days visa-free.
 - **Phu Quoc 30-Day Island Exemption**: Any foreign traveler flying **directly into Phu Quoc International Airport (`PQC`)** from an international origin (such as Singapore, Bangkok, Kuala Lumpur, Seoul, or Taipei) and remaining solely on Phu Quoc Island qualifies for a **30-day visa-free stay**. Visiting Hanoi, Da Nang, or Ho Chi Minh City afterward requires a standard e-Visa.
 - **Mandatory Customs Bans (`Resolution 173/2024/QH15`)**: Under National Assembly **Resolution 173/2024/QH15** (effective since January 1, 2025), Vietnam enforces a **total nationwide ban on e-cigarettes, vapes, heated tobacco devices (`IQOS`), and e-liquids**. Airport X-ray scanners confiscate all vaping hardware on arrival. Likewise, **camera drones (`flycams`) require an individual military flight permit** from the Ministry of National Defence; unpermitted drones are impounded at customs until your departure flight.
 
@@ -94,12 +94,37 @@ For medium-distance overnight links (`Hanoi/Ninh Binh to Dong Hoi or Hue`) and s
 Before boarding your international flight, complete three digital tasks at home:
 
 1. **Install `Grab` and `Xanh SM` Before Departure**: Register your home mobile number and link your Visa or Mastercard while you can still receive bank **SMS OTP verification codes**. Using app-hailed cars at Noi Bai (`HAN`) and Tan Son Nhat (`SGN`) eliminates meter tampering and clone taxi scams.
-2. **Connectivity (`Viettel` eSIM or SIM)**: Install a travel eSIM before takeoff or buy an official **Viettel 4G/5G tourist SIM (`150,000 to 250,000 VND` for 5GB–8GB/day)** inside the arrival hall so you have instant data for ride-hailing and Google Translate.
-3. **Zero-Fee ATMs & Clean Polymer Cash**: Carry **1,500,000 to 3,000,000 VND** in small notes for street stalls, and withdraw cash at **VPBank, TPBank, or ACB ATMs**, which charge **0 VND in local operator fees** (unlike international banks charging `55,000 to 66,000 VND` per withdrawal). Always inspect **20,000 VND** (deep blue) and **500,000 VND** (cyan-blue) notes for two full seconds before paying.
+2. **Connectivity (`Viettel` eSIM or SIM)**: Install a travel eSIM before takeoff or buy an official **Viettel 4G/5G tourist SIM (`150,000 VND to 250,000 VND` / `$6.00–$10.00 USD` for 5GB–8GB/day)** inside a city branch or arrival hall; compare options in our [Vietnam SIM Card Guide](/plan/vietnam-sim-card-airport-vs-city/).
+3. **Zero-Fee ATMs & Clean Polymer Cash**: Carry **1,500,000 VND to 3,000,000 VND ($60.00–$118.00 USD)** in small notes for street stalls, and withdraw cash at **VPBank, TPBank, or ACB ATMs**, which charge **0 VND in local operator fees** (unlike international banks charging `55,000 VND to 66,000 VND` per withdrawal). Always inspect **20,000 VND** (deep blue) and **500,000 VND** (cyan-blue) notes for two full seconds before paying.
 
 ---
 
-## Frequently Asked Questions
+## 2026 Core Corridor Transit, Urban Rail & Statutory Site Fee Ledger
+
+Use this ground-truth ledger to verify airport transfers, intercity legs, urban rail fares, and fixed statutory admission fees across the Hanoi (`HAN`), Da Nang (`DAD`), and Ho Chi Minh City (`SGN`) spine. For full rail-versus-air tradeoffs, see [Transport Within Vietnam](/plan/transport-within-vietnam/) and [Best Time to Visit Vietnam](/plan/best-time-to-visit-vietnam/).
+
+| Corridor / Urban Link | Distance | Typical Duration | Verified 2026 Fare (VND / USD) | Primary Operator / Notes |
+| :--- | :--- | :--- | :--- | :--- |
+| **Noi Bai (`HAN`) → Hanoi Old Quarter** | 28 km | 40 to 50 minutes | **45,000 VND** ($1.80) bus / **280,000–350,000 VND** ($11.20–$14.00) car | Express Bus 86 or GrabCar / Xanh SM |
+| **Da Nang (`DAD`) → Hoi An Ancient Town** | 30 km | 45 minutes | **150,000 VND** ($6.00) shuttle / **350,000 VND** ($14.00) private car | Direct hotel transfer via coastal Truong Sa Road |
+| **Tan Son Nhat (`SGN`) → District 1** | 8 km | 25 to 40 minutes | **15,000–20,000 VND** ($0.80) Bus 109 / **120,000–160,000 VND** ($4.80–$6.40) car | GrabCar pickup at Airport Garage Level 3–5 |
+| **HCMC Metro Line 1 (Ben Thanh – Suoi Tien)** | 19.7 km | 29 minutes (14 stations) | **7,000–20,000 VND** ($0.28–$0.80) ride / **40,000 VND** ($1.60) day pass | Links District 1 to Thao Dien and New Eastern Bus Station |
+| **Hanoi (`HAN`) → Da Nang (`DAD`) Flight** | 760 km | 1 hour 20 minutes | **950,000–2,100,000 VND** ($38.00–$84.00 USD) one-way | Vietnam Airlines (23 kg bag) or Vietjet Air (7 kg carry-on) |
+| **Da Nang (`DAD`) → Saigon (`SGN`) Flight** | 960 km | 1 hour 25 minutes | **1,050,000–2,200,000 VND** ($42.00–$88.00 USD) one-way | 30+ daily departures; check-in closes 40 minutes prior |
+| **Hue ↔ Da Nang Heritage Train (`HD1–HD4`)** | 103 km | 3 hours | **180,000–231,000 VND** ($7.10–$9.10 USD) one-way | Climbs 496 meters Hai Van Pass; live folk music carriage |
+| **Hanoi → Ninh Binh (CT01 / SE Train)** | 95 km | 1.5 to 2.2 hours | **110,000–160,000 VND** ($4.40–$6.40) rail / **250,000 VND** ($9.80) van | Hourly DCar vans or morning SE7 train from Ga Ha Noi |
+| **Saigon → Can Tho (CT01 Expressway)** | 170 km | 3.0 to 3.5 hours | **165,000–195,000 VND** ($6.60–$7.80) FUTA / **260,000–320,000 VND** ($10.40–$12.80) VIP | Runs 24/7 from Western Bus Station (*Bến xe Miền Tây*) |
+
+### Verified 2026 Statutory Site & National Park Tariffs
+
+Major heritage complexes and national parks publish fixed state ticket prices in Vietnamese Dong. Never pay third-party touts above these gate rates:
+- **Northern Landmarks**: **Temple of Literature (Hanoi)** costs **70,000 VND ($2.75 USD)**; **Hoa Lo Prison** runs **50,000 VND ($2.00 USD)**; **Trang An Boat Complex (Ninh Binh)** charges **250,000 VND ($9.80 USD)** for a **2.5 to 3.0 hours** rowed grotto loop; **Ha Long Bay overnight Route 2 permit** costs **590,000 VND ($23.20 USD)** (usually bundled into cruise bills).
+- **Central Landmarks**: **Paradise Cave (Phong Nha)** holds a 2026 statutory fee of **270,000 VND ($10.60 USD)** plus **25,000 VND ($1.00 USD)** electric buggy; **Hue Imperial Citadel** costs **200,000 VND ($7.85 USD)** (or **420,000 VND / $16.50 USD** for the Citadel + Minh Mang + Khai Dinh combo); **Hoi An Ancient Town** heritage pass costs **120,000 VND ($4.70 USD)**.
+- **Southern Landmarks**: **War Remnants Museum (HCMC)** costs **40,000 VND ($1.60 USD)**; **Independence Palace** charges **65,000 VND ($2.55 USD)**; **Cu Chi Tunnels (Ben Dinh, 70 km northwest of District 1, 90 minutes)** charges **125,000 VND ($4.90 USD)** gate entry.
+
+---
+
+## Frequently Asked Questions (2026)
 
 ### Is it better to travel Vietnam from North to South or South to North?
 Both directions work equally well on an open-jaw ticket, so let your travel month decide. From **October to December**, start in **Northern Vietnam (`Hanoi`, `Ninh Binh`, `Ha Long Bay`)** during crisp autumn skies and finish in the South (`Ho Chi Minh City`, `Phu Quoc`) as the southern dry season peaks. From **January to April**, either direction enjoys dry weather across most of the country.

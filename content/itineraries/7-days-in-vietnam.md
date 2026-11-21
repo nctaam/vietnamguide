@@ -6,7 +6,7 @@ description: "Plan 7 days in Vietnam with focused one-week routes covering the n
 travel_cluster: "national_circuit"
 last_verified: "2026-10-22"
 author: "VietnamGuide Editorial Team"
-reading_time_minutes: 12
+reading_time_minutes: 11
 word_count: 2186
 ---
 

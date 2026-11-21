@@ -6,8 +6,8 @@ description: "Where to stay in Ca Mau: central city hotels along Quan Lo canal v
 travel_cluster: "mekong_delta"
 last_verified: "2026-10-25"
 author: "VietnamGuide Editorial Team"
-reading_time_minutes: 12
-word_count: 1546
+reading_time_minutes: 9
+word_count: 1732
 ---
 
 # Where to Stay in Ca Mau (2026): City Hotels to Dat Mui Eco-Lodges
@@ -22,10 +22,11 @@ Choosing where to stay in Ca Mau Province requires solving a 110 km geographic d
 
 | Base Zone | Geographic Position | Recommended Property Types | 2026 Nightly Rate Range | Key Operational Trade-Off |
 | :--- | :--- | :--- | :--- | :--- |
-| **Ward 5 & Tran Hung Dao Strip** | Downtown Ca Mau City commercial grid | 3-star business hotels, private guestrooms | 350,000–900,000 VND | Street traffic noise near Phung Hiep canal; 110 km transit distance to Cape milestone GPS 0001 |
-| **Ward 1 & Hung Vuong Administrative Zone** | Central administrative district near Ca Mau Park | 4-star state hotels, modern corporate towers | 800,000–1,850,000 VND | Higher room tariffs; dining options shut down after 21:30 |
-| **Dat Mui Mangrove Outpost** | Coastal forest zone at Vietnam's southern tip | Timber stilt homestays, community forestry lodges | 250,000–700,000 VND | Brackish tap water; strictly cash economy; mosquito net usage mandatory |
-| **U Minh Ha Peat Swamp Perimeter** | 42 km northwest of Ca Mau City center | Forest reserve bungalows, apiary farmstays | 300,000–800,000 VND | Requires private motorbike or 450,000 VND taxi transfer; isolated dining |
+| **Ward 5 & Tran Hung Dao Strip** | Downtown Ca Mau City commercial grid | 3-star business hotels, private guestrooms | 350,000 VND ($14.00) to 900,000 VND ($36.00) | Street traffic noise near Phung Hiep canal; 110 km transit distance to Cape milestone GPS 0001 |
+| **Ward 1 & Hung Vuong Administrative Zone** | Central administrative district near Ca Mau Park | 4-star state hotels, modern corporate towers | 800,000 VND ($32.00) to 1,850,000 VND ($74.00) | Higher room tariffs; dining options shut down after 21:30 |
+| **Nam Can Transit Town (Halfway Hub)** | 58 km south of Ca Mau City along QL1A | Riverfront commercial mini-hotels, guesthouses | 320,000 VND ($12.80) to 650,000 VND ($26.00) | Practical ATM stop and bridge staging point 52 km north of Dat Mui |
+| **Dat Mui Mangrove Outpost** | Coastal forest zone at Vietnam's southern tip | Timber stilt homestays, community forestry lodges | 250,000 VND ($10.00) to 750,000 VND ($30.00) | Brackish tap water; strictly cash economy; mosquito net usage mandatory |
+| **U Minh Ha Peat Swamp Perimeter** | 42 km northwest of Ca Mau City center | Forest reserve bungalows, apiary farmstays | 300,000 VND ($12.00) to 800,000 VND ($32.00) | Requires private motorbike or 450,000 VND ($18.00) taxi transfer; isolated dining |
 
 ---
 
@@ -99,13 +100,27 @@ U Minh Ha National Park lies 42 km northwest of Ca Mau City, covering 8,286 hect
 - **Song Tram Forest Farmstay (Khanh An Commune):** Rustic timber bungalows rent for 350,000 VND to 600,000 VND per night. Guests can observe traditional honey collection (Gác kèo ong) during morning patrols.
 - **Vo Doi Ranger Outpost Area Guesthouses:** Small family-run rooms along Provincial Road DT968 cost 250,000 VND to 400,000 VND per night. Facilities are basic, featuring hard mattresses, wall-mounted fans, and cold-water bucket showers.
 
-Staying near U Minh Ha requires independent transport. Renting a 110cc semi-automatic scooter from downtown Ca Mau City costs 150,000 VND per day, plus 70,000 VND for a full tank of Ron 95 gasoline.
+Staying near U Minh Ha requires independent transport. Renting a 110cc semi-automatic scooter from downtown Ca Mau City costs 150,000 VND ($6.00) per day, plus 70,000 VND ($2.80) for a full tank of RON 95 gasoline. Park admission at the U Minh Ha ranger station costs 20,000 VND ($0.80), climbing the 24-meter steel fire-watch tower is included, and a 45-minute hand-paddled wooden canoe through the amber peat canals runs 180,000 VND ($7.20) per boat.
+
+### Nam Can Town: The Halfway River Crossing Alternative
+Drivers riding scooters or catching public Bus 01 southward often pause overnight in **Nam Can**, positioned exactly 58 km (75 minutes) south of Ca Mau City and 52 km (65 minutes) north of Cape Ca Mau. Commercial mini-hotels along National Route QL1A near Nam Can Market charge 320,000 VND to 650,000 VND ($12.80 to $26.00) for clean air-conditioned rooms with fresh municipal tap water, reliable Wi-Fi, and walking access to Agribank and VietinBank ATMs before crossing the Cua Lon River into the cash-only mangrove belt.
 
 ---
 
 ## Transit, Logistics & Highway Connections
 
-Reaching Ca Mau and transiting to Cape Ca Mau involves clear logistical links. Ca Mau Airport (CAH) on Ly Thuong Kiet handles turboprop ATR-72 flights from Ho Chi Minh City on select weekdays via Vietnam Airlines, with one-way airfares averaging 1,150,000 VND to 1,850,000 VND.
+Reaching Ca Mau and transiting to Cape Ca Mau involves clear logistical links. Ca Mau Airport (CAH) on Ly Thuong Kiet handles turboprop ATR-72 flights from Ho Chi Minh City on select weekdays via Vietnam Airlines, with one-way airfares averaging 1,150,000 VND ($46.00) to 1,850,000 VND ($74.00) and a 2 km (6-minute, 35,000 VND / $1.40) taxi run into Ward 1 hotels.
+
+| Southern Delta Corridor & Park Tariff (2026) | Distance | Transit Duration | 2026 Verified Tariff (VND / USD) | Operational Notes |
+| :--- | :--- | :--- | :--- | :--- |
+| **Ho Chi Minh City (BX Mien Tay) → Ca Mau Sleeper** | 305 km via QL1A | 7.5 hours | 230,000 VND ($9.20) per berth | Futa Bus Lines hourly departures; free station shuttle |
+| **Can Tho (BX Trung Tam) → Ca Mau Coach** | 155 km via QL1A | 3.5 hours | 145,000 VND ($5.80) per seat | Runs every 45 mins via Soc Trang and Bac Lieu |
+| **Ca Mau Ly Bon Pier → Dat Mui Speedboat** | 95 km riverways | 2.0 hours (120 mins) | 140,000 VND ($5.60) one-way | Scheduled launches at 06:30, 08:30, 12:30 |
+| **Ca Mau Bus Station → Nam Can (Public Bus 01)** | 58 km south | 75 mins | 45,000 VND ($1.80) per rider | Green provincial bus; connect by taxi (350,000 VND / $14.00) for final 52 km |
+| **Ca Mau City → U Minh Ha National Park** | 42 km northwest | 60 mins | 450,000 VND ($18.00) taxi / 20,000 VND ($0.80) park gate | 45-min peat canal canoe 180,000 VND ($7.20) per boat |
+| **Dat Mui Pier → Mui Ca Mau GPS 0001 Park** | 5.0 km coastal spur | 10 mins motorbike taxi | 30,000 VND ($1.20) xe om + 30,000 VND ($1.20) entry | Optional park electric tram 20,000 VND ($0.80) round-trip |
+
+Travelers routing through the deep Mekong Delta can plan feeder schedules with our [Can Tho to Ca Mau Transport Guide](/plan/can-tho-to-ca-mau-transport/), [Where to Stay in Can Tho](/destinations/where-to-stay-in-can-tho/), and [Mekong Delta Travel Guide](/destinations/mekong-delta-travel-guide/).
 
 ```
 [Ho Chi Minh City Airport (SGN)] ───ATR-72 Flight (55 mins / 1,450,000 VND)───> [Ca Mau Airport (CAH)]

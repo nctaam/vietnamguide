@@ -6,7 +6,7 @@ description: "Authoritative Ha Giang Loop planning guide: plan by safety, scener
 travel_cluster: "northern_highlands"
 last_verified: "2026-11-02"
 author: "VietnamGuide Editorial Team"
-reading_time_minutes: 15
+reading_time_minutes: 9
 word_count: 1831
 ---
 

@@ -6,7 +6,7 @@ description: "Discover the best beaches in Vietnam by month: compare Phu Quoc dr
 travel_cluster: "coastal_islands"
 last_verified: "2026-10-22"
 author: "VietnamGuide Editorial Team"
-reading_time_minutes: 12
+reading_time_minutes: 18
 word_count: 3590
 ---
 

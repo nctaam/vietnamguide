@@ -264,7 +264,7 @@ class TestInteractiveShortcodes(unittest.TestCase):
         self.assertIn("'wikipedia'", seo_content)
         self.assertIn('https://www.wikidata.org/wiki/Q1858', seo_content)  # Hanoi
         self.assertIn('https://www.wikidata.org/wiki/Q190128', seo_content)  # Ha Long
-        self.assertIn('https://www.wikidata.org/wiki/Q36352', seo_content)  # Ninh Binh
+        self.assertIn('https://www.wikidata.org/wiki/Q36900', seo_content)  # Ninh Binh
         self.assertIn('https://www.wikidata.org/wiki/Q25282', seo_content)  # Da Nang
         self.assertIn('https://www.wikidata.org/wiki/Q1854', seo_content)  # HCMC
         self.assertIn('https://en.wikipedia.org/wiki/Hanoi', seo_content)
@@ -1070,14 +1070,14 @@ class TestInteractiveShortcodes(unittest.TestCase):
         vc_code = vc_bytes.decode('utf-8')
         self.assertIn('minExpiry.setMonth(minExpiry.getMonth() + 6)', vc_code)
 
-        # 6. guide-seo.php: Wikidata entity IDs and 2026 tariffs
+        # 6. guide-seo.php: Wikidata entity IDs and 2026 tariffs (live-API-verified Q-IDs)
         seo_path = os.path.join(THEME_DIR, 'inc', 'guide-seo.php')
         with open(seo_path, 'r', encoding='utf-8') as f:
             seo_code = f.read()
-        self.assertIn('https://www.wikidata.org/wiki/Q797559', seo_code)
-        self.assertIn('https://www.wikidata.org/wiki/Q10748020', seo_code)
-        self.assertIn('https://www.wikidata.org/wiki/Q1062129', seo_code)
-        self.assertIn('https://www.wikidata.org/wiki/Q1931159', seo_code)
+        self.assertIn('https://www.wikidata.org/wiki/Q1968747', seo_code)  # Ba Be National Park
+        self.assertIn('https://www.wikidata.org/wiki/Q10748377', seo_code)  # Bich Dong Pagoda
+        self.assertIn('https://www.wikidata.org/wiki/Q703871', seo_code)  # War Remnants Museum
+        self.assertIn('https://www.wikidata.org/wiki/Q3232879', seo_code)  # Ben Thanh Market
         self.assertIn('53+ countries and 42 border checkpoints', seo_code)
 
         # 7. homepage.css: :root defines --vg-muted, --vg-guide-muted, --vg-guide-forest
@@ -1108,21 +1108,22 @@ class TestInteractiveShortcodes(unittest.TestCase):
         self.assertIn("'costs/vietnam-travel-cost'    => '/plan/vietnam-travel-cost/'", routing_code)
         self.assertIn("'costs/ha-giang-loop-cost-budget' => '/destinations/ha-giang-loop-planning-guide/'", routing_code)
 
-        # 3. Wikidata Q-IDs in vietnamguide-core.php and guide-seo.php (Cu Chi Q185625, Dong Hoi Q36173)
+        # 3. Wikidata Q-IDs in vietnamguide-core.php and guide-seo.php (live-API-verified: Cu Chi Q192721, Dong Hoi Q1877)
         mu_path = os.path.join(REPO_ROOT, 'wordpress', 'wp-content', 'mu-plugins', 'vietnamguide-core.php')
         with open(mu_path, 'r', encoding='utf-8') as f:
             mu_code = f.read()
-        self.assertIn('https://www.wikidata.org/wiki/Q185625', mu_code)
-        self.assertIn('https://www.wikidata.org/wiki/Q36173', mu_code)
-        self.assertNotIn('Q192935', mu_code)
-        self.assertNotIn('Q1877', mu_code)
+        self.assertIn('https://www.wikidata.org/wiki/Q192721', mu_code)
+        self.assertIn('https://www.wikidata.org/wiki/Q1877', mu_code)
+        self.assertNotIn('Q185625', mu_code)
+        self.assertNotIn('Q36173', mu_code)
 
         seo_path = os.path.join(THEME_DIR, 'inc', 'guide-seo.php')
         with open(seo_path, 'r', encoding='utf-8') as f:
             seo_code = f.read()
-        self.assertIn('https://www.wikidata.org/wiki/Q185625', seo_code)
-        self.assertIn('https://www.wikidata.org/wiki/Q36173', seo_code)
-        self.assertNotIn('Q192935', seo_code)
+        self.assertIn('https://www.wikidata.org/wiki/Q192721', seo_code)
+        self.assertIn('https://www.wikidata.org/wiki/Q1877', seo_code)
+        self.assertNotIn('Q185625', seo_code)
+        self.assertNotIn('Q36173', seo_code)
 
         # 4. JSON_HEX_TAG, wp_kses without rarr, and WAI-ARIA aria-controls
         self.assertIn('JSON_HEX_TAG', self.contents['visa_checker'])

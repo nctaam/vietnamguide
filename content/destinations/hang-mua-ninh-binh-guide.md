@@ -6,7 +6,7 @@ description: "Complete Hang Mua Ninh Binh guide: how to climb 500 stone steps to
 travel_cluster: "ninh_binh"
 last_verified: "2026-10-20"
 author: "VietnamGuide Editorial Team"
-reading_time_minutes: 11
+reading_time_minutes: 12
 word_count: 2499
 ---
 

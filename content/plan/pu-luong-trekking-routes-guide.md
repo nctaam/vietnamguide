@@ -6,7 +6,7 @@ description: "Pu Luong trekking guide: trail maps, day hikes from Ban Don to Kho
 travel_cluster: "northern_highlands"
 last_verified: "2026-10-24"
 author: "VietnamGuide Editorial Team"
-reading_time_minutes: 10
+reading_time_minutes: 7
 word_count: 1449
 ---
 

@@ -631,7 +631,7 @@ add_action('wp_head', static function (): void {
 add_action('wp_footer', static function (): void {
     $swUrl = esc_url(home_url('/sw.js'));
     ?>
-    <aside id="vg-pwa-banner" class="vg-pwa-banner" role="region" aria-label="<?php esc_attr_e('Install Vietnam Travel Field Guide', 'vietnamguide-premium'); ?>">
+    <aside id="vg-pwa-banner" class="vg-pwa-banner" role="region" aria-label="<?php esc_attr_e('Install Vietnam Travel Field Guide', 'vietnamguide-premium'); ?>" hidden>
         <div class="vg-pwa-banner-inner">
             <div class="vg-pwa-banner-text">
                 <span class="vg-pwa-badge"><?php esc_html_e('Offline Travel Guide', 'vietnamguide-premium'); ?></span>
@@ -654,7 +654,7 @@ add_action('wp_footer', static function (): void {
 
         var deferredPrompt = null;
         var banner = document.getElementById("vg-pwa-banner");
-        if (banner) banner.style.display = "none";
+        if (banner) { banner.style.display = "none"; banner.setAttribute("hidden", ""); }
         var installBtn = document.getElementById("vg-pwa-install-btn");
         var dismissBtn = document.getElementById("vg-pwa-dismiss-btn");
         var STORAGE_KEY = "vg_pwa_dismissed";
@@ -681,6 +681,7 @@ add_action('wp_footer', static function (): void {
             e.preventDefault();
             deferredPrompt = e;
             if (banner && !isDismissed()) {
+                banner.removeAttribute("hidden");
                 banner.style.display = "block";
             }
         });
@@ -694,7 +695,7 @@ add_action('wp_footer', static function (): void {
                             setDismissed();
                         }
                         deferredPrompt = null;
-                        if (banner) banner.style.display = "none";
+                        if (banner) { banner.style.display = "none"; banner.setAttribute("hidden", ""); }
                     });
                 }
             });
@@ -703,7 +704,7 @@ add_action('wp_footer', static function (): void {
         if (dismissBtn) {
             dismissBtn.addEventListener("click", function () {
                 setDismissed();
-                if (banner) banner.style.display = "none";
+                if (banner) { banner.style.display = "none"; banner.setAttribute("hidden", ""); }
             });
         }
     })();
@@ -740,20 +741,20 @@ function vg_get_travel_clusters_registry(): array
                 'addressRegion' => 'Hanoi',
                 'geo'          => ['latitude' => 21.0285, 'longitude' => 105.8542],
                 'name'         => 'Hanoi',
-                'description'  => 'Vietnam\'s 1,000-year-old capital city, featuring the atmospheric Old Quarter, French colonial boulevards, vibrant street-food culture, and seamless overland connectivity to Ha Long Bay and Ninh Binh.',
+                'description'  => 'Vietnam\'s 1,000-year-old capital city, featuring the historic Old Quarter, French colonial boulevards, dense street-food culture, and direct expressway and rail links to Ha Long Bay and Ninh Binh.',
                 'wikidata'     => 'https://www.wikidata.org/wiki/Q1858',
                 'wikipedia'    => 'https://en.wikipedia.org/wiki/Hanoi',
                 'tourist_type' => ['Cultural tourism', 'Culinary tourism', 'Urban exploration', 'Historical tourism'],
                 'attractions'  => [
-                    ['name' => 'Old Quarter', 'wikidata' => 'https://www.wikidata.org/wiki/Q10808390'],
-                    ['name' => 'Hoan Kiem Lake', 'wikidata' => 'https://www.wikidata.org/wiki/Q844112'],
-                    ['name' => 'Temple of Literature', 'wikidata' => 'https://www.wikidata.org/wiki/Q1081308'],
-                    ['name' => 'French Quarter', 'wikidata' => 'https://www.wikidata.org/wiki/Q5501872'],
+                    ['name' => 'Old Quarter', 'wikidata' => 'https://www.wikidata.org/wiki/Q6764555'],
+                    ['name' => 'Hoan Kiem Lake', 'wikidata' => 'https://www.wikidata.org/wiki/Q1151254'],
+                    ['name' => 'Temple of Literature', 'wikidata' => 'https://www.wikidata.org/wiki/Q1202019'],
+                    ['name' => 'French Quarter', 'wikidata' => 'https://www.wikidata.org/wiki/Q1134529'],
                 ],
             ],
             'trip_schema' => [
                 'name'         => 'Hanoi to Ha Long Bay & Ninh Binh Northern Triangle Journey',
-                'description'  => 'The quintessential northern Vietnam travel circuit linking the urban cultural heritage of Hanoi with the maritime limestone karsts of Ha Long Bay and the serene terrestrial river valleys of Ninh Binh.',
+                'description'  => 'Northern Vietnam\'s primary travel circuit linking the urban cultural heritage of Hanoi with the maritime limestone karsts of Ha Long Bay and the river valleys of Ninh Binh.',
                 'tourist_type' => ['First-time visitors', 'Multi-day travelers', 'Cultural explorers'],
                 'stops'        => [
                     ['name' => 'Hanoi', 'url' => '/destinations/hanoi-travel-guide/'],
@@ -805,9 +806,9 @@ function vg_get_travel_clusters_registry(): array
                 'tourist_type' => ['Marine cruise tourism', 'Nature & landscapes', 'Sea kayaking', 'UNESCO heritage'],
                 'attractions'  => [
                     ['name' => 'Ha Long Bay', 'wikidata' => 'https://www.wikidata.org/wiki/Q190128'],
-                    ['name' => 'Lan Ha Bay', 'wikidata' => 'https://www.wikidata.org/wiki/Q3216853'],
-                    ['name' => 'Cat Ba Island', 'wikidata' => 'https://www.wikidata.org/wiki/Q1936306'],
-                    ['name' => 'Bai Tu Long Bay', 'wikidata' => 'https://www.wikidata.org/wiki/Q804153'],
+                    ['name' => 'Lan Ha Bay', 'wikidata' => 'https://www.wikidata.org/wiki/Q97162236'],
+                    ['name' => 'Cat Ba Island', 'wikidata' => 'https://www.wikidata.org/wiki/Q993402'],
+                    ['name' => 'Bai Tu Long Bay', 'wikidata' => 'https://www.wikidata.org/wiki/Q10742189'],
                 ],
             ],
             'trip_schema' => [
@@ -865,15 +866,15 @@ function vg_get_travel_clusters_registry(): array
                 'addressRegion' => 'Ninh Binh',
                 'geo'          => ['latitude' => 20.2506, 'longitude' => 105.9745],
                 'name'         => 'Ninh Binh (Trang An & Tam Coc)',
-                'description'  => 'Often celebrated as "Ha Long Bay on land," Ninh Binh enchants travelers with limestone peaks emerging from emerald rice fields, UNESCO paddleboat grottoes, and ancient dynastic temples.',
-                'wikidata'     => 'https://www.wikidata.org/wiki/Q36352',
+                'description'  => 'Known as "Ha Long Bay on land," Ninh Binh pairs sheer limestone karst towers rising from rice paddies with UNESCO river grottoes and 10th-century dynastic temples.',
+                'wikidata'     => 'https://www.wikidata.org/wiki/Q36900',
                 'wikipedia'    => 'https://en.wikipedia.org/wiki/Ninh_B%C3%ACnh_province',
                 'tourist_type' => ['Ecotourism', 'Rural exploration', 'UNESCO landscape', 'Cycling tourism'],
                 'attractions'  => [
-                    ['name' => 'Trang An Landscape Complex', 'wikidata' => 'https://www.wikidata.org/wiki/Q10828551'],
-                    ['name' => 'Tam Coc', 'wikidata' => 'https://www.wikidata.org/wiki/Q7680468'],
-                    ['name' => 'Mua Caves Viewpoint', 'wikidata' => 'https://www.wikidata.org/wiki/Q36359'],
-                    ['name' => 'Bich Dong Pagoda', 'wikidata' => 'https://www.wikidata.org/wiki/Q10748020'],
+                    ['name' => 'Trang An Landscape Complex', 'wikidata' => 'https://www.wikidata.org/wiki/Q10810559'],
+                    ['name' => 'Tam Coc', 'wikidata' => 'https://www.wikidata.org/wiki/Q1406000'],
+                    ['name' => 'Mua Caves Viewpoint', 'wikidata' => 'https://www.wikidata.org/wiki/Q65172044'],
+                    ['name' => 'Bich Dong Pagoda', 'wikidata' => 'https://www.wikidata.org/wiki/Q10748377'],
                 ],
             ],
             'trip_schema' => [
@@ -936,10 +937,10 @@ function vg_get_travel_clusters_registry(): array
                 'wikipedia'    => 'https://en.wikipedia.org/wiki/Da_Nang',
                 'tourist_type' => ['Heritage tourism', 'Beach resort travel', 'Culinary exploration', 'Cultural travel'],
                 'attractions'  => [
-                    ['name' => 'Hoi An Ancient Town', 'wikidata' => 'https://www.wikidata.org/wiki/Q36167'],
-                    ['name' => 'Imperial City of Hue', 'wikidata' => 'https://www.wikidata.org/wiki/Q200257'],
-                    ['name' => 'My Khe Beach & Marble Mountains', 'wikidata' => 'https://www.wikidata.org/wiki/Q25282'],
-                    ['name' => 'Hai Van Pass', 'wikidata' => 'https://www.wikidata.org/wiki/Q1005837'],
+                    ['name' => 'Hoi An Ancient Town', 'wikidata' => 'https://www.wikidata.org/wiki/Q5965459'],
+                    ['name' => 'Imperial City of Hue', 'wikidata' => 'https://www.wikidata.org/wiki/Q10769129'],
+                    ['name' => 'My Khe Beach & Marble Mountains', 'wikidata' => 'https://www.wikidata.org/wiki/Q6755207'],
+                    ['name' => 'Hai Van Pass', 'wikidata' => 'https://www.wikidata.org/wiki/Q1477078'],
                 ],
             ],
             'trip_schema' => [
@@ -1004,15 +1005,15 @@ function vg_get_travel_clusters_registry(): array
                 'addressRegion' => 'Ho Chi Minh City & Mekong Delta',
                 'geo'          => ['latitude' => 10.8231, 'longitude' => 106.6297],
                 'name'         => 'Ho Chi Minh City & Mekong Delta',
-                'description'  => 'Vietnam\'s bustling southern economic powerhouse, famed for French colonial landmarks, Saigon street-food alleys, wartime history, and gateway to the waterways of the Mekong Delta.',
+                'description'  => 'Vietnam\'s largest commercial metropolis, home to French colonial landmarks, dense street-food districts, wartime museums, and direct expressway routes into the Mekong Delta.',
                 'wikidata'     => 'https://www.wikidata.org/wiki/Q1854',
                 'wikipedia'    => 'https://en.wikipedia.org/wiki/Ho_Chi_Minh_City',
                 'tourist_type' => ['Urban exploration', 'Culinary tourism', 'Historical tourism', 'Riverine ecotourism'],
                 'attractions'  => [
-                    ['name' => 'War Remnants Museum', 'wikidata' => 'https://www.wikidata.org/wiki/Q1062129'],
-                    ['name' => 'Cu Chi Tunnels', 'wikidata' => 'https://www.wikidata.org/wiki/Q185625'],
+                    ['name' => 'War Remnants Museum', 'wikidata' => 'https://www.wikidata.org/wiki/Q703871'],
+                    ['name' => 'Cu Chi Tunnels', 'wikidata' => 'https://www.wikidata.org/wiki/Q192721'],
                     ['name' => 'Mekong Delta Waterways', 'wikidata' => 'https://www.wikidata.org/wiki/Q1052867'],
-                    ['name' => 'Ben Thanh Market', 'wikidata' => 'https://www.wikidata.org/wiki/Q1931159'],
+                    ['name' => 'Ben Thanh Market', 'wikidata' => 'https://www.wikidata.org/wiki/Q3232879'],
                 ],
             ],
             'trip_schema' => [
@@ -1071,15 +1072,15 @@ function vg_get_travel_clusters_registry(): array
                 'geo'          => ['latitude' => 22.3364, 'longitude' => 103.8438],
                 'name'         => 'Sa Pa & Northern Highlands',
                 'description'  => 'Vietnam\'s dramatic northern mountain frontier, showcasing Fansipan summit, sculpted rice terraces, colorful ethnic hill-tribe markets, and the epic Ha Giang karst loop.',
-                'wikidata'     => 'https://www.wikidata.org/wiki/Q36384',
+                'wikidata'     => 'https://www.wikidata.org/wiki/Q1000140',
                 'wikipedia'    => 'https://en.wikipedia.org/wiki/Sa_Pa',
                 'tourist_type' => ['Mountain trekking', 'Adventure travel', 'Ethnic cultural immersion', 'Landscape photography'],
                 'attractions'  => [
-                    ['name' => 'Fansipan Summit', 'wikidata' => 'https://www.wikidata.org/wiki/Q1005391'],
-                    ['name' => 'Ma Pi Leng Pass', 'wikidata' => 'https://www.wikidata.org/wiki/Q6720697'],
-                    ['name' => 'Mu Cang Chai Terraces', 'wikidata' => 'https://www.wikidata.org/wiki/Q6930267'],
+                    ['name' => 'Fansipan Summit', 'wikidata' => 'https://www.wikidata.org/wiki/Q123782'],
+                    ['name' => 'Ma Pi Leng Pass', 'wikidata' => 'https://www.wikidata.org/wiki/Q6949928'],
+                    ['name' => 'Mu Cang Chai Terraces', 'wikidata' => 'https://www.wikidata.org/wiki/Q10796264'],
                     ['name' => 'Dong Van Karst Plateau', 'wikidata' => 'https://www.wikidata.org/wiki/Q10744325'],
-                    ['name' => 'Pu Luong Nature Reserve', 'wikidata' => 'https://www.wikidata.org/wiki/Q7257418'],
+                    ['name' => 'Pu Luong Nature Reserve', 'wikidata' => 'https://www.wikidata.org/wiki/Q7257210'],
                 ],
             ],
             'trip_schema' => [
@@ -1144,15 +1145,15 @@ function vg_get_travel_clusters_registry(): array
                 'addressRegion' => 'Kien Giang & Ba Ria - Vung Tau',
                 'geo'          => ['latitude' => 10.2899, 'longitude' => 103.984],
                 'name'         => 'Phu Quoc, Con Dao & Central Coast',
-                'description'  => 'Vietnam\'s idyllic island retreats and sun-drenched coastal havens, offering powder-white sands, coral reef biodiversity, and calm turquoise seas.',
-                'wikidata'     => 'https://www.wikidata.org/wiki/Q223145',
+                'description'  => 'Vietnam\'s offshore islands and south-central coastal bays, pairing sandy shorelines with protected coral reefs, marine national parks, and seasonal dry-weather swimming windows.',
+                'wikidata'     => 'https://www.wikidata.org/wiki/Q146695',
                 'wikipedia'    => 'https://en.wikipedia.org/wiki/Ph%C3%BA_Qu%E1%BB%91c',
                 'tourist_type' => ['Beach resort tourism', 'Marine biodiversity', 'Relaxation', 'Scuba diving'],
                 'attractions'  => [
-                    ['name' => 'Phu Quoc National Park', 'wikidata' => 'https://www.wikidata.org/wiki/Q223145'],
-                    ['name' => 'Con Dao Marine Park', 'wikidata' => 'https://www.wikidata.org/wiki/Q1118128'],
-                    ['name' => 'Quy Nhon Coast', 'wikidata' => 'https://www.wikidata.org/wiki/Q26577'],
-                    ['name' => 'Ly Son Island', 'wikidata' => 'https://www.wikidata.org/wiki/Q10788220'],
+                    ['name' => 'Phu Quoc National Park', 'wikidata' => 'https://www.wikidata.org/wiki/Q1749599'],
+                    ['name' => 'Con Dao Marine Park', 'wikidata' => 'https://www.wikidata.org/wiki/Q1258339'],
+                    ['name' => 'Quy Nhon Coast', 'wikidata' => 'https://www.wikidata.org/wiki/Q36081'],
+                    ['name' => 'Ly Son Island', 'wikidata' => 'https://www.wikidata.org/wiki/Q1320095'],
                 ],
             ],
             'trip_schema' => [
@@ -1222,12 +1223,12 @@ function vg_get_travel_clusters_registry(): array
                 'wikipedia'    => 'https://en.wikipedia.org/wiki/Central_Highlands_(Vietnam)',
                 'tourist_type' => ['Highland agriculture & coffee tourism', 'Cool-climate alpine retreats', 'Indigenous ethnic culture & longhouses', 'Waterfalls & adventure trekking'],
                 'attractions'  => [
-                    ['name' => 'Da Lat French Villas & Tuyen Lam Lake', 'wikidata' => 'https://www.wikidata.org/wiki/Q25281'],
-                    ['name' => 'Mang Den Pine Plateau & Pa Sy Waterfall', 'wikidata' => 'https://www.wikidata.org/wiki/Q10795764'],
-                    ['name' => 'Buon Ma Thuot Coffee Plantations & Dray Nur Falls', 'wikidata' => 'https://www.wikidata.org/wiki/Q25302'],
-                    ['name' => 'Kon Tum Wooden Church & Bahnar Communal Rong Houses', 'wikidata' => 'https://www.wikidata.org/wiki/Q10784269'],
-                    ['name' => 'Bao Loc Tea & Coffee Hills', 'wikidata' => 'https://www.wikidata.org/wiki/Q25301'],
-                    ['name' => 'Pleiku Sea Lake (Bien Ho)', 'wikidata' => 'https://www.wikidata.org/wiki/Q4904576'],
+                    ['name' => 'Da Lat French Villas & Tuyen Lam Lake', 'wikidata' => 'https://www.wikidata.org/wiki/Q10772031'],
+                    ['name' => 'Mang Den Pine Plateau & Pa Sy Waterfall', 'wikidata' => 'https://www.wikidata.org/wiki/Q10796319'],
+                    ['name' => 'Buon Ma Thuot Coffee Plantations & Dray Nur Falls', 'wikidata' => 'https://www.wikidata.org/wiki/Q33469'],
+                    ['name' => 'Kon Tum Wooden Church & Bahnar Communal Rong Houses', 'wikidata' => 'https://www.wikidata.org/wiki/Q10800901'],
+                    ['name' => 'Bao Loc Tea & Coffee Hills', 'wikidata' => 'https://www.wikidata.org/wiki/Q35620'],
+                    ['name' => 'Pleiku Sea Lake (Bien Ho)', 'wikidata' => 'https://www.wikidata.org/wiki/Q10772001'],
                 ],
             ],
             'trip_schema' => [
@@ -1294,16 +1295,16 @@ function vg_get_travel_clusters_registry(): array
                 'geo'          => ['latitude' => 17.5906, 'longitude' => 106.2831],
                 'name'         => 'Phong Nha-Ke Bang & Quang Binh',
                 'description'  => 'An expedition circuit exploring karst formations, subterranean river grottos, primary tropical rainforests, and spelunking in UNESCO-listed Phong Nha-Ke Bang.',
-                'wikidata'     => 'https://www.wikidata.org/wiki/Q192135',
+                'wikidata'     => 'https://www.wikidata.org/wiki/Q23513',
                 'wikipedia'    => 'https://en.wikipedia.org/wiki/Phong_Nha-K%E1%BA%BB_B%C3%A0ng_National_Park',
                 'tourist_type' => ['Spelunking & cave exploration', 'Subterranean river kayaking', 'UNESCO World Heritage nature', 'Jungle trekking & expedition travel'],
                 'attractions'  => [
-                    ['name' => 'Hang Son Doong (World\'s Largest Cave)', 'wikidata' => 'https://www.wikidata.org/wiki/Q212668'],
-                    ['name' => 'Paradise Cave (Thien Duong)', 'wikidata' => 'https://www.wikidata.org/wiki/Q43224'],
-                    ['name' => 'Phong Nha Wet Cave & Underground River', 'wikidata' => 'https://www.wikidata.org/wiki/Q192135'],
-                    ['name' => 'Dark Cave (Hang Toi) & Chay River', 'wikidata' => 'https://www.wikidata.org/wiki/Q192135'],
-                    ['name' => 'Hang En Cave', 'wikidata' => 'https://www.wikidata.org/wiki/Q192135'],
-                    ['name' => 'Dong Hoi Coastal Gateway & Nhat Le Beach', 'wikidata' => 'https://www.wikidata.org/wiki/Q36173'],
+                    ['name' => 'Hang Son Doong (World\'s Largest Cave)', 'wikidata' => 'https://www.wikidata.org/wiki/Q44889'],
+                    ['name' => 'Paradise Cave (Thien Duong)', 'wikidata' => 'https://www.wikidata.org/wiki/Q43171'],
+                    ['name' => 'Phong Nha Wet Cave & Underground River', 'wikidata' => 'https://www.wikidata.org/wiki/Q3395915'],
+                    ['name' => 'Dark Cave (Hang Toi) & Chay River', 'wikidata' => 'https://www.wikidata.org/wiki/Q23513'],
+                    ['name' => 'Hang En Cave', 'wikidata' => 'https://www.wikidata.org/wiki/Q22278419'],
+                    ['name' => 'Dong Hoi Coastal Gateway & Nhat Le Beach', 'wikidata' => 'https://www.wikidata.org/wiki/Q1877'],
                 ],
             ],
             'trip_schema' => [
@@ -1367,12 +1368,12 @@ function vg_get_travel_clusters_registry(): array
                 'wikipedia'    => 'https://en.wikipedia.org/wiki/Mekong_Delta',
                 'tourist_type' => ['Riverine ecotourism', 'Floating market culture', 'Fruit orchard homestays', 'Mangrove biosphere exploration', 'Cross-border river transit'],
                 'attractions'  => [
-                    ['name' => 'Cai Rang Floating Market', 'wikidata' => 'https://www.wikidata.org/wiki/Q5017482'],
-                    ['name' => 'Tra Su Cajuput Melaleuca Forest', 'wikidata' => 'https://www.wikidata.org/wiki/Q10828236'],
-                    ['name' => 'Ben Tre Coconut Waterways', 'wikidata' => 'https://www.wikidata.org/wiki/Q25298'],
-                    ['name' => 'Sam Mountain & Chau Doc Border Temples', 'wikidata' => 'https://www.wikidata.org/wiki/Q737664'],
-                    ['name' => 'Mui Ca Mau Biosphere (Southernmost Tip)', 'wikidata' => 'https://www.wikidata.org/wiki/Q33932'],
-                    ['name' => 'Ha Tien Coastal Frontier', 'wikidata' => 'https://www.wikidata.org/wiki/Q1014494'],
+                    ['name' => 'Cai Rang Floating Market', 'wikidata' => 'https://www.wikidata.org/wiki/Q10748803'],
+                    ['name' => 'Tra Su Cajuput Melaleuca Forest', 'wikidata' => 'https://www.wikidata.org/wiki/Q16480259'],
+                    ['name' => 'Ben Tre Coconut Waterways', 'wikidata' => 'https://www.wikidata.org/wiki/Q33366'],
+                    ['name' => 'Sam Mountain & Chau Doc Border Temples', 'wikidata' => 'https://www.wikidata.org/wiki/Q373214'],
+                    ['name' => 'Mui Ca Mau Biosphere (Southernmost Tip)', 'wikidata' => 'https://www.wikidata.org/wiki/Q125333'],
+                    ['name' => 'Ha Tien Coastal Frontier', 'wikidata' => 'https://www.wikidata.org/wiki/Q800154'],
                 ],
             ],
             'trip_schema' => [
@@ -1440,16 +1441,16 @@ function vg_get_travel_clusters_registry(): array
                 'geo'          => ['latitude' => 22.6667, 'longitude' => 106.2500],
                 'name'         => 'Cao Bang & Far North Frontier',
                 'description'  => 'An overland frontier circuit spanning the freshwater lakes of Ba Be, the tiered cascades of Ban Gioc Waterfall on the northern border, and the mountain valleys of Mai Chau and Dien Bien Phu.',
-                'wikidata'     => 'https://www.wikidata.org/wiki/Q36355',
+                'wikidata'     => 'https://www.wikidata.org/wiki/Q36865',
                 'wikipedia'    => 'https://en.wikipedia.org/wiki/Cao_B%E1%BA%B1ng_province',
                 'tourist_type' => ['Geopark geological exploration', 'Waterfall & freshwater lake ecotourism', 'Frontier motorcycle route touring', 'Ethnic minority homestay immersion', 'Historical battleground tourism'],
                 'attractions'  => [
-                    ['name' => 'Ban Gioc Waterfall (UNESCO Global Geopark)', 'wikidata' => 'https://www.wikidata.org/wiki/Q806148'],
-                    ['name' => 'Ba Be National Park & Freshwater Lake', 'wikidata' => 'https://www.wikidata.org/wiki/Q797559'],
-                    ['name' => 'Nguom Ngao Tiger Cave', 'wikidata' => 'https://www.wikidata.org/wiki/Q10798734'],
-                    ['name' => 'Bac Ha Sunday Ethnic Market', 'wikidata' => 'https://www.wikidata.org/wiki/Q2227060'],
-                    ['name' => 'Dien Bien Phu Historic Valley', 'wikidata' => 'https://www.wikidata.org/wiki/Q207139'],
-                    ['name' => 'Mai Chau Valley & Stilt Villages', 'wikidata' => 'https://www.wikidata.org/wiki/Q1935243'],
+                    ['name' => 'Ban Gioc Waterfall (UNESCO Global Geopark)', 'wikidata' => 'https://www.wikidata.org/wiki/Q983252'],
+                    ['name' => 'Ba Be National Park & Freshwater Lake', 'wikidata' => 'https://www.wikidata.org/wiki/Q1968747'],
+                    ['name' => 'Nguom Ngao Tiger Cave', 'wikidata' => 'https://www.wikidata.org/wiki/Q10842294'],
+                    ['name' => 'Bac Ha Sunday Ethnic Market', 'wikidata' => 'https://www.wikidata.org/wiki/Q4838559'],
+                    ['name' => 'Dien Bien Phu Historic Valley', 'wikidata' => 'https://www.wikidata.org/wiki/Q36027'],
+                    ['name' => 'Mai Chau Valley & Stilt Villages', 'wikidata' => 'https://www.wikidata.org/wiki/Q6735119'],
                 ],
             ],
             'trip_schema' => [
@@ -1522,9 +1523,9 @@ function vg_get_travel_clusters_registry(): array
                 'tourist_type' => ['Cultural tourism', 'Nature & adventure', 'Culinary exploration', 'Heritage tourism'],
                 'attractions'  => [
                     ['name' => 'Ha Long Bay', 'wikidata' => 'https://www.wikidata.org/wiki/Q190128'],
-                    ['name' => 'Hoi An Ancient Town', 'wikidata' => 'https://www.wikidata.org/wiki/Q36167'],
-                    ['name' => 'Trang An Landscape Complex', 'wikidata' => 'https://www.wikidata.org/wiki/Q10828551'],
-                    ['name' => 'Imperial City of Hue', 'wikidata' => 'https://www.wikidata.org/wiki/Q200257'],
+                    ['name' => 'Hoi An Ancient Town', 'wikidata' => 'https://www.wikidata.org/wiki/Q5965459'],
+                    ['name' => 'Trang An Landscape Complex', 'wikidata' => 'https://www.wikidata.org/wiki/Q10810559'],
+                    ['name' => 'Imperial City of Hue', 'wikidata' => 'https://www.wikidata.org/wiki/Q10769129'],
                 ],
                 'containedInPlace' => [
                     '@type'  => 'Place',
@@ -2919,7 +2920,7 @@ function vg_get_curated_faq_items(string $uri_path): array
         'ha-giang-to-dong-van-transport' => [
             ['q' => 'What is the distance and driving time between Ha Giang City and Dong Van?', 'a' => 'The distance is 135 to 145 kilometers following National Highway 4C (QL4C - The Happiness Road). Due to continuous mountain gradients, hairpins on Bac Sum and Tham Ma passes, and frequent photo stops, the trip takes 4.5 to 6 hours by motorcycle or local passenger bus.'],
             ['q' => 'What public transportation is available between Ha Giang and Dong Van?', 'a' => 'Local 16-seat minibuses and mid-size coaches (operated by Quang Nghi, Manh Quan, and Cau Me) depart Ha Giang Central Bus Station between 05:00 AM and 12:30 PM, charging 100,000 to 120,000 VND per ticket. Luxury 9-seat limousine vans operate twice daily for 150,000 to 200,000 VND with central hotel drop-off in Dong Van.'],
-            ['q' => 'What are the must-see landmark stops along National Highway 4C?', 'a' => 'Key highlights on the route to Dong Van include Quan Ba Heaven Gate (Cong troi Quan Ba) and the Fairy Twin Mountains (Nui Doi Co Tien, 45 km from Ha Giang), the pine forests of Yen Minh, the nine-turn Tham Ma Pass (Doc Tham Ma), the Sung La cultural valley (site of Pao Story house), and the 100-year-old H\'Mong King Palace (Dinh ho Vuong) in Sa Phin.'],
+            ['q' => 'What are the key landmark stops along National Highway 4C?', 'a' => 'Key highlights on the route to Dong Van include Quan Ba Heaven Gate (Cong troi Quan Ba) and the Fairy Twin Mountains (Nui Doi Co Tien, 45 km from Ha Giang), the pine forests of Yen Minh, the nine-turn Tham Ma Pass (Doc Tham Ma), the Sung La cultural valley (site of Pao Story house), and the 100-year-old H\'Mong King Palace (Dinh ho Vuong) in Sa Phin.'],
         ],
         'sapa-vs-ha-giang' => [
             ['q' => 'Is Sapa or Ha Giang better for first-time visitors to northern Vietnam?', 'a' => 'Sapa is better suited for travelers seeking comfortable resort stays, well-marked guided valley day walks in Muong Hoa Valley, fine dining, and modern infrastructure like the 3,143-meter Fansipan cable car (800,000 to 850,000 VND). Ha Giang is superior for adventurous backpackers and riders seeking raw geological landscapes, authentic ethnic village homestays, and remote mountain riding along the Dong Van Karst Plateau.'],
@@ -2933,7 +2934,7 @@ function vg_get_curated_faq_items(string $uri_path): array
             ['q' => 'How do I travel to Ben Duoc tunnels by public bus?', 'a' => 'Take public Bus No. 13 from 23/9 Park (Pham Ngu Lao) to Cu Chi Bus Station (7,000 VND, 90 minutes), then transfer directly to local Bus No. 79 (7,000 VND, 45 minutes) which terminates at the main gate of Ben Duoc Tunnels. Total public transit cost is 14,000 VND (approx. 0.60 USD) each way.'],
         ],
         'con-dao-vs-phu-quoc' => [
-            ['q' => 'Is Con Dao or Phu Quoc better for an island vacation in Vietnam?', 'a' => 'Phu Quoc is a 574-square-kilometer island with an international airport, 30-day visa exemption, large beach resort clusters, family entertainment theme parks (VinWonders, Grand World), and vibrant night markets. Con Dao is a tranquil 76-square-kilometer archipelago protected as Con Dao National Park, featuring pristine coral reefs, nesting sea turtles (May to October), colonial prison history, and uncrowded beaches.'],
+            ['q' => 'Is Con Dao or Phu Quoc better for an island vacation in Vietnam?', 'a' => 'Phu Quoc is a 574-square-kilometer island with an international airport, 30-day visa exemption, large beach resort clusters, family entertainment theme parks (VinWonders, Grand World), and active night markets. Con Dao is a tranquil 76-square-kilometer archipelago protected as Con Dao National Park, featuring pristine coral reefs, nesting sea turtles (May to October), colonial prison history, and uncrowded beaches.'],
             ['q' => 'How do flights and ferry costs compare between Phu Quoc and Con Dao?', 'a' => 'Phu Quoc has frequent daily flights from Hanoi, Ho Chi Minh City, and Da Nang on multiple carriers (round-trip 1,500,000 to 3,000,000 VND), as well as fast catamarans from Ha Tien (216,000 to 230,000 VND) and Rach Gia (315,000 to 330,000 VND). Con Dao is serviced primarily by ATR-72 or Embraer domestic flights from Saigon and Can Tho (round-trip 2,800,000 to 4,800,000 VND) or high-speed catamarans from Vung Tau (660,000 to 880,000 VND) and Tran De (390,000 to 520,000 VND).'],
             ['q' => 'Which island has better weather and scuba diving?', 'a' => 'Phu Quoc offers calm turquoise seas during its dry season from November to April, but sees heavy southwest monsoon rains from July to September. Con Dao has flat seas and 15-to-25-meter underwater diving visibility around Hon Bay Canh and Hon Cau from March to September, while winter months (October to February) bring strong northeast winds that generate ocean swells.'],
         ],
@@ -2948,7 +2949,7 @@ function vg_get_curated_faq_items(string $uri_path): array
             ['q' => 'How do I travel from Da Nang city center to Ba Na Hills?', 'a' => 'Ba Na Hills is located 35 kilometers west of Da Nang. Shared round-trip shuttle minibuses pick up at city hotels for 100,000 to 150,000 VND per passenger. A Grab car or private taxi costs 300,000 to 350,000 VND one-way, or 550,000 to 650,000 VND for a round-trip charter including 5 to 6 hours driver waiting time.'],
         ],
         'da-nang-airport-to-hoi-an' => [
-            ['q' => 'What is the fastest and most convenient transport from Da Nang Airport to Hoi An?', 'a' => 'A pre-booked private transfer or Grab car is the fastest and most seamless option, taking 40 to 45 minutes along Vo Nguyen Giap and Lac Long Quan coastal boulevards directly to your Hoi An hotel door. Fixed-price airport sedans cost 300,000 to 350,000 VND (approx. 12 to 14 USD) for a 4-seat car, avoiding metered taxi line surcharges.'],
+            ['q' => 'What is the fastest and most convenient transport from Da Nang Airport to Hoi An?', 'a' => 'A pre-booked private transfer or Grab car is the fastest and most direct option, taking 40 to 45 minutes along Vo Nguyen Giap and Lac Long Quan coastal boulevards directly to your Hoi An hotel door. Fixed-price airport sedans cost 300,000 to 350,000 VND (approx. 12 to 14 USD) for a 4-seat car, avoiding metered taxi line surcharges.'],
             ['q' => 'Is there a cheap shared shuttle bus from Da Nang Airport to Hoi An?', 'a' => 'Yes. Shared tourist shuttles operated by Barri Ann Travel and Hoi An Express depart Da Nang Airport Terminal T1 (domestic) and T2 (international) every 60 minutes between 06:00 and 22:00, charging 100,000 to 120,000 VND (approx. 4 to 5 USD) per person with central hotel drop-off in Hoi An.'],
             ['q' => 'Can I take a public city bus from Da Nang to Hoi An?', 'a' => 'The historic yellow public Bus No. 1 has been replaced by modern provincial intercity bus lines. Travelers using public buses must board at Da Nang Central Bus Station (Ben xe Trung tam Da Nang) or designated street stops along Ton Duc Thang Street; however, shared airport shuttles remain substantially faster and more convenient for travelers carrying luggage.'],
         ],
@@ -3058,7 +3059,7 @@ function vg_get_curated_faq_items(string $uri_path): array
             ['q' => 'When and where can I see red starfish in Phu Quoc?', 'a' => 'Rach Vem fishing village on the far northern coast (30 km from Duong Dong) is famous for Starfish Beach, where red cushion sea stars congregate in warm, shallow coastal flats. The best season to visit is from December to April when waters are calm and clear; visitors should never lift starfish out of the water, as air exposure harms them within seconds.'],
         ],
         'hanoi-to-cat-ba-island-transport' => [
-            ['q' => 'What is the fastest and most convenient way to travel from Hanoi to Cat Ba Island?', 'a' => 'A tourist combo bus (operated by Daiichi Travel, Cat Ba Express, or Good Morning Cat Ba) is the most seamless option, taking 3.5 hours for 300,000 to 350,000 VND (approx. 12 to 14 USD) one-way. The through-ticket includes hotel pickup in Hanoi Old Quarter, express bus travel via the CT04 expressway, a 10-minute speedboat or fast catamaran transfer from Dong Bai Pier bypassing vehicle ferry lines, and a connecting bus directly into Cat Ba town center.'],
+            ['q' => 'What is the fastest and most convenient way to travel from Hanoi to Cat Ba Island?', 'a' => 'A tourist combo bus (operated by Daiichi Travel, Cat Ba Express, or Good Morning Cat Ba) is the most direct option, taking 3.5 hours for 300,000 to 350,000 VND (approx. 12 to 14 USD) one-way. The through-ticket includes hotel pickup in Hanoi Old Quarter, express bus travel via the CT04 expressway, a 10-minute speedboat or fast catamaran transfer from Dong Bai Pier bypassing vehicle ferry lines, and a connecting bus directly into Cat Ba town center.'],
             ['q' => 'Can I take the public ferry from Hai Phong to Cat Ba Island?', 'a' => 'Yes, public car and passenger ferries depart from the Dong Bai ferry terminal (replacing the older Ben Got terminal) to Cai Vieng on Cat Ba Island (ticket 12,000 VND per foot passenger or 45,000 VND with motorbike, 25 to 30 minutes). However, on summer weekends and public holidays, vehicle waiting queues can stretch from 2 to 4 hours; tourist combo buses using passenger speedboats avoid these vehicle queues entirely.'],
             ['q' => 'Is there a scenic cable car from the mainland to Cat Ba Island?', 'a' => 'Yes, Sun World operates the Cat Hai - Phu Long cable car line spanning 3.95 kilometers over the sea (one-way ticket 100,000 VND, 15 minutes). Operating schedules vary by season, and travelers must take a connecting taxi or public bus (30,000 to 50,000 VND, 40 minutes) from Phu Long station down to Cat Ba town center.'],
         ],
@@ -3078,7 +3079,7 @@ function vg_get_curated_faq_items(string $uri_path): array
             ['q' => 'What is Com Hen and where should I try it in Hue?', 'a' => 'Com Hen is a rustic river dish featuring tiny basket clams harvested from the alluvial bed of the Perfume River, served over room-temperature rice (or vermicelli noodles for Bun Hen) with crunchy fried pork rinds (top mo), roasted peanuts, shredded elephant ear taro stem, starfruit, and herbs, accompanied by a steaming bowl of ginger-clam broth. The premier spot to try it is Quan Hoa Dong at 64 Kiet 7 Ung Binh on Con Hen (Hen Islet), where a bowl costs 15,000 to 25,000 VND.'],
         ],
         'best-things-to-do-in-ha-long-bay' => [
-            ['q' => 'What are the must-see caves and landmarks on a Ha Long Bay cruise?', 'a' => 'Key highlights include Sung Sot Cave (Surprise Cave) on Bo Hon Island, featuring two massive limestone chambers adorned with dramatic stalactite formations, Ti Top Island with its 400 stone steps ascending to a 360-degree panoramic summit pavilion and sandy swimming crescent, and Luon Cave, a secluded karst lagoon accessible only by two-seater kayak or bamboo rowing boat through a low arched entrance.'],
+            ['q' => 'What are the main caves and landmarks on a Ha Long Bay cruise?', 'a' => 'Key highlights include Sung Sot Cave (Surprise Cave) on Bo Hon Island, featuring two massive limestone chambers adorned with dramatic stalactite formations, Ti Top Island with its 400 stone steps ascending to a 360-degree panoramic summit pavilion and sandy swimming crescent, and Luon Cave, a secluded karst lagoon accessible only by two-seater kayak or bamboo rowing boat through a low arched entrance.'],
             ['q' => 'How much do official Ha Long Bay sightseeing tickets cost and what is Route 2?', 'a' => 'Route 2 is the most popular sightseeing circuit, encompassing Sung Sot Cave, Ti Top Island, Luon Cave, and Bo Nau Cave. The mandatory scenic ticket costs 250,000 VND per person, plus a 60,000 VND port passenger terminal fee (total 310,000 VND, approx. 12.20 USD). Children under 1.2 meters enter free. Day cruise boat charter or tour operator fees (typically 400,000 to 800,000 VND for a 6-hour cruise including lunch) are charged separately.'],
             ['q' => 'Should I choose a day cruise or an overnight cruise in Ha Long Bay?', 'a' => 'A 6-hour day cruise from Tuan Chau Marina suits travelers on tight schedules or modest budgets (approx. 40 to 60 USD including transfers and lunch). An overnight cruise (2 days / 1 night, ranging from 120 to 280+ USD per person) is recommended for a relaxed experience, allowing you to sail past distant karst clusters into quieter Lan Ha Bay or Bai Tu Long Bay, participate in sunrise Tai Chi on deck, and kayak at sunset away from day-tripper boat traffic.'],
         ],
@@ -3093,7 +3094,7 @@ function vg_get_curated_faq_items(string $uri_path): array
             ['q' => 'Where can luxury or beachfront resort travelers stay on Cat Ba Island?', 'a' => 'Flamingo Cat Ba Beach Resort on Cat Co 1 and Cat Co 2 beaches is the premier upscale property on the island, featuring cliffside infinity pools, private beach coves, and panoramic views over Lan Ha Bay (rates 2,200,000 to 5,000,000 VND per night). Travelers seeking remote island isolation can also book beach bungalows on Nam Cat Island or Sandy Beach in Lan Ha Bay, accessible exclusively by private boat transfers.'],
         ],
         'cat-ba-to-ninh-binh-transport' => [
-            ['q' => 'What is the fastest and most convenient way to travel from Cat Ba Island to Ninh Binh?', 'a' => 'A direct tourist combo bus (operated by The Long Travel, Cat Ba Express, Cat Ba Discovery, or Daiichi Bus) is the fastest and most seamless method, taking 4.5 to 5 hours total. The single ticket covers pickup at your Cat Ba town hotel, island transit to Cai Vieng port, a 10-to-15-minute fast ferry or passenger speedboat across to Dong Bai, and an air-conditioned coach ride via Highway QL10 directly to your hotel in Tam Coc or Trang An.'],
+            ['q' => 'What is the fastest and most convenient way to travel from Cat Ba Island to Ninh Binh?', 'a' => 'A direct tourist combo bus (operated by The Long Travel, Cat Ba Express, Cat Ba Discovery, or Daiichi Bus) is the fastest and most direct method, taking 4.5 to 5 hours total. The single ticket covers pickup at your Cat Ba town hotel, island transit to Cai Vieng port, a 10-to-15-minute fast ferry or passenger speedboat across to Dong Bai, and an air-conditioned coach ride via Highway QL10 directly to your hotel in Tam Coc or Trang An.'],
             ['q' => 'How much does a combo bus ticket cost from Cat Ba Island to Ninh Binh?', 'a' => 'A one-way through-ticket costs 300,000 to 350,000 VND (approx. 12 to 14 USD) per person, inclusive of all road transit legs, ferry fees, and luggage carriage. Standard departures operate twice daily, leaving Cat Ba town around 08:30 AM (arriving Tam Coc by 13:00 PM) and 13:30 PM (arriving Tam Coc by 18:00 PM). Tickets can be booked through island hotel desks or reputable travel offices.'],
             ['q' => 'Can I take public transport or local trains between Cat Ba and Ninh Binh?', 'a' => 'Public transport requires multiple transfers: taking a local island bus to Cai Vieng, public ferry to Dong Bai, taxi or public bus to Hai Phong center, and then catching a local coach from Cau Rao/Vinh Niem bus station to Ninh Binh. Because there is no direct rail line connecting Hai Phong and Ninh Binh without routing through Hanoi, taking public transport takes 7 to 8 hours and costs almost the same as the direct 4.5-hour tourist combo bus.'],
         ],
@@ -3145,7 +3146,7 @@ function vg_get_curated_faq_items(string $uri_path): array
         'best-things-to-do-in-ho-chi-minh-city' => [
             ['q' => 'What are the essential historical landmarks to visit in District 1 and District 3?', 'a' => 'Top heritage visits include the War Remnants Museum (28 Vo Van Tan, District 3, entry 40,000 VND, featuring military aircraft and photojournalism exhibitions), the Independence Palace (Reunification Hall, entry 40,000 to 65,000 VND, showcasing preserved 1970s presidential state rooms and subterranean command bunkers), the Saigon Central Post Office designed with French neoclassical arches, and the nearby Notre-Dame Cathedral.'],
             ['q' => 'What is the Saigon Waterbus and how do I take it?', 'a' => 'The Saigon Waterbus operates along the Saigon River from Bach Dang Wharf in District 1 to Binh An and Linh Dong in Thu Duc City. Tickets cost 15,000 VND (approx. 0.60 USD) each way for a 45-minute river cruise offering sweeping skyline views of Landmark 81 and riverside developments. Boats run every 30 to 45 minutes; sunset departures from Bach Dang around 17:00 PM are particularly popular.'],
-            ['q' => 'Where are the best areas for evening nightlife and rooftop views in Saigon?', 'a' => 'For bustling street energy and food stalls, visit the pedestrianized Nguyen Hue Boulevard and Ben Thanh street food markets. For panoramic sunset cocktails over the city, open-air rooftop lounges across District 1 (such as Chill Skybar, Social Club Rooftop at Hotel des Arts, or Saigon Saigon Bar at Caravelle) offer sweeping urban vistas, with smart-casual dress codes typically enforced after 18:00 PM.'],
+            ['q' => 'Where are the best areas for evening nightlife and rooftop views in Saigon?', 'a' => 'For lively street energy and food stalls, visit the pedestrianized Nguyen Hue Boulevard and Ben Thanh street food markets. For panoramic sunset cocktails over the city, open-air rooftop lounges across District 1 (such as Chill Skybar, Social Club Rooftop at Hotel des Arts, or Saigon Saigon Bar at Caravelle) offer sweeping urban vistas, with smart-casual dress codes typically enforced after 18:00 PM.'],
         ],
         'best-things-to-do-in-hoi-an' => [
             ['q' => 'Do I need to buy the official Ancient Town entrance ticket in Hoi An?', 'a' => 'The official entrance ticket costs 120,000 VND (approx. 5 USD) for international visitors and is valid for the duration of your stay. While walking public streets and crossing bridges requires no payment, the paper pass includes coupons to enter 5 designated heritage sites among 21 options, including the Japanese Covered Bridge (Chua Cau), Tan Ky Old House, Phung Hung Old House, Cantonese Assembly Hall, and traditional music performances.'],

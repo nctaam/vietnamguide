@@ -6,7 +6,7 @@ description: "Complete Vietnam in November guide: autumn weather in Hanoi, north
 travel_cluster: "national_circuit"
 last_verified: "2026-10-31"
 author: "VietnamGuide Editorial Team"
-reading_time_minutes: 12
+reading_time_minutes: 8
 word_count: 1596
 ---
 

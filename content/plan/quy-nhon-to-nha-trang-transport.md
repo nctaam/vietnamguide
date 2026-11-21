@@ -6,8 +6,8 @@ description: "Coastal trains from Dieu Tri Station (4-4.5 hours, 140,000-210,000
 travel_cluster: "coastal_islands"
 last_verified: "2026-11-01"
 author: "VietnamGuide Editorial Team"
-reading_time_minutes: 8
-word_count: 1459
+reading_time_minutes: 10
+word_count: 1919
 ---
 
 # Quy Nhon to Nha Trang Transport (2026): Train vs Bus
@@ -96,3 +96,23 @@ For groups of 3 to 5 passengers or travelers who want to see Phu Yen's volcanic 
 1. **Book Morning Daylight Slots 3 to 5 Days Ahead:** If you want left-side window seats on **Train SE5 (09:18)** or middle-row captain chairs on a morning **Sao Limousine** van, reserve online via `dsvn.vn` or `vexere.com` at least 72 hours in advance. Weekend runs fill quickly with domestic beach travelers from Binh Dinh and Khanh Hoa.
 2. **Coordinate Bai Xep Pickups carefully:** If you are staying 13 km south of Quy Nhon in **Bai Xep Fishing Village**, do not backtrack 24 km north to Dieu Tri Railway Station unless you are taking *The Vietage*. Instead, arrange for a southbound limousine van (`220,000 to 280,000 VND`) to flag you down directly at the **Bai Xep welcome arch on Highway QL1D** 20 minutes after its `71 Tay Son` departure.
 3. **Verify Nha Trang Arrival Points:** Train passengers arrive right downtown at `17 Thai Nguyen`, whereas standard highway coaches terminate 7 km inland at the Southern Bus Station on `23/10 Street` (`90,000 to 120,000 VND` / `$3.60 to $4.80 USD` Grab ride to Tran Phu Beach if you do not use Futa's complimentary transfer shuttle).
+
+---
+
+## Frequently Asked Questions (2026)
+
+### Is the train from Dieu Tri faster than a limousine bus from downtown Quy Nhon?
+
+Door-to-door transit times are almost identical at 4.5 hours, even though the railway spans 219 km versus 215 km by highway. Rail travelers spend 20 to 25 minutes (150,000 to 180,000 VND / $6.00 to $7.20 USD taxi, 11 km) reaching Dieu Tri Station plus 20 minutes on platform check-in before the 4 hour 17 minute ride aboard Train SE5 (140,000 to 210,000 VND / $5.60 to $8.40 USD), then reach Nha Trang's Tran Phu Beach in 5 minutes (1.5 km, 50,000 VND). By contrast, a Sao or Cuc Tu 9-seat limousine (220,000 to 280,000 VND / $8.80 to $11.20 USD) collects you right outside your Quy Nhon hotel lobby and threads the 4.1 km Deo Ca Road Tunnel in 4 to 4.5 hours with zero station transfers.
+
+### How do I book the scenic east-side window seat on Train SE5?
+
+Open Vietnam Railways' official portal (`dsvn.vn`), choose `Diêu Trì` to `Nha Trang`, select morning Train SE5 (09:18 departure, arriving 13:35) or afternoon Train SE21 (15:52), and pick an Air-Conditioned Soft Seat (`NML`) coach. Check the carriage seat map orientation before paying. Southbound chairs facing forward place ocean-facing windows along the left-hand (east) wall, delivering clear views 50 meters above Vung Ro Bay and Dai Lanh Beach roughly 2 hours 15 minutes after departing Dieu Tri. Reserve 3 to 5 days ahead during April–August beach weeks so east-side window pairs remain available.
+
+### Can I connect directly from Quy Nhon to Cam Ranh International Airport (CXR)?
+
+Neither Reunification Express trains nor standard Quy Nhon buses enter Cam Ranh International Airport (`CXR`), located 35 km south of Nha Trang Railway Station (`17 Thai Nguyen Street`). Build generous flight buffers into coastal travel days. From Nha Trang Station, airport Shuttle Bus 18 (65,000 VND / $2.60 USD, 55 minutes) or a fixed-rate taxi (300,000 to 350,000 VND / $12.00 to $14.00 USD, 45 minutes) runs down Nguyen Tat Thanh Boulevard directly to Terminal 1 and Terminal 2. Groups of three to five save a full hour by hiring a direct private car from Quy Nhon to the `CXR` departures curb (250 km, 4.5 to 5 hours, 2,400,000 to 2,800,000 VND / $96.00 to $112.00 USD).
+
+### Do coastal trains or Highway QL1A buses get disrupted during October–December storms?
+
+Late-autumn tropical storms between October 15 and December 15 occasionally flood low-lying track sections in Phu Yen Province or drop loose boulders along the Deo Ca coastal cliffs, delaying southbound trains by 45 to 120 minutes. Highway coaches weather heavy rain better because every bus bypasses exposed mountain hairpins via the concrete 4.1 km Deo Ca Road Tunnel. When riding southbound during November monsoon periods, avoid tight same-day transfers to island boats or evening flights out of Cam Ranh. Plan overnight beach bases in [Where to Stay in Nha Trang](/destinations/where-to-stay-in-nha-trang/) and review reverse timetables in [Nha Trang to Quy Nhon Transport](/plan/nha-trang-to-quy-nhon-transport/) if storm dates shift your itinerary.

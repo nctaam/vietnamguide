@@ -104,7 +104,7 @@ add_action('wp_footer', static function (): void {
             </div>
             <div class="vg-qr-body">
                 <div class="vg-qr-img-wrap">
-                    <img class="vg-qr-img" id="vg-qr-code-img" src="" alt="<?php esc_attr_e('QR Code to open plan on mobile', 'vietnamguide-premium'); ?>" width="180" height="180" />
+                    <img class="vg-qr-img" id="vg-qr-code-img" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'/%3E" alt="<?php esc_attr_e('QR Code to open plan on mobile', 'vietnamguide-premium'); ?>" width="180" height="180" decoding="async" />
                 </div>
                 <p class="vg-qr-desc"><?php esc_html_e('Scan with your mobile camera to access this plan on your journey.', 'vietnamguide-premium'); ?></p>
                 <div class="vg-qr-actions">
@@ -158,8 +158,28 @@ add_action('wp_footer', static function (): void {
         });
 
         document.addEventListener('keydown', function (e) {
+            var modal = document.getElementById('vg-qr-modal');
+            if (!modal || modal.hasAttribute('hidden')) {
+                return;
+            }
             if (e.key === 'Escape') {
+                e.preventDefault();
                 closeQrModal();
+                return;
+            }
+            if (e.key === 'Tab') {
+                var focusables = modal.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
+                if (focusables.length > 0) {
+                    var first = focusables[0];
+                    var last = focusables[focusables.length - 1];
+                    if (e.shiftKey && document.activeElement === first) {
+                        e.preventDefault();
+                        last.focus();
+                    } else if (!e.shiftKey && document.activeElement === last) {
+                        e.preventDefault();
+                        first.focus();
+                    }
+                }
             }
         });
 

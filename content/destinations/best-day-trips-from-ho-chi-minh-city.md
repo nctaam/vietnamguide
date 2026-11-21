@@ -6,7 +6,7 @@ description: "Best day trips from Ho Chi Minh City: Cu Chi Tunnels 70 km transit
 travel_cluster: "southern_delta"
 last_verified: "2026-10-22"
 author: "VietnamGuide Editorial Team"
-reading_time_minutes: 11
+reading_time_minutes: 7
 word_count: 1372
 ---
 

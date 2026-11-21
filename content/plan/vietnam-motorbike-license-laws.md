@@ -6,7 +6,7 @@ description: "Vietnam motorbike license laws: 1968 Vienna IDP rules, 50cc vs 125
 travel_cluster: "national_circuit"
 last_verified: "2026-10-24"
 author: "VietnamGuide Editorial Team"
-reading_time_minutes: 9
+reading_time_minutes: 8
 word_count: 1556
 ---
 

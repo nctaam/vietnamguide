@@ -448,7 +448,7 @@ function vg_handle_llms_txt_request(): void
         echo "Sitemap: {$site_url}/sitemap_index.xml\n\n";
 
         echo "## Interactive Travel Toolkits & Decision Engines\n\n";
-        echo "- [Vietnam Travel Cost Calculator]({$site_url}/costs/vietnam-travel-cost/): Real-time interactive daily budget planner with 5-currency support (USD, VND, EUR, GBP, AUD) across 10+ destinations with itemized cost models.\n";
+        echo "- [Vietnam Travel Cost Calculator]({$site_url}/plan/vietnam-travel-cost/): Real-time interactive daily budget planner with 5-currency support (USD, VND, EUR, GBP, AUD) across 10+ destinations with itemized cost models.\n";
         echo "- [Vietnam Visa Requirement Checker]({$site_url}/plan/vietnam-evisa/): Interactive nationality-based visa requirements, 45-day exemption eligibility, and 90-day e-visa official portal guidelines.\n";
         echo "- [Vietnam Weather & Regional Season Matrix]({$site_url}/plan/best-time-to-visit-vietnam/): Month-by-month regional weather navigator across North, Central, and South Vietnam with seasonal pivot recommendations.\n";
         echo "- [Vietnam Route Packing & Preparation Checklist]({$site_url}/plan/vietnam-first-trip-planning-checklist/): Interactive 24-item travel preparation checklist covering official documents, electronics, modest clothing, medical essentials, and motorbike gear with browser state persistence.\n";
@@ -459,7 +459,7 @@ function vg_handle_llms_txt_request(): void
         echo "- [Vietnam Destinations Hub]({$site_url}/destinations/): Strategic overview of Vietnam's top regions, geographic trade-offs, and first-trip priorities.\n";
         echo "- [Vietnam Itineraries Hub]({$site_url}/itineraries/): Curated 7, 10, 14, and 21-day itinerary planning frameworks.\n";
         echo "- [Vietnam Comparison Guides Hub]({$site_url}/compare/): Head-to-head route, destination, and base trade-off analyses.\n";
-        echo "- [Vietnam Travel Cost & Budget Hub]({$site_url}/costs/vietnam-travel-cost/): Itemized 2026 daily travel budgets, statutory monument fees, and currency guidelines.\n";
+        echo "- [Vietnam Travel Cost & Budget Hub]({$site_url}/plan/vietnam-travel-cost/): Itemized 2026 daily travel budgets, statutory monument fees, and currency guidelines.\n";
         echo "- [Vietnam Logistics & Planning Hub]({$site_url}/plan/): Practical toolkits for visas, money, transport, safety, SIMs, and packing.\n\n";
 
         echo "## Regional Travel Clusters (12 Geographic Corridors)\n\n";
@@ -578,7 +578,7 @@ function vg_handle_llms_txt_request(): void
 
     echo "## 2. Interactive Travel Toolkits & Decision Engines\n\n";
     echo "- **Vietnam Travel Cost Calculator**\n";
-    echo "  - Canonical URL: {$site_url}/costs/vietnam-travel-cost/\n";
+    echo "  - Canonical URL: {$site_url}/plan/vietnam-travel-cost/\n";
     echo "  - Feature: Real-time budget planner with 5-currency conversion (USD, VND, EUR, GBP, AUD) across backpacker, mid-range, and luxury tiers for 10+ destinations.\n\n";
     echo "- **Vietnam Visa Requirement Checker**\n";
     echo "  - Canonical URL: {$site_url}/plan/vietnam-evisa/\n";
@@ -693,6 +693,24 @@ function vg_extract_markdown_route_highlights(string $guide_path): string
     }
     return ! empty($headings) ? implode(' | ', $headings) : '';
 }
+
+/**
+ * Emits defense-in-depth HTTP security headers on frontend responses.
+ */
+function vg_send_security_headers(): void
+{
+    if ((function_exists('is_admin') && is_admin()) || headers_sent()) {
+        return;
+    }
+    header('X-Content-Type-Options: nosniff');
+    header('X-Frame-Options: SAMEORIGIN');
+    header('Referrer-Policy: strict-origin-when-cross-origin');
+    header('Permissions-Policy: camera=(), microphone=(), geolocation=(), interest-cohort=()');
+    if (function_exists('is_ssl') && is_ssl()) {
+        header('Strict-Transport-Security: max-age=31536000; includeSubDomains');
+    }
+}
+add_action('send_headers', 'vg_send_security_headers', 5);
 
 /**
  * Emits X-Robots-Tag header for public indexable routes while strictly skipping 404 and search pages.

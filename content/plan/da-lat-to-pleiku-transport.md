@@ -6,7 +6,7 @@ description: "Overnight sleeper buses and limousine vans covering 380 km (8-9 ho
 travel_cluster: "central_highlands"
 last_verified: "2026-11-01"
 author: "VietnamGuide Editorial Team"
-reading_time_minutes: 8
+reading_time_minutes: 7
 word_count: 1488
 ---
 

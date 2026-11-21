@@ -6,7 +6,7 @@ description: "Hanoi travel guide: how many days to stay, Old Quarter vs French Q
 travel_cluster: "northern_triangle"
 last_verified: "2026-10-21"
 author: "VietnamGuide Editorial Team"
-reading_time_minutes: 14
+reading_time_minutes: 17
 word_count: 3333
 ---
 

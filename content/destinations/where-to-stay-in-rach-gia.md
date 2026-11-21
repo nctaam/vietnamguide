@@ -6,7 +6,7 @@ description: "Where to stay in Rach Gia: convenient passenger ferry port hotels 
 travel_cluster: "mekong_delta"
 last_verified: "2026-10-25"
 author: "VietnamGuide Editorial Team"
-reading_time_minutes: 12
+reading_time_minutes: 14
 word_count: 2895
 ---
 

@@ -6,7 +6,7 @@ description: "Complete Saigon airport to District 1 guide: compare Bus 109, Grab
 travel_cluster: "southern_delta"
 last_verified: "2026-10-22"
 author: "VietnamGuide Editorial Team"
-reading_time_minutes: 9
+reading_time_minutes: 7
 word_count: 1497
 ---
 

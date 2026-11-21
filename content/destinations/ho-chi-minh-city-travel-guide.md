@@ -6,7 +6,7 @@ description: "Ho Chi Minh City travel guide: District 1 vs District 3 bases, War
 travel_cluster: "southern_delta"
 last_verified: "2026-10-21"
 author: "VietnamGuide Editorial Team"
-reading_time_minutes: 14
+reading_time_minutes: 17
 word_count: 3395
 ---
 

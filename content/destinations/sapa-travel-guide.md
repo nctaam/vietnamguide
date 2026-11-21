@@ -6,7 +6,7 @@ description: "Authoritative Sapa travel guide: plan trekking routes, village vs 
 travel_cluster: "northern_highlands"
 last_verified: "2026-11-02"
 author: "VietnamGuide Editorial Team"
-reading_time_minutes: 13
+reading_time_minutes: 11
 word_count: 2158
 ---
 

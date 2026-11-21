@@ -6,7 +6,7 @@ description: "Mu Cang Chai travel guide: plan Sep–Oct golden harvest season, 3
 travel_cluster: "northern_highlands"
 last_verified: "2026-10-22"
 author: "VietnamGuide Editorial Team"
-reading_time_minutes: 10
+reading_time_minutes: 7
 word_count: 1395
 ---
 

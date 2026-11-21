@@ -50,9 +50,9 @@ $footer_data = vg_homepage_data();
 <button class="vg-back-to-top" type="button" aria-label="<?php esc_attr_e('Back to top', 'vietnamguide-premium'); ?>" data-vg-back-to-top>
     <span aria-hidden="true">&uarr;</span>
 </button>
-<div id="vg-cookie-consent" class="vg-cookie-banner" role="dialog" aria-label="<?php esc_attr_e('Cookie and privacy notice', 'vietnamguide-premium'); ?>">
+<div id="vg-cookie-consent" class="vg-cookie-banner" role="dialog" aria-label="<?php esc_attr_e('Cookie and privacy notice', 'vietnamguide-premium'); ?>" aria-describedby="vg-cookie-desc" hidden>
     <div class="vg-cookie-banner__inner">
-        <p class="vg-cookie-banner__text">
+        <p id="vg-cookie-desc" class="vg-cookie-banner__text">
             <?php esc_html_e('We use essential cookies and advertising cookies to support independent travel research and measure site usage in accordance with our', 'vietnamguide-premium'); ?>
             <a href="<?php echo esc_url(vg_home_url('privacy-policy')); ?>" class="vg-cookie-banner__link"><?php esc_html_e('Privacy Policy', 'vietnamguide-premium'); ?></a>.
         </p>
@@ -71,15 +71,16 @@ $footer_data = vg_homepage_data();
     try {
         var consent = localStorage.getItem('vg_cookie_consent');
         var b = document.getElementById('vg-cookie-consent');
-        if (b) { b.style.display = 'none'; }
+        if (b) { b.style.display = 'none'; b.setAttribute('hidden', ''); }
         if (!consent && b) {
+            b.removeAttribute('hidden');
             b.style.display = 'block';
             var acceptBtn = document.getElementById('vg-cookie-accept');
             var declineBtn = document.getElementById('vg-cookie-decline');
             function closeBanner() {
                 b.style.opacity = '0';
                 b.style.transform = 'translateY(16px)';
-                setTimeout(function() { b.style.display = 'none'; }, 300);
+                setTimeout(function() { b.style.display = 'none'; b.setAttribute('hidden', ''); }, 300);
             }
             if (acceptBtn) {
                 acceptBtn.addEventListener('click', function() {
@@ -111,6 +112,11 @@ $footer_data = vg_homepage_data();
                     closeBanner();
                 });
             }
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape' && b && !b.hasAttribute('hidden')) {
+                    closeBanner();
+                }
+            });
         }
     } catch(e) {}
 })();

@@ -6,7 +6,7 @@ description: "How to travel from Da Nang to Nha Trang: Reunification Express sle
 travel_cluster: "central_heritage"
 last_verified: "2026-11-01"
 author: "VietnamGuide Editorial Team"
-reading_time_minutes: 8
+reading_time_minutes: 7
 word_count: 1472
 ---
 

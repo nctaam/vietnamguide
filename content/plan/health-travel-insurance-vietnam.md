@@ -6,7 +6,7 @@ description: "Vietnam travel insurance and health guide: international hospital 
 travel_cluster: "national_circuit"
 last_verified: "2026-10-24"
 author: "VietnamGuide Editorial Team"
-reading_time_minutes: 8
+reading_time_minutes: 11
 word_count: 2218
 ---
 

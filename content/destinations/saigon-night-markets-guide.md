@@ -84,7 +84,7 @@ For travelers who want to step completely outside the tourist bubble and see whe
 
 - **`17:30 – 19:15` (Stop 1 — Ho Thi Ky Alley, District 10)**: Take a GrabCar (`50,000 VND`) from District 1 to `103 Hồ Thị Kỷ`. Share 4 to 5 small street snacks (`bò nướng lá lốt`, `bánh tráng nướng`, `bún num bò chóc`, and `chè Campuchia`) for `~150,000 VND` per person, then stroll through the wholesale flower lanes.
 - **`19:30 – 21:00` (Stop 2 — Vinh Khanh Snail Street, District 4)**: Hop a 10-minute GrabCar (`45,000 VND`) across to `534 Vĩnh Khánh`. Order grilled scallops (`sò điệp nướng mỡ hành`), garlic-butter snails (`ốc hương xào bơ tỏi`) with baguette, and a cold Saigon beer (`~180,000 VND` per person).
-- **`21:15 – 22:30` (Stop 3 — Ben Thanh Night Market & Nguyen Hue Walk, District 1)**: Cross the canal back into District 1 (`35,000 VND` Grab or walk across Mong Bridge), browse the lantern-lit stalls along `Phan Chu Trinh` at Ben Thanh Night Market, and finish with an evening stroll down **Nguyen Hue Walking Street (`Phố Đi Bộ Nguyễn Huệ`)**—a classic highlight of any [Ho Chi Minh City travel itinerary](/destinations/ho-chi-minh-city-travel-guide).
+- **`21:15 – 22:30` (Stop 3 — Ben Thanh Night Market & Nguyen Hue Walk, District 1)**: Cross the canal back into District 1 (`35,000 VND` Grab or walk across Mong Bridge), browse the lantern-lit stalls along `Phan Chu Trinh` at Ben Thanh Night Market, and finish with an evening stroll down **Nguyen Hue Walking Street (`Phố Đi Bộ Nguyễn Huệ`)**—a classic highlight of any [Ho Chi Minh City travel itinerary](/destinations/ho-chi-minh-city-travel-guide/).
 
 ---
 

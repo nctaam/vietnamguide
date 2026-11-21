@@ -26,12 +26,12 @@ except ImportError:
     slop_linter = None
 
 # Default validation thresholds
-DEFAULT_MIN_WORDS = 1200
+DEFAULT_MIN_WORDS = 1350
 DEFAULT_MIN_H2_COUNT = 4
 DEFAULT_MIN_TABLES = 1
 DEFAULT_MIN_BLOCKQUOTES = 1
-DEFAULT_MIN_HLS = 85.0
-DEFAULT_MIN_EMPIRICAL_SIGNALS = 70
+DEFAULT_MIN_HLS = 95.0
+DEFAULT_MIN_EMPIRICAL_SIGNALS = 80
 
 MANDATORY_FRONTMATTER_FIELDS = [
     "title",
@@ -297,6 +297,11 @@ def audit_markdown_file(
         errors.append(
             f"Frontmatter word_count ({frontmatter.get('word_count')}) does not match substantive word count ({word_count})"
         )
+    expected_reading_time = max(1, round(word_count / 200))
+    if frontmatter and frontmatter.get("reading_time_minutes") != expected_reading_time:
+        errors.append(
+            f"Frontmatter reading_time_minutes ({frontmatter.get('reading_time_minutes')}) does not match round(word_count/200) ({expected_reading_time})"
+        )
 
     # 3. Structural Markdown Elements
     elements = count_markdown_elements(body)
@@ -315,10 +320,36 @@ def audit_markdown_file(
             f"Missing editorial callout/pro-tip blockquote: required >= {DEFAULT_MIN_BLOCKQUOTES}"
         )
 
-    if not (elements["has_faq"] or elements["has_steps"]):
-        warnings.append(
-            "Article does not include a dedicated FAQ or Step-by-Step section"
+    if not elements["has_faq"]:
+        errors.append(
+            "Missing dedicated FAQ H2 section (required for FAQPage schema & AIO instant answers)"
         )
+
+    # 3b. Markdown Table Column Consistency (outside fenced code blocks)
+    in_code_fence = False
+    in_md_table = False
+    expected_table_cols: Optional[int] = None
+    for line_idx, raw_line in enumerate(body.splitlines(), 1):
+        stripped_line = raw_line.strip()
+        if stripped_line.startswith("```"):
+            in_code_fence = not in_code_fence
+            in_md_table = False
+            expected_table_cols = None
+            continue
+        if in_code_fence:
+            continue
+        if stripped_line.startswith("|") and stripped_line.endswith("|") and len(stripped_line) >= 2:
+            col_count = len(re.split(r"(?<!\\)\|", stripped_line[1:-1]))
+            if not in_md_table:
+                in_md_table = True
+                expected_table_cols = col_count
+            elif col_count != expected_table_cols:
+                errors.append(
+                    f"Malformed Markdown table at line {line_idx}: expected {expected_table_cols} columns, found {col_count}"
+                )
+        else:
+            in_md_table = False
+            expected_table_cols = None
 
     # 4. Empirical Signal Density
     signals = extract_empirical_signals(body)
@@ -331,7 +362,7 @@ def audit_markdown_file(
     if signals["distance_mentions"] == 0 and signals["transit_time_mentions"] == 0:
         warnings.append("Low transit/spatial density: no km or transit time mentions found")
 
-    # 4b. Link Hygiene Validation (forbid file:// links and relative internal route links missing leading '/')
+    # 4b. Link & Typography Hygiene Validation
     for m_file_link in re.finditer(r"file://[^\s)\"'>]+", body, flags=re.IGNORECASE):
         errors.append(f"Forbidden local file:// link detected in body: '{m_file_link.group(0)}'")
     for m_rel_link in re.finditer(
@@ -340,6 +371,17 @@ def audit_markdown_file(
     ):
         errors.append(
             f"Relative internal link missing leading '/': '({m_rel_link.group(1)}' (must start with '/{m_rel_link.group(1)}')"
+        )
+    for m_int_link in re.finditer(r"(?<!!)\[[^\]]+\]\((/[^)\s]+)\)", body):
+        raw_href = m_int_link.group(1)
+        clean_path = raw_href.split("#")[0].split("?")[0]
+        if clean_path != "/" and not clean_path.endswith("/") and "." not in clean_path.split("/")[-1]:
+            errors.append(
+                f"Internal link missing canonical trailing slash: '{raw_href}' (must end with '/')"
+            )
+    for m_latex in re.finditer(r"\$\\?(?:leftrightarrow|rightarrow|leftarrow|to)\$", body):
+        errors.append(
+            f"Raw LaTeX arrow detected in prose: '{m_latex.group(0)}' (use Unicode '→' or '↔')"
         )
 
     # 5. Anti-AI Slop Quality Engine Verification

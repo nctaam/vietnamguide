@@ -6,7 +6,7 @@ description: "Choose which UNESCO heritage sites in Vietnam fit your route, with
 travel_cluster: "national_circuit"
 last_verified: "2026-10-22"
 author: "VietnamGuide Editorial Team"
-reading_time_minutes: 11
+reading_time_minutes: 8
 word_count: 1641
 ---
 
