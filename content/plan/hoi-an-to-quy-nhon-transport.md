@@ -7,7 +7,7 @@ travel_cluster: "central_heritage"
 last_verified: "2026-11-01"
 author: "VietnamGuide Editorial Team"
 reading_time_minutes: 7
-word_count: 1446
+word_count: 1479
 ---
 
 Separated by 295 km (183 miles) of coastline, salt lagoons, and Cham temple hills, the journey south from Hoi An to Quy Nhon in Binh Dinh Province presents a classic central Vietnam logistics puzzle. Hoi An has no railway station of its own. Nor does the UNESCO-protected Ancient Town have an express highway bus terminal inside its historic center. Every southbound trip therefore requires either a short road transfer to catch a train, a highway pickup along National Route QL1A, or a door-to-door private vehicle.
@@ -81,3 +81,9 @@ Local Hoi An charter fleets quote flat all-inclusive vehicle prices (covering dr
 2. **My Lai Memorial (Son My, Quang Ngai Province — Km 135):** Located 12 km east of Quang Ngai city off Highway 24B. This quiet, deeply moving museum and preserved village site (20,000 VND / $0.80 USD admission; allow 60 minutes) documents the March 1968 civilian massacre during the American War.
 3. **Sa Huynh Salt Fields & Lagoon (Km 195):** Right along QL1A at the southern border of Quang Ngai, glistening salt pans sit beside coastal fishing lagoons where you can stop for a 45-minute fresh seafood lunch (120,000–180,000 VND / $4.80–$7.20 USD per person).
 4. **Banh It Cham Towers (Thap Bac — Km 280):** Perched on a breezy hilltop in Tuy Phuoc District just 15 km north of Quy Nhon (20,000 VND / $0.80 USD ticket), these four 11th-century sandstone-and-brick Cham towers overlook the Kone River delta and make a fitting final stop before checking into your beachfront hotel. Compare coastal neighborhoods in our [Where to Stay in Quy Nhon](/destinations/where-to-stay-in-quy-nhon/) guide.
+
+---
+
+## Related Central Heritage Field Guides
+
+- [Da Nang to Quy Nhon Transport (2026): Train vs Bus](/plan/da-nang-to-quy-nhon-transport/): Da Nang to Quy Nhon transport guide: Reunification Express train berths vs luxury Vietage rail carriages, limousine vans, and coastal highway travel times.

@@ -46,7 +46,7 @@ function vg_homepage_data(): array
         'essentials' => [
             ['title' => 'Vietnam E-Visa', 'meta' => '90-day e-visa rules ($25 single / $50 multiple USD) and 45-day exemptions for 25 countries.', 'url' => vg_home_url('plan/vietnam-evisa')],
             ['title' => 'Best time to visit', 'meta' => 'Plan around regional monsoon calendars across North, Central, and South.', 'url' => vg_home_url('plan/best-time-to-visit-vietnam')],
-            ['title' => 'Travel cost', 'meta' => 'Verified 2026 daily budgets in VND and USD across backpacker, mid-range, and comfort tiers.', 'url' => vg_home_url('costs/vietnam-travel-cost')],
+            ['title' => 'Travel cost', 'meta' => 'Verified 2026 daily budgets in VND and USD across backpacker, mid-range, and comfort tiers.', 'url' => vg_home_url('plan/vietnam-travel-cost')],
             ['title' => 'SIM and eSIM', 'meta' => 'Viettel and Vinaphone 4G/5G tourist data packages (150,000–350,000 VND) from arrival.', 'url' => vg_home_url('plan/sim-esim-vietnam')],
             ['title' => 'Transport', 'meta' => 'Domestic flights, Reunification Express sleeper trains (SE1–SE4), and expressway limousines.', 'url' => vg_home_url('plan/transport-within-vietnam')],
             ['title' => 'Safety and scams', 'meta' => 'Practical airport taxi verification, ATM withdrawal limits, and risk management without alarmism.', 'url' => vg_home_url('plan/safety-scams-vietnam')],

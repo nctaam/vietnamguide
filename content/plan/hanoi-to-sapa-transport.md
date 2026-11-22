@@ -7,7 +7,7 @@ travel_cluster: "northern_triangle"
 last_verified: "2026-10-31"
 author: "VietnamGuide Editorial Team"
 reading_time_minutes: 8
-word_count: 1538
+word_count: 1668
 ---
 
 ## Route Architecture: CT05 Expressway vs Hanoi–Lao Cai Railway
@@ -102,3 +102,12 @@ Yes. Noi Bai Airport sits at Km 0 of the `CT05` Expressway. **Sao Viet**, **G8 S
 
 ### Which is better for motion sickness: the Sapa train or the cabin bus?
 The **`SP3`/`SP4` overnight train** is far gentler during the first 8 hours along the flat Red River valley floor, leaving only a 50-minute mountain climb up `QL4D` across the 612-meter Mong Sen Viaduct. On road vehicles, book a **middle-row captain seat (Seats 3–6) in a 9-seat limousine** or a **lower-deck middle cabin (`Tầng 1, Giữa xe`)** on a 22-cabin bus.
+
+---
+
+## Related Hanoi & Northern Delta Field Guides
+
+- [Hanoi to Sapa: Sleeper Train vs Sleeper Bus (2026)](/plan/hanoi-to-sapa-train-vs-sleeper-bus/): Compare Hanoi to Sapa travel: overnight railway sleeper train to Lao Cai vs luxury cabin sleeper bus direct to Sapa town. Fares, timing, and comfort.
+- [Hanoi to Hue Transport (2026): Train, Flight or Bus](/plan/hanoi-to-hue-transport/): Hanoi to Hue transport options: SE1 and SE3 overnight sleeper trains, direct domestic flights, and cabin buses compared with 2026 prices rates in VND.
+- [Sapa vs Ha Giang: Terraces, Loop Roads or Softer Travel](/compare/sapa-vs-ha-giang/): Compare Sapa vs Ha Giang: choose Sapa, Ha Giang, both, or neither by mountain scenery style, comfort, season, road safety, and Hanoi transfer pressure.
+- [Sapa Travel Guide: Terraces, Trekking and Softer Travel](/destinations/sapa-travel-guide/): Authoritative Sapa travel guide: plan trekking routes, village vs town lodging, Fansipan weather windows, sleeper bus transit from Hanoi, and pacing.

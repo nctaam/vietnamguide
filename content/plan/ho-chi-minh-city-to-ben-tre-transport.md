@@ -6,8 +6,8 @@ description: "Ho Chi Minh City to Ben Tre transport: shared limousine vans vs lo
 travel_cluster: "mekong_delta"
 last_verified: "2026-10-22"
 author: "VietnamGuide Editorial Team"
-reading_time_minutes: 7
-word_count: 1467
+reading_time_minutes: 8
+word_count: 1574
 ---
 
 # Ho Chi Minh City to Ben Tre Transport (2026): Van & Bus
@@ -106,3 +106,11 @@ If your goal is to experience **authentic, unhurried coconut-canal life**, **dri
 
 ### Can I bring a full-sized 24-inch or 28-inch suitcase on a 9-seat VIP limousine van from Saigon to Ben Tre?
 Yes, with one important booking note: a 9-seat Ford Transit DCar Limousine has a **compact rear luggage bay** behind the last row of reclining seats that comfortably holds **4 to 5 medium suitcases plus soft backpacks**. If you are traveling with **two or more oversized 28-inch hard-shell suitcases**, inform the operator (Thịnh Phát, Thảo Châu, or Kim Hoàng) on WhatsApp or Vexere when reserving your seats so the dispatcher places your bags wisely or assigns a 16-seat high-roof Solati van, OR book **FUTA Bus Lines (Phương Trang, 105,000–120,000 VND)**, which uses full-sized 40-berth coaches with massive underbelly cargo holds and free hotel transit shuttles in Ben Tre.
+
+---
+
+## Related Mekong Delta Field Guides
+
+- [Where to Stay in Ben Tre (2026): Best River & Eco-Stays](/destinations/where-to-stay-in-ben-tre/): Where to stay in Ben Tre: peaceful Ham Luong river eco-lodges vs An Khanh village homestays and central city hotels. 2026 room rates and travel advice.
+- [Ho Chi Minh City to Can Tho: Limousine, Bus & Car](/plan/ho-chi-minh-city-to-can-tho-transport/): Ho Chi Minh City to Can Tho transport guide: limousine vans, express buses, and private car options with travel times, station advice, and 2026 VND fares.
+- [Ho Chi Minh City to Da Lat: Bus, Flight & Car](/plan/ho-chi-minh-city-to-da-lat-transport/): Compare Ho Chi Minh City to Da Lat transport options: sleeper buses, flights, and private cars with journey times, ticket costs in VND, and schedules.

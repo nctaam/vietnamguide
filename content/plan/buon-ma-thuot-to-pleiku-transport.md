@@ -7,7 +7,7 @@ travel_cluster: "central_highlands"
 last_verified: "2026-11-01"
 author: "VietnamGuide Editorial Team"
 reading_time_minutes: 8
-word_count: 1577
+word_count: 1612
 ---
 
 # Buon Ma Thuot to Pleiku Transport (2026): Bus vs Van
@@ -102,3 +102,9 @@ Yes. Pleiku Airport (**PXU**) lies **6 km** north of downtown Pleiku, and most l
 
 ### When is the best time of year for the Highway 14 drive?
 The dry season from **November to April** brings clear skies, cool mornings (**16°C to 19°C** in Pleiku), and white coffee blossoms in **February and March**. During the rainy season (**May to October**), afternoon downpours hit between **14:00 and 18:00**, washing slick red basalt clay onto **QL14** shoulders—book morning departures (**07:00 to 09:30**) for dry road conditions.
+
+---
+
+## Related Central Highlands Field Guides
+
+- [Buon Ma Thuot to Nha Trang Transport (2026): Bus & Car](/plan/buon-ma-thuot-to-nha-trang-transport/): Highway 26 transit across 185 km: limousine vans (3.5-4 hours, 200,000 VND) vs local buses over Phoenix Pass. 2026 timetables and departure points.

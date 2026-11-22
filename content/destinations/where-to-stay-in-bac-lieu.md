@@ -7,7 +7,7 @@ travel_cluster: "mekong_delta"
 last_verified: "2026-10-25"
 author: "VietnamGuide Editorial Team"
 reading_time_minutes: 8
-word_count: 1552
+word_count: 1630
 ---
 
 # Where to Stay in Bac Lieu (2026): Best Hotels & Stays
@@ -130,3 +130,11 @@ Yes. Almost all front desks in Ward 3 and Ward 7 arrange scooter rentals through
 
 ### How do I travel between Bac Lieu and Ca Mau?
 Local air-conditioned shuttle buses depart from **Bac Lieu Bus Station** every **20 minutes** between **05:00 AM and 18:00**. The **65 km** trip along National Highway 1A takes **1 hour 30 minutes** and costs **60,000–80,000 VND ($2.40–$3.20 USD)** per person. Alternatively, a metered taxi journey between the two city centers costs approximately **850,000–950,000 VND ($34–$38 USD)**.
+
+---
+
+## Related Mekong Delta Field Guides
+
+- [Where to Stay in Ca Mau (2026): Hotels & Eco-Lodges](/destinations/where-to-stay-in-ca-mau/): Contrasts central Quan Lo canal hotels against Dat Mui mangrove eco-lodges near Vietnam's southernmost cape.
+- [Where to Stay in Ben Tre (2026): Best River & Eco-Stays](/destinations/where-to-stay-in-ben-tre/): Evaluates Ham Luong riverside lodges, An Khanh coconut-orchard homestays, and walkable town bases.
+- [Where to Stay in An Giang (2026): Chau Doc vs Long Xuyen](/destinations/where-to-stay-in-an-giang/): Breaks down Chau Doc riverfront stays, Sam Mountain hillside lodges, and Long Xuyen floating-market hotels with current room tariffs.

@@ -7,7 +7,7 @@ travel_cluster: "national_circuit"
 last_verified: "2026-10-24"
 author: "VietnamGuide Editorial Team"
 reading_time_minutes: 7
-word_count: 1402
+word_count: 1485
 ---
 
 # Vietnam First Trip Planning Checklist
@@ -135,3 +135,11 @@ Home SMS verification is mandatory. Linking a foreign Visa or Mastercard inside 
 
 ### What is the easiest mistake to avoid with Vietnamese Dong banknotes?
 Watch the blue polymer bills closely. The **`500,000 VND` note (`~$20.00 USD`)** and the **`20,000 VND` note (`~$0.80 USD`)** share a nearly identical cyan-blue color, while the **`100,000 VND` note (`~$4.00 USD`)** and **`10,000 VND` note (`~$0.40 USD`)** both look greenish-yellow. Store `500,000 VND` bills in a separate zippered compartment and count every zero under bright light before paying taxi drivers or street vendors.
+
+---
+
+## Related Vietnam Planning & Route Field Guides
+
+- [Vietnam Airport Arrival Checklist](/plan/vietnam-airport-arrival-checklist/): Use this Vietnam airport arrival checklist to handle documents, luggage, SIM or eSIM, small cash, verified transport, scams, and first-night decisions.
+- [Vietnam Scooter Rental Checklist (2026): Bike Checks](/plan/vietnam-scooter-rental-checklist/): Vietnam scooter rental checklist: brake testing, tire checks, blue card papers, helmet safety, damage video recording, and deposit rules for 2026 travel.
+- [Best Vietnam Routes for First-Time Visitors: Planning Guide](/plan/best-vietnam-routes-first-time-visitors/): Plan the best Vietnam routes for first-time visitors: compare 10-day and 14-day circuits, domestic flight connections, train costs, and travel budgets.

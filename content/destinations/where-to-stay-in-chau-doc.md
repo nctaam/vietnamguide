@@ -6,8 +6,8 @@ description: "Where to stay in Chau Doc: luxury riverfront resorts on the Hau Ri
 travel_cluster: "mekong_delta"
 last_verified: "2026-10-24"
 author: "VietnamGuide Editorial Team"
-reading_time_minutes: 7
-word_count: 1453
+reading_time_minutes: 8
+word_count: 1555
 ---
 
 # Where to Stay in Chau Doc (2026): Sam Mountain & River
@@ -73,3 +73,11 @@ Book **Victoria Chau Doc Hotel** (`1 Le Loi`) if you are spending **1 night** be
 
 ### When is the best month to visit Chau Doc and Tra Su Forest?
 **September through November** (`Mùa nước nổi` / Mekong floating-water season) is the best window to visit. Rising Mekong floodwaters coat **Tra Su Melaleuca Forest** in its thickest emerald carpet of `Bèo tấm` water lettuce, while Chau Doc Market overflows with seasonal `Cá linh` fish and bright yellow `Bông điên điển` flowers.
+
+---
+
+## Related Mekong Delta Field Guides
+
+- [Where to Stay in An Giang (2026): Chau Doc vs Long Xuyen](/destinations/where-to-stay-in-an-giang/): Where to stay in An Giang: Chau Doc riverfront hotels vs Sam Mountain retreats and Long Xuyen floating market bases with 2026 room rates and travel advice.
+- [Vietnam to Cambodia Boat Guide (2026): Fast Mekong Ferry](/plan/vietnam-to-cambodia-boat-guide/): Vietnam to Cambodia boat guide: Chau Doc to Phnom Penh high-speed Mekong ferries, Song Tien border stamps, Cambodian e-visa checks, fares, and schedules.
+- [Vietnam to Cambodia Border Crossings: Routes & Visas (2026)](/plan/vietnam-to-cambodia-border-crossings/): Complete Vietnam to Cambodia border crossings guide: compare Moc Bai bus transit, Chau Doc Mekong speedboats, Ha Tien coastal routes, e-visas, and scams.

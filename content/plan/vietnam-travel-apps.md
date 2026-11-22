@@ -6,8 +6,8 @@ description: "Best travel apps for Vietnam: Grab and Xanh SM ride-hailing, BusMa
 travel_cluster: "national_circuit"
 last_verified: "2026-10-24"
 author: "VietnamGuide Editorial Team"
-reading_time_minutes: 7
-word_count: 1454
+reading_time_minutes: 8
+word_count: 1544
 ---
 
 # Best Travel Apps for Vietnam (2026): Rides, Maps & Pay
@@ -119,3 +119,11 @@ No. A data-only travel eSIM (such as Viettel) works seamlessly once Grab, WhatsA
 
 ### Can foreign tourists scan VietQR codes at street stalls?
 You cannot link a foreign credit card directly to MoMo or VNPay without a Vietnamese bank account, but you can scan merchant VietQR codes using tourist fintech wallets like Moreta Pay or ASEAN cross-border banking apps, or simply pay cash in polymer VND notes.
+
+---
+
+## Related Vietnam Planning & Route Field Guides
+
+- [Vietnam Coffee Guide: Egg, Salt, Coconut & Cafes (2026)](/destinations/vietnam-coffee-guide/): Complete Vietnam coffee guide: authentic egg coffee, salt coffee, coconut coffee, robusta phin culture, specialty roasters, and iconic cafes nationwide.
+- [Vietnam Sleeper Bus Survival Guide (2026): Bunks & Tips](/plan/vietnam-sleeper-bus-survival-guide/): Vietnam sleeper bus survival guide: VIP cabins vs standard bunks, lower deck perks, shoe bags, luggage security, and rest stop advice for 2026 trips.
+- [Vietnam Food Safety and Street Food Etiquette Guide](/plan/vietnam-food-safety-street-food-etiquette/): Master Vietnam food safety and street food etiquette: choose clean busy stalls, order politely, handle sauces, ice, cash, seating, and flexible dining.

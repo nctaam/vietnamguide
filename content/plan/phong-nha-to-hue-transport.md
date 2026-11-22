@@ -7,7 +7,7 @@ travel_cluster: "phong_nha_caves"
 last_verified: "2026-10-22"
 author: "VietnamGuide Editorial Team"
 reading_time_minutes: 7
-word_count: 1353
+word_count: 1460
 ---
 
 # Phong Nha to Hue Transport: Bus, Train & DMZ Car (2026)
@@ -90,3 +90,11 @@ Yes, with an important routing distinction: the remote **Ho Chi Minh Highway Wes
 
 ### Does the reverse journey from Hue to Phong Nha work the same way?
 Yes. Direct buses depart central Hue for Phong Nha at **07:30 AM and 14:00 PM** (220,000–300,000 VND), DMZ private cars pick you up at your Hue hotel at **08:00 AM** and drop you in Phong Nha by **15:30 PM** (2,200,000–2,500,000 VND), and northbound trains (**SE8 at 09:10 AM**, **SE6 at 13:20 PM**, and **SE20 at 17:15 PM**) connect Hue Station to Dong Hoi Station in just over 3 hours.
+
+---
+
+## Related Phong Nha & North-Central Field Guides
+
+- [Where to Stay in Phan Rang (2026): Hotels & Resorts](/destinations/where-to-stay-in-phan-rang/): Where to stay in Phan Rang: Ninh Chu beach resorts vs central city hotels near Cham towers and Vinh Hy villas. 2026 room rates, areas, and local advice.
+- [Da Nang to Phong Nha Transport (2026): Train vs Bus](/plan/da-nang-to-phong-nha-transport/): Da Nang to Phong Nha transport guide: Reunification Express train to Dong Hoi vs direct sleeper buses and private cars. Schedules, fares, and cave advice.
+- [Ninh Binh to Phong Nha Transport (2026): Bus vs Train](/plan/ninh-binh-to-phong-nha-transport/): Ninh Binh to Phong Nha transport: direct overnight sleeper buses vs trains to Dong Hoi with local taxi transfers. 2026 ticket fares, schedules, and advice.

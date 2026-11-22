@@ -7,7 +7,7 @@ travel_cluster: "ha_long_bay"
 last_verified: "2026-11-01"
 author: "VietnamGuide Editorial Team"
 reading_time_minutes: 8
-word_count: 1556
+word_count: 1688
 ---
 
 # Cat Ba to Ninh Binh Transport (2026): Tourist Bus Combo, Ferry & Private Transfer Guide
@@ -116,3 +116,12 @@ Tourist express buses that use the 8-minute speedboat tender cannot carry motorb
 
 ### Which departure slot is best if I only have one night in Ninh Binh?
 Book the 08:00 or 08:30 morning departure from Cat Ba Town. Arriving in Tam Coc by 13:00 gives you a full afternoon for a Trang An or Tam Coc sampan ride plus an early morning hike up Hang Mua the next day before catching an evening train or limousine bus onward to Hanoi, Phong Nha, or Hue.
+
+---
+
+## Related Ha Long, Lan Ha & Cat Ba Field Guides
+
+- [Ha Long to Ninh Binh Transport (2026): Bus vs Limousine](/plan/ha-long-to-ninh-binh-transport/): Pier-to-hotel shared limousine vans (3.5 hours, 280,000-350,000 VND) vs express buses covering 190 km via Hai Phong. 2026 cruise transfer schedules.
+- [Hanoi to Cat Ba Island Transport: Bus & Ferry Guide (2026)](/plan/hanoi-to-cat-ba-island-transport/): Complete Hanoi to Cat Ba island transport guide: compare tourist combo bus-and-ferry packages, private transfers, Hai Phong speedboats, and travel times.
+- [Ninh Binh to Phong Nha Transport (2026): Bus vs Train](/plan/ninh-binh-to-phong-nha-transport/): Ninh Binh to Phong Nha transport: direct overnight sleeper buses vs trains to Dong Hoi with local taxi transfers. 2026 ticket fares, schedules, and advice.
+- [Hanoi to Ninh Binh Transport: Train, Van or Car?](/plan/hanoi-to-ninh-binh-transport/): Compare Hanoi to Ninh Binh transport options: evaluate train, limousine van, private car, and day tours by drop-off point, luggage space, and timing.

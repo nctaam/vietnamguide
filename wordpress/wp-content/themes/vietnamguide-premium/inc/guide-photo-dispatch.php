@@ -406,6 +406,7 @@ function vg_render_photo_dispatch(array $atts): string
                     class="vg-dispatch-pill-btn <?php echo $is_tab_active ? 'is-active' : ''; ?>"
                     role="tab"
                     aria-selected="<?php echo $is_tab_active ? 'true' : 'false'; ?>"
+                    tabindex="<?php echo $is_tab_active ? '0' : '-1'; ?>"
                     aria-controls="vg-dispatch-panel-<?php echo esc_attr($d_slug); ?>"
                     id="vg-dispatch-tab-<?php echo esc_attr($d_slug); ?>"
                     data-dispatch-target="<?php echo esc_attr($d_slug); ?>"
@@ -593,7 +594,7 @@ function vg_render_photo_dispatch_lightbox_template(): void
         <div class="vg-lightbox-dialog">
             <button type="button" class="vg-lightbox-close" aria-label="Close dialog" data-vg-close-modal>&times;</button>
             <div class="vg-lightbox-body">
-                <img id="vg-lightbox-img" src="" alt="" class="vg-lightbox-target" width="1920" height="1080" />
+                <img id="vg-lightbox-img" src="data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%20width%3D%271%27%20height%3D%271%27/%3E" alt="" class="vg-lightbox-target" width="1920" height="1080" decoding="async" />
                 <div class="vg-lightbox-caption" id="vg-lightbox-caption"></div>
             </div>
         </div>

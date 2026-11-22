@@ -312,6 +312,7 @@ function vg_interactive_map_shortcode(array $atts = []): string
                                 class="vg-map-pill-btn <?php echo $is_active ? 'is-active' : ''; ?>"
                                 role="tab"
                                 aria-selected="<?php echo $is_active ? 'true' : 'false'; ?>"
+                                tabindex="<?php echo $is_active ? '0' : '-1'; ?>"
                                 aria-controls="vg-dossier-<?php echo esc_attr($corridor['id']); ?>"
                                 id="vg-tab-<?php echo esc_attr($corridor['id']); ?>"
                                 data-corridor-target="<?php echo esc_attr($corridor['id']); ?>"

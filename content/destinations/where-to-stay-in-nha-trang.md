@@ -7,7 +7,7 @@ travel_cluster: "coastal_islands"
 last_verified: "2026-10-24"
 author: "VietnamGuide Editorial Team"
 reading_time_minutes: 8
-word_count: 1512
+word_count: 1646
 ---
 
 # Where to Stay in Nha Trang: Best Areas & Hotels
@@ -74,3 +74,12 @@ January through August is dry season. Backed by 300+ sunny days per year, Nha Tr
 
 ### How do I get from Cam Ranh Airport (CXR) to Central Nha Trang hotels?
 Walk outside CXR Terminal T1 or T2 to **Pillar 4** and board orange **Dat Moi Airport Bus #18** (65,000 VND / $2.60 USD per ticket, departing every 30 minutes from 05:30 to 21:30), which drives 35 km north in 40 minutes and drops passengers right along Tran Phu Boulevard before ending on Yersin Street. Prefer a direct car? A private GrabCar costs 280,000–350,000 VND ($11.20–$14.00 USD) including airport tolls.
+
+---
+
+## Related Coastal & Island Field Guides
+
+- [Mui Ne vs Nha Trang: Which Beach Base Is Better?](/compare/mui-ne-vs-nha-trang/): Mui Ne vs Nha Trang: compare coastal kitesurfing and sand dunes in Mui Ne with high-rise hotels, scuba diving, and nightlife in Nha Trang for 2026.
+- [Phu Quoc vs Nha Trang: Which Beach Is Better?](/compare/phu-quoc-vs-nha-trang/): Phu Quoc vs Nha Trang: compare island resort relaxation with active city-beach energy, water sports, dining scenes, direct flights, and rainy seasons.
+- [Nha Trang Travel Guide: Beach, Food, Cam Ranh and Islands](/destinations/nha-trang-travel-guide/): Nha Trang travel guide: urban beachfront hotels, island hopping boat tours, mud baths, diving spots, Cam Ranh airport transfers, and seasonal timing.
+- [Best Things to Do in Nha Trang: Beaches & Islands](/destinations/best-things-to-do-in-nha-trang/): Explore the best things to do in Nha Trang: island snorkeling tours, Po Nagar Cham Towers, mud baths, scuba diving, and seafood feasts with 2026 prices.

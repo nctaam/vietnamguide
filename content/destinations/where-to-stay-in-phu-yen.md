@@ -6,8 +6,8 @@ description: "Where to stay in Phu Yen: Tuy Hoa city beach hotels vs Xuan Dai ba
 travel_cluster: "coastal_islands"
 last_verified: "2026-10-24"
 author: "VietnamGuide Editorial Team"
-reading_time_minutes: 7
-word_count: 1442
+reading_time_minutes: 8
+word_count: 1548
 ---
 
 # Where to Stay in Phu Yen (2026): Best Areas & Resorts
@@ -76,3 +76,11 @@ It sits closer to Quy Nhon. Downtown Quy Nhon is 35 km north, **Dieu Tri Station
 
 ### How many days do I need for Phu Yen's North and South loops?
 Three days and two nights cover both halves cleanly. Spend Day 1 on the Northern Loop (**Bai Xep**, **O Loan Lagoon** blood cockles, **Mang Lang Church**, and **Ganh Da Dia**), and Day 2 on a 04:15 AM sunrise trip to **Mui Dien Lighthouse**, **Bai Mon**, and **Vung Ro Bay** floating rafts.
+
+---
+
+## Related Coastal & Island Field Guides
+
+- [Phu Yen Travel Guide: Coastal Drive, Cliffs & Tips (2026)](/destinations/phu-yen-travel-guide/): Complete Phu Yen travel guide: explore Ganh Da Dia basalt cliffs, Mui Dien lighthouse, Bai Xep beach, O Loan lagoon seafood, routes, and coastal drives.
+- [Quy Nhon to Phu Yen Coastal Drive: Route & Stops (2026)](/plan/quy-nhon-to-phu-yen-coastal-drive/): Complete Quy Nhon to Phu Yen coastal drive guide: 100 km scenic route via QL1D, Ganh Da Dia basalt rocks, Ky Co beach, car rental rates, and stops.
+- [Where to Stay in Cam Ranh (2026): Bai Dai Beach Resorts](/destinations/where-to-stay-in-cam-ranh/): Bai Dai beachfront resorts 10 minutes from CXR Airport vs central Cam Ranh hotels and transit guesthouses. 2026 rates, transfers, and beach access.

@@ -7,7 +7,7 @@ travel_cluster: "national_circuit"
 last_verified: "2026-10-24"
 author: "VietnamGuide Editorial Team"
 reading_time_minutes: 8
-word_count: 1577
+word_count: 1662
 ---
 
 # Vietnam Airport Arrival Checklist: Step-by-Step Terminal Protocol for 2026
@@ -122,3 +122,11 @@ For **00:00 to 05:00** arrivals, install a **travel eSIM** before flying, withdr
 
 ### Can I connect from an international arrival to a domestic flight in 90 minutes?
 **No—allow at least 3 hours (180 minutes)** at `HAN` or `SGN` to clear immigration (20 to 60 minutes), claim bags, pass customs X-ray, ride the 15-minute shuttle to the Domestic Terminal (`T1` at `HAN`, `T1/T3` at `SGN`), and check in before domestic bag drop closes **40 minutes before departure**.
+
+---
+
+## Related Vietnam Planning & Route Field Guides
+
+- [Vietnam First Trip Planning Checklist](/plan/vietnam-first-trip-planning-checklist/): Prepare with our Vietnam first trip planning checklist before booking: entry checks, route shape, weather risk, cost anchors, arrival setup, and tips.
+- [Vietnam Plug Adapter & Electricity Guide (2026): Outlets](/plan/vietnam-plug-adapter-electricity-guide/): Complete Vietnam plug adapter and electricity guide: Type A, C, and F socket compatibility, 220V voltage rules, dual-voltage tech, and converter tips.
+- [Vietnam Scooter Rental Checklist (2026): Bike Checks](/plan/vietnam-scooter-rental-checklist/): Vietnam scooter rental checklist: brake testing, tire checks, blue card papers, helmet safety, damage video recording, and deposit rules for 2026 travel.

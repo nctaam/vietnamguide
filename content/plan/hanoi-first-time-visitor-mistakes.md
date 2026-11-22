@@ -7,7 +7,7 @@ travel_cluster: "northern_triangle"
 last_verified: "2026-10-22"
 author: "VietnamGuide Editorial Team"
 reading_time_minutes: 8
-word_count: 1501
+word_count: 1648
 ---
 
 # 12 Hanoi First-Time Visitor Mistakes to Avoid (2026): Train Street, Mausoleum Hours, Taxis & Scams
@@ -121,3 +121,12 @@ In 2026, official entrance fees are **`70,000 VND` (`~$2.80 USD`)** for the **Te
 
 ### Is Hanoi safe to walk around at night for first-time visitors?
 Yes. Hanoi's Old Quarter, Hoan Kiem Lake, and French Quarter are among the safest capitals in Asia for evening walking (` violent crime against tourists is extremely rare`). Simply walk at a steady, predictable pace when crossing scooter traffic, politely decline street hawkers offering fruit poles or shoe-shines, and keep your `500,000 VND` notes separate from `20,000 VND` bills.
+
+---
+
+## Related Hanoi & Northern Delta Field Guides
+
+- [Best Day Trips from Hanoi: Ninh Binh, Ha Long or Stay?](/destinations/best-day-trips-from-hanoi/): Best day trips from Hanoi, compared by route job: Ninh Binh, Ha Long or Lan Ha, Bat Trang, Duong Lam, Perfume Pagoda, Ba Vi, timing, weather, and skip logic.
+- [Hanoi vs Ho Chi Minh City: Which Should You Visit First?](/compare/hanoi-vs-ho-chi-minh-city/): Compare Hanoi vs Ho Chi Minh City by first-night comfort, route direction, weather seasons, food scenes, day trips, airport logic, and trip length.
+- [Best Time for Northern Vietnam: Weather & Route Timing](/plan/best-time-for-northern-vietnam/): Find the best time for northern Vietnam: monthly weather analysis across Hanoi, Ha Long Bay, Ninh Binh, Sapa, and Ha Giang to avoid fog and heavy rain.
+- [Hanoi Airport to Old Quarter: Taxi, Bus and Arrival Plan](/plan/hanoi-airport-to-old-quarter/): How to get from Hanoi airport to Old Quarter in 2026: choose hotel pickup, taxi, Grab ride, Express Bus 86, or public bus by arrival hour and bags.

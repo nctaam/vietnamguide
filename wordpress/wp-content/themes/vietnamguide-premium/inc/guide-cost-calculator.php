@@ -665,13 +665,25 @@ function vg_render_cost_calculator_html(): string
                     if (linkTextEl) linkTextEl.textContent = 'Explore Complete ' + rData.name + ' Budget Guide';
 
                     if (itemsEl) {
-                        itemsEl.innerHTML = '';
+                        itemsEl.textContent = '';
                         rData.items.forEach(function(item) {
                             var li = document.createElement('li');
                             li.className = 'vg-calc-rp-item';
-                            var convertedCost = formatCurrency(item.usd, cur);
-                            var altNote = item.alt ? ' <span class="vg-calc-rp-alt">(' + item.alt + ')</span>' : '';
-                            li.innerHTML = '<span class="vg-calc-rp-item-name">' + item.name + altNote + '</span><span class="vg-calc-rp-item-cost">' + convertedCost + '</span>';
+                            var nameSpan = document.createElement('span');
+                            nameSpan.className = 'vg-calc-rp-item-name';
+                            nameSpan.textContent = item.name || '';
+                            if (item.alt) {
+                                nameSpan.appendChild(document.createTextNode(' '));
+                                var altSpan = document.createElement('span');
+                                altSpan.className = 'vg-calc-rp-alt';
+                                altSpan.textContent = '(' + item.alt + ')';
+                                nameSpan.appendChild(altSpan);
+                            }
+                            var costSpan = document.createElement('span');
+                            costSpan.className = 'vg-calc-rp-item-cost';
+                            costSpan.textContent = formatCurrency(item.usd, cur);
+                            li.appendChild(nameSpan);
+                            li.appendChild(costSpan);
                             itemsEl.appendChild(li);
                         });
                     }
@@ -1088,7 +1100,7 @@ function vg_render_cost_calculator_html(): string
                         '- Transport & Flights: ' + formatCurrency(calc.transit, summaryCur) + ' (' + calc.pctTransit + '%)',
                         '- Activities & Sightseeing: ' + formatCurrency(calc.activities, summaryCur) + ' (' + calc.pctTours + '%)',
                         '',
-                        'Calculated at: https://vietnamguide.net/costs/vietnam-travel-cost/'
+                        'Calculated at: https://vietnamguide.net/plan/vietnam-travel-cost/'
                     ].join('\n');
 
                     if (navigator.clipboard && navigator.clipboard.writeText) {
@@ -1521,7 +1533,7 @@ function vg_render_route_budget_widget(array $args = []): string
         </div>
 
         <div class="vg-rb-footer">
-            <a href="<?php echo esc_url(home_url('/costs/vietnam-travel-cost/?route=' . $route)); ?>" class="vg-rb-btn-cta" id="<?php echo esc_attr($uid); ?>-cta-btn">
+            <a href="<?php echo esc_url(home_url('/plan/vietnam-travel-cost/?route=' . $route)); ?>" class="vg-rb-btn-cta" id="<?php echo esc_attr($uid); ?>-cta-btn">
                 <span><?php esc_html_e('Customize Pacing in Full Budget Calculator', 'vietnamguide-premium'); ?> &rarr;</span>
             </a>
             <a href="<?php echo esc_url($cfg['guide_url']); ?>" class="vg-rb-btn-guide">
@@ -1582,7 +1594,7 @@ function vg_render_route_budget_widget(array $args = []): string
             if (convertedDisplay) convertedDisplay.textContent = formatConverted(mode.total_usd);
 
             if (ctaBtn) {
-                ctaBtn.href = '<?php echo esc_url(home_url('/costs/vietnam-travel-cost/')); ?>?route=<?php echo esc_js($route); ?>&tier=' + (mode.calc_tier || 'midrange') + '&currency=' + currentCurrency;
+                ctaBtn.href = '<?php echo esc_url(home_url('/plan/vietnam-travel-cost/')); ?>?route=<?php echo esc_js($route); ?>&tier=' + (mode.calc_tier || 'midrange') + '&currency=' + currentCurrency;
             }
 
             var tot = mode.total_usd;
@@ -1603,11 +1615,18 @@ function vg_render_route_budget_widget(array $args = []): string
 
             var list = document.getElementById('<?php echo esc_js($uid); ?>-items-list');
             if (list) {
-                list.innerHTML = '';
+                list.textContent = '';
                 (mode.items || []).forEach(function (item) {
                     var li = document.createElement('li');
                     li.className = 'vg-rb-item';
-                    li.innerHTML = '<span class="vg-rb-item-name">' + item.name + '</span><span class="vg-rb-item-amount">' + formatVal(item.usd) + '</span>';
+                    var nameSpan = document.createElement('span');
+                    nameSpan.className = 'vg-rb-item-name';
+                    nameSpan.textContent = item.name || '';
+                    var amtSpan = document.createElement('span');
+                    amtSpan.className = 'vg-rb-item-amount';
+                    amtSpan.textContent = formatVal(item.usd);
+                    li.appendChild(nameSpan);
+                    li.appendChild(amtSpan);
                     list.appendChild(li);
                 });
             }

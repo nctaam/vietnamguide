@@ -6,8 +6,8 @@ description: "Complete Vietnam train travel guide: compare 4-berth soft sleepers
 travel_cluster: "national_circuit"
 last_verified: "2026-10-24"
 author: "VietnamGuide Editorial Team"
-reading_time_minutes: 8
-word_count: 1596
+reading_time_minutes: 9
+word_count: 1701
 ---
 
 # Vietnam Train Travel: 2026 Reunification Express, Sleeper Cabins & Scenic Routes
@@ -97,3 +97,11 @@ Flagship **`SE1/SE2`, `SE3/SE4`, and `SE19/SE20`** carriages feature a western s
 
 ### Is it better to take the overnight train or fly from Hanoi to Da Nang/Hue?
 On a 7-day trip, a 1-hour 20-minute flight (1,100,000 to 1,800,000 VND) saves time. On a 10-to-14-day trip, the **`SE19` or `SE3` overnight 4-berth sleeper (950,000 to 1,450,000 VND)** saves a hotel night, drops you in central Hue (02 Bui Thi Xuan), and crosses the **Hai Van Pass and Lang Co Bay** in morning daylight.
+
+---
+
+## Related Vietnam Planning & Route Field Guides
+
+- [Vietnam Night Train Safety Tips (2026): Sleeper Berths](/plan/vietnam-night-train-safety-tips/): Vietnam night train safety tips: cabin door locks, luggage security, lower vs upper sleeper berths, food hygiene, and theft prevention for 2026 rail trips.
+- [Da Nang to Hue Train vs Car: Hai Van Pass Guide (2026)](/itineraries/da-nang-to-hue-train-vs-car/): Da Nang to Hue train vs car comparison: compare the scenic heritage train over Hai Van Pass with private car sightseeing stops, costs, and travel times.
+- [Hoi An vs Hue: Which Central Vietnam Stop Is Better?](/compare/hoi-an-vs-hue/): Hoi An vs Hue comparison: evaluate UNESCO heritage sites, 125 km train transit over Hai Van Pass, street food costs, walking comfort, and travel pace.

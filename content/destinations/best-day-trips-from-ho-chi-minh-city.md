@@ -7,7 +7,7 @@ travel_cluster: "southern_delta"
 last_verified: "2026-10-22"
 author: "VietnamGuide Editorial Team"
 reading_time_minutes: 7
-word_count: 1372
+word_count: 1475
 ---
 
 # 8 Best Day Trips from Ho Chi Minh City (2026): Cu Chi Tunnels, Mekong Delta, Can Gio, Ba Den & Vung Tau
@@ -100,3 +100,11 @@ Because of Saigon River bridge and port renovation schedules in Ho Chi Minh City
 
 ### What is the best time of year for day trips from Ho Chi Minh City?
 Southern Vietnam operates on a two-season tropical monsoon cycle (`27°C–34°C` year-round). The **Dry Season (December to April)** offers sunny mornings and zero afternoon rain, though March and April reach `35°C–37°C` at midday—making `07:30 AM` departures to Cu Chi Tunnels and Black Virgin Mountain essential. During the **Green / Rainy Season (May to November)**, mornings remain bright and clear while heavy tropical downpours typically arrive for `45 to 90 minutes` between `14:30 PM and 17:00 PM`, when you are already heading back toward Saigon in an air-conditioned limousine or speedboat.
+
+---
+
+## Related Ho Chi Minh City & Southern Field Guides
+
+- [Southern Vietnam Itinerary (2026): 5 to 7-Day Route](/itineraries/southern-vietnam-itinerary/): Southern Vietnam itinerary for 2026: practical 5 to 7-day route connecting Saigon, Mekong Delta floating markets, and Phu Quoc island sandy beaches.
+- [Ho Chi Minh City to Ben Tre Transport (2026): Van & Bus](/plan/ho-chi-minh-city-to-ben-tre-transport/): Ho Chi Minh City to Ben Tre transport: shared limousine vans vs local buses and private cars via Highway 1A. 2026 schedules, fares, and travel tips.
+- [Cu Chi Tunnels vs Mekong Delta Day Trip: Which Is Better?](/compare/cu-chi-tunnels-vs-mekong-delta-day-trip/): Cu Chi Tunnels vs Mekong Delta day trip: compare war history vs river scenery, travel times from Saigon, tour fatigue, speedboat options, and itinerary fit.

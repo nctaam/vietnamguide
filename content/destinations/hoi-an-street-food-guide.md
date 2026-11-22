@@ -6,8 +6,8 @@ description: "Complete Hoi An street food guide: where to eat Cao Lau, Mi Quang,
 travel_cluster: "central_heritage"
 last_verified: "2026-10-21"
 author: "VietnamGuide Editorial Team"
-reading_time_minutes: 12
-word_count: 2467
+reading_time_minutes: 13
+word_count: 2611
 ---
 
 # Hoi An Street Food Guide: 9 Essential Dishes & Stalls (2026)
@@ -182,3 +182,12 @@ Budget 180,000 VND to 280,000 VND ($7.20 to $11.20 USD) per person per day for 4
 
 ### How do I travel between Da Nang and Hoi An for food tours?
 Hoi An sits 30 km south of Da Nang International Airport (DAD) along the coastal Vo Nguyen Giap / Lac Long Quan boulevard. A private 4-seat Grab car or taxi takes 40 minutes to 50 minutes and costs 300,000 VND to 380,000 VND ($12.00 to $15.20 USD) one-way, while shared shuttle minibuses charge 130,000 VND to 150,000 VND ($5.20 to $6.00 USD) per seat.
+
+---
+
+## Related Central Heritage Field Guides
+
+- [Hoi An vs Hue: Which Central Vietnam Stop Is Better?](/compare/hoi-an-vs-hue/): Hoi An vs Hue comparison: evaluate UNESCO heritage sites, 125 km train transit over Hai Van Pass, street food costs, walking comfort, and travel pace.
+- [Da Nang Street Food Guide: Seafood, Mi Quang & Gems (2026)](/destinations/da-nang-street-food-guide/): Complete Da Nang street food guide: where to eat authentic mi quang, banh xeo Ba Duong, Nam O fish salad, coastal seafood, Con Market, and local prices.
+- [Best Things to Do in Hoi An: What Is Actually Worth It](/destinations/best-things-to-do-in-hoi-an/): Best things to do in Hoi An: Ancient Town heritage ticket rules, lantern night walks, An Bang beach, My Son Sanctuary day trips, and regional food tips.
+- [Central Vietnam Itinerary (2026): 5 to 7-Day Route](/itineraries/central-vietnam-itinerary/): Central Vietnam itinerary for 2026: practical 5 to 7-day route connecting Hue Citadel, Hai Van Pass, Da Nang beaches, and Hoi An lantern old streets.

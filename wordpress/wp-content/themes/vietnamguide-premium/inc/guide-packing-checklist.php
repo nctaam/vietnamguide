@@ -422,7 +422,7 @@ function vg_render_packing_checklist($attributes = []): string
                         <p><?php esc_html_e('45-day exemption rules (25 countries), 42 port entry gates, and official $25/$50 90-day E-Visa guidelines.', 'vietnamguide-premium'); ?></p>
                     </div>
                 </a>
-                <a href="<?php echo esc_url(home_url('/costs/vietnam-travel-cost/')); ?>" class="vg-checklist-synergy-card vg-synergy-bridge">
+                <a href="<?php echo esc_url(home_url('/plan/vietnam-travel-cost/')); ?>" class="vg-checklist-synergy-card vg-synergy-bridge">
                     <span class="vg-checklist-synergy-icon" aria-hidden="true">§</span>
                     <div>
                         <strong><?php esc_html_e('Vietnam Travel Cost Calculator', 'vietnamguide-premium'); ?></strong>

@@ -6,8 +6,8 @@ description: "Where to stay on Cat Ba Island: waterfront hotels in Cat Ba town, 
 travel_cluster: "ha_long_bay"
 last_verified: "2026-10-24"
 author: "VietnamGuide Editorial Team"
-reading_time_minutes: 7
-word_count: 1435
+reading_time_minutes: 8
+word_count: 1574
 ---
 
 # Where to Stay on Cat Ba Island (2026): Best Areas
@@ -99,3 +99,12 @@ Skip mid-strip hotels directly on central **1 Thang 4 Street**, which face the c
 
 ### Should I bring cash if I stay in Viet Hai Ancient Village?
 Yes. While hotels and restaurants in Cat Ba Town and Cat Co Resorts accept Visa/Mastercard and have ATMs along Nui Ngoc and 1 Thang 4 streets, **Viet Hai Village** has zero ATM machines and intermittent card terminal connectivity. Withdraw 1,500,000 to 2,500,000 VND ($60 to $100 USD) in town before boarding the 45-minute boat from Ben Beo or starting the 12 km National Park trek.
+
+---
+
+## Related Ha Long, Lan Ha & Cat Ba Field Guides
+
+- [Cat Ba Travel Guide: Island Base, Lan Ha Bay, and Park Time](/destinations/cat-ba-travel-guide/): Cat Ba travel guide: island base logistics, Lan Ha Bay boat tours, Cannon Fort, Cat Ba National Park hikes, ferry connections from Hanoi, and hotels.
+- [Cat Ba to Ninh Binh Transport (2026): Tourist Bus Combo](/plan/cat-ba-to-ninh-binh-transport/): Cat Ba to Ninh Binh transport: direct tourist bus and ferry combos via Hai Phong expressway vs private transfers. 2026 schedules, fares, and local tips.
+- [Best Islands in Vietnam: Phu Quoc, Con Dao, Cat Ba, and More](/destinations/best-islands-in-vietnam/): Best islands in Vietnam: compare Phu Quoc resort beaches, Con Dao marine tranquility, Cat Ba national park karsts, and Cham Islands diving day trips.
+- [Hanoi to Cat Ba Island Transport: Bus & Ferry Guide (2026)](/plan/hanoi-to-cat-ba-island-transport/): Complete Hanoi to Cat Ba island transport guide: compare tourist combo bus-and-ferry packages, private transfers, Hai Phong speedboats, and travel times.

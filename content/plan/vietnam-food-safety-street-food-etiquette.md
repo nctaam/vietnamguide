@@ -7,7 +7,7 @@ travel_cluster: "national_circuit"
 last_verified: "2026-10-24"
 author: "VietnamGuide Editorial Team"
 reading_time_minutes: 12
-word_count: 2319
+word_count: 2409
 ---
 
 # Vietnam Food Safety and Street Food Etiquette Guide
@@ -144,3 +144,11 @@ However, crushed roasted peanuts are scooped as a final garnish onto **Bún bò 
 
 ### Is it rude to call out *"Em ơi!"* to get a server's attention at a busy Vietnamese street stall?
 Not at all. Waiting silently for eye contact at a 40-seat sidewalk stall during the 12:00 lunch rush means you may wait **15 minutes to 20 minutes** without receiving your check. Raise your hand 20 cm above shoulder level with a polite smile and call out **"Em ơi, tính tiền!"** (*Excuse me, bill please!*) to a server younger than you, **"Chị ơi!"** to an older woman, or **"Anh ơi!"** to an older man. Tipping is not mandatory at street carts, though rounding a **45,000 VND ($1.80 USD)** bill up to **50,000 VND ($2.00 USD)** is warmly appreciated.
+
+---
+
+## Related Vietnam Planning & Route Field Guides
+
+- [Gluten-Free in Vietnam (2026): Celiac Travel Guide](/plan/vietnam-gluten-free-travel-guide/): Gluten-free in Vietnam: essential celiac guide to naturally gluten-free rice dishes, soy sauce warnings, cross-contamination tips, and restaurant phrases.
+- [Vietnam Night Train Safety Tips (2026): Sleeper Berths](/plan/vietnam-night-train-safety-tips/): Vietnam night train safety tips: cabin door locks, luggage security, lower vs upper sleeper berths, food hygiene, and theft prevention for 2026 rail trips.
+- [Where to Stay in Vietnam: Base Decision Guide](/plan/where-to-stay-in-vietnam-base-decisions/): Choose where to stay in Vietnam by base job: arrival ease, street food access, quiet sleep, family rhythm, rail transfers, beach rest, and airport.

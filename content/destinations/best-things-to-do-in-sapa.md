@@ -7,7 +7,7 @@ travel_cluster: "northern_highlands"
 last_verified: "2026-10-22"
 author: "VietnamGuide Editorial Team"
 reading_time_minutes: 7
-word_count: 1359
+word_count: 1452
 ---
 
 # Best Things to Do in Sapa (2026): Muong Hoa Valley Treks, Fansipan Cable Car, O Quy Ho Pass & Villages
@@ -105,3 +105,11 @@ Between `09:00 AM and 16:30 PM`, **Cat Cat Village (`150,000 VND`)** feels more 
 
 ### Should I book a Sapa trek in advance or find a local ethnic guide on arrival?
 To ensure 100% of your trekking fee goes directly to a local H'Mong or Red Dao family rather than a Hanoi middleman agency, book directly with a community-owned social enterprise (**Sapa O'Chau**, **Sapa Sisters**, or **ETHOS**) or ask your Ta Van / Lao Chai homestay host to connect you with a licensed village guide (`600,000–850,000 VND/day`). Always decline street touts if you feel pressured, and never give money or candy to young children on the streets—doing so keeps them out of school.
+
+---
+
+## Related Northern Highlands Field Guides
+
+- [Sapa Trekking Routes Guide: Trails, Difficulty & Maps (2026)](/plan/sapa-trekking-routes-guide/): Complete Sapa trekking routes guide: compare Muong Hoa valley trails, Y Linh Ho to Ta Van day hikes, hiring local guides vs solo trekking, and gear.
+- [Sapa Travel Guide: Terraces, Trekking and Softer Travel](/destinations/sapa-travel-guide/): Authoritative Sapa travel guide: plan trekking routes, village vs town lodging, Fansipan weather windows, sleeper bus transit from Hanoi, and pacing.
+- [Sapa Trekking Guided vs Self-Guided: Mountain Route Guide](/plan/sapa-trekking-guided-vs-self-guided/): Plan Sapa trekking guided vs self-guided: compare trail navigation, rainy season mud risks, local Hmong guide rates, homestay costs, and village permits.

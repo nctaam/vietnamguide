@@ -263,6 +263,114 @@ class TestProductionStrictness(unittest.TestCase):
         self.assertNotIn("home_url('/costs/vietnam-travel-cost/')", guide_page_code)
         self.assertNotIn("/costs/vietnam-travel-cost/", aio_code)
 
+    def test_all_inline_php_scripts_pass_node_syntax_check(self):
+        """Every inline <script> block embedded in theme PHP templates must parse cleanly in Node."""
+        node_bin = shutil.which("node")
+        if not node_bin:
+            self.skipTest("node binary not available in PATH")
+
+        import tempfile
+
+        script_re = re.compile(r"<script\b([^>]*)>([\s\S]*?)</script>", re.IGNORECASE)
+        failures = []
+        checked_blocks = 0
+
+        for php_file in sorted(THEME_DIR.rglob("*.php")):
+            text = php_file.read_text(encoding="utf-8", errors="ignore")
+            for idx, m in enumerate(script_re.finditer(text), 1):
+                attrs = m.group(1) or ""
+                if re.search(r'type\s*=\s*["\']application/ld\+json["\']', attrs, re.I):
+                    continue
+                if re.search(r"\bsrc\s*=", attrs, re.I):
+                    continue
+                js_body = m.group(2)
+                if not js_body.strip():
+                    continue
+                # Replace PHP interpolations with valid JS placeholders respecting quote context
+                sanitized = re.sub(r"<\?php[\s\S]*?\?>", lambda pm: "0" if not re.search(r"['\"`]$", js_body[:pm.start()]) else "x", js_body)
+                # Normalize any remaining PHP tags inside string literals cleanly
+                checked_blocks += 1
+                with tempfile.NamedTemporaryFile("w", suffix=".js", encoding="utf-8", delete=False) as tf:
+                    tf.write(sanitized)
+                    tmp_path = Path(tf.name)
+                try:
+                    proc = subprocess.run(
+                        [node_bin, "--check", str(tmp_path)],
+                        capture_output=True,
+                        text=True,
+                        timeout=15,
+                    )
+                    if proc.returncode != 0:
+                        failures.append(f"{php_file.relative_to(REPO_ROOT)}#script-{idx}: {proc.stderr.strip()}")
+                finally:
+                    tmp_path.unlink(missing_ok=True)
+
+        self.assertGreaterEqual(checked_blocks, 10)
+        self.assertEqual(failures, [], "Inline PHP <script> syntax errors:\n" + "\n".join(failures))
+
+    def test_stage216_wcag_aa_contrast_wai_aria_tabs_lightbox_and_zero_redirects(self):
+        """Enforce Stage 216 WCAG 2.2 AA contrast, WAI-ARIA APG Tabs, lightbox focus trap, zero dynamic innerHTML, and canonical Cost Calculator URLs."""
+        homepage_css = (THEME_DIR / "assets" / "css" / "homepage.css").read_text(encoding="utf-8")
+        guide_exp_css = (THEME_DIR / "assets" / "css" / "guide-experience.css").read_text(encoding="utf-8")
+        interactive_js = (THEME_DIR / "assets" / "js" / "guide-interactive.js").read_text(encoding="utf-8")
+        map_php = (THEME_DIR / "inc" / "guide-interactive-map.php").read_text(encoding="utf-8")
+        dispatch_php = (THEME_DIR / "inc" / "guide-photo-dispatch.php").read_text(encoding="utf-8")
+        calc_php = (THEME_DIR / "inc" / "guide-cost-calculator.php").read_text(encoding="utf-8")
+        guide_content_php = (THEME_DIR / "inc" / "guide-content.php").read_text(encoding="utf-8")
+
+        # 1. WCAG 2.2 AA light-surface text contrast tokens (zero low-contrast saffron/coral on light backgrounds)
+        self.assertIn("--vg-coral-text: #a43b27;", homepage_css)
+        for bad_rule in (
+            ".vg-calc-badge {\n  display: inline-block;\n  font-size: 11px;\n  font-weight: 800;\n  letter-spacing: 0.12em;\n  text-transform: uppercase;\n  color: var(--vg-gold-saffron",
+            ".vg-sm-badge {\n  display: inline-block;\n  font-size: 11px;\n  font-weight: 800;\n  letter-spacing: 0.12em;\n  text-transform: uppercase;\n  color: var(--vg-gold-saffron",
+            ".vg-finder-kicker {\n  display: inline-block;\n  font-size: 12px;\n  font-weight: 800;\n  letter-spacing: 0.12em;\n  text-transform: uppercase;\n  color: var(--vg-gold-saffron",
+            ".vg-search-count--empty {\n  color: var(--vg-coral);",
+            ".vg-search-badge--practical {\n  background: rgba(201, 95, 74, 0.12);\n  color: var(--vg-coral);",
+        ):
+            self.assertNotIn(bad_rule, homepage_css)
+        self.assertIn("color: var(--vg-gold-text, #7e5802);", guide_exp_css)
+
+        # 2. WAI-ARIA APG Tabs roving tabindex + Home/End across Map, Photo Dispatch & Field Desk
+        self.assertGreaterEqual(interactive_js.count("e.key === 'Home'"), 3)
+        self.assertGreaterEqual(interactive_js.count("e.key === 'End'"), 3)
+        self.assertIn("btn.setAttribute('tabindex', isActive ? '0' : '-1');", interactive_js)
+        self.assertIn("btn.setAttribute('tabindex', match ? '0' : '-1');", interactive_js)
+        self.assertIn("tabindex=\"<?php echo $is_active ? '0' : '-1'; ?>\"", map_php)
+        self.assertIn("tabindex=\"<?php echo $is_tab_active ? '0' : '-1'; ?>\"", dispatch_php)
+
+        # 3. Lightbox modal WCAG 2.2 AA Tab focus trap + valid placeholder SVG src
+        self.assertIn("if (e.key === 'Tab')", interactive_js)
+        self.assertNotIn('id="vg-lightbox-img" src=""', dispatch_php)
+        self.assertIn('id="vg-lightbox-img" src="data:image/svg+xml', dispatch_php)
+        self.assertIn('decoding="async"', dispatch_php)
+
+        # 4. Zero dynamic li.innerHTML sinks in Cost Calculator & Route Budget widgets
+        self.assertNotIn("li.innerHTML =", calc_php)
+        self.assertIn("document.createElement('span')", calc_php)
+
+        # 5. Zero-CLS intrinsic dimension resolution for inline Markdown <img> in guide-content.php
+        self.assertIn("vg_resolve_image_dimensions_by_url", guide_content_php)
+
+        # 6. Zero legacy /costs/vietnam-travel-cost/ redirect hops across homepage, search, and all 6 interactive toolkits
+        for rel in (
+            "front-page.php",
+            "inc/homepage-data.php",
+            "search.php",
+            "inc/guide-airport-navigator.php",
+            "inc/guide-itinerary-finder.php",
+            "inc/guide-visa-checker.php",
+            "inc/guide-season-matrix.php",
+            "inc/guide-packing-checklist.php",
+        ):
+            src = (THEME_DIR / rel).read_text(encoding="utf-8")
+            self.assertNotIn(
+                "costs/vietnam-travel-cost",
+                src,
+                f"Legacy redirect hop 'costs/vietnam-travel-cost' still found in {rel}",
+            )
+        self.assertNotIn("https://vietnamguide.net/costs/vietnam-travel-cost/", calc_php)
+        self.assertNotIn("home_url('/costs/vietnam-travel-cost/", calc_php)
+
 
 if __name__ == "__main__":
     unittest.main()

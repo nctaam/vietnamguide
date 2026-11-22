@@ -7,7 +7,7 @@ travel_cluster: "coastal_islands"
 last_verified: "2026-10-20"
 author: "VietnamGuide Editorial Team"
 reading_time_minutes: 9
-word_count: 1732
+word_count: 1841
 ---
 
 # Quy Nhon Travel Guide: Quiet Beaches, Ky Co & Transfers
@@ -301,3 +301,11 @@ Families will appreciate the quiet city beach with its ban on noisy jet skis, ma
 |       | Evening (17:30)    | Sunset drinks overlooking southern cliffs, return city   |
 +-------+--------------------+----------------------------------------------------------+
 ```
+
+---
+
+## Related Coastal & Island Field Guides
+
+- [Where to Stay in Cam Ranh (2026): Bai Dai Beach Resorts](/destinations/where-to-stay-in-cam-ranh/): Bai Dai beachfront resorts 10 minutes from CXR Airport vs central Cam Ranh hotels and transit guesthouses. 2026 rates, transfers, and beach access.
+- [Best Things to Do in Quy Nhon: Cliffs, Bays & Beaches](/destinations/best-things-to-do-in-quy-nhon/): The best things to do in Quy Nhon: Ky Co beach, Eo Gio cliff trail, Banh It Cham towers, Bai Xep fishing cove, and local seafood with realistic VND costs.
+- [Nha Trang to Quy Nhon Transport (2026): Train vs Van](/plan/nha-trang-to-quy-nhon-transport/): Nha Trang to Quy Nhon transport: scenic coastal trains vs shared limousine vans and private cars along Highway 1D. 2026 ticket fares and travel times.

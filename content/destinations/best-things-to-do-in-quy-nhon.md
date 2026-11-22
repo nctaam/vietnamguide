@@ -6,8 +6,8 @@ description: "The best things to do in Quy Nhon: Ky Co beach, Eo Gio cliff trail
 travel_cluster: "coastal_islands"
 last_verified: "2026-10-22"
 author: "VietnamGuide Editorial Team"
-reading_time_minutes: 7
-word_count: 1490
+reading_time_minutes: 8
+word_count: 1528
 ---
 
 # Best Things to Do in Quy Nhon (2026): Ky Co Beach, Eo Gio Cliffs, Cham Towers & Bai Xep Cove
@@ -111,3 +111,9 @@ The prime dry, sunny beach season in Quy Nhon runs for seven months from **Febru
 
 ### Should I stay in Downtown Quy Nhon (`Xuân Diệu`) or out in `Bãi Xép` / `Nhơn Lý`?
 If you want walkable street food, lively evening seafood stalls, beach bars (`Surf Bar`), and easy access to both the northern peninsula (`Ky Co / Eo Gio`) and southern coves, stay in **Downtown Quy Nhon along `Xuân Diệu` or `An Dương Vương` Boulevards** (`Fleur De Lys Hotel`, `Anya Premier`, or boutique hotels for `600,000–2,200,000 VND/night`). If you want total peace, bohemian beach bars, or luxury cliffside villas (`Avani Quy Nhon`, `Anantara Quy Nhon`, or `Life's a Beach`), stay `12 km` south in **Bai Xep (`Ghềnh Ráng`)**!
+
+---
+
+## Related Coastal & Island Field Guides
+
+- [Quy Nhon to Phu Yen Coastal Drive: Route & Stops (2026)](/plan/quy-nhon-to-phu-yen-coastal-drive/): Complete Quy Nhon to Phu Yen coastal drive guide: 100 km scenic route via QL1D, Ganh Da Dia basalt rocks, Ky Co beach, car rental rates, and stops.

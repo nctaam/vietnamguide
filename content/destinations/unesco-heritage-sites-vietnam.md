@@ -6,8 +6,8 @@ description: "Choose which UNESCO heritage sites in Vietnam fit your route, with
 travel_cluster: "national_circuit"
 last_verified: "2026-10-22"
 author: "VietnamGuide Editorial Team"
-reading_time_minutes: 8
-word_count: 1641
+reading_time_minutes: 9
+word_count: 1741
 ---
 
 # UNESCO Heritage Sites in Vietnam: 2026 Route Guide
@@ -122,3 +122,11 @@ For a first 10-day itinerary, prioritize **1) Ha Long Bay – Cat Ba Archipelago
 
 ### Are credit cards accepted at UNESCO ticket counters in Vietnam?
 The Hue Monuments Conservation Center (`Đại Nội Huế` and royal tombs), Trang An Wharf in Ninh Binh, and the Thang Long Citadel in Hanoi accept Visa, Mastercard, and domestic QR payments, though card terminals occasionally go offline. Ticket kiosks in Hoi An Ancient Town, My Son Sanctuary, and Phong Nha boat docks still strongly favor **Vietnamese Dong (`VND`) cash**, so carry `500,000 to 1,000,000 VND` per person in cash on sightseeing days.
+
+---
+
+## Related Vietnam Planning & Route Field Guides
+
+- [Vietnam Plug Adapter & Electricity Guide (2026): Outlets](/plan/vietnam-plug-adapter-electricity-guide/): Complete Vietnam plug adapter and electricity guide: Type A, C, and F socket compatibility, 220V voltage rules, dual-voltage tech, and converter tips.
+- [21 Days in Vietnam: Best Three-Week Route for First Trips](/itineraries/21-days-in-vietnam/): Plan 21 days in Vietnam with a complete full-country route from North to South featuring Ha Giang Loop, Sapa, Central Heritage, Saigon, and Mekong Delta.
+- [North vs Central vs South Vietnam: Where to Go First](/compare/north-central-south-vietnam/): Compare North vs Central vs South Vietnam for a first trip: choose the best region by season, route length, travel style, pacing, and what to skip.

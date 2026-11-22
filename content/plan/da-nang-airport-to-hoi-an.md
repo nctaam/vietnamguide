@@ -6,8 +6,8 @@ description: "Complete Da Nang airport to Hoi An transfer guide: compare pre-boo
 travel_cluster: "central_heritage"
 last_verified: "2026-10-22"
 author: "VietnamGuide Editorial Team"
-reading_time_minutes: 7
-word_count: 1473
+reading_time_minutes: 8
+word_count: 1575
 ---
 
 # Da Nang Airport (DAD) to Hoi An & My Khe Beach Transfer Guide (2026): Private Car, Grab & Shuttle Bus
@@ -125,3 +125,11 @@ Yes. Marble Mountains sits directly on the coastal road halfway between Da Nang 
 
 ### How far is My Khe Beach from Da Nang Airport (`DAD`)?
 **My Khe Beach (`Biển Mỹ Khê`)** and the **An Thuong (`An Thượng`)** expat/traveler neighborhood are only **`5.5 to 6.5 kilometers` (`12 to 15 minutes`)** east of Da Nang Airport across the Han River, costing **`85,000 to 125,000 VND` (`~$3.40–$5.00 USD`)** via GrabCar or Xanh SM.
+
+---
+
+## Related Central Heritage Field Guides
+
+- [Hoi An Tailoring Guide: Custom Suits & Dresses](/destinations/hoi-an-tailoring-guide/): Planning Hoi An tailoring in 2026? Get expert tips for custom suits, dresses, fabric selection, fitting timelines, trusted shops, and VND shop pricing.
+- [Da Nang vs Hoi An: Which Central Vietnam Base Is Better?](/compare/da-nang-vs-hoi-an/): Choose your central Vietnam base by My Khe beach access, 15-minute airport transfers, dining variety, historic ancient town streets, and regional day trips.
+- [Da Nang Beaches Guide: My Khe, Non Nuoc or Hoi An Coast?](/destinations/da-nang-beaches-guide/): Authoritative Da Nang beaches guide: choose between My Khe, Non Nuoc, Son Tra edge, and Hoi An coast by weather season, hotel style, and family needs.

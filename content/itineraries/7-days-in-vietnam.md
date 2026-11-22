@@ -7,7 +7,7 @@ travel_cluster: "national_circuit"
 last_verified: "2026-10-22"
 author: "VietnamGuide Editorial Team"
 reading_time_minutes: 11
-word_count: 2186
+word_count: 2286
 ---
 
 # 7 Days in Vietnam: The Strategic One-Week Route Guide
@@ -203,3 +203,11 @@ Yes. A day-cruise from Hanoi requires 5 hours of round-trip highway driving for 
 
 ### How much physical cash should I carry for seven days?
 While major hotels, upscale restaurants, and cruise operators accept international credit cards (Visa and Mastercard), streetside noodle shops, entry ticket booths, local cafes, and sampan tips operate exclusively in cash. A budget of 1,500,000 to 2,000,000 VND ($60–$80 USD) in cash per person per day is more than sufficient for all incidentals, street food, and souvenirs.
+
+---
+
+## Related Vietnam Planning & Route Field Guides
+
+- [Where to Stay in Vietnam: Base Decision Guide](/plan/where-to-stay-in-vietnam-base-decisions/): Choose where to stay in Vietnam by base job: arrival ease, street food access, quiet sleep, family rhythm, rail transfers, beach rest, and airport.
+- [Vietnam Travel Insurance & Health Guide: What to Cover](/plan/health-travel-insurance-vietnam/): Vietnam travel insurance and health guide: international hospital networks in Hanoi and HCMC, motorbike injury coverage rules, vaccines, and pharmacies.
+- [Best Day Trips from Hanoi: Ninh Binh, Ha Long or Stay?](/destinations/best-day-trips-from-hanoi/): Best day trips from Hanoi, compared by route job: Ninh Binh, Ha Long or Lan Ha, Bat Trang, Duong Lam, Perfume Pagoda, Ba Vi, timing, weather, and skip logic.

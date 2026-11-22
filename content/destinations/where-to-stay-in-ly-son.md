@@ -7,7 +7,7 @@ travel_cluster: "coastal_islands"
 last_verified: "2026-10-24"
 author: "VietnamGuide Editorial Team"
 reading_time_minutes: 8
-word_count: 1660
+word_count: 1700
 ---
 
 # Where to Stay in Ly Son (2026): Big vs Small Island
@@ -100,3 +100,9 @@ The prime dry, calm-sea window runs from **April to August**, with **February–
 
 ### How do I get around Ly Son Island from my hotel?
 On **Big Island (Đảo Lớn)**, virtually every hotel and homestay rents motorbikes on the spot for 120,000–150,000 VND/day (fuel included, no deposit required for overnight guests), and electric buggies or 4–7 seat taxis (150,000–300,000 VND per trip) wait at Ben Dinh Port. On **Little Island (Đảo Bé)**, you can walk across the 0.69 km² island in 20 minutes or hop on a shared electric buggy (30,000–50,000 VND/person).
+
+---
+
+## Related Coastal & Island Field Guides
+
+- [Where to Stay in Quang Ngai (2026): City vs Sa Ky Port](/destinations/where-to-stay-in-quang-ngai/): Quang Ngai hotels near the station vs Sa Ky Port transit guesthouses 20 km away for 07:30 Ly Son speedboats. 2026 room rates, amenities, and transit advice.

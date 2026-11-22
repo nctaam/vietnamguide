@@ -7,7 +7,7 @@ travel_cluster: "mekong_delta"
 last_verified: "2026-10-21"
 author: "VietnamGuide Editorial Team"
 reading_time_minutes: 12
-word_count: 2333
+word_count: 2437
 ---
 
 # Cu Chi Tunnels vs Mekong Delta Day Trip: Which Is Better?
@@ -179,3 +179,11 @@ Experiencing Cai Rang requires a **2-day/1-night trip** (staying overnight at a 
 For **Cu Chi**, wear dark, breathable cotton or quick-dry athletic clothes that can brush against red laterite soil without staining, paired with closed-toe sneakers for climbing steep earthen stairs. Apply 20% to 30% DEET mosquito repellent before entering the shaded forest, carry a 500ml bottle of water (10,000 VND / $0.40 USD), and bring a small hand towel for 85% underground humidity.
 
 For the **Mekong Delta**, wear flat sandals or slip-on shoes with non-slip rubber soles for stepping across wet wooden boat gunwales, and pack a wide-brimmed sun hat and SPF 50 sunscreen for crossing the 1.8 km Tien River. Carry **200,000 VND ($8.00 USD) to 300,000 VND ($12.00 USD)** in small 20,000 VND and 50,000 VND bills for tipping sampan rowers and buying fresh coconut water (**20,000 VND / $0.80 USD**).
+
+---
+
+## Related Mekong Delta Field Guides
+
+- [21 Days in Vietnam: Best Three-Week Route for First Trips](/itineraries/21-days-in-vietnam/): Plan 21 days in Vietnam with a complete full-country route from North to South featuring Ha Giang Loop, Sapa, Central Heritage, Saigon, and Mekong Delta.
+- [Southern Vietnam Itinerary (2026): 5 to 7-Day Route](/itineraries/southern-vietnam-itinerary/): Southern Vietnam itinerary for 2026: practical 5 to 7-day route connecting Saigon, Mekong Delta floating markets, and Phu Quoc island sandy beaches.
+- [Best Day Trips from Ho Chi Minh City: Cu Chi or Mekong?](/destinations/best-day-trips-from-ho-chi-minh-city/): Best day trips from Ho Chi Minh City: Cu Chi Tunnels 70 km transit, Ben Tre Mekong Delta boat tours, entry ticket fees, and travel schedules compared.

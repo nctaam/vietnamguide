@@ -6,8 +6,8 @@ description: "Old Quarter stone houses and 150,000-350,000 VND dorms vs Ma Pi Le
 travel_cluster: "northern_highlands"
 last_verified: "2026-10-24"
 author: "VietnamGuide Editorial Team"
-reading_time_minutes: 7
-word_count: 1498
+reading_time_minutes: 8
+word_count: 1607
 ---
 
 # Where to Stay in Dong Van (2026): Old Quarter Clay Houses, Heated Brick Hotels & Lo Lo Chai Border Homestays
@@ -92,3 +92,11 @@ Yes. Both **Dong Van District** and **Lung Cu Commune** sit inside Vietnam's res
 
 ### How cold do Dong Van homestays get in winter, and what heating should I look for?
 From late **November through February**, nighttime temperatures in Dong Van (**1,025m**) and Lung Cu (**1,470m**) regularly fall between **1°C and 8°C (34°F–46°F)**, and traditional clay houses have no central insulation. If you travel in winter, verify before booking that your room provides either a **two-way heating air conditioner (Điều hòa 2 chiều)** in a brick hotel (Hoa Cuong, Hoang Ngoc) or a working **electric mattress pad (Chăn điện)** plus an en-suite hot water cylinder.
+
+---
+
+## Related Northern Highlands Field Guides
+
+- [Where to Stay in Yen Minh (2026): Town vs Pine Valley](/destinations/where-to-stay-in-yen-minh/): Where to stay in Yen Minh: town center guesthouses vs pine forest homestays and eco-lodges with 2026 room rates, loop amenities, and Night 1 advice.
+- [Ha Giang to Dong Van Transport (2026): Bus vs Motorbike](/plan/ha-giang-to-dong-van-transport/): QL4C mountain highway across 135 km: local passenger minibuses (4.5-5 hours, 120,000 VND) vs motorbike self-drive and Easy Riders with 2026 VND fares.
+- [Where to Stay in Ha Giang (2026): Loop Bases & Stays](/destinations/where-to-stay-in-ha-giang/): Where to stay in Ha Giang and the loop: city staging hostels, Dong Van old town homestays, Meo Vac clay lodges, and Du Gia waterfall stays in 2026.

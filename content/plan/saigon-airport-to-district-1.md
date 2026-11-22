@@ -6,8 +6,8 @@ description: "Complete Saigon airport to District 1 guide: compare Bus 109, Grab
 travel_cluster: "southern_delta"
 last_verified: "2026-10-22"
 author: "VietnamGuide Editorial Team"
-reading_time_minutes: 7
-word_count: 1497
+reading_time_minutes: 8
+word_count: 1630
 ---
 
 # Saigon Airport (SGN) to District 1 Transfer Guide (2026): Grab TCP Garage, Bus 109 & T1/T2/T3 Terminals
@@ -136,3 +136,12 @@ While **Terminal 1 (`T1`)** is a `5-minute` (`300-meter`) covered walk from **Te
 
 ### Does Airport Bus 109 run late at night from Saigon Airport to Bui Vien?
 Yes. **Airport Bus `109`** operates daily from **`05:45` until `23:40`**, departing every `20–30 minutes` from T2 International (`Lane B, Pillar 12–15`) and T1/T3 Domestic straight to **Saigon Bus Station at `23/9 Park` (`Phạm Ngũ Lão`)**, just a `2-minute` walk from Bui Vien Walking Street, for **`15,000–20,000 VND` (`~$0.60–$0.80 USD`)**.
+
+---
+
+## Related Ho Chi Minh City & Southern Field Guides
+
+- [Saigon Night Markets: 5 Best Food & Street Markets (2026)](/destinations/saigon-night-markets-guide/): Complete Saigon night markets guide: explore Ho Thi Ky food street, Ben Thanh night stalls, Ba Chieu street eats, opening hours, prices, and safety.
+- [Saigon Street Food Guide: Night Markets & Must-Eats (2026)](/destinations/saigon-street-food-guide/): Complete Saigon street food guide: best broken rice (com tam), banh mi, District 4 seafood street, Ho Thi Ky night market, prices, and food safety advice.
+- [Ben Duoc vs Ben Dinh: Which Cu Chi Tunnels Site to Visit?](/compare/cu-chi-tunnels-ben-duoc-vs-ben-dinh/): Ben Duoc vs Ben Dinh comparison: compare authentic historical tunnels, tour bus crowds, distance from Saigon, crawl sizes, shooting ranges, and costs.
+- [Saigon to Vung Tau Transport (2026): Ferry vs Limousine](/plan/saigon-to-vung-tau-transport/): Saigon to Vung Tau transport guide: Greenlines DP high-speed hydrofoil ferry vs luxury DCar limousine vans with 2026 fares, schedules, and pier departures.

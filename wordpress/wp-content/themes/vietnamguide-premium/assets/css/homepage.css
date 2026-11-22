@@ -15,6 +15,7 @@
   --vg-gold-text: #7e5802;
   --vg-gold-light: #f3d484;
   --vg-coral: #c95f4a;
+  --vg-coral-text: #a43b27;
   --vg-muted: #555e65;
   --vg-guide-muted: #4c504c;
   --vg-white: #ffffff;
@@ -1959,7 +1960,7 @@ html:not(.vg-js) body.home .vg-site-header {
 }
 
 .vg-404-card:hover .vg-404-card__cta {
-  color: var(--vg-gold-saffron, #C99446);
+  color: var(--vg-gold-text, #7e5802);
 }
 
 .vg-check-list {
@@ -2262,7 +2263,7 @@ html:not(.vg-js) body.home .vg-site-header {
 }
 
 .vg-search-count--empty {
-  color: var(--vg-coral);
+  color: var(--vg-coral-text, #a43b27);
 }
 
 .vg-search-form-top {
@@ -2373,7 +2374,7 @@ html:not(.vg-js) body.home .vg-site-header {
 
 .vg-search-badge--practical {
   background: rgba(201, 95, 74, 0.12);
-  color: var(--vg-coral);
+  color: var(--vg-coral-text, #a43b27);
 }
 
 .vg-search-badge--general {
@@ -2602,7 +2603,7 @@ html:not(.vg-js) body.home .vg-site-header {
 }
 
 .vg-search-toolkit-card:hover .vg-search-toolkit-card__cta {
-  color: var(--vg-gold-saffron, #C99446);
+  color: var(--vg-gold-text, #7e5802);
 }
 
 .vg-search-itinerary-pills {
@@ -2927,7 +2928,7 @@ button[type="submit"]:active {
 }
 
 .vg-megamenu-action:hover {
-  color: var(--vg-gold-saffron) !important;
+  color: var(--vg-gold-text, #7e5802) !important;
 }
 
 @media (max-width: 960px) {
@@ -3404,7 +3405,7 @@ body:has(.vg-guide-experience) .vg-back-to-top {
   font-weight: 800;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: var(--vg-gold-saffron, #C99446);
+  color: var(--vg-gold-text, #7e5802);
   margin-bottom: 8px;
 }
 
@@ -3663,7 +3664,7 @@ body:has(.vg-guide-experience) .vg-back-to-top {
   content: "—";
   position: absolute;
   left: 0;
-  color: var(--vg-gold-saffron, #C99446);
+  color: var(--vg-gold-text, #7e5802);
   font-weight: 700;
 }
 
@@ -3833,7 +3834,7 @@ body:has(.vg-guide-experience) .vg-back-to-top {
   font-weight: 800;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: var(--vg-gold-saffron, #C99446);
+  color: var(--vg-gold-text, #7e5802);
   margin-bottom: 6px;
 }
 
@@ -4868,7 +4869,7 @@ body:has(.vg-guide-experience) .vg-back-to-top {
   font-weight: 800;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: var(--vg-gold-saffron, #C99446);
+  color: var(--vg-gold-text, #7e5802);
   margin-bottom: 6px;
 }
 
@@ -5551,7 +5552,7 @@ body:has(.vg-guide-experience) .vg-back-to-top {
   position: absolute;
   right: 12px;
   bottom: 12px;
-  color: var(--vg-gold-saffron, #C99446);
+  color: var(--vg-gold-text, #7e5802);
   font-size: 14px;
   font-weight: 700;
 }

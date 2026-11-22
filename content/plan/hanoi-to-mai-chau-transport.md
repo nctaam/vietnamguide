@@ -7,7 +7,7 @@ travel_cluster: "far_north_frontier"
 last_verified: "2026-10-31"
 author: "VietnamGuide Editorial Team"
 reading_time_minutes: 8
-word_count: 1589
+word_count: 1691
 ---
 
 # Hanoi to Mai Chau Transport (2026): Limousine Shuttles, Local Buses, and Thung Khe Pass Routing
@@ -114,3 +114,11 @@ National Highway 6 is a primary all-weather artery where crews clear minor rockf
 
 ### Which seats should I book on a 9-seat limousine to avoid motion sickness?
 Request seats 3, 4, 5, or 6—the four individual captain chairs in the middle two rows between the axles. Avoid rear bench seats 7, 8, and 9 over the back wheels, which pitch across the 18 km of Thung Khe Pass switchbacks.
+
+---
+
+## Related Far North Frontier Field Guides
+
+- [Northwest Vietnam Itinerary (2026): 6 to 8-Day Loop](/itineraries/northwest-vietnam-itinerary/): Northwest Vietnam itinerary: realistic 6 to 8-day overland circuit connecting Hanoi, Mai Chau valley, Pu Luong nature reserve, and Ninh Binh karsts.
+- [Hanoi to Tam Dao Transport (2026): Bus, Van & Bike](/plan/hanoi-to-tam-dao-transport/): Old Quarter pickup limousines (2 hours, 160,000-200,000 VND) vs Bus 58 and motorbike climbs up Tam Dao Mountain (75 km). 2026 schedules and traffic advice.
+- [Hanoi to Dien Bien Phu Transport (2026): Flight vs Bus](/plan/hanoi-to-dien-bien-phu-transport/): Hanoi to Dien Bien Phu transport guide: direct domestic flights from Noi Bai vs overnight sleeper buses via Pha Din Pass. 2026 fares, schedules, and tips.

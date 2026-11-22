@@ -6,8 +6,8 @@ description: "Mekong Delta travel guide: floating markets in Can Tho, Ben Tre ri
 travel_cluster: "mekong_delta"
 last_verified: "2026-10-23"
 author: "VietnamGuide Editorial Team"
-reading_time_minutes: 15
-word_count: 3065
+reading_time_minutes: 16
+word_count: 3171
 ---
 
 # Mekong Delta Travel Guide: Day Trip, Overnight or Skip?
@@ -152,3 +152,11 @@ For dinner in Can Tho, order *lẩu mắm Dạ Lý* (fermented fish hotpot with 
 
 ### Where should I go next to continue my journey?
 Read our direct head-to-head [Can Tho vs. Ben Tre Comparison](/compare/mekong-delta-overnight-vs-day-trip/), plan ground transfers with our [Saigon to Can Tho Transport Guide](/plan/ho-chi-minh-city-to-can-tho-transport/), or connect onward to southern beaches via our [Rach Gia to Phu Quoc Ferry Guide](/plan/rach-gia-to-phu-quoc-ferry/).
+
+---
+
+## Related Mekong Delta Field Guides
+
+- [Where to Stay in An Giang (2026): Chau Doc vs Long Xuyen](/destinations/where-to-stay-in-an-giang/): Where to stay in An Giang: Chau Doc riverfront hotels vs Sam Mountain retreats and Long Xuyen floating market bases with 2026 room rates and travel advice.
+- [Where to Stay in Ben Tre (2026): Best River & Eco-Stays](/destinations/where-to-stay-in-ben-tre/): Where to stay in Ben Tre: peaceful Ham Luong river eco-lodges vs An Khanh village homestays and central city hotels. 2026 room rates and travel advice.
+- [Vietnam to Cambodia Border Crossings: Routes & Visas (2026)](/plan/vietnam-to-cambodia-border-crossings/): Complete Vietnam to Cambodia border crossings guide: compare Moc Bai bus transit, Chau Doc Mekong speedboats, Ha Tien coastal routes, e-visas, and scams.

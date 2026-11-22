@@ -6,8 +6,8 @@ description: "Where to stay in Soc Trang: central city hotels near Khmer pagodas
 travel_cluster: "mekong_delta"
 last_verified: "2026-10-25"
 author: "VietnamGuide Editorial Team"
-reading_time_minutes: 8
-word_count: 1585
+reading_time_minutes: 9
+word_count: 1727
 ---
 
 # Where to Stay in Soc Trang (2026): Best Hotels & Stays
@@ -134,3 +134,12 @@ A private metered taxi via Mai Linh costs **420,000–500,000 VND ($17–$20 USD
 
 ### When is the best time to visit Soc Trang for festivals?
 The premier time is November during the **Ooc Om Bok Festival**, when colorful Khmer dragon boats compete along the Maspero River. For quiet temple visits and calm ocean crossings to Con Dao, plan your stay between **January and April** during the dry season.
+
+---
+
+## Related Mekong Delta Field Guides
+
+- [Tran De to Con Dao Ferry (2026): Superdong Speedboat](/plan/tran-de-to-con-dao-ferry/): Tran De to Con Dao ferry: Superdong fast speedboat schedule, 2026 ticket fares, Soc Trang pier logistics, sea conditions, and island boarding tips.
+- [Where to Stay in Con Dao (2026): Best Areas & Resorts](/destinations/where-to-stay-in-con-dao/): Where to stay in Con Dao: Con Son town heritage guesthouses vs Dat Doc bay luxury villas and quiet beaches with 2026 nightly hotel prices rates in VND.
+- [How to Get to Con Dao: Flight vs High-Speed Ferry (2026)](/plan/how-to-get-to-con-dao-flight-vs-ferry/): Discover how to get to Con Dao: flights from Saigon and Can Tho vs fast ferries from Vung Tau and Tran De. Schedules, ticket costs, and sea advice.
+- [Vung Tau to Con Dao Ferry (2026): Express Catamaran](/plan/vung-tau-to-con-dao-ferry/): Vung Tau to Con Dao ferry: Con Dao Express 36 fast catamaran timetables, 2026 ticket prices, Cau Da pier transfers, and open-ocean crossing advice.

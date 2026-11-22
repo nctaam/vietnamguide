@@ -6,8 +6,8 @@ description: "Southern Vietnam itinerary for 2026: practical 5 to 7-day route co
 travel_cluster: "southern_delta"
 last_verified: "2026-10-22"
 author: "VietnamGuide Editorial Team"
-reading_time_minutes: 8
-word_count: 1668
+reading_time_minutes: 9
+word_count: 1774
 ---
 
 # Southern Vietnam Itinerary (2026): 5 to 7-Day Route Guide
@@ -186,3 +186,11 @@ Ben Dinh is located closer to Saigon (50 km) and accommodates large commercial t
 
 ### Is the rainy season a bad time to visit Southern Vietnam?
 The southern rainy season runs from May to November. However, rain typically falls in intense, predictable 45-minute afternoon downpours rather than continuous grey drizzles. Mornings and early afternoons are almost always clear and sunny. Visiting during the wet season brings lush green delta orchards and significantly lower resort rates in Phu Quoc.
+
+---
+
+## Related Ho Chi Minh City & Southern Field Guides
+
+- [21 Days in Vietnam: Best Three-Week Route for First Trips](/itineraries/21-days-in-vietnam/): Plan 21 days in Vietnam with a complete full-country route from North to South featuring Ha Giang Loop, Sapa, Central Heritage, Saigon, and Mekong Delta.
+- [Best Day Trips from Ho Chi Minh City: Cu Chi or Mekong?](/destinations/best-day-trips-from-ho-chi-minh-city/): Best day trips from Ho Chi Minh City: Cu Chi Tunnels 70 km transit, Ben Tre Mekong Delta boat tours, entry ticket fees, and travel schedules compared.
+- [Ho Chi Minh City to Phu Quoc: Flights & Ferry](/plan/ho-chi-minh-city-to-phu-quoc-transport/): Compare Ho Chi Minh City to Phu Quoc transport options: direct flights, bus-and-ferry routes, departure ports, ticket costs in VND, and travel times.

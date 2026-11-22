@@ -7,7 +7,7 @@ travel_cluster: "ninh_binh"
 last_verified: "2026-11-01"
 author: "VietnamGuide Editorial Team"
 reading_time_minutes: 8
-word_count: 1637
+word_count: 1675
 ---
 
 # Ninh Binh Day Trip vs Overnight: Which Is Better?
@@ -140,3 +140,4 @@ Yes, if you pack a windproof shell and fleece layer for 14°C to 19°C weather. 
 - **Boat Route Showdown**: Compare cave lengths and foot-rowing techniques in [Trang An vs Tam Coc](/compare/trang-an-vs-tam-coc/).
 - **Village Base & Cycling**: Plan valley lodging in our [Tam Coc Travel Guide](/destinations/tam-coc-travel-guide/) and step-by-step [Hang Mua Ninh Binh Guide](/destinations/hang-mua-ninh-binh-guide/).
 - **Transfer & Pacing Protocols**: Review rail timetables in [Hanoi to Ninh Binh Transport](/plan/hanoi-to-ninh-binh-transport/), slow-travel sequencing in [Ninh Binh Without Rushing](/plan/ninh-binh-without-rushing/), and coastal links in the [Ninh Binh to Ha Long Bay Transfer](/plan/ninh-binh-to-ha-long-bay-transfer/) guide.
+- [Best Things to Do in Ninh Binh: Karsts, Boats & Caves](/destinations/best-things-to-do-in-ninh-binh/): The best things to do in Ninh Binh: Trang An boat rides, Hang Mua dragon viewpoint, Tam Coc river caves, Bai Dinh pagoda, and cycling with 2026 prices.

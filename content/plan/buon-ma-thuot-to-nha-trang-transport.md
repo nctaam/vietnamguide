@@ -7,7 +7,7 @@ travel_cluster: "central_highlands"
 last_verified: "2026-11-01"
 author: "VietnamGuide Editorial Team"
 reading_time_minutes: 8
-word_count: 1576
+word_count: 1611
 ---
 
 # Buon Ma Thuot to Nha Trang Transport (2026): Bus & Car
@@ -93,3 +93,9 @@ While Buon Ma Thuot enters its dry season in November, **M'Drak and Phoenix Pass
 
 ### Can I take a limousine van directly from Buon Ma Thuot to Cam Ranh Airport (CXR)?
 Limousine vans terminate in central Nha Trang, roughly **35 km** north of Cam Ranh International Airport (**CXR**). Ask your driver to drop you at the southern end of Tran Phu Street or Nguyen Tat Thanh Boulevard in Nha Trang, where you can catch a Dat Moi airport bus (**65,000 VND** / **$2.60 USD**, **45 minutes**) or a Grab car (**300,000 to 350,000 VND** / **$12.00 to $14.00 USD**) directly to **CXR**.
+
+---
+
+## Related Central Highlands Field Guides
+
+- [Da Lat to Buon Ma Thuot Transport (2026): Bus & Car](/plan/da-lat-to-buon-ma-thuot-transport/): Highway 27 highland route covering 210 km: shared limousine vans (5-6 hours, 220,000-260,000 VND) past Lak Lake vs private cars and 2026 schedules.

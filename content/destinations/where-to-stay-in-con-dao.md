@@ -7,7 +7,7 @@ travel_cluster: "coastal_islands"
 last_verified: "2026-10-24"
 author: "VietnamGuide Editorial Team"
 reading_time_minutes: 8
-word_count: 1518
+word_count: 1624
 ---
 
 # Where to Stay in Con Dao (2026): Best Areas & Resorts
@@ -75,3 +75,11 @@ Bring at least 3,000,000 to 5,000,000 VND ($120 to $200 USD) in physical cash pe
 
 ### Can non-guests visit the beach at Six Senses Con Dao in Dat Doc Bay?
 While all beaches in Vietnam are legally public below the high-water mark, Dat Doc Bay is physically enclosed by steep mountain headlands and the private access road of Six Senses Con Dao. Non-guests cannot walk through the resort grounds without a confirmed spa or dining reservation; for open public golden sand, head 6 km further north to Dam Trau Beach or swim at An Hai Beach in town.
+
+---
+
+## Related Coastal & Island Field Guides
+
+- [Where to Stay in Soc Trang (2026): Hotels & Port Stays](/destinations/where-to-stay-in-soc-trang/): Where to stay in Soc Trang: central city hotels near Khmer pagodas vs Tran De port transit stays for Con Dao ferries. 2026 room rates and travel advice.
+- [Con Dao vs Phu Quoc: Which Vietnam Island is Better? (2026)](/compare/con-dao-vs-phu-quoc/): Con Dao vs Phu Quoc comparison: compare pristine turtle beaches, national park hiking, flight logistics, luxury resorts, nightlife, and travel costs.
+- [Best Beaches in Vietnam: Where to Go by Month](/destinations/best-beaches-in-vietnam/): Discover the best beaches in Vietnam by month: compare Phu Quoc dry season in Dec–Apr, Da Nang surf swells, Con Dao turtle nesting, and flight options.

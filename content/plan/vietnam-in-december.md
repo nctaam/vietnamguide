@@ -7,7 +7,7 @@ travel_cluster: "national_circuit"
 last_verified: "2026-10-31"
 author: "VietnamGuide Editorial Team"
 reading_time_minutes: 8
-word_count: 1596
+word_count: 1684
 ---
 
 December brings winter weather to Northern Vietnam, a drying rebound along the central coast, and peak sunshine across the Mekong Delta and southern islands. Across the 1,650 km length of the country, travelers can experience 2°C frost on Fansipan and 30°C beach weather in Phu Quoc within a 3-hour flight window.
@@ -118,3 +118,11 @@ Rainfall in Hoi An drops by more than half between November and December, fallin
 
 ### How far in advance should I book Vietnam travel for Christmas and New Year?
 For travel between December 20 and January 5, book Phu Quoc resorts, Hanoi hotels, and Halong Bay cruises 45 to 60 days ahead. Top resorts and Lan Ha Bay cruises hit 95% occupancy by mid-November, and flight fares rise by 35% to 50% within 21 days of departure.
+
+---
+
+## Related Vietnam Planning & Route Field Guides
+
+- [Vietnam in June: Weather, Beach Sun & Route Guide (2026)](/plan/vietnam-in-june/): Complete Vietnam in June guide: explore peak central coast beach sunshine, northern mountain harvest escapes, southern rain patterns, and smart packing.
+- [Vietnam in April: Weather, Holidays & Route Guide (2026)](/plan/vietnam-in-april/): Complete Vietnam in April guide: pleasant northern spring, central beach conditions, southern heat prep, April 30 national holiday surge, and packing.
+- [Vietnam in March: Weather, Regional Routes & Tips (2026)](/plan/vietnam-in-march/): Complete Vietnam in March guide: regional weather patterns, ideal nationwide routes, beach conditions in Central Vietnam, crowd levels, and packing advice.

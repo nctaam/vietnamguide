@@ -6,8 +6,8 @@ description: "Where to stay in An Giang: Chau Doc riverfront hotels vs Sam Mount
 travel_cluster: "mekong_delta"
 last_verified: "2026-10-25"
 author: "VietnamGuide Editorial Team"
-reading_time_minutes: 7
-word_count: 1434
+reading_time_minutes: 8
+word_count: 1524
 ---
 
 # Where to Stay in An Giang: Chau Doc to Long Xuyen Guide
@@ -255,3 +255,11 @@ Yes. Tra Su Cajuput Forest lies approximately 28 kilometers south of Chau Doc vi
 
 ### What is the best season to stay in An Giang?
 The high-water floating season (*mùa nước nổi*) from September to November offers the most striking landscape. During these months, alluvial floodwaters submerge the cajuput forest floor, creating lush green carpets of duckweed across Tra Su, while local fishing markets overflow with fresh river fish and water lilies.
+
+---
+
+## Related Mekong Delta Field Guides
+
+- [Where to Stay in Bac Lieu (2026): Hotels & Farm Stays](/destinations/where-to-stay-in-bac-lieu/): Compares central city hotels near the Bac Lieu Prince mansion (300,000–650,000 VND) against coastal wind-farm homestays 15 km east.
+- [Where to Stay in Chau Doc (2026): Sam Mountain & River](/destinations/where-to-stay-in-chau-doc/): Weighs Hau River waterfront hotels near the Phnom Penh boat pier against hillside Sam Mountain lodges and town guesthouses.
+- [Mekong Delta Travel Guide: Day Trip, Overnight or Skip?](/destinations/mekong-delta-travel-guide/): Maps floating markets in Can Tho, Ben Tre river canals, Vinh Long homestays, and Chau Doc overland crossings into Cambodia.

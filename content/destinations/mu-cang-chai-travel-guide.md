@@ -6,8 +6,8 @@ description: "Mu Cang Chai travel guide: plan Sep–Oct golden harvest season, 3
 travel_cluster: "northern_highlands"
 last_verified: "2026-10-22"
 author: "VietnamGuide Editorial Team"
-reading_time_minutes: 7
-word_count: 1395
+reading_time_minutes: 8
+word_count: 1509
 ---
 
 # Mu Cang Chai Travel Guide (2026): Golden Rice Terraces, Khau Pha Pass, Mam Xoi Hill & Hanoi Routes
@@ -121,3 +121,11 @@ For upscale comfort, book **Garrya Mù Cang Chải** (`a 5-star wellness resort 
 
 ### Can I combine Mu Cang Chai and Sa Pa in one trip?
 Yes! Mu Cang Chai and Sa Pa are only **`160 kilometers` (`4 to 4.5 hours` drive)** apart via `QL32` (`through Than Uyên and Tân Uyên`) and `QL4D` over iconic **O Quy Ho Pass (`Đèo Ô Quy Hồ`)**. Combining **2 nights in Tu Le / Mu Cang Chai** with **2 nights in Sa Pa** creates northern Vietnam's ultimate 5-day mountain terrace loop without ever retracing the same highway.
+
+---
+
+## Related Northern Highlands Field Guides
+
+- [Where to Stay in Mu Cang Chai (2026): Stays & Resorts](/destinations/where-to-stay-in-mu-cang-chai/): Where to stay in Mu Cang Chai: La Pan Tan hillside homestays vs Tu Le valley hot spring luxury resorts and town hotels. 2026 room rates and harvest advice.
+- [Hanoi to Mu Cang Chai Transport (2026): Bus vs Van](/plan/hanoi-to-mu-cang-chai-transport/): Hanoi to Mu Cang Chai transport guide: shared limousine vans vs sleeper buses and private transfers via Khau Pha Pass. 2026 ticket costs and harvest times.
+- [Sapa to Mu Cang Chai Transport (2026): Bus & Route](/plan/sapa-to-mu-cang-chai-transport/): O Quy Ho Pass and Highway 32 mountain route across 140 km: local buses (4.5-5 hours, 150,000 VND) vs private cars. 2026 fares, transit times, and road tips.

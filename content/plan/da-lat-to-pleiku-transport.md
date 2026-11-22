@@ -6,8 +6,8 @@ description: "Overnight sleeper buses and limousine vans covering 380 km (8-9 ho
 travel_cluster: "central_highlands"
 last_verified: "2026-11-01"
 author: "VietnamGuide Editorial Team"
-reading_time_minutes: 7
-word_count: 1488
+reading_time_minutes: 8
+word_count: 1526
 ---
 
 # Da Lat to Pleiku Transport (2026): Sleeper Bus Guide
@@ -100,3 +100,9 @@ Most 34-berth sleepers and 22-cabin coaches on **QL27** lack onboard toilets due
 
 ### What should I wear on the overnight bus from Da Lat?
 Wear a fleece hoodie and socks. Da Lat evenings start at **14°C to 16°C**, and drivers run ceiling AC vents at **18°C to 20°C** all night. Each berth includes a thin blanket and pillow.
+
+---
+
+## Related Central Highlands Field Guides
+
+- [Pleiku to Quy Nhon Transport (2026): Bus vs Private Car](/plan/pleiku-to-quy-nhon-transport/): QL19 mountain route across 165 km over An Khe and Mang Yang passes: limousine buses (3.5-4 hours, 160,000-200,000 VND) vs private cars and 2026 tips.

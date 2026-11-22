@@ -7,7 +7,7 @@ travel_cluster: "coastal_islands"
 last_verified: "2026-10-22"
 author: "VietnamGuide Editorial Team"
 reading_time_minutes: 18
-word_count: 3590
+word_count: 3662
 ---
 
 # 12 Best Beaches in Vietnam (2026): Where to Go by Month, Monsoon Calendar & Island Comparison
@@ -158,3 +158,10 @@ Your choice depends on the calendar month and whether you want cultural day trip
 - **Near Hanoi**: Mainland beaches in Ha Long City (Bai Chay, 155 km from Hanoi) have calm but emerald-opaque water due to Red River silt. For clear open-ocean swimming in the North between May and September, take the 45 minutes high-speed ferry from Ao Tien Port (200,000 VND, or $8.00 USD) to **Quan Lan / Minh Chau Island** or **Co To Island**, or kayak to **Three Peaches Beach (Ba Trái Đào)** in Lan Ha Bay.
 
 - **Near Ho Chi Minh City**: Vung Tau (100 km) and Can Gio (50 km) sit beside the mouths of the Saigon and Dong Nai estuaries, resulting in brownish alluvial water. For clean swimming within driving range of Saigon, travel 2.0 hours (120 km) east to **Ho Tram / Ho Coc**, drive 2.5 hours (200 km) along the CT01 Expressway to **Mui Ne**, or board a 45 minutes flight from SGN to **Con Dao (VCS)** or **Phu Quoc (PQC)**.
+
+---
+
+## Related Coastal & Island Field Guides
+
+- [Phu Quoc Beaches Guide: 7 Best Beaches & Coast Map (2026)](/destinations/phu-quoc-beaches-guide/): Complete Phu Quoc beaches guide: compare Sao Beach, Ong Lang sunsets, Bai Khem resorts, starfish ethics at Rach Vem, seasonal winds, and clear water.
+- [Where to Stay in Lang Co (2026): Beach & Lagoon Resorts](/destinations/where-to-stay-in-lang-co/): Canh Duong beach villas at Banyan Tree and Angsana vs Lap An oyster lagoon homestays 30 km north of Da Nang. 2026 room rates and coastal road tips.

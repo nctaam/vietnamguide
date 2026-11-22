@@ -7,7 +7,7 @@ travel_cluster: "coastal_islands"
 last_verified: "2026-11-01"
 author: "VietnamGuide Editorial Team"
 reading_time_minutes: 9
-word_count: 1829
+word_count: 1867
 ---
 
 ## Why Tran De (Soc Trang) Is the Shortest Sea Crossing to Con Dao
@@ -122,3 +122,9 @@ Often yes, though every boat stops in Beaufort Force 7 gales. Because the Tran D
 ### Can I leave my rented motorbike parked safely at Tran De Port overnight?
 
 Both the Superdong passenger pier and Tran De Fishing Port run gated, roofed overnight compounds guarded `24 hours` a day for `15,000 VND` (`$0.60 USD`) per night for scooters and `70,000 to 100,000 VND` (`$2.80 to $4.00 USD`) per night for four-wheeled cars. Parking beats freighting for stays under four days. Shipping a `110cc` to `150cc` motorcycle round-trip across the `90 km` strait costs `500,000 to 800,000 VND` (`$20.00 to $32.00 USD`) plus `60,000 VND` in stevedore tie-down fees, whereas renting a `125cc` automatic scooter on Con Son Island runs `150,000 to 200,000 VND` (`$6.00 to $8.00 USD`) per `24 hours`. Plan island coastal loops with our [Con Dao Travel Guide](/destinations/con-dao-travel-guide/) or overnight Mekong stays in [Where to Stay in Can Tho](/destinations/where-to-stay-in-can-tho/).
+
+---
+
+## Related Coastal & Island Field Guides
+
+- [Where to Stay in Soc Trang (2026): Hotels & Port Stays](/destinations/where-to-stay-in-soc-trang/): Where to stay in Soc Trang: central city hotels near Khmer pagodas vs Tran De port transit stays for Con Dao ferries. 2026 room rates and travel advice.

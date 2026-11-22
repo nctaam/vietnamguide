@@ -6,8 +6,8 @@ description: "Complete Vietnam in April guide: pleasant northern spring, central
 travel_cluster: "national_circuit"
 last_verified: "2026-11-02"
 author: "VietnamGuide Editorial Team"
-reading_time_minutes: 9
-word_count: 1825
+reading_time_minutes: 10
+word_count: 1915
 ---
 
 # Vietnam in April: Weather Transitions, Coastal Heat, and Holidays
@@ -138,3 +138,11 @@ The **Hung Kings Commemoration Day (`Giỗ Tổ Hùng Vương`, 10th day of the 
 
 ### Are the Cham Islands and Phu Quoc ferries calm in April?
 **Yes.** Both the **18 km, 20-minute Cua Dai to Cham Islands speedboat (`650,000–850,000 VND` / `$25.50–$33.30 USD` day tour)** in Central Vietnam and the **45 km, 75-minute Ha Tien to Phu Quoc Superdong ferry (`310,000 VND` / `$12.20 USD`)** in Southern Vietnam operate under calm `< 0.5 meters` wave heights throughout April.
+
+---
+
+## Related Vietnam Planning & Route Field Guides
+
+- [Vietnam in December: Weather and Best Routes](/plan/vietnam-in-december/): Plan Vietnam in December by region, route shape, weather risk, holiday booking pressure, beach and bay trade-offs, packing lists, and live route checks.
+- [Vietnam in February: Weather, Tet and Best Routes](/plan/vietnam-in-february/): Plan Vietnam in February by Tet holiday timing, post-Tet restart, dry regional weather, route shape, transport pressure, packing, and live route checks.
+- [Vietnam in June: Weather, Beach Sun & Route Guide (2026)](/plan/vietnam-in-june/): Complete Vietnam in June guide: explore peak central coast beach sunshine, northern mountain harvest escapes, southern rain patterns, and smart packing.

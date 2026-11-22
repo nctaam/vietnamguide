@@ -7,7 +7,7 @@ travel_cluster: "national_circuit"
 last_verified: "2026-11-01"
 author: "VietnamGuide Editorial Team"
 reading_time_minutes: 9
-word_count: 1872
+word_count: 1897
 ---
 
 # Vietnam SIM Card: Airport vs City Stores Guide (2026)
@@ -144,3 +144,8 @@ Official **Viettel**, **Vinaphone**, and **MobiFone** prepaid plans support full
 ### Which carrier works best for rural Ha Giang Loop, Phong Nha, and island routes?
 Pick **Viettel** without hesitation. Across the **350 km** [Ha Giang Loop](/destinations/ha-giang-loop-planning-guide/) (including Dong Van **145 km** north of Ha Giang City and Ma Pi Leng Pass **22 km** outside Meo Vac), inland valleys **45 km** from Dong Hoi in [Phong Nha](/destinations/phong-nha-travel-guide/), and offshore islands like Con Dao (**185 km** from Vung Tau), Viettel's military-built tower network holds steady 4G signal where Vinaphone and MobiFone frequently drop out. See our full carrier comparison in [SIM & eSIM Vietnam](/plan/sim-esim-vietnam/) before locking in a multi-week mountain route.
 
+---
+
+## Related Vietnam Planning & Route Field Guides
+
+- [Vietnam Airport Arrival Checklist](/plan/vietnam-airport-arrival-checklist/): Use this Vietnam airport arrival checklist to handle documents, luggage, SIM or eSIM, small cash, verified transport, scams, and first-night decisions.

@@ -7,7 +7,7 @@ travel_cluster: "northern_triangle"
 last_verified: "2026-10-31"
 author: "VietnamGuide Editorial Team"
 reading_time_minutes: 8
-word_count: 1513
+word_count: 1643
 ---
 
 ## Corridor Overview: Meter-Gauge Railway vs Expressway CT04
@@ -104,3 +104,12 @@ No direct rail link connects Noi Bai Airport to Hai Phong. The fastest option is
 
 ### Which Hai Phong bus station is closest to the city center and Cat Bi Airport (HPH)?
 **Thuong Ly Bus Station** (52 Hanoi Street) sits 2.5 km west of the Opera House and serves Hong Bang District hotels best. **Niem Nghia Bus Station** (275 Tran Nguyen Han) and **Vinh Niem Bus Station** (Bui Vien Boulevard) sit 3.5 km to 4.5 km south of the center and are just 5 km (12 minutes by taxi, 75,000 VND / $3.00) from **Cat Bi International Airport (HPH)**.
+
+---
+
+## Related Hanoi & Northern Delta Field Guides
+
+- [Hanoi to Cat Ba Island Transport: Bus & Ferry Guide (2026)](/plan/hanoi-to-cat-ba-island-transport/): Complete Hanoi to Cat Ba island transport guide: compare tourist combo bus-and-ferry packages, private transfers, Hai Phong speedboats, and travel times.
+- [Hanoi to Hue Transport (2026): Train, Flight or Bus](/plan/hanoi-to-hue-transport/): Hanoi to Hue transport options: SE1 and SE3 overnight sleeper trains, direct domestic flights, and cabin buses compared with 2026 prices rates in VND.
+- [Hanoi to Ninh Binh Transport: Train, Van or Car?](/plan/hanoi-to-ninh-binh-transport/): Compare Hanoi to Ninh Binh transport options: evaluate train, limousine van, private car, and day tours by drop-off point, luggage space, and timing.
+- [Hanoi to Sapa Transport: Train, Cabin Bus or Private Car?](/plan/hanoi-to-sapa-transport/): Compare Hanoi to Sapa transport by train, cabin bus, limousine van, and private car using sleep, arrival hour, luggage, motion comfort, and VND fares.

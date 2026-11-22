@@ -7,7 +7,7 @@ travel_cluster: "central_heritage"
 last_verified: "2026-10-22"
 author: "VietnamGuide Editorial Team"
 reading_time_minutes: 8
-word_count: 1543
+word_count: 1647
 ---
 
 # Best Things to Do in Da Nang (2026): Marble Mountains, Son Tra Peninsula, Dragon Bridge & My Khe Beach
@@ -104,3 +104,11 @@ The **Da Nang Dragon Bridge (`Cầu Rồng`) breathes fire and water every Frida
 
 ### Is Ba Na Hills and the Golden Bridge (`Cầu Vàng`) worth visiting from Da Nang?
 If you go on a clear, sunny morning and arrive at the **Suoi Mo Cable Car Station by `07:30 AM`** (`950,000–1,000,000 VND` / `~$38–$40 USD` round-trip), riding the world-record `5.8-kilometer` mountain cable car above rainforest waterfalls and walking across the **Golden Bridge (`Cầu Vàng`)** before the `10:00 AM` tour crowds is genuinely spectacular. However, check the weather forecast first: on heavy rain or thick winter fog days (`November–January`), visibility at `1,487 meters` can drop to `10 meters`, so save Ba Na Hills for your clearest morning in Da Nang!
+
+---
+
+## Related Central Heritage Field Guides
+
+- [Ba Na Hills Golden Bridge: Cable Car, Fog & Map (2026)](/destinations/ba-na-hills-golden-bridge-guide/): Complete Ba Na Hills Golden Bridge guide: compare cable car ticket prices, early morning crowd beats, mountain fog forecasts, opening hours, and transport.
+- [Da Nang Street Food Guide: Seafood, Mi Quang & Gems (2026)](/destinations/da-nang-street-food-guide/): Complete Da Nang street food guide: where to eat authentic mi quang, banh xeo Ba Duong, Nam O fish salad, coastal seafood, Con Market, and local prices.
+- [Da Nang vs Hoi An: Which Central Vietnam Base Is Better?](/compare/da-nang-vs-hoi-an/): Choose your central Vietnam base by My Khe beach access, 15-minute airport transfers, dining variety, historic ancient town streets, and regional day trips.

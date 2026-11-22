@@ -7,7 +7,7 @@ travel_cluster: "coastal_islands"
 last_verified: "2026-10-22"
 author: "VietnamGuide Editorial Team"
 reading_time_minutes: 7
-word_count: 1358
+word_count: 1461
 ---
 
 # Con Dao vs Phu Quoc (2026): Remote Marine Sanctuary vs Mega-Resort Island
@@ -113,3 +113,11 @@ Wild green sea turtles (`Chelonia mydas`) nest on the beaches of **Con Dao Natio
 
 ### How long is the ferry to Con Dao vs the ferry to Phu Quoc?
 To **Phu Quoc**, the fast ferry takes **`1 hour 15 minutes` from Ha Tien (`230,000–250,000 VND`)** or **`2 hours 15 minutes` from Rach Gia (`330,000–340,000 VND`)** across sheltered Gulf of Thailand waters. To **Con Dao**, the shortest ocean catamaran crossing is **`2 hours 30 minutes` from Tran De Port in Soc Trang (`310,000–390,000 VND`)** or **`3 hours 45 minutes` from Vung Tau (`790,000–1,200,000 VND`)** across the open South China Sea.
+
+---
+
+## Related Coastal & Island Field Guides
+
+- [Best Islands in Vietnam: Phu Quoc, Con Dao, Cat Ba, and More](/destinations/best-islands-in-vietnam/): Best islands in Vietnam: compare Phu Quoc resort beaches, Con Dao marine tranquility, Cat Ba national park karsts, and Cham Islands diving day trips.
+- [Best Beaches in Vietnam: Where to Go by Month](/destinations/best-beaches-in-vietnam/): Discover the best beaches in Vietnam by month: compare Phu Quoc dry season in Dec–Apr, Da Nang surf swells, Con Dao turtle nesting, and flight options.
+- [Phu Quoc vs Nha Trang: Which Beach Is Better?](/compare/phu-quoc-vs-nha-trang/): Phu Quoc vs Nha Trang: compare island resort relaxation with active city-beach energy, water sports, dining scenes, direct flights, and rainy seasons.

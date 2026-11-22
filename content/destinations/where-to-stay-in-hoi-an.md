@@ -6,8 +6,8 @@ description: "Complete guide on where to stay in Hoi An: compare Ancient Town wa
 travel_cluster: "central_heritage"
 last_verified: "2026-10-24"
 author: "VietnamGuide Editorial Team"
-reading_time_minutes: 7
-word_count: 1411
+reading_time_minutes: 8
+word_count: 1547
 ---
 
 # Where to Stay in Hoi An: Old Town vs Beach & Fields (2026)
@@ -92,3 +92,12 @@ Hoi An farmers cultivate two annual rice crops in Cam Chau and Cam Thanh. You wi
 
 ### Can cars drive to hotels inside Hoi An Ancient Town?
 No motor vehicles are permitted inside the core UNESCO pedestrian streets (Tran Phu, Nguyen Thai Hoc, Bach Dang, Nguyen Thi Minh Khai) from 09:00 to 11:00 and 15:00 to 21:30 daily. However, virtually all hotels sit just outside these barriers along Hai Ba Trung, Phan Chu Trinh, Hung Vuong, or Nguyen Phuc Chu, where airport cars and Grab taxis can drop you directly at the hotel lobby 24 hours a day.
+
+---
+
+## Related Central Heritage Field Guides
+
+- [Cham Islands Travel Guide: Hoi An Day Trip or Overnight?](/destinations/cham-islands-travel-guide/): Cham Islands travel guide: speedboats from Hoi An, UNESCO biosphere marine reserve snorkeling, Bai Chong beach, homestay visits, and rough sea season advice.
+- [Ly Son vs Cham Islands: Which Central Island to Pick? (2026)](/compare/ly-son-vs-cham-islands/): Ly Son vs Cham Islands comparison: volcanic geology vs coral reef biosphere, speedboat transfers from Sa Ky or Hoi An, homestays, and 2026 VND costs.
+- [Central Vietnam Itinerary (2026): 5 to 7-Day Route](/itineraries/central-vietnam-itinerary/): Central Vietnam itinerary for 2026: practical 5 to 7-day route connecting Hue Citadel, Hai Van Pass, Da Nang beaches, and Hoi An lantern old streets.
+- [Da Nang vs Hoi An: Which Central Vietnam Base Is Better?](/compare/da-nang-vs-hoi-an/): Choose your central Vietnam base by My Khe beach access, 15-minute airport transfers, dining variety, historic ancient town streets, and regional day trips.

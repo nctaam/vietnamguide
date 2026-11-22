@@ -6,8 +6,8 @@ description: "Hanoi in 2 days itinerary: ideal 48-hour plan covering Hoan Kiem L
 travel_cluster: "northern_triangle"
 last_verified: "2026-10-22"
 author: "VietnamGuide Editorial Team"
-reading_time_minutes: 9
-word_count: 1888
+reading_time_minutes: 10
+word_count: 2033
 ---
 
 # Hanoi in 2 Days: A Calm First-Time Itinerary
@@ -168,3 +168,12 @@ If you want immediate walking access to sights without late-night street noise, 
 
 ### Is street food in Hanoi safe for first-time visitors?
 Hanoi's specialized street stalls—where a family cooks a single dish like *pho* or *bun cha* in boiling cauldrons or over live charcoal for decades—have extremely high ingredient turnover and are safer than empty tourist restaurants with 100-item menus. Choose busy stalls during peak meal hours (07:00–09:00 AM and 11:30–13:30 PM), ensure broth is served piping hot, and stick to bottled water or hot tea.
+
+---
+
+## Related Hanoi & Northern Delta Field Guides
+
+- [Best Things to Do in Hanoi: What Is Actually Worth Your Time](/destinations/best-things-to-do-in-hanoi/): Best things to do in Hanoi: Old Quarter street food walks, Temple of Literature entry fees, water puppet tickets, 2-day transit routes, and top sights.
+- [Hanoi Street Food Guide: Best Dishes, Stalls & Tips (2026)](/destinations/hanoi-street-food-guide/): Complete Hanoi street food guide: where to eat pho bo, bun cha, cha ca, banh cuon, and egg coffee. Old Quarter stall addresses, prices, and hygiene tips.
+- [Hanoi vs Ho Chi Minh City: Which Should You Visit First?](/compare/hanoi-vs-ho-chi-minh-city/): Compare Hanoi vs Ho Chi Minh City by first-night comfort, route direction, weather seasons, food scenes, day trips, airport logic, and trip length.
+- [Hanoi to Hai Phong Transport (2026): Train vs Van](/plan/hanoi-to-hai-phong-transport/): Daily trains from Hanoi Central and Long Bien (2.5 hours, 95,000 VND) vs 5B Expressway limousines (80 mins, 150,000 VND). 2026 schedules and food tour tips.

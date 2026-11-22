@@ -7,7 +7,7 @@ travel_cluster: "southern_delta"
 last_verified: "2026-10-20"
 author: "VietnamGuide Editorial Team"
 reading_time_minutes: 9
-word_count: 1733
+word_count: 1772
 ---
 
 # Ben Duoc vs Ben Dinh: Which Cu Chi Tunnels Site to Visit?
@@ -198,3 +198,9 @@ Live-fire cartridges cost approximately 60,000 VND (~$2.40 USD) per bullet for s
 
 ### Can you take a boat from Ho Chi Minh City to Cu Chi?
 Yes. Luxury high-speed riverboat operators such as Les Rives provide morning and afternoon departures from Bach Dang Wharf in central District 1. The boat trip takes roughly 75 to 80 minutes along the Saigon River, eliminating suburban highway traffic jams. Tour packages cost between 1.9 million and 2.4 million VND ($75 to $95 USD) per person, inclusive of breakfast or lunch, entrance tickets, and an English-speaking guide.
+
+---
+
+## Related Ho Chi Minh City & Southern Field Guides
+
+- [Best Day Trips from Ho Chi Minh City: Cu Chi or Mekong?](/destinations/best-day-trips-from-ho-chi-minh-city/): Best day trips from Ho Chi Minh City: Cu Chi Tunnels 70 km transit, Ben Tre Mekong Delta boat tours, entry ticket fees, and travel schedules compared.

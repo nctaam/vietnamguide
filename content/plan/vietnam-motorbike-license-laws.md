@@ -7,7 +7,7 @@ travel_cluster: "national_circuit"
 last_verified: "2026-10-24"
 author: "VietnamGuide Editorial Team"
 reading_time_minutes: 8
-word_count: 1556
+word_count: 1643
 ---
 
 # Vietnam Motorbike License Laws (2026): IDP & Legal Rules
@@ -126,3 +126,11 @@ No license is required. Under Vietnam's **2024 Law on Road Traffic Order and Saf
 
 ### How can long-term expats or digital nomads obtain a legal Vietnamese motorbike license?
 Holders of a **Temporary Residence Card (`TRC`)** or visa valid for **at least 3 months (`90 days`)** have two legal paths. If you already hold a national motorcycle license from home, you can convert it directly into a Vietnamese **Category A1 or A** PET card at the **Department of Transport (`Sở GTVT`) or Traffic Police** for **135,000 VND** (`$5.30 USD`) with no riding test. If you only hold a foreign car license (`Category B`), you skip the written theory exam and only take the **15-minute figure-eight practical riding test (`Vòng số 8`)** at a local test center (`~1,200,000–1,800,000 VND` total).
+
+---
+
+## Related Vietnam Planning & Route Field Guides
+
+- [Vietnam Scooter Rental Checklist (2026): Bike Checks](/plan/vietnam-scooter-rental-checklist/): Vietnam scooter rental checklist: brake testing, tire checks, blue card papers, helmet safety, damage video recording, and deposit rules for 2026 travel.
+- [Vietnam Travel Insurance & Health Guide: What to Cover](/plan/health-travel-insurance-vietnam/): Vietnam travel insurance and health guide: international hospital networks in Hanoi and HCMC, motorbike injury coverage rules, vaccines, and pharmacies.
+- [Vietnam in August: Monsoon Surf, Rice Green & Heat](/plan/vietnam-in-august/): Plan Vietnam in August by region: central coast dry sunshine, northern mountain rice terraces, afternoon monsoon rain windows, and 2026 rail transport.

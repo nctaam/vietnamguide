@@ -6,8 +6,8 @@ description: "Complete tipping in Vietnam guide: when to tip, service charge nor
 travel_cluster: "national_circuit"
 last_verified: "2026-10-24"
 author: "VietnamGuide Editorial Team"
-reading_time_minutes: 7
-word_count: 1460
+reading_time_minutes: 8
+word_count: 1581
 ---
 
 # Tipping in Vietnam: Etiquette, Rules & Amounts (2026)
@@ -97,3 +97,12 @@ Stay calm and polite. The vast majority of **Trang An** (strictly regulated by t
 
 ### Do I need to tip on a free walking tour in Hanoi or Ho Chi Minh City?
 Yes—depending on the structure. Volunteer student clubs (such as *Hanoi Kids* or *Saigon Hotpot*) strictly prohibit cash tips and only ask that you cover the student's **30,000 to 60,000 VND** coffee or street snack plus any temple entry tickets (`30,000 to 70,000 VND`). Commercial "free" walking tours booked via online portals operate on a tip-supported model, where **150,000 to 250,000 VND per person** (`$6 to $10 USD`) is the standard benchmark for a 2.5- to 3-hour walk.
+
+---
+
+## Related Vietnam Planning & Route Field Guides
+
+- [Best Places to Visit in Vietnam: Where to Go First](/destinations/best-places-to-visit-vietnam/): Best places to visit in Vietnam: curated shortlist of top destinations by season, travel pace, cultural depth, beach time, and realistic route connections.
+- [UNESCO Heritage Sites in Vietnam: 2026 Route Guide](/destinations/unesco-heritage-sites-vietnam/): Choose which UNESCO heritage sites in Vietnam fit your route, with 2026 updates, first-trip priorities, skip logic, source checks, and verified photo proof.
+- [Vietnam Coffee Guide: Egg, Salt, Coconut & Cafes (2026)](/destinations/vietnam-coffee-guide/): Complete Vietnam coffee guide: authentic egg coffee, salt coffee, coconut coffee, robusta phin culture, specialty roasters, and iconic cafes nationwide.
+- [Vietnam Family Travel Guide (2026): Route & Kid Advice](/itineraries/vietnam-family-travel-guide/): Vietnam family travel guide: practical 10 to 14-day routes with kids, stroller access, child-friendly trains, meal tips, and 2026 safety logistics.

@@ -7,7 +7,7 @@ travel_cluster: "mekong_delta"
 last_verified: "2026-10-25"
 author: "VietnamGuide Editorial Team"
 reading_time_minutes: 10
-word_count: 2006
+word_count: 2100
 ---
 
 # Can Tho to Rach Gia Transport: Bus Schedules, Limousines, Expressways, and Port Transfers
@@ -156,3 +156,11 @@ Yes. **Vietcombank, BIDV, and Agribank** operate 24/7 ATMs within 150 meters to 
 
 ### What happens if rough weather halts ferry departures from Rach Gia?
 When Gulf of Thailand winds hit Beaufort Force 6 to 7 (above 40 km/h to 50 km/h), the Maritime Administration suspends all Rach Gia sailings. Superdong and Phu Quoc Express provide a **100% cash or card refund** (or free rebooking onto the next day's boat). Stranded travelers needing same-day arrival can catch a 45 minutes taxi (18 km, 220,000 VND or $8.80 USD) to **Rach Gia Airport (VKG)** for a 50-minute Vietnam Airlines ATR-72 flight, or hire a car 90 km northwest along QL80 to **Ha Tien Port** (2.0 hours, 900,000 VND or $36.00 USD), where sheltered 45 km Phu Quoc car ferries often resume sailing earlier.
+
+---
+
+## Related Mekong Delta Field Guides
+
+- [Can Tho to Ca Mau Transport (2026): Bus vs Van](/plan/can-tho-to-ca-mau-transport/): Details Futa express coaches (150,000 VND, 3.5 hours) and limousine vans running 150 km south along Highway 1A toward Dat Mui.
+- [Can Tho to Phu Quoc Transport (2026): Ferry vs Flight](/plan/can-tho-to-phu-quoc-transport/): Compares 50-minute direct flights against road transfers to Rach Gia Port and 2.5-hour Superdong fast catamarans.
+- [Can Tho to Ha Tien Transport (2026): Bus vs Van](/plan/can-tho-to-ha-tien-transport/): Covers 190 km Futa sleeper coaches and shared vans (4–4.5 hours, 170,000–220,000 VND) timed for morning Phu Quoc sailings.

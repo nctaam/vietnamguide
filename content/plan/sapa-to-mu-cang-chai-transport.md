@@ -7,7 +7,7 @@ travel_cluster: "northern_highlands"
 last_verified: "2026-10-31"
 author: "VietnamGuide Editorial Team"
 reading_time_minutes: 8
-word_count: 1521
+word_count: 1627
 ---
 
 # Sapa to Mu Cang Chai Transport (2026): Bus & Route
@@ -114,3 +114,11 @@ Do not get off at the central Mu Cang Chai Bus Station unless your hotel is insi
 
 ### How do I travel from Mu Cang Chai back to Hanoi without returning to Sapa?
 Direct sleeper buses and 29-seat coaches operated by The Anh, Kien Huyen, and Cường Lan depart Mu Cang Chai town and Nga Ba Kim daily at 07:30 AM, 09:00 AM, 13:00 PM, and 20:00 PM heading south on `QL32`. The route crosses Khau Pha Pass (35 km south of Mu Cang Chai), passes Tu Le (`Tú Lệ`) and Nghia Lo (`Nghĩa Lộ`), and arrives at My Dinh Bus Station in Hanoi in 6.5 to 7.5 hours for 250,000 VND to 350,000 VND ($10.00 to $14.00).
+
+---
+
+## Related Northern Highlands Field Guides
+
+- [Vietnam Rice Terraces Guide: Sapa, Mu Cang Chai & More](/compare/vietnam-rice-terraces-guide/): Authoritative Vietnam rice terraces guide: compare Sapa, Mu Cang Chai, Hoang Su Phi, and Pu Luong by golden season harvest timing and 2026 hike trails.
+- [Where to Stay in Mu Cang Chai (2026): Stays & Resorts](/destinations/where-to-stay-in-mu-cang-chai/): Where to stay in Mu Cang Chai: La Pan Tan hillside homestays vs Tu Le valley hot spring luxury resorts and town hotels. 2026 room rates and harvest advice.
+- [Sapa to Ha Giang Transport (2026): Bus vs Limousine](/plan/sapa-to-ha-giang-transport/): Sapa to Ha Giang transport: daytime VIP limousines vs overnight sleeper buses via Lao Cai and Highway 279. 2026 schedules, ticket fares, and advice.

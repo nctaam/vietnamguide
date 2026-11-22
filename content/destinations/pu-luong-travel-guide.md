@@ -7,7 +7,7 @@ travel_cluster: "northern_highlands"
 last_verified: "2026-10-22"
 author: "VietnamGuide Editorial Team"
 reading_time_minutes: 8
-word_count: 1569
+word_count: 1605
 ---
 
 # Pu Luong Nature Reserve Travel Guide (2026): Rice Terraces, Bamboo Water Wheels, Treks & Hanoi Limousines
@@ -139,3 +139,9 @@ You do not need to go back through Hanoi. Daily tourist limousine vans and shutt
 
 ### Are there ATMs in Pu Luong Nature Reserve?
 There are **no ATMs inside the core villages of `Bản Đôn`, `Kho Mường`, or `Bản Hiêu`** (the nearest Agribank ATM is `18–25 km` away in Cành Nàng town, Ba Thuoc District). While upscale resorts (`Pu Luong Retreat`, `Casa`, `Natura`) accept Visa/Mastercard with a `3%` bank fee, always withdraw **`1,500,000 to 2,500,000 VND` (`$60–$100 USD`) in cash** in Hanoi or Ninh Binh before departing to pay for village raft tickets, motorbike transfers, and local guides.
+
+---
+
+## Related Northern Highlands Field Guides
+
+- [Where to Stay in Pu Luong (2026): Best Villages & Bases](/destinations/where-to-stay-in-pu-luong/): Where to stay in Pu Luong: Don village valley view retreats vs Ban Hieu waterwheel homestays with 2026 VND room rates, trekking bases, and local advice.

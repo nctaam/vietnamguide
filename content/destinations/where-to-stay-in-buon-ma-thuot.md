@@ -7,7 +7,7 @@ travel_cluster: "central_highlands"
 last_verified: "2026-10-24"
 author: "VietnamGuide Editorial Team"
 reading_time_minutes: 8
-word_count: 1561
+word_count: 1667
 ---
 
 # Where to Stay in Buon Ma Thuot (2026): City & Eco-Stays
@@ -83,3 +83,11 @@ Plan **2 to 3 nights**. Spend two nights near **Nga Sau** or **Ako Dhong** to ex
 
 ### Can I still ride elephants in Buon Don or Lak Lake in 2026?
 Do not book elephant rides. **Yok Don National Park** and **Animals Asia** permanently abolished elephant riding in favor of hands-off forest observation treks (`800,000–1,500,000 VND/person`), while **LAK Tented Camp** focuses strictly on non-riding ethical conservation walks, village cycling, and sunrise dugout canoeing.
+
+---
+
+## Related Central Highlands Field Guides
+
+- [Where to Stay in Bao Loc (2026): Tea Hills vs Town Center](/destinations/where-to-stay-in-bao-loc/): Where to stay in Bao Loc: central commercial hotels vs tea plantation eco-lodges with 2026 room prices, Dambri waterfall tips, and highland advice.
+- [Buon Ma Thuot to Nha Trang Transport (2026): Bus & Car](/plan/buon-ma-thuot-to-nha-trang-transport/): Highway 26 transit across 185 km: limousine vans (3.5-4 hours, 200,000 VND) vs local buses over Phoenix Pass. 2026 timetables and departure points.
+- [Buon Ma Thuot to Pleiku Transport (2026): Bus vs Van](/plan/buon-ma-thuot-to-pleiku-transport/): Highway 14 route across 180 km: shared limousines (3.5 hours, 180,000-220,000 VND) vs local buses and motorbikes. 2026 timetables, terminals, and road tips.

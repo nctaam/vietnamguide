@@ -7,7 +7,7 @@ travel_cluster: "far_north_frontier"
 last_verified: "2026-10-22"
 author: "VietnamGuide Editorial Team"
 reading_time_minutes: 8
-word_count: 1572
+word_count: 1608
 ---
 
 # Cao Bang to Ba Be Transport (2026): Bus vs Car
@@ -106,3 +106,9 @@ Yes, if you charter a **private car (1,500,000 to 1,800,000 VND)** or ride a mot
 
 ### Where do I find an ATM or buy snacks before entering Ba Be National Park?
 Do not wait until you reach the lakeshore villages of Pac Ngoi or Bo Lu to withdraw cash! While Pac Ngoi has over twenty family-run Tay stilt homestays and small beer-and-noodle shops, **there are zero reliable bank ATMs inside the lakeside villages**, and most family boat captains and homestays settle boat charter fees (**600,000 to 800,000 VND**), kayak rentals (**150,000 VND**), and home-cooked dinners (**150,000 VND per person**) in physical Vietnamese Dong notes. Withdraw at least **2,500,000 to 3,500,000 VND ($100–$140 USD)** at the **Agribank, BIDV, or VietinBank ATMs in central Cao Bang City** before boarding your morning van, or ask your driver to pause for 5 minutes at the **Agribank branch in Cho Ra Town (Thị trấn Chợ Rã, 16 km before the lake)** on the way in.
+
+---
+
+## Related Far North Frontier Field Guides
+
+- [Ha Giang to Cao Bang Transport (2026): Bus vs Van](/plan/ha-giang-to-cao-bang-transport/): Ha Giang to Cao Bang transport: local buses and shared minivans via Bao Lac and Highway 34 vs motorbike routes. 2026 schedules, fares, and road tips.

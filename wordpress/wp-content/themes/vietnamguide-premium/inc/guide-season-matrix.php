@@ -1117,7 +1117,7 @@ function vg_render_season_matrix_html(): string
                     <strong><?php esc_html_e('Visa Exemption & E-Visa Checker', 'vietnamguide-premium'); ?></strong>
                     <span><?php esc_html_e('Verify 45-day exemption vs $25 e-visa rules &rarr;', 'vietnamguide-premium'); ?></span>
                 </a>
-                <a href="<?php echo esc_url(home_url('/costs/vietnam-travel-cost/')); ?>" class="vg-sm-bridge-card vg-synergy-bridge">
+                <a href="<?php echo esc_url(home_url('/plan/vietnam-travel-cost/')); ?>" class="vg-sm-bridge-card vg-synergy-bridge">
                     <span class="vg-sm-bridge-tag"><?php esc_html_e('Budgeting', 'vietnamguide-premium'); ?></span>
                     <strong><?php esc_html_e('Trip Cost Calculator', 'vietnamguide-premium'); ?></strong>
                     <span><?php esc_html_e('Estimate 3–30 day spending by comfort tier &rarr;', 'vietnamguide-premium'); ?></span>

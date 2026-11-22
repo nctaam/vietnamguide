@@ -7,7 +7,7 @@ travel_cluster: "far_north_frontier"
 last_verified: "2026-10-24"
 author: "VietnamGuide Editorial Team"
 reading_time_minutes: 8
-word_count: 1554
+word_count: 1659
 ---
 
 # Where to Stay in Ba Be (2026): Lake Homestays & Lodges
@@ -103,3 +103,11 @@ Do not pre-book overpriced $70 USD online boat packages. Walk to the official **
 
 ### Are there ATMs inside Ba Be National Park (Pac Ngoi or Bo Lu)?
 No. Neither **Pac Ngoi**, **Bo Lu**, nor **Coc Toc** has a bank ATM, and mobile card readers frequently lose signal inside the limestone basin. Always stop in **Cho Ra Town (Thị trấn Chợ Rã)**—located **15 km (25 minutes)** east of the lake on **DT254**—to withdraw sufficient VND cash from the **Agribank** or **BIDV ATMs** before entering the park.
+
+---
+
+## Related Far North Frontier Field Guides
+
+- [Where to Stay in Bao Lac (2026): Mountain Transit Stays](/destinations/where-to-stay-in-bao-lac/): Where to stay in Bao Lac: riverside town guesthouses vs Black Lo Lo homestays with 2026 room rates, QL34 loop logistics, and mountain route advice.
+- [Ba Be Lake Travel Guide (2026): Boat Tours & Homestays](/destinations/ba-be-lake-travel-guide/): Ba Be Lake travel guide: scenic boat tours, Puong Cave, Dau Dang waterfall, Pac Ngoi homestays, kayak rentals, park entry fees, and 2026 itineraries.
+- [Cao Bang to Ba Be Transport (2026): Bus vs Car](/plan/cao-bang-to-ba-be-transport/): Highway 34 and 279 mountain transfer across 130 km: passenger minivans (4.5 hours, 150,000 VND) vs private cars. 2026 road conditions and lake access tips.

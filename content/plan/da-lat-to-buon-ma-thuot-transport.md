@@ -6,8 +6,8 @@ description: "Highway 27 highland route covering 210 km: shared limousine vans (
 travel_cluster: "central_highlands"
 last_verified: "2026-10-21"
 author: "VietnamGuide Editorial Team"
-reading_time_minutes: 7
-word_count: 1472
+reading_time_minutes: 8
+word_count: 1564
 ---
 
 # Da Lat to Buon Ma Thuot Transport: Bus, Car & Route QL27 (2026)
@@ -169,3 +169,11 @@ Standard sleeper coaches provide spacious under-floor cargo holds accommodating 
 
 ### Is an overnight stay at Lak Lake recommended?
 Yes, if your schedule allows 48 hours rather than a single transit day. Spending a night at Lak Tented Camp or an authentic M'Nong homestay in Buon Jun allows you to witness early morning mist rising off the lake, experience traditional gong performances (*không gian văn hóa Cồng Chiêng*), and continue into Buon Ma Thuot refreshed the following morning.
+
+---
+
+## Related Central Highlands Field Guides
+
+- [Central Highlands Vietnam Itinerary (2026): 5-7 Day Route](/itineraries/central-highlands-vietnam-itinerary/): Sequences a 5-to-7-day plateau loop linking Da Lat, Lak Lake, Dray Nur waterfalls, and Buon Ma Thuot coffee estates.
+- [Buon Ma Thuot to Nha Trang Transport (2026): Bus & Car](/plan/buon-ma-thuot-to-nha-trang-transport/): Maps the 185 km Highway 26 descent over Phoenix Pass by limousine van (3.5–4 hours, 200,000 VND) or local bus.
+- [Buon Ma Thuot to Pleiku Transport (2026): Bus vs Van](/plan/buon-ma-thuot-to-pleiku-transport/): Outlines 180 km Highway 14 transit north by shared limousine (3.5 hours, 180,000–220,000 VND), regional coach, or motorbike.

@@ -6,8 +6,8 @@ description: "Where to stay in Can Tho for floating markets: Ninh Kieu Wharf wal
 travel_cluster: "mekong_delta"
 last_verified: "2026-10-24"
 author: "VietnamGuide Editorial Team"
-reading_time_minutes: 7
-word_count: 1475
+reading_time_minutes: 8
+word_count: 1620
 ---
 
 # Where to Stay in Can Tho (2026): Best Areas & Hotels
@@ -111,3 +111,12 @@ At the official Ninh Kieu Tourist Pier ticket counter, a private wooden sampan f
 
 ### How do I get from Ho Chi Minh City to my hotel in Can Tho?
 Take a `FUTA Bus Lines` (`Phuong Trang`) sleeper bus from Saigon's Mien Tay Bus Station (departures every 30 minutes, **165,000 to 180,000 VND / $6.60 to $7.20 USD**, 3.0 to 3.5 hours via the `CT01` expressway and My Thuan 2 Bridge). Upon arrival at Can Tho Central Bus Station, show your ticket at the `FUTA` dispatch desk for a **free shuttle van transfer** directly to any hotel in Ninh Kieu or Cai Rang.
+
+---
+
+## Related Mekong Delta Field Guides
+
+- [Mekong Delta Overnight vs Day Trip: Which Is Worth It?](/compare/mekong-delta-overnight-vs-day-trip/): Decide between Mekong Delta overnight vs day trip: choose a quick day tour, Can Tho stay, deeper river route, or clean skip by timing and 2026 comfort.
+- [Mekong Delta Travel Guide: Day Trip, Overnight or Skip?](/destinations/mekong-delta-travel-guide/): Mekong Delta travel guide: floating markets in Can Tho, Ben Tre riverboat day trips, homestays in Vinh Long, Chau Doc border routes, and transfer logistics.
+- [Can Tho to Ca Mau Transport (2026): Bus vs Van](/plan/can-tho-to-ca-mau-transport/): Futa express buses (150,000 VND, 3.5 hours) vs limousine minivans covering 150 km south via Highway 1A. 2026 departure times, ticket fares, and Dat Mui tips.
+- [Ho Chi Minh City to Can Tho: Limousine, Bus & Car](/plan/ho-chi-minh-city-to-can-tho-transport/): Ho Chi Minh City to Can Tho transport guide: limousine vans, express buses, and private car options with travel times, station advice, and 2026 VND fares.

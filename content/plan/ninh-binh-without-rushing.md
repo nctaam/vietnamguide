@@ -6,8 +6,8 @@ description: "Plan Ninh Binh without rushing: choose one long day, one protected
 travel_cluster: "ninh_binh"
 last_verified: "2026-11-01"
 author: "VietnamGuide Editorial Team"
-reading_time_minutes: 8
-word_count: 1593
+reading_time_minutes: 9
+word_count: 1737
 ---
 
 # Ninh Binh Without Rushing: How to Match Your Boat Route, Base & Transfer Window
@@ -101,3 +101,12 @@ Skip Bai Dinh if you have less than 2 full days. Built largely between 2003 and 
 
 ### How much cash in VND do I need to carry in Ninh Binh?
 Carry 600,000 VND to 800,000 VND ($24.00 to $32.00) per person in physical notes. Ticket booths at Trang An (250,000 VND to 300,000 VND), Tam Coc (250,000 VND), Hang Mua (100,000 VND), Van Long (100,000 VND), Hoa Lu (20,000 VND), and official parking gates (10,000 VND to 20,000 VND) take cash or domestic QR transfers rather than foreign cards.
+
+---
+
+## Related Ninh Binh & Karst Valley Field Guides
+
+- [Ninh Binh Day Trip vs Overnight: Which Is Better?](/compare/ninh-binh-day-trip-vs-overnight/): Evaluate Ninh Binh day trip vs overnight stay: practical verdict by route length, transfer pressure, Trang An vs Tam Coc, weather, cost, and hotels.
+- [Best Things to Do in Ninh Binh: Karsts, Boats & Caves](/destinations/best-things-to-do-in-ninh-binh/): The best things to do in Ninh Binh: Trang An boat rides, Hang Mua dragon viewpoint, Tam Coc river caves, Bai Dinh pagoda, and cycling with 2026 prices.
+- [Hang Mua Ninh Binh: Dragon Peak, 500 Steps & Tips (2026)](/destinations/hang-mua-ninh-binh-guide/): Complete Hang Mua Ninh Binh guide: how to climb 500 stone steps to Ngoa Long dragon peak, lotus boardwalk timing, tickets, avoiding crowds, and photo tips.
+- [Where to Stay in Ninh Binh: Best Areas](/destinations/where-to-stay-in-ninh-binh/): Where to stay in Ninh Binh: choose Tam Coc, Trang An area, Ninh Binh city, Van Long, Gia Vien, or Cuc Phuong by route, sleep, pickup, and 2026 comfort.

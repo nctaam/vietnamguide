@@ -7,7 +7,7 @@ travel_cluster: "northern_highlands"
 last_verified: "2026-10-31"
 author: "VietnamGuide Editorial Team"
 reading_time_minutes: 8
-word_count: 1586
+word_count: 1689
 ---
 
 # Ha Giang to Dong Van Transport (2026): Bus vs Motorbike
@@ -120,3 +120,11 @@ Belt-driven scooters (Honda AirBlade, Vision, Lead) lack manual gears and provid
 
 ### Are there working ATMs and petrol stations between Ha Giang City and Dong Van?
 Yes, at 45 km to 50 km intervals. Agribank operates ATMs in Tam Son Town (Km 49), Yen Minh Town (Km 98), and Dong Van Town (Km 140) with per-transaction limits of 3,000,000 VND to 5,000,000 VND ($120.00 to $200.00 USD). State Petrolimex stations sit in those same four towns.
+
+---
+
+## Related Northern Highlands Field Guides
+
+- [Where to Stay in Ha Giang (2026): Loop Bases & Stays](/destinations/where-to-stay-in-ha-giang/): Where to stay in Ha Giang and the loop: city staging hostels, Dong Van old town homestays, Meo Vac clay lodges, and Du Gia waterfall stays in 2026.
+- [Ha Giang Easy Rider vs Self-Drive: Motorbike Route Guide](/compare/ha-giang-easy-rider-vs-self-drive/): Decide between Ha Giang easy rider vs self-drive: compare tour costs, 1968 IDP license rules, road hazards, physical fatigue, and passenger safety.
+- [Where to Stay in Dong Van (2026): Hotels & Homestays](/destinations/where-to-stay-in-dong-van/): Old Quarter stone houses and 150,000-350,000 VND dorms vs Ma Pi Leng canyon cliffside homestays. 2026 room rates, mountain lodges, and Loop advice.

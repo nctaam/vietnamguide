@@ -7,7 +7,7 @@ travel_cluster: "central_highlands"
 last_verified: "2026-10-22"
 author: "VietnamGuide Editorial Team"
 reading_time_minutes: 9
-word_count: 1706
+word_count: 1807
 ---
 
 # Central Highlands Vietnam Itinerary (2026): 5 to 7-Day Da Lat, Buon Ma Thuot & Kon Tum Route
@@ -130,3 +130,11 @@ It comes down to **elevation and bean species**. **Da Lat (`1,400–1,650m` in C
 
 ### Can I visit the Central Highlands without riding a motorbike?
 Yes, 100% of this itinerary works smoothly without touching a motorbike. Within Da Lat, Buon Ma Thuot, Pleiku, and Kon Tum, **Grab cars and metered taxis (Mai Linh, Tiên Sa, Sun Taxi)** are inexpensive (`14,000–16,000 VND/km`) and readily available via app, and intercity connections between the four highland capitals are served by comfortable 9-to-16-seat limousine vans (`180,000–300,000 VND` per leg) or private cars with drivers.
+
+---
+
+## Related Central Highlands Field Guides
+
+- [Best Things to Do in Da Lat: Highlands & Waterfalls](/destinations/best-things-to-do-in-da-lat/): Discover the best things to do in Da Lat: Arabica coffee cupping, alpine coaster rides, Datanla falls, pine trails, and night markets with 2026 prices.
+- [Da Lat to Buon Ma Thuot Transport (2026): Bus & Car](/plan/da-lat-to-buon-ma-thuot-transport/): Highway 27 highland route covering 210 km: shared limousine vans (5-6 hours, 220,000-260,000 VND) past Lak Lake vs private cars and 2026 schedules.
+- [Da Lat Coffee Farms: Arabica Tour & Cupping Guide](/destinations/da-lat-coffee-farms-guide/): Explore the best Da Lat coffee farms. Our guide covers arabica plantations, farm tour types, cupping sessions, costs, and the best seasons to visit.

@@ -7,7 +7,7 @@ travel_cluster: "phong_nha_caves"
 last_verified: "2026-10-20"
 author: "VietnamGuide Editorial Team"
 reading_time_minutes: 10
-word_count: 1914
+word_count: 2052
 ---
 
 # Phong Nha Cave Treks: 1 to 3-Day Expedition Guide (2026)
@@ -182,3 +182,12 @@ For show caves like Paradise and Phong Nha, wear comfortable walking shoes with 
 
 ### Are credit cards widely accepted in Phong Nha?
 Major tour operators (Oxalis, Jungle Boss) and international-style hotels accept Visa and Mastercard, frequently with a 3 percent processing fee. However, park ticket counters, local dragon boat operators, family-run restaurants, and rural homestays deal almost exclusively in cash. Multiple Agribank and Vietcombank ATMs operate along the main road in Son Trach town to withdraw Vietnamese Dong.
+
+---
+
+## Related Phong Nha & North-Central Field Guides
+
+- [Phong Nha Travel Guide: Caves, Seasons and Route Fit](/destinations/phong-nha-travel-guide/): Authoritative Phong Nha travel guide: decide whether Phong Nha is worth the cave detour by route fit, season, nights needed, fitness, and trade-offs.
+- [Da Nang to Phong Nha Transport (2026): Train vs Bus](/plan/da-nang-to-phong-nha-transport/): Da Nang to Phong Nha transport guide: Reunification Express train to Dong Hoi vs direct sleeper buses and private cars. Schedules, fares, and cave advice.
+- [Where to Stay in Dong Hoi (2026): Nhat Le Beach & Hotels](/destinations/where-to-stay-in-dong-hoi/): Nhat Le beachfront resorts vs Dong Hoi railway station transit hotels 45 km south of Phong Nha. 2026 nightly rates, cave shuttles, and area advice.
+- [Where to Stay in Phong Nha: Son Trach & Valleys](/destinations/where-to-stay-in-phong-nha/): Decide where to stay in Phong Nha with our lodging guide: Son Trach town, riverside eco-resorts, and Bong Lai Valley farm homestays with prices in VND.

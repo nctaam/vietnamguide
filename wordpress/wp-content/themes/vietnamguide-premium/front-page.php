@@ -141,7 +141,7 @@ $data = vg_homepage_data();
                         </div>
                     </div>
                     <div class="vg-toolkit-card__cta-wrap">
-                        <a href="<?php echo esc_url(vg_home_url('costs/vietnam-travel-cost')); ?>" class="vg-button vg-button--secondary vg-toolkit-card__btn" data-vg-event="toolkit_cost_click">
+                        <a href="<?php echo esc_url(vg_home_url('plan/vietnam-travel-cost')); ?>" class="vg-button vg-button--secondary vg-toolkit-card__btn" data-vg-event="toolkit_cost_click">
                             <span><?php esc_html_e('Open Cost Calculator', 'vietnamguide-premium'); ?></span>
                             <span aria-hidden="true">&rarr;</span>
                         </a>

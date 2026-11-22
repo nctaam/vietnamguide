@@ -7,7 +7,7 @@ travel_cluster: "central_highlands"
 last_verified: "2026-10-21"
 author: "VietnamGuide Editorial Team"
 reading_time_minutes: 12
-word_count: 2347
+word_count: 2492
 ---
 
 # Mang Den Travel Guide: Pine Plateau at 1,200m (2026)
@@ -156,3 +156,12 @@ Yes. Two 24-hour ATMs (Agribank and BIDV) stand on Vo Nguyen Giap Boulevard (Nat
 
 ### When is the cherry blossom season in Mang Den?
 Mang Den's 3,000 native pink cherry trees (*hoa mai anh đào*) bloom during a 30-day window between December 20 and January 25 when nighttime temperatures drop to 9°C to 13°C. Prime viewing corridors (all 0 VND / $0.00 USD entry) include the 1.5 km perimeter of Dak Ke Lake, Central Square (`Quảng Trường Măng Đen`), and the 3 km pine avenue along Vo Nguyen Giap Boulevard.
+
+---
+
+## Related Central Highlands Field Guides
+
+- [Where to Stay in Mang Den (2026): Pine Forest Stays](/destinations/where-to-stay-in-mang-den/): Where to stay in Mang Den: pine forest wooden chalets vs town center boutique hotels and Pa Sy waterfall eco-lodges with 2026 room rates and climate tips.
+- [Kon Tum to Da Nang Transport (2026): Bus vs Car](/plan/kon-tum-to-da-nang-transport/): Highway 14 and Lo Xo Pass route across 290 km: shared limousines (6 hours, 280,000 VND) vs express coaches. 2026 timetables, fares, and pass driving advice.
+- [Pleiku to Kon Tum Transport (2026): Bus, Taxi & Ride](/plan/pleiku-to-kon-tum-transport/): Highway 14 public bus line (50 mins, 35,000 VND) vs airport taxis and private cars covering 50 km between highland capitals. 2026 schedules & tips.
+- [Where to Stay in Kon Tum (2026): Best River & Town Stays](/destinations/where-to-stay-in-kon-tum/): Where to stay in Kon Tum: Dak Bla riverfront hotels vs Bahnar ethnic stilt village homestays near the Wooden Church. 2026 room rates and travel advice.

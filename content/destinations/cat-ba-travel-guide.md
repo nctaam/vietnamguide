@@ -7,7 +7,7 @@ travel_cluster: "ha_long_bay"
 last_verified: "2026-10-20"
 author: "VietnamGuide Editorial Team"
 reading_time_minutes: 12
-word_count: 2318
+word_count: 2461
 ---
 
 # Cat Ba Travel Guide: Island Base, Lan Ha Bay, and Park Time
@@ -191,3 +191,12 @@ Yes. Staying in a Cat Ba Town hotel (750,000 VND or $30.00 USD per night) and bo
 
 ### Is Cat Ba Island suitable for families with young children?
 Yes. Families enjoy the 12 minutes Sun World cable car ride (3,955 meters over the sea), level cycling (4.5 km) in Viet Hai village, and calm mornings at Cat Co 1 Beach. Skip the steep 400 meters limestone scramble atop Ngu Lam Peak with children under 7 years old, choosing the paved 300 meters Trung Trang Cave walk (45 minutes) instead.
+
+---
+
+## Related Ha Long, Lan Ha & Cat Ba Field Guides
+
+- [Hanoi to Cat Ba Island Transport: Bus & Ferry Guide (2026)](/plan/hanoi-to-cat-ba-island-transport/): Complete Hanoi to Cat Ba island transport guide: compare tourist combo bus-and-ferry packages, private transfers, Hai Phong speedboats, and travel times.
+- [Where to Stay on Cat Ba Island (2026): Best Areas](/destinations/where-to-stay-in-cat-ba/): Where to stay on Cat Ba Island: waterfront hotels in Cat Ba town, Cat Co cliff resorts, and quiet Viet Hai village eco-lodges with realistic 2026 rates.
+- [Best Day Trips from Hanoi: Ninh Binh, Ha Long or Stay?](/destinations/best-day-trips-from-hanoi/): Best day trips from Hanoi, compared by route job: Ninh Binh, Ha Long or Lan Ha, Bat Trang, Duong Lam, Perfume Pagoda, Ba Vi, timing, weather, and skip logic.
+- [Cat Ba to Ninh Binh Transport (2026): Tourist Bus Combo](/plan/cat-ba-to-ninh-binh-transport/): Cat Ba to Ninh Binh transport: direct tourist bus and ferry combos via Hai Phong expressway vs private transfers. 2026 schedules, fares, and local tips.

@@ -902,7 +902,7 @@ function vg_render_airport_navigator_html(): string
                     <span class="vg-an-step-title"><?php esc_html_e('Visa Exemption & E-Visa Checker', 'vietnamguide-premium'); ?></span>
                     <span class="vg-an-step-desc"><?php esc_html_e('Verify entry rules & avoid middleman fees', 'vietnamguide-premium'); ?></span>
                 </a>
-                <a href="<?php echo esc_url(home_url('/costs/vietnam-travel-cost/')); ?>" class="vg-an-step-link vg-synergy-bridge">
+                <a href="<?php echo esc_url(home_url('/plan/vietnam-travel-cost/')); ?>" class="vg-an-step-link vg-synergy-bridge">
                     <span class="vg-an-step-icon" aria-hidden="true">§</span>
                     <span class="vg-an-step-title"><?php esc_html_e('Travel Cost Calculator', 'vietnamguide-premium'); ?></span>
                     <span class="vg-an-step-desc"><?php esc_html_e('Calculate realistic daily travel budgets', 'vietnamguide-premium'); ?></span>

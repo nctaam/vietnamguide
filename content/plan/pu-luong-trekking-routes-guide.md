@@ -7,7 +7,7 @@ travel_cluster: "northern_highlands"
 last_verified: "2026-10-24"
 author: "VietnamGuide Editorial Team"
 reading_time_minutes: 7
-word_count: 1449
+word_count: 1481
 ---
 
 # Pu Luong Trekking Guide (2026): Trails, Difficulty & Maps
@@ -128,3 +128,9 @@ Routes 1 and 3 through the buffer zone villages can be walked independently. Tra
 
 ### What should I tip homestay hosts and trekking guides?
 Homestay rates already include meals, so tipping is discretionary but warmly received. Leaving 50,000 VND to 100,000 VND per guest at departure shows appreciation. For guides on multi-day expeditions, 100,000 VND to 200,000 VND per day is customary. Porters carrying heavy loads on the Son-Ba-Muoi route deserve 100,000 VND to 150,000 VND per day for their physical labor.
+
+---
+
+## Related Northern Highlands Field Guides
+
+- [Pu Luong Travel Guide: Countryside Retreat & Logistics](/destinations/pu-luong-travel-guide/): Pu Luong travel guide: plan May and Oct golden harvest season, 160 km limousine transfer from Hanoi, bamboo water wheels, homestay rates, and village treks.

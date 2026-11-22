@@ -7,7 +7,7 @@ travel_cluster: "northern_highlands"
 last_verified: "2026-10-24"
 author: "VietnamGuide Editorial Team"
 reading_time_minutes: 8
-word_count: 1562
+word_count: 1663
 ---
 
 # Where to Stay in Ha Giang (2026): Loop Bases & Stays
@@ -97,3 +97,11 @@ Every major rental shop and staging hostel in **Ha Giang City (km 0)**—includi
 
 ### How does my homestay register my $10 USD (250,000 VND) Ha Giang Border Permit?
 When you check into your first overnight stay inside the border belt (**Quan Ba, Yen Minh, Dong Van, Lo Lo Chai, or Meo Vac**), the receptionist photographs your passport and Vietnam e-Visa and submits your details to the commune police post (Công an xã), adding the statutory **250,000 VND ($10 USD) permit fee** directly to your room bill.
+
+---
+
+## Related Northern Highlands Field Guides
+
+- [Where to Stay in Du Gia (2026): Waterfall Homestays](/destinations/where-to-stay-in-du-gia/): Where to stay in Du Gia: traditional Tay wooden stilt houses vs quiet valley homestays near the waterfall with realistic 2026 room rates and meal tips.
+- [Ha Giang to Dong Van Transport (2026): Bus vs Motorbike](/plan/ha-giang-to-dong-van-transport/): QL4C mountain highway across 135 km: local passenger minibuses (4.5-5 hours, 120,000 VND) vs motorbike self-drive and Easy Riders with 2026 VND fares.
+- [Ha Giang Easy Rider vs Self-Drive: Motorbike Route Guide](/compare/ha-giang-easy-rider-vs-self-drive/): Decide between Ha Giang easy rider vs self-drive: compare tour costs, 1968 IDP license rules, road hazards, physical fatigue, and passenger safety.

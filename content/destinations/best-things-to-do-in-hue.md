@@ -7,7 +7,7 @@ travel_cluster: "central_heritage"
 last_verified: "2026-10-22"
 author: "VietnamGuide Editorial Team"
 reading_time_minutes: 8
-word_count: 1515
+word_count: 1550
 ---
 
 # Best Things to Do in Hue (2026): Imperial Citadel, Royal Tombs Combo Tickets, Perfume River & Food
@@ -122,3 +122,9 @@ While you can see the Imperial Citadel, two royal tombs, and Thien Mu Pagoda on 
 
 ### What is the best month to visit Hue?
 The best weather in Hue runs from **January through August**, with **February to April** offering the most pleasant spring temperatures (`22°C–28°C`) and low rainfall. **May to August** is sunny and hot (`31°C–36°C`, great for early-morning sightseeing and afternoons at **Thuan An Beach `Bãi Biển Thuận An`** `14 km` away), whereas **October to December** is Hue's heavy rainy season (`bring a poncho and waterproof sandals`).
+
+---
+
+## Related Central Heritage Field Guides
+
+- [Hoi An vs Hue: Which Central Vietnam Stop Is Better?](/compare/hoi-an-vs-hue/): Hoi An vs Hue comparison: evaluate UNESCO heritage sites, 125 km train transit over Hai Van Pass, street food costs, walking comfort, and travel pace.

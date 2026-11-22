@@ -6,8 +6,8 @@ description: "Con Dao travel guide: pristine coral reefs, sea turtle nesting sea
 travel_cluster: "coastal_islands"
 last_verified: "2026-10-21"
 author: "VietnamGuide Editorial Team"
-reading_time_minutes: 8
-word_count: 1672
+reading_time_minutes: 9
+word_count: 1811
 ---
 
 # Con Dao Travel Guide: Best Time, Where to Stay & Costs (2026)
@@ -205,3 +205,12 @@ Distinct culinary specialties include **Mứt Hạt Bàng** (snacks crafted from
 
 ### Is motorcycle riding safe on Con Son Island?
 Yes. Traffic on Con Dao is exceptionally light compared to mainland Vietnam, with virtually zero heavy truck traffic. Roads encircling the coast are paved and offer sweeping ocean vistas. However, drivers must exercise caution regarding sudden coastal wind gusts along cliffside curves, wandering mountain monkeys on the road, and loose gravel on hillside roads near Dam Trau. Wear an approved helmet and maintain speeds under 40 km/h.
+
+---
+
+## Related Coastal & Island Field Guides
+
+- [How to Get to Con Dao: Flight vs High-Speed Ferry (2026)](/plan/how-to-get-to-con-dao-flight-vs-ferry/): Discover how to get to Con Dao: flights from Saigon and Can Tho vs fast ferries from Vung Tau and Tran De. Schedules, ticket costs, and sea advice.
+- [Con Dao vs Phu Quoc: Which Vietnam Island is Better? (2026)](/compare/con-dao-vs-phu-quoc/): Con Dao vs Phu Quoc comparison: compare pristine turtle beaches, national park hiking, flight logistics, luxury resorts, nightlife, and travel costs.
+- [Tran De to Con Dao Ferry (2026): Superdong Speedboat](/plan/tran-de-to-con-dao-ferry/): Tran De to Con Dao ferry: Superdong fast speedboat schedule, 2026 ticket fares, Soc Trang pier logistics, sea conditions, and island boarding tips.
+- [Best Beaches in Vietnam: Where to Go by Month](/destinations/best-beaches-in-vietnam/): Discover the best beaches in Vietnam by month: compare Phu Quoc dry season in Dec–Apr, Da Nang surf swells, Con Dao turtle nesting, and flight options.

@@ -6,8 +6,8 @@ description: "Complete Cham Islands day trip guide: speedboats from Cua Dai pier
 travel_cluster: "central_heritage"
 last_verified: "2026-10-22"
 author: "VietnamGuide Editorial Team"
-reading_time_minutes: 7
-word_count: 1366
+reading_time_minutes: 8
+word_count: 1508
 ---
 
 # Cham Islands (Cu Lao Cham) Day Trip Guide from Hoi An (2026): Cua Dai Speedboat, Snorkeling & Fees
@@ -118,3 +118,12 @@ In 2026, the mandatory **Cham Islands UNESCO Biosphere Reserve entrance ticket c
 
 ### Can you stay overnight on the Cham Islands instead of doing a day trip?
 Yes! Once the last tourist speedboats depart back to Cua Dai Pier at `14:30 PM`, the islands become wonderfully quiet. You can stay in a clean, air-conditioned family homestay in **Bai Lang (`Bãi Làng`)** or **Bai Huong (`Bãi Hương`)** for **`350,000 to 650,000 VND` (`~$14–$26 USD`) per night**, rent a motorbike (`150,000 VND/day`) to watch sunset at **Eo Gio (`Eo Gió`)**, eat fresh squid with local fishermen on the harbourfront, and take the next afternoon's speedboat back to Hoi An.
+
+---
+
+## Related Central Heritage Field Guides
+
+- [Cham Islands Travel Guide: Hoi An Day Trip or Overnight?](/destinations/cham-islands-travel-guide/): Cham Islands travel guide: speedboats from Hoi An, UNESCO biosphere marine reserve snorkeling, Bai Chong beach, homestay visits, and rough sea season advice.
+- [Ly Son vs Cham Islands: Which Central Island to Pick? (2026)](/compare/ly-son-vs-cham-islands/): Ly Son vs Cham Islands comparison: volcanic geology vs coral reef biosphere, speedboat transfers from Sa Ky or Hoi An, homestays, and 2026 VND costs.
+- [Best Things to Do in Hue: What Is Actually Worth Your Time](/destinations/best-things-to-do-in-hue/): Best things to do in Hue: UNESCO Imperial Citadel walking tours, 200,000 VND royal tomb combo tickets, Perfume River boats, and royal court food costs.
+- [Hoi An vs Hue: Which Central Vietnam Stop Is Better?](/compare/hoi-an-vs-hue/): Hoi An vs Hue comparison: evaluate UNESCO heritage sites, 125 km train transit over Hai Van Pass, street food costs, walking comfort, and travel pace.

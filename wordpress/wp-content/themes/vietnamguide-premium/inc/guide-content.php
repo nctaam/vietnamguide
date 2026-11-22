@@ -399,7 +399,14 @@ function vg_render_inline_markdown_fallback(string $text): string
             if ('' === $url) {
                 return $alt;
             }
-            return '<img src="' . $url . '" alt="' . $alt . '" loading="lazy" decoding="async" />';
+            $dimAttrs = '';
+            if (function_exists('vg_resolve_image_dimensions_by_url')) {
+                [$w, $h] = vg_resolve_image_dimensions_by_url($raw_url);
+                if ($w > 0 && $h > 0) {
+                    $dimAttrs = ' width="' . (int) $w . '" height="' . (int) $h . '"';
+                }
+            }
+            return '<img src="' . $url . '" alt="' . $alt . '"' . $dimAttrs . ' loading="lazy" decoding="async" />';
         },
         $escaped
     );

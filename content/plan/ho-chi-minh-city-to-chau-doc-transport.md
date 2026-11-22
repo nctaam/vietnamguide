@@ -7,7 +7,7 @@ travel_cluster: "mekong_delta"
 last_verified: "2026-11-01"
 author: "VietnamGuide Editorial Team"
 reading_time_minutes: 8
-word_count: 1512
+word_count: 1549
 ---
 
 # Ho Chi Minh City to Chau Doc Transport (2026): Bus & Van
@@ -90,3 +90,9 @@ Always book a lower-deck berth in the middle rows (seats A4 through A10) on Phuo
 
 ### How do I visit Tra Su Cajuput Forest from Chau Doc after arriving by bus?
 Tra Su Cajuput Forest is located 27 km southwest of central Chau Doc in Tinh Bien Town (a 40-minute drive). You can rent a 125cc scooter in Chau Doc for 150,000 VND ($6.00 USD) per day, or hire a half-day private 4-seat taxi round-trip for 550,000 to 650,000 VND ($22.00–$26.00 USD) including a 2-hour waiting window while you take the paddle sampan through the flooded melaleuca canopy.
+
+---
+
+## Related Mekong Delta Field Guides
+
+- [Ho Chi Minh City to Ben Tre Transport (2026): Van & Bus](/plan/ho-chi-minh-city-to-ben-tre-transport/): Ho Chi Minh City to Ben Tre transport: shared limousine vans vs local buses and private cars via Highway 1A. 2026 schedules, fares, and travel tips.

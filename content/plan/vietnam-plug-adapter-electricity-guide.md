@@ -7,7 +7,7 @@ travel_cluster: "national_circuit"
 last_verified: "2026-10-24"
 author: "VietnamGuide Editorial Team"
 reading_time_minutes: 8
-word_count: 1594
+word_count: 1684
 ---
 
 # Vietnam Plug Adapter & Electricity Guide (2026): Outlets
@@ -106,3 +106,11 @@ No. A plug adapter only changes the physical pin shape; it does not reduce Vietn
 
 ### Where can I buy a cheap plug adapter or USB-C charger in Hanoi or Ho Chi Minh City?
 Skip overpriced airport kiosks (`250,000 VND` / `$10.00 USD`). Walk 5 minutes to any **Điện Máy Xanh**, **FPT Shop**, **Thế Giới Di Động**, or hardware shop (`Tiệm điện nước`), where a `Type C` adapter costs `15,000–35,000 VND` ($0.60–$1.40 USD) and `20W–65W` Anker, Baseus, or Ugreen USB-C chargers cost `180,000–650,000 VND` ($7.20–$26.00 USD).
+
+---
+
+## Related Vietnam Planning & Route Field Guides
+
+- [Vietnam SIM Card: Airport vs City Stores Guide (2026)](/plan/vietnam-sim-card-airport-vs-city/): Vietnam SIM card guide: buying at Noi Bai or Tan Son Nhat airport kiosks vs official Viettel and Vinaphone city shops, prices, and eSIM activation.
+- [SIM and eSIM in Vietnam: Traveler Connectivity Guide](/plan/sim-esim-vietnam/): Choose SIM and eSIM in Vietnam with device checks, local number needs, airport setup, coverage, hotspot tethering, roaming backup, and live signal checks.
+- [Vietnam Airport Arrival Checklist](/plan/vietnam-airport-arrival-checklist/): Use this Vietnam airport arrival checklist to handle documents, luggage, SIM or eSIM, small cash, verified transport, scams, and first-night decisions.

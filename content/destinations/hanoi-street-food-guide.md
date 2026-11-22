@@ -6,8 +6,8 @@ description: "Complete Hanoi street food guide: where to eat pho bo, bun cha, ch
 travel_cluster: "northern_triangle"
 last_verified: "2026-10-20"
 author: "VietnamGuide Editorial Team"
-reading_time_minutes: 11
-word_count: 2262
+reading_time_minutes: 12
+word_count: 2323
 ---
 
 # Hanoi Street Food Guide: Iconic Dishes, Provenance, and Sidewalk Etiquette
@@ -164,3 +164,10 @@ A 3.5 hours guided walking food tour in the Old Quarter costs 550,000 VND to 750
 Because traditional sidewalk broths simmer beef bones, chicken carcasses, or pork ribs and use fermented fish sauce (*nước mắm*), strict vegetarians cannot eat broth soups at standard stalls. Instead, look for signs reading **Quán Chay** or **Cơm Chay** (Buddhist vegetarian kitchens), which brew 100% plant-based mushroom, radish, and pear broths.
 
 Top verified vegetarian addresses within 1.5 km of Hoan Kiem Lake include **Cơm Chay Nàng Tấm** (79A Trần Hưng Đạo, 60,000 VND to 120,000 VND, or $2.40 to $4.80 USD per dish), **Ưu Đàm Chay** (55 Nguyễn Du), and **Katze Vegan & Vegetarian** (43 Hàng Bè, 2nd floor, vegan *Phở* and *Bún Chả* 65,000 VND to 95,000 VND, or $2.60 to $3.80 USD). Safe sidewalk snacks for vegetarians include plain *Bánh Rán* mung-bean donuts (7,000 VND, or $0.28 USD), fresh tropical fruit cups (30,000 VND, or $1.20 USD), and *Chè* sweet bean desserts (25,000 VND, or $1.00 USD).
+
+---
+
+## Related Hanoi & Northern Delta Field Guides
+
+- [Hanoi in 2 Days: A Calm First-Time Itinerary](/itineraries/hanoi-in-2-days/): Hanoi in 2 days itinerary: ideal 48-hour plan covering Hoan Kiem Lake, Temple of Literature, Old Quarter coffee culture, evening street food, and museums.
+- [Hanoi Train Street Guide: Timetable, Cafes & Rules (2026)](/destinations/hanoi-train-street-guide/): Complete Hanoi train street guide: compare Tran Phu and Phung Hung sections, train timetable schedules, police checkpoints, cafe access, and safety.

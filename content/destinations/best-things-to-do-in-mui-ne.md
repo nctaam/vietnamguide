@@ -7,7 +7,7 @@ travel_cluster: "coastal_islands"
 last_verified: "2026-10-22"
 author: "VietnamGuide Editorial Team"
 reading_time_minutes: 8
-word_count: 1569
+word_count: 1605
 ---
 
 # Best Things to Do in Mui Ne (2026): White Sand Dunes Sunrise Jeep, Fairy Stream, Kitesurfing & Seafood
@@ -111,3 +111,9 @@ Exercise caution! Local traffic police along **Nguyen Dinh Chieu Street**, the *
 
 ### How do I travel directly from Mui Ne to Da Lat or Nha Trang?
 Daily tourist sleeper buses and 9-seat VIP limousines (**Hạnh Cafe**, **Nam Á Châu**, **Phương Trang**, **Thịnh Phát**) depart right from your hotel on **Nguyen Dinh Chieu Street** to **Da Lat (`160 km` over scenic Dai Ninh Pass `QL28B`, `3.5 to 4.5 hours`, `180,000–280,000 VND`)** and to **Nha Trang (`220 km` via the new Vinh Hao–Cam Lam Expressway `CT01`, `3.5 to 4 hours`, `200,000–300,000 VND`)**.
+
+---
+
+## Related Coastal & Island Field Guides
+
+- [Mui Ne vs Nha Trang: Which Beach Base Is Better?](/compare/mui-ne-vs-nha-trang/): Mui Ne vs Nha Trang: compare coastal kitesurfing and sand dunes in Mui Ne with high-rise hotels, scuba diving, and nightlife in Nha Trang for 2026.

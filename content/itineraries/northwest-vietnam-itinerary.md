@@ -7,7 +7,7 @@ travel_cluster: "far_north_frontier"
 last_verified: "2026-10-22"
 author: "VietnamGuide Editorial Team"
 reading_time_minutes: 8
-word_count: 1536
+word_count: 1638
 ---
 
 # Northwest Vietnam Itinerary (2026): 6 to 8-Day Rice Terrace & Valley Loop
@@ -129,3 +129,11 @@ There is **no direct public bus** from Pu Luong or Mai Chau to Nghia Lo and Mu C
 
 ### Should I take the overnight train or the VIP cabin bus from Sapa back to Hanoi?
 The **daytime VIP 22-cabin bus (`350,000–450,000 VND`, `5.5 hours`)** is faster and more convenient because it picks you up directly in Sapa Town and travels down the `CT05` expressway, whereas the **overnight train (`SP3`/`SP4`, `750,000–950,000 VND` in a 4-berth wooden cabin)** terminates at **Lao Cai Railway Station**, requiring an extra `35 km` (`55-minute`) mountain bus or taxi transfer (`50,000 VND` public bus or `350,000 VND` private car) down from Sapa.
+
+---
+
+## Related Far North Frontier Field Guides
+
+- [Hanoi to Mai Chau Transport (2026): Bus vs Limousine](/plan/hanoi-to-mai-chau-transport/): Hanoi to Mai Chau transport: Old Quarter limousine shuttles vs local buses and motorbike routes over Thung Khe Pass. 2026 fares, travel times, and advice.
+- [Mai Chau to Pu Luong Transport (2026): Van vs Bike](/plan/mai-chau-to-pu-luong-transport/): Highway 15C transfer across 45 km: resort shuttle vans (1.5 hours, 180,000-250,000 VND) vs private cars and motorbikes. 2026 transit times and road advice.
+- [Hanoi to Ninh Binh: Train vs Limousine Van (2026)](/plan/hanoi-to-ninh-binh-train-vs-limousine/): Hanoi to Ninh Binh transport comparison: express train from Hanoi station vs luxury limousine door-to-door vans with schedules, comfort, and 2026 fares.

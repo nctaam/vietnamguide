@@ -6,8 +6,8 @@ description: "How to get from Hanoi airport to Old Quarter in 2026: choose hotel
 travel_cluster: "northern_triangle"
 last_verified: "2026-10-22"
 author: "VietnamGuide Editorial Team"
-reading_time_minutes: 7
-word_count: 1467
+reading_time_minutes: 8
+word_count: 1610
 ---
 
 # Hanoi Airport (HAN) to Old Quarter Transfer Guide (2026): Express Bus 86, Grab, Taxi & Late-Night Cars
@@ -131,3 +131,12 @@ Take the **free green-and-yellow NIA shuttle bus**. It links **Terminal 1 (Level
 
 ### What is the best way to get from Hanoi Airport to the Old Quarter late at night (after `22:30`)?
 Pre-book a private car (`350,000–450,000 VND` / `$14–$18 USD`). Because Express Bus 86 stops running at **`22:15`** and late-night Grab drivers frequently cancel cashless trips after midnight, arranging a driver via your Old Quarter hotel or Klook guarantees someone waiting at **T2 Exit `A1`/`A2`** with a printed name sign regardless of flight delays.
+
+---
+
+## Related Hanoi & Northern Delta Field Guides
+
+- [Old Quarter vs French Quarter vs West Lake: Best Hanoi Base](/compare/old-quarter-vs-french-quarter-vs-west-lake/): Compare Old Quarter vs French Quarter vs West Lake by hotel rates, 30 km airport transit costs, walking comfort, food scenes, and family sleep quality.
+- [Hanoi Travel Guide: Where to Stay, What to Do and Route Fit](/destinations/hanoi-travel-guide/): Hanoi travel guide: how many days to stay, Old Quarter vs French Quarter hotels, Noi Bai airport taxis, street food safety, and day trips to Ninh Binh.
+- [Hanoi to Pu Luong Transport (2026): Shuttle vs Car](/plan/hanoi-to-pu-luong-transport/): Hanoi to Pu Luong transport: direct Old Quarter eco-bus shuttles vs private transfers and motorbike routes via Ban Don. 2026 fares, travel times, and tips.
+- [Hanoi vs Ho Chi Minh City: Which Should You Visit First?](/compare/hanoi-vs-ho-chi-minh-city/): Compare Hanoi vs Ho Chi Minh City by first-night comfort, route direction, weather seasons, food scenes, day trips, airport logic, and trip length.

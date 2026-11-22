@@ -497,7 +497,7 @@ function vg_render_visa_checker_html(): string
                         <strong class="vg-vc-ns-name"><?php esc_html_e('Airport Transit Navigator', 'vietnamguide-premium'); ?></strong>
                         <span class="vg-vc-ns-desc"><?php esc_html_e('Grab bays, metered taxi numbers & scam shields for HAN/SGN/DAD', 'vietnamguide-premium'); ?> &rarr;</span>
                     </a>
-                    <a href="<?php echo esc_url(home_url('/costs/vietnam-travel-cost/')); ?>" class="vg-vc-ns-card vg-synergy-bridge" id="vg-vc-ns-cost">
+                    <a href="<?php echo esc_url(home_url('/plan/vietnam-travel-cost/')); ?>" class="vg-vc-ns-card vg-synergy-bridge" id="vg-vc-ns-cost">
                         <span class="vg-vc-ns-tag"><?php esc_html_e('Budget Calculator', 'vietnamguide-premium'); ?></span>
                         <strong class="vg-vc-ns-name"><?php esc_html_e('Calculate Travel Budget', 'vietnamguide-premium'); ?></strong>
                         <span class="vg-vc-ns-desc"><?php esc_html_e('Estimate hotel, food, and domestic transit', 'vietnamguide-premium'); ?> &rarr;</span>
@@ -661,7 +661,7 @@ function vg_render_visa_checker_html(): string
                 }
             }
             if (costLink) {
-                costLink.href = '<?php echo esc_url(home_url('/costs/vietnam-travel-cost/')); ?>?days=' + currentDuration;
+                costLink.href = '<?php echo esc_url(home_url('/plan/vietnam-travel-cost/')); ?>?days=' + currentDuration;
             }
 
             // Save state to storage and sync URL

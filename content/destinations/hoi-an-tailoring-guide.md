@@ -6,8 +6,8 @@ description: "Planning Hoi An tailoring in 2026? Get expert tips for custom suit
 travel_cluster: "central_heritage"
 last_verified: "2026-10-22"
 author: "VietnamGuide Editorial Team"
-reading_time_minutes: 8
-word_count: 1614
+reading_time_minutes: 9
+word_count: 1758
 ---
 
 # Hoi An Tailoring Guide (2026): Custom Suits, Dress Prices, Best Shops & 3-Fitting Timeline
@@ -122,3 +122,12 @@ At top-tier fixed-price houses like **Yaly Couture**, **Bebe Tailor**, and **A D
 
 ### Can Hoi An tailors ship my finished clothes home and keep my measurements on file?
 Yes. All major Hoi An ateliers (**Yaly**, **Bebe**, **A Dong Silk**, **Kimmy**) ship worldwide via **DHL or FedEx International Express** (`5 to 8 business days` delivery, costing roughly **`$35–$65 USD` for the first kg** and `$12–$15 USD` per additional kg) and store your digital paper pattern and measurement profile for 5+ years so you can reorder shirts or suits via WhatsApp or email from home.
+
+---
+
+## Related Central Heritage Field Guides
+
+- [Hoi An to Quy Nhon Transport (2026): Train vs Bus](/plan/hoi-an-to-quy-nhon-transport/): Hoi An to Quy Nhon transport: direct sleeper buses vs trains via Dieu Tri or Da Nang and private cars along Highway 1A. 2026 fares, travel times, and tips.
+- [Hue to Hoi An: Train, Car, Bus & Hai Van Pass](/plan/hue-to-hoi-an-transport/): Compare Hue to Hoi An transport options: scenic trains, private cars over Hai Van Pass, tourist shuttle buses, and motorbike tours with 2026 costs in VND.
+- [Quy Nhon to Hoi An Transport (2026): Train, Bus & Car](/plan/quy-nhon-to-hoi-an-transport/): Quy Nhon to Hoi An transport: trains from Dieu Tri to Tra Kieu, limousine sleeper buses, and coastal private cars. 2026 fares, times, and route advice.
+- [Cham Islands Travel Guide: Hoi An Day Trip or Overnight?](/destinations/cham-islands-travel-guide/): Cham Islands travel guide: speedboats from Hoi An, UNESCO biosphere marine reserve snorkeling, Bai Chong beach, homestay visits, and rough sea season advice.

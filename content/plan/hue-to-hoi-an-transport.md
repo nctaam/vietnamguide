@@ -7,7 +7,7 @@ travel_cluster: "central_heritage"
 last_verified: "2026-10-22"
 author: "VietnamGuide Editorial Team"
 reading_time_minutes: 8
-word_count: 1505
+word_count: 1609
 ---
 
 # Hue to Hoi An: Train, Car, Bus & Hai Van Pass
@@ -102,3 +102,11 @@ Yes. Every transport option operates identically northbound from **Hoi An to Hue
 
 ### What is the best time of day to cross the Hai Van Pass by car or motorbike?
 Depart Hue between **08:00 and 09:00 AM** so your vehicle reaches Lap An Lagoon around 09:30 AM and crests the 496-meter Hai Van Pass summit between **10:30 and 11:30 AM**. Morning hours offer the clearest ocean visibility across Lang Co Bay and Da Nang Bay before afternoon convective clouds build against the coastal mountains after 14:30 PM.
+
+---
+
+## Related Central Heritage Field Guides
+
+- [Quy Nhon to Hoi An Transport (2026): Train, Bus & Car](/plan/quy-nhon-to-hoi-an-transport/): Quy Nhon to Hoi An transport: trains from Dieu Tri to Tra Kieu, limousine sleeper buses, and coastal private cars. 2026 fares, times, and route advice.
+- [Hoi An vs Hue: Which Central Vietnam Stop Is Better?](/compare/hoi-an-vs-hue/): Hoi An vs Hue comparison: evaluate UNESCO heritage sites, 125 km train transit over Hai Van Pass, street food costs, walking comfort, and travel pace.
+- [Central Vietnam Itinerary (2026): 5 to 7-Day Route](/itineraries/central-vietnam-itinerary/): Central Vietnam itinerary for 2026: practical 5 to 7-day route connecting Hue Citadel, Hai Van Pass, Da Nang beaches, and Hoi An lantern old streets.

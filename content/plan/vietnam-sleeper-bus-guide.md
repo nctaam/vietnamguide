@@ -6,8 +6,8 @@ description: "Complete Vietnam sleeper bus guide: compare luxury VIP private cab
 travel_cluster: "national_circuit"
 last_verified: "2026-10-24"
 author: "VietnamGuide Editorial Team"
-reading_time_minutes: 7
-word_count: 1480
+reading_time_minutes: 8
+word_count: 1574
 ---
 
 # Vietnam Sleeper Bus Guide: Cabin vs Sleeper & Safety (2026)
@@ -117,3 +117,11 @@ Cabin air-conditioning runs at 17°C to 20°C all night, and the thin bus blanke
 
 ### Is the VIP cabin bus better than the overnight train from Hanoi to Sa Pa?
 Yes for speed and convenience: the 22-cabin bus takes 5.5 hours to 6 hours via the CT05 expressway for 400,000 VND to 450,000 VND ($16.00 to $18.00 USD) right into Sa Pa town, whereas the train takes 8 hours to Lao Cai plus a 1-hour mountain van transfer (750,000 VND to 1,400,000 VND). Pick the train only if you need an onboard toilet or a locked 4-berth family compartment.
+
+---
+
+## Related Vietnam Planning & Route Field Guides
+
+- [Vietnam Sleeper Bus Survival Guide (2026): Bunks & Tips](/plan/vietnam-sleeper-bus-survival-guide/): Vietnam sleeper bus survival guide: VIP cabins vs standard bunks, lower deck perks, shoe bags, luggage security, and rest stop advice for 2026 trips.
+- [Vietnam Food Safety and Street Food Etiquette Guide](/plan/vietnam-food-safety-street-food-etiquette/): Master Vietnam food safety and street food etiquette: choose clean busy stalls, order politely, handle sauces, ice, cash, seating, and flexible dining.
+- [Tap Water in Vietnam: Drinking, Ice, Brushing Teeth (2026)](/plan/tap-water-in-vietnam/): Can you drink tap water in Vietnam? Complete guide covering bottled water, street drink ice safety, brushing teeth, boiling, and avoiding stomach illness.

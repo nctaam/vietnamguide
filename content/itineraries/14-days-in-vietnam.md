@@ -7,7 +7,7 @@ travel_cluster: "national_circuit"
 last_verified: "2026-10-22"
 author: "VietnamGuide Editorial Team"
 reading_time_minutes: 13
-word_count: 2534
+word_count: 2620
 ---
 
 # 14 Days in Vietnam: The Definitive Two-Week Route Guide
@@ -246,3 +246,11 @@ Travel with a medium rolling suitcase or a 40-to-50-liter travel backpack. Becau
 
 ### Is the tap water safe to drink during the trip?
 Do not drink tap water in Vietnam. Reputable hotels provide complimentary sealed glass or recyclable bottles daily. Sealed bottled water is available at every street corner for 10,000 to 15,000 VND. Ice cubes in established cafes and restaurants are produced industrially from purified water and are generally safe.
+
+---
+
+## Related Vietnam Planning & Route Field Guides
+
+- [Vietnam Travel Guide: First Trip Planning Order](/plan/vietnam-travel-guide/): Complete Vietnam travel guide for first-timers: step-by-step route planning, visa rules, regional climates, daily budgets, transport, and cultural norms.
+- [7 Days in Vietnam: Best One-Week Itinerary](/itineraries/7-days-in-vietnam/): Plan 7 days in Vietnam with focused one-week routes covering the north (Hanoi, Ha Long Bay, Ninh Binh) or central region without rushing transfers.
+- [Tet in Vietnam Travel Guide: Dates, Closures and Routes](/plan/tet-in-vietnam-travel-guide/): Authoritative Tet in Vietnam travel guide: exact dates, transport pressure, changed opening hours, holiday etiquette, cash needs, and route decisions.

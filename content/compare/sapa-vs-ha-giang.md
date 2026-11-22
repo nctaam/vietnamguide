@@ -6,8 +6,8 @@ description: "Compare Sapa vs Ha Giang: choose Sapa, Ha Giang, both, or neither 
 travel_cluster: "northern_highlands"
 last_verified: "2026-10-22"
 author: "VietnamGuide Editorial Team"
-reading_time_minutes: 7
-word_count: 1405
+reading_time_minutes: 8
+word_count: 1510
 ---
 
 # Sa Pa vs Ha Giang (2026): Terraced Trekking & Fansipan vs Karst Motorbike Loop
@@ -122,3 +122,11 @@ Yes. Around 40% of international visitors ride pillion (`on the back seat`) behi
 
 ### Is there a direct bus between Sa Pa and Ha Giang?
 Yes. Direct VIP sleeper buses and 16-seat limousines (`Quang Nghi`, `Bang Phan`) run daily between **Sa Pa** and **Ha Giang City** via Highway `QL279` and `QL2`. The `235 km` journey takes **`5.5 to 6.5 hours`** and costs **`300,000 to 400,000 VND` (`~$12–$16 USD`)**, eliminating the need to backtrack through Hanoi.
+
+---
+
+## Related Northern Highlands Field Guides
+
+- [Vietnam Rice Terraces Guide: Sapa, Mu Cang Chai & More](/compare/vietnam-rice-terraces-guide/): Authoritative Vietnam rice terraces guide: compare Sapa, Mu Cang Chai, Hoang Su Phi, and Pu Luong by golden season harvest timing and 2026 hike trails.
+- [Where to Stay in Ha Giang (2026): Loop Bases & Stays](/destinations/where-to-stay-in-ha-giang/): Where to stay in Ha Giang and the loop: city staging hostels, Dong Van old town homestays, Meo Vac clay lodges, and Du Gia waterfall stays in 2026.
+- [Sapa to Ha Giang Transport (2026): Bus vs Limousine](/plan/sapa-to-ha-giang-transport/): Sapa to Ha Giang transport: daytime VIP limousines vs overnight sleeper buses via Lao Cai and Highway 279. 2026 schedules, ticket fares, and advice.

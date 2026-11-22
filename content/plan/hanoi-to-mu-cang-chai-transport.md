@@ -7,7 +7,7 @@ travel_cluster: "northern_triangle"
 last_verified: "2026-10-25"
 author: "VietnamGuide Editorial Team"
 reading_time_minutes: 8
-word_count: 1587
+word_count: 1696
 ---
 
 # Hanoi to Mu Cang Chai Transport (2026): Bus vs Van
@@ -155,3 +155,11 @@ Experienced riders can cover the 300 km route via Highway QL32 in 8 to 10 hours.
 
 ### What should I do if my bus arrives in Mu Cang Chai at 04:30 AM?
 Coordinate with your homestay host 24 hours prior to departure. Most homestays in La Pan Tan and central town dispatch a motorbike rider to meet your bus at the town gas station. Many provide access to a common lounge or warm tea shelter until your room becomes ready for occupancy.
+
+---
+
+## Related Hanoi & Northern Delta Field Guides
+
+- [Sapa to Mu Cang Chai Transport (2026): Bus & Route](/plan/sapa-to-mu-cang-chai-transport/): O Quy Ho Pass and Highway 32 mountain route across 140 km: local buses (4.5-5 hours, 150,000 VND) vs private cars. 2026 fares, transit times, and road tips.
+- [Mu Cang Chai Travel Guide: Golden Rice Terraces & Route](/destinations/mu-cang-chai-travel-guide/): Mu Cang Chai travel guide: plan Sep–Oct golden harvest season, 300 km sleeper bus routes from Hanoi across Khau Pha Pass, homestay rates, and loop tips.
+- [Hanoi to Ha Giang Transport: Bus, Private Car or Route](/plan/hanoi-to-ha-giang-transport/): Compare Hanoi to Ha Giang transport in 2026 by sleeper bus, day transfer, private car, and staged route using fatigue, safety, weather, and buffers.

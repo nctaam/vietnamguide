@@ -7,7 +7,7 @@ travel_cluster: "national_circuit"
 last_verified: "2026-10-24"
 author: "VietnamGuide Editorial Team"
 reading_time_minutes: 8
-word_count: 1524
+word_count: 1610
 ---
 
 # Tet in Vietnam Travel Guide: Dates, Closures and Routes
@@ -117,3 +117,11 @@ Overnight cruises in **Ha Long Bay and Lan Ha Bay** sail every day of the year. 
 
 ### Can I get a Vietnam e-Visa processed during the Tet holiday week?
 No. The **Vietnam Immigration Department** suspends routine **90-day e-Visa** processing (`evisa.gov.vn`, **$25.00 USD** single-entry / **$50.00 USD** multiple-entry) during the **7 to 9 day official Tet holiday**. Submit your application at least **14 to 21 days** before Tet starts.
+
+---
+
+## Related Vietnam Planning & Route Field Guides
+
+- [Vietnam in January: Weather, Routes and Tet Tips](/plan/vietnam-in-january/): Plan Vietnam in January by regional dry weather, route shape, Tet holiday lead-up, northern cold fronts, transport booking pressure, and live checks.
+- [Tipping in Vietnam: Etiquette, Rules & Amounts (2026)](/plan/tipping-in-vietnam/): Complete tipping in Vietnam guide: when to tip, service charge norms for tour guides, drivers, spas, and restaurants, plus cash etiquette rates in VND.
+- [Vietnam Airport Arrival Checklist](/plan/vietnam-airport-arrival-checklist/): Use this Vietnam airport arrival checklist to handle documents, luggage, SIM or eSIM, small cash, verified transport, scams, and first-night decisions.

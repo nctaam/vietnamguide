@@ -7,7 +7,7 @@ travel_cluster: "national_circuit"
 last_verified: "2026-10-31"
 author: "VietnamGuide Editorial Team"
 reading_time_minutes: 8
-word_count: 1596
+word_count: 1697
 ---
 
 November divides Vietnam into three contrasting climate zones across its 1,650 km coastline. Northern provinces enjoy dry autumn air and clear mountain views. Southern provinces exit the monsoon and enter sunny dry-season conditions. Caught between them, Central Vietnam endures its wettest month, marked by heavy downpours and flooding in Hue and Hoi An.
@@ -120,3 +120,11 @@ Yes. Pairing Halong Bay with Phu Quoc works well in November. Halong Bay enjoys 
 
 ### How far in advance do I need to book trains, flights, and hotels in November?
 Book 4-berth trains to Sapa (SP3/SP4) and VIP buses to Ha Giang 10 to 14 days ahead. Weekend seats sell out fast during buckwheat season. Reserve 4-star Hanoi hotels (1,400,000 VND to 2,600,000 VND / $56.00 to $104.00 per night) and Phu Quoc resorts 3 weeks ahead.
+
+---
+
+## Related Vietnam Planning & Route Field Guides
+
+- [North vs Central vs South Vietnam: Where to Go First](/compare/north-central-south-vietnam/): Compare North vs Central vs South Vietnam for a first trip: choose the best region by season, route length, travel style, pacing, and what to skip.
+- [Vietnam in January: Weather, Routes and Tet Tips](/plan/vietnam-in-january/): Plan Vietnam in January by regional dry weather, route shape, Tet holiday lead-up, northern cold fronts, transport booking pressure, and live checks.
+- [10 Days in Vietnam: Best Route for First-Time Visitors](/itineraries/10-days-in-vietnam/): Plan 10 days in Vietnam with a balanced route order from Hanoi to Ho Chi Minh City, internal transfer timings, realistic night allocation, and daily costs.

@@ -6,8 +6,8 @@ description: "Best time to visit Vietnam by route in 2026: north, central, south
 travel_cluster: "national_circuit"
 last_verified: "2026-11-02"
 author: "VietnamGuide Editorial Team"
-reading_time_minutes: 9
-word_count: 1842
+reading_time_minutes: 10
+word_count: 1941
 ---
 
 # Best Time to Visit Vietnam (2026): Month-by-Month Weather, Regions & Route Pivots
@@ -140,3 +140,11 @@ In December and January, Hanoi averages `14–20°C` during the day and `11–14
 
 ### Where can I check official live typhoon, flood, and port-closure alerts in Vietnam?
 Monitor the **National Center for Hydro-Meteorological Forecasting (`nchmf.gov.vn`)** for tropical depression tracks and reservoir discharge alerts, alongside **Windy.com (ECMWF wave model)** for swell height across the **45 km Ha Tien–Phu Quoc ferry route (`310,000 VND` / `$12.20 USD`)** and **Ha Long Bay (`590,000 VND` / `$23.15 USD` overnight sightseeing permit zone)**. When provincial Port Authorities suspend departures due to Force 6 winds (`> 39 km/h`), licensed cruise and ferry operators issue a 100% ticket refund or free date rebooking by 06:45 on the day of sailing.
+
+---
+
+## Related Vietnam Planning & Route Field Guides
+
+- [North vs Central vs South Vietnam: Where to Go First](/compare/north-central-south-vietnam/): Compare North vs Central vs South Vietnam for a first trip: choose the best region by season, route length, travel style, pacing, and what to skip.
+- [Best Places to Visit in Vietnam: Where to Go First](/destinations/best-places-to-visit-vietnam/): Best places to visit in Vietnam: curated shortlist of top destinations by season, travel pace, cultural depth, beach time, and realistic route connections.
+- [Vietnam in December: Weather and Best Routes](/plan/vietnam-in-december/): Plan Vietnam in December by region, route shape, weather risk, holiday booking pressure, beach and bay trade-offs, packing lists, and live route checks.

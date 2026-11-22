@@ -7,7 +7,7 @@ travel_cluster: "far_north_frontier"
 last_verified: "2026-10-31"
 author: "VietnamGuide Editorial Team"
 reading_time_minutes: 8
-word_count: 1543
+word_count: 1644
 ---
 
 # Mai Chau to Pu Luong Transport (2026): Van vs Bike
@@ -112,3 +112,11 @@ You do not need to backtrack through Mai Chau. Daily 16-seat tourist shuttle van
 
 ### Are there working ATMs and petrol stations inside Pu Luong Nature Reserve?
 Zero bank ATMs exist inside Ban Don, Kho Muong, or Ban Hieu. Withdraw sufficient cash VND at Agribank in Mai Chau Town before departing, or in Canh Nang Town (18 km east of Ban Don), as most homestays add a 3% to 4% card fee. Small petrol pumps operate in Co Luong and Pho Doan Town (Km 36).
+
+---
+
+## Related Far North Frontier Field Guides
+
+- [Hanoi to Mai Chau Transport (2026): Bus vs Limousine](/plan/hanoi-to-mai-chau-transport/): Hanoi to Mai Chau transport: Old Quarter limousine shuttles vs local buses and motorbike routes over Thung Khe Pass. 2026 fares, travel times, and advice.
+- [Where to Stay in Mai Chau (2026): Best Areas & Lodges](/destinations/where-to-stay-in-mai-chau/): Where to stay in Mai Chau: Ban Lac and Pom Coong stilt homestays vs luxury valley eco-resorts with 2026 nightly VND room rates and transport local tips.
+- [Northwest Vietnam Itinerary (2026): 6 to 8-Day Loop](/itineraries/northwest-vietnam-itinerary/): Northwest Vietnam itinerary: realistic 6 to 8-day overland circuit connecting Hanoi, Mai Chau valley, Pu Luong nature reserve, and Ninh Binh karsts.

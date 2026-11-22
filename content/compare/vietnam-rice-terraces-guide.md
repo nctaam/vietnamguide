@@ -7,7 +7,7 @@ travel_cluster: "northern_highlands"
 last_verified: "2026-10-22"
 author: "VietnamGuide Editorial Team"
 reading_time_minutes: 8
-word_count: 1538
+word_count: 1643
 ---
 
 # Vietnam Rice Terraces Guide (2026): Sapa vs Mu Cang Chai vs Hoang Su Phi vs Pu Luong
@@ -142,3 +142,11 @@ They connect directly along National Highway **`QL32`** and **`QL4D` (`160 km`, 
 
 ### What should I pay local ethnic guides and farming households when visiting rice terraces?
 In **Mu Cang Chai** and **Sapa**, small bamboo viewing platforms, wooden swings, and heart-shaped photo frames placed inside private rice terraces are built and maintained by individual H'Mong farming families to supplement their single annual rice harvest. Always carry crisp **`10,000`, `20,000`, and `50,000 VND` polymer banknotes** to pay the posted **`20,000–30,000 VND`** entry fee at each private terrace gate (`Đồi Mâm Xôi`, `Đồi Móng Ngựa`, `Vành Móng Ngựa`), and walk strictly along the raised earth and stone paddy bunds (`bờ ruộng`) rather than stepping onto ripening rice stalks. When hiring an independent Black H'Mong, Red Dao, or La Chi local trekking guide in Sapa, Hoang Su Phi, or Pu Luong, the fair 2026 direct daily rate is **`600,000 to 800,000 VND` per group** (`~$24–$32 USD` for a full `12–15 km` day hike), plus a `100,000–150,000 VND` tip and covering their `50,000 VND` trail lunch.
+
+---
+
+## Related Northern Highlands Field Guides
+
+- [Sapa to Mu Cang Chai Transport (2026): Bus & Route](/plan/sapa-to-mu-cang-chai-transport/): O Quy Ho Pass and Highway 32 mountain route across 140 km: local buses (4.5-5 hours, 150,000 VND) vs private cars. 2026 fares, transit times, and road tips.
+- [Sapa Trekking Guided vs Self-Guided: Mountain Route Guide](/plan/sapa-trekking-guided-vs-self-guided/): Plan Sapa trekking guided vs self-guided: compare trail navigation, rainy season mud risks, local Hmong guide rates, homestay costs, and village permits.
+- [Mu Cang Chai Travel Guide: Golden Rice Terraces & Route](/destinations/mu-cang-chai-travel-guide/): Mu Cang Chai travel guide: plan Sep–Oct golden harvest season, 300 km sleeper bus routes from Hanoi across Khau Pha Pass, homestay rates, and loop tips.

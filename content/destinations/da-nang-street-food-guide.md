@@ -6,8 +6,8 @@ description: "Complete Da Nang street food guide: where to eat authentic mi quan
 travel_cluster: "central_heritage"
 last_verified: "2026-11-02"
 author: "VietnamGuide Editorial Team"
-reading_time_minutes: 9
-word_count: 1838
+reading_time_minutes: 10
+word_count: 1945
 ---
 
 # Da Nang Street Food Guide: Seafood, Mi Quang & Gems (2026)
@@ -156,3 +156,11 @@ Crushed peanuts (*đậu phộng*), peanut oil (*dầu phụng*), and fermented 
 
 ### Is Chợ Cồn or Sơn Trà Night Market better for first-time visitors?
 **Chợ Cồn** (especially between 15:00 and 18:00) is far superior for authentic central Vietnamese dishes eaten by Da Nang residents at 20,000 to 45,000 VND ($0.80 to $1.80 USD). **Sơn Trà Night Market** (17:30 to 24:00) is geared toward evening visitors walking to the Dragon Bridge, offering grilled seafood skewers and fruit smoothies in an open pedestrian street.
+
+---
+
+## Related Central Heritage Field Guides
+
+- [Hoi An Street Food Guide: 9 Essential Dishes & Stalls (2026)](/destinations/hoi-an-street-food-guide/): Complete Hoi An street food guide: where to eat Cao Lau, Mi Quang, White Rose dumplings, Madam Khanh banh mi, night market snacks, and hygiene tips.
+- [Best Things to Do in Da Nang: Beaches & Mountains](/destinations/best-things-to-do-in-da-nang/): Explore the best things to do in Da Nang: My Khe Beach, Marble Mountains, Dragon Bridge, Ba Na Hills, and local street food with 2026 prices in VND.
+- [Da Nang vs Hoi An: Which Central Vietnam Base Is Better?](/compare/da-nang-vs-hoi-an/): Choose your central Vietnam base by My Khe beach access, 15-minute airport transfers, dining variety, historic ancient town streets, and regional day trips.

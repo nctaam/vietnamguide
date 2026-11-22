@@ -7,7 +7,7 @@ travel_cluster: "national_circuit"
 last_verified: "2026-11-02"
 author: "VietnamGuide Editorial Team"
 reading_time_minutes: 10
-word_count: 1938
+word_count: 2025
 ---
 
 # Vietnam in May: Shoulder Season Value, Water Pouring, and Coastal Sun
@@ -135,3 +135,11 @@ On **Phu Quoc Island** in the Gulf of Thailand (45 km from Ha Tien, 75 minutes b
 
 ### Can I trek Ha Giang and Cao Bang waterfalls comfortably in May?
 Yes. In **Ha Giang** (300 km north of Hanoi, 6 hours by sleeper bus at 350,000 VND / $13.75 USD) and **Cao Bang** (360 km northeast of Hanoi, 6.5 hours by sleeper coach at 380,000 VND / $14.90 USD), May brings 22–28°C daytime mountain temperatures and early summer showers that feed highland rivers. At **Ban Gioc Waterfall** on the Quay Son River (85 km northeast of Cao Bang city, 2 hours by road, 45,000 VND / $1.75 USD admission plus 50,000 VND / $1.95 USD bamboo raft), water volume expands across the 300-meter-wide limestone cascades while the adjacent 2 km Nguom Ngao Cave (45,000 VND / $1.75 USD entry) stays cool at 20°C.
+
+---
+
+## Related Vietnam Planning & Route Field Guides
+
+- [Vietnam in March: Weather, Regional Routes & Tips (2026)](/plan/vietnam-in-march/): Complete Vietnam in March guide: regional weather patterns, ideal nationwide routes, beach conditions in Central Vietnam, crowd levels, and packing advice.
+- [Vietnam in August: Monsoon Surf, Rice Green & Heat](/plan/vietnam-in-august/): Plan Vietnam in August by region: central coast dry sunshine, northern mountain rice terraces, afternoon monsoon rain windows, and 2026 rail transport.
+- [Vietnam in October: Shoulder Season & Central Rains](/plan/vietnam-in-october/): Plan Vietnam in October across regions: shoulder season transition, central coast typhoon and flood watchouts, and dry northern trekking clear windows.

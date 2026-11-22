@@ -7,7 +7,7 @@ travel_cluster: "ninh_binh"
 last_verified: "2026-10-22"
 author: "VietnamGuide Editorial Team"
 reading_time_minutes: 8
-word_count: 1646
+word_count: 1683
 ---
 
 # Trang An vs Tam Coc Boat Tour Guide (2026): Routes 1–3, Ticket Prices & Rice Harvest Season
@@ -129,3 +129,9 @@ In 2026, the all-inclusive **Trang An boat and sightseeing ticket costs `250,000
 
 ### How much should you tip the boat rower at Trang An and Tam Coc?
 While tipping is optional at Trang An, rowing a steel or wooden sampan for 2 to 3 hours in tropical heat is physically demanding, and rowers receive only a fraction of the pier ticket price. A respectful standard tip at both Trang An and Tam Coc is **`50,000 to 100,000 VND` (`~$2.00–$4.00 USD`) per boat** (`roughly 25,000–50,000 VND per passenger`), handed directly to your rower upon returning to the dock.
+
+---
+
+## Related Ninh Binh & Karst Valley Field Guides
+
+- [Tam Coc vs Trang An Boat Tour: Which is Better in 2026?](/compare/tam-coc-vs-trang-an-boat-tour/): Tam Coc vs Trang An boat tour comparison: compare ticket prices, routes 1, 2, 3, cave depths, scenery, boatman tipping, crowd levels, and best season.

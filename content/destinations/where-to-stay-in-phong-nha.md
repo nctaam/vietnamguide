@@ -6,8 +6,8 @@ description: "Decide where to stay in Phong Nha with our lodging guide: Son Trac
 travel_cluster: "phong_nha_caves"
 last_verified: "2026-10-24"
 author: "VietnamGuide Editorial Team"
-reading_time_minutes: 7
-word_count: 1369
+reading_time_minutes: 8
+word_count: 1514
 ---
 
 # Where to Stay in Phong Nha: Son Trach & Valleys
@@ -86,3 +86,12 @@ Yes, if you stay in **Son Trach Town** or **Cu Lac**. From Son Trach, you can wa
 
 ### How many nights should I book in Phong Nha?
 Book **2 nights** if you are visiting the show caves (**Phong Nha Cave, Paradise Cave, Dark Cave, and Bong Lai Valley**), or **3 to 4 nights** (1 night before + 1–2 nights in the jungle + 1 recovery night at a riverside pool lodge) if you are tackling an overnight cave trek like **Hang En (2D1N)** or **Hang Pygmy (2D1N)**.
+
+---
+
+## Related Phong Nha & North-Central Field Guides
+
+- [Da Nang to Phong Nha Transport (2026): Train vs Bus](/plan/da-nang-to-phong-nha-transport/): Da Nang to Phong Nha transport guide: Reunification Express train to Dong Hoi vs direct sleeper buses and private cars. Schedules, fares, and cave advice.
+- [Ninh Binh to Phong Nha Transport (2026): Bus vs Train](/plan/ninh-binh-to-phong-nha-transport/): Ninh Binh to Phong Nha transport: direct overnight sleeper buses vs trains to Dong Hoi with local taxi transfers. 2026 ticket fares, schedules, and advice.
+- [Phong Nha to Hue Transport: Bus, Train & DMZ Car (2026)](/plan/phong-nha-to-hue-transport/): Complete Phong Nha to Hue transport guide: compare direct tourist buses, Dong Hoi heritage trains, and scenic DMZ private cars via Vinh Moc tunnels.
+- [Dong Hoi to Phong Nha Transport (2026): Bus vs Taxi](/plan/dong-hoi-to-phong-nha-transport/): Bus B4 (50,000 VND, 75 mins) from Dong Hoi station vs taxis (350,000-450,000 VND, 45 mins) covering 45 km to Phong Nha town. 2026 schedules and transit tips.

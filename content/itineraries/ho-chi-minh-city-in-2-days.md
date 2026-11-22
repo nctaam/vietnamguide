@@ -6,8 +6,8 @@ description: "Plan Ho Chi Minh City in 2 days without wasted travel: District 1 
 travel_cluster: "southern_delta"
 last_verified: "2026-10-22"
 author: "VietnamGuide Editorial Team"
-reading_time_minutes: 9
-word_count: 1786
+reading_time_minutes: 10
+word_count: 1901
 ---
 
 # Ho Chi Minh City in 2 Days (2026): 48-Hour Itinerary
@@ -163,3 +163,11 @@ Bui Vien Street in Pham Ngu Lao (District 1) is Saigon’s backpacker strip—a 
 
 ### What is the best time of year to visit Ho Chi Minh City?
 Ho Chi Minh City maintains warm tropical temperatures (28°C–34°C) year-round. The **dry season runs from December to April**, offering sunny skies and lower humidity—with December and January providing the most comfortable walking weather (24°C–31°C). During the wet season (May to November), carry a compact umbrella for predictable 45-minute tropical downpours between 15:00 and 17:00, and schedule indoor visits (like the War Remnants Museum or Independence Palace) during the mid-afternoon hours.
+
+---
+
+## Related Ho Chi Minh City & Southern Field Guides
+
+- [Best Things to Do in Ho Chi Minh City (2026 Guide)](/destinations/best-things-to-do-in-ho-chi-minh-city/): Discover the best things to do in Ho Chi Minh City: war history museums, rooftop cafes, street food alleys, and day trips with 2026 prices rates in VND.
+- [Ho Chi Minh City Travel Guide: Districts, Food & Routes](/destinations/ho-chi-minh-city-travel-guide/): Ho Chi Minh City travel guide: District 1 vs District 3 bases, War Remnants Museum, street food scenes, Tan Son Nhat airport tips, and Cu Chi day trips.
+- [Best Day Trips from Ho Chi Minh City: Cu Chi or Mekong?](/destinations/best-day-trips-from-ho-chi-minh-city/): Best day trips from Ho Chi Minh City: Cu Chi Tunnels 70 km transit, Ben Tre Mekong Delta boat tours, entry ticket fees, and travel schedules compared.

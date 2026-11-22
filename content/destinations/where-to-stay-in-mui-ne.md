@@ -6,8 +6,8 @@ description: "Decide where to stay in Mui Ne: Nguyen Dinh Chieu resort strip, Ha
 travel_cluster: "coastal_islands"
 last_verified: "2026-10-24"
 author: "VietnamGuide Editorial Team"
-reading_time_minutes: 8
-word_count: 1563
+reading_time_minutes: 9
+word_count: 1709
 ---
 
 # Where to Stay in Mui Ne: Beach Resorts & Coast Areas
@@ -82,3 +82,12 @@ Book **West or Central Ham Tien** (#1 to #140 Nguyen Dinh Chieu) if you want wal
 
 ### How much does it cost to get around Mui Ne between hotels and the sand dunes?
 Metered Mai Linh and Sun Taxis charge 14,000 to 16,000 VND ($0.55 to $0.65 USD) per kilometer, making a 6 km hop along Nguyen Dinh Chieu cost 85,000 to 100,000 VND ($3.40 to $4.00 USD). Local Bus #1 also runs the entire strip every 30 minutes from 05:30 AM to 06:30 PM for 13,000 to 35,000 VND ($0.50 to $1.40 USD), while 125cc scooters rent for 150,000 to 200,000 VND ($6.00 to $8.00 USD) per day.
+
+---
+
+## Related Coastal & Island Field Guides
+
+- [Mui Ne vs Nha Trang: Which Beach Base Is Better?](/compare/mui-ne-vs-nha-trang/): Mui Ne vs Nha Trang: compare coastal kitesurfing and sand dunes in Mui Ne with high-rise hotels, scuba diving, and nightlife in Nha Trang for 2026.
+- [Best Things to Do in Mui Ne: Sand Dunes & Coastal Bays](/destinations/best-things-to-do-in-mui-ne/): The best things to do in Mui Ne: White and Red Sand Dunes sunrise tours, Fairy Stream walks, fishing harbor seafood, and kitesurfing with VND costs.
+- [Ho Chi Minh City to Mui Ne: Express Bus, Train & Car](/plan/ho-chi-minh-city-to-mui-ne-transport/): Compare Ho Chi Minh City to Mui Ne transport options via the new expressway: limousine buses, coastal trains to Phan Thiet, private cars, and travel times.
+- [Da Lat to Mui Ne Transport (2026): Bus, Van & Car](/plan/da-lat-to-mui-ne-transport/): Tourist coaches and limousine vans descending Dai Ninh Pass across 155 km (4 hours, 180,000-240,000 VND) via Highway 28B. 2026 schedules and local tips.

@@ -6,8 +6,8 @@ description: "Complete Hue street food guide: taste authentic Bun Bo Hue, royal 
 travel_cluster: "central_heritage"
 last_verified: "2026-11-02"
 author: "VietnamGuide Editorial Team"
-reading_time_minutes: 11
-word_count: 2166
+reading_time_minutes: 12
+word_count: 2308
 ---
 
 # Hue Street Food Guide: 9 Essential Dishes & Stalls (2026)
@@ -186,3 +186,12 @@ Dedicated street restaurants such as Bún Bò Bà Tuyết, Quán Bà Đỏ, Quá
 
 ### What is the best way to navigate between Hue's North Bank and South Bank food zones?
 Hue's culinary map spans a compact 3 km by 4 km radius bisected by the Perfume River. Grab Bike rides between any two stalls cost 15,000 to 25,000 VND ($0.60 to $1.00 USD) and take 5 to 10 minutes, while 4-seat Grab Car or Xanh SM electric taxi rides cost 30,000 to 55,000 VND ($1.20 to $2.15 USD).
+
+---
+
+## Related Central Heritage Field Guides
+
+- [Hoi An vs Hue: Which Central Vietnam Stop Is Better?](/compare/hoi-an-vs-hue/): Hoi An vs Hue comparison: evaluate UNESCO heritage sites, 125 km train transit over Hai Van Pass, street food costs, walking comfort, and travel pace.
+- [Best Things to Do in Hue: What Is Actually Worth Your Time](/destinations/best-things-to-do-in-hue/): Best things to do in Hue: UNESCO Imperial Citadel walking tours, 200,000 VND royal tomb combo tickets, Perfume River boats, and royal court food costs.
+- [Hoi An Street Food Guide: 9 Essential Dishes & Stalls (2026)](/destinations/hoi-an-street-food-guide/): Complete Hoi An street food guide: where to eat Cao Lau, Mi Quang, White Rose dumplings, Madam Khanh banh mi, night market snacks, and hygiene tips.
+- [Central Vietnam Itinerary (2026): 5 to 7-Day Route](/itineraries/central-vietnam-itinerary/): Central Vietnam itinerary for 2026: practical 5 to 7-day route connecting Hue Citadel, Hai Van Pass, Da Nang beaches, and Hoi An lantern old streets.

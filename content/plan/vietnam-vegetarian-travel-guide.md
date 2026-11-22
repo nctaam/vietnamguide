@@ -7,7 +7,7 @@ travel_cluster: "national_circuit"
 last_verified: "2026-10-24"
 author: "VietnamGuide Editorial Team"
 reading_time_minutes: 7
-word_count: 1379
+word_count: 1467
 ---
 
 # Vegetarian in Vietnam (2026): Food Guide & Phrases
@@ -105,3 +105,11 @@ Plain fried or steamed soybean tofu itself is **100% plant-based**, coagulated w
 
 ### How do I find hidden local "Quán Chay" stalls on Google Maps and GrabFood?
 Open **Google Maps** or the **GrabFood** delivery app and type **`"Quán chay"`**, **`"Cơm chay"`**, or **`"Bún chay"`** rather than the English word "vegetarian." Searching in Vietnamese reveals **5x to 8x more neighborhood family eateries** within a **1 km radius**, most charging **25,000 to 45,000 VND ($1.00 to $1.80 USD)** per bowl and holding **4.5+ star** ratings from local Buddhist diners.
+
+---
+
+## Related Vietnam Planning & Route Field Guides
+
+- [Gluten-Free in Vietnam (2026): Celiac Travel Guide](/plan/vietnam-gluten-free-travel-guide/): Gluten-free in Vietnam: essential celiac guide to naturally gluten-free rice dishes, soy sauce warnings, cross-contamination tips, and restaurant phrases.
+- [Vietnam Food Safety and Street Food Etiquette Guide](/plan/vietnam-food-safety-street-food-etiquette/): Master Vietnam food safety and street food etiquette: choose clean busy stalls, order politely, handle sauces, ice, cash, seating, and flexible dining.
+- [Where to Stay in Vietnam: Base Decision Guide](/plan/where-to-stay-in-vietnam-base-decisions/): Choose where to stay in Vietnam by base job: arrival ease, street food access, quiet sleep, family rhythm, rail transfers, beach rest, and airport.

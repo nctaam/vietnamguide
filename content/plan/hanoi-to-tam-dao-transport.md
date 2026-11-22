@@ -7,7 +7,7 @@ travel_cluster: "far_north_frontier"
 last_verified: "2026-10-25"
 author: "VietnamGuide Editorial Team"
 reading_time_minutes: 8
-word_count: 1570
+word_count: 1672
 ---
 
 # Hanoi to Tam Dao Transport (2026): Bus, Van & Bike
@@ -139,3 +139,11 @@ Climbing the mountain on an automatic scooter is easy, but descending is hazardo
 
 ### What is the closest train station to Tam Dao?
 The closest rail depot is Vinh Yen Railway Station (*Ga Vĩnh Yên*), located 25 km southwest along the Hanoi–Lao Cai railway line. Daily passenger trains depart Hanoi Railway Station for Vinh Yen (1.5 hours, 70,000 VND). From Vinh Yen station, travelers take local bus #07 or hail a taxi to reach the base of Tam Dao Mountain.
+
+---
+
+## Related Far North Frontier Field Guides
+
+- [Where to Stay in Tam Dao (2026): Hotels & Chalets](/destinations/where-to-stay-in-tam-dao/): Stone Church town-center hotels vs cliffside chalets at 900m elevation with 18-22 deg C mountain weather. 2026 room rates, valley views, and weekend tips.
+- [Hanoi to Ba Be Lake Transport (2026): Bus & Transfers](/plan/hanoi-to-ba-be-transport/): Hanoi to Ba Be Lake transport guide: local direct buses, private car transfers, and driving routes via Thai Nguyen to Pac Ngoi village with 2026 fares.
+- [Hanoi to Mai Chau Transport (2026): Bus vs Limousine](/plan/hanoi-to-mai-chau-transport/): Hanoi to Mai Chau transport: Old Quarter limousine shuttles vs local buses and motorbike routes over Thung Khe Pass. 2026 fares, travel times, and advice.

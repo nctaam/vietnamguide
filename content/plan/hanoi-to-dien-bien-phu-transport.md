@@ -6,8 +6,8 @@ description: "Hanoi to Dien Bien Phu transport guide: direct domestic flights fr
 travel_cluster: "far_north_frontier"
 last_verified: "2026-10-31"
 author: "VietnamGuide Editorial Team"
-reading_time_minutes: 7
-word_count: 1408
+reading_time_minutes: 8
+word_count: 1513
 ---
 
 ## Route Architecture: Air Corridor vs National Route 6 Overland
@@ -101,3 +101,11 @@ My Dinh Bus Station (9 km west of Hoan Kiem) offers the most 22-cabin VIP operat
 
 ### How do I travel onward from Dien Bien Phu to Sapa or Muong Khoa (Laos)?
 Daily sleeper buses climb `QL12` and `QL4D` via Muong Lay and O Quy Ho Pass (2,035 meters) to Sapa in 8.5 hours (275 km) for 300,000 VND to 380,000 VND ($12.00 to $15.20 USD). For Laos, the 05:30 bus crosses Tay Trang border gate (35 km via `QL279`) to Muong Khoa in 4.5 hours for 250,000 VND ($10.00 USD).
+
+---
+
+## Related Far North Frontier Field Guides
+
+- [Where to Stay in Dien Bien Phu (2026): Valley Hotels](/destinations/where-to-stay-in-dien-bien-phu/): Muong Thanh valley hotels near A1 Hill (350,000-800,000 VND) vs French battlefield guesthouses and suburban eco-homestays. 2026 room rates and travel advice.
+- [Hanoi to Tam Dao Transport (2026): Bus, Van & Bike](/plan/hanoi-to-tam-dao-transport/): Old Quarter pickup limousines (2 hours, 160,000-200,000 VND) vs Bus 58 and motorbike climbs up Tam Dao Mountain (75 km). 2026 schedules and traffic advice.
+- [Hanoi to Ba Be Lake Transport (2026): Bus & Transfers](/plan/hanoi-to-ba-be-transport/): Hanoi to Ba Be Lake transport guide: local direct buses, private car transfers, and driving routes via Thai Nguyen to Pac Ngoi village with 2026 fares.

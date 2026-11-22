@@ -7,7 +7,7 @@ travel_cluster: "coastal_islands"
 last_verified: "2026-10-22"
 author: "VietnamGuide Editorial Team"
 reading_time_minutes: 7
-word_count: 1364
+word_count: 1482
 ---
 
 # Ly Son Island Travel Guide (2026): Volcanic Cliffs, Sa Ky Speedboat, Dao Be & Garlic Kingdom
@@ -119,3 +119,11 @@ No special military permit is required for foreign tourists visiting Ly Son Isla
 
 ### How many days do you need on Ly Son Island?
 A **2-Day / 1-Night (`2D1N`)** trip is the minimum needed to see `Đỉnh Thới Lới`, `Hang Câu`, `Chùa Hang`, and `Cổng Tò Vò` on Day 1 and take the morning speedboat to **`Đảo Bé` (`An Bình`)** on Day 2. If you want a slower pace with sunrise photography at Hang Cau and an extra afternoon swimming, **3 Days / 2 Nights (`3D2N`)** is ideal.
+
+---
+
+## Related Coastal & Island Field Guides
+
+- [Where to Stay in Ly Son (2026): Big vs Small Island](/destinations/where-to-stay-in-ly-son/): Where to stay in Ly Son: Big Island port hotels vs Little Island beach homestays and Mu Cu sunrise eco-lodges with 2026 room rates and island advice.
+- [Where to Stay in Quang Ngai (2026): City vs Sa Ky Port](/destinations/where-to-stay-in-quang-ngai/): Quang Ngai hotels near the station vs Sa Ky Port transit guesthouses 20 km away for 07:30 Ly Son speedboats. 2026 room rates, amenities, and transit advice.
+- [Da Nang to Ly Son Transport (2026): Train, Bus & Ferry](/plan/da-nang-to-ly-son-transport/): Express train to Quang Ngai (2.5 hours, 95,000 VND), 20 km taxi to Sa Ky Port, and 35-minute speedboat to Ly Son Island. 2026 schedules and weather tips.

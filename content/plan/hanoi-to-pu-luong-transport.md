@@ -7,7 +7,7 @@ travel_cluster: "northern_triangle"
 last_verified: "2026-10-31"
 author: "VietnamGuide Editorial Team"
 reading_time_minutes: 8
-word_count: 1550
+word_count: 1684
 ---
 
 # Hanoi to Pu Luong Transport (2026): Direct Eco-Bus Shuttles, Private Cars, and QL15C Mountain Routing
@@ -106,3 +106,12 @@ During heavy downpours or storm alerts, ask your driver to avoid the northern QL
 
 ### Are there evening buses from Hanoi to Pu Luong?
 No tourist shuttle leaves Hanoi for Pu Luong after 13:30 because driving the unlit cliffs of QL15C after dark (18:00 onward) is unsafe. Afternoon arrivals at Noi Bai Airport should either stay overnight in Hanoi for the 07:00 shuttle or depart in a private car before 14:30.
+
+---
+
+## Related Hanoi & Northern Delta Field Guides
+
+- [Pu Luong Travel Guide: Countryside Retreat & Logistics](/destinations/pu-luong-travel-guide/): Pu Luong travel guide: plan May and Oct golden harvest season, 160 km limousine transfer from Hanoi, bamboo water wheels, homestay rates, and village treks.
+- [Hanoi to Ha Giang Transport: Bus, Private Car or Route](/plan/hanoi-to-ha-giang-transport/): Compare Hanoi to Ha Giang transport in 2026 by sleeper bus, day transfer, private car, and staged route using fatigue, safety, weather, and buffers.
+- [Hanoi to Ha Long Bay Transport: Limousine, Bus & Car (2026)](/plan/hanoi-to-ha-long-bay-transport/): Complete Hanoi to Ha Long Bay transport guide: compare 9-seat luxury limousines via Expressway 5B, private transfers, local buses, and cruise pickups.
+- [Hanoi to Mu Cang Chai Transport (2026): Bus vs Van](/plan/hanoi-to-mu-cang-chai-transport/): Hanoi to Mu Cang Chai transport guide: shared limousine vans vs sleeper buses and private transfers via Khau Pha Pass. 2026 ticket costs and harvest times.

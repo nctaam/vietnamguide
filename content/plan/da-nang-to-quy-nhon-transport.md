@@ -6,8 +6,8 @@ description: "Da Nang to Quy Nhon transport guide: Reunification Express train b
 travel_cluster: "central_heritage"
 last_verified: "2026-10-20"
 author: "VietnamGuide Editorial Team"
-reading_time_minutes: 8
-word_count: 1632
+reading_time_minutes: 9
+word_count: 1745
 ---
 
 # Da Nang to Quy Nhon Transport: Coastal Railway, Luxury Rail & Limousine
@@ -356,3 +356,11 @@ Reserve a seat on the **left side** of the train relative to the forward directi
 
 ### Can I book transport from Hoi An directly to Quy Nhon?
 Yes. Several tourist limousine bus companies provide hotel pickup directly in Hoi An, departing between 07:00 and 08:30 AM and reaching central Quy Nhon in roughly 6.0 hours (fares: 280,000 to 350,000 VND). Train travelers must take a 45-minute taxi from Hoi An to Da Nang Railway Station to board the train.
+
+---
+
+## Related Central Heritage Field Guides
+
+- [Da Nang to Ly Son Transport (2026): Train, Bus & Ferry](/plan/da-nang-to-ly-son-transport/): Express train to Quang Ngai (2.5 hours, 95,000 VND), 20 km taxi to Sa Ky Port, and 35-minute speedboat to Ly Son Island. 2026 schedules and weather tips.
+- [Da Nang to Nha Trang (2026): Train, Bus & Flight Guide](/plan/da-nang-to-nha-trang-transport/): How to travel from Da Nang to Nha Trang: Reunification Express sleeper train vs day seats, sleeper coaches, flights, and travel times with 2026 VND fares.
+- [Kon Tum to Da Nang Transport (2026): Bus vs Car](/plan/kon-tum-to-da-nang-transport/): Highway 14 and Lo Xo Pass route across 290 km: shared limousines (6 hours, 280,000 VND) vs express coaches. 2026 timetables, fares, and pass driving advice.

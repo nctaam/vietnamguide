@@ -144,7 +144,7 @@ class TestInteractiveShortcodes(unittest.TestCase):
         """Components must feature cross-tool synergy links connecting the travel planning workflow."""
         # Airport navigator links to visa, cost calculator, weather, itineraries, and packing checklist
         self.assertIn('/plan/vietnam-evisa/', self.contents['airport_navigator'])
-        self.assertIn('/costs/vietnam-travel-cost/', self.contents['airport_navigator'])
+        self.assertIn('/plan/vietnam-travel-cost/', self.contents['airport_navigator'])
         self.assertIn('/plan/best-time-to-visit-vietnam/', self.contents['airport_navigator'])
         self.assertIn('/itineraries/', self.contents['airport_navigator'])
         self.assertIn('/plan/vietnam-first-trip-planning-checklist/', self.contents['airport_navigator'])
@@ -158,7 +158,7 @@ class TestInteractiveShortcodes(unittest.TestCase):
 
         # Itinerary finder links to climate/seasonality, costs, visa, airport, and packing checklist
         self.assertIn('/plan/best-time-to-visit-vietnam/', self.contents['itinerary_finder'])
-        self.assertIn('/costs/vietnam-travel-cost/', self.contents['itinerary_finder'])
+        self.assertIn('/plan/vietnam-travel-cost/', self.contents['itinerary_finder'])
         self.assertIn('/plan/vietnam-evisa/', self.contents['itinerary_finder'])
         self.assertIn('/plan/vietnam-airport-arrival-checklist/', self.contents['itinerary_finder'])
         self.assertIn('/plan/vietnam-first-trip-planning-checklist/', self.contents['itinerary_finder'])
@@ -166,20 +166,20 @@ class TestInteractiveShortcodes(unittest.TestCase):
         # Visa checker links to itineraries, airport, costs, weather, and packing checklist
         self.assertIn('/itineraries/', self.contents['visa_checker'])
         self.assertIn('/plan/vietnam-airport-arrival-checklist/', self.contents['visa_checker'])
-        self.assertIn('/costs/vietnam-travel-cost/', self.contents['visa_checker'])
+        self.assertIn('/plan/vietnam-travel-cost/', self.contents['visa_checker'])
         self.assertIn('/plan/best-time-to-visit-vietnam/', self.contents['visa_checker'])
         self.assertIn('/plan/vietnam-first-trip-planning-checklist/', self.contents['visa_checker'])
 
         # Season matrix links to visa, costs, airport, itineraries, and packing checklist
         self.assertIn('/plan/vietnam-evisa/', self.contents['season_matrix'])
-        self.assertIn('/costs/vietnam-travel-cost/', self.contents['season_matrix'])
+        self.assertIn('/plan/vietnam-travel-cost/', self.contents['season_matrix'])
         self.assertIn('/plan/vietnam-airport-arrival-checklist/', self.contents['season_matrix'])
         self.assertIn('/itineraries/', self.contents['season_matrix'])
         self.assertIn('/plan/vietnam-first-trip-planning-checklist/', self.contents['season_matrix'])
 
         # Packing checklist links to visa, costs, best time, airport, and itineraries
         self.assertIn('/plan/vietnam-evisa/', self.contents['packing_checklist'])
-        self.assertIn('/costs/vietnam-travel-cost/', self.contents['packing_checklist'])
+        self.assertIn('/plan/vietnam-travel-cost/', self.contents['packing_checklist'])
         self.assertIn('/plan/best-time-to-visit-vietnam/', self.contents['packing_checklist'])
         self.assertIn('/plan/vietnam-airport-arrival-checklist/', self.contents['packing_checklist'])
         self.assertIn('/itineraries/', self.contents['packing_checklist'])

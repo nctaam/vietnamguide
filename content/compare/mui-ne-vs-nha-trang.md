@@ -6,8 +6,8 @@ description: "Mui Ne vs Nha Trang: compare coastal kitesurfing and sand dunes in
 travel_cluster: "coastal_islands"
 last_verified: "2026-10-20"
 author: "VietnamGuide Editorial Team"
-reading_time_minutes: 7
-word_count: 1491
+reading_time_minutes: 8
+word_count: 1629
 ---
 
 # Mui Ne vs Nha Trang: Sand Dunes & Surf vs Urban Island Beachfront
@@ -300,3 +300,12 @@ No commercial airport currently operates in Mui Ne. Travelers flying into the re
 
 ### How much do the ATV rentals at Mui Ne White Sand Dunes cost?
 Renting an all-terrain vehicle (ATV/quad bike) at Bau Trang White Sand Dunes typically costs between 600,000 and 800,000 VND ($24–$32 USD) per vehicle for a 20-to-30-minute session across the dune slopes.
+
+---
+
+## Related Coastal & Island Field Guides
+
+- [Where to Stay in Nha Trang: Best Areas & Hotels](/destinations/where-to-stay-in-nha-trang/): Find where to stay in Nha Trang with our 2026 district guide covering Tran Phu beachfront, city center, and Bai Dai resorts with hotel rates in VND.
+- [Nha Trang Travel Guide: Beach, Food, Cam Ranh and Islands](/destinations/nha-trang-travel-guide/): Nha Trang travel guide: urban beachfront hotels, island hopping boat tours, mud baths, diving spots, Cam Ranh airport transfers, and seasonal timing.
+- [Best Things to Do in Nha Trang: Beaches & Islands](/destinations/best-things-to-do-in-nha-trang/): Explore the best things to do in Nha Trang: island snorkeling tours, Po Nagar Cham Towers, mud baths, scuba diving, and seafood feasts with 2026 prices.
+- [Nha Trang to Quy Nhon Transport (2026): Train vs Van](/plan/nha-trang-to-quy-nhon-transport/): Nha Trang to Quy Nhon transport: scenic coastal trains vs shared limousine vans and private cars along Highway 1D. 2026 ticket fares and travel times.

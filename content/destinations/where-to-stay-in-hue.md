@@ -6,8 +6,8 @@ description: "Where to stay in Hue for 2026: compare Imperial Citadel walking st
 travel_cluster: "central_heritage"
 last_verified: "2026-10-24"
 author: "VietnamGuide Editorial Team"
-reading_time_minutes: 7
-word_count: 1460
+reading_time_minutes: 8
+word_count: 1602
 ---
 
 # Where to Stay in Hue: Best Areas & Hotels (2026)
@@ -101,3 +101,12 @@ Book along **western Le Loi Street** (such as Azerai La Residence or Silk Path G
 
 ### How many nights do I need in Hue?
 Two full nights cover the essentials: Day 1 for the Imperial Citadel (`Đại Nội`), Thien Mu Pagoda, and a Perfume River sunset walk, and Day 2 for Minh Mang, Khai Dinh, and Tu Duc Tombs. Add a third night to cycle Thuy Bieu pomelo orchards or soak in the Alba Wellness Valley hot springs.
+
+---
+
+## Related Central Heritage Field Guides
+
+- [Hue Street Food Guide: 9 Essential Dishes & Stalls (2026)](/destinations/hue-street-food-guide/): Complete Hue street food guide: taste authentic Bun Bo Hue, royal steamed rice cakes (banh beo, nam, loc), crispy banh khoai, sweet che, and top stalls.
+- [Central Vietnam Itinerary (2026): 5 to 7-Day Route](/itineraries/central-vietnam-itinerary/): Central Vietnam itinerary for 2026: practical 5 to 7-day route connecting Hue Citadel, Hai Van Pass, Da Nang beaches, and Hoi An lantern old streets.
+- [Da Nang to Hue Train vs Car: Hai Van Pass Guide (2026)](/itineraries/da-nang-to-hue-train-vs-car/): Da Nang to Hue train vs car comparison: compare the scenic heritage train over Hai Van Pass with private car sightseeing stops, costs, and travel times.
+- [Hue to Hoi An: Train, Car, Bus & Hai Van Pass](/plan/hue-to-hoi-an-transport/): Compare Hue to Hoi An transport options: scenic trains, private cars over Hai Van Pass, tourist shuttle buses, and motorbike tours with 2026 costs in VND.

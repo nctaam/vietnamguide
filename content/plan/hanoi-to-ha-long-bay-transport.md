@@ -7,7 +7,7 @@ travel_cluster: "northern_triangle"
 last_verified: "2026-10-31"
 author: "VietnamGuide Editorial Team"
 reading_time_minutes: 8
-word_count: 1588
+word_count: 1696
 ---
 
 ## Route Architecture: CT04 and CT06 Expressway Corridor
@@ -105,3 +105,11 @@ Do not book a domestic flight departing before 04:30 PM or an international flig
 
 ### Do Grab or Be ride-hailing apps work for trips between Hanoi and Ha Long Bay?
 One-way **GrabCar** or **BeCar** rides from Hanoi to Ha Long Bay cost 1,450,000 VND to 1,700,000 VND ($58.00 to $68.00) on the app, excluding the 245,000 VND ($9.80) expressway tolls. However, booking a dedicated private car operator at 1,400,000 VND ($56.00) all-inclusive is much more reliable because app drivers frequently demand off-app cash surcharges for their empty return leg.
+
+---
+
+## Related Hanoi & Northern Delta Field Guides
+
+- [Hanoi to Pu Luong Transport (2026): Shuttle vs Car](/plan/hanoi-to-pu-luong-transport/): Hanoi to Pu Luong transport: direct Old Quarter eco-bus shuttles vs private transfers and motorbike routes via Ban Don. 2026 fares, travel times, and tips.
+- [Best Day Trips from Hanoi: Ninh Binh, Ha Long or Stay?](/destinations/best-day-trips-from-hanoi/): Best day trips from Hanoi, compared by route job: Ninh Binh, Ha Long or Lan Ha, Bat Trang, Duong Lam, Perfume Pagoda, Ba Vi, timing, weather, and skip logic.
+- [Ha Long Bay Day Trip vs Overnight Cruise: 2026 Comparison](/itineraries/ha-long-bay-day-trip-vs-overnight-cruise/): Ha Long Bay day trip vs overnight cruise comparison: compare travel time from Hanoi, costs, karst depth, kayaking, sleeping on water, and route value.

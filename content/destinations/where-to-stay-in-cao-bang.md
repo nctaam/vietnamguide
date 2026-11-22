@@ -6,8 +6,8 @@ description: "Bang River hotels in Cao Bang City vs Nguom Ngao and Ban Gioc wate
 travel_cluster: "far_north_frontier"
 last_verified: "2026-10-24"
 author: "VietnamGuide Editorial Team"
-reading_time_minutes: 7
-word_count: 1410
+reading_time_minutes: 8
+word_count: 1515
 ---
 
 # Where to Stay in Cao Bang (2026): City vs Waterfall
@@ -102,3 +102,11 @@ No separate paid border permit is required for tourists staying in **Cao Bang Ci
 
 ### Can I reach Khuoi Ky homestays and Ban Gioc Waterfall without a motorbike?
 Yes. Board local **Bus #07** in **Cao Bang City** (runs every **30–45 minutes** from **05:30 to 17:30**, **70,000 VND** ticket, **2.5 hours**). Ask the conductor to drop you at the **Khuoi Ky Village** stone arch on **DT206** or at the **Ban Gioc Waterfall** gate **2 km** further east.
+
+---
+
+## Related Far North Frontier Field Guides
+
+- [Where to Stay in Bac Ha (2026): Town vs Village Stays](/destinations/where-to-stay-in-bac-ha/): Where to stay in Bac Ha: town center hotels vs ethnic Hmong homestays with 2026 VND room rates, Sunday market advice, and Ban Pho village valley lodging.
+- [Hanoi to Cao Bang Transport (2026): Limousine & Bus](/plan/hanoi-to-cao-bang-transport/): Hanoi to Cao Bang transport guide: VIP limousine vans, overnight sleeper buses, and motorcycle routes to Ban Gioc Waterfall with 2026 bus VND fares.
+- [Cao Bang Travel Guide: Ban Gioc Waterfall & Loop Routes](/destinations/cao-bang-travel-guide/): Cao Bang travel guide: how to visit Ban Gioc Waterfall, Non Nuoc UNESCO Geopark, Nguom Ngao Cave, and integrate Cao Bang into a Northern Vietnam loop.

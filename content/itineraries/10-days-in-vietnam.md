@@ -6,8 +6,8 @@ description: "Plan 10 days in Vietnam with a balanced route order from Hanoi to 
 travel_cluster: "national_circuit"
 last_verified: "2026-10-22"
 author: "VietnamGuide Editorial Team"
-reading_time_minutes: 11
-word_count: 2273
+reading_time_minutes: 12
+word_count: 2357
 ---
 
 # 10 Days in Vietnam: The Strategic First-Timer Itinerary
@@ -195,3 +195,11 @@ While sleeper trains like the Reunification Express (SE1/SE3) are legendary cult
 
 ### How far in advance should domestic flights be booked?
 Book domestic flights at least four to six weeks in advance, especially for travel between November and April. Booking early secures preferred mid-morning departure slots and includes checked baggage allowances (standard on Vietnam Airlines, but an extra fee on budget carriers like Vietjet).
+
+---
+
+## Related Vietnam Planning & Route Field Guides
+
+- [Vietnam Travel Insurance & Health Guide: What to Cover](/plan/health-travel-insurance-vietnam/): Vietnam travel insurance and health guide: international hospital networks in Hanoi and HCMC, motorbike injury coverage rules, vaccines, and pharmacies.
+- [Vietnam Travel Guide: First Trip Planning Order](/plan/vietnam-travel-guide/): Complete Vietnam travel guide for first-timers: step-by-step route planning, visa rules, regional climates, daily budgets, transport, and cultural norms.
+- [Vietnam Train vs Flight (2026): Travel Comparison](/plan/vietnam-train-vs-flight/): Comparing Reunification Express sleeper trains (SE lines, 4-berth cabins) with 1-hour domestic flights for Hanoi, Da Nang, and Saigon. 2026 costs and advice.

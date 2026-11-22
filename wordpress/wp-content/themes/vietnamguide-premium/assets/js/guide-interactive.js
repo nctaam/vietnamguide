@@ -27,6 +27,7 @@
           var isActive = btn.getAttribute('data-corridor-target') === id;
           btn.classList.toggle('is-active', isActive);
           btn.setAttribute('aria-selected', isActive ? 'true' : 'false');
+          btn.setAttribute('tabindex', isActive ? '0' : '-1');
         });
         Array.prototype.forEach.call(panels, function (panel) {
           var isActive = panel.getAttribute('data-corridor-panel') === id;
@@ -54,6 +55,7 @@
       }
 
       Array.prototype.forEach.call(tabBtns, function (btn, idx) {
+        btn.setAttribute('tabindex', btn.getAttribute('aria-selected') === 'true' ? '0' : '-1');
         btn.addEventListener('click', function () {
           var targetId = this.getAttribute('data-corridor-target');
           if (targetId) {
@@ -61,18 +63,23 @@
           }
         });
         btn.addEventListener('keydown', function (e) {
+          var nextIdx = -1;
           if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') {
-            e.preventDefault();
-            var nextIdx = e.key === 'ArrowRight'
+            nextIdx = e.key === 'ArrowRight'
               ? (idx + 1) % tabBtns.length
               : (idx - 1 + tabBtns.length) % tabBtns.length;
+          } else if (e.key === 'Home') {
+            nextIdx = 0;
+          } else if (e.key === 'End') {
+            nextIdx = tabBtns.length - 1;
+          }
+          if (nextIdx !== -1 && tabBtns[nextIdx]) {
+            e.preventDefault();
             var nextBtn = tabBtns[nextIdx];
-            if (nextBtn) {
-              nextBtn.focus();
-              var targetId = nextBtn.getAttribute('data-corridor-target');
-              if (targetId) {
-                activate(targetId);
-              }
+            nextBtn.focus();
+            var targetId = nextBtn.getAttribute('data-corridor-target');
+            if (targetId) {
+              activate(targetId);
             }
           }
         });
@@ -120,6 +127,7 @@
           var match = btn.getAttribute('data-dispatch-target') === targetId;
           btn.classList.toggle('is-active', match);
           btn.setAttribute('aria-selected', match ? 'true' : 'false');
+          btn.setAttribute('tabindex', match ? '0' : '-1');
         });
         panels.forEach(function (panel) {
           var match = panel.getAttribute('data-dispatch-panel') === targetId;
@@ -139,6 +147,7 @@
       }
 
       tabBtns.forEach(function (btn, idx) {
+        btn.setAttribute('tabindex', btn.getAttribute('aria-selected') === 'true' ? '0' : '-1');
         btn.addEventListener('click', function () {
           var targetId = btn.getAttribute('data-dispatch-target');
           if (targetId) {
@@ -146,18 +155,23 @@
           }
         });
         btn.addEventListener('keydown', function (e) {
+          var nextIdx = -1;
           if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') {
-            e.preventDefault();
-            var nextIdx = e.key === 'ArrowRight'
+            nextIdx = e.key === 'ArrowRight'
               ? (idx + 1) % tabBtns.length
               : (idx - 1 + tabBtns.length) % tabBtns.length;
+          } else if (e.key === 'Home') {
+            nextIdx = 0;
+          } else if (e.key === 'End') {
+            nextIdx = tabBtns.length - 1;
+          }
+          if (nextIdx !== -1 && tabBtns[nextIdx]) {
+            e.preventDefault();
             var nextBtn = tabBtns[nextIdx];
-            if (nextBtn) {
-              nextBtn.focus();
-              var targetId = nextBtn.getAttribute('data-dispatch-target');
-              if (targetId) {
-                switchDispatch(targetId);
-              }
+            nextBtn.focus();
+            var targetId = nextBtn.getAttribute('data-dispatch-target');
+            if (targetId) {
+              switchDispatch(targetId);
             }
           }
         });
@@ -230,8 +244,30 @@
     });
 
     document.addEventListener('keydown', function (e) {
-      if (!modal.hasAttribute('hidden') && e.key === 'Escape') {
+      if (modal.hasAttribute('hidden')) {
+        return;
+      }
+      if (e.key === 'Escape') {
         closeModal();
+        return;
+      }
+      if (e.key === 'Tab') {
+        var focusables = modal.querySelectorAll('button:not([disabled]), [href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])');
+        if (!focusables.length) {
+          e.preventDefault();
+          return;
+        }
+        var first = focusables[0];
+        var last = focusables[focusables.length - 1];
+        if (e.shiftKey) {
+          if (document.activeElement === first || !modal.contains(document.activeElement)) {
+            e.preventDefault();
+            last.focus();
+          }
+        } else if (document.activeElement === last || !modal.contains(document.activeElement)) {
+          e.preventDefault();
+          first.focus();
+        }
       }
     });
   }

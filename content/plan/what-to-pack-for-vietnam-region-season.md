@@ -6,8 +6,8 @@ description: "Learn what to pack for Vietnam by region and season: north, centra
 travel_cluster: "national_circuit"
 last_verified: "2026-11-02"
 author: "VietnamGuide Editorial Team"
-reading_time_minutes: 9
-word_count: 1860
+reading_time_minutes: 10
+word_count: 1949
 ---
 
 # What to Pack for Vietnam by Region & Season (2026): Clothing, Plugs & Dress Codes
@@ -139,3 +139,11 @@ A **20-to-24-inch wheeled suitcase (`55 cm–65 cm` height, `10–15 kg`)** or a
 
 ### What cash, ATMs, and eSIM connectivity items should I pack in my daypack?
 Carry a multi-currency debit card (such as Charles Schwab, Wise, or Revolut) plus $200 USD in crisp, uncreased $100 bills printed after 2017 for emergency exchange at licensed gold shops or Vietcombank counters. TPBank and VPBank ATMs across Hanoi, Da Nang, and Ho Chi Minh City dispense up to 5,000,000 VND ($196.00 USD) per withdrawal with 0 VND local operator fees. For mobile data, install a Viettel 4G/5G eSIM or physical SIM card (150,000–250,000 VND / $5.90–$9.80 USD for 5GB per day over 15–30 days) at the airport arrival hall, as Viettel maintains the strongest cellular reception along remote mountain passes in Ha Giang, Sa Pa, and Phong Nha.
+
+---
+
+## Related Vietnam Planning & Route Field Guides
+
+- [Best Places to Visit in Vietnam: Where to Go First](/destinations/best-places-to-visit-vietnam/): Best places to visit in Vietnam: curated shortlist of top destinations by season, travel pace, cultural depth, beach time, and realistic route connections.
+- [Vietnam in May: Weather, Crowds & Regional Travel (2026)](/plan/vietnam-in-may/): Complete Vietnam in May guide: post-holiday shoulder season, central coast beach sunshine, early southern monsoon rains, northern warmth, and packing.
+- [Vietnam Rainy Season Travel: Flexible Route Guide](/plan/vietnam-rainy-season-flexible-route/): Plan Vietnam rainy season travel in 2026 with regional weather logic, route buffers, flexible cancellation posture, indoor pivots, and rail checks.

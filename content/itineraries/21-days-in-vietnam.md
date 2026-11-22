@@ -6,8 +6,8 @@ description: "Plan 21 days in Vietnam with a complete full-country route from No
 travel_cluster: "national_circuit"
 last_verified: "2026-10-22"
 author: "VietnamGuide Editorial Team"
-reading_time_minutes: 10
-word_count: 2070
+reading_time_minutes: 11
+word_count: 2167
 ---
 
 # 21 Days in Vietnam: The Definitive Three-Week Route Guide
@@ -199,3 +199,11 @@ While the coastal railway between Hanoi, Hue, and Da Nang is highly recommended,
 
 ### What is the visa policy for a 21-day trip?
 Citizens of many European and Asian countries qualify for a 45-day single or multi-entry visa exemption. Travelers from countries requiring visas (including the United States, Canada, and Australia) can easily obtain a 90-day electronic visa (e-Visa) through Vietnam's official immigration portal for $25 USD. Always apply at least two weeks before departure.
+
+---
+
+## Related Vietnam Planning & Route Field Guides
+
+- [UNESCO Heritage Sites in Vietnam: 2026 Route Guide](/destinations/unesco-heritage-sites-vietnam/): Choose which UNESCO heritage sites in Vietnam fit your route, with 2026 updates, first-trip priorities, skip logic, source checks, and verified photo proof.
+- [Southern Vietnam Itinerary (2026): 5 to 7-Day Route](/itineraries/southern-vietnam-itinerary/): Southern Vietnam itinerary for 2026: practical 5 to 7-day route connecting Saigon, Mekong Delta floating markets, and Phu Quoc island sandy beaches.
+- [Cu Chi Tunnels vs Mekong Delta Day Trip: Which Is Better?](/compare/cu-chi-tunnels-vs-mekong-delta-day-trip/): Cu Chi Tunnels vs Mekong Delta day trip: compare war history vs river scenery, travel times from Saigon, tour fatigue, speedboat options, and itinerary fit.

@@ -7,7 +7,7 @@ travel_cluster: "far_north_frontier"
 last_verified: "2026-10-22"
 author: "VietnamGuide Editorial Team"
 reading_time_minutes: 10
-word_count: 1904
+word_count: 2009
 ---
 
 # Northeast Vietnam Itinerary (2026): 5 to 7-Day Ba Be, Cao Bang & Ha Giang Loop
@@ -143,3 +143,11 @@ Because the Ba Be National Park boat cooperative prices vessels by the boat (`50
 
 ### Is there a direct public bus from Cao Bang to Ha Giang?
 Yes, local 29-seat coaster buses and mini-vans run daily between Cao Bang Interprovincial Bus Station and Ha Giang Bus Station via `QL34` (departing around `06:00` and `07:00`, fare `250,000–300,000 VND`, taking `7 to 8 hours`). If you are continuing onto the Ha Giang Loop, ask the driver to drop you off at **Bao Lac junction** or take the morning minibus heading directly toward **Meo Vac** so you do not waste half a day riding all the way into Ha Giang City only to backtrack north on `QL4C`.
+
+---
+
+## Related Far North Frontier Field Guides
+
+- [Hanoi to Cao Bang Transport (2026): Limousine & Bus](/plan/hanoi-to-cao-bang-transport/): Hanoi to Cao Bang transport guide: VIP limousine vans, overnight sleeper buses, and motorcycle routes to Ban Gioc Waterfall with 2026 bus VND fares.
+- [Where to Stay in Cao Bang (2026): City vs Waterfall](/destinations/where-to-stay-in-cao-bang/): Bang River hotels in Cao Bang City vs Nguom Ngao and Ban Gioc waterfall stone homestays 85 km away in Trung Khanh. 2026 room rates and border tips.
+- [Hanoi to Ba Be Lake Transport (2026): Bus & Transfers](/plan/hanoi-to-ba-be-transport/): Hanoi to Ba Be Lake transport guide: local direct buses, private car transfers, and driving routes via Thai Nguyen to Pac Ngoi village with 2026 fares.

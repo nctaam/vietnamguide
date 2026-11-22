@@ -33,7 +33,7 @@ if ($q_clean !== '') {
             'badge'       => __('Interactive Budget Engine', 'vietnamguide-premium'),
             'title'       => __('Vietnam Travel Cost Calculator', 'vietnamguide-premium'),
             'description' => __('Calculate realistic daily travel expenses across accommodation, transport, meals, and activities tailored to your trip style and group size.', 'vietnamguide-premium'),
-            'url'         => home_url('/costs/vietnam-travel-cost/'),
+            'url'         => home_url('/plan/vietnam-travel-cost/'),
             'cta'         => __('Calculate Your Budget', 'vietnamguide-premium'),
         ];
     } elseif (str_contains($q_clean, 'weather') || str_contains($q_clean, 'rain') || str_contains($q_clean, 'season') || str_contains($q_clean, 'climate') || str_contains($q_clean, 'monsoon') || str_contains($q_clean, 'typhoon') || str_contains($q_clean, 'when to')) {
@@ -248,7 +248,7 @@ if ($q_clean !== '') {
                                 <p class="vg-search-toolkit-card__desc"><?php esc_html_e('Verify visa exemption rules and 90-day E-visa entry requirements for your passport nationality.', 'vietnamguide-premium'); ?></p>
                                 <span class="vg-search-toolkit-card__cta"><?php esc_html_e('Check Visa Rules', 'vietnamguide-premium'); ?> &rarr;</span>
                             </a>
-                            <a href="<?php echo esc_url(home_url('/costs/vietnam-travel-cost/')); ?>" class="vg-search-toolkit-card">
+                            <a href="<?php echo esc_url(home_url('/plan/vietnam-travel-cost/')); ?>" class="vg-search-toolkit-card">
                                 <span class="vg-search-toolkit-card__badge"><?php esc_html_e('Budget Tool', 'vietnamguide-premium'); ?></span>
                                 <h3 class="vg-search-toolkit-card__title"><?php esc_html_e('Travel Cost Calculator', 'vietnamguide-premium'); ?></h3>
                                 <p class="vg-search-toolkit-card__desc"><?php esc_html_e('Estimate realistic daily costs across budget, mid-range, and luxury tiers with itemized breakdowns.', 'vietnamguide-premium'); ?></p>

@@ -7,7 +7,7 @@ travel_cluster: "central_highlands"
 last_verified: "2026-10-21"
 author: "VietnamGuide Editorial Team"
 reading_time_minutes: 8
-word_count: 1539
+word_count: 1643
 ---
 
 # Da Lat Travel Guide: Highlands, Coffee & Route Planning (2026)
@@ -190,3 +190,11 @@ Purchase coffee directly from certified specialty roasting establishments that p
 
 ### Do I need an International Driving Permit (IDP) to rent a motorbike in Da Lat?
 Statutory Vietnamese road laws mandate that foreign drivers possess a valid 1968 Convention International Driving Permit (IDP) paired with their domestic motorcycle license. While local rental agencies rarely verify licenses before handing over keys, police checkpoints along suburban highways and mountain pass approaches (particularly QL20 and QL27C) conduct routine inspections. Driving without appropriate certification invalidates international travel insurance coverage in the event of an accident.
+
+---
+
+## Related Central Highlands Field Guides
+
+- [Central Highlands Vietnam Itinerary (2026): 5-7 Day Route](/itineraries/central-highlands-vietnam-itinerary/): Experience the Central Highlands Vietnam itinerary: 5 to 7 days from Da Lat to Lak Lake, Dray Nur waterfalls, and Buon Ma Thuot coffee plantations.
+- [Da Lat to Buon Ma Thuot Transport (2026): Bus & Car](/plan/da-lat-to-buon-ma-thuot-transport/): Highway 27 highland route covering 210 km: shared limousine vans (5-6 hours, 220,000-260,000 VND) past Lak Lake vs private cars and 2026 schedules.
+- [Da Lat to Mui Ne Transport (2026): Bus, Van & Car](/plan/da-lat-to-mui-ne-transport/): Tourist coaches and limousine vans descending Dai Ninh Pass across 155 km (4 hours, 180,000-240,000 VND) via Highway 28B. 2026 schedules and local tips.

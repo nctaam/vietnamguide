@@ -7,7 +7,7 @@ travel_cluster: "central_heritage"
 last_verified: "2026-10-22"
 author: "VietnamGuide Editorial Team"
 reading_time_minutes: 7
-word_count: 1356
+word_count: 1495
 ---
 
 # Da Nang to Hue Train vs Car (2026): Hai Van Pass Route & Cost Comparison
@@ -124,3 +124,12 @@ Yes. Specialist one-way rental operators (such as **Style Motorbikes**, **Tigit 
 
 ### Why do taxis and Grab cars refuse to drive over Hai Van Pass unless I pay extra?
 Standard app-hailed Grab cars and metered taxis between Da Nang and Hue are priced based on the **`6.28 km` Hai Van Road Tunnel route** because climbing the `21 km` mountain pass consumes roughly double the fuel, brake wear, and driving time (`+45 to 60 minutes`). If you book a standard Grab, the driver will automatically take the tunnel. To drive over the pass with photo stops at Hai Van Quan and Lap An Lagoon, book a dedicated **Sightseeing Private Car** or negotiate an upfront **`300,000–400,000 VND` pass surcharge** with the driver before departure.
+
+---
+
+## Related Central Heritage Field Guides
+
+- [Central Vietnam Itinerary (2026): 5 to 7-Day Route](/itineraries/central-vietnam-itinerary/): Central Vietnam itinerary for 2026: practical 5 to 7-day route connecting Hue Citadel, Hai Van Pass, Da Nang beaches, and Hoi An lantern old streets.
+- [Hoi An vs Hue: Which Central Vietnam Stop Is Better?](/compare/hoi-an-vs-hue/): Hoi An vs Hue comparison: evaluate UNESCO heritage sites, 125 km train transit over Hai Van Pass, street food costs, walking comfort, and travel pace.
+- [Hue to Hoi An: Train, Car, Bus & Hai Van Pass](/plan/hue-to-hoi-an-transport/): Compare Hue to Hoi An transport options: scenic trains, private cars over Hai Van Pass, tourist shuttle buses, and motorbike tours with 2026 costs in VND.
+- [Da Nang Travel Guide: Beaches, City Base & Day Trips](/destinations/da-nang-travel-guide/): Da Nang travel guide: My Khe beach resorts, Dragon Bridge weekend fire shows, Marble Mountains, Son Tra peninsula, and day trips to Hoi An and Hue.

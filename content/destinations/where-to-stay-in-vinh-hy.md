@@ -6,8 +6,8 @@ description: "Amanoi cliffside villas ($1,000+ USD) vs Vinh Hy fishing village h
 travel_cluster: "coastal_islands"
 last_verified: "2026-10-24"
 author: "VietnamGuide Editorial Team"
-reading_time_minutes: 7
-word_count: 1446
+reading_time_minutes: 8
+word_count: 1551
 ---
 
 # Where to Stay in Vinh Hy (2026): Luxury vs Village
@@ -76,3 +76,11 @@ From **Cam Ranh International Airport (CXR)**, drive **60 km (1 hour 15 minutes)
 
 ### When is the best month to visit Vinh Hy Bay and Hang Rai?
 With **under 700mm of annual rain** and **300+ sunny days**, Vinh Hy stays dry from **January through September**. **March to August** delivers flat, crystal-clear water for glass-bottom coral boats, while **October and November** swells create dramatic wave cascades over the fossilized coral shelf at **Hang Rai** (40,000 VND).
+
+---
+
+## Related Coastal & Island Field Guides
+
+- [Where to Stay in Phan Rang (2026): Hotels & Resorts](/destinations/where-to-stay-in-phan-rang/): Where to stay in Phan Rang: Ninh Chu beach resorts vs central city hotels near Cham towers and Vinh Hy villas. 2026 room rates, areas, and local advice.
+- [Mekong Delta Travel Guide: Day Trip, Overnight or Skip?](/destinations/mekong-delta-travel-guide/): Mekong Delta travel guide: floating markets in Can Tho, Ben Tre riverboat day trips, homestays in Vinh Long, Chau Doc border routes, and transfer logistics.
+- [Phong Nha to Hue Transport: Bus, Train & DMZ Car (2026)](/plan/phong-nha-to-hue-transport/): Complete Phong Nha to Hue transport guide: compare direct tourist buses, Dong Hoi heritage trains, and scenic DMZ private cars via Vinh Moc tunnels.

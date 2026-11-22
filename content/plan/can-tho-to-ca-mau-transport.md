@@ -7,7 +7,7 @@ travel_cluster: "mekong_delta"
 last_verified: "2026-10-25"
 author: "VietnamGuide Editorial Team"
 reading_time_minutes: 8
-word_count: 1585
+word_count: 1693
 ---
 
 # Can Tho to Ca Mau Transport: Bus, Limousine, and Dat Mui Transit Guide
@@ -164,3 +164,11 @@ Ben xe Ca Mau offers luggage storage lockers inside the central station manageme
 
 ### Are sleeper bunks comfortable for tall passengers over six feet?
 Standard 34-berth sleeper coaches on this route feature bunks measuring approximately 180 cm (5 feet 11 inches) in length. Taller travelers over six feet (183 cm) may find their feet touching the end compartment wall. If extra legroom is critical, book front-row captain seats in a 9-seat VIP limousine instead.
+
+---
+
+## Related Mekong Delta Field Guides
+
+- [Where to Stay in Ca Mau (2026): Hotels & Eco-Lodges](/destinations/where-to-stay-in-ca-mau/): Where to stay in Ca Mau: central city hotels along Quan Lo canal vs Dat Mui mangrove eco-lodges near the southern tip. 2026 room rates and travel advice.
+- [Can Tho to Chau Doc Transport (2026): Bus vs Limousine](/plan/can-tho-to-chau-doc-transport/): Can Tho to Chau Doc transport: Futa express buses vs shared limousine minivans and private cars via Highway 91. 2026 schedules, ticket fares, and advice.
+- [Can Tho to Ha Tien Transport (2026): Bus vs Van](/plan/can-tho-to-ha-tien-transport/): Futa coaches and limousines across 190 km (4-4.5 hours, 170,000-220,000 VND) connecting to early Phu Quoc ferries. 2026 schedules and port transfer advice.

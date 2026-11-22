@@ -6,8 +6,8 @@ description: "Cao Bang travel guide: how to visit Ban Gioc Waterfall, Non Nuoc U
 travel_cluster: "far_north_frontier"
 last_verified: "2026-10-21"
 author: "VietnamGuide Editorial Team"
-reading_time_minutes: 12
-word_count: 2474
+reading_time_minutes: 13
+word_count: 2580
 ---
 
 # Cao Bang Travel Guide: Ban Gioc Waterfall & Loop Routes
@@ -172,3 +172,11 @@ Stay 2.0 km from the falls inside **Khuoi Ky Stone Village** (`Làng Đá Khuổ
 
 ### How do you get from Hanoi to Cao Bang (and from Cao Bang to Ban Gioc by public bus)?
 From Hanoi, 9-seat VIP DCar limousines (**Thanh Ly**, **Vinh Dung**, or **Hiep Giang**, 400,000 VND to 450,000 VND / $16.00 to $18.00 USD one-way) pick up in the Old Quarter at 06:30, 09:30, and 14:30 and reach Cao Bang City in 5.5 hours (285 km via CT07 and QL3), while overnight 24-cabin sleeper buses from My Dinh Station cost 320,000 VND to 350,000 VND ($12.80 to $14.00 USD, 6.5 hours, 21:00 to 04:00). From Cao Bang City, red-and-yellow **Public Bus #07** departs every 30 minutes from 05:30 to 17:30 right to the Ban Gioc Waterfall gate (85 km, 2.5 hours, 70,000 VND to 80,000 VND / $2.80 to $3.20 USD).
+
+---
+
+## Related Far North Frontier Field Guides
+
+- [Where to Stay in Cao Bang (2026): City vs Waterfall](/destinations/where-to-stay-in-cao-bang/): Bang River hotels in Cao Bang City vs Nguom Ngao and Ban Gioc waterfall stone homestays 85 km away in Trung Khanh. 2026 room rates and border tips.
+- [Hanoi to Cao Bang Transport (2026): Limousine & Bus](/plan/hanoi-to-cao-bang-transport/): Hanoi to Cao Bang transport guide: VIP limousine vans, overnight sleeper buses, and motorcycle routes to Ban Gioc Waterfall with 2026 bus VND fares.
+- [Northeast Vietnam Itinerary (2026): 5-7 Day Scenic Loop](/itineraries/northeast-vietnam-itinerary/): Plan your Northeast Vietnam itinerary: 5 to 7 days from Hanoi through Ba Be Lake to Ban Gioc Waterfall and Cao Bang karst valleys with 2026 route maps.

@@ -6,8 +6,8 @@ description: "Choose where to stay in Vietnam by base job: arrival ease, street 
 travel_cluster: "national_circuit"
 last_verified: "2026-10-24"
 author: "VietnamGuide Editorial Team"
-reading_time_minutes: 7
-word_count: 1478
+reading_time_minutes: 8
+word_count: 1570
 ---
 
 # Where to Stay in Vietnam: Base Decision Guide
@@ -115,3 +115,11 @@ Blame narrow colonial plot taxes. Historic urban land rules created **tube house
 
 ### Should I stay in Tam Coc or Trang An when visiting Ninh Binh?
 Choose **Tam Coc Village Core** if you are visiting for 1 to 2 nights without a motorbike and want to walk to 40+ dinner restaurants, cafes, and ATMs at night. Book a lodge in **Trang An or Hang Mua Valley (`4 to 6 km` away)** if you want dramatic limestone cliffs surrounding a quiet pool bungalow and are happy taking a **`60,000 to 90,000 VND` (`10-minute`) Grab** into Tam Coc for evening meals.
+
+---
+
+## Related Vietnam Planning & Route Field Guides
+
+- [Best Vietnam Cities for First-Time Visitors: Route Guide](/plan/best-vietnam-cities-for-first-time-visitors/): Choose the best Vietnam cities for first-time visitors by route role, airport arrival logic, culinary culture, beach comfort, day trips, and pacing.
+- [Where to Stay in Hai Phong (2026): Hotels & Districts](/destinations/where-to-stay-in-hai-phong/): French Quarter boutique hotels near the Opera House vs Le Hong Phong business towers 5 km from Cat Bi Airport. 2026 room rates and food tour local tips.
+- [Vietnam Airport Arrival Checklist](/plan/vietnam-airport-arrival-checklist/): Use this Vietnam airport arrival checklist to handle documents, luggage, SIM or eSIM, small cash, verified transport, scams, and first-night decisions.

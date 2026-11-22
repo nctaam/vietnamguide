@@ -7,7 +7,7 @@ travel_cluster: "national_circuit"
 last_verified: "2026-10-22"
 author: "VietnamGuide Editorial Team"
 reading_time_minutes: 11
-word_count: 2130
+word_count: 2225
 ---
 
 # Vietnam Family Travel Guide (2026): Route & Kid Advice
@@ -173,3 +173,11 @@ If you book an **entire 4-berth soft-sleeper cabin** (*Khoang 4 điều hòa*) e
 
 ### Is malaria or dengue fever a concern for children on this route?
 Standard tourist hubs—including Hanoi, Ninh Binh, Ha Long Bay, Hue, Da Nang, Hoi An, and Ho Chi Minh City—are **malaria-free**, so pediatric anti-malarial medication is unnecessary on this classic route. However, **dengue fever** (transmitted by daytime *Aedes* mosquitoes) exists across urban and rural Southeast Asia. Dress children in light-colored cotton clothing and apply a kid-safe **20% Picaridin (Icaridin) or 15–20% DEET** insect repellent every morning and late afternoon (around dawn and dusk).
+
+---
+
+## Related Vietnam Planning & Route Field Guides
+
+- [UNESCO Heritage Sites in Vietnam: 2026 Route Guide](/destinations/unesco-heritage-sites-vietnam/): Choose which UNESCO heritage sites in Vietnam fit your route, with 2026 updates, first-trip priorities, skip logic, source checks, and verified photo proof.
+- [Tap Water in Vietnam: Drinking, Ice, Brushing Teeth (2026)](/plan/tap-water-in-vietnam/): Can you drink tap water in Vietnam? Complete guide covering bottled water, street drink ice safety, brushing teeth, boiling, and avoiding stomach illness.
+- [Vietnam Night Train Safety Tips (2026): Sleeper Berths](/plan/vietnam-night-train-safety-tips/): Vietnam night train safety tips: cabin door locks, luggage security, lower vs upper sleeper berths, food hygiene, and theft prevention for 2026 rail trips.

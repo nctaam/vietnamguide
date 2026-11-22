@@ -7,7 +7,7 @@ travel_cluster: "coastal_islands"
 last_verified: "2026-11-02"
 author: "VietnamGuide Editorial Team"
 reading_time_minutes: 10
-word_count: 1985
+word_count: 2019
 ---
 
 # Nha Trang Travel Guide: Beach, Food, Cam Ranh and Islands
@@ -143,3 +143,9 @@ Base yourself in **central Nha Trang (Tran Phu Boulevard)** if you want to walk 
 
 ### Are Hon Mun coral reefs open for scuba diving in 2026?
 Yes, regulated outer reef sites around Hon Mun, Madonna Rock, Moray Beach, and neighboring Hon Rom remain open to licensed PADI and SSI dive operators under the Khanh Hoa Bay Management Board's conservation zoning. To protect shallow regenerating staghorn coral beds, unguided mass-tour helmet walking is restricted to designated sandy platforms off Hon Tam and Mini Beach.
+
+---
+
+## Related Coastal & Island Field Guides
+
+- [Where to Stay in Cam Ranh (2026): Bai Dai Beach Resorts](/destinations/where-to-stay-in-cam-ranh/): Bai Dai beachfront resorts 10 minutes from CXR Airport vs central Cam Ranh hotels and transit guesthouses. 2026 rates, transfers, and beach access.

@@ -6,8 +6,8 @@ description: "Comparing Reunification Express sleeper trains (SE lines, 4-berth 
 travel_cluster: "national_circuit"
 last_verified: "2026-11-01"
 author: "VietnamGuide Editorial Team"
-reading_time_minutes: 7
-word_count: 1448
+reading_time_minutes: 8
+word_count: 1514
 ---
 
 # Vietnam Train vs Flight (2026): Travel Comparison
@@ -131,3 +131,10 @@ No. All passenger trains operate on the single-track `1,000 mm` metre-gauge netw
 
 ### Which train numbers are best between Hanoi, Hue, Da Nang, and Saigon?
 Always prioritize `SE1/SE2` and `SE3/SE4` on the full Hanoi–HCMC trunk, or `SE19/SE20` between Hanoi and Da Nang. These premier express services use newer air-conditioned Dalian and Gia Lam carriages, make fewer provincial stops, and run `2 to 4 hours` faster than older `SE5/SE6` or `SE7/SE8` formations.
+
+---
+
+## Related Vietnam Planning & Route Field Guides
+
+- [10 Days in Vietnam: Best Route for First-Time Visitors](/itineraries/10-days-in-vietnam/): Plan 10 days in Vietnam with a balanced route order from Hanoi to Ho Chi Minh City, internal transfer timings, realistic night allocation, and daily costs.
+- [Vietnam Craft Beer Guide (2026): Breweries, Taps & Prices](/plan/vietnam-craft-beer-guide/): Vietnam craft beer guide: top artisanal breweries in Saigon, Hanoi, and Da Nang, signature tropical IPAs, taproom locations, and 2026 VND room prices.

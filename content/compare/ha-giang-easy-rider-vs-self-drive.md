@@ -7,7 +7,7 @@ travel_cluster: "northern_highlands"
 last_verified: "2026-10-22"
 author: "VietnamGuide Editorial Team"
 reading_time_minutes: 9
-word_count: 1755
+word_count: 1790
 ---
 
 # Ha Giang Easy Rider vs Self-Drive: Motorbike Route Guide
@@ -205,3 +205,9 @@ Tipping is discretionary but standard practice for commendable service. Drivers 
 
 ### What luggage can I bring on an Easy Rider tour?
 Travelers should leave their large suitcases or heavy travel backpacks in free luggage storage provided by tour hostels in Ha Giang City. You travel the loop carrying only a small daypack (15 to 25 liters) containing clothing for 3 to 4 days, waterproof jackets, warm fleece layers, personal toiletries, and chargers. Your daypack is wrapped in heavy-duty waterproof plastic and strapped to the rear bike rack or transported inside a company support vehicle.
+
+---
+
+## Related Northern Highlands Field Guides
+
+- [Ha Giang to Dong Van Transport (2026): Bus vs Motorbike](/plan/ha-giang-to-dong-van-transport/): QL4C mountain highway across 135 km: local passenger minibuses (4.5-5 hours, 120,000 VND) vs motorbike self-drive and Easy Riders with 2026 VND fares.

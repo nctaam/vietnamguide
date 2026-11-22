@@ -144,6 +144,11 @@ class TestContentDepthAuditor(unittest.TestCase):
                 report["elements"]["has_faq"],
                 f"{md_path.name} must include an explicit FAQ H2 section",
             )
+            self.assertGreaterEqual(
+                report["internal_links"],
+                3,
+                f"{md_path.name} must include >= 3 unique canonical internal links",
+            )
 
     def test_canonical_content_registry_parity_and_no_duplicates(self):
         import json
@@ -168,6 +173,7 @@ class TestContentDepthAuditor(unittest.TestCase):
         self.assertEqual(dir_report["scanned_files"], len(registry_routes))
         self.assertEqual(dir_report["passed_files"], dir_report["scanned_files"])
         self.assertEqual(dir_report.get("duplicate_route_paths"), [])
+        self.assertEqual(dir_report.get("orphan_routes"), [])
 
         seen_routes = set()
         for r in dir_report["results"]:
@@ -281,6 +287,7 @@ class TestContentDepthAuditor(unittest.TestCase):
             self.assertIn("Malformed Markdown table", err_text)
             self.assertIn("Frontmatter reading_time_minutes", err_text)
             self.assertIn("Missing dedicated FAQ H2 section", err_text)
+            self.assertIn("Insufficient canonical internal links", err_text)
 
 
 if __name__ == "__main__":

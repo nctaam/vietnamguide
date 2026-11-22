@@ -6,8 +6,8 @@ description: "Vietnam domestic flights guide: Vietnam Airlines vs Vietjet, bagga
 travel_cluster: "national_circuit"
 last_verified: "2026-10-24"
 author: "VietnamGuide Editorial Team"
-reading_time_minutes: 8
-word_count: 1590
+reading_time_minutes: 9
+word_count: 1711
 ---
 
 # Vietnam Domestic Flights Guide (2026): Airlines & Tips
@@ -110,3 +110,12 @@ Schedule a minimum **3.0 to 3.5 hour connection buffer** at Ho Chi Minh City (SG
 
 ### Can I board a Vietnamese domestic flight using a digital boarding pass on my phone?
 Yes, passengers departing from major airports including **Hanoi (HAN), Ho Chi Minh City (SGN), Da Nang (DAD), Cam Ranh (CXR), Phu Quoc (PQC), and Da Lat (DLI)** without checked bags can clear security and board using a mobile QR pass. Budget carriers still weigh 7 kg cabin bags at the departure gate.
+
+---
+
+## Related Vietnam Planning & Route Field Guides
+
+- [Transport Within Vietnam: Flights, Trains, Cars and Buses](/plan/transport-within-vietnam/): Choose transport within Vietnam by route: domestic flights, trains, private cars, sleeper buses, ferries, airport transfers, prebooking, and live checks.
+- [Best Vietnam Cities for First-Time Visitors: Route Guide](/plan/best-vietnam-cities-for-first-time-visitors/): Choose the best Vietnam cities for first-time visitors by route role, airport arrival logic, culinary culture, beach comfort, day trips, and pacing.
+- [Best Vietnam Routes for First-Time Visitors: Planning Guide](/plan/best-vietnam-routes-first-time-visitors/): Plan the best Vietnam routes for first-time visitors: compare 10-day and 14-day circuits, domestic flight connections, train costs, and travel budgets.
+- [Vietnam SIM Card: Airport vs City Stores Guide (2026)](/plan/vietnam-sim-card-airport-vs-city/): Vietnam SIM card guide: buying at Noi Bai or Tan Son Nhat airport kiosks vs official Viettel and Vinaphone city shops, prices, and eSIM activation.

@@ -7,7 +7,7 @@ travel_cluster: "northern_triangle"
 last_verified: "2026-10-20"
 author: "VietnamGuide Editorial Team"
 reading_time_minutes: 8
-word_count: 1522
+word_count: 1606
 ---
 
 # Hanoi to Cat Ba Island Transport: Tourist Combo Bus, Dong Bai Ferry, and Cable Car
@@ -178,3 +178,11 @@ Dong Bai Pier features wider vehicle holding bays and modern berthing docks comp
 
 ### What should I do if a typhoon warning halts ferry operations?
 During tropical storms (primarily July and August), maritime authorities issue sailing suspensions (*lệnh cấm biển*), shutting down passenger speedboats, cable cars, and vehicle ferries. Bus operators will cancel bookings with full refunds or hold passengers in Hai Phong City until the maritime ban is lifted.
+
+---
+
+## Related Hanoi & Northern Delta Field Guides
+
+- [Hanoi to Mu Cang Chai Transport (2026): Bus vs Van](/plan/hanoi-to-mu-cang-chai-transport/): Compares limousine vans, overnight sleeper coaches, and private cars crossing Khau Pha Pass during terrace harvest months.
+- [Hanoi to Hai Phong Transport (2026): Train vs Van](/plan/hanoi-to-hai-phong-transport/): Weighs daily rail departures from Hanoi Central and Long Bien (2.5 hours, 95,000 VND) against 80-minute 5B Expressway vans (150,000 VND).
+- [Cat Ba to Ninh Binh Transport (2026): Tourist Bus Combo](/plan/cat-ba-to-ninh-binh-transport/): Explains direct island-to-karst ferry-and-bus transfers via the Hai Phong expressway versus private car charters.

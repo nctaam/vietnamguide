@@ -6,8 +6,8 @@ description: "Explore the best Da Lat coffee farms. Our guide covers arabica pla
 travel_cluster: "central_highlands"
 last_verified: "2026-10-21"
 author: "VietnamGuide Editorial Team"
-reading_time_minutes: 15
-word_count: 3045
+reading_time_minutes: 16
+word_count: 3147
 ---
 
 # Da Lat Coffee Farms: Arabica Tour & Cupping Guide (2026)
@@ -193,3 +193,11 @@ Yes. Both Cau Dat Plantation and K'Ho Coffee feature 2 km to 3.5 km outdoor walk
 
 ### What should I wear when visiting rural highland coffee farms?
 Wear closed-toe trail runners or hiking shoes with lugged rubber soles to maintain grip on 25-degree red clay slopes and damp morning grass. Dress in removable layers: bring a windproof jacket or fleece for 07:00 departures when temperatures at 1,650 meters dip to 12°C to 14°C, paired with a breathable cotton shirt and SPF 50 sunscreen once the mountain mist clears by 10:00 and temperatures climb to 22°C to 24°C.
+
+---
+
+## Related Central Highlands Field Guides
+
+- [Best Things to Do in Da Lat: Highlands & Waterfalls](/destinations/best-things-to-do-in-da-lat/): Discover the best things to do in Da Lat: Arabica coffee cupping, alpine coaster rides, Datanla falls, pine trails, and night markets with 2026 prices.
+- [Central Highlands Vietnam Itinerary (2026): 5-7 Day Route](/itineraries/central-highlands-vietnam-itinerary/): Experience the Central Highlands Vietnam itinerary: 5 to 7 days from Da Lat to Lak Lake, Dray Nur waterfalls, and Buon Ma Thuot coffee plantations.
+- [Ho Chi Minh City to Da Lat: Bus, Flight & Car](/plan/ho-chi-minh-city-to-da-lat-transport/): Compare Ho Chi Minh City to Da Lat transport options: sleeper buses, flights, and private cars with journey times, ticket costs in VND, and schedules.

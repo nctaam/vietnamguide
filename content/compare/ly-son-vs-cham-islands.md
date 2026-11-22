@@ -7,7 +7,7 @@ travel_cluster: "central_heritage"
 last_verified: "2026-10-21"
 author: "VietnamGuide Editorial Team"
 reading_time_minutes: 15
-word_count: 3060
+word_count: 3098
 ---
 
 # Ly Son vs Cham Islands: Which Central Island to Pick? (2026)
@@ -190,3 +190,9 @@ Licensed composite speed canoes depart Ly Son central port (Ben Dinh) for Dao Be
 
 ### Are foreigners allowed to visit Both Ly Son and the Cham Islands without a special military permit?
 Yes. In 2026, foreign nationals do not need a separate military border permit to visit either Ly Son Island or the Cham Islands. You simply present your original passport and valid Vietnamese visa (or visa-exempt entry stamp) when purchasing your ferry ticket at Sa Ky Port or Cua Dai Pier, and register your passport at your island hotel or homestay upon check-in.
+
+---
+
+## Related Central Heritage Field Guides
+
+- [Where to Stay in Ly Son (2026): Big vs Small Island](/destinations/where-to-stay-in-ly-son/): Where to stay in Ly Son: Big Island port hotels vs Little Island beach homestays and Mu Cu sunrise eco-lodges with 2026 room rates and island advice.

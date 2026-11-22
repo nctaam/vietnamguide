@@ -7,7 +7,7 @@ travel_cluster: "coastal_islands"
 last_verified: "2026-10-20"
 author: "VietnamGuide Editorial Team"
 reading_time_minutes: 8
-word_count: 1556
+word_count: 1625
 ---
 
 # Nha Trang to Quy Nhon Transport: Coastal Railway, Bus & Private Car
@@ -294,3 +294,10 @@ Pick the right side. Facing north toward Quy Nhon, right-hand window seats look 
 
 ### Do I need to book Nha Trang to Quy Nhon transport tickets in advance?
 Outside holidays, reserving train or limousine seats **1 to 2 days** ahead works fine. Ahead of Tet Lunar New Year or the April 30 – May 1 Reunification break, lock down soft seats and sleepers **3 to 6 weeks** early.
+
+---
+
+## Related Coastal & Island Field Guides
+
+- [Quy Nhon to Nha Trang Transport (2026): Train vs Bus](/plan/quy-nhon-to-nha-trang-transport/): Coastal trains from Dieu Tri Station (4-4.5 hours, 140,000-210,000 VND) vs Highway 1D limousine vans (215 km). 2026 departure timetables and transfer tips.
+- [Da Nang to Quy Nhon Transport (2026): Train vs Bus](/plan/da-nang-to-quy-nhon-transport/): Da Nang to Quy Nhon transport guide: Reunification Express train berths vs luxury Vietage rail carriages, limousine vans, and coastal highway travel times.

@@ -32,6 +32,7 @@ DEFAULT_MIN_TABLES = 1
 DEFAULT_MIN_BLOCKQUOTES = 1
 DEFAULT_MIN_HLS = 95.0
 DEFAULT_MIN_EMPIRICAL_SIGNALS = 80
+DEFAULT_MIN_INTERNAL_LINKS = 3
 
 MANDATORY_FRONTMATTER_FIELDS = [
     "title",
@@ -372,6 +373,8 @@ def audit_markdown_file(
         errors.append(
             f"Relative internal link missing leading '/': '({m_rel_link.group(1)}' (must start with '/{m_rel_link.group(1)}')"
         )
+    unique_internal_targets: set[str] = set()
+    self_route = str(frontmatter.get("route_path", "")).strip("/") if frontmatter else ""
     for m_int_link in re.finditer(r"(?<!!)\[[^\]]+\]\((/[^)\s]+)\)", body):
         raw_href = m_int_link.group(1)
         clean_path = raw_href.split("#")[0].split("?")[0]
@@ -379,6 +382,13 @@ def audit_markdown_file(
             errors.append(
                 f"Internal link missing canonical trailing slash: '{raw_href}' (must end with '/')"
             )
+        norm_target = clean_path.strip("/")
+        if norm_target and norm_target != self_route:
+            unique_internal_targets.add(norm_target)
+    if len(unique_internal_targets) < DEFAULT_MIN_INTERNAL_LINKS:
+        errors.append(
+            f"Insufficient canonical internal links: found {len(unique_internal_targets)}, required >= {DEFAULT_MIN_INTERNAL_LINKS}"
+        )
     for m_latex in re.finditer(r"\$\\?(?:leftrightarrow|rightarrow|leftarrow|to)\$", body):
         errors.append(
             f"Raw LaTeX arrow detected in prose: '{m_latex.group(0)}' (use Unicode '→' or '↔')"
@@ -411,6 +421,8 @@ def audit_markdown_file(
         "relative_path": str(file_path.relative_to(OPS_DIR.parent).as_posix()) if file_path.is_relative_to(OPS_DIR.parent) else str(file_path),
         "passed": passed,
         "word_count": word_count,
+        "internal_links": len(unique_internal_targets),
+        "internal_link_targets": sorted(unique_internal_targets),
         "frontmatter": frontmatter,
         "elements": elements,
         "empirical_signals": signals,
@@ -467,6 +479,15 @@ def audit_content_directory(
 
     duplicate_routes = sorted([rp for rp, cnt in route_counts.items() if cnt > 1])
 
+    inbound_counts: Dict[str, int] = {rp: 0 for rp in route_counts}
+    for r in results:
+        src_rp = str(r.get("frontmatter", {}).get("route_path", "")).strip("/")
+        for tgt in r.get("internal_link_targets", []):
+            if tgt in inbound_counts and tgt != src_rp:
+                inbound_counts[tgt] += 1
+
+    orphan_routes = sorted([rp for rp, cnt in inbound_counts.items() if cnt == 0]) if len(results) >= 2 else []
+
     for p, r in zip(md_files, results):
         fm = r.get("frontmatter", {})
         rp = str(fm.get("route_path", "")).strip()
@@ -507,6 +528,11 @@ def audit_content_directory(
             r["errors"].append(
                 f"Duplicate route_path '{rp}' detected across multiple Markdown files"
             )
+        if rp in orphan_routes:
+            r["errors"].append(
+                f"Orphan guide detected: '{rp}' receives 0 inbound internal links from other Markdown guides"
+            )
+        r["inbound_links"] = inbound_counts.get(rp, 0)
         r["passed"] = len(r["errors"]) == 0
 
     total_scanned = len(results)
@@ -515,6 +541,7 @@ def audit_content_directory(
         total_scanned > 0
         and total_passed == total_scanned
         and len(duplicate_routes) == 0
+        and len(orphan_routes) == 0
     )
 
     return {
@@ -524,6 +551,7 @@ def audit_content_directory(
         "passed_files": total_passed,
         "failed_files": total_scanned - total_passed,
         "duplicate_route_paths": duplicate_routes,
+        "orphan_routes": orphan_routes,
         "results": results,
     }
 

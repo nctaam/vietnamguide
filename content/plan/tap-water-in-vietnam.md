@@ -6,8 +6,8 @@ description: "Can you drink tap water in Vietnam? Complete guide covering bottle
 travel_cluster: "national_circuit"
 last_verified: "2026-10-24"
 author: "VietnamGuide Editorial Team"
-reading_time_minutes: 7
-word_count: 1484
+reading_time_minutes: 8
+word_count: 1572
 ---
 
 # Tap Water in Vietnam: Drinking, Ice, Brushing Teeth (2026)
@@ -106,3 +106,11 @@ In `98%` of city cafes, bars, and busy street stalls, yes. Look for cylindrical 
 
 ### What should I buy at a Vietnamese pharmacy if I get a mild stomach bug from water or food?
 Walk 5 minutes to **Long Châu** or **Pharmacity** and buy three over-the-counter staples: **`Oresol 245`** oral rehydration salts (`5,000 VND` / `$0.20 USD` per packet), **`Smecta`** (diosmectite clay sachets that coat the stomach lining and bind toxins, `5,000 VND` / `$0.20 USD` per sachet), and **`Enterogermina`** probiotic ampoules (`160,000 VND` / `$6.40 USD` for 20 vials). If fever exceeds `38.5°C` or symptoms persist past 24 hours, visit an international clinic such as **Family Medical Practice** or **Vinmec International Hospital** (`950,000–1,800,000 VND` / `$38.00–$72.00 USD` consultation).
+
+---
+
+## Related Vietnam Planning & Route Field Guides
+
+- [Vietnam Family Travel Guide (2026): Route & Kid Advice](/itineraries/vietnam-family-travel-guide/): Vietnam family travel guide: practical 10 to 14-day routes with kids, stroller access, child-friendly trains, meal tips, and 2026 safety logistics.
+- [Vietnam Travel Insurance & Health Guide: What to Cover](/plan/health-travel-insurance-vietnam/): Vietnam travel insurance and health guide: international hospital networks in Hanoi and HCMC, motorbike injury coverage rules, vaccines, and pharmacies.
+- [Vietnam Safety and Scams: Practical Risk Guide for Visitors](/plan/safety-scams-vietnam/): Vietnam safety and scams guide: practical advice on airport taxi fraud, fake Grab drivers, ATM skimming, street crossing safety, and emergency contacts.

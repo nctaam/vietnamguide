@@ -6,8 +6,8 @@ description: "Decide between Mekong Delta overnight vs day trip: choose a quick 
 travel_cluster: "mekong_delta"
 last_verified: "2026-11-02"
 author: "VietnamGuide Editorial Team"
-reading_time_minutes: 9
-word_count: 1899
+reading_time_minutes: 10
+word_count: 2002
 ---
 
 # Mekong Delta Overnight vs Day Trip: Which Is Worth It?
@@ -159,3 +159,11 @@ No. The historic wholesale floating market at Cái Bè (Tiền Giang) ceased reg
 
 ### When is the best season to visit the Mekong Delta and Trà Sư Forest?
 The delta operates year-round with temperatures between 26°C and 34°C. The **high-water season (*mùa nước nổi*) from September to November** fills Trà Sư Cajuput Forest with bright green duckweed carpets and brings yellow *điên điển* flowers to local markets, while the **dry season from December to April** provides sunny skies and zero afternoon rain showers.
+
+---
+
+## Related Mekong Delta Field Guides
+
+- [Mekong Delta Floating Markets: Cai Rang & Cai Be](/destinations/mekong-delta-floating-markets-guide/): Explore the Mekong Delta floating markets in 2026: compare Cai Rang and Cai Be, early morning boat tours, departure timing, VND costs, and local fruits.
+- [Mekong Delta Travel Guide: Day Trip, Overnight or Skip?](/destinations/mekong-delta-travel-guide/): Mekong Delta travel guide: floating markets in Can Tho, Ben Tre riverboat day trips, homestays in Vinh Long, Chau Doc border routes, and transfer logistics.
+- [Cu Chi Tunnels vs Mekong Delta Day Trip: Which Is Better?](/compare/cu-chi-tunnels-vs-mekong-delta-day-trip/): Cu Chi Tunnels vs Mekong Delta day trip: compare war history vs river scenery, travel times from Saigon, tour fatigue, speedboat options, and itinerary fit.

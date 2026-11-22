@@ -7,7 +7,7 @@ travel_cluster: "southern_delta"
 last_verified: "2026-10-22"
 author: "VietnamGuide Editorial Team"
 reading_time_minutes: 8
-word_count: 1548
+word_count: 1617
 ---
 
 # Saigon Night Markets: 5 Best Food & Street Markets (2026)
@@ -123,3 +123,10 @@ Bring **350,000 to 500,000 VND ($14 to $20 USD) in small cash notes** (10,000, 2
 
 ### Can I pay with Apple Pay, credit cards, or VietQR at Saigon night markets?
 Foreign Visa and Mastercard credit cards and Apple Pay are **not** accepted at open-air street food stalls in Ho Thi Ky, Ba Chieu, or Vinh Khanh, and only a handful of large sit-down souvenir booths at Ben Thanh Night Market operate POS card terminals (often adding a 3 percent surcharge). While nearly every Vietnamese street vendor displays a printed **VietQR bank transfer plaque**, scanning domestic bank QR codes requires either a Vietnamese bank account or an international cross-border QR wallet (such as Thai PromptPay, Cambodian Bakong, or specialized tourist QR apps like Moreta Pay or LocalPay). Carrying physical Vietnamese Dong banknotes remains the fastest, most reliable payment method at every night market in Ho Chi Minh City.
+
+---
+
+## Related Ho Chi Minh City & Southern Field Guides
+
+- [Saigon Street Food Guide: Night Markets & Must-Eats (2026)](/destinations/saigon-street-food-guide/): Complete Saigon street food guide: best broken rice (com tam), banh mi, District 4 seafood street, Ho Thi Ky night market, prices, and food safety advice.
+- [Saigon Airport to District 1: Bus 109, Grab & Taxis (2026)](/plan/saigon-airport-to-district-1/): Complete Saigon airport to District 1 guide: compare Bus 109, Grab car pickup at TCP garage, metered taxi fares, travel times, and airport scam traps.

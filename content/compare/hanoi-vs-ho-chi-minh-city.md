@@ -7,7 +7,7 @@ travel_cluster: "northern_triangle"
 last_verified: "2026-10-21"
 author: "VietnamGuide Editorial Team"
 reading_time_minutes: 15
-word_count: 2971
+word_count: 3067
 ---
 
 # Hanoi vs Ho Chi Minh City: Which Should You Visit First?
@@ -241,3 +241,11 @@ Yes. The Grab, Be, and Xanh SM (electric VinFast taxi) apps operate 24 hours a d
 Direct flights between Hanoi (HAN) and Ho Chi Minh City (SGN) take **2 hours and 10 minutes** in the air, with 40+ daily departures operated by Vietnam Airlines, Vietjet Air, and Bamboo Airways. One-way economy fares range from **1,100,000 VND ($44.00 USD) to 2,400,000 VND ($96.00 USD)** including a 20 kg checked bag.
 
 When factoring in the 60-minute drive to Noi Bai (28 km), 90-minute domestic check-in and security buffer, 130-minute flight, 30-minute baggage claim, and 35-minute drive from Tan Son Nhat (7 km) into District 1, budget **5.5 to 6 hours total door-to-door time**. Travelers preferring overland rail can board the Reunification Express (trains SE1, SE3, or SE5), which covers the 1,726 km route in **32 to 34 hours** for **1,150,000 VND ($46.00 USD) to 1,650,000 VND ($66.00 USD)** in a 4-berth air-conditioned soft sleeper cabin.
+
+---
+
+## Related Hanoi & Northern Delta Field Guides
+
+- [Vietnam in November: Weather, Autumn Leaves & Tips (2026)](/plan/vietnam-in-november/): Complete Vietnam in November guide: autumn weather in Hanoi, northern rice harvest, central rain patterns, southern dry season onset, and route design.
+- [10 Days in Vietnam: Best Route for First-Time Visitors](/itineraries/10-days-in-vietnam/): Plan 10 days in Vietnam with a balanced route order from Hanoi to Ho Chi Minh City, internal transfer timings, realistic night allocation, and daily costs.
+- [Vietnam Craft Beer Guide (2026): Breweries, Taps & Prices](/plan/vietnam-craft-beer-guide/): Vietnam craft beer guide: top artisanal breweries in Saigon, Hanoi, and Da Nang, signature tropical IPAs, taproom locations, and 2026 VND room prices.

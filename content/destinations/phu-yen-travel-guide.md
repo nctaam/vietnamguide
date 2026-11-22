@@ -7,7 +7,7 @@ travel_cluster: "coastal_islands"
 last_verified: "2026-10-20"
 author: "VietnamGuide Editorial Team"
 reading_time_minutes: 9
-word_count: 1768
+word_count: 1808
 ---
 
 # Phu Yen Travel Guide: Basalt Cliffs, Easternmost Sunrise, and Coastal Drives
@@ -352,3 +352,9 @@ The signature dish is *mắt cá ngừ đại dương* (braised ocean tuna eyes 
 |       | Evening (18:00)    | Sunset drinks at beach cafes along Doc Lap boulevard     |
 +-------+--------------------+----------------------------------------------------------+
 ```
+
+---
+
+## Related Coastal & Island Field Guides
+
+- [Where to Stay in Phu Yen (2026): Best Areas & Resorts](/destinations/where-to-stay-in-phu-yen/): Where to stay in Phu Yen: Tuy Hoa city beach hotels vs Xuan Dai bay luxury villas and Bai Xep seaside resorts with 2026 nightly hotel room rates in VND.

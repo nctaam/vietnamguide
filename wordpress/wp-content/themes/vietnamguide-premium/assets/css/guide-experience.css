@@ -846,7 +846,7 @@
 }
 
 .vg-guide-related a span {
-  color: var(--vg-gold);
+  color: var(--vg-gold-text, #7e5802);
   transition: transform 180ms cubic-bezier(0.23, 1, 0.32, 1);
 }
 

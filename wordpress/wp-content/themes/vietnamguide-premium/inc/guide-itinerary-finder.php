@@ -373,7 +373,7 @@ function vg_render_itinerary_finder_html(): string
         <div class="vg-finder-toolkit vg-tool-synergy-bar">
             <div class="vg-finder-tk-title"><?php esc_html_e('Connected Travel Planning Toolkits', 'vietnamguide-premium'); ?></div>
             <div class="vg-finder-tk-grid">
-                <a href="<?php echo esc_url(home_url('/costs/vietnam-travel-cost/')); ?>" class="vg-finder-tk-card vg-synergy-bridge">
+                <a href="<?php echo esc_url(home_url('/plan/vietnam-travel-cost/')); ?>" class="vg-finder-tk-card vg-synergy-bridge">
                     <span class="vg-finder-tk-badge"><?php esc_html_e('Budget', 'vietnamguide-premium'); ?></span>
                     <strong><?php esc_html_e('Trip Cost Calculator', 'vietnamguide-premium'); ?></strong>
                     <span><?php esc_html_e('Estimate 3–30 day spending by comfort tier &rarr;', 'vietnamguide-premium'); ?></span>

@@ -6,8 +6,8 @@ description: "Vietnam travel insurance and health guide: international hospital 
 travel_cluster: "national_circuit"
 last_verified: "2026-10-24"
 author: "VietnamGuide Editorial Team"
-reading_time_minutes: 11
-word_count: 2218
+reading_time_minutes: 12
+word_count: 2312
 ---
 
 # Vietnam Travel Insurance & Health Guide: What to Cover
@@ -123,3 +123,11 @@ Yes, in 95% of urban cafés and restaurants. Inspect the ice cubes inside your g
 
 ### Can I bring my own prescription medications into Vietnam?
 Yes, travelers may bring up to a **30-day personal supply** of standard prescription medications (and up to a 7-day to 10-day supply of strictly controlled psychotropic or narcotic pain medications) through customs at Noi Bai (28 km from Hanoi) or Tan Son Nhat (8 km from central HCMC), provided every medication remains in its **original pharmacy-labeled container** accompanied by a printed English doctor's prescription matching your passport name.
+
+---
+
+## Related Vietnam Planning & Route Field Guides
+
+- [Tap Water in Vietnam: Drinking, Ice, Brushing Teeth (2026)](/plan/tap-water-in-vietnam/): Can you drink tap water in Vietnam? Complete guide covering bottled water, street drink ice safety, brushing teeth, boiling, and avoiding stomach illness.
+- [Grab in Vietnam: App Setup, Payments, Airports & Tips (2026)](/plan/grab-in-vietnam-guide/): Complete guide to Grab in Vietnam: foreign card setup, cash payments, airport pickup zones in Hanoi and Saigon, GrabBike safety, and app alternatives.
+- [Vietnam in November: Weather, Autumn Leaves & Tips (2026)](/plan/vietnam-in-november/): Complete Vietnam in November guide: autumn weather in Hanoi, northern rice harvest, central rain patterns, southern dry season onset, and route design.

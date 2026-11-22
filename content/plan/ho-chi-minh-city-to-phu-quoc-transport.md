@@ -6,8 +6,8 @@ description: "Compare Ho Chi Minh City to Phu Quoc transport options: direct fli
 travel_cluster: "southern_delta"
 last_verified: "2026-11-01"
 author: "VietnamGuide Editorial Team"
-reading_time_minutes: 7
-word_count: 1473
+reading_time_minutes: 8
+word_count: 1510
 ---
 
 # Ho Chi Minh City to Phu Quoc: Flights, Sleeper Buses, and Fast Ferries (2026 Guide)
@@ -98,3 +98,9 @@ No. No commercial passenger ferry connects Ho Chi Minh City or Vung Tau directly
 
 ### What happens if afternoon monsoon winds cancel the Rach Gia or Ha Tien ferries?
 During the southwest monsoon season (June through October), Beaufort Force 6–7 gusts (40–55 km/h) occasionally trigger Kien Giang Maritime Port Authority suspension orders (cam tau). When sailings are halted, Superdong and Phu Quoc Express issue 100% ticket refunds or free rebooking onto the first cleared morning boat, so avoid scheduling tight same-day international flight connections out of Tan Son Nhat Airport.
+
+---
+
+## Related Ho Chi Minh City & Southern Field Guides
+
+- [Ho Chi Minh City to Mui Ne: Express Bus, Train & Car](/plan/ho-chi-minh-city-to-mui-ne-transport/): Compare Ho Chi Minh City to Mui Ne transport options via the new expressway: limousine buses, coastal trains to Phan Thiet, private cars, and travel times.

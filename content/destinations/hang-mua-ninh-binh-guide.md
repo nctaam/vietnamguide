@@ -6,8 +6,8 @@ description: "Complete Hang Mua Ninh Binh guide: how to climb 500 stone steps to
 travel_cluster: "ninh_binh"
 last_verified: "2026-10-20"
 author: "VietnamGuide Editorial Team"
-reading_time_minutes: 12
-word_count: 2499
+reading_time_minutes: 13
+word_count: 2530
 ---
 
 # Hang Mua Ninh Binh Guide: 486 Stone Steps, Ngoa Long Peak, and Timing
@@ -174,3 +174,9 @@ No. Unpermitted recreational drone flights are strictly prohibited across the Tr
 
 ### What should I wear and pack for the Hang Mua climb?
 Wear closed-toe running shoes, trail sneakers, or strapped hiking sandals with rubber lugs; never wear smooth flip-flops or heels on the polished limestone steps. Carry 500 ml to 1,000 ml of water per person (kiosks at the base sell 500 ml bottled water for 15,000 VND, or $0.60 USD, while vendors at step 350 charge 25,000 VND to 30,000 VND, or $1.00 to $1.20 USD, and fresh coconuts for 40,000 VND, or $1.60 USD). Pack SPF 50 sunscreen, a chin-strapped hat, and a 20,000 VND ($0.80 USD) plastic poncho in case of sudden 30 minutes afternoon showers.
+
+---
+
+## Related Ninh Binh & Karst Valley Field Guides
+
+- [Ninh Binh Without Rushing: Boat, Base, Transfer](/plan/ninh-binh-without-rushing/): Plan Ninh Binh without rushing: choose one long day, one protected night, or two slower nights by boat route, base, transfer pressure, and weather.

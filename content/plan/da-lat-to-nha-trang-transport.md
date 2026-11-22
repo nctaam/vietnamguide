@@ -6,8 +6,8 @@ description: "Complete Da Lat to Nha Trang transport guide: compare 9-seat VIP l
 travel_cluster: "central_highlands"
 last_verified: "2026-10-20"
 author: "VietnamGuide Editorial Team"
-reading_time_minutes: 9
-word_count: 1858
+reading_time_minutes: 10
+word_count: 1963
 ---
 
 # Da Lat to Nha Trang Transport: Scenic Mountain Pass, Limousine, and Bus Route
@@ -189,3 +189,11 @@ Most 9-seater limousine operators permit one medium suitcase or backpack (up to 
 
 ### Can I book a direct transfer from Da Lat to Cam Ranh Airport?
 Yes. Several private car hire companies and select limousine shuttles provide direct door-to-door transit from Da Lat hotels to Cam Ranh Airport (CXR). Private 4-seat sedans cost approximately 1,600,000–1,900,000 VND ($64.00–$76.00 USD), with a transit time of roughly 3.5 hours via Khanh Le Pass and the coastal bypass highway.
+
+---
+
+## Related Central Highlands Field Guides
+
+- [Da Lat to Pleiku Transport (2026): Sleeper Bus Guide](/plan/da-lat-to-pleiku-transport/): Overnight sleeper buses and limousine vans covering 380 km (8-9 hours, 320,000-380,000 VND) via QL27 and QL14. 2026 timetables and booking local advice.
+- [Nha Trang to Da Lat Transport (2026): Bus vs Van](/plan/nha-trang-to-da-lat-transport/): Khanh Le Pass mountain climb across 135 km: limousine vans (3.5 hours, 190,000-230,000 VND) vs coaches. 2026 departure times and pass weather advice.
+- [Buon Ma Thuot to Nha Trang Transport (2026): Bus & Car](/plan/buon-ma-thuot-to-nha-trang-transport/): Highway 26 transit across 185 km: limousine vans (3.5-4 hours, 200,000 VND) vs local buses over Phoenix Pass. 2026 timetables and departure points.

@@ -7,7 +7,7 @@ travel_cluster: "phong_nha_caves"
 last_verified: "2026-10-20"
 author: "VietnamGuide Editorial Team"
 reading_time_minutes: 9
-word_count: 1788
+word_count: 1824
 ---
 
 # Dong Hoi to Phong Nha Transport: Bus, Taxi, and Motorbike Route
@@ -184,3 +184,9 @@ Dong Hoi Railway Station maintains a basic luggage storage service at the baggag
 
 ### Is the road from Dong Hoi to Phong Nha difficult to drive on a scooter?
 The road is straightforward, fully paved, and lacks steep mountain grades. The first 15 km along National Route 1A carries moderate truck and intercity coach traffic, requiring focused defensive driving. Once you turn westward onto Provincial Road DT562 at Hoan Lao, traffic thins considerably and the route becomes a peaceful, enjoyable ride through rolling countryside.
+
+---
+
+## Related Phong Nha & North-Central Field Guides
+
+- [Where to Stay in Dong Hoi (2026): Nhat Le Beach & Hotels](/destinations/where-to-stay-in-dong-hoi/): Nhat Le beachfront resorts vs Dong Hoi railway station transit hotels 45 km south of Phong Nha. 2026 nightly rates, cave shuttles, and area advice.

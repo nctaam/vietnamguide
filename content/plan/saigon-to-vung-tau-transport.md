@@ -7,7 +7,7 @@ travel_cluster: "southern_delta"
 last_verified: "2026-11-01"
 author: "VietnamGuide Editorial Team"
 reading_time_minutes: 7
-word_count: 1439
+word_count: 1477
 ---
 
 # Saigon to Vung Tau Transport (2026): Ferry vs Limousine
@@ -110,3 +110,9 @@ One standard `20–25 kg` suitcase per passenger is free on Greenlines DP vessel
 
 ### How do I travel from Tan Son Nhat Airport (SGN) to Vung Tau after 21:30?
 Airport limousine vans (Toan Thang, Anh Quoc, Huy Hoang) stop running between `21:30` and `22:00`. For flights landing after `22:00`, pre-book a private 4-seat sedan (`1,150,000 VND` / `$46.00 USD`) for the `1 hour 50 minute` night drive down `CT01` and `QL51`.
+
+---
+
+## Related Ho Chi Minh City & Southern Field Guides
+
+- [Where to Stay in Vung Tau (2026): Best Beaches & Hotels](/destinations/where-to-stay-in-vung-tau/): Where to stay in Vung Tau: Back Beach resort towers vs Front Beach sunset hotels and quiet Bai Dau hillside villas with 2026 room rates and beach advice.
