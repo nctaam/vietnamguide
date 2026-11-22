@@ -3218,6 +3218,14 @@ function vg_extract_authored_faq_items_from_html(string $html): array
         return [];
     }
 
+    // Strip injected interactive/journey widget sections so their <h3> headings or telemetry
+    // <details> elements are never misclassified as authored FAQ questions.
+    $cleanHtml = (string) preg_replace(
+        '/<section\b[^>]*class="[^"]*\bvg-(?:contextual-journey|photo-dispatch|curated-howto|cost-calc|visa-checker|season-matrix|airport-nav|itinerary-finder|packing-checklist)\b[^"]*"[^>]*>[\s\S]*?<\/section>/i',
+        '',
+        $html
+    );
+
     $strip = static function (string $fragment): string {
         $cleaned = preg_replace('/<(?:br\s*\/?|\/p|\/li|\/div)>/i', ' ', $fragment);
         $plain = function_exists('wp_strip_all_tags')
@@ -3233,13 +3241,13 @@ function vg_extract_authored_faq_items_from_html(string $html): array
 
     $qas = [];
 
-    // Strategy 1: Authored H2 FAQ section containing H3 questions
+    // Strategy 1: Authored H2 FAQ section containing H3 questions or wp-block-details/details summaries
     $h2Open = '<' . '[hH]2\b[^>]*>';
     $h2Close = '<\/' . '[hH]2>';
     $h2Boundary = '<' . '[hH]2\b';
-    if (preg_match('/' . $h2Open . '([^<]*(?:Frequently Asked Questions|FAQ|Common Questions)[^<]*)' . $h2Close . '([\s\S]*?)(?=' . $h2Boundary . '|\z)/i', $html, $faqMatch)) {
+    if (preg_match('/' . $h2Open . '([^<]*(?:Frequently Asked Questions|FAQ|Common Questions)[^<]*)' . $h2Close . '([\s\S]*?)(?=' . $h2Boundary . '|\z)/i', $cleanHtml, $faqMatch)) {
         $faqBody = (string) $faqMatch[2];
-        if (preg_match_all('/<h3\b[^>]*>([\s\S]*?)<\/h3>([\s\S]*?)(?=<h3\b|<hr\b|\z)/i', $faqBody, $h3Matches, PREG_SET_ORDER)) {
+        if (preg_match_all('/<h3\b[^>]*>([\s\S]*?)<\/h3>([\s\S]*?)(?=<h3\b|<hr\b|<section\b|\z)/i', $faqBody, $h3Matches, PREG_SET_ORDER)) {
             foreach ($h3Matches as $pair) {
                 $q = $strip((string) $pair[1]);
                 $a = $strip((string) $pair[2]);
@@ -3251,11 +3259,26 @@ function vg_extract_authored_faq_items_from_html(string $html): array
                 }
             }
         }
+        // Strategy 1b: Legacy DB FAQ blocks written with <div class="wp-block-details"><summary>Q</summary><p>A</p></div>
+        if (empty($qas) && stripos($faqBody, '<summary') !== false) {
+            if (preg_match_all('/<(?:div\b[^>]*wp-block-details[^>]*|details\b[^>]*)>\s*<summary[^>]*>([\s\S]*?)<\/summary>([\s\S]*?)<\/(?:div|details)>/i', $faqBody, $detMatches, PREG_SET_ORDER)) {
+                foreach ($detMatches as $pair) {
+                    $q = $strip((string) $pair[1]);
+                    $a = $strip((string) $pair[2]);
+                    if ($strLen($q) >= 10 && $strLen($a) >= 20) {
+                        $qas[] = ['q' => $q, 'a' => $a];
+                        if (count($qas) >= 10) {
+                            break;
+                        }
+                    }
+                }
+            }
+        }
     }
 
     // Strategy 2: Native <details><summary> Q&A fallback (excluding non-FAQ telemetry/ledger disclosures)
-    if (empty($qas) && stripos($html, '<details') !== false) {
-        if (preg_match_all('/<details(?![^>]*(?:vg-ref-ledger|vg-dispatch-telemetry|vg-checklist-field-specs))[^>]*>\s*<summary[^>]*>([\s\S]*?)<\/summary>([\s\S]*?)<\/details>/i', $html, $dMatches, PREG_SET_ORDER)) {
+    if (empty($qas) && stripos($cleanHtml, '<details') !== false) {
+        if (preg_match_all('/<details(?![^>]*(?:vg-ref-ledger|vg-dispatch-telemetry|vg-checklist-field-specs))[^>]*>\s*<summary[^>]*>([\s\S]*?)<\/summary>([\s\S]*?)<\/details>/i', $cleanHtml, $dMatches, PREG_SET_ORDER)) {
             foreach ($dMatches as $pair) {
                 $q = $strip((string) $pair[1]);
                 $a = $strip((string) $pair[2]);
@@ -3273,18 +3296,78 @@ function vg_extract_authored_faq_items_from_html(string $html): array
 }
 
 /**
+ * Extracts verified Q&A pairs from the companion repository Markdown guide
+ * (/wp-content/content/<category>/<slug>.md) when a legacy DB page lacks an authored FAQ block.
+ * Cached per request so visible accordion markup and FAQPage JSON-LD share 100% identical items.
+ *
+ * @return array<int, array{q:string, a:string}>
+ */
+function vg_get_repository_markdown_faq_items_by_uri(string $uri_path): array
+{
+    static $cache = [];
+
+    $normalized = strtolower(trim($uri_path, '/'));
+    if ($normalized === '' || ! preg_match('#^(destinations|itineraries|compare|plan|recommend)/[a-z0-9-]+$#', $normalized)) {
+        return [];
+    }
+
+    if (array_key_exists($normalized, $cache)) {
+        return $cache[$normalized];
+    }
+
+    $cache[$normalized] = [];
+    if (! function_exists('vg_try_load_repository_markdown_guide')) {
+        return [];
+    }
+
+    $targetSlug = basename($normalized);
+    $targetPost = null;
+    if (function_exists('get_page_by_path')) {
+        $candidate = get_page_by_path($normalized);
+        if ($candidate instanceof WP_Post) {
+            $targetPost = $candidate;
+        }
+    }
+    if ($targetPost === null && function_exists('get_queried_object')) {
+        $candidate = get_queried_object();
+        if ($candidate instanceof WP_Post && strtolower((string) $candidate->post_name) === $targetSlug) {
+            $targetPost = $candidate;
+        }
+    }
+    if ($targetPost === null && function_exists('get_post')) {
+        $candidate = get_post();
+        if ($candidate instanceof WP_Post && strtolower((string) $candidate->post_name) === $targetSlug) {
+            $targetPost = $candidate;
+        }
+    }
+    if ($targetPost === null && class_exists('WP_Post')) {
+        $synthetic = new WP_Post(new stdClass());
+        $synthetic->post_name = $targetSlug;
+        $targetPost = $synthetic;
+    }
+
+    if (! ($targetPost instanceof WP_Post)) {
+        return [];
+    }
+
+    $compiledHtml = vg_try_load_repository_markdown_guide($targetPost);
+    if ($compiledHtml === '') {
+        return [];
+    }
+
+    $cache[$normalized] = vg_extract_authored_faq_items_from_html($compiledHtml);
+    return $cache[$normalized];
+}
+
+/**
  * Renders visible HTML5 <details>/<summary> FAQ accordion matching FAQPage JSON-LD schema.
  * Strictly uses level-3 heading to preserve the Zero-H2 TOC invariant across inc/*.php.
  * Automatically suppresses duplicate accordion output when the article body already contains
- * an authored visible FAQ section (Single Source of Truth).
+ * a complete authored visible FAQ section (>= 2 Q&As), and falls back to companion repository
+ * Markdown Q&As when a legacy DB page lacks an authored FAQ block (100% visible-to-schema parity).
  */
 function vg_render_curated_faq_accordion(string $uri_path, string $existing_html = ''): string
 {
-    $items = vg_get_curated_faq_items($uri_path);
-    if (empty($items)) {
-        return vg_render_curated_howto_steps($uri_path, $existing_html);
-    }
-
     if ($existing_html !== '' && stripos($existing_html, 'vg-curated-faq') !== false) {
         return '';
     }
@@ -3293,7 +3376,16 @@ function vg_render_curated_faq_accordion(string $uri_path, string $existing_html
 
     // Single Source of Truth: if the article already renders an authored visible FAQ section,
     // do not append a second duplicate FAQ accordion below the article.
-    if ($existing_html !== '' && ! empty(vg_extract_authored_faq_items_from_html($existing_html))) {
+    $authored_items = $existing_html !== '' ? vg_extract_authored_faq_items_from_html($existing_html) : [];
+    if (! empty($authored_items)) {
+        return $howto_html;
+    }
+
+    $items = vg_get_curated_faq_items($uri_path);
+    if (empty($items)) {
+        $items = vg_get_repository_markdown_faq_items_by_uri($uri_path);
+    }
+    if (empty($items)) {
         return $howto_html;
     }
 
@@ -3407,10 +3499,6 @@ function vg_inject_curated_faq_on_non_guide_pages(string $content): string
         return $content;
     }
 
-    if (strpos($content, 'vg-guide-hero') !== false) {
-        return $content;
-    }
-
     if (! empty($GLOBALS['vg_rendering_guide_shell'])) {
         return $content;
     }
@@ -3476,22 +3564,37 @@ function vg_get_page_faq_schema(string $uri_path, string $current_url): ?array
     if ($post instanceof WP_Post) {
         $authored_html = is_string($post->post_content) ? $post->post_content : '';
         $extracted = vg_extract_authored_faq_items_from_html($authored_html);
-        if (empty($extracted) && function_exists('vg_try_load_repository_markdown_guide')) {
-            $repo_html = vg_try_load_repository_markdown_guide($post);
-            if ($repo_html !== '') {
-                $extracted = vg_extract_authored_faq_items_from_html($repo_html);
-            }
-        }
         if (! empty($extracted)) {
             $raw_qas = $extracted;
+        } else {
+            // Keep 100% visible-to-schema parity with vg_render_curated_faq_accordion():
+            // legacy DB pages with 0 authored Q&As use curated or companion Markdown FAQs.
+            $supplement = vg_get_curated_faq_items($uri_path);
+            if (empty($supplement)) {
+                $supplement = vg_get_repository_markdown_faq_items_by_uri($uri_path);
+            }
+            if (empty($supplement) && function_exists('vg_try_load_repository_markdown_guide')) {
+                $repo_html = vg_try_load_repository_markdown_guide($post);
+                if ($repo_html !== '') {
+                    $supplement = vg_extract_authored_faq_items_from_html($repo_html);
+                }
+            }
+            if (! empty($supplement)) {
+                $raw_qas = $supplement;
+            }
         }
     }
 
-    // 2. Curated fallback for hub pages, legacy DB pages without an authored FAQ H2, or headless schema checks
+    // 2. Curated / companion Markdown fallback for hub pages or headless schema checks
     if ($raw_qas === null) {
         $curated_qas = vg_get_curated_faq_items($uri_path);
         if (! empty($curated_qas)) {
             $raw_qas = $curated_qas;
+        } else {
+            $repo_qas = vg_get_repository_markdown_faq_items_by_uri($uri_path);
+            if (! empty($repo_qas)) {
+                $raw_qas = $repo_qas;
+            }
         }
     }
 

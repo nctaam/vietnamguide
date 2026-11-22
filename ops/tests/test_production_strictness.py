@@ -480,6 +480,98 @@ class TestProductionStrictness(unittest.TestCase):
         guide_content_code = (THEME_DIR / "inc" / "guide-content.php").read_text(encoding="utf-8")
         self.assertNotIn("/\\R/", guide_content_code)
 
+    def test_stage218_visible_to_schema_faq_parity_for_legacy_db_pages_and_zero_cost_hops(self):
+        """Legacy DB pages with <2 authored Q&As must render companion Markdown FAQs visibly in exact 1:1 parity with JSON-LD, and guide-cost-calculator.php must have zero /costs/ redirect hops."""
+        calc_code = (THEME_DIR / "inc" / "guide-cost-calculator.php").read_text(encoding="utf-8")
+        for legacy_hop in (
+            "/costs/ha-giang-loop-cost-budget/",
+            "/costs/da-nang-hoi-an-budget/",
+            "/costs/hanoi-ninh-binh-ha-long-budget/",
+            "/costs/10-day-vietnam-trip-cost/",
+            "/costs/vietnam-travel-cost/",
+        ):
+            self.assertNotIn(
+                f"home_url('{legacy_hop}')",
+                calc_code,
+                f"Legacy 301 redirect hop still present in guide-cost-calculator.php: {legacy_hop}",
+            )
+        homepage_data_code = (THEME_DIR / "inc" / "homepage-data.php").read_text(encoding="utf-8")
+        self.assertNotIn("vg_home_url('costs')", homepage_data_code)
+        self.assertIn("vg_home_url('plan/vietnam-travel-cost')", homepage_data_code)
+
+        php_bin = shutil.which("php")
+        if not php_bin:
+            self.skipTest("PHP CLI not available")
+
+        seo_php = (THEME_DIR / "inc" / "guide-seo.php").as_posix()
+        content_php = (THEME_DIR / "inc" / "guide-content.php").as_posix()
+        wp_root = (REPO_ROOT / "wordpress").as_posix()
+        php_check = f"""
+        define('ABSPATH', '{wp_root}/');
+        class WP_Post {{
+            public int $ID = 104;
+            public string $post_type = 'page';
+            public string $post_name = 'north-central-south-vietnam';
+            public string $post_title = 'North vs Central vs South Vietnam';
+            public string $post_content = '<section class="vg-guide-hero"><h1>North vs Central vs South Vietnam</h1></section><h2>Overview</h2><p>Legacy DB body with zero authored FAQ questions and no curated PHP entry.</p>';
+        }}
+        function esc_html($s) {{ return htmlspecialchars((string)$s, ENT_QUOTES, 'UTF-8'); }}
+        function esc_attr($s) {{ return htmlspecialchars((string)$s, ENT_QUOTES, 'UTF-8'); }}
+        function esc_url($s) {{ return (string)$s; }}
+        function __($s, $d = '') {{ return (string)$s; }}
+        function apply_filters($k, $v) {{ return $v; }}
+        function add_action(...$a) {{}}
+        function add_filter(...$a) {{}}
+        function add_shortcode(...$a) {{}}
+        function wp_strip_all_tags($s) {{ return strip_tags((string)$s); }}
+        function get_queried_object() {{ return $GLOBALS['__test_post']; }}
+        function get_post($id = null) {{ return $GLOBALS['__test_post']; }}
+        function get_page_uri($post = null) {{ return 'compare/north-central-south-vietnam'; }}
+        function get_template_directory() {{ return '{THEME_DIR.as_posix()}'; }}
+        function home_url($p = '') {{ return 'https://vietnamguide.net' . $p; }}
+        require_once '{content_php}';
+        require_once '{seo_php}';
+
+        $GLOBALS['__test_post'] = new WP_Post();
+        $uri = '/compare/north-central-south-vietnam/';
+        $curated_count = count(vg_get_curated_faq_items($uri));
+        $visible_html = vg_render_curated_faq_accordion($uri, $GLOBALS['__test_post']->post_content);
+        $injected_html = vg_inject_curated_faq_on_non_guide_pages($GLOBALS['__test_post']->post_content);
+        $schema = vg_get_page_faq_schema($uri, 'https://vietnamguide.net' . $uri);
+        $visible_qas = vg_extract_authored_faq_items_from_html($visible_html);
+        $schema_questions = array_map(static fn($x) => $x['name'], $schema['mainEntity'] ?? []);
+        $visible_questions = array_map(static fn($x) => $x['q'], $visible_qas);
+
+        // Also test legacy wp-block-details FAQ extraction and ensure contextual-journey <h3> is never misclassified as an FAQ question
+        $details_html = '<h2>Frequently asked questions</h2>'
+            . '<div class="wp-block-details"><summary><strong>Can I visit both Ly Son and Cham Islands on one trip?</strong></summary>'
+            . '<p>Only if you have three weeks or more dedicated to Central Vietnam travel.</p></div>'
+            . '<section class="vg-contextual-journey"><h3 class="vg-contextual-journey__title">Connected Destinations along the Central Corridor</h3><p>Explore Da Nang and Hoi An next.</p></section>';
+        $details_qas = vg_extract_authored_faq_items_from_html($details_html);
+
+        echo json_encode([
+            'curated_count' => $curated_count,
+            'visible_has_section' => strpos($visible_html, 'vg-curated-faq') !== false,
+            'injected_non_guide_has_section' => strpos($injected_html, 'vg-curated-faq') !== false,
+            'visible_count' => count($visible_questions),
+            'schema_count' => count($schema_questions),
+            'exact_parity' => ($visible_questions === $schema_questions),
+            'details_qa_count' => count($details_qas),
+            'details_q0' => $details_qas[0]['q'] ?? '',
+        ]);
+        """
+        proc = subprocess.run([php_bin, "-r", php_check], capture_output=True, text=True, timeout=20)
+        self.assertEqual(proc.returncode, 0, f"PHP Stage 218 runtime check failed:\n{proc.stdout}\n{proc.stderr}")
+        data = json.loads(proc.stdout)
+        self.assertEqual(data["curated_count"], 0, "Fixture must exercise the companion Markdown fallback (not curated PHP array)")
+        self.assertTrue(data["visible_has_section"])
+        self.assertTrue(data["injected_non_guide_has_section"], "Fallback content-page.php pages with .vg-guide-hero must also receive visible FAQ accordion")
+        self.assertGreaterEqual(data["visible_count"], 2)
+        self.assertEqual(data["visible_count"], data["schema_count"])
+        self.assertTrue(data["exact_parity"], "Visible accordion questions and FAQPage JSON-LD mainEntity must match 1:1")
+        self.assertEqual(data["details_qa_count"], 1, "Must extract wp-block-details summary Q&A while ignoring vg-contextual-journey <h3>")
+        self.assertEqual(data["details_q0"], "Can I visit both Ly Son and Cham Islands on one trip?")
+
 
 if __name__ == "__main__":
     unittest.main()

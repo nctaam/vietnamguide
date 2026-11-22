@@ -755,8 +755,14 @@ function vg_prepare_guide_content(WP_Post $post): ?array
         return null;
     }
 
-    $heroHtml = apply_filters('the_content', $split['hero_source']);
-    $bodyHtml = apply_filters('the_content', $split['body_source']);
+    $prevRenderingGuideShell = ! empty($GLOBALS['vg_rendering_guide_shell']);
+    $GLOBALS['vg_rendering_guide_shell'] = true;
+    try {
+        $heroHtml = apply_filters('the_content', $split['hero_source']);
+        $bodyHtml = apply_filters('the_content', $split['body_source']);
+    } finally {
+        $GLOBALS['vg_rendering_guide_shell'] = $prevRenderingGuideShell;
+    }
     $heroStats = vg_inspect_guide_html((string) $heroHtml);
     $bodyStats = vg_inspect_guide_html((string) $bodyHtml);
     if (

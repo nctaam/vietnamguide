@@ -423,7 +423,7 @@ function vg_render_cost_calculator_html(): string
                 style: 'backpacker',
                 party: 1,
                 flights: 0,
-                guideUrl: '<?php echo esc_url(home_url('/costs/ha-giang-loop-cost-budget/')); ?>',
+                guideUrl: '<?php echo esc_url(home_url('/destinations/ha-giang-loop-planning-guide/')); ?>',
                 items: [
                     { name: 'VIP Sleeper Bus (Hanoi - Ha Giang Round-trip)', usd: 28 },
                     { name: 'Motorbike Rental (4 days semi-auto)', usd: 36, alt: 'Easy Rider: ~$180' },
@@ -438,7 +438,7 @@ function vg_render_cost_calculator_html(): string
                 style: 'midrange',
                 party: 2,
                 flights: 2,
-                guideUrl: '<?php echo esc_url(home_url('/costs/da-nang-hoi-an-budget/')); ?>',
+                guideUrl: '<?php echo esc_url(home_url('/itineraries/central-vietnam-itinerary/')); ?>',
                 items: [
                     { name: 'Round-trip Domestic Flights (HAN/SGN - DAD)', usd: 110 },
                     { name: 'Boutique Hotels with Pool (4 nights)', usd: 180 },
@@ -453,7 +453,7 @@ function vg_render_cost_calculator_html(): string
                 style: 'midrange',
                 party: 2,
                 flights: 0,
-                guideUrl: '<?php echo esc_url(home_url('/costs/hanoi-ninh-binh-ha-long-budget/')); ?>',
+                guideUrl: '<?php echo esc_url(home_url('/itineraries/northeast-vietnam-itinerary/')); ?>',
                 items: [
                     { name: 'Limousine Vans (Hanoi - Ninh Binh - Bay)', usd: 38 },
                     { name: 'Trang An Boat & Hang Mua Passes', usd: 15 },
@@ -1279,7 +1279,7 @@ function vg_render_route_budget_widget(array $args = []): string
             'name'       => __('Ha Giang Loop 4D3N Budget', 'vietnamguide-premium'),
             'badge'      => __('Mountain Motorbike Route', 'vietnamguide-premium'),
             'days'       => 4,
-            'guide_url'  => home_url('/costs/ha-giang-loop-cost-budget/'),
+            'guide_url'  => home_url('/destinations/ha-giang-loop-planning-guide/'),
             'modes'      => [
                 'mode_a' => [
                     'key'        => 'self_drive',
@@ -1326,7 +1326,7 @@ function vg_render_route_budget_widget(array $args = []): string
             'name'       => __('Da Nang & Hoi An 5D4N Budget', 'vietnamguide-premium'),
             'badge'      => __('Heritage & Coastal Route', 'vietnamguide-premium'),
             'days'       => 5,
-            'guide_url'  => home_url('/costs/da-nang-hoi-an-budget/'),
+            'guide_url'  => home_url('/itineraries/central-vietnam-itinerary/'),
             'modes'      => [
                 'mode_a' => [
                     'key'        => 'backpacker',
@@ -1373,7 +1373,7 @@ function vg_render_route_budget_widget(array $args = []): string
             'name'       => __('Hanoi, Ninh Binh & Ha Long 4D3N Budget', 'vietnamguide-premium'),
             'badge'      => __('Northern Landscapes & Cruise', 'vietnamguide-premium'),
             'days'       => 4,
-            'guide_url'  => home_url('/costs/hanoi-ninh-binh-ha-long-budget/'),
+            'guide_url'  => home_url('/itineraries/northeast-vietnam-itinerary/'),
             'modes'      => [
                 'mode_a' => [
                     'key'        => 'day_cruise',
@@ -1419,7 +1419,7 @@ function vg_render_route_budget_widget(array $args = []): string
             'name'       => __('Classic 10-Day North-to-South Budget', 'vietnamguide-premium'),
             'badge'      => __('Hanoi, Ha Long, Hoi An & HCMC', 'vietnamguide-premium'),
             'days'       => 10,
-            'guide_url'  => home_url('/costs/10-day-vietnam-trip-cost/'),
+            'guide_url'  => home_url('/itineraries/10-days-in-vietnam/'),
             'modes'      => [
                 'mode_a' => [
                     'key'        => 'backpacker',

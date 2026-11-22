@@ -9,7 +9,7 @@ function vg_homepage_data(): array
             ['label' => 'Destinations', 'url' => vg_home_url('destinations')],
             ['label' => 'Itineraries', 'url' => vg_home_url('itineraries')],
             ['label' => 'Compare', 'url' => vg_home_url('compare')],
-            ['label' => 'Costs', 'url' => vg_home_url('costs')],
+            ['label' => 'Costs', 'url' => vg_home_url('plan/vietnam-travel-cost')],
         ],
         'trip_lengths' => [
             ['label' => '7 days', 'url' => vg_home_url('itineraries/7-days-in-vietnam')],
