@@ -419,9 +419,17 @@ function vg_render_inline_markdown_fallback(string $text): string
         $escaped
     );
 
-    $escaped = (string) preg_replace('/\*\*\*([^\n*]+?)\*\*\*/', '<strong><em>$1</em></strong>', $escaped);
-    $escaped = (string) preg_replace('/\*\*((?:[^*]|\*(?!\*))+)\*\*/', '<strong>$1</strong>', $escaped);
-    $escaped = (string) preg_replace('/(?<!\*)\*([^*\n]+)\*(?!\*)/', '<em>$1</em>', $escaped);
+    $patterns = [
+        '/\*\*\*([^\n*]+?)\*\*\*/'               => '<strong><em>$1</em></strong>',
+        '/\*\*([^*]+(?:\*(?!\*)[^*]*)*)\*\*/'    => '<strong>$1</strong>',
+        '/(?<!\*)\*([^*\n]+)\*(?!\*)/'           => '<em>$1</em>',
+    ];
+    foreach ($patterns as $pattern => $replacement) {
+        $replaced = preg_replace($pattern, $replacement, $escaped);
+        if (is_string($replaced)) {
+            $escaped = $replaced;
+        }
+    }
 
     $escaped = str_replace("\x00VG_BR\x00", '<br>', $escaped);
     if ($codeSpans !== []) {
@@ -499,8 +507,8 @@ function vg_try_load_repository_markdown_guide(WP_Post $post): string
 
     $frontmatter = [];
     $body = $raw;
-    if (preg_match('/\A---\R([\s\S]*?)\R---\R?([\s\S]*)\z/', $raw, $fmMatch)) {
-        $fmLines = preg_split('/\R/', (string) $fmMatch[1]) ?: [];
+    if (preg_match('/\A---(?:\r\n|\r|\n)([\s\S]*?)(?:\r\n|\r|\n)---(?:\r\n|\r|\n)?([\s\S]*)\z/', $raw, $fmMatch)) {
+        $fmLines = preg_split('/\r\n|\r|\n/', (string) $fmMatch[1]) ?: [];
         foreach ($fmLines as $fmLine) {
             if (preg_match('/^\s*([a-zA-Z0-9_]+)\s*:\s*(.+?)\s*$/', (string) $fmLine, $kv)) {
                 $val = trim((string) $kv[2]);
@@ -516,7 +524,7 @@ function vg_try_load_repository_markdown_guide(WP_Post $post): string
         $body = (string) $fmMatch[2];
     }
 
-    $lines = preg_split('/\R/', $body) ?: [];
+    $lines = preg_split('/\r\n|\r|\n/', $body) ?: [];
     $extractedH1 = null;
     $htmlBlocks = [];
     $lineCount = count($lines);

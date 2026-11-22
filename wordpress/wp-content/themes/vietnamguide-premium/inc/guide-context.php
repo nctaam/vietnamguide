@@ -393,6 +393,31 @@ function vg_is_valid_guide_context(array $context): bool
     return true;
 }
 
+function vg_guide_context_cache_key(WP_Post $post): string
+{
+    $eeatUpdated = function_exists('vg_eeat_get_field')
+        ? (string) vg_eeat_get_field($post->ID, 'last_meaningful_update')
+        : '';
+    $eeatSources = function_exists('vg_eeat_get_field')
+        ? (string) vg_eeat_get_field($post->ID, 'sources_checked')
+        : '';
+    $metaReviewed = (string) get_post_meta($post->ID, '_vg_reviewed_at', true);
+    $permalink = (string) get_permalink($post);
+    $fingerprint = implode('|', [
+        (string) $post->ID,
+        (string) ($post->post_title ?? ''),
+        (string) ($post->post_name ?? ''),
+        (string) ($post->post_modified_gmt ?? ''),
+        $permalink,
+        $eeatUpdated,
+        $eeatSources,
+        $metaReviewed,
+        (string) $post->post_content,
+    ]);
+
+    return 'vg_ctx_v1_' . $post->ID . '_' . md5($fingerprint);
+}
+
 function vg_build_guide_context(WP_Post $post): ?array
 {
     if ($post->post_password !== '' || post_password_required($post)) {
@@ -405,26 +430,7 @@ function vg_build_guide_context(WP_Post $post): ?array
 
     $cacheKey = '';
     if (function_exists('wp_cache_get') && function_exists('wp_cache_set')) {
-        $eeatUpdated = function_exists('vg_eeat_get_field')
-            ? (string) vg_eeat_get_field($post->ID, 'last_meaningful_update')
-            : '';
-        $eeatSources = function_exists('vg_eeat_get_field')
-            ? (string) vg_eeat_get_field($post->ID, 'sources_checked')
-            : '';
-        $metaReviewed = (string) get_post_meta($post->ID, '_vg_reviewed_at', true);
-        $permalink = (string) get_permalink($post);
-        $fingerprint = implode('|', [
-            (string) $post->ID,
-            (string) ($post->post_title ?? ''),
-            (string) ($post->post_name ?? ''),
-            (string) ($post->post_modified_gmt ?? ''),
-            $permalink,
-            $eeatUpdated,
-            $eeatSources,
-            $metaReviewed,
-            (string) $post->post_content,
-        ]);
-        $cacheKey = 'vg_ctx_v1_' . $post->ID . '_' . md5($fingerprint);
+        $cacheKey = vg_guide_context_cache_key($post);
         $cached = wp_cache_get($cacheKey, 'vietnamguide_context');
         if (is_array($cached) && vg_is_valid_guide_context($cached)) {
             return $cached;

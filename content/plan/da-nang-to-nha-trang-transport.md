@@ -6,8 +6,8 @@ description: "How to travel from Da Nang to Nha Trang: Reunification Express sle
 travel_cluster: "central_heritage"
 last_verified: "2026-11-01"
 author: "VietnamGuide Editorial Team"
-reading_time_minutes: 7
-word_count: 1472
+reading_time_minutes: 8
+word_count: 1672
 ---
 
 Covering 530 km (329 miles) along Vietnam's South Central Coast, the corridor between Da Nang and Nha Trang in Khanh Hoa Province links two of the country's largest beachfront hubs. Three transit modes compete across this distance in 2026. You can fly nonstop in 1 hour 05 minutes, ride the Reunification Express railway for 9.5 to 10.5 hours past the granite headlands of Phu Yen, or book an overnight highway sleeper coach for 9.5 to 11 hours down the CT01 and QL1A trunk roads.
@@ -74,7 +74,7 @@ Do not confuse Cam Ranh Airport with downtown Nha Trang. The passenger terminal 
 2. **Grab or Fixed-Rate Airport Taxi:** Pre-booking a 4-seat Grab car on your phone or buying a fixed-rate voucher at the Mai Linh, Vinasun, or Sun Taxi counter inside the Arrivals hall costs 320,000 to 400,000 VND ($12.80 to $16.00 USD) inclusive of the 15,000 VND airport toll gate.
 3. **Bai Dai Resort Strip:** If your beachfront resort is along Cam Ranh Long Beach (Bai Dai—including Alma, Radisson Blu, The Anam, or Mövenpick), you are only 6 to 12 km (10 to 15 minutes, 120,000–180,000 VND / $4.80–$7.20 USD by metered cab) north of CXR Terminal T1.
 
-## Option 3: Overnight Sleeper Buses & Frequently Asked Questions
+## Option 3: Overnight Sleeper Buses
 
 To save a night's hotel cost and wake up in Khanh Hoa at dawn, highway coaches depart Da Nang every evening between 18:30 and 21:30. Via the North-South Expressway (CT01) and Highway QL1A, overnight road transit takes 9.5 to 11 hours.
 
@@ -85,3 +85,14 @@ To save a night's hotel cost and wake up in Khanh Hoa at dawn, highway coaches d
 * **Cuc Tu & Hanh Cafe:** Budget 34-berth coaches (320,000–380,000 VND / $12.80–$15.20 USD) making two 20-minute rest stops in Quang Ngai and Song Cau (Phu Yen).
 
 Coaches depart from **Da Nang Central Bus Station** (185 Ton Duc Thang Street, Lien Chieu District, 7 km northwest of downtown; 90,000–120,000 VND / $3.60–$4.80 USD by Grab) and arrive at **Nha Trang Southern Bus Station** (Km6 23/10 Street, Vinh Trung, 7.5 km west of the beach; 100,000–130,000 VND / $4.00–$5.20 USD by taxi). Always reserve a **lower-deck middle berth (Tang Duoi, rows A2 to A5)** to minimize sway over Ca Pass. Once in town, consult our guide on [Where to Stay in Nha Trang](/destinations/where-to-stay-in-nha-trang/) or plan a northern stopover via [Hoi An to Quy Nhon Transport](/plan/hoi-an-to-quy-nhon-transport/).
+
+## Frequently Asked Questions
+
+### Is the Reunification Express train or a direct flight better from Da Nang to Nha Trang?
+Direct flights from Da Nang (DAD) to Cam Ranh (CXR) save half a day, taking 1 hour 05 minutes in the air (plus 45 minutes road transfer from CXR to Tran Phu Beach) for 1,150,000–2,200,000 VND ($46.00–$88.00 USD). Trains like SE21, SE3, and SE1 take 9 hours 15 minutes to 10 hours 30 minutes along the coastal cliffs for 390,000–1,050,000 VND ($15.60–$42.00 USD) and drop you directly in central Nha Trang.
+
+### How much is the transfer from Cam Ranh Airport (CXR) to downtown Nha Trang?
+Cam Ranh Airport sits 35 km south of downtown Nha Trang (40 to 50 minutes drive). **Dat Moi Airport Bus #18** costs 65,000 VND ($2.60 USD) per passenger from Domestic Arrivals Gate 4, while a 4-seat GrabCar or fixed-rate airport taxi costs 320,000–400,000 VND ($12.80–$16.00 USD) including the 15,000 VND airport toll.
+
+### Which sleeper bus operator from Da Nang to Nha Trang includes hotel drop-off?
+**Futa Bus Lines (Phuong Trang)** charges 340,000 VND ($13.60 USD) for a 34-berth sleeper or 460,000 VND ($18.40 USD) for a 22-cabin limousine coach and includes a free shuttle minivan (*Xe Trung Chuyen*) from Nha Trang Southern Bus Station (7.5 km west) directly to central Nha Trang hotels.

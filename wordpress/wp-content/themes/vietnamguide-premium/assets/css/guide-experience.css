@@ -802,6 +802,8 @@
   margin-inline: auto;
   padding-block: clamp(64px, 8vw, 104px);
   border-top: 1px solid var(--vg-line);
+  content-visibility: auto;
+  contain-intrinsic-size: auto 480px;
 }
 
 .vg-guide-related h2 {

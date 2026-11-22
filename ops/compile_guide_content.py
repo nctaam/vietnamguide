@@ -67,8 +67,8 @@ def render_inline_markdown(text: str) -> str:
     # Bold + Italic ***...***
     escaped = re.sub(r"\*\*\*([^*]+)\*\*\*", r"<strong><em>\1</em></strong>", escaped)
 
-    # Bold **...** (supports nested single * italic inside bold)
-    escaped = re.sub(r"\*\*((?:[^*]|\*(?!\*))+)\*\*", r"<strong>\1</strong>", escaped)
+    # Bold **...** (supports nested single * italic inside bold without backtracking explosion)
+    escaped = re.sub(r"\*\*([^*]+(?:\*(?!\*)[^*]*)*)\*\*", r"<strong>\1</strong>", escaped)
 
     # Italic *...*
     escaped = re.sub(r"(?<!\*)\*([^*\n]+)\*(?!\*)", r"<em>\1</em>", escaped)

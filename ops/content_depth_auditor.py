@@ -33,6 +33,7 @@ DEFAULT_MIN_BLOCKQUOTES = 1
 DEFAULT_MIN_HLS = 95.0
 DEFAULT_MIN_EMPIRICAL_SIGNALS = 80
 DEFAULT_MIN_INTERNAL_LINKS = 3
+DEFAULT_MIN_FAQ_QAS = 2
 
 MANDATORY_FRONTMATTER_FIELDS = [
     "title",
@@ -188,10 +189,19 @@ def count_markdown_elements(body: str) -> Dict[str, int]:
     # Pro-tip or tactical alert blocks
     callouts_count = len(re.findall(r"^>\s*\[!(?:NOTE|TIP|IMPORTANT|WARNING|CAUTION)\]", body_no_code, re.MULTILINE))
 
-    # FAQ presence
-    has_faq = bool(
-        re.search(r"^##\s+.*(?:Frequently Asked Questions|FAQ|Common Questions).*$", body_no_code, re.IGNORECASE | re.MULTILINE)
+    # FAQ presence & extractable Q&A count
+    faq_section_match = re.search(
+        r"^##\s+.*(?:Frequently Asked Questions|FAQ|Common Questions).*$\n([\s\S]*?)(?=^##\s+|\Z)",
+        body_no_code,
+        re.IGNORECASE | re.MULTILINE,
     )
+    has_faq = bool(faq_section_match)
+    faq_qa_count = 0
+    if faq_section_match:
+        faq_body = faq_section_match.group(1)
+        h3_qs = re.findall(r"^###\s+.+$", faq_body, re.MULTILINE)
+        bold_qs = re.findall(r"^\*\*[^*\n]+\?\*\*", faq_body, re.MULTILINE)
+        faq_qa_count = max(len(h3_qs), len(bold_qs))
 
     # HowTo / Step-by-Step presence
     has_steps = bool(
@@ -205,6 +215,7 @@ def count_markdown_elements(body: str) -> Dict[str, int]:
         "blockquote_count": blockquote_count,
         "callout_count": callouts_count,
         "has_faq": has_faq,
+        "faq_qa_count": faq_qa_count,
         "has_steps": has_steps,
     }
 
@@ -324,6 +335,10 @@ def audit_markdown_file(
     if not elements["has_faq"]:
         errors.append(
             "Missing dedicated FAQ H2 section (required for FAQPage schema & AIO instant answers)"
+        )
+    elif elements.get("faq_qa_count", 0) < DEFAULT_MIN_FAQ_QAS:
+        errors.append(
+            f"Insufficient extractable Q&A items under FAQ H2: found {elements.get('faq_qa_count', 0)}, required >= {DEFAULT_MIN_FAQ_QAS}"
         )
 
     # 3b. Markdown Table Column Consistency (outside fenced code blocks)

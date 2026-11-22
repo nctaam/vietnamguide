@@ -204,6 +204,7 @@
 
       var closeBtn = modal.querySelector('.vg-lightbox-close');
       if (closeBtn) {
+        void modal.offsetWidth;
         closeBtn.focus();
       }
     }

@@ -371,6 +371,115 @@ class TestProductionStrictness(unittest.TestCase):
         self.assertNotIn("https://vietnamguide.net/costs/vietnam-travel-cost/", calc_php)
         self.assertNotIn("home_url('/costs/vietnam-travel-cost/", calc_php)
 
+    def test_stage217_faq_single_source_of_truth_cwv_defer_and_hero_budgets(self):
+        """Enforce Stage 217 Single-Source-of-Truth FAQ extraction & anti-duplication, CWV script defer, AdSense preconnect, content-visibility: auto, and regional hero JPEG payload budgets."""
+        seo_code = (THEME_DIR / "inc" / "guide-seo.php").read_text(encoding="utf-8")
+        homepage_css = (THEME_DIR / "assets" / "css" / "homepage.css").read_text(encoding="utf-8")
+        guide_exp_css = (THEME_DIR / "assets" / "css" / "guide-experience.css").read_text(encoding="utf-8")
+
+        # 1. CWV Resource Hints, Script Defer & CSS content-visibility: auto + print override
+        self.assertIn("https://pagead2.googlesyndication.com", seo_code)
+        self.assertIn("function vg_defer_theme_scripts(", seo_code)
+        self.assertIn("add_filter('script_loader_tag', 'vg_defer_theme_scripts'", seo_code)
+        self.assertIn("content-visibility: auto;", homepage_css)
+        self.assertIn("content-visibility: visible !important;", homepage_css)
+        self.assertIn("content-visibility: auto;", guide_exp_css)
+
+        # 2. Regional hero JPEG payload budget (all 10 non-pinned heroes <= 580 KB each, total <= 4.2 MB)
+        img_dir = THEME_DIR / "assets" / "images"
+        regional_heroes = [
+            "cao-bang-tu-san-canyon-hero.jpg",
+            "da-lat-xuan-huong-hero.jpg",
+            "hanoi-hoan-kiem-hero.jpg",
+            "hue-imperial-citadel-hero.jpg",
+            "mekong-delta-phong-dien-hero.jpg",
+            "ninh-binh-mua-cave-hero.jpg",
+            "phong-nha-son-river-hero.jpg",
+            "phu-quoc-kem-beach-hero.jpg",
+            "saigon-city-hall-hero.jpg",
+            "sapa-rice-terraces-hero.jpg",
+        ]
+        total_bytes = 0
+        for hero_name in regional_heroes:
+            sz = (img_dir / hero_name).stat().st_size
+            total_bytes += sz
+            self.assertLessEqual(sz, 580_000, f"Regional hero {hero_name} exceeds 580 KB LCP budget: {sz:,} B")
+        self.assertLessEqual(total_bytes, 4_200_000, f"Total 10 regional heroes exceed 4.2 MB budget: {total_bytes:,} B")
+
+        # 3. Live PHP 8.x runtime check of FAQ Single Source of Truth + vg_defer_theme_scripts
+        php_bin = shutil.which("php")
+        if not php_bin:
+            self.skipTest("php binary not available in PATH")
+
+        php_check = r"""
+        define('ABSPATH', '""" + str((REPO_ROOT / "wordpress").as_posix()) + r"""/');
+        class WP_Post {
+            public int $ID = 101;
+            public string $post_name = 'hue-to-dong-hoi-transport';
+            public string $post_title = 'Hue to Dong Hoi Transport';
+            public string $post_content = '';
+        }
+        $GLOBALS['__mock_post'] = new WP_Post();
+        function get_queried_object() { return $GLOBALS['__mock_post']; }
+        function get_post() { return $GLOBALS['__mock_post']; }
+        function get_page_uri($p) { return $GLOBALS['__mock_uri_override'] ?? ('plan/' . $p->post_name); }
+        function esc_html($s) { return htmlspecialchars((string)$s, ENT_QUOTES, 'UTF-8'); }
+        function esc_attr($s) { return htmlspecialchars((string)$s, ENT_QUOTES, 'UTF-8'); }
+        function esc_url($s) { return (string)$s; }
+        function __($s, $d = '') { return (string)$s; }
+        function apply_filters($k, $v) { return $v; }
+        function add_action(...$a) {}
+        function add_filter(...$a) {}
+        function add_shortcode(...$a) {}
+        function wp_strip_all_tags($s) { return strip_tags((string)$s); }
+        require '""" + str((THEME_DIR / "inc" / "guide-seo.php").as_posix()) + r"""';
+        require '""" + str((THEME_DIR / "inc" / "guide-content.php").as_posix()) + r"""';
+
+        // A. Uncurated Markdown guide (hue-to-dong-hoi-transport) gets FAQPage JSON-LD directly from Markdown!
+        $schema_uncurated = vg_get_page_faq_schema('plan/hue-to-dong-hoi-transport', 'https://vietnamguide.net/plan/hue-to-dong-hoi-transport/');
+        // B. Curated route with authored visible FAQ suppresses duplicate vg-curated-faq accordion
+        $authored_html = '<h2>Frequently Asked Questions</h2><h3>How much is Hanoi Airport Bus 86?</h3><p>Bus 86 costs 45,000 VND per rider and departs every 25 minutes.</p>';
+        $dedup_out = vg_render_curated_faq_accordion('destinations/hanoi-travel-guide', $authored_html);
+        // C. Legacy page without authored FAQ still renders curated accordion
+        $legacy_out = vg_render_curated_faq_accordion('destinations/hanoi-travel-guide', '<p>Legacy content without FAQ section.</p>');
+        // D. Script defer filter adds defer cleanly once
+        $deferred = vg_defer_theme_scripts('<script src="/assets/js/homepage.js"></script>', 'vietnamguide-homepage', '/assets/js/homepage.js');
+        $already = vg_defer_theme_scripts('<script defer src="/assets/js/homepage.js"></script>', 'vietnamguide-homepage', '/assets/js/homepage.js');
+        // E. Vietnamese UTF-8 byte 0x85 (e.g. 'Nguyễn', 'ễ') must NEVER be split by non-UTF-8 \R regexes into empty <p></p>
+        $hanoiPost = new WP_Post();
+        $hanoiPost->post_name = 'best-things-to-do-in-hanoi';
+        $hanoiPost->post_title = 'Best Things to Do in Hanoi';
+        $GLOBALS['__mock_uri_override'] = 'destinations/best-things-to-do-in-hanoi';
+        $hanoiHtml = vg_try_load_repository_markdown_guide($hanoiPost);
+        $hanoiQas = vg_extract_authored_faq_items_from_html($hanoiHtml);
+
+        echo json_encode([
+            'uncurated_faq_count' => is_array($schema_uncurated) ? count($schema_uncurated['mainEntity'] ?? []) : 0,
+            'dedup_has_curated_faq' => strpos($dedup_out, 'vg-curated-faq') !== false,
+            'legacy_has_curated_faq' => strpos($legacy_out, 'vg-curated-faq') !== false,
+            'deferred_tag' => $deferred,
+            'already_deferred_count' => substr_count($already, 'defer'),
+            'hanoi_has_nguyen' => strpos($hanoiHtml, 'Nguyễn Hữu Huân') !== false,
+            'hanoi_has_empty_p' => strpos($hanoiHtml, '<p></p>') !== false,
+            'hanoi_faq_count' => count($hanoiQas),
+        ]);
+        """
+        proc = subprocess.run([php_bin, "-r", php_check], capture_output=True, text=True, timeout=20)
+        self.assertEqual(proc.returncode, 0, f"PHP Stage 217 runtime check failed:\n{proc.stdout}\n{proc.stderr}")
+        data = json.loads(proc.stdout)
+        self.assertEqual(data["uncurated_faq_count"], 3)
+        self.assertFalse(data["dedup_has_curated_faq"])
+        self.assertTrue(data["legacy_has_curated_faq"])
+        self.assertIn("<script defer ", data["deferred_tag"])
+        self.assertEqual(data["already_deferred_count"], 1)
+        self.assertTrue(data["hanoi_has_nguyen"], "Vietnamese 'ễ' (0x85 byte) must survive Markdown line splitting intact")
+        self.assertFalse(data["hanoi_has_empty_p"], "Markdown parser must not produce empty <p></p> paragraphs")
+        self.assertEqual(data["hanoi_faq_count"], 2)
+
+        # Zero bare non-UTF-8 /\R/ regexes anywhere in inc/guide-content.php
+        guide_content_code = (THEME_DIR / "inc" / "guide-content.php").read_text(encoding="utf-8")
+        self.assertNotIn("/\\R/", guide_content_code)
+
 
 if __name__ == "__main__":
     unittest.main()

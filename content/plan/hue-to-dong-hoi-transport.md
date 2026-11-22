@@ -6,8 +6,8 @@ description: "Hue to Dong Hoi transport: Reunification Express trains vs shared 
 travel_cluster: "phong_nha_caves"
 last_verified: "2026-11-01"
 author: "VietnamGuide Editorial Team"
-reading_time_minutes: 8
-word_count: 1553
+reading_time_minutes: 9
+word_count: 1759
 ---
 
 Moving north from the former imperial capital of Hue to Dong Hoi—the coastal capital of Quang Binh Province—covers 166 km (103 miles) on the North-South Railway or 165 km (102.5 miles) by road via National Highway QL1A and the Cam Lo–La Son Expressway (CT01). While many travelers treat Dong Hoi strictly as a rail and airport hub for [Hue to Phong Nha Transport](/plan/hue-to-phong-nha-transport/), the city itself anchors Nhat Le Beach, the Bao Ninh sand peninsula, and Dong Hoi Airport (VDH).
@@ -92,9 +92,20 @@ Because the 17th Parallel sits at the Ben Hai River (95 km north of Hue and 70 k
 4. **11:25 – Vinh Moc Tunnels (Vinh Linh District):** Detour 13 km east to inspect the three-tier coastal tunnel village carved 12 to 23 meters underground (50,000 VND / $2.00 USD ticket; 60 minutes).
 5. **14:00 – Arrive Dong Hoi City:** Drive the final 65 km (1 hour 15 minutes) north to your Nhat Le Beach hotel.
 
-## Arriving in Dong Hoi: Onward Connections & Frequently Asked Questions
+## Arriving in Dong Hoi: Onward Connections
 
 From **Dong Hoi Railway Station (Sub-zone 4, Nam Ly Ward)**, onward transfers split into two directions:
 
 * **To Dong Hoi Center & Nhat Le Beach (4.5 to 6 km):** Metered **Mai Linh (0232 385 8585)**, **Sun Taxi (0232 368 6868)**, and **Xanh SM electric taxis** wait outside the exit. A ride to central Dong Hoi (Tran Hung Dao Street) takes 8 minutes and costs 55,000–75,000 VND ($2.20–$3.00 USD). Crossing the bridge to **Nhat Le Beach (Truong Phap Street)** or **Bao Ninh Peninsula (Vo Nguyen Giap Street)** covers 5 to 7.5 km (12 to 15 minutes) for 70,000–100,000 VND ($2.80–$4.00 USD).
 * **To Phong Nha-Ke Bang National Park (45 km northwest):** A private 4-seat taxi from Dong Hoi Station along Highway DT20 to Son Trach takes 45 to 55 minutes and costs 500,000–600,000 VND ($20.00–$24.00 USD). Budget travelers can take a 35,000 VND ($1.40 USD) taxi 2.2 km east to **Nam Ly Bus Station (Tran Hung Dao Street)** to board **Quang Binh Public Bus B4**, departing every 45 to 60 minutes between 05:30 and 17:30 (75 minutes, 35,000–50,000 VND / $1.40–$2.00 USD cash onboard). For southbound return schedules, see [Dong Hoi to Hue Transport](/plan/dong-hoi-to-hue-transport/).
+
+## Frequently Asked Questions
+
+### How long is the train from Hue to Dong Hoi and which seat class is best?
+Reunification Express trains cover the 166 km northbound track from Hue Railway Station to Dong Hoi in 2 hours 45 minutes to 3 hours 15 minutes. For daytime runs like SE4 (15:10) or SE2 (15:54), an **Air-Conditioned Soft Seat (NML)** at 125,000–175,000 VND ($5.00–$7.00 USD) offers ample legroom without paying double for a 4-berth sleeper cabin (285,000–350,000 VND).
+
+### Can I stop at the Vinh Moc Tunnels and Hien Luong Bridge between Hue and Dong Hoi?
+Yes, by hiring a northbound **DMZ sightseeing private car** (2,200,000–2,600,000 VND / $88.00–$104.00 USD total for 5.5 to 6.5 hours) instead of taking the express train or limousine van. Both Hien Luong Bridge (95 km north of Hue) and Vinh Moc Tunnels (13 km east of Highway QL1A) charge 50,000 VND ($2.00 USD) entry per adult.
+
+### How do I reach Phong Nha-Ke Bang National Park after arriving at Dong Hoi Station?
+Take a direct 4-seat taxi from Dong Hoi Station along Provincial Road DT20 to Son Trach village (45 km, 45–55 minutes, 500,000–600,000 VND / $20.00–$24.00 USD). Solo travelers on a tighter budget can ride a 35,000 VND taxi 2.2 km to Nam Ly Bus Station and board public **Bus B4** (35,000–50,000 VND, 75 minutes, running 05:30–17:30).

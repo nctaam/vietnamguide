@@ -733,6 +733,167 @@ class TestPlaywrightE2ESmoke(unittest.TestCase):
         finally:
             page.close()
 
+    def test_e2e_stage216_217_wai_aria_tabs_lightbox_focus_trap_wcag_aa_and_faq_dedup(self):
+        """Playwright E2E (Stage 216-217): Live Chromium verification of WAI-ARIA APG Tabs (roving tabindex + Home/End), Lightbox Tab focus trap, WCAG 2.2 AA computed contrast (>=4.5:1), and zero duplicate FAQ rendering."""
+        map_html = _render_php_component(
+            "require 'wordpress/wp-content/themes/vietnamguide-premium/inc/guide-interactive-map.php';\n"
+            "echo vg_interactive_map_shortcode();\n"
+        )
+        dispatch_html = _render_php_component(
+            "require 'wordpress/wp-content/themes/vietnamguide-premium/inc/guide-photo-dispatch.php';\n"
+            "echo vg_photo_dispatch_shortcode(['slug' => 'ha-long-dawn']);\n"
+            "vg_render_photo_dispatch_lightbox_template();\n"
+        )
+        dedup_faq_html = _render_php_component(
+            "require 'wordpress/wp-content/themes/vietnamguide-premium/inc/guide-seo.php';\n"
+            "$authored = '<h2>Frequently Asked Questions</h2><h3>How much is Noi Bai Bus 86?</h3><p>Bus 86 costs 45,000 VND per passenger and runs every 25 minutes from T2 to Hanoi Old Quarter.</p>';\n"
+            "echo $authored . vg_render_curated_faq_accordion('destinations/hanoi-travel-guide', $authored);\n"
+        )
+        self.assertNotIn('vg-curated-faq', dedup_faq_html)
+
+        full_doc = f"""<!doctype html>
+        <html lang="en">
+        <head>
+            <meta charset="utf-8">
+            <style>{self.homepage_css}</style>
+            <style>{self.interactive_css}</style>
+            <style>{self.guide_css}</style>
+        </head>
+        <body class="vg-site" style="background:#FFFFFF;">
+            {map_html}
+            {dispatch_html}
+            <section class="vg-cost-calculator"><span class="vg-calc-badge">Budget Engine</span></section>
+            <section class="vg-season-matrix"><span class="vg-sm-badge">Climate Matrix</span></section>
+            <section class="vg-itinerary-finder"><span class="vg-finder-kicker">Route Finder</span></section>
+            <div class="vg-search-meta"><span class="vg-search-count vg-search-count--empty">No guides matched</span></div>
+            <div><span class="vg-search-badge vg-search-badge--practical">Planning Guide</span></div>
+            <article class="vg-guide-article">{dedup_faq_html}</article>
+            <script>{self.interactive_js}</script>
+        </body>
+        </html>"""
+
+        page = self._browser.new_page()
+        console_errors = []
+        page_errors = []
+        page.on("console", lambda msg: console_errors.append(msg.text) if msg.type == "error" else None)
+        page.on("pageerror", lambda err: page_errors.append(str(err)))
+
+        try:
+            page.set_content(full_doc, wait_until="domcontentloaded")
+
+            # 1. WAI-ARIA APG Tabs roving tabindex + End/Home on [vg_interactive_map]
+            map_tabs = page.locator('[data-vg-interactive-map] [role="tab"]')
+            self.assertEqual(page.locator('#vg-tab-central-heritage').get_attribute('tabindex'), '0')
+            page.locator('#vg-tab-central-heritage').focus()
+            page.keyboard.press('End')
+            last_map_tab = map_tabs.last
+            self.assertEqual(last_map_tab.get_attribute('aria-selected'), 'true')
+            self.assertEqual(last_map_tab.get_attribute('tabindex'), '0')
+            self.assertEqual(page.locator('#vg-tab-central-heritage').get_attribute('tabindex'), '-1')
+            page.keyboard.press('Home')
+            first_map_tab = map_tabs.first
+            self.assertEqual(first_map_tab.get_attribute('aria-selected'), 'true')
+            self.assertEqual(first_map_tab.get_attribute('tabindex'), '0')
+
+            # 2. WAI-ARIA APG Tabs roving tabindex + End/Home on [vg_photo_dispatch]
+            disp_tabs = page.locator('[data-vg-photo-dispatch-suite] [role="tab"]')
+            self.assertEqual(disp_tabs.first.get_attribute('tabindex'), '0')
+            disp_tabs.first.focus()
+            page.keyboard.press('End')
+            self.assertEqual(disp_tabs.last.get_attribute('aria-selected'), 'true')
+            self.assertEqual(disp_tabs.last.get_attribute('tabindex'), '0')
+            page.keyboard.press('Home')
+            self.assertEqual(disp_tabs.first.get_attribute('aria-selected'), 'true')
+
+            # 3. Lightbox Tab focus trap & Escape focus restoration
+            expand_btn = page.locator('#vg-dispatch-panel-ha-long-dawn .vg-dispatch-expand-btn')
+            expand_btn.click()
+            modal = page.locator('#vg-dispatch-modal')
+            self.assertIn('is-active', modal.get_attribute('class') or '')
+            self.assertIsNone(modal.get_attribute('hidden'))
+            page.keyboard.press('Tab')
+            active_in_modal = page.evaluate(
+                "() => document.getElementById('vg-dispatch-modal').contains(document.activeElement)"
+            )
+            self.assertTrue(active_in_modal, "Tab focus must stay trapped inside open #vg-dispatch-modal")
+            page.keyboard.press('Shift+Tab')
+            active_in_modal_shift = page.evaluate(
+                "() => document.getElementById('vg-dispatch-modal').contains(document.activeElement)"
+            )
+            self.assertTrue(active_in_modal_shift, "Shift+Tab focus must stay trapped inside open #vg-dispatch-modal")
+            page.keyboard.press('Escape')
+            self.assertNotIn('is-active', modal.get_attribute('class') or '')
+            self.assertIsNotNone(modal.get_attribute('hidden'))
+
+            # 4. Live Chromium WCAG 2.2 AA contrast verification (>= 4.5:1)
+            contrast_results = page.evaluate("""() => {
+                function parseRgb(str) {
+                    const m = str.match(/rgba?\\((\\d+),\\s*(\\d+),\\s*(\\d+)(?:,\\s*([\\d.]+))?\\)/);
+                    if (!m) return [255, 255, 255, 1];
+                    return [Number(m[1]), Number(m[2]), Number(m[3]), m[4] !== undefined ? Number(m[4]) : 1];
+                }
+                function blend(fg, bg) {
+                    const a = fg[3];
+                    return [
+                        fg[0] * a + bg[0] * (1 - a),
+                        fg[1] * a + bg[1] * (1 - a),
+                        fg[2] * a + bg[2] * (1 - a),
+                    ];
+                }
+                function lum(rgb) {
+                    const c = rgb.map(v => {
+                        const s = v / 255;
+                        return s <= 0.03928 ? s / 12.92 : Math.pow((s + 0.055) / 1.055, 2.4);
+                    });
+                    return 0.2126 * c[0] + 0.7152 * c[1] + 0.0722 * c[2];
+                }
+                function ratio(fgRgb, bgRgb) {
+                    const l1 = lum(fgRgb), l2 = lum(bgRgb);
+                    return (Math.max(l1, l2) + 0.05) / (Math.min(l1, l2) + 0.05);
+                }
+                function effectiveBg(el) {
+                    let cur = el;
+                    let stack = [];
+                    while (cur && cur.nodeType === 1) {
+                        const bg = parseRgb(getComputedStyle(cur).backgroundColor);
+                        if (bg[3] > 0) stack.push(bg);
+                        if (bg[3] === 1) break;
+                        cur = cur.parentElement;
+                    }
+                    let base = [255, 255, 255];
+                    for (let i = stack.length - 1; i >= 0; i--) {
+                        base = blend(stack[i], base);
+                    }
+                    return base;
+                }
+                const selectors = [
+                    '.vg-calc-badge',
+                    '.vg-sm-badge',
+                    '.vg-finder-kicker',
+                    '.vg-search-count--empty',
+                    '.vg-search-badge--practical'
+                ];
+                return selectors.map(sel => {
+                    const el = document.querySelector(sel);
+                    const fg = parseRgb(getComputedStyle(el).color);
+                    const bg = effectiveBg(el);
+                    return { sel, ratio: Number(ratio(fg.slice(0, 3), bg).toFixed(2)) };
+                });
+            }""")
+            for item in contrast_results:
+                self.assertGreaterEqual(
+                    item['ratio'],
+                    4.5,
+                    f"WCAG 2.2 AA contrast failure on {item['sel']}: {item['ratio']}:1 < 4.5:1",
+                )
+
+            # 5. Zero duplicate FAQ headings in rendered DOM
+            self.assertEqual(page.locator('.vg-curated-faq').count(), 0)
+            self.assertEqual(console_errors, [])
+            self.assertEqual(page_errors, [])
+        finally:
+            page.close()
+
 
 if __name__ == '__main__':
     unittest.main()

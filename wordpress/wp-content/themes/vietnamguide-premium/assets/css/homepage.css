@@ -1254,6 +1254,8 @@ html:not(.vg-js) body.home .vg-site-header {
   background: #0a0d0f;
   color: var(--vg-white);
   border-top: 2px solid var(--vg-gold);
+  content-visibility: auto;
+  contain-intrinsic-size: auto 420px;
 }
 
 .vg-site-footer__inner {
@@ -7727,6 +7729,8 @@ details[class$="-specs"] {
   border-radius: 10px;
   padding: 0.95rem 1.15rem;
   box-shadow: none;
+  content-visibility: auto;
+  contain-intrinsic-size: auto 72px;
 }
 
 .vg-ref-summary,
@@ -8043,6 +8047,14 @@ details[class$="-specs"] table tbody th {
     max-width: 100% !important;
     margin: 0 !important;
     padding: 0 !important;
+  }
+
+  .vg-site-footer,
+  .vg-ref-ledger,
+  .vg-checklist-field-specs,
+  details[class$="-ledger"],
+  details[class$="-specs"] {
+    content-visibility: visible !important;
   }
 
   a {

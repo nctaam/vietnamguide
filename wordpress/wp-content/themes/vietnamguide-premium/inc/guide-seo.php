@@ -597,6 +597,8 @@ add_action('wp_head', static function (): void {
         '<link rel="icon" type="image/svg+xml" href="' . esc_url($themeUrl . '/assets/images/vg-icon.svg') . '">',
         '<link rel="preconnect" href="https://upload.wikimedia.org" crossorigin>',
         '<link rel="dns-prefetch" href="https://upload.wikimedia.org">',
+        '<link rel="preconnect" href="https://pagead2.googlesyndication.com" crossorigin>',
+        '<link rel="dns-prefetch" href="https://pagead2.googlesyndication.com">',
         '<link rel="alternate" type="application/rss+xml" title="' . esc_attr__('VietnamGuide - Travel Planning Advisory Feed', 'vietnamguide-premium') . '" href="' . esc_url(home_url('/feed/')) . '">',
     ]);
 
@@ -626,6 +628,29 @@ add_action('wp_head', static function (): void {
 
     echo implode("\n", $headTags) . "\n";
 }, 1);
+
+/**
+ * Adds the `defer` attribute to non-critical theme JavaScript bundles to keep the
+ * initial HTML parsing critical path unblocked (Core Web Vitals FCP/LCP/INP).
+ */
+function vg_defer_theme_scripts(string $tag, string $handle, string $src): string
+{
+    $deferredHandles = [
+        'vietnamguide-homepage'          => true,
+        'vietnamguide-guide-experience'  => true,
+        'vietnamguide-guide-interactive' => true,
+    ];
+    if (! isset($deferredHandles[$handle])) {
+        return $tag;
+    }
+    if (stripos($tag, ' defer') !== false || stripos($tag, ' async') !== false) {
+        return $tag;
+    }
+    return (string) preg_replace('/(<' . 'script\b)/i', '$1 defer', $tag, 1);
+}
+if (function_exists('add_filter')) {
+    add_filter('script_loader_tag', 'vg_defer_theme_scripts', 10, 3);
+}
 
 // Register PWA Service Worker for offline field guide, mobile install prompt, and print handling
 add_action('wp_footer', static function (): void {
@@ -3179,18 +3204,97 @@ function vg_get_curated_faq_items(string $uri_path): array
 }
 
 /**
+ * Extracts visible authored Q&A pairs from compiled Markdown/Gutenberg HTML.
+ * Supports:
+ *   1. An H2 FAQ heading (Frequently Asked Questions / FAQ / Common Questions) followed by H3 questions & body blocks.
+ *   2. Native HTML5 <details><summary>Question</summary>Answer</details> disclosures.
+ * Guarantees 100% visible-to-schema parity and eliminates duplicate FAQ sections.
+ *
+ * @return array<int, array{q:string, a:string}>
+ */
+function vg_extract_authored_faq_items_from_html(string $html): array
+{
+    if (trim($html) === '') {
+        return [];
+    }
+
+    $strip = static function (string $fragment): string {
+        $cleaned = preg_replace('/<(?:br\s*\/?|\/p|\/li|\/div)>/i', ' ', $fragment);
+        $plain = function_exists('wp_strip_all_tags')
+            ? wp_strip_all_tags((string) $cleaned)
+            : strip_tags((string) $cleaned);
+        $decoded = html_entity_decode($plain, ENT_QUOTES | ENT_HTML5, 'UTF-8');
+        return trim((string) preg_replace('/\s+/u', ' ', $decoded));
+    };
+
+    $strLen = static function (string $s): int {
+        return function_exists('mb_strlen') ? mb_strlen($s, 'UTF-8') : strlen($s);
+    };
+
+    $qas = [];
+
+    // Strategy 1: Authored H2 FAQ section containing H3 questions
+    $h2Open = '<' . '[hH]2\b[^>]*>';
+    $h2Close = '<\/' . '[hH]2>';
+    $h2Boundary = '<' . '[hH]2\b';
+    if (preg_match('/' . $h2Open . '([^<]*(?:Frequently Asked Questions|FAQ|Common Questions)[^<]*)' . $h2Close . '([\s\S]*?)(?=' . $h2Boundary . '|\z)/i', $html, $faqMatch)) {
+        $faqBody = (string) $faqMatch[2];
+        if (preg_match_all('/<h3\b[^>]*>([\s\S]*?)<\/h3>([\s\S]*?)(?=<h3\b|<hr\b|\z)/i', $faqBody, $h3Matches, PREG_SET_ORDER)) {
+            foreach ($h3Matches as $pair) {
+                $q = $strip((string) $pair[1]);
+                $a = $strip((string) $pair[2]);
+                if ($strLen($q) >= 10 && $strLen($a) >= 20) {
+                    $qas[] = ['q' => $q, 'a' => $a];
+                    if (count($qas) >= 10) {
+                        break;
+                    }
+                }
+            }
+        }
+    }
+
+    // Strategy 2: Native <details><summary> Q&A fallback (excluding non-FAQ telemetry/ledger disclosures)
+    if (empty($qas) && stripos($html, '<details') !== false) {
+        if (preg_match_all('/<details(?![^>]*(?:vg-ref-ledger|vg-dispatch-telemetry|vg-checklist-field-specs))[^>]*>\s*<summary[^>]*>([\s\S]*?)<\/summary>([\s\S]*?)<\/details>/i', $html, $dMatches, PREG_SET_ORDER)) {
+            foreach ($dMatches as $pair) {
+                $q = $strip((string) $pair[1]);
+                $a = $strip((string) $pair[2]);
+                if ($strLen($q) >= 10 && $strLen($a) >= 20) {
+                    $qas[] = ['q' => $q, 'a' => $a];
+                    if (count($qas) >= 10) {
+                        break;
+                    }
+                }
+            }
+        }
+    }
+
+    return $qas;
+}
+
+/**
  * Renders visible HTML5 <details>/<summary> FAQ accordion matching FAQPage JSON-LD schema.
  * Strictly uses level-3 heading to preserve the Zero-H2 TOC invariant across inc/*.php.
+ * Automatically suppresses duplicate accordion output when the article body already contains
+ * an authored visible FAQ section (Single Source of Truth).
  */
 function vg_render_curated_faq_accordion(string $uri_path, string $existing_html = ''): string
 {
     $items = vg_get_curated_faq_items($uri_path);
     if (empty($items)) {
-        return '';
+        return vg_render_curated_howto_steps($uri_path, $existing_html);
     }
 
     if ($existing_html !== '' && stripos($existing_html, 'vg-curated-faq') !== false) {
         return '';
+    }
+
+    $howto_html = vg_render_curated_howto_steps($uri_path, $existing_html);
+
+    // Single Source of Truth: if the article already renders an authored visible FAQ section,
+    // do not append a second duplicate FAQ accordion below the article.
+    if ($existing_html !== '' && ! empty(vg_extract_authored_faq_items_from_html($existing_html))) {
+        return $howto_html;
     }
 
     $visible_items = [];
@@ -3208,8 +3312,6 @@ function vg_render_curated_faq_accordion(string $uri_path, string $existing_html
             'a' => $answer,
         ];
     }
-
-    $howto_html = vg_render_curated_howto_steps($uri_path, $existing_html);
 
     if (empty($visible_items)) {
         return $howto_html;
@@ -3349,35 +3451,47 @@ if (function_exists('add_filter')) {
 
 /**
  * Authoritative FAQ Schema.org generator for high-intent travel planning queries.
+ * Prioritizes visible authored FAQ Q&As from the rendered article / repository Markdown
+ * so FAQPage JSON-LD achieves 100% visible-to-schema parity across all 282 guides without
+ * duplicating content into PHP arrays; falls back to curated PHP FAQs for hub/legacy routes.
  */
 function vg_get_page_faq_schema(string $uri_path, string $current_url): ?array
 {
-    $curated_qas = vg_get_curated_faq_items($uri_path);
-    $raw_qas = ! empty($curated_qas) ? $curated_qas : null;
+    $raw_qas = null;
 
-    // Dynamic fallback: extract structured Q&As from authored details/summary markup if not in curated registry
-    if ($raw_qas === null && function_exists('get_queried_object')) {
-        $post = get_queried_object();
-        if (! ($post instanceof WP_Post) && function_exists('get_post')) {
-            $post = get_post();
+    // 1. Primary Single-Source-of-Truth: extract visible authored Q&As from the active post or repository Markdown
+    $post = null;
+    if (function_exists('get_queried_object')) {
+        $candidate = get_queried_object();
+        if ($candidate instanceof WP_Post) {
+            $post = $candidate;
         }
-        if ($post instanceof WP_Post && ! empty($post->post_content)) {
-            $content = $post->post_content;
-            if (stripos($content, '<details') !== false) {
-                if (preg_match_all('/<details[^>]*>\s*<summary[^>]*>(.*?)<\/summary>\s*(?:<p[^>]*>)?(.*?)(?:<\/p>)?\s*<\/details>/is', $content, $matches, PREG_SET_ORDER)) {
-                    $dynamic_qas = [];
-                    foreach ($matches as $match) {
-                        $q = trim(html_entity_decode(wp_strip_all_tags($match[1]), ENT_QUOTES | ENT_HTML5, 'UTF-8'));
-                        $a = trim(html_entity_decode(wp_strip_all_tags($match[2]), ENT_QUOTES | ENT_HTML5, 'UTF-8'));
-                        if (mb_strlen($q) >= 10 && mb_strlen($a) >= 20) {
-                            $dynamic_qas[] = ['q' => $q, 'a' => $a];
-                        }
-                    }
-                    if (! empty($dynamic_qas)) {
-                        $raw_qas = $dynamic_qas;
-                    }
-                }
+    }
+    if ($post === null && function_exists('get_post')) {
+        $candidate = get_post();
+        if ($candidate instanceof WP_Post) {
+            $post = $candidate;
+        }
+    }
+    if ($post instanceof WP_Post) {
+        $authored_html = is_string($post->post_content) ? $post->post_content : '';
+        $extracted = vg_extract_authored_faq_items_from_html($authored_html);
+        if (empty($extracted) && function_exists('vg_try_load_repository_markdown_guide')) {
+            $repo_html = vg_try_load_repository_markdown_guide($post);
+            if ($repo_html !== '') {
+                $extracted = vg_extract_authored_faq_items_from_html($repo_html);
             }
+        }
+        if (! empty($extracted)) {
+            $raw_qas = $extracted;
+        }
+    }
+
+    // 2. Curated fallback for hub pages, legacy DB pages without an authored FAQ H2, or headless schema checks
+    if ($raw_qas === null) {
+        $curated_qas = vg_get_curated_faq_items($uri_path);
+        if (! empty($curated_qas)) {
+            $raw_qas = $curated_qas;
         }
     }
 

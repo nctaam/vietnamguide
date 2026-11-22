@@ -1095,7 +1095,7 @@ class TestInteractiveShortcodes(unittest.TestCase):
         with open(gc_path, 'r', encoding='utf-8') as f:
             gc_code = f.read()
         self.assertIn("vg-code-block", gc_code)
-        self.assertIn(r"'/\*\*((?:[^*]|\*(?!\*))+)\*\*/'", gc_code)
+        self.assertIn(r"'/\*\*([^*]+(?:\*(?!\*)[^*]*)*)\*\*/'", gc_code)
         self.assertIn("VG_BR", gc_code)
         self.assertIn("VG_CODE_", gc_code)
 

@@ -145,6 +145,11 @@ class TestContentDepthAuditor(unittest.TestCase):
                 f"{md_path.name} must include an explicit FAQ H2 section",
             )
             self.assertGreaterEqual(
+                report["elements"]["faq_qa_count"],
+                2,
+                f"{md_path.name} must include >= 2 extractable Q&A items under its FAQ H2",
+            )
+            self.assertGreaterEqual(
                 report["internal_links"],
                 3,
                 f"{md_path.name} must include >= 3 unique canonical internal links",
