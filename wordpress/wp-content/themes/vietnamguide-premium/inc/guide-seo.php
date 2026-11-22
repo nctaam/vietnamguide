@@ -59,7 +59,8 @@ function vg_resolve_image_dimensions_by_url(string $url): array
 }
 
 /**
- * Return a verified >= 1920px high-resolution Google Discover image for each of the 12 travel clusters.
+ * Return a verified >= 1200x675px high-resolution Google Discover image for each of the 12 travel clusters
+ * (self-hosted official Vietnamese tourism & press photography in /wp-content/uploads/editorial-2026/).
  *
  * @return array{url:string,width:int,height:int,caption:string}
  */
@@ -68,70 +69,70 @@ function vg_get_cluster_default_discover_image(string $clusterId): array
     $heroFallback = get_theme_file_uri('/assets/images/ha-long-bay-vietnam-hero.jpg');
     $map = [
         'northern_triangle' => [
-            'url'     => 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/Hanoi-lac-hoan-kiem.jpg/1920px-Hanoi-lac-hoan-kiem.jpg',
-            'width'   => 1920,
-            'height'  => 1284,
-            'caption' => 'Hoan Kiem Lake and Red River Delta gateway in Hanoi, Vietnam',
+            'url'     => 'https://vietnamguide.net/wp-content/uploads/editorial-2026/hanoi-hoan-kiem-lake.jpg',
+            'width'   => 1600,
+            'height'  => 900,
+            'caption' => 'Aerial view of Hoan Kiem Lake, Ngoc Son Temple, and red The Huc Bridge in Hanoi, Vietnam',
         ],
         'ha_long_bay' => [
-            'url'     => 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/fa/Ha_Long_Bay%2C_Vietnam%2C_View_from_above.jpg/1920px-Ha_Long_Bay%2C_Vietnam%2C_View_from_above.jpg',
-            'width'   => 1920,
-            'height'  => 1280,
-            'caption' => 'Aerial view of limestone karst formations in Ha Long Bay, Vietnam',
+            'url'     => 'https://vietnamguide.net/wp-content/uploads/editorial-2026/ha-long-bay-aerial.jpg',
+            'width'   => 1200,
+            'height'  => 819,
+            'caption' => 'Aerial view of emerald waters, limestone karst islets, and cruise boats in Ha Long Bay, Quang Ninh, Vietnam',
         ],
         'ninh_binh' => [
-            'url'     => 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/f4/Mua_Cave%2C_Ninh_Binh%2C_Vietnam%2C_20240202_0926_4964.jpg/1920px-Mua_Cave%2C_Ninh_Binh%2C_Vietnam%2C_20240202_0926_4964.jpg',
-            'width'   => 1920,
-            'height'  => 1278,
-            'caption' => 'Limestone karst peaks and river valley from Mua Cave viewpoint in Ninh Binh, Vietnam',
+            'url'     => 'https://vietnamguide.net/wp-content/uploads/editorial-2026/ninh-binh-mua-cave.jpg',
+            'width'   => 1200,
+            'height'  => 800,
+            'caption' => 'Summit pagoda and panoramic limestone karst valley seen from Hang Mua (Mua Cave) viewpoint in Ninh Binh, Vietnam',
         ],
         'central_heritage' => [
-            'url'     => 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d6/H%E1%BB%99i_An%2C_Ancient_Town%2C_2020-01_CN-11.jpg/1920px-H%E1%BB%99i_An%2C_Ancient_Town%2C_2020-01_CN-11.jpg',
-            'width'   => 1920,
-            'height'  => 1575,
-            'caption' => 'UNESCO merchant shophouses and Thu Bon riverfront in Hoi An Ancient Town, Vietnam',
+            'url'     => 'https://vietnamguide.net/wp-content/uploads/editorial-2026/hoi-an-ancient-town.jpg',
+            'width'   => 1280,
+            'height'  => 720,
+            'caption' => 'UNESCO yellow heritage shophouses along the Hoai River waterfront in Hoi An Ancient Town, Vietnam',
         ],
         'southern_delta' => [
-            'url'     => 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/3d/Ho_Chi_Minh_City%2C_City_Hall%2C_2020-01_CN-02.jpg/1920px-Ho_Chi_Minh_City%2C_City_Hall%2C_2020-01_CN-02.jpg',
-            'width'   => 1920,
-            'height'  => 1220,
-            'caption' => 'Nguyen Hue walking boulevard and historic City Hall in District 1, Ho Chi Minh City, Vietnam',
+            'url'     => 'https://vietnamguide.net/wp-content/uploads/editorial-2026/hcmc-district-1.jpg',
+            'width'   => 1280,
+            'height'  => 720,
+            'caption' => 'Twilight skyline of District 1 civic core and Saigon River in Ho Chi Minh City, Vietnam',
         ],
         'northern_highlands' => [
-            'url'     => 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/ff/Rice_terraces_in_Sapa%2C_Vietnam.jpg/1920px-Rice_terraces_in_Sapa%2C_Vietnam.jpg',
-            'width'   => 1920,
-            'height'  => 1280,
-            'caption' => 'Stepped mountain rice terraces in Muong Hoa Valley, Sa Pa, Northern Vietnam',
+            'url'     => 'https://vietnamguide.net/wp-content/uploads/editorial-2026/sapa-rice-terraces.jpg',
+            'width'   => 1260,
+            'height'  => 681,
+            'caption' => 'Golden stepped mountain rice terraces in Muong Hoa Valley, Sa Pa, Lao Cai, Northern Vietnam',
         ],
         'coastal_islands' => [
-            'url'     => 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/33/Kem_Beach_aerial_view_Phu_Quoc_Island_Vietnam.jpg/1920px-Kem_Beach_aerial_view_Phu_Quoc_Island_Vietnam.jpg',
-            'width'   => 1920,
-            'height'  => 1440,
-            'caption' => 'Turquoise coastal waters and white sand shoreline at Kem Beach, Phu Quoc Island, Vietnam',
+            'url'     => 'https://vietnamguide.net/wp-content/uploads/editorial-2026/phu-quoc-kem-beach.jpg',
+            'width'   => 1600,
+            'height'  => 1066,
+            'caption' => 'Aerial view of white sand crescent shoreline and turquoise bay at Kem Beach, Phu Quoc Island, Vietnam',
         ],
         'central_highlands' => [
-            'url'     => 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/aa/Da_Lat_-_Xuan_Huong_Lake.jpg/1920px-Da_Lat_-_Xuan_Huong_Lake.jpg',
-            'width'   => 1920,
-            'height'  => 1275,
-            'caption' => 'Crescent waters of Xuan Huong Lake and pine-forested hills on the Langbiang Plateau in Da Lat, Central Highlands, Vietnam',
+            'url'     => 'https://vietnamguide.net/wp-content/uploads/editorial-2026/da-lat-xuan-huong-lake.jpg',
+            'width'   => 1260,
+            'height'  => 681,
+            'caption' => 'Pine-fringed waters of Xuan Huong Lake on the Langbiang Plateau in Da Lat, Central Highlands, Vietnam',
         ],
         'phong_nha_caves' => [
-            'url'     => 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/f1/Son_River-Quang_Binh_province.jpg/1920px-Son_River-Quang_Binh_province.jpg',
-            'width'   => 1920,
-            'height'  => 1354,
-            'caption' => 'Son River and limestone karst mountains in Phong Nha-Ke Bang National Park, Quang Binh, Vietnam',
+            'url'     => 'https://vietnamguide.net/wp-content/uploads/editorial-2026/phong-nha-son-river.jpg',
+            'width'   => 1280,
+            'height'  => 720,
+            'caption' => 'Wooden boats on the emerald Son River framed by limestone karst mountains in Phong Nha-Ke Bang, Quang Binh, Vietnam',
         ],
         'mekong_delta' => [
-            'url'     => 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/90/Vietnam%2C_Phong_Dien%2C_Mekong_Delta%2C_River.jpg/1920px-Vietnam%2C_Phong_Dien%2C_Mekong_Delta%2C_River.jpg',
-            'width'   => 1920,
-            'height'  => 1280,
-            'caption' => 'Riverine canal network and wooden sampan boats in Phong Dien, Mekong Delta, Vietnam',
+            'url'     => 'https://vietnamguide.net/wp-content/uploads/editorial-2026/mekong-delta-can-tho.jpg',
+            'width'   => 1260,
+            'height'  => 681,
+            'caption' => 'Riverine commerce and wooden boats on the Mekong Delta waterways in Can Tho, Southern Vietnam',
         ],
         'far_north_frontier' => [
-            'url'     => 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/3d/TuSan_Canyon.jpg/1920px-TuSan_Canyon.jpg',
-            'width'   => 1920,
-            'height'  => 1080,
-            'caption' => 'Nho Que River winding through Tu San Canyon on the northern frontier of Vietnam',
+            'url'     => 'https://vietnamguide.net/wp-content/uploads/editorial-2026/ha-giang-tu-san-canyon.jpg',
+            'width'   => 1260,
+            'height'  => 681,
+            'caption' => 'Emerald Nho Que River winding through steep limestone cliffs of Tu San Canyon below Ma Pi Leng, Ha Giang, Vietnam',
         ],
         'national_circuit' => [
             'url'     => $heroFallback,
@@ -145,7 +146,7 @@ function vg_get_cluster_default_discover_image(string $clusterId): array
 }
 
 /**
- * Resolve destination-specific >= 1920px Google Discover / Schema.org ImageObject for sub-destinations
+ * Resolve destination-specific >= 1200x675px Google Discover / Schema.org ImageObject for sub-destinations
  * within multi-hub clusters (e.g. Hue, Da Nang, My Son, Cat Ba/Lan Ha, Bai Tu Long, Con Dao, Nha Trang, Quy Nhon, Mui Ne).
  *
  * @return array{url:string,width:int,height:int,caption:string}|null
@@ -159,74 +160,74 @@ function vg_get_subdestination_discover_image(string $resolvedPath): ?array
 
     if (str_contains($p, 'hue')) {
         return [
-            'url'     => 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b9/Hue_Vietnam_Citadel-of-Hu%E1%BA%BF-13.jpg/1920px-Hue_Vietnam_Citadel-of-Hu%E1%BA%BF-13.jpg',
-            'width'   => 1920,
-            'height'  => 1280,
-            'caption' => 'Ngo Mon Gate and Imperial Citadel walls in Hue, Thua Thien Hue, Vietnam',
+            'url'     => 'https://vietnamguide.net/wp-content/uploads/editorial-2026/hue-imperial-citadel.jpg',
+            'width'   => 1260,
+            'height'  => 681,
+            'caption' => 'Imperial Citadel heritage architecture and royal enclosure in Hue, Thua Thien Hue, Vietnam',
         ];
     }
     if (str_contains($p, 'da-nang')) {
         return [
-            'url'     => 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/af/My_Khe_Beach_seen_from_the_Son_Tra_Mountain.jpg/1920px-My_Khe_Beach_seen_from_the_Son_Tra_Mountain.jpg',
-            'width'   => 1920,
-            'height'  => 1440,
-            'caption' => 'My Khe Beach coastline seen from Son Tra Peninsula in Da Nang, Vietnam',
+            'url'     => 'https://vietnamguide.net/wp-content/uploads/editorial-2026/da-nang-my-khe-beach.jpg',
+            'width'   => 1280,
+            'height'  => 720,
+            'caption' => 'My Khe Beach coastline and Da Nang bay panorama seen from Son Tra Peninsula, Central Vietnam',
         ];
     }
     if (str_contains($p, 'my-son')) {
         return [
-            'url'     => 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/7d/My_Son_Sanctuary_Vietnam_06.jpg/1920px-My_Son_Sanctuary_Vietnam_06.jpg',
-            'width'   => 1920,
-            'height'  => 1440,
-            'caption' => 'Ancient Hindu brick temple towers at My Son Sanctuary UNESCO World Heritage Site, Quang Nam, Vietnam',
+            'url'     => 'https://vietnamguide.net/wp-content/uploads/editorial-2026/my-son-sanctuary.jpg',
+            'width'   => 1600,
+            'height'  => 1143,
+            'caption' => 'Ancient Hindu red-brick temple towers at My Son Sanctuary UNESCO World Heritage Site, Quang Nam, Vietnam',
         ];
     }
     if (str_contains($p, 'cat-ba') || str_contains($p, 'lan-ha')) {
         return [
-            'url'     => 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/ca/Lan_Ha_Bay-Cat_Ba_Vietnam-Andres_Larin.jpg/1920px-Lan_Ha_Bay-Cat_Ba_Vietnam-Andres_Larin.jpg',
-            'width'   => 1920,
-            'height'  => 1435,
-            'caption' => 'Limestone karst islands and emerald waters in Lan Ha Bay off Cat Ba Island, Hai Phong, Vietnam',
+            'url'     => 'https://vietnamguide.net/wp-content/uploads/editorial-2026/lan-ha-bay-cat-ba.jpg',
+            'width'   => 1382,
+            'height'  => 953,
+            'caption' => 'Emerald waters, kayaks, and limestone karst islands in Lan Ha Bay off Cat Ba Island, Hai Phong, Vietnam',
         ];
     }
     if (str_contains($p, 'bai-tu-long')) {
         return [
-            'url'     => 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/46/B%C3%A1i_T%E1%BB%AD_Long_Bay_-_01.jpg/1920px-B%C3%A1i_T%E1%BB%AD_Long_Bay_-_01.jpg',
-            'width'   => 1920,
-            'height'  => 1282,
-            'caption' => 'Limestone karst archipelago and calm channels in Bai Tu Long Bay, Quang Ninh, Vietnam',
+            'url'     => 'https://vietnamguide.net/wp-content/uploads/editorial-2026/bai-tu-long-bay.jpg',
+            'width'   => 1600,
+            'height'  => 1000,
+            'caption' => 'Aerial panorama of tranquil limestone karst islands and clear channels in Bai Tu Long Bay, Quang Ninh, Vietnam',
         ];
     }
     if (str_contains($p, 'con-dao')) {
         return [
-            'url'     => 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/6e/Beach_view_from_Six_Senses_Resort_in_C%C3%B4n_%C4%90%E1%BA%A3o_%28April_2022%29.jpg/1920px-Beach_view_from_Six_Senses_Resort_in_C%C3%B4n_%C4%90%E1%BA%A3o_%28April_2022%29.jpg',
-            'width'   => 1920,
-            'height'  => 1440,
-            'caption' => 'Dat Doc Beach and coastal headlands in the Con Dao Archipelago, Ba Ria - Vung Tau, Vietnam',
+            'url'     => 'https://vietnamguide.net/wp-content/uploads/editorial-2026/con-dao-beach.jpg',
+            'width'   => 1260,
+            'height'  => 681,
+            'caption' => 'Sheltered sandy bay and forested coastal headland in the Con Dao Archipelago, Ba Ria - Vung Tau, Vietnam',
         ];
     }
     if (str_contains($p, 'nha-trang') || str_contains($p, 'cam-ranh')) {
         return [
-            'url'     => 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/6f/Nha_Trang_Beach_3.jpg/1920px-Nha_Trang_Beach_3.jpg',
-            'width'   => 1920,
-            'height'  => 1440,
-            'caption' => 'Crescent sandy shoreline and turquoise bay along Tran Phu Beach in Nha Trang, Khanh Hoa, Vietnam',
+            'url'     => 'https://vietnamguide.net/wp-content/uploads/editorial-2026/nha-trang-beach.jpg',
+            'width'   => 1260,
+            'height'  => 681,
+            'caption' => 'Crystal turquoise bay and coastal islands of Nha Trang, Khanh Hoa, South-Central Vietnam',
         ];
     }
     if (str_contains($p, 'quy-nhon')) {
         return [
-            'url'     => 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/6d/Ky_Co_beach%2C_Quy_Nhon_city%2C_Binh_Dinh_province%2C_Vietnam.jpg/1920px-Ky_Co_beach%2C_Quy_Nhon_city%2C_Binh_Dinh_province%2C_Vietnam.jpg',
-            'width'   => 1920,
-            'height'  => 1280,
-            'caption' => 'Granite headlands and turquoise cove at Ky Co Beach, Quy Nhon, Binh Dinh, Vietnam',
+            'url'     => 'https://vietnamguide.net/wp-content/uploads/editorial-2026/quy-nhon-ky-co-beach.jpg',
+            'width'   => 1600,
+            'height'  => 1067,
+            'caption' => 'Granite coastal cliffs and turquoise waters of the Eo Gio - Ky Co shoreline in Quy Nhon, Binh Dinh, Vietnam',
         ];
     }
     if (str_contains($p, 'mui-ne') || str_contains($p, 'phan-thiet')) {
         return [
-            'url'     => 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/2d/Vietnam%2C_Mui_Ne_beach%2C_Kitesurfing_on_the_beach.jpg/1920px-Vietnam%2C_Mui_Ne_beach%2C_Kitesurfing_on_the_beach.jpg',
-            'width'   => 1920,
-            'height'  => 1280,
-            'caption' => 'Kitesurfers catching trade winds along Ham Tien Beach in Mui Ne, Binh Thuan, Vietnam',
+            'url'     => 'https://vietnamguide.net/wp-content/uploads/editorial-2026/mui-ne-beach.jpg',
+            'width'   => 1600,
+            'height'  => 1067,
+            'caption' => 'Trade-wind waves and kitesurfing waters along Mui Ne coastline, Binh Thuan, Vietnam',
         ];
     }
 

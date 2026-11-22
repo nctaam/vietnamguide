@@ -1207,14 +1207,14 @@ echo json_encode([
         self.assertEqual(len(rep['description_violations']), 0, "No description violations allowed")
 
     def test_cluster_aware_discover_image_object_and_exact_dimensions(self):
-        """Discover ImageObject must resolve cluster-specific 1920px assets with exact natural dimensions."""
+        """Discover ImageObject must resolve cluster-specific self-hosted >=1200x675px assets with exact natural dimensions."""
         expected_cases = [
-            ('destinations/sapa-travel-guide', '1920px-Rice_terraces_in_Sapa%2C_Vietnam.jpg', 1920, 1280),
-            ('destinations/da-lat-travel-guide', '1920px-Da_Lat_-_Xuan_Huong_Lake.jpg', 1920, 1275),
-            ('destinations/phong-nha-travel-guide', '1920px-Son_River-Quang_Binh_province.jpg', 1920, 1354),
-            ('destinations/mekong-delta-travel-guide', '1920px-Vietnam%2C_Phong_Dien%2C_Mekong_Delta%2C_River.jpg', 1920, 1280),
-            ('destinations/cao-bang-travel-guide', '1920px-TuSan_Canyon.jpg', 1920, 1080),
-            ('destinations/phu-quoc-travel-guide', '1920px-Kem_Beach_aerial_view_Phu_Quoc_Island_Vietnam.jpg', 1920, 1440),
+            ('destinations/sapa-travel-guide', 'editorial-2026/sapa-rice-terraces.jpg', 1260, 681),
+            ('destinations/da-lat-travel-guide', 'editorial-2026/da-lat-xuan-huong-lake.jpg', 1260, 681),
+            ('destinations/phong-nha-travel-guide', 'editorial-2026/phong-nha-son-river.jpg', 1280, 720),
+            ('destinations/mekong-delta-travel-guide', 'editorial-2026/mekong-delta-can-tho.jpg', 1260, 681),
+            ('destinations/cao-bang-travel-guide', 'editorial-2026/ha-giang-tu-san-canyon.jpg', 1260, 681),
+            ('destinations/phu-quoc-travel-guide', 'editorial-2026/phu-quoc-kem-beach.jpg', 1600, 1066),
         ]
         for uri_path, expected_file, exp_w, exp_h in expected_cases:
             with self.subTest(uri_path=uri_path):
@@ -1568,22 +1568,26 @@ echo json_encode([
             self.assertTrue(info['dedup_empty'], f"Visible FAQ accordion on {uri} must be idempotent when already present")
 
     def test_wikimedia_discover_images_cryptographic_md5_path_integrity(self):
-        """Every Wikimedia Commons URL in guide-seo.php must have a cryptographically valid MD5 directory prefix /<h[0]>/<h[0:2]>/."""
-        import hashlib
-        from urllib.parse import unquote
+        """Stage 219: All 20 Discover images in guide-seo.php and 12 dispatches in guide-photo-dispatch.php must use self-hosted editorial-2026 JPEGs registered in image-dimensions.php with zero Wikimedia URLs."""
         with open(GUIDE_SEO_PHP, 'r', encoding='utf-8') as f:
             seo_src = f.read()
-        pattern = r'https://upload\.wikimedia\.org/wikipedia/commons/thumb/([0-9a-f])/([0-9a-f]{2})/([^/\'"\s]+)/'
-        matches = re.findall(pattern, seo_src)
-        self.assertGreaterEqual(len(matches), 11, "Must find all regional Wikimedia Commons Discover image URLs")
-        for d1, d2, encoded_filename in matches:
-            decoded_filename = unquote(encoded_filename).replace(' ', '_')
-            md5_hex = hashlib.md5(decoded_filename.encode('utf-8')).hexdigest()
-            self.assertEqual(
-                (d1, d2),
-                (md5_hex[0], md5_hex[:2]),
-                f"Broken Wikimedia Commons MD5 directory prefix for {decoded_filename}: found /{d1}/{d2}/, expected /{md5_hex[0]}/{md5_hex[:2]}/"
-            )
+        with open(PHOTO_DISPATCH_PHP, 'r', encoding='utf-8') as f:
+            dispatch_src = f.read()
+        with open(IMAGE_DIMS_PHP, 'r', encoding='utf-8') as f:
+            dims_src = f.read()
+
+        # Zero upload.wikimedia.org image URLs remaining in guide-seo.php Discover maps or guide-photo-dispatch.php
+        wiki_img_pat = r'https://upload\.wikimedia\.org/wikipedia/commons/[^\'"\s]+'
+        self.assertEqual(len(re.findall(wiki_img_pat, seo_src)), 0, "guide-seo.php must not reference upload.wikimedia.org image URLs")
+        self.assertEqual(len(re.findall(wiki_img_pat, dispatch_src)), 0, "guide-photo-dispatch.php must not reference upload.wikimedia.org image URLs")
+
+        editorial_pat = r'https://vietnamguide\.net/wp-content/uploads/editorial-2026/([a-z0-9-]+\.jpg)'
+        seo_matches = re.findall(editorial_pat, seo_src)
+        dispatch_matches = re.findall(editorial_pat, dispatch_src)
+        self.assertGreaterEqual(len(seo_matches), 20, "Must find all 20 regional & sub-destination self-hosted Discover image URLs in guide-seo.php")
+        self.assertGreaterEqual(len(dispatch_matches), 12, "Must find all 12 self-hosted editorial URLs in guide-photo-dispatch.php")
+        for fname in sorted(set(seo_matches + dispatch_matches)):
+            self.assertIn(f"'{fname}'", dims_src, f"Self-hosted editorial image {fname} must be registered in image-dimensions.php")
 
     def test_expanded_curated_faqs_and_9_gateway_webapplication_schema(self):
         """Expanded curated FAQs (Cat Ba, Nha Trang, Quy Nhon, Mui Ne, Hue, Can Tho, Train Travel) and 9-gateway WebApplication schema must emit verified 2026 ground truth."""
@@ -1621,17 +1625,17 @@ echo json_encode([
         self.assertIn('9 gateway airports (HAN, SGN, DAD, CXR, PQC, HUI, DLI, VDH, HPH)', out['airport_app']['description'])
 
     def test_subdestination_discover_image_resolution_and_stage117_faqs_howtos(self):
-        """Sub-destinations must resolve their own 1920px Wikimedia Commons Discover images, and Stage 117 FAQ/HowTo/Wikidata ground truth must be verified."""
+        """Sub-destinations must resolve their own self-hosted >=1200x675px Discover images, and Stage 117 FAQ/HowTo/Wikidata ground truth must be verified."""
         subdest_cases = [
-            ('destinations/hue-travel-guide', '1920px-Hue_Vietnam_Citadel-of-Hu%E1%BA%BF-13.jpg', 1920, 1280),
-            ('destinations/da-nang-travel-guide', '1920px-My_Khe_Beach_seen_from_the_Son_Tra_Mountain.jpg', 1920, 1440),
-            ('destinations/my-son-sanctuary-guide', '1920px-My_Son_Sanctuary_Vietnam_06.jpg', 1920, 1440),
-            ('destinations/cat-ba-travel-guide', '1920px-Lan_Ha_Bay-Cat_Ba_Vietnam-Andres_Larin.jpg', 1920, 1435),
-            ('destinations/bai-tu-long-bay-guide', '1920px-B%C3%A1i_T%E1%BB%AD_Long_Bay_-_01.jpg', 1920, 1282),
-            ('destinations/con-dao-travel-guide', '1920px-Beach_view_from_Six_Senses_Resort_in_C%C3%B4n_%C4%90%E1%BA%A3o_%28April_2022%29.jpg', 1920, 1440),
-            ('destinations/nha-trang-travel-guide', '1920px-Nha_Trang_Beach_3.jpg', 1920, 1440),
-            ('destinations/quy-nhon-travel-guide', '1920px-Ky_Co_beach%2C_Quy_Nhon_city%2C_Binh_Dinh_province%2C_Vietnam.jpg', 1920, 1280),
-            ('destinations/mui-ne-travel-guide', '1920px-Vietnam%2C_Mui_Ne_beach%2C_Kitesurfing_on_the_beach.jpg', 1920, 1280),
+            ('destinations/hue-travel-guide', 'editorial-2026/hue-imperial-citadel.jpg', 1260, 681),
+            ('destinations/da-nang-travel-guide', 'editorial-2026/da-nang-my-khe-beach.jpg', 1280, 720),
+            ('destinations/my-son-sanctuary-guide', 'editorial-2026/my-son-sanctuary.jpg', 1600, 1143),
+            ('destinations/cat-ba-travel-guide', 'editorial-2026/lan-ha-bay-cat-ba.jpg', 1382, 953),
+            ('destinations/bai-tu-long-bay-guide', 'editorial-2026/bai-tu-long-bay.jpg', 1600, 1000),
+            ('destinations/con-dao-travel-guide', 'editorial-2026/con-dao-beach.jpg', 1260, 681),
+            ('destinations/nha-trang-travel-guide', 'editorial-2026/nha-trang-beach.jpg', 1260, 681),
+            ('destinations/quy-nhon-travel-guide', 'editorial-2026/quy-nhon-ky-co-beach.jpg', 1600, 1067),
+            ('destinations/mui-ne-travel-guide', 'editorial-2026/mui-ne-beach.jpg', 1600, 1067),
         ]
         stage117_faqs = [
             'destinations/ba-be-lake-travel-guide',
