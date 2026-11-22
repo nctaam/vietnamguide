@@ -262,6 +262,59 @@ def connect_ssh(config: DeployConfig):
     return client
 
 
+MAX_SINGLE_SSH_COMMAND_BYTES = 64000
+SSH_COMMAND_CHUNK_BYTES = 32000
+
+
+def _build_chunked_commands(
+    init_prefix: list[str],
+    chunk_prefix: list[str],
+    units: list[str],
+    suffix: list[str] | None = None,
+) -> list[str]:
+    """Pack shell command units into chunks safely below Linux MAX_ARG_STRLEN (128 KiB)."""
+    tail = list(suffix or ())
+    single = '; '.join([*init_prefix, *units, *tail])
+    if len(single.encode('utf-8')) <= MAX_SINGLE_SSH_COMMAND_BYTES:
+        return [single]
+
+    batched: list[str] = []
+    current_prefix = list(init_prefix)
+    current_units: list[str] = []
+    base_len = len('; '.join([*current_prefix, *tail]).encode('utf-8')) + 4
+    current_len = base_len
+
+    for unit in units:
+        unit_len = len(unit.encode('utf-8')) + 2
+        if current_units and (current_len + unit_len) > SSH_COMMAND_CHUNK_BYTES:
+            batched.append('; '.join([*current_prefix, *current_units, *tail]))
+            current_prefix = list(chunk_prefix)
+            current_units = []
+            base_len = len('; '.join([*current_prefix, *tail]).encode('utf-8')) + 4
+            current_len = base_len
+        current_units.append(unit)
+        current_len += unit_len
+
+    if current_units or not batched:
+        batched.append('; '.join([*current_prefix, *current_units, *tail]))
+    return batched
+
+
+def _exec_remote_command(ssh, command: str) -> tuple[int, str]:
+    """Execute a single remote SSH command and return (exit_status, stderr_text)."""
+    _stdin, stdout, stderr = ssh.exec_command(command)
+    exit_status = (
+        stdout.channel.recv_exit_status()
+        if hasattr(stdout, 'channel') and hasattr(stdout.channel, 'recv_exit_status')
+        else 0
+    )
+    raw_err = stderr.read() if (exit_status != 0 and hasattr(stderr, 'read')) else b''
+    if hasattr(stdout, 'channel') and hasattr(stdout.channel, 'close'):
+        stdout.channel.close()
+    error = raw_err.decode('utf-8', errors='replace').strip() if isinstance(raw_err, bytes) else str(raw_err).strip()
+    return exit_status, error
+
+
 def backup_remote_files(ssh, config: DeployConfig, *, include_content: bool = False) -> str:
     """Create a timestamped, per-file rollback copy before uploading anything."""
 
@@ -269,68 +322,62 @@ def backup_remote_files(ssh, config: DeployConfig, *, include_content: bool = Fa
     backup_root = posixpath.join(config.remote_root, 'wp-content', '.vietnamguide-deployment-backups')
     backup_dir = posixpath.join(backup_root, backup_id)
     manifest_path = posixpath.join(backup_dir, 'backup-manifest.tsv')
-    commands = [
+    init_prefix = [
         'set -eu',
         f'mkdir -p -- {shlex.quote(backup_dir)}',
+        f'chmod 700 -- {shlex.quote(backup_root)}',
         f': > {shlex.quote(manifest_path)}',
     ]
 
+    units: list[str] = []
     for _local_relative, remote_relative in get_deploy_manifest(include_content=include_content):
         source = get_remote_path(config, remote_relative)
         destination = posixpath.join(backup_dir, remote_relative)
         destination_parent = posixpath.dirname(destination)
         source_q = shlex.quote(source)
         destination_q = shlex.quote(destination)
-        commands.extend(
-            [
-                f'mkdir -p -- {shlex.quote(destination_parent)}',
-                f'if [ -f {source_q} ]; then '
-                f'cp -p -- {source_q} {destination_q}; '
-                f'printf "%s\\t%s\\n" PRESENT {shlex.quote(remote_relative)} >> {shlex.quote(manifest_path)}; '
-                f'sha256sum -- {source_q} >> {shlex.quote(manifest_path)}; '
-                f'else printf "%s\\t%s\\n" MISSING {shlex.quote(remote_relative)} >> {shlex.quote(manifest_path)}; fi',
-            ]
+        units.append(
+            f'mkdir -p -- {shlex.quote(destination_parent)}; '
+            f'if [ -f {source_q} ]; then '
+            f'cp -p -- {source_q} {destination_q}; '
+            f'printf "%s\\t%s\\n" PRESENT {shlex.quote(remote_relative)} >> {shlex.quote(manifest_path)}; '
+            f'sha256sum -- {source_q} >> {shlex.quote(manifest_path)}; '
+            f'else printf "%s\\t%s\\n" MISSING {shlex.quote(remote_relative)} >> {shlex.quote(manifest_path)}; fi'
         )
 
-    stdin, stdout, stderr = ssh.exec_command('; '.join(commands))
-    exit_status = stdout.channel.recv_exit_status()
-    error = stderr.read().decode('utf-8', errors='replace').strip() if exit_status != 0 else ''
-    if hasattr(stdout, 'channel') and hasattr(stdout.channel, 'close'):
-        stdout.channel.close()
-    if exit_status != 0:
-        raise RuntimeError(f'remote backup failed ({exit_status}): {error}')
+    for cmd in _build_chunked_commands(init_prefix, ['set -eu'], units):
+        exit_status, error = _exec_remote_command(ssh, cmd)
+        if exit_status != 0:
+            raise RuntimeError(f'remote backup failed ({exit_status}): {error}')
     return backup_dir
 
 
 def restore_remote_backup(ssh, config: DeployConfig, backup_dir: str, *, include_content: bool = False) -> None:
     """Restore remote files from backup manifest in case of deployment failure."""
     manifest_path = posixpath.join(backup_dir, 'backup-manifest.tsv')
-    commands = [
+    prefix = [
         'set -eu',
         f'test -f {shlex.quote(manifest_path)}',
     ]
 
+    units: list[str] = []
     for _local_relative, remote_relative in get_deploy_manifest(include_content=include_content):
         target = get_remote_path(config, remote_relative)
         backup_file = posixpath.join(backup_dir, remote_relative)
         target_q = shlex.quote(target)
         backup_q = shlex.quote(backup_file)
         # If backup exists, restore it. If it was missing prior to deployment, delete newly created file.
-        commands.append(
+        units.append(
             f'if [ -f {backup_q} ]; then '
             f'mkdir -p -- {shlex.quote(posixpath.dirname(target))}; '
             f'cp -pf -- {backup_q} {target_q}; '
             f'else rm -f -- {target_q}; fi'
         )
 
-    commands.append('set +e')
-    stdin, stdout, stderr = ssh.exec_command('; '.join(commands))
-    exit_status = stdout.channel.recv_exit_status()
-    error = stderr.read().decode('utf-8', errors='replace').strip() if exit_status != 0 else ''
-    if hasattr(stdout, 'channel') and hasattr(stdout.channel, 'close'):
-        stdout.channel.close()
-    if exit_status != 0:
-        raise RuntimeError(f'rollback restoration failed ({exit_status}): {error}')
+    for cmd in _build_chunked_commands(prefix, prefix, units, suffix=['set +e']):
+        exit_status, error = _exec_remote_command(ssh, cmd)
+        if exit_status != 0:
+            raise RuntimeError(f'rollback restoration failed ({exit_status}): {error}')
 
 
 def purge_cache(ssh, config: DeployConfig) -> None:
@@ -349,6 +396,7 @@ def purge_cache(ssh, config: DeployConfig) -> None:
         + ' '.join(quoted_paths)
         + f'; php -r "if (file_exists({wp_load_q})) {{ define(\'WP_USE_THEMES\', false); require {wp_load_q}; do_action(\'litespeed_purge_all\'); }}" >/dev/null 2>&1 || true'
         + '; killall -9 lsphp >/dev/null 2>&1 || true'
+        + '; /usr/local/lsws/bin/lswsctrl reload >/dev/null 2>&1 || true'
     )
     stdin, stdout, stderr = ssh.exec_command(command)
     exit_status = stdout.channel.recv_exit_status()
@@ -455,6 +503,7 @@ def deploy_tarball_batch(
     tar_buffer = io.BytesIO()
     manifest_entries: list[tuple[str, str, str]] = []
     manifest = get_deploy_manifest(include_content=(len(local_files) > len(DEPLOY_FILES)))
+    now_mtime = int(datetime.now(timezone.utc).timestamp())
     with tarfile.open(fileobj=tar_buffer, mode='w:gz') as tar:
         for (local_relative, local_path), (_unused, remote_relative) in zip(local_files, manifest):
             local_bytes = local_path.read_bytes()
@@ -465,6 +514,7 @@ def deploy_tarball_batch(
             info = tarfile.TarInfo(name=norm_rel)
             info.size = len(local_bytes)
             info.mode = 0o644
+            info.mtime = now_mtime
             tar.addfile(info, io.BytesIO(local_bytes))
             manifest_entries.append((local_relative, norm_rel, file_hash))
 
@@ -478,7 +528,7 @@ def deploy_tarball_batch(
     try:
         sftp.put(str(local_tar_path), remote_tar_path)
 
-        commands = [
+        extract_prefix = [
             'set -eu',
             f'mkdir -p -- {shlex.quote(remote_extract_dir)}',
             f'actual_tar_hash=$(sha256sum -- {shlex.quote(remote_tar_path)} | awk \'{{print tolower($1)}}\')',
@@ -486,31 +536,42 @@ def deploy_tarball_batch(
             f'rm -f {shlex.quote(remote_tar_path)}; echo "TARBALL_HASH_MISMATCH:$actual_tar_hash" >&2; exit 10; fi',
             f'tar -xzf {shlex.quote(remote_tar_path)} -C {shlex.quote(remote_extract_dir)} || {{ rm -f {shlex.quote(remote_tar_path)}; exit 12; }}',
         ]
+        verify_units: list[str] = []
+        promote_units: list[str] = []
+        combined_units: list[str] = []
         for _local_rel, norm_rel, expected_file_hash in manifest_entries:
             staged_file = posixpath.join(remote_extract_dir, norm_rel)
             target_file = get_remote_path(config, norm_rel)
             target_parent = posixpath.dirname(target_file)
-            commands.extend([
-                f'actual_hash=$(sha256sum -- {shlex.quote(staged_file)} | awk \'{{print tolower($1)}}\')',
+            verify_unit = (
+                f'actual_hash=$(sha256sum -- {shlex.quote(staged_file)} | awk \'{{print tolower($1)}}\'); '
                 f'if [ "$actual_hash" != {shlex.quote(expected_file_hash)} ]; then '
-                f'echo "FILE_HASH_MISMATCH:{norm_rel}:$actual_hash" >&2; exit 11; fi',
-                f'mkdir -p -- {shlex.quote(target_parent)}',
-                f'mv -f -- {shlex.quote(staged_file)} {shlex.quote(target_file)}',
-            ])
+                f'echo "FILE_HASH_MISMATCH:{norm_rel}:$actual_hash" >&2; exit 11; fi'
+            )
+            promote_unit = (
+                f'mkdir -p -- {shlex.quote(target_parent)}; '
+                f'mv -f -- {shlex.quote(staged_file)} {shlex.quote(target_file)}'
+            )
+            verify_units.append(verify_unit)
+            promote_units.append(promote_unit)
+            combined_units.append(f'{verify_unit}; {promote_unit}')
 
-        _stdin, stdout, stderr = ssh.exec_command('; '.join(commands))
-        exit_status = (
-            stdout.channel.recv_exit_status()
-            if hasattr(stdout, 'channel') and hasattr(stdout.channel, 'recv_exit_status')
-            else 0
-        )
-        raw_err = stderr.read() if hasattr(stderr, 'read') else b''
-        if hasattr(stdout, 'channel') and hasattr(stdout.channel, 'close'):
-            stdout.channel.close()
-        if exit_status != 0:
-            err_msg = raw_err.decode('utf-8', errors='replace').strip() if isinstance(raw_err, bytes) else str(raw_err).strip()
-            print(f'  [FAIL] Batch tarball promotion failed ({exit_status}): {err_msg}')
-            return False
+        single_command = '; '.join([*extract_prefix, *combined_units])
+        if len(single_command.encode('utf-8')) <= MAX_SINGLE_SSH_COMMAND_BYTES:
+            execution_plan = [single_command]
+        else:
+            # Verify every extracted file hash before promoting any file into live webroot.
+            execution_plan = [
+                '; '.join(extract_prefix),
+                *_build_chunked_commands(['set -eu'], ['set -eu'], verify_units),
+                *_build_chunked_commands(['set -eu'], ['set -eu'], promote_units),
+            ]
+
+        for cmd in execution_plan:
+            exit_status, err_msg = _exec_remote_command(ssh, cmd)
+            if exit_status != 0:
+                print(f'  [FAIL] Batch tarball promotion failed ({exit_status}): {err_msg}')
+                return False
 
         for local_rel, norm_rel, expected_file_hash in manifest_entries:
             print(f'  [OK] Promoted (batch): {local_rel} -> {get_remote_path(config, norm_rel)} ({expected_file_hash})')

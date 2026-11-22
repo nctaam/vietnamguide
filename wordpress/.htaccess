@@ -41,8 +41,9 @@
 <IfModule mod_rewrite.c>
     RewriteEngine On
 
-    # 1. Immediate 403 for scanner probes, hidden dotfiles & backups (0 PHP overhead)
+    # 1. Immediate 403 for scanner probes, hidden dotfiles, backups & raw markdown corpus (0 PHP overhead)
     RewriteRule ^wp-content/\..* - [F,L]
+    RewriteRule ^wp-content/content/ - [F,L]
     RewriteRule ^(\.env|\.git|\.user\.ini|wp-config\.php|readme\.html|license\.txt) - [F,L]
     RewriteRule \.(env|sql|bak|backup|config|save|swp|git|svn|bzr|hg|ini|log|tar\.gz|tgz|tsv)$ - [F,L]
     RewriteRule ^(app|apps|api|web|core|config|vendor)/\.env - [F,L]

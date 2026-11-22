@@ -215,6 +215,8 @@ class TestThemeAssetsPipeline(unittest.TestCase):
         self.assertIn('X-Frame-Options "SAMEORIGIN"', content)
         self.assertIn('Cross-Origin-Opener-Policy "same-origin"', content)
         self.assertIn('Cross-Origin-Resource-Policy "same-origin"', content)
+        self.assertIn('RewriteRule ^wp-content/\\..* - [F,L]', content)
+        self.assertIn('RewriteRule ^wp-content/content/ - [F,L]', content)
 
         # High Performance Caching
         self.assertIn('<IfModule mod_expires.c>', content)

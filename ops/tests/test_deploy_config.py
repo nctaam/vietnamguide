@@ -153,6 +153,7 @@ class DeployConfigTests(unittest.TestCase):
         self.assertIn('set -eu; rm -rf -- ', ssh.command)
         self.assertIn("litespeed_purge_all", ssh.command)
         self.assertIn("killall -9 lsphp", ssh.command)
+        self.assertIn("lswsctrl reload", ssh.command)
 
     def test_prune_remote_backups_retains_latest_snapshots(self):
         class FakeChannel:
@@ -201,10 +202,11 @@ class DeployConfigTests(unittest.TestCase):
                 return b''
 
         class FakeSSH:
-            command = ''
+            def __init__(self):
+                self.commands = []
 
             def exec_command(self, command):
-                self.command = command
+                self.commands.append(command)
                 return None, FakeStream(), FakeStream()
 
         config = DeployConfig(
@@ -219,11 +221,14 @@ class DeployConfigTests(unittest.TestCase):
         ssh = FakeSSH()
 
         backup_dir = backup_remote_files(ssh, config)
+        combined = '\n'.join(ssh.commands)
 
         self.assertRegex(backup_dir, r'^/srv/site/wp-content/\.vietnamguide-deployment-backups/')
-        self.assertIn('backup-manifest.tsv', ssh.command)
-        self.assertIn('cp -p --', ssh.command)
-        self.assertIn('sha256sum --', ssh.command)
+        self.assertIn('chmod 700 --', combined)
+        self.assertIn('backup-manifest.tsv', combined)
+        self.assertIn('cp -p --', combined)
+        self.assertIn('sha256sum --', combined)
+        self.assertTrue(all(len(cmd.encode('utf-8')) <= 64000 for cmd in ssh.commands))
 
     def test_functions_php_required_includes_exist_in_deploy_files(self):
         """All 15 include files required in functions.php must exist in DEPLOY_FILES to prevent fatal crash."""
@@ -810,6 +815,27 @@ class DeployConfigTests(unittest.TestCase):
         self.assertTrue(success)
         self.assertEqual(len(mock_sftp.tar_members), len(DEPLOY_FILES) + 282)
         self.assertTrue(any(m.startswith('wp-content/content/') for m in mock_sftp.tar_members))
+
+        # Every SSH exec command for 364-file batch deploy must stay well below Linux MAX_ARG_STRLEN (128 KiB)
+        self.assertGreater(len(mock_ssh.commands), 2)
+        for cmd in mock_ssh.commands:
+            self.assertLessEqual(len(cmd.encode('utf-8')), 64000, f'SSH command exceeded 64 KB safety cap: {len(cmd)} bytes')
+        # All SHA-256 verification chunks must complete before any mv -f promotion command runs
+        first_mv_idx = next(i for i, cmd in enumerate(mock_ssh.commands) if 'mv -f --' in cmd)
+        last_verify_idx = max(i for i, cmd in enumerate(mock_ssh.commands) if 'FILE_HASH_MISMATCH' in cmd)
+        self.assertLess(last_verify_idx, first_mv_idx)
+
+        # Backup & rollback with include_content=True must also chunk safely below 64 KB
+        backup_ssh = MockSSH()
+        backup_dir = backup_remote_files(backup_ssh, config, include_content=True)
+        self.assertGreater(len(backup_ssh.commands), 1)
+        for cmd in backup_ssh.commands:
+            self.assertLessEqual(len(cmd.encode('utf-8')), 64000)
+        restore_ssh = MockSSH()
+        restore_remote_backup(restore_ssh, config, backup_dir, include_content=True)
+        self.assertGreater(len(restore_ssh.commands), 1)
+        for cmd in restore_ssh.commands:
+            self.assertLessEqual(len(cmd.encode('utf-8')), 64000)
 
 
 if __name__ == '__main__':

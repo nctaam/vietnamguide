@@ -543,7 +543,7 @@ function vg_get_canonical_alias_redirect_map(): array
         'costs/vietnam-travel-cost'    => '/plan/vietnam-travel-cost/',
         'costs/ha-giang-loop-cost-budget' => '/destinations/ha-giang-loop-planning-guide/',
         'costs/da-nang-hoi-an-budget'  => '/itineraries/central-vietnam-itinerary/',
-        'costs/hanoi-ninh-binh-ha-long-budget' => '/itineraries/north-vietnam-itinerary/',
+        'costs/hanoi-ninh-binh-ha-long-budget' => '/itineraries/northeast-vietnam-itinerary/',
         'costs/10-day-vietnam-trip-cost' => '/itineraries/10-days-in-vietnam/',
         'costs/vietnam-2-week-budget'  => '/plan/vietnam-travel-cost/',
         'costs/vietnam-3-week-budget'  => '/plan/vietnam-travel-cost/',
