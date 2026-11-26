@@ -1576,16 +1576,18 @@ echo json_encode([
         with open(IMAGE_DIMS_PHP, 'r', encoding='utf-8') as f:
             dims_src = f.read()
 
-        # Zero upload.wikimedia.org image URLs remaining in guide-seo.php Discover maps or guide-photo-dispatch.php
-        wiki_img_pat = r'https://upload\.wikimedia\.org/wikipedia/commons/[^\'"\s]+'
-        self.assertEqual(len(re.findall(wiki_img_pat, seo_src)), 0, "guide-seo.php must not reference upload.wikimedia.org image URLs")
-        self.assertEqual(len(re.findall(wiki_img_pat, dispatch_src)), 0, "guide-photo-dispatch.php must not reference upload.wikimedia.org image URLs")
+        # Zero upload.wikimedia.org URLs or preconnect hints remaining in guide-seo.php or guide-photo-dispatch.php (Stages 219-220)
+        wiki_img_pat = r'https://upload\.wikimedia\.org'
+        self.assertEqual(len(re.findall(wiki_img_pat, seo_src)), 0, "guide-seo.php must not reference upload.wikimedia.org URLs or preconnect hints")
+        self.assertEqual(len(re.findall(wiki_img_pat, dispatch_src)), 0, "guide-photo-dispatch.php must not reference upload.wikimedia.org URLs")
 
         editorial_pat = r'https://vietnamguide\.net/wp-content/uploads/editorial-2026/([a-z0-9-]+\.jpg)'
         seo_matches = re.findall(editorial_pat, seo_src)
         dispatch_matches = re.findall(editorial_pat, dispatch_src)
+        dim_matches = re.findall(editorial_pat, dims_src)
         self.assertGreaterEqual(len(seo_matches), 20, "Must find all 20 regional & sub-destination self-hosted Discover image URLs in guide-seo.php")
         self.assertGreaterEqual(len(dispatch_matches), 12, "Must find all 12 self-hosted editorial URLs in guide-photo-dispatch.php")
+        self.assertGreaterEqual(len(set(dim_matches)), 131, "image-dimensions.php must register all 131 self-hosted editorial-2026 JPEGs (37 Stage 219 + 94 Stage 220)")
         for fname in sorted(set(seo_matches + dispatch_matches)):
             self.assertIn(f"'{fname}'", dims_src, f"Self-hosted editorial image {fname} must be registered in image-dimensions.php")
 

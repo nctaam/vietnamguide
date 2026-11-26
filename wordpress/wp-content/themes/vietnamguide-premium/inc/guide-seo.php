@@ -596,8 +596,6 @@ add_action('wp_head', static function (): void {
         '<link rel="manifest" href="' . esc_url($themeUrl . '/site.webmanifest') . '">',
         '<link rel="apple-touch-icon" href="' . esc_url($themeUrl . '/assets/images/vg-icon-192.png') . '">',
         '<link rel="icon" type="image/svg+xml" href="' . esc_url($themeUrl . '/assets/images/vg-icon.svg') . '">',
-        '<link rel="preconnect" href="https://upload.wikimedia.org" crossorigin>',
-        '<link rel="dns-prefetch" href="https://upload.wikimedia.org">',
         '<link rel="preconnect" href="https://pagead2.googlesyndication.com" crossorigin>',
         '<link rel="dns-prefetch" href="https://pagead2.googlesyndication.com">',
         '<link rel="alternate" type="application/rss+xml" title="' . esc_attr__('VietnamGuide - Travel Planning Advisory Feed', 'vietnamguide-premium') . '" href="' . esc_url(home_url('/feed/')) . '">',
