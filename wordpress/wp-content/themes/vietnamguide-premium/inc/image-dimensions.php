@@ -927,6 +927,9 @@ function vg_get_known_image_dimensions(): array
         'https://vietnamguide.net/wp-content/uploads/editorial-2026/vietnam-international-hospital.jpg' => [950, 632],
         'vietnam-ambulance-emergency.jpg' => [1280, 862],
         'https://vietnamguide.net/wp-content/uploads/editorial-2026/vietnam-ambulance-emergency.jpg' => [1280, 862],
+        // Stage 221: Real Vietnamese Dong polymer banknotes (VTV News, replacing legacy /2026/07/ banknote photo)
+        'vietnam-vnd-banknotes.jpg' => [1600, 999],
+        'https://vietnamguide.net/wp-content/uploads/editorial-2026/vietnam-vnd-banknotes.jpg' => [1600, 999],
     ];
 
     return $dimensions;

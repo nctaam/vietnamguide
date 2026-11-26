@@ -1587,7 +1587,8 @@ echo json_encode([
         dim_matches = re.findall(editorial_pat, dims_src)
         self.assertGreaterEqual(len(seo_matches), 20, "Must find all 20 regional & sub-destination self-hosted Discover image URLs in guide-seo.php")
         self.assertGreaterEqual(len(dispatch_matches), 12, "Must find all 12 self-hosted editorial URLs in guide-photo-dispatch.php")
-        self.assertGreaterEqual(len(set(dim_matches)), 131, "image-dimensions.php must register all 131 self-hosted editorial-2026 JPEGs (37 Stage 219 + 94 Stage 220)")
+        self.assertGreaterEqual(len(set(dim_matches)), 132, "image-dimensions.php must register all 132 self-hosted editorial-2026 JPEGs (37 Stage 219 + 94 Stage 220 + 1 Stage 221)")
+        self.assertIn("'vietnam-vnd-banknotes.jpg'", dims_src, "Stage 221 real VND banknotes photo must be registered in image-dimensions.php")
         for fname in sorted(set(seo_matches + dispatch_matches)):
             self.assertIn(f"'{fname}'", dims_src, f"Self-hosted editorial image {fname} must be registered in image-dimensions.php")
 
