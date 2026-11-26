@@ -59,6 +59,31 @@ function vg_resolve_image_dimensions_by_url(string $url): array
 }
 
 /**
+ * Build responsive srcset for self-hosted /wp-content/uploads/editorial-2026/*.jpg images.
+ * - JPEG mode ($webp = false): returns 768w + naturalWidth srcset only when naturalWidth >= 1100px.
+ * - WebP mode ($webp = true): returns 768w.jpg.webp + .jpg.webp srcset when >= 1100px, or single .jpg.webp for narrower originals.
+ */
+function vg_build_editorial_responsive_srcset(string $src, int $naturalWidth, bool $webp = false): ?string
+{
+    if (! preg_match('#^(https://vietnamguide\.net/wp-content/uploads/editorial-2026/[a-z0-9-]+)\.jpg$#i', trim($src), $m)) {
+        return null;
+    }
+    if (str_ends_with(strtolower($m[1]), '-768w')) {
+        return null;
+    }
+    if ($webp) {
+        if ($naturalWidth >= 1100) {
+            return $m[1] . '-768w.jpg.webp 768w, ' . $m[1] . '.jpg.webp ' . $naturalWidth . 'w';
+        }
+        return $m[1] . '.jpg.webp';
+    }
+    if ($naturalWidth < 1100) {
+        return null;
+    }
+    return $m[1] . '-768w.jpg 768w, ' . $m[1] . '.jpg ' . $naturalWidth . 'w';
+}
+
+/**
  * Return a verified >= 1200x675px high-resolution Google Discover image for each of the 12 travel clusters
  * (self-hosted official Vietnamese tourism & press photography in /wp-content/uploads/editorial-2026/).
  *
@@ -601,7 +626,13 @@ add_action('wp_head', static function (): void {
         '<link rel="alternate" type="application/rss+xml" title="' . esc_attr__('VietnamGuide - Travel Planning Advisory Feed', 'vietnamguide-premium') . '" href="' . esc_url(home_url('/feed/')) . '">',
     ]);
 
-    if (is_singular()) {
+    if (is_front_page() || is_home()) {
+        $homeHeroWebp = $themeUrl . '/assets/images/home-hero.webp';
+        $homeHeroSrcset = esc_url($themeUrl . '/assets/images/home-hero-640.webp') . ' 640w, '
+            . esc_url($themeUrl . '/assets/images/home-hero-960.webp') . ' 960w, '
+            . esc_url($homeHeroWebp) . ' 1376w';
+        $headTags[] = '<link rel="preload" as="image" type="image/webp" href="' . esc_url($homeHeroWebp) . '" imagesrcset="' . esc_attr($homeHeroSrcset) . '" imagesizes="100vw" fetchpriority="high">';
+    } elseif (is_singular()) {
         $heroImage = '';
         if (function_exists('get_post')) {
             $post = get_post();
@@ -615,14 +646,18 @@ add_action('wp_head', static function (): void {
             $heroImage = vg_get_default_og_image_url();
         }
         if ($heroImage !== '') {
-            $headTags[] = '<link rel="preload" as="image" href="' . esc_url($heroImage) . '" fetchpriority="high">';
+            [$heroW] = vg_resolve_image_dimensions_by_url($heroImage);
+            $heroWebpSrcset = vg_build_editorial_responsive_srcset($heroImage, (int) $heroW, true);
+            if ($heroWebpSrcset !== null) {
+                if ((int) $heroW >= 1100) {
+                    $headTags[] = '<link rel="preload" as="image" type="image/webp" href="' . esc_url($heroImage . '.webp') . '" imagesrcset="' . esc_attr($heroWebpSrcset) . '" imagesizes="100vw" fetchpriority="high">';
+                } else {
+                    $headTags[] = '<link rel="preload" as="image" type="image/webp" href="' . esc_url($heroWebpSrcset) . '" fetchpriority="high">';
+                }
+            } else {
+                $headTags[] = '<link rel="preload" as="image" href="' . esc_url($heroImage) . '" fetchpriority="high">';
+            }
         }
-    } elseif (is_front_page() || is_home()) {
-        $homeHeroWebp = $themeUrl . '/assets/images/home-hero.webp';
-        $homeHeroSrcset = esc_url($themeUrl . '/assets/images/home-hero-640.webp') . ' 640w, '
-            . esc_url($themeUrl . '/assets/images/home-hero-960.webp') . ' 960w, '
-            . esc_url($homeHeroWebp) . ' 1376w';
-        $headTags[] = '<link rel="preload" as="image" type="image/webp" href="' . esc_url($homeHeroWebp) . '" imagesrcset="' . esc_attr($homeHeroSrcset) . '" imagesizes="100vw" fetchpriority="high">';
     }
 
     echo implode("\n", $headTags) . "\n";
@@ -4469,6 +4504,23 @@ function vg_enhance_content_images(string $content): string
             }
         }
 
+        // 2b. Inject responsive 768w srcset & sizes for self-hosted editorial-2026 images (>= 1100px wide)
+        if ($processor->get_attribute('srcset') === null) {
+            $widthAttr = $processor->get_attribute('width');
+            $resolvedWidth = is_numeric($widthAttr) ? (int) $widthAttr : 0;
+            if ($resolvedWidth < 1100) {
+                [$knownW] = vg_resolve_image_dimensions_by_url($src);
+                $resolvedWidth = max($resolvedWidth, (int) $knownW);
+            }
+            $responsiveSrcset = vg_build_editorial_responsive_srcset($src, $resolvedWidth);
+            if ($responsiveSrcset !== null) {
+                $processor->set_attribute('srcset', $responsiveSrcset);
+                if ($processor->get_attribute('sizes') === null) {
+                    $processor->set_attribute('sizes', $isHeroImg ? '100vw' : '(max-width: 768px) 100vw, 760px');
+                }
+            }
+        }
+
         // 3. Ensure decoding="async"
         $decoding = $processor->get_attribute('decoding');
         if ($decoding === null) {
@@ -4488,7 +4540,45 @@ function vg_enhance_content_images(string $content): string
         }
     }
 
-    return $processor->get_updated_html();
+    $enhancedHtml = $processor->get_updated_html();
+
+    // 5. Idempotently wrap standalone editorial-2026 <img> tags in HTML5 <picture class="vg-picture">
+    // with a <source type="image/webp"> candidate so modern browsers fetch WebP without proxy/server cache poisoning.
+    if (stripos($enhancedHtml, '/wp-content/uploads/editorial-2026/') !== false) {
+        $enhancedHtml = (string) preg_replace_callback(
+            '#(<picture\b[^>]*>[\s\S]*?</picture>)|(<img\b[^>]*>)#i',
+            static function (array $match): string {
+                if (! empty($match[1])) {
+                    return $match[1];
+                }
+                $imgTag = (string) ($match[2] ?? '');
+                if ($imgTag === '' || ! preg_match('/\bsrc=["\']([^"\']+)["\']/i', $imgTag, $srcMatch)) {
+                    return $imgTag;
+                }
+                $src = trim((string) $srcMatch[1]);
+                $w = 0;
+                if (preg_match('/\bwidth=["\'](\d+)["\']/i', $imgTag, $wMatch)) {
+                    $w = (int) $wMatch[1];
+                }
+                if ($w < 1100) {
+                    [$knownW] = vg_resolve_image_dimensions_by_url($src);
+                    $w = max($w, (int) $knownW);
+                }
+                $webpSrcset = vg_build_editorial_responsive_srcset($src, $w, true);
+                if ($webpSrcset === null) {
+                    return $imgTag;
+                }
+                $sizesAttr = '';
+                if ($w >= 1100 && preg_match('/\bsizes=["\']([^"\']+)["\']/i', $imgTag, $sizesMatch)) {
+                    $sizesAttr = ' sizes="' . esc_attr(trim((string) $sizesMatch[1])) . '"';
+                }
+                return '<picture class="vg-picture"><source type="image/webp" srcset="' . esc_attr($webpSrcset) . '"' . $sizesAttr . '>' . $imgTag . '</picture>';
+            },
+            $enhancedHtml
+        );
+    }
+
+    return $enhancedHtml;
 }
 
 add_filter('the_content', 'vg_enhance_content_images', 21);

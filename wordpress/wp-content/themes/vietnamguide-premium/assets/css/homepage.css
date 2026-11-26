@@ -91,6 +91,10 @@ img {
   height: auto;
 }
 
+.vg-picture {
+  display: contents;
+}
+
 :focus-visible {
   outline: 3px solid var(--vg-gold);
   outline-offset: 3px;

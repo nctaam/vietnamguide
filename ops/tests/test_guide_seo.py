@@ -1516,15 +1516,101 @@ echo json_encode([
         self.assertGreaterEqual(article['image'].get('width', 0), 1200)
 
     def test_lcp_hero_image_preloading_contract(self):
-        """wp_head must output <link rel='preload' as='image'> for singular routes and front page LCP hero."""
+        """Stage 223: wp_head must prioritize home-hero.webp on static front page (even when is_singular() is true), emit responsive imagesrcset for editorial-2026 heroes, and vg_enhance_content_images must inject 768w srcset only for >=1100px editorial-2026 images."""
         with open(GUIDE_SEO_PHP, 'r', encoding='utf-8') as f:
             seo_src = f.read()
 
-        # Check that front-page preloads home-hero.webp
+        # Static front-page preload branch MUST precede is_singular() so WordPress static front page is never shadowed
+        idx_front = seo_src.find('if (is_front_page() || is_home())')
+        idx_sing = seo_src.find('elseif (is_singular())', idx_front)
+        self.assertGreater(idx_front, 0, "Front-page preload check must exist in guide-seo.php")
+        self.assertGreater(idx_sing, idx_front, "is_front_page() preload must run BEFORE is_singular() to avoid static front-page shadowing")
         self.assertIn("home-hero.webp", seo_src, "guide-seo.php must preload home-hero.webp on front page for CWV LCP optimization")
         self.assertIn('<link rel="preload" as="image" type="image/webp"', seo_src)
         self.assertIn('<link rel="preload" as="image" href="', seo_src)
         self.assertIn('fetchpriority="high"', seo_src)
+
+        # Runtime verification of static front-page preload, singular hero preload, + responsive editorial-2026 srcset helper & content filter
+        php_code = r"""
+        $GLOBALS['vg_is_front_page'] = true;
+        $GLOBALS['vg_is_singular'] = true;
+        $_SERVER['REQUEST_URI'] = '/';
+        ob_start();
+        do_action('wp_head');
+        $front_head = ob_get_clean();
+
+        $GLOBALS['vg_is_front_page'] = false;
+        $GLOBALS['vg_is_singular'] = true;
+        $_SERVER['REQUEST_URI'] = '/destinations/hanoi-travel-guide/';
+        $post = new WP_Post();
+        $post->ID = 42;
+        $post->post_name = 'hanoi-travel-guide';
+        $post->post_content = '<div class="vg-guide-hero"><img class="wp-block-cover__image-background" src="https://vietnamguide.net/wp-content/uploads/editorial-2026/hanoi-hoan-kiem-lake.jpg" alt="Hanoi"></div>';
+        $GLOBALS['post'] = $post;
+        ob_start();
+        do_action('wp_head');
+        $singular_head = ob_get_clean();
+
+        $srcset_1600 = vg_build_editorial_responsive_srcset('https://vietnamguide.net/wp-content/uploads/editorial-2026/hanoi-hoan-kiem-lake.jpg', 1600);
+        $srcset_870  = vg_build_editorial_responsive_srcset('https://vietnamguide.net/wp-content/uploads/editorial-2026/hanoi-old-quarter-street.jpg', 870);
+        $srcset_768w = vg_build_editorial_responsive_srcset('https://vietnamguide.net/wp-content/uploads/editorial-2026/hanoi-hoan-kiem-lake-768w.jpg', 1600);
+        $srcset_ext  = vg_build_editorial_responsive_srcset('https://vietnamguide.net/wp-content/themes/vietnamguide-premium/assets/images/ha-long-bay-vietnam-hero.jpg', 1920);
+        $webp_1600   = vg_build_editorial_responsive_srcset('https://vietnamguide.net/wp-content/uploads/editorial-2026/hanoi-hoan-kiem-lake.jpg', 1600, true);
+        $webp_870    = vg_build_editorial_responsive_srcset('https://vietnamguide.net/wp-content/uploads/editorial-2026/hanoi-old-quarter-street.jpg', 870, true);
+
+        $sample_html = '<div class="vg-guide-hero"><img class="wp-block-cover__image-background" src="https://vietnamguide.net/wp-content/uploads/editorial-2026/hanoi-hoan-kiem-lake.jpg" alt="Hanoi"></div>'
+            . '<figure><img src="https://vietnamguide.net/wp-content/uploads/editorial-2026/phu-quoc-kem-beach.jpg" alt="Phu Quoc"></figure>'
+            . '<figure><img src="https://vietnamguide.net/wp-content/uploads/editorial-2026/hanoi-old-quarter-street.jpg" alt="Old Quarter"></figure>';
+        $enhanced = vg_enhance_content_images($sample_html);
+        $enhanced_twice = vg_enhance_content_images($enhanced);
+
+        echo json_encode([
+            'front_has_webp_preload' => str_contains($front_head, 'home-hero.webp'),
+            'front_has_wrong_halong' => str_contains($front_head, 'rel="preload" as="image" href="https://vietnamguide.net/wp-content/themes/vietnamguide-premium/assets/images/ha-long-bay-vietnam-hero.jpg"'),
+            'singular_head'          => $singular_head,
+            'srcset_1600'            => $srcset_1600,
+            'srcset_870'             => $srcset_870,
+            'srcset_768w'            => $srcset_768w,
+            'srcset_ext'             => $srcset_ext,
+            'webp_1600'              => $webp_1600,
+            'webp_870'               => $webp_870,
+            'enhanced'               => $enhanced,
+            'picture_count_once'     => substr_count($enhanced, '<picture class="vg-picture">'),
+            'picture_count_twice'    => substr_count($enhanced_twice, '<picture class="vg-picture">'),
+        ]);
+        """
+        proc = _run_php(php_code)
+        self.assertEqual(proc.returncode, 0, f"PHP error:\n{proc.stderr}")
+        res = json.loads(proc.stdout)
+        self.assertTrue(res['front_has_webp_preload'], "Static front page (is_front_page && is_singular) must preload home-hero.webp")
+        self.assertFalse(res['front_has_wrong_halong'], "Static front page must NOT preload ha-long-bay-vietnam-hero.jpg")
+        self.assertIn('type="image/webp"', res['singular_head'])
+        self.assertIn('hanoi-hoan-kiem-lake-768w.jpg.webp 768w, https://vietnamguide.net/wp-content/uploads/editorial-2026/hanoi-hoan-kiem-lake.jpg.webp 1600w', res['singular_head'])
+        self.assertIn('imagesizes="100vw"', res['singular_head'])
+        self.assertEqual(
+            res['srcset_1600'],
+            'https://vietnamguide.net/wp-content/uploads/editorial-2026/hanoi-hoan-kiem-lake-768w.jpg 768w, https://vietnamguide.net/wp-content/uploads/editorial-2026/hanoi-hoan-kiem-lake.jpg 1600w',
+        )
+        self.assertEqual(
+            res['webp_1600'],
+            'https://vietnamguide.net/wp-content/uploads/editorial-2026/hanoi-hoan-kiem-lake-768w.jpg.webp 768w, https://vietnamguide.net/wp-content/uploads/editorial-2026/hanoi-hoan-kiem-lake.jpg.webp 1600w',
+        )
+        self.assertEqual(
+            res['webp_870'],
+            'https://vietnamguide.net/wp-content/uploads/editorial-2026/hanoi-old-quarter-street.jpg.webp',
+        )
+        self.assertIsNone(res['srcset_870'], "Images narrower than 1100px must not emit -768w.jpg srcset")
+        self.assertIsNone(res['srcset_768w'], "Already-768w derivatives must not double-append -768w")
+        self.assertIsNone(res['srcset_ext'], "Non-editorial-2026 theme assets must not emit editorial -768w srcset")
+        self.assertEqual(res['picture_count_once'], 3, "All 3 editorial-2026 images must be wrapped in <picture class=\"vg-picture\">")
+        self.assertEqual(res['picture_count_twice'], 3, "vg_enhance_content_images <picture> wrapping must be strictly idempotent")
+        self.assertIn('<source type="image/webp" srcset="https://vietnamguide.net/wp-content/uploads/editorial-2026/hanoi-hoan-kiem-lake-768w.jpg.webp 768w, https://vietnamguide.net/wp-content/uploads/editorial-2026/hanoi-hoan-kiem-lake.jpg.webp 1600w" sizes="100vw">', res['enhanced'])
+        self.assertIn('<source type="image/webp" srcset="https://vietnamguide.net/wp-content/uploads/editorial-2026/hanoi-old-quarter-street.jpg.webp">', res['enhanced'])
+        self.assertIn('hanoi-hoan-kiem-lake-768w.jpg 768w', res['enhanced'])
+        self.assertIn('sizes="100vw"', res['enhanced'])
+        self.assertIn('phu-quoc-kem-beach-768w.jpg 768w', res['enhanced'])
+        self.assertIn('sizes="(max-width: 768px) 100vw, 760px"', res['enhanced'])
+        self.assertNotIn('hanoi-old-quarter-street-768w.jpg', res['enhanced'])
 
     def test_curated_faq_schema_has_100_percent_visible_accordion_parity(self):
         """Every route with curated FAQPage JSON-LD schema must render matching visible <details>/<summary> Q&As with zero <h2> tags."""
