@@ -1251,6 +1251,9 @@ function vg_render_cost_calculator_html(): string
  */
 function vg_cost_calculator_shortcode(): string
 {
+    if (function_exists('vg_enqueue_toolkit_style')) {
+        vg_enqueue_toolkit_style('cost-calculator');
+    }
     return vg_render_cost_calculator_html();
 }
 add_shortcode('vg_cost_calculator', 'vg_cost_calculator_shortcode');
@@ -1692,32 +1695,16 @@ function vg_route_budget_shortcode(array $atts = []): string
         'tier'  => 'midrange',
     ], $atts, 'vg_route_budget');
 
+    if (function_exists('vg_enqueue_toolkit_style')) {
+        vg_enqueue_toolkit_style('route-budget');
+    }
     return vg_render_route_budget_widget($parsed);
 }
 add_shortcode('vg_route_budget', 'vg_route_budget_shortcode');
 
-/**
- * Injects the Cost Calculator component on /costs/vietnam-travel-cost/ and /costs/ hub pages.
- *
- * @param string $content Post content.
- * @return string
- */
-function vg_inject_cost_calculator_on_page(string $content): string
+function vg_get_cost_calculator_slugs(): array
 {
-    if (is_admin()) {
-        return $content;
-    }
-
-    if (strpos($content, 'vg-guide-hero') !== false && strpos($content, 'vg-concierge-verdict') === false) {
-        return $content;
-    }
-
-    global $post;
-    $currentPost = $post instanceof WP_Post ? $post : get_post();
-    $postSlug = $currentPost ? (string) $currentPost->post_name : '';
-    $pageUri = $currentPost ? trim((string) get_page_uri($currentPost), '/') : '';
-
-    $costSlugs = [
+    return [
         'vietnam-travel-cost',
         'costs',
         'where-to-stay-in-vietnam-base-decisions',
@@ -1734,8 +1721,11 @@ function vg_inject_cost_calculator_on_page(string $content): string
         'vietnam-train-vs-flight',
         'ha-long-bay-cruise-questions-before-booking',
     ];
+}
 
-    $routeBudgetPresetMap = [
+function vg_get_route_budget_preset_map(): array
+{
+    return [
         'ha-giang-loop-planning-guide'            => 'ha-giang',
         'ha-giang-easy-rider-vs-self-drive'       => 'ha-giang',
         'where-to-stay-in-ha-giang'               => 'ha-giang',
@@ -1772,6 +1762,31 @@ function vg_inject_cost_calculator_on_page(string $content): string
         'southern-vietnam-itinerary'              => 'classic-10d',
         'vietnam-family-travel-guide'             => 'classic-10d',
     ];
+}
+
+/**
+ * Injects the Cost Calculator component on /costs/vietnam-travel-cost/ and /costs/ hub pages.
+ *
+ * @param string $content Post content.
+ * @return string
+ */
+function vg_inject_cost_calculator_on_page(string $content): string
+{
+    if (is_admin()) {
+        return $content;
+    }
+
+    if (strpos($content, 'vg-guide-hero') !== false && strpos($content, 'vg-concierge-verdict') === false) {
+        return $content;
+    }
+
+    global $post;
+    $currentPost = $post instanceof WP_Post ? $post : get_post();
+    $postSlug = $currentPost ? (string) $currentPost->post_name : '';
+    $pageUri = $currentPost ? trim((string) get_page_uri($currentPost), '/') : '';
+
+    $costSlugs = vg_get_cost_calculator_slugs();
+    $routeBudgetPresetMap = vg_get_route_budget_preset_map();
 
     $isCostGuide = in_array($postSlug, $costSlugs, true)
         || in_array($pageUri, ['costs/vietnam-travel-cost', 'costs', 'plan/where-to-stay-in-vietnam-base-decisions', 'plan/money-cash-cards-atms', 'plan/tipping-in-vietnam'], true)

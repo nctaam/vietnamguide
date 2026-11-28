@@ -1323,10 +1323,46 @@ function vg_render_airport_navigator_html(): string
     return (string) ob_get_clean();
 }
 
+function vg_get_airport_navigator_slugs(): array
+{
+    return [
+        'vietnam-airport-arrival-checklist',
+        'transport-within-vietnam',
+        'safety-and-scams-in-vietnam',
+        'safety-scams-vietnam',
+        'vietnam-first-trip-planning-checklist',
+        'hanoi-airport-to-old-quarter',
+        'saigon-airport-to-district-1',
+        'ho-chi-minh-city-airport-to-district-1',
+        'da-nang-airport-to-hoi-an',
+        'da-nang-airport-to-hoi-an-transfer',
+        'domestic-flights-in-vietnam',
+        'domestic-flights-in-vietnam-guide',
+        'vietnam-domestic-flights-guide',
+        'apps-for-vietnam-travel',
+        'vietnam-travel-apps',
+        'sim-esim-vietnam',
+        'vietnam-sim-card-airport-vs-city',
+        'grab-taxi-scams-vietnam',
+        'grab-in-vietnam-guide',
+        'getting-around-vietnam',
+        'hanoi-to-ha-long-bay-transport-guide',
+        'da-nang-to-hoi-an-transport-guide',
+        'hue-to-hoi-an-transport-guide',
+        'hanoi-to-ninh-binh-transport-guide',
+        'hanoi-to-sapa-transport-guide',
+    ];
+}
+
 /**
  * Register shortcode [vg_airport_navigator].
  */
-add_shortcode('vg_airport_navigator', 'vg_render_airport_navigator_html');
+add_shortcode('vg_airport_navigator', static function (): string {
+    if (function_exists('vg_enqueue_toolkit_style')) {
+        vg_enqueue_toolkit_style('airport-navigator');
+    }
+    return vg_render_airport_navigator_html();
+});
 
 /**
  * Injects the Airport Navigator automatically on relevant travel planning guides.
@@ -1354,33 +1390,7 @@ function vg_inject_airport_navigator_on_page(string $content): string
     }
 
     $currentSlug = (string) get_post_field('post_name');
-    $airportSlugs = [
-        'vietnam-airport-arrival-checklist',
-        'transport-within-vietnam',
-        'safety-and-scams-in-vietnam',
-        'safety-scams-vietnam',
-        'vietnam-first-trip-planning-checklist',
-        'hanoi-airport-to-old-quarter',
-        'saigon-airport-to-district-1',
-        'ho-chi-minh-city-airport-to-district-1',
-        'da-nang-airport-to-hoi-an',
-        'da-nang-airport-to-hoi-an-transfer',
-        'domestic-flights-in-vietnam',
-        'domestic-flights-in-vietnam-guide',
-        'vietnam-domestic-flights-guide',
-        'apps-for-vietnam-travel',
-        'vietnam-travel-apps',
-        'sim-esim-vietnam',
-        'vietnam-sim-card-airport-vs-city',
-        'grab-taxi-scams-vietnam',
-        'grab-in-vietnam-guide',
-        'getting-around-vietnam',
-        'hanoi-to-ha-long-bay-transport-guide',
-        'da-nang-to-hoi-an-transport-guide',
-        'hue-to-hoi-an-transport-guide',
-        'hanoi-to-ninh-binh-transport-guide',
-        'hanoi-to-sapa-transport-guide',
-    ];
+    $airportSlugs = vg_get_airport_navigator_slugs();
 
     $isTargetPage = in_array($currentSlug, $airportSlugs, true)
         || is_page('vietnam-airport-arrival-checklist')

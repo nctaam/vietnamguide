@@ -23,6 +23,16 @@ JS_DIR = THEME_ASSETS / 'js'
 
 TARGET_FILES = [
     CSS_DIR / 'homepage.css',
+    CSS_DIR / 'subpages.css',
+    CSS_DIR / 'search-404.css',
+    CSS_DIR / 'toolkit-core.css',
+    CSS_DIR / 'toolkit-itinerary-finder.css',
+    CSS_DIR / 'toolkit-cost-calculator.css',
+    CSS_DIR / 'toolkit-route-budget.css',
+    CSS_DIR / 'toolkit-season-matrix.css',
+    CSS_DIR / 'toolkit-visa-checker.css',
+    CSS_DIR / 'toolkit-airport-navigator.css',
+    CSS_DIR / 'toolkit-packing-checklist.css',
     CSS_DIR / 'guide-experience.css',
     CSS_DIR / 'guide-patterns.css',
     CSS_DIR / 'guide-interactive.css',

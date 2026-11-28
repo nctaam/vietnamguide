@@ -8,13 +8,22 @@
 
 'use strict';
 
-var CACHE_NAME = 'vg-travel-handbook-v1.5.0';
+var CACHE_NAME = 'vg-travel-handbook-v1.6.0';
 var OFFLINE_URL = '/offline.html';
 var MAX_CACHE_ENTRIES = 80;
 
 var PRECACHE_ASSETS = [
   OFFLINE_URL,
   '/wp-content/themes/vietnamguide-premium/assets/css/homepage.css',
+  '/wp-content/themes/vietnamguide-premium/assets/css/subpages.css',
+  '/wp-content/themes/vietnamguide-premium/assets/css/toolkit-core.css',
+  '/wp-content/themes/vietnamguide-premium/assets/css/toolkit-itinerary-finder.css',
+  '/wp-content/themes/vietnamguide-premium/assets/css/toolkit-cost-calculator.css',
+  '/wp-content/themes/vietnamguide-premium/assets/css/toolkit-route-budget.css',
+  '/wp-content/themes/vietnamguide-premium/assets/css/toolkit-season-matrix.css',
+  '/wp-content/themes/vietnamguide-premium/assets/css/toolkit-visa-checker.css',
+  '/wp-content/themes/vietnamguide-premium/assets/css/toolkit-airport-navigator.css',
+  '/wp-content/themes/vietnamguide-premium/assets/css/toolkit-packing-checklist.css',
   '/wp-content/themes/vietnamguide-premium/assets/css/guide-patterns.css',
   '/wp-content/themes/vietnamguide-premium/assets/css/guide-experience.css',
   '/wp-content/themes/vietnamguide-premium/assets/css/guide-interactive.css',

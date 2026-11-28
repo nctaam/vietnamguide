@@ -24,6 +24,16 @@ function vg_theme_asset_version(string $relativePath): string
     $normalizedPath = ltrim(str_replace('\\', '/', $relativePath), '/');
     $allowedPaths = [
         'assets/css/homepage.css' => true,
+        'assets/css/subpages.css' => true,
+        'assets/css/search-404.css' => true,
+        'assets/css/toolkit-core.css' => true,
+        'assets/css/toolkit-itinerary-finder.css' => true,
+        'assets/css/toolkit-cost-calculator.css' => true,
+        'assets/css/toolkit-route-budget.css' => true,
+        'assets/css/toolkit-season-matrix.css' => true,
+        'assets/css/toolkit-visa-checker.css' => true,
+        'assets/css/toolkit-airport-navigator.css' => true,
+        'assets/css/toolkit-packing-checklist.css' => true,
         'assets/css/guide-patterns.css' => true,
         'assets/js/homepage.js' => true,
         'assets/css/guide-experience.css' => true,
@@ -141,10 +151,136 @@ add_action('after_setup_theme', static function (): void {
         'footer' => __('Footer navigation', 'vietnamguide-premium'),
     ]);
 });
+function vg_enqueue_toolkit_style(string $toolkitKey): void
+{
+    $allowed = [
+        'itinerary-finder'  => '/assets/css/toolkit-itinerary-finder.css',
+        'cost-calculator'   => '/assets/css/toolkit-cost-calculator.css',
+        'route-budget'      => '/assets/css/toolkit-route-budget.css',
+        'season-matrix'     => '/assets/css/toolkit-season-matrix.css',
+        'visa-checker'      => '/assets/css/toolkit-visa-checker.css',
+        'airport-navigator' => '/assets/css/toolkit-airport-navigator.css',
+        'packing-checklist' => '/assets/css/toolkit-packing-checklist.css',
+    ];
+    if (! isset($allowed[$toolkitKey]) || ! function_exists('wp_enqueue_style')) {
+        return;
+    }
+    wp_enqueue_style(
+        'vietnamguide-toolkit-core',
+        get_theme_file_uri('/assets/css/toolkit-core.css'),
+        ['vietnamguide-homepage'],
+        vg_theme_asset_version('/assets/css/toolkit-core.css')
+    );
+    wp_enqueue_style(
+        'vietnamguide-toolkit-' . $toolkitKey,
+        get_theme_file_uri($allowed[$toolkitKey]),
+        ['vietnamguide-toolkit-core'],
+        vg_theme_asset_version($allowed[$toolkitKey])
+    );
+}
+
+/**
+ * Determine the exact minimal set of per-toolkit CSS modules needed for the current page.
+ * Single-source-of-truth parity with each toolkit module's auto-injection slug list and shortcodes.
+ *
+ * @return string[]
+ */
+function vg_get_required_toolkit_styles(?WP_Post $post = null): array
+{
+    if (
+        (function_exists('is_front_page') && is_front_page())
+        || (function_exists('is_404') && is_404())
+        || (function_exists('is_search') && is_search())
+    ) {
+        return [];
+    }
+
+    $post = $post ?? (function_exists('get_post') ? get_post() : null);
+    $slug = ($post instanceof WP_Post && is_string($post->post_name)) ? trim($post->post_name) : '';
+    $content = ($post instanceof WP_Post && is_string($post->post_content)) ? $post->post_content : '';
+    $uri = ($post instanceof WP_Post && function_exists('get_page_uri')) ? trim((string) get_page_uri($post), '/') : '';
+
+    $needed = [];
+    $hasShortcodeOrClass = static function (string $shortcode, string $classMarker) use ($content): bool {
+        if ($content === '') {
+            return false;
+        }
+        if (function_exists('has_shortcode') && has_shortcode($content, $shortcode)) {
+            return true;
+        }
+        return str_contains($content, '[' . $shortcode) || str_contains($content, $classMarker);
+    };
+
+    if (
+        (function_exists('vg_get_itinerary_finder_slugs') && in_array($slug, vg_get_itinerary_finder_slugs(), true))
+        || $hasShortcodeOrClass('vg_itinerary_finder', 'vg-itinerary-finder')
+    ) {
+        $needed['itinerary-finder'] = true;
+    }
+
+    $isCostTarget = (function_exists('vg_get_cost_calculator_slugs') && in_array($slug, vg_get_cost_calculator_slugs(), true))
+        || in_array($uri, ['costs/vietnam-travel-cost', 'costs', 'plan/where-to-stay-in-vietnam-base-decisions', 'plan/money-cash-cards-atms', 'plan/tipping-in-vietnam'], true);
+    if ($isCostTarget || $hasShortcodeOrClass('vg_cost_calculator', 'vg-cost-calculator')) {
+        $needed['cost-calculator'] = true;
+    }
+    $isRouteBudgetTarget = ! $isCostTarget
+        && function_exists('vg_get_route_budget_preset_map')
+        && isset(vg_get_route_budget_preset_map()[$slug]);
+    if ($isRouteBudgetTarget || $hasShortcodeOrClass('vg_route_budget', 'vg-route-budget-widget')) {
+        $needed['route-budget'] = true;
+    }
+
+    if (
+        (function_exists('vg_get_season_matrix_slugs') && in_array($slug, vg_get_season_matrix_slugs(), true))
+        || $hasShortcodeOrClass('vg_season_matrix', 'vg-season-matrix')
+    ) {
+        $needed['season-matrix'] = true;
+    }
+
+    if (
+        (function_exists('vg_get_visa_checker_slugs') && in_array($slug, vg_get_visa_checker_slugs(), true))
+        || $hasShortcodeOrClass('vg_visa_checker', 'vg-visa-checker')
+    ) {
+        $needed['visa-checker'] = true;
+    }
+
+    if (
+        (function_exists('vg_get_airport_navigator_slugs') && in_array($slug, vg_get_airport_navigator_slugs(), true))
+        || $hasShortcodeOrClass('vg_airport_navigator', 'vg-airport-navigator')
+    ) {
+        $needed['airport-navigator'] = true;
+    }
+
+    if (
+        (function_exists('vg_get_packing_checklist_slugs') && in_array($slug, vg_get_packing_checklist_slugs(), true))
+        || $hasShortcodeOrClass('vg_packing_checklist', 'vg-checklist-widget')
+    ) {
+        $needed['packing-checklist'] = true;
+    }
+
+    return array_keys($needed);
+}
+
 add_action('wp_enqueue_scripts', static function (): void {
     wp_enqueue_style('vietnamguide-homepage', get_theme_file_uri('/assets/css/homepage.css'), [], vg_theme_asset_version('/assets/css/homepage.css'));
     wp_enqueue_style('vietnamguide-guide-patterns', get_theme_file_uri('/assets/css/guide-patterns.css'), ['vietnamguide-homepage'], vg_theme_asset_version('/assets/css/guide-patterns.css'));
     wp_enqueue_script('vietnamguide-homepage', get_theme_file_uri('/assets/js/homepage.js'), [], vg_theme_asset_version('/assets/js/homepage.js'), true);
+    if (! (function_exists('is_front_page') && is_front_page())) {
+        wp_enqueue_style(
+            'vietnamguide-subpages',
+            get_theme_file_uri('/assets/css/subpages.css'),
+            ['vietnamguide-homepage'],
+            vg_theme_asset_version('/assets/css/subpages.css')
+        );
+    }
+    if ((function_exists('is_search') && is_search()) || (function_exists('is_404') && is_404())) {
+        wp_enqueue_style(
+            'vietnamguide-search-404',
+            get_theme_file_uri('/assets/css/search-404.css'),
+            ['vietnamguide-homepage'],
+            vg_theme_asset_version('/assets/css/search-404.css')
+        );
+    }
     if (vg_is_guide_experience_page()) {
         wp_enqueue_style(
             'vietnamguide-guide-experience',
@@ -160,10 +296,20 @@ add_action('wp_enqueue_scripts', static function (): void {
             true
         );
     }
+    foreach (vg_get_required_toolkit_styles() as $toolkitKey) {
+        vg_enqueue_toolkit_style($toolkitKey);
+    }
     if (vg_should_enqueue_interactive_assets()) {
         vg_enqueue_interactive_shortcode_assets();
     }
 });
+
+// Dequeue unused block-pattern stylesheet on static front page (0% used on Homepage per CDP CSS coverage)
+add_action('wp_enqueue_scripts', static function (): void {
+    if (function_exists('is_front_page') && is_front_page() && function_exists('wp_dequeue_style')) {
+        wp_dequeue_style('vietnamguide-guide-patterns');
+    }
+}, 20);
 function vg_primary_menu_fallback(): void
 {
     $data = vg_homepage_data();

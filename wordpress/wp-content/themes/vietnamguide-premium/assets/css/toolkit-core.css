@@ -1,0 +1,274 @@
+/* VietnamGuide Shared Interactive Toolkit Infrastructure, Synergy Bridges, Share Bar & Print Rules */
+
+/* Cross-Tool Contextual Bridges & Synergy Toolkit */
+
+.vg-vc-next-steps,
+.vg-calc-next-steps,
+.vg-finder-toolkit,
+.vg-sm-bridge,
+.vg-tool-synergy-bar {
+  margin-top: 28px;
+  padding: 22px clamp(16px, 2.5vw, 24px);
+  background: var(--vg-paper, #ffffff);
+  border: 1px solid var(--vg-border-hairline, #E5DFD6);
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(15, 37, 55, 0.03);
+}
+
+.vg-vc-ns-head,
+.vg-calc-ns-title,
+.vg-finder-tk-title,
+.vg-sm-bridge-head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--vg-navy, #0F2537);
+  margin-bottom: 16px;
+  padding-bottom: 10px;
+  border-bottom: 1px dashed var(--vg-border-hairline, #E5DFD6);
+}
+
+.vg-vc-ns-icon,
+.vg-sm-bridge-icon {
+  font-size: 16px;
+}
+
+.vg-vc-ns-grid,
+.vg-calc-ns-grid,
+.vg-finder-tk-grid,
+.vg-sm-bridge-grid,
+.vg-checklist-synergy-links {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 14px;
+}
+
+.vg-vc-ns-card,
+.vg-calc-ns-card,
+.vg-finder-tk-card,
+.vg-sm-bridge-card {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 16px;
+  background: var(--vg-paper-tactile, #FAF8F5);
+  border: 1px solid var(--vg-border-hairline, #E5DFD6);
+  border-radius: 10px;
+  text-decoration: none;
+  color: var(--vg-ink, #101417);
+  transition: all 180ms cubic-bezier(0.16, 1, 0.3, 1);
+  box-sizing: border-box;
+}
+
+.vg-vc-ns-card:hover,
+.vg-calc-ns-card:hover,
+.vg-finder-tk-card:hover,
+.vg-sm-bridge-card:hover:hover {
+  background: #ffffff;
+  border-color: var(--vg-gold-saffron, #C99446);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(15, 37, 55, 0.08);
+}
+
+.vg-vc-ns-card:active,
+.vg-calc-ns-card:active,
+.vg-finder-tk-card:active,
+.vg-sm-bridge-card:active:active {
+  transform: scale(0.98);
+}
+
+.vg-vc-ns-card:focus-visible,
+.vg-calc-ns-card:focus-visible,
+.vg-finder-tk-card:focus-visible,
+.vg-sm-bridge-card:focus-visible,
+.vg-synergy-bridge:focus-visible {
+  outline: 2px solid var(--vg-gold-saffron, #C99446);
+  outline-offset: 2px;
+}
+
+.vg-vc-ns-tag,
+.vg-calc-ns-badge,
+.vg-finder-tk-badge,
+.vg-sm-bridge-tag {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--vg-gold-text, #7e5802);
+  margin-bottom: 2px;
+}
+
+.vg-vc-ns-name,
+.vg-calc-ns-card strong,
+.vg-finder-tk-card strong,
+.vg-sm-bridge-card strong {
+  font-size: 14px;
+  font-weight: 800;
+  line-height: 1.35;
+  color: var(--vg-navy, #0F2537);
+}
+
+.vg-vc-ns-desc,
+.vg-calc-ns-sub,
+.vg-finder-tk-card span:last-child,
+.vg-sm-bridge-card span:last-child {
+  font-size: 12px;
+  line-height: 1.45;
+  color: rgba(16, 20, 23, 0.65);
+}
+
+/* Viral Social & Deep-Link Sharing Bar */
+.vg-tool-share-bar {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 18px;
+  padding-top: 14px;
+  border-top: 1px dashed var(--vg-border-hairline, #E5DFD6);
+}
+
+.vg-btn-share {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  border-radius: 9999px;
+  text-decoration: none;
+  cursor: pointer;
+  border: 1px solid var(--vg-border-hairline, #E5DFD6);
+  background: #ffffff;
+  color: var(--vg-ink, #101417);
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 1px 2px rgba(15, 37, 55, 0.04);
+}
+
+.vg-btn-share:hover {
+  background: var(--vg-paper-tactile, #FAF8F5);
+  border-color: var(--vg-navy, #0F2537);
+  color: var(--vg-navy, #0F2537);
+  transform: translateY(-1px);
+  box-shadow: 0 3px 8px rgba(15, 37, 55, 0.08);
+}
+
+.vg-btn-share--wa:hover {
+  background: #25d366;
+  border-color: #25d366;
+  color: #ffffff;
+}
+
+.vg-btn-share--tg:hover {
+  background: #0088cc;
+  border-color: #0088cc;
+  color: #ffffff;
+}
+
+.vg-btn-share--qr:hover {
+  background: var(--vg-navy, #0F2537);
+  border-color: var(--vg-navy, #0F2537);
+  color: #ffffff;
+}
+
+@media (min-width: 640px) {
+  .vg-vc-ns-grid,
+  .vg-calc-ns-grid,
+  .vg-finder-tk-grid,
+  .vg-sm-bridge-grid,
+  .vg-checklist-synergy-links {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 960px) {
+  .vg-vc-ns-grid,
+  .vg-calc-ns-grid,
+  .vg-finder-tk-grid,
+  .vg-sm-bridge-grid,
+  .vg-checklist-synergy-links {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (min-width: 1200px) {
+  .vg-vc-ns-grid,
+  .vg-calc-ns-grid,
+  .vg-finder-tk-grid,
+  .vg-sm-bridge-grid,
+  .vg-checklist-synergy-links {
+    grid-template-columns: repeat(5, 1fr);
+  }
+}
+
+@media print {
+  .vg-vc-controls,
+  .vg-vc-quick-chips,
+  .vg-vc-slider-wrap,
+  .vg-vc-action-bar,
+  .vg-vc-next-steps,
+  .vg-calc-controls,
+  .vg-calc-presets,
+  .vg-calc-actions,
+  .vg-calc-next-steps,
+  .vg-finder-controls,
+  .vg-finder-status-bar,
+  .vg-finder-toolkit,
+  .vg-finder-card-links,
+  .vg-finder-weather-link,
+  .vg-sm-actions,
+  .vg-sm-actions-bar,
+  .vg-sm-bridge,
+  .vg-an-header-actions,
+  .vg-an-airports-bar,
+  .vg-an-tabs,
+  .vg-an-zone-selector-bar,
+  .vg-an-next-steps,
+  .vg-checklist-actions,
+  .vg-checklist-filters,
+  .vg-checklist-progress-bar-wrap,
+  .vg-checklist-synergy-wrap,
+  .vg-tool-synergy-bar,
+  .vg-synergy-bridge {
+    display: none !important;
+  }
+
+  .vg-visa-checker,
+  .vg-cost-calculator,
+  .vg-itinerary-finder,
+  .vg-season-matrix,
+  .vg-airport-navigator,
+  .vg-checklist-widget {
+    border: 1pt solid #cccccc !important;
+    background: #ffffff !important;
+    padding: 12pt !important;
+    margin: 12pt 0 !important;
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+
+  .vg-checklist-item {
+    display: block !important;
+    border: 1px solid #999 !important;
+    break-inside: avoid;
+  }
+
+  .vg-checklist-box-custom {
+    border: 2px solid #000 !important;
+  }
+
+  .vg-vc-verdict-banner,
+  .vg-calc-results,
+  .vg-calc-summary-card,
+  .vg-an-airport-banner {
+    border: 1pt solid #bbb !important;
+    background: #f9f9f9 !important;
+    color: #111827 !important;
+    padding: 10pt !important;
+  }
+}

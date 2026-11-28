@@ -739,32 +739,9 @@ function vg_render_packing_checklist($attributes = []): string
     return (string) ob_get_clean();
 }
 
-add_shortcode('vg_packing_checklist', 'vg_render_packing_checklist');
-
-/**
- * Injects the Packing Checklist component onto relevant planning checklist pages.
- *
- * @param string $content Post content.
- * @return string
- */
-function vg_inject_packing_checklist_on_page(string $content): string
+function vg_get_packing_checklist_slugs(): array
 {
-    if (is_admin()) {
-        return $content;
-    }
-
-    if (strpos($content, 'vg-guide-hero') !== false) {
-        return $content;
-    }
-
-    static $injected = [];
-    $postId = get_the_ID();
-    if ($postId && isset($injected[$postId])) {
-        return $content;
-    }
-
-    $currentSlug = (string) get_post_field('post_name');
-    $packingSlugs = [
+    return [
         'vietnam-first-trip-planning-checklist',
         'vietnam-airport-arrival-checklist',
         'what-to-pack-for-vietnam-region-season',
@@ -790,6 +767,39 @@ function vg_inject_packing_checklist_on_page(string $content): string
         'pu-luong-trekking-routes-guide',
         'phong-nha-cave-treks',
     ];
+}
+
+add_shortcode('vg_packing_checklist', static function ($attributes = []): string {
+    if (function_exists('vg_enqueue_toolkit_style')) {
+        vg_enqueue_toolkit_style('packing-checklist');
+    }
+    return vg_render_packing_checklist($attributes);
+});
+
+/**
+ * Injects the Packing Checklist component onto relevant planning checklist pages.
+ *
+ * @param string $content Post content.
+ * @return string
+ */
+function vg_inject_packing_checklist_on_page(string $content): string
+{
+    if (is_admin()) {
+        return $content;
+    }
+
+    if (strpos($content, 'vg-guide-hero') !== false) {
+        return $content;
+    }
+
+    static $injected = [];
+    $postId = get_the_ID();
+    if ($postId && isset($injected[$postId])) {
+        return $content;
+    }
+
+    $currentSlug = (string) get_post_field('post_name');
+    $packingSlugs = vg_get_packing_checklist_slugs();
 
     $isTarget = in_array($currentSlug, $packingSlugs, true)
         || is_page('vietnam-first-trip-planning-checklist')

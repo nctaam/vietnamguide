@@ -320,6 +320,13 @@ class TestProductionStrictness(unittest.TestCase):
 
         # 1. WCAG 2.2 AA light-surface text contrast tokens (zero low-contrast saffron/coral on light backgrounds)
         self.assertIn("--vg-coral-text: #a43b27;", homepage_css)
+        combined_ui_css = "\n".join([
+            homepage_css,
+            (THEME_DIR / "assets" / "css" / "search-404.css").read_text(encoding="utf-8"),
+            (THEME_DIR / "assets" / "css" / "toolkit-cost-calculator.css").read_text(encoding="utf-8"),
+            (THEME_DIR / "assets" / "css" / "toolkit-season-matrix.css").read_text(encoding="utf-8"),
+            (THEME_DIR / "assets" / "css" / "toolkit-itinerary-finder.css").read_text(encoding="utf-8"),
+        ])
         for bad_rule in (
             ".vg-calc-badge {\n  display: inline-block;\n  font-size: 11px;\n  font-weight: 800;\n  letter-spacing: 0.12em;\n  text-transform: uppercase;\n  color: var(--vg-gold-saffron",
             ".vg-sm-badge {\n  display: inline-block;\n  font-size: 11px;\n  font-weight: 800;\n  letter-spacing: 0.12em;\n  text-transform: uppercase;\n  color: var(--vg-gold-saffron",
@@ -327,7 +334,7 @@ class TestProductionStrictness(unittest.TestCase):
             ".vg-search-count--empty {\n  color: var(--vg-coral);",
             ".vg-search-badge--practical {\n  background: rgba(201, 95, 74, 0.12);\n  color: var(--vg-coral);",
         ):
-            self.assertNotIn(bad_rule, homepage_css)
+            self.assertNotIn(bad_rule, combined_ui_css)
         self.assertIn("color: var(--vg-gold-text, #7e5802);", guide_exp_css)
 
         # 2. WAI-ARIA APG Tabs roving tabindex + Home/End across Map, Photo Dispatch & Field Desk

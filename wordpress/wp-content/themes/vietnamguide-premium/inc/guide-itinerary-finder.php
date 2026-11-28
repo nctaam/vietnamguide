@@ -732,42 +732,9 @@ function vg_render_itinerary_finder_html(): string
     return (string) ob_get_clean();
 }
 
-/**
- * Shortcode handler for [vg_itinerary_finder].
- *
- * @return string
- */
-function vg_itinerary_finder_shortcode(): string
+function vg_get_itinerary_finder_slugs(): array
 {
-    return vg_render_itinerary_finder_html();
-}
-add_shortcode('vg_itinerary_finder', 'vg_itinerary_finder_shortcode');
-
-/**
- * Injects the Itinerary Finder component on the /itineraries/ hub page right after the lede hero.
- *
- * @param string $content Post content.
- * @return string
- */
-function vg_inject_itinerary_finder_on_hub(string $content): string
-{
-    if (is_admin()) {
-        return $content;
-    }
-
-    // Never inject into hero block
-    if (strpos($content, 'vg-guide-hero') !== false) {
-        return $content;
-    }
-
-    static $injectedPosts = [];
-    $postId = get_the_ID();
-    if ($postId && isset($injectedPosts[$postId])) {
-        return $content;
-    }
-
-    $currentSlug = (string) get_post_field('post_name');
-    $itinerarySlugs = [
+    return [
         'itineraries',
         'best-vietnam-routes-first-time-visitors',
         'best-vietnam-cities-for-first-time-visitors',
@@ -805,6 +772,47 @@ function vg_inject_itinerary_finder_on_hub(string $content): string
         'motorbike-rental-laws-vietnam',
         'vietnam-motorbike-license-laws',
     ];
+}
+
+/**
+ * Shortcode handler for [vg_itinerary_finder].
+ *
+ * @return string
+ */
+function vg_itinerary_finder_shortcode(): string
+{
+    if (function_exists('vg_enqueue_toolkit_style')) {
+        vg_enqueue_toolkit_style('itinerary-finder');
+    }
+    return vg_render_itinerary_finder_html();
+}
+add_shortcode('vg_itinerary_finder', 'vg_itinerary_finder_shortcode');
+
+/**
+ * Injects the Itinerary Finder component on the /itineraries/ hub page right after the lede hero.
+ *
+ * @param string $content Post content.
+ * @return string
+ */
+function vg_inject_itinerary_finder_on_hub(string $content): string
+{
+    if (is_admin()) {
+        return $content;
+    }
+
+    // Never inject into hero block
+    if (strpos($content, 'vg-guide-hero') !== false) {
+        return $content;
+    }
+
+    static $injectedPosts = [];
+    $postId = get_the_ID();
+    if ($postId && isset($injectedPosts[$postId])) {
+        return $content;
+    }
+
+    $currentSlug = (string) get_post_field('post_name');
+    $itinerarySlugs = vg_get_itinerary_finder_slugs();
 
     $isTargetPage = in_array($currentSlug, $itinerarySlugs, true)
         || is_page('itineraries')

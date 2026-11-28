@@ -1685,6 +1685,38 @@ function vg_render_season_matrix_html(): string
     return (string) ob_get_clean();
 }
 
+function vg_get_season_matrix_slugs(): array
+{
+    return [
+        'best-time-to-visit-vietnam',
+        'what-to-pack-for-vietnam-region-season',
+        'best-time-for-northern-vietnam',
+        'best-time-for-central-vietnam',
+        'best-time-for-southern-vietnam',
+        'vietnam-rainy-season-flexible-route',
+        'typhoon-season-in-vietnam',
+        'tet-in-vietnam-travel-guide',
+        'tet-lunar-new-year-travel-guide',
+        'vietnam-in-january',
+        'vietnam-in-february',
+        'vietnam-in-march',
+        'vietnam-in-april',
+        'vietnam-in-may',
+        'vietnam-in-june',
+        'vietnam-in-july',
+        'vietnam-in-august',
+        'vietnam-in-september',
+        'vietnam-in-october',
+        'vietnam-in-november',
+        'vietnam-in-december',
+        'best-beaches-in-vietnam',
+        'best-islands-in-vietnam',
+        'vietnam-rice-terraces-guide',
+        'ha-long-bay-cruise-questions-before-booking',
+        'cham-islands-day-trip-guide',
+    ];
+}
+
 /**
  * Shortcode handler for [vg_season_matrix].
  *
@@ -1692,6 +1724,9 @@ function vg_render_season_matrix_html(): string
  */
 function vg_season_matrix_shortcode(): string
 {
+    if (function_exists('vg_enqueue_toolkit_style')) {
+        vg_enqueue_toolkit_style('season-matrix');
+    }
     return vg_render_season_matrix_html();
 }
 add_shortcode('vg_season_matrix', 'vg_season_matrix_shortcode');
@@ -1720,34 +1755,7 @@ function vg_inject_season_matrix_on_page(string $content): string
     }
 
     $currentSlug = (string) get_post_field('post_name');
-    $seasonSlugs = [
-        'best-time-to-visit-vietnam',
-        'what-to-pack-for-vietnam-region-season',
-        'best-time-for-northern-vietnam',
-        'best-time-for-central-vietnam',
-        'best-time-for-southern-vietnam',
-        'vietnam-rainy-season-flexible-route',
-        'typhoon-season-in-vietnam',
-        'tet-in-vietnam-travel-guide',
-        'tet-lunar-new-year-travel-guide',
-        'vietnam-in-january',
-        'vietnam-in-february',
-        'vietnam-in-march',
-        'vietnam-in-april',
-        'vietnam-in-may',
-        'vietnam-in-june',
-        'vietnam-in-july',
-        'vietnam-in-august',
-        'vietnam-in-september',
-        'vietnam-in-october',
-        'vietnam-in-november',
-        'vietnam-in-december',
-        'best-beaches-in-vietnam',
-        'best-islands-in-vietnam',
-        'vietnam-rice-terraces-guide',
-        'ha-long-bay-cruise-questions-before-booking',
-        'cham-islands-day-trip-guide',
-    ];
+    $seasonSlugs = vg_get_season_matrix_slugs();
 
     $isTargetPage = in_array($currentSlug, $seasonSlugs, true)
         || is_page('best-time-to-visit-vietnam')

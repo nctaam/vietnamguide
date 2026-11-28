@@ -285,7 +285,22 @@ class TestThemeAssetsPipeline(unittest.TestCase):
                 f"Template {tpl_path.name} must contain 0 static style=\" attributes.",
             )
 
-        for css_name in ['homepage.css', 'guide-patterns.css', 'guide-interactive.css']:
+        modular_css_files = [
+            'homepage.css',
+            'subpages.css',
+            'search-404.css',
+            'toolkit-core.css',
+            'toolkit-itinerary-finder.css',
+            'toolkit-cost-calculator.css',
+            'toolkit-route-budget.css',
+            'toolkit-season-matrix.css',
+            'toolkit-visa-checker.css',
+            'toolkit-airport-navigator.css',
+            'toolkit-packing-checklist.css',
+            'guide-patterns.css',
+            'guide-interactive.css',
+        ]
+        for css_name in modular_css_files:
             css_text = (THEME_ASSETS / 'css' / css_name).read_text(encoding='utf-8')
             media_headers = [m.strip() for m in re.findall(r'@media\s+[^{]+', css_text)]
             self.assertEqual(
@@ -301,11 +316,13 @@ class TestThemeAssetsPipeline(unittest.TestCase):
             )
 
         homepage_css = (THEME_ASSETS / 'css' / 'homepage.css').read_text(encoding='utf-8')
+        packing_css = (THEME_ASSETS / 'css' / 'toolkit-packing-checklist.css').read_text(encoding='utf-8')
         self.assertIn('.vg-ref-ledger', homepage_css)
         self.assertIn('body:has(.vg-guide-experience) .vg-back-to-top', homepage_css)
         self.assertIn('.vg-pwa-banner', homepage_css)
         self.assertIn('.vg-hp-field', homepage_css)
-        self.assertIn('.vg-checklist-noscript', homepage_css)
+        self.assertIn('.vg-checklist-noscript', packing_css)
+        self.assertNotIn('.vg-checklist-noscript', homepage_css)
 
         experience_css = (THEME_ASSETS / 'css' / 'guide-experience.css').read_text(encoding='utf-8')
         self.assertIn('.vg-guide-trust__item--policy a', experience_css)
@@ -367,14 +384,116 @@ class TestThemeAssetsPipeline(unittest.TestCase):
                     buf.append(ch)
             return selectors
 
-        patterns_css = (THEME_ASSETS / 'css' / 'guide-patterns.css').read_text(encoding='utf-8')
-        hp_sels = _extract_top_level_selectors(homepage_css)
-        pat_sels = _extract_top_level_selectors(patterns_css)
-        int_sels = _extract_top_level_selectors(interactive_css)
+        sel_maps = {
+            css_name: _extract_top_level_selectors((THEME_ASSETS / 'css' / css_name).read_text(encoding='utf-8'))
+            for css_name in modular_css_files
+        }
+        for i in range(len(modular_css_files)):
+            for j in range(i + 1, len(modular_css_files)):
+                a, b = modular_css_files[i], modular_css_files[j]
+                self.assertEqual(
+                    sel_maps[a] & sel_maps[b],
+                    set(),
+                    f"Overlap between {a} and {b}: {sel_maps[a] & sel_maps[b]}",
+                )
 
-        self.assertEqual(hp_sels & pat_sels, set(), f"Overlap between homepage.css and guide-patterns.css: {hp_sels & pat_sels}")
-        self.assertEqual(hp_sels & int_sels, set(), f"Overlap between homepage.css and guide-interactive.css: {hp_sels & int_sels}")
-        self.assertEqual(pat_sels & int_sels, set(), f"Overlap between guide-patterns.css and guide-interactive.css: {pat_sels & int_sels}")
+    def test_stage224_critical_path_css_split_budget_and_conditional_enqueues(self):
+        """Stage 224: homepage.css must stay <= 70 KB raw (critical-path budget) and per-toolkit/subpage CSS must enqueue conditionally."""
+        hp_path = THEME_ASSETS / 'css' / 'homepage.css'
+        hp_bytes = hp_path.stat().st_size
+        self.assertLessEqual(
+            hp_bytes,
+            70_000,
+            f"homepage.css critical-path budget exceeded (<= 70,000 B): {hp_bytes:,} B",
+        )
+        hp_text = hp_path.read_text(encoding='utf-8')
+        for extracted_sel in (
+            '.vg-visa-checker {',
+            '.vg-cost-calculator {',
+            '.vg-route-budget-widget {',
+            '.vg-season-matrix {',
+            '.vg-airport-navigator {',
+            '.vg-checklist-widget {',
+            '.vg-itinerary-finder {',
+            '.vg-404-container {',
+            '.vg-search-section {',
+            '.vg-entry-content h2 {',
+        ):
+            self.assertNotIn(extracted_sel, hp_text, f"Subpage/toolkit selector '{extracted_sel}' must not bloat homepage.css")
+
+        php_code = r"""
+        define('ABSPATH', 1);
+        class WP_Post {
+            public int $ID = 1;
+            public string $post_name = '';
+            public string $post_content = '';
+        }
+        $GLOBALS['vg_is_front'] = false;
+        $GLOBALS['vg_is_404'] = false;
+        $GLOBALS['vg_is_search'] = false;
+        $GLOBALS['vg_current_post'] = null;
+        $GLOBALS['vg_enqueued_styles'] = [];
+
+        function is_front_page(): bool { return (bool) $GLOBALS['vg_is_front']; }
+        function is_404(): bool { return (bool) $GLOBALS['vg_is_404']; }
+        function is_search(): bool { return (bool) $GLOBALS['vg_is_search']; }
+        function get_post(): ?WP_Post { return $GLOBALS['vg_current_post']; }
+        function get_page_uri($p = null): string { return ($p instanceof WP_Post) ? $p->post_name : ''; }
+        function get_theme_file_path(string $rel = ''): string {
+            return getcwd() . '/wordpress/wp-content/themes/vietnamguide-premium/' . ltrim($rel, '/');
+        }
+        function get_theme_file_uri(string $rel = ''): string {
+            return 'https://vietnamguide.net/wp-content/themes/vietnamguide-premium/' . ltrim($rel, '/');
+        }
+        function wp_get_theme() {
+            return new class { public function get(string $k): string { return '2.0.0'; } };
+        }
+        function add_action(string $tag, callable $cb, int $p = 10, int $a = 1): void {}
+        function add_filter(string $tag, callable $cb, int $p = 10, int $a = 1): void {}
+        function add_shortcode(string $tag, callable $cb): void {}
+        function __return_false(): bool { return false; }
+        function wp_enqueue_style(string $handle, string $src = '', array $deps = [], string $ver = ''): void {
+            $GLOBALS['vg_enqueued_styles'][$handle] = ['src' => $src, 'deps' => $deps, 'ver' => $ver];
+        }
+        function wp_enqueue_script(string $handle, string $src = '', array $deps = [], string $ver = '', bool $in_footer = false): void {}
+
+        require get_theme_file_path('/functions.php');
+
+        $out = [];
+        $GLOBALS['vg_is_front'] = true;
+        $p = new WP_Post(); $p->post_name = 'home';
+        $out['front'] = vg_get_required_toolkit_styles($p);
+
+        $GLOBALS['vg_is_front'] = false;
+        foreach (['hanoi-travel-guide', 'ha-long-bay-travel-guide', 'vietnam-evisa', 'vietnam-travel-cost', 'best-time-to-visit-vietnam', 'itineraries'] as $slug) {
+            $p = new WP_Post(); $p->post_name = $slug;
+            $out[$slug] = vg_get_required_toolkit_styles($p);
+        }
+        $pCustom = new WP_Post();
+        $pCustom->post_name = 'custom-page';
+        $pCustom->post_content = '<p>Intro</p>[vg_packing_checklist]';
+        $out['custom_shortcode'] = vg_get_required_toolkit_styles($pCustom);
+
+        vg_enqueue_toolkit_style('visa-checker');
+        $out['enqueued_handles'] = array_keys($GLOBALS['vg_enqueued_styles']);
+        $out['visa_ver_len'] = strlen($GLOBALS['vg_enqueued_styles']['vietnamguide-toolkit-visa-checker']['ver'] ?? '');
+
+        echo json_encode($out);
+        """
+        res = subprocess.run(['php', '-r', php_code], cwd=str(REPO_ROOT), capture_output=True, text=True, encoding='utf-8')
+        self.assertEqual(res.returncode, 0, f"PHP runtime failed:\n{res.stdout}\n{res.stderr}")
+        import json as _json
+        data = _json.loads(res.stdout)
+        self.assertEqual(data['front'], [])
+        self.assertEqual(data['hanoi-travel-guide'], [])
+        self.assertEqual(data['ha-long-bay-travel-guide'], ['route-budget'])
+        self.assertEqual(data['vietnam-evisa'], ['visa-checker'])
+        self.assertEqual(data['vietnam-travel-cost'], ['cost-calculator'])
+        self.assertEqual(data['best-time-to-visit-vietnam'], ['season-matrix'])
+        self.assertEqual(data['itineraries'], ['itinerary-finder'])
+        self.assertEqual(data['custom_shortcode'], ['packing-checklist'])
+        self.assertEqual(data['enqueued_handles'], ['vietnamguide-toolkit-core', 'vietnamguide-toolkit-visa-checker'])
+        self.assertEqual(data['visa_ver_len'], 64)
 
 
 if __name__ == '__main__':

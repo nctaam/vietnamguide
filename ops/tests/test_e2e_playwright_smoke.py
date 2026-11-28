@@ -81,6 +81,18 @@ class TestPlaywrightE2ESmoke(unittest.TestCase):
             raise unittest.SkipTest(f"Playwright Chromium browser binary unavailable: {exc}")
 
         cls.homepage_css = (ASSETS_DIR / 'css' / 'homepage.css').read_text(encoding='utf-8')
+        cls.subpages_css = (ASSETS_DIR / 'css' / 'subpages.css').read_text(encoding='utf-8')
+        cls.search_404_css = (ASSETS_DIR / 'css' / 'search-404.css').read_text(encoding='utf-8')
+        cls.toolkit_core_css = (ASSETS_DIR / 'css' / 'toolkit-core.css').read_text(encoding='utf-8')
+        cls.toolkit_css_map = {
+            'visa': (ASSETS_DIR / 'css' / 'toolkit-visa-checker.css').read_text(encoding='utf-8'),
+            'cost': (ASSETS_DIR / 'css' / 'toolkit-cost-calculator.css').read_text(encoding='utf-8'),
+            'route': (ASSETS_DIR / 'css' / 'toolkit-route-budget.css').read_text(encoding='utf-8'),
+            'season': (ASSETS_DIR / 'css' / 'toolkit-season-matrix.css').read_text(encoding='utf-8'),
+            'airport': (ASSETS_DIR / 'css' / 'toolkit-airport-navigator.css').read_text(encoding='utf-8'),
+            'packing': (ASSETS_DIR / 'css' / 'toolkit-packing-checklist.css').read_text(encoding='utf-8'),
+            'itinerary': (ASSETS_DIR / 'css' / 'toolkit-itinerary-finder.css').read_text(encoding='utf-8'),
+        }
         cls.interactive_css = (ASSETS_DIR / 'css' / 'guide-interactive.css').read_text(encoding='utf-8')
         cls.guide_css = (ASSETS_DIR / 'css' / 'guide-experience.css').read_text(encoding='utf-8')
         cls.interactive_js = (ASSETS_DIR / 'js' / 'guide-interactive.js').read_text(encoding='utf-8')
@@ -326,6 +338,8 @@ class TestPlaywrightE2ESmoke(unittest.TestCase):
         <head>
             <meta charset="utf-8">
             <style>{self.homepage_css}</style>
+            <style>{self.toolkit_core_css}</style>
+            <style>{self.toolkit_css_map['visa']}</style>
             <style>{self.interactive_css}</style>
         </head>
         <body>
@@ -381,6 +395,8 @@ class TestPlaywrightE2ESmoke(unittest.TestCase):
         <head>
             <meta charset="utf-8">
             <style>{self.homepage_css}</style>
+            <style>{self.toolkit_core_css}</style>
+            <style>{self.toolkit_css_map['cost']}</style>
             <style>{self.interactive_css}</style>
         </head>
         <body>
@@ -428,6 +444,8 @@ class TestPlaywrightE2ESmoke(unittest.TestCase):
         <head>
             <meta charset="utf-8">
             <style>{self.homepage_css}</style>
+            <style>{self.toolkit_core_css}</style>
+            <style>{self.toolkit_css_map['season']}</style>
             <style>{self.interactive_css}</style>
         </head>
         <body>
@@ -484,6 +502,8 @@ class TestPlaywrightE2ESmoke(unittest.TestCase):
         <head>
             <meta charset="utf-8">
             <style>{self.homepage_css}</style>
+            <style>{self.toolkit_core_css}</style>
+            <style>{self.toolkit_css_map['airport']}</style>
             <style>{self.interactive_css}</style>
         </head>
         <body>
@@ -531,6 +551,8 @@ class TestPlaywrightE2ESmoke(unittest.TestCase):
         <head>
             <meta charset="utf-8">
             <style>{self.homepage_css}</style>
+            <style>{self.toolkit_core_css}</style>
+            <style>{self.toolkit_css_map['packing']}</style>
             <style>{self.interactive_css}</style>
         </head>
         <body>
@@ -573,6 +595,8 @@ class TestPlaywrightE2ESmoke(unittest.TestCase):
         <head>
             <meta charset="utf-8">
             <style>{self.homepage_css}</style>
+            <style>{self.toolkit_core_css}</style>
+            <style>{self.toolkit_css_map['itinerary']}</style>
             <style>{self.interactive_css}</style>
         </head>
         <body>
@@ -623,6 +647,8 @@ class TestPlaywrightE2ESmoke(unittest.TestCase):
         <head>
             <meta charset="utf-8">
             <style>{self.homepage_css}</style>
+            <style>{self.toolkit_core_css}</style>
+            <style>{self.toolkit_css_map['cost']}</style>
             <style>{self.interactive_css}</style>
         </head>
         <body>
@@ -641,6 +667,8 @@ class TestPlaywrightE2ESmoke(unittest.TestCase):
         <head>
             <meta charset="utf-8">
             <style>{self.homepage_css}</style>
+            <style>{self.toolkit_core_css}</style>
+            <style>{self.toolkit_css_map['visa']}</style>
             <style>{self.interactive_css}</style>
         </head>
         <body>
@@ -653,6 +681,8 @@ class TestPlaywrightE2ESmoke(unittest.TestCase):
         <head>
             <meta charset="utf-8">
             <style>{self.homepage_css}</style>
+            <style>{self.toolkit_core_css}</style>
+            <style>{self.toolkit_css_map['packing']}</style>
             <style>{self.interactive_css}</style>
         </head>
         <body>
@@ -719,7 +749,7 @@ class TestPlaywrightE2ESmoke(unittest.TestCase):
                 page.locator('.vg-vc-toggle-btn[data-entry="multiple"]').get_attribute('aria-checked'),
                 'true',
             )
-            self.assertEqual(page.locator('#vg-vc-cost-amount').inner_text().strip(), '$50 USD')
+            self.assertEqual(page.locator('#vg-vc-cost-amount').text_content().strip(), '$50 USD')
 
             # 3. F15: Packing Checklist single window.print() invocation when guide-experience.js is present
             page.goto("https://vietnamguide.test/plan/vietnam-first-trip-planning-checklist/", wait_until="domcontentloaded")
@@ -756,6 +786,12 @@ class TestPlaywrightE2ESmoke(unittest.TestCase):
         <head>
             <meta charset="utf-8">
             <style>{self.homepage_css}</style>
+            <style>{self.subpages_css}</style>
+            <style>{self.search_404_css}</style>
+            <style>{self.toolkit_core_css}</style>
+            <style>{self.toolkit_css_map['cost']}</style>
+            <style>{self.toolkit_css_map['season']}</style>
+            <style>{self.toolkit_css_map['itinerary']}</style>
             <style>{self.interactive_css}</style>
             <style>{self.guide_css}</style>
         </head>

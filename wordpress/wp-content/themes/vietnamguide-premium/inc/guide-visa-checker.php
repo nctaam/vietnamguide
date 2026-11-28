@@ -972,6 +972,23 @@ function vg_render_visa_checker_html(): string
     return (string) ob_get_clean();
 }
 
+function vg_get_visa_checker_slugs(): array
+{
+    return [
+        'vietnam-evisa',
+        'vietnam-visa-guide',
+        'vietnam-airport-arrival-checklist',
+        'vietnam-first-trip-planning-checklist',
+        'phu-quoc-visa-exemption-guide',
+        'vietnam-visa-extension-overstay-rules',
+        'vietnam-land-border-crossings-guide',
+        'vietnam-customs-allowances-prohibited-items',
+        'vietnam-to-cambodia-border-crossings',
+        'vietnam-to-cambodia-boat-guide',
+        'vietnam-travel-guide',
+    ];
+}
+
 /**
  * Shortcode handler for [vg_visa_checker].
  *
@@ -979,6 +996,9 @@ function vg_render_visa_checker_html(): string
  */
 function vg_visa_checker_shortcode(): string
 {
+    if (function_exists('vg_enqueue_toolkit_style')) {
+        vg_enqueue_toolkit_style('visa-checker');
+    }
     return vg_render_visa_checker_html();
 }
 add_shortcode('vg_visa_checker', 'vg_visa_checker_shortcode');
@@ -1007,19 +1027,7 @@ function vg_inject_visa_checker_on_page(string $content): string
     }
 
     $currentSlug = (string) get_post_field('post_name');
-    $visaSlugs = [
-        'vietnam-evisa',
-        'vietnam-visa-guide',
-        'vietnam-airport-arrival-checklist',
-        'vietnam-first-trip-planning-checklist',
-        'phu-quoc-visa-exemption-guide',
-        'vietnam-visa-extension-overstay-rules',
-        'vietnam-land-border-crossings-guide',
-        'vietnam-customs-allowances-prohibited-items',
-        'vietnam-to-cambodia-border-crossings',
-        'vietnam-to-cambodia-boat-guide',
-        'vietnam-travel-guide',
-    ];
+    $visaSlugs = vg_get_visa_checker_slugs();
 
     $isTargetPage = in_array($currentSlug, $visaSlugs, true)
         || is_page('vietnam-evisa')
